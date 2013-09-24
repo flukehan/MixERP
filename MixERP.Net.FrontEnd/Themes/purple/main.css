@@ -495,10 +495,10 @@ a.sub-menu-anchor, a.sub-menu-anchor:visited
     padding-left: 18px;
 }
 
-    a.sub-menu-anchor:hover
+    a.sub-menu-anchor:hover, a.menu-selected
     {
         background-color: #8765C5;
-        color: White;
+        color: #FFFFFF!important;
     }
 
 .success
@@ -995,11 +995,11 @@ input.date
 #SearchTextBox
 {
     border: 1px solid #CA95FF;
-    margin:0px;
-    height:18px;
-    width:95%;
+    margin: 0px;
+    height: 18px;
+    width: 95%;
     background-image: url('/Resource/Icons/find-16.png');
     background-repeat: no-repeat;
-    background-position-x:right;
-    background-position-y:center;
+    background-position-x: right;
+    background-position-y: center;
 }

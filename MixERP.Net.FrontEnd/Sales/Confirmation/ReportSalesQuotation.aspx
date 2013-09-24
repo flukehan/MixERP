@@ -16,7 +16,7 @@ http://mozilla.org/MPL/2.0/.
 <body>
     <form id="form1" runat="server">
     <mixerp:Report ID="SalesQuotationReport" runat="server" 
-        Path="~/Reports/Sources/en-US/Sales.View.Sales.Quotation.xml" AutoInitialize="true" />
+        Path="~/Reports/Sources/Sales.View.Sales.Quotation.xml" AutoInitialize="true" />
     </form>
 </body>
 </html>

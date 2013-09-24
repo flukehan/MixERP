@@ -38,11 +38,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         public string Text { get; set; }
 
         /// <summary>
-        /// A readonly instance of the GridView
-        /// </summary>
-        //public GridView Grid { get { return ProductGridView; } }
-
-        /// <summary>
         /// This property when set to true will display the RadioButtonList control which contains the transaction types.
         /// Transaction types are Cash and Credit.
         /// </summary>
@@ -60,7 +55,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         /// <summary>
         /// This property when enabled will display cash repositories and their available balance.
-        /// Not all availble cash repositories will be displayed here but those which belong to the current (or logged in) branch office.
+        /// Not all available cash repositories will be displayed here but those which belong to the current (or logged in) branch office.
         /// This property must be enabled for transactions which have affect on cash ledger, namely "Direct Purchase" and "Direct Sales".
         /// </summary>
         public bool ShowCashRepository { get; set; }
@@ -102,6 +97,8 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         /// <summary>
         /// This function returns a new instance of ControlCollection class.
+        /// The control collection is processed on the page which contains this UserControl
+        /// for transaction posting.
         /// </summary>
         /// <returns></returns>
         private ControlCollection GetControls()
@@ -130,9 +127,9 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         }
 
         /// <summary>
-        /// This property provides a read-only acess to all the controls of this UserControl.
+        /// This property provides a read-only access to all the controls of this UserControl.
         /// This property is accessed after the user clicks the "Save" button.
-        /// The values of each control is read and then sent to the database layer.
+        /// The values of each control is read and then sent to the transaction posting engine.
         /// </summary>
         public ControlCollection GetForm
         {
@@ -142,9 +139,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             }
         }
 
-        /// <summary>
-        /// This property set the width of the top panel.
-        /// </summary>
         public Unit TopPanelWidth
         {
             get
@@ -158,7 +152,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         }
 
-
         /// <summary>
         /// This event will be raised on SaveButon's click event.
         /// </summary>
@@ -168,7 +161,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         {
             //Validation Check Start
 
-            //Check the number of products in the grid.
             if(ProductGridView.Rows.Count.Equals(0))
             {
                 ErrorLabel.Text = Resources.Warnings.NoItemFound;
@@ -195,24 +187,19 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             //So, if you approve the transaction, there is no effect since the cash was already out-->First Out. 
             //The actual cash balance is restored only when you reject the transaction.
  
-            //So, no point on getting confused here. This calculations is happened on the database level.
+            //If you are still not so sure what it means, don't worry. 
+            //The calculation happens on the database level.
             //If anything goes wrong, throw stones to your DBAs.
 
             if(this.Book == Common.Models.Transactions.TranBook.Purchase && CashRepositoryRow.Visible)
             {
-                //Update cash repository balance.
                 this.UpdateRepositoryBalance();
 
-                //Get the balance of the cash repository.
                 decimal repositoryBalance = MixERP.Net.Common.Conversion.TryCastDecimal(CashRepositoryBalanceTextBox.Text);
-
-                //Get the grand total credit amount.
                 decimal grandTotal = MixERP.Net.Common.Conversion.TryCastDecimal(GrandTotalTextBox.Text);
 
-                //If the amount to pay is greater than available cash balance.
                 if(grandTotal > repositoryBalance)
                 {
-                    //Display an error message to the user stating that there's not enough cash to post this transaction.
                     ErrorLabel.Text = Resources.Warnings.NotEnoughCash;
                     return;
                 }
@@ -224,7 +211,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                //Check if the value actually was a number.
                 if(!MixERP.Net.Common.Conversion.IsNumeric(ShippingChargeTextBox.Text))
                 {
-                    //You could never guess in your wildest dream how insanse a user could behave.
                     MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(ShippingChargeTextBox);
                     return;
                 }
@@ -243,7 +229,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         /// <param name="e"></param>
         public virtual void OnSaveButtonClick(object sender, EventArgs e)
         {
-            //Check if the event can be used.
             if (SaveButtonClick != null)
             {
                 //Raise the event.
@@ -251,61 +236,35 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             }
         }
 
-
-        /// <summary>
-        /// This method handles the grid view's row command event.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         protected void ProductGridView_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            //We only expect a delete command here.
+            //At this point, we only expect a delete command here.
             //Be careful if this GridView implements other commands in the future.
-            //Needs refactoring.
-
 
             //Get an instance of the collection of the products stored in the grid.
-            Collection<MixERP.Net.Common.Models.Transactions.ProductDetailsModel> table = this.GetTable();
+            Collection<MixERP.Net.Common.Models.Transactions.ProductDetailsModel> dataSource = this.GetTable();
 
             //Get the instance of grid view row on which the the command was triggered.
             GridViewRow row = (GridViewRow)(((ImageButton)e.CommandSource).NamingContainer);
 
-            //Get the index of the row.
             int index = row.RowIndex;
+            dataSource.RemoveAt(index);
 
-            //Remove the product from the collection at the specified index.
-            table.RemoveAt(index);
-
-            //Store the new product collection on the session.
-            Session[this.ID] = table;
-
-            //Call the method to bind the gridview once again. 
+            Session[this.ID] = dataSource;
             this.BindGridView();
-
-            //UpdatePanel1.Update();
         }
 
-        /// <summary>
-        /// This method is called for each grid view rows' databound event.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         protected void ProductGridView_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            //Check the row type.
             if(e.Row.RowType == DataControlRowType.DataRow)
             {
-                //Yeaaaaa! This is a data row. Yipeee!!!!!
+                //Yeaaaaa! This is a data row. Yippee!!!!!
                 
-                //Find the image button in this row.
                 ImageButton deleteImageButton = e.Row.FindControl("DeleteImageButton") as ImageButton;
                 
-                //Make sure that we found the image button we were looking for.
                 if (deleteImageButton != null)
                 {
-                    //Wowowowow, we found the button.
-
-                    //Tell the script manager that this button should fire an asynchronous postback event.
+                    //Tell the script manager that this button should fire an asynchronous post-back event.
                     ScriptManager.GetCurrent(this.Page).RegisterAsyncPostBackControl(deleteImageButton);
                 }
             }

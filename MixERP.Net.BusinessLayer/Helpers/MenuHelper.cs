@@ -37,7 +37,7 @@ namespace MixERP.Net.BusinessLayer.Helpers
                         {
                             foreach(MixERP.Net.Common.Models.Core.Menu childMenu in childMenus)
                             {
-                                menu += string.Format(System.Threading.Thread.CurrentThread.CurrentCulture, "<a href='{0}' title='{1}' class='sub-menu-anchor'>{1}</a>", page.ResolveUrl(childMenu.Url), childMenu.MenuText);
+                                menu += string.Format(System.Threading.Thread.CurrentThread.CurrentCulture, "<a href='{0}' title='{1}' data-menucode='{2}' class='sub-menu-anchor'>{1}</a>", page.ResolveUrl(childMenu.Url), childMenu.MenuText, childMenu.MenuCode);
                             }
                         }
 

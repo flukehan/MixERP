@@ -111,7 +111,7 @@ namespace MixERP.Net.FrontEnd.Reports
                 return null;
             }
 
-            return "~/Reports/Sources/en-US/" + id;
+            return "~/Reports/Sources/" + id;
         }
 
         private System.Collections.ObjectModel.Collection<KeyValuePair<string, string>> GetParameters()

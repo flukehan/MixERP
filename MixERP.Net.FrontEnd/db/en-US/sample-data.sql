@@ -27,7 +27,6 @@ SELECT 'CAS', 'CAS Banking Solution', 1, 1, 1, 1, 'Yes', 1, 10, 'No', 40000, 400
 INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
 SELECT 'SGT', 'Samsung Galaxy Tab 10.1', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 30000, 45000;
 
-
 INSERT INTO office.stores(office_id, store_code, store_name, address, store_type_id, allow_sales)
 SELECT 1, 'STORE-1', 'Store 1', 'Office', 2, true UNION ALL
 SELECT 1, 'GODOW-1', 'Godown 1', 'Office', 2, false;
@@ -36,8 +35,5 @@ INSERT INTO office.cash_repositories(office_id, cash_repository_code, cash_repos
 SELECT 2, 'DRW1', 'Drawer 1', 'Drawer' UNION ALL
 SELECT 2, 'VLT', 'Vault', 'Vault';
 
-
-
 INSERT INTO core.shippers(company_name, account_id)
 SELECT 'Default', core.get_account_id_by_account_code('20110');
-

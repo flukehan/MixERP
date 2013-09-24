@@ -124,7 +124,7 @@ CHECK
 DROP VIEW IF EXISTS db_stat;
 CREATE VIEW db_stat
 AS
-select
+SELECT
 	relname,
 	last_vacuum,
 	last_autovacuum,
@@ -134,7 +134,7 @@ select
 	autovacuum_count,
 	analyze_count,
 	autoanalyze_count
-from
+FROM
    pg_stat_user_tables;
 
 DROP DOMAIN IF EXISTS decimal_strict2;
