@@ -11,6 +11,15 @@ http://mozilla.org/MPL/2.0/.
 	TODO LIST : NEED TO CREATE INDEXES.
 ***********************************************************************************/
 
+DO 
+$$
+BEGIN
+   EXECUTE 'ALTER DATABASE ' || current_database() || ' SET timezone TO ''UTC''';
+END;
+$$
+LANGUAGE plpgsql;
+
+
 DROP SCHEMA IF EXISTS audit CASCADE;
 DROP SCHEMA IF EXISTS core CASCADE;
 DROP SCHEMA IF EXISTS office CASCADE;
@@ -977,6 +986,8 @@ UNION ALL SELECT 'Lead Status Setup', '/CRM/Setup/LeadStatuses.aspx', 'CRMLST', 
 UNION ALL SELECT 'Opportunity Stages Setup', '/CRM/Setup/OpportunityStages.aspx', 'CRMOS', 2, core.get_menu_id('CSM')
 UNION ALL SELECT 'Miscellaneous Parameters', NULL, 'SMP', 1, core.get_menu_id('SE')
 UNION ALL SELECT 'Flags', '/Setup/Flags.aspx', 'TRF', 2, core.get_menu_id('SMP')
+UNION ALL SELECT 'Audit Reports', NULL, 'SEAR', 1, core.get_menu_id('SE')
+UNION ALL SELECT 'Login View', '/Reports/Office.Login.xml', 'SEAR-LV', 2, core.get_menu_id('SEAR')
 UNION ALL SELECT 'Office Setup', NULL, 'SOS', 1, core.get_menu_id('SE')
 UNION ALL SELECT 'Office & Branch Setup', '/Setup/Offices.aspx', 'SOB', 2, core.get_menu_id('SOS')
 UNION ALL SELECT 'Department Setup', '/Setup/Departments.aspx', 'SDS', 2, core.get_menu_id('SOS')

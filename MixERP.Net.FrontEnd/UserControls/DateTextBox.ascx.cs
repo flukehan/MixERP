@@ -65,7 +65,7 @@ namespace MixERP.Net.FrontEnd.UserControls
             }
         }
 
-        public MixERP.Net.BusinessLayer.Core.DateEnums Mode { get; set; }
+        public MixERP.Net.BusinessLayer.Core.Frequency Mode { get; set; }
 
         private void SetDate()
         {
@@ -73,13 +73,13 @@ namespace MixERP.Net.FrontEnd.UserControls
             {
                 switch(this.Mode)
                 {
-                    case BusinessLayer.Core.DateEnums.Today:
+                    case BusinessLayer.Core.Frequency.Today:
                         this.text = DateTime.Now.ToShortDateString();
                         break;
-                    case BusinessLayer.Core.DateEnums.MonthStartDate:
+                    case BusinessLayer.Core.Frequency.MonthStartDate:
                         this.text = MixERP.Net.Common.Helpers.DateHelper.GetMonthStartDate(DateTime.Now).ToShortDateString();
                         break;
-                    case BusinessLayer.Core.DateEnums.MonthEndDate:
+                    case BusinessLayer.Core.Frequency.MonthEndDate:
                         this.text = MixERP.Net.Common.Helpers.DateHelper.GetMonthEndDate(DateTime.Now).ToShortDateString();
                         break;
                     default:

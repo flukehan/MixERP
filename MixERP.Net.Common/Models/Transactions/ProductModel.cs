@@ -22,6 +22,6 @@ namespace MixERP.Net.Common.Models.Transactions
 
         public MixERP.Net.Common.Models.Transactions.TranBook Book { get; set; }
         public MixERP.Net.Common.Models.Transactions.SubTranBook SubBook { get; set; }
-        public Collection<int> transactionIdCollection { get; set; }
+        public Collection<int> TransactionIdCollection { get; set; }
     }
 }

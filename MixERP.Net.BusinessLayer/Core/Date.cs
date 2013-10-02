@@ -12,7 +12,7 @@ using System.Text;
 
 namespace MixERP.Net.BusinessLayer.Core
 {
-    public enum DateEnums
+    public enum Frequency
     { 
         Today,
         MonthStartDate,
@@ -22,6 +22,7 @@ namespace MixERP.Net.BusinessLayer.Core
         HalfStartDate,
         HalfEndDate,
         FiscalYearStartDate,
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "YearEnd")]
         FiscalYearEndDate
     }
 }

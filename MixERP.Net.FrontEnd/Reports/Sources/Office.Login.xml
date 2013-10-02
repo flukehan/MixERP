@@ -13,7 +13,6 @@ http://mozilla.org/MPL/2.0/.
     </TopSection>
     <Body>
         <Content>
-            <h2>{Resources.Titles.LoginView}</h2>
         </Content>
         <GridViews>
             <GridView>
@@ -36,9 +35,8 @@ http://mozilla.org/MPL/2.0/.
             DO
             $$
             BEGIN
-            IF NOT EXISTS(SELECT * FROM core.menus WHERE menu_code='SAR-SVSI') THEN
-            INSERT INTO core.menus(menu_text, url, menu_code, level, parent_menu_id)
-            SELECT 'View Sales Inovice', '/Reports/Sales.View.Sales.Invoice.xml', 'SAR-SVSI', 2, core.get_menu_id('SAR');
+            IF NOT EXISTS(SELECT * FROM core.menus WHERE menu_code='SEAR-LV') THEN
+            SELECT 'Login View', '/Reports/Office.Login.xml', 'SEAR-LV', 2, core.get_menu_id('SEAR');
             END IF;
             END
             $$

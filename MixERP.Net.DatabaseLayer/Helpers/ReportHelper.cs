@@ -40,5 +40,13 @@ namespace MixERP.Net.DatabaseLayer.Helpers
                 return MixERP.Net.DatabaseLayer.DBFactory.DBOperations.GetDataTable(command);
             }
         }
+
+        public static void InstallReport(string sql)
+        {
+            using(NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                MixERP.Net.DatabaseLayer.DBFactory.DBOperations.ExecuteNonQuery(command);
+            }
+        }
     }
 }

@@ -14,7 +14,7 @@ using System.Web;
 
 namespace MixERP.Net.BusinessLayer.Reporting
 {
-    public class ReportParser
+    public static class ReportParser
     {
         public static string ParseExpression(string expression)
         {
@@ -53,6 +53,17 @@ namespace MixERP.Net.BusinessLayer.Reporting
 
         public static string ParseDataSource(string expression, System.Collections.ObjectModel.Collection<System.Data.DataTable> table)
         {
+            if(string.IsNullOrWhiteSpace(expression))
+            {
+                return null;
+            }
+
+            if(table == null)
+            {
+                return null;
+            }
+
+            
             foreach(var match in Regex.Matches(expression, "{.*?}"))
             {
                 string word = match.ToString();
@@ -101,6 +112,5 @@ namespace MixERP.Net.BusinessLayer.Reporting
 
             return string.Empty;
         }
-
     }
 }

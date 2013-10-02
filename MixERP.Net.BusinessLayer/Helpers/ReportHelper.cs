@@ -121,5 +121,10 @@ namespace MixERP.Net.BusinessLayer.Helpers
 
             return false;
         }
+
+        public static void InstallReport(string sql)
+        {
+            MixERP.Net.DatabaseLayer.Helpers.ReportHelper.InstallReport(sql);
+        }
     }
 }

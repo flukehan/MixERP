@@ -303,7 +303,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
             if(PriceTypeDropDownList.SelectedItem != null)
             {
-                MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.SetSelectedValue(PriceTypeDropDownList, model.PriceTypeId.ToString());
+                MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.SetSelectedValue(PriceTypeDropDownList, model.PriceTypeId.ToString(MixERP.Net.BusinessLayer.Helpers.SessionHelper.Culture()));
             }
 
             ReferenceNumberTextBox.Text = model.ReferenceNumber;

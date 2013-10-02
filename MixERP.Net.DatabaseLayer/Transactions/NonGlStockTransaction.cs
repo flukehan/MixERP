@@ -141,6 +141,11 @@ namespace MixERP.Net.DatabaseLayer.Transactions
 
         public static bool TransactionIdsBelongToSameParty(Collection<int> ids)
         {
+            if(ids == null)
+            {
+                return false;
+            }
+            
             //Crate an array object to store the parameters.
             var parameters = new string[ids.Count];
 
@@ -170,6 +175,11 @@ namespace MixERP.Net.DatabaseLayer.Transactions
 
         public static DataTable GetSalesQuotationView(Collection<int> ids)
         {
+            if(ids == null)
+            {
+                return null;
+            }
+
             //Crate an array object to store the parameters.
             var parameters = new string[ids.Count];
 

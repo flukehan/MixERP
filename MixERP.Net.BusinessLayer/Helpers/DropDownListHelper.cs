@@ -22,7 +22,7 @@ namespace MixERP.Net.BusinessLayer.Helpers
             {
                 return;
             }
-            
+
             using(DataTable table = MixERP.Net.BusinessLayer.Helpers.FormHelper.GetTable(schemaName, tableName))
             {
                 table.Columns.Add("text_field", typeof(string), displayField);
@@ -45,7 +45,7 @@ namespace MixERP.Net.BusinessLayer.Helpers
             {
                 return;
             }
-            
+
             table.Columns.Add("text_field", typeof(string), displayField);
 
             list.DataSource = table;
@@ -60,21 +60,22 @@ namespace MixERP.Net.BusinessLayer.Helpers
         /// <param name="dropDownList"></param>
         /// <param name="selectedValue">The value of the item in the list control to select</param>
         /// <returns>Returns true if the value exists in the list control, false otherwise</returns>
-        public static bool SetSelectedValue(DropDownList dropDownList, String selectedValue)
+        public static bool SetSelectedValue(ListControl dropDownList, String selectedValue)
         {
-            dropDownList.ClearSelection();
-
-            ListItem selectedListItem = dropDownList.Items.FindByValue(selectedValue);
-
-            if(selectedListItem != null)
+            if(dropDownList != null)
             {
-                selectedListItem.Selected = true;
-                return true;
+                dropDownList.ClearSelection();
+
+                ListItem selectedListItem = dropDownList.Items.FindByValue(selectedValue);
+
+                if(selectedListItem != null)
+                {
+                    selectedListItem.Selected = true;
+                    return true;
+                }
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
     }
 }

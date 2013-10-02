@@ -23,6 +23,7 @@ namespace MixERP.Net.FrontEnd.UserControls
     public partial class ReportControl : System.Web.UI.UserControl
     {
         private string reportPath;
+
         #region "Properties"
         public string Path { get; set; }
         public bool AutoInitialize { get; set; }
@@ -79,6 +80,7 @@ namespace MixERP.Net.FrontEnd.UserControls
             this.SetBodySection();
             this.SetGridViews();
             this.SetBottomSection();
+            this.InstallReport();
             this.CleanUp();
         }
 
@@ -114,7 +116,7 @@ namespace MixERP.Net.FrontEnd.UserControls
                 //under the current node, the variable "decimalFieldIndices" will have
                 //a value. If not, an empty string will be added to the collection.
                 this.DecimalFieldIndicesCollection.Add(decimalFieldIndices);
-            }        
+            }
         }
 
         private System.Collections.ObjectModel.Collection<int> RunningTotalTextColumnIndexCollection;
@@ -230,6 +232,7 @@ namespace MixERP.Net.FrontEnd.UserControls
             topSection = MixERP.Net.BusinessLayer.Reporting.ReportParser.ParseDataSource(topSection, this.DataTableCollection);
             TopSectionLiteral.Text = topSection;
         }
+
         private void SetBodySection()
         {
             string bodySection = XmlHelper.GetNodeText(reportPath, "/PesReport/Body/Content");
@@ -261,6 +264,7 @@ namespace MixERP.Net.FrontEnd.UserControls
 
             this.LoadGrid(string.Concat(indices));
         }
+
         private void LoadGrid(string indices)
         {
             foreach(string data in indices.Split(','))
@@ -292,7 +296,6 @@ namespace MixERP.Net.FrontEnd.UserControls
             }
 
         }
-
 
         #region "GridView Events"
         void GridView_DataBound(object sender, EventArgs e)
@@ -416,6 +419,15 @@ namespace MixERP.Net.FrontEnd.UserControls
         }
         #endregion
 
+        private void InstallReport()
+        {
+            if(this.IsValid())
+            {
+                string installationQuery = XmlHelper.GetNodeText(reportPath, "/PesReport/Install/Query");
+                MixERP.Net.BusinessLayer.Helpers.ReportHelper.InstallReport(installationQuery);
+            }
+        }
+
         private void CleanUp()
         {
             for(int i = 0; i < this.DataTableCollection.Count - 1; i++)
@@ -432,8 +444,6 @@ namespace MixERP.Net.FrontEnd.UserControls
 
             }
         }
-
     }
-
 }
 

@@ -172,9 +172,9 @@ http://mozilla.org/MPL/2.0/.
             DO
             $$
             BEGIN
-            IF NOT EXISTS(SELECT * FROM core.menus WHERE menu_code='SAR-SVSI') THEN
+            IF NOT EXISTS(SELECT * FROM core.menus WHERE menu_code='PUR-PVPI') THEN
             INSERT INTO core.menus(menu_text, url, menu_code, level, parent_menu_id)
-            SELECT 'View Sales Inovice', '/Reports/Sales.View.Sales.Invoice.xml', 'SAR-SVSI', 2, core.get_menu_id('SAR');
+            SELECT 'View Purchase Inovice', '/Reports/Purchase.View.Purchase.Invoice.xml', 'PUR-PVPI', 2, core.get_menu_id('PUR');
             END IF;
             END
             $$
