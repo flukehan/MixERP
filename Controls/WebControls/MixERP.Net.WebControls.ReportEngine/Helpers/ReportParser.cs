@@ -7,14 +7,15 @@ http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 
-namespace MixERP.Net.BusinessLayer.Reporting
+namespace MixERP.Net.WebControls.ReportEngine.Helpers
 {
-    public static class ReportParser
+    public class ReportParser
     {
         public static string ParseExpression(string expression)
         {
@@ -23,8 +24,8 @@ namespace MixERP.Net.BusinessLayer.Reporting
                 return string.Empty;
             }
 
-            //Todo:Parameterize LogoPath in web.config
-            expression = expression.Replace("{LogoPath}", MixERP.Net.Common.PageUtility.GetCurrentDomainName() + MixERP.Net.Common.PageUtility.ResolveUrl("~/Themes/purple/mixerp-logo-light.png"));
+            string logo = MixERP.Net.Common.Helpers.ConfigurationHelper.GetSectionKey("MixERPParameters", "LogoPath");
+            expression = expression.Replace("{LogoPath}", MixERP.Net.Common.PageUtility.GetCurrentDomainName() + MixERP.Net.Common.PageUtility.ResolveUrl(logo));
             expression = expression.Replace("{PrintDate}", System.DateTime.Now.ToString());
 
             foreach(var match in Regex.Matches(expression, "{.*?}"))
@@ -63,7 +64,7 @@ namespace MixERP.Net.BusinessLayer.Reporting
                 return null;
             }
 
-            
+
             foreach(var match in Regex.Matches(expression, "{.*?}"))
             {
                 string word = match.ToString();

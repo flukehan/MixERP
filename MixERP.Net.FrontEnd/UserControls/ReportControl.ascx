@@ -32,8 +32,8 @@ http://mozilla.org/MPL/2.0/.
 </div>
 
 <div id="report">
-    <mixerp:ReportHeader runat="server" />
-
+    <mixerp:ReportHeader ID="Header" runat="server" Path="~/Reports/Assets/Header.html" />
+   
     <h1>
         <asp:Literal ID="ReportTitleLiteral" runat="server" />
     </h1>

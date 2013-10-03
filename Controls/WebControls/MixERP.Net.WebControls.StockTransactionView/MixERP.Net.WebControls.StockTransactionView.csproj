@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Mix Open Foundation.snk" />
+    <None Include="MixERP.Net.WebControls.StockTransactionView.licenseheader" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

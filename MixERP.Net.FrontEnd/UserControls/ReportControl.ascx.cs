@@ -215,7 +215,7 @@ namespace MixERP.Net.FrontEnd.UserControls
         private void SetTitle()
         {
             string title = XmlHelper.GetNodeText(reportPath, "/PesReport/Title");
-            ReportTitleLiteral.Text = MixERP.Net.BusinessLayer.Reporting.ReportParser.ParseExpression(title);
+            ReportTitleLiteral.Text = MixERP.Net.WebControls.ReportEngine.Helpers.ReportParser.ParseExpression(title);
             ReportTitleHidden.Value = ReportTitleLiteral.Text;
 
             if(!string.IsNullOrWhiteSpace(ReportTitleLiteral.Text))
@@ -228,23 +228,23 @@ namespace MixERP.Net.FrontEnd.UserControls
         private void SetTopSection()
         {
             string topSection = XmlHelper.GetNodeText(reportPath, "/PesReport/TopSection");
-            topSection = MixERP.Net.BusinessLayer.Reporting.ReportParser.ParseExpression(topSection);
-            topSection = MixERP.Net.BusinessLayer.Reporting.ReportParser.ParseDataSource(topSection, this.DataTableCollection);
+            topSection = MixERP.Net.WebControls.ReportEngine.Helpers.ReportParser.ParseExpression(topSection);
+            topSection = MixERP.Net.WebControls.ReportEngine.Helpers.ReportParser.ParseDataSource(topSection, this.DataTableCollection);
             TopSectionLiteral.Text = topSection;
         }
 
         private void SetBodySection()
         {
             string bodySection = XmlHelper.GetNodeText(reportPath, "/PesReport/Body/Content");
-            bodySection = MixERP.Net.BusinessLayer.Reporting.ReportParser.ParseExpression(bodySection);
-            bodySection = MixERP.Net.BusinessLayer.Reporting.ReportParser.ParseDataSource(bodySection, this.DataTableCollection);
+            bodySection = MixERP.Net.WebControls.ReportEngine.Helpers.ReportParser.ParseExpression(bodySection);
+            bodySection = MixERP.Net.WebControls.ReportEngine.Helpers.ReportParser.ParseDataSource(bodySection, this.DataTableCollection);
             ContentLiteral.Text = bodySection;
         }
         private void SetBottomSection()
         {
             string bottomSection = XmlHelper.GetNodeText(reportPath, "/PesReport/BottomSection");
-            bottomSection = MixERP.Net.BusinessLayer.Reporting.ReportParser.ParseExpression(bottomSection);
-            bottomSection = MixERP.Net.BusinessLayer.Reporting.ReportParser.ParseDataSource(bottomSection, this.DataTableCollection);
+            bottomSection = MixERP.Net.WebControls.ReportEngine.Helpers.ReportParser.ParseExpression(bottomSection);
+            bottomSection = MixERP.Net.WebControls.ReportEngine.Helpers.ReportParser.ParseDataSource(bottomSection, this.DataTableCollection);
             BottomSectionLiteral.Text = bottomSection;
         }
         #endregion

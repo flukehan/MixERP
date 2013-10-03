@@ -939,13 +939,6 @@
     <Compile Include="UserControls\ReportControl.ascx.designer.cs">
       <DependentUpon>ReportControl.ascx</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Reporting\Header.ascx.cs">
-      <DependentUpon>Header.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserControls\Reporting\Header.ascx.designer.cs">
-      <DependentUpon>Header.ascx</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\TransactionChecklistControl.ascx.cs">
       <DependentUpon>TransactionChecklistControl.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1533,7 +1526,6 @@
     <Content Include="UserControls\Products\ProductControl.ascx" />
     <Content Include="UserControls\Products\ProductViewControl.ascx" />
     <Content Include="UserControls\ReportControl.ascx" />
-    <Content Include="UserControls\Reporting\Header.ascx" />
     <Content Include="UserControls\TransactionChecklistControl.ascx" />
     <Content Include="UserControls\Widgets\AlertsWidget.ascx" />
     <Content Include="UserControls\Widgets\CurrentOfficeSalesByMonthWidget.ascx" />
@@ -1572,6 +1564,10 @@
     <ProjectReference Include="..\Controls\WebControls\MixERP.Net.WebControls.Common\MixERP.Net.WebControls.Common.csproj">
       <Project>{2d961540-6597-4e7b-969c-974d71d820dd}</Project>
       <Name>MixERP.Net.WebControls.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Controls\WebControls\MixERP.Net.WebControls.ReportEngine\MixERP.Net.WebControls.ReportEngine.csproj">
+      <Project>{81f04b78-6194-4f86-a795-5f186c602eee}</Project>
+      <Name>MixERP.Net.WebControls.ReportEngine</Name>
     </ProjectReference>
     <ProjectReference Include="..\MixERP.Net.BusinessLayer\MixERP.Net.BusinessLayer.csproj">
       <Project>{81de04cf-7de9-42ff-8339-d05e2586dcba}</Project>

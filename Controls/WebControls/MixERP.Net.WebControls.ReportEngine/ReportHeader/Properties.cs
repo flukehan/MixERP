@@ -11,10 +11,22 @@ using System.Linq;
 using System.Text;
 using System.Web.UI.WebControls;
 
-namespace MixERP.Net.WebControls.Common
+namespace MixERP.Net.WebControls.ReportEngine
 {
-    public partial class DateTextBox : CompositeControl
+    public partial class ReportHeader : CompositeControl
     {
-
+        private string path;
+        public string Path 
+        {
+            get
+            {
+                return this.path;
+            }
+            set
+            {
+                this.path = value;
+                EnsureChildControls();           
+            }
+        }
     }
 }

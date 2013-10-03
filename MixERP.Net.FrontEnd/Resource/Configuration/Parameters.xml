@@ -9,6 +9,7 @@ http://mozilla.org/MPL/2.0/.
 -->
 
 <MixERPParameters>
+    <add key="LogoPath" value="~/Themes/purple/mixerp-logo-light.png" />
     <add key="PartyName" value="FirstName MiddleName LastName" />
     <add key="ShortDateFormat" value="d/M/yyyy" />
     <add key="LongDateFormat" value="d/M/yyyy HH:mm:ss" />
