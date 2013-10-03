@@ -45,7 +45,7 @@ http://mozilla.org/MPL/2.0/.
                         </tr>
                         <tr>
                             <td>
-                                <mixerp:DateTextBox ID="ValueDateTextBox" runat="server" Width="100" CssClass="date" />
+                                <mixerp:DateTextBox ID="ValueDateTextBox" runat="server" Width="100" CssClass="date" />                                
                             </td>
                             <td>
                                 <asp:TextBox ID="ReferenceNumberTextBox" runat="server" Width="100" />

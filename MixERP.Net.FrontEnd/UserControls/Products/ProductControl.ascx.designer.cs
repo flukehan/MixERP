@@ -127,7 +127,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::MixERP.Net.FrontEnd.UserControls.DateTextBox DateTextBox;
+        protected global::MixERP.Net.WebControls.Common.DateTextBox DateTextBox;
         
         /// <summary>
         /// StoreDropDownList control.

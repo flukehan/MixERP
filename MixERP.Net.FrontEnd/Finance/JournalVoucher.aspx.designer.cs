@@ -73,7 +73,7 @@ namespace MixERP.Net.FrontEnd.Finance {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::MixERP.Net.FrontEnd.UserControls.DateTextBox ValueDateTextBox;
+        protected global::MixERP.Net.WebControls.Common.DateTextBox ValueDateTextBox;
         
         /// <summary>
         /// ReferenceNumberTextBox control.

@@ -29,7 +29,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>GlobalizationRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\MixERP.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -911,13 +911,6 @@
     <Compile Include="UserControls\CurrencyExtender.ascx.designer.cs">
       <DependentUpon>CurrencyExtender.ascx</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\DateTextBox.ascx.cs">
-      <DependentUpon>DateTextBox.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserControls\DateTextBox.ascx.designer.cs">
-      <DependentUpon>DateTextBox.ascx</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\Forms\FormControl.ascx.cs">
       <DependentUpon>FormControl.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1515,7 +1508,6 @@
     <Content Include="Themes\purple\padding.css" />
     <Content Include="Themes\purple\mixerp-logo.png" />
     <Content Include="UserControls\CurrencyExtender.ascx" />
-    <Content Include="UserControls\DateTextBox.ascx" />
     <Content Include="UserControls\Forms\FormControl.ascx" />
   </ItemGroup>
   <ItemGroup>
@@ -1577,6 +1569,10 @@
     <Folder Include="Setup\General\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Controls\WebControls\MixERP.Net.WebControls.Common\MixERP.Net.WebControls.Common.csproj">
+      <Project>{2d961540-6597-4e7b-969c-974d71d820dd}</Project>
+      <Name>MixERP.Net.WebControls.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MixERP.Net.BusinessLayer\MixERP.Net.BusinessLayer.csproj">
       <Project>{81de04cf-7de9-42ff-8339-d05e2586dcba}</Project>
       <Name>MixERP.Net.BusinessLayer</Name>

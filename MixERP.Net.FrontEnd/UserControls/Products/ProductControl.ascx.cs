@@ -14,6 +14,8 @@ using System.Web.UI.WebControls;
 namespace MixERP.Net.FrontEnd.UserControls.Products
 {
     /// <summary>
+    /// Todo: Move this control to a separate project.
+    /// Todo: Refactor the code to return values instead of controls.
     /// Stay warned, this is very very big class and maybe complex as well and needs improvements.
     /// This UserControl provides a common interface for all transactions that are related to
     /// stock and/or inventory. Everything is handled in this class, except for the Save event.
@@ -74,7 +76,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         /// </summary>
         public class ControlCollection
         {
-            public MixERP.Net.FrontEnd.UserControls.DateTextBox DateTextBox { get; set; }
+            public MixERP.Net.WebControls.Common.DateTextBox DateTextBox { get; set; }
             public DropDownList StoreDropDownList { get; set; }
             public RadioButtonList TransactionTypeRadioButtonList { get; set; }
             public TextBox PartyCodeTextBox { get; set; }

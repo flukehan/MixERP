@@ -20,6 +20,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Forms
 {
     public partial class FormControl : System.Web.UI.UserControl
     {
+        //Todo: Move this control to a separate project.
         private string imageColumn = string.Empty;
 
         #region Properties

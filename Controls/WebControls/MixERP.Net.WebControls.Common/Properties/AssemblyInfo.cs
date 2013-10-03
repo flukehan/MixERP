@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MixERP.Net.WebControls.DateTextBox")]
+[assembly: AssemblyTitle("MixERP.Net.WebControls.Common")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MixERP.Net.WebControls.DateTextBox")]
+[assembly: AssemblyProduct("MixERP.Net.WebControls.Common")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("7ca616da-cf57-4109-9e49-eb55a37b03b6")]
+[assembly: Guid("d9117984-e48a-4256-954e-59b16dd1b994")]
 
 // Version information for an assembly consists of the following four values:
 //

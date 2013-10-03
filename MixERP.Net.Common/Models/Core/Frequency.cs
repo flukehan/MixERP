@@ -10,7 +10,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MixERP.Net.BusinessLayer.Core
+namespace MixERP.Net.Common.Models.Core
 {
-
+    public enum Frequency
+    {
+        Today,
+        MonthStartDate,
+        MonthEndDate,
+        QuarterStartDate,
+        QuarterEndDate,
+        HalfStartDate,
+        HalfEndDate,
+        FiscalYearStartDate,
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "YearEnd")]
+        FiscalYearEndDate
+    }
 }

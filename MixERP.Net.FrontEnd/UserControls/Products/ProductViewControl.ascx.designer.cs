@@ -91,7 +91,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::MixERP.Net.FrontEnd.UserControls.DateTextBox DateFromDateTextBox;
+        protected global::MixERP.Net.WebControls.Common.DateTextBox DateFromDateTextBox;
         
         /// <summary>
         /// DateToDateTextBox control.
@@ -100,7 +100,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::MixERP.Net.FrontEnd.UserControls.DateTextBox DateToDateTextBox;
+        protected global::MixERP.Net.WebControls.Common.DateTextBox DateToDateTextBox;
         
         /// <summary>
         /// OfficeTextBox control.
