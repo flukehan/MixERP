@@ -5,7 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 --%>
-<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="TopSellingProductOfAllTimetWidget.ascx.cs" Inherits="MixERP.Net.FrontEnd.UserControls.Widgets.TopSellingProductOfAllTimetWidget" %>
+<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="TopSellingProductOfAllTimeWidget.ascx.cs" Inherits="MixERP.Net.FrontEnd.UserControls.Widgets.TopSellingProductOfAllTimeWidget" %>
 <div class="panel double-panel">
     <div class="panel-title">
         Top 5 Selling Products of All Time(Todo: Same)

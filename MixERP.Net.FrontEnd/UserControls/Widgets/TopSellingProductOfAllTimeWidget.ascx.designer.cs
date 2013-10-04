@@ -10,6 +10,6 @@
 namespace MixERP.Net.FrontEnd.UserControls.Widgets {
     
     
-    public partial class TopSellingProductOfAllTimetWidget {
+    public partial class TopSellingProductOfAllTimeWidget {
     }
 }

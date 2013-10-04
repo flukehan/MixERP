@@ -11,6 +11,15 @@ http://mozilla.org/MPL/2.0/.
 	TODO LIST : NEED TO CREATE INDEXES.
 ***********************************************************************************/
 
+DO 
+$$
+BEGIN
+   EXECUTE 'ALTER DATABASE ' || current_database() || ' SET timezone TO ''UTC''';
+END;
+$$
+LANGUAGE plpgsql;
+
+
 DROP SCHEMA IF EXISTS audit CASCADE;
 DROP SCHEMA IF EXISTS core CASCADE;
 DROP SCHEMA IF EXISTS office CASCADE;
@@ -19,6 +28,7 @@ DROP SCHEMA IF EXISTS transactions CASCADE;
 DROP SCHEMA IF EXISTS crm CASCADE;
 DROP SCHEMA IF EXISTS mrp CASCADE;
 
+
 CREATE SCHEMA audit;
 CREATE SCHEMA core;
 CREATE SCHEMA office;
@@ -26,6 +36,94 @@ CREATE SCHEMA policy;
 CREATE SCHEMA transactions;
 CREATE SCHEMA crm;
 CREATE SCHEMA mrp;
+
+DO
+$$
+BEGIN
+	IF NOT EXISTS (SELECT * FROM pg_catalog.pg_user WHERE  usename = 'mix_erp') THEN
+		CREATE ROLE mix_erp WITH LOGIN PASSWORD 'change-on-deloyment';
+	END IF;
+
+
+	GRANT USAGE ON SCHEMA audit TO mix_erp;
+	GRANT USAGE ON SCHEMA core TO mix_erp;
+	GRANT USAGE ON SCHEMA office TO mix_erp;
+	GRANT USAGE ON SCHEMA policy TO mix_erp;
+	GRANT USAGE ON SCHEMA transactions TO mix_erp;
+	GRANT USAGE ON SCHEMA crm TO mix_erp;
+	GRANT USAGE ON SCHEMA mrp TO mix_erp;
+
+
+	ALTER DEFAULT PRIVILEGES IN SCHEMA audit GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA core GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA office GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA policy GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA transactions GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA crm GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA mrp GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
+
+	ALTER DEFAULT PRIVILEGES IN SCHEMA audit GRANT ALL ON SEQUENCES TO mix_erp;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA core GRANT ALL ON SEQUENCES TO mix_erp;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA office GRANT ALL ON SEQUENCES TO mix_erp;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA policy GRANT ALL ON SEQUENCES TO mix_erp;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA transactions GRANT ALL ON SEQUENCES TO mix_erp;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA crm GRANT ALL ON SEQUENCES TO mix_erp;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA mrp GRANT ALL ON SEQUENCES TO mix_erp;
+
+
+
+
+	ALTER DEFAULT PRIVILEGES IN SCHEMA audit GRANT EXECUTE ON FUNCTIONS TO mix_erp;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA core GRANT EXECUTE ON FUNCTIONS TO mix_erp;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA office GRANT EXECUTE ON FUNCTIONS TO mix_erp;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA policy GRANT EXECUTE ON FUNCTIONS TO mix_erp;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA transactions GRANT EXECUTE ON FUNCTIONS TO mix_erp;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA crm GRANT EXECUTE ON FUNCTIONS TO mix_erp;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA mrp GRANT EXECUTE ON FUNCTIONS TO mix_erp;
+   
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+
+DO
+$$
+BEGIN
+	IF NOT EXISTS (SELECT * FROM pg_catalog.pg_user WHERE  usename = 'report_user') THEN
+		CREATE ROLE report_user WITH LOGIN PASSWORD 'change-on-deloyment';
+	END IF;
+
+	GRANT USAGE ON SCHEMA audit TO report_user;
+	GRANT USAGE ON SCHEMA core TO report_user;
+	GRANT USAGE ON SCHEMA office TO report_user;
+	GRANT USAGE ON SCHEMA policy TO report_user;
+	GRANT USAGE ON SCHEMA transactions TO report_user;
+	GRANT USAGE ON SCHEMA crm TO report_user;
+	GRANT USAGE ON SCHEMA mrp TO report_user;
+
+	ALTER DEFAULT PRIVILEGES IN SCHEMA audit GRANT SELECT ON TABLES TO report_user;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA core GRANT SELECT ON TABLES TO report_user;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA office GRANT SELECT ON TABLES TO report_user;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA policy GRANT SELECT ON TABLES TO report_user;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA transactions GRANT SELECT ON TABLES TO report_user;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA crm GRANT SELECT ON TABLES TO report_user;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA mrp GRANT SELECT ON TABLES TO report_user;
+
+
+	ALTER DEFAULT PRIVILEGES IN SCHEMA audit GRANT EXECUTE ON FUNCTIONS TO report_user;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA core GRANT EXECUTE ON FUNCTIONS TO report_user;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA office GRANT EXECUTE ON FUNCTIONS TO report_user;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA policy GRANT EXECUTE ON FUNCTIONS TO report_user;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA transactions GRANT EXECUTE ON FUNCTIONS TO report_user;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA crm GRANT EXECUTE ON FUNCTIONS TO report_user;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA mrp GRANT EXECUTE ON FUNCTIONS TO report_user;
+END
+$$
+LANGUAGE plpgsql;
+
+
 
 
 CREATE TABLE core.verification_statuses
@@ -124,7 +222,7 @@ CHECK
 DROP VIEW IF EXISTS db_stat;
 CREATE VIEW db_stat
 AS
-select
+SELECT
 	relname,
 	last_vacuum,
 	last_autovacuum,
@@ -134,7 +232,7 @@ select
 	autovacuum_count,
 	analyze_count,
 	autoanalyze_count
-from
+FROM
    pg_stat_user_tables;
 
 DROP DOMAIN IF EXISTS decimal_strict2;
@@ -149,6 +247,9 @@ DROP DOMAIN IF EXISTS image_path;
 CREATE DOMAIN image_path
 AS text;
 
+DROP DOMAIN IF EXISTS color;
+CREATE DOMAIN color
+AS text;
 
 
 CREATE TABLE office.users
@@ -162,6 +263,101 @@ CREATE TABLE office.users
 	audit_user_id				integer NULL REFERENCES office.users(user_id),
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
+
+CREATE TABLE core.flag_types
+(
+	flag_type_id				SERIAL NOT NULL PRIMARY KEY,
+	flag_type_name				national character varying(24) NOT NULL,
+	flag_color				color NOT NULL,
+	audit_user_id				integer NULL REFERENCES office.users(user_id),
+	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+);
+
+INSERT INTO core.flag_types(flag_type_name, flag_color)
+SELECT 'Critical', 		'#FC8A68' UNION ALL
+SELECT 'Important',		'#FAD5AA' UNION ALL
+SELECT 'Review', 		'#F2E4F7' UNION ALL
+SELECT 'Todo', 			'#CDF2FA' UNION ALL
+SELECT 'OK', 			'#D7E868';
+
+CREATE TABLE core.flags
+(
+	flag_id					BIGSERIAL NOT NULL PRIMARY KEY,
+	user_id					integer NOT NULL REFERENCES office.users(user_id),
+	flag_type_id				integer NOT NULL REFERENCES core.flag_types(flag_type_id),
+	resource				text, --Fully qualified repository name. Example: crm.lead_sources.
+	resource_id				text --The unique idenfier for lookup. Example: lead_source_id.
+);
+
+CREATE UNIQUE INDEX flags_user_id_resource_resource_id_uix
+ON core.flags(user_id, UPPER(resource), UPPER(resource_id));
+
+CREATE FUNCTION core.get_flag_type_id
+(
+	user_id_ integer,
+	resource_ text,
+	resource_id_ text
+)
+RETURNS integer
+AS
+$$
+BEGIN
+	RETURN 
+	(
+		SELECT flag_type_id
+		FROM core.flags
+		WHERE user_id=$1
+		AND resource=$2
+		AND resource_id=$3
+	);
+END
+$$
+LANGUAGE plpgsql;
+
+CREATE FUNCTION core.get_flag_type_id
+(
+	user_id_ integer,
+	resource_ text,
+	resource_id_ bigint
+)
+RETURNS integer
+AS
+$$
+BEGIN
+	RETURN core.get_flag_type_id($1, $2, $3::text);
+END
+$$
+LANGUAGE plpgsql;
+
+CREATE FUNCTION core.get_flag_type_id
+(
+	user_id_ integer,
+	resource_ text,
+	resource_id_ integer
+)
+RETURNS integer
+AS
+$$
+BEGIN
+	RETURN core.get_flag_type_id($1, $2, $3::text);
+END
+$$
+LANGUAGE plpgsql;
+
+CREATE FUNCTION core.get_flag_color(flag_type_id_ integer)
+RETURNS text
+AS
+$$
+BEGIN
+	RETURN
+	(
+		SELECT flag_color
+		FROM core.flag_types
+		WHERE core.flag_types.flag_type_id=$1
+	);
+END
+$$
+LANGUAGE plpgsql;
 
 CREATE TABLE core.currencies
 (
@@ -877,6 +1073,10 @@ UNION ALL SELECT 'Setup & Maintenance', NULL, 'CSM', 1, core.get_menu_id('CRM')
 UNION ALL SELECT 'Lead Sources Setup', '/CRM/Setup/LeadSources.aspx', 'CRMLS', 2, core.get_menu_id('CSM')
 UNION ALL SELECT 'Lead Status Setup', '/CRM/Setup/LeadStatuses.aspx', 'CRMLST', 2, core.get_menu_id('CSM')
 UNION ALL SELECT 'Opportunity Stages Setup', '/CRM/Setup/OpportunityStages.aspx', 'CRMOS', 2, core.get_menu_id('CSM')
+UNION ALL SELECT 'Miscellaneous Parameters', NULL, 'SMP', 1, core.get_menu_id('SE')
+UNION ALL SELECT 'Flags', '/Setup/Flags.aspx', 'TRF', 2, core.get_menu_id('SMP')
+UNION ALL SELECT 'Audit Reports', NULL, 'SEAR', 1, core.get_menu_id('SE')
+UNION ALL SELECT 'Login View', '/Reports/Office.Login.xml', 'SEAR-LV', 2, core.get_menu_id('SEAR')
 UNION ALL SELECT 'Office Setup', NULL, 'SOS', 1, core.get_menu_id('SE')
 UNION ALL SELECT 'Office & Branch Setup', '/Setup/Offices.aspx', 'SOB', 2, core.get_menu_id('SOS')
 UNION ALL SELECT 'Department Setup', '/Setup/Departments.aspx', 'SDS', 2, core.get_menu_id('SOS')
@@ -3254,7 +3454,7 @@ CREATE TABLE transactions.non_gl_stock_master
 
 CREATE TABLE transactions.non_gl_stock_details
 (
-	non_gl_stock_details_id 		BIGSERIAL NOT NULL PRIMARY KEY,
+	non_gl_stock_detail_id 			BIGSERIAL NOT NULL PRIMARY KEY,
 	non_gl_stock_master_id 			bigint NOT NULL REFERENCES transactions.non_gl_stock_master(non_gl_stock_master_id),
 	item_id 				integer NOT NULL REFERENCES core.items(item_id),
 	quantity 				integer NOT NULL,
@@ -3267,6 +3467,25 @@ CREATE TABLE transactions.non_gl_stock_details
 	tax 					money NOT NULL CONSTRAINT non_gl_stock_details_tax_df DEFAULT(0),
 	audit_user_id				integer NULL REFERENCES office.users(user_id),
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+);
+
+--This table stores information of quotations
+--which were upgraded to order(s).
+CREATE TABLE transactions.non_gl_stock_master_relations
+(
+	stock_master_non_gl_relation_id		BIGSERIAL NOT NULL PRIMARY KEY,	
+	order_non_gl_stock_master_id		bigint NOT NULL REFERENCES transactions.non_gl_stock_master(non_gl_stock_master_id),
+	quotation_non_gl_stock_master_id	bigint NOT NULL REFERENCES transactions.stock_master(stock_master_id)
+);
+
+
+--This table stores information of Non GL Stock Transactions such as orders and quotations
+--which were upgraded to deliveries or invoices.
+CREATE TABLE transactions.stock_master_non_gl_relations
+(
+	stock_master_non_gl_relation_id		BIGSERIAL NOT NULL PRIMARY KEY,	
+	stock_master_id				bigint NOT NULL REFERENCES transactions.stock_master(stock_master_id),
+	non_gl_stock_master_id			bigint NOT NULL REFERENCES transactions.non_gl_stock_master(non_gl_stock_master_id)
 );
 
 

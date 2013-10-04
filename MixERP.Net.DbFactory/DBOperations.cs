@@ -58,11 +58,11 @@ namespace MixERP.Net.DBFactory
             return null;
         }
 
-        public static DataTable GetDataTable(Npgsql.NpgsqlCommand command)
+        public static DataTable GetDataTable(Npgsql.NpgsqlCommand command, string connectionString)
         {
             if(command != null)
             {
-                using(Npgsql.NpgsqlConnection connection = new Npgsql.NpgsqlConnection(MixERP.Net.DBFactory.DBConnection.ConnectionString()))
+                using(Npgsql.NpgsqlConnection connection = new Npgsql.NpgsqlConnection(connectionString))
                 {
                     command.Connection = connection;
                     command.CommandTimeout = 300;
@@ -81,6 +81,13 @@ namespace MixERP.Net.DBFactory
 
             return null;
         }
+
+        public static DataTable GetDataTable(Npgsql.NpgsqlCommand command)
+        {
+            return GetDataTable(command, MixERP.Net.DBFactory.DBConnection.ConnectionString());
+        }
+
+
 
         public static Npgsql.NpgsqlDataReader GetDataReader(Npgsql.NpgsqlCommand command)
         {

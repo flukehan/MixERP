@@ -981,12 +981,12 @@
     <Compile Include="UserControls\Widgets\TopSellingProductOfAllTimeCurrentWidget.ascx.designer.cs">
       <DependentUpon>TopSellingProductOfAllTimeCurrentWidget.ascx</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Widgets\TopSellingProductOfAllTimetWidget.ascx.cs">
-      <DependentUpon>TopSellingProductOfAllTimetWidget.ascx</DependentUpon>
+    <Compile Include="UserControls\Widgets\TopSellingProductOfAllTimeWidget.ascx.cs">
+      <DependentUpon>TopSellingProductOfAllTimeWidget.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="UserControls\Widgets\TopSellingProductOfAllTimetWidget.ascx.designer.cs">
-      <DependentUpon>TopSellingProductOfAllTimetWidget.ascx</DependentUpon>
+    <Compile Include="UserControls\Widgets\TopSellingProductOfAllTimeWidget.ascx.designer.cs">
+      <DependentUpon>TopSellingProductOfAllTimeWidget.ascx</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Widgets\WorkflowWidget.ascx.cs">
       <DependentUpon>WorkflowWidget.ascx</DependentUpon>
@@ -1526,7 +1526,7 @@
     <Content Include="UserControls\Widgets\OfficeInformationWidget.ascx" />
     <Content Include="UserControls\Widgets\SalesByOfficeWidget.ascx" />
     <Content Include="UserControls\Widgets\TopSellingProductOfAllTimeCurrentWidget.ascx" />
-    <Content Include="UserControls\Widgets\TopSellingProductOfAllTimetWidget.ascx" />
+    <Content Include="UserControls\Widgets\TopSellingProductOfAllTimeWidget.ascx" />
     <Content Include="UserControls\Widgets\WorkflowWidget.ascx" />
     <Content Include="Web.config" />
     <Content Include="MixERP.Net.FrontEnd.licenseheader" />

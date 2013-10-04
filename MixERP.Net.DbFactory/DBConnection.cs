@@ -11,6 +11,7 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using MixERP.Net.Common;
+using Npgsql;
 
 namespace MixERP.Net.DBFactory
 {
@@ -18,11 +19,11 @@ namespace MixERP.Net.DBFactory
     {
         public static string ConnectionString()
         {
-            Npgsql.NpgsqlConnectionStringBuilder connectionStringBuilder = new Npgsql.NpgsqlConnectionStringBuilder();
-            connectionStringBuilder.Host = Conversion.TryCastString(ConfigurationManager.AppSettings["Server"]);
-            connectionStringBuilder.Database = Conversion.TryCastString(ConfigurationManager.AppSettings["Database"]);
-            connectionStringBuilder.UserName = Conversion.TryCastString(ConfigurationManager.AppSettings["UserId"]);
-            connectionStringBuilder.Password = Conversion.TryCastString(ConfigurationManager.AppSettings["Password"]);
+            NpgsqlConnectionStringBuilder connectionStringBuilder = new NpgsqlConnectionStringBuilder();
+            connectionStringBuilder.Host = ConfigurationManager.AppSettings["Server"];
+            connectionStringBuilder.Database = ConfigurationManager.AppSettings["Database"];
+            connectionStringBuilder.UserName = ConfigurationManager.AppSettings["UserId"];
+            connectionStringBuilder.Password = ConfigurationManager.AppSettings["Password"];
 
             return connectionStringBuilder.ConnectionString;
         }

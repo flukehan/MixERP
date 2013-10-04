@@ -1,4 +1,5 @@
-﻿/********************************************************************************
+﻿
+/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
 This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
@@ -24,6 +25,7 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
 
             Collection<Collection<KeyValuePair<string, string>>> collection = new Collection<Collection<KeyValuePair<string, string>>>();
             Collection<KeyValuePair<string, string>> parameters = new Collection<KeyValuePair<string, string>>();
+            
             System.Xml.XmlNodeList dataSources = XmlHelper.GetNodes(reportPath, "//DataSource");
 
             foreach(System.Xml.XmlNode datasource in dataSources)

@@ -48,6 +48,7 @@
       <HintPath>..\..\..\..\New folder\Dependencies\Npgsql\policy.2.0.Npgsql.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -56,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Connection\DBConnection.cs" />
     <Compile Include="Installer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TableHelper.cs" />
@@ -64,6 +66,10 @@
     <None Include="Mix Open Foundation.snk" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\MixERP.net.Common\MixERP.Net.Common.csproj">
+      <Project>{d5a09c22-8f48-4fb2-a14d-c62c8c8fcec0}</Project>
+      <Name>MixERP.Net.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\MixERP.Net.DbFactory\MixERP.Net.DbFactory.csproj">
       <Project>{8fd9661c-2473-4581-8722-18b08d4db252}</Project>
       <Name>MixERP.Net.DbFactory</Name>

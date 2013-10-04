@@ -247,25 +247,24 @@ namespace MixERP.Net.WebControls.ReportEngine
 
                 if(!string.IsNullOrWhiteSpace(ds))
                 {
-                    //if(!ds.Contains(' '))
-                    //{
                     int index = MixERP.Net.Common.Conversion.TryCastInteger(ds);
 
-                    GridView grid = new GridView();
-                    grid.EnableTheming = false;
+                    using(GridView grid = new GridView())
+                    {
+                        grid.EnableTheming = false;
 
-                    grid.ID = "GridView" + ds;
-                    grid.CssClass = "report";
+                        grid.ID = "GridView" + ds;
+                        grid.CssClass = "report";
 
-                    grid.Width = Unit.Percentage(100);
-                    grid.GridLines = GridLines.Both;
-                    grid.RowDataBound += GridView_RowDataBound;
-                    grid.DataBound += GridView_DataBound;
-                    gridPlaceHolder.Controls.Add(grid);
+                        grid.Width = Unit.Percentage(100);
+                        grid.GridLines = GridLines.Both;
+                        grid.RowDataBound += GridView_RowDataBound;
+                        grid.DataBound += GridView_DataBound;
+                        gridPlaceHolder.Controls.Add(grid);
 
-                    grid.DataSource = this.DataTableCollection[index];
-                    grid.DataBind();
-                    //}
+                        grid.DataSource = this.DataTableCollection[index];
+                        grid.DataBind();
+                    }
                 }
             }
 
@@ -312,6 +311,7 @@ namespace MixERP.Net.WebControls.ReportEngine
                 if(table != null)
                 {
                     table.Dispose();
+
                     if(table != null)
                     {
                         table = null;

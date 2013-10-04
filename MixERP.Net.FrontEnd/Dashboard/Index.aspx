@@ -62,7 +62,7 @@ http://mozilla.org/MPL/2.0/.
                     <mixerp:LinksWidget runat="server" />
                 </li>
                 <li data-row="3" data-col="1" data-sizex="4" data-sizey="2" class="gs_w">
-                    <mixerp:TopSellingProductOfAllTimetWidget runat="server" />
+                    <mixerp:TopSellingProductOfAllTimeWidget runat="server" />
                 </li>
                 <li data-row="3" data-col="2" data-sizex="4" data-sizey="2" class="gs_w">
                     <mixerp:TopSellingProductOfAllTimeCurrentWidget runat="server" />

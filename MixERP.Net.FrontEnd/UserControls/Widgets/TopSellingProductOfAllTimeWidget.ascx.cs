@@ -14,7 +14,7 @@ using System.Web.UI.WebControls;
 
 namespace MixERP.Net.FrontEnd.UserControls.Widgets
 {
-    public partial class TopSellingProductOfAllTimetWidget : System.Web.UI.UserControl
+    public partial class TopSellingProductOfAllTimeWidget : System.Web.UI.UserControl
     {
         protected void Page_Load(object sender, EventArgs e)
         {
