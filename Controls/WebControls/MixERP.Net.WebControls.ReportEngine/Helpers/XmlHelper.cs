@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 
-namespace MixERP.Net.BusinessLayer.Helpers
+namespace MixERP.Net.WebControls.ReportEngine.Helpers
 {
     public static class XmlHelper
     {
@@ -29,5 +29,11 @@ namespace MixERP.Net.BusinessLayer.Helpers
             return doc.SelectSingleNode(name).InnerXml;
         }
 
+        public static XmlNode GetNode(string path, string name)
+        {
+            System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
+            doc.Load(path);
+            return doc.SelectSingleNode(name);
+        }
     }
 }

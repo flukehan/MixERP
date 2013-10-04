@@ -77,10 +77,8 @@
     <Compile Include="Helpers\GridviewHelper.cs" />
     <Compile Include="Helpers\Maintenance.cs" />
     <Compile Include="Helpers\MenuHelper.cs" />
-    <Compile Include="Helpers\ReportHelper.cs" />
     <Compile Include="Helpers\SessionHelper.cs" />
     <Compile Include="Helpers\TableHelper.cs" />
-    <Compile Include="Helpers\XmlHelper.cs" />
     <Compile Include="Office\CashRepositories.cs" />
     <Compile Include="Office\CostCenters.cs" />
     <Compile Include="Office\Offices.cs" />

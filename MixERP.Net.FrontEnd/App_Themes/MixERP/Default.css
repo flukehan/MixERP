@@ -166,6 +166,10 @@ table.horizontal > tbody > tr > td:first-child
         background-color: #F2DAFA;
     }
 
+    .report-command a img
+    {
+        padding:2px;
+    }
 @media print
 {
     .hide

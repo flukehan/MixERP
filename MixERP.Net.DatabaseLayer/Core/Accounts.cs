@@ -22,7 +22,7 @@ namespace MixERP.Net.DatabaseLayer.Core
             {
                 command.Parameters.AddWithValue("@AccountId", accountId);
 
-                return MixERP.Net.DatabaseLayer.DBFactory.DBOperations.GetDataTable(command).Rows.Count.Equals(1);
+                return MixERP.Net.DBFactory.DBOperations.GetDataTable(command).Rows.Count.Equals(1);
             }
         }
 
@@ -33,7 +33,7 @@ namespace MixERP.Net.DatabaseLayer.Core
             {
                 command.Parameters.AddWithValue("@AccountCode", accountCode);
 
-                return MixERP.Net.DatabaseLayer.DBFactory.DBOperations.GetDataTable(command).Rows.Count.Equals(1);
+                return MixERP.Net.DBFactory.DBOperations.GetDataTable(command).Rows.Count.Equals(1);
             }
         }
     }

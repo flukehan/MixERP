@@ -33,7 +33,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
                 sql = sql.Replace("@Offset", MixERP.Net.Common.Conversion.TryCastString(offset));
                 command.CommandText = sql;
 
-                return MixERP.Net.DatabaseLayer.DBFactory.DBOperations.GetDataTable(command);
+                return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
             }
         }
 
@@ -46,7 +46,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
                 sql = sql.Replace("@TableName", DBFactory.Sanitizer.SanitizeIdentifierName(tableName));
                 command.CommandText = sql;
 
-                return MixERP.Net.DatabaseLayer.DBFactory.DBOperations.GetDataTable(command);
+                return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
             }
         }
 
@@ -103,7 +103,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
                 }
 
 
-                return MixERP.Net.DatabaseLayer.DBFactory.DBOperations.GetDataTable(command);
+                return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
             }
         }
 
@@ -172,7 +172,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
 
                 command.Parameters.AddWithValue("@Limit", limit);
 
-                return MixERP.Net.DatabaseLayer.DBFactory.DBOperations.GetDataTable(command);
+                return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
             }
         }
 
@@ -187,7 +187,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
 
                 command.CommandText = sql;
 
-                return MixERP.Net.Common.Conversion.TryCastInteger(MixERP.Net.DatabaseLayer.DBFactory.DBOperations.GetScalarValue(command));
+                return MixERP.Net.Common.Conversion.TryCastInteger(MixERP.Net.DBFactory.DBOperations.GetScalarValue(command));
             }
         }
 
@@ -256,7 +256,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
 
                 command.Parameters.AddWithValue("@AuditUserId", userId);
 
-                return MixERP.Net.DatabaseLayer.DBFactory.DBOperations.ExecuteNonQuery(command);
+                return MixERP.Net.DBFactory.DBOperations.ExecuteNonQuery(command);
             }
         }
 
@@ -328,7 +328,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
 
                 command.Parameters.AddWithValue("@KeyValue", keyColumnValue);
 
-                return MixERP.Net.DatabaseLayer.DBFactory.DBOperations.ExecuteNonQuery(command);
+                return MixERP.Net.DBFactory.DBOperations.ExecuteNonQuery(command);
             }
         }
 
@@ -345,7 +345,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
 
                 command.Parameters.AddWithValue("@KeyValue", keyColumnValue);
 
-                return MixERP.Net.DatabaseLayer.DBFactory.DBOperations.ExecuteNonQuery(command);
+                return MixERP.Net.DBFactory.DBOperations.ExecuteNonQuery(command);
             }
         }
     }

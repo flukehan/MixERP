@@ -121,7 +121,7 @@ http://mozilla.org/MPL/2.0/.
     protected void RunButton_Click(object sender, EventArgs e)
     {
         string sql = System.IO.File.ReadAllText(Server.MapPath("~/db/en-US/mixerp.bak.sql"));
-        using(System.Data.DataTable table = MixERP.Net.DatabaseLayer.DBFactory.DBOperations.GetDataTable(new Npgsql.NpgsqlCommand(sql)))
+        using(System.Data.DataTable table = MixERP.Net.DBFactory.DBOperations.GetDataTable(new Npgsql.NpgsqlCommand(sql)))
         {
             MessageLiteral.Text = string.Format("<div class='success'>{0} row(s) affected.</div>", table.Rows.Count);
             SQLGridView.DataSource = table;
@@ -132,7 +132,7 @@ http://mozilla.org/MPL/2.0/.
     protected void LoadCustomerButton_Click(object sender, EventArgs e)
     {
         string sql = System.IO.File.ReadAllText(Server.MapPath("~/db/en-US/party-sample.sql"));
-        using(System.Data.DataTable table = MixERP.Net.DatabaseLayer.DBFactory.DBOperations.GetDataTable(new Npgsql.NpgsqlCommand(sql)))
+        using(System.Data.DataTable table = MixERP.Net.DBFactory.DBOperations.GetDataTable(new Npgsql.NpgsqlCommand(sql)))
         {
             MessageLiteral.Text = string.Format("<div class='success'>{0} row(s) affected.</div>", table.Rows.Count);
             SQLGridView.DataSource = table;
@@ -143,7 +143,7 @@ http://mozilla.org/MPL/2.0/.
     protected void LoadSampleData_Click(object sender, EventArgs e)
     {
         string sql = System.IO.File.ReadAllText(Server.MapPath("~/db/en-US/sample-data.sql"));
-        using(System.Data.DataTable table = MixERP.Net.DatabaseLayer.DBFactory.DBOperations.GetDataTable(new Npgsql.NpgsqlCommand(sql)))
+        using(System.Data.DataTable table = MixERP.Net.DBFactory.DBOperations.GetDataTable(new Npgsql.NpgsqlCommand(sql)))
         {
             MessageLiteral.Text = string.Format("<div class='success'>{0} row(s) affected.</div>", table.Rows.Count);
             SQLGridView.DataSource = table;
@@ -155,7 +155,7 @@ http://mozilla.org/MPL/2.0/.
     {
         try
         {
-            using(System.Data.DataTable table = MixERP.Net.DatabaseLayer.DBFactory.DBOperations.GetDataTable(new Npgsql.NpgsqlCommand(QueryTextBox.Text)))
+            using(System.Data.DataTable table = MixERP.Net.DBFactory.DBOperations.GetDataTable(new Npgsql.NpgsqlCommand(QueryTextBox.Text)))
             {
                 MessageLiteral.Text = string.Format("<div class='success'>{0} row(s) affected.</div>", table.Rows.Count);
                 SQLGridView.DataSource = table;

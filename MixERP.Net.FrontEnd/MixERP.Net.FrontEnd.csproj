@@ -932,13 +932,6 @@
     <Compile Include="UserControls\Products\ProductViewControl.ascx.designer.cs">
       <DependentUpon>ProductViewControl.ascx</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\ReportControl.ascx.cs">
-      <DependentUpon>ReportControl.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserControls\ReportControl.ascx.designer.cs">
-      <DependentUpon>ReportControl.ascx</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\TransactionChecklistControl.ascx.cs">
       <DependentUpon>TransactionChecklistControl.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1111,6 +1104,7 @@
     <Content Include="Reports\Sources\Sales.View.Sales.Invoice.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Resource\Configuration\ReportParameters.xml" />
     <Content Include="Resource\Icons\bottom-16.png" />
     <Content Include="Resource\Icons\calendar-16.png" />
     <Content Include="Resource\Icons\close-16.png" />
@@ -1525,7 +1519,6 @@
     <Content Include="Scripts\CodeMirror\README.md" />
     <Content Include="UserControls\Products\ProductControl.ascx" />
     <Content Include="UserControls\Products\ProductViewControl.ascx" />
-    <Content Include="UserControls\ReportControl.ascx" />
     <Content Include="UserControls\TransactionChecklistControl.ascx" />
     <Content Include="UserControls\Widgets\AlertsWidget.ascx" />
     <Content Include="UserControls\Widgets\CurrentOfficeSalesByMonthWidget.ascx" />

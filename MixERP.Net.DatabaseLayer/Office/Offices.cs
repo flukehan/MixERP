@@ -21,7 +21,7 @@ namespace MixERP.Net.DatabaseLayer.Office
             string sql = "SELECT * FROM office.get_offices();";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                return MixERP.Net.DatabaseLayer.DBFactory.DBOperations.GetDataTable(command);
+                return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
             }
         }
     }

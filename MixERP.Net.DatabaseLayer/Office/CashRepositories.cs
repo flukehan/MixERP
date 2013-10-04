@@ -21,7 +21,7 @@ namespace MixERP.Net.DatabaseLayer.Office
             string sql = "SELECT * FROM office.cash_repositories;";
             using(NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                return MixERP.Net.DatabaseLayer.DBFactory.DBOperations.GetDataTable(command);
+                return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
             }
         }
 
@@ -31,7 +31,7 @@ namespace MixERP.Net.DatabaseLayer.Office
             using(NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
-                return MixERP.Net.DatabaseLayer.DBFactory.DBOperations.GetDataTable(command);
+                return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
             }
         }
 
@@ -41,7 +41,7 @@ namespace MixERP.Net.DatabaseLayer.Office
             using(NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@CashRepositoryId", cashRepositoryId);
-                return MixERP.Net.Common.Conversion.TryCastDecimal(MixERP.Net.DatabaseLayer.DBFactory.DBOperations.GetScalarValue(command));
+                return MixERP.Net.Common.Conversion.TryCastDecimal(MixERP.Net.DBFactory.DBOperations.GetScalarValue(command));
             }
         }
 

@@ -31,16 +31,11 @@ http://mozilla.org/MPL/2.0/.
         </DataSource>
     </DataSources>
     <Install>
-        <Query>
-            DO
-            $$
-            BEGIN
-            IF NOT EXISTS(SELECT * FROM core.menus WHERE menu_code='SEAR-LV') THEN
-            SELECT 'Login View', '/Reports/Office.Login.xml', 'SEAR-LV', 2, core.get_menu_id('SEAR');
-            END IF;
-            END
-            $$
-            LANGUAGE plpgsql;
-        </Query>
+        <Report
+            MenuCode="SEAR-LV"
+            ParentMenuCode="SEAR"
+            MenuText="{Resources.Titles.LoginView}"
+            Level="2"
+            Path="/Reports/Office.Login.xml" />
     </Install>
 </PesReport>

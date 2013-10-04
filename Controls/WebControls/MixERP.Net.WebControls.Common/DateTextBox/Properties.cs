@@ -15,7 +15,7 @@ namespace MixERP.Net.WebControls.Common
 {
     public partial class DateTextBox : CompositeControl
     {
-        public Unit ControlWidth
+        public override Unit Width
         {
             get
             {
@@ -28,7 +28,20 @@ namespace MixERP.Net.WebControls.Common
                 textBox.Width = value;
             }
         }
-        public override string CssClass { get; set; }
+
+        public override string CssClass {
+            get
+            {
+                EnsureChildControls();
+                return textBox.CssClass;
+            }
+            set
+            {
+                EnsureChildControls();
+                textBox.CssClass = value;
+            }
+        }
+
         public bool Disabled
         {
             get

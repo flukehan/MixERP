@@ -24,7 +24,7 @@ namespace MixERP.Net.DatabaseLayer.Core
                 command.Parameters.AddWithValue("@Url", path);
                 command.Parameters.AddWithValue("@Level", level);
 
-                return MixERP.Net.DatabaseLayer.DBFactory.DBOperations.GetDataTable(command);
+                return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
             }
         }
 
@@ -34,7 +34,7 @@ namespace MixERP.Net.DatabaseLayer.Core
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@Url", path);
-                return MixERP.Net.DatabaseLayer.DBFactory.DBOperations.GetDataTable(command);
+                return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
             }
         }
 
@@ -55,7 +55,7 @@ namespace MixERP.Net.DatabaseLayer.Core
                     command.Parameters.AddWithValue("@Level", level);
                 }
 
-                return MixERP.Net.DatabaseLayer.DBFactory.DBOperations.GetDataTable(command);
+                return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
             }
         }
     }

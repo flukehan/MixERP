@@ -20,7 +20,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
             using (Npgsql.NpgsqlCommand command = new Npgsql.NpgsqlCommand(sql))
             {
                 command.CommandTimeout = 3600;
-                MixERP.Net.DatabaseLayer.DBFactory.DBOperations.ExecuteNonQuery(command);
+                MixERP.Net.DBFactory.DBOperations.ExecuteNonQuery(command);
             }
         }
 
@@ -30,7 +30,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
             using (Npgsql.NpgsqlCommand command = new Npgsql.NpgsqlCommand(sql))
             {
                 command.CommandTimeout = 3600;
-                MixERP.Net.DatabaseLayer.DBFactory.DBOperations.ExecuteNonQuery(command);
+                MixERP.Net.DBFactory.DBOperations.ExecuteNonQuery(command);
             }            
         }
 
@@ -40,7 +40,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
             using (Npgsql.NpgsqlCommand command = new Npgsql.NpgsqlCommand(sql))
             {
                 command.CommandTimeout = 3600;
-                MixERP.Net.DatabaseLayer.DBFactory.DBOperations.ExecuteNonQuery(command);
+                MixERP.Net.DBFactory.DBOperations.ExecuteNonQuery(command);
             }
         }
     }

@@ -24,7 +24,7 @@ http://mozilla.org/MPL/2.0/.
         <a href="#" onclick="$('.report-parameter').toggle(500);" class="menu" style="float: right; padding: 4px;">Close This Form</a>
     </asp:Panel>
 
-    <mixerp:Report ID="ReportViewer1" runat="server" />
+    <mixerp:Report ID="ReportViewer11" runat="server" />
     </form>
 </body>
 </html>

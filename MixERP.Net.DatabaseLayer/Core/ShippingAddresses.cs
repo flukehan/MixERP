@@ -23,7 +23,7 @@ namespace MixERP.Net.DatabaseLayer.Core
             {
                 command.Parameters.AddWithValue("@PartyId", partyId);
 
-                return MixERP.Net.DatabaseLayer.DBFactory.DBOperations.GetDataTable(command);
+                return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
             }
         }
 
@@ -34,7 +34,7 @@ namespace MixERP.Net.DatabaseLayer.Core
             {
                 command.Parameters.AddWithValue("@PartyCode", partyCode);
 
-                return MixERP.Net.DatabaseLayer.DBFactory.DBOperations.GetDataTable(command);
+                return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
             }
         }
     }

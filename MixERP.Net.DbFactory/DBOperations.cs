@@ -13,7 +13,7 @@ using System.Globalization;
 using System.Data;
 using Npgsql;
 
-namespace MixERP.Net.DatabaseLayer.DBFactory
+namespace MixERP.Net.DBFactory
 {
     public static class DBOperations
     {
@@ -21,7 +21,7 @@ namespace MixERP.Net.DatabaseLayer.DBFactory
         {
             if(command != null)
             {
-                using(Npgsql.NpgsqlConnection connection = new Npgsql.NpgsqlConnection(MixERP.Net.DatabaseLayer.DBFactory.DBConnection.ConnectionString()))
+                using(Npgsql.NpgsqlConnection connection = new Npgsql.NpgsqlConnection(MixERP.Net.DBFactory.DBConnection.ConnectionString()))
                 {
                     try
                     {
@@ -46,7 +46,7 @@ namespace MixERP.Net.DatabaseLayer.DBFactory
         {
             if(command != null)
             {
-                using(Npgsql.NpgsqlConnection connection = new Npgsql.NpgsqlConnection(MixERP.Net.DatabaseLayer.DBFactory.DBConnection.ConnectionString()))
+                using(Npgsql.NpgsqlConnection connection = new Npgsql.NpgsqlConnection(MixERP.Net.DBFactory.DBConnection.ConnectionString()))
                 {
                     command.Connection = connection;
                     command.CommandTimeout = 300;
@@ -62,7 +62,7 @@ namespace MixERP.Net.DatabaseLayer.DBFactory
         {
             if(command != null)
             {
-                using(Npgsql.NpgsqlConnection connection = new Npgsql.NpgsqlConnection(MixERP.Net.DatabaseLayer.DBFactory.DBConnection.ConnectionString()))
+                using(Npgsql.NpgsqlConnection connection = new Npgsql.NpgsqlConnection(MixERP.Net.DBFactory.DBConnection.ConnectionString()))
                 {
                     command.Connection = connection;
                     command.CommandTimeout = 300;
@@ -87,7 +87,7 @@ namespace MixERP.Net.DatabaseLayer.DBFactory
             if(command != null)
             {
                 Npgsql.NpgsqlDataReader reader = default(Npgsql.NpgsqlDataReader);
-                using(Npgsql.NpgsqlConnection connection = new Npgsql.NpgsqlConnection(MixERP.Net.DatabaseLayer.DBFactory.DBConnection.ConnectionString()))
+                using(Npgsql.NpgsqlConnection connection = new Npgsql.NpgsqlConnection(MixERP.Net.DBFactory.DBConnection.ConnectionString()))
                 {
                     command.Connection = connection;
                     command.CommandTimeout = 300;
@@ -118,7 +118,7 @@ namespace MixERP.Net.DatabaseLayer.DBFactory
         {
             if(command != null)
             {
-                using(Npgsql.NpgsqlConnection connection = new Npgsql.NpgsqlConnection(MixERP.Net.DatabaseLayer.DBFactory.DBConnection.ConnectionString()))
+                using(Npgsql.NpgsqlConnection connection = new Npgsql.NpgsqlConnection(MixERP.Net.DBFactory.DBConnection.ConnectionString()))
                 {
                     command.Connection = connection;
                     command.CommandTimeout = 300;

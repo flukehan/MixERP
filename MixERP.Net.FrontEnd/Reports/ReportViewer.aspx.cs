@@ -28,8 +28,8 @@ namespace MixERP.Net.FrontEnd.Reports
             if(collection == null || collection.Count.Equals(0))
             {
                 ReportParameterPanel.Style.Add("display", "none");
-                ReportViewer1.Path = this.ReportPath();
-                ReportViewer1.InitializeReport();
+                ReportViewer11.Path = this.ReportPath();
+                ReportViewer11.InitializeReport();
                 return;
             }
 
@@ -56,13 +56,13 @@ namespace MixERP.Net.FrontEnd.Reports
             button.ID = "UpdateButton";
             button.Text = Resources.Titles.Update;
             button.CssClass = "myButton";
-            button.Click += button_Click;
+            button.Click += UpdateButton_Click;
 
             AddRow("", button);
 
         }
 
-        protected void button_Click(object sender, EventArgs e)
+        protected void UpdateButton_Click(object sender, EventArgs e)
         {
             if(ReportParameterTable.Rows.Count.Equals(0))
             {
@@ -81,9 +81,9 @@ namespace MixERP.Net.FrontEnd.Reports
                     list.Add(new KeyValuePair<string, string>("@" + textBox.ID.Replace("_text_box", ""), textBox.Text));
                 }
             }
-            ReportViewer1.Path = this.ReportPath();
-            ReportViewer1.ParameterCollection = MixERP.Net.BusinessLayer.Helpers.ReportHelper.BindParameters(Server.MapPath(this.ReportPath()), list);
-            ReportViewer1.InitializeReport();
+            ReportViewer11.Path = this.ReportPath();
+            ReportViewer11.ParameterCollection = MixERP.Net.WebControls.ReportEngine.Helpers.ParameterHelper.BindParameters(Server.MapPath(this.ReportPath()), list);
+            ReportViewer11.InitializeReport();
         }
 
         private void AddRow(string label, Control control)
@@ -117,7 +117,7 @@ namespace MixERP.Net.FrontEnd.Reports
         private System.Collections.ObjectModel.Collection<KeyValuePair<string, string>> GetParameters()
         {
             string path = Server.MapPath(this.ReportPath());
-            System.Collections.ObjectModel.Collection<KeyValuePair<string, string>> collection = MixERP.Net.BusinessLayer.Helpers.ReportHelper.GetParameters(path);
+            System.Collections.ObjectModel.Collection<KeyValuePair<string, string>> collection = MixERP.Net.WebControls.ReportEngine.Helpers.ParameterHelper.GetParameters(path);
             return collection;
         }
     }

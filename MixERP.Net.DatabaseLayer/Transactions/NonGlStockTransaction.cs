@@ -12,6 +12,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using Npgsql;
+using MixERP.Net.DBFactory;
 
 namespace MixERP.Net.DatabaseLayer.Transactions
 {
@@ -42,7 +43,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
             //decimal discountTotal = details.Sum(d => d.Discount);
             //decimal taxTotal = details.Sum(d => d.Tax);
 
-            using(NpgsqlConnection connection = new NpgsqlConnection(DBFactory.DBConnection.ConnectionString()))
+            using(NpgsqlConnection connection = new NpgsqlConnection(DBConnection.ConnectionString()))
             {
                 connection.Open();
 
@@ -135,7 +136,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                 command.Parameters.AddWithValue("@ReferenceNumber", referenceNumber);
                 command.Parameters.AddWithValue("@StatementReference", statementReference);
 
-                return MixERP.Net.DatabaseLayer.DBFactory.DBOperations.GetDataTable(command);
+                return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
             }
         }
 
@@ -169,7 +170,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
 
                 //If the transactions associated with the supplied transaction ids belong to a single part,
                 //the value should equal to 1.
-                return MixERP.Net.Common.Conversion.TryCastInteger(MixERP.Net.DatabaseLayer.DBFactory.DBOperations.GetScalarValue(command)).Equals(1);
+                return MixERP.Net.Common.Conversion.TryCastInteger(MixERP.Net.DBFactory.DBOperations.GetScalarValue(command)).Equals(1);
             }
         }
 
@@ -228,7 +229,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
 
                 //If the transactions associated with the supplied transaction ids belong to a single part,
                 //the value should equal to 1.
-                return MixERP.Net.DatabaseLayer.DBFactory.DBOperations.GetDataTable(command);
+                return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
             }
         }
 

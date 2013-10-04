@@ -25,7 +25,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
             {
                 command.Parameters.AddWithValue("@TransactionMasterId", transactionMasterId);
 
-                using(DataTable table = MixERP.Net.DatabaseLayer.DBFactory.DBOperations.GetDataTable(command))
+                using(DataTable table = MixERP.Net.DBFactory.DBOperations.GetDataTable(command))
                 {
                     if(table != null)
                     {
@@ -59,7 +59,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                 command.Parameters.AddWithValue("@reason", reason);
                 command.Parameters.AddWithValue("@TransactionMasterId", transactionMasterId);
 
-                return MixERP.Net.DatabaseLayer.DBFactory.DBOperations.ExecuteNonQuery(command);
+                return MixERP.Net.DBFactory.DBOperations.ExecuteNonQuery(command);
             }
         }
 
@@ -71,7 +71,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                 using(NpgsqlCommand command = new NpgsqlCommand(sql))
                 {
                     command.Parameters.AddWithValue("@TransactionMasterId", transactionMasterId);
-                    return MixERP.Net.DatabaseLayer.DBFactory.DBOperations.ExecuteNonQuery(command);
+                    return MixERP.Net.DBFactory.DBOperations.ExecuteNonQuery(command);
                 }
             }
 

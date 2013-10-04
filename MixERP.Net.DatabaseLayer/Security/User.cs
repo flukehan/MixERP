@@ -30,7 +30,7 @@ namespace MixERP.Net.DatabaseLayer.Security
                 command.Parameters.AddWithValue("@IPAddress", ipAddress);
                 command.Parameters.AddWithValue("@RemoteUser", remoteUser);
 
-                return MixERP.Net.Common.Conversion.TryCastLong(MixERP.Net.DatabaseLayer.DBFactory.DBOperations.GetScalarValue(command));
+                return MixERP.Net.Common.Conversion.TryCastLong(MixERP.Net.DBFactory.DBOperations.GetScalarValue(command));
             }
         }
 
@@ -41,7 +41,7 @@ namespace MixERP.Net.DatabaseLayer.Security
             {
                 command.Parameters.AddWithValue("@UserName", userName);
 
-                return MixERP.Net.DatabaseLayer.DBFactory.DBOperations.GetDataTable(command);
+                return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
             }
         }
     }

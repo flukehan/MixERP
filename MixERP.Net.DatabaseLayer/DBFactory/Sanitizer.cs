@@ -29,17 +29,7 @@ namespace MixERP.Net.DatabaseLayer.DBFactory
         /// </returns>
         public static string SanitizeIdentifierName(string identifier)
         {
-            if(string.IsNullOrWhiteSpace(identifier))
-            {
-                return null;
-            }
-
-            //No comment.
-            if(identifier.Contains("--")){return string.Empty;}
-            if(identifier.Contains("/*")){return string.Empty;}
-
-            //Removing the match else than alphabets, numbers, and underscore.
-            return Regex.Replace(identifier, @"[^a-zA-Z0-9_]", "");
+            return MixERP.Net.DBFactory.Sanitizer.SanitizeIdentifierName(identifier);
         }
 
     }

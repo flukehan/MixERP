@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using MixERP.Net.DBFactory;
 using Npgsql;
 
 namespace MixERP.Net.DatabaseLayer.Transactions
@@ -43,7 +44,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
             }
 
 
-            using(NpgsqlConnection connection = new NpgsqlConnection(DBFactory.DBConnection.ConnectionString()))
+            using(NpgsqlConnection connection = new NpgsqlConnection(DBConnection.ConnectionString()))
             {
                 connection.Open();
 

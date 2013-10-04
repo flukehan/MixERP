@@ -38,7 +38,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
                         command.Parameters.AddWithValue(paramNames[i], exclusions[i].Trim());
                     }
 
-                    return MixERP.Net.DatabaseLayer.DBFactory.DBOperations.GetDataTable(command);
+                    return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
                 }
             }
             else
@@ -50,7 +50,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
                     command.Parameters.AddWithValue("@Schema", schema);
                     command.Parameters.AddWithValue("@TableName", tableName);
 
-                    return MixERP.Net.DatabaseLayer.DBFactory.DBOperations.GetDataTable(command);
+                    return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
                 }
             
             }

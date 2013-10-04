@@ -28,6 +28,6 @@ namespace MixERP.Net.FrontEnd.Purchase.Confirmation {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::MixERP.Net.FrontEnd.UserControls.ReportControl DirectPurchaseInvoiceReport;
+        protected global::MixERP.Net.WebControls.ReportEngine.Report DirectPurchaseInvoiceReport;
     }
 }

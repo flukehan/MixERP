@@ -8,67 +8,28 @@ http://mozilla.org/MPL/2.0/.
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
-using System.Web;
-using System.Web.UI;
+using System.Text;
 using System.Web.UI.WebControls;
 using System.Xml;
-using System.Xml.Linq;
-using MixERP.Net.BusinessLayer.Helpers;
+using MixERP.Net.WebControls.ReportEngine.Helpers;
 
-namespace MixERP.Net.FrontEnd.UserControls
+namespace MixERP.Net.WebControls.ReportEngine
 {
-    public partial class ReportControl : System.Web.UI.UserControl
+    public partial class Report
     {
-        private string reportPath;
-
-        #region "Properties"
-        public string Path { get; set; }
-        public bool AutoInitialize { get; set; }
-
-        /// <summary>
-        /// Collection of each datasources' parameter collection.
-        /// The datasource parameter collection is a collection of
-        /// parameters stored in KeyValuePair.
-        /// </summary>
-        public Collection<Collection<KeyValuePair<string, string>>> ParameterCollection { get; set; }
-        #endregion
-
-        private bool IsValid()
-        {
-            if(string.IsNullOrWhiteSpace(this.Path))
-            {
-                return false;
-            }
-
-            this.reportPath = Server.MapPath(this.Path);
-
-            if(!System.IO.File.Exists(this.reportPath))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            if(this.AutoInitialize)
-            {
-                this.InitializeReport();
-            }
-        }
-
         public void InitializeReport()
         {
+            EnsureChildControls();
+
             //Check if the set report path is a valid file.
             if(!this.IsValid())
             {
-                ReportTitleLiteral.Text = Resources.Titles.ReportNotFound;
-                ReportTitleHidden.Value = ReportTitleLiteral.Text;
-                TopSectionLiteral.Text = string.Format(System.Threading.Thread.CurrentThread.CurrentCulture, Resources.Warnings.InvalidLocation, this.reportPath);
+                this.InitializeLiterals();
+
+                reportTitleLiteral.Text = this.ReportNotFoundErrorMessage;
+                reportTitleHidden.Value = reportTitleLiteral.Text;
+                topSectionLiteral.Text = string.Format(System.Threading.Thread.CurrentThread.CurrentCulture, this.InvalidLocationErrorMessage, this.reportPath);
                 return;
             }
 
@@ -82,6 +43,28 @@ namespace MixERP.Net.FrontEnd.UserControls
             this.SetBottomSection();
             this.InstallReport();
             this.CleanUp();
+        }
+
+
+        /// <summary>
+        /// Initializes the literals by providing a default value if those were not provided.
+        /// </summary>
+        private void InitializeLiterals()
+        {
+            if(string.IsNullOrWhiteSpace(this.ReportNotFoundErrorMessage))
+            {
+                this.ReportNotFoundErrorMessage = "Report not found.";
+            }
+
+            if(string.IsNullOrWhiteSpace(this.InvalidLocationErrorMessage))
+            {
+                this.InvalidLocationErrorMessage = "Invalid location.";
+            }
+
+            if(string.IsNullOrWhiteSpace(this.RunningTotalText))
+            {
+                this.InvalidLocationErrorMessage = "Total";
+            }
         }
 
         private System.Collections.ObjectModel.Collection<string> DecimalFieldIndicesCollection;
@@ -118,7 +101,6 @@ namespace MixERP.Net.FrontEnd.UserControls
                 this.DecimalFieldIndicesCollection.Add(decimalFieldIndices);
             }
         }
-
         private System.Collections.ObjectModel.Collection<int> RunningTotalTextColumnIndexCollection;
         private System.Collections.ObjectModel.Collection<string> RunningTotalFieldIndicesCollection;
         private void SetRunningTotalFields()
@@ -202,7 +184,7 @@ namespace MixERP.Net.FrontEnd.UserControls
                         }
 
                         //Get DataTable from SQL Query and parameter collection.
-                        using(System.Data.DataTable table = MixERP.Net.BusinessLayer.Helpers.ReportHelper.GetDataTable(sql, parameters))
+                        using(System.Data.DataTable table = MixERP.Net.WebControls.ReportEngine.Data.TableHelper.GetDataTable(sql, parameters))
                         {
                             //Add this datatable to the collection for later binding.
                             this.DataTableCollection.Add(table);
@@ -215,22 +197,21 @@ namespace MixERP.Net.FrontEnd.UserControls
         private void SetTitle()
         {
             string title = XmlHelper.GetNodeText(reportPath, "/PesReport/Title");
-            ReportTitleLiteral.Text = MixERP.Net.WebControls.ReportEngine.Helpers.ReportParser.ParseExpression(title);
-            ReportTitleHidden.Value = ReportTitleLiteral.Text;
+            reportTitleLiteral.Text = MixERP.Net.WebControls.ReportEngine.Helpers.ReportParser.ParseExpression(title);
+            reportTitleHidden.Value = reportTitleLiteral.Text;
 
-            if(!string.IsNullOrWhiteSpace(ReportTitleLiteral.Text))
+            if(!string.IsNullOrWhiteSpace(reportTitleLiteral.Text))
             {
-                this.Page.Title = ReportTitleLiteral.Text;
+                this.Page.Title = reportTitleLiteral.Text;
             }
         }
 
-        #region "Set Sections"
         private void SetTopSection()
         {
             string topSection = XmlHelper.GetNodeText(reportPath, "/PesReport/TopSection");
             topSection = MixERP.Net.WebControls.ReportEngine.Helpers.ReportParser.ParseExpression(topSection);
             topSection = MixERP.Net.WebControls.ReportEngine.Helpers.ReportParser.ParseDataSource(topSection, this.DataTableCollection);
-            TopSectionLiteral.Text = topSection;
+            topSectionLiteral.Text = topSection;
         }
 
         private void SetBodySection()
@@ -238,16 +219,9 @@ namespace MixERP.Net.FrontEnd.UserControls
             string bodySection = XmlHelper.GetNodeText(reportPath, "/PesReport/Body/Content");
             bodySection = MixERP.Net.WebControls.ReportEngine.Helpers.ReportParser.ParseExpression(bodySection);
             bodySection = MixERP.Net.WebControls.ReportEngine.Helpers.ReportParser.ParseDataSource(bodySection, this.DataTableCollection);
-            ContentLiteral.Text = bodySection;
+            bodyContentsLiteral.Text = bodySection;
         }
-        private void SetBottomSection()
-        {
-            string bottomSection = XmlHelper.GetNodeText(reportPath, "/PesReport/BottomSection");
-            bottomSection = MixERP.Net.WebControls.ReportEngine.Helpers.ReportParser.ParseExpression(bottomSection);
-            bottomSection = MixERP.Net.WebControls.ReportEngine.Helpers.ReportParser.ParseDataSource(bottomSection, this.DataTableCollection);
-            BottomSectionLiteral.Text = bottomSection;
-        }
-        #endregion
+
 
         private void SetGridViews()
         {
@@ -287,7 +261,7 @@ namespace MixERP.Net.FrontEnd.UserControls
                     grid.GridLines = GridLines.Both;
                     grid.RowDataBound += GridView_RowDataBound;
                     grid.DataBound += GridView_DataBound;
-                    BodyPlaceHolder.Controls.Add(grid);
+                    gridPlaceHolder.Controls.Add(grid);
 
                     grid.DataSource = this.DataTableCollection[index];
                     grid.DataBind();
@@ -297,136 +271,38 @@ namespace MixERP.Net.FrontEnd.UserControls
 
         }
 
-        #region "GridView Events"
-        void GridView_DataBound(object sender, EventArgs e)
+
+        private void SetBottomSection()
         {
-            GridView grid = (GridView)sender;
-
-            int arg = MixERP.Net.Common.Conversion.TryCastInteger(grid.ID.Replace("GridView", ""));
-
-            if(string.IsNullOrWhiteSpace(this.RunningTotalFieldIndicesCollection[arg]))
-            {
-                return;
-            }
-
-            if(grid.FooterRow == null)
-            {
-                return;
-            }
-
-            grid.FooterRow.Visible = true;
-
-            for(int i = 0; i < this.RunningTotalTextColumnIndexCollection[arg]; i++)
-            {
-                grid.FooterRow.Cells[i].Visible = false;
-            }
-
-            grid.FooterRow.Cells[this.RunningTotalTextColumnIndexCollection[arg]].ColumnSpan = this.RunningTotalTextColumnIndexCollection[arg] + 1;
-            grid.FooterRow.Cells[this.RunningTotalTextColumnIndexCollection[arg]].Text = Resources.Titles.Total;
-            grid.FooterRow.Cells[this.RunningTotalTextColumnIndexCollection[arg]].Style.Add("text-align", "right");
-            grid.FooterRow.Cells[this.RunningTotalTextColumnIndexCollection[arg]].Font.Bold = true;
-
-            foreach(string field in this.RunningTotalFieldIndicesCollection[arg].Split(','))
-            {
-                int index = MixERP.Net.Common.Conversion.TryCastInteger(field.Trim());
-
-                decimal total = 0;
-
-                if(index > 0)
-                {
-                    foreach(GridViewRow row in grid.Rows)
-                    {
-                        if(row.RowType == DataControlRowType.DataRow)
-                        {
-                            total += MixERP.Net.Common.Conversion.TryCastDecimal(row.Cells[index].Text);
-                        }
-                    }
-
-                    grid.FooterRow.Cells[index].Text = string.Format(System.Threading.Thread.CurrentThread.CurrentCulture, "{0:N}", total);
-                    grid.FooterRow.Cells[index].Font.Bold = true;
-                }
-            }
+            string bottomSection = XmlHelper.GetNodeText(reportPath, "/PesReport/BottomSection");
+            bottomSection = MixERP.Net.WebControls.ReportEngine.Helpers.ReportParser.ParseExpression(bottomSection);
+            bottomSection = MixERP.Net.WebControls.ReportEngine.Helpers.ReportParser.ParseDataSource(bottomSection, this.DataTableCollection);
+            bottomSectionLiteral.Text = bottomSection;
         }
 
-        void GridView_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            if(e.Row.RowType == DataControlRowType.Header)
-            {
-                for(int i = 0; i < e.Row.Cells.Count; i++)
-                {
-                    string cellText = e.Row.Cells[i].Text;
-
-                    cellText = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString("FormResource", cellText, false);
-                    e.Row.Cells[i].Text = cellText;
-                    e.Row.Cells[i].HorizontalAlign = HorizontalAlign.Left;
-                }
-            }
-
-            if(e.Row.RowType == DataControlRowType.DataRow)
-            {
-                GridView grid = (GridView)sender;
-                int arg = MixERP.Net.Common.Conversion.TryCastInteger(grid.ID.Replace("GridView", ""));
-
-                //Apply formatting on decimal fields
-                if(string.IsNullOrWhiteSpace(this.DecimalFieldIndicesCollection[arg]))
-                {
-                    return;
-                }
-
-
-                string decimalFields = this.DecimalFieldIndicesCollection[arg];
-                foreach(string fieldIndex in decimalFields.Split(','))
-                {
-                    int index = MixERP.Net.Common.Conversion.TryCastInteger(fieldIndex);
-                    decimal value = MixERP.Net.Common.Conversion.TryCastDecimal(e.Row.Cells[index].Text);
-                    e.Row.Cells[index].Text = string.Format(System.Threading.Thread.CurrentThread.CurrentCulture, "{0:N}", value);
-                }
-            }
-        }
-        #endregion
-
-        #region "Export Report"
-        protected void ExcelImageButton_Click(object sender, ImageClickEventArgs e)
-        {
-            string html = ReportHidden.Value;
-            if(!string.IsNullOrWhiteSpace(html))
-            {
-                Response.ContentType = "application/force-download";
-                Response.AddHeader("content-disposition", "attachment; filename=" + ReportTitleHidden.Value + ".xls");
-                Response.Charset = "";
-                Response.Cache.SetCacheability(HttpCacheability.NoCache);
-                Response.ContentType = "application/vnd.ms-excel";
-                Response.Write(html);
-                Response.Flush();
-                Response.Close();
-            }
-        }
-
-        protected void WordImageButton_Click(object sender, ImageClickEventArgs e)
-        {
-            string html = ReportHidden.Value;
-            if(!string.IsNullOrWhiteSpace(html))
-            {
-                Response.ContentType = "application/force-download";
-                Response.AddHeader("content-disposition", "attachment; filename=" + ReportTitleHidden.Value + ".doc");
-                Response.Charset = "";
-                Response.Cache.SetCacheability(HttpCacheability.NoCache);
-                Response.ContentType = "application/vnd.ms-word";
-                Response.Write(html);
-                Response.Flush();
-                Response.Close();
-            }
-        }
-        #endregion
 
         private void InstallReport()
         {
             if(this.IsValid())
             {
-                string installationQuery = XmlHelper.GetNodeText(reportPath, "/PesReport/Install/Query");
-                MixERP.Net.BusinessLayer.Helpers.ReportHelper.InstallReport(installationQuery);
+                XmlNode reportNode = XmlHelper.GetNode(reportPath, "/PesReport/Install/Report");
+
+                if(reportNode == null)
+                {
+                    return;
+                }
+
+                string menuCode = reportNode.Attributes["MenuCode"].Value;
+                string parentMenuCode = reportNode.Attributes["ParentMenuCode"].Value;
+                int level = MixERP.Net.Common.Conversion.TryCastInteger(reportNode.Attributes["Level"].Value);
+                string menuText = MixERP.Net.WebControls.ReportEngine.Helpers.ReportParser.ParseExpression(reportNode.Attributes["MenuText"].Value);
+
+                string path = reportNode.Attributes["Path"].Value;
+
+                MixERP.Net.WebControls.ReportEngine.Helpers.ReportInstaller.InstallReport(menuCode, parentMenuCode, level, menuText, path);
             }
         }
+
 
         private void CleanUp()
         {
@@ -446,4 +322,3 @@ namespace MixERP.Net.FrontEnd.UserControls
         }
     }
 }
-

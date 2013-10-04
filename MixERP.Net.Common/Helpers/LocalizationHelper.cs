@@ -52,6 +52,11 @@ namespace MixERP.Net.Common.Helpers
             return key;
         }
 
+        public static void AddResourceString(string className, string key, string value)
+        { 
+            //Todo.
+            return;
+        }
 
         public static CultureInfo Culture()
         {

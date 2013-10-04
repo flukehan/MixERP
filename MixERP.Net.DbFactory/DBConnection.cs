@@ -7,21 +7,22 @@ http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
+using MixERP.Net.Common;
 
-namespace MixERP.Net.DatabaseLayer.DBFactory
+namespace MixERP.Net.DBFactory
 {
     public static class DBConnection
     {
         public static string ConnectionString()
         {
             Npgsql.NpgsqlConnectionStringBuilder connectionStringBuilder = new Npgsql.NpgsqlConnectionStringBuilder();
-            connectionStringBuilder.Host = MixERP.Net.Common.Conversion.TryCastString(System.Configuration.ConfigurationManager.AppSettings["Server"]);
-            connectionStringBuilder.Database = MixERP.Net.Common.Conversion.TryCastString(System.Configuration.ConfigurationManager.AppSettings["Database"]);
-            connectionStringBuilder.UserName = MixERP.Net.Common.Conversion.TryCastString(System.Configuration.ConfigurationManager.AppSettings["UserId"]);
-            connectionStringBuilder.Password = MixERP.Net.Common.Conversion.TryCastString(System.Configuration.ConfigurationManager.AppSettings["Password"]);
-            connectionStringBuilder.Timeout = 600;
+            connectionStringBuilder.Host = Conversion.TryCastString(ConfigurationManager.AppSettings["Server"]);
+            connectionStringBuilder.Database = Conversion.TryCastString(ConfigurationManager.AppSettings["Database"]);
+            connectionStringBuilder.UserName = Conversion.TryCastString(ConfigurationManager.AppSettings["UserId"]);
+            connectionStringBuilder.Password = Conversion.TryCastString(ConfigurationManager.AppSettings["Password"]);
 
             return connectionStringBuilder.ConnectionString;
         }

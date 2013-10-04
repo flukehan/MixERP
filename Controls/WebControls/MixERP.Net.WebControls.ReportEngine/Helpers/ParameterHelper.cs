@@ -8,25 +8,14 @@ http://mozilla.org/MPL/2.0/.
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Web;
 
-namespace MixERP.Net.BusinessLayer.Helpers
+namespace MixERP.Net.WebControls.ReportEngine.Helpers
 {
-    public static class ReportHelper
+    public static class ParameterHelper
     {
-        public static DataTable GetDataTable(string sql, Collection<KeyValuePair<string, string>> parameters)
-        {
-            return MixERP.Net.DatabaseLayer.Helpers.ReportHelper.GetDataTable(sql, parameters);
-        }
-        
-
-        public static Collection<Collection<KeyValuePair<string,string>>> BindParameters(string reportPath, Collection<KeyValuePair<string, string>> parameterCollection)
+        public static Collection<Collection<KeyValuePair<string, string>>> BindParameters(string reportPath, Collection<KeyValuePair<string, string>> parameterCollection)
         {
             if(!System.IO.File.Exists(reportPath))
             {
@@ -120,11 +109,6 @@ namespace MixERP.Net.BusinessLayer.Helpers
             }
 
             return false;
-        }
-
-        public static void InstallReport(string sql)
-        {
-            MixERP.Net.DatabaseLayer.Helpers.ReportHelper.InstallReport(sql);
         }
     }
 }

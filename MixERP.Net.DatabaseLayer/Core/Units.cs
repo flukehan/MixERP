@@ -23,7 +23,7 @@ namespace MixERP.Net.DatabaseLayer.Core
             {
                 command.Parameters.AddWithValue("@ItemCode", itemCode);
 
-                return MixERP.Net.DatabaseLayer.DBFactory.DBOperations.GetDataTable(command);
+                return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
             }
         }
 
@@ -34,7 +34,7 @@ namespace MixERP.Net.DatabaseLayer.Core
             {
                 command.Parameters.AddWithValue("@UnitName", unitName);
 
-                return MixERP.Net.DatabaseLayer.DBFactory.DBOperations.GetScalarValue(command).ToString().Equals("1");
+                return MixERP.Net.DBFactory.DBOperations.GetScalarValue(command).ToString().Equals("1");
             }        
         }
     }

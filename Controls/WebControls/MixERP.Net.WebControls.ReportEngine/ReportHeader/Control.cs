@@ -14,7 +14,7 @@ using System.Web.UI.WebControls;
 
 namespace MixERP.Net.WebControls.ReportEngine
 {
-    [ToolboxData("<{0}:DateTextBox runat=server></{0}:DateTextBox>")]
+    [ToolboxData("<{0}:ReportHeader runat=server></{0}:ReportHeader>")]
     public partial class ReportHeader : CompositeControl
     {
         private string html;

@@ -1564,6 +1564,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to View Sales Invoice.
+        /// </summary>
+        internal static string ViewSalesInovice {
+            get {
+                return ResourceManager.GetString("ViewSalesInovice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to View This Invoice.
         /// </summary>
         internal static string ViewThisInvoice {

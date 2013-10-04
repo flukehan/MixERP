@@ -50,11 +50,23 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\ParameterHelper.cs" />
+    <Compile Include="Helpers\ReportInstaller.cs" />
     <Compile Include="Helpers\ReportParser.cs" />
+    <Compile Include="Helpers\XmlHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportHeader\Control.cs" />
     <Compile Include="ReportHeader\Events.cs" />
     <Compile Include="ReportHeader\Properties.cs" />
+    <Compile Include="ReportHeader\RaisedEvents.cs" />
+    <Compile Include="Report\Body.cs" />
+    <Compile Include="Report\CommandPanel.cs" />
+    <Compile Include="Report\Control.cs" />
+    <Compile Include="Report\Events.cs" />
+    <Compile Include="Report\HiddenControls.cs" />
+    <Compile Include="Report\Intializer.cs" />
+    <Compile Include="Report\Properties.cs" />
+    <Compile Include="Report\RaisedEvents.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Mix Open Foundation.snk" />
@@ -64,6 +76,10 @@
     <ProjectReference Include="..\..\..\MixERP.net.Common\MixERP.Net.Common.csproj">
       <Project>{d5a09c22-8f48-4fb2-a14d-c62c8c8fcec0}</Project>
       <Name>MixERP.Net.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MixERP.Net.WebControls.ReportEngine.Data\MixERP.Net.WebControls.ReportEngine.Data.csproj">
+      <Project>{daaad018-fcd1-4231-bb11-ef765f41463d}</Project>
+      <Name>MixERP.Net.WebControls.ReportEngine.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0"?>
+
+<!--
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
+If a copy of the MPL was not distributed  with this file, You can obtain one at 
+http://mozilla.org/MPL/2.0/.
+-->
+
+<MixERPReportParameters>
+    <add key="HeaderPath" value="/Reports/Assets/Header.html" />
+    <add key="EmailIcon" value="/Resource/Icons/email-16.png" />
+    <add key="PrintIcon" value="/Resource/Icons/print-16.png" />
+    <add key="ExcelIcon" value="/Resource/Icons/excel-16.png" />
+    <add key="WordIcon" value="/Resource/Icons/word-16.png" />
+    <add key="GoTopIcon" value="/Resource/Icons/top-16.png" />
+    <add key="GoBottomIcon" value="/Resource/Icons/bottom-16.png" />
+    <add key="FilterIcon" value="/Resource/Icons/filter-16.png" />
+    <add key="CloseIcon" value="/Resource/Icons/close-16.png" />
+</MixERPReportParameters>

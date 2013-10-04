@@ -168,17 +168,14 @@ http://mozilla.org/MPL/2.0/.
         </DataSource>
     </DataSources>
     <Install>
-        <Query>
-            DO
-            $$
-            BEGIN
-            IF NOT EXISTS(SELECT * FROM core.menus WHERE menu_code='PUR-PVPI') THEN
-            INSERT INTO core.menus(menu_text, url, menu_code, level, parent_menu_id)
-            SELECT 'View Purchase Inovice', '/Reports/Purchase.View.Purchase.Invoice.xml', 'PUR-PVPI', 2, core.get_menu_id('PUR');
-            END IF;
-            END
-            $$
-            LANGUAGE plpgsql;
-        </Query>
+        <Report
+            MenuCode="PUR-PVPI"
+            ParentMenuCode="PUR"
+            MenuText="{Resources.Titles.ViewPurchaseInovice}"
+            Level="2"
+            Path="/Reports/Purchase.View.Purchase.Invoice.xml" />
+        <Resources>
+            <Add Key="ViewPurchaseInovice" Value="View Purchase Invoice" Class="Titles" Culture="en-US" />
+        </Resources>
     </Install>
 </PesReport>

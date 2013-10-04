@@ -45,7 +45,6 @@ namespace MixERP.Net.WebControls.Common
 
             textBox = new TextBox();
             textBox.ID = this.ID;
-            textBox.CssClass = this.CssClass;
 
             extender = new CalendarExtender();
             extender.ID = this.ID + "CalendarExtender";
