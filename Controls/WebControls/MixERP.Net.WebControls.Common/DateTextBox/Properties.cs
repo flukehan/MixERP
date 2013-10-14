@@ -57,7 +57,6 @@ namespace MixERP.Net.WebControls.Common
         }
         public bool EnableValidation { get; set; }
         public override string ID { get; set; }
-        public string InvalidDateValidationMessage { get; set; }
         public string Text 
         {
             get
@@ -72,6 +71,5 @@ namespace MixERP.Net.WebControls.Common
             }
         }
         public string ValidatorCssClass { get; set; }
-
     }
 }

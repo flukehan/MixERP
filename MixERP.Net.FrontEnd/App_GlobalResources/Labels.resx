@@ -130,7 +130,7 @@
     <value>Parties collectively refer to suppliers, customers, agents, and dealers.</value>
   </data>
   <data name="RequiredFieldDetails" xml:space="preserve">
-    <value>The fields marked with asterisk (*) are required.</value>
+    <value>Fields marked with asterisk (*) are required.</value>
   </data>
   <data name="TaskCompletedSuccessfully" xml:space="preserve">
     <value>The task was completed successfully.</value>

@@ -35,7 +35,6 @@ namespace MixERP.Net.FrontEnd
                         }
 
                         Response.Redirect("~/Dashboard/Index.aspx", true);
-
                     }
                 }
             }

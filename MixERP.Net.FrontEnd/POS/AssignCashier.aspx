@@ -14,7 +14,21 @@ http://mozilla.org/MPL/2.0/.
 <asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-    <asp:ScriptManager ID="ScriptManager1" runat="server" />
+    <AjaxCTK:ToolkitScriptManager runat="server" />
+    <%--<asp:ScriptManager runat="server" />--%>
+    <mixerp:ScrudForm ID="AccountTypeForm" runat="server" 
+        Text="<%$Resources:Titles, ChartOfAccounts %>" 
+        TableSchema="core" Table="accounts" KeyColumn="account_id"
+        ViewSchema="core" View="account_view" Width="1500" PageSize="10" 
+        Exclude="sys_type"
+        DisplayFields="core.account_masters.account_master_id-->account_master_code + ' (' + account_master_name + ')',core.accounts.account_id-->account_code + ' (' + account_name + ')'" 
+        DisplayViews="core.account_masters.account_master_id-->core.account_masters, core.accounts.account_id--> core.account_view" 
+        CommandPanelButtonCssClass="menu"
+        UpdateProgressTemplateCssClass="ajax-container"
+        UpdateProgressSpinnerImageCssClass="ajax-loader"
+        UpdateProgressSpinnerImagePath="/spinner.gif"        
+        />
+
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceHolder" runat="server">
 </asp:Content>

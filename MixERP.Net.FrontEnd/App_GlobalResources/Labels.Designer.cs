@@ -97,7 +97,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The fields marked with asterisk (*) are required..
+        ///   Looks up a localized string similar to Fields marked with asterisk (*) are required..
         /// </summary>
         internal static string RequiredFieldDetails {
             get {

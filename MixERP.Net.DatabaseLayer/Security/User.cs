@@ -17,7 +17,6 @@ namespace MixERP.Net.DatabaseLayer.Security
 {
     public static class User
     {
-
         public static long SignIn(int officeId, string userName, string password, string browser, string ipAddress, string remoteUser)
         {
             string sql = "SELECT * FROM office.sign_in(@OfficeId, @UserName, @Password, @Browser, @IPAddress, @RemoteUser);";

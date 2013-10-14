@@ -881,7 +881,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
             if(valueDate.Equals(DateTime.MinValue))
             {
-                ErrorLabelTop.Text = Resources.Warnings.InvalidDate;
+                ErrorLabelTop.Text = "Invalid Date";
                 DateTextBox.CssClass = "dirty";
                 DateTextBox.Focus();
                 return;

@@ -1095,4 +1095,7 @@
   <data name="flag_type_name" xml:space="preserve">
     <value>Flag Type Name</value>
   </data>
+  <data name="select" xml:space="preserve">
+    <value>Select</value>
+  </data>
 </root>

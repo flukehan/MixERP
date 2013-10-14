@@ -62,12 +62,7 @@ namespace MixERP.Net.WebControls.Common
             validator.ValueToCompare = "1/1/1900";
             validator.Type = ValidationDataType.Date;
 
-            if(string.IsNullOrWhiteSpace(this.InvalidDateValidationMessage))
-            {
-                this.InvalidDateValidationMessage = "Invalid date";
-            }
-
-            validator.ErrorMessage = this.InvalidDateValidationMessage;
+            validator.ErrorMessage = Resources.CommonResource.InvalidDate;
             validator.EnableClientScript = true;
             validator.CssClass = this.ValidatorCssClass;
 

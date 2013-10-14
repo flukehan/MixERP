@@ -115,24 +115,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This is not a valid date..
-        /// </summary>
-        internal static string InvalidDate {
-            get {
-                return ResourceManager.GetString("InvalidDate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This is not a valid image..
-        /// </summary>
-        internal static string InvalidImage {
-            get {
-                return ResourceManager.GetString("InvalidImage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to &quot;{0}&quot; is not a valid path or location..
         /// </summary>
         internal static string InvalidLocation {
@@ -160,38 +142,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Only numbers are allowed..
-        /// </summary>
-        internal static string OnlyNumbersAllowed {
-            get {
-                return ResourceManager.GetString("OnlyNumbersAllowed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This is a required field..
-        /// </summary>
-        internal static string RequiredField {
-            get {
-                return ResourceManager.GetString("RequiredField", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Sales is not allowed here..
         /// </summary>
         internal static string SalesNotAllowedHere {
             get {
                 return ResourceManager.GetString("SalesNotAllowedHere", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Operation failed due to an unknown error..
-        /// </summary>
-        internal static string UnknownError {
-            get {
-                return ResourceManager.GetString("UnknownError", resourceCulture);
             }
         }
         

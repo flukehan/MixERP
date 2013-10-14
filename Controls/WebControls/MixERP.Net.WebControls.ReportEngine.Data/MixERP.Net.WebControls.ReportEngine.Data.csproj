@@ -70,9 +70,9 @@
       <Project>{d5a09c22-8f48-4fb2-a14d-c62c8c8fcec0}</Project>
       <Name>MixERP.Net.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\MixERP.Net.DbFactory\MixERP.Net.DbFactory.csproj">
+    <ProjectReference Include="..\..\..\MixERP.Net.DbFactory\MixERP.Net.DBFactory.csproj">
       <Project>{8fd9661c-2473-4581-8722-18b08d4db252}</Project>
-      <Name>MixERP.Net.DbFactory</Name>
+      <Name>MixERP.Net.DBFactory</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

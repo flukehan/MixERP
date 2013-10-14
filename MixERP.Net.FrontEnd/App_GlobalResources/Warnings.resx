@@ -136,12 +136,6 @@
     <value>Only {0} {1} of {2} left in stock.</value>
     <comment>Only {Qty} {Unit} of {ItemName} left in stock.</comment>
   </data>
-  <data name="InvalidDate" xml:space="preserve">
-    <value>This is not a valid date.</value>
-  </data>
-  <data name="InvalidImage" xml:space="preserve">
-    <value>This is not a valid image.</value>
-  </data>
   <data name="InvalidLocation" xml:space="preserve">
     <value>"{0}" is not a valid path or location.</value>
   </data>
@@ -151,17 +145,8 @@
   <data name="NotEnoughCash" xml:space="preserve">
     <value>Not enough cash in the repository.</value>
   </data>
-  <data name="OnlyNumbersAllowed" xml:space="preserve">
-    <value>Only numbers are allowed.</value>
-  </data>
-  <data name="RequiredField" xml:space="preserve">
-    <value>This is a required field.</value>
-  </data>
   <data name="SalesNotAllowedHere" xml:space="preserve">
     <value>Sales is not allowed here.</value>
-  </data>
-  <data name="UnknownError" xml:space="preserve">
-    <value>Operation failed due to an unknown error.</value>
   </data>
   <data name="UnknownTransactionType" xml:space="preserve">
     <value>Unknown transaction type.</value>

@@ -219,7 +219,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Forms
                     else
                     {
                         FormLabel.CssClass = "failure";
-                        FormLabel.Text = Resources.Warnings.UnknownError;
+                        FormLabel.Text = "Unknown Error";
                     }
                 }
             }
@@ -998,7 +998,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Forms
         {
             CompareValidator validator = new CompareValidator();
             validator.ID = controlToValidate.ID + "DateValidator";
-            validator.ErrorMessage = "<br/>" + Resources.Warnings.InvalidDate;
+            validator.ErrorMessage = "<br/>" + "Invalid Date";
             validator.CssClass = "form-error";
             validator.ControlToValidate = controlToValidate.ID;
             validator.EnableClientScript = true;
@@ -1015,7 +1015,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Forms
         {
             CompareValidator validator = new CompareValidator();
             validator.ID = controlToValidate.ID + "DecimalValidator";
-            validator.ErrorMessage = "<br/>" + Resources.Warnings.OnlyNumbersAllowed;
+            validator.ErrorMessage = "<br/> Only Number Allowed";
             validator.CssClass = "form-error";
             validator.ControlToValidate = controlToValidate.ID;
             validator.EnableClientScript = true;
@@ -1042,7 +1042,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Forms
         {
             CompareValidator validator = new CompareValidator();
             validator.ID = controlToValidate.ID + "NumberValidator";
-            validator.ErrorMessage = "<br/>" + Resources.Warnings.OnlyNumbersAllowed;
+            validator.ErrorMessage = "<br/>Only Number Allowed";
             validator.CssClass = "form-error";
             validator.ControlToValidate = controlToValidate.ID;
             validator.EnableClientScript = true;
@@ -1069,7 +1069,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Forms
         {
             RequiredFieldValidator validator = new RequiredFieldValidator();
             validator.ID = controlToValidate.ID + "RequiredValidator";
-            validator.ErrorMessage = "<br/>" + Resources.Warnings.RequiredField;
+            validator.ErrorMessage = "<br/>*";
             validator.CssClass = "form-error";
             validator.ControlToValidate = controlToValidate.ID;
             validator.EnableClientScript = true;
@@ -1083,7 +1083,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Forms
         {
             RegularExpressionValidator validator = new RegularExpressionValidator();
             validator.ID = controlToValidate.ID + "RegexValidator";
-            validator.ErrorMessage = "<br/>" + Resources.Warnings.InvalidImage;
+            validator.ErrorMessage = "<br/> Invalid Image";
             validator.CssClass = "form-error";
             validator.ControlToValidate = controlToValidate.ID;
             validator.EnableClientScript = true;

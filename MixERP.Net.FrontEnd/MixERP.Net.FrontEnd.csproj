@@ -44,7 +44,7 @@
   <ItemGroup>
     <Reference Include="AjaxControlToolkit, Version=4.1.51116.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\New folder\Dependencies\AjaxControlToolkit\AjaxControlToolkit.dll</HintPath>
+      <HintPath>..\Dependencies\AjaxControlToolkit\AjaxControlToolkit.dll</HintPath>
     </Reference>
     <Reference Include="AspNetPager, Version=7.4.3.0, Culture=neutral, PublicKeyToken=fb0a0fe055d40fd4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -1104,6 +1104,7 @@
     <Content Include="Reports\Sources\Sales.View.Sales.Invoice.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Resource\Configuration\ScrudParameters.xml" />
     <Content Include="Resource\Configuration\ReportParameters.xml" />
     <Content Include="Resource\Icons\bottom-16.png" />
     <Content Include="Resource\Icons\calendar-16.png" />
@@ -1561,6 +1562,10 @@
     <ProjectReference Include="..\Controls\WebControls\MixERP.Net.WebControls.ReportEngine\MixERP.Net.WebControls.ReportEngine.csproj">
       <Project>{81f04b78-6194-4f86-a795-5f186c602eee}</Project>
       <Name>MixERP.Net.WebControls.ReportEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Controls\WebControls\MixERP.Net.WebControls.ScrudFactory\MixERP.Net.WebControls.ScrudFactory.csproj">
+      <Project>{07ddce95-a18f-4a35-b892-ce09ead2aa65}</Project>
+      <Name>MixERP.Net.WebControls.ScrudFactory</Name>
     </ProjectReference>
     <ProjectReference Include="..\MixERP.Net.BusinessLayer\MixERP.Net.BusinessLayer.csproj">
       <Project>{81de04cf-7de9-42ff-8339-d05e2586dcba}</Project>

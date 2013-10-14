@@ -45,6 +45,8 @@ BEGIN
 	END IF;
 
 
+	GRANT USAGE ON SCHEMA public TO mix_erp;
+	GRANT USAGE ON SCHEMA information_schema TO mix_erp;
 	GRANT USAGE ON SCHEMA audit TO mix_erp;
 	GRANT USAGE ON SCHEMA core TO mix_erp;
 	GRANT USAGE ON SCHEMA office TO mix_erp;
@@ -53,7 +55,8 @@ BEGIN
 	GRANT USAGE ON SCHEMA crm TO mix_erp;
 	GRANT USAGE ON SCHEMA mrp TO mix_erp;
 
-
+	ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA information_schema GRANT SELECT ON TABLES TO mix_erp;
 	ALTER DEFAULT PRIVILEGES IN SCHEMA audit GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
 	ALTER DEFAULT PRIVILEGES IN SCHEMA core GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
 	ALTER DEFAULT PRIVILEGES IN SCHEMA office GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
@@ -62,6 +65,7 @@ BEGIN
 	ALTER DEFAULT PRIVILEGES IN SCHEMA crm GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
 	ALTER DEFAULT PRIVILEGES IN SCHEMA mrp GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
 
+	ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO mix_erp;
 	ALTER DEFAULT PRIVILEGES IN SCHEMA audit GRANT ALL ON SEQUENCES TO mix_erp;
 	ALTER DEFAULT PRIVILEGES IN SCHEMA core GRANT ALL ON SEQUENCES TO mix_erp;
 	ALTER DEFAULT PRIVILEGES IN SCHEMA office GRANT ALL ON SEQUENCES TO mix_erp;
@@ -73,6 +77,8 @@ BEGIN
 
 
 
+	ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT EXECUTE ON FUNCTIONS TO mix_erp;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA information_schema GRANT EXECUTE ON FUNCTIONS TO mix_erp;
 	ALTER DEFAULT PRIVILEGES IN SCHEMA audit GRANT EXECUTE ON FUNCTIONS TO mix_erp;
 	ALTER DEFAULT PRIVILEGES IN SCHEMA core GRANT EXECUTE ON FUNCTIONS TO mix_erp;
 	ALTER DEFAULT PRIVILEGES IN SCHEMA office GRANT EXECUTE ON FUNCTIONS TO mix_erp;
@@ -95,6 +101,8 @@ BEGIN
 		CREATE ROLE report_user WITH LOGIN PASSWORD 'change-on-deloyment';
 	END IF;
 
+	GRANT USAGE ON SCHEMA public TO report_user;
+	GRANT USAGE ON SCHEMA information_schema TO report_user;
 	GRANT USAGE ON SCHEMA audit TO report_user;
 	GRANT USAGE ON SCHEMA core TO report_user;
 	GRANT USAGE ON SCHEMA office TO report_user;
@@ -103,6 +111,8 @@ BEGIN
 	GRANT USAGE ON SCHEMA crm TO report_user;
 	GRANT USAGE ON SCHEMA mrp TO report_user;
 
+	ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO report_user;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA information_schema GRANT SELECT ON TABLES TO report_user;
 	ALTER DEFAULT PRIVILEGES IN SCHEMA audit GRANT SELECT ON TABLES TO report_user;
 	ALTER DEFAULT PRIVILEGES IN SCHEMA core GRANT SELECT ON TABLES TO report_user;
 	ALTER DEFAULT PRIVILEGES IN SCHEMA office GRANT SELECT ON TABLES TO report_user;
@@ -112,6 +122,8 @@ BEGIN
 	ALTER DEFAULT PRIVILEGES IN SCHEMA mrp GRANT SELECT ON TABLES TO report_user;
 
 
+	ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT EXECUTE ON FUNCTIONS TO report_user;
+	ALTER DEFAULT PRIVILEGES IN SCHEMA information_schema GRANT EXECUTE ON FUNCTIONS TO report_user;
 	ALTER DEFAULT PRIVILEGES IN SCHEMA audit GRANT EXECUTE ON FUNCTIONS TO report_user;
 	ALTER DEFAULT PRIVILEGES IN SCHEMA core GRANT EXECUTE ON FUNCTIONS TO report_user;
 	ALTER DEFAULT PRIVILEGES IN SCHEMA office GRANT EXECUTE ON FUNCTIONS TO report_user;
@@ -1156,6 +1168,49 @@ FROM
   office.roles;
 
 
+
+CREATE VIEW core.constraint_column_usage AS
+    SELECT CAST(current_database() AS text) AS table_catalog,
+           CAST(tblschema AS text) AS table_schema,
+           CAST(tblname AS text) AS table_name,
+           CAST(colname AS text) AS column_name,
+           CAST(current_database() AS text) AS constraint_catalog,
+           CAST(cstrschema AS text) AS constraint_schema,
+           CAST(cstrname AS text) AS constraint_name
+
+    FROM (
+        /* check constraints */
+        SELECT DISTINCT nr.nspname, r.relname, r.relowner, a.attname, nc.nspname, c.conname
+          FROM pg_namespace nr, pg_class r, pg_attribute a, pg_depend d, pg_namespace nc, pg_constraint c
+          WHERE nr.oid = r.relnamespace
+            AND r.oid = a.attrelid
+            AND d.refclassid = 'pg_catalog.pg_class'::regclass
+            AND d.refobjid = r.oid
+            AND d.refobjsubid = a.attnum
+            AND d.classid = 'pg_catalog.pg_constraint'::regclass
+            AND d.objid = c.oid
+            AND c.connamespace = nc.oid
+            AND c.contype = 'c'
+            AND r.relkind = 'r'
+            AND NOT a.attisdropped
+
+        UNION ALL
+
+        /* unique/primary key/foreign key constraints */
+        SELECT nr.nspname, r.relname, r.relowner, a.attname, nc.nspname, c.conname
+          FROM pg_namespace nr, pg_class r, pg_attribute a, pg_namespace nc,
+               pg_constraint c
+          WHERE nr.oid = r.relnamespace
+            AND r.oid = a.attrelid
+            AND nc.oid = c.connamespace
+            AND (CASE WHEN c.contype = 'f' THEN r.oid = c.confrelid AND a.attnum = ANY (c.confkey)
+                      ELSE r.oid = c.conrelid AND a.attnum = ANY (c.conkey) END)
+            AND NOT a.attisdropped
+            AND c.contype IN ('p', 'u', 'f')
+            AND r.relkind = 'r'
+
+      ) AS x (tblschema, tblname, tblowner, colname, cstrschema, cstrname);
+
 CREATE VIEW core.relationship_view
 AS
 SELECT
@@ -1178,7 +1233,7 @@ LEFT JOIN
 		AND tc.constraint_schema = rc.constraint_schema  
 		AND tc.constraint_name = rc.constraint_name	
 LEFT JOIN
-	information_schema.constraint_column_usage ccu  
+	core.constraint_column_usage ccu  
 		ON rc.unique_constraint_catalog = ccu.constraint_catalog  
 		AND rc.unique_constraint_schema = ccu.constraint_schema  
 		AND rc.unique_constraint_name = ccu.constraint_name  
@@ -1949,16 +2004,19 @@ BEGIN
 		) THEN
 			RAISE EXCEPTION 'You are not allowed to change system accounts.';
 		END IF;
-		RETURN OLD;
 	END IF;
 	
 	IF TG_OP='INSERT' THEN
 		IF (NEW.sys_type=true OR NEW.is_cash=true) THEN
 			RAISE EXCEPTION 'You are not allowed to add system accounts.';
 		END IF;
-		RETURN NEW;
 	END IF;
 
+	IF TG_OP='DELETE' THEN
+		RETURN OLD;
+	END IF;
+
+	RETURN NEW;	
 END
 $$
 LANGUAGE plpgsql;

@@ -12,11 +12,6 @@ namespace MixERP.Net.WebControls.ReportEngine.Data
     {
         public static DataTable GetDataTable(string sql, Collection<KeyValuePair<string, string>> parameters)
         {
-            if(string.IsNullOrWhiteSpace(sql))
-            {
-                return null;
-            }
-
             /**************************************************************************************
             A MixERP report is a developer-only feature. 
             But, that does not guarantee that there will be no misuse.
@@ -30,10 +25,7 @@ namespace MixERP.Net.WebControls.ReportEngine.Data
             The SQL query is expected to have only the SELECT statement, but there is no
             absolute and perfect way to parse and determine that the query contained
             in the report is actually a "SELECT-only" statement. 
-            
-            However, this is in no way "a good solution" and looks pretty ugly.
-            But, in fact, this is a preventive measure against a direct purposeful attack.
-            
+                        
             Moreover, the prospective damage could occur only due to some DBAs messing up 
             with the permission of the database user "report_user" which is restricted by default 
             with a read-only access.
@@ -43,7 +35,11 @@ namespace MixERP.Net.WebControls.ReportEngine.Data
             
             TODO: Investigate more on what and how it could be done better.
             ***************************************************************************************/
-            sql = "BEGIN TRANSACTION; " + sql + "; ROLLBACK TRANSACTION;";
+
+            if(string.IsNullOrWhiteSpace(sql))
+            {
+                return null;
+            }
 
             using(NpgsqlCommand command = new NpgsqlCommand(sql))
             {
