@@ -673,6 +673,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Contact Address Line 1.
+        /// </summary>
+        internal static string contact_address_line_1 {
+            get {
+                return ResourceManager.GetString("contact_address_line_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contact Address Line 2.
+        /// </summary>
+        internal static string contact_address_line_2 {
+            get {
+                return ResourceManager.GetString("contact_address_line_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Contact Cell.
         /// </summary>
         internal static string contact_cell {

@@ -11,6 +11,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.WebControls.ScrudFactory;
 
 namespace MixERP.Net.FrontEnd.Finance.Setup
 {
@@ -18,6 +19,17 @@ namespace MixERP.Net.FrontEnd.Finance.Setup
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            ScrudForm scrud = new ScrudForm();
+
+            scrud.KeyColumn = "ageing_slab_id";
+
+            scrud.TableSchema = "core";
+            scrud.Table = "ageing_slabs";
+            scrud.ViewSchema = "core";
+            scrud.View = "ageing_slabs";
+
+            scrud.Text = Resources.Titles.AgeingSlabSetup;
+            ToolkitScriptManager1.NamingContainer.Controls.Add(scrud);
         }
     }
 }

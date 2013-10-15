@@ -11,6 +11,9 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.BusinessLayer.Helpers;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.WebControls.ScrudFactory;
 
 namespace MixERP.Net.FrontEnd.Sales.Setup
 {
@@ -18,7 +21,35 @@ namespace MixERP.Net.FrontEnd.Sales.Setup
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            ScrudForm scrud = new ScrudForm();
 
+            scrud.KeyColumn = "bonus_slab_detail_id";
+
+            scrud.TableSchema = "core";
+            scrud.Table = "bonus_slab_details";
+            scrud.ViewSchema = "core";
+            scrud.View = "bonus_slab_detail_view";
+
+            scrud.DisplayFields = this.GetDisplayFields();
+            scrud.DisplayViews = this.GetDisplayViews();
+
+            scrud.Text = Resources.Titles.BonusSlabDetails;
+
+            ToolkitScriptManager1.NamingContainer.Controls.Add(scrud);
+        }
+
+        private string GetDisplayFields()
+        {
+            List<string> displayFields = new List<string>();
+            ScrudHelper.AddDisplayField(displayFields, "core.bonus_slabs.bonus_slab_id", ConfigurationHelper.GetDbParameter("BonusSlabDisplayField"));
+            return string.Join(",", displayFields);
+        }
+
+        private string GetDisplayViews()
+        {
+            List<string> displayViews = new List<string>();
+            ScrudHelper.AddDisplayView(displayViews, "core.bonus_slabs.bonus_slab_id", "core.bonus_slabs");
+            return string.Join(",", displayViews);
         }
     }
 }

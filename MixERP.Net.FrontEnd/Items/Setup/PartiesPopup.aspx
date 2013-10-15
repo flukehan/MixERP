@@ -21,37 +21,23 @@ http://mozilla.org/MPL/2.0/.
     <title></title>
 
     <style type="text/css">
-        form
-        {
+        form {
             background-color: white!important;
         }
 
-        #GridPanel
-        {
+        #GridPanel {
             width: 99%!important;
         }
-
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
-    <div class="container">
-        <mixerp:Form ID="PartyForm" runat="server"
-            PageSize="10"
-            TableSchema="core" Table="parties"
-            KeyColumn="party_id"
-            ViewSchema="core" View="party_view"
-            Exclude="party_code"
-            DisplayFields="core.party_types.party_type_id-->party_type_code + ' (' + party_type_name + ')', core.frequencies.frequency_id-->frequency_code, core.accounts.account_id-->account_code + ' (' + account_name + ')' "
-            DisplayViews="core.party_types.party_type_id-->core.party_types, core.frequencies.frequency_id-->core.frequencies, core.accounts.account_id-->core.account_view "
-            SelectedValues="core.accounts.account_id-->'10400 (Accounts Receivable)'"
-            Text="<%$Resources: Titles, PartyMaintenance %>"
-            Width="4000"
-            Description="<%$Resources:Labels, PartyDescription %>" />
-    </div>
-    <script type="text/javascript">
-        $("#party_name_textbox").focus(function () {
-            var p = "<%= this.GetPartyNameParameter() %>";
+        <div class="container" runat="server" id="container">
+            <AjaxCTK:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" />
+        </div>
+        <script type="text/javascript">
+            $("#party_name_textbox").focus(function () {
+                var p = "<%= this.GetPartyNameParameter() %>";
             updatePartyName(p);
         });
 
@@ -78,7 +64,7 @@ http://mozilla.org/MPL/2.0/.
             $(".container").css("padding", "24px");
         }
 
-    </script>
+        </script>
     </form>
 </body>
 </html>

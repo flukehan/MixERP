@@ -327,7 +327,8 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         {
             if(this.SubBook == Common.Models.Transactions.SubTranBook.Direct || this.SubBook == Common.Models.Transactions.SubTranBook.Invoice || this.SubBook == Common.Models.Transactions.SubTranBook.Delivery || this.SubBook == Common.Models.Transactions.SubTranBook.Receipt)
             {
-                MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.BindDropDownList(CostCenterDropDownList, "office", "cost_centers", "cost_center_id", MixERP.Net.BusinessLayer.Office.CostCenters.GetDisplayField());
+                string displayField = MixERP.Net.Common.Helpers.ConfigurationHelper.GetDbParameter( "CostCenterDisplayField");
+                MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.BindDropDownList(CostCenterDropDownList, "office", "cost_centers", "cost_center_id", displayField);
             }
             else
             {
@@ -339,7 +340,8 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         {
             if(this.SubBook == Common.Models.Transactions.SubTranBook.Direct || this.SubBook == Common.Models.Transactions.SubTranBook.Invoice || this.SubBook == Common.Models.Transactions.SubTranBook.Delivery || this.SubBook == Common.Models.Transactions.SubTranBook.Receipt)
             {
-                MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.BindDropDownList(StoreDropDownList, "office", "stores", "store_id", MixERP.Net.BusinessLayer.Office.Stores.GetDisplayField());
+                string displayField = MixERP.Net.Common.Helpers.ConfigurationHelper.GetDbParameter( "StoreDisplayField");
+                MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.BindDropDownList(StoreDropDownList, "office", "stores", "store_id", displayField);
             }
             else
             {
@@ -354,7 +356,8 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             {
                 using(System.Data.DataTable table = MixERP.Net.BusinessLayer.Office.CashRepositories.GetCashRepositories(MixERP.Net.BusinessLayer.Helpers.SessionHelper.OfficeId()))
                 {
-                    MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.BindDropDownList(CashRepositoryDropDownList, table, "cash_repository_id", MixERP.Net.BusinessLayer.Office.CashRepositories.GetDisplayField());
+                    string displayField = MixERP.Net.Common.Helpers.ConfigurationHelper.GetDbParameter( "CashRepositoryDisplayField");
+                    MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.BindDropDownList(CashRepositoryDropDownList, table, "cash_repository_id", displayField);
                     this.UpdateRepositoryBalance();
                 }
             }
@@ -415,7 +418,8 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         {
             if(this.Book == Common.Models.Transactions.TranBook.Sales)
             {
-                MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.BindDropDownList(PriceTypeDropDownList, "core", "price_types", "price_type_id", MixERP.Net.BusinessLayer.Core.PriceTypes.GetDisplayField());
+                string displayField = MixERP.Net.Common.Helpers.ConfigurationHelper.GetDbParameter( "PriceTypeDisplayField");
+                MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.BindDropDownList(PriceTypeDropDownList, "core", "price_types", "price_type_id", displayField);
             }
             else
             {
@@ -435,7 +439,8 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
             if(this.Book == Common.Models.Transactions.TranBook.Sales)
             {
-                MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.BindDropDownList(SalesPersonDropDownList, "core", "agents", "agent_id", MixERP.Net.BusinessLayer.Core.Agents.GetDisplayField());
+                string displayField = MixERP.Net.Common.Helpers.ConfigurationHelper.GetDbParameter( "AgentDisplayField");
+                MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.BindDropDownList(SalesPersonDropDownList, "core", "agents", "agent_id", displayField);
                 SalesPersonRow.Visible = true;
             }
         }
@@ -450,7 +455,8 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             {
                 if(this.SubBook == Common.Models.Transactions.SubTranBook.Direct || this.SubBook == Common.Models.Transactions.SubTranBook.Delivery)
                 {
-                    MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.BindDropDownList(ShippingCompanyDropDownList, "core", "shippers", "shipper_id", MixERP.Net.BusinessLayer.Core.Shippers.GetDisplayField());
+                    string displayField = MixERP.Net.Common.Helpers.ConfigurationHelper.GetDbParameter( "ShipperDisplayField");
+                    MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.BindDropDownList(ShippingCompanyDropDownList, "core", "shippers", "shipper_id", displayField);
 
                     ShippingAddressRow.Visible = true;
                     ShippingChargeRow.Visible = true;

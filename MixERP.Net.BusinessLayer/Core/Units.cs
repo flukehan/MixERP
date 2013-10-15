@@ -24,18 +24,5 @@ namespace MixERP.Net.BusinessLayer.Core
         {
             return MixERP.Net.DatabaseLayer.Core.Units.UnitExistsByName(unitName);
         }
-
-        public static string GetDisplayField()
-        {
-            string displayField = MixERP.Net.Common.Helpers.ConfigurationHelper.GetSectionKey("MixERPDbParameters", "UnitDisplayField");
-
-            if(string.IsNullOrWhiteSpace(displayField))
-            {
-                displayField = "unit_name";
-            }
-
-            return displayField;
-        }
-
     }
 }

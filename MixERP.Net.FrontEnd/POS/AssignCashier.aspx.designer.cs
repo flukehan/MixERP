@@ -13,12 +13,12 @@ namespace MixERP.Net.FrontEnd.POS {
     public partial class AssignCashier {
         
         /// <summary>
-        /// AccountTypeForm control.
+        /// ToolkitScriptManager1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::MixERP.Net.WebControls.ScrudFactory.ScrudForm AccountTypeForm;
+        protected global::AjaxControlToolkit.ToolkitScriptManager ToolkitScriptManager1;
     }
 }

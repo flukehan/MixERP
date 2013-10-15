@@ -11,6 +11,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.WebControls.ScrudFactory;
 
 namespace MixERP.Net.FrontEnd.Setup.Admin
 {
@@ -21,6 +22,36 @@ namespace MixERP.Net.FrontEnd.Setup.Admin
             VacuumButton.OnClientClick = "return(confirm('" + Resources.Questions.ConfirmVacuum + "'));";
             FullVacuumButton.OnClientClick = "return(confirm('" + Resources.Questions.ConfirmVacuumFull + "'));";
             AnalyzeButton.OnClientClick = "return(confirm('" + Resources.Questions.ConfirmAnalyze + "'));";
+            this.AddScrud();
+            this.LocalizeButtons();
+        }
+
+        private void LocalizeButtons()
+        {
+            VacuumButton.Text = Resources.Titles.VacuumDatabase;
+            FullVacuumButton.Text = Resources.Titles.VacuumFullDatabase;
+            AnalyzeButton.Text = Resources.Titles.AnalyzeDatabse;
+        }
+
+        private void AddScrud()
+        {
+            ScrudForm scrud = new ScrudForm();
+
+            scrud.DenyAdd = true;
+            scrud.DenyDelete = true;
+            scrud.DenyEdit = true;
+
+            scrud.KeyColumn = "relname";
+            scrud.PageSize = 500;
+
+            scrud.TableSchema = "public";
+            scrud.Table = "db_stat";
+            scrud.ViewSchema = "public";
+            scrud.View = "db_stat";
+
+            scrud.Text = Resources.Titles.DatabaseStatistics;
+
+            ToolkitScriptManager1.NamingContainer.Controls.Add(scrud);
         }
 
         protected void VacuumButton_Click(object sender, EventArgs e)

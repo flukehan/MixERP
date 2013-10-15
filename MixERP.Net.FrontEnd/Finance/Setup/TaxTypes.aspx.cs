@@ -11,6 +11,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.WebControls.ScrudFactory;
 
 namespace MixERP.Net.FrontEnd.Finance.Setup
 {
@@ -18,7 +19,18 @@ namespace MixERP.Net.FrontEnd.Finance.Setup
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            ScrudForm scrud = new ScrudForm();
 
+            scrud.KeyColumn = "tax_type_id";
+
+            scrud.TableSchema = "core";
+            scrud.Table = "tax_types";
+            scrud.ViewSchema = "core";
+            scrud.View = "tax_types";
+
+            scrud.Text = Resources.Titles.TaxTypes;
+
+            ToolkitScriptManager1.NamingContainer.Controls.Add(scrud);
         }
     }
 }

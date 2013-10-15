@@ -60,14 +60,10 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Core\Accounts.cs" />
-    <Compile Include="Core\Agents.cs" />
-    <Compile Include="Core\Customers.cs" />
     <Compile Include="Core\Date.cs" />
     <Compile Include="Core\Parties.cs" />
     <Compile Include="Core\Items.cs" />
     <Compile Include="Core\Menu.cs" />
-    <Compile Include="Core\PriceTypes.cs" />
-    <Compile Include="Core\Shippers.cs" />
     <Compile Include="Core\ShippingAddresses.cs" />
     <Compile Include="Core\Units.cs" />
     <Compile Include="DBFactory\Sanitizer.cs" />
@@ -77,10 +73,10 @@
     <Compile Include="Helpers\GridviewHelper.cs" />
     <Compile Include="Helpers\Maintenance.cs" />
     <Compile Include="Helpers\MenuHelper.cs" />
+    <Compile Include="Helpers\ScrudHelper.cs" />
     <Compile Include="Helpers\SessionHelper.cs" />
     <Compile Include="Helpers\TableHelper.cs" />
     <Compile Include="Office\CashRepositories.cs" />
-    <Compile Include="Office\CostCenters.cs" />
     <Compile Include="Office\Offices.cs" />
     <Compile Include="Office\Stores.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1098,4 +1098,10 @@
   <data name="select" xml:space="preserve">
     <value>Select</value>
   </data>
+  <data name="contact_address_line_1" xml:space="preserve">
+    <value>Contact Address Line 1</value>
+  </data>
+  <data name="contact_address_line_2" xml:space="preserve">
+    <value>Contact Address Line 2</value>
+  </data>
 </root>

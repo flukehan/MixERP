@@ -18,6 +18,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 {
     public partial class ScrudDropDownList
     {
+        //Todo: Simplify this class.
         public static void AddDropDownList(HtmlTable t, string columnName, bool isNullable, string tableSchema, string tableName, string tableColumn, string defaultValue, string displayFields, string displayViews, string selectedValues)
         {
             string selectedItemValue = string.Empty;

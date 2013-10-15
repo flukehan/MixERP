@@ -11,6 +11,9 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.BusinessLayer.Helpers;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.WebControls.ScrudFactory;
 
 namespace MixERP.Net.FrontEnd.Items.Setup
 {
@@ -18,7 +21,36 @@ namespace MixERP.Net.FrontEnd.Items.Setup
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            ScrudForm scrud = new ScrudForm();
 
+            scrud.KeyColumn = "compound_unit_id";
+
+            scrud.TableSchema = "core";
+            scrud.Table = "compound_units";
+            scrud.ViewSchema = "core";
+            scrud.View = "compound_unit_view";
+
+            scrud.DisplayFields = this.GetDisplayFields();
+            scrud.DisplayViews = this.GetDisplayViews();
+
+            scrud.Text = Resources.Titles.CompoundUnitsOfMeasure;
+
+            ToolkitScriptManager1.NamingContainer.Controls.Add(scrud);
         }
+
+        private string GetDisplayFields()
+        {
+            List<string> displayFields = new List<string>();
+            ScrudHelper.AddDisplayField(displayFields, "core.units.unit_id", ConfigurationHelper.GetDbParameter("UnitDisplayField"));
+            return string.Join(",", displayFields);
+        }
+
+        private string GetDisplayViews()
+        {
+            List<string> displayViews = new List<string>();
+            ScrudHelper.AddDisplayView(displayViews, "core.units.unit_id", "core.unit_view");
+            return string.Join(",", displayViews);
+        }
+
     }
 }

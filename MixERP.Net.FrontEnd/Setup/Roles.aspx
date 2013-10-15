@@ -11,13 +11,7 @@ http://mozilla.org/MPL/2.0/.
 <asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-    <mixerp:Form ID="RoleForm" runat="server" 
-        DenyAdd="false" DenyDelete="false" DenyEdit="false" 
-        KeyColumn="role_id"
-        PageSize="10" Width="1000"
-        TableSchema="office" Table="roles" 
-        ViewSchema="office" View="roles" 
-        Text="<%$Resources:Titles, RoleMaintenance %>"  />
+   <AjaxCTK:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceHolder" runat="server">
 </asp:Content>

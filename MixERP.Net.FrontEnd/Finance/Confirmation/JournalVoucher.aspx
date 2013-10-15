@@ -17,8 +17,7 @@ http://mozilla.org/MPL/2.0/.
         DisplayWithdrawButton="true"
         DisplayPrintGLEntryButton="true"
         DisplayAttachmentButton="true"
-        GLAdvicePath="~/Finance/Confirmation/GLAdvice.aspx"        
-         />
+        GLAdvicePath="~/Finance/Confirmation/GLAdvice.aspx" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceHolder" runat="server">
 </asp:Content>

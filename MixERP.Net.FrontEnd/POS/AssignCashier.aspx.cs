@@ -16,9 +16,6 @@ namespace MixERP.Net.FrontEnd.POS
 {
     public partial class AssignCashier : MixERP.Net.BusinessLayer.BasePageClass
     {
-        protected void Page_Load(object sender, EventArgs e)
-        {
 
-        }
     }
 }

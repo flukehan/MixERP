@@ -20,7 +20,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             bool showAll = (MixERP.Net.Common.Conversion.TryCastString(this.Page.Request.QueryString["show"]).Equals("all"));
 
             this.BindGridView();
-            this.formGridView.Width = this.Width;
+            this.formGridView.Width = this.GetWidth();
             this.pager.RecordCount = MixERP.Net.BusinessLayer.Helpers.FormHelper.GetTotalRecords(this.ViewSchema, this.View);
             this.pager.PageSize = 10;
 
@@ -38,6 +38,23 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             this.userIdHidden.Value = MixERP.Net.BusinessLayer.Helpers.SessionHelper.UserName();
             this.officeCodeHidden.Value = MixERP.Net.BusinessLayer.Helpers.SessionHelper.OfficeName();
+        }
+
+        private Unit GetWidth()
+        {
+            if (this.Width.Value.Equals(0))
+            {
+                int width = MixERP.Net.Common.Conversion.TryCastInteger(MixERP.Net.Common.Helpers.ConfigurationHelper.GetSectionKey("MixERPScrudParameters", "GridViewDefaultWidth"));
+
+                if (width.Equals(0))
+                {
+                    return 1000;                
+                }
+
+                return width;
+            }
+
+            return this.Width;
         }
 
         private void BindGridView()

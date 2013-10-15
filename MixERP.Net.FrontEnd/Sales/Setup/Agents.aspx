@@ -11,13 +11,7 @@ http://mozilla.org/MPL/2.0/.
 <asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-    <mixerp:Form ID="AgentSlabForm" runat="server" DenyAdd="false" DenyDelete="false" DenyEdit="false" KeyColumn="agent_id"
-        PageSize="10" TableSchema="core" Table="agents" ViewSchema="core" View="agent_view" 
-        Text="<%$Resources:Titles, AgentSetup %>" Width="1000"
-        DisplayFields="core.accounts.account_id-->account_code + ' (' + account_name + ')'"
-        DisplayViews="core.accounts.account_id-->core.account_view"
-        SelectedValues="core.accounts.account_id-->'20100 (Accounts Payable)'"
-         />
+   <AjaxCTK:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceHolder" runat="server">
 </asp:Content>

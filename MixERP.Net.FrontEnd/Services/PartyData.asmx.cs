@@ -33,7 +33,8 @@ namespace MixERP.Net.FrontEnd.Services
         {
             using(System.Data.DataTable table = MixERP.Net.BusinessLayer.Helpers.FormHelper.GetTable("core", "parties"))
             {
-                table.Columns.Add("party", typeof(string), MixERP.Net.BusinessLayer.Core.Parties.GetDisplayField());
+                string displayField = MixERP.Net.Common.Helpers.ConfigurationHelper.GetDbParameter( "PartyDisplayField");
+                table.Columns.Add("party", typeof(string), displayField);
                 return this.GetValues(table);
             }
 
@@ -61,7 +62,8 @@ namespace MixERP.Net.FrontEnd.Services
 
             using(System.Data.DataTable table = MixERP.Net.BusinessLayer.Core.ShippingAddresses.GetShippingAddressView(partyCode))
             {
-                table.Columns.Add("shipping_address", typeof(string), MixERP.Net.BusinessLayer.Core.ShippingAddresses.GetDisplayField());
+                string displayField = MixERP.Net.Common.Helpers.ConfigurationHelper.GetDbParameter( "ShippingAddressDisplayField");
+                table.Columns.Add("shipping_address", typeof(string), displayField);
 
                 foreach(System.Data.DataRow dr in table.Rows)
                 {

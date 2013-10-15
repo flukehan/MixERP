@@ -16,9 +16,9 @@ http://mozilla.org/MPL/2.0/.
 </head>
 <body>
     <form id="form1" runat="server">
-    <mixerp:Report ID="GLAdviceReport" runat="server"
-        Path="~/Reports/Sources/Transactions.GLEntry.xml"
-        AutoInitialize="true" />
+        <mixerp:Report ID="GLAdviceReport" runat="server"
+            Path="~/Reports/Sources/Transactions.GLEntry.xml"
+            AutoInitialize="true" />
     </form>
 </body>
 </html>

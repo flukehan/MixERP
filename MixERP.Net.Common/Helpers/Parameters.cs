@@ -14,7 +14,7 @@ namespace MixERP.Net.Common.Helpers
 {
     public static class Parameters
     {
-        public static string PartyName()
+        public static string PartyNameFormat()
         {
             return GetParameter("PartyName");
         }

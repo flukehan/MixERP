@@ -25,10 +25,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
         HiddenField officeCodeHidden;
         Label messageLabel = new Label();
 
-        public string UpdateProgressTemplateCssClass { get; set; }
-        public string UpdateProgressSpinnerImageCssClass { get; set; }
-        public string UpdateProgressSpinnerImagePath { get; set; }
-        public string CommandPanelButtonCssClass { get; set; }
 
         protected override void OnPreRender(EventArgs e)
         {
@@ -74,17 +70,41 @@ namespace MixERP.Net.WebControls.ScrudFactory
         MixERP.Net.WebControls.ScrudFactory.Controls.CommandPanel bottomCommandPanel;
         MixERP.Net.WebControls.ScrudFactory.Controls.CommandPanel topCommandPanel;
 
+        private string GetCommandPanelButtonCssClass()
+        {
+            string cssClass = this.CommandPanelButtonCssClass;
+
+            if (string.IsNullOrWhiteSpace(cssClass))
+            {
+                cssClass = MixERP.Net.Common.Helpers.ConfigurationHelper.GetSectionKey("MixERPScrudParameters", "CommandPanelButtonCssClass");
+            }
+
+            return cssClass;
+        }
+
+        private string GetButtonCssClass()
+        {
+            string cssClass = this.ButtonCssClass;
+
+            if (string.IsNullOrWhiteSpace(cssClass))
+            {
+                cssClass = MixERP.Net.Common.Helpers.ConfigurationHelper.GetSectionKey("MixERPScrudParameters", "ButtonCssClass");
+            }
+
+            return cssClass;
+        }
+
         private void CreateCommandPanels()
         {
             bottomCommandPanel = new Controls.CommandPanel();
             bottomCommandPanel.DeleteButtonClick += DeleteButton_Click;
             bottomCommandPanel.EditButtonClick += EditButton_Click;
-            bottomCommandPanel.ButtonCssClass = this.CommandPanelButtonCssClass;
+            bottomCommandPanel.ButtonCssClass = this.GetCommandPanelButtonCssClass();
 
             topCommandPanel = new Controls.CommandPanel();
             topCommandPanel.DeleteButtonClick += DeleteButton_Click;
             topCommandPanel.EditButtonClick += EditButton_Click;
-            topCommandPanel.ButtonCssClass = this.CommandPanelButtonCssClass;
+            topCommandPanel.ButtonCssClass = this.GetCommandPanelButtonCssClass();
 
         }
     }

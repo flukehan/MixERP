@@ -565,6 +565,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fiscal Year.
+        /// </summary>
+        internal static string FiscalYear {
+            get {
+                return ResourceManager.GetString("FiscalYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Flags.
         /// </summary>
         internal static string Flags {
@@ -1614,6 +1623,15 @@ namespace Resources {
         internal static string WithdrawTransaction {
             get {
                 return ResourceManager.GetString("WithdrawTransaction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Workcenters.
+        /// </summary>
+        internal static string Workcenters {
+            get {
+                return ResourceManager.GetString("Workcenters", resourceCulture);
             }
         }
         

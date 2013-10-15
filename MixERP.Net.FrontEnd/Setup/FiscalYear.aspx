@@ -12,15 +12,7 @@ http://mozilla.org/MPL/2.0/.
 <asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-    <mixerp:Form ID="FiscalYearForm" runat="server"
-        DenyAdd="false" DenyEdit="true" DenyDelete="true"
-        KeyColumn="fiscal_year_code"
-        PageSize="10"
-        TableSchema="core"
-        Table="fiscal_year"
-        ViewSchema="core"
-        View="fiscal_year"
-        Width="1000" />
+    <AjaxCTK:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceHolder" runat="server">
 </asp:Content>

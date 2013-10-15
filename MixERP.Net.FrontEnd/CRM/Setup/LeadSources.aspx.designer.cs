@@ -13,12 +13,12 @@ namespace MixERP.Net.FrontEnd.CRM.Setup {
     public partial class LeadSources {
         
         /// <summary>
-        /// LeadSourceForm control.
+        /// ToolkitScriptManager1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::MixERP.Net.FrontEnd.UserControls.Forms.FormControl LeadSourceForm;
+        protected global::AjaxControlToolkit.ToolkitScriptManager ToolkitScriptManager1;
     }
 }

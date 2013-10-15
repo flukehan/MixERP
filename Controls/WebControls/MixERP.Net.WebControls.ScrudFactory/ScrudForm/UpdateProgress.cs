@@ -24,8 +24,46 @@ namespace MixERP.Net.WebControls.ScrudFactory
             updateProgress = new UpdateProgress();
             updateProgress.ID = "ScrudUpdateProgress";
 
-            updateProgress.ProgressTemplate = new AjaxProgressTemplate(this.UpdateProgressTemplateCssClass, this.UpdateProgressSpinnerImageCssClass, this.UpdateProgressSpinnerImagePath);
+            updateProgress.ProgressTemplate = new AjaxProgressTemplate(this.GetUpdateProgressTemplateCssClass(), this.GetUpdateProgressSpinnerImageCssClass(), this.GetUpdateProgressSpinnerImagePath());
             p.Controls.Add(updateProgress);
         }
+
+        private string GetUpdateProgressTemplateCssClass()
+        {
+            string cssClass = this.UpdateProgressTemplateCssClass;
+
+            if (string.IsNullOrWhiteSpace(cssClass))
+            {
+                cssClass = MixERP.Net.Common.Helpers.ConfigurationHelper.GetSectionKey("MixERPScrudParameters", "UpdateProgressTemplateCssClass");
+            }
+
+            return cssClass;
+        }
+
+        private string GetUpdateProgressSpinnerImageCssClass()
+        {
+            string cssClass = this.UpdateProgressSpinnerImageCssClass;
+
+            if (string.IsNullOrWhiteSpace(cssClass))
+            {
+                cssClass = MixERP.Net.Common.Helpers.ConfigurationHelper.GetSectionKey("MixERPScrudParameters", "UpdateProgressSpinnerImageCssClass");
+            }
+
+            return cssClass;
+        }
+
+        private string GetUpdateProgressSpinnerImagePath()
+        {
+            string cssClass = this.UpdateProgressSpinnerImagePath;
+
+            if (string.IsNullOrWhiteSpace(cssClass))
+            {
+                cssClass = MixERP.Net.Common.Helpers.ConfigurationHelper.GetSectionKey("MixERPScrudParameters", "UpdateProgressSpinnerImagePath");
+            }
+
+            return cssClass;
+        }
+
+
     }
 }

@@ -11,16 +11,7 @@ http://mozilla.org/MPL/2.0/.
 <asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-    <mixerp:Form ID="OfficeForm" runat="server" 
-        DenyAdd="false" DenyDelete="true" DenyEdit="true" 
-        KeyColumn="office_id" 
-        PageSize="10" 
-        TableSchema="office" Table="offices" 
-        ViewSchema="office" View="offices" 
-        Text="<%$Resources:Titles, OfficeSetup %>" 
-        DisplayFields="office.offices.office_id-->office_name, core.currencies.currency_code-->currency_symbol + ' (' + currency_code + '/' + currency_name + ')'"
-        DisplayViews="office.offices.office_id-->office.office_view, core.currencies.currency_code-->core.currencies"
-        Width="4000" />
+   <AjaxCTK:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceHolder" runat="server">
 </asp:Content>

@@ -11,11 +11,7 @@ http://mozilla.org/MPL/2.0/.
 <asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-    <mixerp:Form ID="ItemCostPriceForm" runat="server" Text="<%$Resources:Titles, ItemCostPrices %>" TableSchema="core" Table="item_cost_prices" KeyColumn="item_cost_price_id"
-        ViewSchema="core" View="item_cost_price_view" Width="1000" PageSize="10"
-        DisplayFields="core.items.item_id-->item_code + ' (' + item_name + ')', core.parties.party_id-->party_code + ' (' + party_name + ')', core.units.unit_id-->unit_code + ' (' + unit_name + ')' "
-        DisplayViews="core.items.item_id-->core.item_view, core.parties.party_id-->core.party_view, core.units.unit_id-->core.unit_view"        
-         />
+   <AjaxCTK:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceHolder" runat="server">
 </asp:Content>

@@ -11,6 +11,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.WebControls.ScrudFactory;
 
 namespace MixERP.Net.FrontEnd.Setup
 {
@@ -18,7 +19,18 @@ namespace MixERP.Net.FrontEnd.Setup
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            ScrudForm scrud = new ScrudForm();
 
+            scrud.KeyColumn = "fiscal_year_code";
+            
+            scrud.TableSchema = "core";
+            scrud.Table = "fiscal_year";
+            scrud.ViewSchema = "core";
+            scrud.View = "fiscal_year";
+            
+            scrud.Text = Resources.Titles.FiscalYear;
+            
+            ToolkitScriptManager1.NamingContainer.Controls.Add(scrud);
         }
     }
 }

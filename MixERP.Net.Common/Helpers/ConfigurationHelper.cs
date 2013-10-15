@@ -15,6 +15,11 @@ namespace MixERP.Net.Common.Helpers
 {
     public static class ConfigurationHelper
     {
+        public static string GetDbParameter(string keyName)
+        {
+            return GetSectionKey("MixERPDbParameters", keyName);
+        }
+
         public static string GetSectionKey(string sectionName, string keyName)
         {
             NameValueCollection parameters = (NameValueCollection)System.Configuration.ConfigurationManager.GetSection(sectionName);

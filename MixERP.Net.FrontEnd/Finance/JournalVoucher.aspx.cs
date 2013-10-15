@@ -195,10 +195,10 @@ namespace MixERP.Net.FrontEnd.Finance
             AccountCodeTextBox.Focus();
         }
 
-
         private void DataBindControls()
         {
-            MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.BindDropDownList(CostCenterDropDownList, "office", "cost_centers", "cost_center_id", MixERP.Net.BusinessLayer.Office.CostCenters.GetDisplayField());
+            string displayField = MixERP.Net.Common.Helpers.ConfigurationHelper.GetDbParameter( "CostCenterDisplayField");
+            MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.BindDropDownList(CostCenterDropDownList, "office", "cost_centers", "cost_center_id", displayField);
         }
 
         private void BindGridView()

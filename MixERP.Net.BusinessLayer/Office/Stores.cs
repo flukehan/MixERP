@@ -19,17 +19,5 @@ namespace MixERP.Net.BusinessLayer.Office
             return MixERP.Net.DatabaseLayer.Office.Stores.IsSalesAllowed(storeId);
         }
 
-        public static string GetDisplayField()
-        {
-            string displayField = MixERP.Net.Common.Helpers.ConfigurationHelper.GetSectionKey("MixERPDbParameters", "StoreDisplayField");
-
-            if(string.IsNullOrWhiteSpace(displayField))
-            {
-                displayField = "store_name";
-            }
-
-            return displayField;
-        }
-
     }
 }

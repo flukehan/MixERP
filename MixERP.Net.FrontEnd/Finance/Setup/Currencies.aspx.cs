@@ -11,6 +11,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.WebControls.ScrudFactory;
 
 namespace MixERP.Net.FrontEnd.Finance.Setup
 {
@@ -18,7 +19,17 @@ namespace MixERP.Net.FrontEnd.Finance.Setup
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            ScrudForm scrud = new ScrudForm();
 
+            scrud.KeyColumn = "currency_code";
+            scrud.TableSchema = "core";
+            scrud.Table = "currencies";
+            scrud.ViewSchema = "core";
+            scrud.View = "currencies";
+
+            scrud.Text = Resources.Titles.Currencies;
+
+            ToolkitScriptManager1.NamingContainer.Controls.Add(scrud);
         }
     }
 }

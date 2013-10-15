@@ -13,15 +13,7 @@ http://mozilla.org/MPL/2.0/.
 <asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-    <mixerp:Form ID="WorkCenterForm" runat="server"
-        KeyColumn="work_center_id"
-        TableSchema="office" Table="work_centers"
-        ViewSchema="office" View="work_center_view"
-        Width="1000"
-        DisplayFields="office.offices.office_id-->office_code + ' (' + office_name + ')' "
-        DisplayViews="office.offices.office_id-->office.office_view"
-        
-         />
+   <AjaxCTK:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceHolder" runat="server">
 </asp:Content>

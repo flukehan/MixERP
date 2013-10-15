@@ -11,14 +11,7 @@ http://mozilla.org/MPL/2.0/.
 <asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-    <mixerp:Form ID="ShipperForm" runat="server" Text="<%$Resources:Titles, Shippers %>" TableSchema="core" Table="shippers" KeyColumn="shipper_id"
-        ViewSchema="core" View="shippers" Width="5000" PageSize="10"
-        Exclude="shipper_code, shipper_name"
-        SelectedValues="core.accounts.account_id-->'20110 (Shipping Charge Payable)'"
-        DisplayFields="core.accounts.account_id-->account_code + ' (' + account_name + ')'"
-        DisplayViews="core.accounts.account_id-->core.account_view"
-        
-         />
+   <AjaxCTK:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceHolder" runat="server">
 </asp:Content>

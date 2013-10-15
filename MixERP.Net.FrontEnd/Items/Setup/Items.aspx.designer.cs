@@ -13,12 +13,12 @@ namespace MixERP.Net.FrontEnd.Items.Setup {
     public partial class Items {
         
         /// <summary>
-        /// ItemForm control.
+        /// ToolkitScriptManager1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::MixERP.Net.FrontEnd.UserControls.Forms.FormControl ItemForm;
+        protected global::AjaxControlToolkit.ToolkitScriptManager ToolkitScriptManager1;
     }
 }

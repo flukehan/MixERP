@@ -12,13 +12,7 @@ http://mozilla.org/MPL/2.0/.
 <asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-    <mixerp:Form ID="PartyTypeForm" runat="server"
-        PageSize="10"
-        TableSchema="core" Table="party_types"
-        KeyColumn="party_type_id"
-        ViewSchema="core" View="party_types"
-        Text="<%$Resources: Titles, PartyTypes %>"
-        Width="1000" />
+   <AjaxCTK:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceHolder" runat="server">
 </asp:Content>

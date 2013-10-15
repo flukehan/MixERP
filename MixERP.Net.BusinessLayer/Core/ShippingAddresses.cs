@@ -25,17 +25,5 @@ namespace MixERP.Net.BusinessLayer.Core
             return MixERP.Net.DatabaseLayer.Core.ShippingAddresses.GetShippingAddressView(partyCode);
         }
 
-        public static string GetDisplayField()
-        {
-            string displayField = MixERP.Net.Common.Helpers.ConfigurationHelper.GetSectionKey("MixERPDbParameters", "ShippingAddressDisplayField");
-
-            if(string.IsNullOrWhiteSpace(displayField))
-            {
-                displayField = "city";
-            }
-
-            return displayField;
-        }
-
     }
 }

@@ -11,11 +11,8 @@ http://mozilla.org/MPL/2.0/.
 <asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-    <mixerp:Form ID="StoreForm" runat="server" DenyAdd="false" DenyDelete="false" DenyEdit="false" KeyColumn="store_id"
-        PageSize="10" TableSchema="office" Table="stores" ViewSchema="office" View="stores" Text="<%$Resources:Titles, Stores %>" Width="1000"
-        DisplayFields="office.store_types.store_type_id-->store_type_name,office.offices.office_id-->office_name"        
-        DisplayViews="office.store_types.store_type_id-->office.store_types,office.offices.office_id-->office.office_view"
-         />
+   <AjaxCTK:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceHolder" runat="server">
 </asp:Content>
+

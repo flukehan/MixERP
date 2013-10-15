@@ -12,16 +12,7 @@ http://mozilla.org/MPL/2.0/.
 <asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-    <mixerp:Form ID="CashRepositoryForm" runat="server"
-        DenyAdd="false" DenyDelete="false" DenyEdit="false"
-        KeyColumn="cash_repository_id"
-        PageSize="10" Width="1000"
-        TableSchema="office" Table="cash_repositories"
-        ViewSchema="office" View="cash_repository_view"
-        Text="<%$Resources:Titles, CashRepositories %>"
-        DisplayFields="office.cash_repositories.cash_repository_id-->cash_repository_code + ' (' + cash_repository_name + ')', office.offices.office_id-->office_code + ' (' + office_name + ')'"
-        DisplayViews="office.cash_repositories.cash_repository_id-->office.cash_repository_view, office.offices.office_id-->office.office_view"        
-         />
+   <AjaxCTK:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceHolder" runat="server">
 </asp:Content>

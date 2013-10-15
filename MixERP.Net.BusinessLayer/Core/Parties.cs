@@ -18,16 +18,5 @@ namespace MixERP.Net.BusinessLayer.Core
         {
             return MixERP.Net.DatabaseLayer.Core.Parties.IsCreditAllowed(partyCode);
         }
-
-        public static string GetDisplayField()
-        {
-            string displayField = MixERP.Net.Common.Helpers.ConfigurationHelper.GetSectionKey("MixERPDbParameters", "PartyDisplayField");
-            if(string.IsNullOrWhiteSpace(displayField))
-            {
-                displayField = "party_name";
-            }
-
-            return displayField;
-        }
     }
 }

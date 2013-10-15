@@ -13,12 +13,12 @@ namespace MixERP.Net.FrontEnd.CRM.Setup {
     public partial class OpportunityStages {
         
         /// <summary>
-        /// OpportunityStageForm control.
+        /// ToolkitScriptManager1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::MixERP.Net.FrontEnd.UserControls.Forms.FormControl OpportunityStageForm;
+        protected global::AjaxControlToolkit.ToolkitScriptManager ToolkitScriptManager1;
     }
 }

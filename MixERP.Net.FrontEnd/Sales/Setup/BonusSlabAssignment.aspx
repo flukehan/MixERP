@@ -11,12 +11,7 @@ http://mozilla.org/MPL/2.0/.
 <asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-    <mixerp:Form ID="BonusSetupForm" runat="server" DenyAdd="false" DenyDelete="false" DenyEdit="false" KeyColumn="agent_bonus_setup_id"
-        PageSize="10" TableSchema="core" Table="agent_bonus_setups" ViewSchema="core" View="agent_bonus_setup_view" 
-        Text="<%$Resources:Titles, AgentBonusSlabAssignment %>" Width="1000"
-        DisplayFields="core.bonus_slabs.bonus_slab_id-->bonus_slab_name, core.agents.agent_id-->agent_name"
-        DisplayViews="core.bonus_slabs.bonus_slab_id-->core.bonus_slab_view, core.agents.agent_id-->core.agent_view"
-         />
+   <AjaxCTK:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceHolder" runat="server">
 </asp:Content>

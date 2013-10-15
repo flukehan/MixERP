@@ -13,12 +13,12 @@ namespace MixERP.Net.FrontEnd.Finance.Setup {
     public partial class TaxTypes {
         
         /// <summary>
-        /// TaxTypeForm control.
+        /// ToolkitScriptManager1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::MixERP.Net.FrontEnd.UserControls.Forms.FormControl TaxTypeForm;
+        protected global::AjaxControlToolkit.ToolkitScriptManager ToolkitScriptManager1;
     }
 }

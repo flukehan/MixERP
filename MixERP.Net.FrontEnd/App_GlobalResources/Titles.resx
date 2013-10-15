@@ -639,4 +639,10 @@
   <data name="ViewSalesInovice" xml:space="preserve">
     <value>View Sales Invoice</value>
   </data>
+  <data name="Workcenters" xml:space="preserve">
+    <value>Workcenters</value>
+  </data>
+  <data name="FiscalYear" xml:space="preserve">
+    <value>Fiscal Year</value>
+  </data>
 </root>

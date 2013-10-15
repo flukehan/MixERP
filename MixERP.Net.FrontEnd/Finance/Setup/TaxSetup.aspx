@@ -11,12 +11,7 @@ http://mozilla.org/MPL/2.0/.
 <asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-    <mixerp:Form ID="TaxForm" runat="server" Text="<%$Resources:Titles, TaxSetup %>" TableSchema="core" Table="taxes" KeyColumn="tax_id"
-        ViewSchema="core" View="tax_view" Width="1000" PageSize="10" 
-        SelectedValues="core.accounts.account_id-->'20700 (Tax Payables)' "
-        DisplayFields="core.tax_types.tax_type_id-->tax_type_code + ' (' + tax_type_name + ')', core.accounts.account_id-->account_code + ' (' + account_name + ')'"
-        DisplayViews="core.tax_types.tax_type_id-->core.tax_types, core.accounts.account_id-->core.account_view"
-         />
+   <AjaxCTK:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceHolder" runat="server">
 </asp:Content>

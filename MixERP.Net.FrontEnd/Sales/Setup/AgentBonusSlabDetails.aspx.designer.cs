@@ -13,12 +13,12 @@ namespace MixERP.Net.FrontEnd.Sales.Setup {
     public partial class AgentBonusSlabDetails {
         
         /// <summary>
-        /// BonusSlabDetailsForm control.
+        /// ToolkitScriptManager1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::MixERP.Net.FrontEnd.UserControls.Forms.FormControl BonusSlabDetailsForm;
+        protected global::AjaxControlToolkit.ToolkitScriptManager ToolkitScriptManager1;
     }
 }

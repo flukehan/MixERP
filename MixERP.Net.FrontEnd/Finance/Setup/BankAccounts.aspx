@@ -13,14 +13,11 @@ http://mozilla.org/MPL/2.0/.
 <asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-    <mixerp:Form ID="BankAccountForm" runat="server" 
-        Text="<%$Resources:Titles, BankAccounts %>" 
-        TableSchema="core" Table="bank_accounts" KeyColumn="account_id"
-        ViewSchema="core" View="bank_accounts" Width="1000" PageSize="10" 
-        DisplayFields="office.users.user_id-->user_name, core.accounts.account_id-->account_code + ' (' + account_name + ')'"
-        DisplayViews="office.users.user_id-->office.user_view, core.accounts.account_id-->core.account_view"        
-         />
+   <AjaxCTK:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" />
 
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceHolder" runat="server">
 </asp:Content>
+<script runat="server">
+
+</script>

@@ -7,6 +7,7 @@ http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Web.UI.WebControls;
@@ -122,5 +123,11 @@ namespace MixERP.Net.WebControls.ScrudFactory
         /// The full inner width of the grid.
         /// </summary>
         public override Unit Width { get; set; }
+
+        public string UpdateProgressTemplateCssClass { get; set; }
+        public string UpdateProgressSpinnerImageCssClass { get; set; }
+        public string UpdateProgressSpinnerImagePath { get; set; }
+        public string CommandPanelButtonCssClass { get; set; }
+        public string ButtonCssClass { get; set; }
     }
 }

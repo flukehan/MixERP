@@ -14,17 +14,6 @@ namespace MixERP.Net.BusinessLayer.Core
 {
     public static class Accounts
     {
-        public static string GetDisplayField()
-        {
-            string displayField = MixERP.Net.Common.Helpers.ConfigurationHelper.GetSectionKey("MixERPDbParameters", "AccountDisplayField");
-            if(string.IsNullOrWhiteSpace(displayField))
-            {
-                displayField = "account_name";
-            }
-
-            return displayField;
-        }
-
         public static bool IsCashAccount(int accountId)
         {
             return MixERP.Net.DatabaseLayer.Core.Accounts.IsCashAccount(accountId);

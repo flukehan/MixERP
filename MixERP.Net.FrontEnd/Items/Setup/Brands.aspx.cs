@@ -11,6 +11,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.WebControls.ScrudFactory;
 
 namespace MixERP.Net.FrontEnd.Items.Setup
 {
@@ -18,7 +19,18 @@ namespace MixERP.Net.FrontEnd.Items.Setup
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            ScrudForm scrud = new ScrudForm();
 
+            scrud.KeyColumn = "brand_id";
+
+            scrud.TableSchema = "core";
+            scrud.Table = "brands";
+            scrud.ViewSchema = "core";
+            scrud.View = "brands";
+
+            scrud.Text = Resources.Titles.Brands;
+
+            ToolkitScriptManager1.NamingContainer.Controls.Add(scrud);
         }
     }
 }

@@ -11,6 +11,9 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.BusinessLayer.Helpers;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.WebControls.ScrudFactory;
 
 namespace MixERP.Net.FrontEnd.Sales.Setup
 {
@@ -18,7 +21,37 @@ namespace MixERP.Net.FrontEnd.Sales.Setup
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            ScrudForm scrud = new ScrudForm();
 
+            scrud.KeyColumn = "agent_bonus_setup_id";
+
+            scrud.TableSchema = "core";
+            scrud.Table = "agent_bonus_setups";
+            scrud.ViewSchema = "core";
+            scrud.View = "agent_bonus_setup_view";
+
+            scrud.DisplayFields = this.GetDisplayFields();
+            scrud.DisplayViews = this.GetDisplayViews();
+
+            scrud.Text = Resources.Titles.AgentBonusSlabAssignment;
+            ToolkitScriptManager1.NamingContainer.Controls.Add(scrud);
         }
+
+        private string GetDisplayFields()
+        {
+            List<string> displayFields = new List<string>();
+            ScrudHelper.AddDisplayField(displayFields, "core.bonus_slabs.bonus_slab_id", ConfigurationHelper.GetDbParameter("BonusSlabDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.core.agents.agent_id", ConfigurationHelper.GetDbParameter("AgentDisplayField"));
+            return string.Join(",", displayFields);
+        }
+
+        private string GetDisplayViews()
+        {
+            List<string> displayViews = new List<string>();
+            ScrudHelper.AddDisplayView(displayViews, "core.bonus_slabs.bonus_slab_id", "core.bonus_slab_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.agents.agent_id", "core.agent_view");
+            return string.Join(",", displayViews);
+        }
+
     }
 }

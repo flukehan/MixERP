@@ -30,16 +30,5 @@ namespace MixERP.Net.BusinessLayer.Office
         {
             return MixERP.Net.DatabaseLayer.Office.CashRepositories.GetBalance(cashRepositoryId);
         }
-
-        public static string GetDisplayField()
-        {
-            string displayField = MixERP.Net.Common.Helpers.ConfigurationHelper.GetSectionKey("MixERPDbParameters", "CashRepositoryDisplayField");
-            if(string.IsNullOrWhiteSpace(displayField))
-            {
-                displayField = "cash_repository_name";
-            }
-
-            return displayField;
-        }
     }
 }

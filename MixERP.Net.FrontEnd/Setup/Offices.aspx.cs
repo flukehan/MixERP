@@ -11,6 +11,9 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.BusinessLayer.Helpers;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.WebControls.ScrudFactory;
 
 namespace MixERP.Net.FrontEnd.Setup
 {
@@ -18,7 +21,43 @@ namespace MixERP.Net.FrontEnd.Setup
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            ScrudForm scrud = new ScrudForm();
 
+            scrud.KeyColumn = "office_id";
+
+            scrud.TableSchema = "office";
+            scrud.Table = "offices";
+            scrud.ViewSchema = "office";
+            scrud.View = "offices";
+
+            scrud.Width = 4000;
+
+            scrud.DisplayFields = this.GetDisplayFields();
+            scrud.DisplayViews = this.GetDisplayViews();
+
+            scrud.Text = Resources.Titles.OfficeSetup;
+
+            ToolkitScriptManager1.NamingContainer.Controls.Add(scrud);
         }
+
+        private string GetDisplayFields()
+        {
+            List<string> displayFields = new List<string>();
+            ScrudHelper.AddDisplayField(displayFields, "office.offices.office_id", ConfigurationHelper.GetDbParameter("OfficeDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.currencies.currency_code", ConfigurationHelper.GetDbParameter("CurrencyDisplayField"));
+            return string.Join(",", displayFields);
+        }
+
+        private string GetDisplayViews()
+        {
+            List<string> displayViews = new List<string>();
+            ScrudHelper.AddDisplayView(displayViews, "office.offices.office_id", "office.office_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.currencies.currency_code", "core.currencies");
+            return string.Join(",", displayViews);
+        }
+
+
+
+
     }
 }

@@ -86,7 +86,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             saveButton.Text = Resources.ScrudResource.Save;
             saveButton.OnClientClick = "adjustSpinnerSize();";
             saveButton.Click += SaveButton_Click;
-            saveButton.CssClass = "button";
+            saveButton.CssClass = this.GetButtonCssClass();
 
             controlCell.Controls.Add(saveButton);
 
@@ -96,13 +96,13 @@ namespace MixERP.Net.WebControls.ScrudFactory
             cancelButton.CausesValidation = false;
             cancelButton.OnClientClick = "$('#FormPanel').hide(500); $('#GridPanel').show(500);";
             cancelButton.Click += CancelButton_Click;
-            cancelButton.CssClass = "button";
+            cancelButton.CssClass = this.GetButtonCssClass();
 
             controlCell.Controls.Add(cancelButton);
 
             HtmlInputReset resetButton = new HtmlInputReset();
             resetButton.Value = Resources.ScrudResource.Reset;
-            resetButton.Attributes.Add("class", "button");
+            resetButton.Attributes.Add("class", this.GetButtonCssClass());
 
             controlCell.Controls.Add(resetButton);
 

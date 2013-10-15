@@ -911,13 +911,6 @@
     <Compile Include="UserControls\CurrencyExtender.ascx.designer.cs">
       <DependentUpon>CurrencyExtender.ascx</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Forms\FormControl.ascx.cs">
-      <DependentUpon>FormControl.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserControls\Forms\FormControl.ascx.designer.cs">
-      <DependentUpon>FormControl.ascx</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\Products\ProductControl.ascx.cs">
       <DependentUpon>ProductControl.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1496,7 +1489,6 @@
     <Content Include="Themes\purple\padding.css" />
     <Content Include="Themes\purple\mixerp-logo.png" />
     <Content Include="UserControls\CurrencyExtender.ascx" />
-    <Content Include="UserControls\Forms\FormControl.ascx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Themes\MixERP\Skin1.skin" />
