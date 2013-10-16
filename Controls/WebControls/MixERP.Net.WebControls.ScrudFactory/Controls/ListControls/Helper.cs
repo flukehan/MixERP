@@ -22,22 +22,25 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
             string[] key = keys.Split(',');
             string[] value = values.Split(',');
 
-            if(key.Count() == value.Count())
+            if (key.Count() != value.Count())
             {
-                for(int i = 0; i < key.Length; i++)
-                {
-                    ListItem item = new ListItem(key[i].Trim(), value[i].Trim());
-                    control.Items.Add(item);
-                }
+                throw new InvalidOperationException("Key or value count mismatch. Cannot add items to " + control.ID);
             }
 
-            foreach(ListItem item in control.Items)
+            for (int i = 0; i < key.Length; i++)
             {
-                if(control is CheckBoxList)
+                ListItem item = new ListItem(key[i].Trim(), value[i].Trim());
+                control.Items.Add(item);
+            }
+
+            foreach (ListItem item in control.Items)
+            {
+                //Checkbox list allows multiple selection.
+                if (control is CheckBoxList)
                 {
-                    foreach(string selectedValue in selectedValues.Split(','))
+                    foreach (string selectedValue in selectedValues.Split(','))
                     {
-                        if(item.Value.Trim().Equals(selectedValue.Trim()))
+                        if (item.Value.Trim().Equals(selectedValue.Trim()))
                         {
                             item.Selected = true;
                         }
@@ -45,7 +48,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
                 }
                 else
                 {
-                    if(item.Value.Trim().Equals(selectedValues.Split(',').Last().Trim()))
+                    if (item.Value.Trim().Equals(selectedValues.Split(',').Last().Trim()))
                     {
                         item.Selected = true;
                         break;

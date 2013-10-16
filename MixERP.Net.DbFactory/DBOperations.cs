@@ -26,7 +26,6 @@ namespace MixERP.Net.DBFactory
                     try
                     {
                         command.Connection = connection;
-                        command.CommandTimeout = 300;
                         connection.Open();
 
                         command.ExecuteNonQuery();
@@ -49,7 +48,6 @@ namespace MixERP.Net.DBFactory
                 using(Npgsql.NpgsqlConnection connection = new Npgsql.NpgsqlConnection(MixERP.Net.DBFactory.DBConnection.ConnectionString()))
                 {
                     command.Connection = connection;
-                    command.CommandTimeout = 300;
                     connection.Open();
                     return command.ExecuteScalar();
                 }
@@ -65,7 +63,6 @@ namespace MixERP.Net.DBFactory
                 using(Npgsql.NpgsqlConnection connection = new Npgsql.NpgsqlConnection(connectionString))
                 {
                     command.Connection = connection;
-                    command.CommandTimeout = 300;
 
                     using(NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(command))
                     {
@@ -97,7 +94,6 @@ namespace MixERP.Net.DBFactory
                 using(Npgsql.NpgsqlConnection connection = new Npgsql.NpgsqlConnection(MixERP.Net.DBFactory.DBConnection.ConnectionString()))
                 {
                     command.Connection = connection;
-                    command.CommandTimeout = 300;
 
                     command.Connection.Open();
                     reader = command.ExecuteReader(CommandBehavior.CloseConnection);
@@ -128,7 +124,6 @@ namespace MixERP.Net.DBFactory
                 using(Npgsql.NpgsqlConnection connection = new Npgsql.NpgsqlConnection(MixERP.Net.DBFactory.DBConnection.ConnectionString()))
                 {
                     command.Connection = connection;
-                    command.CommandTimeout = 300;
 
                     using(Npgsql.NpgsqlDataAdapter adapter = new Npgsql.NpgsqlDataAdapter(command))
                     {

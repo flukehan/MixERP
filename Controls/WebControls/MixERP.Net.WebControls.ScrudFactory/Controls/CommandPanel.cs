@@ -27,7 +27,8 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
         public Panel GetCommandPanel()
         {
             commandPanel = new Panel();
-            commandPanel.CssClass = "vpad16";
+            commandPanel.CssClass = "vpad16"; //Parameterize in configuration file.
+
             this.AddShowCompactButton(commandPanel);
             this.AddShowAllButton(commandPanel);
             this.AddAddButton(commandPanel);
@@ -41,48 +42,32 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
 
         private void AddShowCompactButton(Panel p)
         {
-            HtmlInputButton showCompactButton = new HtmlInputButton();
-            showCompactButton.Attributes.Add("class", this.ButtonCssClass);
-            showCompactButton.Attributes.Add("title", "ALT + C");
-            showCompactButton.Attributes.Add("onclick", "showCompact();");
-            showCompactButton.Value = Resources.ScrudResource.ShowCompact;
+            HtmlInputButton showCompactButton = this.GetInputButton("ALT + C", "showCompact();", Resources.ScrudResource.ShowCompact);
             p.Controls.Add(showCompactButton);
         }
 
         private void AddShowAllButton(Panel p)
         {
-            HtmlInputButton showAllButton = new HtmlInputButton();
-            showAllButton.Attributes.Add("class", this.ButtonCssClass);
-            showAllButton.Attributes.Add("title", "Ctrl + S");
-            showAllButton.Attributes.Add("onclick", "showAll();");
-            showAllButton.Value = Resources.ScrudResource.ShowAll;
+            HtmlInputButton showAllButton = this.GetInputButton("CTRL + S", "showAll();", Resources.ScrudResource.ShowAll);
             p.Controls.Add(showAllButton);
         }
 
         private void AddAddButton(Panel p)
         {
-            HtmlInputButton addButton = new HtmlInputButton();
-            addButton.Attributes.Add("class", this.ButtonCssClass);
-            addButton.Attributes.Add("title", "Alt + A");
-            addButton.Attributes.Add("onclick", "return(addNew());");
-            addButton.Value = Resources.ScrudResource.AddNew;
+            HtmlInputButton addButton = this.GetInputButton("ALT + A", "return(addNew());", Resources.ScrudResource.AddNew);
             p.Controls.Add(addButton);
         }
 
         private void AddEditButton(Panel p)
         {
-            EditButton = new Button();
-            EditButton.Attributes.Add("class", this.ButtonCssClass);
-            EditButton.Attributes.Add("title", "Ctrl + E");
-            EditButton.Attributes.Add("onclick", "return(confirmAction());");
-            EditButton.Text = Resources.ScrudResource.EditSelected;
+            EditButton = this.GetButton("CTRL + E", "return(confirmAction());", Resources.ScrudResource.EditSelected);
             EditButton.Click += new EventHandler(OnEditButtonClick);
             p.Controls.Add(EditButton);
         }
 
         private void OnEditButtonClick(object sender, EventArgs e)
         {
-            if(EditButtonClick != null)
+            if (EditButtonClick != null)
             {
                 EditButtonClick(this, e);
             }
@@ -90,18 +75,14 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
 
         private void AddDeleteButton(Panel p)
         {
-            DeleteButton = new Button();
-            DeleteButton.Attributes.Add("class", this.ButtonCssClass);
-            DeleteButton.Attributes.Add("title", "Ctrl + D");
-            DeleteButton.Attributes.Add("onclick", "return(confirmAction());");
-            DeleteButton.Text = Resources.ScrudResource.DeleteSelected;
+            DeleteButton = this.GetButton("CTRL + D", "return(confirmAction());", Resources.ScrudResource.DeleteSelected);
             DeleteButton.Click += new EventHandler(OnDeleteButtonClick);
             p.Controls.Add(DeleteButton);
         }
 
         private void OnDeleteButtonClick(object sender, EventArgs e)
         {
-            if(DeleteButtonClick != null)
+            if (DeleteButtonClick != null)
             {
                 DeleteButtonClick(this, e);
             }
@@ -109,13 +90,32 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
 
         private void AddPrintButton(Panel p)
         {
-            HtmlInputButton printButton = new HtmlInputButton();
-            printButton.Attributes.Add("class", this.ButtonCssClass);
-            printButton.Attributes.Add("title", "Ctrl + P");
-            printButton.Attributes.Add("onclick", "printThis();");
-            printButton.Value = Resources.ScrudResource.Print;
+            HtmlInputButton printButton = this.GetInputButton("CTRL + P", "printThis();", Resources.ScrudResource.Print);
             p.Controls.Add(printButton);
         }
+
+        private HtmlInputButton GetInputButton(string title, string onclick, string value)
+        {
+            HtmlInputButton inputButton = new HtmlInputButton();
+            inputButton.Attributes.Add("class", this.ButtonCssClass);
+            inputButton.Attributes.Add("title", title);
+            inputButton.Attributes.Add("onclick", onclick);
+            inputButton.Value = value;
+
+            return inputButton;
+        }
+
+        private Button GetButton(string toolTip, string onClientClick, string text)
+        {
+            Button button = new Button();
+            button.CssClass = this.ButtonCssClass;
+            button.ToolTip = toolTip;
+            button.OnClientClick = onClientClick;
+            button.Text = text;
+
+            return button;
+        }
+
 
     }
 }

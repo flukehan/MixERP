@@ -34,11 +34,10 @@ namespace MixERP.Net.DBFactory
                 return null;
             }
 
-            //No comment.
             if(identifier.Contains("--")){return string.Empty;}
             if(identifier.Contains("/*")){return string.Empty;}
 
-            //Removing the match else than alphabets, numbers, and underscore.
+            //Only alphabets [a-zA-Z], numbers, and an underscore is allowed.
             return Regex.Replace(identifier, @"[^a-zA-Z0-9_]", "");
         }
 

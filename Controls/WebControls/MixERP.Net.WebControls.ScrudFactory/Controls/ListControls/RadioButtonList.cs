@@ -43,6 +43,5 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
             Helper.AddListItems(list, keys, values, selectedValues);
             return list;
         }
-
     }
 }

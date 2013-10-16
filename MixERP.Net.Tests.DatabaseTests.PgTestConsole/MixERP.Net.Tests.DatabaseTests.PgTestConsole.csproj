@@ -4,16 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DAAAD018-FCD1-4231-BB11-EF765F41463D}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{E45E5B6B-AD2C-4603-8E02-C7328413CCA2}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MixERP.Net.WebControls.ReportEngine.Data</RootNamespace>
-    <AssemblyName>MixERP.Net.WebControls.ReportEngine.Data</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <RootNamespace>MixERP.Net.Tests.DatabaseTests.PgTestConsole</RootNamespace>
+    <AssemblyName>MixERP.Net.Tests.DatabaseTests.PgTestConsole</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>Mono</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -21,9 +21,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>..\..\..\MixERP.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -31,27 +31,17 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>Mix Open Foundation.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Mono.Security, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Dependencies\Npgsql\Mono.Security.dll</HintPath>
+    <Reference Include="Mono.Security">
+      <HintPath>..\Dependencies\Npgsql\Mono.Security.dll</HintPath>
     </Reference>
-    <Reference Include="Npgsql, Version=2.0.12.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Dependencies\Npgsql\Npgsql.dll</HintPath>
+    <Reference Include="Npgsql">
+      <HintPath>..\Dependencies\Npgsql\Npgsql.dll</HintPath>
     </Reference>
-    <Reference Include="policy.2.0.Npgsql, Version=0.0.0.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Dependencies\Npgsql\policy.2.0.Npgsql.dll</HintPath>
+    <Reference Include="policy.2.0.Npgsql">
+      <HintPath>..\Dependencies\Npgsql\policy.2.0.Npgsql.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -60,20 +50,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Connection\DBConnection.cs" />
-    <Compile Include="Installer.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TableHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Mix Open Foundation.snk" />
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\MixERP.net.Common\MixERP.Net.Common.csproj">
-      <Project>{d5a09c22-8f48-4fb2-a14d-c62c8c8fcec0}</Project>
-      <Name>MixERP.Net.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\MixERP.Net.DbFactory\MixERP.Net.DBFactory.csproj">
+    <ProjectReference Include="..\MixERP.Net.DbFactory\MixERP.Net.DBFactory.csproj">
       <Project>{8fd9661c-2473-4581-8722-18b08d4db252}</Project>
       <Name>MixERP.Net.DBFactory</Name>
     </ProjectReference>

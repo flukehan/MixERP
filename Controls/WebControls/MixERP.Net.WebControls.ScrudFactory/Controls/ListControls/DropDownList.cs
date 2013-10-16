@@ -8,193 +8,35 @@ http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common.Helpers;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 {
     public partial class ScrudDropDownList
     {
-        //Todo: Simplify this class.
         public static void AddDropDownList(HtmlTable t, string columnName, bool isNullable, string tableSchema, string tableName, string tableColumn, string defaultValue, string displayFields, string displayViews, string selectedValues)
         {
-            string selectedItemValue = string.Empty;
-            string dataTextField = string.Empty;
-            string relation = string.Empty;
-            string viewRelation = string.Empty;
-            string selected = string.Empty;
-            string label = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString("FormResource", columnName);
-            string schema = string.Empty;
-            string view = string.Empty;
-            HtmlAnchor itemSelectorAnchor = null;
+            string label = LocalizationHelper.GetResourceString("FormResource", columnName);
 
             DropDownList dropDownList = GetDropDownList(columnName + "_dropdownlist");
 
+            HtmlAnchor itemSelectorAnchor;
 
-            using(System.Data.DataTable table = MixERP.Net.BusinessLayer.Helpers.FormHelper.GetTable(tableSchema, tableName))
+            using (System.Data.DataTable table = MixERP.Net.BusinessLayer.Helpers.FormHelper.GetTable(tableSchema, tableName))
             {
-                if(table.Rows.Count > 0)
-                {
-                    //See DisplayFields Property for more information.
-                    //Loop through all the DisplayFields to match this control.
-                    foreach(string displayField in displayFields.Split(','))
-                    {
-                        //First, trim the field to remove whitespaces.
-                        viewRelation = displayField.Trim();
-
-                        //The fully qualified name of this column.
-                        relation = tableSchema + "." + tableName + "." + tableColumn;
-
-                        //Check whether this field matches exactly with this column.
-                        if(viewRelation.StartsWith(relation, StringComparison.OrdinalIgnoreCase))
-                        {
-                            //This field in this loop contained the column name we were looking for.
-                            //Now, get the mapped column (display field) to show on the drop down list.
-                            //This should be done by :
-                            //1. Removing the column name from the field.
-                            //2. Removign the the "-->" symbol.
-                            //What we get is the name of the field that is displayed on this drop down list.
-                            dataTextField = viewRelation.Replace(relation + "-->", "");
-
-                            //Since we have found the field we needed, let's break this loop.
-                            break;
-                        }
-                        //Probably this was not the field we were looking for.
-                    }
-
-                    //The display field can be an existing column or a representation of different columns (formula).
-                    //Let's check whether the display field really exists.
-                    if(!table.Columns.Contains(dataTextField))
-                    {
-                        //This display field was a formula based various columns.
-                        //Now, we are adding a new column "DataTextField" in the data table using the requested formula.
-                        table.Columns.Add("DataTextField", typeof(string), dataTextField);
-                        dataTextField = "DataTextField";
-                    }
-
-                    dropDownList.DataSource = table;
-                    dropDownList.DataValueField = tableColumn;
-                    dropDownList.DataTextField = dataTextField;
-                    dropDownList.DataBind();
-
-                    if(!string.IsNullOrWhiteSpace(displayViews))
-                    {
-                        //See DisplayViews Property for more information.
-                        //Loop through all the DisplayViews to match this control.
-                        foreach(string displayView in displayViews.Split(','))
-                        {
-                            //First, trim the field to remove whitespaces.
-                            viewRelation = displayView.Trim();
-
-                            //The fully qualified name of this column.
-                            relation = tableSchema + "." + tableName + "." + tableColumn;
-
-                            //Check whether this view matches exactly with this column.
-                            if(viewRelation.StartsWith(relation, StringComparison.OrdinalIgnoreCase))
-                            {
-                                //This view in this loop starts with the column name we were looking for.
-                                //Now, get the mapped view to show on the modal page.
-                                //This should be done by :
-                                //1. Removing the column name from the field.
-                                //2. Removign the the "-->" symbol.
-                                //What we get is the name of the view that is shown on the modal page.
-                                viewRelation = viewRelation.Replace(relation + "-->", "");
-
-                                //Since we have found the field we needed, let's break this loop.
-                                break;
-                            }
-                            //Probably this was not the field we were looking for.
-                        }
-
-                        schema = viewRelation.Split('.').First();
-                        view = viewRelation.Split('.').Last();
-
-                        //Sanitize the schema and the view
-                        schema = MixERP.Net.BusinessLayer.DBFactory.Sanitizer.SanitizeIdentifierName(schema);
-                        view = MixERP.Net.BusinessLayer.DBFactory.Sanitizer.SanitizeIdentifierName(view);
-
-                        if(string.IsNullOrWhiteSpace(schema) || string.IsNullOrWhiteSpace(view))
-                        {
-                            schema = string.Empty;
-                            view = string.Empty;
-                        }
-                        else
-                        {
-                            itemSelectorAnchor = new HtmlAnchor();
-                            itemSelectorAnchor.Attributes["class"] = "item-selector";
-                            itemSelectorAnchor.HRef = "/General/ItemSelector.aspx?Schema=" + schema + "&View=" + view + "&AssociatedControlId=" + dropDownList.ID;
-                        }
-                    }
-
-                }
+                SetDisplayFields(dropDownList, table, tableSchema, tableName, tableColumn, displayFields);
+                itemSelectorAnchor = GetItemSelector(dropDownList.ClientID, table, tableSchema, tableName, tableColumn, displayViews);
             }
 
+            SetSelectedValue(dropDownList, tableSchema, tableName, tableColumn, defaultValue, selectedValues);
 
-            //Determining the value which will be pre-selected when this drop down list is displayed.
-
-            //If the "defaultValue" parameter has a value, it means that the form is being edited.
-            //Check if "defaultValue" is empty.
-            if(!string.IsNullOrWhiteSpace(defaultValue))
-            {
-                selectedItemValue = defaultValue;
-            }
-            else
-            {
-                //In this case, this is probably a fresh form for entry.
-                //Checking if the "SelectedValues" has a value.
-                if(!string.IsNullOrWhiteSpace(selectedValues))
-                {
-                    foreach(string selectedValue in selectedValues.Split(','))
-                    {
-                        //Trim whitespaces
-                        selected = selectedValue.Trim();
-
-                        //The plain old fully qualified name of this column.
-                        relation = tableSchema + "." + tableName + "." + tableColumn;
-
-                        //Checking again whether this field matches exactly with this column.
-                        if(selected.StartsWith(relation, StringComparison.OrdinalIgnoreCase))
-                        {
-                            //This field in this loop contained the column name we were looking for.
-                            //Now, get the mapped column (display field) to show on the drop down list.
-                            //This should be done by :
-                            //1. Removing the column name from the field.
-                            //2. Removign the the "-->" symbol.
-                            string value = selected.Replace(relation + "-->", "");
-
-                            //Check the type of the value.
-                            //If the value starts with single inverted comma, the value is a text.
-                            if(value.StartsWith("'", StringComparison.OrdinalIgnoreCase))
-                            {
-                                //The selected item value from the drop down list text fields.
-                                ListItem item = dropDownList.Items.FindByText(value.Replace("'", ""));
-
-                                if(item != null)
-                                {
-                                    selectedItemValue = item.Value;
-                                }
-                            }
-                            else
-                            {
-                                selectedItemValue = value;
-                            }
-                            break;
-                        }
-                    }
-                }
-            }
-
-
-            if(!string.IsNullOrWhiteSpace(selectedItemValue))
-            {
-                dropDownList.SelectedValue = selectedItemValue;
-            }
-
-
-            if(isNullable)
+            if (isNullable)
             {
                 dropDownList.Items.Insert(0, new ListItem(String.Empty, String.Empty));
                 ScrudFactoryHelper.AddRow(t, label, dropDownList, itemSelectorAnchor);
@@ -204,24 +46,179 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
                 RequiredFieldValidator required = ScrudFactoryHelper.GetRequiredFieldValidator(dropDownList);
                 ScrudFactoryHelper.AddRow(t, label + Resources.ScrudResource.RequiredFieldIndicator, dropDownList, required, itemSelectorAnchor);
             }
+        }
 
+
+        private static string GetExpressionValue(string expressions, string schema, string table, string column)
+        {
+            if (string.IsNullOrWhiteSpace(expressions) || string.IsNullOrWhiteSpace(schema) || string.IsNullOrWhiteSpace(table) || string.IsNullOrWhiteSpace(column))
+            {
+                return string.Empty;
+            }
+
+            //Fully qualified relation name (PostgreSQL Terminology).
+            string relation = schema + "." + table + "." + column;
+
+            //Todo: Parameterize these values in the configuration file.
+            char itemSeparator = ',';
+            string expressionSeparator = "-->";
+
+            foreach (string item in expressions.Split(itemSeparator))
+            {
+                //First, trim the field to remove whitespaces.
+                string expression = item.Trim(); ;
+
+                //Check whether this expression matches with the fully qualified column name.
+                if (expression.StartsWith(relation, StringComparison.OrdinalIgnoreCase))
+                {
+                    //Remove the column name and expression separator and return the actual expression value.
+                    return expression.Replace(relation + expressionSeparator, string.Empty);
+                }
+                //Probably that was not the field we were looking for.
+            }
+
+            return string.Empty;
+        }
+
+        private static void SetDisplayFields(DropDownList dropDownList, DataTable table, string tableSchema, string tableName, string tableColumn, string displayFields)
+        {
+            //See DisplayFields Property for more information.
+            string columnOrExpression = string.Empty;
+
+            if (table.Rows.Count > 0)
+            {
+                //Get the expression value of display field from comma seprated list of expressions.
+                //The expression can be either the column name or a column expression.
+                columnOrExpression = GetExpressionValue(displayFields, tableSchema, tableName, tableColumn);
+
+                //Let's check whether the display field expression really exists.
+                //If it does not exist, it is probably an expression column.
+                if (!table.Columns.Contains(columnOrExpression))
+                {
+                    //Add the expression as a new column in the datatable.
+                    table.Columns.Add("DataTextField", typeof(string), columnOrExpression);
+                    columnOrExpression = "DataTextField";
+                }
+
+                dropDownList.DataSource = table;
+                dropDownList.DataValueField = tableColumn;
+                dropDownList.DataTextField = columnOrExpression;
+                dropDownList.DataBind();
+            }
+        }
+
+        /// <summary>
+        /// Creates item selector html anchor which bascially is an extender of the control.
+        /// The extender is an html image button which, when clicked, will open 
+        /// a popup window which allows selection, filtering, search, etc. on the target table.
+        /// </summary>
+        /// <param name="associatedControlId">ClientID of the DropDownList control to wich this control is associated to.</param>
+        /// <param name="table"></param>
+        /// <param name="tableSchema"></param>
+        /// <param name="tableName"></param>
+        /// <param name="tableColumn"></param>
+        /// <param name="displayViews"></param>
+        /// <returns></returns>
+        private static HtmlAnchor GetItemSelector(string associatedControlId, DataTable table, string tableSchema, string tableName, string tableColumn, string displayViews)
+        {
+            if (table.Rows.Count.Equals(0) || string.IsNullOrWhiteSpace(displayViews))
+            {
+                return null;
+            }
+
+            HtmlAnchor itemSelectorAnchor = new HtmlAnchor();
+
+            string relation = string.Empty;
+            string viewRelation = string.Empty;
+
+            string schema = string.Empty;
+            string view = string.Empty;
+
+            //Get the expression value of display view from comma seprated list of expressions.
+            //The expression must be a valid fully qualified table or view name.
+            viewRelation = GetExpressionValue(displayViews, tableSchema, tableName, tableColumn);
+
+            schema = viewRelation.Split('.').First();
+            view = viewRelation.Split('.').Last();
+
+            //Sanitize the schema and the view
+            schema = MixERP.Net.BusinessLayer.DBFactory.Sanitizer.SanitizeIdentifierName(schema);
+            view = MixERP.Net.BusinessLayer.DBFactory.Sanitizer.SanitizeIdentifierName(view);
+
+            if (string.IsNullOrWhiteSpace(schema) || string.IsNullOrWhiteSpace(view))
+            {
+                throw new InvalidOperationException("Invalid table or view name specified. Make sure that the expression value is a fully qualified relation name.");
+            }
+
+            //Todo: Parameterize these attributes in the configuration file.
+            itemSelectorAnchor.Attributes["class"] = "item-selector";
+            itemSelectorAnchor.HRef = "/General/ItemSelector.aspx?Schema=" + schema + "&View=" + view + "&AssociatedControlId=" + associatedControlId;
+
+            return itemSelectorAnchor;
+        }
+
+        private static void SetSelectedValue(DropDownList dropDownList, string schema, string table, string column, string postbackValue, string selectedValueExpressions)
+        {
+            string selectedItemValue = string.Empty;
+
+            if (dropDownList == null || string.IsNullOrWhiteSpace(schema) || string.IsNullOrWhiteSpace(table) || string.IsNullOrWhiteSpace(column))
+            {
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(postbackValue) && string.IsNullOrWhiteSpace(selectedValueExpressions))
+            {
+                return;
+            }
+
+            //If the post back contains a value, skip finding value from expressions.
+            if (!string.IsNullOrWhiteSpace(postbackValue))
+            {
+                selectedItemValue = postbackValue;
+            }
+            else
+            {
+                //Find value from expressions.
+                if (!string.IsNullOrWhiteSpace(selectedValueExpressions))
+                {
+                    string value = GetExpressionValue(selectedValueExpressions, schema, table, column);
+
+                    if (value.StartsWith("'", StringComparison.OrdinalIgnoreCase))
+                    {
+                        //If the value starts with a quote, find the value by the text.
+                        ListItem item = dropDownList.Items.FindByText(value.Replace("'", ""));
+
+                        if (item != null)
+                        {
+                            selectedItemValue = item.Value;
+                        }
+                    }
+                    else
+                    {
+                        selectedItemValue = value;
+                    }
+                }
+            }
+
+
+            if (!string.IsNullOrWhiteSpace(selectedItemValue))
+            {
+                dropDownList.SelectedValue = selectedItemValue;
+            }
         }
 
         private static DropDownList GetDropDownList(string id, string keys, string values, string selectedValues)
         {
-            DropDownList list = new DropDownList();
-            list.ID = id;
-            list.ClientIDMode = System.Web.UI.ClientIDMode.Static;
-
-            Helper.AddListItems(list, keys, values, selectedValues);
-            return list;
+            DropDownList dropDownList = GetDropDownList(id);
+            Helper.AddListItems(dropDownList, keys, values, selectedValues);
+            return dropDownList;
         }
 
         private static DropDownList GetDropDownList(string id)
         {
             DropDownList dropDownList = new DropDownList();
-            dropDownList.ID = id;
 
+            dropDownList.ID = id;
             dropDownList.ClientIDMode = System.Web.UI.ClientIDMode.Static;
 
             return dropDownList;
