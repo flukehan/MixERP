@@ -52,7 +52,7 @@ namespace MixERP.Net.Common.Helpers
             return key;
         }
 
-        public static void AddResourceString(string className, string key, string value)
+        public static void AddResourceString(string culture, string className, string key, string value)
         { 
             //Todo.
             return;

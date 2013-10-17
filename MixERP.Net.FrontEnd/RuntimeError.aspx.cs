@@ -21,14 +21,16 @@ namespace MixERP.Net.FrontEnd
         {
             string server = Request.ServerVariables["SERVER_SOFTWARE"];
 
-            //This is visual studio
+            //This is visual studio.
             if(string.IsNullOrWhiteSpace(server))
             {
+                //Display detailed error message on development.
                 this.DisplayError();
             }
             else
             {
-                bool displayError = System.Configuration.ConfigurationManager.AppSettings["DisplayError"].Equals("true");
+                bool displayError = System.Configuration.ConfigurationManager.AppSettings["DisplayErrorDetails"].Equals("true");
+                
                 if(displayError)
                 {
                     this.DisplayError();

@@ -53,7 +53,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logic", "Logic", "{ADD35728
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database Tests", "Database Tests", "{ABD09714-F452-4D9F-A209-06508B04A316}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.Tests.DatabaseTests.PgTestConsole", "MixERP.Net.Tests.DatabaseTests.PgTestConsole\MixERP.Net.Tests.DatabaseTests.PgTestConsole.csproj", "{E45E5B6B-AD2C-4603-8E02-C7328413CCA2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.Tests.DatabaseTests.PgTestConsole", "Tests\Database Tests\MixERP.Net.Tests.DatabaseTests.PgTestConsole\MixERP.Net.Tests.DatabaseTests.PgTestConsole.csproj", "{E45E5B6B-AD2C-4603-8E02-C7328413CCA2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

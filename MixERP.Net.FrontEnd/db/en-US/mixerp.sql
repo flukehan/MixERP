@@ -2096,7 +2096,8 @@ SELECT 'Purchase.Payables', core.get_account_id_by_account_code('20100') UNION A
 SELECT 'Purchase.Discount', core.get_account_id_by_account_code('40270') UNION ALL
 SELECT 'Purchase.Tax', core.get_account_id_by_account_code('20700') UNION ALL
 SELECT 'Inventory', core.get_account_id_by_account_code('10700') UNION ALL
-SELECT 'COGS', core.get_account_id_by_account_code('40200');
+SELECT 'COGS', core.get_account_id_by_account_code('40200') UNION ALL
+SELECT 'Tax.Payable', core.get_account_id_by_account_code('20700');
 
 CREATE FUNCTION core.get_account_id_by_parameter(text)
 RETURNS integer

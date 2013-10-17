@@ -1015,10 +1015,14 @@
     <Content Include="db\en-US\mixerp.sql" />
     <Content Include="db\en-US\sample-data.sql" />
     <Content Include="db\index.html" />
+    <Content Include="db\pg-test\functionality-tests\gl-mapping.test.sql" />
     <Content Include="db\pg-test\functionality-tests\index.html" />
+    <Content Include="db\pg-test\functionality-tests\passwords.test.sql" />
     <Content Include="db\pg-test\index.html" />
+    <Content Include="db\pg-test\install-unit-test.sql" />
     <Content Include="db\pg-test\test-by-schema\audit\index.html" />
     <Content Include="db\pg-test\test-by-schema\core\index.html" />
+    <Content Include="db\pg-test\test-by-schema\core\verification_statuses.sql" />
     <Content Include="db\pg-test\test-by-schema\crm\index.html" />
     <Content Include="db\pg-test\test-by-schema\index.html" />
     <Content Include="db\pg-test\test-by-schema\mrp\index.html" />
@@ -1108,6 +1112,7 @@
     <Content Include="Reports\Sources\Sales.View.Sales.Invoice.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Resource\Configuration\index.html" />
     <Content Include="Resource\Configuration\ScrudParameters.xml" />
     <Content Include="Resource\Configuration\ReportParameters.xml" />
     <Content Include="Resource\Icons\bottom-16.png" />

@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MixERP.Net.Tests.DatabaseTests.PgTestConsole</RootNamespace>
     <AssemblyName>MixERP.Net.Tests.DatabaseTests.PgTestConsole</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Mono</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -57,7 +58,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MixERP.Net.DbFactory\MixERP.Net.DBFactory.csproj">
+    <ProjectReference Include="..\..\..\MixERP.Net.DbFactory\MixERP.Net.DBFactory.csproj">
       <Project>{8fd9661c-2473-4581-8722-18b08d4db252}</Project>
       <Name>MixERP.Net.DBFactory</Name>
     </ProjectReference>
