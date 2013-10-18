@@ -1,4 +1,76 @@
-﻿DROP FUNCTION IF EXISTS office.can_login(user_id integer_strict, office_id integer_strict);
+﻿DROP FUNCTION IF EXISTS core.is_leap_year(integer);
+CREATE FUNCTION core.is_leap_year(integer)
+RETURNS boolean
+AS
+$$
+BEGIN
+	RETURN (SELECT date_part('day', (($1::text || '-02-01')::date + '1 month'::interval - '1 day'::interval)) = 29);
+END
+$$
+LANGUAGE plpgsql
+IMMUTABLE STRICT;
+
+DROP FUNCTION IF EXISTS core.get_current_year();
+CREATE FUNCTION core.get_current_year()
+RETURNS integer
+AS
+$$
+BEGIN
+	RETURN(SELECT EXTRACT(year FROM current_date)::integer);
+END
+$$
+LANGUAGE plpgsql;
+
+DROP FUNCTION IF EXISTS core.is_leap_year();
+CREATE FUNCTION core.is_leap_year()
+RETURNS boolean
+AS
+$$
+BEGIN
+	RETURN core.is_leap_year(core.get_current_year());
+END
+$$
+LANGUAGE plpgsql
+IMMUTABLE STRICT;
+
+DROP FUNCTION IF EXISTS core.calculate_interest(principal numeric, rate numeric, days integer, num_of_days_in_year integer, round_up integer);
+CREATE FUNCTION core.calculate_interest(principal numeric, rate numeric, days integer, round_up integer, num_of_days_in_year integer)
+RETURNS numeric
+AS
+$$
+	DECLARE interest numeric;
+BEGIN
+	IF num_of_days_in_year = 0 OR num_of_days_in_year IS NULL THEN
+		RAISE EXCEPTION 'Cannot calculate interest. The number of days in a year was not provided.';
+	END IF;
+	
+	interest := ROUND(principal * rate * days / (num_of_days_in_year * 100), round_up);
+
+	RETURN interest;
+END
+$$
+LANGUAGE plpgsql
+IMMUTABLE STRICT;
+
+
+DROP FUNCTION IF EXISTS core.calculate_interest(principal numeric, rate numeric, days integer, round_up integer);
+CREATE FUNCTION core.calculate_interest(principal numeric, rate numeric, days integer, round_up integer)
+RETURNS numeric
+AS
+$$
+	DECLARE num_of_days_in_year integer = 365;
+BEGIN
+	IF core.is_leap_year() THEN
+		num_of_days_in_year = 366;
+	END IF;
+	
+	RETURN core.calculate_interest(principal, rate, days, round_up, num_of_days_in_year);
+END
+$$
+LANGUAGE plpgsql
+IMMUTABLE STRICT;
+
+DROP FUNCTION IF EXISTS office.can_login(user_id integer_strict, office_id integer_strict);
 CREATE FUNCTION office.can_login(user_id integer_strict, office_id integer_strict)
 RETURNS boolean
 AS
