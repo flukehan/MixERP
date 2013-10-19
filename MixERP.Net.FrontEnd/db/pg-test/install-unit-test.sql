@@ -204,7 +204,7 @@ BEGIN
 	END LOOP;
 
 	_completed_on := clock_timestamp() AT TIME ZONE 'UTC';
-	_delta := extract(millisecond from _completed_on - _started_from);
+	_delta := extract(millisecond from _completed_on - _started_from)::integer;
 	
 	UPDATE unit_tests.tests
 	SET total_tests = _total_tests, failed_tests = _failed_tests, completed_on = _completed_on
@@ -228,7 +228,7 @@ BEGIN
 	ELSE
 		RAISE NOTICE '%', _ret_val;	
 	END IF;
-	
+
 	RETURN _ret_val;
 END
 $$

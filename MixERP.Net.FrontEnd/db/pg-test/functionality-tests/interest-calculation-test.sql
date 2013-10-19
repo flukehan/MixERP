@@ -28,8 +28,7 @@ BEGIN
 	END IF;
 
 	SELECT assert.ok('End of test.') INTO message;
-
-	RETURN message;	
+	RETURN message;
 END
 $$
 LANGUAGE plpgsql;

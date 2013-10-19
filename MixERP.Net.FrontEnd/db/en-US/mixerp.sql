@@ -385,7 +385,7 @@ INSERT INTO core.currencies
 SELECT 'NPR', 'Rs.', 'Nepali Rupees', 'paisa' UNION ALL
 SELECT 'USD', '$ ', 'United States Dollar', 'cents';
 
-CREATE FUNCTION office.is_parent_office(child integer_strict, parent integer_strict)
+CREATE FUNCTION office.is_parent_office(parent integer_strict, child integer_strict)
 RETURNS boolean
 AS
 $$		
