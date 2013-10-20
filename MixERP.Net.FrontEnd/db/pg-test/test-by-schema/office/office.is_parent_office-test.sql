@@ -1,4 +1,11 @@
-﻿DROP FUNCTION IF EXISTS unit_tests.is_parent_office_test();
+﻿/********************************************************************************
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
+If a copy of the MPL was not distributed  with this file, You can obtain one at 
+http://mozilla.org/MPL/2.0/.
+***********************************************************************************/
+DROP FUNCTION IF EXISTS unit_tests.is_parent_office_test();
 
 CREATE FUNCTION unit_tests.is_parent_office_test()
 RETURNS test_result
@@ -16,11 +23,11 @@ $$
 BEGIN
 	grand_parent_id := nextval('office.offices_office_id_seq');
 	INSERT INTO office.offices(office_id, office_code,office_name,nick_name,registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number)
-	SELECT grand_parent_id, 'GP','Grand Parent Office', 'Grandpa', '1-1-2000', '','','','','','','','','','0','0';
+	SELECT grand_parent_id, 'Grand Parent','Grand Parent', 'Grand Parent', '1-1-2000', '','','','','','','','','','0','0';
 	
 	parent_id := nextval('office.offices_office_id_seq');
 	INSERT INTO office.offices(office_id, parent_office_id, office_code,office_name,nick_name,registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number)
-	SELECT parent_id, grand_parent_id, 'P','Parent Office', 'Parent', '1-1-2000', '','','','','','','','','','0','0';
+	SELECT parent_id, grand_parent_id, 'Parent','Parent', 'Parent', '1-1-2000', '','','','','','','','','','0','0';
 	
 	id := nextval('office.offices_office_id_seq');
 	INSERT INTO office.offices(office_id, parent_office_id, office_code,office_name,nick_name,registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number)

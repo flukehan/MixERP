@@ -16,10 +16,10 @@ CREATE DOMAIN test_result AS text;
 
 CREATE TABLE unit_tests.tests
 (
-	test_id			SERIAL NOT NULL PRIMARY KEY,
-	started_on		TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT(CURRENT_TIMESTAMP AT TIME ZONE 'UTC'),
+	test_id				SERIAL NOT NULL PRIMARY KEY,
+	started_on			TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT(CURRENT_TIMESTAMP AT TIME ZONE 'UTC'),
 	completed_on		TIMESTAMP WITHOUT TIME ZONE NULL,
-	total_tests		integer NULL DEFAULT(0),
+	total_tests			integer NULL DEFAULT(0),
 	failed_tests		integer NULL DEFAULT(0)
 );
 
@@ -34,12 +34,12 @@ ON unit_tests.tests(failed_tests);
 
 CREATE TABLE unit_tests.test_details
 (
-	id			BIGSERIAL NOT NULL PRIMARY KEY,
-	test_id			integer NOT NULL REFERENCES unit_tests.tests(test_id),
+	id					BIGSERIAL NOT NULL PRIMARY KEY,
+	test_id				integer NOT NULL REFERENCES unit_tests.tests(test_id),
 	function_name		text NOT NULL,
-	message			text NOT NULL,
-	ts			TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT(CURRENT_TIMESTAMP AT TIME ZONE 'UTC'),
-	status			boolean NOT NULL
+	message				text NOT NULL,
+	ts					TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT(CURRENT_TIMESTAMP AT TIME ZONE 'UTC'),
+	status				boolean NOT NULL
 );
 
 CREATE INDEX unit_tests_test_details_test_id_inx
