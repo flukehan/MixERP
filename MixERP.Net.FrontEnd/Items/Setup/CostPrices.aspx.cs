@@ -30,15 +30,15 @@ namespace MixERP.Net.FrontEnd.Items.Setup
             scrud.ViewSchema = "core";
             scrud.View = "item_cost_price_view";
 
-            scrud.DisplayFields = this.GetDisplayFields();
-            scrud.DisplayViews = this.GetDisplayViews();
+            scrud.DisplayFields = GetDisplayFields();
+            scrud.DisplayViews = GetDisplayViews();
 
             scrud.Text = Resources.Titles.ItemCostPrices;
 
             ToolkitScriptManager1.NamingContainer.Controls.Add(scrud);
         }
 
-        private string GetDisplayFields()
+        private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
             ScrudHelper.AddDisplayField(displayFields, "core.items.item_id", ConfigurationHelper.GetDbParameter("ItemDisplayField"));
@@ -47,7 +47,7 @@ namespace MixERP.Net.FrontEnd.Items.Setup
             return string.Join(",", displayFields);
         }
 
-        private string GetDisplayViews()
+        private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
             ScrudHelper.AddDisplayView(displayViews, "core.items.item_id", "core.item_view");

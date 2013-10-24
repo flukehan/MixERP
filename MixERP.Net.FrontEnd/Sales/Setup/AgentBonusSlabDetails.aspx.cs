@@ -30,22 +30,22 @@ namespace MixERP.Net.FrontEnd.Sales.Setup
             scrud.ViewSchema = "core";
             scrud.View = "bonus_slab_detail_view";
 
-            scrud.DisplayFields = this.GetDisplayFields();
-            scrud.DisplayViews = this.GetDisplayViews();
+            scrud.DisplayFields = GetDisplayFields();
+            scrud.DisplayViews = GetDisplayViews();
 
             scrud.Text = Resources.Titles.BonusSlabDetails;
 
             ToolkitScriptManager1.NamingContainer.Controls.Add(scrud);
         }
 
-        private string GetDisplayFields()
+        private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
             ScrudHelper.AddDisplayField(displayFields, "core.bonus_slabs.bonus_slab_id", ConfigurationHelper.GetDbParameter("BonusSlabDisplayField"));
             return string.Join(",", displayFields);
         }
 
-        private string GetDisplayViews()
+        private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
             ScrudHelper.AddDisplayView(displayViews, "core.bonus_slabs.bonus_slab_id", "core.bonus_slabs");

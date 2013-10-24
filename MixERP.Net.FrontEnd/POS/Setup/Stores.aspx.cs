@@ -30,15 +30,15 @@ namespace MixERP.Net.FrontEnd.POS.Setup
             scrud.ViewSchema = "office";
             scrud.View = "stores";
 
-            scrud.DisplayFields = this.GetDisplayFields();
-            scrud.DisplayViews = this.GetDisplayViews();
+            scrud.DisplayFields = GetDisplayFields();
+            scrud.DisplayViews = GetDisplayViews();
 
             scrud.Text = Resources.Titles.Stores;
 
             ToolkitScriptManager1.NamingContainer.Controls.Add(scrud);
         }
 
-        private string GetDisplayFields()
+        private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
             ScrudHelper.AddDisplayField(displayFields, "office.store_types.store_type_id", ConfigurationHelper.GetDbParameter("StoreTypeDisplayField"));
@@ -46,7 +46,7 @@ namespace MixERP.Net.FrontEnd.POS.Setup
             return string.Join(",", displayFields);
         }
 
-        private string GetDisplayViews()
+        private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
             ScrudHelper.AddDisplayView(displayViews, "office.store_types.store_type_id", "office.store_types");

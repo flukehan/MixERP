@@ -32,22 +32,22 @@ namespace MixERP.Net.FrontEnd.Items.Setup
             //Shipping address code will be automatically generated on the database.
             scrud.Exclude = "shipping_address_code";
 
-            scrud.DisplayFields = this.GetDisplayFields();
-            scrud.DisplayViews = this.GetDisplayViews();
+            scrud.DisplayFields = GetDisplayFields();
+            scrud.DisplayViews = GetDisplayViews();
 
             scrud.Text = Resources.Titles.ShippingAddressMaintenance;
 
             ToolkitScriptManager1.NamingContainer.Controls.Add(scrud);
         }
 
-        private string GetDisplayFields()
+        private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
             ScrudHelper.AddDisplayField(displayFields, "core.parties.party_id", ConfigurationHelper.GetDbParameter("PartyDisplayField"));
             return string.Join(",", displayFields);
         }
 
-        private string GetDisplayViews()
+        private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
             ScrudHelper.AddDisplayView(displayViews, "core.parties.party_id", "core.party_view");

@@ -29,15 +29,15 @@ namespace MixERP.Net.FrontEnd.Finance.Setup
             scrud.ViewSchema = "core";
             scrud.View = "bank_accounts";
 
-            scrud.DisplayFields = this.GetDisplayFields();
-            scrud.DisplayViews = this.GetDisplayViews();
+            scrud.DisplayFields = GetDisplayFields();
+            scrud.DisplayViews = GetDisplayViews();
 
             scrud.Text = Resources.Titles.BankAccounts;
 
             ToolkitScriptManager1.NamingContainer.Controls.Add(scrud);
         }
 
-        private string GetDisplayFields()
+        private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
             ScrudHelper.AddDisplayField(displayFields, "office.users.user_id", ConfigurationHelper.GetDbParameter("UserDisplayField"));
@@ -45,7 +45,7 @@ namespace MixERP.Net.FrontEnd.Finance.Setup
             return string.Join(",", displayFields);
         }
 
-        private string GetDisplayViews()
+        private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
             ScrudHelper.AddDisplayView(displayViews, "office.users.user_id", "office.user_view");

@@ -535,14 +535,13 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         {
             Collection<MixERP.Net.Common.Models.Transactions.ProductDetailsModel> table = this.GetTable();
 
-            RunningTotalTextBox.Text = (this.GetRunningTotalOfSubTotal(table) + MixERP.Net.Common.Conversion.TryCastDecimal(ShippingChargeTextBox.Text)).ToString(System.Threading.Thread.CurrentThread.CurrentCulture);
-            TaxTotalTextBox.Text = this.GetRunningTotalOfTax(table).ToString(System.Threading.Thread.CurrentThread.CurrentCulture);
-            GrandTotalTextBox.Text = (this.GetRunningTotalOfTotal(table) + MixERP.Net.Common.Conversion.TryCastDecimal(ShippingChargeTextBox.Text)).ToString(System.Threading.Thread.CurrentThread.CurrentCulture);
-
+            RunningTotalTextBox.Text = (GetRunningTotalOfSubTotal(table) + MixERP.Net.Common.Conversion.TryCastDecimal(ShippingChargeTextBox.Text)).ToString(System.Threading.Thread.CurrentThread.CurrentCulture);
+            TaxTotalTextBox.Text = GetRunningTotalOfTax(table).ToString(System.Threading.Thread.CurrentThread.CurrentCulture);
+            GrandTotalTextBox.Text = (GetRunningTotalOfTotal(table) + MixERP.Net.Common.Conversion.TryCastDecimal(ShippingChargeTextBox.Text)).ToString(System.Threading.Thread.CurrentThread.CurrentCulture);
         }
 
         #region "Running Totals"
-        private decimal GetRunningTotalOfSubTotal(Collection<MixERP.Net.Common.Models.Transactions.ProductDetailsModel> table)
+        private static decimal GetRunningTotalOfSubTotal(Collection<MixERP.Net.Common.Models.Transactions.ProductDetailsModel> table)
         {
             decimal retVal = 0;
 
@@ -557,7 +556,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             return retVal;
         }
 
-        private decimal GetRunningTotalOfTax(Collection<MixERP.Net.Common.Models.Transactions.ProductDetailsModel> table)
+        private static decimal GetRunningTotalOfTax(Collection<MixERP.Net.Common.Models.Transactions.ProductDetailsModel> table)
         {
             decimal retVal = 0;
 
@@ -778,7 +777,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             return new Collection<Common.Models.Transactions.ProductDetailsModel>();
         }
 
-        private Collection<MixERP.Net.Common.Models.Transactions.ProductDetailsModel> SummateProducts(Collection<MixERP.Net.Common.Models.Transactions.ProductDetailsModel> productCollection)
+        private static Collection<MixERP.Net.Common.Models.Transactions.ProductDetailsModel> SummateProducts(Collection<MixERP.Net.Common.Models.Transactions.ProductDetailsModel> productCollection)
         {
             //Create a new collection of products.
             Collection<MixERP.Net.Common.Models.Transactions.ProductDetailsModel> collection = new Collection<Common.Models.Transactions.ProductDetailsModel>();

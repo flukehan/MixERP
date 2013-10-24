@@ -36,14 +36,14 @@ namespace MixERP.Net.FrontEnd.Items.Setup
             //Party code will be automtically generated on the database.
             scrud.Exclude = "party_code";
 
-            scrud.DisplayFields = this.GetDisplayFields();
-            scrud.DisplayViews = this.GetDisplayViews();
-            scrud.SelectedValues = this.GetSelectedValues();
+            scrud.DisplayFields = GetDisplayFields();
+            scrud.DisplayViews = GetDisplayViews();
+            scrud.SelectedValues = GetSelectedValues();
 
             container.Controls.Add(scrud);
         }
 
-        private string GetDisplayFields()
+        private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
             ScrudHelper.AddDisplayField(displayFields, "core.party_types.party_type_id", ConfigurationHelper.GetDbParameter("PartyTypeDisplayField"));
@@ -52,7 +52,7 @@ namespace MixERP.Net.FrontEnd.Items.Setup
             return string.Join(",", displayFields);
         }
 
-        private string GetDisplayViews()
+        private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
             ScrudHelper.AddDisplayView(displayViews, "core.party_types.party_type_id", "core.party_types");
@@ -61,7 +61,7 @@ namespace MixERP.Net.FrontEnd.Items.Setup
             return string.Join(",", displayViews);
         }
 
-        private string GetSelectedValues()
+        private static string GetSelectedValues()
         {
             List<string> selectedValues = new List<string>();
 
@@ -72,7 +72,7 @@ namespace MixERP.Net.FrontEnd.Items.Setup
             return string.Join(",", selectedValues);
         }
 
-        public string GetPartyNameParameter()
+        public static string GetPartyNameParameter()
         {
             return MixERP.Net.Common.Helpers.Parameters.PartyNameFormat();
         }

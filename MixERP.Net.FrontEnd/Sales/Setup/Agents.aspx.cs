@@ -29,21 +29,21 @@ namespace MixERP.Net.FrontEnd.Sales.Setup
             scrud.ViewSchema = "core";
             scrud.View = "agent_view";
 
-            scrud.DisplayFields = this.GetDisplayFields();
-            scrud.DisplayViews = this.GetDisplayViews();
+            scrud.DisplayFields = GetDisplayFields();
+            scrud.DisplayViews = GetDisplayViews();
             scrud.SelectedValues = this.GetSelectedValues();
 
             scrud.Text = Resources.Titles.AgentSetup;
         }
 
-        private string GetDisplayFields()
+        private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
             ScrudHelper.AddDisplayField(displayFields, "core.accounts.account_id", ConfigurationHelper.GetDbParameter("AccountDisplayField"));
             return string.Join(",", displayFields);
         }
 
-        private string GetDisplayViews()
+        private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
             ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.account_view");
