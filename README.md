@@ -21,5 +21,6 @@ MixERP is an ASP.net open source ERP Solution.
 * <a href="http://www.facebook.com/groups/183076085203506/" target="_blank">Facebook Discussions Group</a>
 * <a href="http://twitter.com/mixoferp/" target="_blank">Follow MixERP on Twitter</a>
 * <a href="http://mixerp.org/forum/" target="_blank">Community Forum</a>
+* [Project Milestone] (https://github.com/mixerp/mixerp/wiki/Project-Milestone)
 
 Please read the file ReadMe.txt on the root directory before asking us questions.
