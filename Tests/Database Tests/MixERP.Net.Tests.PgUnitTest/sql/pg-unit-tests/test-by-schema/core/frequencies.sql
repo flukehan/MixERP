@@ -1,4 +1,4 @@
-/********************************************************************************
+﻿/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
 This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
@@ -15,22 +15,22 @@ $$
 	DECLARE message text;
 BEGIN
 	IF NOT EXISTS(SELECT 1 FROM core.frequencies WHERE frequency_id=2) THEN
-		PERFORM assert.fail('EOM frequency not present in the catalog.') INTO message;
+		SELECT assert.fail('EOM frequency not present in the catalog.') INTO message;
 		RETURN message;		
 	END IF;
 
 	IF NOT EXISTS(SELECT 1 FROM core.frequencies WHERE frequency_id=3) THEN
-		PERFORM assert.fail('EOQ frequency not present in the catalog.') INTO message;
+		SELECT assert.fail('EOQ frequency not present in the catalog.') INTO message;
 		RETURN message;		
 	END IF;
 
 	IF NOT EXISTS(SELECT 1 FROM core.frequencies WHERE frequency_id=4) THEN
-		PERFORM assert.fail('EOH frequency not present in the catalog.') INTO message;
+		SELECT assert.fail('EOH frequency not present in the catalog.') INTO message;
 		RETURN message;		
 	END IF;
 
 	IF NOT EXISTS(SELECT 1 FROM core.frequencies WHERE frequency_id=5) THEN
-		PERFORM assert.fail('EOY frequency not present in the catalog.') INTO message;
+		SELECT assert.fail('EOY frequency not present in the catalog.') INTO message;
 		RETURN message;		
 	END IF;
 	

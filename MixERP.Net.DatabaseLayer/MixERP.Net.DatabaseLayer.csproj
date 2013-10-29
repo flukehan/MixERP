@@ -65,6 +65,7 @@
     <Compile Include="Core\ShippingAddresses.cs" />
     <Compile Include="Core\Units.cs" />
     <Compile Include="DBFactory\Sanitizer.cs" />
+    <Compile Include="DBFactory\ServerConnectivity.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helpers\FormHelper.cs" />
     <Compile Include="Helpers\Maintenance.cs" />

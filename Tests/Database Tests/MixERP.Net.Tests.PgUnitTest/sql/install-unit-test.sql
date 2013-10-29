@@ -144,13 +144,14 @@ $$
 LANGUAGE plpgsql;
 
 CREATE FUNCTION unit_tests.begin()
-RETURNS text
+RETURNS TABLE(message text, result character(1))
 AS
 $$
 	DECLARE this record;
 	DECLARE _function_name text;
 	DECLARE _sql text;
 	DECLARE _message text;
+	DECLARE _result character(1);
 	DECLARE _test_id integer;
 	DECLARE _status boolean;
 	DECLARE _total_tests integer = 0;
@@ -224,12 +225,14 @@ BEGIN
 	_ret_val := _ret_val || E'\n\n';
 
 	IF _failed_tests > 0 THEN
+		_result := 'N';
 		RAISE WARNING '%', _ret_val;
 	ELSE
+		_result := 'Y';
 		RAISE NOTICE '%', _ret_val;	
 	END IF;
 
-	RETURN _ret_val;
+	RETURN QUERY SELECT _ret_val, _result;
 END
 $$
 LANGUAGE plpgsql;

@@ -12,7 +12,7 @@ http://mozilla.org/MPL/2.0/.
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <link href="themes/purple/main.css" rel="stylesheet" type="text/css" />
-    <script src="Scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="Scripts/jquery.min.js"></script>
     <title>Sign In</title>
 </head>
 <body>

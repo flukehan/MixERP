@@ -17,7 +17,26 @@ namespace MixERP.Net.DBFactory
 {
     public static class DBOperations
     {
-        public static bool ExecuteNonQuery(Npgsql.NpgsqlCommand command)
+        public static bool IsServerAvailable()
+        {
+                try
+                {
+                    using (Npgsql.NpgsqlConnection connection = new Npgsql.NpgsqlConnection(MixERP.Net.DBFactory.DBConnection.ConnectionString()))
+                    {
+                        connection.Open();
+                    }
+
+                    return true;
+                }
+                catch
+                { 
+                    //swallow exception
+                }            
+
+            return false;
+        }
+        
+    public static bool ExecuteNonQuery(Npgsql.NpgsqlCommand command)
         {
             if(command != null)
             {

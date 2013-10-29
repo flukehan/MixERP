@@ -1,4 +1,4 @@
-/********************************************************************************
+﻿/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
 This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
@@ -23,7 +23,7 @@ BEGIN
 	LIMIT 1;
 
 	IF(TRIM(COALESCE(fy_code, '')) = '') THEN
-		PERFORM assert.fail('Fiscal year not present in the catalog.') INTO message;
+		SELECT assert.fail('Fiscal year not present in the catalog.') INTO message;
 		RETURN message;
 	END IF;
 
@@ -32,7 +32,7 @@ BEGIN
 	WHERE fiscal_year_code = fy_code;
 	
 	IF frequency_count <> 12 THEN
-		PERFORM assert.fail('Invalid frequency setup encountered.') INTO message;
+		SELECT assert.fail('Invalid frequency setup encountered.') INTO message;
 		RETURN message;		
 	END IF;
 	
@@ -41,3 +41,5 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+
+

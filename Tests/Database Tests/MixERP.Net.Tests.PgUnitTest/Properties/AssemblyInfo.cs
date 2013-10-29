@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MixERP.Net.Tests.DatabaseTests.PgTestConsole")]
+[assembly: AssemblyTitle("MixERP.Net.Tests.PgUnitTest")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MixERP.Net.Tests.DatabaseTests.PgTestConsole")]
+[assembly: AssemblyProduct("MixERP.Net.Tests.PgUnitTest")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("aa750b74-40f9-4f35-b4fc-70dde1b9036e")]
+[assembly: Guid("38e30f61-c24c-4346-995f-4614344e9d2c")]
 
 // Version information for an assembly consists of the following four values:
 //

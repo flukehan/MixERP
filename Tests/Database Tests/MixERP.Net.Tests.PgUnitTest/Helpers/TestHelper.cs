@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MixERP.Net.Tests.DatabaseTests.PgTestConsole
+namespace MixERP.Net.Tests.PgUnitTest
 {
-    class Program
+    public static class TestHelper
     {
-        static void Main(string[] args)
-        {
+        public static void InstallTests()
+        { 
+        
         }
     }
 }

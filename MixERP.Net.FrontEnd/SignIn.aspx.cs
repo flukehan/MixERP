@@ -16,8 +16,18 @@ namespace MixERP.Net.FrontEnd
 {
     public partial class SignIn : System.Web.UI.Page
     {
+        private void CheckDBConnectivity()
+        {
+            if (!MixERP.Net.BusinessLayer.DBFactory.ServerConnectivity.IsDBServerAvailable())
+            {
+                Response.Redirect("~/offline.html");
+            }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            this.CheckDBConnectivity();
+
             UserIdTextBox.Focus();
 
             if(!IsPostBack)
