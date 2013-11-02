@@ -48,12 +48,12 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
             ScrudFactoryHelper.AddRow(t, label, textBox);
         }
 
-        private static TextBox GetNumberTextBox(string id, int maxLength)
-        {
-            TextBox textBox = ScrudTextBox.GetTextBox(id, maxLength);
-            textBox.Attributes["type"] = "number";
-            return textBox;
-        }
+private static TextBox GetNumberTextBox(string id, int maxLength)
+{
+    TextBox textBox = ScrudTextBox.GetTextBox(id, maxLength);
+    //textBox.Attributes["type"] = "number";
+    return textBox;
+}
 
         private static CompareValidator GetNumberValidator(Control controlToValidate, string domain)
         {

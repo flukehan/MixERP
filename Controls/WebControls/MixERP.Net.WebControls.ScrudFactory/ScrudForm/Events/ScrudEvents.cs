@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace MixERP.Net.WebControls.ScrudFactory
@@ -18,8 +19,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
         protected void SaveButton_Click(object sender, EventArgs e)
         {
             this.Page.Validate();
-
-            if(!this.Page.IsValid)
+            if (!this.Page.IsValid)
             {
                 return;
             }
