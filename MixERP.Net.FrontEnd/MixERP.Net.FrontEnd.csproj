@@ -1562,6 +1562,10 @@
       <Project>{07ddce95-a18f-4a35-b892-ce09ead2aa65}</Project>
       <Name>MixERP.Net.WebControls.ScrudFactory</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Controls\WebControls\MixERP.Net.WebControls.StockTransactionView.Data\MixERP.Net.WebControls.StockTransactionView.Data.csproj">
+      <Project>{f8499d93-ced5-4a3d-a22b-cf21171ede6b}</Project>
+      <Name>MixERP.Net.WebControls.StockTransactionView.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MixERP.Net.BusinessLayer\MixERP.Net.BusinessLayer.csproj">
       <Project>{81de04cf-7de9-42ff-8339-d05e2586dcba}</Project>
       <Name>MixERP.Net.BusinessLayer</Name>

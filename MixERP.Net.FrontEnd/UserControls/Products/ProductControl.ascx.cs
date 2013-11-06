@@ -14,9 +14,8 @@ using System.Web.UI.WebControls;
 namespace MixERP.Net.FrontEnd.UserControls.Products
 {
     /// <summary>
-    /// Todo: Move this control to a separate project.
     /// Todo: Refactor the code to return values instead of controls.
-    /// Stay warned, this is very very big class and maybe complex as well and needs improvements.
+    /// This class is subject to be moved to a standalone server control class library.
     /// This UserControl provides a common interface for all transactions that are related to
     /// stock and/or inventory. Everything is handled in this class, except for the Save event.
     /// The save event is exposed to the page containing this control and should be handled there.
@@ -69,8 +68,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         /// Multiple Sales Quotations --> Sales Order.
         /// Multiple Sales Quotations --> Sales Delivery.
         /// </summary>
-        private MixERP.Net.Common.Models.Transactions.MergeModel model = new Common.Models.Transactions.MergeModel();
-
+        private MixERP.Net.WebControls.StockTransactionView.Data.Models.MergeModel model = new MixERP.Net.WebControls.StockTransactionView.Data.Models.MergeModel();
         /// <summary>
         /// This class is a representation of the controls in this UserControl.
         /// </summary>
@@ -294,7 +292,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 return;
             }
 
-            model = Session["Product"] as MixERP.Net.Common.Models.Transactions.MergeModel;
+            model = Session["Product"] as MixERP.Net.WebControls.StockTransactionView.Data.Models.MergeModel;
 
             if(model == null)
             {
@@ -312,7 +310,20 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             StatementReferenceTextBox.Text = model.StatementReference;
 
             Session[this.ID] = model.View;
+            Session["TranIdCollection"] = model.TransactionIdCollection;
             this.ClearSession("Product");
+        }
+
+        public Collection<int> GetTranIdCollection()
+        {
+            Collection<int> tranIdCollection = new Collection<int>();
+
+            if (Session["TranIdCollection"] != null)
+            {
+                tranIdCollection = Session["TranIdCollection"] as Collection<int>;
+            }
+
+            return tranIdCollection;
         }
 
         private void ClearSession(string key)

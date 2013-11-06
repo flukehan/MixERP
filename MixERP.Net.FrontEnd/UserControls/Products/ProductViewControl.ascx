@@ -25,8 +25,7 @@ http://mozilla.org/MPL/2.0/.
                     CssClass="menu"
                     Text="<%$Resources:Titles, MergeBatchToSalesOrder %>"
                     OnClientClick="return getSelectedItems();"
-                    OnClick="MergeToSalesOrderLinkButton_Click"
-                     />
+                    OnClick="MergeToSalesOrderLinkButton_Click" />
                 <asp:LinkButton ID="MergeToSalesDeliveryLinkButton" runat="server" CssClass="menu" Text="<%$Resources:Titles, MergeBatchToSalesDelivery %>" />
             </td>
             <td>
@@ -50,7 +49,7 @@ http://mozilla.org/MPL/2.0/.
             </asp:DropDownList>
         </p>
         <p>
-            <asp:Button ID="UpdateButton" runat="server" Text="Udate" CssClass="menu" />
+            <asp:Button ID="UpdateButton" runat="server" Text="Update" CssClass="menu" />
             <a href="#" onclick="$('#flag-popunder').toggle(500);" class="menu">Close</a>
         </p>
     </div>
@@ -60,35 +59,27 @@ http://mozilla.org/MPL/2.0/.
 <div id="filter" class="vpad8">
     <table class="form">
         <tr>
-            <td>
-                Date From
+            <td>Date From
             </td>
-            <td>
-                Date To
+            <td>Date To
             </td>
-            <td>
-                Office
+            <td>Office
             </td>
-            <td>
-                Party
+            <td>Party
             </td>
-            <td>
-                Price Type
+            <td>Price Type
             </td>
-            <td>
-                User
+            <td>User
             </td>
-            <td>
-                Reference Number
+            <td>Reference Number
             </td>
-            <td>
-                Statement Reference
+            <td>Statement Reference
             </td>
-            <td>
-            </td>
+            <td></td>
         </tr>
         <tr>
             <td>
+                
                 <mixerp:DateTextBox ID="DateFromDateTextBox" runat="server" CssClass="date" Width="72px" Mode="MonthStartDate" />
             </td>
             <td>
@@ -160,121 +151,6 @@ http://mozilla.org/MPL/2.0/.
 </asp:Panel>
 <asp:HiddenField ID="SelectedValuesHidden" runat="server" />
 
-<script runat="server">
-    protected void Page_Init()
-    {
-        MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.BindDropDownList(FlagDropDownList, "core", "flag_types", "flag_type_id", "flag_type_name");
-    }
-    
-    protected void Page_Load(object sender, EventArgs e)
-    {
-        this.LoadGridView();
-    }
-
-    protected void MergeToSalesOrderLinkButton_Click(object sender, EventArgs e)
-    {
-        //Get the comma separated selected values.
-        string selectedValues = SelectedValuesHidden.Value;
-
-        //Check if something was selected.
-        if(string.IsNullOrWhiteSpace(selectedValues))
-        {
-            return;
-        }
-
-        //Create a collection object to store the IDs.
-        System.Collections.ObjectModel.Collection<int> values = new System.Collections.ObjectModel.Collection<int>();
-
-        //Iterate through each value in the selected values
-        //and determine if each value is a number.
-        foreach(string value in selectedValues.Split(','))
-        {
-            //Parse the value to integer.
-            int val = MixERP.Net.Common.Conversion.TryCastInteger(value); 
-            
-            //We already know that an ID cannot be a zero value.
-            if(val > 0)
-            {
-                //If the object "val" has a greater than zero,
-                //add it to the collection.
-                values.Add(val);
-            }        
-        }
-
-        bool belongToSameParty = MixERP.Net.BusinessLayer.Transactions.NonGLStockTransaction.TransactionIdsBelongToSameParty(values);
-
-        if(!belongToSameParty)
-        {
-            ErrorLabel.Text = "Cannot merge quotations of multiple parties into a single batch. Please try again.";
-            return;
-        }
-
-        MixERP.Net.BusinessLayer.Transactions.NonGLStockTransaction.MergeSalesQuotationToSalesOrder(values);                
-    }
-
-    protected void ShowButton_Click(object sender, EventArgs e)
-    {
-        this.LoadGridView();
-    }
-
-    private void LoadGridView()
-    {
-        DateTime dateFrom = MixERP.Net.Common.Conversion.TryCastDate(DateFromDateTextBox.Text);
-        DateTime dateTo = MixERP.Net.Common.Conversion.TryCastDate(DateToDateTextBox.Text);
-        string office = OfficeTextBox.Text;
-        string party = PartyTextBox.Text;
-        string priceType = PriceTypeTextBox.Text;
-        string user = UserTextBox.Text;
-        string referenceNumber = ReferenceNumberTextBox.Text;
-        string statementReference = StatementReferenceTextBox.Text;
-
-        using(System.Data.DataTable table = MixERP.Net.BusinessLayer.Transactions.NonGLStockTransaction.GetView("Sales.Quotation", dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference))
-        {
-            ProductViewGridView.DataSource = table;
-            ProductViewGridView.DataBind();
-        }
-    }
-
-    protected void ProductViewGridView_RowDataBound(object sender, GridViewRowEventArgs e)
-    {
-        if(e.Row.RowType == DataControlRowType.Header)
-        {
-            for(int i = 0; i < e.Row.Cells.Count; i++)
-            {
-                string cellText = e.Row.Cells[i].Text.Replace("&nbsp;", " ").Trim();
-
-                if(!string.IsNullOrWhiteSpace(cellText))
-                {
-                    cellText = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString("FormResource", cellText);
-                    e.Row.Cells[i].Text = cellText;
-                }
-            }
-        }
-
-        if(e.Row.RowType == DataControlRowType.DataRow)
-        {
-            //e.Row.Cells[2].Text = string.Format(e.Row.Cells[2].Text, "{0:dd/MM/yyyy}");
-            string id = e.Row.Cells[2].Text;
-
-            if(!string.IsNullOrWhiteSpace(id))
-            {
-                string popUpQuotationPreviewUrl = "/Sales/Confirmation/ReportSalesQuotation.aspx?TranId=" + id;
-
-                HtmlAnchor previewAnchor = (HtmlAnchor)e.Row.Cells[0].FindControl("PreviewAnchor");
-                if(previewAnchor != null)
-                {
-                    previewAnchor.HRef = popUpQuotationPreviewUrl;
-                }
-
-                HtmlAnchor printAnchor = (HtmlAnchor)e.Row.Cells[0].FindControl("PrintAnchor");
-                if(printAnchor != null)
-                {
-                    printAnchor.Attributes.Add("onclick", "showWindow('" + popUpQuotationPreviewUrl + "');return false;");
-                }
-            }
-        }
-    }    
-</script>
 
 <script type="text/javascript">
     var getSelectedItems = function () {

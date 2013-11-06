@@ -7,6 +7,7 @@ http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -35,8 +36,9 @@ namespace MixERP.Net.FrontEnd.Purchase
             GridView grid = PurchaseOrder.GetForm.Grid;
             string referenceNumber = PurchaseOrder.GetForm.ReferenceNumberTextBox.Text;
             string statementReference = PurchaseOrder.GetForm.StatementReferenceTextBox.Text;
+            Collection<int> tranIdCollection = PurchaseOrder.GetTranIdCollection();
 
-            long nonGlStockMasterId = MixERP.Net.BusinessLayer.Transactions.NonGLStockTransaction.Add("Purchase.Order", valueDate, partyCode, priceTypeId, grid, referenceNumber, statementReference);
+            long nonGlStockMasterId = MixERP.Net.BusinessLayer.Transactions.NonGLStockTransaction.Add("Purchase.Order", valueDate, partyCode, priceTypeId, grid, referenceNumber, statementReference, tranIdCollection);
             if(nonGlStockMasterId > 0)
             {
                 Response.Redirect("~/Dashboard/Index.aspx?TranId=" + nonGlStockMasterId, true);

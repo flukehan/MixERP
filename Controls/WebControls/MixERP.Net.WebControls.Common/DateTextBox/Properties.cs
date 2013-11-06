@@ -29,7 +29,8 @@ namespace MixERP.Net.WebControls.Common
             }
         }
 
-        public override string CssClass {
+        public override string CssClass 
+        {
             get
             {
                 EnsureChildControls();
@@ -70,6 +71,7 @@ namespace MixERP.Net.WebControls.Common
                 textBox.Text = value;
             }
         }
+
         public string ValidatorCssClass { get; set; }
     }
 }

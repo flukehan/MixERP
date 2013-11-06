@@ -470,14 +470,14 @@ ON office.offices(UPPER(nick_name));
 *******************************************************************/
 
 INSERT INTO office.offices(office_code,office_name,nick_name,registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number)
-SELECT 'PES','Planet Earth Solutions', 'PES Technologies', '06/06/1989', 'Brooklyn','NY','','US','','','','info@planetearthsolution.com','http://planetearthsolution.com','0','0';
+SELECT 'PES','Planet Earth Solutions', 'PES Technologies', '06/06/1989', 'Brooklyn','NY','','US','','','','info@mixof.org','http://mixof.org','0','0';
 
 
 INSERT INTO office.offices(office_code,office_name,nick_name, registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number,parent_office_id)
-SELECT 'PES-NY-BK','Brooklyn Branch', 'PES Brooklyn', '06/06/1989', 'Brooklyn','NY','12345555','','','','','info@planetearthsolution.com','http://planetearthsolution.com','0','0',(SELECT office_id FROM office.offices WHERE office_code='PES');
+SELECT 'PES-NY-BK','Brooklyn Branch', 'PES Brooklyn', '06/06/1989', 'Brooklyn','NY','12345555','','','','','info@mixof.org','http://mixof.org','0','0',(SELECT office_id FROM office.offices WHERE office_code='PES');
 
 INSERT INTO office.offices(office_code,office_name,nick_name, registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number,parent_office_id)
-SELECT 'PES-NY-MEM','Memphis Branch', 'PES Memphis', '06/06/1989', 'Memphis', 'NY','','','','64464554','','info@planetearthsolution.com','http://planetearthsolution.com','0','0',(SELECT office_id FROM office.offices WHERE office_code='PES');
+SELECT 'PES-NY-MEM','Memphis Branch', 'PES Memphis', '06/06/1989', 'Memphis', 'NY','','','','64464554','','info@mixof.org','http://mixof.org','0','0',(SELECT office_id FROM office.offices WHERE office_code='PES');
 
 
 /*******************************************************************
@@ -3528,13 +3528,14 @@ CREATE TABLE transactions.non_gl_stock_details
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
 
+
 --This table stores information of quotations
 --which were upgraded to order(s).
 CREATE TABLE transactions.non_gl_stock_master_relations
 (
 	stock_master_non_gl_relation_id		BIGSERIAL NOT NULL PRIMARY KEY,	
 	order_non_gl_stock_master_id		bigint NOT NULL REFERENCES transactions.non_gl_stock_master(non_gl_stock_master_id),
-	quotation_non_gl_stock_master_id	bigint NOT NULL REFERENCES transactions.stock_master(stock_master_id)
+	quotation_non_gl_stock_master_id	bigint NOT NULL REFERENCES transactions.non_gl_stock_master(non_gl_stock_master_id)
 );
 
 

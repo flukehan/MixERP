@@ -132,6 +132,12 @@
   <data name="RequiredFieldDetails" xml:space="preserve">
     <value>Fields marked with asterisk (*) are required.</value>
   </data>
+  <data name="SOID" xml:space="preserve">
+    <value>SO ID#</value>
+  </data>
+  <data name="SQID" xml:space="preserve">
+    <value>SQ ID#</value>
+  </data>
   <data name="TaskCompletedSuccessfully" xml:space="preserve">
     <value>The task was completed successfully.</value>
   </data>

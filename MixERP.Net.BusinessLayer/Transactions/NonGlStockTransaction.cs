@@ -19,7 +19,7 @@ namespace MixERP.Net.BusinessLayer.Transactions
 {
     public static class NonGLStockTransaction
     {
-        public static long Add(string book, DateTime valueDate, string partyCode, int priceTypeId, GridView grid, string referenceNumber, string statementReference)
+        public static long Add(string book, DateTime valueDate, string partyCode, int priceTypeId, GridView grid, string referenceNumber, string statementReference, Collection<int> transactionIdCollection)
         {
             MixERP.Net.Common.Models.Transactions.StockMasterModel stockMaster = new MixERP.Net.Common.Models.Transactions.StockMasterModel();
             Collection<MixERP.Net.Common.Models.Transactions.StockMasterDetailModel> details = new Collection<MixERP.Net.Common.Models.Transactions.StockMasterDetailModel>();
@@ -28,11 +28,11 @@ namespace MixERP.Net.BusinessLayer.Transactions
             stockMaster.PartyCode = partyCode;
             stockMaster.PriceTypeId = priceTypeId;
 
-            if(grid != null)
+            if (grid != null)
             {
-                if(grid.Rows.Count > 0)
+                if (grid.Rows.Count > 0)
                 {
-                    foreach(GridViewRow row in grid.Rows)
+                    foreach (GridViewRow row in grid.Rows)
                     {
                         MixERP.Net.Common.Models.Transactions.StockMasterDetailModel detail = new MixERP.Net.Common.Models.Transactions.StockMasterDetailModel();
 
@@ -49,7 +49,7 @@ namespace MixERP.Net.BusinessLayer.Transactions
                 }
             }
 
-            nonGlStockMasterId = MixERP.Net.DatabaseLayer.Transactions.NonGLStockTransaction.Add(book, valueDate, MixERP.Net.BusinessLayer.Helpers.SessionHelper.OfficeId(), MixERP.Net.BusinessLayer.Helpers.SessionHelper.UserId(), MixERP.Net.BusinessLayer.Helpers.SessionHelper.LogOnId(), referenceNumber, statementReference, stockMaster, details);
+            nonGlStockMasterId = MixERP.Net.DatabaseLayer.Transactions.NonGLStockTransaction.Add(book, valueDate, MixERP.Net.BusinessLayer.Helpers.SessionHelper.OfficeId(), MixERP.Net.BusinessLayer.Helpers.SessionHelper.UserId(), MixERP.Net.BusinessLayer.Helpers.SessionHelper.LogOnId(), referenceNumber, statementReference, stockMaster, details, transactionIdCollection);
             return nonGlStockMasterId;
         }
 
@@ -63,53 +63,9 @@ namespace MixERP.Net.BusinessLayer.Transactions
             return MixERP.Net.DatabaseLayer.Transactions.NonGLStockTransaction.TransactionIdsBelongToSameParty(ids);
         }
 
-        public static void MergeSalesQuotationToSalesOrder(Collection<int> ids)
+        public static bool IsQuotationAlreadyMerged(Collection<int> ids)
         {
-            MixERP.Net.Common.Models.Transactions.MergeModel model = new Common.Models.Transactions.MergeModel();
-            Collection<MixERP.Net.Common.Models.Transactions.ProductDetailsModel> products = new Collection<Common.Models.Transactions.ProductDetailsModel>();
-
-            using(DataTable table = MixERP.Net.DatabaseLayer.Transactions.NonGLStockTransaction.GetSalesQuotationView(ids))
-            {
-                if(table.Rows.Count.Equals(0))
-                {
-                    return;
-                }
-
-                model.ValueDate = MixERP.Net.Common.Conversion.TryCastDate(table.Rows[0]["value_date"]);
-                model.PartyCode = MixERP.Net.Common.Conversion.TryCastString(table.Rows[0]["party_code"]);
-                model.PriceTypeId = MixERP.Net.Common.Conversion.TryCastInteger(table.Rows[0]["price_type_id"]);
-                model.ReferenceNumber = MixERP.Net.Common.Conversion.TryCastString(table.Rows[0]["reference_number"]);
-                model.StatementReference = MixERP.Net.Common.Conversion.TryCastString(table.Rows[0]["statement_reference"]);
-
-
-                foreach(DataRow row in table.Rows)
-                {
-                    MixERP.Net.Common.Models.Transactions.ProductDetailsModel product = new Common.Models.Transactions.ProductDetailsModel();
-
-                    product.ItemCode = MixERP.Net.Common.Conversion.TryCastString(row["item_code"]);
-                    product.ItemName = MixERP.Net.Common.Conversion.TryCastString(row["item_name"]);
-                    product.Unit = MixERP.Net.Common.Conversion.TryCastString(row["unit_name"]);
-
-                    
-                    product.Quantity = MixERP.Net.Common.Conversion.TryCastInteger(row["quantity"]);                    
-                    product.Price = MixERP.Net.Common.Conversion.TryCastDecimal(row["price"]);
-                    product.Amount = product.Quantity * product.Price;
-                    
-                    product.Discount = MixERP.Net.Common.Conversion.TryCastDecimal(row["discount"]);
-                    product.Subtotal = product.Amount - product.Discount;
-
-                    product.Rate = MixERP.Net.Common.Conversion.TryCastDecimal(row["tax_rate"]);
-                    product.Tax = MixERP.Net.Common.Conversion.TryCastDecimal(row["tax"]);
-                    product.Total = product.Subtotal + product.Tax;
-
-                    products.Add(product);
-                }
-
-                model.View = products;
-            }
-
-            HttpContext.Current.Session["Product"] = model;
-            HttpContext.Current.Response.Redirect("~/Sales/Order.aspx");
+            return MixERP.Net.DatabaseLayer.Transactions.NonGLStockTransaction.IsQuotationAlreadyMerged(ids);
         }
     }
 }
