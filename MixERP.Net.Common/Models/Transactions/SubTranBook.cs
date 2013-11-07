@@ -19,6 +19,8 @@ namespace MixERP.Net.Common.Models.Transactions
         Order, /*Readonly*/
         Delivery,/*Readonly*/
         Receipt, /*Readonly*/
-        Invoice
+        Invoice,
+        Payment,
+        Return
     }
 }

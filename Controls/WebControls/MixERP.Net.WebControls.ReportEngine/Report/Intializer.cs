@@ -67,7 +67,7 @@ namespace MixERP.Net.WebControls.ReportEngine
             }
         }
 
-        private System.Collections.ObjectModel.Collection<string> DecimalFieldIndicesCollection;
+        private Collection<string> DecimalFieldIndicesCollection;
         private void SetDecimalFields()
         {
             string decimalFieldIndices = string.Empty;
@@ -76,7 +76,7 @@ namespace MixERP.Net.WebControls.ReportEngine
             XmlNodeList dataSourceList = XmlHelper.GetNodes(reportPath, "//DataSource");
 
             //Initializing decimal field indices collection.
-            this.DecimalFieldIndicesCollection = new System.Collections.ObjectModel.Collection<string>();
+            this.DecimalFieldIndicesCollection = new Collection<string>();
 
             //Loop through each datasource in the datasource list.
             foreach(XmlNode dataSource in dataSourceList)
@@ -101,8 +101,8 @@ namespace MixERP.Net.WebControls.ReportEngine
                 this.DecimalFieldIndicesCollection.Add(decimalFieldIndices);
             }
         }
-        private System.Collections.ObjectModel.Collection<int> RunningTotalTextColumnIndexCollection;
-        private System.Collections.ObjectModel.Collection<string> RunningTotalFieldIndicesCollection;
+        private Collection<int> RunningTotalTextColumnIndexCollection;
+        private Collection<string> RunningTotalFieldIndicesCollection;
         private void SetRunningTotalFields()
         {
             //Get the list of datasources for this report.
@@ -111,10 +111,10 @@ namespace MixERP.Net.WebControls.ReportEngine
             string runningTotalFieldIndices = string.Empty;
 
             //Initializing running total text column index collection.
-            this.RunningTotalTextColumnIndexCollection = new System.Collections.ObjectModel.Collection<int>();
+            this.RunningTotalTextColumnIndexCollection = new Collection<int>();
 
             //Initializing running total field indices collection.
-            this.RunningTotalFieldIndicesCollection = new System.Collections.ObjectModel.Collection<string>();
+            this.RunningTotalFieldIndicesCollection = new Collection<string>();
 
             //Loop through each datasource in the datasource list.
             foreach(XmlNode dataSource in dataSourceList)
@@ -150,7 +150,7 @@ namespace MixERP.Net.WebControls.ReportEngine
             }
         }
 
-        private System.Collections.ObjectModel.Collection<System.Data.DataTable> DataTableCollection;
+        private Collection<System.Data.DataTable> DataTableCollection;
         private void SetDataSources()
         {
             int index = 0;
@@ -159,7 +159,7 @@ namespace MixERP.Net.WebControls.ReportEngine
             System.Xml.XmlNodeList dataSources = XmlHelper.GetNodes(reportPath, "//DataSource");
 
             //Initializing data source collection.
-            this.DataTableCollection = new System.Collections.ObjectModel.Collection<System.Data.DataTable>();
+            this.DataTableCollection = new Collection<System.Data.DataTable>();
 
             //Loop through each datasource in the datasource list.
             foreach(System.Xml.XmlNode datasource in dataSources)

@@ -18,9 +18,81 @@ namespace MixERP.Net.Common
     using System.Security.Cryptography;
     using System.Text.RegularExpressions;
     using System.Web;
+    using MixERP.Net.Common.Models.Transactions;
 
     public static class Conversion
     {
+
+        public static string GetBookAcronym(TranBook book, SubTranBook subBook)
+        {
+            if (book == TranBook.Sales)
+            {
+                if (subBook == SubTranBook.Delivery)
+                {
+                    return MixERP.Net.Common.Helpers.ConfigurationHelper.GetParameter("SalesDeliveryAcronym");
+                }
+
+                if (subBook == SubTranBook.Direct)
+                {
+                    return MixERP.Net.Common.Helpers.ConfigurationHelper.GetParameter("SalesDirectAcronym");
+                }
+
+                if (subBook == SubTranBook.Invoice)
+                {
+                    return MixERP.Net.Common.Helpers.ConfigurationHelper.GetParameter("SalesInvoiceAcronym");
+                }
+
+                if (subBook == SubTranBook.Order)
+                {
+                    return MixERP.Net.Common.Helpers.ConfigurationHelper.GetParameter("SalesOrderAcronym");
+                }
+
+                if (subBook == SubTranBook.Quotation)
+                {
+                    return MixERP.Net.Common.Helpers.ConfigurationHelper.GetParameter("SalesQuotationAcronym");
+                }
+
+                if (subBook == SubTranBook.Receipt)
+                {
+                    return MixERP.Net.Common.Helpers.ConfigurationHelper.GetParameter("SalesReceiptAcronym");
+                }
+
+                if (subBook == SubTranBook.Return)
+                {
+                    return MixERP.Net.Common.Helpers.ConfigurationHelper.GetParameter("SaleReturnAcronym");
+                }
+            }
+
+            if (book == TranBook.Purchase)
+            {
+                if (subBook == SubTranBook.Direct)
+                {
+                    return MixERP.Net.Common.Helpers.ConfigurationHelper.GetParameter("PurchaseDirectAcronym");
+                }
+
+                if (subBook == SubTranBook.Order)
+                {
+                    return MixERP.Net.Common.Helpers.ConfigurationHelper.GetParameter("PurchaseOrderAcronym");
+                }
+
+                if (subBook == SubTranBook.Payment)
+                {
+                    return MixERP.Net.Common.Helpers.ConfigurationHelper.GetParameter("PurchasePaymentAcronym");
+                }
+
+                if (subBook == SubTranBook.Receipt)
+                {
+                    return MixERP.Net.Common.Helpers.ConfigurationHelper.GetParameter("PurchaseGRNAcronym");
+                }
+
+                if (subBook == SubTranBook.Return)
+                {
+                    return MixERP.Net.Common.Helpers.ConfigurationHelper.GetParameter("PurchaseReturnAcronym");
+                }
+            }
+
+            return string.Empty;
+        }
 
         public static string MapPathReverse(string fullServerPath)
         {

@@ -63,9 +63,14 @@ namespace MixERP.Net.BusinessLayer.Transactions
             return MixERP.Net.DatabaseLayer.Transactions.NonGLStockTransaction.TransactionIdsBelongToSameParty(ids);
         }
 
-        public static bool IsQuotationAlreadyMerged(Collection<int> ids)
+        public static bool AreSalesQuotationsAlreadyMerged(Collection<int> ids)
         {
-            return MixERP.Net.DatabaseLayer.Transactions.NonGLStockTransaction.IsQuotationAlreadyMerged(ids);
+            return MixERP.Net.DatabaseLayer.Transactions.NonGLStockTransaction.AreSalesQuotationsAlreadyMerged(ids);
+        }
+
+        public static bool AreSalesOrdersAlreadyMerged(Collection<int> ids)
+        {
+            return MixERP.Net.DatabaseLayer.Transactions.NonGLStockTransaction.AreSalesOrdersAlreadyMerged(ids);
         }
     }
 }

@@ -13,14 +13,10 @@ http://mozilla.org/MPL/2.0/.
 <asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-    <mixerp:Product runat="server"
-        ID="SalesOrder"
-        Book="Sales"
-        SubBook="Order"
-        Text="<%$Resources:Titles, SalesOrder %>"
-        DisplayTransactionTypeRadioButtonList="false"
-        OnSaveButtonClick="SalesOrder_SaveButtonClick"
-         />
+    <mixerp:ProductView
+        runat="server"
+        Book="Sales" SubBook="Order"
+        Text="<%$Resources:Titles, SalesOrder %>" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceHolder" runat="server">
 </asp:Content>

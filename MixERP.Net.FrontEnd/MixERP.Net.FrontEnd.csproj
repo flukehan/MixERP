@@ -661,6 +661,13 @@
     <Compile Include="Sales\DirectSales.aspx.designer.cs">
       <DependentUpon>DirectSales.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Sales\Entry\Order.aspx.cs">
+      <DependentUpon>Order.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Sales\Entry\Order.aspx.designer.cs">
+      <DependentUpon>Order.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Sales\Entry\Quotation.aspx.cs">
       <DependentUpon>Quotation.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1129,6 +1136,7 @@
     <Content Include="Sales\DeliveryForOrder.aspx" />
     <Content Include="Sales\DeliveryWithoutOrder.aspx" />
     <Content Include="Sales\DirectSales.aspx" />
+    <Content Include="Sales\Entry\Order.aspx" />
     <Content Include="Sales\Entry\Quotation.aspx" />
     <Content Include="Sales\Index.aspx" />
     <Content Include="Sales\Invoice.aspx" />

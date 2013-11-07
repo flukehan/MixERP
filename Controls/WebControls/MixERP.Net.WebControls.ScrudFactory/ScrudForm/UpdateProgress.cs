@@ -34,7 +34,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = MixERP.Net.Common.Helpers.ConfigurationHelper.GetSectionKey("MixERPScrudParameters", "UpdateProgressTemplateCssClass");
+                cssClass = MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter( "UpdateProgressTemplateCssClass");
             }
 
             return cssClass;
@@ -46,7 +46,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = MixERP.Net.Common.Helpers.ConfigurationHelper.GetSectionKey("MixERPScrudParameters", "UpdateProgressSpinnerImageCssClass");
+                cssClass = MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter( "UpdateProgressSpinnerImageCssClass");
             }
 
             return cssClass;
@@ -58,7 +58,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = MixERP.Net.Common.Helpers.ConfigurationHelper.GetSectionKey("MixERPScrudParameters", "UpdateProgressSpinnerImagePath");
+                cssClass = MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter( "UpdateProgressSpinnerImagePath");
             }
 
             return cssClass;

@@ -3533,7 +3533,7 @@ CREATE TABLE transactions.non_gl_stock_details
 --which were upgraded to order(s).
 CREATE TABLE transactions.non_gl_stock_master_relations
 (
-	stock_master_non_gl_relation_id		BIGSERIAL NOT NULL PRIMARY KEY,	
+	non_gl_stock_master_relation_id		BIGSERIAL NOT NULL PRIMARY KEY,	
 	order_non_gl_stock_master_id		bigint NOT NULL REFERENCES transactions.non_gl_stock_master(non_gl_stock_master_id),
 	quotation_non_gl_stock_master_id	bigint NOT NULL REFERENCES transactions.non_gl_stock_master(non_gl_stock_master_id)
 );
@@ -3547,6 +3547,56 @@ CREATE TABLE transactions.stock_master_non_gl_relations
 	stock_master_id				bigint NOT NULL REFERENCES transactions.stock_master(stock_master_id),
 	non_gl_stock_master_id			bigint NOT NULL REFERENCES transactions.non_gl_stock_master(non_gl_stock_master_id)
 );
+
+CREATE FUNCTION transactions.are_sales_quotations_already_merged(VARIADIC arr bigint[])
+RETURNS boolean
+AS
+$$
+BEGIN
+	IF
+	(
+		SELECT 
+		COUNT(*) 
+		FROM transactions.non_gl_stock_master_relations 
+		WHERE quotation_non_gl_stock_master_id = any($1)
+	) > 0 THEN
+		RETURN true;
+	END IF;
+
+	IF
+	(
+		SELECT 
+		COUNT(*) 
+		FROM transactions.stock_master_non_gl_relations
+		WHERE non_gl_stock_master_id = any($1)
+	) > 0 THEN
+		RETURN true;
+	END IF;
+
+	RETURN false;
+END
+$$
+LANGUAGE plpgsql;	
+
+CREATE FUNCTION transactions.are_sales_orders_already_merged(VARIADIC arr bigint[])
+RETURNS boolean
+AS
+$$
+BEGIN
+	IF
+	(
+		SELECT 
+		COUNT(*) 
+		FROM transactions.stock_master_non_gl_relations
+		WHERE non_gl_stock_master_id = any($1)
+	) > 0 THEN
+		RETURN true;
+	END IF;
+
+	RETURN false;
+END
+$$
+LANGUAGE plpgsql;	
 
 
 CREATE TABLE crm.lead_sources

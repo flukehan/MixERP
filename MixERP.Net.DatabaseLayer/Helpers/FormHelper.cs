@@ -1,4 +1,5 @@
-﻿/********************************************************************************
+﻿using Npgsql;
+/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
 This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
@@ -7,12 +8,10 @@ http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Npgsql;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.IO;
-using System.Data.Common;
+using System.Linq;
 
 namespace MixERP.Net.DatabaseLayer.Helpers
 {
@@ -192,7 +191,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
-        public static bool InsertRecord(int userId, string tableSchema, string tableName, System.Collections.ObjectModel.Collection<KeyValuePair<string, string>> data, string imageColumn)
+        public static bool InsertRecord(int userId, string tableSchema, string tableName, Collection<KeyValuePair<string, string>> data, string imageColumn)
         {
             if(data == null)
             {
@@ -261,7 +260,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
-        public static bool UpdateRecord(int userId, string tableSchema, string tableName, System.Collections.ObjectModel.Collection<KeyValuePair<string, string>> data, string keyColumn, string keyColumnValue, string imageColumn)
+        public static bool UpdateRecord(int userId, string tableSchema, string tableName, Collection<KeyValuePair<string, string>> data, string keyColumn, string keyColumnValue, string imageColumn)
         {
             if(data == null)
             {

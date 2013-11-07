@@ -14,7 +14,12 @@ http://mozilla.org/MPL/2.0/.
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 
-    <mixerp:ProductView runat="server" />
+    <mixerp:ProductView
+        runat="server"
+        Book="Sales"
+        SubBook="Quotation"
+        Text="<%$Resources:Titles, SalesQuotation %>"
+         />
 
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceHolder" runat="server">

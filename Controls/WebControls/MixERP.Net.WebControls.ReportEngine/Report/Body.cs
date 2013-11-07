@@ -57,7 +57,7 @@ namespace MixERP.Net.WebControls.ReportEngine
             reportBody.ID = "report";
 
             header = new ReportHeader();
-            header.Path = MixERP.Net.Common.Helpers.ConfigurationHelper.GetSectionKey("MixERPReportParameters", "HeaderPath");                
+            header.Path = MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter( "HeaderPath");                
             reportBody.Controls.Add(header);
 
             reportTitleLiteral = new Literal();

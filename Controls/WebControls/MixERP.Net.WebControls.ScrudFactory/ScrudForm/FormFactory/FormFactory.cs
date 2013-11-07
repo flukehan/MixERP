@@ -7,9 +7,7 @@ http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.UI;
+using System.Collections.ObjectModel;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
@@ -66,9 +64,9 @@ namespace MixERP.Net.WebControls.ScrudFactory
         /// </param>
         /// <returns>Returns a list of column and values mapped as 
         /// KeyValuePair of column_name (key) and value.</returns>
-        private System.Collections.ObjectModel.Collection<KeyValuePair<string, string>> GetFormCollection(bool skipSerial)
+        private Collection<KeyValuePair<string, string>> GetFormCollection(bool skipSerial)
         {
-            System.Collections.ObjectModel.Collection<KeyValuePair<string, string>> list = new System.Collections.ObjectModel.Collection<KeyValuePair<string, string>>();
+            Collection<KeyValuePair<string, string>> list = new Collection<KeyValuePair<string, string>>();
 
             using(System.Data.DataTable table = MixERP.Net.BusinessLayer.Helpers.TableHelper.GetTable(this.TableSchema, this.Table, this.Exclude))
             {

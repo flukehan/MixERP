@@ -1,18 +1,16 @@
-﻿/********************************************************************************
+﻿using AjaxControlToolkit;
+using System.Collections.ObjectModel;
+/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
 This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
-using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Web;
 using System.Web.Script.Services;
 using System.Web.Services;
-using AjaxControlToolkit;
 
 namespace MixERP.Net.FrontEnd.Services
 {
@@ -71,7 +69,7 @@ namespace MixERP.Net.FrontEnd.Services
 
         private CascadingDropDownNameValue[] GetValues(System.Data.DataTable table)
         {
-            System.Collections.ObjectModel.Collection<CascadingDropDownNameValue> values = new System.Collections.ObjectModel.Collection<CascadingDropDownNameValue>();
+            Collection<CascadingDropDownNameValue> values = new Collection<CascadingDropDownNameValue>();
 
             foreach(System.Data.DataRow dr in table.Rows)
             {
@@ -87,7 +85,7 @@ namespace MixERP.Net.FrontEnd.Services
             StringDictionary kv = CascadingDropDown.ParseKnownCategoryValuesString(knownCategoryValues);
             string accountCode = kv["Account"];
 
-            System.Collections.ObjectModel.Collection<CascadingDropDownNameValue> values = new System.Collections.ObjectModel.Collection<CascadingDropDownNameValue>();
+            Collection<CascadingDropDownNameValue> values = new Collection<CascadingDropDownNameValue>();
 
             if(MixERP.Net.BusinessLayer.Core.Accounts.IsCashAccount(accountCode))
             {

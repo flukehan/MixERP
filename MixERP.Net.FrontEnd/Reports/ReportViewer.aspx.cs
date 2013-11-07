@@ -7,8 +7,7 @@ http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Collections.ObjectModel;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -23,7 +22,7 @@ namespace MixERP.Net.FrontEnd.Reports
 
         private void AddParameters()
         {
-            System.Collections.ObjectModel.Collection<KeyValuePair<string, string>> collection = this.GetParameters();
+            Collection<KeyValuePair<string, string>> collection = this.GetParameters();
 
             if(collection == null || collection.Count.Equals(0))
             {
@@ -69,7 +68,7 @@ namespace MixERP.Net.FrontEnd.Reports
                 return;
             }
 
-            System.Collections.ObjectModel.Collection<KeyValuePair<string, string>> list = new System.Collections.ObjectModel.Collection<KeyValuePair<string, string>>();
+            Collection<KeyValuePair<string, string>> list = new Collection<KeyValuePair<string, string>>();
 
             foreach(TableRow row in ReportParameterTable.Rows)
             {
@@ -114,10 +113,10 @@ namespace MixERP.Net.FrontEnd.Reports
             return "~/Reports/Sources/" + id;
         }
 
-        private System.Collections.ObjectModel.Collection<KeyValuePair<string, string>> GetParameters()
+        private Collection<KeyValuePair<string, string>> GetParameters()
         {
             string path = Server.MapPath(this.ReportPath());
-            System.Collections.ObjectModel.Collection<KeyValuePair<string, string>> collection = MixERP.Net.WebControls.ReportEngine.Helpers.ParameterHelper.GetParameters(path);
+            Collection<KeyValuePair<string, string>> collection = MixERP.Net.WebControls.ReportEngine.Helpers.ParameterHelper.GetParameters(path);
             return collection;
         }
     }

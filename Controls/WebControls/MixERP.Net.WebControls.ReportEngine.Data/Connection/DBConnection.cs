@@ -13,8 +13,8 @@ namespace MixERP.Net.WebControls.ReportEngine.Data.Connection
         {
             string host = ConfigurationManager.AppSettings["Server"];
             string database = ConfigurationManager.AppSettings["Database"];
-            string userName = MixERP.Net.Common.Helpers.ConfigurationHelper.GetSectionKey("MixERPReportParameters", "DbLoginName");
-            string password = MixERP.Net.Common.Helpers.ConfigurationHelper.GetSectionKey("MixERPReportParameters", "DbPassword");
+            string userName = MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("DbLoginName");
+            string password = MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("DbPassword");
 
             NpgsqlConnectionStringBuilder connectionStringBuilder = new NpgsqlConnectionStringBuilder();
             connectionStringBuilder.Host = host;

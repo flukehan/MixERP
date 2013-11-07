@@ -1,106 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data;
-using System.Linq;
-using System.Text;
-using MixERP.Net.WebControls.StockTransactionView.Data.Models;
+﻿using System.Collections.ObjectModel;
 using Npgsql;
-using MixERP.Net.DBFactory;
 using MixERP.Net.Common;
 
 namespace MixERP.Net.WebControls.StockTransactionView.Data
 {
     public static class SalesQuotation
     {
-        public static MergeModel GetMergeModel(Collection<int> ids)
-        {
-            int rowIndex = 0;
-
-            if (ids == null)
-            {
-                return new MergeModel();
-            }
-
-            if (ids.Count.Equals(0))
-            {
-                return new MergeModel();
-            }
-
-            MergeModel model = new MergeModel();
-            model.TransactionIdCollection = ids;
-
-            model.Book = Common.Models.Transactions.TranBook.Sales;
-            model.SubBook = Common.Models.Transactions.SubTranBook.Quotation;
-
-            Collection<Common.Models.Transactions.ProductDetailsModel> products = new Collection<Common.Models.Transactions.ProductDetailsModel>();
-            using (NpgsqlConnection connection = new NpgsqlConnection(DBConnection.ConnectionString()))
-            {
-                using (NpgsqlCommand command = GetSalesQuotationViewCommand(ids))
-                {
-                    command.Connection = connection;
-                    command.Connection.Open();
-                    NpgsqlDataReader reader = command.ExecuteReader(CommandBehavior.CloseConnection);
-
-                    if (!reader.HasRows)
-                    {
-                        return new MergeModel();
-                    }
-
-                    while (reader.Read())
-                    {
-                        if (rowIndex.Equals(0))
-                        {
-                            model.ValueDate = Conversion.TryCastDate(reader["value_date"]);
-                            model.PartyCode = Conversion.TryCastString(reader["party_code"]);
-                            model.PriceTypeId = Conversion.TryCastInteger(reader["price_type_id"]);
-                            model.ReferenceNumber = Conversion.TryCastString(reader["reference_number"]);
-                            model.StatementReference = Conversion.TryCastString(reader["statement_reference"]);
-                        }
-
-                        Common.Models.Transactions.ProductDetailsModel product = new Common.Models.Transactions.ProductDetailsModel();
-
-                        product.ItemCode = Conversion.TryCastString(reader["item_code"]);
-                        product.ItemName = Conversion.TryCastString(reader["item_name"]);
-                        product.Unit = Conversion.TryCastString(reader["unit_name"]);
-
-
-                        product.Quantity = Conversion.TryCastInteger(reader["quantity"]);
-                        product.Price = Conversion.TryCastDecimal(reader["price"]);
-                        product.Amount = product.Quantity * product.Price;
-
-                        product.Discount = Conversion.TryCastDecimal(reader["discount"]);
-                        product.Subtotal = product.Amount - product.Discount;
-
-                        product.Rate = Conversion.TryCastDecimal(reader["tax_rate"]);
-                        product.Tax = Conversion.TryCastDecimal(reader["tax"]);
-                        product.Total = product.Subtotal + product.Tax;
-
-                        products.Add(product);
-
-                        rowIndex++;
-                    }
-
-
-                    model.View = products;
-
-                }
-            }
-
-            if (ids.Count > 0)
-            {
-                if (!string.IsNullOrWhiteSpace(model.StatementReference))
-                {
-                    model.StatementReference += Environment.NewLine;
-                }
-
-                model.StatementReference += "(SQ# " + string.Join(",", ids) + ")";
-            }
-
-            return model;
-        }
-
-        private static NpgsqlCommand GetSalesQuotationViewCommand(Collection<int> ids)
+        public static NpgsqlCommand GetSalesQuotationViewCommand(Collection<int> ids)
         {
             if (ids == null)
             {

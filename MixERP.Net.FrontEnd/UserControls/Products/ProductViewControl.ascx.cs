@@ -1,4 +1,8 @@
-﻿/********************************************************************************
+﻿using MixERP.Net.BusinessLayer.Transactions;
+using MixERP.Net.Common.Models.Transactions;
+using MixERP.Net.WebControls.StockTransactionView.Data;
+using MixERP.Net.WebControls.StockTransactionView.Data.Models;
+/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
 This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
@@ -6,11 +10,8 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Web;
-using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
@@ -19,6 +20,20 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
     /// This class is subject to be moved to a standalone server control class library.
     public partial class ProductViewControl : System.Web.UI.UserControl
     {
+        public MixERP.Net.Common.Models.Transactions.TranBook Book { get; set; }
+        public MixERP.Net.Common.Models.Transactions.SubTranBook SubBook { get; set; }
+        public string Text
+        {
+            get
+            {
+                return TitleLiteral.Text;
+            }
+            set
+            {
+                TitleLiteral.Text = value;
+            }
+        }
+
         protected void Page_Init()
         {
             this.InitializeDateTextBoxes();
@@ -39,6 +54,41 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         protected void Page_Load(object sender, EventArgs e)
         {
             this.LoadGridView();
+            this.InitializePostBackUrls();
+            this.InitializeLinkButtons();
+        }
+
+        private void InitializeLinkButtons()
+        {
+            if (this.Book == TranBook.Sales)
+            {
+                if (this.SubBook == SubTranBook.Order)
+                {
+                    MergeToDeliveryLinkButton.Visible = true;
+                }
+
+                if (this.SubBook == SubTranBook.Quotation)
+                {
+                    MergeToOrderLinkButton.Visible = true;
+                    MergeToDeliveryLinkButton.Visible = true;
+                }
+            }
+        }
+        
+        private void InitializePostBackUrls()
+        {
+            if (this.Book == TranBook.Sales)
+            {
+                switch (this.SubBook)
+                {
+                    case SubTranBook.Order:
+                        AddNewLinkButton.PostBackUrl = "/Sales/Entry/Order.aspx";
+                        break;
+                    case SubTranBook.Quotation:
+                        AddNewLinkButton.PostBackUrl = "/Sales/Entry/Quotation.aspx";
+                        break;
+                }
+            }
         }
 
         private Collection<int> GetSelectedValues()
@@ -73,19 +123,20 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             return values;
         }
 
-        protected void MergeToSalesOrderLinkButton_Click(object sender, EventArgs e)
+        protected void MergeToOrderLinkButton_Click(object sender, EventArgs e)
         {
-            System.Collections.ObjectModel.Collection<int> values = this.GetSelectedValues();
+            Collection<int> values = this.GetSelectedValues();
 
             if (this.IsValid())
             {
-                this.MergeToSalesOrder(values);
+                this.Merge(values, "~/Sales/Order.aspx");
             }
         }
 
+        #region Validation
         private bool IsValid()
         {
-            System.Collections.ObjectModel.Collection<int> values = this.GetSelectedValues();
+            Collection<int> values = this.GetSelectedValues();
 
             if (values.Count.Equals(0))
             {
@@ -93,26 +144,66 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 return false;
             }
 
+            if (!this.BelongToSameParty(values)) return false;
+            if (this.AreAlreadyMerged(values)) return false;
+
+            return true;
+        }
+
+        private bool BelongToSameParty(Collection<int> values)
+        {
             bool belongToSameParty = MixERP.Net.BusinessLayer.Transactions.NonGLStockTransaction.TransactionIdsBelongToSameParty(values);
 
             if (!belongToSameParty)
             {
-                ErrorLabel.Text = "Cannot merge quotations of different parties into a single batch. Please try again.";
-                return false;
-            }
-
-            if (MixERP.Net.BusinessLayer.Transactions.NonGLStockTransaction.IsQuotationAlreadyMerged(values))
-            {
-                ErrorLabel.Text = "The selected quotation(s) may contain items which were already merged. Please try again.";
+                ErrorLabel.Text = "Cannot merge transactions of different parties into a single batch. Please try again.";
                 return false;
             }
 
             return true;
         }
 
-        private void MergeToSalesOrder(Collection<int> ids)
+        private bool AreAlreadyMerged(Collection<int> values)
         {
-            MixERP.Net.WebControls.StockTransactionView.Data.Models.MergeModel model = MixERP.Net.WebControls.StockTransactionView.Data.SalesQuotation.GetMergeModel(ids);
+            if (AreSalesQuotationsAlreadyMerged(values)) return true;
+            if (AreSalesOrdersAlreadyMerged(values)) return true;
+
+            return false;
+        }
+
+        private bool AreSalesQuotationsAlreadyMerged(Collection<int> values)
+        {
+            if (this.Book == TranBook.Sales && this.SubBook == SubTranBook.Quotation)
+            {
+                if (NonGLStockTransaction.AreSalesQuotationsAlreadyMerged(values))
+                {
+                    ErrorLabel.Text = "The selected transaction(s) contains item(s) which have already been merged. Please try again.";
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool AreSalesOrdersAlreadyMerged(Collection<int> values)
+        {
+            if (this.Book == TranBook.Sales && this.SubBook == SubTranBook.Order)
+            {
+                if (NonGLStockTransaction.AreSalesOrdersAlreadyMerged(values))
+                {
+                    ErrorLabel.Text = "The selected transaction(s) contains item(s) which have already been merged. Please try again.";
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        #endregion
+
+        private void Merge(Collection<int> ids, string link)
+        {
+            MergeModel model = ModelFactory.GetMergeModel(ids, this.Book, this.SubBook);
 
             if (model.View == null)
             {
@@ -125,8 +216,19 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             }
 
             HttpContext.Current.Session["Product"] = model;
-            HttpContext.Current.Response.Redirect("~/Sales/Order.aspx");
+            HttpContext.Current.Response.Redirect(link);
         }
+
+        protected void MergeToDeliveryLinkButton_Click(object sender, EventArgs e)
+        {
+            Collection<int> values = this.GetSelectedValues();
+
+            if (this.IsValid())
+            {
+                this.Merge(values, "~/Sales/DeliveryWithoutOrder.aspx");
+            }
+        }
+
 
         protected void ShowButton_Click(object sender, EventArgs e)
         {

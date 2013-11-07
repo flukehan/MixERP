@@ -7,9 +7,7 @@ http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.UI;
+using System.Collections.ObjectModel;
 using System.Web.UI.WebControls;
 
 namespace MixERP.Net.WebControls.ScrudFactory
@@ -24,7 +22,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 return;
             }
 
-            System.Collections.ObjectModel.Collection<KeyValuePair<string, string>> list = this.GetFormCollection(true);
+            Collection<KeyValuePair<string, string>> list = this.GetFormCollection(true);
             string id = this.GetSelectedValue();
 
             if(string.IsNullOrWhiteSpace(id))

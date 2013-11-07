@@ -8,7 +8,7 @@ http://mozilla.org/MPL/2.0/.
 <%@ Control Language="C#" AutoEventWireup="True" CodeBehind="ProductViewControl.ascx.cs" Inherits="MixERP.Net.FrontEnd.UserControls.Products.ProductViewControl" %>
 <AjaxCTK:ToolkitScriptManager ID="ScriptManager1" runat="server" />
 <h1>
-    <asp:Literal ID="TitleLiteral" runat="server" Text="<%$Resources:Titles, SalesQuotation %>" />
+    <asp:Literal ID="TitleLiteral" runat="server" />
 </h1>
 <hr class="hr" />
 
@@ -16,20 +16,37 @@ http://mozilla.org/MPL/2.0/.
     <table class="valignmiddle" style="border-collapse: collapse;">
         <tr>
             <td>
-                <asp:LinkButton ID="AddNewLinkButton" runat="server" CssClass="menu" Text="<%$Resources:Titles, AddNew %>"
-                    OnClientClick="window.location='/Sales/Entry/Quotation.aspx';return false;" />
+                <asp:LinkButton
+                    ID="AddNewLinkButton"
+                    runat="server"
+                    CssClass="menu"
+                    Text="<%$Resources:Titles, AddNew %>" />
 
                 <asp:LinkButton
-                    ID="MergeToSalesOrderLinkButton"
+                    ID="MergeToOrderLinkButton"
                     runat="server"
                     CssClass="menu"
                     Text="<%$Resources:Titles, MergeBatchToSalesOrder %>"
                     OnClientClick="return getSelectedItems();"
-                    OnClick="MergeToSalesOrderLinkButton_Click" />
-                <asp:LinkButton ID="MergeToSalesDeliveryLinkButton" runat="server" CssClass="menu" Text="<%$Resources:Titles, MergeBatchToSalesDelivery %>" />
+                    OnClick="MergeToOrderLinkButton_Click"
+                    Visible="false" />
+
+
+                <asp:LinkButton
+                    ID="MergeToDeliveryLinkButton"
+                    runat="server"
+                    CssClass="menu"
+                    Text="<%$Resources:Titles, MergeBatchToSalesDelivery %>"
+                    OnClientClick="return getSelectedItems();"
+                    OnClick="MergeToDeliveryLinkButton_Click"
+                    Visible="false" />
+
             </td>
             <td>
                 <a href="#" class="menu" id="flagButton">Flag This Transaction</a>
+            </td>
+            <td>
+                <a href="#" title="Print" class="menu">Print</a>
             </td>
         </tr>
     </table>
@@ -49,7 +66,14 @@ http://mozilla.org/MPL/2.0/.
             </asp:DropDownList>
         </p>
         <p>
-            <asp:Button ID="UpdateButton" runat="server" Text="Update" CssClass="menu" />
+            <asp:Button 
+                ID="UpdateButton" 
+                runat="server" 
+                Text="Update" 
+                CssClass="menu"
+                OnClientClick="return getSelectedItems();"
+
+                 />
             <a href="#" onclick="$('#flag-popunder').toggle(500);" class="menu">Close</a>
         </p>
     </div>
@@ -79,7 +103,7 @@ http://mozilla.org/MPL/2.0/.
         </tr>
         <tr>
             <td>
-                
+
                 <mixerp:DateTextBox ID="DateFromDateTextBox" runat="server" CssClass="date" Width="72px" Mode="MonthStartDate" />
             </td>
             <td>

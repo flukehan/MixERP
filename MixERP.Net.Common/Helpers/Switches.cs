@@ -41,7 +41,7 @@ namespace MixERP.Net.Common.Helpers
 
         private static bool GetSwitch(string key)
         {
-            string sw = MixERP.Net.Common.Helpers.ConfigurationHelper.GetSectionKey("MixERPSwitches", key);
+            string sw = MixERP.Net.Common.Helpers.ConfigurationHelper.GetSwitch(key);
             if(string.IsNullOrWhiteSpace(sw))
             {
                 return false;

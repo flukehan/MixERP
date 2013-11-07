@@ -25,10 +25,9 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
             script.Append(CreateVariable("localizedAreYouSure", Resources.ScrudResource.AreYouSure));
             script.Append(CreateVariable("localizedNothingSelected", Resources.ScrudResource.NothingSelected));
 
-            script.Append(CreateVariable("reportTemplatePath", MixERP.Net.Common.Helpers.ConfigurationHelper.GetSectionKey("MixERPScrudParameters", "TemplatePath")));
-            script.Append(CreateVariable("reportHeaderPath", MixERP.Net.Common.Helpers.ConfigurationHelper.GetSectionKey("MixERPScrudParameters", "HeaderPath")));
-
-            script.Append(CreateVariable("containerMargin", MixERP.Net.Common.Helpers.ConfigurationHelper.GetSectionKey("MixERPScrudParameters", "GridContainerMargin")));
+            script.Append(CreateVariable("reportTemplatePath", MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("TemplatePath")));
+            script.Append(CreateVariable("reportHeaderPath", MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("HeaderPath")));
+            script.Append(CreateVariable("containerMargin", MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("GridContainerMargin")));
             script.Append(CreateVariable("date", DateTime.Now.ToString()));
             
             script.Append(resource);

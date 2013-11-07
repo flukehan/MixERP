@@ -192,7 +192,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
             }
         }
 
-        public static bool IsQuotationAlreadyMerged(Collection<int> ids)
+        public static bool AreSalesQuotationsAlreadyMerged(Collection<int> ids)
         {
             if (ids == null)
             {
@@ -208,7 +208,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                 parameters[i] = "@Id" + MixERP.Net.Common.Conversion.TryCastString(i);
             }
 
-            string sql = "SELECT COUNT(*) FROM transactions.non_gl_stock_master_relations WHERE quotation_non_gl_stock_master_id IN(" + string.Join(",", parameters) + ");";
+            string sql = @"SELECT transactions.are_sales_quotations_already_merged(" + string.Join(",", parameters) + ");";
 
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
@@ -218,11 +218,39 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                     command.Parameters.AddWithValue("@Id" + MixERP.Net.Common.Conversion.TryCastString(i), ids[i]);
                 }
 
-                return Common.Conversion.TryCastInteger(MixERP.Net.DBFactory.DBOperations.GetScalarValue(command)) > 0;
+                return Common.Conversion.TryCastBoolean(MixERP.Net.DBFactory.DBOperations.GetScalarValue(command));
             }
-
-            return false;
         }
 
+
+        public static bool AreSalesOrdersAlreadyMerged(Collection<int> ids)
+        {
+            if (ids == null)
+            {
+                return false;
+            }
+
+            //Crate an array object to store the parameters.
+            var parameters = new string[ids.Count];
+
+            //Iterate through the ids and create a parameter array.
+            for (int i = 0; i < ids.Count; i++)
+            {
+                parameters[i] = "@Id" + MixERP.Net.Common.Conversion.TryCastString(i);
+            }
+
+            string sql = @"SELECT transactions.are_sales_orders_already_merged(" + string.Join(",", parameters) + ");";
+
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                //Iterate through the IDs and add PostgreSQL parameters.
+                for (int i = 0; i < ids.Count; i++)
+                {
+                    command.Parameters.AddWithValue("@Id" + MixERP.Net.Common.Conversion.TryCastString(i), ids[i]);
+                }
+
+                return Common.Conversion.TryCastBoolean(MixERP.Net.DBFactory.DBOperations.GetScalarValue(command));
+            }
+        }
     }
 }

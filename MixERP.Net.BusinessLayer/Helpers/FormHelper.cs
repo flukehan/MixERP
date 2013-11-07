@@ -5,12 +5,9 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Collections.ObjectModel;
 using System.Data;
-using System.Data.Common;
 using System.Web.UI.WebControls;
 
 namespace MixERP.Net.BusinessLayer.Helpers
@@ -44,12 +41,12 @@ namespace MixERP.Net.BusinessLayer.Helpers
             return MixERP.Net.DatabaseLayer.Helpers.FormHelper.GetTotalRecords(tableSchema, tableName);
         }
 
-        public static bool InsertRecord(string tableSchema, string tableName, System.Collections.ObjectModel.Collection<KeyValuePair<string, string>> data, string imageColumn)
+        public static bool InsertRecord(string tableSchema, string tableName, Collection<KeyValuePair<string, string>> data, string imageColumn)
         {
             return MixERP.Net.DatabaseLayer.Helpers.FormHelper.InsertRecord(MixERP.Net.BusinessLayer.Helpers.SessionHelper.UserId(), tableSchema, tableName, data, imageColumn);
         }
 
-        public static bool UpdateRecord(string tableSchema, string tableName, System.Collections.ObjectModel.Collection<KeyValuePair<string, string>> data, string keyColumn, string keyColumnValue, string imageColumn)
+        public static bool UpdateRecord(string tableSchema, string tableName, Collection<KeyValuePair<string, string>> data, string keyColumn, string keyColumnValue, string imageColumn)
         {
             return MixERP.Net.DatabaseLayer.Helpers.FormHelper.UpdateRecord(MixERP.Net.BusinessLayer.Helpers.SessionHelper.UserId(), tableSchema, tableName, data, keyColumn, keyColumnValue, imageColumn);
         }

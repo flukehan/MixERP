@@ -6,10 +6,8 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Data;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 
@@ -24,7 +22,7 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
                 return string.Empty;
             }
 
-            string logo = MixERP.Net.Common.Helpers.ConfigurationHelper.GetSectionKey("MixERPParameters", "LogoPath");
+            string logo = MixERP.Net.Common.Helpers.ConfigurationHelper.GetParameter("LogoPath");
             expression = expression.Replace("{LogoPath}", MixERP.Net.Common.PageUtility.GetCurrentDomainName() + MixERP.Net.Common.PageUtility.ResolveUrl(logo));
             expression = expression.Replace("{PrintDate}", System.DateTime.Now.ToString());
 
@@ -52,7 +50,7 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
             return expression;
         }
 
-        public static string ParseDataSource(string expression, System.Collections.ObjectModel.Collection<System.Data.DataTable> table)
+        public static string ParseDataSource(string expression, Collection<System.Data.DataTable> table)
         {
             if(string.IsNullOrWhiteSpace(expression))
             {

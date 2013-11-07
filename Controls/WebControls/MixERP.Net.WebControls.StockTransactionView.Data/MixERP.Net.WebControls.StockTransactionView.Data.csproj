@@ -52,6 +52,7 @@
     <Compile Include="Models\MergeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SalesQuotation.cs" />
+    <Compile Include="ModelFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\MixERP.net.Common\MixERP.Net.Common.csproj">

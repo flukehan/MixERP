@@ -25,12 +25,12 @@ namespace MixERP.Net.WebControls.ScrudFactory
             this.pager.PageSize = 10;
 
 
-            if(this.PageSize != 0)
+            if (this.PageSize != 0)
             {
                 this.pager.PageSize = this.PageSize;
             }
 
-            if(showAll)
+            if (showAll)
             {
                 this.pager.PageSize = 1000;
             }
@@ -44,11 +44,11 @@ namespace MixERP.Net.WebControls.ScrudFactory
         {
             if (this.Width.Value.Equals(0))
             {
-                int width = MixERP.Net.Common.Conversion.TryCastInteger(MixERP.Net.Common.Helpers.ConfigurationHelper.GetSectionKey("MixERPScrudParameters", "GridViewDefaultWidth"));
+                int width = MixERP.Net.Common.Conversion.TryCastInteger(MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("GridViewDefaultWidth"));
 
                 if (width.Equals(0))
                 {
-                    return 1000;                
+                    return 1000;
                 }
 
                 return width;
@@ -64,23 +64,23 @@ namespace MixERP.Net.WebControls.ScrudFactory
             int limit = 10;
             int offset = 0;
 
-            if(this.PageSize != 0)
+            if (this.PageSize != 0)
             {
                 limit = this.PageSize;
             }
 
-            if(showAll)
+            if (showAll)
             {
                 limit = 1000;
             }
 
-            if(this.Page.Request["page"] != null)
+            if (this.Page.Request["page"] != null)
             {
                 offset = (MixERP.Net.Common.Conversion.TryCastInteger(this.Page.Request["page"]) - 1) * limit;
             }
 
 
-            using(System.Data.DataTable table = MixERP.Net.BusinessLayer.Helpers.FormHelper.GetView(this.ViewSchema, this.View, this.KeyColumn, limit, offset))
+            using (System.Data.DataTable table = MixERP.Net.BusinessLayer.Helpers.FormHelper.GetView(this.ViewSchema, this.View, this.KeyColumn, limit, offset))
             {
                 this.formGridView.DataSource = table;
                 this.formGridView.DataBind();

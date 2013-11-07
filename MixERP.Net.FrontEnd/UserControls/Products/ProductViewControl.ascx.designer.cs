@@ -40,22 +40,22 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::System.Web.UI.WebControls.LinkButton AddNewLinkButton;
         
         /// <summary>
-        /// MergeToSalesOrderLinkButton control.
+        /// MergeToOrderLinkButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton MergeToSalesOrderLinkButton;
+        protected global::System.Web.UI.WebControls.LinkButton MergeToOrderLinkButton;
         
         /// <summary>
-        /// MergeToSalesDeliveryLinkButton control.
+        /// MergeToDeliveryLinkButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton MergeToSalesDeliveryLinkButton;
+        protected global::System.Web.UI.WebControls.LinkButton MergeToDeliveryLinkButton;
         
         /// <summary>
         /// FlagDropDownList control.

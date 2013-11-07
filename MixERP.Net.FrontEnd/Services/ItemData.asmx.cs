@@ -1,19 +1,17 @@
-﻿/********************************************************************************
+﻿using AjaxControlToolkit;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
+/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
 This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Services;
 using System.Web.Script.Services;
-using System.ComponentModel;
-using AjaxControlToolkit;
-using System.Collections.Specialized;
+using System.Web.Services;
 
 namespace MixERP.Net.FrontEnd.Services
 {
@@ -31,7 +29,7 @@ namespace MixERP.Net.FrontEnd.Services
         [WebMethod]
         public CascadingDropDownNameValue[] GetItems(string knownCategoryValues, string category)
         {
-            System.Collections.ObjectModel.Collection<CascadingDropDownNameValue> values = new System.Collections.ObjectModel.Collection<CascadingDropDownNameValue>();
+            Collection<CascadingDropDownNameValue> values = new Collection<CascadingDropDownNameValue>();
 
             using(System.Data.DataTable table = MixERP.Net.BusinessLayer.Helpers.FormHelper.GetTable("core", "items"))
             {
@@ -47,7 +45,7 @@ namespace MixERP.Net.FrontEnd.Services
         [WebMethod]
         public CascadingDropDownNameValue[] GetStockItems(string knownCategoryValues, string category)
         {
-            System.Collections.ObjectModel.Collection<CascadingDropDownNameValue> values = new System.Collections.ObjectModel.Collection<CascadingDropDownNameValue>();
+            Collection<CascadingDropDownNameValue> values = new Collection<CascadingDropDownNameValue>();
 
             using(System.Data.DataTable table = MixERP.Net.BusinessLayer.Helpers.FormHelper.GetTable("core", "items", "maintain_stock", "true"))
             {
@@ -66,7 +64,7 @@ namespace MixERP.Net.FrontEnd.Services
             StringDictionary kv = CascadingDropDown.ParseKnownCategoryValuesString(knownCategoryValues);            
             string itemCode = kv["Item"];
 
-            System.Collections.ObjectModel.Collection<CascadingDropDownNameValue> values = new System.Collections.ObjectModel.Collection<CascadingDropDownNameValue>();
+            Collection<CascadingDropDownNameValue> values = new Collection<CascadingDropDownNameValue>();
 
             using (System.Data.DataTable table = MixERP.Net.BusinessLayer.Core.Units.GetUnitViewByItemCode(itemCode))
             {

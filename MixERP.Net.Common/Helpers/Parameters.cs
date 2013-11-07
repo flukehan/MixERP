@@ -21,7 +21,7 @@ namespace MixERP.Net.Common.Helpers
         
         private static string GetParameter(string key)
         {
-            return MixERP.Net.Common.Helpers.ConfigurationHelper.GetSectionKey("MixERPParameters", key);
+            return MixERP.Net.Common.Helpers.ConfigurationHelper.GetParameter(key);
         }
 
         public static string ShortDateFormat()
