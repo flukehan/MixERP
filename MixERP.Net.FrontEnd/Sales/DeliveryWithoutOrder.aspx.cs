@@ -6,10 +6,7 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
+using System.Collections.ObjectModel;
 using System.Web.UI.WebControls;
 
 namespace MixERP.Net.FrontEnd.Sales
@@ -31,15 +28,21 @@ namespace MixERP.Net.FrontEnd.Sales
             int shipperId = MixERP.Net.Common.Conversion.TryCastInteger(SalesDeliveryControl.GetForm.ShippingCompanyDropDownList.SelectedItem.Value);
             decimal shippingCharge = MixERP.Net.Common.Conversion.TryCastDecimal(SalesDeliveryControl.GetForm.ShippingChargeTextBox.Text);
             int costCenterId = MixERP.Net.Common.Conversion.TryCastInteger(SalesDeliveryControl.GetForm.CostCenterDropDownList.SelectedItem.Value);
+            int agentId = MixERP.Net.Common.Conversion.TryCastInteger(SalesDeliveryControl.GetForm.AgentDropDownList.SelectedItem.Value);
             string referenceNumber = SalesDeliveryControl.GetForm.ReferenceNumberTextBox.Text;
             string statementReference = SalesDeliveryControl.GetForm.StatementReferenceTextBox.Text;
+            Collection<int> tranIdCollection = SalesDeliveryControl.GetTranIdCollection();
 
-            long transactionMasterId = MixERP.Net.BusinessLayer.Transactions.SalesDelivery.Add(valueDate, storeId, partyCode, priceTypeId, grid, shipperId, shippingCharge, costCenterId, referenceNumber, statementReference);
-            if(transactionMasterId > 0)
+            long transactionMasterId = MixERP.Net.BusinessLayer.Transactions.SalesDelivery.Add(valueDate, storeId, partyCode, priceTypeId, grid, shipperId, shippingCharge, costCenterId, referenceNumber, agentId, statementReference, tranIdCollection);
+
+            if (transactionMasterId > 0)
             {
                 Response.Redirect("~/Sales/Confirmation/DeliveryWithoutOrder.aspx?TranId=" + transactionMasterId, true);
             }
-
+            else
+            {
+                SalesDeliveryControl.ErrorMessage = Resources.Labels.UnknownError;
+            }
         }
     }
 }

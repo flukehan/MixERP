@@ -8,7 +8,7 @@ http://mozilla.org/MPL/2.0/.
 
 /********************************************************************************
 	NOTE: ALL RANDOM INDEXES ARE REMOVED FROM THE SCRIPT.
-	TODO LIST : NEED TO CREATE INDEXES.
+	TODO : NEED TO CREATE INDEXES.
 ***********************************************************************************/
 
 DO 

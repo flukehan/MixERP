@@ -53,8 +53,7 @@ http://mozilla.org/MPL/2.0/.
                         <td>
                             <asp:Literal ID="ReferenceNumberLiteral" runat="server" />
                         </td>
-                        <td>
-                        </td>
+                        <td></td>
                     </tr>
                     <tr style="vertical-align: middle;">
                         <td>
@@ -238,27 +237,33 @@ http://mozilla.org/MPL/2.0/.
                                 </AjaxCTK:CascadingDropDown>
 
                                 <p>
-                                    <asp:TextBox 
-                                        ID="ShippingAddressTextBox" 
-                                        runat="server" 
-                                        ReadOnly="true" 
-                                        TextMode="MultiLine" 
-                                        Width="410px" 
+                                    <asp:TextBox
+                                        ID="ShippingAddressTextBox"
+                                        runat="server"
+                                        ReadOnly="true"
+                                        TextMode="MultiLine"
+                                        Width="410px"
                                         Height="72px" />
                                 </p>
-                            </asp:TableCell></asp:TableRow><asp:TableRow ID="ShippingCompanyRow" runat="server">
+                            </asp:TableCell>
+                        </asp:TableRow>
+                        <asp:TableRow ID="ShippingCompanyRow" runat="server">
                             <asp:TableCell>
                                 <asp:Literal ID="ShippingCompanyDropDownListLabelLiteral" runat="server" />
                             </asp:TableCell><asp:TableCell>
                                 <asp:DropDownList ID="ShippingCompanyDropDownList" runat="server" Width="200">
                                 </asp:DropDownList>
-                            </asp:TableCell></asp:TableRow><asp:TableRow ID="ShippingChargeRow" runat="server">
+                            </asp:TableCell>
+                        </asp:TableRow>
+                        <asp:TableRow ID="ShippingChargeRow" runat="server">
                             <asp:TableCell>
                                 <asp:Literal ID="ShippingChargeTextBoxLabelLiteral" runat="server" />
                             </asp:TableCell><asp:TableCell>
                                 <asp:TextBox ID="ShippingChargeTextBox" runat="server" AutoPostBack="true" CssClass="number" OnTextChanged="ShippingChargeTextBox_TextChanged" Width="100px">
                                 </asp:TextBox>
-                            </asp:TableCell></asp:TableRow><asp:TableRow>
+                            </asp:TableCell>
+                        </asp:TableRow>
+                        <asp:TableRow>
                             <asp:TableCell>
                                 <asp:Literal ID="TotalsLiteral" runat="server" Text="<%$Resources:Titles, Totals %>">
                                 </asp:Literal>
@@ -289,45 +294,61 @@ http://mozilla.org/MPL/2.0/.
                                         </td>
                                     </tr>
                                 </table>
-                            </asp:TableCell></asp:TableRow><asp:TableRow ID="CashRepositoryRow" runat="server">
+                            </asp:TableCell>
+                        </asp:TableRow>
+                        <asp:TableRow ID="CashRepositoryRow" runat="server">
                             <asp:TableCell runat="server">
                                 <asp:Literal ID="CashRepositoryDropDownListLabelLiteral" runat="server" />
                             </asp:TableCell><asp:TableCell>
                                 <asp:DropDownList ID="CashRepositoryDropDownList" runat="server"
-                                    AutoPostBack="true" 
+                                    AutoPostBack="true"
                                     OnSelectedIndexChanged="CashRepositoryDropDownList_SelectIndexChanged"
                                     Width="300px">
                                 </asp:DropDownList>
-                            </asp:TableCell></asp:TableRow><asp:TableRow ID="CashRepositoryBalanceRow" runat="server">
+                            </asp:TableCell>
+                        </asp:TableRow>
+                        <asp:TableRow ID="CashRepositoryBalanceRow" runat="server">
                             <asp:TableCell>
                                 <asp:Literal ID="CashRepositoryBalanceTextBoxLabelLiteral" runat="server" />
                             </asp:TableCell><asp:TableCell>
                                 <asp:TextBox ID="CashRepositoryBalanceTextBox" runat="server" Width="100" ReadOnly="true" />
                                 <asp:Literal ID="DrLiteral" runat="server" Text="<%$Resources:Titles, Dr %>" />
-                            </asp:TableCell></asp:TableRow><asp:TableRow ID="CostCenterRow" runat="server">
+                            </asp:TableCell>
+                        </asp:TableRow>
+                        <asp:TableRow ID="CostCenterRow" runat="server">
                             <asp:TableCell>
                                 <asp:Literal ID="CostCenterDropDownListLabelLiteral" runat="server" />
                             </asp:TableCell><asp:TableCell>
                                 <asp:DropDownList ID="CostCenterDropDownList" runat="server" Width="300">
                                 </asp:DropDownList>
-                            </asp:TableCell></asp:TableRow><asp:TableRow ID="SalesPersonRow" runat="server">
+                            </asp:TableCell>
+                        </asp:TableRow>
+                        <asp:TableRow ID="SalesPersonRow" runat="server">
                             <asp:TableCell>
                                 <asp:Literal ID="SalesPersonDropDownListLabelLiteral" runat="server" />
                             </asp:TableCell><asp:TableCell>
                                 <asp:DropDownList ID="SalesPersonDropDownList" runat="server" Width="300">
                                 </asp:DropDownList>
-                            </asp:TableCell></asp:TableRow><asp:TableRow>
+                            </asp:TableCell>
+                        </asp:TableRow>
+                        <asp:TableRow>
                             <asp:TableCell>
                                 <asp:Literal ID="StatementReferenceTextBoxLabelLiteral" runat="server" />
                             </asp:TableCell><asp:TableCell>
                                 <asp:TextBox ID="StatementReferenceTextBox" runat="server" TextMode="MultiLine" Width="410" Height="100">
                                 </asp:TextBox>
-                            </asp:TableCell></asp:TableRow><asp:TableRow>
+                            </asp:TableCell>
+                        </asp:TableRow>
+                        <asp:TableRow>
                             <asp:TableCell>
                                 &nbsp;
                             </asp:TableCell><asp:TableCell>
                                 <asp:Button ID="SaveButton" runat="server" CssClass="button" Text="<%$Resources:Titles, Save %>" OnClick="SaveButton_Click" />
-                            </asp:TableCell></asp:TableRow></asp:Table></asp:Panel><p>
+                            </asp:TableCell>
+                        </asp:TableRow>
+                    </asp:Table>
+                </asp:Panel>
+                <p>
                     <asp:Label ID="ErrorLabelBottom" runat="server" CssClass="error" />
                 </p>
 
@@ -404,9 +425,8 @@ http://mozilla.org/MPL/2.0/.
         }
     }
 
-    var showShippingAddress = function()
-    {
-        $('#ShippingAddressTextBox').val(($('#ShippingAddressDropDownList').val()));    
+    var showShippingAddress = function () {
+        $('#ShippingAddressTextBox').val(($('#ShippingAddressDropDownList').val()));
     }
 
 

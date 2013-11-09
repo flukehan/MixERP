@@ -66,13 +66,25 @@ namespace MixERP.Net.DatabaseLayer.Core
         public static decimal CountItemInStock(string itemCode, int unitId, int storeId)
         {
             string sql = "SELECT core.count_item_in_stock(core.get_item_id_by_item_code(@ItemCode), @UnitId, @StoreId);";
-            using(NpgsqlCommand command = new NpgsqlCommand(sql))
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@ItemCode", itemCode);
                 command.Parameters.AddWithValue("@UnitId", unitId);
                 command.Parameters.AddWithValue("@StoreId", storeId);
                 return MixERP.Net.Common.Conversion.TryCastDecimal(MixERP.Net.DBFactory.DBOperations.GetScalarValue(command));
-            }        
+            }
+        }
+
+        public static decimal CountItemInStock(string itemCode, string unitName, int storeId)
+        {
+            string sql = "SELECT core.count_item_in_stock(core.get_item_id_by_item_code(@ItemCode), core.get_unit_id_by_unit_name(@UnitName), @StoreId);";
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                command.Parameters.AddWithValue("@ItemCode", itemCode);
+                command.Parameters.AddWithValue("@UnitName", unitName);
+                command.Parameters.AddWithValue("@StoreId", storeId);
+                return MixERP.Net.Common.Conversion.TryCastDecimal(MixERP.Net.DBFactory.DBOperations.GetScalarValue(command));
+            }
         }
 
         public static bool IsStockItem(string itemCode)

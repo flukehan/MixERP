@@ -123,7 +123,7 @@ namespace MixERP.Net.BusinessLayer.Helpers
 
         public static CultureInfo Culture()
         {
-            return MixERP.Net.Common.Helpers.LocalizationHelper.Culture();
+            return MixERP.Net.Common.Helpers.LocalizationHelper.GetCurrentCulture();
         }
     }
 }

@@ -175,7 +175,7 @@ http://mozilla.org/MPL/2.0/.
             Level="2"
             Path="/Reports/Purchase.View.Purchase.Invoice.xml" />
         <Resources>
-            <Add Key="ViewPurchaseInovice" Value="View Purchase Invoice" Class="Titles" Culture="en-US" />
+            <Add Key="ViewPurchaseInovice" Value="View Purchase Invoice" Path="Titles.resx" />
         </Resources>
     </Install>
 </PesReport>

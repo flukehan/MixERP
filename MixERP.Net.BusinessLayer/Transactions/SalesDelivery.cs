@@ -16,7 +16,7 @@ namespace MixERP.Net.BusinessLayer.Transactions
 {
     public static class SalesDelivery
     {
-        public static long Add(DateTime valueDate, int storeId, string partyCode, int priceTypeId, GridView grid, int shipperId, decimal shippingCharge, int costCenterId, string referenceNumber, string statementReference)
+        public static long Add(DateTime valueDate, int storeId, string partyCode, int priceTypeId, GridView grid, int shipperId, decimal shippingCharge, int costCenterId, string referenceNumber, int agentId, string statementReference, Collection<int> transactionIdCollection)
         {
             MixERP.Net.Common.Models.Transactions.StockMasterModel stockMaster = new MixERP.Net.Common.Models.Transactions.StockMasterModel();
             Collection<MixERP.Net.Common.Models.Transactions.StockMasterDetailModel> details = new Collection<MixERP.Net.Common.Models.Transactions.StockMasterDetailModel>();
@@ -27,6 +27,7 @@ namespace MixERP.Net.BusinessLayer.Transactions
             stockMaster.PriceTypeId = priceTypeId;
             stockMaster.ShipperId = shipperId;
             stockMaster.ShippingCharge = shippingCharge;
+            stockMaster.AgentId = agentId;
 
             if(grid != null)
             {
@@ -51,7 +52,7 @@ namespace MixERP.Net.BusinessLayer.Transactions
             }
 
 
-            transactionMasterId = MixERP.Net.DatabaseLayer.Transactions.SalesDelivery.Add(valueDate, MixERP.Net.BusinessLayer.Helpers.SessionHelper.OfficeId(), MixERP.Net.BusinessLayer.Helpers.SessionHelper.UserId(), MixERP.Net.BusinessLayer.Helpers.SessionHelper.LogOnId(), costCenterId, referenceNumber, statementReference, stockMaster, details);
+            transactionMasterId = MixERP.Net.DatabaseLayer.Transactions.SalesDelivery.Add(valueDate, MixERP.Net.BusinessLayer.Helpers.SessionHelper.OfficeId(), MixERP.Net.BusinessLayer.Helpers.SessionHelper.UserId(), MixERP.Net.BusinessLayer.Helpers.SessionHelper.LogOnId(), costCenterId, referenceNumber, statementReference, stockMaster, details, transactionIdCollection);
             MixERP.Net.DatabaseLayer.Transactions.Verification.CallAutoVerification(transactionMasterId);
             return transactionMasterId;
         }

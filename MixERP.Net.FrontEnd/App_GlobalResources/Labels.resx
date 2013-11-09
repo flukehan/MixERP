@@ -145,6 +145,9 @@
     <value>The transaction was withdrawn successfully. Moreover, this action will affect the all the reports produced on and after "{0}".</value>
     <comment>The transaction was withdrawn successfully. Moreover, this action will affect the all the reports produced on and after "1/1/2013".</comment>
   </data>
+  <data name="UnknownError" xml:space="preserve">
+    <value>Unknown error occurred.</value>
+  </data>
   <data name="VerificationApprovedMessage" xml:space="preserve">
     <value>This transaction was approved by {0} on {1}.</value>
     <comment>This transaction was approved by administrator on 1/1/2013.</comment>

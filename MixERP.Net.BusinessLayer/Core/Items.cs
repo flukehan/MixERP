@@ -39,6 +39,11 @@ namespace MixERP.Net.BusinessLayer.Core
             return MixERP.Net.DatabaseLayer.Core.Items.CountItemInStock(itemCode, unitId, storeId);
         }
 
+        public static decimal CountItemInStock(string itemCode, string unitName, int storeId)
+        {
+            return MixERP.Net.DatabaseLayer.Core.Items.CountItemInStock(itemCode, unitName, storeId);
+        }
+
         public static bool IsStockItem(string itemCode)
         {
             return MixERP.Net.DatabaseLayer.Core.Items.IsStockItem(itemCode);

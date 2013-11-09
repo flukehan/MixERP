@@ -222,7 +222,6 @@ namespace MixERP.Net.DatabaseLayer.Transactions
             }
         }
 
-
         public static bool AreSalesOrdersAlreadyMerged(Collection<int> ids)
         {
             if (ids == null)

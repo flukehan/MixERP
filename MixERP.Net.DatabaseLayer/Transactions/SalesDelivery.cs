@@ -18,9 +18,8 @@ namespace MixERP.Net.DatabaseLayer.Transactions
 {
     public static class SalesDelivery
     {
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        public static long Add(DateTime valueDate, int officeId, int userId, long logOnId, int costCenterId, string referenceNumber, string statementReference, MixERP.Net.Common.Models.Transactions.StockMasterModel stockMaster, Collection<MixERP.Net.Common.Models.Transactions.StockMasterDetailModel> details)
+        public static long Add(DateTime valueDate, int officeId, int userId, long logOnId, int costCenterId, string referenceNumber, string statementReference, MixERP.Net.Common.Models.Transactions.StockMasterModel stockMaster, Collection<MixERP.Net.Common.Models.Transactions.StockMasterDetailModel> details, Collection<int> transactionIdCollection)
         {
             if(stockMaster == null)
             {
@@ -33,6 +32,11 @@ namespace MixERP.Net.DatabaseLayer.Transactions
             }
 
             if(details.Count.Equals(0))
+            {
+                return 0;
+            }
+
+            if (stockMaster.AgentId.Equals(0))
             {
                 return 0;
             }
@@ -199,6 +203,23 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                         #endregion
 
                         #endregion
+
+                        if (transactionIdCollection != null)
+                        {
+                            if (transactionIdCollection.Count > 0)
+                            {
+                                foreach (int tranId in transactionIdCollection)
+                                {
+                                    sql = "INSERT INTO transactions.stock_master_non_gl_relations(stock_master_id, non_gl_stock_master_id) SELECT @Id, @RelationId;";
+                                    using (NpgsqlCommand relation = new NpgsqlCommand(sql, connection))
+                                    {
+                                        relation.Parameters.AddWithValue("@Id", transactionMasterId);
+                                        relation.Parameters.AddWithValue("@RelationId", tranId);
+                                        relation.ExecuteNonQuery();
+                                    }
+                                }
+                            }
+                        }
 
                         transaction.Commit();
                         return transactionMasterId;
