@@ -72,7 +72,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
                         ScrudRadioButtonList.AddRadioButtonList(t, columnName, isNullable, Resources.ScrudResource.YesNo, "true,false", defaultValue);
                         break;
                     case "date":
-                        ScrudDateTextBox.AddDateTextBox(t, columnName, defaultValue, isNullable, maxLength);
+                        ScrudDateTextBox.AddDateTextBox(t, columnName, defaultValue, isNullable);
                         break;
                     case "bytea":
                         ScrudFileUpload.AddFileUpload(t, columnName, isNullable);

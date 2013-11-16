@@ -15,6 +15,10 @@ http://mozilla.org/MPL/2.0/.
   <add key="LongDateFormat" value="d/M/yyyy HH:mm:ss" />
   <add key="ShortTimeFormat" value="HH:mm:ss" />
   <add key="LongTimeFormat" value="HH:mm:ss" />
+  <add key="DatePickerDateFormat" value="d/m/yy" />
+  <add key="DatePickerWeekStartDay" value="1" />
+  <add key="DatePickerShowWeekNumber" value="true" />
+  <add key="DatePickerNumberOfMonths" value="[2, 3]" />
   <add key="ThousandSeparator" value="." />
   <add key="DecimalSeparator" value="," />
   <add key="DecimalPlaces" value="2" />

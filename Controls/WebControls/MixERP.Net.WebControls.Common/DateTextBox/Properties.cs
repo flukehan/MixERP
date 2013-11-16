@@ -73,5 +73,11 @@ namespace MixERP.Net.WebControls.Common
         }
 
         public string ValidatorCssClass { get; set; }
+
+        public DateTime? MinDate { get; set; }
+        public DateTime? MaxDate { get; set; }
+
+        //Todo
+        public bool Required { get; set; }
     }
 }

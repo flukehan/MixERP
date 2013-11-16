@@ -39,10 +39,6 @@
     <AssemblyOriginatorKeyFile>Mix Open Foundation.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AjaxControlToolkit, Version=4.1.51116.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Dependencies\AjaxControlToolkit\AjaxControlToolkit.dll</HintPath>
-    </Reference>
     <Reference Include="AspNetPager">
       <HintPath>..\..\..\Dependencies\AspNetPager.dll</HintPath>
     </Reference>
@@ -113,6 +109,10 @@
     <ProjectReference Include="..\..\..\MixERP.net.Common\MixERP.Net.Common.csproj">
       <Project>{d5a09c22-8f48-4fb2-a14d-c62c8c8fcec0}</Project>
       <Name>MixERP.Net.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MixERP.Net.WebControls.Common\MixERP.Net.WebControls.Common.csproj">
+      <Project>{2d961540-6597-4e7b-969c-974d71d820dd}</Project>
+      <Name>MixERP.Net.WebControls.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

@@ -40,7 +40,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
             TextBox textBox = new TextBox();
             textBox.ID = id;
 
-            if(maxLength > 0)
+            if (maxLength > 0)
             {
                 textBox.MaxLength = maxLength;
             }

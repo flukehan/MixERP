@@ -18,35 +18,38 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 {
     public partial class ScrudDateTextBox
     {
-        public static void AddDateTextBox(HtmlTable t, string columnName, string defaultValue, bool isNullable, int maxLength)
+
+        public static MixERP.Net.WebControls.Common.DateTextBox GetDateTextBox(string id, bool required)
+        {
+            MixERP.Net.WebControls.Common.DateTextBox textBox = new MixERP.Net.WebControls.Common.DateTextBox();
+            textBox.ID = id;
+            textBox.Required = required;
+            textBox.ClientIDMode = System.Web.UI.ClientIDMode.Static;
+            textBox.Width = 100;
+            return textBox;
+        }
+
+        public static void AddDateTextBox(HtmlTable t, string columnName, string defaultValue, bool isNullable)
         {
             string label = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString("FormResource", columnName);
 
-            TextBox textBox = ScrudTextBox.GetTextBox(columnName + "_textbox", maxLength);
+            MixERP.Net.WebControls.Common.DateTextBox textBox = GetDateTextBox(columnName + "_textbox", !isNullable);
+
             textBox.CssClass = "date";
 
-            CompareValidator validator = GetDateValidator(textBox);
-            AjaxControlToolkit.CalendarExtender extender = new AjaxControlToolkit.CalendarExtender();
-
-            textBox.Width = 70;
-            extender.ID = textBox.ID + "_calendar_extender";
-            extender.TargetControlID = textBox.ID;
-            extender.PopupButtonID = textBox.ID;
-
-            if(!string.IsNullOrWhiteSpace(defaultValue))
+            if (!string.IsNullOrWhiteSpace(defaultValue))
             {
                 textBox.Text = MixERP.Net.Common.Conversion.TryCastDate(defaultValue).ToShortDateString();
             }
 
 
-            if(!isNullable)
+            if (!isNullable)
             {
-                RequiredFieldValidator required = ScrudFactoryHelper.GetRequiredFieldValidator(textBox);
-                ScrudFactoryHelper.AddRow(t, label + Resources.ScrudResource.RequiredFieldIndicator, textBox, validator, required, extender);
+                ScrudFactoryHelper.AddRow(t, label + Resources.ScrudResource.RequiredFieldIndicator, textBox);
                 return;
             }
 
-            ScrudFactoryHelper.AddRow(t, label, textBox, validator, extender);
+            ScrudFactoryHelper.AddRow(t, label, textBox);
         }
 
         private static TextBox GetDateTextBox(string id, int maxLength)
@@ -55,23 +58,5 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
             textBox.Attributes["type"] = "date";
             return textBox;
         }
-
-        private static CompareValidator GetDateValidator(Control controlToValidate)
-        {
-            CompareValidator validator = new CompareValidator();
-            validator.ID = controlToValidate.ID + "DateValidator";
-            validator.ErrorMessage = "<br/>" + Resources.ScrudResource.InvalidDate;
-            validator.CssClass = "form-error";
-            validator.ControlToValidate = controlToValidate.ID;
-            validator.EnableClientScript = true;
-            validator.SetFocusOnError = true;
-            validator.Display = ValidatorDisplay.Dynamic;
-            validator.Type = ValidationDataType.Date;
-            validator.Operator = ValidationCompareOperator.GreaterThan;
-            validator.ValueToCompare = "1-1-1900";
-
-            return validator;
-        }
-
     }
 }
