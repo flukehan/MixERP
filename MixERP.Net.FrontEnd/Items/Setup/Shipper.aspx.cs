@@ -39,7 +39,7 @@ namespace MixERP.Net.FrontEnd.Items.Setup
 
             scrud.Text = Resources.Titles.Shipper;
 
-            ToolkitScriptManager1.NamingContainer.Controls.Add(scrud);
+            ScriptManager1.NamingContainer.Controls.Add(scrud);
         }
 
         private static string GetDisplayFields()

@@ -23,22 +23,8 @@ namespace MixERP.Net.FrontEnd.Sales
 
         protected void Sales_SaveButtonClick(object sender, EventArgs e)
         {
-            DateTime valueDate = MixERP.Net.Common.Conversion.TryCastDate(DirectSalesControl.GetForm.DateTextBox.Text);
-            int storeId = MixERP.Net.Common.Conversion.TryCastInteger(DirectSalesControl.GetForm.StoreDropDownList.SelectedItem.Value);
-            bool isCredit = DirectSalesControl.GetForm.TransactionTypeRadioButtonList.SelectedItem.Value.Equals(Resources.Titles.Credit); ;
-            string partyCode = DirectSalesControl.GetForm.PartyDropDownList.SelectedItem.Value;
-            int priceTypeId = MixERP.Net.Common.Conversion.TryCastInteger(DirectSalesControl.GetForm.PriceTypeDropDownList.SelectedItem.Value);
-            GridView grid = DirectSalesControl.GetForm.Grid;
-            int cashRepositoryId = MixERP.Net.Common.Conversion.TryCastInteger(DirectSalesControl.GetForm.CashRepositoryDropDownList.SelectedItem.Value);
-            int shipperId = MixERP.Net.Common.Conversion.TryCastInteger(DirectSalesControl.GetForm.ShippingCompanyDropDownList.SelectedItem.Value);
-            string shippingAddressCode = DirectSalesControl.GetForm.ShippingAddressDropDownList.SelectedItem.Text;
-            decimal shippingCharge = MixERP.Net.Common.Conversion.TryCastDecimal(DirectSalesControl.GetForm.ShippingChargeTextBox.Text);
-            int costCenterId = MixERP.Net.Common.Conversion.TryCastInteger(DirectSalesControl.GetForm.CostCenterDropDownList.SelectedItem.Value);
-            int agentId = MixERP.Net.Common.Conversion.TryCastInteger(DirectSalesControl.GetForm.AgentDropDownList.SelectedItem.Value);
-            string referenceNumber = DirectSalesControl.GetForm.ReferenceNumberTextBox.Text;
-            string statementReference = DirectSalesControl.GetForm.StatementReferenceTextBox.Text;
-
-            long transactionMasterId = MixERP.Net.BusinessLayer.Transactions.DirectSales.Add(valueDate, storeId, isCredit, partyCode, agentId, priceTypeId, grid, shipperId, shippingAddressCode, shippingCharge, cashRepositoryId, costCenterId, referenceNumber, statementReference);
+            bool isCredit = DirectSalesControl.GetForm.TransactionType.Equals(Resources.Titles.Credit); ;
+            long transactionMasterId = MixERP.Net.BusinessLayer.Transactions.DirectSales.Add(DirectSalesControl.GetForm.Date, DirectSalesControl.GetForm.StoreId, isCredit, DirectSalesControl.GetForm.PartyCode, DirectSalesControl.GetForm.AgentId, DirectSalesControl.GetForm.PriceTypeId, DirectSalesControl.GetForm.Details, DirectSalesControl.GetForm.ShippingCompanyId, DirectSalesControl.GetForm.ShippingAddressCode, DirectSalesControl.GetForm.ShippingCharge, DirectSalesControl.GetForm.CashRepositoryId, DirectSalesControl.GetForm.CostCenterId, DirectSalesControl.GetForm.ReferenceNumber, DirectSalesControl.GetForm.StatementReference);
             if(transactionMasterId > 0)
             {
                 Response.Redirect("~/Sales/Confirmation/DirectSales.aspx?TranId=" + transactionMasterId, true);

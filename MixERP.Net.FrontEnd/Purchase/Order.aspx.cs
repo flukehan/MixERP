@@ -24,21 +24,9 @@ namespace MixERP.Net.FrontEnd.Purchase
 
         protected void PurchaseOrder_SaveButtonClick(object sender, EventArgs e)
         {
-            DateTime valueDate = MixERP.Net.Common.Conversion.TryCastDate(PurchaseOrder.GetForm.DateTextBox.Text);
-            string partyCode = PurchaseOrder.GetForm.PartyDropDownList.SelectedItem.Value;
-            int priceTypeId = 0;
-
-            if(PurchaseOrder.GetForm.PriceTypeDropDownList.SelectedItem != null)
-            {
-                priceTypeId = MixERP.Net.Common.Conversion.TryCastInteger(PurchaseOrder.GetForm.PriceTypeDropDownList.SelectedItem.Value);            
-            }
-            
-            GridView grid = PurchaseOrder.GetForm.Grid;
-            string referenceNumber = PurchaseOrder.GetForm.ReferenceNumberTextBox.Text;
-            string statementReference = PurchaseOrder.GetForm.StatementReferenceTextBox.Text;
             Collection<int> tranIdCollection = PurchaseOrder.GetTranIdCollection();
 
-            long nonGlStockMasterId = MixERP.Net.BusinessLayer.Transactions.NonGLStockTransaction.Add("Purchase.Order", valueDate, partyCode, priceTypeId, grid, referenceNumber, statementReference, tranIdCollection);
+            long nonGlStockMasterId = MixERP.Net.BusinessLayer.Transactions.NonGLStockTransaction.Add("Purchase.Order", PurchaseOrder.GetForm.Date, PurchaseOrder.GetForm.PartyCode, PurchaseOrder.GetForm.PriceTypeId, PurchaseOrder.GetForm.Details, PurchaseOrder.GetForm.ReferenceNumber, PurchaseOrder.GetForm.StatementReference, tranIdCollection);
             if(nonGlStockMasterId > 0)
             {
                 Response.Redirect("~/Dashboard/Index.aspx?TranId=" + nonGlStockMasterId, true);

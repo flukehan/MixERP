@@ -29,7 +29,7 @@ namespace MixERP.Net.FrontEnd.Finance.Setup
             scrud.View = "ageing_slabs";
 
             scrud.Text = Resources.Titles.AgeingSlabSetup;
-            ToolkitScriptManager1.NamingContainer.Controls.Add(scrud);
+            ScriptManager1.NamingContainer.Controls.Add(scrud);
         }
     }
 }

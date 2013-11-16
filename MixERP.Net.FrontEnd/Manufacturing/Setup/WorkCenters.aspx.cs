@@ -34,8 +34,8 @@ namespace MixERP.Net.FrontEnd.Manufacturing.Setup
             scrud.DisplayViews = GetDisplayViews();
 
             scrud.Text = Resources.Titles.Workcenters;
-            
-            ToolkitScriptManager1.NamingContainer.Controls.Add(scrud);
+
+            ScriptManager1.NamingContainer.Controls.Add(scrud);
         }
 
         private static string GetDisplayFields()

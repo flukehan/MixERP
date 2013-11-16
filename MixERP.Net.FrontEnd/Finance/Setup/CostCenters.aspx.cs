@@ -29,7 +29,7 @@ namespace MixERP.Net.FrontEnd.Finance.Setup
 
             scrud.Text = Resources.Titles.CostCenters;
 
-            ToolkitScriptManager1.NamingContainer.Controls.Add(scrud);
+            ScriptManager1.NamingContainer.Controls.Add(scrud);
         }
     }
 }

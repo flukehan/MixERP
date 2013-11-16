@@ -1,5 +1,4 @@
-﻿using AjaxControlToolkit;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
@@ -11,6 +10,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Web.Script.Services;
 using System.Web.Services;
+using System.Web.UI.WebControls;
 
 namespace MixERP.Net.FrontEnd.Services
 {
@@ -26,7 +26,7 @@ namespace MixERP.Net.FrontEnd.Services
     public class AccountData : System.Web.Services.WebService
     {
         [WebMethod(EnableSession=true)]
-        public CascadingDropDownNameValue[] GetAccounts(string knownCategoryValues, string category)
+        public Collection<ListItem> GetAccounts()
         {
             if(MixERP.Net.Common.Helpers.Switches.AllowParentAccountInGLTransaction())
             {
@@ -67,25 +67,22 @@ namespace MixERP.Net.FrontEnd.Services
 
         }
 
-        private CascadingDropDownNameValue[] GetValues(System.Data.DataTable table)
+        private Collection<ListItem> GetValues(System.Data.DataTable table)
         {
-            Collection<CascadingDropDownNameValue> values = new Collection<CascadingDropDownNameValue>();
+            Collection<ListItem> values = new Collection<ListItem>();
 
             foreach(System.Data.DataRow dr in table.Rows)
             {
-                values.Add(new CascadingDropDownNameValue(dr["account_name"].ToString(), dr["account_code"].ToString()));
+                values.Add(new ListItem(dr["account_name"].ToString(), dr["account_code"].ToString()));
             }
 
-            return values.ToArray();
+            return values;
         }
 
         [WebMethod]
-        public CascadingDropDownNameValue[] GetCashRepositories(string knownCategoryValues, string category)
+        public Collection<ListItem> GetCashRepositories(string accountCode)
         {
-            StringDictionary kv = CascadingDropDown.ParseKnownCategoryValuesString(knownCategoryValues);
-            string accountCode = kv["Account"];
-
-            Collection<CascadingDropDownNameValue> values = new Collection<CascadingDropDownNameValue>();
+            Collection<ListItem> values = new Collection<ListItem>();
 
             if(MixERP.Net.BusinessLayer.Core.Accounts.IsCashAccount(accountCode))
             {
@@ -93,13 +90,12 @@ namespace MixERP.Net.FrontEnd.Services
                 {
                     foreach(System.Data.DataRow dr in table.Rows)
                     {
-                        values.Add(new CascadingDropDownNameValue(dr["cash_repository_name"].ToString(), dr["cash_repository_code"].ToString()));
+                        values.Add(new ListItem(dr["cash_repository_name"].ToString(), dr["cash_repository_code"].ToString()));
                     }
                 }
             }
 
-            return values.ToArray();
-
+            return values;
         }
     }
 }

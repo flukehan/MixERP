@@ -1,4 +1,5 @@
 ﻿using MixERP.Net.Common;
+using MixERP.Net.Common.Models.Transactions;
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
@@ -81,27 +82,39 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 this.ErrorLabelBottom.Text = value;
             }
         }
-        public class ControlCollection
+
+        public class ControlData
         {
-            public MixERP.Net.WebControls.Common.DateTextBox DateTextBox { get; set; }
-            public DropDownList StoreDropDownList { get; set; }
-            public RadioButtonList TransactionTypeRadioButtonList { get; set; }
-            public TextBox PartyCodeTextBox { get; set; }
-            public DropDownList PartyDropDownList { get; set; }
-            public DropDownList PriceTypeDropDownList { get; set; }
-            public TextBox ReferenceNumberTextBox { get; set; }
-            public GridView Grid { get; set; }
-            public TextBox RunningTotalTextBox { get; set; }
-            public TextBox TaxTotalTextBox { get; set; }
-            public TextBox GrandTotalTextBox { get; set; }
-            public DropDownList ShippingAddressDropDownList { get; set; }
-            public DropDownList ShippingCompanyDropDownList { get; set; }
-            public TextBox ShippingChargeTextBox { get; set; }
-            public DropDownList CashRepositoryDropDownList { get; set; }
-            public TextBox CashRepositoryBalanceTextBox { get; set; }
-            public DropDownList CostCenterDropDownList { get; set; }
-            public DropDownList AgentDropDownList { get; set; }
-            public TextBox StatementReferenceTextBox { get; set; }
+            public DateTime Date { get; set; }
+            public int StoreId { get; set; }
+            public string TransactionType { get; set; }
+            public string PartyCode { get; set; }
+            public int PriceTypeId { get; set; }
+            public string ReferenceNumber { get; set; }
+            public Collection<StockMasterDetailModel> Details { get; set; }
+            public decimal RunningTotal { get; set; }
+            public decimal TaxTotal { get; set; }
+            public decimal GrandTotal { get; set; }
+            public string ShippingAddressCode { get; set; }
+            public int ShippingCompanyId { get; set; }
+            public decimal ShippingCharge { get; set; }
+            public int CashRepositoryId { get; set; }
+            public int CostCenterId { get; set; }
+            public int AgentId { get; set; }
+            public string StatementReference { get; set; }
+        }
+
+        private string GetDropDownValue(ListControl listControl)
+        {
+            if (listControl != null)
+            {
+                if (listControl.SelectedItem != null)
+                {
+                    return listControl.SelectedItem.Value;
+                }
+            }
+
+            return string.Empty;
         }
 
         /// <summary>
@@ -110,28 +123,50 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         /// for transaction posting.
         /// </summary>
         /// <returns></returns>
-        private ControlCollection GetControls()
+        private ControlData GetControls()
         {
-            ControlCollection collection = new ControlCollection();
-            collection.DateTextBox = this.DateTextBox;
-            collection.StoreDropDownList = this.StoreDropDownList;
-            collection.TransactionTypeRadioButtonList = this.TransactionTypeRadioButtonList;
-            collection.PartyCodeTextBox = this.PartyCodeTextBox;
-            collection.PartyDropDownList = this.PartyDropDownList;
-            collection.PriceTypeDropDownList = this.PriceTypeDropDownList;
-            collection.ReferenceNumberTextBox = this.ReferenceNumberTextBox;
-            collection.Grid = this.ProductGridView;
-            collection.RunningTotalTextBox = this.RunningTotalTextBox;
-            collection.TaxTotalTextBox = this.TaxTotalTextBox;
-            collection.GrandTotalTextBox = this.GrandTotalTextBox;
-            collection.ShippingAddressDropDownList = this.ShippingAddressDropDownList;
-            collection.ShippingCompanyDropDownList = this.ShippingCompanyDropDownList;
-            collection.ShippingChargeTextBox = this.ShippingChargeTextBox;
-            collection.CashRepositoryDropDownList = this.CashRepositoryDropDownList;
-            collection.CashRepositoryBalanceTextBox = this.CashRepositoryBalanceTextBox;
-            collection.CostCenterDropDownList = this.CostCenterDropDownList;
-            collection.AgentDropDownList = this.SalesPersonDropDownList;
-            collection.StatementReferenceTextBox = this.StatementReferenceTextBox;
+            ControlData collection = new ControlData();
+            collection.Date = Conversion.TryCastDate(this.DateTextBox.Text);
+
+            collection.StoreId = Conversion.TryCastInteger(this.GetDropDownValue(this.StoreDropDownList));
+            collection.TransactionType = this.TransactionTypeRadioButtonList.SelectedItem.Value;
+            collection.PartyCode = this.PartyCodeTextBox.Text;
+            collection.PriceTypeId = Conversion.TryCastInteger(this.GetDropDownValue(this.PriceTypeDropDownList));
+            collection.ReferenceNumber = this.ReferenceNumberTextBox.Text;
+            collection.RunningTotal = Conversion.TryCastDecimal(this.RunningTotalTextBox.Text);
+            collection.TaxTotal = Conversion.TryCastDecimal(this.TaxTotalTextBox.Text);
+            collection.GrandTotal = Conversion.TryCastDecimal(this.GrandTotalTextBox.Text);
+            collection.ShippingAddressCode = this.ShippingAddressCodeHidden.Value;
+            collection.ShippingCompanyId = Conversion.TryCastInteger(this.GetDropDownValue(this.ShippingCompanyDropDownList));
+            collection.ShippingCharge = Conversion.TryCastDecimal(this.ShippingChargeTextBox.Text);
+            collection.CashRepositoryId = Conversion.TryCastInteger(this.GetDropDownValue(this.CashRepositoryDropDownList));
+            collection.CostCenterId = Conversion.TryCastInteger(this.GetDropDownValue(this.CostCenterDropDownList));
+            collection.AgentId = Conversion.TryCastInteger(this.GetDropDownValue(this.SalesPersonDropDownList));
+            collection.StatementReference = this.StatementReferenceTextBox.Text;
+
+            Collection<StockMasterDetailModel> details = new Collection<StockMasterDetailModel>();
+            if (this.ProductGridView != null)
+            {
+                if (this.ProductGridView.Rows.Count > 0)
+                {
+                    foreach (GridViewRow row in this.ProductGridView.Rows)
+                    {
+                        StockMasterDetailModel detail = new StockMasterDetailModel();
+
+                        detail.ItemCode = row.Cells[0].Text;
+                        detail.Quantity = MixERP.Net.Common.Conversion.TryCastInteger(row.Cells[2].Text);
+                        detail.UnitName = row.Cells[3].Text;
+                        detail.Price = MixERP.Net.Common.Conversion.TryCastDecimal(row.Cells[4].Text);
+                        detail.Discount = MixERP.Net.Common.Conversion.TryCastDecimal(row.Cells[6].Text);
+                        detail.TaxRate = MixERP.Net.Common.Conversion.TryCastDecimal(row.Cells[8].Text);
+                        detail.Tax = MixERP.Net.Common.Conversion.TryCastDecimal(row.Cells[9].Text);
+                        details.Add(detail);
+                    }
+                }
+            }
+
+            collection.Details = details;
+
             return collection;
         }
 
@@ -140,7 +175,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         /// This property is accessed after the user clicks the "Save" button.
         /// The values of each control is read and then sent to the transaction posting engine.
         /// </summary>
-        public ControlCollection GetForm
+        public ControlData GetForm
         {
             get
             {
@@ -308,7 +343,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 return;
             }
 
-            PartyDropDownListCascadingDropDown.SelectedValue = model.PartyCode.ToString();
+            PartyDropDownList.SelectedItem.Value = model.PartyCode.ToString();
 
             if (PriceTypeDropDownList.SelectedItem != null)
             {
@@ -424,13 +459,20 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         private void LoadItems()
         {
-            if (this.Book == Common.Models.Transactions.TranBook.Sales)
+            using (Services.ItemData data = new Services.ItemData())
             {
-                ItemDropDownListCascadingDropDown.ServiceMethod = "GetItems";
-            }
-            else
-            {
-                ItemDropDownListCascadingDropDown.ServiceMethod = "GetStockItems";
+                if (this.Book == Common.Models.Transactions.TranBook.Sales)
+                {
+                    ItemDropDownList.DataSource = data.GetItems();
+                }
+                else
+                {
+                    ItemDropDownList.DataSource = data.GetStockItems();
+                }
+
+                ItemDropDownList.DataTextField = "Text";
+                ItemDropDownList.DataValueField = "Value";
+                ItemDropDownList.DataBind();
             }
         }
 
@@ -496,6 +538,19 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             this.LoadSalesPerson();
             this.LoadStores();
             this.LoadCashRepositories();
+            this.LoadParties();
+        }
+
+        private void LoadParties()
+        {
+            using (MixERP.Net.FrontEnd.Services.PartyData data = new Services.PartyData())
+            {
+                PartyDropDownList.DataSource = data.GetParties();
+                PartyDropDownList.DataTextField = "Text";
+                PartyDropDownList.DataValueField = "Value";
+                PartyDropDownList.DataBind();
+                PartyDropDownList.Items.Insert(0, new ListItem("Select", string.Empty));
+            }
         }
         #endregion
 
@@ -628,8 +683,8 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             string itemCode = ItemCodeTextBox.Text;
             string itemName = ItemDropDownList.SelectedItem.Text;
             int quantity = MixERP.Net.Common.Conversion.TryCastInteger(QuantityTextBox.Text);
-            string unit = UnitDropDownList.SelectedItem.Text;
-            int unitId = MixERP.Net.Common.Conversion.TryCastInteger(UnitDropDownList.SelectedItem.Value);
+            string unit = UnitNameHidden.Value;
+            int unitId = MixERP.Net.Common.Conversion.TryCastInteger(UnitIdHidden.Value);
             decimal itemInStock = 0;
             decimal price = MixERP.Net.Common.Conversion.TryCastDecimal(PriceTextBox.Text);
             decimal discount = MixERP.Net.Common.Conversion.TryCastDecimal(DiscountTextBox.Text);
@@ -732,7 +787,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                         if (quantity > itemInStock)
                         {
                             MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(QuantityTextBox);
-                            ErrorLabel.Text = String.Format(System.Threading.Thread.CurrentThread.CurrentCulture, Resources.Warnings.InsufficientStockWarning, itemInStock.ToString("G29", System.Threading.Thread.CurrentThread.CurrentCulture), UnitDropDownList.SelectedItem.Text, ItemDropDownList.SelectedItem.Text);
+                            ErrorLabel.Text = String.Format(System.Threading.Thread.CurrentThread.CurrentCulture, Resources.Warnings.InsufficientStockWarning, itemInStock.ToString("G29", System.Threading.Thread.CurrentThread.CurrentCulture), UnitNameHidden.Value, ItemDropDownList.SelectedItem.Text);
                             return;
                         }
                     }
@@ -841,7 +896,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             string itemCode = ItemDropDownList.SelectedItem.Value;
             string party = string.Empty;
 
-            int unitId = MixERP.Net.Common.Conversion.TryCastInteger(UnitDropDownList.SelectedItem.Value);
+            int unitId = MixERP.Net.Common.Conversion.TryCastInteger(UnitIdHidden.Value);
 
             decimal price = 0;
 
@@ -942,8 +997,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             DateTime valueDate = DateTime.MinValue;
             int storeId = 0;
             string transactionType = string.Empty;
-            string partyCode = string.Empty;
-            partyCode = PartyDropDownList.SelectedItem.Value;
+            string partyCode = PartyCodeTextBox.Text;
 
             if (DateTextBox != null)
             {

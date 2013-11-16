@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MixERP.Net.FrontEnd.Items.Setup {
+namespace MixERP.Net.FrontEnd.Trash {
     
     
-    public partial class PartiesPopup {
+    public partial class jQueryCDDL {
         
         /// <summary>
         /// form1 control.
@@ -22,21 +22,21 @@ namespace MixERP.Net.FrontEnd.Items.Setup {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// container control.
+        /// PartyDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl container;
+        protected global::System.Web.UI.WebControls.DropDownList PartyDropDownList;
         
         /// <summary>
-        /// ScriptManager1 control.
+        /// AddressDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.ScriptManager ScriptManager1;
+        protected global::System.Web.UI.WebControls.DropDownList AddressDropDownList;
     }
 }

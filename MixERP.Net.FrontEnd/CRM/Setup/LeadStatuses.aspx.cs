@@ -29,7 +29,7 @@ namespace MixERP.Net.FrontEnd.CRM.Setup
             scrud.View = "lead_statuses";
             scrud.Text = Resources.Titles.LeadStatuses;
 
-            ToolkitScriptManager1.NamingContainer.Controls.Add(scrud);
+            ScriptManager1.NamingContainer.Controls.Add(scrud);
         }
     }
 }

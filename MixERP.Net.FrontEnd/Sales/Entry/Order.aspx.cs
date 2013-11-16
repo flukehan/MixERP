@@ -23,15 +23,8 @@ namespace MixERP.Net.FrontEnd.Sales.Entry
         
         protected void SalesOrder_SaveButtonClick(object sender, EventArgs e)
         {
-            DateTime valueDate = MixERP.Net.Common.Conversion.TryCastDate(SalesOrder.GetForm.DateTextBox.Text);
-            string partyCode = SalesOrder.GetForm.PartyDropDownList.SelectedItem.Value;
-            int priceTypeId = MixERP.Net.Common.Conversion.TryCastInteger(SalesOrder.GetForm.PriceTypeDropDownList.SelectedItem.Value);
-            GridView grid = SalesOrder.GetForm.Grid;
-            string referenceNumber = SalesOrder.GetForm.ReferenceNumberTextBox.Text;
-            string statementReference = SalesOrder.GetForm.StatementReferenceTextBox.Text;
             Collection<int> tranIdCollection = SalesOrder.GetTranIdCollection();
-
-            long nonGlStockMasterId = MixERP.Net.BusinessLayer.Transactions.NonGLStockTransaction.Add("Sales.Order", valueDate, partyCode, priceTypeId, grid, referenceNumber, statementReference, tranIdCollection);
+            long nonGlStockMasterId = MixERP.Net.BusinessLayer.Transactions.NonGLStockTransaction.Add("Sales.Order", SalesOrder.GetForm.Date, SalesOrder.GetForm.PartyCode, SalesOrder.GetForm.PriceTypeId, SalesOrder.GetForm.Details, SalesOrder.GetForm.ReferenceNumber, SalesOrder.GetForm.StatementReference, tranIdCollection);
             if (nonGlStockMasterId > 0)
             {
                 Response.Redirect("~/Dashboard/Index.aspx?TranId=" + nonGlStockMasterId, true);

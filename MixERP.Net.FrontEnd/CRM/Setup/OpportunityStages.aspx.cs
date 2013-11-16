@@ -30,7 +30,7 @@ namespace MixERP.Net.FrontEnd.CRM.Setup
 
             scrud.Text = Resources.Titles.OpportunityStages;
 
-            ToolkitScriptManager1.NamingContainer.Controls.Add(scrud);
+            ScriptManager1.NamingContainer.Controls.Add(scrud);
         }
     }
 }

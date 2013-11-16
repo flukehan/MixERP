@@ -34,7 +34,7 @@ namespace MixERP.Net.FrontEnd.Sales.Setup
             scrud.DisplayViews = GetDisplayViews();
 
             scrud.Text = Resources.Titles.AgentBonusSlabAssignment;
-            ToolkitScriptManager1.NamingContainer.Controls.Add(scrud);
+            ScriptManager1.NamingContainer.Controls.Add(scrud);
         }
 
         private static string GetDisplayFields()

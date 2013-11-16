@@ -51,7 +51,7 @@ namespace MixERP.Net.FrontEnd.Setup.Admin
 
             scrud.Text = Resources.Titles.DatabaseStatistics;
 
-            ToolkitScriptManager1.NamingContainer.Controls.Add(scrud);
+            ScriptManager1.NamingContainer.Controls.Add(scrud);
         }
 
         protected void VacuumButton_Click(object sender, EventArgs e)

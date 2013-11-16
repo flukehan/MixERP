@@ -42,10 +42,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AjaxControlToolkit, Version=4.1.51116.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\AjaxControlToolkit\AjaxControlToolkit.dll</HintPath>
-    </Reference>
     <Reference Include="AspNetPager, Version=7.4.3.0, Culture=neutral, PublicKeyToken=fb0a0fe055d40fd4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Dependencies\AspNetPager.dll</HintPath>
@@ -911,6 +907,17 @@
     <Compile Include="SignIn.aspx.designer.cs">
       <DependentUpon>SignIn.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Trash\jQueryCDDL.aspx.cs">
+      <DependentUpon>jQueryCDDL.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Trash\jQueryCDDL.aspx.designer.cs">
+      <DependentUpon>jQueryCDDL.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Trash\PartyData.asmx.cs">
+      <DependentUpon>PartyData.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UserControls\CurrencyExtender.ascx.cs">
       <DependentUpon>CurrencyExtender.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1499,6 +1506,8 @@
     <Content Include="Themes\purple\mixerp-logo-light.png" />
     <Content Include="Themes\purple\padding.css" />
     <Content Include="Themes\purple\mixerp-logo.png" />
+    <Content Include="Trash\jQueryCDDL.aspx" />
+    <Content Include="Trash\PartyData.asmx" />
     <Content Include="UserControls\CurrencyExtender.ascx" />
   </ItemGroup>
   <ItemGroup>
@@ -1532,7 +1541,9 @@
     <Content Include="UserControls\Widgets\TopSellingProductOfAllTimeCurrentWidget.ascx" />
     <Content Include="UserControls\Widgets\TopSellingProductOfAllTimeWidget.ascx" />
     <Content Include="UserControls\Widgets\WorkflowWidget.ascx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="MixERP.Net.FrontEnd.licenseheader" />
     <Content Include="Mix Open Foundation.snk" />
     <None Include="Properties\PublishProfiles\MixERP.pubxml" />

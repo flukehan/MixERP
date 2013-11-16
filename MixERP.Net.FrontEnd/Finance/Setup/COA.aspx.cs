@@ -38,7 +38,7 @@ namespace MixERP.Net.FrontEnd.Finance.Setup
 
             scrud.Text = Resources.Titles.ChartOfAccounts;
 
-            this.ToolkitScriptManager1.NamingContainer.Controls.Add(scrud);
+            this.ScriptManager1.NamingContainer.Controls.Add(scrud);
         }
 
         private static string GetDisplayFields()

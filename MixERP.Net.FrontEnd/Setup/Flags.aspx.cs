@@ -30,7 +30,7 @@ namespace MixERP.Net.FrontEnd.Setup
 
             scrud.Text = Resources.Titles.Flags;
 
-            ToolkitScriptManager1.NamingContainer.Controls.Add(scrud);
+            ScriptManager1.NamingContainer.Controls.Add(scrud);
         }
     }
 }

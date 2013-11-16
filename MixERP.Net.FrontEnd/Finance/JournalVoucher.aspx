@@ -13,7 +13,8 @@ http://mozilla.org/MPL/2.0/.
 <asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-    <AjaxCTK:ToolkitScriptManager ID="ScriptManager1" runat="server" />
+    <asp:ScriptManager ID="ScriptManager1" runat="server" />
+
     <asp:Label ID="TitleLabel" runat="server" Text="<%$Resources:Titles, JournalVoucherEntry %>" CssClass="title" />
 
 
@@ -45,7 +46,7 @@ http://mozilla.org/MPL/2.0/.
                         </tr>
                         <tr>
                             <td>
-                                <mixerp:DateTextBox ID="ValueDateTextBox" runat="server" Width="100" CssClass="date" />                                
+                                <mixerp:DateTextBox ID="ValueDateTextBox" runat="server" Width="100" CssClass="date" />
                             </td>
                             <td>
                                 <asp:TextBox ID="ReferenceNumberTextBox" runat="server" Width="100" />
@@ -94,26 +95,9 @@ http://mozilla.org/MPL/2.0/.
                             <asp:DropDownList ID="AccountDropDownList" runat="server" Width="250"
                                 onchange="document.getElementById('AccountCodeTextBox').value = this.options[this.selectedIndex].value;if(this.selectedIndex == 0) { return false };"
                                 ToolTip="Ctrl + A" />
-
-                            <AjaxCTK:CascadingDropDown ID="AccountDropDownListCascadingDropDown" runat="server"
-                                TargetControlID="AccountDropDownList" Category="Account" ServiceMethod="GetAccounts"
-                                ServicePath="~/Services/AccountData.asmx"
-                                LoadingText="<%$Resources:Labels, Loading %>"
-                                PromptText="<%$Resources:Titles, Select %>">
-                            </AjaxCTK:CascadingDropDown>
-
-
                         </td>
                         <td>
                             <asp:DropDownList ID="CashRepositoryDropDownList" runat="server" Width="100" />
-
-                            <AjaxCTK:CascadingDropDown ID="CashRepositoryDropDownListCascadingDropDown" runat="server"
-                                ParentControlID="AccountDropDownList" TargetControlID="CashRepositoryDropDownList"
-                                Category="CashRepository" ServiceMethod="GetCashRepositories"
-                                ServicePath="~/Services/AccountData.asmx"
-                                LoadingText="<%$Resources:Labels, Loading %>"
-                                PromptText="<%$Resources:Titles, Select %>">
-                            </AjaxCTK:CascadingDropDown>
                         </td>
                         <td>
                             <asp:TextBox ID="StatementReferenceTextBox" runat="server" Width="315"
@@ -162,8 +146,7 @@ http://mozilla.org/MPL/2.0/.
                             </td>
                         </tr>
                         <tr>
-                            <td>
-                            </td>
+                            <td></td>
                             <td>
                                 <asp:Button ID="PostTransactionButton" runat="server" Text="<%$Resources:Titles, PostTransaction %>" CssClass="button" Height="30" Width="120" OnClick="PostTransactionButton_Click" />
                             </td>

@@ -6,7 +6,7 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 --%>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ProductControl.ascx.cs" Inherits="MixERP.Net.FrontEnd.UserControls.Products.ProductControl" %>
-<AjaxCTK:ToolkitScriptManager ID="ScriptManager1" runat="server" />
+<asp:ScriptManager ID="ScriptManager1" runat="server" />
 <div style="width: 1000px; overflow: hidden; margin: 0;">
     <asp:Label ID="TitleLabel" CssClass="title" runat="server" />
     <asp:UpdateProgress ID="UpdateProgress1" runat="server">
@@ -74,18 +74,10 @@ http://mozilla.org/MPL/2.0/.
                                 onblur="selectItem(this.id, 'PartyDropDownList');"
                                 ToolTip="F2" />
                             <asp:DropDownList ID="PartyDropDownList" runat="server" Width="150"
-                                onchange="document.getElementById('PartyCodeTextBox').value = this.options[this.selectedIndex].value;if(this.selectedIndex == 0) { return false };"
+                                onchange="if(this.selectedIndex == 0) { return false };document.getElementById('PartyCodeTextBox').value = this.options[this.selectedIndex].value;"
                                 ToolTip="F2">
                             </asp:DropDownList>
-
-                            <AjaxCTK:CascadingDropDown ID="PartyDropDownListCascadingDropDown" runat="server"
-                                TargetControlID="PartyDropDownList" Category="Party"
-                                ServicePath="~/Services/PartyData.asmx"
-                                LoadingText="<%$Resources:Labels, Loading %>"
-                                PromptText="<%$Resources:Titles, Select %>"
-                                ServiceMethod="GetParties">
-                            </AjaxCTK:CascadingDropDown>
-
+                            <asp:HiddenField ID="PartyHidden" runat="server" />
                         </td>
                         <td>
                             <asp:DropDownList ID="PriceTypeDropDownList" runat="server" Width="80">
@@ -153,12 +145,6 @@ http://mozilla.org/MPL/2.0/.
                                     onblur="getPrice();"
                                     ToolTip="Ctrl + I" Width="300">
                                 </asp:DropDownList>
-                                <AjaxCTK:CascadingDropDown ID="ItemDropDownListCascadingDropDown" runat="server"
-                                    TargetControlID="ItemDropDownList" Category="Item"
-                                    ServicePath="~/Services/ItemData.asmx"
-                                    LoadingText="<%$Resources:Labels, Loading %>"
-                                    PromptText="<%$Resources:Titles, Select %>">
-                                </AjaxCTK:CascadingDropDown>
                             </td>
                             <td>
                                 <asp:TextBox ID="QuantityTextBox"
@@ -168,16 +154,11 @@ http://mozilla.org/MPL/2.0/.
                             </td>
                             <td>
                                 <asp:DropDownList ID="UnitDropDownList" runat="server" AutoPostBack="true"
+                                    onchange="$('#UnitNameHidden').val($(this).children('option').filter(':selected').text());$('#UnitIdHidden').val($(this).children('option').filter(':selected').val());"
                                     ToolTip="Ctrl + U" Width="68">
                                 </asp:DropDownList>
-                                <AjaxCTK:CascadingDropDown ID="UnitDropDownListCascadingDropDown" runat="server"
-                                    ParentControlID="ItemDropDownList" TargetControlID="UnitDropDownList"
-                                    Category="Unit"
-                                    ServiceMethod="GetUnits"
-                                    ServicePath="~/Services/ItemData.asmx"
-                                    LoadingText="<%$Resources:Labels, Loading %>"
-                                    PromptText="<%$Resources:Titles, Select %>">
-                                </AjaxCTK:CascadingDropDown>
+                                <asp:HiddenField ID="UnitNameHidden" runat="server" />
+                                <asp:HiddenField ID="UnitIdHidden" runat="server" />
                             </td>
                             <td>
                                 <asp:TextBox ID="PriceTextBox" runat="server" CssClass="right number" onblur="updateTax();calculateAmount();"
@@ -227,15 +208,7 @@ http://mozilla.org/MPL/2.0/.
                             </asp:TableCell><asp:TableCell>
                                 <asp:DropDownList ID="ShippingAddressDropDownList" runat="server" Width="200" onchange="showShippingAddress()">
                                 </asp:DropDownList>
-                                <AjaxCTK:CascadingDropDown ID="ShippingAddressDropDownListCascadingDropDown" runat="server"
-                                    ParentControlID="PartyDropDownList" TargetControlID="ShippingAddressDropDownList"
-                                    Category="ShippingAddress"
-                                    ServiceMethod="GetShippingAddresses"
-                                    ServicePath="~/Services/PartyData.asmx"
-                                    LoadingText="<%$Resources:Labels, Loading %>"
-                                    PromptText="<%$Resources:Titles, Select %>">
-                                </AjaxCTK:CascadingDropDown>
-
+                                <asp:HiddenField ID="ShippingAddressCodeHidden" runat="server" />
                                 <p>
                                     <asp:TextBox
                                         ID="ShippingAddressTextBox"
@@ -404,7 +377,7 @@ http://mozilla.org/MPL/2.0/.
         var total = parseFloat2(priceTextBox.val()) * parseFloat2(quantityTextBox.val());
         var subTotal = total - parseFloat2(discountTextBox.val());
         var taxableAmount = total;
-        var taxAfterDiscount = '<%=MixERP.Net.Common.Helpers.Switches.TaxAfterDiscount().ToString()%>';
+        var taxAfterDiscount = "<%=MixERP.Net.Common.Helpers.Switches.TaxAfterDiscount().ToString()%>";
 
         if (taxAfterDiscount.toLowerCase() == "true") {
             taxableAmount = subTotal;
@@ -479,4 +452,101 @@ http://mozilla.org/MPL/2.0/.
             $('#AddButton').click();
         });
     });
+
+    $().ready(function () {
+        initializeAjaxData();
+    });
+
+    //Called on Ajax Postback caused by ASP.net
+    function Page_EndRequest(sender, args) {
+        initializeAjaxData();
+    }
+
+    function initializeAjaxData() {
+        loadAddresses();
+        loadUnits();
+
+        $("#PartyDropDownList").change(function () {
+            loadAddresses();
+        });
+
+        $("#ItemDropDownList").change(function () {
+            loadUnits();
+        });
+    }
+
+    function loadAddresses() {
+        var partyCode = $("#PartyDropDownList").attr('value');
+        $("#ShippingAddressDropDownList").empty();
+
+        $.ajax({
+            type: "POST",
+            url: "/Services/PartyData.asmx/GetAddressByPartyCode",
+            data: "{partyCode:'" + partyCode + "'}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                bindAddresses(msg.d)
+            },
+            error: function (xhr, status, error) {
+                var err = eval("(" + xhr.responseText + ")");
+                addListItem("ShippingAddressDropDownList", 0, err.Message);
+            }
+        });
+    }
+
+    function loadUnits() {
+        var itemCode = $("#ItemDropDownList").attr('value');
+        $("#UnitDropDownList").empty();
+
+        $.ajax({
+            type: "POST",
+            url: "/Services/ItemData.asmx/GetUnits",
+            data: "{itemCode:'" + itemCode + "'}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                bindUnits(msg.d)
+            },
+            error: function (xhr, status, error) {
+                var err = eval("(" + xhr.responseText + ")");
+                addListItem("UnitDropDownList", 0, err.Message);
+            }
+        });
+    }
+
+    function addListItem(dropDownListId, value, text) {
+        var dropDownList = $("#" + dropDownListId);
+        dropDownList.append($("<option></option>").val(value).html(text));
+    }
+
+    var selectLocalized = "Select";
+    var noneLocalized = "None";
+
+    function bindAddresses(data) {
+        if (data.length == 0) {
+            addListItem("ShippingAddressDropDownList", "", noneLocalized);
+            return;
+        }
+
+        addListItem("ShippingAddressDropDownList", "", selectLocalized);
+
+        $.each(data, function () {
+            addListItem("ShippingAddressDropDownList", this['Value'], this['Text']);
+        });
+    }
+
+    function bindUnits(data) {
+        if (data.length == 0) {
+            addListItem("UnitDropDownList", "", noneLocalized);
+            return;
+        }
+
+        addListItem("UnitDropDownList", "", selectLocalized);
+
+        $.each(data, function () {
+            addListItem("UnitDropDownList", this['Value'], this['Text']);
+        });
+    }
+
 </script>

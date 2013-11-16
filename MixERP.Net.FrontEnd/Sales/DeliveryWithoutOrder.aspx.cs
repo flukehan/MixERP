@@ -20,20 +20,9 @@ namespace MixERP.Net.FrontEnd.Sales
 
         protected void SalesDeliveryControl_SaveButtonClick(object sender, EventArgs e)
         {
-            DateTime valueDate = MixERP.Net.Common.Conversion.TryCastDate(SalesDeliveryControl.GetForm.DateTextBox.Text);
-            int storeId = MixERP.Net.Common.Conversion.TryCastInteger(SalesDeliveryControl.GetForm.StoreDropDownList.SelectedItem.Value);
-            string partyCode = SalesDeliveryControl.GetForm.PartyDropDownList.SelectedItem.Value;
-            int priceTypeId = MixERP.Net.Common.Conversion.TryCastInteger(SalesDeliveryControl.GetForm.PriceTypeDropDownList.SelectedItem.Value);
-            GridView grid = SalesDeliveryControl.GetForm.Grid;
-            int shipperId = MixERP.Net.Common.Conversion.TryCastInteger(SalesDeliveryControl.GetForm.ShippingCompanyDropDownList.SelectedItem.Value);
-            decimal shippingCharge = MixERP.Net.Common.Conversion.TryCastDecimal(SalesDeliveryControl.GetForm.ShippingChargeTextBox.Text);
-            int costCenterId = MixERP.Net.Common.Conversion.TryCastInteger(SalesDeliveryControl.GetForm.CostCenterDropDownList.SelectedItem.Value);
-            int agentId = MixERP.Net.Common.Conversion.TryCastInteger(SalesDeliveryControl.GetForm.AgentDropDownList.SelectedItem.Value);
-            string referenceNumber = SalesDeliveryControl.GetForm.ReferenceNumberTextBox.Text;
-            string statementReference = SalesDeliveryControl.GetForm.StatementReferenceTextBox.Text;
             Collection<int> tranIdCollection = SalesDeliveryControl.GetTranIdCollection();
 
-            long transactionMasterId = MixERP.Net.BusinessLayer.Transactions.SalesDelivery.Add(valueDate, storeId, partyCode, priceTypeId, grid, shipperId, shippingCharge, costCenterId, referenceNumber, agentId, statementReference, tranIdCollection);
+            long transactionMasterId = MixERP.Net.BusinessLayer.Transactions.SalesDelivery.Add(SalesDeliveryControl.GetForm.Date, SalesDeliveryControl.GetForm.StoreId, SalesDeliveryControl.GetForm.PartyCode, SalesDeliveryControl.GetForm.PriceTypeId, SalesDeliveryControl.GetForm.Details, SalesDeliveryControl.GetForm.ShippingCompanyId, SalesDeliveryControl.GetForm.ShippingCharge, SalesDeliveryControl.GetForm.CostCenterId, SalesDeliveryControl.GetForm.ReferenceNumber, SalesDeliveryControl.GetForm.AgentId, SalesDeliveryControl.GetForm.StatementReference, tranIdCollection);
 
             if (transactionMasterId > 0)
             {
@@ -43,6 +32,7 @@ namespace MixERP.Net.FrontEnd.Sales
             {
                 SalesDeliveryControl.ErrorMessage = Resources.Labels.UnknownError;
             }
+
         }
     }
 }

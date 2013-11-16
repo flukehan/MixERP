@@ -37,7 +37,7 @@ namespace MixERP.Net.Common.Helpers
 
         public static string GetScrudParameter(string keyName)
         {
-            return GetScrudParameter( keyName);
+            return GetSectionKey("MixERPScrudParameters", keyName);
         }
 
         

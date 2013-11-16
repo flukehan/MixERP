@@ -29,8 +29,8 @@ namespace MixERP.Net.FrontEnd.Setup
             scrud.View = "fiscal_year";
             
             scrud.Text = Resources.Titles.FiscalYear;
-            
-            ToolkitScriptManager1.NamingContainer.Controls.Add(scrud);
+
+            ScriptManager1.NamingContainer.Controls.Add(scrud);
         }
     }
 }

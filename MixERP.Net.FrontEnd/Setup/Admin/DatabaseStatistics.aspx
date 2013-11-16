@@ -12,7 +12,7 @@ http://mozilla.org/MPL/2.0/.
 <asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-   <AjaxCTK:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" />
+    <asp:ScriptManager ID="ScriptManager1" runat="server" />
 
     <h1>Maintenance</h1>
     <hr class="hr" />

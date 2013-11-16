@@ -42,7 +42,7 @@ namespace MixERP.Net.FrontEnd.Setup.Policy
 
             scrud.Text = Resources.Titles.AutoVerificationPolicy;
 
-            ToolkitScriptManager1.NamingContainer.Controls.Add(scrud);
+            ScriptManager1.NamingContainer.Controls.Add(scrud);
         }
 
         private static string GetDisplayFields()

@@ -33,7 +33,7 @@ http://mozilla.org/MPL/2.0/.
 <body>
     <form id="form1" runat="server">
         <div class="container" runat="server" id="container">
-            <AjaxCTK:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" />
+    <asp:ScriptManager ID="ScriptManager1" runat="server" />
         </div>
         <script type="text/javascript">
             $("#party_name_textbox").focus(function () {

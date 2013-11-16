@@ -19,7 +19,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::AjaxControlToolkit.ToolkitScriptManager ScriptManager1;
+        protected global::System.Web.UI.ScriptManager ScriptManager1;
         
         /// <summary>
         /// TitleLabel control.
@@ -166,13 +166,13 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::System.Web.UI.WebControls.DropDownList PartyDropDownList;
         
         /// <summary>
-        /// PartyDropDownListCascadingDropDown control.
+        /// PartyHidden control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::AjaxControlToolkit.CascadingDropDown PartyDropDownListCascadingDropDown;
+        protected global::System.Web.UI.WebControls.HiddenField PartyHidden;
         
         /// <summary>
         /// PriceTypeDropDownList control.
@@ -265,15 +265,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::System.Web.UI.WebControls.DropDownList ItemDropDownList;
         
         /// <summary>
-        /// ItemDropDownListCascadingDropDown control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::AjaxControlToolkit.CascadingDropDown ItemDropDownListCascadingDropDown;
-        
-        /// <summary>
         /// QuantityTextBox control.
         /// </summary>
         /// <remarks>
@@ -292,13 +283,22 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::System.Web.UI.WebControls.DropDownList UnitDropDownList;
         
         /// <summary>
-        /// UnitDropDownListCascadingDropDown control.
+        /// UnitNameHidden control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::AjaxControlToolkit.CascadingDropDown UnitDropDownListCascadingDropDown;
+        protected global::System.Web.UI.WebControls.HiddenField UnitNameHidden;
+        
+        /// <summary>
+        /// UnitIdHidden control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField UnitIdHidden;
         
         /// <summary>
         /// PriceTextBox control.
@@ -418,13 +418,13 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::System.Web.UI.WebControls.DropDownList ShippingAddressDropDownList;
         
         /// <summary>
-        /// ShippingAddressDropDownListCascadingDropDown control.
+        /// ShippingAddressCodeHidden control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::AjaxControlToolkit.CascadingDropDown ShippingAddressDropDownListCascadingDropDown;
+        protected global::System.Web.UI.WebControls.HiddenField ShippingAddressCodeHidden;
         
         /// <summary>
         /// ShippingAddressTextBox control.

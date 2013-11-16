@@ -1,5 +1,4 @@
-﻿using AjaxControlToolkit;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 /********************************************************************************
@@ -12,6 +11,7 @@ http://mozilla.org/MPL/2.0/.
 using System.Linq;
 using System.Web.Script.Services;
 using System.Web.Services;
+using System.Web.UI.WebControls;
 
 namespace MixERP.Net.FrontEnd.Services
 {
@@ -27,53 +27,50 @@ namespace MixERP.Net.FrontEnd.Services
     {
 
         [WebMethod]
-        public CascadingDropDownNameValue[] GetItems(string knownCategoryValues, string category)
+        public Collection<ListItem> GetItems()
         {
-            Collection<CascadingDropDownNameValue> values = new Collection<CascadingDropDownNameValue>();
+            Collection<ListItem> values = new Collection<ListItem>();
 
             using(System.Data.DataTable table = MixERP.Net.BusinessLayer.Helpers.FormHelper.GetTable("core", "items"))
             {
                 foreach(System.Data.DataRow dr in table.Rows)
                 {
-                    values.Add(new CascadingDropDownNameValue(dr["item_name"].ToString(), dr["item_code"].ToString()));
+                    values.Add(new ListItem(dr["item_name"].ToString(), dr["item_code"].ToString()));
                 }
 
-                return values.ToArray();
+                return values;
             }
         }
 
         [WebMethod]
-        public CascadingDropDownNameValue[] GetStockItems(string knownCategoryValues, string category)
+        public Collection<ListItem> GetStockItems()
         {
-            Collection<CascadingDropDownNameValue> values = new Collection<CascadingDropDownNameValue>();
+            Collection<ListItem> values = new Collection<ListItem>();
 
             using(System.Data.DataTable table = MixERP.Net.BusinessLayer.Helpers.FormHelper.GetTable("core", "items", "maintain_stock", "true"))
             {
                 foreach(System.Data.DataRow dr in table.Rows)
                 {
-                    values.Add(new CascadingDropDownNameValue(dr["item_name"].ToString(), dr["item_code"].ToString()));
+                    values.Add(new ListItem(dr["item_name"].ToString(), dr["item_code"].ToString()));
                 }
 
-                return values.ToArray();
+                return values;
             }
         }
 
         [WebMethod]
-        public CascadingDropDownNameValue[] GetUnits(string knownCategoryValues, string category)
+        public Collection<ListItem> GetUnits(string itemCode)
         {
-            StringDictionary kv = CascadingDropDown.ParseKnownCategoryValuesString(knownCategoryValues);            
-            string itemCode = kv["Item"];
-
-            Collection<CascadingDropDownNameValue> values = new Collection<CascadingDropDownNameValue>();
+            Collection<ListItem> values = new Collection<ListItem>();
 
             using (System.Data.DataTable table = MixERP.Net.BusinessLayer.Core.Units.GetUnitViewByItemCode(itemCode))
             {
                 foreach (System.Data.DataRow dr in table.Rows)
                 {
-                    values.Add(new CascadingDropDownNameValue(dr["unit_name"].ToString(), dr["unit_id"].ToString()));
+                    values.Add(new ListItem(dr["unit_name"].ToString(), dr["unit_id"].ToString()));
                 }
 
-                return values.ToArray();
+                return values;
             }
         }
 

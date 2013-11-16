@@ -19,7 +19,7 @@ namespace MixERP.Net.FrontEnd.Finance {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::AjaxControlToolkit.ToolkitScriptManager ScriptManager1;
+        protected global::System.Web.UI.ScriptManager ScriptManager1;
         
         /// <summary>
         /// TitleLabel control.
@@ -112,15 +112,6 @@ namespace MixERP.Net.FrontEnd.Finance {
         protected global::System.Web.UI.WebControls.DropDownList AccountDropDownList;
         
         /// <summary>
-        /// AccountDropDownListCascadingDropDown control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::AjaxControlToolkit.CascadingDropDown AccountDropDownListCascadingDropDown;
-        
-        /// <summary>
         /// CashRepositoryDropDownList control.
         /// </summary>
         /// <remarks>
@@ -128,15 +119,6 @@ namespace MixERP.Net.FrontEnd.Finance {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList CashRepositoryDropDownList;
-        
-        /// <summary>
-        /// CashRepositoryDropDownListCascadingDropDown control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::AjaxControlToolkit.CascadingDropDown CashRepositoryDropDownListCascadingDropDown;
         
         /// <summary>
         /// StatementReferenceTextBox control.

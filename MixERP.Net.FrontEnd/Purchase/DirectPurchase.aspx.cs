@@ -23,18 +23,9 @@ namespace MixERP.Net.FrontEnd.Purchase
 
         protected void Purchase_SaveButtonClick(object sender, EventArgs e)
         {
-            DateTime valueDate = MixERP.Net.Common.Conversion.TryCastDate(DirectPurchaseControl.GetForm.DateTextBox.Text);
-            int storeId = MixERP.Net.Common.Conversion.TryCastInteger(DirectPurchaseControl.GetForm.StoreDropDownList.SelectedItem.Value);
-            bool isCredit = DirectPurchaseControl.GetForm.TransactionTypeRadioButtonList.SelectedItem.Value.Equals(Resources.Titles.Credit); ;
-            string partyCode = DirectPurchaseControl.GetForm.PartyDropDownList.SelectedItem.Value;
-            GridView grid = DirectPurchaseControl.GetForm.Grid;
-            int cashRepositoryId = MixERP.Net.Common.Conversion.TryCastInteger(DirectPurchaseControl.GetForm.CashRepositoryDropDownList.SelectedItem.Value);
+            bool isCredit = DirectPurchaseControl.GetForm.TransactionType.Equals(Resources.Titles.Credit); ;
 
-            int costCenterId = MixERP.Net.Common.Conversion.TryCastInteger(DirectPurchaseControl.GetForm.CostCenterDropDownList.SelectedItem.Value);
-            string referenceNumber = DirectPurchaseControl.GetForm.ReferenceNumberTextBox.Text;
-            string statementReference = DirectPurchaseControl.GetForm.StatementReferenceTextBox.Text;
-
-            long transactionMasterId = MixERP.Net.BusinessLayer.Transactions.DirectPurchase.Add(valueDate, storeId, isCredit, partyCode, grid, cashRepositoryId, costCenterId, referenceNumber, statementReference);
+            long transactionMasterId = MixERP.Net.BusinessLayer.Transactions.DirectPurchase.Add(DirectPurchaseControl.GetForm.Date, DirectPurchaseControl.GetForm.StoreId, isCredit, DirectPurchaseControl.GetForm.PartyCode, DirectPurchaseControl.GetForm.Details, DirectPurchaseControl.GetForm.CashRepositoryId, DirectPurchaseControl.GetForm.CostCenterId, DirectPurchaseControl.GetForm.ReferenceNumber, DirectPurchaseControl.GetForm.StatementReference);
             if(transactionMasterId > 0)
             {
                 Response.Redirect("~/Purchase/Confirmation/DirectPurchase.aspx?TranId=" + transactionMasterId, true);
