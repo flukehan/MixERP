@@ -8,8 +8,12 @@ http://mozilla.org/MPL/2.0/.
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Configuration;
+using System.IO;
 using System.Linq;
+using System.Runtime.Remoting;
 using System.Text;
+using System.Xml;
 
 namespace MixERP.Net.Common.Helpers
 {
@@ -22,7 +26,7 @@ namespace MixERP.Net.Common.Helpers
 
         public static string GetParameter(string keyName)
         {
-            return GetSectionKey("MixERPParameters", keyName);        
+            return GetSectionKey("MixERPParameters", keyName);
         }
 
         public static string GetSwitch(string keyName)
@@ -40,17 +44,23 @@ namespace MixERP.Net.Common.Helpers
             return GetSectionKey("MixERPScrudParameters", keyName);
         }
 
-        
-        
+
+
         private static string GetSectionKey(string sectionName, string keyName)
         {
-            NameValueCollection parameters = (NameValueCollection)System.Configuration.ConfigurationManager.GetSection(sectionName);
-            if(parameters != null)
-            {
-                return parameters[keyName];
-            }
+            //string path =  "/Resource/Configuration/" + sectionName + ".xml";
+            string path = @"C:\Users\binod\Desktop\mixerp\0. Github\MixERP.net.FrontEnd\Resource\Configuration\" + sectionName + ".xml"; 
+            //Configuration myConfig = ConfigurationManager.OpenExeConfiguration(path);
+            
+            return GetConfigurationValues(path, keyName);            
+        }
 
-            return string.Empty;
+        public static string GetConfigurationValues(string configFileName, string sectionName)
+        {
+            ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap() { ExeConfigFilename = configFileName };
+            Configuration config = ConfigurationManager.OpenMappedExeConfiguration(configFileMap, ConfigurationUserLevel.None);
+            AppSettingsSection section = config.GetSection("appSettings") as AppSettingsSection;
+            return section.Settings[sectionName].Value;
         }
     }
 }

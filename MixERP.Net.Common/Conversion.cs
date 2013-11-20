@@ -19,6 +19,7 @@ namespace MixERP.Net.Common
     using System.Text.RegularExpressions;
     using System.Web;
     using MixERP.Net.Common.Models.Transactions;
+    using System.Web.UI;
 
     public static class Conversion
     {
@@ -94,14 +95,31 @@ namespace MixERP.Net.Common
             return string.Empty;
         }
 
+        public static string ResolveUrl(string url)
+        {
+            return (HttpContext.Current.Handler as Page).ResolveUrl(url);        
+        }
+
         public static string MapPathReverse(string fullServerPath)
         {
-            if(fullServerPath == null)
+            if (string.IsNullOrWhiteSpace(fullServerPath))
             {
                 return null;
             }
 
-            return @"~\" + fullServerPath.Replace(HttpContext.Current.Request.PhysicalApplicationPath, String.Empty);
+            return @"~/" + fullServerPath.Replace(HttpContext.Current.Request.PhysicalApplicationPath, String.Empty).Replace(@"\", "/");
+        }
+
+        public static string GetRelativePath(string absolutePath)
+        {
+            if (string.IsNullOrWhiteSpace(absolutePath))
+            {
+                return null;
+            }
+
+            string physicalPath = HttpContext.Current.Request.MapPath(absolutePath);
+
+            return MapPathReverse(physicalPath);
         }
 
         public static short TryCastShort(object value)

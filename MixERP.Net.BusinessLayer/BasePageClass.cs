@@ -64,7 +64,6 @@ namespace MixERP.Net.BusinessLayer
             base.InitializeCulture();
         }
 
-
         protected override void OnInit(EventArgs e)
         {
             if(!IsPostBack)

@@ -22,7 +22,8 @@ namespace MixERP.Net.BusinessLayer.Helpers
             if(page != null)
             {
                 string menu = string.Empty;
-                Collection<MixERP.Net.Common.Models.Core.Menu> rootMenus = MixERP.Net.BusinessLayer.Core.Menu.GetRootMenuCollection(path);
+                string relativePath = MixERP.Net.Common.Conversion.GetRelativePath(path);
+                Collection<MixERP.Net.Common.Models.Core.Menu> rootMenus = MixERP.Net.BusinessLayer.Core.Menu.GetRootMenuCollection(relativePath);
 
                 if(rootMenus.Count > 0)
                 {

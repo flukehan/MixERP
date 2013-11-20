@@ -37,7 +37,7 @@ http://mozilla.org/MPL/2.0/.
         </div>
         <script type="text/javascript">
             $("#party_name_textbox").focus(function () {
-                var p = "<%= this.GetPartyNameParameter() %>";
+                var p = "<%= GetPartyNameParameter() %>";
             updatePartyName(p);
         });
 

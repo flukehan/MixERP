@@ -1114,8 +1114,8 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Resource\Configuration\index.html" />
-    <Content Include="Resource\Configuration\ScrudParameters.xml" />
-    <Content Include="Resource\Configuration\ReportParameters.xml" />
+    <Content Include="Resource\Configuration\MixERPScrudParameters.xml" />
+    <Content Include="Resource\Configuration\MixERPReportParameters.xml" />
     <Content Include="Resource\Icons\bottom-16.png" />
     <Content Include="Resource\Icons\calendar-16.png" />
     <Content Include="Resource\Icons\close-16.png" />
@@ -2159,11 +2159,11 @@
     <Content Include="Mix Open Foundation.snk" />
     <None Include="Properties\PublishProfiles\MixERP.pubxml" />
     <Content Include="Reports\Assets\ReadMe.txt" />
-    <Content Include="Resource\Configuration\Switches.xml" />
-    <Content Include="Resource\Configuration\Parameters.xml">
+    <Content Include="Resource\Configuration\MixERPSwitches.xml" />
+    <Content Include="Resource\Configuration\MixERPParameters.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Resource\Configuration\DbParameters.xml" />
+    <Content Include="Resource\Configuration\MixERPDbParameters.xml" />
     <Content Include="Scripts\jquery-ui\development-bundle\demos\autocomplete\search.php" />
     <Content Include="Scripts\jquery-ui\development-bundle\demos\tabs\ajax\content3-slow.php" />
     <Content Include="Scripts\jquery-ui\development-bundle\demos\tabs\ajax\content4-broken.php" />
@@ -2305,7 +2305,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>2904</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:50905/</IISUrl>
+          <IISUrl>http://localhost:20852/mixerp</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>http://pes/</CustomServerUrl>

@@ -52,7 +52,7 @@ http://mozilla.org/MPL/2.0/.
 
     <form id="form1" runat="server" enctype="multipart/form-data" method="post" submitdisabledcontrols="true" defaultbutton="SwallowSubmitButton">
         <div id="page">
-            <a href="/Dashboard/Index.aspx">
+            <a href="~/Dashboard/Index.aspx" runat="server">
                 <img src="/themes/purple/mixerp-logo.png" height="50" width="250" />
             </a>
             <div id="menu">

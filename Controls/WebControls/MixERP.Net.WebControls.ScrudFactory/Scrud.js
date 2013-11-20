@@ -1,10 +1,4 @@
-﻿//var localizedAreYouSure = 'Are you sure?';
-//var localizedNothingSelected = 'Nothing selected!';
-//var reportTemplatePath = "/Reports/Print.html?";
-//var reportHeaderPath = "/Reports/Assets/Header.aspx";
-//var date = Date.now;
-//var containerMargin = 340;
-var formGridViewId = "FormGridView";
+﻿var formGridViewId = "FormGridView";
 var gridPanelId = "GridPanel";
 var userIdHiddenId = "UserIdHidden";
 var officeCodeHiddenId = "OfficeCodeHidden";
@@ -49,7 +43,8 @@ var selectedValue = function () {
 
 var selectNode = function (id) {
     $('[id^="SelectRadio"]').removeAttr("checked");
-    $("#" + id).attr("checked", "checked");
+    //$("#" + id).attr("checked", "checked");
+    $("#" + id).prop("checked", "checked");
 }
 
 
@@ -133,7 +128,7 @@ function adjustSpinnerSize() {
 
 
 
-function UpdateTableHeaders() {
+function updateTableHeaders() {
     $("div.floating-header").each(function () {
         var originalHeaderRow = $(".tableFloatingHeaderOriginal", this);
         var floatingHeaderRow = $(".tableFloatingHeader", this);
@@ -175,9 +170,9 @@ $(document).ready(function () {
 
         originalHeaderRow.addClass("tableFloatingHeaderOriginal");
     });
-    UpdateTableHeaders();
-    $(window).scroll(UpdateTableHeaders);
-    $(window).resize(UpdateTableHeaders);
+    updateTableHeaders();
+    $(window).scroll(updateTableHeaders);
+    $(window).resize(updateTableHeaders);
 });
 
 var addNew = function () {
