@@ -35,23 +35,24 @@ namespace MixERP.Net.FrontEnd.Setup.Admin
 
         private void AddScrud()
         {
-            ScrudForm scrud = new ScrudForm();
+            using (ScrudForm scrud = new ScrudForm())
+            {
+                scrud.DenyAdd = true;
+                scrud.DenyDelete = true;
+                scrud.DenyEdit = true;
 
-            scrud.DenyAdd = true;
-            scrud.DenyDelete = true;
-            scrud.DenyEdit = true;
+                scrud.KeyColumn = "relname";
+                scrud.PageSize = 500;
 
-            scrud.KeyColumn = "relname";
-            scrud.PageSize = 500;
+                scrud.TableSchema = "public";
+                scrud.Table = "db_stat";
+                scrud.ViewSchema = "public";
+                scrud.View = "db_stat";
 
-            scrud.TableSchema = "public";
-            scrud.Table = "db_stat";
-            scrud.ViewSchema = "public";
-            scrud.View = "db_stat";
+                scrud.Text = Resources.Titles.DatabaseStatistics;
 
-            scrud.Text = Resources.Titles.DatabaseStatistics;
-
-            ScriptManager1.NamingContainer.Controls.Add(scrud);
+                ScriptManager1.NamingContainer.Controls.Add(scrud);
+            }
         }
 
         protected void VacuumButton_Click(object sender, EventArgs e)

@@ -21,21 +21,22 @@ namespace MixERP.Net.FrontEnd.Setup
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ScrudForm scrud = new ScrudForm();
+            using (ScrudForm scrud = new ScrudForm())
+            {
+                scrud.KeyColumn = "counter_id";
 
-            scrud.KeyColumn = "counter_id";
+                scrud.TableSchema = "office";
+                scrud.Table = "counters";
+                scrud.ViewSchema = "office";
+                scrud.View = "counters";
 
-            scrud.TableSchema = "office";
-            scrud.Table = "counters";
-            scrud.ViewSchema = "office";
-            scrud.View = "counters";
+                scrud.DisplayFields = GetDisplayFields();
+                scrud.DisplayViews = GetDisplayViews();
 
-            scrud.DisplayFields = GetDisplayFields();
-            scrud.DisplayViews = GetDisplayViews();
+                scrud.Text = Resources.Titles.Counters;
 
-            scrud.Text = Resources.Titles.Counters;
-
-            ScriptManager1.NamingContainer.Controls.Add(scrud);
+                ScriptManager1.NamingContainer.Controls.Add(scrud);
+            }
         }
 
         private static string GetDisplayFields()

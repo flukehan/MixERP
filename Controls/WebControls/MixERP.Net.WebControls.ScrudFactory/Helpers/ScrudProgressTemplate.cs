@@ -31,16 +31,25 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 
         public void InstantiateIn(Control container)
         {
-            HtmlGenericControl ajaxProgressDiv = new HtmlGenericControl("div");
-            ajaxProgressDiv.Attributes.Add("class", this.cssClass);
+            if (container == null)
+            {
+                return;
+            }
 
-            HtmlGenericControl ajaxImage = new HtmlGenericControl("img");
-            ajaxImage.Attributes.Add("src", this.spinnerImagePath);
-            ajaxImage.Attributes.Add("class", this.spinnerImageCssClass);
+            using (HtmlGenericControl ajaxProgressDiv = new HtmlGenericControl("div"))
+            {
+                ajaxProgressDiv.Attributes.Add("class", this.cssClass);
 
-            ajaxProgressDiv.Controls.Add(ajaxImage);
+                using (HtmlGenericControl ajaxImage = new HtmlGenericControl("img"))
+                {
+                    ajaxImage.Attributes.Add("src", this.spinnerImagePath);
+                    ajaxImage.Attributes.Add("class", this.spinnerImageCssClass);
 
-            container.Controls.Add(ajaxProgressDiv);
+                    ajaxProgressDiv.Controls.Add(ajaxImage);
+
+                    container.Controls.Add(ajaxProgressDiv);
+                }
+            }
         }
     }
 

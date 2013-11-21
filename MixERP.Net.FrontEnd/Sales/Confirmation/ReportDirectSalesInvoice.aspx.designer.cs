@@ -10,7 +10,7 @@
 namespace MixERP.Net.FrontEnd.Sales.Confirmation {
     
     
-    public partial class ReportDirectSalesInovice {
+    public partial class ReportDirectSalesInvoice {
         
         /// <summary>
         /// form1 control.

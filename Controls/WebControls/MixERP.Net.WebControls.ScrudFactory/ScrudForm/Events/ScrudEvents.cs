@@ -39,8 +39,11 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         //Clear the form container.
                         formContainer.Controls.Clear();
 
-                        //Load the form again.
-                        this.LoadForm(this.formContainer, new System.Data.DataTable());
+                        using (System.Data.DataTable table = new System.Data.DataTable())
+                        {
+                            //Load the form again.
+                            this.LoadForm(this.formContainer, table);
+                        }
 
                         //Refresh the grid.
                         this.BindGridView();

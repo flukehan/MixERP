@@ -20,28 +20,44 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
     {
         public static void AddRadioButtonList(HtmlTable t, string columnName, bool isNullable, string keys, string values, string selectedValue)
         {
-            RadioButtonList radioButtonList = GetRadioButtonList(columnName + "_radiobuttonlist", keys, values, selectedValue);
-            string label = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString("FormResource", columnName);
-
-            if(!isNullable)
+            if (t == null)
             {
-                RequiredFieldValidator required = ScrudFactoryHelper.GetRequiredFieldValidator(radioButtonList);
-                ScrudFactoryHelper.AddRow(t, label + Resources.ScrudResource.RequiredFieldIndicator, radioButtonList, required);
                 return;
             }
 
-            ScrudFactoryHelper.AddRow(t, label, radioButtonList);
+            using (RadioButtonList radioButtonList = GetRadioButtonList(columnName + "_radiobuttonlist", keys, values, selectedValue))
+            {
+                string label = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString("FormResource", columnName);
+
+                if (!isNullable)
+                {
+                    using (RequiredFieldValidator required = ScrudFactoryHelper.GetRequiredFieldValidator(radioButtonList))
+                    {
+                        ScrudFactoryHelper.AddRow(t, label + Resources.ScrudResource.RequiredFieldIndicator, radioButtonList, required);
+                        return;
+                    }
+                }
+
+                ScrudFactoryHelper.AddRow(t, label, radioButtonList);
+            }
         }
 
         private static RadioButtonList GetRadioButtonList(string id, string keys, string values, string selectedValues)
         {
-            RadioButtonList list = new RadioButtonList();
-            list.ID = id;
-            list.ClientIDMode = System.Web.UI.ClientIDMode.Static;
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                return null;
+            }
 
-            list.RepeatDirection = RepeatDirection.Horizontal;
-            Helper.AddListItems(list, keys, values, selectedValues);
-            return list;
+            using (RadioButtonList list = new RadioButtonList())
+            {
+                list.ID = id;
+                list.ClientIDMode = System.Web.UI.ClientIDMode.Static;
+
+                list.RepeatDirection = RepeatDirection.Horizontal;
+                Helper.AddListItems(list, keys, values, selectedValues);
+                return list;
+            }
         }
     }
 }

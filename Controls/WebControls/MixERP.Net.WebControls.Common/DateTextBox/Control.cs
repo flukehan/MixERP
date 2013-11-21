@@ -110,6 +110,7 @@ namespace MixERP.Net.WebControls.Common
             parameters.Add("dateFormat", "'" + format + "'");
             parameters.Add("showWeek", showWeekNumber.ToString().ToLower());
             parameters.Add("firstDay", (weekStartDay - 1).ToString());
+            parameters.Add("constrainInput", "false");
 
             if (minDate != null)
             {

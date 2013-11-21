@@ -13,7 +13,7 @@ http://mozilla.org/MPL/2.0/.
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <link href="~/themes/purple/main.css" rel="stylesheet" type="text/css" runat="server" />
-    <script src="/Scripts/jquery.min.js" type="text/javascript"></script>
+    <script src="/Scripts/jquery-ui/js/jquery-1.9.1.min.js" type="text/javascript"></script>
     <script src="/Scripts/shortcut.js"></script>
     <script src="/Scripts/colorbox/jquery.colorbox-min.js"></script>
     <link href="/Scripts/colorbox/colorbox.css" rel="stylesheet" />

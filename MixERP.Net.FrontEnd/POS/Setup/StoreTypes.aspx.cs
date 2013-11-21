@@ -19,18 +19,19 @@ namespace MixERP.Net.FrontEnd.POS.Setup
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ScrudForm scrud = new ScrudForm();
+            using (ScrudForm scrud = new ScrudForm())
+            {
+                scrud.KeyColumn = "store_type_id";
 
-            scrud.KeyColumn = "store_type_id";
+                scrud.TableSchema = "office";
+                scrud.Table = "store_types";
+                scrud.ViewSchema = "office";
+                scrud.View = "store_types";
 
-            scrud.TableSchema = "office";
-            scrud.Table = "store_types";
-            scrud.ViewSchema = "office";
-            scrud.View = "store_types";
+                scrud.Text = Resources.Titles.StoreTypes;
 
-            scrud.Text = Resources.Titles.StoreTypes;
-
-            ScriptManager1.NamingContainer.Controls.Add(scrud);
+                ScriptManager1.NamingContainer.Controls.Add(scrud);
+            }
         }
     }
 }

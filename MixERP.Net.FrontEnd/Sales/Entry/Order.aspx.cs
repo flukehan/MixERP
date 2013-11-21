@@ -27,7 +27,7 @@ namespace MixERP.Net.FrontEnd.Sales.Entry
             long nonGlStockMasterId = MixERP.Net.BusinessLayer.Transactions.NonGLStockTransaction.Add("Sales.Order", SalesOrder.GetForm.Date, SalesOrder.GetForm.PartyCode, SalesOrder.GetForm.PriceTypeId, SalesOrder.GetForm.Details, SalesOrder.GetForm.ReferenceNumber, SalesOrder.GetForm.StatementReference, tranIdCollection);
             if (nonGlStockMasterId > 0)
             {
-                Response.Redirect("~/Dashboard/Index.aspx?TranId=" + nonGlStockMasterId, true);
+                Response.Redirect("~/Sales/Order.aspx?TranId=" + nonGlStockMasterId, true);
             }
         }
     }

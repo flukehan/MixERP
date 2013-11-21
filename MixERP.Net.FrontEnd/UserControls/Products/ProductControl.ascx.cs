@@ -77,6 +77,10 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         public string ErrorMessage
         {
+            private get 
+            {
+                return this.ErrorLabelBottom.Text;
+            }
             set
             {
                 this.ErrorLabelBottom.Text = value;
@@ -104,7 +108,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             public string StatementReference { get; set; }
         }
 
-        private string GetDropDownValue(ListControl listControl)
+        private static string GetDropDownValue(ListControl listControl)
         {
             if (listControl != null)
             {
@@ -128,20 +132,20 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             ControlData collection = new ControlData();
             collection.Date = Conversion.TryCastDate(this.DateTextBox.Text);
 
-            collection.StoreId = Conversion.TryCastInteger(this.GetDropDownValue(this.StoreDropDownList));
+            collection.StoreId = Conversion.TryCastInteger(GetDropDownValue(this.StoreDropDownList));
             collection.TransactionType = this.TransactionTypeRadioButtonList.SelectedItem.Value;
             collection.PartyCode = this.PartyCodeTextBox.Text;
-            collection.PriceTypeId = Conversion.TryCastInteger(this.GetDropDownValue(this.PriceTypeDropDownList));
+            collection.PriceTypeId = Conversion.TryCastInteger(GetDropDownValue(this.PriceTypeDropDownList));
             collection.ReferenceNumber = this.ReferenceNumberTextBox.Text;
             collection.RunningTotal = Conversion.TryCastDecimal(this.RunningTotalTextBox.Text);
             collection.TaxTotal = Conversion.TryCastDecimal(this.TaxTotalTextBox.Text);
             collection.GrandTotal = Conversion.TryCastDecimal(this.GrandTotalTextBox.Text);
             collection.ShippingAddressCode = this.ShippingAddressCodeHidden.Value;
-            collection.ShippingCompanyId = Conversion.TryCastInteger(this.GetDropDownValue(this.ShippingCompanyDropDownList));
+            collection.ShippingCompanyId = Conversion.TryCastInteger(GetDropDownValue(this.ShippingCompanyDropDownList));
             collection.ShippingCharge = Conversion.TryCastDecimal(this.ShippingChargeTextBox.Text);
-            collection.CashRepositoryId = Conversion.TryCastInteger(this.GetDropDownValue(this.CashRepositoryDropDownList));
-            collection.CostCenterId = Conversion.TryCastInteger(this.GetDropDownValue(this.CostCenterDropDownList));
-            collection.AgentId = Conversion.TryCastInteger(this.GetDropDownValue(this.SalesPersonDropDownList));
+            collection.CashRepositoryId = Conversion.TryCastInteger(GetDropDownValue(this.CashRepositoryDropDownList));
+            collection.CostCenterId = Conversion.TryCastInteger(GetDropDownValue(this.CostCenterDropDownList));
+            collection.AgentId = Conversion.TryCastInteger(GetDropDownValue(this.SalesPersonDropDownList));
             collection.StatementReference = this.StatementReferenceTextBox.Text;
 
             Collection<StockMasterDetailModel> details = new Collection<StockMasterDetailModel>();
@@ -282,6 +286,11 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         protected void ProductGridView_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            if (e == null)
+            {
+                return;
+            }
+
             //At this point, we only expect a delete command here.
             //Be careful if this GridView implements other commands in the future.
 
@@ -300,6 +309,11 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         protected void ProductGridView_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            if (e == null)
+            {
+                return;
+            }
+
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 //Yeaaaaa! This is a data row. Yippee!!!!!
@@ -549,7 +563,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 PartyDropDownList.DataTextField = "Text";
                 PartyDropDownList.DataValueField = "Value";
                 PartyDropDownList.DataBind();
-                PartyDropDownList.Items.Insert(0, new ListItem("Select", string.Empty));
+                PartyDropDownList.Items.Insert(0, new ListItem(Resources.Titles.Select, string.Empty));
             }
         }
         #endregion

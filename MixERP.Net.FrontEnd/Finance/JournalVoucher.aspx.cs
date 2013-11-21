@@ -32,6 +32,11 @@ namespace MixERP.Net.FrontEnd.Finance
         }
         protected void TransactionGridView_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            if (e == null)
+            {
+                return;
+            }
+
             if(e.Row.RowType == DataControlRowType.DataRow)
             {
                 ImageButton lb = e.Row.FindControl("DeleteImageButton") as ImageButton;
@@ -41,6 +46,11 @@ namespace MixERP.Net.FrontEnd.Finance
 
         protected void TransactionGridView_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            if (e == null)
+            {
+                return;
+            }
+
             Collection<MixERP.Net.Common.Models.Transactions.JournalDetailsModel> table = this.GetTable();
 
             GridViewRow row = (GridViewRow)(((ImageButton)e.CommandSource).NamingContainer);

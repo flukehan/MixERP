@@ -21,21 +21,22 @@ namespace MixERP.Net.FrontEnd.Items.Setup
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ScrudForm scrud = new ScrudForm();
+            using (ScrudForm scrud = new ScrudForm())
+            {
+                scrud.KeyColumn = "item_cost_price_id";
 
-            scrud.KeyColumn = "item_cost_price_id";
+                scrud.TableSchema = "core";
+                scrud.Table = "item_cost_prices";
+                scrud.ViewSchema = "core";
+                scrud.View = "item_cost_price_view";
 
-            scrud.TableSchema = "core";
-            scrud.Table = "item_cost_prices";
-            scrud.ViewSchema = "core";
-            scrud.View = "item_cost_price_view";
+                scrud.DisplayFields = GetDisplayFields();
+                scrud.DisplayViews = GetDisplayViews();
 
-            scrud.DisplayFields = GetDisplayFields();
-            scrud.DisplayViews = GetDisplayViews();
+                scrud.Text = Resources.Titles.ItemCostPrices;
 
-            scrud.Text = Resources.Titles.ItemCostPrices;
-
-            ScriptManager1.NamingContainer.Controls.Add(scrud);
+                ScriptManager1.NamingContainer.Controls.Add(scrud);
+            }
         }
 
         private static string GetDisplayFields()

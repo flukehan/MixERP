@@ -15,7 +15,7 @@ http://mozilla.org/MPL/2.0/.
 <head runat="server">
     <title></title>
     <link href="~/themes/purple/main.css" rel="stylesheet" type="text/css" runat="server" />
-    <script src="/Scripts/jquery.min.js" type="text/javascript"></script>
+    <script src="/Scripts/jquery-ui/js/jquery-1.9.1.min.js" type="text/javascript"></script>
     <style type="text/css">
         html, body, form
         {

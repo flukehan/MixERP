@@ -48,10 +48,7 @@ namespace MixERP.Net.Common.Helpers
 
         private static string GetSectionKey(string sectionName, string keyName)
         {
-            //string path =  "/Resource/Configuration/" + sectionName + ".xml";
-            string path = @"C:\Users\binod\Desktop\mixerp\0. Github\MixERP.net.FrontEnd\Resource\Configuration\" + sectionName + ".xml"; 
-            //Configuration myConfig = ConfigurationManager.OpenExeConfiguration(path);
-            
+            string path = System.Web.HttpContext.Current.Server.MapPath("~/Resource/Configuration/" + sectionName + ".xml");            
             return GetConfigurationValues(path, keyName);            
         }
 

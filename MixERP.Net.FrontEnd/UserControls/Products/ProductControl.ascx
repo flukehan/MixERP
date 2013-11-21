@@ -476,7 +476,7 @@ http://mozilla.org/MPL/2.0/.
     }
 
     function loadAddresses() {
-        var partyCode = $("#PartyDropDownList").attr('value');
+        var partyCode = $("#PartyDropDownList").val();
         $("#ShippingAddressDropDownList").empty();
 
         $.ajax({
@@ -496,7 +496,7 @@ http://mozilla.org/MPL/2.0/.
     }
 
     function loadUnits() {
-        var itemCode = $("#ItemDropDownList").attr('value');
+        var itemCode = $("#ItemDropDownList").val();
         $("#UnitDropDownList").empty();
 
         $.ajax({
@@ -534,6 +534,8 @@ http://mozilla.org/MPL/2.0/.
         $.each(data, function () {
             addListItem("ShippingAddressDropDownList", this['Value'], this['Text']);
         });
+
+        $("#ShippingAddressDropDownList").val($("#ShippingAddressCodeHidden").val());
     }
 
     function bindUnits(data) {
@@ -547,6 +549,10 @@ http://mozilla.org/MPL/2.0/.
         $.each(data, function () {
             addListItem("UnitDropDownList", this['Value'], this['Text']);
         });
+
+        $("#UnitDropDownList").val($("#UnitIdHidden").val());
     }
+
+    $("#DateTextBox").focus();
 
 </script>

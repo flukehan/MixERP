@@ -66,14 +66,12 @@ http://mozilla.org/MPL/2.0/.
             </asp:DropDownList>
         </p>
         <p>
-            <asp:Button 
-                ID="UpdateButton" 
-                runat="server" 
-                Text="Update" 
+            <asp:Button
+                ID="UpdateButton"
+                runat="server"
+                Text="Update"
                 CssClass="menu"
-                OnClientClick="return getSelectedItems();"
-
-                 />
+                OnClientClick="return getSelectedItems();" />
             <a href="#" onclick="$('#flag-popunder').toggle(500);" class="menu">Close</a>
         </p>
     </div>

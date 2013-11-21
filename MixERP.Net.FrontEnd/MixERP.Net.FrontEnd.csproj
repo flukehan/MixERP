@@ -14,7 +14,7 @@
     <RootNamespace>MixERP.Net.FrontEnd</RootNamespace>
     <AssemblyName>MixERP.Net.FrontEnd</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -183,12 +183,12 @@
     <Compile Include="Dashboard\Index.aspx.designer.cs">
       <DependentUpon>Index.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Finance\BankReconcilation.aspx.cs">
-      <DependentUpon>BankReconcilation.aspx</DependentUpon>
+    <Compile Include="Finance\BankReconciliation.aspx.cs">
+      <DependentUpon>BankReconciliation.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Finance\BankReconcilation.aspx.designer.cs">
-      <DependentUpon>BankReconcilation.aspx</DependentUpon>
+    <Compile Include="Finance\BankReconciliation.aspx.designer.cs">
+      <DependentUpon>BankReconciliation.aspx</DependentUpon>
     </Compile>
     <Compile Include="Finance\Confirmation\GLAdvice.aspx.cs">
       <DependentUpon>GLAdvice.aspx</DependentUpon>
@@ -622,12 +622,12 @@
     <Compile Include="Sales\Confirmation\ReportDeliveryNote.aspx.designer.cs">
       <DependentUpon>ReportDeliveryNote.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Sales\Confirmation\ReportDirectSalesInovice.aspx.cs">
-      <DependentUpon>ReportDirectSalesInovice.aspx</DependentUpon>
+    <Compile Include="Sales\Confirmation\ReportDirectSalesInvoice.aspx.cs">
+      <DependentUpon>ReportDirectSalesInvoice.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Sales\Confirmation\ReportDirectSalesInovice.aspx.designer.cs">
-      <DependentUpon>ReportDirectSalesInovice.aspx</DependentUpon>
+    <Compile Include="Sales\Confirmation\ReportDirectSalesInvoice.aspx.designer.cs">
+      <DependentUpon>ReportDirectSalesInvoice.aspx</DependentUpon>
     </Compile>
     <Compile Include="Sales\Confirmation\ReportSalesQuotation.aspx.cs">
       <DependentUpon>ReportSalesQuotation.aspx</DependentUpon>
@@ -1032,7 +1032,7 @@
     <Content Include="Dependencies\AspNetPager.dll" />
     <Content Include="Dependencies\Mono.Security.dll" />
     <Content Include="Dependencies\Npgsql.dll" />
-    <Content Include="Finance\BankReconcilation.aspx" />
+    <Content Include="Finance\BankReconciliation.aspx" />
     <Content Include="Finance\Confirmation\GLAdvice.aspx" />
     <Content Include="Finance\Confirmation\JournalVoucher.aspx" />
     <Content Include="Finance\Index.aspx" />
@@ -1138,7 +1138,7 @@
     <Content Include="Sales\Confirmation\DeliveryWithoutOrder.aspx" />
     <Content Include="Sales\Confirmation\DirectSales.aspx" />
     <Content Include="Sales\Confirmation\ReportDeliveryNote.aspx" />
-    <Content Include="Sales\Confirmation\ReportDirectSalesInovice.aspx" />
+    <Content Include="Sales\Confirmation\ReportDirectSalesInvoice.aspx" />
     <Content Include="Sales\Confirmation\ReportSalesQuotation.aspx" />
     <Content Include="Sales\DeliveryForOrder.aspx" />
     <Content Include="Sales\DeliveryWithoutOrder.aspx" />
@@ -2209,6 +2209,7 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <Content Include="xsp4.bat" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Media\Temp\" />
@@ -2305,10 +2306,10 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>2904</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:20852/mixerp</IISUrl>
+          <IISUrl>http://localhost/MixERP.Net.FrontEnd</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>http://pes/</CustomServerUrl>
+          <CustomServerUrl>http://demo.mixerp.org</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

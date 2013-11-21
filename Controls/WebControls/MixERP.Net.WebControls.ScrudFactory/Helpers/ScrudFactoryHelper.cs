@@ -15,31 +15,55 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
     {
         public static void AddRow(HtmlTable table, string label, params Control[] controls)
         {
-            HtmlTableRow newRow = new HtmlTableRow();
-            HtmlTableCell labelCell = new HtmlTableCell();
-            HtmlTableCell controlCell = new HtmlTableCell();
-            Literal labelLiteral = new Literal();
-
-            labelLiteral.Text = string.Format(System.Threading.Thread.CurrentThread.CurrentCulture, "<label for='{0}'>{1}</label>", controls[0].ID, label);
-            labelCell.Attributes.Add("class", "label-cell");
-
-            labelCell.Controls.Add(labelLiteral);
-
-            foreach (Control control in controls)
+            if (table == null)
             {
-                if (control != null)
-                {
-                    controlCell.Controls.Add(control);
-                }
+                return;
             }
 
-            newRow.Cells.Add(labelCell);
-            newRow.Cells.Add(controlCell);
-            table.Rows.Add(newRow);
+
+            using (HtmlTableRow newRow = new HtmlTableRow())
+            {
+                using (HtmlTableCell labelCell = new HtmlTableCell())
+                {
+                    using (HtmlTableCell controlCell = new HtmlTableCell())
+                    {
+                        using (Literal labelLiteral = new Literal())
+                        {
+
+                            labelLiteral.Text = string.Format(System.Threading.Thread.CurrentThread.CurrentCulture, "<label for='{0}'>{1}</label>", controls[0].ID, label);
+                            labelCell.Attributes.Add("class", "label-cell");
+
+                            labelCell.Controls.Add(labelLiteral);
+
+                            foreach (Control control in controls)
+                            {
+                                if (control != null)
+                                {
+                                    controlCell.Controls.Add(control);
+                                }
+                            }
+
+                            newRow.Cells.Add(labelCell);
+                            newRow.Cells.Add(controlCell);
+                            table.Rows.Add(newRow);
+                        }
+                    }
+                }
+            }
         }
 
         public static void AddField(HtmlTable t, string columnName, string defaultValue, bool isSerial, bool isNullable, string dataType, string domain, int maxLength, string parentTableSchema, string parentTable, string parentTableColumn, string displayFields, string displayViews, string selectedValues)
         {
+            if (t == null)
+            {
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(columnName))
+            {
+                return;
+            }
+
             if (string.IsNullOrWhiteSpace(parentTableColumn))
             {
                 switch (dataType)
@@ -90,16 +114,23 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 
         public static RequiredFieldValidator GetRequiredFieldValidator(Control controlToValidate)
         {
-            RequiredFieldValidator validator = new RequiredFieldValidator();
-            validator.ID = controlToValidate.ID + "RequiredValidator";
-            validator.ErrorMessage = "<br/>" + Resources.ScrudResource.RequiredField;
-            validator.CssClass = "form-error";
-            validator.ControlToValidate = controlToValidate.ID;
-            validator.EnableClientScript = true;
-            validator.SetFocusOnError = true;
-            validator.Display = ValidatorDisplay.Dynamic;
+            if (controlToValidate == null)
+            {
+                return null;
+            }
 
-            return validator;
+            using (RequiredFieldValidator validator = new RequiredFieldValidator())
+            {
+                validator.ID = controlToValidate.ID + "RequiredValidator";
+                validator.ErrorMessage = "<br/>" + Resources.ScrudResource.RequiredField;
+                validator.CssClass = "form-error";
+                validator.ControlToValidate = controlToValidate.ID;
+                validator.EnableClientScript = true;
+                validator.SetFocusOnError = true;
+                validator.Display = ValidatorDisplay.Dynamic;
+
+                return validator;
+            }
         }
     }
 }

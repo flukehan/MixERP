@@ -21,26 +21,27 @@ namespace MixERP.Net.FrontEnd.Items.Setup
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ScrudForm scrud = new ScrudForm();
+            using (ScrudForm scrud = new ScrudForm())
+            {
+                scrud.KeyColumn = "party_id";
+                scrud.TableSchema = "core";
+                scrud.Table = "parties";
+                scrud.ViewSchema = "core";
+                scrud.View = "party_view";
 
-            scrud.KeyColumn = "party_id";
-            scrud.TableSchema = "core";
-            scrud.Table = "parties";
-            scrud.ViewSchema = "core";
-            scrud.View = "party_view";
+                scrud.Text = Resources.Titles.PartyMaintenance;
+                scrud.Description = Resources.Labels.PartyDescription;
+                scrud.Width = 4000;
 
-            scrud.Text = Resources.Titles.PartyMaintenance;
-            scrud.Description = Resources.Labels.PartyDescription;
-            scrud.Width = 4000;
+                //Party code will be automtically generated on the database.
+                scrud.Exclude = "party_code";
 
-            //Party code will be automtically generated on the database.
-            scrud.Exclude = "party_code";
+                scrud.DisplayFields = GetDisplayFields();
+                scrud.DisplayViews = GetDisplayViews();
+                scrud.SelectedValues = GetSelectedValues();
 
-            scrud.DisplayFields = GetDisplayFields();
-            scrud.DisplayViews = GetDisplayViews();
-            scrud.SelectedValues = GetSelectedValues();
-
-            container.Controls.Add(scrud);
+                container.Controls.Add(scrud);
+            }
         }
 
         private static string GetDisplayFields()

@@ -11,7 +11,7 @@ using System.Collections.ObjectModel;
 
 namespace MixERP.Net.FrontEnd.Sales.Confirmation
 {
-    public partial class ReportDirectSalesInovice : MixERP.Net.BusinessLayer.BasePageClass
+    public partial class ReportDirectSalesInvoice : MixERP.Net.BusinessLayer.BasePageClass
     {
         protected void Page_Load(object sender, EventArgs e)
         {

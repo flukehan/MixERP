@@ -22,23 +22,24 @@ namespace MixERP.Net.FrontEnd.Finance.Setup
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ScrudForm scrud = new ScrudForm();
+            using (ScrudForm scrud = new ScrudForm())
+            {
+                scrud.TableSchema = "core";
+                scrud.Table = "accounts";
+                scrud.KeyColumn = "account_id";
+                scrud.ViewSchema = "core";
+                scrud.View = "account_view";
 
-            scrud.TableSchema = "core";
-            scrud.Table = "accounts";
-            scrud.KeyColumn = "account_id";
-            scrud.ViewSchema = "core";
-            scrud.View = "account_view";
+                scrud.Width = 1500;
+                scrud.Exclude = "sys_type";
 
-            scrud.Width = 1500;
-            scrud.Exclude = "sys_type";
+                scrud.DisplayFields = GetDisplayFields();
+                scrud.DisplayViews = GetDisplayViews();
 
-            scrud.DisplayFields = GetDisplayFields();
-            scrud.DisplayViews = GetDisplayViews();
+                scrud.Text = Resources.Titles.ChartOfAccounts;
 
-            scrud.Text = Resources.Titles.ChartOfAccounts;
-
-            this.ScriptManager1.NamingContainer.Controls.Add(scrud);
+                this.ScriptManager1.NamingContainer.Controls.Add(scrud);
+            }
         }
 
         private static string GetDisplayFields()

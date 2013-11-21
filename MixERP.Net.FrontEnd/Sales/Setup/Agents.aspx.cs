@@ -21,19 +21,20 @@ namespace MixERP.Net.FrontEnd.Sales.Setup
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ScrudForm scrud = new ScrudForm();
+            using (ScrudForm scrud = new ScrudForm())
+            {
+                scrud.KeyColumn = "agent_id";
+                scrud.TableSchema = "core";
+                scrud.Table = "agents";
+                scrud.ViewSchema = "core";
+                scrud.View = "agent_view";
 
-            scrud.KeyColumn = "agent_id";
-            scrud.TableSchema = "core";
-            scrud.Table = "agents";
-            scrud.ViewSchema = "core";
-            scrud.View = "agent_view";
+                scrud.DisplayFields = GetDisplayFields();
+                scrud.DisplayViews = GetDisplayViews();
+                scrud.SelectedValues = this.GetSelectedValues();
 
-            scrud.DisplayFields = GetDisplayFields();
-            scrud.DisplayViews = GetDisplayViews();
-            scrud.SelectedValues = this.GetSelectedValues();
-
-            scrud.Text = Resources.Titles.AgentSetup;
+                scrud.Text = Resources.Titles.AgentSetup;
+            }
         }
 
         private static string GetDisplayFields()

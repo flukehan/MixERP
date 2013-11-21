@@ -34,14 +34,14 @@ namespace MixERP.Net.FrontEnd.Services
                 {
                     using(System.Data.DataTable table = MixERP.Net.BusinessLayer.Helpers.FormHelper.GetTable("core", "accounts"))
                     {
-                        return this.GetValues(table);
+                        return GetValues(table);
                     }
                 }
                 else
                 {
                     using(System.Data.DataTable table = MixERP.Net.BusinessLayer.Helpers.FormHelper.GetTable("core", "accounts", "confidential", "0"))
                     {
-                        return this.GetValues(table);
+                        return GetValues(table);
                     }
                 }
             }
@@ -51,7 +51,7 @@ namespace MixERP.Net.FrontEnd.Services
                 {
                     using(System.Data.DataTable table = MixERP.Net.BusinessLayer.Helpers.FormHelper.GetTable("core", "account_view", "has_child", "0"))
                     {
-                        return this.GetValues(table);
+                        return GetValues(table);
                     }
                 }
                 else
@@ -59,7 +59,7 @@ namespace MixERP.Net.FrontEnd.Services
                     {
                         using(System.Data.DataTable table = MixERP.Net.BusinessLayer.Helpers.FormHelper.GetTable("core", "account_view", "has_child, confidential", "0, 0"))
                         {
-                            return this.GetValues(table);
+                            return GetValues(table);
                         }
                     }
                 }
@@ -67,7 +67,7 @@ namespace MixERP.Net.FrontEnd.Services
 
         }
 
-        private Collection<ListItem> GetValues(System.Data.DataTable table)
+        private static Collection<ListItem> GetValues(System.Data.DataTable table)
         {
             Collection<ListItem> values = new Collection<ListItem>();
 

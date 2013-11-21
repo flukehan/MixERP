@@ -19,18 +19,19 @@ namespace MixERP.Net.FrontEnd.Items.Setup
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ScrudForm scrud = new ScrudForm();
+            using (ScrudForm scrud = new ScrudForm())
+            {
+                scrud.KeyColumn = "brand_id";
 
-            scrud.KeyColumn = "brand_id";
+                scrud.TableSchema = "core";
+                scrud.Table = "brands";
+                scrud.ViewSchema = "core";
+                scrud.View = "brands";
 
-            scrud.TableSchema = "core";
-            scrud.Table = "brands";
-            scrud.ViewSchema = "core";
-            scrud.View = "brands";
+                scrud.Text = Resources.Titles.Brands;
 
-            scrud.Text = Resources.Titles.Brands;
-
-            ScriptManager1.NamingContainer.Controls.Add(scrud);
+                ScriptManager1.NamingContainer.Controls.Add(scrud);
+            }
         }
     }
 }

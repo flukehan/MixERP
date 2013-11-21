@@ -21,20 +21,22 @@ namespace MixERP.Net.FrontEnd.Finance.Setup
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ScrudForm scrud = new ScrudForm();
-            scrud.KeyColumn = "account_id";
+            using (ScrudForm scrud = new ScrudForm())
+            {
+                scrud.KeyColumn = "account_id";
 
-            scrud.TableSchema = "core";
-            scrud.Table = "bank_accounts";
-            scrud.ViewSchema = "core";
-            scrud.View = "bank_accounts";
+                scrud.TableSchema = "core";
+                scrud.Table = "bank_accounts";
+                scrud.ViewSchema = "core";
+                scrud.View = "bank_accounts";
 
-            scrud.DisplayFields = GetDisplayFields();
-            scrud.DisplayViews = GetDisplayViews();
+                scrud.DisplayFields = GetDisplayFields();
+                scrud.DisplayViews = GetDisplayViews();
 
-            scrud.Text = Resources.Titles.BankAccounts;
+                scrud.Text = Resources.Titles.BankAccounts;
 
-            ScriptManager1.NamingContainer.Controls.Add(scrud);
+                ScriptManager1.NamingContainer.Controls.Add(scrud);
+            }
         }
 
         private static string GetDisplayFields()

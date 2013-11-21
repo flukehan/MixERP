@@ -20,7 +20,7 @@ http://mozilla.org/MPL/2.0/.
         DisplayPrintGLEntryButton="true"
         DisplayAttachmentButton="true"
         IsNonGLTransaction="true"
-        InvoicePath="~/Sales/Confirmation/ReportDirectSalesInovice.aspx"
+        InvoicePath="~/Sales/Confirmation/ReportDirectSalesInvoice.aspx"
         CustomerInvoicePath="~/Sales/Confirmation/ReportCustomerInvoice.aspx"
         GLAdvicePath="~/Finance/Confirmation/GLAdvice.aspx"
          />

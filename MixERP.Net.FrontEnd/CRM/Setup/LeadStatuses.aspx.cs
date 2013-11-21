@@ -19,17 +19,18 @@ namespace MixERP.Net.FrontEnd.CRM.Setup
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ScrudForm scrud = new ScrudForm();
+            using (ScrudForm scrud = new ScrudForm())
+            {
+                scrud.KeyColumn = "lead_status_id";
 
-            scrud.KeyColumn = "lead_status_id";
+                scrud.TableSchema = "crm";
+                scrud.Table = "lead_statuses";
+                scrud.ViewSchema = "crm";
+                scrud.View = "lead_statuses";
+                scrud.Text = Resources.Titles.LeadStatuses;
 
-            scrud.TableSchema = "crm";
-            scrud.Table = "lead_statuses";
-            scrud.ViewSchema = "crm";
-            scrud.View = "lead_statuses";
-            scrud.Text = Resources.Titles.LeadStatuses;
-
-            ScriptManager1.NamingContainer.Controls.Add(scrud);
+                ScriptManager1.NamingContainer.Controls.Add(scrud);
+            }
         }
     }
 }

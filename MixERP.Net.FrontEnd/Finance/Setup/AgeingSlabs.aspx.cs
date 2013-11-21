@@ -19,17 +19,18 @@ namespace MixERP.Net.FrontEnd.Finance.Setup
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ScrudForm scrud = new ScrudForm();
+            using (ScrudForm scrud = new ScrudForm())
+            {
+                scrud.KeyColumn = "ageing_slab_id";
 
-            scrud.KeyColumn = "ageing_slab_id";
+                scrud.TableSchema = "core";
+                scrud.Table = "ageing_slabs";
+                scrud.ViewSchema = "core";
+                scrud.View = "ageing_slabs";
 
-            scrud.TableSchema = "core";
-            scrud.Table = "ageing_slabs";
-            scrud.ViewSchema = "core";
-            scrud.View = "ageing_slabs";
-
-            scrud.Text = Resources.Titles.AgeingSlabSetup;
-            ScriptManager1.NamingContainer.Controls.Add(scrud);
+                scrud.Text = Resources.Titles.AgeingSlabSetup;
+                ScriptManager1.NamingContainer.Controls.Add(scrud);
+            }
         }
     }
 }

@@ -24,7 +24,7 @@ namespace MixERP.Net.FrontEnd.Reports
         {
             Collection<KeyValuePair<string, string>> collection = this.GetParameters();
 
-            if(collection == null || collection.Count.Equals(0))
+            if (collection == null || collection.Count.Equals(0))
             {
                 ReportParameterPanel.Style.Add("display", "none");
                 ReportViewer11.Path = this.ReportPath();
@@ -32,49 +32,52 @@ namespace MixERP.Net.FrontEnd.Reports
                 return;
             }
 
-            foreach(KeyValuePair<string, string> parameter in collection)
+            foreach (KeyValuePair<string, string> parameter in collection)
             {
-                TextBox textBox = new TextBox();
-                textBox.ID = parameter.Key.Replace("@", "") + "_text_box";
-
-                string label = "<label for='" + textBox.ID + "'>" + MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString("FormResource", parameter.Key.Replace("@", "")) + "</label>";
-
-                if(parameter.Value.Equals("Date"))
+                using (TextBox textBox = new TextBox())
                 {
+                    textBox.ID = parameter.Key.Replace("@", "") + "_text_box";
 
+                    string label = "<label for='" + textBox.ID + "'>" + MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString("FormResource", parameter.Key.Replace("@", "")) + "</label>";
+
+                    if (parameter.Value.Equals("Date"))
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
+
+                    AddRow(label, textBox);
                 }
-                else
-                {
-
-                }
-
-                AddRow(label, textBox);
             }
 
-            Button button = new Button();
-            button.ID = "UpdateButton";
-            button.Text = Resources.Titles.Update;
-            button.CssClass = "myButton";
-            button.Click += UpdateButton_Click;
+            using (Button button = new Button())
+            {
+                button.ID = "UpdateButton";
+                button.Text = Resources.Titles.Update;
+                button.CssClass = "myButton";
+                button.Click += UpdateButton_Click;
 
-            AddRow("", button);
-
+                AddRow("", button);
+            }
         }
 
         protected void UpdateButton_Click(object sender, EventArgs e)
         {
-            if(ReportParameterTable.Rows.Count.Equals(0))
+            if (ReportParameterTable.Rows.Count.Equals(0))
             {
                 return;
             }
 
             Collection<KeyValuePair<string, string>> list = new Collection<KeyValuePair<string, string>>();
 
-            foreach(TableRow row in ReportParameterTable.Rows)
+            foreach (TableRow row in ReportParameterTable.Rows)
             {
                 TableCell cell = row.Cells[1];
 
-                if(cell.Controls[0] is TextBox)
+                if (cell.Controls[0] is TextBox)
                 {
                     TextBox textBox = (TextBox)cell.Controls[0];
                     list.Add(new KeyValuePair<string, string>("@" + textBox.ID.Replace("_text_box", ""), textBox.Text));
@@ -87,25 +90,34 @@ namespace MixERP.Net.FrontEnd.Reports
 
         private void AddRow(string label, Control control)
         {
-            TableRow row = new TableRow();
+            if (control == null)
+            {
+                return;
+            }
 
-            TableCell cell = new TableCell();
-            cell.Text = label;
+            using (TableRow row = new TableRow())
+            {
+                using (TableCell cell = new TableCell())
+                {
+                    cell.Text = label;
 
-            TableCell controlCell = new TableCell();
-            controlCell.Controls.Add(control);
+                    using (TableCell controlCell = new TableCell())
+                    {
+                        controlCell.Controls.Add(control);
 
-            row.Cells.Add(cell);
-            row.Cells.Add(controlCell);
+                        row.Cells.Add(cell);
+                        row.Cells.Add(controlCell);
 
-            ReportParameterTable.Rows.Add(row);
-
+                        ReportParameterTable.Rows.Add(row);
+                    }
+                }
+            }
         }
 
         private string ReportPath()
         {
             string id = this.Request["Id"];
-            if(string.IsNullOrWhiteSpace(id))
+            if (string.IsNullOrWhiteSpace(id))
             {
                 return null;
             }

@@ -7,10 +7,12 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 -->
-<MixERPSwitches>
+<configuration>
+  <appSettings>
     <add key="AllowSupplierInSales" value="true" />
     <add key="AllowNonSupplierInPurchase" value="true" />
     <add key="AllowParentAccountInGLTransaction" value="false" />
     <add key="EnableAutoVerification" value="true" />
     <add key="TaxAfterDiscount" value="true" />
-</MixERPSwitches>
+  </appSettings>
+</configuration>

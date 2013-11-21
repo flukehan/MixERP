@@ -40,16 +40,23 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
             var assembly = Assembly.GetExecutingAssembly();
             var resourceName = "MixERP.Net.WebControls.ScrudFactory.Scrud.js";
 
-            using(Stream stream = assembly.GetManifestResourceStream(resourceName))
-            using(StreamReader reader = new StreamReader(stream))
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
             {
-                return reader.ReadToEnd();
-            }         
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    return reader.ReadToEnd();
+                }
+            }
         }
 
 
         private static string CreateVariable(string variableName)
         {
+            if (string.IsNullOrWhiteSpace(variableName))
+            {
+                return string.Empty;
+            }
+
             StringBuilder variable = new StringBuilder();
             variable.Append("var ");
             variable.Append(variableName);

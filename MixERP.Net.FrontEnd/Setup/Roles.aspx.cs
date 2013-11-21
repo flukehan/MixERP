@@ -19,18 +19,19 @@ namespace MixERP.Net.FrontEnd.Setup
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ScrudForm scrud = new ScrudForm();
+            using (ScrudForm scrud = new ScrudForm())
+            {
+                scrud.KeyColumn = "role_id";
 
-            scrud.KeyColumn = "role_id";
+                scrud.TableSchema = "office";
+                scrud.Table = "roles";
+                scrud.ViewSchema = "office";
+                scrud.View = "roles";
 
-            scrud.TableSchema = "office";
-            scrud.Table = "roles";
-            scrud.ViewSchema = "office";
-            scrud.View = "roles";
+                scrud.Text = Resources.Titles.RoleMaintenance;
 
-            scrud.Text = Resources.Titles.RoleMaintenance;
-
-            ScriptManager1.NamingContainer.Controls.Add(scrud);
+                ScriptManager1.NamingContainer.Controls.Add(scrud);
+            }
         }
     }
 }

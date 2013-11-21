@@ -21,11 +21,18 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private void AddTitle(Panel p)
         {
-            HtmlGenericControl heading = new HtmlGenericControl("h1");
-            titleLabel = new Label();
-            titleLabel.ID = "TitleLabel";
-            heading.Controls.Add(titleLabel);
-            p.Controls.Add(heading);
+            if (p == null)
+            {
+                return;
+            }
+
+            using (HtmlGenericControl heading = new HtmlGenericControl("h1"))
+            {
+                titleLabel = new Label();
+                titleLabel.ID = "TitleLabel";
+                heading.Controls.Add(titleLabel);
+                p.Controls.Add(heading);
+            }
         }
 
         private void AddDescription(Panel p)
@@ -42,9 +49,16 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private void AddRuler(Panel p)
         {
-            HtmlGenericControl ruler = new HtmlGenericControl("hr");
-            ruler.Attributes.Add("class", "hr");
-            p.Controls.Add(ruler);
+            if (p == null)
+            {
+                return;
+            }
+
+            using (HtmlGenericControl ruler = new HtmlGenericControl("hr"))
+            {
+                ruler.Attributes.Add("class", "hr");
+                p.Controls.Add(ruler);
+            }
         }
 
         private void LoadDescription()

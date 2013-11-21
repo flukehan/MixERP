@@ -20,34 +20,53 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
     {
         public static void AddTextBox(HtmlTable t, string columnName, string defaultValue, bool isNullable, int maxLength)
         {
-            TextBox textBox = GetTextBox(columnName + "_textbox", maxLength);
-            string label = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString("FormResource", columnName);
-
-            textBox.Text = defaultValue;
-
-            if(!isNullable)
+            if (t == null)
             {
-                RequiredFieldValidator required = ScrudFactoryHelper.GetRequiredFieldValidator(textBox);
-                ScrudFactoryHelper.AddRow(t, label + Resources.ScrudResource.RequiredFieldIndicator, textBox, required);
                 return;
             }
 
-            ScrudFactoryHelper.AddRow(t, label, textBox);
+            if (string.IsNullOrWhiteSpace(columnName))
+            {
+                return;
+            }
+
+            using (TextBox textBox = GetTextBox(columnName + "_textbox", maxLength))
+            {
+                string label = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString("FormResource", columnName);
+
+                textBox.Text = defaultValue;
+
+                if (!isNullable)
+                {
+                    RequiredFieldValidator required = ScrudFactoryHelper.GetRequiredFieldValidator(textBox);
+                    ScrudFactoryHelper.AddRow(t, label + Resources.ScrudResource.RequiredFieldIndicator, textBox, required);
+                    return;
+                }
+
+                ScrudFactoryHelper.AddRow(t, label, textBox);
+            }
         }
 
         public static TextBox GetTextBox(string id, int maxLength)
         {
-            TextBox textBox = new TextBox();
-            textBox.ID = id;
-
-            if (maxLength > 0)
+            if (string.IsNullOrWhiteSpace(id))
             {
-                textBox.MaxLength = maxLength;
+                return null;
             }
 
-            textBox.ClientIDMode = System.Web.UI.ClientIDMode.Static;
+            using (TextBox textBox = new TextBox())
+            {
+                textBox.ID = id;
 
-            return textBox;
+                if (maxLength > 0)
+                {
+                    textBox.MaxLength = maxLength;
+                }
+
+                textBox.ClientIDMode = System.Web.UI.ClientIDMode.Static;
+
+                return textBox;
+            }
         }
 
     }

@@ -21,28 +21,29 @@ namespace MixERP.Net.FrontEnd.Setup.Policy
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ScrudForm scrud = new ScrudForm();
+            using (ScrudForm scrud = new ScrudForm())
+            {
+                scrud.DenyAdd = !MixERP.Net.BusinessLayer.Helpers.SessionHelper.IsAdmin();
+                scrud.DenyEdit = !MixERP.Net.BusinessLayer.Helpers.SessionHelper.IsAdmin();
+                scrud.DenyDelete = !MixERP.Net.BusinessLayer.Helpers.SessionHelper.IsAdmin();
 
-            scrud.DenyAdd = !MixERP.Net.BusinessLayer.Helpers.SessionHelper.IsAdmin();
-            scrud.DenyEdit = !MixERP.Net.BusinessLayer.Helpers.SessionHelper.IsAdmin();
-            scrud.DenyDelete = !MixERP.Net.BusinessLayer.Helpers.SessionHelper.IsAdmin();
+                scrud.KeyColumn = "user_id";
 
-            scrud.KeyColumn = "user_id";
+                scrud.TableSchema = "policy";
+                scrud.Table = "auto_verification_policy";
+                scrud.ViewSchema = "policy";
+                scrud.View = "auto_verification_policy_view";
 
-            scrud.TableSchema = "policy";
-            scrud.Table = "auto_verification_policy";
-            scrud.ViewSchema = "policy";
-            scrud.View = "auto_verification_policy_view";
+                scrud.PageSize = 100;
+                scrud.Width = 2000;
 
-            scrud.PageSize = 100;
-            scrud.Width = 2000;
+                scrud.DisplayFields = GetDisplayFields();
+                scrud.DisplayViews = GetDisplayViews();
 
-            scrud.DisplayFields = GetDisplayFields();
-            scrud.DisplayViews = GetDisplayViews();
+                scrud.Text = Resources.Titles.AutoVerificationPolicy;
 
-            scrud.Text = Resources.Titles.AutoVerificationPolicy;
-
-            ScriptManager1.NamingContainer.Controls.Add(scrud);
+                ScriptManager1.NamingContainer.Controls.Add(scrud);
+            }
         }
 
         private static string GetDisplayFields()

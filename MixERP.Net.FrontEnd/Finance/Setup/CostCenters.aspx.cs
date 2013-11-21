@@ -19,17 +19,18 @@ namespace MixERP.Net.FrontEnd.Finance.Setup
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ScrudForm scrud = new ScrudForm();
+            using (ScrudForm scrud = new ScrudForm())
+            {
+                scrud.KeyColumn = "cost_center_id";
+                scrud.TableSchema = "office";
+                scrud.Table = "cost_centers";
+                scrud.ViewSchema = "office";
+                scrud.View = "cost_center_view";
 
-            scrud.KeyColumn = "cost_center_id";
-            scrud.TableSchema = "office";
-            scrud.Table = "cost_centers";
-            scrud.ViewSchema = "office";
-            scrud.View = "cost_center_view";
+                scrud.Text = Resources.Titles.CostCenters;
 
-            scrud.Text = Resources.Titles.CostCenters;
-
-            ScriptManager1.NamingContainer.Controls.Add(scrud);
+                ScriptManager1.NamingContainer.Controls.Add(scrud);
+            }
         }
     }
 }

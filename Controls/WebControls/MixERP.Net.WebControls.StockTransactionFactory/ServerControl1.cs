@@ -33,6 +33,11 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
  
         protected override void RenderContents(HtmlTextWriter output)
         {
+            if (output == null)
+            {
+                return;
+            }
+
             output.Write(Text);
         }
     }
