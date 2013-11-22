@@ -10,7 +10,7 @@ http://mozilla.org/MPL/2.0/.
 
 <%@ Register Assembly="System.Web.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Namespace="System.Web.UI.DataVisualization.Charting" TagPrefix="asp" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceHolder" runat="server">
+<asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceholder" runat="server">
 
     <script src="/Scripts/gridster/jquery.gridster.js"></script>
     <link href="/Scripts/gridster/jquery.gridster.min.css" rel="stylesheet" />
@@ -34,9 +34,9 @@ http://mozilla.org/MPL/2.0/.
         }
     </style>
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceHolder" runat="server">
+<asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceholder" runat="server">
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
+<asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceholder" runat="server">
 
     <div style="width: 1092px; margin: auto;">
         <h1 style="margin-left: 12px;">Binod, Welcome to MixERP Dashboard (Todo Page)</h1>
@@ -89,5 +89,5 @@ http://mozilla.org/MPL/2.0/.
 
         </div>
 </asp:Content>
-<asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceHolder" runat="server">
+<asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceholder" runat="server">
 </asp:Content>

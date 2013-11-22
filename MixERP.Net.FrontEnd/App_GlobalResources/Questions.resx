@@ -120,7 +120,7 @@
   <data name="AreYouSure" xml:space="preserve">
     <value>Are you sure?</value>
   </data>
-  <data name="CantAccessAccount" xml:space="preserve">
+  <data name="CannotAccessAccount" xml:space="preserve">
     <value>Can't access your account?</value>
   </data>
   <data name="ConfirmAnalyze" xml:space="preserve">

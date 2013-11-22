@@ -134,12 +134,12 @@
     <Compile Include="CRM\Lead.aspx.designer.cs">
       <DependentUpon>Lead.aspx</DependentUpon>
     </Compile>
-    <Compile Include="CRM\LeadFollowup.aspx.cs">
-      <DependentUpon>LeadFollowup.aspx</DependentUpon>
+    <Compile Include="CRM\LeadFollowUp.aspx.cs">
+      <DependentUpon>LeadFollowUp.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="CRM\LeadFollowup.aspx.designer.cs">
-      <DependentUpon>LeadFollowup.aspx</DependentUpon>
+    <Compile Include="CRM\LeadFollowUp.aspx.designer.cs">
+      <DependentUpon>LeadFollowUp.aspx</DependentUpon>
     </Compile>
     <Compile Include="CRM\Opportunity.aspx.cs">
       <DependentUpon>Opportunity.aspx</DependentUpon>
@@ -148,12 +148,12 @@
     <Compile Include="CRM\Opportunity.aspx.designer.cs">
       <DependentUpon>Opportunity.aspx</DependentUpon>
     </Compile>
-    <Compile Include="CRM\OpportunityFollowup.aspx.cs">
-      <DependentUpon>OpportunityFollowup.aspx</DependentUpon>
+    <Compile Include="CRM\OpportunityFollowUp.aspx.cs">
+      <DependentUpon>OpportunityFollowUp.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="CRM\OpportunityFollowup.aspx.designer.cs">
-      <DependentUpon>OpportunityFollowup.aspx</DependentUpon>
+    <Compile Include="CRM\OpportunityFollowUp.aspx.designer.cs">
+      <DependentUpon>OpportunityFollowUp.aspx</DependentUpon>
     </Compile>
     <Compile Include="CRM\Setup\LeadSources.aspx.cs">
       <DependentUpon>LeadSources.aspx</DependentUpon>
@@ -907,17 +907,6 @@
     <Compile Include="SignIn.aspx.designer.cs">
       <DependentUpon>SignIn.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Trash\jQueryCDDL.aspx.cs">
-      <DependentUpon>jQueryCDDL.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Trash\jQueryCDDL.aspx.designer.cs">
-      <DependentUpon>jQueryCDDL.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Trash\PartyData.asmx.cs">
-      <DependentUpon>PartyData.asmx</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="UserControls\CurrencyExtender.ascx.cs">
       <DependentUpon>CurrencyExtender.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1016,9 +1005,9 @@
     <Content Include="CRM\ConvertLeadToOpportunity.aspx" />
     <Content Include="CRM\Index.aspx" />
     <Content Include="CRM\Lead.aspx" />
-    <Content Include="CRM\LeadFollowup.aspx" />
+    <Content Include="CRM\LeadFollowUp.aspx" />
     <Content Include="CRM\Opportunity.aspx" />
-    <Content Include="CRM\OpportunityFollowup.aspx" />
+    <Content Include="CRM\OpportunityFollowUp.aspx" />
     <Content Include="CRM\Setup\LeadSources.aspx" />
     <Content Include="CRM\Setup\LeadStatuses.aspx" />
     <Content Include="CRM\Setup\OpportunityStages.aspx" />
@@ -2117,8 +2106,6 @@
     <Content Include="Themes\purple\mixerp-logo-light.png" />
     <Content Include="Themes\purple\padding.css" />
     <Content Include="Themes\purple\mixerp-logo.png" />
-    <Content Include="Trash\jQueryCDDL.aspx" />
-    <Content Include="Trash\PartyData.asmx" />
     <Content Include="UserControls\CurrencyExtender.ascx" />
   </ItemGroup>
   <ItemGroup>
@@ -2218,6 +2205,7 @@
     <Folder Include="Resource\Logo\" />
     <Folder Include="Scripts\CodeMirror\bin\" />
     <Folder Include="Setup\General\" />
+    <Folder Include="Trash\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Controls\WebControls\MixERP.Net.WebControls.Common\MixERP.Net.WebControls.Common.csproj">
@@ -2263,6 +2251,7 @@
     <Content Include="App_GlobalResources\Questions.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Questions.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>

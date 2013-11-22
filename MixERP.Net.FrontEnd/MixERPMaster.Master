@@ -25,9 +25,9 @@ http://mozilla.org/MPL/2.0/.
     <link href="/Scripts/colorbox/colorbox.css" rel="stylesheet" />
     <link href="/Scripts/jquery-ui/css/custom-theme/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" />
     <title>MixErp® Beta</title>
-    <asp:ContentPlaceHolder ID="ScriptContentPlaceHolder" runat="server">
+    <asp:ContentPlaceHolder ID="ScriptContentPlaceholder" runat="server">
     </asp:ContentPlaceHolder>
-    <asp:ContentPlaceHolder ID="StyleSheetContentPlaceHolder" runat="server">
+    <asp:ContentPlaceHolder ID="StyleSheetContentPlaceholder" runat="server">
     </asp:ContentPlaceHolder>
 
     <!--[if IE]>
@@ -67,7 +67,7 @@ http://mozilla.org/MPL/2.0/.
                 </div>
             </div>
             <div id="content">
-                <asp:ContentPlaceHolder ID="BodyContentPlaceHolder" runat="server">
+                <asp:ContentPlaceHolder ID="BodyContentPlaceholder" runat="server">
                 </asp:ContentPlaceHolder>
                 <asp:Button ID="SwallowSubmitButton" runat="server" OnClientClick="return(false);" Style="display: none;" />
             </div>
@@ -93,7 +93,7 @@ http://mozilla.org/MPL/2.0/.
 
 
         </script>
-        <asp:ContentPlaceHolder ID="BottomScriptContentPlaceHolder" runat="server">
+        <asp:ContentPlaceHolder ID="BottomScriptContentPlaceholder" runat="server">
         </asp:ContentPlaceHolder>
     </form>
 </body>

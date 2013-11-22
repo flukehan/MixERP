@@ -8,11 +8,11 @@ http://mozilla.org/MPL/2.0/.
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/ContentMaster.Master" AutoEventWireup="true" CodeBehind="JournalVoucher.aspx.cs" Inherits="MixERP.Net.FrontEnd.Finance.JournalVoucher" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceHolder" runat="server">
+<asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceholder" runat="server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceHolder" runat="server">
+<asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceholder" runat="server">
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
+<asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceholder" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server" />
 
     <asp:Label ID="TitleLabel" runat="server" Text="<%$Resources:Titles, JournalVoucherEntry %>" CssClass="title" />
@@ -157,7 +157,7 @@ http://mozilla.org/MPL/2.0/.
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
-<asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceHolder" runat="server">
+<asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceholder" runat="server">
     <script type="text/javascript">
         areYouSureLocalized = '<%= Resources.Questions.AreYouSure %>';
 

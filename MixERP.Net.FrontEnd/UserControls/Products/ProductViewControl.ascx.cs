@@ -255,6 +255,11 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         protected void ProductViewGridView_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            if (e == null)
+            {
+                return;
+            }
+
             if (e.Row.RowType == DataControlRowType.Header)
             {
                 for (int i = 0; i < e.Row.Cells.Count; i++)

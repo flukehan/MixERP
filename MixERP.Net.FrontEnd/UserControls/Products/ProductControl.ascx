@@ -296,11 +296,11 @@ http://mozilla.org/MPL/2.0/.
                                 </asp:DropDownList>
                             </asp:TableCell>
                         </asp:TableRow>
-                        <asp:TableRow ID="SalesPersonRow" runat="server">
+                        <asp:TableRow ID="SalespersonRow" runat="server">
                             <asp:TableCell>
-                                <asp:Literal ID="SalesPersonDropDownListLabelLiteral" runat="server" />
+                                <asp:Literal ID="SalespersonDropDownListLabelLiteral" runat="server" />
                             </asp:TableCell><asp:TableCell>
-                                <asp:DropDownList ID="SalesPersonDropDownList" runat="server" Width="300">
+                                <asp:DropDownList ID="SalespersonDropDownList" runat="server" Width="300">
                                 </asp:DropDownList>
                             </asp:TableCell>
                         </asp:TableRow>

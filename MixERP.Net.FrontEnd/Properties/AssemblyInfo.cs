@@ -1,4 +1,5 @@
-﻿/********************************************************************************
+﻿using System;
+/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
 This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
@@ -20,7 +21,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-
+[assembly: CLSCompliant(true)]
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
 // COM, set the ComVisible attribute to true on that type.

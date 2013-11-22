@@ -8,15 +8,15 @@ http://mozilla.org/MPL/2.0/.
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/ContentMaster.Master" AutoEventWireup="true" CodeBehind="Order.aspx.cs" Inherits="MixERP.Net.FrontEnd.Sales.Order" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceHolder" runat="server">
+<asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceholder" runat="server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceHolder" runat="server">
+<asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceholder" runat="server">
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
+<asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceholder" runat="server">
     <mixerp:ProductView
         runat="server"
         Book="Sales" SubBook="Order"
         Text="<%$Resources:Titles, SalesOrder %>" />
 </asp:Content>
-<asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceHolder" runat="server">
+<asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceholder" runat="server">
 </asp:Content>

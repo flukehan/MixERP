@@ -92,7 +92,7 @@ http://mozilla.org/MPL/2.0/.
                     <td></td>
                     <td>
                         <p>
-                            <asp:LinkButton ID="CantAccessAccountLinkButton" runat="server" Text="<%$Resources:Questions, CantAccessAccount %>" />
+                            <asp:LinkButton ID="CannotAccessAccountLinkButton" runat="server" Text="<%$Resources:Questions, CannotAccessAccount %>" />
                         </p>
                     </td>
                 </tr>

@@ -4600,7 +4600,7 @@ $.widget("ui.sortable", $.ui.mouse, {
 				for ( j = cur.length - 1; j >= 0; j--){
 					inst = $.data(cur[j], this.widgetFullName);
 					if(inst && inst !== this && !inst.options.disabled) {
-						queries.push([$.isFunction(inst.options.items) ? inst.options.items.call(inst.element) : $(inst.options.items, inst.element).not(".ui-sortable-helper").not(".ui-sortable-placeholder"), inst]);
+					    queries.push([$.isFunction(inst.options.items) ? inst.options.items.call(inst.element) : $(inst.options.items, inst.element).not(".ui-sortable-helper").not(".ui-sortable-placeholder"), inst]);
 					}
 				}
 			}
@@ -4732,7 +4732,7 @@ $.widget("ui.sortable", $.ui.mouse, {
 
 					var nodeName = that.currentItem[0].nodeName.toLowerCase(),
 						element = $( "<" + nodeName + ">", that.document[0] )
-							.addClass(className || that.currentItem[0].className+" ui-sortable-placeholder")
+							.addClass(className || that.currentItem[0].className + " ui-sortable-placeholder")
 							.removeClass("ui-sortable-helper");
 
 					if ( nodeName === "tr" ) {

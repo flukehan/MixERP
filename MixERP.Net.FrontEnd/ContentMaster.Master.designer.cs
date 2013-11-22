@@ -13,22 +13,22 @@ namespace MixERP.Net.FrontEnd {
     public partial class ContentMaster {
         
         /// <summary>
-        /// ScriptContentPlaceHolder control.
+        /// ScriptContentPlaceholder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ScriptContentPlaceHolder;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder ScriptContentPlaceholder;
         
         /// <summary>
-        /// StyleSheetContentPlaceHolder control.
+        /// StyleSheetContentPlaceholder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder StyleSheetContentPlaceHolder;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder StyleSheetContentPlaceholder;
         
         /// <summary>
         /// SearchTextBox control.
@@ -49,21 +49,21 @@ namespace MixERP.Net.FrontEnd {
         protected global::System.Web.UI.WebControls.Literal ContentMenuLiteral;
         
         /// <summary>
-        /// BodyContentPlaceHolder control.
+        /// BodyContentPlaceholder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder BodyContentPlaceHolder;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder BodyContentPlaceholder;
         
         /// <summary>
-        /// BottomScriptContentPlaceHolder control.
+        /// BottomScriptContentPlaceholder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder BottomScriptContentPlaceHolder;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder BottomScriptContentPlaceholder;
     }
 }

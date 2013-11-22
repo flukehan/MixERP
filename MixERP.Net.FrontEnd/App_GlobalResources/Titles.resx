@@ -519,9 +519,6 @@
   <data name="SalesQuotation" xml:space="preserve">
     <value>Sales Quotation</value>
   </data>
-  <data name="Save1" xml:space="preserve">
-    <value>Save</value>
-  </data>
   <data name="Shippers" xml:space="preserve">
     <value>Shippers</value>
   </data>
@@ -560,12 +557,6 @@
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
-  </data>
-  <data name="String1" xml:space="preserve">
-    <value>Sign In</value>
-  </data>
-  <data name="String2" xml:space="preserve">
-    <value>Remember Me</value>
   </data>
   <data name="UserId" xml:space="preserve">
     <value>User Id</value>
@@ -609,8 +600,8 @@
   <data name="ReferenceNumberAbbreviated" xml:space="preserve">
     <value>Ref#</value>
   </data>
-  <data name="SalesPerson" xml:space="preserve">
-    <value>Sales Person</value>
+  <data name="Salesperson" xml:space="preserve">
+    <value>Salesperson</value>
   </data>
   <data name="ShippingAddressMaintenance" xml:space="preserve">
     <value>Shipping Address Maintenance</value>

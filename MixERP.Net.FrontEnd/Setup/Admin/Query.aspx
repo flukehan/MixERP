@@ -8,11 +8,11 @@ http://mozilla.org/MPL/2.0/.
 <%@ Page Title="" Language="C#" MasterPageFile="~/MenuMaster.Master" AutoEventWireup="true"
     CodeBehind="Query.aspx.cs" Inherits="MixERP.Net.FrontEnd.Setup.Admin.Query" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceHolder" runat="server">
+<asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceholder" runat="server">
     <script src="/Scripts/CodeMirror/lib/codemirror.js"></script>
     <script src="/Scripts/CodeMirror/mode/sql/sql.js"></script>
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceHolder" runat="server">
+<asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceholder" runat="server">
     <link href="/Scripts/CodeMirror/lib/codemirror.css" rel="stylesheet" />
     <link href="/Scripts/CodeMirror/theme/visual-studio.css" rel="stylesheet" />
 
@@ -30,7 +30,7 @@ http://mozilla.org/MPL/2.0/.
         }
     </style>
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
+<asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceholder" runat="server">
     <div id="buttons">
 
         <asp:Button ID="ExecuteButton" runat="server" Text="<%$Resources:Titles, Execute %>" OnClick="ExecuteButton_Click" />
@@ -64,7 +64,7 @@ http://mozilla.org/MPL/2.0/.
     </p>
 
 </asp:Content>
-<asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceHolder"
+<asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceholder"
     runat="server">
 
     <script type="text/javascript">

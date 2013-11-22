@@ -72,9 +72,9 @@ namespace Resources {
         /// <summary>
         ///   Looks up a localized string similar to Can&apos;t access your account?.
         /// </summary>
-        internal static string CantAccessAccount {
+        internal static string CannotAccessAccount {
             get {
-                return ResourceManager.GetString("CantAccessAccount", resourceCulture);
+                return ResourceManager.GetString("CannotAccessAccount", resourceCulture);
             }
         }
         

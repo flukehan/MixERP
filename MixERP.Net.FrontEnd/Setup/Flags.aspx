@@ -8,14 +8,14 @@ http://mozilla.org/MPL/2.0/.
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/ContentMaster.Master" AutoEventWireup="true" CodeBehind="Flags.aspx.cs" Inherits="MixERP.Net.FrontEnd.Setup.Flags" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceHolder" runat="server">
+<asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceholder" runat="server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceHolder" runat="server">
+<asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceholder" runat="server">
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
+<asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceholder" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server" />
 </asp:Content>
-<asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceHolder" runat="server">
+<asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceholder" runat="server">
     <script type="text/javascript">
         //This event will be called by ASP.net AJAX during
         //asynchronous partial page rendering.

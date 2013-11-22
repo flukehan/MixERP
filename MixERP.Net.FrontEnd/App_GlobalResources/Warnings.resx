@@ -136,6 +136,9 @@
     <value>Only {0} {1} of {2} left in stock.</value>
     <comment>Only {Qty} {Unit} of {ItemName} left in stock.</comment>
   </data>
+  <data name="InvalidDate" xml:space="preserve">
+    <value>Invalid date</value>
+  </data>
   <data name="InvalidLocation" xml:space="preserve">
     <value>"{0}" is not a valid path or location.</value>
   </data>

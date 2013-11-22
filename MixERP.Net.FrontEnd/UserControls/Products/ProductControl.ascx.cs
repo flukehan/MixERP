@@ -77,7 +77,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         public string ErrorMessage
         {
-            private get 
+            get 
             {
                 return this.ErrorLabelBottom.Text;
             }
@@ -145,7 +145,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             collection.ShippingCharge = Conversion.TryCastDecimal(this.ShippingChargeTextBox.Text);
             collection.CashRepositoryId = Conversion.TryCastInteger(GetDropDownValue(this.CashRepositoryDropDownList));
             collection.CostCenterId = Conversion.TryCastInteger(GetDropDownValue(this.CostCenterDropDownList));
-            collection.AgentId = Conversion.TryCastInteger(GetDropDownValue(this.SalesPersonDropDownList));
+            collection.AgentId = Conversion.TryCastInteger(GetDropDownValue(this.SalespersonDropDownList));
             collection.StatementReference = this.StatementReferenceTextBox.Text;
 
             Collection<StockMasterDetailModel> details = new Collection<StockMasterDetailModel>();
@@ -455,7 +455,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             CashRepositoryDropDownListLabelLiteral.Text = "<label for='CashRepositoryDropDownList'>" + Resources.Titles.CashRepository + "</label>";
             CashRepositoryBalanceTextBoxLabelLiteral.Text = "<label for='CashRepositoryBalanceTextBox'>" + Resources.Titles.CashRepositoryBalance + "</label>";
             CostCenterDropDownListLabelLiteral.Text = "<label for='CostCenterDropDownList'>" + Resources.Titles.CostCenter + "</label>";
-            SalesPersonDropDownListLabelLiteral.Text = "<label for='SalesPersonDropDownList'>" + Resources.Titles.SalesPerson + "</label>";
+            SalespersonDropDownListLabelLiteral.Text = "<label for='SalespersonDropDownList'>" + Resources.Titles.Salesperson + "</label>";
             StatementReferenceTextBoxLabelLiteral.Text = "<label for='StatementReferenceTextBox'>" + Resources.Titles.StatementReference + "</label>";
         }
 
@@ -509,15 +509,15 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         }
 
-        private void LoadSalesPerson()
+        private void LoadSalesperson()
         {
-            SalesPersonRow.Visible = false;
+            SalespersonRow.Visible = false;
 
             if (this.Book == Common.Models.Transactions.TranBook.Sales)
             {
                 string displayField = MixERP.Net.Common.Helpers.ConfigurationHelper.GetDbParameter("AgentDisplayField");
-                MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.BindDropDownList(SalesPersonDropDownList, "core", "agents", "agent_id", displayField);
-                SalesPersonRow.Visible = true;
+                MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.BindDropDownList(SalespersonDropDownList, "core", "agents", "agent_id", displayField);
+                SalespersonRow.Visible = true;
             }
         }
 
@@ -549,7 +549,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             this.LoadPriceTypes();
             this.LoadShippers();
             this.LoadCostCenters();
-            this.LoadSalesPerson();
+            this.LoadSalesperson();
             this.LoadStores();
             this.LoadCashRepositories();
             this.LoadParties();
@@ -1039,7 +1039,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
             if (valueDate.Equals(DateTime.MinValue))
             {
-                ErrorLabelTop.Text = "Invalid Date";
+                ErrorLabelTop.Text = Resources.Warnings.InvalidDate;
                 DateTextBox.CssClass = "dirty";
                 DateTextBox.Focus();
                 return;

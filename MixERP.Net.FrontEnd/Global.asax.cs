@@ -17,6 +17,7 @@ namespace MixERP.Net.FrontEnd
     public class Global : System.Web.HttpApplication
     {
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         void Application_Start(object sender, EventArgs e)
         {
             RegisterRoutes(RouteTable.Routes);
@@ -31,12 +32,14 @@ namespace MixERP.Net.FrontEnd
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         void Application_End(object sender, EventArgs e)
         {
             //  Code that runs on application shutdown
 
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         void Application_Error(object sender, EventArgs e)
         {
             // Code that runs when an unhandled error occurs
@@ -57,12 +60,14 @@ namespace MixERP.Net.FrontEnd
 
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         void Session_Start(object sender, EventArgs e)
         {
             // Code that runs when a new session is started
 
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         void Session_End(object sender, EventArgs e)
         {
             // Code that runs when a session ends. 

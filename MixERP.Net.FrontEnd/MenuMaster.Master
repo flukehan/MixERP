@@ -9,22 +9,22 @@ http://mozilla.org/MPL/2.0/.
 <%@ Master Language="C#" MasterPageFile="~/MixErpMaster.Master" AutoEventWireup="true"
     CodeBehind="MenuMaster.Master.cs" Inherits="MixERP.Net.FrontEnd.MenuMaster" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceHolder" runat="server">
-    <asp:ContentPlaceHolder ID="ScriptContentPlaceHolder" runat="server">
+<asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceholder" runat="server">
+    <asp:ContentPlaceHolder ID="ScriptContentPlaceholder" runat="server">
     </asp:ContentPlaceHolder>
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceHolder" runat="server">
-    <asp:ContentPlaceHolder ID="StyleSheetContentPlaceHolder" runat="server">
+<asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceholder" runat="server">
+    <asp:ContentPlaceHolder ID="StyleSheetContentPlaceholder" runat="server">
     </asp:ContentPlaceHolder>
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
+<asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceholder" runat="server">
     <div class="content">
-        <asp:ContentPlaceHolder ID="BodyContentPlaceHolder" runat="server">
+        <asp:ContentPlaceHolder ID="BodyContentPlaceholder" runat="server">
         </asp:ContentPlaceHolder>
     </div>
 </asp:Content>
-<asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceHolder"
+<asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceholder"
     runat="server">
-    <asp:ContentPlaceHolder ID="BottomScriptContentPlaceHolder" runat="server">
+    <asp:ContentPlaceHolder ID="BottomScriptContentPlaceholder" runat="server">
     </asp:ContentPlaceHolder>
 </asp:Content>

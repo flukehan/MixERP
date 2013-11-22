@@ -643,31 +643,31 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::System.Web.UI.WebControls.DropDownList CostCenterDropDownList;
         
         /// <summary>
-        /// SalesPersonRow control.
+        /// SalespersonRow control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableRow SalesPersonRow;
+        protected global::System.Web.UI.WebControls.TableRow SalespersonRow;
         
         /// <summary>
-        /// SalesPersonDropDownListLabelLiteral control.
+        /// SalespersonDropDownListLabelLiteral control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal SalesPersonDropDownListLabelLiteral;
+        protected global::System.Web.UI.WebControls.Literal SalespersonDropDownListLabelLiteral;
         
         /// <summary>
-        /// SalesPersonDropDownList control.
+        /// SalespersonDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList SalesPersonDropDownList;
+        protected global::System.Web.UI.WebControls.DropDownList SalespersonDropDownList;
         
         /// <summary>
         /// StatementReferenceTextBoxLabelLiteral control.
