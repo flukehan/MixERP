@@ -55,6 +55,11 @@
     <None Include="Mix Open Foundation.snk" />
     <None Include="MixERP.Net.WebControls.StockTransactionFactory.licenseheader" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\..\Dictionary.xml">
+      <Link>Dictionary.xml</Link>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

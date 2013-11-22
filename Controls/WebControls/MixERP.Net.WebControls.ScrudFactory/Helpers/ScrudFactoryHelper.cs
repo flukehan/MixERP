@@ -20,6 +20,15 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
                 return;
             }
 
+            if (controls == null)
+            {
+                return;
+            }
+
+            if (controls.Length.Equals(0))
+            {
+                return;
+            }
 
             using (HtmlTableRow newRow = new HtmlTableRow())
             {

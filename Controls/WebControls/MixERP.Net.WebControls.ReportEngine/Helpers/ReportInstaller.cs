@@ -12,7 +12,7 @@ using System.Text;
 
 namespace MixERP.Net.WebControls.ReportEngine.Helpers
 {
-    public class ReportInstaller
+    public static class ReportInstaller
     {
         public static void InstallReport(string menuCode, string parentMenuCode, int level, string menuText, string path)
         {

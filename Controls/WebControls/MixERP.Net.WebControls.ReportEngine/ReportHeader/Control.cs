@@ -58,6 +58,11 @@ namespace MixERP.Net.WebControls.ReportEngine
                 return;
             }
 
+            if (w == null)
+            {
+                return;
+            }
+
             this.PrepareReportHeader();
 
             w.RenderBeginTag(HtmlTextWriterTag.Div);

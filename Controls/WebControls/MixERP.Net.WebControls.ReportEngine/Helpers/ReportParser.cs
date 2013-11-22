@@ -13,7 +13,7 @@ using System.Web;
 
 namespace MixERP.Net.WebControls.ReportEngine.Helpers
 {
-    public class ReportParser
+    public static class ReportParser
     {
         public static string ParseExpression(string expression)
         {

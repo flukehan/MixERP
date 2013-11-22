@@ -18,16 +18,23 @@ namespace MixERP.Net.WebControls.ScrudFactory
     {
         protected void FormGridView_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            if (e == null)
+            {
+                return;
+            }
+
             if(e.Row.RowType == DataControlRowType.DataRow)
             {
-                HtmlInputRadioButton radio = new HtmlInputRadioButton();
-                radio.ClientIDMode = System.Web.UI.ClientIDMode.Static;
-                radio.Name = "SelectRadio";
-                radio.ID = "SelectRadio";
-                radio.ClientIDMode = System.Web.UI.ClientIDMode.Predictable;
-                radio.Value = e.Row.Cells[1].Text;
-                //radio.Attributes.Add("onclick", "selectNode(this.id);");
-                e.Row.Cells[0].Controls.Add(radio);
+                using (HtmlInputRadioButton radio = new HtmlInputRadioButton())
+                {
+                    radio.ClientIDMode = System.Web.UI.ClientIDMode.Static;
+                    radio.Name = "SelectRadio";
+                    radio.ID = "SelectRadio";
+                    radio.ClientIDMode = System.Web.UI.ClientIDMode.Predictable;
+                    radio.Value = e.Row.Cells[1].Text;
+                    //radio.Attributes.Add("onclick", "selectNode(this.id);");
+                    e.Row.Cells[0].Controls.Add(radio);
+                }
             }
             else if(e.Row.RowType == DataControlRowType.Header)
             {

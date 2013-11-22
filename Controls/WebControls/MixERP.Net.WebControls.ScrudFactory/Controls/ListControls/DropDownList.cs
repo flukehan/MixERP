@@ -128,7 +128,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 
             HtmlAnchor itemSelectorAnchor = new HtmlAnchor();
 
-            string relation = string.Empty;
+            //string relation = string.Empty;
             string viewRelation = string.Empty;
 
             string schema = string.Empty;
@@ -216,12 +216,13 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 
         private static DropDownList GetDropDownList(string id)
         {
-            DropDownList dropDownList = new DropDownList();
+            using (DropDownList dropDownList = new DropDownList())
+            {
+                dropDownList.ID = id;
+                dropDownList.ClientIDMode = System.Web.UI.ClientIDMode.Static;
 
-            dropDownList.ID = id;
-            dropDownList.ClientIDMode = System.Web.UI.ClientIDMode.Static;
-
-            return dropDownList;
+                return dropDownList;
+            }
         }
     }
 }

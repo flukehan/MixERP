@@ -9,20 +9,27 @@ http://mozilla.org/MPL/2.0/.
 -->
 
 <Dictionary>
-    <Words>
-        <Unrecognized>
-            <Word>cb</Word>
-        </Unrecognized>
-        <Recognized>
-            <Word>MixERP</Word>
-            <Word>Eval</Word>
-            <Word>Pes</Word>
-            <Word>Sha</Word>
-        </Recognized>
-    </Words>
-    <Acronyms>
-        <CasingExceptions>
-            <Acronym>ERP</Acronym>
-        </CasingExceptions>
-    </Acronyms>
+  <Words>
+    <Recognized>
+      <Word>Cr</Word>
+      <Word>Dr</Word>
+      <Word>Eval</Word>
+      <Word>MixERP</Word>
+      <Word>Pes</Word>
+      <Word>Scrud</Word>
+      <Word>SubTotal</Word>
+      <Word>Sha</Word>
+    </Recognized>
+  </Words>
+  <Acronyms>
+    <CasingExceptions>
+      <Acronym>COA</Acronym>
+      <Acronym>CUOM</Acronym>
+      <Acronym>CRM</Acronym>
+      <Acronym>ERP</Acronym>
+      <Acronym>GRN</Acronym>
+      <Acronym>POS</Acronym>
+      <Acronym>UOM</Acronym>
+    </CasingExceptions>
+  </Acronyms>
 </Dictionary>

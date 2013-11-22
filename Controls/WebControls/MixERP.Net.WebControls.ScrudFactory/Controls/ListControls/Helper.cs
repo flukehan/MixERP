@@ -19,6 +19,21 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
     {
         public static void AddListItems(ListControl control, string keys, string values, string selectedValues)
         {
+            if (control == null)
+            {
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(keys))
+            {
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(values))
+            {
+                return;
+            }
+
             string[] key = keys.Split(',');
             string[] value = values.Split(',');
 
@@ -38,11 +53,14 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
                 //Checkbox list allows multiple selection.
                 if (control is CheckBoxList)
                 {
-                    foreach (string selectedValue in selectedValues.Split(','))
+                    if (!string.IsNullOrWhiteSpace(selectedValues))
                     {
-                        if (item.Value.Trim().Equals(selectedValue.Trim()))
+                        foreach (string selectedValue in selectedValues.Split(','))
                         {
-                            item.Selected = true;
+                            if (item.Value.Trim().Equals(selectedValue.Trim()))
+                            {
+                                item.Selected = true;
+                            }
                         }
                     }
                 }

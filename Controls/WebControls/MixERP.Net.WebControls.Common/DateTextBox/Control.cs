@@ -9,6 +9,7 @@ http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -109,7 +110,7 @@ namespace MixERP.Net.WebControls.Common
 
             parameters.Add("dateFormat", "'" + format + "'");
             parameters.Add("showWeek", showWeekNumber.ToString().ToLower());
-            parameters.Add("firstDay", (weekStartDay - 1).ToString());
+            parameters.Add("firstDay", (weekStartDay - 1).ToString(CultureInfo.InvariantCulture));
             parameters.Add("constrainInput", "false");
 
             if (minDate != null)

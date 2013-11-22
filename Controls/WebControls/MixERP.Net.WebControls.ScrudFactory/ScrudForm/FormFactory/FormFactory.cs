@@ -17,38 +17,40 @@ namespace MixERP.Net.WebControls.ScrudFactory
     {
         private void LoadForm(Panel container, System.Data.DataTable values)
         {
-            HtmlTable t = new HtmlTable();
-            t.Attributes["class"] = "valignmiddle";
-
-            using(System.Data.DataTable table = MixERP.Net.BusinessLayer.Helpers.TableHelper.GetTable(this.TableSchema, this.Table, this.Exclude))
+            using (HtmlTable t = new HtmlTable())
             {
-                if(table.Rows.Count > 0)
+                t.Attributes["class"] = "valignmiddle";
+
+                using (System.Data.DataTable table = MixERP.Net.BusinessLayer.Helpers.TableHelper.GetTable(this.TableSchema, this.Table, this.Exclude))
                 {
-                    foreach(System.Data.DataRow row in table.Rows)
+                    if (table.Rows.Count > 0)
                     {
-                        string columnName = MixERP.Net.Common.Conversion.TryCastString(row["column_name"]);
-                        string defaultValue = MixERP.Net.Common.Conversion.TryCastString(row["column_default"]); //nextval('%_seq'::regclass)
-                        bool isSerial = defaultValue.StartsWith("nextval", StringComparison.OrdinalIgnoreCase);
-                        bool isNullable = MixERP.Net.Common.Conversion.TryCastBoolean(row["is_nullable"]);
-                        string dataType = MixERP.Net.Common.Conversion.TryCastString(row["data_type"]);
-                        string domain = MixERP.Net.Common.Conversion.TryCastString(row["domain_name"]);
-                        int maxLength = MixERP.Net.Common.Conversion.TryCastInteger(row["character_maximum_length"]);
-
-                        string parentTableSchema = MixERP.Net.Common.Conversion.TryCastString(row["references_schema"]);
-                        string parentTable = MixERP.Net.Common.Conversion.TryCastString(row["references_table"]);
-                        string parentTableColumn = MixERP.Net.Common.Conversion.TryCastString(row["references_field"]);
-
-                        if(values.Rows.Count.Equals(1))
+                        foreach (System.Data.DataRow row in table.Rows)
                         {
-                            defaultValue = MixERP.Net.Common.Conversion.TryCastString(values.Rows[0][columnName]);
-                        }
+                            string columnName = MixERP.Net.Common.Conversion.TryCastString(row["column_name"]);
+                            string defaultValue = MixERP.Net.Common.Conversion.TryCastString(row["column_default"]); //nextval('%_seq'::regclass)
+                            bool isSerial = defaultValue.StartsWith("nextval", StringComparison.OrdinalIgnoreCase);
+                            bool isNullable = MixERP.Net.Common.Conversion.TryCastBoolean(row["is_nullable"]);
+                            string dataType = MixERP.Net.Common.Conversion.TryCastString(row["data_type"]);
+                            string domain = MixERP.Net.Common.Conversion.TryCastString(row["domain_name"]);
+                            int maxLength = MixERP.Net.Common.Conversion.TryCastInteger(row["character_maximum_length"]);
 
-                        MixERP.Net.WebControls.ScrudFactory.Helpers.ScrudFactoryHelper.AddField(t, columnName, defaultValue, isSerial, isNullable, dataType, domain, maxLength, parentTableSchema, parentTable, parentTableColumn, this.DisplayFields, this.DisplayViews, this.SelectedValues);
+                            string parentTableSchema = MixERP.Net.Common.Conversion.TryCastString(row["references_schema"]);
+                            string parentTable = MixERP.Net.Common.Conversion.TryCastString(row["references_table"]);
+                            string parentTableColumn = MixERP.Net.Common.Conversion.TryCastString(row["references_field"]);
+
+                            if (values.Rows.Count.Equals(1))
+                            {
+                                defaultValue = MixERP.Net.Common.Conversion.TryCastString(values.Rows[0][columnName]);
+                            }
+
+                            MixERP.Net.WebControls.ScrudFactory.Helpers.ScrudFactoryHelper.AddField(t, columnName, defaultValue, isSerial, isNullable, dataType, domain, maxLength, parentTableSchema, parentTable, parentTableColumn, this.DisplayFields, this.DisplayViews, this.SelectedValues);
+                        }
                     }
                 }
-            }
 
-            container.Controls.Add(t);
+                container.Controls.Add(t);
+            }
         }
         
         /// <summary>

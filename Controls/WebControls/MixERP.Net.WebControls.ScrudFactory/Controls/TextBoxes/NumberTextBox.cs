@@ -20,23 +20,36 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
     {
         public static void AddNumberTextBox(HtmlTable t, string columnName, string defaultValue, bool isSerial, bool isNullable, int maxLength, string domain)
         {
+            if (t == null)
+            {
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(columnName))
+            {
+                return;
+            }
+
             TextBox textBox = GetNumberTextBox(columnName + "_textbox", maxLength);
             string label = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString("FormResource", columnName);
 
-            if(!defaultValue.StartsWith("nextVal", StringComparison.OrdinalIgnoreCase))
+            if (!string.IsNullOrWhiteSpace(defaultValue))
             {
-                textBox.Text = defaultValue;
+                if (!defaultValue.StartsWith("nextVal", StringComparison.OrdinalIgnoreCase))
+                {
+                    textBox.Text = defaultValue;
+                }
             }
 
             textBox.Width = 200;
 
-            if(isSerial)
+            if (isSerial)
             {
                 textBox.ReadOnly = true;
             }
             else
             {
-                if(!isNullable)
+                if (!isNullable)
                 {
                     CompareValidator validator = GetNumberValidator(textBox, domain);
                     RequiredFieldValidator required = ScrudFactoryHelper.GetRequiredFieldValidator(textBox);
@@ -48,39 +61,40 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
             ScrudFactoryHelper.AddRow(t, label, textBox);
         }
 
-private static TextBox GetNumberTextBox(string id, int maxLength)
-{
-    TextBox textBox = ScrudTextBox.GetTextBox(id, maxLength);
-    //textBox.Attributes["type"] = "number";
-    return textBox;
-}
+        private static TextBox GetNumberTextBox(string id, int maxLength)
+        {
+            TextBox textBox = ScrudTextBox.GetTextBox(id, maxLength);
+            //textBox.Attributes["type"] = "number";
+            return textBox;
+        }
 
         private static CompareValidator GetNumberValidator(Control controlToValidate, string domain)
         {
-            CompareValidator validator = new CompareValidator();
-            validator.ID = controlToValidate.ID + "NumberValidator";
-            validator.ErrorMessage = "<br/>" + Resources.ScrudResource.OnlyNumbersAllowed;
-            validator.CssClass = "form-error";
-            validator.ControlToValidate = controlToValidate.ID;
-            validator.EnableClientScript = true;
-            validator.SetFocusOnError = true;
-            validator.Display = ValidatorDisplay.Dynamic;
-            validator.Type = ValidationDataType.Integer;
-
-            //MixERP strict data type
-            if(domain.Contains("strict"))
+            using (CompareValidator validator = new CompareValidator())
             {
-                validator.Operator = ValidationCompareOperator.GreaterThan;
-            }
-            else
-            {
-                validator.Operator = ValidationCompareOperator.GreaterThanEqual;
-            }
+                validator.ID = controlToValidate.ID + "NumberValidator";
+                validator.ErrorMessage = "<br/>" + Resources.ScrudResource.OnlyNumbersAllowed;
+                validator.CssClass = "form-error";
+                validator.ControlToValidate = controlToValidate.ID;
+                validator.EnableClientScript = true;
+                validator.SetFocusOnError = true;
+                validator.Display = ValidatorDisplay.Dynamic;
+                validator.Type = ValidationDataType.Integer;
 
-            validator.ValueToCompare = "0";
+                //MixERP strict data type
+                if (domain.Contains("strict"))
+                {
+                    validator.Operator = ValidationCompareOperator.GreaterThan;
+                }
+                else
+                {
+                    validator.Operator = ValidationCompareOperator.GreaterThanEqual;
+                }
 
-            return validator;
+                validator.ValueToCompare = "0";
+
+                return validator;
+            }
         }
-
     }
 }

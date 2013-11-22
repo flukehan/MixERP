@@ -28,8 +28,8 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
             //Todo: One of the following:
             //1. Ask the script manager to do a synchronous postback on save button click event.
             //2. Implement a handler to upload image using AJAX. 
-            
-            if(!isNullable)
+
+            if (!isNullable)
             {
                 RequiredFieldValidator required = ScrudFactoryHelper.GetRequiredFieldValidator(fileUpload);
                 ScrudFactoryHelper.AddRow(t, label + Resources.ScrudResource.RequiredFieldIndicator, fileUpload, required, validator);
@@ -41,16 +41,21 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
 
         public static string UploadFile(FileUpload fileUpload)
         {
-            //Todo: Parameterize media path.a
+            if (fileUpload == null)
+            {
+                return string.Empty;
+            }
+
+            //Todo: Parameterize media path.
             string uploadDirectory = HttpContext.Current.Server.MapPath("~/Media/Temp");
-            if(!System.IO.Directory.Exists(uploadDirectory))
+            if (!System.IO.Directory.Exists(uploadDirectory))
             {
                 System.IO.Directory.CreateDirectory(uploadDirectory);
             }
 
             string id = Guid.NewGuid().ToString();
 
-            if(fileUpload.HasFile)
+            if (fileUpload.HasFile)
             {
                 id += System.IO.Path.GetExtension(fileUpload.FileName);
                 id = System.IO.Path.Combine(uploadDirectory, id);
@@ -63,24 +68,28 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
 
         private static FileUpload GetFileUpload(string id)
         {
-            FileUpload fileUpload = new FileUpload();
-            fileUpload.ID = id;
+            using (FileUpload fileUpload = new FileUpload())
+            {
+                fileUpload.ID = id;
 
-            return fileUpload;
+                return fileUpload;
+            }
         }
 
         private static RegularExpressionValidator GetImageValidator(Control controlToValidate)
         {
-            RegularExpressionValidator validator = new RegularExpressionValidator();
-            validator.ID = controlToValidate.ID + "RegexValidator";
-            validator.ErrorMessage = "<br/>" + Resources.ScrudResource.InvalidImage;
-            validator.CssClass = "form-error";
-            validator.ControlToValidate = controlToValidate.ID;
-            validator.EnableClientScript = true;
-            validator.SetFocusOnError = true;
-            validator.Display = ValidatorDisplay.Dynamic;
-            validator.ValidationExpression = @"(.*\.([gG][iI][fF]|[jJ][pP][gG]|[jJ][pP][eE][gG]|[bB][mM][pP])$)";
-            return validator;
+            using (RegularExpressionValidator validator = new RegularExpressionValidator())
+            {
+                validator.ID = controlToValidate.ID + "RegexValidator";
+                validator.ErrorMessage = "<br/>" + Resources.ScrudResource.InvalidImage;
+                validator.CssClass = "form-error";
+                validator.ControlToValidate = controlToValidate.ID;
+                validator.EnableClientScript = true;
+                validator.SetFocusOnError = true;
+                validator.Display = ValidatorDisplay.Dynamic;
+                validator.ValidationExpression = @"(.*\.([gG][iI][fF]|[jJ][pP][gG]|[jJ][pP][eE][gG]|[bB][mM][pP])$)";
+                return validator;
+            }
         }
 
     }
