@@ -148,13 +148,13 @@ namespace MixERP.Net.FrontEnd.UserControls {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator ReasonTextBoxRequired;
         
         /// <summary>
-        /// OKButton control.
+        /// OkButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button OKButton;
+        protected global::System.Web.UI.WebControls.Button OkButton;
         
         /// <summary>
         /// CancelButton control.

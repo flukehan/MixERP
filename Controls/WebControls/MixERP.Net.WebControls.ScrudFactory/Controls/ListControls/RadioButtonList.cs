@@ -16,11 +16,11 @@ using MixERP.Net.WebControls.ScrudFactory.Helpers;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 {
-    public partial class ScrudRadioButtonList
+    public static class ScrudRadioButtonList
     {
-        public static void AddRadioButtonList(HtmlTable t, string columnName, bool isNullable, string keys, string values, string selectedValue)
+        public static void AddRadioButtonList(HtmlTable htmlTable, string columnName, bool isNullable, string keys, string values, string selectedValue)
         {
-            if (t == null)
+            if (htmlTable == null)
             {
                 return;
             }
@@ -33,12 +33,12 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
                 {
                     using (RequiredFieldValidator required = ScrudFactoryHelper.GetRequiredFieldValidator(radioButtonList))
                     {
-                        ScrudFactoryHelper.AddRow(t, label + Resources.ScrudResource.RequiredFieldIndicator, radioButtonList, required);
+                        ScrudFactoryHelper.AddRow(htmlTable, label + Resources.ScrudResource.RequiredFieldIndicator, radioButtonList, required);
                         return;
                     }
                 }
 
-                ScrudFactoryHelper.AddRow(t, label, radioButtonList);
+                ScrudFactoryHelper.AddRow(htmlTable, label, radioButtonList);
             }
         }
 

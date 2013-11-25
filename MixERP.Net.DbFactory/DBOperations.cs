@@ -28,7 +28,7 @@ namespace MixERP.Net.DBFactory
 
                     return true;
                 }
-                catch
+                catch(NpgsqlException)
                 { 
                     //swallow exception
                 }            

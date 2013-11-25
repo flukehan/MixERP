@@ -14,16 +14,78 @@ using System.Web.UI.WebControls;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls
 {
-    public class CommandPanel
+    public class CommandPanel : IDisposable
     {
-        public Button EditButton;
+        private bool disposed;
+        
+        private Button editButton;        
+        public Button EditButton 
+        {
+            get
+            {
+                return this.editButton;
+            }
+        }
+
         public event EventHandler EditButtonClick;
 
-        public Button DeleteButton;
+        private Button deleteButton;
+        public Button DeleteButton
+        {
+            get
+            {
+                return this.deleteButton;
+            }
+        }
+
         public event EventHandler DeleteButtonClick;
 
         public string ButtonCssClass { get; set; }
 
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    if (commandPanel != null)
+                    {
+                        commandPanel.Dispose();
+                        commandPanel = null;
+                    }
+                    
+                    if (editButton != null)
+                    {
+                        editButton.Dispose();
+                        editButton = null;
+                    }
+
+                    if (EditButtonClick != null)
+                    {
+                        EditButtonClick = null;
+                    }
+
+                    if (deleteButton != null)
+                    {
+                        deleteButton.Dispose();
+                        deleteButton = null;
+                    }
+
+                    if (DeleteButtonClick != null)
+                    {
+                        DeleteButtonClick = null;
+                    }
+                }
+
+                disposed = true;
+            }
+        }
         public Panel GetCommandPanel()
         {
             commandPanel = new Panel();
@@ -60,9 +122,9 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
 
         private void AddEditButton(Panel p)
         {
-            EditButton = this.GetButton("CTRL + E", "return(confirmAction());", Resources.ScrudResource.EditSelected);
-            EditButton.Click += new EventHandler(OnEditButtonClick);
-            p.Controls.Add(EditButton);
+            editButton = this.GetButton("CTRL + E", "return(confirmAction());", Resources.ScrudResource.EditSelected);
+            editButton.Click += new EventHandler(OnEditButtonClick);
+            p.Controls.Add(editButton);
         }
 
         private void OnEditButtonClick(object sender, EventArgs e)
@@ -75,9 +137,9 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
 
         private void AddDeleteButton(Panel p)
         {
-            DeleteButton = this.GetButton("CTRL + D", "return(confirmAction());", Resources.ScrudResource.DeleteSelected);
-            DeleteButton.Click += new EventHandler(OnDeleteButtonClick);
-            p.Controls.Add(DeleteButton);
+            deleteButton = this.GetButton("CTRL + D", "return(confirmAction());", Resources.ScrudResource.DeleteSelected);
+            deleteButton.Click += new EventHandler(OnDeleteButtonClick);
+            p.Controls.Add(deleteButton);
         }
 
         private void OnDeleteButtonClick(object sender, EventArgs e)
@@ -96,26 +158,28 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
 
         private HtmlInputButton GetInputButton(string title, string onclick, string value)
         {
-            HtmlInputButton inputButton = new HtmlInputButton();
-            inputButton.Attributes.Add("class", this.ButtonCssClass);
-            inputButton.Attributes.Add("title", title);
-            inputButton.Attributes.Add("onclick", onclick);
-            inputButton.Value = value;
+            using (HtmlInputButton inputButton = new HtmlInputButton())
+            {
+                inputButton.Attributes.Add("class", this.ButtonCssClass);
+                inputButton.Attributes.Add("title", title);
+                inputButton.Attributes.Add("onclick", onclick);
+                inputButton.Value = value;
 
-            return inputButton;
+                return inputButton;
+            }
         }
 
         private Button GetButton(string toolTip, string onClientClick, string text)
         {
-            Button button = new Button();
-            button.CssClass = this.ButtonCssClass;
-            button.ToolTip = toolTip;
-            button.OnClientClick = onClientClick;
-            button.Text = text;
+            using (Button button = new Button())
+            {
+                button.CssClass = this.ButtonCssClass;
+                button.ToolTip = toolTip;
+                button.OnClientClick = onClientClick;
+                button.Text = text;
 
-            return button;
+                return button;
+            }
         }
-
-
     }
 }

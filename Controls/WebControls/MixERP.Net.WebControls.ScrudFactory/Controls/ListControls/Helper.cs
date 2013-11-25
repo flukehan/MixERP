@@ -15,7 +15,7 @@ using System.Web.UI.WebControls;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 {
-    public partial class Helper
+    public static class Helper
     {
         public static void AddListItems(ListControl control, string keys, string values, string selectedValues)
         {
@@ -66,10 +66,13 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
                 }
                 else
                 {
-                    if (item.Value.Trim().Equals(selectedValues.Split(',').Last().Trim()))
+                    if (!string.IsNullOrWhiteSpace(selectedValues))
                     {
-                        item.Selected = true;
-                        break;
+                        if (item.Value.Trim().Equals(selectedValues.Split(',').Last().Trim()))
+                        {
+                            item.Selected = true;
+                            break;
+                        }
                     }
                 }
             }

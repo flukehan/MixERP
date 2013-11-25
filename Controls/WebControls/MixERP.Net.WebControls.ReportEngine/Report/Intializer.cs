@@ -13,6 +13,7 @@ using System.Text;
 using System.Web.UI.WebControls;
 using System.Xml;
 using MixERP.Net.WebControls.ReportEngine.Helpers;
+using System.Xml.XPath;
 
 namespace MixERP.Net.WebControls.ReportEngine
 {

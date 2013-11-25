@@ -10,7 +10,7 @@
 namespace MixERP.Net.FrontEnd {
     
     
-    public partial class MixErpMaster {
+    public partial class MixERPMaster {
         
         /// <summary>
         /// ScriptContentPlaceholder control.

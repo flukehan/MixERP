@@ -12,6 +12,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common.Helpers;
 
 namespace MixERP.Net.FrontEnd.Finance
 {
@@ -77,13 +78,11 @@ namespace MixERP.Net.FrontEnd.Finance
 
         private void InitializeControls()
         {
-            ValueDateLiteral.Text = "<label for='ValueDateTextBox'>" + Resources.Titles.ValueDate + "</label>";
-            ReferenceNumberLiteral.Text = "<label for='ReferenceNumberTextBox'>" + Resources.Titles.ReferenceNumber + "</label>";
-
-
-            CostCenterLiteral.Text = "<label for='CostCenterDropDownList'>" + Resources.Titles.CostCenter + "</label>";
-            DebitTotalLiteral.Text = "<label for='DebitTotalTextBox'>" + Resources.Titles.DebitTotal + "</label>";
-            CreditTotalLiteral.Text = "<label for='CreditTotalTextBox'>" + Resources.Titles.CreditTotal + "</label>";
+            ValueDateLiteral.Text = HtmlControlHelper.GetLabel(ValueDateTextBox.ClientID,  Resources.Titles.ValueDate);
+            ReferenceNumberLiteral.Text = HtmlControlHelper.GetLabel(ReferenceNumberTextBox.ClientID, Resources.Titles.ReferenceNumber);
+            CostCenterLiteral.Text = HtmlControlHelper.GetLabel(CostCenterDropDownList.ClientID, Resources.Titles.CostCenter);
+            DebitTotalLiteral.Text = HtmlControlHelper.GetLabel(DebitTotalTextBox.ClientID, Resources.Titles.DebitTotal);
+            CreditTotalLiteral.Text = HtmlControlHelper.GetLabel(CreditTotalTextBox.ClientID, Resources.Titles.CreditTotal);
         }
 
         private Collection<MixERP.Net.Common.Models.Transactions.JournalDetailsModel> GetTable()

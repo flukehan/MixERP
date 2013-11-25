@@ -16,11 +16,11 @@ using MixERP.Net.WebControls.ScrudFactory.Helpers;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 {
-    public partial class ScrudTextBox
+    public static class ScrudTextBox
     {
-        public static void AddTextBox(HtmlTable t, string columnName, string defaultValue, bool isNullable, int maxLength)
+        public static void AddTextBox(HtmlTable htmlTable, string columnName, string defaultValue, bool isNullable, int maxLength)
         {
-            if (t == null)
+            if (htmlTable == null)
             {
                 return;
             }
@@ -39,11 +39,11 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
                 if (!isNullable)
                 {
                     RequiredFieldValidator required = ScrudFactoryHelper.GetRequiredFieldValidator(textBox);
-                    ScrudFactoryHelper.AddRow(t, label + Resources.ScrudResource.RequiredFieldIndicator, textBox, required);
+                    ScrudFactoryHelper.AddRow(htmlTable, label + Resources.ScrudResource.RequiredFieldIndicator, textBox, required);
                     return;
                 }
 
-                ScrudFactoryHelper.AddRow(t, label, textBox);
+                ScrudFactoryHelper.AddRow(htmlTable, label, textBox);
             }
         }
 

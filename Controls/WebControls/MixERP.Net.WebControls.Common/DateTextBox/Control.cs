@@ -77,7 +77,7 @@ namespace MixERP.Net.WebControls.Common
         {
             string script = string.Empty;
             string selector = "$('#" + controlId + "')";
-            string locale = this.GetDatePickerLocale();
+            string locale = GetDatePickerLocale();
 
             script = "$(function() {" + selector + ".datepicker({";
             script += this.GetParameters();
@@ -87,7 +87,7 @@ namespace MixERP.Net.WebControls.Common
             {
                 if (!locale.Contains("iv"))
                 {
-                    script += ",$.datepicker.regional['" + this.GetDatePickerLocale() + "'";
+                    script += ",$.datepicker.regional['" + GetDatePickerLocale() + "'";
                 }
             }
 
@@ -101,15 +101,25 @@ namespace MixERP.Net.WebControls.Common
             string script = string.Empty;
             int index = 0;
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            string format = this.GetDatePickerFormat();
-            bool showWeekNumber = this.ShowWeekNumber();
-            int weekStartDay = this.GetWeekStartDay();
+            string format = GetDatePickerFormat();
+            bool showWeekNumber = ShowWeekNumber();
+            int weekStartDay = GetWeekStartDay();
             DateTime? minDate = this.MinDate;
             DateTime? maxDate = this.MaxDate;
-            string numberOfMonths = this.GetNumberOfMonths();
+            string numberOfMonths = GetNumberOfMonths();
 
             parameters.Add("dateFormat", "'" + format + "'");
-            parameters.Add("showWeek", showWeekNumber.ToString().ToLower());
+
+            if (showWeekNumber)
+            {
+                parameters.Add("showWeek", "true");
+            }
+            else
+            {
+                parameters.Add("showWeek", "false");
+            }
+
+
             parameters.Add("firstDay", (weekStartDay - 1).ToString(CultureInfo.InvariantCulture));
             parameters.Add("constrainInput", "false");
 
@@ -139,27 +149,27 @@ namespace MixERP.Net.WebControls.Common
             return script;
         }
 
-        private string GetDatePickerFormat()
+        private static string GetDatePickerFormat()
         {
             return ConfigurationHelper.GetParameter("DatePickerDateFormat");
         }
 
-        private string GetDatePickerLocale()
+        private static string GetDatePickerLocale()
         {
             return MixERP.Net.Common.Helpers.LocalizationHelper.GetCurrentCulture().TwoLetterISOLanguageName;
         }
 
-        private int GetWeekStartDay()
+        private static int GetWeekStartDay()
         {
             return Conversion.TryCastInteger(ConfigurationHelper.GetParameter("DatePickerWeekStartDay"));
         }
 
-        private bool ShowWeekNumber()
+        private static bool ShowWeekNumber()
         {
             return ConfigurationHelper.GetParameter("DatePickerShowWeekNumber").Equals("true");
         }
 
-        private string GetNumberOfMonths()
+        private static string GetNumberOfMonths()
         {
             return ConfigurationHelper.GetParameter("DatePickerNumberOfMonths");
         }

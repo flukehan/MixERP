@@ -27,12 +27,15 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data
             }
 
             MergeModel model = new MergeModel();
-            model.TransactionIdCollection = ids;
+            
+            foreach (int tranId in ids)
+            {
+                model.AddTransactionIdToCollection(tranId);
+            }
 
             model.Book = book;
             model.SubBook = subBook;
 
-            Collection<ProductDetailsModel> products = new Collection<ProductDetailsModel>();
             using (NpgsqlConnection connection = new NpgsqlConnection(DBConnection.ConnectionString()))
             {
                 using (NpgsqlCommand command = SalesQuotation.GetSalesQuotationViewCommand(ids))
@@ -75,13 +78,10 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data
                         product.Tax = Conversion.TryCastDecimal(reader["tax"]);
                         product.Total = product.Subtotal + product.Tax;
 
-                        products.Add(product);
+                        model.AddViewToCollection(product);
 
                         rowIndex++;
                     }
-
-                    model.View = products;
-
                 }
             }
 

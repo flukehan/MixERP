@@ -18,9 +18,9 @@ using MixERP.Net.Common.Helpers;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 {
-    public partial class ScrudDropDownList
+    public static class ScrudDropDownList
     {
-        public static void AddDropDownList(HtmlTable t, string columnName, bool isNullable, string tableSchema, string tableName, string tableColumn, string defaultValue, string displayFields, string displayViews, string selectedValues)
+        public static void AddDropDownList(HtmlTable htmlTable, string columnName, bool isNullable, string tableSchema, string tableName, string tableColumn, string defaultValue, string displayFields, string displayViews, string selectedValues)
         {
             string label = LocalizationHelper.GetResourceString("FormResource", columnName);
 
@@ -39,12 +39,12 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
             if (isNullable)
             {
                 dropDownList.Items.Insert(0, new ListItem(String.Empty, String.Empty));
-                ScrudFactoryHelper.AddRow(t, label, dropDownList, itemSelectorAnchor);
+                ScrudFactoryHelper.AddRow(htmlTable, label, dropDownList, itemSelectorAnchor);
             }
             else
             {
                 RequiredFieldValidator required = ScrudFactoryHelper.GetRequiredFieldValidator(dropDownList);
-                ScrudFactoryHelper.AddRow(t, label + Resources.ScrudResource.RequiredFieldIndicator, dropDownList, required, itemSelectorAnchor);
+                ScrudFactoryHelper.AddRow(htmlTable, label + Resources.ScrudResource.RequiredFieldIndicator, dropDownList, required, itemSelectorAnchor);
             }
         }
 
@@ -126,35 +126,36 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
                 return null;
             }
 
-            HtmlAnchor itemSelectorAnchor = new HtmlAnchor();
-
-            //string relation = string.Empty;
-            string viewRelation = string.Empty;
-
-            string schema = string.Empty;
-            string view = string.Empty;
-
-            //Get the expression value of display view from comma seprated list of expressions.
-            //The expression must be a valid fully qualified table or view name.
-            viewRelation = GetExpressionValue(displayViews, tableSchema, tableName, tableColumn);
-
-            schema = viewRelation.Split('.').First();
-            view = viewRelation.Split('.').Last();
-
-            //Sanitize the schema and the view
-            schema = MixERP.Net.BusinessLayer.DBFactory.Sanitizer.SanitizeIdentifierName(schema);
-            view = MixERP.Net.BusinessLayer.DBFactory.Sanitizer.SanitizeIdentifierName(view);
-
-            if (string.IsNullOrWhiteSpace(schema) || string.IsNullOrWhiteSpace(view))
+            using (HtmlAnchor itemSelectorAnchor = new HtmlAnchor())
             {
-                throw new InvalidOperationException("Invalid table or view name specified. Make sure that the expression value is a fully qualified relation name.");
+                //string relation = string.Empty;
+                string viewRelation = string.Empty;
+
+                string schema = string.Empty;
+                string view = string.Empty;
+
+                //Get the expression value of display view from comma seprated list of expressions.
+                //The expression must be a valid fully qualified table or view name.
+                viewRelation = GetExpressionValue(displayViews, tableSchema, tableName, tableColumn);
+
+                schema = viewRelation.Split('.').First();
+                view = viewRelation.Split('.').Last();
+
+                //Sanitize the schema and the view
+                schema = MixERP.Net.BusinessLayer.DBFactory.Sanitizer.SanitizeIdentifierName(schema);
+                view = MixERP.Net.BusinessLayer.DBFactory.Sanitizer.SanitizeIdentifierName(view);
+
+                if (string.IsNullOrWhiteSpace(schema) || string.IsNullOrWhiteSpace(view))
+                {
+                    throw new InvalidOperationException("Invalid table or view name specified. Make sure that the expression value is a fully qualified relation name.");
+                }
+
+                //Todo: Parameterize these attributes in the configuration file.
+                itemSelectorAnchor.Attributes["class"] = "item-selector";
+                itemSelectorAnchor.HRef = "/General/ItemSelector.aspx?Schema=" + schema + "&View=" + view + "&AssociatedControlId=" + associatedControlId;
+
+                return itemSelectorAnchor;
             }
-
-            //Todo: Parameterize these attributes in the configuration file.
-            itemSelectorAnchor.Attributes["class"] = "item-selector";
-            itemSelectorAnchor.HRef = "/General/ItemSelector.aspx?Schema=" + schema + "&View=" + view + "&AssociatedControlId=" + associatedControlId;
-
-            return itemSelectorAnchor;
         }
 
         private static void SetSelectedValue(DropDownList dropDownList, string schema, string table, string column, string postbackValue, string selectedValueExpressions)
@@ -207,12 +208,12 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
             }
         }
 
-        private static DropDownList GetDropDownList(string id, string keys, string values, string selectedValues)
-        {
-            DropDownList dropDownList = GetDropDownList(id);
-            Helper.AddListItems(dropDownList, keys, values, selectedValues);
-            return dropDownList;
-        }
+        //private static DropDownList GetDropDownList(string id, string keys, string values, string selectedValues)
+        //{
+        //    DropDownList dropDownList = GetDropDownList(id);
+        //    Helper.AddListItems(dropDownList, keys, values, selectedValues);
+        //    return dropDownList;
+        //}
 
         private static DropDownList GetDropDownList(string id)
         {

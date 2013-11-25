@@ -17,7 +17,6 @@ http://mozilla.org/MPL/2.0/.
       <Word>MixERP</Word>
       <Word>Pes</Word>
       <Word>Scrud</Word>
-      <Word>SubTotal</Word>
       <Word>Sha</Word>
     </Recognized>
   </Words>
@@ -29,7 +28,9 @@ http://mozilla.org/MPL/2.0/.
       <Acronym>ERP</Acronym>
       <Acronym>GRN</Acronym>
       <Acronym>POS</Acronym>
+      <Acronym>SubTotal</Acronym>
       <Acronym>UOM</Acronym>
+      <Acronym>ValueDate</Acronym>
     </CasingExceptions>
   </Acronyms>
 </Dictionary>

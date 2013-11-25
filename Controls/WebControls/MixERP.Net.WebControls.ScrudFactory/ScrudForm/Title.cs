@@ -47,7 +47,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             this.Page.Title = this.Text;
         }
 
-        private void AddRuler(Panel p)
+        private static void AddRuler(Panel p)
         {
             if (p == null)
             {

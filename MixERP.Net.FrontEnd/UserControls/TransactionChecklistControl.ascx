@@ -49,7 +49,7 @@ http://mozilla.org/MPL/2.0/.
         </p>
 
         <p>
-            <asp:Button ID="OKButton" runat="server" Text="<%$Resources:Titles, OK %>" CssClass="button" OnClick="OKButton_Click" />
+            <asp:Button ID="OkButton" runat="server" Text="<%$Resources:Titles, OK %>" CssClass="button" OnClick="OkButton_Click" />
             <asp:Button ID="CancelButton" runat="server" Text="<%$Resources:Titles, Cancel %>" CssClass="button" CausesValidation="false" OnClientClick="$('#withdraw').toggle(200);return(false);" />
         </p>
 
@@ -74,7 +74,7 @@ http://mozilla.org/MPL/2.0/.
     public string CustomerInvoicePath { get; set; }
     public string GLAdvicePath { get; set; }
 
-    protected void OKButton_Click(object sender, EventArgs e)
+    protected void OkButton_Click(object sender, EventArgs e)
     {
 
         DateTime transactionDate = DateTime.Now;

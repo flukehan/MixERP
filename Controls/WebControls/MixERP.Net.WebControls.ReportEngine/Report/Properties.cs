@@ -21,11 +21,25 @@ namespace MixERP.Net.WebControls.ReportEngine
         public string ReportNotFoundErrorMessage { get; set; }
         public string InvalidLocationErrorMessage { get; set; }
         public string RunningTotalText { get; set; }
+
         /// <summary>
         /// Collection of each datasources' parameter collection.
         /// The datasource parameter collection is a collection of
         /// parameters stored in KeyValuePair.
         /// </summary>
-        public Collection<Collection<KeyValuePair<string, string>>> ParameterCollection { get; set; }
+
+        private Collection<Collection<KeyValuePair<string, string>>> parameterCollection = new Collection<Collection<KeyValuePair<string, string>>>();
+        public Collection<Collection<KeyValuePair<string, string>>> ParameterCollection 
+        {
+            get
+            {
+                return this.parameterCollection;
+            }
+        }
+
+        public void AddParameterToCollection(Collection<KeyValuePair<string, string>> parameter)
+        {
+            this.parameterCollection.Add(parameter);
+        }
     }
 }

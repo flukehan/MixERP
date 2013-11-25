@@ -5,6 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 --%>
+
 <%@ Page Title="" Language="C#" MasterPageFile="~/ContentMaster.Master" AutoEventWireup="true" CodeBehind="RuntimeError.aspx.cs" Inherits="MixERP.Net.FrontEnd.RuntimeError" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceholder" runat="server">
@@ -15,18 +16,16 @@ http://mozilla.org/MPL/2.0/.
     <h1>Error Occurred</h1>
     <hr class="hr" />
 
-    <p>We tried our best to complete the task, but it failed miserably.</p>
-
+    <div class="error">I tried my best to complete the task, but it failed miserably.</div>
     <br />
-    <p>You could notify the project admin if you think this is a serious error. Nonetheless, the exception has been logged and we might be able to help you.</p>
 
+    <p>You should notify the system administrator if this is an urgent issue. Nonetheless, the exception has been logged.</p>
     <br />
 
     <asp:Literal ID="ExceptionLiteral" runat="server" />
-<br />
-    <p>
-        <a class="menu" href="javascript:history.go(-1);">Go Back to the Previous Page</a>
-    </p>
+    <br />
+
+    <a class="menu" href="javascript:history.go(-1);">Go Back to the Previous Page</a>
 
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceholder" runat="server">

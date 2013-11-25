@@ -133,6 +133,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The selected transaction(s) contains item(s) which have already been merged. Please try again..
+        /// </summary>
+        internal static string TransactionAlreadyMerged {
+            get {
+                return ResourceManager.GetString("TransactionAlreadyMerged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The transaction was withdrawn successfully. Moreover, this action will affect the all the reports produced on and after &quot;{0}&quot;..
         /// </summary>
         internal static string TransactionWithdrawnMessage {

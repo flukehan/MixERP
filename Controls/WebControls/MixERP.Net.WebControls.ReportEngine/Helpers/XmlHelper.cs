@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using System.Xml.XPath;
 
 namespace MixERP.Net.WebControls.ReportEngine.Helpers
 {
@@ -29,6 +30,7 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
             return doc.SelectSingleNode(name).InnerXml;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1059:MembersShouldNotExposeCertainConcreteTypes", MessageId = "System.Xml.XmlNode")]
         public static XmlNode GetNode(string path, string name)
         {
             System.Xml.XmlDocument doc = new System.Xml.XmlDocument();

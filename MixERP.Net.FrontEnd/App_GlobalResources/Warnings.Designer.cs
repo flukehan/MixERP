@@ -79,6 +79,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot merge transactions of different parties into a single batch. Please try again..
+        /// </summary>
+        internal static string CannotMergeTransactionsOfDifferentParties {
+            get {
+                return ResourceManager.GetString("CannotMergeTransactionsOfDifferentParties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You may not withdraw else&apos;s transaction..
         /// </summary>
         internal static string CannotWithdrawElsesTransaction {
@@ -147,6 +156,15 @@ namespace Resources {
         internal static string NotEnoughCash {
             get {
                 return ResourceManager.GetString("NotEnoughCash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nothing was selected. Please try again..
+        /// </summary>
+        internal static string NothingSelectedPleaseTryAgain {
+            get {
+                return ResourceManager.GetString("NothingSelectedPleaseTryAgain", resourceCulture);
             }
         }
         

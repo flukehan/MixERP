@@ -140,7 +140,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
             if (values.Count.Equals(0))
             {
-                ErrorLabel.Text = "Nothing was selected. Please try again.";
+                ErrorLabel.Text = Resources.Warnings.NothingSelectedPleaseTryAgain;
                 return false;
             }
 
@@ -156,7 +156,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
             if (!belongToSameParty)
             {
-                ErrorLabel.Text = "Cannot merge transactions of different parties into a single batch. Please try again.";
+                ErrorLabel.Text = Resources.Warnings.CannotMergeTransactionsOfDifferentParties;
                 return false;
             }
 
@@ -177,7 +177,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             {
                 if (NonGLStockTransaction.AreSalesQuotationsAlreadyMerged(values))
                 {
-                    ErrorLabel.Text = "The selected transaction(s) contains item(s) which have already been merged. Please try again.";
+                    ErrorLabel.Text = Resources.Labels.TransactionAlreadyMerged;
                     return true;
                 }
             }
@@ -191,7 +191,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             {
                 if (NonGLStockTransaction.AreSalesOrdersAlreadyMerged(values))
                 {
-                    ErrorLabel.Text = "The selected transaction(s) contains item(s) which have already been merged. Please try again.";
+                    ErrorLabel.Text = Resources.Labels.TransactionAlreadyMerged;
                     return true;
                 }
             }

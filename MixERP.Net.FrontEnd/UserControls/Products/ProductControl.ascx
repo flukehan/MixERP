@@ -22,7 +22,7 @@ http://mozilla.org/MPL/2.0/.
             <asp:AsyncPostBackTrigger ControlID="CashRepositoryDropDownList" />
             <asp:AsyncPostBackTrigger ControlID="ProductGridView" />
             <asp:AsyncPostBackTrigger ControlID="AddButton" />
-            <asp:AsyncPostBackTrigger ControlID="OKButton" />
+            <asp:AsyncPostBackTrigger ControlID="OkButton" />
             <asp:AsyncPostBackTrigger ControlID="CancelButton" />
             <asp:AsyncPostBackTrigger ControlID="ItemDropDownList" />
             <asp:AsyncPostBackTrigger ControlID="UnitDropDownList" />
@@ -87,7 +87,7 @@ http://mozilla.org/MPL/2.0/.
                             <asp:TextBox ID="ReferenceNumberTextBox" runat="server" Width="60" MaxLength="24" />
                         </td>
                         <td>
-                            <asp:Button ID="OKButton" runat="server" Text="<%$ Resources:Titles, OK %>" Width="40" OnClick="OKButton_Click" />
+                            <asp:Button ID="OkButton" runat="server" Text="<%$ Resources:Titles, OK %>" Width="40" OnClick="OkButton_Click" />
                             <asp:Button ID="CancelButton" runat="server" Text="<%$ Resources:Titles, Cancel %>" Width="50" Enabled="false" OnClick="CancelButton_Click" />
                         </td>
                     </tr>
@@ -175,7 +175,7 @@ http://mozilla.org/MPL/2.0/.
                                 </asp:TextBox>
                             </td>
                             <td>
-                                <asp:TextBox ID="SubTotalTextBox" runat="server" CssClass="right number" ReadOnly="true" Width="65">
+                                <asp:TextBox ID="SubtotalTextBox" runat="server" CssClass="right number" ReadOnly="true" Width="65">
                                 </asp:TextBox>
                             </td>
                             <td>

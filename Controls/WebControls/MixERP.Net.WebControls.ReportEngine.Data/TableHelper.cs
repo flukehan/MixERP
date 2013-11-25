@@ -19,14 +19,14 @@ namespace MixERP.Net.WebControls.ReportEngine.Data
             Therefore, a review for defense against possible 
             SQL Injection Attacks is absolutely required here.
 
-            Although we connect to PostgreSQL Database Server using a login "report_user"
+            Although, we connect to PostgreSQL Database Server using a login "report_user"
             which has a read-only access for executing the SQL statements to produce the report.
 
             The SQL query is expected to have only the SELECT statement, but there is no
             absolute and perfect way to parse and determine that the query contained
             in the report is actually a "SELECT-only" statement. 
                         
-            Moreover, the prospective damage could occur only due to some DBAs messing up 
+            Moreover, the prospective damage could occur due to somebody messing up 
             with the permission of the database user "report_user" which is restricted by default 
             with a read-only access.
 

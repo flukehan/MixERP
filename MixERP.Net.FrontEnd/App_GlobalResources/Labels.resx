@@ -141,6 +141,9 @@
   <data name="TaskCompletedSuccessfully" xml:space="preserve">
     <value>The task was completed successfully.</value>
   </data>
+  <data name="TransactionAlreadyMerged" xml:space="preserve">
+    <value>The selected transaction(s) contains item(s) which have already been merged. Please try again.</value>
+  </data>
   <data name="TransactionWithdrawnMessage" xml:space="preserve">
     <value>The transaction was withdrawn successfully. Moreover, this action will affect the all the reports produced on and after "{0}".</value>
     <comment>The transaction was withdrawn successfully. Moreover, this action will affect the all the reports produced on and after "1/1/2013".</comment>

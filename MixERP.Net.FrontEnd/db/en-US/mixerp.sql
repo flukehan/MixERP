@@ -991,7 +991,7 @@ INSERT INTO core.menus(menu_text, url, menu_code, level)
 SELECT 'Dashboard', '~/Dashboard/Index.aspx', 'DB', 0 UNION ALL
 SELECT 'Sales', '~/Sales/Index.aspx', 'SA', 0 UNION ALL
 SELECT 'Purchase', '~/Purchase/Index.aspx', 'PU', 0 UNION ALL
-SELECT 'Products & Items', '~/Items/Index.aspx', 'ITM', 0 UNION ALL
+SELECT 'Products & Items', '~/Inventory/Index.aspx', 'ITM', 0 UNION ALL
 SELECT 'Finance', '~/Finance/Index.aspx', 'FI', 0 UNION ALL
 SELECT 'Manufacturing', '~/Manufacturing/Index.aspx', 'MF', 0 UNION ALL
 SELECT 'CRM', '~/CRM/Index.aspx', 'CRM', 0 UNION ALL
@@ -1032,20 +1032,20 @@ UNION ALL SELECT 'Payment to Supplier', '~/Purchase/Payment.aspx', 'PAS', 2, cor
 UNION ALL SELECT 'Purchase Return', '~/Purchase/Return.aspx', 'PR', 2, core.get_menu_id('PUQ')
 UNION ALL SELECT 'Purchase Reports', NULL, 'PUR', 1, core.get_menu_id('PU')
 UNION ALL SELECT 'Inventory Movements', NULL, 'IIM', 1, core.get_menu_id('ITM')
-UNION ALL SELECT 'Stock Transfer Journal', '~/Items/Transfer.aspx', 'STJ', 2, core.get_menu_id('IIM')
-UNION ALL SELECT 'Stock Adjustments', '~/Items/Adjustment.aspx', 'STA', 2, core.get_menu_id('IIM')
+UNION ALL SELECT 'Stock Transfer Journal', '~/Inventory/Transfer.aspx', 'STJ', 2, core.get_menu_id('IIM')
+UNION ALL SELECT 'Stock Adjustments', '~/Inventory/Adjustment.aspx', 'STA', 2, core.get_menu_id('IIM')
 UNION ALL SELECT 'Setup & Maintenance', NULL, 'ISM', 1, core.get_menu_id('ITM')
-UNION ALL SELECT 'Party Types', '~/Items/Setup/PartyTypes.aspx', 'PT', 2, core.get_menu_id('ISM')
-UNION ALL SELECT 'Party Accounts', '~/Items/Setup/Parties.aspx', 'PA', 2, core.get_menu_id('ISM')
-UNION ALL SELECT 'Shipping Addresses', '~/Items/Setup/ShippingAddresses.aspx', 'PSA', 2, core.get_menu_id('ISM')
-UNION ALL SELECT 'Item Maintenance', '~/Items/Setup/Items.aspx', 'SSI', 2, core.get_menu_id('ISM')
-UNION ALL SELECT 'Cost Prices', '~/Items/Setup/CostPrices.aspx', 'ICP', 2, core.get_menu_id('ISM')
-UNION ALL SELECT 'Selling Prices', '~/Items/Setup/SellingPrices.aspx', 'ISP', 2, core.get_menu_id('ISM')
-UNION ALL SELECT 'Item Groups', '~/Items/Setup/ItemGroups.aspx', 'SSG', 2, core.get_menu_id('ISM')
-UNION ALL SELECT 'Brands', '~/Items/Setup/Brands.aspx', 'SSB', 2, core.get_menu_id('ISM')
-UNION ALL SELECT 'Units of Measure', '~/Items/Setup/UOM.aspx', 'UOM', 2, core.get_menu_id('ISM')
-UNION ALL SELECT 'Compound Units of Measure', '~/Items/Setup/CUOM.aspx', 'CUOM', 2, core.get_menu_id('ISM')
-UNION ALL SELECT 'Shipper Information', '~/Items/Setup/Shipper.aspx', 'SHI', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Party Types', '~/Inventory/Setup/PartyTypes.aspx', 'PT', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Party Accounts', '~/Inventory/Setup/Parties.aspx', 'PA', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Shipping Addresses', '~/Inventory/Setup/ShippingAddresses.aspx', 'PSA', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Item Maintenance', '~/Inventory/Setup/Items.aspx', 'SSI', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Cost Prices', '~/Inventory/Setup/CostPrices.aspx', 'ICP', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Selling Prices', '~/Inventory/Setup/SellingPrices.aspx', 'ISP', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Item Groups', '~/Inventory/Setup/ItemGroups.aspx', 'SSG', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Brands', '~/Inventory/Setup/Brands.aspx', 'SSB', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Units of Measure', '~/Inventory/Setup/UOM.aspx', 'UOM', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Compound Units of Measure', '~/Inventory/Setup/CUOM.aspx', 'CUOM', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Shipper Information', '~/Inventory/Setup/Shipper.aspx', 'SHI', 2, core.get_menu_id('ISM')
 UNION ALL SELECT 'Transactions & Templates', NULL, 'FTT', 1, core.get_menu_id('FI')
 UNION ALL SELECT 'Journal Voucher Entry', '~/Finance/JournalVoucher.aspx', 'JVN', 2, core.get_menu_id('FTT')
 UNION ALL SELECT 'Template Transaction', '~/Finance/TemplateTransaction.aspx', 'TTR', 2, core.get_menu_id('FTT')

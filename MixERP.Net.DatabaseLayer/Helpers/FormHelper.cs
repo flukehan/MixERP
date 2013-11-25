@@ -21,7 +21,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
         {
             string sql = "SELECT * FROM @TableSchema.@TableName ORDER BY @OrderBy LIMIT @Limit OFFSET @Offset;";
 
-            using(NpgsqlCommand command = new NpgsqlCommand())
+            using (NpgsqlCommand command = new NpgsqlCommand())
             {
                 //We are 100% sure that the following parameters do not come from user input.
                 //Having said that, it is nice to sanitize the objects before sending it to the database server.
@@ -39,7 +39,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
         public static DataTable GetTable(string tableSchema, string tableName)
         {
             string sql = "SELECT * FROM @TableSchema.@TableName;";
-            using(NpgsqlCommand command = new NpgsqlCommand())
+            using (NpgsqlCommand command = new NpgsqlCommand())
             {
                 sql = sql.Replace("@TableSchema", DBFactory.Sanitizer.SanitizeIdentifierName(tableSchema));
                 sql = sql.Replace("@TableName", DBFactory.Sanitizer.SanitizeIdentifierName(tableName));
@@ -51,12 +51,12 @@ namespace MixERP.Net.DatabaseLayer.Helpers
 
         public static DataTable GetTable(string tableSchema, string tableName, string columnNames, string columnValues)
         {
-            if(string.IsNullOrWhiteSpace(columnNames))
+            if (string.IsNullOrWhiteSpace(columnNames))
             {
                 return null;
             }
 
-            if(string.IsNullOrWhiteSpace(columnValues))
+            if (string.IsNullOrWhiteSpace(columnValues))
             {
                 return null;
             }
@@ -64,7 +64,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
             string[] columns = columnNames.Split(',');
             string[] values = columnValues.Split(',');
 
-            if(!columns.Count().Equals(values.Count()))
+            if (!columns.Count().Equals(values.Count()))
             {
                 return null;
             }
@@ -72,9 +72,9 @@ namespace MixERP.Net.DatabaseLayer.Helpers
             int counter = 0;
             string sql = "SELECT * FROM @TableSchema.@TableName WHERE ";
 
-            foreach(string column in columns)
+            foreach (string column in columns)
             {
-                if(!counter.Equals(0))
+                if (!counter.Equals(0))
                 {
                     sql += " AND ";
                 }
@@ -86,7 +86,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
 
             sql += ";";
 
-            using(NpgsqlCommand command = new NpgsqlCommand())
+            using (NpgsqlCommand command = new NpgsqlCommand())
             {
                 sql = sql.Replace("@TableSchema", DBFactory.Sanitizer.SanitizeIdentifierName(tableSchema));
                 sql = sql.Replace("@TableName", DBFactory.Sanitizer.SanitizeIdentifierName(tableName));
@@ -95,7 +95,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
                 command.CommandText = sql;
 
                 counter = 0;
-                foreach(string column in columns)
+                foreach (string column in columns)
                 {
                     command.Parameters.AddWithValue(DBFactory.Sanitizer.SanitizeIdentifierName(column.Trim()), values[counter]);
                     counter++;
@@ -110,20 +110,20 @@ namespace MixERP.Net.DatabaseLayer.Helpers
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
         public static DataTable GetTable(string tableSchema, string tableName, string columnNames, string columnValuesLike, int limit)
         {
-            if(columnNames == null)
+            if (columnNames == null)
             {
                 columnNames = string.Empty;
             }
 
-            if(columnValuesLike == null)
+            if (columnValuesLike == null)
             {
                 columnValuesLike = string.Empty;
             }
-            
+
             string[] columns = columnNames.Split(',');
             string[] values = columnValuesLike.Split(',');
 
-            if(!columns.Count().Equals(values.Count()))
+            if (!columns.Count().Equals(values.Count()))
             {
                 return null;
             }
@@ -131,11 +131,11 @@ namespace MixERP.Net.DatabaseLayer.Helpers
             int counter = 0;
             string sql = "SELECT * FROM @TableSchema.@TableName ";
 
-            foreach(string column in columns)
+            foreach (string column in columns)
             {
-                if(!string.IsNullOrWhiteSpace(column))
+                if (!string.IsNullOrWhiteSpace(column))
                 {
-                    if(counter.Equals(0))
+                    if (counter.Equals(0))
                     {
                         sql += " WHERE ";
                     }
@@ -151,7 +151,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
 
             sql += " LIMIT @Limit;";
 
-            using(NpgsqlCommand command = new NpgsqlCommand())
+            using (NpgsqlCommand command = new NpgsqlCommand())
             {
                 sql = sql.Replace("@TableSchema", DBFactory.Sanitizer.SanitizeIdentifierName(tableSchema));
                 sql = sql.Replace("@TableName", DBFactory.Sanitizer.SanitizeIdentifierName(tableName));
@@ -160,9 +160,9 @@ namespace MixERP.Net.DatabaseLayer.Helpers
                 command.CommandText = sql;
 
                 counter = 0;
-                foreach(string column in columns)
+                foreach (string column in columns)
                 {
-                    if(!string.IsNullOrWhiteSpace(column))
+                    if (!string.IsNullOrWhiteSpace(column))
                     {
                         command.Parameters.AddWithValue(DBFactory.Sanitizer.SanitizeIdentifierName(column.Trim()), "%" + values[counter].ToLower(System.Threading.Thread.CurrentThread.CurrentCulture) + "%");
                         counter++;
@@ -179,7 +179,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
         public static int GetTotalRecords(string tableSchema, string tableName)
         {
             string sql = "SELECT COUNT(*) FROM @TableSchema.@TableName";
-            using(NpgsqlCommand command = new NpgsqlCommand())
+            using (NpgsqlCommand command = new NpgsqlCommand())
             {
                 sql = sql.Replace("@TableSchema", DBFactory.Sanitizer.SanitizeIdentifierName(tableSchema));
                 sql = sql.Replace("@TableName", DBFactory.Sanitizer.SanitizeIdentifierName(tableName));
@@ -193,7 +193,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
         public static bool InsertRecord(int userId, string tableSchema, string tableName, Collection<KeyValuePair<string, string>> data, string imageColumn)
         {
-            if(data == null)
+            if (data == null)
             {
                 return false;
             }
@@ -203,11 +203,11 @@ namespace MixERP.Net.DatabaseLayer.Helpers
 
             int counter = 0;
 
-            foreach(KeyValuePair<string, string> pair in data)
+            foreach (KeyValuePair<string, string> pair in data)
             {
                 counter++;
 
-                if(counter.Equals(1))
+                if (counter.Equals(1))
                 {
                     columns += DBFactory.Sanitizer.SanitizeIdentifierName(pair.Key);
                     columnParamters += "@" + pair.Key;
@@ -220,26 +220,26 @@ namespace MixERP.Net.DatabaseLayer.Helpers
             }
 
             string sql = "INSERT INTO @TableSchema.@TableName(" + columns + ", audit_user_id) SELECT " + columnParamters + ", @AuditUserId;";
-            using(NpgsqlCommand command = new NpgsqlCommand())
+            using (NpgsqlCommand command = new NpgsqlCommand())
             {
                 sql = sql.Replace("@TableSchema", DBFactory.Sanitizer.SanitizeIdentifierName(tableSchema));
                 sql = sql.Replace("@TableName", DBFactory.Sanitizer.SanitizeIdentifierName(tableName));
 
                 command.CommandText = sql;
 
-                foreach(KeyValuePair<string, string> pair in data)
+                foreach (KeyValuePair<string, string> pair in data)
                 {
-                    if(string.IsNullOrWhiteSpace(pair.Value))
+                    if (string.IsNullOrWhiteSpace(pair.Value))
                     {
                         command.Parameters.AddWithValue("@" + pair.Key, DBNull.Value);
                     }
                     else
                     {
-                        if(pair.Key.Equals(imageColumn))
+                        if (pair.Key.Equals(imageColumn))
                         {
-                            using(FileStream stream = new FileStream(pair.Value, FileMode.Open, FileAccess.Read))
+                            using (FileStream stream = new FileStream(pair.Value, FileMode.Open, FileAccess.Read))
                             {
-                                using(BinaryReader reader = new BinaryReader(new BufferedStream(stream)))
+                                using (BinaryReader reader = new BinaryReader(new BufferedStream(stream)))
                                 {
                                     byte[] byteArray = reader.ReadBytes(Convert.ToInt32(stream.Length));
                                     command.Parameters.AddWithValue("@" + pair.Key, byteArray);
@@ -262,7 +262,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
         public static bool UpdateRecord(int userId, string tableSchema, string tableName, Collection<KeyValuePair<string, string>> data, string keyColumn, string keyColumnValue, string imageColumn)
         {
-            if(data == null)
+            if (data == null)
             {
                 return false;
             }
@@ -270,16 +270,16 @@ namespace MixERP.Net.DatabaseLayer.Helpers
             string columns = string.Empty;
 
             int counter = 0;
-            
+
             //Adding the current user to the column collection.
             KeyValuePair<string, string> auditUserId = new KeyValuePair<string, string>("audit_user_id", userId.ToString(System.Threading.Thread.CurrentThread.CurrentCulture));
             data.Add(auditUserId);
 
-            foreach(KeyValuePair<string, string> pair in data)
+            foreach (KeyValuePair<string, string> pair in data)
             {
                 counter++;
 
-                if(counter.Equals(1))
+                if (counter.Equals(1))
                 {
                     columns += DBFactory.Sanitizer.SanitizeIdentifierName(pair.Key) + "=@" + pair.Key;
                 }
@@ -291,7 +291,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
 
             string sql = "UPDATE @TableSchema.@TableName SET " + columns + " WHERE @KeyColumn=@KeyValue;";
 
-            using(NpgsqlCommand command = new NpgsqlCommand())
+            using (NpgsqlCommand command = new NpgsqlCommand())
             {
                 sql = sql.Replace("@TableSchema", DBFactory.Sanitizer.SanitizeIdentifierName(tableSchema));
                 sql = sql.Replace("@TableName", DBFactory.Sanitizer.SanitizeIdentifierName(tableName));
@@ -299,22 +299,31 @@ namespace MixERP.Net.DatabaseLayer.Helpers
 
                 command.CommandText = sql;
 
-                foreach(KeyValuePair<string, string> pair in data)
+                foreach (KeyValuePair<string, string> pair in data)
                 {
-                    if(string.IsNullOrWhiteSpace(pair.Value))
+                    if (string.IsNullOrWhiteSpace(pair.Value))
                     {
                         command.Parameters.AddWithValue("@" + pair.Key, DBNull.Value);
                     }
                     else
                     {
-                        if(pair.Key.Equals(imageColumn))
+                        if (pair.Key.Equals(imageColumn))
                         {
-                            using(FileStream stream = new FileStream(pair.Value, FileMode.Open, FileAccess.Read))
+                                FileStream stream = new FileStream(pair.Value, FileMode.Open, FileAccess.Read);
+                            try
                             {
-                                using(BinaryReader reader = new BinaryReader(new BufferedStream(stream)))
+
+                                using (BinaryReader reader = new BinaryReader(new BufferedStream(stream)))
                                 {
                                     byte[] byteArray = reader.ReadBytes(Convert.ToInt32(stream.Length));
                                     command.Parameters.AddWithValue("@" + pair.Key, byteArray);
+                                }
+                            }
+                            finally
+                            {
+                                if (stream != null)
+                                {
+                                    stream = null;
                                 }
                             }
                         }
@@ -335,7 +344,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
         {
             string sql = "DELETE FROM @TableSchema.@TableName WHERE @KeyColumn=@KeyValue";
 
-            using(NpgsqlCommand command = new NpgsqlCommand())
+            using (NpgsqlCommand command = new NpgsqlCommand())
             {
                 sql = sql.Replace("@TableSchema", DBFactory.Sanitizer.SanitizeIdentifierName(tableSchema));
                 sql = sql.Replace("@TableName", DBFactory.Sanitizer.SanitizeIdentifierName(tableName));

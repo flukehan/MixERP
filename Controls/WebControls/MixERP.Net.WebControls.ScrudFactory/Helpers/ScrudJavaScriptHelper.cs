@@ -29,42 +29,52 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
             script.Append(CreateVariable("reportHeaderPath", MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("HeaderPath")));
             script.Append(CreateVariable("containerMargin", MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("GridContainerMargin")));
             script.Append(CreateVariable("date", DateTime.Now.ToString()));
-            
+
             script.Append(resource);
             return script.ToString();
         }
 
-        
+
         private static string GetResource()
         {
             var assembly = Assembly.GetExecutingAssembly();
             var resourceName = "MixERP.Net.WebControls.ScrudFactory.Scrud.js";
 
-            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            Stream stream = assembly.GetManifestResourceStream(resourceName);
+
+            try
             {
                 using (StreamReader reader = new StreamReader(stream))
                 {
                     return reader.ReadToEnd();
                 }
             }
-        }
-
-
-        private static string CreateVariable(string variableName)
-        {
-            if (string.IsNullOrWhiteSpace(variableName))
+            finally
             {
-                return string.Empty;
+                if (stream != null)
+                {
+                    stream = null;
+                }
             }
 
-            StringBuilder variable = new StringBuilder();
-            variable.Append("var ");
-            variable.Append(variableName);
-            variable.Append(";");
-            variable.Append(Environment.NewLine);
-
-            return variable.ToString();
         }
+
+
+        //private static string CreateVariable(string variableName)
+        //{
+        //    if (string.IsNullOrWhiteSpace(variableName))
+        //    {
+        //        return string.Empty;
+        //    }
+
+        //    StringBuilder variable = new StringBuilder();
+        //    variable.Append("var ");
+        //    variable.Append(variableName);
+        //    variable.Append(";");
+        //    variable.Append(Environment.NewLine);
+
+        //    return variable.ToString();
+        //}
 
         private static string CreateVariable(string variableName, string initialValue)
         {

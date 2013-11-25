@@ -51,7 +51,7 @@ namespace MixERP.Net.WebControls.ReportEngine
 
 
 
-        private void AddReportBody(Panel reportContainer)
+        private void AddReportBody(Panel container)
         {
             reportBody = new Panel();
             reportBody.ID = "report";
@@ -75,7 +75,7 @@ namespace MixERP.Net.WebControls.ReportEngine
             bottomSectionLiteral = new Literal();
             reportBody.Controls.Add(bottomSectionLiteral);
            
-            reportContainer.Controls.Add(reportBody);
+            container.Controls.Add(reportBody);
         }
 
     }

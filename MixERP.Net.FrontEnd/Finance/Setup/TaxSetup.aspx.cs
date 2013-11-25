@@ -32,7 +32,7 @@ namespace MixERP.Net.FrontEnd.Finance.Setup
 
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
-                scrud.SelectedValues = this.GetSelectedValues();
+                scrud.SelectedValues = GetSelectedValues();
 
                 scrud.Text = Resources.Titles.TaxSetup;
 
@@ -56,7 +56,7 @@ namespace MixERP.Net.FrontEnd.Finance.Setup
             return string.Join(",", displayViews);
         }
 
-        private string GetSelectedValues()
+        private static string GetSelectedValues()
         {
             List<string> selectedValues = new List<string>();
 

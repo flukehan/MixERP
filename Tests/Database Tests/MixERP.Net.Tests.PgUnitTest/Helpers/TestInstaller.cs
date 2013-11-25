@@ -22,6 +22,7 @@ namespace MixERP.Net.Tests.PgUnitTest.Helpers
             return true;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
         private static void RunInstallScript()
         {
             bool run = Conversion.TryCastBoolean(ConfigurationManager.AppSettings["RunInstallScript"]);
@@ -32,12 +33,14 @@ namespace MixERP.Net.Tests.PgUnitTest.Helpers
             }
 
             string script = ConfigurationManager.AppSettings["InstallScriptPath"];
+
             using (NpgsqlCommand command = new NpgsqlCommand(script))
             {
                 MixERP.Net.DBFactory.DBOperations.ExecuteNonQuery(command);
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
         private static void InstallUnitTests()
         {
             string sql = GetScript();

@@ -17,9 +17,9 @@ using System.Web;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls
 {
-    public partial class ScrudFileUpload
+    public static class ScrudFileUpload
     {
-        public static void AddFileUpload(HtmlTable t, string columnName, bool isNullable)
+        public static void AddFileUpload(HtmlTable htmlTable, string columnName, bool isNullable)
         {
             string label = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString("FormResource", columnName);
             FileUpload fileUpload = GetFileUpload(columnName + "_fileupload");
@@ -32,11 +32,11 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
             if (!isNullable)
             {
                 RequiredFieldValidator required = ScrudFactoryHelper.GetRequiredFieldValidator(fileUpload);
-                ScrudFactoryHelper.AddRow(t, label + Resources.ScrudResource.RequiredFieldIndicator, fileUpload, required, validator);
+                ScrudFactoryHelper.AddRow(htmlTable, label + Resources.ScrudResource.RequiredFieldIndicator, fileUpload, required, validator);
                 return;
             }
 
-            ScrudFactoryHelper.AddRow(t, label, fileUpload, validator);
+            ScrudFactoryHelper.AddRow(htmlTable, label, fileUpload, validator);
         }
 
         public static string UploadFile(FileUpload fileUpload)

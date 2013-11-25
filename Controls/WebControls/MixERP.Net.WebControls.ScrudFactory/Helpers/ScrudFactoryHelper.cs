@@ -11,11 +11,12 @@ using MixERP.Net.WebControls.ScrudFactory.Controls;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 {
-    public class ScrudFactoryHelper
+    public static class ScrudFactoryHelper
     {
-        public static void AddRow(HtmlTable table, string label, params Control[] controls)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Web.UI.WebControls.Literal.set_Text(System.String)")]
+        public static void AddRow(HtmlTable htmlTable, string label, params Control[] controls)
         {
-            if (table == null)
+            if (htmlTable == null)
             {
                 return;
             }
@@ -38,7 +39,6 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
                     {
                         using (Literal labelLiteral = new Literal())
                         {
-
                             labelLiteral.Text = string.Format(System.Threading.Thread.CurrentThread.CurrentCulture, "<label for='{0}'>{1}</label>", controls[0].ID, label);
                             labelCell.Attributes.Add("class", "label-cell");
 
@@ -54,16 +54,16 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 
                             newRow.Cells.Add(labelCell);
                             newRow.Cells.Add(controlCell);
-                            table.Rows.Add(newRow);
+                            htmlTable.Rows.Add(newRow);
                         }
                     }
                 }
             }
         }
 
-        public static void AddField(HtmlTable t, string columnName, string defaultValue, bool isSerial, bool isNullable, string dataType, string domain, int maxLength, string parentTableSchema, string parentTable, string parentTableColumn, string displayFields, string displayViews, string selectedValues)
+        public static void AddField(HtmlTable htmlTable, string columnName, string defaultValue, bool isSerial, bool isNullable, string dataType, string domain, int maxLength, string parentTableSchema, string parentTable, string parentTableColumn, string displayFields, string displayViews, string selectedValues)
         {
-            if (t == null)
+            if (htmlTable == null)
             {
                 return;
             }
@@ -85,12 +85,12 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
                     case "varchar":
                     case "nvarchar":
                     case "text":
-                        ScrudTextBox.AddTextBox(t, columnName, defaultValue, isNullable, maxLength);
+                        ScrudTextBox.AddTextBox(htmlTable, columnName, defaultValue, isNullable, maxLength);
                         break;
                     case "smallint":
                     case "integer":
                     case "bigint":
-                        ScrudNumberTextBox.AddNumberTextBox(t, columnName, defaultValue, isSerial, isNullable, maxLength, domain);
+                        ScrudNumberTextBox.AddNumberTextBox(htmlTable, columnName, defaultValue, isSerial, isNullable, maxLength, domain);
                         break;
                     case "numeric":
                     case "money":
@@ -99,16 +99,16 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
                     case "float":
                     case "real":
                     case "currency":
-                        ScrudDecimalTextBox.AddDecimalTextBox(t, columnName, defaultValue, isNullable, maxLength, domain);
+                        ScrudDecimalTextBox.AddDecimalTextBox(htmlTable, columnName, defaultValue, isNullable, maxLength, domain);
                         break;
                     case "boolean":
-                        ScrudRadioButtonList.AddRadioButtonList(t, columnName, isNullable, Resources.ScrudResource.YesNo, "true,false", defaultValue);
+                        ScrudRadioButtonList.AddRadioButtonList(htmlTable, columnName, isNullable, Resources.ScrudResource.YesNo, "true,false", defaultValue);
                         break;
                     case "date":
-                        ScrudDateTextBox.AddDateTextBox(t, columnName, defaultValue, isNullable);
+                        ScrudDateTextBox.AddDateTextBox(htmlTable, columnName, defaultValue, isNullable);
                         break;
                     case "bytea":
-                        ScrudFileUpload.AddFileUpload(t, columnName, isNullable);
+                        ScrudFileUpload.AddFileUpload(htmlTable, columnName, isNullable);
                         break;
                     case "timestamp with time zone":
                         //Do not show this field
@@ -117,7 +117,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
             }
             else
             {
-                ScrudDropDownList.AddDropDownList(t, columnName, isNullable, parentTableSchema, parentTable, parentTableColumn, defaultValue, displayFields, displayViews, selectedValues);
+                ScrudDropDownList.AddDropDownList(htmlTable, columnName, isNullable, parentTableSchema, parentTable, parentTableColumn, defaultValue, displayFields, displayViews, selectedValues);
             }
         }
 

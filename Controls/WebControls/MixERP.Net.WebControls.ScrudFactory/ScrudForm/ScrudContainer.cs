@@ -24,7 +24,9 @@ namespace MixERP.Net.WebControls.ScrudFactory
             this.AddUpdateProgress(p);
 
             this.AddTitle(p);
-            this.AddRuler(p);
+            
+            AddRuler(p);
+            
             this.AddDescription(p);
 
             this.CreateCommandPanels();

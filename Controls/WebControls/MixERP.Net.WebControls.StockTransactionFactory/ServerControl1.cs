@@ -31,14 +31,14 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
             }
         }
  
-        protected override void RenderContents(HtmlTextWriter output)
+        protected override void RenderContents(HtmlTextWriter writer)
         {
-            if (output == null)
+            if (writer == null)
             {
                 return;
             }
 
-            output.Write(Text);
+            writer.Write(Text);
         }
     }
 }

@@ -17,9 +17,9 @@ namespace MixERP.Net.WebControls.ScrudFactory
     {
         private void LoadForm(Panel container, System.Data.DataTable values)
         {
-            using (HtmlTable t = new HtmlTable())
+            using (HtmlTable htmlTable = new HtmlTable())
             {
-                t.Attributes["class"] = "valignmiddle";
+                htmlTable.Attributes["class"] = "valignmiddle";
 
                 using (System.Data.DataTable table = MixERP.Net.BusinessLayer.Helpers.TableHelper.GetTable(this.TableSchema, this.Table, this.Exclude))
                 {
@@ -44,12 +44,12 @@ namespace MixERP.Net.WebControls.ScrudFactory
                                 defaultValue = MixERP.Net.Common.Conversion.TryCastString(values.Rows[0][columnName]);
                             }
 
-                            MixERP.Net.WebControls.ScrudFactory.Helpers.ScrudFactoryHelper.AddField(t, columnName, defaultValue, isSerial, isNullable, dataType, domain, maxLength, parentTableSchema, parentTable, parentTableColumn, this.DisplayFields, this.DisplayViews, this.SelectedValues);
+                            MixERP.Net.WebControls.ScrudFactory.Helpers.ScrudFactoryHelper.AddField(htmlTable, columnName, defaultValue, isSerial, isNullable, dataType, domain, maxLength, parentTableSchema, parentTable, parentTableColumn, this.DisplayFields, this.DisplayViews, this.SelectedValues);
                         }
                     }
                 }
 
-                container.Controls.Add(t);
+                container.Controls.Add(htmlTable);
             }
         }
         

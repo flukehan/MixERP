@@ -1,35 +1,32 @@
-﻿/********************************************************************************
+﻿using MixERP.Net.WebControls.Common;
+using MixERP.Net.WebControls.ScrudFactory.Helpers;
+/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
 This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using MixERP.Net.WebControls.ScrudFactory.Helpers;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 {
-    public partial class ScrudDateTextBox
+    public static class ScrudDateTextBox
     {
-
         public static MixERP.Net.WebControls.Common.DateTextBox GetDateTextBox(string id, bool required)
         {
-            MixERP.Net.WebControls.Common.DateTextBox textBox = new MixERP.Net.WebControls.Common.DateTextBox();
-            textBox.ID = id;
-            textBox.Required = required;
-            textBox.ClientIDMode = System.Web.UI.ClientIDMode.Static;
-            textBox.Width = 100;
-            return textBox;
+            using (DateTextBox textBox = new DateTextBox())
+            {
+                textBox.ID = id;
+                textBox.Required = required;
+                textBox.ClientIDMode = System.Web.UI.ClientIDMode.Static;
+                textBox.Width = 100;
+                return textBox;
+            }
         }
 
-        public static void AddDateTextBox(HtmlTable t, string columnName, string defaultValue, bool isNullable)
+        public static void AddDateTextBox(HtmlTable htmlTable, string columnName, string defaultValue, bool isNullable)
         {
             string label = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString("FormResource", columnName);
 
@@ -45,18 +42,12 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 
             if (!isNullable)
             {
-                ScrudFactoryHelper.AddRow(t, label + Resources.ScrudResource.RequiredFieldIndicator, textBox);
+                ScrudFactoryHelper.AddRow(htmlTable, label + Resources.ScrudResource.RequiredFieldIndicator, textBox);
                 return;
             }
 
-            ScrudFactoryHelper.AddRow(t, label, textBox);
+            ScrudFactoryHelper.AddRow(htmlTable, label, textBox);
         }
 
-        private static TextBox GetDateTextBox(string id, int maxLength)
-        {
-            TextBox textBox = ScrudTextBox.GetTextBox(id, maxLength);
-            textBox.Attributes["type"] = "date";
-            return textBox;
-        }
     }
 }

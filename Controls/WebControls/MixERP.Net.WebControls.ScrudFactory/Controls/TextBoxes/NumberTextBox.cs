@@ -16,11 +16,11 @@ using MixERP.Net.WebControls.ScrudFactory.Helpers;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 {
-    public partial class ScrudNumberTextBox
+    public static class ScrudNumberTextBox
     {
-        public static void AddNumberTextBox(HtmlTable t, string columnName, string defaultValue, bool isSerial, bool isNullable, int maxLength, string domain)
+        public static void AddNumberTextBox(HtmlTable htmlTable, string columnName, string defaultValue, bool isSerial, bool isNullable, int maxLength, string domain)
         {
-            if (t == null)
+            if (htmlTable == null)
             {
                 return;
             }
@@ -53,12 +53,12 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
                 {
                     CompareValidator validator = GetNumberValidator(textBox, domain);
                     RequiredFieldValidator required = ScrudFactoryHelper.GetRequiredFieldValidator(textBox);
-                    ScrudFactoryHelper.AddRow(t, label + Resources.ScrudResource.RequiredFieldIndicator, textBox, validator, required);
+                    ScrudFactoryHelper.AddRow(htmlTable, label + Resources.ScrudResource.RequiredFieldIndicator, textBox, validator, required);
                     return;
                 }
             }
 
-            ScrudFactoryHelper.AddRow(t, label, textBox);
+            ScrudFactoryHelper.AddRow(htmlTable, label, textBox);
         }
 
         private static TextBox GetNumberTextBox(string id, int maxLength)

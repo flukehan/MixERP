@@ -54,9 +54,14 @@
     <Compile Include="DateTextBox\Properties.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\CommonResource.Designer.cs">
+      <DependentUpon>CommonResource.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CommonResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\CommonResource.en-US.Designer.cs">
+      <DependentUpon>CommonResource.en-US.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -69,6 +74,11 @@
       <LastGenOutput>CommonResource.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CommonResource.en-US.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CommonResource.en-US.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\MixERP.net.Common\MixERP.Net.Common.csproj">
@@ -77,9 +87,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\..\Dictionary.xml">
+    <CodeAnalysisDictionary Include="..\..\..\Dictionary.xml">
       <Link>Dictionary.xml</Link>
-    </Content>
+    </CodeAnalysisDictionary>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

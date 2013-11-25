@@ -1,4 +1,5 @@
-﻿/********************************************************************************
+﻿using MixERP.Net.WebControls.ReportEngine.Helpers;
+/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
 This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
@@ -84,7 +85,14 @@ namespace MixERP.Net.FrontEnd.Reports
                 }
             }
             ReportViewer11.Path = this.ReportPath();
-            ReportViewer11.ParameterCollection = MixERP.Net.WebControls.ReportEngine.Helpers.ParameterHelper.BindParameters(Server.MapPath(this.ReportPath()), list);
+
+            //ReportViewer11.ParameterCollection = ParameterHelper.BindParameters(Server.MapPath(this.ReportPath()), list);
+
+            foreach (var parameter in ParameterHelper.BindParameters(Server.MapPath(this.ReportPath()), list))
+            {
+                ReportViewer11.AddParameterToCollection(parameter);
+            }
+            
             ReportViewer11.InitializeReport();
         }
 

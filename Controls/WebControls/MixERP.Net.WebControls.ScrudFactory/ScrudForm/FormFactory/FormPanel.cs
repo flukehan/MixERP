@@ -77,7 +77,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private void AddFormFooter(Panel p)
         {
-            using (HtmlTable table = new HtmlTable())
+            using (HtmlTable htmlTable = new HtmlTable())
             {
                 using (HtmlTableRow row = new HtmlTableRow())
                 {
@@ -120,8 +120,8 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
                         row.Cells.Add(controlCell);
 
-                        table.Rows.Add(row);
-                        p.Controls.Add(table);
+                        htmlTable.Rows.Add(row);
+                        p.Controls.Add(htmlTable);
                     }
                 }
             }

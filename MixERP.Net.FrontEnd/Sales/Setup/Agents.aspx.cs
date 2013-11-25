@@ -31,7 +31,7 @@ namespace MixERP.Net.FrontEnd.Sales.Setup
 
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
-                scrud.SelectedValues = this.GetSelectedValues();
+                scrud.SelectedValues = GetSelectedValues();
 
                 scrud.Text = Resources.Titles.AgentSetup;
             }
@@ -52,7 +52,7 @@ namespace MixERP.Net.FrontEnd.Sales.Setup
         }
 
 
-        private string GetSelectedValues()
+        private static string GetSelectedValues()
         {
             List<string> selectedValues = new List<string>();
 

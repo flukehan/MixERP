@@ -327,109 +327,109 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Items\Adjustment.aspx.cs">
+    <Compile Include="Inventory\Adjustment.aspx.cs">
       <DependentUpon>Adjustment.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Items\Adjustment.aspx.designer.cs">
+    <Compile Include="Inventory\Adjustment.aspx.designer.cs">
       <DependentUpon>Adjustment.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Items\Index.aspx.cs">
+    <Compile Include="Inventory\Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Items\Index.aspx.designer.cs">
+    <Compile Include="Inventory\Index.aspx.designer.cs">
       <DependentUpon>Index.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Items\Setup\Brands.aspx.cs">
+    <Compile Include="Inventory\Setup\Brands.aspx.cs">
       <DependentUpon>Brands.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Items\Setup\Brands.aspx.designer.cs">
+    <Compile Include="Inventory\Setup\Brands.aspx.designer.cs">
       <DependentUpon>Brands.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Items\Setup\CostPrices.aspx.cs">
+    <Compile Include="Inventory\Setup\CostPrices.aspx.cs">
       <DependentUpon>CostPrices.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Items\Setup\CostPrices.aspx.designer.cs">
+    <Compile Include="Inventory\Setup\CostPrices.aspx.designer.cs">
       <DependentUpon>CostPrices.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Items\Setup\CUOM.aspx.cs">
+    <Compile Include="Inventory\Setup\CUOM.aspx.cs">
       <DependentUpon>CUOM.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Items\Setup\CUOM.aspx.designer.cs">
+    <Compile Include="Inventory\Setup\CUOM.aspx.designer.cs">
       <DependentUpon>CUOM.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Items\Setup\ItemGroups.aspx.cs">
+    <Compile Include="Inventory\Setup\ItemGroups.aspx.cs">
       <DependentUpon>ItemGroups.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Items\Setup\ItemGroups.aspx.designer.cs">
+    <Compile Include="Inventory\Setup\ItemGroups.aspx.designer.cs">
       <DependentUpon>ItemGroups.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Items\Setup\Items.aspx.cs">
+    <Compile Include="Inventory\Setup\Items.aspx.cs">
       <DependentUpon>Items.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Items\Setup\Items.aspx.designer.cs">
+    <Compile Include="Inventory\Setup\Items.aspx.designer.cs">
       <DependentUpon>Items.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Items\Setup\Parties.aspx.cs">
+    <Compile Include="Inventory\Setup\Parties.aspx.cs">
       <DependentUpon>Parties.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Items\Setup\Parties.aspx.designer.cs">
+    <Compile Include="Inventory\Setup\Parties.aspx.designer.cs">
       <DependentUpon>Parties.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Items\Setup\PartiesPopup.aspx.cs">
+    <Compile Include="Inventory\Setup\PartiesPopup.aspx.cs">
       <DependentUpon>PartiesPopup.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Items\Setup\PartiesPopup.aspx.designer.cs">
+    <Compile Include="Inventory\Setup\PartiesPopup.aspx.designer.cs">
       <DependentUpon>PartiesPopup.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Items\Setup\PartyTypes.aspx.cs">
+    <Compile Include="Inventory\Setup\PartyTypes.aspx.cs">
       <DependentUpon>PartyTypes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Items\Setup\PartyTypes.aspx.designer.cs">
+    <Compile Include="Inventory\Setup\PartyTypes.aspx.designer.cs">
       <DependentUpon>PartyTypes.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Items\Setup\SellingPrices.aspx.cs">
+    <Compile Include="Inventory\Setup\SellingPrices.aspx.cs">
       <DependentUpon>SellingPrices.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Items\Setup\SellingPrices.aspx.designer.cs">
+    <Compile Include="Inventory\Setup\SellingPrices.aspx.designer.cs">
       <DependentUpon>SellingPrices.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Items\Setup\Shipper.aspx.cs">
+    <Compile Include="Inventory\Setup\Shipper.aspx.cs">
       <DependentUpon>Shipper.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Items\Setup\Shipper.aspx.designer.cs">
+    <Compile Include="Inventory\Setup\Shipper.aspx.designer.cs">
       <DependentUpon>Shipper.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Items\Setup\ShippingAddresses.aspx.cs">
+    <Compile Include="Inventory\Setup\ShippingAddresses.aspx.cs">
       <DependentUpon>ShippingAddresses.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Items\Setup\ShippingAddresses.aspx.designer.cs">
+    <Compile Include="Inventory\Setup\ShippingAddresses.aspx.designer.cs">
       <DependentUpon>ShippingAddresses.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Items\Setup\UOM.aspx.cs">
+    <Compile Include="Inventory\Setup\UOM.aspx.cs">
       <DependentUpon>UOM.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Items\Setup\UOM.aspx.designer.cs">
+    <Compile Include="Inventory\Setup\UOM.aspx.designer.cs">
       <DependentUpon>UOM.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Items\Transfer.aspx.cs">
+    <Compile Include="Inventory\Transfer.aspx.cs">
       <DependentUpon>Transfer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Items\Transfer.aspx.designer.cs">
+    <Compile Include="Inventory\Transfer.aspx.designer.cs">
       <DependentUpon>Transfer.aspx</DependentUpon>
     </Compile>
     <Compile Include="Manufacturing\Index.aspx.cs">
@@ -1043,21 +1043,21 @@
     <Content Include="General\ItemSelector.aspx" />
     <Content Include="Global.asax" />
     <Content Include="index.html" />
-    <Content Include="Items\Adjustment.aspx" />
-    <Content Include="Items\Index.aspx" />
-    <Content Include="Items\Setup\Brands.aspx" />
-    <Content Include="Items\Setup\CostPrices.aspx" />
-    <Content Include="Items\Setup\CUOM.aspx" />
-    <Content Include="Items\Setup\ItemGroups.aspx" />
-    <Content Include="Items\Setup\Items.aspx" />
-    <Content Include="Items\Setup\Parties.aspx" />
-    <Content Include="Items\Setup\PartiesPopup.aspx" />
-    <Content Include="Items\Setup\PartyTypes.aspx" />
-    <Content Include="Items\Setup\SellingPrices.aspx" />
-    <Content Include="Items\Setup\Shipper.aspx" />
-    <Content Include="Items\Setup\ShippingAddresses.aspx" />
-    <Content Include="Items\Setup\UOM.aspx" />
-    <Content Include="Items\Transfer.aspx" />
+    <Content Include="Inventory\Adjustment.aspx" />
+    <Content Include="Inventory\Index.aspx" />
+    <Content Include="Inventory\Setup\Brands.aspx" />
+    <Content Include="Inventory\Setup\CostPrices.aspx" />
+    <Content Include="Inventory\Setup\CUOM.aspx" />
+    <Content Include="Inventory\Setup\ItemGroups.aspx" />
+    <Content Include="Inventory\Setup\Items.aspx" />
+    <Content Include="Inventory\Setup\Parties.aspx" />
+    <Content Include="Inventory\Setup\PartiesPopup.aspx" />
+    <Content Include="Inventory\Setup\PartyTypes.aspx" />
+    <Content Include="Inventory\Setup\SellingPrices.aspx" />
+    <Content Include="Inventory\Setup\Shipper.aspx" />
+    <Content Include="Inventory\Setup\ShippingAddresses.aspx" />
+    <Content Include="Inventory\Setup\UOM.aspx" />
+    <Content Include="Inventory\Transfer.aspx" />
     <Content Include="Manufacturing\Index.aspx" />
     <Content Include="Manufacturing\Setup\WorkCenters.aspx" />
     <Content Include="offline.html" />

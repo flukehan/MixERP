@@ -123,6 +123,9 @@
   <data name="BothSidesHaveValue" xml:space="preserve">
     <value>Both debit and credit side have values.</value>
   </data>
+  <data name="CannotMergeTransactionsOfDifferentParties" xml:space="preserve">
+    <value>Cannot merge transactions of different parties into a single batch. Please try again.</value>
+  </data>
   <data name="CannotWithdrawElsesTransaction" xml:space="preserve">
     <value>You may not withdraw else's transaction.</value>
   </data>
@@ -147,6 +150,9 @@
   </data>
   <data name="NotEnoughCash" xml:space="preserve">
     <value>Not enough cash in the repository.</value>
+  </data>
+  <data name="NothingSelectedPleaseTryAgain" xml:space="preserve">
+    <value>Nothing was selected. Please try again.</value>
   </data>
   <data name="SalesNotAllowedHere" xml:space="preserve">
     <value>Sales is not allowed here.</value>

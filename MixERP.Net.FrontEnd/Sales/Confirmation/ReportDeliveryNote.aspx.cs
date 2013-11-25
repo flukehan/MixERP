@@ -15,15 +15,10 @@ namespace MixERP.Net.FrontEnd.Sales.Confirmation
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Collection<Collection<KeyValuePair<string, string>>> parameters = new Collection<Collection<KeyValuePair<string, string>>>();
-
             Collection<KeyValuePair<string, string>> list = new Collection<KeyValuePair<string, string>>();
             list.Add(new KeyValuePair<string, string>("@transaction_master_id", this.Request["TranId"]));
-
-            parameters.Add(list);
-            parameters.Add(list);
-
-            DeliveryNoteReport.ParameterCollection = parameters;
+            DeliveryNoteReport.AddParameterToCollection(list);
+            DeliveryNoteReport.AddParameterToCollection(list);
         }
     }
 }

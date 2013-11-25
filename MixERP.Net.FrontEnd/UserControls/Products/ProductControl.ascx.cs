@@ -12,9 +12,45 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common.Helpers;
 
 namespace MixERP.Net.FrontEnd.UserControls.Products
 {
+    public class ControlData
+    {
+        public DateTime Date { get; set; }
+        public int StoreId { get; set; }
+        public string TransactionType { get; set; }
+        public string PartyCode { get; set; }
+        public int PriceTypeId { get; set; }
+        public string ReferenceNumber { get; set; }
+
+        private Collection<StockMasterDetailModel> details = new Collection<StockMasterDetailModel>();
+        public Collection<StockMasterDetailModel> Details
+        {
+            get
+            {
+                return details;
+            }
+        }
+
+        public void AddDetail(StockMasterDetailModel detail)
+        {
+            details.Add(detail);
+        }
+
+        public decimal RunningTotal { get; set; }
+        public decimal TaxTotal { get; set; }
+        public decimal GrandTotal { get; set; }
+        public string ShippingAddressCode { get; set; }
+        public int ShippingCompanyId { get; set; }
+        public decimal ShippingCharge { get; set; }
+        public int CashRepositoryId { get; set; }
+        public int CostCenterId { get; set; }
+        public int AgentId { get; set; }
+        public string StatementReference { get; set; }
+    }
+
     /// <summary>
     /// Todo: Refactor the code to return values instead of controls.
     /// This class is subject to be moved to a standalone server control class library.
@@ -77,7 +113,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         public string ErrorMessage
         {
-            get 
+            get
             {
                 return this.ErrorLabelBottom.Text;
             }
@@ -85,27 +121,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             {
                 this.ErrorLabelBottom.Text = value;
             }
-        }
-
-        public class ControlData
-        {
-            public DateTime Date { get; set; }
-            public int StoreId { get; set; }
-            public string TransactionType { get; set; }
-            public string PartyCode { get; set; }
-            public int PriceTypeId { get; set; }
-            public string ReferenceNumber { get; set; }
-            public Collection<StockMasterDetailModel> Details { get; set; }
-            public decimal RunningTotal { get; set; }
-            public decimal TaxTotal { get; set; }
-            public decimal GrandTotal { get; set; }
-            public string ShippingAddressCode { get; set; }
-            public int ShippingCompanyId { get; set; }
-            public decimal ShippingCharge { get; set; }
-            public int CashRepositoryId { get; set; }
-            public int CostCenterId { get; set; }
-            public int AgentId { get; set; }
-            public string StatementReference { get; set; }
         }
 
         private static string GetDropDownValue(ListControl listControl)
@@ -148,7 +163,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             collection.AgentId = Conversion.TryCastInteger(GetDropDownValue(this.SalespersonDropDownList));
             collection.StatementReference = this.StatementReferenceTextBox.Text;
 
-            Collection<StockMasterDetailModel> details = new Collection<StockMasterDetailModel>();
             if (this.ProductGridView != null)
             {
                 if (this.ProductGridView.Rows.Count > 0)
@@ -164,12 +178,10 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                         detail.Discount = MixERP.Net.Common.Conversion.TryCastDecimal(row.Cells[6].Text);
                         detail.TaxRate = MixERP.Net.Common.Conversion.TryCastDecimal(row.Cells[8].Text);
                         detail.Tax = MixERP.Net.Common.Conversion.TryCastDecimal(row.Cells[9].Text);
-                        details.Add(detail);
+                        collection.AddDetail(detail);
                     }
                 }
             }
-
-            collection.Details = details;
 
             return collection;
         }
@@ -439,35 +451,35 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         private void LoadLabels()
         {
-            DateLiteral.Text = "<label for='DateTextBox'>" + Resources.Titles.ValueDate + "</label>";
-            StoreLiteral.Text = "<label for='StoreDropDownList'>" + Resources.Titles.SelectStore + "</label>";
+            DateLiteral.Text = HtmlControlHelper.GetLabel(DateTextBox.ClientID, Resources.Titles.ValueDate);
+            StoreLiteral.Text = HtmlControlHelper.GetLabel(StoreDropDownList.ClientID, Resources.Titles.SelectStore);
 
-            PartyLiteral.Text = "<label for='PartyCodeTextBox'>" + Resources.Titles.SelectParty + "</label>";
-            PriceTypeLiteral.Text = "<label for='PriceTypeDropDownList'>" + Resources.Titles.PriceType + "</label>";
-            ReferenceNumberLiteral.Text = "<label for='ReferenceNumberTextBox'>" + Resources.Titles.ReferenceNumberAbbreviated + "</label>";
+            PartyLiteral.Text = HtmlControlHelper.GetLabel(PartyCodeTextBox.ClientID,Resources.Titles.SelectParty);
+            PriceTypeLiteral.Text = HtmlControlHelper.GetLabel(PriceTypeDropDownList.ClientID,Resources.Titles.PriceType);
+            ReferenceNumberLiteral.Text = HtmlControlHelper.GetLabel(ReferenceNumberTextBox.ClientID,Resources.Titles.ReferenceNumberAbbreviated);
 
-            RunningTotalTextBoxLabelLiteral.Text = "<label for ='RunningTotalTextBox'>" + Resources.Titles.RunningTotal + "</label>";
-            TaxTotalTextBoxLabelLiteral.Text = "<label for='TaxTotalTextBox'>" + Resources.Titles.TaxTotal + "</label>";
-            GrandTotalTextBoxLabelLiteral.Text = "<label for='GrandTotalTextBox'>" + Resources.Titles.GrandTotal + "</label>";
-            ShippingAddressDropDownListLabelLiteral.Text = "<label for='ShippingAddressDropDownList'>" + Resources.Titles.ShippingAddress + "</label>";
-            ShippingCompanyDropDownListLabelLiteral.Text = "<label for='ShippingCompanyDropDownList'>" + Resources.Titles.ShippingCompany + "</label>";
-            ShippingChargeTextBoxLabelLiteral.Text = "<label for='ShippingChargeTextBox'>" + Resources.Titles.ShippingCharge + "</label>";
-            CashRepositoryDropDownListLabelLiteral.Text = "<label for='CashRepositoryDropDownList'>" + Resources.Titles.CashRepository + "</label>";
-            CashRepositoryBalanceTextBoxLabelLiteral.Text = "<label for='CashRepositoryBalanceTextBox'>" + Resources.Titles.CashRepositoryBalance + "</label>";
-            CostCenterDropDownListLabelLiteral.Text = "<label for='CostCenterDropDownList'>" + Resources.Titles.CostCenter + "</label>";
-            SalespersonDropDownListLabelLiteral.Text = "<label for='SalespersonDropDownList'>" + Resources.Titles.Salesperson + "</label>";
-            StatementReferenceTextBoxLabelLiteral.Text = "<label for='StatementReferenceTextBox'>" + Resources.Titles.StatementReference + "</label>";
+            RunningTotalTextBoxLabelLiteral.Text = HtmlControlHelper.GetLabel(RunningTotalTextBox.ClientID,Resources.Titles.RunningTotal);
+            TaxTotalTextBoxLabelLiteral.Text = HtmlControlHelper.GetLabel(TaxTotalTextBox.ClientID,Resources.Titles.TaxTotal);
+            GrandTotalTextBoxLabelLiteral.Text = HtmlControlHelper.GetLabel(GrandTotalTextBox.ClientID,Resources.Titles.GrandTotal);
+            ShippingAddressDropDownListLabelLiteral.Text = HtmlControlHelper.GetLabel(ShippingAddressDropDownList.ClientID,Resources.Titles.ShippingAddress);
+            ShippingCompanyDropDownListLabelLiteral.Text = HtmlControlHelper.GetLabel(ShippingCompanyDropDownList.ClientID,Resources.Titles.ShippingCompany);
+            ShippingChargeTextBoxLabelLiteral.Text = HtmlControlHelper.GetLabel(ShippingChargeTextBox.ClientID,Resources.Titles.ShippingCharge);
+            CashRepositoryDropDownListLabelLiteral.Text = HtmlControlHelper.GetLabel(CashRepositoryDropDownList.ClientID,Resources.Titles.CashRepository);
+            CashRepositoryBalanceTextBoxLabelLiteral.Text = HtmlControlHelper.GetLabel(CashRepositoryBalanceTextBox.ClientID,Resources.Titles.CashRepositoryBalance);
+            CostCenterDropDownListLabelLiteral.Text = HtmlControlHelper.GetLabel(CostCenterDropDownList.ClientID,Resources.Titles.CostCenter);
+            SalespersonDropDownListLabelLiteral.Text = HtmlControlHelper.GetLabel(SalespersonDropDownList.ClientID,Resources.Titles.Salesperson);
+            StatementReferenceTextBoxLabelLiteral.Text = HtmlControlHelper.GetLabel(StatementReferenceTextBox.ClientID,Resources.Titles.StatementReference);
         }
 
         private void LoadTransactionTypeLabel()
         {
             if (this.Book == Common.Models.Transactions.TranBook.Sales)
             {
-                TransactionTypeLiteral.Text = "<label>" + Resources.Titles.SalesType + "</label>";
+                TransactionTypeLiteral.Text = HtmlControlHelper.GetLabel(Resources.Titles.SalesType);
             }
             else
             {
-                TransactionTypeLiteral.Text = "<label>" + Resources.Titles.PurchaseType + "</label>";
+                TransactionTypeLiteral.Text = HtmlControlHelper.GetLabel(Resources.Titles.PurchaseType);
             }
         }
 
@@ -651,7 +663,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
             if (table.Count > 0)
             {
-                foreach (MixERP.Net.Common.Models.Transactions.ProductDetailsModel model in table)
+                foreach (ProductDetailsModel model in table)
                 {
                     retVal += MixERP.Net.Common.Conversion.TryCastDecimal(model.Tax);
                 }
@@ -660,15 +672,15 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             return retVal;
         }
 
-        private decimal GetRunningTotalOfTotal(Collection<MixERP.Net.Common.Models.Transactions.ProductDetailsModel> table)
+        private static decimal GetRunningTotalOfTotal(Collection<ProductDetailsModel> productDetailsModelCollection)
         {
             decimal retVal = 0;
 
-            if (table.Count > 0)
+            if (productDetailsModelCollection.Count > 0)
             {
-                foreach (MixERP.Net.Common.Models.Transactions.ProductDetailsModel model in table)
+                foreach (ProductDetailsModel productDetailsModel in productDetailsModelCollection)
                 {
-                    retVal += MixERP.Net.Common.Conversion.TryCastDecimal(model.Total);
+                    retVal += MixERP.Net.Common.Conversion.TryCastDecimal(productDetailsModel.Total);
                 }
             }
 
@@ -1000,7 +1012,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             return true;
         }
 
-        protected void OKButton_Click(object sender, EventArgs e)
+        protected void OkButton_Click(object sender, EventArgs e)
         {
             //Verify quantities of the already added items on the selected store.
             if (!this.VerifyQuantity())
@@ -1101,7 +1113,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             PartyDropDownList.Enabled = !state;
             PriceTypeDropDownList.Enabled = !state;
             ReferenceNumberTextBox.Enabled = !state;
-            OKButton.Enabled = !state;
+            OkButton.Enabled = !state;
             CancelButton.Enabled = state;
 
             if (TransactionTypeRadioButtonList.Visible)
