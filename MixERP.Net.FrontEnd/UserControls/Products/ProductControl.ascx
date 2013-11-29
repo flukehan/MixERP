@@ -21,11 +21,8 @@ http://mozilla.org/MPL/2.0/.
         <Triggers>
             <asp:AsyncPostBackTrigger ControlID="CashRepositoryDropDownList" />
             <asp:AsyncPostBackTrigger ControlID="ProductGridView" />
-            <asp:AsyncPostBackTrigger ControlID="AddButton" />
             <asp:AsyncPostBackTrigger ControlID="OkButton" />
             <asp:AsyncPostBackTrigger ControlID="CancelButton" />
-            <asp:AsyncPostBackTrigger ControlID="ItemDropDownList" />
-            <asp:AsyncPostBackTrigger ControlID="UnitDropDownList" />
             <asp:AsyncPostBackTrigger ControlID="ShippingChargeTextBox" />
             <asp:PostBackTrigger ControlID="SaveButton" />
         </Triggers>
@@ -71,7 +68,7 @@ http://mozilla.org/MPL/2.0/.
                         </td>
                         <td>
                             <asp:TextBox ID="PartyCodeTextBox" runat="server" Width="80"
-                                onblur="selectItem(this.id, 'PartyDropDownList');"
+                                onblur="selectDropDownListByValue(this.id, 'PartyDropDownList');"
                                 ToolTip="F2" />
                             <asp:DropDownList ID="PartyDropDownList" runat="server" Width="150"
                                 onchange="if(this.selectedIndex == 0) { return false };document.getElementById('PartyCodeTextBox').value = this.options[this.selectedIndex].value;"
@@ -99,24 +96,25 @@ http://mozilla.org/MPL/2.0/.
             </p>
             <div class="center">
                 <asp:GridView ID="ProductGridView" runat="server" EnableTheming="False"
-                    CssClass="grid2" ShowHeaderWhenEmpty="true"
+                    CssClass="grid2 grid3" ShowHeaderWhenEmpty="true"
                     AlternatingRowStyle-CssClass="grid2-row-alt"
                     OnRowDataBound="ProductGridView_RowDataBound"
                     OnRowCommand="ProductGridView_RowCommand"
-                    AutoGenerateColumns="False">
+                    AutoGenerateColumns="False"
+                    ShowFooter="true">
                     <Columns>
-                        <asp:BoundField DataField="ItemCode" HeaderText="<%$ Resources:Titles, Code %>" HeaderStyle-Width="70" />
-                        <asp:BoundField DataField="ItemName" HeaderText="<%$ Resources:Titles, ItemName %>" HeaderStyle-Width="315" />
-                        <asp:BoundField DataField="Quantity" HeaderText="<%$ Resources:Titles, QuantityAbbreviated %>" ItemStyle-CssClass="right" HeaderStyle-CssClass="right" HeaderStyle-Width="50" />
-                        <asp:BoundField DataField="Unit" HeaderText="<%$ Resources:Titles, Unit %>" HeaderStyle-Width="70" />
-                        <asp:BoundField DataField="Price" HeaderText="<%$ Resources:Titles, Price %>" ItemStyle-CssClass="right" HeaderStyle-CssClass="right" HeaderStyle-Width="75" DataFormatString="{0:N}" />
-                        <asp:BoundField DataField="Amount" HeaderText="<%$ Resources:Titles, Amount %>" ItemStyle-CssClass="right" HeaderStyle-CssClass="right" HeaderStyle-Width="75" DataFormatString="{0:N}" />
-                        <asp:BoundField DataField="Discount" HeaderText="<%$ Resources:Titles, Discount %>" ItemStyle-CssClass="right" HeaderStyle-CssClass="right" HeaderStyle-Width="50" DataFormatString="{0:N}" />
-                        <asp:BoundField DataField="SubTotal" HeaderText="<%$ Resources:Titles, SubTotal %>" ItemStyle-CssClass="right" HeaderStyle-CssClass="right" HeaderStyle-Width="75" DataFormatString="{0:N}" />
-                        <asp:BoundField DataField="Rate" HeaderText="<%$ Resources:Titles, Rate %>" ItemStyle-CssClass="right" HeaderStyle-CssClass="right" HeaderStyle-Width="40" DataFormatString="{0:N}" />
-                        <asp:BoundField DataField="Tax" HeaderText="<%$ Resources:Titles, Tax %>" ItemStyle-CssClass="right" HeaderStyle-CssClass="right" HeaderStyle-Width="50" DataFormatString="{0:N}" />
-                        <asp:BoundField DataField="Total" HeaderText="<%$ Resources:Titles, Total %>" ItemStyle-CssClass="right" HeaderStyle-CssClass="right" HeaderStyle-Width="80" DataFormatString="{0:N}" />
-                        <asp:TemplateField ShowHeader="False" HeaderStyle-Width="50" HeaderText="<%$ Resources:Titles, Action %>">
+                        <asp:BoundField DataField="ItemCode" HeaderText="<%$ Resources:Titles, Code %>" />
+                        <asp:BoundField DataField="ItemName" HeaderText="<%$ Resources:Titles, ItemName %>" />
+                        <asp:BoundField DataField="Quantity" HeaderText="<%$ Resources:Titles, QuantityAbbreviated %>" ItemStyle-CssClass="right" HeaderStyle-CssClass="right" />
+                        <asp:BoundField DataField="Unit" HeaderText="<%$ Resources:Titles, Unit %>" />
+                        <asp:BoundField DataField="Price" HeaderText="<%$ Resources:Titles, Price %>" ItemStyle-CssClass="right" HeaderStyle-CssClass="right" DataFormatString="{0:N}" />
+                        <asp:BoundField DataField="Amount" HeaderText="<%$ Resources:Titles, Amount %>" ItemStyle-CssClass="right" HeaderStyle-CssClass="right" DataFormatString="{0:N}" />
+                        <asp:BoundField DataField="Discount" HeaderText="<%$ Resources:Titles, Discount %>" ItemStyle-CssClass="right" HeaderStyle-CssClass="right" DataFormatString="{0:N}" />
+                        <asp:BoundField DataField="SubTotal" HeaderText="<%$ Resources:Titles, SubTotal %>" ItemStyle-CssClass="right" HeaderStyle-CssClass="right" DataFormatString="{0:N}" />
+                        <asp:BoundField DataField="Rate" HeaderText="<%$ Resources:Titles, Rate %>" ItemStyle-CssClass="right" HeaderStyle-CssClass="right" DataFormatString="{0:N}" />
+                        <asp:BoundField DataField="Tax" HeaderText="<%$ Resources:Titles, Tax %>" ItemStyle-CssClass="right" HeaderStyle-CssClass="right" DataFormatString="{0:N}" />
+                        <asp:BoundField DataField="Total" HeaderText="<%$ Resources:Titles, Total %>" ItemStyle-CssClass="right" HeaderStyle-CssClass="right" DataFormatString="{0:N}" />
+                        <asp:TemplateField ShowHeader="False" HeaderText="<%$ Resources:Titles, Action %>">
                             <ItemTemplate>
                                 <asp:ImageButton ID="DeleteImageButton" ClientIDMode="Predictable" runat="server"
                                     CausesValidation="false"
@@ -130,73 +128,10 @@ http://mozilla.org/MPL/2.0/.
                     <HeaderStyle CssClass="grid2-header" />
                     <RowStyle CssClass="grid2-row" />
                 </asp:GridView>
+                <%--                <asp:HiddenField ID="UnitNameHidden" runat="server" />
+                <asp:HiddenField ID="UnitIdHidden" runat="server" />--%>
 
                 <asp:Panel ID="FormPanel" runat="server" Enabled="false">
-                    <table id="FormTable" class="grid3" runat="server">
-                        <tr>
-                            <td>
-                                <asp:TextBox ID="ItemCodeTextBox" runat="server"
-                                    onblur="selectItem(this.id, 'ItemDropDownList');"
-                                    ToolTip="Alt + C" Width="58" />
-                            </td>
-                            <td>
-                                <asp:DropDownList ID="ItemDropDownList" runat="server"
-                                    onchange="document.getElementById('ItemCodeTextBox').value = this.options[this.selectedIndex].value;if(this.selectedIndex == 0) { return false };"
-                                    onblur="getPrice();"
-                                    ToolTip="Ctrl + I" Width="300">
-                                </asp:DropDownList>
-                            </td>
-                            <td>
-                                <asp:TextBox ID="QuantityTextBox"
-                                    runat="server" Text="1"
-                                    onblur="updateTax();calculateAmount();" CssClass="right"
-                                    ToolTip="Ctrl + Q" Width="42" />
-                            </td>
-                            <td>
-                                <asp:DropDownList ID="UnitDropDownList" runat="server" AutoPostBack="true"
-                                    onchange="$('#UnitNameHidden').val($(this).children('option').filter(':selected').text());$('#UnitIdHidden').val($(this).children('option').filter(':selected').val());"
-                                    ToolTip="Ctrl + U" Width="68">
-                                </asp:DropDownList>
-                                <asp:HiddenField ID="UnitNameHidden" runat="server" />
-                                <asp:HiddenField ID="UnitIdHidden" runat="server" />
-                            </td>
-                            <td>
-                                <asp:TextBox ID="PriceTextBox" runat="server" CssClass="right number" onblur="updateTax();calculateAmount();"
-                                    ToolTip="Alt + P" Width="65">
-                                </asp:TextBox>
-                            </td>
-                            <td>
-                                <asp:TextBox ID="AmountTextBox" runat="server" CssClass="right number" ReadOnly="true" Width="65">
-                                </asp:TextBox>
-                            </td>
-                            <td>
-                                <asp:TextBox ID="DiscountTextBox" runat="server" CssClass="right number" onblur="updateTax();calculateAmount();"
-                                    ToolTip="Ctrl + D" Width="50">
-                                </asp:TextBox>
-                            </td>
-                            <td>
-                                <asp:TextBox ID="SubtotalTextBox" runat="server" CssClass="right number" ReadOnly="true" Width="65">
-                                </asp:TextBox>
-                            </td>
-                            <td>
-                                <asp:TextBox ID="TaxRateTextBox" runat="server" onblur="updateTax();calculateAmount();" CssClass="right" Width="35">
-                                </asp:TextBox>
-                            </td>
-                            <td>
-                                <asp:TextBox ID="TaxTextBox" runat="server" CssClass="right number" onblur="calculateAmount();" ToolTip="Ctrl + T" Width="45">
-                                </asp:TextBox>
-                            </td>
-                            <td>
-                                <asp:TextBox ID="TotalTextBox" runat="server" CssClass="right number" ReadOnly="true" Width="70">
-                                </asp:TextBox>
-                            </td>
-                            <td style="width: 52px;">
-                                <asp:Button ID="AddButton" runat="server" OnClientClick="calculateAmount();" OnClick="AddButton_Click"
-                                    Text="<%$Resources:Titles, Add %>"
-                                    ToolTip="CTRL + Enter" />
-                            </td>
-                        </tr>
-                    </table>
                     <asp:Label ID="ErrorLabel" runat="server" CssClass="error" />
                 </asp:Panel>
                 <div class="vpad8"></div>
@@ -330,9 +265,6 @@ http://mozilla.org/MPL/2.0/.
     </asp:UpdatePanel>
 </div>
 <script type="text/javascript">
-    areYouSureLocalized = '<%= Resources.Questions.AreYouSure %>';
-    updateTaxLocalized = '<%= Resources.Questions.UpdateTax %>';
-
     $(document).ready(function () {
         Sys.WebForms.PageRequestManager.getInstance().add_endRequest(AjaxPageLoadHandler);
     });
@@ -357,7 +289,7 @@ http://mozilla.org/MPL/2.0/.
         var priceTextBox = $("#PriceTextBox");
         var amountTextBox = $("#AmountTextBox");
         var discountTextBox = $("#DiscountTextBox");
-        var subTotalTextBox = $("#SubTotalTextBox");
+        var subTotalTextBox = $("#SubtotalTextBox");
         var taxTextBox = $("#TaxTextBox");
         var totalTextBox = $("#TotalTextBox");
 
@@ -383,16 +315,16 @@ http://mozilla.org/MPL/2.0/.
             taxableAmount = subTotal;
         }
 
-        var tax = (taxableAmount * parseFloat2(taxRateTextBox.val())) / 100;
+        var tax = (taxableAmount * parseFloat2(parseFormattedNumber(taxRateTextBox.val()))) / 100;
 
-        if (parseFloat2(tax).toFixed(2) != parseFloat2(taxTextBox.val()).toFixed(2)) {
-            var question = confirm(updateTaxLocalized);
+        if (parseFloat2(tax).toFixed(2) != parseFloat2(parseFormattedNumber(taxTextBox.val())).toFixed(2)) {
+            var question = confirm(localizedUpdateTax);
             if (question) {
                 if (tax.toFixed) {
-                    taxTextBox.val(tax.toFixed(2));
+                    taxTextBox.val(getFormattedNumber(tax.toFixed(2)));
                 }
                 else {
-                    taxTextBox.val(tax);
+                    taxTextBox.val(getFormattedNumber(tax));
                 }
             }
         }

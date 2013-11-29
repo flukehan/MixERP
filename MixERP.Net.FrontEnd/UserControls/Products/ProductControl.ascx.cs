@@ -52,8 +52,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
     }
 
     /// <summary>
-    /// Todo: Refactor the code to return values instead of controls.
-    /// This class is subject to be moved to a standalone server control class library.
+    /// Todo: This class is subject to be moved to a standalone server control class library.
     /// This UserControl provides a common interface for all transactions that are related to
     /// stock and/or inventory. Everything is handled in this class, except for the Save event.
     /// The save event is exposed to the page containing this control and should be handled there.
@@ -303,20 +302,194 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 return;
             }
 
-            //At this point, we only expect a delete command here.
-            //Be careful if this GridView implements other commands in the future.
+            if (e.CommandName == "Delete")
+            {
+                this.DeleteRow(e);
+            }
+            if (e.CommandName == "Add")
+            {
+                this.AddRow();
+            }
+        }
+
+        public void DeleteRow(GridViewCommandEventArgs e)
+        {
+            if (e == null)
+            {
+                return;
+            }
 
             //Get an instance of the collection of the products stored in the grid.
             Collection<MixERP.Net.Common.Models.Transactions.ProductDetailsModel> dataSource = this.GetTable();
 
             //Get the instance of grid view row on which the the command was triggered.
-            GridViewRow row = (GridViewRow)(((ImageButton)e.CommandSource).NamingContainer);
+            GridViewRow row = (GridViewRow)(((Control)e.CommandSource).NamingContainer);
 
             int index = row.RowIndex;
             dataSource.RemoveAt(index);
 
             Session[this.ID] = dataSource;
             this.BindGridView();
+        }
+
+        public void AddRow()
+        {
+            using (TextBox itemCodeTextBox = this.FindFooterControl("ItemCodeTextBox") as TextBox)
+            {
+                using (DropDownList itemDropDownList = this.FindFooterControl("ItemDropDownList") as DropDownList)
+                {
+                    using (TextBox quantityTextBox = this.FindFooterControl("QuantityTextBox") as TextBox)
+                    {
+                        using (TextBox priceTextBox = this.FindFooterControl("PriceTextBox") as TextBox)
+                        {
+                            using (TextBox discountTextBox = this.FindFooterControl("DiscountTextBox") as TextBox)
+                            {
+                                using (TextBox taxRateTextBox = this.FindFooterControl("TaxRateTextBox") as TextBox)
+                                {
+                                    using (TextBox taxTextBox = this.FindFooterControl("TaxTextBox") as TextBox)
+                                    {
+                                        using (DropDownList unitDropDownList = this.FindFooterControl("UnitDropDownList") as DropDownList)
+                                        {
+                                            using (HiddenField unitNameHidden = this.UpdatePanel1.FindControl("UnitNameHidden") as HiddenField)
+                                            {
+                                                using (HiddenField unitIdHidden = this.UpdatePanel1.FindControl("UnitIdHidden") as HiddenField)
+                                                {
+                                                    string itemCode = itemCodeTextBox.Text;
+                                                    string itemName = itemDropDownList.SelectedItem.Text;
+                                                    int quantity = MixERP.Net.Common.Conversion.TryCastInteger(quantityTextBox.Text);
+                                                    string unit = unitNameHidden.Value;
+                                                    int unitId = MixERP.Net.Common.Conversion.TryCastInteger(unitIdHidden.Value);
+                                                    decimal itemInStock = 0;
+                                                    decimal price = MixERP.Net.Common.Conversion.TryCastDecimal(priceTextBox.Text);
+                                                    decimal discount = MixERP.Net.Common.Conversion.TryCastDecimal(discountTextBox.Text);
+                                                    decimal taxRate = MixERP.Net.Common.Conversion.TryCastDecimal(taxRateTextBox.Text);
+                                                    decimal tax = MixERP.Net.Common.Conversion.TryCastDecimal(taxTextBox.Text);
+                                                    int storeId = 0;
+
+                                                    if (StoreDropDownList.SelectedItem != null)
+                                                    {
+                                                        storeId = MixERP.Net.Common.Conversion.TryCastInteger(StoreDropDownList.SelectedItem.Value);
+                                                    }
+
+                                                    #region Validation
+
+                                                    if (string.IsNullOrWhiteSpace(itemCode))
+                                                    {
+                                                        MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(itemCodeTextBox);
+                                                        return;
+                                                    }
+                                                    else
+                                                    {
+                                                        MixERP.Net.BusinessLayer.Helpers.FormHelper.RemoveDirty(itemCodeTextBox);
+                                                    }
+
+                                                    if (!MixERP.Net.BusinessLayer.Core.Items.ItemExistsByCode(itemCode))
+                                                    {
+                                                        MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(itemCodeTextBox);
+                                                        return;
+                                                    }
+                                                    else
+                                                    {
+                                                        MixERP.Net.BusinessLayer.Helpers.FormHelper.RemoveDirty(itemCodeTextBox);
+                                                    }
+
+                                                    if (quantity < 1)
+                                                    {
+                                                        MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(quantityTextBox);
+                                                        return;
+                                                    }
+                                                    else
+                                                    {
+                                                        MixERP.Net.BusinessLayer.Helpers.FormHelper.RemoveDirty(quantityTextBox);
+                                                    }
+
+                                                    if (!MixERP.Net.BusinessLayer.Core.Units.UnitExistsByName(unit))
+                                                    {
+                                                        MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(unitDropDownList);
+                                                        return;
+                                                    }
+                                                    else
+                                                    {
+                                                        MixERP.Net.BusinessLayer.Helpers.FormHelper.RemoveDirty(unitDropDownList);
+                                                    }
+
+                                                    if (price <= 0)
+                                                    {
+                                                        MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(priceTextBox);
+                                                        return;
+                                                    }
+                                                    else
+                                                    {
+                                                        MixERP.Net.BusinessLayer.Helpers.FormHelper.RemoveDirty(priceTextBox);
+                                                    }
+
+                                                    if (discount < 0)
+                                                    {
+                                                        MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(discountTextBox);
+                                                        return;
+                                                    }
+                                                    else
+                                                    {
+                                                        if (discount > (price * quantity))
+                                                        {
+                                                            MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(discountTextBox);
+                                                            return;
+                                                        }
+                                                        else
+                                                        {
+                                                            MixERP.Net.BusinessLayer.Helpers.FormHelper.RemoveDirty(discountTextBox);
+                                                        }
+                                                    }
+
+                                                    if (tax < 0)
+                                                    {
+                                                        MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(taxTextBox);
+                                                        return;
+                                                    }
+                                                    else
+                                                    {
+                                                        MixERP.Net.BusinessLayer.Helpers.FormHelper.RemoveDirty(taxTextBox);
+                                                    }
+
+                                                    if (this.VerifyStock)
+                                                    {
+                                                        if (this.Book == Common.Models.Transactions.TranBook.Sales)
+                                                        {
+                                                            if (MixERP.Net.BusinessLayer.Core.Items.IsStockItem(itemCode))
+                                                            {
+                                                                itemInStock = MixERP.Net.BusinessLayer.Core.Items.CountItemInStock(itemCode, unitId, storeId);
+                                                                if (quantity > itemInStock)
+                                                                {
+                                                                    MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(quantityTextBox);
+                                                                    ErrorLabel.Text = String.Format(System.Threading.Thread.CurrentThread.CurrentCulture, Resources.Warnings.InsufficientStockWarning, itemInStock.ToString("G29", System.Threading.Thread.CurrentThread.CurrentCulture), unitNameHidden.Value, itemDropDownList.SelectedItem.Text);
+                                                                    return;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    #endregion
+
+                                                    this.AddRowToTable(itemCode, itemName, quantity, unit, price, discount, taxRate, tax);
+
+                                                    this.BindGridView();
+                                                    itemCodeTextBox.Text = "";
+                                                    quantityTextBox.Text = "1";
+                                                    priceTextBox.Text = "";
+                                                    discountTextBox.Text = "";
+                                                    taxTextBox.Text = "";
+
+                                                    itemCodeTextBox.Focus();
+                                                    this.LoadFooter();
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         protected void ProductGridView_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -328,6 +501,12 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
+                if (Conversion.TryCastInteger(e.Row.Cells[2].Text).Equals(0))
+                {
+                    e.Row.Visible = false;
+                    return;
+                }
+
                 //Yeaaaaa! This is a data row. Yippee!!!!!
 
                 ImageButton deleteImageButton = e.Row.FindControl("DeleteImageButton") as ImageButton;
@@ -351,9 +530,302 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             this.InitializeControls();
             this.LoadValuesFromSession();
             this.BindGridView();
+            this.AddUnitNameHidden();
+            this.AddUnitIdHidden();
+            this.LoadFooter();
             ScriptManager1.RegisterAsyncPostBackControl(ProductGridView);
         }
 
+        private void AddUnitNameHidden()
+        {
+            using (HiddenField unitNameHidden = new HiddenField())
+            {
+                unitNameHidden.ID = "UnitNameHidden";
+                unitNameHidden.ClientIDMode = System.Web.UI.ClientIDMode.Static;
+                UpdatePanel1.ContentTemplateContainer.Controls.Add(unitNameHidden);
+            }
+        }
+
+        private void AddUnitIdHidden()
+        {
+            using (HiddenField unitIdHidden = new HiddenField())
+            {
+                unitIdHidden.ID = "UnitIdHidden";
+                unitIdHidden.ClientIDMode = System.Web.UI.ClientIDMode.Static;
+                UpdatePanel1.ContentTemplateContainer.Controls.Add(unitIdHidden);
+            }
+        }
+
+        #region "GridView Footer"
+        private void LoadFooter()
+        {
+            using (GridViewRow footer = ProductGridView.FooterRow)
+            {
+                if (footer == null)
+                {
+                    return;
+                }
+
+                this.AddItemCodeTextBox(footer, 0);
+                this.AddItemDropDownList(footer, 1);
+                this.AddQuantityTextBox(footer, 2);
+                this.AddUnitDropDownList(footer, 3);
+                this.AddPriceTextBox(footer, 4);
+                this.AddAmountTextBox(footer, 5);
+                this.AddDiscountTextBox(footer, 6);
+                this.AddSubtotalTextBox(footer, 7);
+                this.AddTaxRateTextBox(footer, 8);
+                this.AddTaxTextBox(footer, 9);
+                this.AddTotalTextBox(footer, 10);
+                this.AddAddButton(footer, 11);
+            }
+        }
+
+        private void AddItemCodeTextBox(GridViewRow row, int index)
+        {
+            if (row == null)
+            {
+                return;
+            }
+
+            using (TextBox itemCodeTextBox = new TextBox())
+            {
+                itemCodeTextBox.ID = "ItemCodeTextBox";
+                itemCodeTextBox.ClientIDMode = System.Web.UI.ClientIDMode.Static;
+                itemCodeTextBox.Attributes.Add("onblur", "selectDropDownListByValue(this.id, 'ItemDropDownList');");
+                itemCodeTextBox.ToolTip = "Alt + C";
+                itemCodeTextBox.Width = 60;
+
+                AddControlToGridViewRow(row, itemCodeTextBox, index);
+            }
+        }
+
+        private void AddItemDropDownList(GridViewRow row, int index)
+        {
+            if (row == null)
+            {
+                return;
+            }
+
+            using (DropDownList itemDropDownList = new DropDownList())
+            {
+                itemDropDownList.ID = "ItemDropDownList";
+                itemDropDownList.ClientIDMode = System.Web.UI.ClientIDMode.Static;
+                itemDropDownList.Attributes.Add("onchange", "document.getElementById('ItemCodeTextBox').value = this.options[this.selectedIndex].value;if(this.selectedIndex == 0) { return false };");
+                itemDropDownList.Attributes.Add("onblur", "getPrice();");
+                itemDropDownList.ToolTip = "Ctrl + I";
+                itemDropDownList.Width = 300;
+
+                ScriptManager1.RegisterAsyncPostBackControl(itemDropDownList);
+                AddControlToGridViewRow(row, itemDropDownList, index);
+                this.LoadItems();
+            }
+        }
+
+        private void AddQuantityTextBox(GridViewRow row, int index)
+        {
+            if (row == null)
+            {
+                return;
+            }
+
+            using (TextBox quantityTextBox = new TextBox())
+            {
+                quantityTextBox.ID = "QuantityTextBox";
+                quantityTextBox.ClientIDMode = System.Web.UI.ClientIDMode.Static;
+                quantityTextBox.Attributes.Add("onblur", "updateTax();calculateAmount();");
+                quantityTextBox.CssClass = "right";
+                quantityTextBox.ToolTip = "Ctrl + Q";
+                quantityTextBox.Width = 50;
+                quantityTextBox.Text = "1";
+
+                AddControlToGridViewRow(row, quantityTextBox, index);
+            }
+        }
+
+        private void AddUnitDropDownList(GridViewRow row, int index)
+        {
+            if (row == null)
+            {
+                return;
+            }
+
+            using (DropDownList unitDropDownList = new DropDownList())
+            {
+                unitDropDownList.ID = "UnitDropDownList";
+                unitDropDownList.ClientIDMode = System.Web.UI.ClientIDMode.Static;
+                unitDropDownList.AutoPostBack = true;
+                unitDropDownList.Attributes.Add("onchange", "$('#UnitNameHidden').val($(this).children('option').filter(':selected').text());$('#UnitIdHidden').val($(this).children('option').filter(':selected').val());");
+                unitDropDownList.ToolTip = "Ctrl + U";
+                unitDropDownList.Width = 70;
+                ScriptManager1.RegisterAsyncPostBackControl(unitDropDownList);
+                AddControlToGridViewRow(row, unitDropDownList, index);
+            }
+        }
+
+
+        private void AddPriceTextBox(GridViewRow row, int index)
+        {
+            if (row == null)
+            {
+                return;
+            }
+
+            using (TextBox priceTextBox = new TextBox())
+            {
+                priceTextBox.ID = "PriceTextBox";
+                priceTextBox.ClientIDMode = System.Web.UI.ClientIDMode.Static;
+                priceTextBox.Attributes.Add("onblur", "updateTax();calculateAmount();");
+                priceTextBox.CssClass = "right number";
+                priceTextBox.ToolTip = "Alt + P";
+                priceTextBox.Width = 65;
+
+                AddControlToGridViewRow(row, priceTextBox, index);
+            }
+        }
+
+        private void AddAmountTextBox(GridViewRow row, int index)
+        {
+            if (row == null)
+            {
+                return;
+            }
+
+            using (TextBox amountTextBox = new TextBox())
+            {
+                amountTextBox.ID = "AmountTextBox";
+                amountTextBox.ClientIDMode = System.Web.UI.ClientIDMode.Static;
+                amountTextBox.CssClass = "right number";
+                amountTextBox.ReadOnly = true;
+                amountTextBox.Width = 70;
+
+                AddControlToGridViewRow(row, amountTextBox, index);
+            }
+        }
+
+        private void AddDiscountTextBox(GridViewRow row, int index)
+        {
+            if (row == null)
+            {
+                return;
+            }
+
+            using (TextBox discountTextBox = new TextBox())
+            {
+                discountTextBox.ID = "DiscountTextBox";
+                discountTextBox.ClientIDMode = System.Web.UI.ClientIDMode.Static;
+                discountTextBox.CssClass = "right number";
+                discountTextBox.Attributes.Add("onblur", "updateTax();calculateAmount();");
+                discountTextBox.ToolTip = "Ctrl + D";
+
+                discountTextBox.Width = 50;
+
+                AddControlToGridViewRow(row, discountTextBox, index);
+            }
+        }
+
+        private void AddSubtotalTextBox(GridViewRow row, int index)
+        {
+            if (row == null)
+            {
+                return;
+            }
+
+            using (TextBox subtotalTextBox = new TextBox())
+            {
+                subtotalTextBox.ID = "SubtotalTextBox";
+                subtotalTextBox.ClientIDMode = System.Web.UI.ClientIDMode.Static;
+                subtotalTextBox.CssClass = "right number";
+                subtotalTextBox.ReadOnly = true;
+                subtotalTextBox.Width = 70;
+
+                AddControlToGridViewRow(row, subtotalTextBox, index);
+            }
+        }
+
+        private void AddTaxRateTextBox(GridViewRow row, int index)
+        {
+            if (row == null)
+            {
+                return;
+            }
+
+            using (TextBox taxRateTextBox = new TextBox())
+            {
+                taxRateTextBox.ID = "TaxRateTextBox";
+                taxRateTextBox.ClientIDMode = System.Web.UI.ClientIDMode.Static;
+                taxRateTextBox.Attributes.Add("onblur", "updateTax();calculateAmount();");
+                taxRateTextBox.CssClass = "right";
+                taxRateTextBox.Width = 40;
+
+                AddControlToGridViewRow(row, taxRateTextBox, index);
+            }
+        }
+
+        private void AddTaxTextBox(GridViewRow row, int index)
+        {
+            if (row == null)
+            {
+                return;
+            }
+
+            using (TextBox taxTextBox = new TextBox())
+            {
+                taxTextBox.ID = "TaxTextBox";
+                taxTextBox.ClientIDMode = System.Web.UI.ClientIDMode.Static;
+                taxTextBox.Attributes.Add("onblur", "calculateAmount();");
+                taxTextBox.CssClass = "right number";
+                taxTextBox.Width = 50;
+                taxTextBox.ToolTip = "Ctrl + T";
+
+                AddControlToGridViewRow(row, taxTextBox, index);
+            }
+        }
+
+        private void AddTotalTextBox(GridViewRow row, int index)
+        {
+            if (row == null)
+            {
+                return;
+            }
+
+            using (TextBox totalTextBox = new TextBox())
+            {
+                totalTextBox.ID = "TotalTextBox";
+                totalTextBox.ClientIDMode = System.Web.UI.ClientIDMode.Static;
+                totalTextBox.CssClass = "right number";
+                totalTextBox.ReadOnly = true;
+                totalTextBox.Width = 70;
+
+                AddControlToGridViewRow(row, totalTextBox, index);
+            }
+        }
+
+        private void AddAddButton(GridViewRow row, int index)
+        {
+            if (row == null)
+            {
+                return;
+            }
+
+            using (Button addButton = new Button())
+            {
+                addButton.ID = "AddButton";
+                addButton.OnClientClick = "calculateAmount();";
+                addButton.CommandName = "Add";
+                addButton.Text = Resources.Titles.Add;
+                addButton.ToolTip = "CTRL + Enter";
+
+                this.ScriptManager1.RegisterAsyncPostBackControl(addButton);
+                AddControlToGridViewRow(row, addButton, index);
+            }
+        }
+
+        private static void AddControlToGridViewRow(GridViewRow row, Control control, int columnIndex)
+        {
+            row.Cells[columnIndex].Controls.Add(control);
+        }
+        #endregion
 
         private void LoadValuesFromSession()
         {
@@ -454,21 +926,21 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             DateLiteral.Text = HtmlControlHelper.GetLabel(DateTextBox.ClientID, Resources.Titles.ValueDate);
             StoreLiteral.Text = HtmlControlHelper.GetLabel(StoreDropDownList.ClientID, Resources.Titles.SelectStore);
 
-            PartyLiteral.Text = HtmlControlHelper.GetLabel(PartyCodeTextBox.ClientID,Resources.Titles.SelectParty);
-            PriceTypeLiteral.Text = HtmlControlHelper.GetLabel(PriceTypeDropDownList.ClientID,Resources.Titles.PriceType);
-            ReferenceNumberLiteral.Text = HtmlControlHelper.GetLabel(ReferenceNumberTextBox.ClientID,Resources.Titles.ReferenceNumberAbbreviated);
+            PartyLiteral.Text = HtmlControlHelper.GetLabel(PartyCodeTextBox.ClientID, Resources.Titles.SelectParty);
+            PriceTypeLiteral.Text = HtmlControlHelper.GetLabel(PriceTypeDropDownList.ClientID, Resources.Titles.PriceType);
+            ReferenceNumberLiteral.Text = HtmlControlHelper.GetLabel(ReferenceNumberTextBox.ClientID, Resources.Titles.ReferenceNumberAbbreviated);
 
-            RunningTotalTextBoxLabelLiteral.Text = HtmlControlHelper.GetLabel(RunningTotalTextBox.ClientID,Resources.Titles.RunningTotal);
-            TaxTotalTextBoxLabelLiteral.Text = HtmlControlHelper.GetLabel(TaxTotalTextBox.ClientID,Resources.Titles.TaxTotal);
-            GrandTotalTextBoxLabelLiteral.Text = HtmlControlHelper.GetLabel(GrandTotalTextBox.ClientID,Resources.Titles.GrandTotal);
-            ShippingAddressDropDownListLabelLiteral.Text = HtmlControlHelper.GetLabel(ShippingAddressDropDownList.ClientID,Resources.Titles.ShippingAddress);
-            ShippingCompanyDropDownListLabelLiteral.Text = HtmlControlHelper.GetLabel(ShippingCompanyDropDownList.ClientID,Resources.Titles.ShippingCompany);
-            ShippingChargeTextBoxLabelLiteral.Text = HtmlControlHelper.GetLabel(ShippingChargeTextBox.ClientID,Resources.Titles.ShippingCharge);
-            CashRepositoryDropDownListLabelLiteral.Text = HtmlControlHelper.GetLabel(CashRepositoryDropDownList.ClientID,Resources.Titles.CashRepository);
-            CashRepositoryBalanceTextBoxLabelLiteral.Text = HtmlControlHelper.GetLabel(CashRepositoryBalanceTextBox.ClientID,Resources.Titles.CashRepositoryBalance);
-            CostCenterDropDownListLabelLiteral.Text = HtmlControlHelper.GetLabel(CostCenterDropDownList.ClientID,Resources.Titles.CostCenter);
-            SalespersonDropDownListLabelLiteral.Text = HtmlControlHelper.GetLabel(SalespersonDropDownList.ClientID,Resources.Titles.Salesperson);
-            StatementReferenceTextBoxLabelLiteral.Text = HtmlControlHelper.GetLabel(StatementReferenceTextBox.ClientID,Resources.Titles.StatementReference);
+            RunningTotalTextBoxLabelLiteral.Text = HtmlControlHelper.GetLabel(RunningTotalTextBox.ClientID, Resources.Titles.RunningTotal);
+            TaxTotalTextBoxLabelLiteral.Text = HtmlControlHelper.GetLabel(TaxTotalTextBox.ClientID, Resources.Titles.TaxTotal);
+            GrandTotalTextBoxLabelLiteral.Text = HtmlControlHelper.GetLabel(GrandTotalTextBox.ClientID, Resources.Titles.GrandTotal);
+            ShippingAddressDropDownListLabelLiteral.Text = HtmlControlHelper.GetLabel(ShippingAddressDropDownList.ClientID, Resources.Titles.ShippingAddress);
+            ShippingCompanyDropDownListLabelLiteral.Text = HtmlControlHelper.GetLabel(ShippingCompanyDropDownList.ClientID, Resources.Titles.ShippingCompany);
+            ShippingChargeTextBoxLabelLiteral.Text = HtmlControlHelper.GetLabel(ShippingChargeTextBox.ClientID, Resources.Titles.ShippingCharge);
+            CashRepositoryDropDownListLabelLiteral.Text = HtmlControlHelper.GetLabel(CashRepositoryDropDownList.ClientID, Resources.Titles.CashRepository);
+            CashRepositoryBalanceTextBoxLabelLiteral.Text = HtmlControlHelper.GetLabel(CashRepositoryBalanceTextBox.ClientID, Resources.Titles.CashRepositoryBalance);
+            CostCenterDropDownListLabelLiteral.Text = HtmlControlHelper.GetLabel(CostCenterDropDownList.ClientID, Resources.Titles.CostCenter);
+            SalespersonDropDownListLabelLiteral.Text = HtmlControlHelper.GetLabel(SalespersonDropDownList.ClientID, Resources.Titles.Salesperson);
+            StatementReferenceTextBoxLabelLiteral.Text = HtmlControlHelper.GetLabel(StatementReferenceTextBox.ClientID, Resources.Titles.StatementReference);
         }
 
         private void LoadTransactionTypeLabel()
@@ -483,22 +955,53 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             }
         }
 
-        private void LoadItems()
+        private Control FindFooterControl(string controlId)
         {
-            using (Services.ItemData data = new Services.ItemData())
+            using (GridViewRow footer = ProductGridView.FooterRow)
             {
-                if (this.Book == Common.Models.Transactions.TranBook.Sales)
+                if (footer == null)
                 {
-                    ItemDropDownList.DataSource = data.GetItems();
-                }
-                else
-                {
-                    ItemDropDownList.DataSource = data.GetStockItems();
+                    return null;
                 }
 
-                ItemDropDownList.DataTextField = "Text";
-                ItemDropDownList.DataValueField = "Value";
-                ItemDropDownList.DataBind();
+                foreach (TableCell cell in footer.Cells)
+                {
+                    Control control = cell.FindControl(controlId);
+
+                    if (control != null)
+                    {
+                        return control;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        private void LoadItems()
+        {
+            using (DropDownList itemDropDownList = FindFooterControl("ItemDropDownList") as DropDownList)
+            {
+                if (itemDropDownList == null)
+                {
+                    return;
+                }
+
+                using (Services.ItemData data = new Services.ItemData())
+                {
+                    if (this.Book == Common.Models.Transactions.TranBook.Sales)
+                    {
+                        itemDropDownList.DataSource = data.GetItems();
+                    }
+                    else
+                    {
+                        itemDropDownList.DataSource = data.GetStockItems();
+                    }
+
+                    itemDropDownList.DataTextField = "Text";
+                    itemDropDownList.DataValueField = "Value";
+                    itemDropDownList.DataBind();
+                }
             }
         }
 
@@ -557,7 +1060,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         {
             this.LoadLabels();
             this.LoadTransactionTypeLabel();
-            this.LoadItems();
             this.LoadPriceTypes();
             this.LoadShippers();
             this.LoadCostCenters();
@@ -587,7 +1089,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 Control c = this.Page.FindControl(Request.Form["__EVENTTARGET"]);
                 if (c != null)
                 {
-                    if (c.ID.Equals(UnitDropDownList.ClientID))
+                    if (c.ID.Equals("UnitDropDownList"))
                     {
                         UnitDropDownList_SelectedIndexChanged(c, e);
                     }
@@ -704,135 +1206,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             }
         }
 
-        protected void AddButton_Click(object sender, EventArgs e)
-        {
-            string itemCode = ItemCodeTextBox.Text;
-            string itemName = ItemDropDownList.SelectedItem.Text;
-            int quantity = MixERP.Net.Common.Conversion.TryCastInteger(QuantityTextBox.Text);
-            string unit = UnitNameHidden.Value;
-            int unitId = MixERP.Net.Common.Conversion.TryCastInteger(UnitIdHidden.Value);
-            decimal itemInStock = 0;
-            decimal price = MixERP.Net.Common.Conversion.TryCastDecimal(PriceTextBox.Text);
-            decimal discount = MixERP.Net.Common.Conversion.TryCastDecimal(DiscountTextBox.Text);
-            decimal taxRate = MixERP.Net.Common.Conversion.TryCastDecimal(TaxRateTextBox.Text);
-            decimal tax = MixERP.Net.Common.Conversion.TryCastDecimal(TaxTextBox.Text);
-            int storeId = 0;
-
-            if (StoreDropDownList.SelectedItem != null)
-            {
-                storeId = MixERP.Net.Common.Conversion.TryCastInteger(StoreDropDownList.SelectedItem.Value);
-            }
-
-            #region Validation
-
-            if (string.IsNullOrWhiteSpace(itemCode))
-            {
-                MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(ItemCodeTextBox);
-                return;
-            }
-            else
-            {
-                MixERP.Net.BusinessLayer.Helpers.FormHelper.RemoveDirty(ItemCodeTextBox);
-            }
-
-            if (!MixERP.Net.BusinessLayer.Core.Items.ItemExistsByCode(itemCode))
-            {
-                MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(ItemCodeTextBox);
-                return;
-            }
-            else
-            {
-                MixERP.Net.BusinessLayer.Helpers.FormHelper.RemoveDirty(ItemCodeTextBox);
-            }
-
-            if (quantity < 1)
-            {
-                MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(QuantityTextBox);
-                return;
-            }
-            else
-            {
-                MixERP.Net.BusinessLayer.Helpers.FormHelper.RemoveDirty(QuantityTextBox);
-            }
-
-            if (!MixERP.Net.BusinessLayer.Core.Units.UnitExistsByName(unit))
-            {
-                MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(UnitDropDownList);
-                return;
-            }
-            else
-            {
-                MixERP.Net.BusinessLayer.Helpers.FormHelper.RemoveDirty(UnitDropDownList);
-            }
-
-            if (price <= 0)
-            {
-                MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(PriceTextBox);
-                return;
-            }
-            else
-            {
-                MixERP.Net.BusinessLayer.Helpers.FormHelper.RemoveDirty(PriceTextBox);
-            }
-
-            if (discount < 0)
-            {
-                MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(DiscountTextBox);
-                return;
-            }
-            else
-            {
-                if (discount > (price * quantity))
-                {
-                    MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(DiscountTextBox);
-                    return;
-                }
-                else
-                {
-                    MixERP.Net.BusinessLayer.Helpers.FormHelper.RemoveDirty(DiscountTextBox);
-                }
-            }
-
-            if (tax < 0)
-            {
-                MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(TaxTextBox);
-                return;
-            }
-            else
-            {
-                MixERP.Net.BusinessLayer.Helpers.FormHelper.RemoveDirty(TaxTextBox);
-            }
-
-            if (this.VerifyStock)
-            {
-                if (this.Book == Common.Models.Transactions.TranBook.Sales)
-                {
-                    if (MixERP.Net.BusinessLayer.Core.Items.IsStockItem(itemCode))
-                    {
-                        itemInStock = MixERP.Net.BusinessLayer.Core.Items.CountItemInStock(itemCode, unitId, storeId);
-                        if (quantity > itemInStock)
-                        {
-                            MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(QuantityTextBox);
-                            ErrorLabel.Text = String.Format(System.Threading.Thread.CurrentThread.CurrentCulture, Resources.Warnings.InsufficientStockWarning, itemInStock.ToString("G29", System.Threading.Thread.CurrentThread.CurrentCulture), UnitNameHidden.Value, ItemDropDownList.SelectedItem.Text);
-                            return;
-                        }
-                    }
-                }
-            }
-            #endregion
-
-            this.AddRowToTable(itemCode, itemName, quantity, unit, price, discount, taxRate, tax);
-
-            this.BindGridView();
-            ItemCodeTextBox.Text = "";
-            QuantityTextBox.Text = "1";
-            PriceTextBox.Text = "";
-            DiscountTextBox.Text = "";
-            TaxTextBox.Text = "";
-
-            ItemCodeTextBox.Focus();
-        }
-
         private void AddRowToTable(string itemCode, string itemName, int quantity, string unit, decimal price, decimal discount, decimal taxRate, decimal tax)
         {
             Collection<MixERP.Net.Common.Models.Transactions.ProductDetailsModel> table = this.GetTable();
@@ -860,10 +1233,13 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         private Collection<MixERP.Net.Common.Models.Transactions.ProductDetailsModel> GetTable()
         {
+            Collection<ProductDetailsModel> productCollection = new Collection<ProductDetailsModel>();
+            productCollection.Add(new ProductDetailsModel());
+
             if (Session[this.ID] != null)
             {
                 //Get an instance of the ProductDetailsModel collection stored in session.
-                var productCollection = (Collection<MixERP.Net.Common.Models.Transactions.ProductDetailsModel>)Session[this.ID];
+                productCollection = (Collection<ProductDetailsModel>)Session[this.ID];
 
                 //Summate the collection.
                 productCollection = SummateProducts(productCollection);
@@ -871,10 +1247,9 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 //Store the summated table in session.
                 Session[this.ID] = productCollection;
 
-                return productCollection;
             }
 
-            return new Collection<Common.Models.Transactions.ProductDetailsModel>();
+            return productCollection;
         }
 
         private static Collection<MixERP.Net.Common.Models.Transactions.ProductDetailsModel> SummateProducts(Collection<MixERP.Net.Common.Models.Transactions.ProductDetailsModel> productCollection)
@@ -914,42 +1289,69 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         void UnitDropDownList_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.DisplayPrice();
-            PriceTextBox.Focus();
+            using (TextBox priceTextBox = this.FindFooterControl("PriceTextBox") as TextBox)
+            {
+                priceTextBox.Focus();
+            }
         }
 
         private void DisplayPrice()
         {
-            string itemCode = ItemDropDownList.SelectedItem.Value;
-            string party = string.Empty;
-
-            int unitId = MixERP.Net.Common.Conversion.TryCastInteger(UnitIdHidden.Value);
-
-            decimal price = 0;
-
-            if (this.Book == Common.Models.Transactions.TranBook.Sales)
+            using (DropDownList itemDropDownList = this.FindFooterControl("ItemDropDownList") as DropDownList)
             {
-                party = PartyDropDownList.SelectedItem.Value;
-                short priceTypeId = MixERP.Net.Common.Conversion.TryCastShort(PriceTypeDropDownList.SelectedItem.Value);
-                price = MixERP.Net.BusinessLayer.Core.Items.GetItemSellingPrice(itemCode, party, priceTypeId, unitId);
+                using (TextBox discountTextBox = this.FindFooterControl("DiscountTextBox") as TextBox)
+                {
+                    using (TextBox priceTextBox = this.FindFooterControl("PriceTextBox") as TextBox)
+                    {
+                        using (TextBox taxRateTextBox = this.FindFooterControl("TaxRateTextBox") as TextBox)
+                        {
+                            using (TextBox taxTextBox = this.FindFooterControl("TaxTextBox") as TextBox)
+                            {
+                                using (TextBox quantityTextBox = this.FindFooterControl("QuantityTextBox") as TextBox)
+                                {
+                                    using (TextBox amountTextBox = this.FindFooterControl("AmountTextBox") as TextBox)
+                                    {
+                                        using (HiddenField unitIdHidden = this.UpdatePanel1.FindControl("UnitIdHidden") as HiddenField)
+                                        {
+                                            string itemCode = itemDropDownList.SelectedItem.Value;
+                                            string party = string.Empty;
+
+                                            int unitId = MixERP.Net.Common.Conversion.TryCastInteger(unitIdHidden.Value);
+
+                                            decimal price = 0;
+
+                                            if (this.Book == Common.Models.Transactions.TranBook.Sales)
+                                            {
+                                                party = PartyDropDownList.SelectedItem.Value;
+                                                short priceTypeId = MixERP.Net.Common.Conversion.TryCastShort(PriceTypeDropDownList.SelectedItem.Value);
+                                                price = MixERP.Net.BusinessLayer.Core.Items.GetItemSellingPrice(itemCode, party, priceTypeId, unitId);
+                                            }
+                                            else
+                                            {
+                                                party = PartyDropDownList.SelectedItem.Value;
+                                                price = MixERP.Net.BusinessLayer.Core.Items.GetItemCostPrice(itemCode, party, unitId);
+                                            }
+
+                                            decimal discount = MixERP.Net.Common.Conversion.TryCastDecimal(discountTextBox.Text);
+                                            decimal taxRate = MixERP.Net.BusinessLayer.Core.Items.GetTaxRate(itemCode);
+
+
+                                            priceTextBox.Text = price.ToString(System.Threading.Thread.CurrentThread.CurrentCulture);
+
+                                            taxRateTextBox.Text = taxRate.ToString(System.Threading.Thread.CurrentThread.CurrentCulture);
+                                            taxTextBox.Text = (((price - discount) * taxRate) / 100.00m).ToString("#.##", System.Threading.Thread.CurrentThread.CurrentCulture);
+
+                                            decimal amount = price * MixERP.Net.Common.Conversion.TryCastInteger(quantityTextBox.Text);
+
+                                            amountTextBox.Text = amount.ToString(System.Threading.Thread.CurrentThread.CurrentCulture);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
-            else
-            {
-                party = PartyDropDownList.SelectedItem.Value;
-                price = MixERP.Net.BusinessLayer.Core.Items.GetItemCostPrice(itemCode, party, unitId);
-            }
-
-            decimal discount = MixERP.Net.Common.Conversion.TryCastDecimal(DiscountTextBox.Text);
-            decimal taxRate = MixERP.Net.BusinessLayer.Core.Items.GetTaxRate(itemCode);
-
-
-            PriceTextBox.Text = price.ToString(System.Threading.Thread.CurrentThread.CurrentCulture);
-
-            TaxRateTextBox.Text = taxRate.ToString(System.Threading.Thread.CurrentThread.CurrentCulture);
-            TaxTextBox.Text = (((price - discount) * taxRate) / 100.00m).ToString("#.##", System.Threading.Thread.CurrentThread.CurrentCulture);
-
-            decimal amount = price * MixERP.Net.Common.Conversion.TryCastInteger(QuantityTextBox.Text);
-
-            AmountTextBox.Text = amount.ToString(System.Threading.Thread.CurrentThread.CurrentCulture);
         }
 
         private bool VerifyQuantity()
@@ -1084,7 +1486,13 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
             ModeHiddenField.Value = "Started";
             this.SetControlStates();
-            ItemCodeTextBox.Focus();
+            using (TextBox itemCodeTextBox = this.FindFooterControl("ItemCodeTextBox") as TextBox)
+            {
+                if (itemCodeTextBox != null)
+                {
+                    itemCodeTextBox.Focus();
+                }
+            }
         }
 
         protected void CancelButton_Click(object sender, EventArgs e)

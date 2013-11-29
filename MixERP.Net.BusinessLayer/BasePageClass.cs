@@ -96,31 +96,17 @@ namespace MixERP.Net.BusinessLayer
 
         private static void SetCulture()
         {
-            //Todo
-            Thread.CurrentThread.CurrentCulture = new CultureInfo(CultureInfo.InvariantCulture.Name);
-            LoadCulture(Thread.CurrentThread.CurrentCulture);
+            if (HttpContext.Current.Session["Culture"] == null)
+            {
+                return;
+            }
 
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo(CultureInfo.InvariantCulture.Name);
-            LoadCulture(Thread.CurrentThread.CurrentUICulture);
+            string cultureName = HttpContext.Current.Session["Culture"].ToString();
+            CultureInfo culture = new CultureInfo(cultureName);                        
+            Thread.CurrentThread.CurrentCulture = culture;
+            Thread.CurrentThread.CurrentUICulture = culture;
         }
 
-        private static void LoadCulture(CultureInfo c)
-        {
-            NumberFormatInfo numberFormat = c.NumberFormat;
-            numberFormat.NumberGroupSeparator = MixERP.Net.Common.Helpers.Parameters.ThousandSeparator();
-            numberFormat.NumberDecimalSeparator = MixERP.Net.Common.Helpers.Parameters.DecimalSeparator();
-            numberFormat.NumberDecimalDigits = MixERP.Net.Common.Conversion.TryCastInteger(MixERP.Net.Common.Helpers.Parameters.DecimalPlaces());
-            numberFormat.CurrencySymbol = MixERP.Net.Common.Helpers.Parameters.CurrencySymbol();
-            numberFormat.CurrencyGroupSeparator = MixERP.Net.Common.Helpers.Parameters.ThousandSeparator();
-            numberFormat.CurrencyDecimalSeparator = MixERP.Net.Common.Helpers.Parameters.DecimalSeparator();
-            numberFormat.CurrencyDecimalDigits = MixERP.Net.Common.Conversion.TryCastInteger(MixERP.Net.Common.Helpers.Parameters.DecimalPlaces());
-
-            DateTimeFormatInfo dateFormat = c.DateTimeFormat;
-            dateFormat.ShortDatePattern = MixERP.Net.Common.Helpers.Parameters.ShortDateFormat();
-            dateFormat.LongDatePattern = MixERP.Net.Common.Helpers.Parameters.LongDateFormat();
-            dateFormat.ShortTimePattern = MixERP.Net.Common.Helpers.Parameters.ShortTimeFormat();
-            dateFormat.LongTimePattern = MixERP.Net.Common.Helpers.Parameters.LongTimeFormat();                    
-        }
 
         private void SetSession()
         {

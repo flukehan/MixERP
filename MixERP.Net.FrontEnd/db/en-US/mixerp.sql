@@ -790,7 +790,8 @@ CREATE TABLE audit.logins
 	browser 				national character varying(500) NOT NULL,
 	ip_address 				national character varying(50) NOT NULL,
 	login_date_time 			TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT(now()),
-	remote_user 				national character varying(50) NOT NULL
+	remote_user 				national character varying(50) NOT NULL,
+	culture					national character varying(12) NOT NULL
 );
 
 CREATE FUNCTION office.get_login_id(_user_id integer)
@@ -822,6 +823,28 @@ BEGIN
 	RETURN
 	(
 		SELECT office_id
+		FROM audit.logins
+		WHERE user_id=$1
+		AND login_date_time = 
+		(
+			SELECT MAX(login_date_time)
+			FROM audit.logins
+			WHERE user_id=$1
+		)
+	);
+END
+$$
+LANGUAGE plpgsql;
+
+
+CREATE FUNCTION office.get_logged_in_culture(_user_id integer)
+RETURNS bigint
+AS
+$$
+BEGIN
+	RETURN
+	(
+		SELECT culture
 		FROM audit.logins
 		WHERE user_id=$1
 		AND login_date_time = 
@@ -936,6 +959,17 @@ CREATE TABLE core.menus
 
 CREATE UNIQUE INDEX menus_menu_code_uix
 ON core.menus(UPPER(menu_code));
+
+CREATE TABLE core.menu_locale
+(
+	menu_locale_id				SERIAL NOT NULL PRIMARY KEY,
+	menu_id 				integer NOT NULL REFERENCES core.menus(menu_id),
+	culture					national character varying(12) NOT NULL,
+	menu_text 				national character varying(250) NOT NULL
+);
+
+CREATE UNIQUE INDEX menu_locale_menu_id_culture_uix
+ON core.menu_locale(menu_id, LOWER(culture));
 
 CREATE FUNCTION core.get_menu_id(menu_code text)
 RETURNS INTEGER
@@ -1124,6 +1158,7 @@ SELECT
 	users.full_name,
 	office.get_login_id(office.users.user_id) AS login_id,
 	office.get_logged_in_office_id(office.users.user_id) AS office_id,
+	office.get_logged_in_culture(office.users.user_id) AS culture,
 	logged_in_office.office_code || ' (' || logged_in_office.office_name || ')' AS office,
 	logged_in_office.office_code,
 	logged_in_office.office_name,

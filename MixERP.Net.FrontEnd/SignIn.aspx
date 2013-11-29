@@ -67,6 +67,19 @@ http://mozilla.org/MPL/2.0/.
                     </td>
                 </tr>
                 <tr>
+                    <td>
+                        Select Language
+                    </td>
+                    <td>
+                        <p>
+                            <asp:DropDownList ID="LanguageDropDownList" runat="server">
+                                <asp:ListItem Text="English (United States)" Value="en-US" />
+                                <asp:ListItem Text="French (France)" Value="fr-FR" />
+                            </asp:DropDownList>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
                     <td></td>
                     <td>
                         <p>

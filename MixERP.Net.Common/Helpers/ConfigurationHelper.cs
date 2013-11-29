@@ -57,7 +57,13 @@ namespace MixERP.Net.Common.Helpers
             ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap() { ExeConfigFilename = configFileName };
             Configuration config = ConfigurationManager.OpenMappedExeConfiguration(configFileMap, ConfigurationUserLevel.None);
             AppSettingsSection section = config.GetSection("appSettings") as AppSettingsSection;
-            return section.Settings[sectionName].Value;
+
+            if (section.Settings[sectionName] != null)
+            {
+                return section.Settings[sectionName].Value;
+            }
+
+            return string.Empty;
         }
     }
 }

@@ -18,6 +18,7 @@ namespace MixERP.Net.WebControls.Common
     [ToolboxData("<{0}:DateTextBox runat=server></{0}:DateTextBox>")]
     public partial class DateTextBox : CompositeControl
     {
+        //Todo: Display localized calendar.
         TextBox textBox;
         CompareValidator validator;
 
@@ -87,7 +88,7 @@ namespace MixERP.Net.WebControls.Common
             {
                 if (!locale.Contains("iv"))
                 {
-                    script += ",$.datepicker.regional['" + GetDatePickerLocale() + "'";
+                    script += ",$.datepicker.regional['" + GetDatePickerLocale() + "']";
                 }
             }
 
@@ -120,7 +121,7 @@ namespace MixERP.Net.WebControls.Common
             }
 
 
-            parameters.Add("firstDay", (weekStartDay - 1).ToString(CultureInfo.InvariantCulture));
+            parameters.Add("firstDay", (weekStartDay).ToString(CultureInfo.InvariantCulture));
             parameters.Add("constrainInput", "false");
 
             if (minDate != null)
@@ -151,7 +152,8 @@ namespace MixERP.Net.WebControls.Common
 
         private static string GetDatePickerFormat()
         {
-            return ConfigurationHelper.GetParameter("DatePickerDateFormat");
+            //Todo: jQuery date format
+            return "dd/mm/yy";
         }
 
         private static string GetDatePickerLocale()
@@ -161,7 +163,7 @@ namespace MixERP.Net.WebControls.Common
 
         private static int GetWeekStartDay()
         {
-            return Conversion.TryCastInteger(ConfigurationHelper.GetParameter("DatePickerWeekStartDay"));
+            return (int)MixERP.Net.Common.Helpers.LocalizationHelper.GetCurrentCulture().DateTimeFormat.FirstDayOfWeek;
         }
 
         private static bool ShowWeekNumber()

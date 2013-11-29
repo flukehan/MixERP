@@ -89,7 +89,7 @@ http://mozilla.org/MPL/2.0/.
                     <tr>
                         <td>
                             <asp:TextBox ID="AccountCodeTextBox" runat="server" Width="100"
-                                onblur="selectItem(this.id, 'AccountDropDownList');" ToolTip="Alt + C" />
+                                onblur="selectDropDownListByValue(this.id, 'AccountDropDownList');" ToolTip="Alt + C" />
                         </td>
                         <td>
                             <asp:DropDownList ID="AccountDropDownList" runat="server" Width="250"
@@ -159,7 +159,7 @@ http://mozilla.org/MPL/2.0/.
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceholder" runat="server">
     <script type="text/javascript">
-        areYouSureLocalized = '<%= Resources.Questions.AreYouSure %>';
+        localizedAreYouSure = '<%= Resources.Questions.AreYouSure %>';
 
         $(document).ready(function () {
             shortcut.add("ALT+C", function () {

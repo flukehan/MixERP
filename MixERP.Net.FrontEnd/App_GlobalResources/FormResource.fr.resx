@@ -1,0 +1,1107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="account_code" xml:space="preserve">
+    <value>Code de Compte</value>
+  </data>
+  <data name="account_id" xml:space="preserve">
+    <value>ID de Compte</value>
+  </data>
+  <data name="account_master_code" xml:space="preserve">
+    <value>Compte Code Maître</value>
+  </data>
+  <data name="account_master_id" xml:space="preserve">
+    <value>Compte Principal Id</value>
+  </data>
+  <data name="account_master_name" xml:space="preserve">
+    <value>Nom du Compte Principal</value>
+  </data>
+  <data name="account_name" xml:space="preserve">
+    <value>Nom du Compte</value>
+  </data>
+  <data name="actions" xml:space="preserve">
+    <value>Actes</value>
+  </data>
+  <data name="activity_id" xml:space="preserve">
+    <value>Activité ID</value>
+  </data>
+  <data name="address" xml:space="preserve">
+    <value>Adresse</value>
+  </data>
+  <data name="address_line_1" xml:space="preserve">
+    <value>Adresse Ligne 1</value>
+  </data>
+  <data name="address_line_2" xml:space="preserve">
+    <value>Adresse Ligne 2</value>
+  </data>
+  <data name="ageing_slab_id" xml:space="preserve">
+    <value>Vieillissement Dalle ID</value>
+  </data>
+  <data name="ageing_slab_name" xml:space="preserve">
+    <value>Vieillissement Slab Nom</value>
+  </data>
+  <data name="agent_bonus_setup_id" xml:space="preserve">
+    <value>Agent Bonus ID d'installation</value>
+  </data>
+  <data name="agent_code" xml:space="preserve">
+    <value>Agent Code</value>
+  </data>
+  <data name="agent_id" xml:space="preserve">
+    <value>Agent ID</value>
+  </data>
+  <data name="agent_name" xml:space="preserve">
+    <value>Nom de l'agent</value>
+  </data>
+  <data name="allow_credit" xml:space="preserve">
+    <value>Autoriser Crédit</value>
+  </data>
+  <data name="allow_sales" xml:space="preserve">
+    <value>Autoriser Ventes</value>
+  </data>
+  <data name="amount" xml:space="preserve">
+    <value>Montant</value>
+  </data>
+  <data name="amount_from" xml:space="preserve">
+    <value>Montant De</value>
+  </data>
+  <data name="amount_to" xml:space="preserve">
+    <value>Nombre Pour</value>
+  </data>
+  <data name="analyze_count" xml:space="preserve">
+    <value>Analyser Comte</value>
+  </data>
+  <data name="assigned_by_user_id" xml:space="preserve">
+    <value>Assigné par ID d'utilisateur</value>
+  </data>
+  <data name="audit_ts" xml:space="preserve">
+    <value>Horodatage de vérification</value>
+  </data>
+  <data name="audit_user_id" xml:space="preserve">
+    <value>Audit ID Utilisateur</value>
+  </data>
+  <data name="autoanalyze_count" xml:space="preserve">
+    <value>Auto Analyser Comte</value>
+  </data>
+  <data name="autovacuum_count" xml:space="preserve">
+    <value>Autovacuum Comte</value>
+  </data>
+  <data name="bank_account_code" xml:space="preserve">
+    <value>Banque Code de Compte</value>
+  </data>
+  <data name="bank_account_type" xml:space="preserve">
+    <value>Banque Type de Compte</value>
+  </data>
+  <data name="bank_address" xml:space="preserve">
+    <value>Adresse de la Banque</value>
+  </data>
+  <data name="bank_branch" xml:space="preserve">
+    <value>Succursale de la Banque</value>
+  </data>
+  <data name="bank_contact_number" xml:space="preserve">
+    <value>Numéro de téléphone Banque</value>
+  </data>
+  <data name="bank_name" xml:space="preserve">
+    <value>Nom de la Banque</value>
+  </data>
+  <data name="base_quantity" xml:space="preserve">
+    <value>Grandeur de Base</value>
+  </data>
+  <data name="base_unit_id" xml:space="preserve">
+    <value>ID de l'unité de Base</value>
+  </data>
+  <data name="base_unit_name" xml:space="preserve">
+    <value>Nom de l'unité de Base</value>
+  </data>
+  <data name="bonus_rate" xml:space="preserve">
+    <value>Taux de Bonus</value>
+  </data>
+  <data name="bonus_slab_code" xml:space="preserve">
+    <value>Code de Bonus Dalle</value>
+  </data>
+  <data name="bonus_slab_detail_id" xml:space="preserve">
+    <value>Bonus Dalle Détail ID</value>
+  </data>
+  <data name="bonus_slab_id" xml:space="preserve">
+    <value>Bonus Dalle ID</value>
+  </data>
+  <data name="bonus_slab_name" xml:space="preserve">
+    <value>Nom de Dalle de Bonus</value>
+  </data>
+  <data name="book" xml:space="preserve">
+    <value>Livre</value>
+  </data>
+  <data name="brand_code" xml:space="preserve">
+    <value>Code de Marque</value>
+  </data>
+  <data name="brand_id" xml:space="preserve">
+    <value>ID Marque</value>
+  </data>
+  <data name="brand_name" xml:space="preserve">
+    <value>Nom de Marque</value>
+  </data>
+  <data name="browser" xml:space="preserve">
+    <value>Navigateur</value>
+  </data>
+  <data name="can_self_verify" xml:space="preserve">
+    <value>Peut auto-Vérifier</value>
+  </data>
+  <data name="can_verify_gl_transactions" xml:space="preserve">
+    <value>Peut vérifier les transactions GL</value>
+  </data>
+  <data name="can_verify_purchase_transactions" xml:space="preserve">
+    <value>Peut Vérifiez Achat Transactions</value>
+  </data>
+  <data name="can_verify_sales_transactions" xml:space="preserve">
+    <value>Pouvez Vérifier les Transactions de Vente</value>
+  </data>
+  <data name="cashier_id" xml:space="preserve">
+    <value>Caissier ID</value>
+  </data>
+  <data name="cash_repository_code" xml:space="preserve">
+    <value>Code de Dépôt en Espèces</value>
+  </data>
+  <data name="cash_repository_id" xml:space="preserve">
+    <value>ID de Dépôt en Espèces</value>
+  </data>
+  <data name="cash_repository_name" xml:space="preserve">
+    <value>Nom du Référentiel en Espèces</value>
+  </data>
+  <data name="cell" xml:space="preserve">
+    <value>Cellule</value>
+  </data>
+  <data name="charge_interest" xml:space="preserve">
+    <value>Charge d'intérêt</value>
+  </data>
+  <data name="checking_frequency_id" xml:space="preserve">
+    <value>Vérification Fréquence ID</value>
+  </data>
+  <data name="city" xml:space="preserve">
+    <value>Ville</value>
+  </data>
+  <data name="closed" xml:space="preserve">
+    <value>fermé</value>
+  </data>
+  <data name="column_default" xml:space="preserve">
+    <value>Colonne par Défaut</value>
+  </data>
+  <data name="column_name" xml:space="preserve">
+    <value>Nom de la Colonne</value>
+  </data>
+  <data name="commission_rate" xml:space="preserve">
+    <value>Taux de Commission</value>
+  </data>
+  <data name="company_name" xml:space="preserve">
+    <value>Nom de l'entreprise</value>
+  </data>
+  <data name="compare_unit_id" xml:space="preserve">
+    <value>Comparer Unité Id</value>
+  </data>
+  <data name="compare_unit_name" xml:space="preserve">
+    <value>Comparer Nom de l'unité</value>
+  </data>
+  <data name="compound_unit_id" xml:space="preserve">
+    <value>Unité Composée ID</value>
+  </data>
+  <data name="confidential" xml:space="preserve">
+    <value>Confidentiel</value>
+  </data>
+  <data name="contact_address_line_1" xml:space="preserve">
+    <value>Coordonnées Adresse Ligne 1</value>
+  </data>
+  <data name="contact_address_line_2" xml:space="preserve">
+    <value>Coordonnées Adresse Ligne 2</value>
+  </data>
+  <data name="contact_cell" xml:space="preserve">
+    <value>Contactez-Cellulaire</value>
+  </data>
+  <data name="contact_city" xml:space="preserve">
+    <value>Contact ville</value>
+  </data>
+  <data name="contact_country" xml:space="preserve">
+    <value>Contact Pays</value>
+  </data>
+  <data name="contact_email" xml:space="preserve">
+    <value>Email de Contact</value>
+  </data>
+  <data name="contact_number" xml:space="preserve">
+    <value>Numéro de Téléphone</value>
+  </data>
+  <data name="contact_person" xml:space="preserve">
+    <value>Personne à Contacter</value>
+  </data>
+  <data name="contact_phone" xml:space="preserve">
+    <value>Téléphone</value>
+  </data>
+  <data name="contact_state" xml:space="preserve">
+    <value>Contact État</value>
+  </data>
+  <data name="contact_street" xml:space="preserve">
+    <value>Contact Rue</value>
+  </data>
+  <data name="cost_center_code" xml:space="preserve">
+    <value>Coût Code Center</value>
+  </data>
+  <data name="cost_center_id" xml:space="preserve">
+    <value>Centre de Coûts ID</value>
+  </data>
+  <data name="cost_center_name" xml:space="preserve">
+    <value>Coût Nom Centre</value>
+  </data>
+  <data name="cost_price" xml:space="preserve">
+    <value>Prix ​​de Revient</value>
+  </data>
+  <data name="cost_price_includes_tax" xml:space="preserve">
+    <value>Prix de Revient Inclut la Taxe</value>
+  </data>
+  <data name="counter_code" xml:space="preserve">
+    <value>Code Compteur</value>
+  </data>
+  <data name="counter_id" xml:space="preserve">
+    <value>Contre Id</value>
+  </data>
+  <data name="counter_name" xml:space="preserve">
+    <value>Nom du Compteur</value>
+  </data>
+  <data name="country" xml:space="preserve">
+    <value>Pays</value>
+  </data>
+  <data name="credit" xml:space="preserve">
+    <value>Crédit</value>
+  </data>
+  <data name="cst_number" xml:space="preserve">
+    <value>Nombre CST</value>
+  </data>
+  <data name="currency_code" xml:space="preserve">
+    <value>Code de Devise</value>
+  </data>
+  <data name="currency_name" xml:space="preserve">
+    <value>Nom de la Devise</value>
+  </data>
+  <data name="currency_symbol" xml:space="preserve">
+    <value>Symbole Monétaire</value>
+  </data>
+  <data name="customer_code" xml:space="preserve">
+    <value>Code Client</value>
+  </data>
+  <data name="customer_id" xml:space="preserve">
+    <value>Id de Client</value>
+  </data>
+  <data name="customer_name" xml:space="preserve">
+    <value>Nom du Client</value>
+  </data>
+  <data name="data_type" xml:space="preserve">
+    <value>Type de Données</value>
+  </data>
+  <data name="datetime_precision" xml:space="preserve">
+    <value>Précision DateTime</value>
+  </data>
+  <data name="date_of_birth" xml:space="preserve">
+    <value>Date de Naissance</value>
+  </data>
+  <data name="debit" xml:space="preserve">
+    <value>Débit</value>
+  </data>
+  <data name="department_code" xml:space="preserve">
+    <value>Code Département</value>
+  </data>
+  <data name="department_id" xml:space="preserve">
+    <value>Département Id</value>
+  </data>
+  <data name="department_name" xml:space="preserve">
+    <value>Nom Département</value>
+  </data>
+  <data name="description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="details" xml:space="preserve">
+    <value>Détails</value>
+  </data>
+  <data name="discount" xml:space="preserve">
+    <value>Discount</value>
+  </data>
+  <data name="domain_name" xml:space="preserve">
+    <value>Nom de Domaine</value>
+  </data>
+  <data name="effective_from" xml:space="preserve">
+    <value>Effective à Partir du</value>
+  </data>
+  <data name="email" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="ends_on" xml:space="preserve">
+    <value>Extrémités Sur</value>
+  </data>
+  <data name="entry_ts" xml:space="preserve">
+    <value>Entrée Timestamp</value>
+  </data>
+  <data name="event_ts" xml:space="preserve">
+    <value>Événement Timestamp</value>
+  </data>
+  <data name="exclude_from_purchase" xml:space="preserve">
+    <value>Exclure de l'achat</value>
+  </data>
+  <data name="exclude_from_sales" xml:space="preserve">
+    <value>Exclure de la Vente</value>
+  </data>
+  <data name="external_code" xml:space="preserve">
+    <value>Code Externe</value>
+  </data>
+  <data name="factory_address" xml:space="preserve">
+    <value>Adresse en Usine</value>
+  </data>
+  <data name="failed_date_time" xml:space="preserve">
+    <value>Échec Date Heure</value>
+  </data>
+  <data name="failed_login_id" xml:space="preserve">
+    <value>Echec Connexion Id</value>
+  </data>
+  <data name="fax" xml:space="preserve">
+    <value>Télécopie</value>
+  </data>
+  <data name="first_name" xml:space="preserve">
+    <value>Prénom</value>
+  </data>
+  <data name="fiscal_year_code" xml:space="preserve">
+    <value>Exercice Code</value>
+  </data>
+  <data name="fiscal_year_name" xml:space="preserve">
+    <value>Exercice Nom</value>
+  </data>
+  <data name="flag_color" xml:space="preserve">
+    <value>Marquer la Couleur</value>
+  </data>
+  <data name="flag_type_id" xml:space="preserve">
+    <value>Type de Marquage Id</value>
+  </data>
+  <data name="flag_type_name" xml:space="preserve">
+    <value>Type de Marquage Nom</value>
+  </data>
+  <data name="frequency_code" xml:space="preserve">
+    <value>Code de la Fréquence</value>
+  </data>
+  <data name="frequency_id" xml:space="preserve">
+    <value>Fréquence Id</value>
+  </data>
+  <data name="frequency_name" xml:space="preserve">
+    <value>Nom de Fréquence</value>
+  </data>
+  <data name="frequency_setup_id" xml:space="preserve">
+    <value>Fréquence Id de Configuration</value>
+  </data>
+  <data name="from_days" xml:space="preserve">
+    <value>De Jours</value>
+  </data>
+  <data name="full_name" xml:space="preserve">
+    <value>Nom Complet</value>
+  </data>
+  <data name="gl_verification_limit" xml:space="preserve">
+    <value>GL Vérification Limite</value>
+  </data>
+  <data name="has_child" xml:space="preserve">
+    <value>Elle a un Enfant</value>
+  </data>
+  <data name="hot_item" xml:space="preserve">
+    <value>Point Chaud</value>
+  </data>
+  <data name="hundredth_name" xml:space="preserve">
+    <value>Nom Centième</value>
+  </data>
+  <data name="id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="includes_tax" xml:space="preserve">
+    <value>Comprend la Taxe</value>
+  </data>
+  <data name="interest_compounding_frequency_id" xml:space="preserve">
+    <value>Compoundage Intérêt Id de Fréquence</value>
+  </data>
+  <data name="interest_rate" xml:space="preserve">
+    <value>Taux d'intérêt</value>
+  </data>
+  <data name="ip_address" xml:space="preserve">
+    <value>Adresse IP</value>
+  </data>
+  <data name="is_active" xml:space="preserve">
+    <value>Est Actif</value>
+  </data>
+  <data name="is_admin" xml:space="preserve">
+    <value>Est Admin</value>
+  </data>
+  <data name="is_cash" xml:space="preserve">
+    <value>Trésorerie Est</value>
+  </data>
+  <data name="is_nullable" xml:space="preserve">
+    <value>Accepte la valeur Null</value>
+  </data>
+  <data name="is_supplier" xml:space="preserve">
+    <value>Est Fournisseur</value>
+  </data>
+  <data name="is_system" xml:space="preserve">
+    <value>Système est</value>
+  </data>
+  <data name="item_code" xml:space="preserve">
+    <value>Code de l'élément</value>
+  </data>
+  <data name="item_cost_price_id" xml:space="preserve">
+    <value>Coût de l'élément prix</value>
+  </data>
+  <data name="item_group_code" xml:space="preserve">
+    <value>élément Id groupe code</value>
+  </data>
+  <data name="item_group_id" xml:space="preserve">
+    <value>élément Id de groupe</value>
+  </data>
+  <data name="item_group_name" xml:space="preserve">
+    <value>point Nom de groupe</value>
+  </data>
+  <data name="item_id" xml:space="preserve">
+    <value>Id Élément</value>
+  </data>
+  <data name="item_image" xml:space="preserve">
+    <value>Élément Élément Image</value>
+  </data>
+  <data name="item_name" xml:space="preserve">
+    <value>Nom</value>
+  </data>
+  <data name="item_opening_inventory_id" xml:space="preserve">
+    <value>élément stock d'ouverture Id</value>
+  </data>
+  <data name="item_selling_price_id" xml:space="preserve">
+    <value>Élément Prix de vente Id</value>
+  </data>
+  <data name="last_analyze" xml:space="preserve">
+    <value>dernière Analaze</value>
+  </data>
+  <data name="last_autoanalyze" xml:space="preserve">
+    <value>dernier Autoanalyze</value>
+  </data>
+  <data name="last_autovacuum" xml:space="preserve">
+    <value>Autovacuum Dernier</value>
+  </data>
+  <data name="last_name" xml:space="preserve">
+    <value>Dernier</value>
+  </data>
+  <data name="last_vacuum" xml:space="preserve">
+    <value>Dernier nom vide</value>
+  </data>
+  <data name="lead_source_code" xml:space="preserve">
+    <value>Câble Code Source</value>
+  </data>
+  <data name="lead_source_id" xml:space="preserve">
+    <value>Source plomb</value>
+  </data>
+  <data name="lead_source_name" xml:space="preserve">
+    <value>plomb Id Nom de la Source</value>
+  </data>
+  <data name="lead_status_code" xml:space="preserve">
+    <value>etat plomb</value>
+  </data>
+  <data name="lead_status_id" xml:space="preserve">
+    <value>plomb Code Id d'état</value>
+  </data>
+  <data name="lead_status_name" xml:space="preserve">
+    <value>État dériv. Nom</value>
+  </data>
+  <data name="lead_time_in_days" xml:space="preserve">
+    <value>de temps (en jours)</value>
+  </data>
+  <data name="level" xml:space="preserve">
+    <value>Niveau</value>
+  </data>
+  <data name="lock_out_id" xml:space="preserve">
+    <value>de lock-out Id</value>
+  </data>
+  <data name="lock_out_till" xml:space="preserve">
+    <value>verrouiller jusqu'à</value>
+  </data>
+  <data name="lock_out_time" xml:space="preserve">
+    <value>verrouiller les temps de connexion</value>
+  </data>
+  <data name="logged_in_office" xml:space="preserve">
+    <value>bureau</value>
+  </data>
+  <data name="logged_in_office_id" xml:space="preserve">
+    <value>connecté à Office de connexion à l'Id</value>
+  </data>
+  <data name="login_date_time" xml:space="preserve">
+    <value>Date Heure</value>
+  </data>
+  <data name="login_id" xml:space="preserve">
+    <value>Id de</value>
+  </data>
+  <data name="maintained_by" xml:space="preserve">
+    <value>maintenus par</value>
+  </data>
+  <data name="maintained_by_user_id" xml:space="preserve">
+    <value>maintenu par Id utilisateur</value>
+  </data>
+  <data name="maintain_stock" xml:space="preserve">
+    <value>maintenir les stocks</value>
+  </data>
+  <data name="maximum_credit_amount" xml:space="preserve">
+    <value>montant maximal du Crédit</value>
+  </data>
+  <data name="maximum_credit_period" xml:space="preserve">
+    <value>Crédit maximal période</value>
+  </data>
+  <data name="menu_code" xml:space="preserve">
+    <value>Code Menu</value>
+  </data>
+  <data name="menu_id" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="menu_text" xml:space="preserve">
+    <value>Menu Id texte</value>
+  </data>
+  <data name="middle_name" xml:space="preserve">
+    <value>Middle Name</value>
+  </data>
+  <data name="mimimum_credit_amount" xml:space="preserve">
+    <value>crédit Minimum</value>
+  </data>
+  <data name="new_val" xml:space="preserve">
+    <value>nouveau Val</value>
+  </data>
+  <data name="nick_name" xml:space="preserve">
+    <value>Nick Name</value>
+  </data>
+  <data name="non_gl_stock_master_id" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="numeric_precision" xml:space="preserve">
+    <value>numérique de précision</value>
+  </data>
+  <data name="numeric_precision_radix" xml:space="preserve">
+    <value>Précision numérique Radix</value>
+  </data>
+  <data name="numeric_scale" xml:space="preserve">
+    <value>Échelle numérique</value>
+  </data>
+  <data name="office" xml:space="preserve">
+    <value>Bureau Bureau</value>
+  </data>
+  <data name="office_address" xml:space="preserve">
+    <value>Adresse</value>
+  </data>
+  <data name="office_code" xml:space="preserve">
+    <value>Code bureau</value>
+  </data>
+  <data name="office_id" xml:space="preserve">
+    <value>Bureau</value>
+  </data>
+  <data name="office_name" xml:space="preserve">
+    <value>Bureau Id nom</value>
+  </data>
+  <data name="old_val" xml:space="preserve">
+    <value>ancien Val</value>
+  </data>
+  <data name="opportunity_stage_code" xml:space="preserve">
+    <value>occasion stade</value>
+  </data>
+  <data name="opportunity_stage_id" xml:space="preserve">
+    <value>occasion Code Id de phase</value>
+  </data>
+  <data name="opportunity_stage_name" xml:space="preserve">
+    <value>occasion nom de scène</value>
+  </data>
+  <data name="ordinal_position" xml:space="preserve">
+    <value>position ordinale</value>
+  </data>
+  <data name="pan_number" xml:space="preserve">
+    <value>PAN nombre</value>
+  </data>
+  <data name="parent" xml:space="preserve">
+    <value>Parent</value>
+  </data>
+  <data name="parent_account_code" xml:space="preserve">
+    <value>Compte Parent Parent Code</value>
+  </data>
+  <data name="parent_account_id" xml:space="preserve">
+    <value>Id de compte</value>
+  </data>
+  <data name="parent_account_name" xml:space="preserve">
+    <value>Parent Nom de compte</value>
+  </data>
+  <data name="parent_cash_repository_id" xml:space="preserve">
+    <value>Parent Référentiel trésorerie</value>
+  </data>
+  <data name="parent_cr_code" xml:space="preserve">
+    <value>Parent Id Code Cr</value>
+  </data>
+  <data name="parent_cr_name" xml:space="preserve">
+    <value>Cr Parent Nom</value>
+  </data>
+  <data name="parent_menu_id" xml:space="preserve">
+    <value>Menu Parent</value>
+  </data>
+  <data name="parent_office_id" xml:space="preserve">
+    <value>Parent Id Id Bureau</value>
+  </data>
+  <data name="party" xml:space="preserve">
+    <value>parti</value>
+  </data>
+  <data name="party_code" xml:space="preserve">
+    <value>parti</value>
+  </data>
+  <data name="party_id" xml:space="preserve">
+    <value>parti Code Id</value>
+  </data>
+  <data name="party_name" xml:space="preserve">
+    <value>Nom parti</value>
+  </data>
+  <data name="party_type" xml:space="preserve">
+    <value>parti parti de Type</value>
+  </data>
+  <data name="party_type_code" xml:space="preserve">
+    <value>Code Type</value>
+  </data>
+  <data name="party_type_id" xml:space="preserve">
+    <value>Type de tiers</value>
+  </data>
+  <data name="party_type_name" xml:space="preserve">
+    <value>parti Id Nom de Type</value>
+  </data>
+  <data name="password" xml:space="preserve">
+    <value>téléphone mot</value>
+  </data>
+  <data name="phone" xml:space="preserve">
+    <value />
+  </data>
+  <data name="preferred_supplier_id" xml:space="preserve">
+    <value>préféré Id fournisseur</value>
+  </data>
+  <data name="price" xml:space="preserve">
+    <value>Prix Prix</value>
+  </data>
+  <data name="price_type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="price_type_code" xml:space="preserve">
+    <value>Prix Type Prix Code</value>
+  </data>
+  <data name="price_type_id" xml:space="preserve">
+    <value>Id Type</value>
+  </data>
+  <data name="price_type_name" xml:space="preserve">
+    <value>Prix Nom de Type</value>
+  </data>
+  <data name="primary_key_id" xml:space="preserve">
+    <value>Clé primaire id</value>
+  </data>
+  <data name="principal_user" xml:space="preserve">
+    <value>utilisateur Principal</value>
+  </data>
+  <data name="purchase_verification_limit" xml:space="preserve">
+    <value>Vérification d'achat</value>
+  </data>
+  <data name="quantity" xml:space="preserve">
+    <value>quantité limite</value>
+  </data>
+  <data name="rate" xml:space="preserve">
+    <value>Taux</value>
+  </data>
+  <data name="rate_per_base_quantity" xml:space="preserve">
+    <value>tarif par quantité de Base</value>
+  </data>
+  <data name="rate_per_quantity" xml:space="preserve">
+    <value>tarif par quantité</value>
+  </data>
+  <data name="references_field" xml:space="preserve">
+    <value>Références Références de champ</value>
+  </data>
+  <data name="references_schema" xml:space="preserve">
+    <value />
+  </data>
+  <data name="references_table" xml:space="preserve">
+    <value>Références Schéma Table</value>
+  </data>
+  <data name="reference_number" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ref_no" xml:space="preserve">
+    <value>Ref aucun numéro de référence</value>
+  </data>
+  <data name="registration_date" xml:space="preserve">
+    <value>Date d'enregistrement</value>
+  </data>
+  <data name="registration_number" xml:space="preserve">
+    <value>Numéro d'enregistrement</value>
+  </data>
+  <data name="relationship_officer_name" xml:space="preserve">
+    <value>Agent relation Nom</value>
+  </data>
+  <data name="relation_officer" xml:space="preserve">
+    <value>Rapport Agent</value>
+  </data>
+  <data name="relname" xml:space="preserve">
+    <value>Nom de la relation</value>
+  </data>
+  <data name="remote_user" xml:space="preserve">
+    <value>Utilisateur distant</value>
+  </data>
+  <data name="reorder_level" xml:space="preserve">
+    <value>Niveau de réapprovisionnement</value>
+  </data>
+  <data name="repository" xml:space="preserve">
+    <value />
+  </data>
+  <data name="resource" xml:space="preserve">
+    <value>des ressources Référentiel</value>
+  </data>
+  <data name="role" xml:space="preserve">
+    <value>Rôle</value>
+  </data>
+  <data name="role_code" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="role_id" xml:space="preserve">
+    <value>Id de rôle</value>
+  </data>
+  <data name="role_name" xml:space="preserve">
+    <value>Nom de rôle</value>
+  </data>
+  <data name="sales_verification_limit" xml:space="preserve">
+    <value>Vérification vente limite</value>
+  </data>
+  <data name="select" xml:space="preserve">
+    <value>Sélectionnez</value>
+  </data>
+  <data name="self_verification_limit" xml:space="preserve">
+    <value>Vérification automatiques d'alimentation limite</value>
+  </data>
+  <data name="selling_price" xml:space="preserve">
+    <value>Prix de vente</value>
+  </data>
+  <data name="selling_price_includes_tax" xml:space="preserve">
+    <value>prix de vente comprend la taxe</value>
+  </data>
+  <data name="shipper_code" xml:space="preserve">
+    <value>expéditeur Code</value>
+  </data>
+  <data name="shipper_id" xml:space="preserve">
+    <value>Id Expéditeur</value>
+  </data>
+  <data name="shipper_name" xml:space="preserve">
+    <value>Nom de l'expéditeur</value>
+  </data>
+  <data name="shipping_address" xml:space="preserve">
+    <value>Adresse de livraison</value>
+  </data>
+  <data name="shipping_address_code" xml:space="preserve">
+    <value>Adresse de livraison Code</value>
+  </data>
+  <data name="shipping_address_id" xml:space="preserve">
+    <value>adresse d'expédition</value>
+  </data>
+  <data name="slab_name" xml:space="preserve">
+    <value>dalle Id Nom</value>
+  </data>
+  <data name="sst_number" xml:space="preserve">
+    <value>SST numéro commence</value>
+  </data>
+  <data name="starts_from" xml:space="preserve">
+    <value>par</value>
+  </data>
+  <data name="state" xml:space="preserve">
+    <value>État</value>
+  </data>
+  <data name="statement_reference" xml:space="preserve">
+    <value>État de référence</value>
+  </data>
+  <data name="status" xml:space="preserve">
+    <value />
+  </data>
+  <data name="stock_master_detail_id" xml:space="preserve">
+    <value>Stock Master Id Détail</value>
+  </data>
+  <data name="stock_master_id" xml:space="preserve">
+    <value>Stock Master Id</value>
+  </data>
+  <data name="stock_master_rate_id" xml:space="preserve">
+    <value>Stock Master Id taux</value>
+  </data>
+  <data name="store_code" xml:space="preserve">
+    <value>stockent le Code</value>
+  </data>
+  <data name="store_id" xml:space="preserve">
+    <value>Id Magasin</value>
+  </data>
+  <data name="store_name" xml:space="preserve">
+    <value>Nom du magasin</value>
+  </data>
+  <data name="store_policy_detail_id" xml:space="preserve">
+    <value>Magasin politique Id détail</value>
+  </data>
+  <data name="store_policy_id" xml:space="preserve">
+    <value>Magasin Id politique</value>
+  </data>
+  <data name="store_type_code" xml:space="preserve">
+    <value>Type de magasin</value>
+  </data>
+  <data name="store_type_id" xml:space="preserve">
+    <value>Magasin Code Id Type</value>
+  </data>
+  <data name="store_type_name" xml:space="preserve">
+    <value>Type de magasin Nom</value>
+  </data>
+  <data name="street" xml:space="preserve">
+    <value>rue</value>
+  </data>
+  <data name="sub_total" xml:space="preserve">
+    <value>Sous-total</value>
+  </data>
+  <data name="supplier_code" xml:space="preserve">
+    <value>Code fournisseur</value>
+  </data>
+  <data name="supplier_id" xml:space="preserve">
+    <value>fournisseur</value>
+  </data>
+  <data name="supplier_name" xml:space="preserve">
+    <value>Fournisseur Id nom</value>
+  </data>
+  <data name="sys_type" xml:space="preserve">
+    <value>Sys</value>
+  </data>
+  <data name="sys_user_id" xml:space="preserve">
+    <value>Sys Type Id utilisateur</value>
+  </data>
+  <data name="table_name" xml:space="preserve">
+    <value>Nom de Table</value>
+  </data>
+  <data name="table_schema" xml:space="preserve">
+    <value>Table Schema</value>
+  </data>
+  <data name="tax" xml:space="preserve">
+    <value>Taxe</value>
+  </data>
+  <data name="tax_amount" xml:space="preserve">
+    <value>Code taxe au niveau Montant</value>
+  </data>
+  <data name="tax_code" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tax_id" xml:space="preserve">
+    <value>taxe Id</value>
+  </data>
+  <data name="tax_name" xml:space="preserve">
+    <value>Nom Taxe</value>
+  </data>
+  <data name="tax_rate" xml:space="preserve">
+    <value>taux d'impôt</value>
+  </data>
+  <data name="tax_type_code" xml:space="preserve">
+    <value>Type de taxe</value>
+  </data>
+  <data name="tax_type_id" xml:space="preserve">
+    <value>fiscale Code Id Type</value>
+  </data>
+  <data name="tax_type_name" xml:space="preserve">
+    <value>Type Taxe Nom</value>
+  </data>
+  <data name="total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="to_days" xml:space="preserve">
+    <value>de jours</value>
+  </data>
+  <data name="transaction_code" xml:space="preserve">
+    <value>Transaction</value>
+  </data>
+  <data name="transaction_counter" xml:space="preserve">
+    <value>Transaction Code compteur</value>
+  </data>
+  <data name="transaction_date" xml:space="preserve">
+    <value>Date de Transaction</value>
+  </data>
+  <data name="transaction_detail_id" xml:space="preserve">
+    <value>Transaction Id détail</value>
+  </data>
+  <data name="transaction_master_id" xml:space="preserve">
+    <value>maître Transaction Id</value>
+  </data>
+  <data name="transaction_ts" xml:space="preserve">
+    <value>Transaction Ts</value>
+  </data>
+  <data name="transaction_type" xml:space="preserve">
+    <value>Type de transaction</value>
+  </data>
+  <data name="type" xml:space="preserve">
+    <value>type</value>
+  </data>
+  <data name="udt_name" xml:space="preserve">
+    <value>UDT Nom</value>
+  </data>
+  <data name="unit_code" xml:space="preserve">
+    <value>Code unité</value>
+  </data>
+  <data name="unit_id" xml:space="preserve">
+    <value>Unité</value>
+  </data>
+  <data name="unit_name" xml:space="preserve">
+    <value>Unité Id Nom</value>
+  </data>
+  <data name="url" xml:space="preserve">
+    <value>Url</value>
+  </data>
+  <data name="user" xml:space="preserve">
+    <value>utilisateur</value>
+  </data>
+  <data name="user_id" xml:space="preserve">
+    <value>Id utilisateur</value>
+  </data>
+  <data name="user_name" xml:space="preserve">
+    <value>Nom d'utilisateur</value>
+  </data>
+  <data name="vacuum_count" xml:space="preserve">
+    <value>vide Valeur de comptage</value>
+  </data>
+  <data name="value" xml:space="preserve">
+    <value>Valeur</value>
+  </data>
+  <data name="value_date" xml:space="preserve">
+    <value>Date de valeur</value>
+  </data>
+  <data name="verification" xml:space="preserve">
+    <value>Vérification</value>
+  </data>
+  <data name="verify_gl_transactions" xml:space="preserve">
+    <value>Vérifier GL Transactions</value>
+  </data>
+  <data name="verify_purchase_transactions" xml:space="preserve">
+    <value>Vérifiez achat Transactions</value>
+  </data>
+  <data name="verify_sales_transactions" xml:space="preserve">
+    <value>Vérifiez Transactions de vente</value>
+  </data>
+  <data name="work_center_code" xml:space="preserve">
+    <value>Code Workcenter</value>
+  </data>
+  <data name="work_center_id" xml:space="preserve">
+    <value>Workcenter</value>
+  </data>
+  <data name="work_center_name" xml:space="preserve">
+    <value>Workcenter Id nom</value>
+  </data>
+  <data name="written_by_user_id" xml:space="preserve">
+    <value>écrit par Id utilisateur</value>
+  </data>
+  <data name="zip_code" xml:space="preserve">
+    <value>Code postal</value>
+  </data>
+</root>

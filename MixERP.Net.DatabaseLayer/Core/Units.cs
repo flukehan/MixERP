@@ -34,8 +34,13 @@ namespace MixERP.Net.DatabaseLayer.Core
             {
                 command.Parameters.AddWithValue("@UnitName", unitName);
 
-                return MixERP.Net.DBFactory.DBOperations.GetScalarValue(command).ToString().Equals("1");
-            }        
+                var value = MixERP.Net.DBFactory.DBOperations.GetScalarValue(command);
+                if (value != null)
+                {
+                    return value.ToString().Equals("1");
+                }
+            }
+            return false;
         }
     }
 }

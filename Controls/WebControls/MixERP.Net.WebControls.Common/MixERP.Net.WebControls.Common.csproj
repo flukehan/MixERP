@@ -58,25 +58,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Resources\CommonResource.en-US.Designer.cs">
-      <DependentUpon>CommonResource.en-US.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Mix Open Foundation.snk" />
     <None Include="MixERP.Net.WebControls.Common.licenseheader" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\CommonResource.fr.resx" />
     <EmbeddedResource Include="Resources\CommonResource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>CommonResource.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\CommonResource.en-US.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>CommonResource.en-US.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

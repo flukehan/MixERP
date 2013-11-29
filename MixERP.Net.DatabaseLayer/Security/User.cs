@@ -17,9 +17,9 @@ namespace MixERP.Net.DatabaseLayer.Security
 {
     public static class User
     {
-        public static long SignIn(int officeId, string userName, string password, string browser, string ipAddress, string remoteUser)
+        public static long SignIn(int officeId, string userName, string password, string browser, string ipAddress, string remoteUser, string culture)
         {
-            string sql = "SELECT * FROM office.sign_in(@OfficeId, @UserName, @Password, @Browser, @IPAddress, @RemoteUser);";
+            string sql = "SELECT * FROM office.sign_in(@OfficeId, @UserName, @Password, @Browser, @IPAddress, @RemoteUser, @Culture);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
@@ -28,12 +28,13 @@ namespace MixERP.Net.DatabaseLayer.Security
                 command.Parameters.AddWithValue("@Browser", browser);
                 command.Parameters.AddWithValue("@IPAddress", ipAddress);
                 command.Parameters.AddWithValue("@RemoteUser", remoteUser);
+                command.Parameters.AddWithValue("@Culture", culture);
 
                 return MixERP.Net.Common.Conversion.TryCastLong(MixERP.Net.DBFactory.DBOperations.GetScalarValue(command));
             }
         }
 
-        public static DataTable GetUserTable(string userName)
+        public static DataTable GetLoginView(string userName)
         {
             string sql = "SELECT * FROM office.login_view WHERE user_name=@UserName;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))

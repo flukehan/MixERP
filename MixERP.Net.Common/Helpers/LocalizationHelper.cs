@@ -103,9 +103,32 @@ namespace MixERP.Net.Common.Helpers
 
         public static CultureInfo GetCurrentCulture()
         {
-            //Todo
-            CultureInfo culture = new CultureInfo(CultureInfo.InvariantCulture.Name);
+            CultureInfo culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
             return culture;
+        }
+
+        public static string GetThousandSeparator()
+        {
+            CultureInfo culture = GetCurrentCulture();
+            return culture.NumberFormat.CurrencyGroupSeparator;
+        }
+
+        public static string GetDecimalSeparator()
+        {
+            CultureInfo culture = GetCurrentCulture();
+            return culture.NumberFormat.CurrencyDecimalSeparator;
+        }
+
+        public static int GetDecimalPlaces()
+        {
+            CultureInfo culture = GetCurrentCulture();
+            return culture.NumberFormat.CurrencyDecimalDigits;
+        }
+
+        public static string GetShortDateFormat()
+        {
+            CultureInfo culture = GetCurrentCulture();
+            return culture.DateTimeFormat.ShortDatePattern;
         }
 
     }

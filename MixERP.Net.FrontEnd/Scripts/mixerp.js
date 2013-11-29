@@ -1,8 +1,4 @@
-﻿//Do not localize these values by hand.
-var areYouSureLocalized = "";
-var updateTaxLocalized = "";
-
-function getDocHeight() {
+﻿function getDocHeight() {
     var D = document;
     return Math.max(
                 Math.max(D.body.scrollHeight, D.documentElement.scrollHeight),
@@ -12,9 +8,9 @@ function getDocHeight() {
 
 }
 
-var selectItem = function (tb, ddl) {
-    var listControl = $("#" + ddl);
-    var textBox = $("#" + tb);
+var selectDropDownListByValue = function (textBoxId, dropDownListId) {
+    var listControl = $("#" + dropDownListId);
+    var textBox = $("#" + textBoxId);
     var selectedValue = textBox.val();
     var exists;
 
@@ -33,7 +29,7 @@ var selectItem = function (tb, ddl) {
         textBox.val('');
     }
 
-    triggerChange(ddl);
+    triggerChange(dropDownListId);
 }
 
 var triggerChange = function (controlId) {
@@ -56,13 +52,24 @@ var parseFloat2 = function (arg) {
 }
 
 var confirmAction = function () {
-    return confirm(areYouSureLocalized);
+    return confirm(localizedAreYouSure);
 }
 
 
 /******************************************************************************************************
 DATE EXPRESSION START
 ******************************************************************************************************/
+
+var validateByControlId = function (controlId)
+{
+    if (typeof Page_ClientValidate === "function") {
+        Page_ClientValidate(controlId);
+    }
+    else {
+        console.log("The function Page_ClientValidate was not found.");
+    }
+}
+
 $(document).ready(function () {
     $(".date").blur(function () {
         if (today == "") return;
@@ -73,84 +80,84 @@ $(document).ready(function () {
         if (value == "d") {
             result = dateAdd(today, "d", 0);
             control.val(result);
-            Page_ClientValidate(control.attr("id"));
+            validateByControlId(control.attr("id"));
             return;
         }
 
         if (value == "m" || value == "+m") {
             control.val(dateAdd(today, "m", 1));
-            Page_ClientValidate(control.attr("id"));
+            validateByControlId(control.attr("id"));
             return;
         }
 
         if (value == "w" || value == "+w") {
             control.val(dateAdd(today, "d", 7));
-            Page_ClientValidate(control.attr("id"));
+            validateByControlId(control.attr("id"));
             return;
         }
 
         if (value == "y" || value == "+y") {
             control.val(dateAdd(today, "y", 1));
-            Page_ClientValidate(control.attr("id"));
+            validateByControlId(control.attr("id"));
             return;
         }
 
         if (value == "-d") {
             control.val(dateAdd(today, "d", -1));
-            Page_ClientValidate(control.attr("id"));
+            validateByControlId(control.attr("id"));
             return;
         }
 
         if (value == "+d") {
             control.val(dateAdd(today, "d", 1));
-            Page_ClientValidate(control.attr("id"));
+            validateByControlId(control.attr("id"));
             return;
         }
 
 
         if (value == "-w") {
             control.val(dateAdd(today, "d", -7));
-            Page_ClientValidate(control.attr("id"));
+            validateByControlId(control.attr("id"));
             return;
         }
 
         if (value == "-m") {
             control.val(dateAdd(today, "m", -1));
-            Page_ClientValidate(control.attr("id"));
+            validateByControlId(control.attr("id"));
             return;
         }
 
         if (value == "-y") {
             control.val(dateAdd(today, "y", -1));
-            Page_ClientValidate(control.attr("id"));
+            validateByControlId(control.attr("id"));
             return;
         }
 
         if (value.indexOf("d") >= 0) {
             var number = parseInt(value.replace("d"));
             control.val(dateAdd(today, "d", number));
-            Page_ClientValidate(control.attr("id"));
+            validateByControlId(control.attr("id"));
             return;
         }
 
         if (value.indexOf("w") >= 0) {
             var number = parseInt(value.replace("w"));
             control.val(dateAdd(today, "d", number * 7));
-            Page_ClientValidate(control.attr("id"));
+            validateByControlId(control.attr("id"));
             return;
         }
 
         if (value.indexOf("m") >= 0) {
             var number = parseInt(value.replace("m"));
             control.val(dateAdd(today, "m", number));
-            Page_ClientValidate(control.attr("id"));
+            validateByControlId(control.attr("id"));
             return;
         }
 
         if (value.indexOf("y") >= 0) {
             var number = parseInt(value.replace("y"));
             control.val(dateAdd(today, "y", number));
-            Page_ClientValidate(control.attr("id"));
+            validateByControlId(control.attr("id"));
             return;
         }
     });
@@ -361,3 +368,14 @@ function preparePieChart(datasourceId, canvasId, legendId, type) {
 /******************************************************************************************************
 Chart END
 ******************************************************************************************************/
+
+var parseFormattedNumber = function (input) {
+    var result = input.replace(thousandSeparator, "");
+    result = result.replace(decimalSeparator, ".");
+    return result;
+}
+
+var getFormattedNumber = function (input) {
+    var result = input.replace(".", decimalSeparator);
+    return result;
+}

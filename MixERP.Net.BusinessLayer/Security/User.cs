@@ -24,7 +24,7 @@ namespace MixERP.Net.BusinessLayer.Security
             {
                 try
                 {
-                    using(DataTable table = GetUserTable(user))
+                    using(DataTable table = GetLoginView(user))
                     {
                         if(table.Rows.Count.Equals(1))
                         {
@@ -38,6 +38,7 @@ namespace MixERP.Net.BusinessLayer.Security
 
                             page.Session["LogOnId"] = LogOnId;
                             page.Session["UserId"] = table.Rows[0]["user_id"];
+                            page.Session["Culture"] = table.Rows[0]["culture"];
                             page.Session["UserName"] = user;
                             page.Session["Role"] = table.Rows[0]["role"];
                             page.Session["IsSystem"] = table.Rows[0]["is_system"];
@@ -68,16 +69,17 @@ namespace MixERP.Net.BusinessLayer.Security
             }
         }
 
-        public static bool SignIn(int officeId, string userName, string password, bool remember, System.Web.UI.Page page)
+        public static bool SignIn(int officeId, string userName, string password, string culture, bool remember, System.Web.UI.Page page)
         {
             if(page != null)
             {
                 try
                 {
-                    long LogOnId = MixERP.Net.DatabaseLayer.Security.User.SignIn(officeId, userName, MixERP.Net.Common.Conversion.HashSha512(password, userName), page.Request.UserAgent, "0", "");
+                    long LogOnId = MixERP.Net.DatabaseLayer.Security.User.SignIn(officeId, userName, MixERP.Net.Common.Conversion.HashSha512(password, userName), page.Request.UserAgent, "0", "", culture);
 
                     if(LogOnId > 0)
                     {
+                        page.Session["Culture"] = culture;
                         SetSession(page, userName);
 
                         FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, userName, DateTime.Now, DateTime.Now.AddMinutes(30), remember, String.Empty, FormsAuthentication.FormsCookiePath);
@@ -85,7 +87,6 @@ namespace MixERP.Net.BusinessLayer.Security
                         HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedCookie);
                         cookie.Expires = DateTime.Now.AddMinutes(30);
                         page.Response.Cookies.Add(cookie);
-                        //FormsAuthentication.RedirectFromLoginPage(userName, false);
 
                         System.Web.Security.FormsAuthentication.RedirectFromLoginPage(userName, true, "MixERP.Net");
 
@@ -102,9 +103,9 @@ namespace MixERP.Net.BusinessLayer.Security
             return false;
         }
 
-        public static DataTable GetUserTable(string userName)
+        public static DataTable GetLoginView(string userName)
         {
-            return MixERP.Net.DatabaseLayer.Security.User.GetUserTable(userName);
+            return MixERP.Net.DatabaseLayer.Security.User.GetLoginView(userName);
         }
 
     }

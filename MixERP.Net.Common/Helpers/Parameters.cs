@@ -23,45 +23,5 @@ namespace MixERP.Net.Common.Helpers
         {
             return MixERP.Net.Common.Helpers.ConfigurationHelper.GetParameter(key);
         }
-
-        public static string ShortDateFormat()
-        {
-            return GetParameter("ShortDateFormat");
-        }
-
-        public static string LongDateFormat()
-        {
-            return GetParameter("LongDateFormat");
-        }
-
-        public static string ShortTimeFormat()
-        {
-            return GetParameter("ShortTimeFormat");
-        }
-
-        public static string LongTimeFormat()
-        {
-            return GetParameter("LongTimeFormat");
-        }
-
-        public static string ThousandSeparator()
-        {
-            return GetParameter("ThousandSeparator");
-        }
-
-        public static string DecimalSeparator()
-        {
-            return GetParameter("DecimalSeparator");
-        }
-
-        public static string DecimalPlaces()
-        {
-            return GetParameter("DecimalPlaces");
-        }
-
-        public static string CurrencySymbol()
-        {
-            return GetParameter("CurrencySymbol");
-        }
     }
 }

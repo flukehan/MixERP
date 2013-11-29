@@ -53,7 +53,7 @@ namespace MixERP.Net.FrontEnd
         protected void SignInButton_Click(object sender, EventArgs e)
         {
             int officeId = MixERP.Net.Common.Conversion.TryCastInteger(BranchDropDownList.SelectedItem.Value);
-            bool results = MixERP.Net.BusinessLayer.Security.User.SignIn(officeId, UserIdTextBox.Text, PasswordTextBox.Text, RememberMe.Checked, this.Page);
+            bool results = MixERP.Net.BusinessLayer.Security.User.SignIn(officeId, UserIdTextBox.Text, PasswordTextBox.Text, LanguageDropDownList.SelectedItem.Value, RememberMe.Checked, this.Page);
 
             if(!results)
             {

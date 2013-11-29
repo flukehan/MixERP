@@ -93,6 +93,7 @@
     <None Include="MixERP.Net.WebControls.ScrudFactory.licenseheader" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\ScrudResource.fr.resx" />
     <EmbeddedResource Include="Scrud.js" />
   </ItemGroup>
   <ItemGroup>
