@@ -60,8 +60,7 @@ var confirmAction = function () {
 DATE EXPRESSION START
 ******************************************************************************************************/
 
-var validateByControlId = function (controlId)
-{
+var validateByControlId = function (controlId) {
     if (typeof Page_ClientValidate === "function") {
         Page_ClientValidate(controlId);
     }
@@ -195,7 +194,10 @@ var showWindow = function (url) {
 
 $(document).ready(function () {
     setNumberFormat();
-    Sys.WebForms.PageRequestManager.getInstance().add_endRequest(Page_EndRequest);
+
+    if (!(typeof Sys === "undefined")) {
+        Sys.WebForms.PageRequestManager.getInstance().add_endRequest(Page_EndRequest);
+    }
 });
 
 function Page_EndRequest(sender, args) {

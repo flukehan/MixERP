@@ -28,6 +28,12 @@ namespace MixERP.Net.FrontEnd
             string menu = string.Empty;
 
             Collection<MixERP.Net.Common.Models.Core.Menu> collection = MixERP.Net.BusinessLayer.Core.Menu.GetMenuCollection(0, 0);
+            
+            if (collection == null)
+            {
+                return;
+            }
+
             if(collection.Count > 0)
             {
                 foreach(MixERP.Net.Common.Models.Core.Menu model in collection)

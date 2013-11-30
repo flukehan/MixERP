@@ -845,7 +845,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
             if (PriceTypeDropDownList.SelectedItem != null)
             {
-                MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.SetSelectedValue(PriceTypeDropDownList, model.PriceTypeId.ToString(MixERP.Net.BusinessLayer.Helpers.SessionHelper.Culture()));
+                MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.SetSelectedValue(PriceTypeDropDownList, model.PriceTypeId.ToString(MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetCulture()));
             }
 
             ReferenceNumberTextBox.Text = model.ReferenceNumber;
@@ -907,7 +907,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         {
             if (this.ShowCashRepository)
             {
-                using (System.Data.DataTable table = MixERP.Net.BusinessLayer.Office.CashRepositories.GetCashRepositories(MixERP.Net.BusinessLayer.Helpers.SessionHelper.OfficeId()))
+                using (System.Data.DataTable table = MixERP.Net.BusinessLayer.Office.CashRepositories.GetCashRepositories(MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetOfficeId()))
                 {
                     string displayField = MixERP.Net.Common.Helpers.ConfigurationHelper.GetDbParameter("CashRepositoryDisplayField");
                     MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.BindDropDownList(CashRepositoryDropDownList, table, "cash_repository_id", displayField);

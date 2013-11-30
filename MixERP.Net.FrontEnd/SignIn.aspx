@@ -12,24 +12,24 @@ http://mozilla.org/MPL/2.0/.
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <link href="themes/purple/main.css" rel="stylesheet" type="text/css" />
-    <script src="/Scripts/jquery-ui/js/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="//code.jquery.com/jquery-1.9.1.js" type="text/javascript"></script>
     <title>Sign In</title>
 </head>
 <body>
     <form id="form1" runat="server">
         <div class="sign-in-logo">
             <a href="/SignIn.aspx">
-                <img src="themes/purple/mixerp-logo.png" />
+                <asp:Image runat="server" ImageUrl="~/Themes/purple/mixerp-logo.png" />
             </a>
         </div>
         <div class="sign-in">
             <h1>
                 <asp:Literal ID="SignInLiteral" runat="server" Text="<%$Resources:Titles, SignIn %>" />
             </h1>
-            <hr />
+            <hr class="hr" />
             <table width="100%">
                 <tr>
-                    <td style="width: 100px;">
+                    <td style="width: 150px;">
                         <label for="UserIdTextBox">
                             <asp:Literal ID="UserIdLiteral" runat="server" Text="<%$Resources:Titles, UserId %>" />
                         </label>
@@ -59,22 +59,23 @@ http://mozilla.org/MPL/2.0/.
                         </label>
                     </td>
                     <td>
-                        <asp:DropDownList ID="BranchDropDownList" runat="server" DataSourceID="ObjectDataSource1"
+                        <asp:DropDownList ID="BranchDropDownList" runat="server"
                             DataTextField="office_name" DataValueField="office_id">
                         </asp:DropDownList>
-                        <asp:ObjectDataSource ID="ObjectDataSource1" runat="server" SelectMethod="GetOffices"
-                            TypeName="MixERP.Net.BusinessLayer.Office.Offices"></asp:ObjectDataSource>
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        Select Language
+                    <td>Select Language
                     </td>
                     <td>
                         <p>
                             <asp:DropDownList ID="LanguageDropDownList" runat="server">
                                 <asp:ListItem Text="English (United States)" Value="en-US" />
-                                <asp:ListItem Text="French (France)" Value="fr-FR" />
+                                <asp:ListItem Text="English (Great Britain)" Value="en-GB" />
+                                <asp:ListItem Text="Français (France)" Value="fr-FR" />
+                                <asp:ListItem Text="Deutsch (Deutschland)" Value="de-DE" />
+                                <asp:ListItem Text="नेपाली (नेपाल)" Value="ne-NP" />
+                                <asp:ListItem Text="हिन्दी (India)" Value="hi-IN" />
                             </asp:DropDownList>
                         </p>
                     </td>
@@ -104,6 +105,7 @@ http://mozilla.org/MPL/2.0/.
                 <tr>
                     <td></td>
                     <td>
+                        <hr class="hr" />
                         <p>
                             <asp:LinkButton ID="CannotAccessAccountLinkButton" runat="server" Text="<%$Resources:Questions, CannotAccessAccount %>" />
                         </p>

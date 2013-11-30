@@ -30,7 +30,7 @@ namespace MixERP.Net.BusinessLayer.Transactions
             stockMaster.AgentId = agentId;
 
 
-            transactionMasterId = MixERP.Net.DatabaseLayer.Transactions.SalesDelivery.Add(valueDate, MixERP.Net.BusinessLayer.Helpers.SessionHelper.OfficeId(), MixERP.Net.BusinessLayer.Helpers.SessionHelper.UserId(), MixERP.Net.BusinessLayer.Helpers.SessionHelper.LogOnId(), costCenterId, referenceNumber, statementReference, stockMaster, details, transactionIdCollection);
+            transactionMasterId = MixERP.Net.DatabaseLayer.Transactions.SalesDelivery.Add(valueDate, MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetOfficeId(), MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetUserId(), MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetLogOnId(), costCenterId, referenceNumber, statementReference, stockMaster, details, transactionIdCollection);
             MixERP.Net.DatabaseLayer.Transactions.Verification.CallAutoVerification(transactionMasterId);
             return transactionMasterId;
         }

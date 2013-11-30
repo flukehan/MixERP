@@ -28,13 +28,13 @@ namespace MixERP.Net.BusinessLayer.Transactions
             stockMaster.PartyCode = partyCode;
             stockMaster.PriceTypeId = priceTypeId;
 
-            nonGlStockMasterId = MixERP.Net.DatabaseLayer.Transactions.NonGLStockTransaction.Add(book, valueDate, MixERP.Net.BusinessLayer.Helpers.SessionHelper.OfficeId(), MixERP.Net.BusinessLayer.Helpers.SessionHelper.UserId(), MixERP.Net.BusinessLayer.Helpers.SessionHelper.LogOnId(), referenceNumber, statementReference, stockMaster, details, transactionIdCollection);
+            nonGlStockMasterId = MixERP.Net.DatabaseLayer.Transactions.NonGLStockTransaction.Add(book, valueDate, MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetOfficeId(), MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetUserId(), MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetLogOnId(), referenceNumber, statementReference, stockMaster, details, transactionIdCollection);
             return nonGlStockMasterId;
         }
 
         public static System.Data.DataTable GetView(string book, DateTime dateFrom, DateTime dateTo, string office, string party, string priceType, string user, string referenceNumber, string statementReference)
         {
-            return MixERP.Net.DatabaseLayer.Transactions.NonGLStockTransaction.GetView(MixERP.Net.BusinessLayer.Helpers.SessionHelper.UserId(), book, MixERP.Net.BusinessLayer.Helpers.SessionHelper.OfficeId(), dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference);
+            return MixERP.Net.DatabaseLayer.Transactions.NonGLStockTransaction.GetView(MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetUserId(), book, MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetOfficeId(), dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference);
         }
 
         public static bool TransactionIdsBelongToSameParty(Collection<int> ids)

@@ -837,3 +837,91 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+
+--Todo: Move to db logic.
+CREATE FUNCTION policy.check_menu_policy_trigger()
+RETURNS trigger
+AS
+$$
+	DECLARE count integer=0;
+BEGIN
+	IF NEW.office_id IS NOT NULL THEN
+		count := count + 1;
+	END IF;
+
+	IF NEW.role_id IS NOT NULL THEN
+		count := count + 1;
+	END IF;
+	
+	IF NEW.user_id IS NOT NULL THEN
+		count := count + 1;
+	END IF;
+
+	IF count <> 1 THEN
+		RAISE EXCEPTION 'Only one of the following columns is required : office_id, role_id, user_id.';
+	END IF;
+
+	RETURN NEW;
+END
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER check_menu_policy_trigger BEFORE INSERT
+ON policy.menu_policy
+FOR EACH ROW EXECUTE PROCEDURE policy.check_menu_policy_trigger();
+
+DROP FUNCTION IF EXISTS policy.get_menu(user_id_ integer, office_id_ integer, culture_ text);
+CREATE FUNCTION policy.get_menu(user_id_ integer, office_id_ integer, culture_ text)
+RETURNS TABLE
+(
+	menu_id			integer,
+	menu_text		national character varying(250),
+	url			national character varying(250),
+	menu_code		character varying(12),
+	level			smallint,
+	parent_menu_id		integer
+)
+AS
+$$
+DECLARE culture_exists boolean = false;
+BEGIN
+	IF EXISTS(SELECT * FROM core.menu_locale WHERE culture=$3) THEN
+		culture_exists := true;
+	END IF;
+
+	IF culture_exists THEN
+		RETURN QUERY 
+		SELECT
+			core.menus.menu_id,
+			core.menu_locale.menu_text,
+			core.menus.url,
+			core.menus.menu_code,
+			core.menus.level,
+			core.menus.parent_menu_id	
+		FROM core.menus
+		INNER JOIN policy.menu_access
+		ON core.menus.menu_id = policy.menu_access.menu_id
+		INNER JOIN core.menu_locale
+		ON core.menus.menu_id = core.menu_locale.menu_id
+		WHERE policy.menu_access.user_id=$1
+		AND policy.menu_access.office_id=$2
+		AND core.menu_locale.culture=$3;
+	ELSE
+		RETURN QUERY 
+		SELECT
+			core.menus.menu_id,
+			core.menus.menu_text,
+			core.menus.url,
+			core.menus.menu_code,
+			core.menus.level,
+			core.menus.parent_menu_id	
+		FROM core.menus
+		INNER JOIN policy.menu_access
+		ON core.menus.menu_id = policy.menu_access.menu_id
+		WHERE policy.menu_access.user_id=$1
+		AND policy.menu_access.office_id=$2;
+	END IF;
+
+END
+$$
+LANGUAGE plpgsql;

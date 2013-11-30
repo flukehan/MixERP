@@ -29,7 +29,7 @@ namespace MixERP.Net.BusinessLayer.Transactions
             stockMaster.CashRepositoryId = cashRepositoryId;
             stockMaster.StoreId = storeId;
 
-            transactionMasterId = MixERP.Net.DatabaseLayer.Transactions.DirectSales.Add(valueDate, MixERP.Net.BusinessLayer.Helpers.SessionHelper.OfficeId(), MixERP.Net.BusinessLayer.Helpers.SessionHelper.UserId(), MixERP.Net.BusinessLayer.Helpers.SessionHelper.LogOnId(), costCenterId, referenceNumber, statementReference, stockMaster, details);
+            transactionMasterId = MixERP.Net.DatabaseLayer.Transactions.DirectSales.Add(valueDate, MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetOfficeId(), MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetUserId(), MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetLogOnId(), costCenterId, referenceNumber, statementReference, stockMaster, details);
             MixERP.Net.DatabaseLayer.Transactions.Verification.CallAutoVerification(transactionMasterId);
             return transactionMasterId;
         }

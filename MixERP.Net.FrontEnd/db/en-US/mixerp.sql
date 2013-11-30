@@ -838,7 +838,7 @@ LANGUAGE plpgsql;
 
 
 CREATE FUNCTION office.get_logged_in_culture(_user_id integer)
-RETURNS bigint
+RETURNS text
 AS
 $$
 BEGIN
@@ -863,7 +863,7 @@ CREATE TABLE audit.failed_logins
 	failed_login_id 			BIGSERIAL NOT NULL PRIMARY KEY,
 	user_id 				integer NULL REFERENCES office.users(user_id),
 	user_name 				national character varying(50) NOT NULL,
-	office_id 				integer NOT NULL REFERENCES office.offices(office_id),
+	office_id 				integer NULL REFERENCES office.offices(office_id),
 	browser 				national character varying(500) NOT NULL,
 	ip_address 				national character varying(50) NOT NULL,
 	failed_date_time 			TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT(now()),
@@ -970,6 +970,29 @@ CREATE TABLE core.menu_locale
 
 CREATE UNIQUE INDEX menu_locale_menu_id_culture_uix
 ON core.menu_locale(menu_id, LOWER(culture));
+
+CREATE TABLE policy.menu_policy
+(
+	policy_id				SERIAL NOT NULL PRIMARY KEY,
+	menu_id					integer NOT NULL REFERENCES core.menus(menu_id),
+	office_id				integer NULL REFERENCES office.offices(office_id),
+	inherit_in_child_offices		boolean NOT NULL DEFAULT(false),
+	role_id					integer NULL REFERENCES office.roles(role_id),
+	user_id					integer NULL REFERENCES office.users(user_id),
+	scope					national character varying(12) NOT NULL
+						CONSTRAINT menu_policy_scope_chk
+						CHECK(scope IN('Allow','Deny'))
+	
+);
+
+CREATE TABLE policy.menu_access
+(
+	access_id				BIGSERIAL NOT NULL PRIMARY KEY,
+	office_id				integer NOT NULL REFERENCES office.offices(office_id),
+	menu_id					integer NOT NULL REFERENCES core.menus(menu_id),
+	user_id					integer NULL REFERENCES office.users(user_id)	
+);
+
 
 CREATE FUNCTION core.get_menu_id(menu_code text)
 RETURNS INTEGER
@@ -1145,6 +1168,15 @@ UNION ALL SELECT 'Restore Database', '~/Setup/Admin/Restore.aspx', 'RES', 2, cor
 UNION ALL SELECT 'Change User Password', '~/Setup/Admin/ChangePassword.aspx', 'PWD', 2, core.get_menu_id('SAT')
 UNION ALL SELECT 'New Company', '~/Setup/Admin/NewCompany.aspx', 'NEW', 2, core.get_menu_id('SAT');
 
+
+INSERT INTO policy.menu_access(office_id, menu_id, user_id)
+SELECT office.get_office_id_by_office_code('PES-NY-BK'), core.menus.menu_id, office.get_user_id_by_user_name('binod')
+FROM core.menus
+
+UNION ALL
+
+SELECT office.get_office_id_by_office_code('PES-NY-MEM'), core.menus.menu_id, office.get_user_id_by_user_name('binod')
+FROM core.menus;
 
 
 CREATE VIEW office.login_view

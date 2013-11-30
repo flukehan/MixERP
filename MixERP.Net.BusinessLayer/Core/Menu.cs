@@ -18,22 +18,31 @@ namespace MixERP.Net.BusinessLayer.Core
             Collection<MixERP.Net.Common.Models.Core.Menu> collection = new Collection<Common.Models.Core.Menu>();
 
             string relativePath = Conversion.GetRelativePath(path);
+            int userId = MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetUserId();
+            int officeId = MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetOfficeId();
+            string culture = MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetCulture().TwoLetterISOLanguageName;
 
-
-            foreach(DataRow row in MixERP.Net.DatabaseLayer.Core.Menu.GetMenuTable(relativePath, level).Rows)
+            using (DataTable table = MixERP.Net.DatabaseLayer.Core.Menu.GetMenuTable(relativePath, level, userId, officeId, culture))
             {
-                MixERP.Net.Common.Models.Core.Menu model = new Common.Models.Core.Menu();
+                if (table == null)
+                {
+                    return null;
+                }
 
-                model.MenuId = Conversion.TryCastInteger(row["menu_id"]);
-                model.MenuText = Conversion.TryCastString(row["menu_text"]);
-                model.Url = Conversion.ResolveUrl(Conversion.TryCastString(row["url"]));
-                model.MenuCode = Conversion.TryCastString(row["menu_code"]);
-                model.Level = Conversion.TryCastInteger(row["level"]);
-                model.ParentMenuId = Conversion.TryCastInteger(row["parent_menu_id"]);
-                
-                collection.Add(model);
+                foreach (DataRow row in table.Rows)
+                {
+                    MixERP.Net.Common.Models.Core.Menu model = new Common.Models.Core.Menu();
+
+                    model.MenuId = Conversion.TryCastInteger(row["menu_id"]);
+                    model.MenuText = Conversion.TryCastString(row["menu_text"]);
+                    model.Url = Conversion.ResolveUrl(Conversion.TryCastString(row["url"]));
+                    model.MenuCode = Conversion.TryCastString(row["menu_code"]);
+                    model.Level = Conversion.TryCastInteger(row["level"]);
+                    model.ParentMenuId = Conversion.TryCastInteger(row["parent_menu_id"]);
+
+                    collection.Add(model);
+                }
             }
-
             return collection;
         }
 
@@ -41,18 +50,30 @@ namespace MixERP.Net.BusinessLayer.Core
         {
             Collection<MixERP.Net.Common.Models.Core.Menu> collection = new Collection<Common.Models.Core.Menu>();
 
-            foreach(DataRow row in MixERP.Net.DatabaseLayer.Core.Menu.GetRootMenuTable(path).Rows)
+            int userId = MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetUserId();
+            int officeId = MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetOfficeId();
+            string culture = MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetCulture().TwoLetterISOLanguageName;
+
+            using (DataTable table = MixERP.Net.DatabaseLayer.Core.Menu.GetRootMenuTable(path, userId, officeId, culture))
             {
-                MixERP.Net.Common.Models.Core.Menu model = new Common.Models.Core.Menu();
+                if (table == null)
+                {
+                    return null;
+                }
 
-                model.MenuId = Conversion.TryCastInteger(row["menu_id"]);
-                model.MenuText = Conversion.TryCastString(row["menu_text"]);
-                model.Url = Conversion.ResolveUrl(Conversion.TryCastString(row["url"]));
-                model.MenuCode = Conversion.TryCastString(row["menu_code"]);
-                model.Level = Conversion.TryCastInteger(row["level"]);
-                model.ParentMenuId = Conversion.TryCastInteger(row["parent_menu_id"]);
+                foreach (DataRow row in table.Rows)
+                {
+                    MixERP.Net.Common.Models.Core.Menu model = new Common.Models.Core.Menu();
 
-                collection.Add(model);
+                    model.MenuId = Conversion.TryCastInteger(row["menu_id"]);
+                    model.MenuText = Conversion.TryCastString(row["menu_text"]);
+                    model.Url = Conversion.ResolveUrl(Conversion.TryCastString(row["url"]));
+                    model.MenuCode = Conversion.TryCastString(row["menu_code"]);
+                    model.Level = Conversion.TryCastInteger(row["level"]);
+                    model.ParentMenuId = Conversion.TryCastInteger(row["parent_menu_id"]);
+
+                    collection.Add(model);
+                }
             }
 
             return collection;
@@ -62,18 +83,30 @@ namespace MixERP.Net.BusinessLayer.Core
         {
             Collection<MixERP.Net.Common.Models.Core.Menu> collection = new Collection<Common.Models.Core.Menu>();
 
-            foreach(DataRow row in MixERP.Net.DatabaseLayer.Core.Menu.GetMenuTable(parentMenuId, level).Rows)
+            int userId = MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetUserId();
+            int officeId = MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetOfficeId();
+            string culture = MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetCulture().TwoLetterISOLanguageName;
+
+            using (DataTable table = MixERP.Net.DatabaseLayer.Core.Menu.GetMenuTable(parentMenuId, level, userId, officeId, culture))
             {
-                MixERP.Net.Common.Models.Core.Menu model = new Common.Models.Core.Menu();
+                if (table == null)
+                {
+                    return null;
+                }
 
-                model.MenuId = Conversion.TryCastInteger(row["menu_id"]);
-                model.MenuText = Conversion.TryCastString(row["menu_text"]);
-                model.Url = Conversion.ResolveUrl(Conversion.TryCastString(row["url"]));
-                model.MenuCode = Conversion.TryCastString(row["menu_code"]);
-                model.Level = Conversion.TryCastInteger(row["level"]);
-                model.ParentMenuId = Conversion.TryCastInteger(row["parent_menu_id"]);
+                foreach (DataRow row in table.Rows)
+                {
+                    MixERP.Net.Common.Models.Core.Menu model = new Common.Models.Core.Menu();
 
-                collection.Add(model);
+                    model.MenuId = Conversion.TryCastInteger(row["menu_id"]);
+                    model.MenuText = Conversion.TryCastString(row["menu_text"]);
+                    model.Url = Conversion.ResolveUrl(Conversion.TryCastString(row["url"]));
+                    model.MenuCode = Conversion.TryCastString(row["menu_code"]);
+                    model.Level = Conversion.TryCastInteger(row["level"]);
+                    model.ParentMenuId = Conversion.TryCastInteger(row["parent_menu_id"]);
+
+                    collection.Add(model);
+                }
             }
 
             return collection;

@@ -24,9 +24,19 @@ namespace MixERP.Net.FrontEnd
             }
         }
 
+        private void BindBranchDropDownList()
+        {
+            using (System.Data.DataTable table = MixERP.Net.BusinessLayer.Office.Offices.GetOffices())
+            {
+                BranchDropDownList.DataSource = table;
+                BranchDropDownList.DataBind();
+            }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             this.CheckDBConnectivity();
+            this.BindBranchDropDownList();
 
             UserIdTextBox.Focus();
 

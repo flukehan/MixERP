@@ -43,12 +43,12 @@ namespace MixERP.Net.BusinessLayer.Helpers
 
         public static bool InsertRecord(string tableSchema, string tableName, Collection<KeyValuePair<string, string>> data, string imageColumn)
         {
-            return MixERP.Net.DatabaseLayer.Helpers.FormHelper.InsertRecord(MixERP.Net.BusinessLayer.Helpers.SessionHelper.UserId(), tableSchema, tableName, data, imageColumn);
+            return MixERP.Net.DatabaseLayer.Helpers.FormHelper.InsertRecord(MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetUserId(), tableSchema, tableName, data, imageColumn);
         }
 
         public static bool UpdateRecord(string tableSchema, string tableName, Collection<KeyValuePair<string, string>> data, string keyColumn, string keyColumnValue, string imageColumn)
         {
-            return MixERP.Net.DatabaseLayer.Helpers.FormHelper.UpdateRecord(MixERP.Net.BusinessLayer.Helpers.SessionHelper.UserId(), tableSchema, tableName, data, keyColumn, keyColumnValue, imageColumn);
+            return MixERP.Net.DatabaseLayer.Helpers.FormHelper.UpdateRecord(MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetUserId(), tableSchema, tableName, data, keyColumn, keyColumnValue, imageColumn);
         }
 
         public static bool DeleteRecord(string tableSchema, string tableName, string keyColumn, string keyColumnValue)

@@ -32,7 +32,7 @@ namespace MixERP.Net.BusinessLayer.Transactions
                 statementReference = statementReference.Replace("&nbsp;", " ").Trim();
             }
 
-            transactionMasterId = MixERP.Net.DatabaseLayer.Transactions.DirectPurchase.Add(valueDate, MixERP.Net.BusinessLayer.Helpers.SessionHelper.OfficeId(), MixERP.Net.BusinessLayer.Helpers.SessionHelper.UserId(), MixERP.Net.BusinessLayer.Helpers.SessionHelper.LogOnId(), costCenterId, referenceNumber, statementReference, stockMaster, details);
+            transactionMasterId = MixERP.Net.DatabaseLayer.Transactions.DirectPurchase.Add(valueDate, MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetOfficeId(), MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetUserId(), MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetLogOnId(), costCenterId, referenceNumber, statementReference, stockMaster, details);
             MixERP.Net.DatabaseLayer.Transactions.Verification.CallAutoVerification(transactionMasterId);
             return transactionMasterId;
         }

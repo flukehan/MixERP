@@ -36,8 +36,8 @@ namespace MixERP.Net.WebControls.ScrudFactory
             }
 
 
-            this.userIdHidden.Value = MixERP.Net.BusinessLayer.Helpers.SessionHelper.UserName();
-            this.officeCodeHidden.Value = MixERP.Net.BusinessLayer.Helpers.SessionHelper.OfficeName();
+            this.userIdHidden.Value = MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetUserName();
+            this.officeCodeHidden.Value = MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetOfficeName();
         }
 
         private Unit GetWidth()

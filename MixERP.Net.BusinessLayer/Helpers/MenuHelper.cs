@@ -25,6 +25,11 @@ namespace MixERP.Net.BusinessLayer.Helpers
                 string relativePath = MixERP.Net.Common.Conversion.GetRelativePath(path);
                 Collection<MixERP.Net.Common.Models.Core.Menu> rootMenus = MixERP.Net.BusinessLayer.Core.Menu.GetRootMenuCollection(relativePath);
 
+                if (rootMenus == null)
+                {
+                    return string.Empty;
+                }
+
                 if(rootMenus.Count > 0)
                 {
                     foreach(MixERP.Net.Common.Models.Core.Menu rootMenu in rootMenus)

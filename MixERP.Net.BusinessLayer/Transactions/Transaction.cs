@@ -40,7 +40,7 @@ namespace MixERP.Net.BusinessLayer.Transactions
             }
 
 
-            transactionMasterId = MixERP.Net.DatabaseLayer.Transactions.Transaction.Add(valueDate, MixERP.Net.BusinessLayer.Helpers.SessionHelper.OfficeId(), MixERP.Net.BusinessLayer.Helpers.SessionHelper.UserId(), MixERP.Net.BusinessLayer.Helpers.SessionHelper.LogOnId(), costCenterId, referenceNumber, details);
+            transactionMasterId = MixERP.Net.DatabaseLayer.Transactions.Transaction.Add(valueDate, MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetOfficeId(), MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetUserId(), MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetLogOnId(), costCenterId, referenceNumber, details);
             MixERP.Net.DatabaseLayer.Transactions.Verification.CallAutoVerification(transactionMasterId);
             return transactionMasterId;
         }

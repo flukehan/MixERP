@@ -38,7 +38,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             }
             else if(e.Row.RowType == DataControlRowType.Header)
             {
-                for(int i = 0; i < e.Row.Cells.Count; i++)
+                for(int i = 1; i < e.Row.Cells.Count; i++)
                 {
                     string cellText = e.Row.Cells[i].Text;
 
