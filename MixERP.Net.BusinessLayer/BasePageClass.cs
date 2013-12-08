@@ -26,7 +26,7 @@ namespace MixERP.Net.BusinessLayer
         /// even when the user is not logged in.
         /// </summary>
         public bool NoLogOn { get; set; }
-        
+
         /// <summary>
         /// Since we save the menu on the database, this parameter is only used 
         /// when there is no associated record of this page's url or path in the menu table.
@@ -34,20 +34,20 @@ namespace MixERP.Net.BusinessLayer
         /// on the left hand side to be displayed in regards with the specified path.
         /// </summary>
         public string OverridePath { get; set; }
-        
+
         protected override void OnLoad(EventArgs e)
         {
-            if(string.IsNullOrWhiteSpace(OverridePath))
+            if (string.IsNullOrWhiteSpace(OverridePath))
             {
                 OverridePath = this.Page.Request.Url.AbsolutePath;
             }
-            
+
             Literal menuLiteral = ((Literal)MixERP.Net.Common.PageUtility.FindControlIterative(this.Master, "ContentMenuLiteral"));
 
-            if(menuLiteral != null)
+            if (menuLiteral != null)
             {
                 string menu = MixERP.Net.BusinessLayer.Helpers.MenuHelper.GetContentPageMenu(this.Page, this.OverridePath);
-                menuLiteral.Text = menu;            
+                menuLiteral.Text = menu;
             }
 
             base.OnLoad(e);
@@ -66,17 +66,17 @@ namespace MixERP.Net.BusinessLayer
 
         protected override void OnInit(EventArgs e)
         {
-            if(!IsPostBack)
+            if (!IsPostBack)
             {
-                if(Request.IsAuthenticated)
+                if (Request.IsAuthenticated)
                 {
-                    if(Context.Session == null)
+                    if (Context.Session == null)
                     {
                         SetSession();
                     }
                     else
                     {
-                        if(Context.Session["UserId"] == null)
+                        if (Context.Session["UserId"] == null)
                         {
                             SetSession();
                         }
@@ -84,7 +84,7 @@ namespace MixERP.Net.BusinessLayer
                 }
                 else
                 {
-                    if(!this.NoLogOn)
+                    if (!this.NoLogOn)
                     {
                         RequestLogOnPage();
                     }
@@ -102,7 +102,7 @@ namespace MixERP.Net.BusinessLayer
             }
 
             string cultureName = HttpContext.Current.Session["Culture"].ToString();
-            CultureInfo culture = new CultureInfo(cultureName);                        
+            CultureInfo culture = new CultureInfo(cultureName);
             Thread.CurrentThread.CurrentCulture = culture;
             Thread.CurrentThread.CurrentUICulture = culture;
         }
@@ -116,9 +116,19 @@ namespace MixERP.Net.BusinessLayer
         public static void RequestLogOnPage()
         {
             FormsAuthentication.SignOut();
-            string currentUrl = HttpContext.Current.Request.RawUrl;
-            string loginPageUrl = FormsAuthentication.LoginUrl;
-            HttpContext.Current.Response.Redirect(String.Format(System.Threading.Thread.CurrentThread.CurrentCulture, "{0}?ReturnUrl={1}", loginPageUrl, currentUrl));
+
+            foreach (var cookie in HttpContext.Current.Request.Cookies.AllKeys)
+            {
+                HttpContext.Current.Request.Cookies.Remove(cookie);
+            }
+
+            string currentPage = HttpContext.Current.Request.Url.AbsolutePath;
+            string loginUrl = (HttpContext.Current.Handler as Page).ResolveUrl(FormsAuthentication.LoginUrl);
+
+            if (currentPage != loginUrl)
+            {
+                FormsAuthentication.RedirectToLoginPage(currentPage);
+            }
         }
     }
 }

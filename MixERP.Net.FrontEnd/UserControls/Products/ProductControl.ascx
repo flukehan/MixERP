@@ -12,7 +12,7 @@ http://mozilla.org/MPL/2.0/.
     <asp:UpdateProgress ID="UpdateProgress1" runat="server">
         <ProgressTemplate>
             <div class="ajax-container">
-                <img alt="progress" src="/spinner.gif" class="ajax-loader" />
+                <img runat="server" alt="progress" src="~/spinner.gif" class="ajax-loader" />
             </div>
         </ProgressTemplate>
     </asp:UpdateProgress>
@@ -413,7 +413,7 @@ http://mozilla.org/MPL/2.0/.
 
         $.ajax({
             type: "POST",
-            url: "/Services/PartyData.asmx/GetAddressByPartyCode",
+            url: "<%=ResolveUrl("~/Services/PartyData.asmx/GetAddressByPartyCode") %>",
             data: "{partyCode:'" + partyCode + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -433,7 +433,7 @@ http://mozilla.org/MPL/2.0/.
 
         $.ajax({
             type: "POST",
-            url: "/Services/ItemData.asmx/GetUnits",
+            url: "<%=ResolveUrl("~/Services/ItemData.asmx/GetUnits") %>",
             data: "{itemCode:'" + itemCode + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",

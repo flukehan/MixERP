@@ -1086,8 +1086,8 @@
   <data name="resource" xml:space="preserve">
     <value>Resource</value>
   </data>
-  <data name="flag_color" xml:space="preserve">
-    <value>Flag Color</value>
+  <data name="background_color" xml:space="preserve">
+    <value>Background Color</value>
   </data>
   <data name="flag_type_id" xml:space="preserve">
     <value>Flag Type Id</value>
@@ -1103,5 +1103,17 @@
   </data>
   <data name="contact_address_line_2" xml:space="preserve">
     <value>Contact Address Line 2</value>
+  </data>
+  <data name="foreground_color" xml:space="preserve">
+    <value>Foreground Color</value>
+  </data>
+  <data name="flag_color" xml:space="preserve">
+    <value>Flag Color</value>
+  </data>
+  <data name="flag_background_color" xml:space="preserve">
+    <value>Background Color</value>
+  </data>
+  <data name="flag_foreground_color" xml:space="preserve">
+    <value>Foreground Color</value>
   </data>
 </root>

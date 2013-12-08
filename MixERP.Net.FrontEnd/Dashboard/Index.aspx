@@ -8,12 +8,9 @@ http://mozilla.org/MPL/2.0/.
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/MenuMaster.Master" AutoEventWireup="true" CodeBehind="Index.aspx.cs" Inherits="MixERP.Net.FrontEnd.Dashboard.Index" %>
 
-<%@ Register Assembly="System.Web.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Namespace="System.Web.UI.DataVisualization.Charting" TagPrefix="asp" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceholder" runat="server">
-
-    <script src="/Scripts/gridster/jquery.gridster.js"></script>
-    <link href="/Scripts/gridster/jquery.gridster.min.css" rel="stylesheet" />
+    <script src="<%=ResolveUrl("~/Scripts/gridster/jquery.gridster.js") %>"></script>
+    <link href="<%=ResolveUrl("~/Scripts/gridster/jquery.gridster.min.css") %>" rel="stylesheet" />
     <script type="text/javascript">
         var gridster;
 

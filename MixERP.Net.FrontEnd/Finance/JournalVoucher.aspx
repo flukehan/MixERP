@@ -22,7 +22,7 @@ http://mozilla.org/MPL/2.0/.
     <asp:UpdateProgress ID="UpdateProgress1" runat="server">
         <ProgressTemplate>
             <div class="ajax-container">
-                <img alt="progress" src="/spinner.gif" class="ajax-loader" />
+                <img runat="server" alt="progress" src="~/spinner.gif" class="ajax-loader" />
             </div>
         </ProgressTemplate>
     </asp:UpdateProgress>

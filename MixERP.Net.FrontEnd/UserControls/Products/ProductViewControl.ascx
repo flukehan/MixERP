@@ -143,13 +143,13 @@ http://mozilla.org/MPL/2.0/.
             <asp:TemplateField HeaderStyle-Width="56px" HeaderText="actions">
                 <ItemTemplate>
                     <a href="#" id="PreviewAnchor" runat="server" title="Quick Preview" class="preview">
-                        <img src="/Resource/Icons/search-16.png" />
+                        <img runat="server" src="~/Resource/Icons/search-16.png" />
                     </a>
                     <a href="#" id="PrintAnchor" runat="server" title="Print">
-                        <img src="/Resource/Icons/print-16.png" />
+                        <img runat="server" src="~/Resource/Icons/print-16.png" />
                     </a>
                     <a href="#" title="Go To Top" onclick="window.scroll(0);">
-                        <img src="/Resource/Icons/top-16.png" />
+                        <img runat="server" src="~/Resource/Icons/top-16.png" />
                     </a>
                 </ItemTemplate>
             </asp:TemplateField>
@@ -167,7 +167,8 @@ http://mozilla.org/MPL/2.0/.
             <asp:BoundField DataField="transaction_ts" HeaderText="transaction_ts" DataFormatString="{0:D}" />
             <asp:BoundField DataField="user" HeaderText="user" />
             <asp:BoundField DataField="statement_reference" HeaderText="statement_reference" />
-            <asp:BoundField DataField="flag_color" HeaderText="flag_color" />
+            <asp:BoundField DataField="flag_background_color" HeaderText="flag_background_color" />
+            <asp:BoundField DataField="flag_foreground_color" HeaderText="flag_foreground_color" />
         </Columns>
     </asp:GridView>
 </asp:Panel>

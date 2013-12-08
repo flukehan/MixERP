@@ -82,10 +82,10 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 switch (this.SubBook)
                 {
                     case SubTranBook.Order:
-                        AddNewLinkButton.PostBackUrl = "/Sales/Entry/Order.aspx";
+                        AddNewLinkButton.PostBackUrl = "~/Sales/Entry/Order.aspx";
                         break;
                     case SubTranBook.Quotation:
-                        AddNewLinkButton.PostBackUrl = "/Sales/Entry/Quotation.aspx";
+                        AddNewLinkButton.PostBackUrl = "~/Sales/Entry/Quotation.aspx";
                         break;
                 }
             }

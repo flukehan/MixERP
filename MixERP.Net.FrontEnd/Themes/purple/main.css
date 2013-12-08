@@ -790,7 +790,7 @@ textarea
 
 input.date
 {
-    background: white url(/Resource/Icons/calendar-16.png) no-repeat scroll;
+    background: white url(../../Resource/Icons/calendar-16.png) no-repeat scroll;
     background-position: 95% 50%;
     padding-right: 16px;
     cursor: pointer;
@@ -863,7 +863,7 @@ input.date
 
 .item-selector
 {
-    background: url('/Resource/Icons/search-16.png') no-repeat;
+    background: url('../../Resource/Icons/search-16.png') no-repeat;
     background-position: 4px 4px;
     height: 20px;
     width: 20px;
@@ -998,7 +998,7 @@ input.date
     margin: 0px;
     height: 18px;
     width: 95%;
-    background-image: url('/Resource/Icons/find-16.png');
+    background-image: url('../../Resource/Icons/find-16.png');
     background-repeat: no-repeat;
     background-position-x: right;
     background-position-y: center;

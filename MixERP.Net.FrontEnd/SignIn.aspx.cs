@@ -49,15 +49,25 @@ namespace MixERP.Net.FrontEnd
                     {
                         string sessionUser = MixERP.Net.Common.Conversion.TryCastString(this.Page.Session["UserName"]);
 
-                        if(string.IsNullOrWhiteSpace(sessionUser))
+                        if (string.IsNullOrWhiteSpace(sessionUser))
                         {
-                            MixERP.Net.BusinessLayer.Security.User.SetSession(this.Page, user);
+                            if (MixERP.Net.BusinessLayer.Security.User.SetSession(this.Page, user))
+                            {
+                                this.RedirectToDashboard();
+                            }
                         }
-
-                        Response.Redirect("~/Dashboard/Index.aspx", true);
+                        else
+                        {
+                            this.RedirectToDashboard();
+                        }                        
                     }
                 }
             }
+        }
+
+        private void RedirectToDashboard()
+        {
+            Response.Redirect("~/Dashboard/Index.aspx", true);        
         }
 
         protected void SignInButton_Click(object sender, EventArgs e)

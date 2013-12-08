@@ -762,7 +762,8 @@ RETURNS TABLE
 	"user"					national character varying(50),
 	reference_number			national character varying(24),
 	statement_reference			text,
-	flag_color				text
+	flag_background_color			text,
+	flag_foreground_color			text
 )
 AS
 $$
@@ -791,7 +792,8 @@ BEGIN
 		office.users.user_name AS user,
 		transactions.non_gl_stock_master.reference_number,
 		transactions.non_gl_stock_master.statement_reference,
-		core.get_flag_color(core.get_flag_type_id(user_id_, book_, transactions.non_gl_stock_master.non_gl_stock_master_id)) AS flag
+		core.get_flag_background_color(core.get_flag_type_id(user_id_, book_, transactions.non_gl_stock_master.non_gl_stock_master_id)) AS flag_bg,
+		core.get_flag_foreground_color(core.get_flag_type_id(user_id_, book_, transactions.non_gl_stock_master.non_gl_stock_master_id)) AS flag_fg
 	FROM transactions.non_gl_stock_master
 	INNER JOIN core.parties
 	ON transactions.non_gl_stock_master.party_id = core.parties.party_id

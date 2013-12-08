@@ -1,0 +1,23 @@
+﻿<?xml version="1.0"?>
+
+<!--
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
+If a copy of the MPL was not distributed  with this file, You can obtain one at 
+http://mozilla.org/MPL/2.0/.
+-->
+
+<configuration>
+  <appSettings>
+    <add key="HeaderPath" value="~/Reports/Assets/Header.aspx" />
+    <add key="TemplatePath" value="~/Reports/Print.html" />
+    <add key="GridContainerMargin" value="340" />
+    <add key="GridViewDefaultWidth" value="1100" />
+    <add key="CommandPanelButtonCssClass" value="menu" />
+    <add key="ButtonCssClass" value="button" />
+    <add key="UpdateProgressTemplateCssClass" value="ajax-container" />
+    <add key="UpdateProgressSpinnerImageCssClass" value="ajax-loader" />
+    <add key="UpdateProgressSpinnerImagePath" value="~/spinner.gif" />
+  </appSettings>
+</configuration>

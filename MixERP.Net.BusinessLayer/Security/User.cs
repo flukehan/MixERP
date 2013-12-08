@@ -18,7 +18,7 @@ namespace MixERP.Net.BusinessLayer.Security
 {
     public static class User
     {
-        public static void SetSession(System.Web.UI.Page page, string user)
+        public static bool SetSession(System.Web.UI.Page page, string user)
         {
             if(page != null)
             {
@@ -33,7 +33,7 @@ namespace MixERP.Net.BusinessLayer.Security
                             if(LogOnId.Equals(0))
                             {
                                 MixERP.Net.BusinessLayer.BasePageClass.RequestLogOnPage();
-                                return;
+                                return false;
                             }
 
                             page.Session["LogOnId"] = LogOnId;
@@ -59,6 +59,8 @@ namespace MixERP.Net.BusinessLayer.Security
                             page.Session["Fax"] = table.Rows[0]["fax"];
                             page.Session["Email"] = table.Rows[0]["email"];
                             page.Session["Url"] = table.Rows[0]["url"];
+
+                            return true;
                         }
                     }
                 }
@@ -67,6 +69,8 @@ namespace MixERP.Net.BusinessLayer.Security
                     //Swallow the exception
                 }
             }
+
+            return false;
         }
 
         public static bool SignIn(int officeId, string userName, string password, string culture, bool remember, System.Web.UI.Page page)

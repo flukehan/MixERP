@@ -21,30 +21,28 @@ namespace MixERP.Net.Common.Helpers
     {
         public static string GetDbParameter(string keyName)
         {
-            return GetSectionKey("MixERPDbParameters", keyName);
+            return GetSectionKey("DbParameters", keyName);
         }
 
         public static string GetParameter(string keyName)
         {
-            return GetSectionKey("MixERPParameters", keyName);
+            return GetSectionKey("Parameters", keyName);
         }
 
         public static string GetSwitch(string keyName)
         {
-            return GetSectionKey("MixERPSwitches", keyName);
+            return GetSectionKey("Switches", keyName);
         }
 
         public static string GetReportParameter(string keyName)
         {
-            return GetSectionKey("MixERPReportParameters", keyName);
+            return GetSectionKey("ReportParameters", keyName);
         }
 
         public static string GetScrudParameter(string keyName)
         {
-            return GetSectionKey("MixERPScrudParameters", keyName);
+            return GetSectionKey("ScrudParameters", keyName);
         }
-
-
 
         private static string GetSectionKey(string sectionName, string keyName)
         {

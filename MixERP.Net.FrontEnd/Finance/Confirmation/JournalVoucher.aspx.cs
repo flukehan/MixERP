@@ -18,7 +18,7 @@ namespace MixERP.Net.FrontEnd.Finance.Confirmation
     {
         protected void Page_Init(object sender, EventArgs e)
         {
-            this.OverridePath = "/Finance/JournalVoucher.aspx";
+            this.OverridePath = "~/Finance/JournalVoucher.aspx";
         }
         
         protected void Page_Load(object sender, EventArgs e)

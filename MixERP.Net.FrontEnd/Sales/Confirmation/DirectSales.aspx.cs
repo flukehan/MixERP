@@ -18,7 +18,7 @@ namespace MixERP.Net.FrontEnd.Sales.Confirmation
     {
         protected void Page_Init(object sender, EventArgs e)
         {
-            this.OverridePath = "/Sales/DirectSales.aspx";
+            this.OverridePath = "~/Sales/DirectSales.aspx";
         }
         
         protected void Page_Load(object sender, EventArgs e)

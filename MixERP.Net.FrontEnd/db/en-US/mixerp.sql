@@ -280,17 +280,18 @@ CREATE TABLE core.flag_types
 (
 	flag_type_id				SERIAL NOT NULL PRIMARY KEY,
 	flag_type_name				national character varying(24) NOT NULL,
-	flag_color				color NOT NULL,
+	background_color			color NOT NULL,
+	foreground_color			color NOT NULL,
 	audit_user_id				integer NULL REFERENCES office.users(user_id),
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
 
-INSERT INTO core.flag_types(flag_type_name, flag_color)
-SELECT 'Critical', 		'#FC8A68' UNION ALL
-SELECT 'Important',		'#FAD5AA' UNION ALL
-SELECT 'Review', 		'#F2E4F7' UNION ALL
-SELECT 'Todo', 			'#CDF2FA' UNION ALL
-SELECT 'OK', 			'#D7E868';
+INSERT INTO core.flag_types(flag_type_name, background_color, foreground_color)
+SELECT 'Critical', 		'#CC0404', '#FFFFFF' UNION ALL
+SELECT 'Important',		'#A3159E', '#FFFFFF' UNION ALL
+SELECT 'Review', 		'#142F82', '#FFFFFF' UNION ALL
+SELECT 'Todo', 			'#F9FF4F', '#000000' UNION ALL
+SELECT 'OK', 			'#95F75C', '#000000';
 
 CREATE TABLE core.flags
 (
@@ -356,14 +357,29 @@ END
 $$
 LANGUAGE plpgsql;
 
-CREATE FUNCTION core.get_flag_color(flag_type_id_ integer)
+CREATE FUNCTION core.get_flag_background_color(flag_type_id_ integer)
 RETURNS text
 AS
 $$
 BEGIN
 	RETURN
 	(
-		SELECT flag_color
+		SELECT background_color
+		FROM core.flag_types
+		WHERE core.flag_types.flag_type_id=$1
+	);
+END
+$$
+LANGUAGE plpgsql;
+
+CREATE FUNCTION core.get_flag_foreground_color(flag_type_id_ integer)
+RETURNS text
+AS
+$$
+BEGIN
+	RETURN
+	(
+		SELECT foreground_color
 		FROM core.flag_types
 		WHERE core.flag_types.flag_type_id=$1
 	);

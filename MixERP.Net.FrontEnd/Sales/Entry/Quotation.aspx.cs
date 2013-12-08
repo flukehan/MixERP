@@ -20,7 +20,7 @@ namespace MixERP.Net.FrontEnd.Sales.Entry
 
         protected void Page_Init(object sender, EventArgs e)
         {
-            this.OverridePath = "/Sales/Quotation.aspx";
+            this.OverridePath = "~/Sales/Quotation.aspx";
         }
 
         protected void Page_Load(object sender, EventArgs e)

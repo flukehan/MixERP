@@ -24,7 +24,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             updateProgress = new UpdateProgress();
             updateProgress.ID = "ScrudUpdateProgress";
 
-            updateProgress.ProgressTemplate = new AjaxProgressTemplate(this.GetUpdateProgressTemplateCssClass(), this.GetUpdateProgressSpinnerImageCssClass(), this.GetUpdateProgressSpinnerImagePath());
+            updateProgress.ProgressTemplate = new AjaxProgressTemplate(this.GetUpdateProgressTemplateCssClass(), this.GetUpdateProgressSpinnerImageCssClass(), this.Page.ResolveUrl(this.GetUpdateProgressSpinnerImagePath()));
             p.Controls.Add(updateProgress);
         }
 

@@ -166,17 +166,17 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             {
                 if (this.ProductGridView.Rows.Count > 0)
                 {
-                    foreach (GridViewRow row in this.ProductGridView.Rows)
+                    for (int i = 1; i < ProductGridView.Rows.Count; i++)
                     {
                         StockMasterDetailModel detail = new StockMasterDetailModel();
 
-                        detail.ItemCode = row.Cells[0].Text;
-                        detail.Quantity = MixERP.Net.Common.Conversion.TryCastInteger(row.Cells[2].Text);
-                        detail.UnitName = row.Cells[3].Text;
-                        detail.Price = MixERP.Net.Common.Conversion.TryCastDecimal(row.Cells[4].Text);
-                        detail.Discount = MixERP.Net.Common.Conversion.TryCastDecimal(row.Cells[6].Text);
-                        detail.TaxRate = MixERP.Net.Common.Conversion.TryCastDecimal(row.Cells[8].Text);
-                        detail.Tax = MixERP.Net.Common.Conversion.TryCastDecimal(row.Cells[9].Text);
+                        detail.ItemCode = ProductGridView.Rows[i].Cells[0].Text;
+                        detail.Quantity = MixERP.Net.Common.Conversion.TryCastInteger(ProductGridView.Rows[i].Cells[2].Text);
+                        detail.UnitName = ProductGridView.Rows[i].Cells[3].Text;
+                        detail.Price = MixERP.Net.Common.Conversion.TryCastDecimal(ProductGridView.Rows[i].Cells[4].Text);
+                        detail.Discount = MixERP.Net.Common.Conversion.TryCastDecimal(ProductGridView.Rows[i].Cells[6].Text);
+                        detail.TaxRate = MixERP.Net.Common.Conversion.TryCastDecimal(ProductGridView.Rows[i].Cells[8].Text);
+                        detail.Tax = MixERP.Net.Common.Conversion.TryCastDecimal(ProductGridView.Rows[i].Cells[9].Text);
                         collection.AddDetail(detail);
                     }
                 }
