@@ -120,4 +120,7 @@
   <data name="InvalidDate" xml:space="preserve">
     <value>Invalid Date</value>
   </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>This is a required field.</value>
+  </data>
 </root>

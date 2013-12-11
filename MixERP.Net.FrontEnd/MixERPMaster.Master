@@ -12,8 +12,7 @@ http://mozilla.org/MPL/2.0/.
 <!DOCTYPE html>
 <html>
 <head runat="server">
-
-    <asp:PlaceHolder ID="PlaceHolder1" runat="server">
+    <asp:PlaceHolder ID="HeadHolder" runat="server">
         <link href="<%=ResolveUrl("~/themes/purple/main.css") %>" rel="stylesheet" type="text/css" />
         <script src="//code.jquery.com/jquery-1.9.1.js" type="text/javascript"></script>
         <script src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
@@ -28,13 +27,11 @@ http://mozilla.org/MPL/2.0/.
 
         <link href="<%=ResolveUrl("~/Scripts/colorbox/colorbox.css") %>" rel="stylesheet" />
     </asp:PlaceHolder>
-
     <title>MixErp® Beta</title>
     <asp:ContentPlaceHolder ID="ScriptContentPlaceholder" runat="server">
     </asp:ContentPlaceHolder>
     <asp:ContentPlaceHolder ID="StyleSheetContentPlaceholder" runat="server">
     </asp:ContentPlaceHolder>
-
     <!--[if IE]>
         <style>
         .grid3 td
@@ -43,7 +40,6 @@ http://mozilla.org/MPL/2.0/.
         }
         </style>
     <![endif]-->
-
 </head>
 <body>
     <script type="text/javascript">

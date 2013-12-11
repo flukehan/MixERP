@@ -1195,7 +1195,7 @@ SELECT office.get_office_id_by_office_code('PES-NY-MEM'), core.menus.menu_id, of
 FROM core.menus;
 
 
-CREATE VIEW office.login_view
+CREATE VIEW office.sign_in_view
 AS
 SELECT
 	users.user_id, 

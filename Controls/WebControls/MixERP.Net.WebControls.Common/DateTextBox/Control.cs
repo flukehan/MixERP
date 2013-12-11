@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.WebControls.Common.Helpers;
 
 namespace MixERP.Net.WebControls.Common
 {
@@ -20,7 +21,8 @@ namespace MixERP.Net.WebControls.Common
     {
         //Todo: Display localized calendar.
         TextBox textBox;
-        CompareValidator validator;
+        CompareValidator compareValidator;
+        RequiredFieldValidator requiredValidator;
 
         protected override void Render(HtmlTextWriter w)
         {
@@ -28,13 +30,34 @@ namespace MixERP.Net.WebControls.Common
 
             if (this.EnableValidation)
             {
-                validator.RenderControl(w);
+                compareValidator.RenderControl(w);
             }
         }
 
         protected override void RecreateChildControls()
         {
             EnsureChildControls();
+        }
+
+        private void InitializeDate(MixERP.Net.Common.Models.Core.Frequency frequency)
+        {
+            //Todo:Fix this implementation.
+            DateTime date = DateTime.Today;
+
+            if (frequency == Net.Common.Models.Core.Frequency.MonthStartDate)
+            {
+                date = date.AddDays(1 - date.Day);
+            }
+
+            if (frequency == Net.Common.Models.Core.Frequency.MonthEndDate)
+            {
+                date = new DateTime(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month));
+            }
+
+            if (textBox != null)
+            {
+                textBox.Text = date.ToShortDateString();
+            }
         }
 
         protected override void CreateChildControls()
@@ -44,136 +67,40 @@ namespace MixERP.Net.WebControls.Common
             textBox = new TextBox();
             textBox.ID = this.ID;
 
-            validator = new CompareValidator();
-            validator.Display = ValidatorDisplay.Dynamic;
+            compareValidator = new CompareValidator();
+            compareValidator.Display = ValidatorDisplay.Dynamic;
 
-            validator.ID = this.ID + "CompareValidator";
-            validator.ControlToValidate = this.ID;
-            validator.ValueToCompare = "1/1/1900";
-            validator.Type = ValidationDataType.Date;
+            compareValidator.ID = this.ID + "CompareValidator";
+            compareValidator.ControlToValidate = this.ID;
+            compareValidator.ValueToCompare = "1/1/1900";
+            compareValidator.Type = ValidationDataType.Date;
 
-            validator.ErrorMessage = Resources.CommonResource.InvalidDate;
-            validator.EnableClientScript = true;
-            validator.CssClass = this.ValidatorCssClass;
+            compareValidator.ErrorMessage = Resources.CommonResource.InvalidDate;
+            compareValidator.EnableClientScript = true;
+            compareValidator.CssClass = this.ValidatorCssClass;
+
+            requiredValidator = new RequiredFieldValidator();
+            requiredValidator.Display = ValidatorDisplay.Dynamic;
+
+            requiredValidator.ID = this.ID + "RequiredFieldValidator";
+            requiredValidator.ControlToValidate = this.ID;
+            requiredValidator.ErrorMessage = Resources.CommonResource.RequiredField;
+            requiredValidator.EnableClientScript = true;
+            requiredValidator.CssClass = this.ValidatorCssClass;
 
             this.Controls.Add(textBox);
 
             if (this.EnableValidation)
             {
-                this.Controls.Add(validator);
+                this.Controls.Add(compareValidator);
             }
 
-            this.AddScript();
-        }
-
-        private void AddScript()
-        {
-            string script = this.GetDatePickerScript(this.ID);
-
-            Page p = System.Web.HttpContext.Current.CurrentHandler as Page;
-            MixERP.Net.Common.PageUtility.ExecuteJavaScript("datePicker_" + this.ID, script, p);
-        }
-
-        private string GetDatePickerScript(string controlId)
-        {
-            string script = string.Empty;
-            string selector = "$('#" + controlId + "')";
-            string locale = GetDatePickerLocale();
-
-            script = "$(function() {" + selector + ".datepicker({";
-            script += this.GetParameters();
-            script += "}";
-
-            if (!string.IsNullOrWhiteSpace(locale))
+            if (this.Required)
             {
-                if (!locale.Contains("iv"))
-                {
-                    script += ",$.datepicker.regional['" + GetDatePickerLocale() + "']";
-                }
+                this.Controls.Add(requiredValidator);
             }
 
-            script += ");";
-            script += "});";
-            return script;
-        }
-
-        private string GetParameters()
-        {
-            string script = string.Empty;
-            int index = 0;
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            string format = GetDatePickerFormat();
-            bool showWeekNumber = ShowWeekNumber();
-            int weekStartDay = GetWeekStartDay();
-            DateTime? minDate = this.MinDate;
-            DateTime? maxDate = this.MaxDate;
-            string numberOfMonths = GetNumberOfMonths();
-
-            parameters.Add("dateFormat", "'" + format + "'");
-
-            if (showWeekNumber)
-            {
-                parameters.Add("showWeek", "true");
-            }
-            else
-            {
-                parameters.Add("showWeek", "false");
-            }
-
-
-            parameters.Add("firstDay", (weekStartDay).ToString(CultureInfo.InvariantCulture));
-            parameters.Add("constrainInput", "false");
-
-            if (minDate != null)
-            {
-                parameters.Add("minDate", "new Date(" + minDate.Value.Year + "," + minDate.Value.Month + "," + minDate.Value.Day + ")");
-            }
-
-            if (maxDate != null)
-            {
-                parameters.Add("maxDate", "new Date(" + maxDate.Value.Year + "," + maxDate.Value.Month + "," + maxDate.Value.Day + ")");
-            }
-
-            parameters.Add("numberOfMonths", numberOfMonths);
-
-            foreach (var item in parameters)
-            {
-                if (!index.Equals(0))
-                {
-                    script += ",";
-                }
-
-                script += item.Key + ":" + item.Value;
-                index++;
-            }
-
-            return script;
-        }
-
-        private static string GetDatePickerFormat()
-        {
-            //Todo: jQuery date format
-            return "dd/mm/yy";
-        }
-
-        private static string GetDatePickerLocale()
-        {
-            return MixERP.Net.Common.Helpers.LocalizationHelper.GetCurrentCulture().TwoLetterISOLanguageName;
-        }
-
-        private static int GetWeekStartDay()
-        {
-            return (int)MixERP.Net.Common.Helpers.LocalizationHelper.GetCurrentCulture().DateTimeFormat.FirstDayOfWeek;
-        }
-
-        private static bool ShowWeekNumber()
-        {
-            return ConfigurationHelper.GetParameter("DatePickerShowWeekNumber").Equals("true");
-        }
-
-        private static string GetNumberOfMonths()
-        {
-            return ConfigurationHelper.GetParameter("DatePickerNumberOfMonths");
+            this.AddjQueryUIDatePicker();
         }
     }
 }

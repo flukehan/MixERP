@@ -77,7 +77,22 @@ namespace MixERP.Net.WebControls.Common
         public DateTime? MinDate { get; set; }
         public DateTime? MaxDate { get; set; }
 
-        //Todo
         public bool Required { get; set; }
+
+
+        private MixERP.Net.Common.Models.Core.Frequency mode;
+        public MixERP.Net.Common.Models.Core.Frequency Mode 
+        {
+            get
+            {
+                return this.mode;
+            }
+            set
+            {
+                this.mode = value;
+                EnsureChildControls();
+                this.InitializeDate(this.mode);
+            }
+        }
     }
 }

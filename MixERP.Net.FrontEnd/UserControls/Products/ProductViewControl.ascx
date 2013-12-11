@@ -101,11 +101,10 @@ http://mozilla.org/MPL/2.0/.
         </tr>
         <tr>
             <td>
-
-                <mixerp:DateTextBox ID="DateFromDateTextBox" runat="server" CssClass="date" Width="72px" Mode="MonthStartDate" />
+                <mixerp:DateTextBox ID="DateFromDateTextBox" runat="server" CssClass="date" Width="72px" Mode="MonthStartDate" Required="true" />
             </td>
             <td>
-                <mixerp:DateTextBox ID="DateToDateTextBox" runat="server" CssClass="date" Width="72px" Mode="MonthEndDate" />
+                <mixerp:DateTextBox ID="DateToDateTextBox" runat="server" CssClass="date" Width="72px" Mode="MonthEndDate" Required="true" />
             </td>
             <td>
                 <asp:TextBox ID="OfficeTextBox" runat="server" Width="72px" />

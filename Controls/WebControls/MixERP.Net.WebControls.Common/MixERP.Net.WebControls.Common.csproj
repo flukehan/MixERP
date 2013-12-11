@@ -51,6 +51,8 @@
   <ItemGroup>
     <Compile Include="DateTextBox\Control.cs" />
     <Compile Include="DateTextBox\Events.cs" />
+    <Compile Include="DateTextBox\jQueryUIDatePickerSupport.cs" />
+    <Compile Include="Helpers\jQueryUIHelper.cs" />
     <Compile Include="DateTextBox\Properties.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\CommonResource.Designer.cs">
@@ -64,7 +66,9 @@
     <None Include="MixERP.Net.WebControls.Common.licenseheader" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\CommonResource.fr.resx" />
+    <EmbeddedResource Include="Resources\CommonResource.fr.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\CommonResource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>CommonResource.Designer.cs</LastGenOutput>

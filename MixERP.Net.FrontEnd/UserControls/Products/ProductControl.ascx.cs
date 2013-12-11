@@ -13,6 +13,7 @@ using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common.Helpers;
+using System.Globalization;
 
 namespace MixERP.Net.FrontEnd.UserControls.Products
 {
@@ -473,7 +474,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
                                                     this.BindGridView();
                                                     itemCodeTextBox.Text = "";
-                                                    quantityTextBox.Text = "1";
+                                                    quantityTextBox.Text = (1).ToString(CultureInfo.InvariantCulture);
                                                     priceTextBox.Text = "";
                                                     discountTextBox.Text = "";
                                                     taxTextBox.Text = "";
@@ -566,22 +567,22 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                     return;
                 }
 
-                this.AddItemCodeTextBox(footer, 0);
-                this.AddItemDropDownList(footer, 1);
-                this.AddQuantityTextBox(footer, 2);
-                this.AddUnitDropDownList(footer, 3);
-                this.AddPriceTextBox(footer, 4);
-                this.AddAmountTextBox(footer, 5);
-                this.AddDiscountTextBox(footer, 6);
-                this.AddSubtotalTextBox(footer, 7);
-                this.AddTaxRateTextBox(footer, 8);
-                this.AddTaxTextBox(footer, 9);
-                this.AddTotalTextBox(footer, 10);
-                this.AddAddButton(footer, 11);
+                AddItemCodeTextBox(footer, 0);
+                AddItemDropDownList(footer, 1);
+                AddQuantityTextBox(footer, 2);
+                AddUnitDropDownList(footer, 3);
+                AddPriceTextBox(footer, 4);
+                AddAmountTextBox(footer, 5);
+                AddDiscountTextBox(footer, 6);
+                AddSubtotalTextBox(footer, 7);
+                AddTaxRateTextBox(footer, 8);
+                AddTaxTextBox(footer, 9);
+                AddTotalTextBox(footer, 10);
+                AddAddButton(footer, 11);
             }
         }
 
-        private void AddItemCodeTextBox(GridViewRow row, int index)
+        private static void AddItemCodeTextBox(GridViewRow row, int index)
         {
             if (row == null)
             {
@@ -593,7 +594,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 itemCodeTextBox.ID = "ItemCodeTextBox";
                 itemCodeTextBox.ClientIDMode = System.Web.UI.ClientIDMode.Static;
                 itemCodeTextBox.Attributes.Add("onblur", "selectDropDownListByValue(this.id, 'ItemDropDownList');");
-                itemCodeTextBox.ToolTip = "Alt + C";
+                itemCodeTextBox.ToolTip = Resources.Titles.AltC;
                 itemCodeTextBox.Width = 60;
 
                 AddControlToGridViewRow(row, itemCodeTextBox, index);
@@ -613,7 +614,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 itemDropDownList.ClientIDMode = System.Web.UI.ClientIDMode.Static;
                 itemDropDownList.Attributes.Add("onchange", "document.getElementById('ItemCodeTextBox').value = this.options[this.selectedIndex].value;if(this.selectedIndex == 0) { return false };");
                 itemDropDownList.Attributes.Add("onblur", "getPrice();");
-                itemDropDownList.ToolTip = "Ctrl + I";
+                itemDropDownList.ToolTip = Resources.Titles.CtrlI;
                 itemDropDownList.Width = 300;
 
                 ScriptManager1.RegisterAsyncPostBackControl(itemDropDownList);
@@ -622,7 +623,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             }
         }
 
-        private void AddQuantityTextBox(GridViewRow row, int index)
+        private static void AddQuantityTextBox(GridViewRow row, int index)
         {
             if (row == null)
             {
@@ -635,9 +636,9 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 quantityTextBox.ClientIDMode = System.Web.UI.ClientIDMode.Static;
                 quantityTextBox.Attributes.Add("onblur", "updateTax();calculateAmount();");
                 quantityTextBox.CssClass = "right";
-                quantityTextBox.ToolTip = "Ctrl + Q";
+                quantityTextBox.ToolTip = Resources.Titles.CtrlQ;
                 quantityTextBox.Width = 50;
-                quantityTextBox.Text = "1";
+                quantityTextBox.Text = (1).ToString(CultureInfo.InvariantCulture); ;
 
                 AddControlToGridViewRow(row, quantityTextBox, index);
             }
@@ -656,7 +657,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 unitDropDownList.ClientIDMode = System.Web.UI.ClientIDMode.Static;
                 unitDropDownList.AutoPostBack = true;
                 unitDropDownList.Attributes.Add("onchange", "$('#UnitNameHidden').val($(this).children('option').filter(':selected').text());$('#UnitIdHidden').val($(this).children('option').filter(':selected').val());");
-                unitDropDownList.ToolTip = "Ctrl + U";
+                unitDropDownList.ToolTip = Resources.Titles.CtrlU;
                 unitDropDownList.Width = 70;
                 ScriptManager1.RegisterAsyncPostBackControl(unitDropDownList);
                 AddControlToGridViewRow(row, unitDropDownList, index);
@@ -664,7 +665,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         }
 
 
-        private void AddPriceTextBox(GridViewRow row, int index)
+        private static void AddPriceTextBox(GridViewRow row, int index)
         {
             if (row == null)
             {
@@ -677,14 +678,14 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 priceTextBox.ClientIDMode = System.Web.UI.ClientIDMode.Static;
                 priceTextBox.Attributes.Add("onblur", "updateTax();calculateAmount();");
                 priceTextBox.CssClass = "right number";
-                priceTextBox.ToolTip = "Alt + P";
+                priceTextBox.ToolTip = Resources.Titles.AltP;
                 priceTextBox.Width = 65;
 
                 AddControlToGridViewRow(row, priceTextBox, index);
             }
         }
 
-        private void AddAmountTextBox(GridViewRow row, int index)
+        private static void AddAmountTextBox(GridViewRow row, int index)
         {
             if (row == null)
             {
@@ -703,7 +704,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             }
         }
 
-        private void AddDiscountTextBox(GridViewRow row, int index)
+        private static void AddDiscountTextBox(GridViewRow row, int index)
         {
             if (row == null)
             {
@@ -716,7 +717,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 discountTextBox.ClientIDMode = System.Web.UI.ClientIDMode.Static;
                 discountTextBox.CssClass = "right number";
                 discountTextBox.Attributes.Add("onblur", "updateTax();calculateAmount();");
-                discountTextBox.ToolTip = "Ctrl + D";
+                discountTextBox.ToolTip = Resources.Titles.CtrlD;
 
                 discountTextBox.Width = 50;
 
@@ -724,7 +725,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             }
         }
 
-        private void AddSubtotalTextBox(GridViewRow row, int index)
+        private static void AddSubtotalTextBox(GridViewRow row, int index)
         {
             if (row == null)
             {
@@ -743,7 +744,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             }
         }
 
-        private void AddTaxRateTextBox(GridViewRow row, int index)
+        private static void AddTaxRateTextBox(GridViewRow row, int index)
         {
             if (row == null)
             {
@@ -762,7 +763,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             }
         }
 
-        private void AddTaxTextBox(GridViewRow row, int index)
+        private static void AddTaxTextBox(GridViewRow row, int index)
         {
             if (row == null)
             {
@@ -776,13 +777,13 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 taxTextBox.Attributes.Add("onblur", "calculateAmount();");
                 taxTextBox.CssClass = "right number";
                 taxTextBox.Width = 50;
-                taxTextBox.ToolTip = "Ctrl + T";
+                taxTextBox.ToolTip = Resources.Titles.CtrlT;
 
                 AddControlToGridViewRow(row, taxTextBox, index);
             }
         }
 
-        private void AddTotalTextBox(GridViewRow row, int index)
+        private static void AddTotalTextBox(GridViewRow row, int index)
         {
             if (row == null)
             {
@@ -814,7 +815,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 addButton.OnClientClick = "calculateAmount();";
                 addButton.CommandName = "Add";
                 addButton.Text = Resources.Titles.Add;
-                addButton.ToolTip = "CTRL + Enter";
+                addButton.ToolTip = Resources.Titles.CtrlReturn;
 
                 this.ScriptManager1.RegisterAsyncPostBackControl(addButton);
                 AddControlToGridViewRow(row, addButton, index);

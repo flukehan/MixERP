@@ -20,17 +20,17 @@ namespace MixERP.Net.BusinessLayer.Security
     {
         public static bool SetSession(System.Web.UI.Page page, string user)
         {
-            if(page != null)
+            if (page != null)
             {
                 try
                 {
-                    using(DataTable table = GetLoginView(user))
+                    using (DataTable table = GetSignInView(user))
                     {
-                        if(table.Rows.Count.Equals(1))
+                        if (table.Rows.Count.Equals(1))
                         {
                             long LogOnId = MixERP.Net.Common.Conversion.TryCastLong(table.Rows[0]["login_id"]);
 
-                            if(LogOnId.Equals(0))
+                            if (LogOnId.Equals(0))
                             {
                                 MixERP.Net.BusinessLayer.BasePageClass.RequestLogOnPage();
                                 return false;
@@ -64,7 +64,7 @@ namespace MixERP.Net.BusinessLayer.Security
                         }
                     }
                 }
-                catch(DbException)
+                catch (DbException)
                 {
                     //Swallow the exception
                 }
@@ -75,13 +75,16 @@ namespace MixERP.Net.BusinessLayer.Security
 
         public static bool SignIn(int officeId, string userName, string password, string culture, bool remember, System.Web.UI.Page page)
         {
-            if(page != null)
+            if (page != null)
             {
                 try
                 {
-                    long LogOnId = MixERP.Net.DatabaseLayer.Security.User.SignIn(officeId, userName, MixERP.Net.Common.Conversion.HashSha512(password, userName), page.Request.UserAgent, "0", "", culture);
+                    string remoteAddress = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+                    string remoteUser = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_USER"];
+                    
+                    long LogOnId = MixERP.Net.DatabaseLayer.Security.User.SignIn(officeId, userName, MixERP.Net.Common.Conversion.HashSha512(password, userName), page.Request.UserAgent, remoteAddress, remoteUser, culture);
 
-                    if(LogOnId > 0)
+                    if (LogOnId > 0)
                     {
                         page.Session["Culture"] = culture;
                         SetSession(page, userName);
@@ -98,7 +101,7 @@ namespace MixERP.Net.BusinessLayer.Security
                         return true;
                     }
                 }
-                catch(DbException)
+                catch (DbException)
                 {
                     //Swallow the exception
                 }
@@ -107,9 +110,9 @@ namespace MixERP.Net.BusinessLayer.Security
             return false;
         }
 
-        public static DataTable GetLoginView(string userName)
+        public static DataTable GetSignInView(string userName)
         {
-            return MixERP.Net.DatabaseLayer.Security.User.GetLoginView(userName);
+            return MixERP.Net.DatabaseLayer.Security.User.GetSignInView(userName);
         }
 
     }

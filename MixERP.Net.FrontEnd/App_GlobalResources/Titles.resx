@@ -636,4 +636,28 @@
   <data name="FiscalYear" xml:space="preserve">
     <value>Fiscal Year</value>
   </data>
+  <data name="AltC" xml:space="preserve">
+    <value>Press Alt +C</value>
+  </data>
+  <data name="AltP" xml:space="preserve">
+    <value>Press Alt +P</value>
+  </data>
+  <data name="CtrlD" xml:space="preserve">
+    <value>Press Ctrl + D</value>
+  </data>
+  <data name="CtrlI" xml:space="preserve">
+    <value>Press Ctrl + I</value>
+  </data>
+  <data name="CtrlQ" xml:space="preserve">
+    <value>Press Ctrl + Q</value>
+  </data>
+  <data name="CtrlReturn" xml:space="preserve">
+    <value>Press Ctrl + Return</value>
+  </data>
+  <data name="CtrlT" xml:space="preserve">
+    <value>Press Ctrl + T</value>
+  </data>
+  <data name="CtrlU" xml:space="preserve">
+    <value>Press Ctrl + U</value>
+  </data>
 </root>

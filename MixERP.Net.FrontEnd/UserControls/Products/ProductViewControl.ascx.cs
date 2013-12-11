@@ -36,14 +36,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         protected void Page_Init()
         {
-            this.InitializeDateTextBoxes();
             this.BindFlagTypeDropDownList();
-        }
-
-        private void InitializeDateTextBoxes()
-        {
-            DateFromDateTextBox.Text = DateTime.Now.ToShortDateString();
-            DateToDateTextBox.Text = DateTime.Now.ToShortDateString();
         }
 
         private void BindFlagTypeDropDownList()
