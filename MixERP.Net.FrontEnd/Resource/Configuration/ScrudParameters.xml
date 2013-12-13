@@ -13,11 +13,15 @@ http://mozilla.org/MPL/2.0/.
     <add key="HeaderPath" value="~/Reports/Assets/Header.aspx" />
     <add key="TemplatePath" value="~/Reports/Print.html" />
     <add key="GridContainerMargin" value="340" />
+    <add key="GridViewCssClass" value="grid" />
     <add key="GridViewDefaultWidth" value="1100" />
     <add key="CommandPanelButtonCssClass" value="menu" />
     <add key="ButtonCssClass" value="button" />
     <add key="UpdateProgressTemplateCssClass" value="ajax-container" />
     <add key="UpdateProgressSpinnerImageCssClass" value="ajax-loader" />
     <add key="UpdateProgressSpinnerImagePath" value="~/spinner.gif" />
+    <add key="UserIdSessionKey" value="UserId" />
+    <add key="UserNameSessionKey" value="UserName" />
+    <add key="OfficeCodeSessionKey" value="OfficeCode" />
   </appSettings>
 </configuration>

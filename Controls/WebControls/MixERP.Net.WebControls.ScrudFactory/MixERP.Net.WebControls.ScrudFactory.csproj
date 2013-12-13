@@ -103,10 +103,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\MixERP.net.BusinessLayer\MixERP.Net.BusinessLayer.csproj">
-      <Project>{81de04cf-7de9-42ff-8339-d05e2586dcba}</Project>
-      <Name>MixERP.Net.BusinessLayer</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\MixERP.net.Common\MixERP.Net.Common.csproj">
       <Project>{d5a09c22-8f48-4fb2-a14d-c62c8c8fcec0}</Project>
       <Name>MixERP.Net.Common</Name>
@@ -114,6 +110,10 @@
     <ProjectReference Include="..\MixERP.Net.WebControls.Common\MixERP.Net.WebControls.Common.csproj">
       <Project>{2d961540-6597-4e7b-969c-974d71d820dd}</Project>
       <Name>MixERP.Net.WebControls.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MixERP.Net.WebControls.ScrudFactory.Data\MixERP.Net.WebControls.ScrudFactory.Data.csproj">
+      <Project>{6ccf0b3b-aa69-42d2-abff-0085aa160501}</Project>
+      <Name>MixERP.Net.WebControls.ScrudFactory.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

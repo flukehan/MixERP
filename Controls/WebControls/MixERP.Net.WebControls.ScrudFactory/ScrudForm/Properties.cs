@@ -128,6 +128,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
         public string UpdateProgressSpinnerImageCssClass { get; set; }
         public string UpdateProgressSpinnerImagePath { get; set; }
         public string CommandPanelButtonCssClass { get; set; }
+        public string GridViewCssClass { get; set; }
         public string ButtonCssClass { get; set; }
     }
 }

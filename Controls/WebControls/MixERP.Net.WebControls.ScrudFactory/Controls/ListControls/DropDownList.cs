@@ -28,7 +28,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 
             HtmlAnchor itemSelectorAnchor;
 
-            using (System.Data.DataTable table = MixERP.Net.BusinessLayer.Helpers.FormHelper.GetTable(tableSchema, tableName))
+            using (System.Data.DataTable table = MixERP.Net.WebControls.ScrudFactory.Data.FormHelper.GetTable(tableSchema, tableName))
             {
                 SetDisplayFields(dropDownList, table, tableSchema, tableName, tableColumn, displayFields);
                 itemSelectorAnchor = GetItemSelector(dropDownList.ClientID, table, tableSchema, tableName, tableColumn, displayViews);
@@ -142,8 +142,8 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
                 view = viewRelation.Split('.').Last();
 
                 //Sanitize the schema and the view
-                schema = MixERP.Net.BusinessLayer.DBFactory.Sanitizer.SanitizeIdentifierName(schema);
-                view = MixERP.Net.BusinessLayer.DBFactory.Sanitizer.SanitizeIdentifierName(view);
+                schema = MixERP.Net.WebControls.ScrudFactory.Data.Sanitizer.SanitizeIdentifierName(schema);
+                view = MixERP.Net.WebControls.ScrudFactory.Data.Sanitizer.SanitizeIdentifierName(view);
 
                 if (string.IsNullOrWhiteSpace(schema) || string.IsNullOrWhiteSpace(view))
                 {

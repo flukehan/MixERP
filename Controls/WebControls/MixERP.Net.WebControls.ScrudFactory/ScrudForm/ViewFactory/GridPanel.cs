@@ -36,7 +36,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             formGridView = new GridView();
             formGridView.ID = "FormGridView";
             formGridView.GridLines = GridLines.None;
-            formGridView.CssClass = "grid";
+            formGridView.CssClass = this.GetGridViewCssClass();
             formGridView.RowStyle.CssClass = "row";
             formGridView.AlternatingRowStyle.CssClass = "alt";
             formGridView.AutoGenerateColumns = true;

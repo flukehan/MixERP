@@ -46,6 +46,8 @@ http://mozilla.org/MPL/2.0/.
             shortcut.add("CTRL+M", function () {
                 $('#SearchTextBox').focus();
             });
+
+            $('#SearchTextBox').focus();
         });
 
         var anchors = $("a.sub-menu-anchor");
@@ -54,7 +56,6 @@ http://mozilla.org/MPL/2.0/.
         anchors.hover(function () {
             $("#SearchTextBox").val(($(this).attr("data-menucode")));
         });
-
 
         //Selects menu item from the typed query.
         $("#SearchTextBox").keyup(function (e) {

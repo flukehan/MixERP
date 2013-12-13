@@ -75,7 +75,19 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter( "CommandPanelButtonCssClass");
+                cssClass = MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("CommandPanelButtonCssClass");
+            }
+
+            return cssClass;
+        }
+
+        private string GetGridViewCssClass()
+        {
+            string cssClass = this.GridViewCssClass;
+
+            if (string.IsNullOrWhiteSpace(cssClass))
+            {
+                cssClass = MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("GridViewCssClass");
             }
 
             return cssClass;
@@ -87,7 +99,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter( "ButtonCssClass");
+                cssClass = MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("ButtonCssClass");
             }
 
             return cssClass;

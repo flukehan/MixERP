@@ -484,7 +484,4 @@ http://mozilla.org/MPL/2.0/.
 
         $("#UnitDropDownList").val($("#UnitIdHidden").val());
     }
-
-    $("#DateTextBox").focus();
-
 </script>

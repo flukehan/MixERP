@@ -51,7 +51,7 @@ namespace MixERP.Net.WebControls.ReportEngine
         {
             emailAnchor = new HtmlAnchor();
             emailAnchor.ID = "SendEmailAnchor";
-            emailAnchor.InnerHtml = "<img src='" + MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("EmailIcon") + "' />";
+            emailAnchor.InnerHtml = "<img src='" + this.Page.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("EmailIcon")) + "' />";
             p.Controls.Add(emailAnchor);
         }
 
@@ -60,7 +60,7 @@ namespace MixERP.Net.WebControls.ReportEngine
             printAnchor = new HtmlAnchor();
             printAnchor.ID = "PrintAnchor";
             printAnchor.HRef = "javascript:window.print();";
-            printAnchor.InnerHtml = "<img src='" + MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("PrintIcon") + "' />";
+            printAnchor.InnerHtml = "<img src='" + this.Page.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("PrintIcon")) + "' />";
 
             p.Controls.Add(printAnchor);
         }
@@ -70,7 +70,7 @@ namespace MixERP.Net.WebControls.ReportEngine
             excelAnchor = new HtmlAnchor();
             excelAnchor.ID = "ExcelAnchor";
             excelAnchor.HRef = "#";
-            excelAnchor.InnerHtml = "<img src='" + MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("ExcelIcon") + "' />";
+            excelAnchor.InnerHtml = "<img src='" + this.Page.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("ExcelIcon")) + "' />";
             excelAnchor.ServerClick += ExcelAnchor_ServerClick;
 
             excelAnchor.Attributes.Add("onclick", this.GetReportHtmlScript());
@@ -82,7 +82,7 @@ namespace MixERP.Net.WebControls.ReportEngine
             wordAnchor = new HtmlAnchor();
             wordAnchor.ID = "WordAnchor";
             wordAnchor.HRef = "#";
-            wordAnchor.InnerHtml = "<img src='" + MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("WordIcon") + "' />";
+            wordAnchor.InnerHtml = "<img src='" + this.Page.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("WordIcon")) + "' />";
             wordAnchor.ServerClick += WordAnchor_ServerClick;
 
             wordAnchor.Attributes.Add("onclick", this.GetReportHtmlScript());
@@ -94,7 +94,7 @@ namespace MixERP.Net.WebControls.ReportEngine
             goTopAnchor = new HtmlAnchor();
             goTopAnchor.ID = "GoTop";
             goTopAnchor.HRef = "javascript:window.scrollTo(0, 0);";
-            goTopAnchor.InnerHtml = "<img src='" + MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("GoTopIcon") + "' />";
+            goTopAnchor.InnerHtml = "<img src='" + this.Page.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("GoTopIcon")) + "' />";
             p.Controls.Add(goTopAnchor);
         }
 
@@ -103,7 +103,7 @@ namespace MixERP.Net.WebControls.ReportEngine
             goBottomAnchor = new HtmlAnchor();
             goBottomAnchor.ID = "GoBottom";
             goBottomAnchor.HRef = "javascript:window.scrollTo(0,document.body.scrollHeight);";
-            goBottomAnchor.InnerHtml = "<img src='" + MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("GoBottomIcon") + "' />";
+            goBottomAnchor.InnerHtml = "<img src='" + this.Page.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("GoBottomIcon")) + "' />";
             p.Controls.Add(goBottomAnchor);
         }
 
@@ -113,7 +113,7 @@ namespace MixERP.Net.WebControls.ReportEngine
             filterAnchor.ID = "FilterAnchor";
             filterAnchor.HRef = "#";
             filterAnchor.Attributes.Add("onclick", "$('.report-parameter').toggle(500);");
-            filterAnchor.InnerHtml = "<img src='" + MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("FilterIcon") + "' />";
+            filterAnchor.InnerHtml = "<img src='" + this.Page.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("FilterIcon")) + "' />";
             p.Controls.Add(filterAnchor);
         }
 
@@ -123,7 +123,7 @@ namespace MixERP.Net.WebControls.ReportEngine
             closeAnchor.ID = "CloseAnchor";
             closeAnchor.HRef = "#";
             closeAnchor.Attributes.Add("onclick", "window.close();");
-            closeAnchor.InnerHtml = "<img src='" + MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("CloseIcon") + "' />";
+            closeAnchor.InnerHtml = "<img src='" + this.Page.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("CloseIcon")) + "' />";
             p.Controls.Add(closeAnchor);
         }
 

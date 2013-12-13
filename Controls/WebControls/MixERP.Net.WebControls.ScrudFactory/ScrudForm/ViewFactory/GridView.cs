@@ -21,7 +21,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             this.BindGridView();
             this.formGridView.Width = this.GetWidth();
-            this.pager.RecordCount = MixERP.Net.BusinessLayer.Helpers.FormHelper.GetTotalRecords(this.ViewSchema, this.View);
+            this.pager.RecordCount = MixERP.Net.WebControls.ScrudFactory.Data.FormHelper.GetTotalRecords(this.ViewSchema, this.View);
             this.pager.PageSize = 10;
 
 
@@ -35,9 +35,11 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 this.pager.PageSize = 1000;
             }
 
+            string userNameSessionKey = MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("UserNameSessionKey");
+            string officeCodeSessionKey = MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("OfficeCodeSessionKey");
 
-            this.userIdHidden.Value = MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetUserName();
-            this.officeCodeHidden.Value = MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetOfficeName();
+            this.userIdHidden.Value = MixERP.Net.Common.Helpers.SessionHelper.GetSessionValueByKey(userNameSessionKey);
+            this.officeCodeHidden.Value = MixERP.Net.Common.Helpers.SessionHelper.GetSessionValueByKey(officeCodeSessionKey);
         }
 
         private Unit GetWidth()
@@ -80,7 +82,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             }
 
 
-            using (System.Data.DataTable table = MixERP.Net.BusinessLayer.Helpers.FormHelper.GetView(this.ViewSchema, this.View, this.KeyColumn, limit, offset))
+            using (System.Data.DataTable table = MixERP.Net.WebControls.ScrudFactory.Data.FormHelper.GetView(this.ViewSchema, this.View, this.KeyColumn, limit, offset))
             {
                 this.formGridView.DataSource = table;
                 this.formGridView.DataBind();

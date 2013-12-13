@@ -271,7 +271,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 //Check if the value actually was a number.
                 if (!MixERP.Net.Common.Conversion.IsNumeric(ShippingChargeTextBox.Text))
                 {
-                    MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(ShippingChargeTextBox);
+                    MixERP.Net.Common.Helpers.FormHelper.MakeDirty(ShippingChargeTextBox);
                     return;
                 }
             }
@@ -376,80 +376,80 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
                                                     if (string.IsNullOrWhiteSpace(itemCode))
                                                     {
-                                                        MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(itemCodeTextBox);
+                                                        MixERP.Net.Common.Helpers.FormHelper.MakeDirty(itemCodeTextBox);
                                                         return;
                                                     }
                                                     else
                                                     {
-                                                        MixERP.Net.BusinessLayer.Helpers.FormHelper.RemoveDirty(itemCodeTextBox);
+                                                        MixERP.Net.Common.Helpers.FormHelper.RemoveDirty(itemCodeTextBox);
                                                     }
 
                                                     if (!MixERP.Net.BusinessLayer.Core.Items.ItemExistsByCode(itemCode))
                                                     {
-                                                        MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(itemCodeTextBox);
+                                                        MixERP.Net.Common.Helpers.FormHelper.MakeDirty(itemCodeTextBox);
                                                         return;
                                                     }
                                                     else
                                                     {
-                                                        MixERP.Net.BusinessLayer.Helpers.FormHelper.RemoveDirty(itemCodeTextBox);
+                                                        MixERP.Net.Common.Helpers.FormHelper.RemoveDirty(itemCodeTextBox);
                                                     }
 
                                                     if (quantity < 1)
                                                     {
-                                                        MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(quantityTextBox);
+                                                        MixERP.Net.Common.Helpers.FormHelper.MakeDirty(quantityTextBox);
                                                         return;
                                                     }
                                                     else
                                                     {
-                                                        MixERP.Net.BusinessLayer.Helpers.FormHelper.RemoveDirty(quantityTextBox);
+                                                        MixERP.Net.Common.Helpers.FormHelper.RemoveDirty(quantityTextBox);
                                                     }
 
                                                     if (!MixERP.Net.BusinessLayer.Core.Units.UnitExistsByName(unit))
                                                     {
-                                                        MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(unitDropDownList);
+                                                        MixERP.Net.Common.Helpers.FormHelper.MakeDirty(unitDropDownList);
                                                         return;
                                                     }
                                                     else
                                                     {
-                                                        MixERP.Net.BusinessLayer.Helpers.FormHelper.RemoveDirty(unitDropDownList);
+                                                        MixERP.Net.Common.Helpers.FormHelper.RemoveDirty(unitDropDownList);
                                                     }
 
                                                     if (price <= 0)
                                                     {
-                                                        MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(priceTextBox);
+                                                        MixERP.Net.Common.Helpers.FormHelper.MakeDirty(priceTextBox);
                                                         return;
                                                     }
                                                     else
                                                     {
-                                                        MixERP.Net.BusinessLayer.Helpers.FormHelper.RemoveDirty(priceTextBox);
+                                                        MixERP.Net.Common.Helpers.FormHelper.RemoveDirty(priceTextBox);
                                                     }
 
                                                     if (discount < 0)
                                                     {
-                                                        MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(discountTextBox);
+                                                        MixERP.Net.Common.Helpers.FormHelper.MakeDirty(discountTextBox);
                                                         return;
                                                     }
                                                     else
                                                     {
                                                         if (discount > (price * quantity))
                                                         {
-                                                            MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(discountTextBox);
+                                                            MixERP.Net.Common.Helpers.FormHelper.MakeDirty(discountTextBox);
                                                             return;
                                                         }
                                                         else
                                                         {
-                                                            MixERP.Net.BusinessLayer.Helpers.FormHelper.RemoveDirty(discountTextBox);
+                                                            MixERP.Net.Common.Helpers.FormHelper.RemoveDirty(discountTextBox);
                                                         }
                                                     }
 
                                                     if (tax < 0)
                                                     {
-                                                        MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(taxTextBox);
+                                                        MixERP.Net.Common.Helpers.FormHelper.MakeDirty(taxTextBox);
                                                         return;
                                                     }
                                                     else
                                                     {
-                                                        MixERP.Net.BusinessLayer.Helpers.FormHelper.RemoveDirty(taxTextBox);
+                                                        MixERP.Net.Common.Helpers.FormHelper.RemoveDirty(taxTextBox);
                                                     }
 
                                                     if (this.VerifyStock)
@@ -461,7 +461,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                                                                 itemInStock = MixERP.Net.BusinessLayer.Core.Items.CountItemInStock(itemCode, unitId, storeId);
                                                                 if (quantity > itemInStock)
                                                                 {
-                                                                    MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(quantityTextBox);
+                                                                    MixERP.Net.Common.Helpers.FormHelper.MakeDirty(quantityTextBox);
                                                                     ErrorLabel.Text = String.Format(System.Threading.Thread.CurrentThread.CurrentCulture, Resources.Warnings.InsufficientStockWarning, itemInStock.ToString("G29", System.Threading.Thread.CurrentThread.CurrentCulture), unitNameHidden.Value, itemDropDownList.SelectedItem.Text);
                                                                     return;
                                                                 }
@@ -1446,8 +1446,8 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
             if (string.IsNullOrWhiteSpace(partyCode))
             {
-                MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(PartyCodeTextBox);
-                MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(PartyDropDownList);
+                MixERP.Net.Common.Helpers.FormHelper.MakeDirty(PartyCodeTextBox);
+                MixERP.Net.Common.Helpers.FormHelper.MakeDirty(PartyDropDownList);
                 PartyCodeTextBox.Focus();
                 return;
             }
@@ -1467,7 +1467,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                     if (!MixERP.Net.BusinessLayer.Office.Stores.IsSalesAllowed(storeId))
                     {
                         ErrorLabelTop.Text = Resources.Warnings.SalesNotAllowedHere;
-                        MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(StoreDropDownList);
+                        MixERP.Net.Common.Helpers.FormHelper.MakeDirty(StoreDropDownList);
                         return;
                     }
                 }

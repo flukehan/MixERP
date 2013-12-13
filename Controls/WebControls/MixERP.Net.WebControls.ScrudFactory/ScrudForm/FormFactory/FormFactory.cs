@@ -21,7 +21,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             {
                 htmlTable.Attributes["class"] = "valignmiddle";
 
-                using (System.Data.DataTable table = MixERP.Net.BusinessLayer.Helpers.TableHelper.GetTable(this.TableSchema, this.Table, this.Exclude))
+                using (System.Data.DataTable table = MixERP.Net.WebControls.ScrudFactory.Data.TableHelper.GetTable(this.TableSchema, this.Table, this.Exclude))
                 {
                     if (table.Rows.Count > 0)
                     {
@@ -70,7 +70,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
         {
             Collection<KeyValuePair<string, string>> list = new Collection<KeyValuePair<string, string>>();
 
-            using(System.Data.DataTable table = MixERP.Net.BusinessLayer.Helpers.TableHelper.GetTable(this.TableSchema, this.Table, this.Exclude))
+            using (System.Data.DataTable table = MixERP.Net.WebControls.ScrudFactory.Data.TableHelper.GetTable(this.TableSchema, this.Table, this.Exclude))
             {
                 if(table.Rows.Count > 0)
                 {

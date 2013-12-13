@@ -22,8 +22,40 @@ namespace MixERP.Net.WebControls.ScrudFactory
         Panel scrudContainer;
         private string imageColumn = string.Empty;
 
+        private void Validate()
+        {
+            if (string.IsNullOrWhiteSpace(this.TableSchema))
+            {
+                throw new ApplicationException("The property 'TableSchema' cannot be left blank.");
+            }
+
+            if (string.IsNullOrWhiteSpace(this.Table))
+            {
+                throw new ApplicationException("The property 'Table' cannot be left blank.");
+            }
+            
+            if (string.IsNullOrWhiteSpace(this.ViewSchema))
+            {
+                throw new ApplicationException("The property 'ViewSchema' cannot be left blank.");
+            }
+
+            if (string.IsNullOrWhiteSpace(this.View))
+            {
+                throw new ApplicationException("The property 'View' cannot be left blank.");
+            }
+
+            if (string.IsNullOrWhiteSpace(this.KeyColumn))
+            {
+                throw new ApplicationException("The property 'KeyColumn' cannot be left blank.");
+            }
+
+
+        }
+        
         protected override void CreateChildControls()
         {
+            this.Validate();
+
             scrudContainer = new Panel();
 
             this.LoadScrudContainer(scrudContainer);

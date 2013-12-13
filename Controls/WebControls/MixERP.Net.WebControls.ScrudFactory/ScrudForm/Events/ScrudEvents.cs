@@ -8,7 +8,9 @@ http://mozilla.org/MPL/2.0/.
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
@@ -22,8 +24,17 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 return;
             }
 
+            string userIdSessionKey = MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("UserIdSessionKey");
+
+            if (!(Conversion.TryCastInteger(MixERP.Net.Common.Helpers.SessionHelper.GetSessionValueByKey(userIdSessionKey)) > 0))
+            {
+                throw new ApplicationException("The user id session key is invalid or incorrectly configured.");
+            }
+
             Collection<KeyValuePair<string, string>> list = this.GetFormCollection(true);
             string id = this.GetSelectedValue();
+
+            int userId = Conversion.TryCastInteger(this.Page.Session[userIdSessionKey]);
 
             if(string.IsNullOrWhiteSpace(id))
             {
@@ -34,7 +45,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 }
                 else
                 {
-                    if(MixERP.Net.BusinessLayer.Helpers.FormHelper.InsertRecord(this.TableSchema, this.Table, list, this.imageColumn))
+                    if (MixERP.Net.WebControls.ScrudFactory.Data.FormHelper.InsertRecord(userId, this.TableSchema, this.Table, list, this.imageColumn))
                     {
                         //Clear the form container.
                         formContainer.Controls.Clear();
@@ -62,7 +73,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 }
                 else
                 {
-                    if(MixERP.Net.BusinessLayer.Helpers.FormHelper.UpdateRecord(this.TableSchema, this.Table, list, this.KeyColumn, id, this.imageColumn))
+                    if (MixERP.Net.WebControls.ScrudFactory.Data.FormHelper.UpdateRecord(userId, this.TableSchema, this.Table, list, this.KeyColumn, id, this.imageColumn))
                     {
                         //Clear the form container.
                         formContainer.Controls.Clear();
@@ -114,7 +125,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 return;
             }
 
-            using(System.Data.DataTable table = MixERP.Net.BusinessLayer.Helpers.FormHelper.GetTable(this.TableSchema, this.Table, this.KeyColumn, id))
+            using (System.Data.DataTable table = MixERP.Net.WebControls.ScrudFactory.Data.FormHelper.GetTable(this.TableSchema, this.Table, this.KeyColumn, id))
             {
                 if(table.Rows.Count.Equals(1))
                 {
@@ -145,7 +156,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 return;
             }
 
-            if(MixERP.Net.BusinessLayer.Helpers.FormHelper.DeleteRecord(this.TableSchema, this.Table, this.KeyColumn, id))
+            if (MixERP.Net.WebControls.ScrudFactory.Data.FormHelper.DeleteRecord(this.TableSchema, this.Table, this.KeyColumn, id))
             {
                 //Refresh the grid.
                 this.BindGridView();

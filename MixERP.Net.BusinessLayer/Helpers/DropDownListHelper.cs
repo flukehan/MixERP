@@ -23,7 +23,7 @@ namespace MixERP.Net.BusinessLayer.Helpers
                 return;
             }
 
-            using(DataTable table = MixERP.Net.BusinessLayer.Helpers.FormHelper.GetTable(schemaName, tableName))
+            using(DataTable table = MixERP.Net.DatabaseLayer.Helpers.FormHelper.GetTable(schemaName, tableName))
             {
                 table.Columns.Add("text_field", typeof(string), displayField);
 

@@ -127,42 +127,42 @@ namespace MixERP.Net.FrontEnd.Finance
 
             #region Validation
             if(string.IsNullOrWhiteSpace(accountCode))
-            {
-                MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(AccountCodeTextBox);
+            {                
+                MixERP.Net.Common.Helpers.FormHelper.MakeDirty(AccountCodeTextBox);
                 return;
             }
             else
             {
-                MixERP.Net.BusinessLayer.Helpers.FormHelper.RemoveDirty(AccountCodeTextBox);
+                MixERP.Net.Common.Helpers.FormHelper.RemoveDirty(AccountCodeTextBox);
             }
 
             if(string.IsNullOrWhiteSpace(account))
             {
-                MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(AccountDropDownList);
+                MixERP.Net.Common.Helpers.FormHelper.MakeDirty(AccountDropDownList);
                 return;
             }
             else
             {
-                MixERP.Net.BusinessLayer.Helpers.FormHelper.RemoveDirty(AccountDropDownList);
+                MixERP.Net.Common.Helpers.FormHelper.RemoveDirty(AccountDropDownList);
             }
 
             if(debit.Equals(0) && credit.Equals(0))
             {
-                MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(DebitTextBox);
-                MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(CreditTextBox);
+                MixERP.Net.Common.Helpers.FormHelper.MakeDirty(DebitTextBox);
+                MixERP.Net.Common.Helpers.FormHelper.MakeDirty(CreditTextBox);
                 return;
             }
             else
             {
                 if(debit > 0 && credit > 0)
                 {
-                    MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(DebitTextBox);
-                    MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(CreditTextBox);
+                    MixERP.Net.Common.Helpers.FormHelper.MakeDirty(DebitTextBox);
+                    MixERP.Net.Common.Helpers.FormHelper.MakeDirty(CreditTextBox);
                     return;
                 }
                 else
                 {
-                    MixERP.Net.BusinessLayer.Helpers.FormHelper.RemoveDirty(StatementReferenceTextBox);
+                    MixERP.Net.Common.Helpers.FormHelper.RemoveDirty(StatementReferenceTextBox);
                 }
             }
 
@@ -170,13 +170,13 @@ namespace MixERP.Net.FrontEnd.Finance
             {
                 if(string.IsNullOrEmpty(CashRepositoryDropDownList.SelectedItem.Value))
                 {
-                    MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(CashRepositoryDropDownList);
+                    MixERP.Net.Common.Helpers.FormHelper.MakeDirty(CashRepositoryDropDownList);
                     CashRepositoryDropDownList.Focus();
                     return;
                 }
                 else
                 {
-                    MixERP.Net.BusinessLayer.Helpers.FormHelper.RemoveDirty(CashRepositoryDropDownList);
+                    MixERP.Net.Common.Helpers.FormHelper.RemoveDirty(CashRepositoryDropDownList);
                 }
             }
 
@@ -188,8 +188,8 @@ namespace MixERP.Net.FrontEnd.Finance
                 {
                     if(row.AccountCode.Equals(accountCode))
                     {
-                        MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(AccountCodeTextBox);
-                        MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(AccountDropDownList);
+                        MixERP.Net.Common.Helpers.FormHelper.MakeDirty(AccountCodeTextBox);
+                        MixERP.Net.Common.Helpers.FormHelper.MakeDirty(AccountDropDownList);
                         return;
                     }
                 }

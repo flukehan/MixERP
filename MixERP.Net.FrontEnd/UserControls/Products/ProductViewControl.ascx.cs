@@ -67,7 +67,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 }
             }
         }
-        
+
         private void InitializePostBackUrls()
         {
             if (this.Book == TranBook.Sales)
@@ -273,7 +273,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
                 if (!string.IsNullOrWhiteSpace(id))
                 {
-                    string popUpQuotationPreviewUrl = "/Sales/Confirmation/ReportSalesQuotation.aspx?TranId=" + id;
+                    string popUpQuotationPreviewUrl = this.Page.ResolveUrl("~/Sales/Confirmation/ReportSalesQuotation.aspx?TranId=" + id);
 
                     HtmlAnchor previewAnchor = (HtmlAnchor)e.Row.Cells[0].FindControl("PreviewAnchor");
                     if (previewAnchor != null)
