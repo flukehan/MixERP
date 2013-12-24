@@ -19,9 +19,9 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
 {
     public static class ScrudFileUpload
     {
-        public static void AddFileUpload(HtmlTable htmlTable, string columnName, bool isNullable)
+        public static void AddFileUpload(HtmlTable htmlTable, string resourceClassName, string columnName, bool isNullable)
         {
-            string label = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString("FormResource", columnName);
+            string label = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString(resourceClassName, columnName);
             FileUpload fileUpload = GetFileUpload(columnName + "_fileupload");
             RegularExpressionValidator validator = GetImageValidator(fileUpload);
 

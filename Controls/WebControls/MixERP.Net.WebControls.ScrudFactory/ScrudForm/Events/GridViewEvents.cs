@@ -42,7 +42,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 {
                     string cellText = e.Row.Cells[i].Text;
 
-                    cellText = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString("FormResource", cellText);
+                    cellText = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString(this.GetResourceClassName(), cellText);
                     e.Row.Cells[i].Text = cellText;
                 }
             }

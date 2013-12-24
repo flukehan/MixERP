@@ -20,8 +20,13 @@ namespace MixERP.Net.FrontEnd
         {
             if (!MixERP.Net.BusinessLayer.DBFactory.ServerConnectivity.IsDBServerAvailable())
             {
-                Response.Redirect("~/offline.html");
+                this.RedirectToOfflinePage();
             }
+        }
+
+        private void RedirectToOfflinePage()
+        {
+            Response.Redirect("~/offline.html");
         }
 
         private void BindBranchDropDownList()
@@ -36,16 +41,29 @@ namespace MixERP.Net.FrontEnd
         protected void Page_Load(object sender, EventArgs e)
         {
             this.CheckDBConnectivity();
-            this.BindBranchDropDownList();
+
+            try
+            {
+                this.BindBranchDropDownList();
+            }
+            catch
+            {
+                //Could not bind the branch office dropdownlist.
+                //The target database does not contain mixerp schema.
+                //Swallow the exception
+                //and redirect to application offline page.
+                this.RedirectToOfflinePage();
+                return;
+            }
 
             UserIdTextBox.Focus();
 
-            if(!IsPostBack)
+            if (!IsPostBack)
             {
-                if(User.Identity.IsAuthenticated)
+                if (User.Identity.IsAuthenticated)
                 {
                     string user = User.Identity.Name;
-                    if(!string.IsNullOrWhiteSpace(user))
+                    if (!string.IsNullOrWhiteSpace(user))
                     {
                         string sessionUser = MixERP.Net.Common.Conversion.TryCastString(this.Page.Session["UserName"]);
 
@@ -59,15 +77,17 @@ namespace MixERP.Net.FrontEnd
                         else
                         {
                             this.RedirectToDashboard();
-                        }                        
+                        }
                     }
                 }
             }
+
+
         }
 
         private void RedirectToDashboard()
         {
-            Response.Redirect("~/Dashboard/Index.aspx", true);        
+            Response.Redirect("~/Dashboard/Index.aspx", true);
         }
 
         protected void SignInButton_Click(object sender, EventArgs e)
@@ -75,7 +95,7 @@ namespace MixERP.Net.FrontEnd
             int officeId = MixERP.Net.Common.Conversion.TryCastInteger(BranchDropDownList.SelectedItem.Value);
             bool results = MixERP.Net.BusinessLayer.Security.User.SignIn(officeId, UserIdTextBox.Text, PasswordTextBox.Text, LanguageDropDownList.SelectedItem.Value, RememberMe.Checked, this.Page);
 
-            if(!results)
+            if (!results)
             {
                 MessageLiteral.Text = "<span class='error-message'>" + Resources.Warnings.UserIdOrPasswordIncorrect + "</span>";
             }

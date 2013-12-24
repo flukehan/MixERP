@@ -18,10 +18,10 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 {
     public static class ScrudCheckBoxList
     {
-        public static void AddCheckBoxList(HtmlTable htmlTable, string columnName, bool isNullable, string keys, string values, string selectedValues)
+        public static void AddCheckBoxList(HtmlTable htmlTable, string resourceClassName, string columnName, bool isNullable, string keys, string values, string selectedValues)
         {
             CheckBoxList checkBoxList = GetCheckBoxList(columnName + "_radiobuttonlist", keys, values, selectedValues);
-            string label = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString("FormResource", columnName);
+            string label = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString(resourceClassName, columnName);
 
             if (!isNullable)
             {

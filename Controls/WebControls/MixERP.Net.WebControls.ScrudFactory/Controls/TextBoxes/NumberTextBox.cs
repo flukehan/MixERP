@@ -18,7 +18,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 {
     public static class ScrudNumberTextBox
     {
-        public static void AddNumberTextBox(HtmlTable htmlTable, string columnName, string defaultValue, bool isSerial, bool isNullable, int maxLength, string domain)
+        public static void AddNumberTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isSerial, bool isNullable, int maxLength, string domain)
         {
             if (htmlTable == null)
             {
@@ -31,7 +31,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
             }
 
             TextBox textBox = GetNumberTextBox(columnName + "_textbox", maxLength);
-            string label = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString("FormResource", columnName);
+            string label = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString(resourceClassName, columnName);
 
             if (!string.IsNullOrWhiteSpace(defaultValue))
             {

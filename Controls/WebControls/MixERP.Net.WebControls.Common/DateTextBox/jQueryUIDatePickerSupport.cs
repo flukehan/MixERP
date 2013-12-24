@@ -14,7 +14,13 @@ namespace MixERP.Net.WebControls.Common
             string script = this.GetDatePickerScript(this.ID);
 
             Page p = System.Web.HttpContext.Current.CurrentHandler as Page;
-            MixERP.Net.Common.PageUtility.ExecuteJavaScript("datePicker_" + this.ID, script, p);
+            MixERP.Net.Common.PageUtility.ExecuteJavaScript("datePicker_" + this.ID + this.RandomNumber().ToString(), script, p);
+        }
+
+        private int RandomNumber()
+        {
+            Random rnd = new Random();
+            return rnd.Next(2000);
         }
 
         private string GetDatePickerScript(string controlId)
@@ -23,7 +29,7 @@ namespace MixERP.Net.WebControls.Common
             string selector = "$('#" + controlId + "')";
             string locale = JQueryUIHelper.GetDatePickerLocale();
 
-            script = "$(function() {" + selector + ".datepicker({";
+            script = "function pageLoad(sender, args) {$(function() {" + selector + ".datepicker({";
             script += this.GetParameters();
             script += "}";
 
@@ -37,6 +43,7 @@ namespace MixERP.Net.WebControls.Common
 
             script += ");";
             script += "});";
+            script += "}";
             return script;
         }
 

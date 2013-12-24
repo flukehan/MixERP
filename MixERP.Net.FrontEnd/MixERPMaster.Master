@@ -27,7 +27,7 @@ http://mozilla.org/MPL/2.0/.
 
         <link href="<%=ResolveUrl("~/Scripts/colorbox/colorbox.css") %>" rel="stylesheet" />
     </asp:PlaceHolder>
-    <title>MixErp® Beta</title>
+    <title>MixERP® Beta</title>
     <asp:ContentPlaceHolder ID="ScriptContentPlaceholder" runat="server">
     </asp:ContentPlaceHolder>
     <asp:ContentPlaceHolder ID="StyleSheetContentPlaceholder" runat="server">

@@ -58,12 +58,10 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter( "UpdateProgressSpinnerImagePath");
+                cssClass = MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("UpdateProgressSpinnerImagePath");
             }
 
             return cssClass;
         }
-
-
     }
 }

@@ -39,7 +39,7 @@ namespace MixERP.Net.FrontEnd.Reports
                 {
                     textBox.ID = parameter.Key.Replace("@", "") + "_text_box";
 
-                    string label = "<label for='" + textBox.ID + "'>" + MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString("FormResource", parameter.Key.Replace("@", "")) + "</label>";
+                    string label = "<label for='" + textBox.ID + "'>" + MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString("ScrudResource", parameter.Key.Replace("@", "")) + "</label>";
 
                     if (parameter.Value.Equals("Date"))
                     {

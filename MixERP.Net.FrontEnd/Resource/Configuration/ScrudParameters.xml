@@ -23,5 +23,6 @@ http://mozilla.org/MPL/2.0/.
     <add key="UserIdSessionKey" value="UserId" />
     <add key="UserNameSessionKey" value="UserName" />
     <add key="OfficeCodeSessionKey" value="OfficeCode" />
+    <add key="ResourceClassName" value="ScrudResource" />
   </appSettings>
 </configuration>

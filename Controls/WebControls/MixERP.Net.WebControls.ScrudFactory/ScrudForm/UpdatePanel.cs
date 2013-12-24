@@ -93,6 +93,18 @@ namespace MixERP.Net.WebControls.ScrudFactory
             return cssClass;
         }
 
+        public string GetResourceClassName()
+        {
+            string resourceClassName = this.ResourceClassName;
+
+            if (string.IsNullOrWhiteSpace(resourceClassName))
+            {
+                resourceClassName = MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("ResourceClassName");
+            }
+
+            return resourceClassName;
+        }
+
         private string GetButtonCssClass()
         {
             string cssClass = this.ButtonCssClass;

@@ -130,5 +130,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
         public string CommandPanelButtonCssClass { get; set; }
         public string GridViewCssClass { get; set; }
         public string ButtonCssClass { get; set; }
+
+        public string ResourceClassName { get; set; }
     }
 }

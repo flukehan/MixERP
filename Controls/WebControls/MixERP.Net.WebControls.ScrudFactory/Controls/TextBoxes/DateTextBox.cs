@@ -26,9 +26,9 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
             }
         }
 
-        public static void AddDateTextBox(HtmlTable htmlTable, string columnName, string defaultValue, bool isNullable)
+        public static void AddDateTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isNullable)
         {
-            string label = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString("FormResource", columnName);
+            string label = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString(resourceClassName, columnName);
 
             MixERP.Net.WebControls.Common.DateTextBox textBox = GetDateTextBox(columnName + "_textbox", !isNullable);
 

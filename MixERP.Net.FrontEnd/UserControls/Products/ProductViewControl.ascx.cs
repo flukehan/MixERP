@@ -122,7 +122,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
             if (this.IsValid())
             {
-                this.Merge(values, "~/Sales/Order.aspx");
+                this.Merge(values, "~/Sales/Entry/Order.aspx");
             }
         }
 
@@ -261,7 +261,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
                     if (!string.IsNullOrWhiteSpace(cellText))
                     {
-                        cellText = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString("FormResource", cellText);
+                        cellText = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString("ScrudResource", cellText);
                         e.Row.Cells[i].Text = cellText;
                     }
                 }

@@ -20,9 +20,9 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 {
     public static class ScrudDropDownList
     {
-        public static void AddDropDownList(HtmlTable htmlTable, string columnName, bool isNullable, string tableSchema, string tableName, string tableColumn, string defaultValue, string displayFields, string displayViews, string selectedValues)
+        public static void AddDropDownList(HtmlTable htmlTable, string resourceClassName, string columnName, bool isNullable, string tableSchema, string tableName, string tableColumn, string defaultValue, string displayFields, string displayViews, string selectedValues)
         {
-            string label = LocalizationHelper.GetResourceString("FormResource", columnName);
+            string label = LocalizationHelper.GetResourceString(resourceClassName, columnName);
 
             DropDownList dropDownList = GetDropDownList(columnName + "_dropdownlist");
 

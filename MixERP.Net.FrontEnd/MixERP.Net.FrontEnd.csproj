@@ -76,15 +76,15 @@
     <Compile Include="Account\SignOut.aspx.designer.cs">
       <DependentUpon>SignOut.aspx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\FormResource.Designer.cs">
+    <Compile Include="App_GlobalResources\ScrudResource.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FormResource.resx</DependentUpon>
+      <DependentUpon>ScrudResource.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\FormResource.fr.designer.cs">
+    <Compile Include="App_GlobalResources\ScrudResource.fr.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FormResource.fr.resx</DependentUpon>
+      <DependentUpon>ScrudResource.fr.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\Labels.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -1650,9 +1650,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_GlobalResources\FormResource.resx">
+    <Content Include="App_GlobalResources\ScrudResource.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>FormResource.Designer.cs</LastGenOutput>
+      <LastGenOutput>ScrudResource.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
@@ -1691,9 +1691,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_GlobalResources\FormResource.fr.resx">
+    <Content Include="App_GlobalResources\ScrudResource.fr.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>FormResource.fr.designer.cs</LastGenOutput>
+      <LastGenOutput>ScrudResource.fr.designer.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

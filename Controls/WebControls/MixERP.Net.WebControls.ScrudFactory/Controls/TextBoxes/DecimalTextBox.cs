@@ -18,10 +18,10 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 {
     public static class ScrudDecimalTextBox
     {
-        public static void AddDecimalTextBox(HtmlTable htmlTable, string columnName, string defaultValue, bool isNullable, int maxLength, string domain)
+        public static void AddDecimalTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isNullable, int maxLength, string domain)
         {
             TextBox textBox = ScrudTextBox.GetTextBox(columnName + "_textbox", maxLength);
-            string label = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString("FormResource", columnName);
+            string label = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString(resourceClassName, columnName);
 
             CompareValidator validator = GetDecimalValidator(textBox, domain);
             textBox.Text = defaultValue;

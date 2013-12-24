@@ -57,7 +57,7 @@ Setup.resx
 -Resource keys: use ProperCasing.
 
 
-FormResource.resx
+ScrudResource.resx
 -PostgreSQL columns are stored as resource keys. These are used on dynamically generated forms and reports. 
 -Resource keys: use lowercase_underscore_separator.
 

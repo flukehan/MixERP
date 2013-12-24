@@ -842,7 +842,9 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 return;
             }
 
-            PartyDropDownList.SelectedItem.Value = model.PartyCode.ToString();
+            PartyDropDownList.SelectedValue = model.PartyCode.ToString();
+            PartyCodeTextBox.Text = model.PartyCode.ToString();
+
 
             if (PriceTypeDropDownList.SelectedItem != null)
             {

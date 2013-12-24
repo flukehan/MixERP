@@ -18,7 +18,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 {
     public static class ScrudRadioButtonList
     {
-        public static void AddRadioButtonList(HtmlTable htmlTable, string columnName, bool isNullable, string keys, string values, string selectedValue)
+        public static void AddRadioButtonList(HtmlTable htmlTable, string resourceClassName, string columnName, bool isNullable, string keys, string values, string selectedValue)
         {
             if (htmlTable == null)
             {
@@ -27,7 +27,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 
             using (RadioButtonList radioButtonList = GetRadioButtonList(columnName + "_radiobuttonlist", keys, values, selectedValue))
             {
-                string label = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString("FormResource", columnName);
+                string label = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString(resourceClassName, columnName);
 
                 if (!isNullable)
                 {
