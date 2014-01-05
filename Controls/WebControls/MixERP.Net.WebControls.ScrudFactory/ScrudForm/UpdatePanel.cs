@@ -23,6 +23,8 @@ namespace MixERP.Net.WebControls.ScrudFactory
         HiddenField userIdHidden;
         HiddenField officeCodeHidden;
         Label messageLabel = new Label();
+        MixERP.Net.WebControls.ScrudFactory.Controls.CommandPanel bottomCommandPanel;
+        MixERP.Net.WebControls.ScrudFactory.Controls.CommandPanel topCommandPanel;
 
 
         protected override void OnPreRender(EventArgs e)
@@ -66,8 +68,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
             p.Controls.Add(updatePanel);
         }
 
-        MixERP.Net.WebControls.ScrudFactory.Controls.CommandPanel bottomCommandPanel;
-        MixERP.Net.WebControls.ScrudFactory.Controls.CommandPanel topCommandPanel;
 
         private string GetCommandPanelButtonCssClass()
         {
@@ -132,13 +132,13 @@ namespace MixERP.Net.WebControls.ScrudFactory
         private void CreateCommandPanels()
         {
             bottomCommandPanel = new Controls.CommandPanel();
-            bottomCommandPanel.DeleteButtonClick += DeleteButton_Click;
-            bottomCommandPanel.EditButtonClick += EditButton_Click;
+            bottomCommandPanel.DeleteButtonClick += this.DeleteButton_Click;
+            bottomCommandPanel.EditButtonClick += this.EditButton_Click;
             bottomCommandPanel.ButtonCssClass = this.GetCommandPanelButtonCssClass();
 
             topCommandPanel = new Controls.CommandPanel();
-            topCommandPanel.DeleteButtonClick += DeleteButton_Click;
-            topCommandPanel.EditButtonClick += EditButton_Click;
+            topCommandPanel.DeleteButtonClick += this.DeleteButton_Click;
+            topCommandPanel.EditButtonClick += this.EditButton_Click;
             topCommandPanel.ButtonCssClass = this.GetCommandPanelButtonCssClass();
 
         }

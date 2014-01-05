@@ -17,8 +17,9 @@ using System.Web.UI.WebControls;
 namespace MixERP.Net.WebControls.ScrudFactory
 {
     [ToolboxData("<{0}:ScrudForm runat=server></{0}:ScrudForm>")]
-    public partial class ScrudForm : CompositeControl
+    public partial class ScrudForm : CompositeControl, IDisposable
     {
+        private bool disposed;
         Panel scrudContainer;
         private string imageColumn = string.Empty;
 
@@ -79,5 +80,81 @@ namespace MixERP.Net.WebControls.ScrudFactory
         {
             scrudContainer.RenderControl(w);
         }
+
+        public override void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+            base.Dispose();
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(scrudContainer);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(formPanel);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(form);
+
+                    if (formGridView != null)
+                    {
+                        formGridView.RowDataBound -= this.FormGridView_RowDataBound;                        
+                    }
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(formGridView);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(addNewEntryLiteral);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(requiredFieldDetailsLabel);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(formContainer);
+
+                    if (saveButton != null)
+                    {
+                        saveButton.Click -= this.SaveButton_Click;                        
+                    }
+                    
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(saveButton);
+
+                    if (cancelButton != null)
+                    {
+                        cancelButton.Click -= this.CancelButton_Click;                    
+                    }
+                    
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(cancelButton);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(updatePanel);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(userIdHidden);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(officeCodeHidden);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(messageLabel);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(titleLabel);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(descriptionLabel);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(updateProgress);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(gridPanel);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(formGridView);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(pager);
+
+                    if (topCommandPanel != null)
+                    {
+                        topCommandPanel.DeleteButtonClick -= this.DeleteButton_Click;
+                        topCommandPanel.EditButtonClick -= this.EditButton_Click;                    
+                    }
+
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(topCommandPanel);
+
+                    if (bottomCommandPanel != null)
+                    {
+                        bottomCommandPanel.DeleteButtonClick -= this.DeleteButton_Click;
+                        bottomCommandPanel.EditButtonClick -= this.EditButton_Click;
+                    }
+
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(bottomCommandPanel);
+
+
+                }
+
+                disposed = true;
+            }
+        }
+
+
     }
 }

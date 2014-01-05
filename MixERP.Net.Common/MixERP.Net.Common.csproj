@@ -59,6 +59,7 @@
     <Compile Include="ExceptionManager.cs" />
     <Compile Include="Helpers\ConfigurationHelper.cs" />
     <Compile Include="Helpers\DateHelper.cs" />
+    <Compile Include="Helpers\DisposableHelper.cs" />
     <Compile Include="Helpers\ExpressionHelper.cs" />
     <Compile Include="Helpers\FormHelper.cs" />
     <Compile Include="Helpers\HtmlControlHelper.cs" />

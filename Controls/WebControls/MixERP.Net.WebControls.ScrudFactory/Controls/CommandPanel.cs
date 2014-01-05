@@ -54,16 +54,11 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
             {
                 if (disposing)
                 {
-                    if (commandPanel != null)
-                    {
-                        commandPanel.Dispose();
-                        commandPanel = null;
-                    }
-                    
-                    if (editButton != null)
-                    {
-                        editButton.Dispose();
-                        editButton = null;
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(commandPanel);
+
+                    if(editButton !=null)
+                    { 
+                        editButton.Click -= new EventHandler(OnEditButtonClick);
                     }
 
                     if (EditButtonClick != null)
@@ -71,16 +66,19 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
                         EditButtonClick = null;
                     }
 
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(editButton);
+
                     if (deleteButton != null)
                     {
-                        deleteButton.Dispose();
-                        deleteButton = null;
+                        deleteButton.Click -= new EventHandler(OnDeleteButtonClick);
                     }
 
                     if (DeleteButtonClick != null)
                     {
                         DeleteButtonClick = null;
                     }
+                    
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(deleteButton);
                 }
 
                 disposed = true;

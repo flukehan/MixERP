@@ -40,7 +40,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             formGridView.RowStyle.CssClass = "row";
             formGridView.AlternatingRowStyle.CssClass = "alt";
             formGridView.AutoGenerateColumns = true;
-            formGridView.RowDataBound += FormGridView_RowDataBound;
+            formGridView.RowDataBound += this.FormGridView_RowDataBound;
 
             TemplateField selectField = new TemplateField();
             selectField.HeaderText = Resources.ScrudResource.Select;

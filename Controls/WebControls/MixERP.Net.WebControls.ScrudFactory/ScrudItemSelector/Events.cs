@@ -51,11 +51,11 @@ namespace MixERP.Net.WebControls.ScrudFactory
             if (string.IsNullOrWhiteSpace(this.GetSchema())) return;
             if (string.IsNullOrWhiteSpace(this.GetView())) return;
 
-                        using (System.Data.DataTable table = MixERP.Net.WebControls.ScrudFactory.Data.FormHelper.GetTable(this.GetSchema(), this.GetView(), filterDropDownList.SelectedItem.Value, filterTextBox.Text, 10))
-                        {
-                            searchGridView.DataSource = table;
-                            searchGridView.DataBind();
-                        }
+            using (System.Data.DataTable table = MixERP.Net.WebControls.ScrudFactory.Data.FormHelper.GetTable(this.GetSchema(), this.GetView(), filterDropDownList.SelectedItem.Value, filterTextBox.Text, 10))
+            {
+                searchGridView.DataSource = table;
+                searchGridView.DataBind();
+            }
         }
 
         private string GetSchema()

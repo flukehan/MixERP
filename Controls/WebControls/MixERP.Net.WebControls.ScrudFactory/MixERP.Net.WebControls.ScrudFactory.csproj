@@ -91,6 +91,9 @@
     <Compile Include="ScrudForm\ViewFactory\GridView.cs" />
     <Compile Include="ScrudForm\ViewFactory\Selection.cs" />
     <Compile Include="ScrudItemSelector\Events.cs" />
+    <Compile Include="ScrudItemSelector\Intializer.cs" />
+    <Compile Include="ScrudItemSelector\ItemSelector.cs" />
+    <Compile Include="ScrudItemSelector\JavaScript.cs" />
     <Compile Include="ScrudItemSelector\Properties.cs" />
     <Compile Include="ScrudItemSelector\Control.cs" />
   </ItemGroup>
