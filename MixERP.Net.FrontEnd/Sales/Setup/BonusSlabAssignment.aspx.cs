@@ -17,7 +17,7 @@ using MixERP.Net.WebControls.ScrudFactory;
 
 namespace MixERP.Net.FrontEnd.Sales.Setup
 {
-    public partial class BonusSlabAssignment : MixERP.Net.BusinessLayer.BasePageClass
+    public partial class BonusSlabAssignment : MixERP.Net.BusinessLayer.MixERPWebPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

@@ -20,7 +20,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 {
     public static class ScrudDropDownList
     {
-        public static void AddDropDownList(HtmlTable htmlTable, string resourceClassName, string columnName, bool isNullable, string tableSchema, string tableName, string tableColumn, string defaultValue, string displayFields, string displayViews, string selectedValues)
+        public static void AddDropDownList(HtmlTable htmlTable, string resourceClassName, string itemSelectorPath, string columnName, bool isNullable, string tableSchema, string tableName, string tableColumn, string defaultValue, string displayFields, string displayViews, string selectedValues)
         {
             string label = LocalizationHelper.GetResourceString(resourceClassName, columnName);
 
@@ -31,7 +31,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
             using (System.Data.DataTable table = MixERP.Net.WebControls.ScrudFactory.Data.FormHelper.GetTable(tableSchema, tableName))
             {
                 SetDisplayFields(dropDownList, table, tableSchema, tableName, tableColumn, displayFields);
-                itemSelectorAnchor = GetItemSelector(dropDownList.ClientID, table, tableSchema, tableName, tableColumn, displayViews);
+                itemSelectorAnchor = GetItemSelector(dropDownList.ClientID, table,itemSelectorPath, tableSchema, tableName, tableColumn, displayViews);
             }
 
             SetSelectedValue(dropDownList, tableSchema, tableName, tableColumn, defaultValue, selectedValues);
@@ -119,7 +119,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
         /// <param name="tableColumn"></param>
         /// <param name="displayViews"></param>
         /// <returns></returns>
-        private static HtmlAnchor GetItemSelector(string associatedControlId, DataTable table, string tableSchema, string tableName, string tableColumn, string displayViews)
+        private static HtmlAnchor GetItemSelector(string associatedControlId, DataTable table, string itemSelectorPath, string tableSchema, string tableName, string tableColumn, string displayViews)
         {
             if (table.Rows.Count.Equals(0) || string.IsNullOrWhiteSpace(displayViews))
             {
@@ -152,7 +152,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 
                 //Todo: Parameterize these attributes in the configuration file.
                 itemSelectorAnchor.Attributes["class"] = "item-selector";
-                itemSelectorAnchor.HRef = "/General/ItemSelector.aspx?Schema=" + schema + "&View=" + view + "&AssociatedControlId=" + associatedControlId;
+                itemSelectorAnchor.HRef = itemSelectorPath + "?Schema=" + schema + "&View=" + view + "&AssociatedControlId=" + associatedControlId;
 
                 return itemSelectorAnchor;
             }

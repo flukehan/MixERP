@@ -61,7 +61,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
             }
         }
 
-        public static void AddField(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isSerial, bool isNullable, string dataType, string domain, int maxLength, string parentTableSchema, string parentTable, string parentTableColumn, string displayFields, string displayViews, string selectedValues)
+        public static void AddField(HtmlTable htmlTable, string resourceClassName, string itemSelectorPath, string columnName, string defaultValue, bool isSerial, bool isNullable, string dataType, string domain, int maxLength, string parentTableSchema, string parentTable, string parentTableColumn, string displayFields, string displayViews, string selectedValues)
         {
             if (htmlTable == null)
             {
@@ -117,7 +117,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
             }
             else
             {
-                ScrudDropDownList.AddDropDownList(htmlTable, resourceClassName, columnName, isNullable, parentTableSchema, parentTable, parentTableColumn, defaultValue, displayFields, displayViews, selectedValues);
+                ScrudDropDownList.AddDropDownList(htmlTable, resourceClassName, itemSelectorPath, columnName, isNullable, parentTableSchema, parentTable, parentTableColumn, defaultValue, displayFields, displayViews, selectedValues);
             }
         }
 

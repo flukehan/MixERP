@@ -14,7 +14,7 @@ using System.Web.UI.WebControls;
 
 namespace MixERP.Net.FrontEnd.POS
 {
-    public partial class AssignCashier : MixERP.Net.BusinessLayer.BasePageClass
+    public partial class AssignCashier : MixERP.Net.BusinessLayer.MixERPWebPage
     {
 
     }

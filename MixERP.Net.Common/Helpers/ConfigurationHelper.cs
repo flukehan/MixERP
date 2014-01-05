@@ -21,33 +21,32 @@ namespace MixERP.Net.Common.Helpers
     {
         public static string GetDbParameter(string keyName)
         {
-            return GetSectionKey("DbParameters", keyName);
+            string path = System.Web.HttpContext.Current.Server.MapPath(System.Configuration.ConfigurationManager.AppSettings["DBParameterConfigFileLocation"]);
+            return GetConfigurationValues(path, keyName);
         }
 
         public static string GetParameter(string keyName)
         {
-            return GetSectionKey("Parameters", keyName);
+            string path = System.Web.HttpContext.Current.Server.MapPath(System.Configuration.ConfigurationManager.AppSettings["ParamterConfigFileLocation"]);
+            return GetConfigurationValues(path, keyName);
         }
 
         public static string GetSwitch(string keyName)
         {
-            return GetSectionKey("Switches", keyName);
+            string path = System.Web.HttpContext.Current.Server.MapPath(System.Configuration.ConfigurationManager.AppSettings["SwitchConfigFileLocation"]);
+            return GetConfigurationValues(path, keyName);
         }
 
         public static string GetReportParameter(string keyName)
         {
-            return GetSectionKey("ReportParameters", keyName);
+            string path = System.Web.HttpContext.Current.Server.MapPath(System.Configuration.ConfigurationManager.AppSettings["ReportConfigFileLocation"]);
+            return GetConfigurationValues(path, keyName);
         }
 
         public static string GetScrudParameter(string keyName)
         {
-            return GetSectionKey("ScrudParameters", keyName);
-        }
-
-        private static string GetSectionKey(string sectionName, string keyName)
-        {
-            string path = System.Web.HttpContext.Current.Server.MapPath("~/Resource/Configuration/" + sectionName + ".xml");            
-            return GetConfigurationValues(path, keyName);            
+            string path = System.Web.HttpContext.Current.Server.MapPath(System.Configuration.ConfigurationManager.AppSettings["ScrudConfigFileLocation"]);
+            return GetConfigurationValues(path, keyName);
         }
 
         public static string GetConfigurationValues(string configFileName, string sectionName)

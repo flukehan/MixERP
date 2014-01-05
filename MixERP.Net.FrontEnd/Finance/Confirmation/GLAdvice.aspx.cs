@@ -11,7 +11,7 @@ using System.Collections.ObjectModel;
 
 namespace MixERP.Net.FrontEnd.Finance.Confirmation
 {
-    public partial class GLAdvice : MixERP.Net.BusinessLayer.BasePageClass
+    public partial class GLAdvice : MixERP.Net.BusinessLayer.MixERPWebPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

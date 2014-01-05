@@ -54,7 +54,10 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\ItemSelectorJavaScriptHelper.cs" />
+    <Compile Include="Helpers\JavaScriptHelper.cs" />
     <Compile Include="Helpers\ScrudFactoryHelper.cs" />
+    <Compile Include="Helpers\ScrudItemSelectorSelectTemplate.cs" />
     <Compile Include="Helpers\ScrudJavaScriptHelper.cs" />
     <Compile Include="Helpers\ScrudProgressTemplate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -87,6 +90,9 @@
     <Compile Include="ScrudForm\ScrudContainer.cs" />
     <Compile Include="ScrudForm\ViewFactory\GridView.cs" />
     <Compile Include="ScrudForm\ViewFactory\Selection.cs" />
+    <Compile Include="ScrudItemSelector\Events.cs" />
+    <Compile Include="ScrudItemSelector\Properties.cs" />
+    <Compile Include="ScrudItemSelector\Control.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Mix Open Foundation.snk" />
@@ -120,6 +126,9 @@
     <CodeAnalysisDictionary Include="..\..\..\Dictionary.xml">
       <Link>Dictionary.xml</Link>
     </CodeAnalysisDictionary>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ScrudItemSelector.js" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

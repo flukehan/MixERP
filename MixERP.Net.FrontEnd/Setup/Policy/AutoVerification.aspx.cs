@@ -17,7 +17,7 @@ using MixERP.Net.WebControls.ScrudFactory;
 
 namespace MixERP.Net.FrontEnd.Setup.Policy
 {
-    public partial class AutoVerification : MixERP.Net.BusinessLayer.BasePageClass
+    public partial class AutoVerification : MixERP.Net.BusinessLayer.MixERPWebPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

@@ -17,7 +17,7 @@ using MixERP.Net.WebControls.ScrudFactory;
 
 namespace MixERP.Net.FrontEnd.Sales.Setup
 {
-    public partial class Agents : MixERP.Net.BusinessLayer.BasePageClass
+    public partial class Agents : MixERP.Net.BusinessLayer.MixERPWebPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

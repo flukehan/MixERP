@@ -12,7 +12,7 @@ using System.Text;
 
 namespace MixERP.Net.BusinessLayer
 {
-    public class BaseUserControlClass : System.Web.UI.UserControl
+    public class MixERPUserControl : System.Web.UI.UserControl
     {
     }
 }

@@ -105,6 +105,18 @@ namespace MixERP.Net.WebControls.ScrudFactory
             return resourceClassName;
         }
 
+        public string GetItemSelectorPath()
+        {
+            string itemSelectorPath = this.ItemSelectorPath;
+
+            if (string.IsNullOrWhiteSpace(itemSelectorPath))
+            {
+                itemSelectorPath = MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("ItemSelectorPath");
+            }
+
+            return itemSelectorPath;
+        }
+
         private string GetButtonCssClass()
         {
             string cssClass = this.ButtonCssClass;

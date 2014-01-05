@@ -32,7 +32,7 @@ namespace MixERP.Net.BusinessLayer.Security
 
                             if (LogOnId.Equals(0))
                             {
-                                MixERP.Net.BusinessLayer.BasePageClass.RequestLogOnPage();
+                                MixERP.Net.BusinessLayer.MixERPWebPage.RequestLogOnPage();
                                 return false;
                             }
 

@@ -112,7 +112,7 @@ namespace MixERP.Net.WebControls.ReportEngine
                 {
                     string cellText = e.Row.Cells[i].Text;
 
-                    cellText = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString("FormResource", cellText, false);
+                    cellText = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString("ScrudResource", cellText, false);
                     e.Row.Cells[i].Text = cellText;
                     e.Row.Cells[i].HorizontalAlign = HorizontalAlign.Left;
                 }

@@ -14,7 +14,7 @@ using System.Web.UI.WebControls;
 
 namespace MixERP.Net.FrontEnd.Setup.Policy
 {
-    public partial class GLAccess : MixERP.Net.BusinessLayer.BasePageClass
+    public partial class GLAccess : MixERP.Net.BusinessLayer.MixERPWebPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

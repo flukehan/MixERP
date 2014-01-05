@@ -12,6 +12,7 @@ http://mozilla.org/MPL/2.0/.
   <appSettings>
     <add key="HeaderPath" value="~/Reports/Assets/Header.aspx" />
     <add key="TemplatePath" value="~/Reports/Print.html" />
+    <add key="ItemSelectorPath" value="~/General/ItemSelector.aspx" />
     <add key="GridContainerMargin" value="340" />
     <add key="GridViewCssClass" value="grid" />
     <add key="GridViewDefaultWidth" value="1100" />

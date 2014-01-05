@@ -18,7 +18,7 @@ using System.Web.UI.WebControls;
 
 namespace MixERP.Net.BusinessLayer
 {
-    public class BasePageClass : System.Web.UI.Page
+    public class MixERPWebPage : System.Web.UI.Page
     {
         /// <summary>
         /// Use this parameter on the Page_Init event of member pages.

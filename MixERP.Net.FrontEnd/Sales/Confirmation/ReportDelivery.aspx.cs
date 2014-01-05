@@ -11,7 +11,7 @@ using System.Collections.ObjectModel;
 
 namespace MixERP.Net.FrontEnd.Sales.Confirmation
 {
-    public partial class ReportDelivery : MixERP.Net.BusinessLayer.BasePageClass
+    public partial class ReportDelivery : MixERP.Net.BusinessLayer.MixERPWebPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

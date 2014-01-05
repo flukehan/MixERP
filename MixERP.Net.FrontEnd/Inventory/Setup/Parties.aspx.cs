@@ -14,7 +14,7 @@ using System.Web.UI.WebControls;
 
 namespace MixERP.Net.FrontEnd.Inventory.Setup
 {
-    public partial class Parties : MixERP.Net.BusinessLayer.BasePageClass
+    public partial class Parties : MixERP.Net.BusinessLayer.MixERPWebPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

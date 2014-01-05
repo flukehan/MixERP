@@ -14,7 +14,7 @@ using System.Web.UI.WebControls;
 
 namespace MixERP.Net.FrontEnd.Reports
 {
-    public partial class ReportViewer : MixERP.Net.BusinessLayer.BasePageClass
+    public partial class ReportViewer : MixERP.Net.BusinessLayer.MixERPWebPage
     {
         protected void Page_Init(object sender, EventArgs e)
         {

@@ -16,7 +16,7 @@ using MixERP.Net.WebControls.ScrudFactory;
 namespace MixERP.Net.FrontEnd.Setup
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags")]
-    public partial class Flags : MixERP.Net.BusinessLayer.BasePageClass
+    public partial class Flags : MixERP.Net.BusinessLayer.MixERPWebPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

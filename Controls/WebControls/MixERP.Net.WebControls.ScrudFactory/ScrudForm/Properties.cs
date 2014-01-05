@@ -131,6 +131,17 @@ namespace MixERP.Net.WebControls.ScrudFactory
         public string GridViewCssClass { get; set; }
         public string ButtonCssClass { get; set; }
 
+        /// <summary>
+        /// Use this parameter to override the "ResourceClassName" key in the configuration file.
+        /// ResourceClassName contains localized resource strings of database table column names.
+        /// </summary>
         public string ResourceClassName { get; set; }
+
+        /// <summary>
+        /// Use this parameter to override "ItemSelectorPath" key in the configuration file.
+        /// ItemSelectorPath is a page which pops up on iframe and provides 
+        /// some basic serach functionalities for the dropdownlist control.
+        /// </summary>
+        public string ItemSelectorPath { get; set; }
     }
 }

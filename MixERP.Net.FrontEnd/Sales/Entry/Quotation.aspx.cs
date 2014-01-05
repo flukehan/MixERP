@@ -15,7 +15,7 @@ using System.Web.UI.WebControls;
 
 namespace MixERP.Net.FrontEnd.Sales.Entry
 {
-    public partial class Quotation : MixERP.Net.BusinessLayer.BasePageClass
+    public partial class Quotation : MixERP.Net.BusinessLayer.MixERPWebPage
     {
 
         protected void Page_Init(object sender, EventArgs e)

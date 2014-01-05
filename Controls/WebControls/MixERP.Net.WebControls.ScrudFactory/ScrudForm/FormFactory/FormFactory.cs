@@ -44,7 +44,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                                 defaultValue = MixERP.Net.Common.Conversion.TryCastString(values.Rows[0][columnName]);
                             }
 
-                            MixERP.Net.WebControls.ScrudFactory.Helpers.ScrudFactoryHelper.AddField(htmlTable, this.GetResourceClassName(), columnName, defaultValue, isSerial, isNullable, dataType, domain, maxLength, parentTableSchema, parentTable, parentTableColumn, this.DisplayFields, this.DisplayViews, this.SelectedValues);
+                            MixERP.Net.WebControls.ScrudFactory.Helpers.ScrudFactoryHelper.AddField(htmlTable, this.GetResourceClassName(),this.GetItemSelectorPath(), columnName, defaultValue, isSerial, isNullable, dataType, domain, maxLength, parentTableSchema, parentTable, parentTableColumn, this.DisplayFields, this.DisplayViews, this.SelectedValues);
                         }
                     }
                 }

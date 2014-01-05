@@ -15,7 +15,7 @@ using MixERP.Net.WebControls.ScrudFactory;
 
 namespace MixERP.Net.FrontEnd.Finance.Setup
 {
-    public partial class AgeingSlabs : MixERP.Net.BusinessLayer.BasePageClass
+    public partial class AgeingSlabs : MixERP.Net.BusinessLayer.MixERPWebPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

@@ -14,7 +14,7 @@ using System.Web.UI.WebControls;
 
 namespace MixERP.Net.FrontEnd.Setup.Admin
 {
-    public partial class Restore : MixERP.Net.BusinessLayer.BasePageClass
+    public partial class Restore : MixERP.Net.BusinessLayer.MixERPWebPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

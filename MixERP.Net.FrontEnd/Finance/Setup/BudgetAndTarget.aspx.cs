@@ -14,7 +14,7 @@ using System.Web.UI.WebControls;
 
 namespace MixERP.Net.FrontEnd.Finance.Setup
 {
-    public partial class BudgetAndTarget : MixERP.Net.BusinessLayer.BasePageClass
+    public partial class BudgetAndTarget : MixERP.Net.BusinessLayer.MixERPWebPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

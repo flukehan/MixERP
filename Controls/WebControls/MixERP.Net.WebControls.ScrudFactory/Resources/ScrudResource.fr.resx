@@ -135,6 +135,9 @@
   <data name="EditSelected" xml:space="preserve">
     <value>Modifier la sélection</value>
   </data>
+  <data name="Go" xml:space="preserve">
+    <value>Go</value>
+  </data>
   <data name="InvalidDate" xml:space="preserve">
     <value>Ce n'est pas une date valide.</value>
   </data>

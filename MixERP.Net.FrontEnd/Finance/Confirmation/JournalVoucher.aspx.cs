@@ -14,7 +14,7 @@ using System.Web.UI.WebControls;
 
 namespace MixERP.Net.FrontEnd.Finance.Confirmation
 {
-    public partial class JournalVoucher : MixERP.Net.BusinessLayer.BasePageClass
+    public partial class JournalVoucher : MixERP.Net.BusinessLayer.MixERPWebPage
     {
         protected void Page_Init(object sender, EventArgs e)
         {

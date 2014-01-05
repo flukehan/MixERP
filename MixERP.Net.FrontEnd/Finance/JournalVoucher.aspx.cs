@@ -16,7 +16,7 @@ using MixERP.Net.Common.Helpers;
 
 namespace MixERP.Net.FrontEnd.Finance
 {
-    public partial class JournalVoucher : MixERP.Net.BusinessLayer.BasePageClass
+    public partial class JournalVoucher : MixERP.Net.BusinessLayer.MixERPWebPage
     {
         protected void PostTransactionButton_Click(object sender, EventArgs e)
         {

@@ -17,9 +17,9 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 {
     public static class ScrudJavaScriptHelper
     {
-        public static string GetScrudScript()
+        public static string GetScript()
         {
-            string resource = GetResource();
+            string resource = Helpers.JavaScriptHelper.GetEmbeddedScript("MixERP.Net.WebControls.ScrudFactory.Scrud.js");
             StringBuilder script = new StringBuilder();
 
             script.Append(CreateVariable("localizedAreYouSure", Resources.ScrudResource.AreYouSure));
@@ -33,48 +33,6 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
             script.Append(resource);
             return script.ToString();
         }
-
-
-        private static string GetResource()
-        {
-            var assembly = Assembly.GetExecutingAssembly();
-            var resourceName = "MixERP.Net.WebControls.ScrudFactory.Scrud.js";
-
-            Stream stream = assembly.GetManifestResourceStream(resourceName);
-
-            try
-            {
-                using (StreamReader reader = new StreamReader(stream))
-                {
-                    return reader.ReadToEnd();
-                }
-            }
-            finally
-            {
-                if (stream != null)
-                {
-                    stream = null;
-                }
-            }
-
-        }
-
-
-        //private static string CreateVariable(string variableName)
-        //{
-        //    if (string.IsNullOrWhiteSpace(variableName))
-        //    {
-        //        return string.Empty;
-        //    }
-
-        //    StringBuilder variable = new StringBuilder();
-        //    variable.Append("var ");
-        //    variable.Append(variableName);
-        //    variable.Append(";");
-        //    variable.Append(Environment.NewLine);
-
-        //    return variable.ToString();
-        //}
 
         private static string CreateVariable(string variableName, string initialValue)
         {

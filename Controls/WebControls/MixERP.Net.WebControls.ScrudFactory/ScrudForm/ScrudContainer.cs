@@ -37,7 +37,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private void AddJavaScript()
         {
-            string script = MixERP.Net.WebControls.ScrudFactory.Helpers.ScrudJavaScriptHelper.GetScrudScript();            
+            string script = MixERP.Net.WebControls.ScrudFactory.Helpers.ScrudJavaScriptHelper.GetScript();            
             MixERP.Net.Common.PageUtility.ExecuteJavaScript("scrudScript", script, this.Page);     
         }
     }
