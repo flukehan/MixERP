@@ -31,6 +31,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
             }
 
             TextBox textBox = GetNumberTextBox(columnName + "_textbox", maxLength);
+            CompareValidator numberValidator = GetNumberValidator(textBox, domain);
             string label = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString(resourceClassName, columnName);
 
             if (!string.IsNullOrWhiteSpace(defaultValue))
@@ -51,14 +52,13 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
             {
                 if (!isNullable)
                 {
-                    CompareValidator validator = GetNumberValidator(textBox, domain);
                     RequiredFieldValidator required = ScrudFactoryHelper.GetRequiredFieldValidator(textBox);
-                    ScrudFactoryHelper.AddRow(htmlTable, label + Resources.ScrudResource.RequiredFieldIndicator, textBox, validator, required);
+                    ScrudFactoryHelper.AddRow(htmlTable, label + Resources.ScrudResource.RequiredFieldIndicator, textBox, numberValidator, required);
                     return;
                 }
             }
 
-            ScrudFactoryHelper.AddRow(htmlTable, label, textBox);
+            ScrudFactoryHelper.AddRow(htmlTable, label, textBox, numberValidator);
         }
 
         private static TextBox GetNumberTextBox(string id, int maxLength)
