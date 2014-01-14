@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Mix Open Foundation.snk" />
+    <None Include="MixERP.Net.WebControls.TransactionChecklist.Data.licenseheader" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\..\..\Dictionary.xml">

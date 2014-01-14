@@ -46,8 +46,9 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
                 return string.Empty;
             }
 
-            //Todo: Parameterize media path.
-            string uploadDirectory = HttpContext.Current.Server.MapPath("~/Media/Temp");
+            string tempMediaPath = MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("TempMediaPath");
+            string uploadDirectory = HttpContext.Current.Server.MapPath(tempMediaPath);
+
             if (!System.IO.Directory.Exists(uploadDirectory))
             {
                 System.IO.Directory.CreateDirectory(uploadDirectory);

@@ -25,7 +25,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             gridPanel = new Panel();
             gridPanel.ID = "GridPanel";
             gridPanel.ScrollBars = ScrollBars.Auto;
-            gridPanel.Width = 1000; //Todo
+            gridPanel.Width = Unit.Parse(MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("GridPanelDefaultWidth"));
 
             this.AddGridView(gridPanel);
             this.AddPager(gridPanel);

@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Mix Open Foundation.snk" />
+    <None Include="MixERP.Net.WebControls.ReportEngine.Data.licenseheader" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\MixERP.net.Common\MixERP.Net.Common.csproj">

@@ -63,7 +63,7 @@ namespace MixERP.Net.FrontEnd.Inventory.Setup
             List<string> selectedValues = new List<string>();
 
             //Todo:
-            //The default selected value of tax account
+            //The default selected value of shipping payable account
             //should be done via GL Mapping.
             ScrudHelper.AddSelectedValue(selectedValues, "core.accounts.account_id", "'20110 (Shipping Charge Payable)'");
             return string.Join(",", selectedValues);

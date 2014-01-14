@@ -1,11 +1,4 @@
-﻿<%-- 
-Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
-
-This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
-If a copy of the MPL was not distributed  with this file, You can obtain one at 
-http://mozilla.org/MPL/2.0/.
---%>
-<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ProductControl.ascx.cs" Inherits="MixERP.Net.FrontEnd.UserControls.Products.ProductControl" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ProductControl.ascx.cs" Inherits="MixERP.Net.FrontEnd.UserControls.Products.ProductControl" %>
 <asp:ScriptManager ID="ScriptManager1" runat="server" />
 <div style="width: 1000px; overflow: hidden; margin: 0;">
     <asp:Label ID="TitleLabel" CssClass="title" runat="server" />

@@ -21,6 +21,7 @@ namespace MixERP.Net.FrontEnd.Account
         {
             Session.Remove("UserName");
             FormsAuthentication.SignOut();
+            //FormsAuthentication.RedirectToLoginPage();
             Response.Redirect("~/SignIn.aspx");
         }
     }

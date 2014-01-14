@@ -1,4 +1,11 @@
-﻿using MixERP.Net.WebControls.ScrudFactory.Helpers;
+﻿/********************************************************************************
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
+If a copy of the MPL was not distributed  with this file, You can obtain one at 
+http://mozilla.org/MPL/2.0/.
+***********************************************************************************/
+using MixERP.Net.WebControls.ScrudFactory.Helpers;
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
@@ -59,9 +66,8 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
             //Fully qualified relation name (PostgreSQL Terminology).
             string relation = schema + "." + table + "." + column;
 
-            //Todo: Parameterize these values in the configuration file.
-            char itemSeparator = ',';
-            string expressionSeparator = "-->";
+            char itemSeparator = char.Parse(MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("ItemSeparator"));
+            string expressionSeparator = MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("ExpressionSeparator");
 
             foreach (string item in expressions.Split(itemSeparator))
             {
@@ -147,11 +153,10 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 
                 if (string.IsNullOrWhiteSpace(schema) || string.IsNullOrWhiteSpace(view))
                 {
-                    throw new InvalidOperationException("Invalid table or view name specified. Make sure that the expression value is a fully qualified relation name.");
+                    return null;
                 }
 
-                //Todo: Parameterize these attributes in the configuration file.
-                itemSelectorAnchor.Attributes["class"] = "item-selector";
+                itemSelectorAnchor.Attributes["class"] = MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("ItemSelectorAnchorCssClass");
                 itemSelectorAnchor.HRef = itemSelectorPath + "?Schema=" + schema + "&View=" + view + "&AssociatedControlId=" + associatedControlId;
 
                 return itemSelectorAnchor;

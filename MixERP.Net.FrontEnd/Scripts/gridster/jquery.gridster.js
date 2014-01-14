@@ -1,7 +1,3 @@
-/*! gridster.js - v0.1.0 - 2013-06-14
-* http://gridster.net/
-* Copyright (c) 2013 ducksboard; Licensed MIT */
-
 ;(function($, window, document, undefined){
     /**
     * Creates objects with coordinates (x1, y1, x2, y2, cx, cy, width, height)

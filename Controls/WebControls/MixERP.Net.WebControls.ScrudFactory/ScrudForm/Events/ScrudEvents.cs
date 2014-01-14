@@ -58,7 +58,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
                         //Refresh the grid.
                         this.BindGridView();
-
                         this.DisplaySuccess();
 
                     }

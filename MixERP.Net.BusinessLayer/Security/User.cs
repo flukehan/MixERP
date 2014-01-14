@@ -90,20 +90,21 @@ namespace MixERP.Net.BusinessLayer.Security
                         SetSession(page, userName);
 
                         FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, userName, DateTime.Now, DateTime.Now.AddMinutes(30), remember, String.Empty, FormsAuthentication.FormsCookiePath);
-                        string encryptedCookie = FormsAuthentication.Encrypt(ticket);
+                        string encryptedCookie = FormsAuthentication.Encrypt(ticket);  
+                   
                         HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedCookie);
-                        cookie.Expires = DateTime.Now.AddMinutes(30);
+                        cookie.Domain = FormsAuthentication.CookieDomain;
+                        cookie.Path = ticket.CookiePath;
+
                         page.Response.Cookies.Add(cookie);
-
-                        System.Web.Security.FormsAuthentication.RedirectFromLoginPage(userName, true, "MixERP.Net");
-
+                        page.Response.Redirect(FormsAuthentication.GetRedirectUrl(userName, remember));
 
                         return true;
                     }
                 }
-                catch (DbException)
+                catch
                 {
-                    //Swallow the exception
+                    //Swallow the exception here
                 }
             }
 

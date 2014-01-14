@@ -145,7 +145,5 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             return list;
         }
-
-
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿//Sample license text.
+using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
