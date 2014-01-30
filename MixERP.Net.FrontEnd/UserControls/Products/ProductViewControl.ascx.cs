@@ -238,12 +238,140 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             string user = UserTextBox.Text;
             string referenceNumber = ReferenceNumberTextBox.Text;
             string statementReference = StatementReferenceTextBox.Text;
+            string bookName = this.GetTransactionBookName();
 
-            using (System.Data.DataTable table = MixERP.Net.BusinessLayer.Transactions.NonGLStockTransaction.GetView("Sales.Quotation", dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference))
+            if (this.IsNonGlTransaction())
             {
-                ProductViewGridView.DataSource = table;
-                ProductViewGridView.DataBind();
+                using (System.Data.DataTable table = MixERP.Net.BusinessLayer.Transactions.NonGLStockTransaction.GetView(bookName, dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference))
+                {
+                    ProductViewGridView.DataSource = table;
+                    ProductViewGridView.DataBind();
+                }
             }
+            else
+            {
+                //Todo
+                //using (System.Data.DataTable table = MixERP.Net.BusinessLayer.Transactions.NonGLStockTransaction.GetView(bookName, dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference))
+                //{
+                //    ProductViewGridView.DataSource = table;
+                //    ProductViewGridView.DataBind();
+                //}            
+            }
+        }
+
+        private string GetTransactionBookName()
+        {
+            string bookName = string.Empty;
+
+            if (this.Book == TranBook.Sales)
+            {
+                switch (this.SubBook)
+                {
+                    case SubTranBook.Delivery:
+                        bookName = "Sales.Delivery";
+                        break;
+                    case SubTranBook.Direct:
+                        bookName = "Sales.Direct";
+                        break;
+                    case SubTranBook.Invoice:
+                        bookName = "Sales.Invoice";
+                        break;
+                    case SubTranBook.Order:
+                        bookName = "Sales.Order";
+                        break;
+                    case SubTranBook.Payment:
+                        throw new InvalidOperationException("Invalid SubTranBook 'Sales Payment'");
+                    case SubTranBook.Quotation:
+                        bookName = "Sales.Quotation";
+                        break;
+                    case SubTranBook.Receipt:
+                        bookName = "Sales.Receipt";
+                        break;
+                    case SubTranBook.Return:
+                        bookName = "Sales.Return";
+                        break;
+                }
+            }
+
+
+            if (this.Book == TranBook.Purchase)
+            {
+                switch (this.SubBook)
+                {
+                    case SubTranBook.Delivery:
+                        throw new InvalidOperationException("Invalid SubTranBook 'Purchase Receipt'");
+                    case SubTranBook.Direct:
+                        bookName = "Purchase.Direct";
+                        break;
+                    case SubTranBook.Invoice:
+                        bookName = "Purchase.Invoice";
+                        break;
+                    case SubTranBook.Order:
+                        bookName = "Purchase.Order";
+                        break;
+                    case SubTranBook.Payment:
+                        bookName = "Purchase.Payment";
+                        break;
+                    case SubTranBook.Quotation:
+                        throw new InvalidOperationException("Invalid SubTranBook 'Purchase Quotation'");
+                    case SubTranBook.Receipt:
+                        throw new InvalidOperationException("Invalid SubTranBook 'Purchase Receipt'");
+                    case SubTranBook.Return:
+                        bookName = "Purchase.Return";
+                        break;
+                }
+            }
+
+            return bookName;
+        }
+        private bool IsNonGlTransaction()
+        {
+            //Todo
+            bool isNonGlTransaction = false;
+
+            if (this.Book == TranBook.Sales)
+            {
+                switch (this.SubBook)
+                {
+                    case SubTranBook.Order:
+                        isNonGlTransaction = true;
+                        break;
+                    case SubTranBook.Quotation:
+                        isNonGlTransaction = true;
+                        break;
+                }
+            }
+
+            if (this.Book == TranBook.Purchase)
+            {
+                if(this.SubBook == SubTranBook.Order)
+                {
+                        isNonGlTransaction = true;
+                }
+            }
+
+            return isNonGlTransaction;
+        }
+        private string GetTransactionTableName()
+        {
+            string tableName = "transactions.stock_master";
+
+            if (this.IsNonGlTransaction())
+            {
+                tableName = "transactions.non_gl_stock_master";
+            }
+            return tableName;
+        }
+
+        private string GetTransactionTablePrimaryKeyName()
+        {
+            string key = "stock_master_id";
+
+            if (this.IsNonGlTransaction())
+            {
+                key = "non_gl_stock_master_id";
+            }
+            return key;        
         }
 
         protected void ProductViewGridView_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -288,6 +416,17 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                     }
                 }
             }
+        }
+
+        protected void UpdateButton_Click(object sender, EventArgs e)
+        {
+            int flagTypeId = MixERP.Net.Common.Conversion.TryCastInteger(FlagDropDownList.SelectedValue);
+            string resource = this.GetTransactionTableName();
+            string resourceKey = this.GetTransactionTablePrimaryKeyName();
+            Collection<int> resourceIds = this.GetSelectedValues();
+
+            MixERP.Net.BusinessLayer.Core.Flags.CreateFlag(flagTypeId, resource, resourceKey, resourceIds);
+            this.LoadGridView();
         }
     }
 }

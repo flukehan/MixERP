@@ -298,18 +298,54 @@ CREATE TABLE core.flags
 	flag_id					BIGSERIAL NOT NULL PRIMARY KEY,
 	user_id					integer NOT NULL REFERENCES office.users(user_id),
 	flag_type_id				integer NOT NULL REFERENCES core.flag_types(flag_type_id),
-	resource				text, --Fully qualified repository name. Example: crm.lead_sources.
-	resource_id				text --The unique idenfier for lookup. Example: lead_source_id.
+	resource				text, --Fully qualified resource name. Example: transactions.non_gl_stock_master.
+	resource_key				text, --The unique idenfier for lookup. Example: non_gl_stock_master_id,
+	resource_id				integer --The value of the unique identifier to lookup for
 );
 
 CREATE UNIQUE INDEX flags_user_id_resource_resource_id_uix
-ON core.flags(user_id, UPPER(resource), UPPER(resource_id));
+ON core.flags(user_id, UPPER(resource), UPPER(resource_key), resource_id);
+
+
+CREATE FUNCTION core.create_flag
+(
+	user_id_ 	integer,
+	flag_type_id_	integer,
+	resource_	text,
+	resource_key_	text,
+	resource_id_	integer
+)
+RETURNS void
+AS
+$$
+BEGIN
+	IF NOT EXISTS(SELECT * FROM core.flags WHERE user_id=user_id_ AND resource=resource_ AND resource_key=resource_key_ AND resource_id=resource_id_) THEN
+		INSERT INTO core.flags(user_id, flag_type_id, resource, resource_key, resource_id)
+		SELECT user_id_, flag_type_id_, resource_, resource_key_, resource_id_;
+	ELSE
+		UPDATE core.flags
+		SET
+			flag_type_id=flag_type_id_
+		WHERE 
+			user_id=user_id_ 
+		AND 
+			resource=resource_ 
+		AND 
+			resource_key=resource_key_ 
+		AND 
+			resource_id=resource_id_;
+	END IF;
+END
+$$
+LANGUAGE plpgsql;
+
 
 CREATE FUNCTION core.get_flag_type_id
 (
 	user_id_ integer,
 	resource_ text,
-	resource_id_ text
+	resource_key_ text,
+	resource_id_ bigint
 )
 RETURNS integer
 AS
@@ -321,7 +357,8 @@ BEGIN
 		FROM core.flags
 		WHERE user_id=$1
 		AND resource=$2
-		AND resource_id=$3
+		AND resource_key=$3
+		AND resource_id=$4
 	);
 END
 $$

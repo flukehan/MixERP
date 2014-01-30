@@ -758,6 +758,7 @@ RETURNS TABLE
 	office					national character varying(12),
 	party					text,
 	price_type				text,
+	amount					money_strict,
 	transaction_ts				TIMESTAMP WITH TIME ZONE,
 	"user"					national character varying(50),
 	reference_number			national character varying(24),
@@ -788,13 +789,16 @@ BEGIN
 		office.offices.office_code AS office,
 		core.parties.party_code || ' (' || core.parties.party_name || ')' AS party,
 		core.price_types.price_type_code || ' (' || core.price_types.price_type_name || ')' AS price_type,
+		SUM(transactions.non_gl_stock_details.price * transactions.non_gl_stock_details.quantity + tax - discount)::money_strict AS amount,
 		transactions.non_gl_stock_master.transaction_ts,
 		office.users.user_name AS user,
 		transactions.non_gl_stock_master.reference_number,
 		transactions.non_gl_stock_master.statement_reference,
-		core.get_flag_background_color(core.get_flag_type_id(user_id_, book_, transactions.non_gl_stock_master.non_gl_stock_master_id)) AS flag_bg,
-		core.get_flag_foreground_color(core.get_flag_type_id(user_id_, book_, transactions.non_gl_stock_master.non_gl_stock_master_id)) AS flag_fg
+		core.get_flag_background_color(core.get_flag_type_id(user_id_, 'transactions.non_gl_stock_master', 'non_gl_stock_master_id', transactions.non_gl_stock_master.non_gl_stock_master_id)) AS flag_bg,
+		core.get_flag_foreground_color(core.get_flag_type_id(user_id_, 'transactions.non_gl_stock_master', 'non_gl_stock_master_id', transactions.non_gl_stock_master.non_gl_stock_master_id)) AS flag_fg
 	FROM transactions.non_gl_stock_master
+	INNER JOIN transactions.non_gl_stock_details
+	ON transactions.non_gl_stock_master.non_gl_stock_master_id = transactions.non_gl_stock_details.non_gl_stock_master_id
 	INNER JOIN core.parties
 	ON transactions.non_gl_stock_master.party_id = core.parties.party_id
 	INNER JOIN core.price_types
@@ -835,12 +839,26 @@ BEGIN
 		office.offices.office_code
 	) LIKE '%' || lower(office_) || '%'	
 	AND office.offices.office_id IN (SELECT office_id FROM office_cte)
+	GROUP BY 
+		transactions.non_gl_stock_master.non_gl_stock_master_id,
+		transactions.non_gl_stock_master.value_date,
+		office.offices.office_code,
+		core.parties.party_code,
+		core.parties.party_name,
+		core.price_types.price_type_code,
+		core.price_types.price_type_name,
+		transactions.non_gl_stock_master.transaction_ts,
+		office.users.user_name,
+		transactions.non_gl_stock_master.reference_number,
+		transactions.non_gl_stock_master.statement_reference		
 	LIMIT 100;
 END
 $$
 LANGUAGE plpgsql;
 
---Todo: Move to db logic.
+DROP FUNCTION IF EXISTS policy.check_menu_policy_trigger() CASCADE;
+
+
 CREATE FUNCTION policy.check_menu_policy_trigger()
 RETURNS trigger
 AS

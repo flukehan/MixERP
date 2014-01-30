@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Flags.cs" />
     <Compile Include="MixERPWebPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

@@ -64,11 +64,13 @@
                 runat="server"
                 Text="Update"
                 CssClass="menu"
-                OnClientClick="return getSelectedItems();" />
+                OnClientClick="return getSelectedItems();"
+                OnClick="UpdateButton_Click" />
             <a href="#" onclick="$('#flag-popunder').toggle(500);" class="menu">Close</a>
         </p>
     </div>
 </div>
+
 <asp:Label ID="ErrorLabel" runat="server" CssClass="error" />
 
 <div id="filter" class="vpad8">
@@ -156,6 +158,7 @@
             <asp:BoundField DataField="reference_number" HeaderText="reference_number" />
             <asp:BoundField DataField="party" HeaderText="party" />
             <asp:BoundField DataField="price_type" HeaderText="price_type" />
+            <asp:BoundField DataField="amount" HeaderText="amount" />
             <asp:BoundField DataField="transaction_ts" HeaderText="transaction_ts" DataFormatString="{0:D}" />
             <asp:BoundField DataField="user" HeaderText="user" />
             <asp:BoundField DataField="statement_reference" HeaderText="statement_reference" />
@@ -168,6 +171,48 @@
 
 
 <script type="text/javascript">
+
+    var updateFlagColor = function () {
+        //Get an instance of the form grid.
+
+        var grid = $("#ProductViewGridView");
+
+        //Set position of the column which contains color value.
+        var bgColorColumnPos = "13";
+        var fgColorColumnPos = "14";
+
+        //Iterate through all the rows of the grid.
+        grid.find("tr").each(function () {
+
+            //Get the current row instance from the loop.
+            var row = $(this);
+
+            //Read the color value from the associated column.
+            var background = row.find("td:nth-child(" + bgColorColumnPos + ")").html();
+            var foreground = row.find("td:nth-child(" + fgColorColumnPos + ")").html();
+
+            if (background) {
+                if (background != '&nbsp;') {
+                    row.css("background", background);
+
+                    //Iterate through all the columns of the current row.
+                    row.find("td").each(function () {
+                        //Prevent border display by unsetting the border information for each cell.
+                        $(this).css("border", "none");
+                    });
+                }
+            }
+
+            if (foreground) {
+                if (foreground != '&nbsp;') {
+                    row.find("td").css("color", foreground);
+                }
+            }
+        });
+    }
+
+    updateFlagColor();
+
     var getSelectedItems = function () {
         var selection = [];
 
