@@ -27,27 +27,27 @@ namespace MixERP.Net.WebControls.ScrudFactory
         {
             if (string.IsNullOrWhiteSpace(this.TableSchema))
             {
-                throw new ApplicationException("The property 'TableSchema' cannot be left blank.");
+                throw new ApplicationException("The property 'TableSchema' cannot be left empty.");
             }
 
             if (string.IsNullOrWhiteSpace(this.Table))
             {
-                throw new ApplicationException("The property 'Table' cannot be left blank.");
+                throw new ApplicationException("The property 'Table' cannot be left empty.");
             }
             
             if (string.IsNullOrWhiteSpace(this.ViewSchema))
             {
-                throw new ApplicationException("The property 'ViewSchema' cannot be left blank.");
+                throw new ApplicationException("The property 'ViewSchema' cannot be left empty.");
             }
 
             if (string.IsNullOrWhiteSpace(this.View))
             {
-                throw new ApplicationException("The property 'View' cannot be left blank.");
+                throw new ApplicationException("The property 'View' cannot be left empty.");
             }
 
             if (string.IsNullOrWhiteSpace(this.KeyColumn))
             {
-                throw new ApplicationException("The property 'KeyColumn' cannot be left blank.");
+                throw new ApplicationException("The property 'KeyColumn' cannot be left empty.");
             }
 
 

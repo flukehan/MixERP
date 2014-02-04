@@ -120,7 +120,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
 
         private void AddEditButton(Panel p)
         {
-            editButton = this.GetButton("CTRL + E", "return(confirmAction());", Resources.ScrudResource.EditSelected);
+            editButton = this.GetButton("CTRL + E", "return(confirmAction('Edit'));", Resources.ScrudResource.EditSelected);
             editButton.Click += new EventHandler(OnEditButtonClick);
             p.Controls.Add(editButton);
         }
@@ -135,7 +135,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
 
         private void AddDeleteButton(Panel p)
         {
-            deleteButton = this.GetButton("CTRL + D", "return(confirmAction());", Resources.ScrudResource.DeleteSelected);
+            deleteButton = this.GetButton("CTRL + D", "return(confirmAction('Delete'));", Resources.ScrudResource.DeleteSelected);
             deleteButton.Click += new EventHandler(OnDeleteButtonClick);
             p.Controls.Add(deleteButton);
         }

@@ -20,24 +20,34 @@ var showAll = function () {
     window.location = window.location.pathname + '?show=all';
 }
 
-var confirmAction = function () {
-    var c = confirm(localizedAreYouSure);
+var confirmAction = function (eventId) {
+    var retVal = false;
+    var selectedItemValue;
 
-    if (c) {
-        var selected = selectedValue();
+    var confirmed = confirm(localizedAreYouSure);
 
-        if (selected == undefined) {
+    if (confirmed) {
+        selectedItemValue = getSelectedValue();
+
+        if (selectedItemValue == undefined) {
             alert(localizedNothingSelected);
-            return false;
+            retVal = false;
         }
-        return true;
+        else {
+            retVal = true;
+        }
     }
-    else {
-        return false;
+
+    if (retVal) {
+        if (customFormUrl && keyColumn) {
+            window.location = customFormUrl + "?" + keyColumn + "=" + selectedItemValue;
+        }
     }
+
+    return retVal;
 }
 
-var selectedValue = function () {
+var getSelectedValue = function () {
     return $('[id^="SelectRadio"]:checked').val();
 }
 
@@ -125,9 +135,6 @@ function adjustSpinnerSize() {
     //current scroll position.
 }
 
-
-
-
 function updateTableHeaders() {
     $("div.floating-header").each(function () {
         var originalHeaderRow = $(".tableFloatingHeaderOriginal", this);
@@ -176,6 +183,10 @@ $(document).ready(function () {
 });
 
 var addNew = function () {
+    if (customFormUrl) {
+        top.location = customFormUrl;
+    }
+
     $('#' + formGridViewId + 'tr').find('td input:radio').removeAttr('checked');
     $('#form1').each(function () {
         this.reset();
@@ -193,7 +204,7 @@ $(document).ready(function () {
         if (!$('#' + formPanelId).is(':hidden')) {
 
             if ($("#colorbox").css("display") != "block") {
-                var result = confirm('Are you sure?');
+                var result = confirm(localizedAreYouSure);
                 if (result) {
                     $('#' + cancelButtonId).click();
                 }

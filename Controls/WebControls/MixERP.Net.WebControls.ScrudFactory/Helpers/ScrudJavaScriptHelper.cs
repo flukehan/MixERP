@@ -17,18 +17,19 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 {
     public static class ScrudJavaScriptHelper
     {
-        public static string GetScript()
+        public static string GetScript(string keyColumn, string customFormUrl)
         {
             string resource = Helpers.JavaScriptHelper.GetEmbeddedScript("MixERP.Net.WebControls.ScrudFactory.Scrud.js");
             StringBuilder script = new StringBuilder();
 
             script.Append(CreateVariable("localizedAreYouSure", Resources.ScrudResource.AreYouSure));
             script.Append(CreateVariable("localizedNothingSelected", Resources.ScrudResource.NothingSelected));
-
             script.Append(CreateVariable("reportTemplatePath", MixERP.Net.Common.PageUtility.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("TemplatePath"))));
             script.Append(CreateVariable("reportHeaderPath", MixERP.Net.Common.PageUtility.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("HeaderPath"))));
             script.Append(CreateVariable("containerMargin", MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("GridContainerMargin")));
             script.Append(CreateVariable("date", DateTime.Now.ToString()));
+            script.Append(CreateVariable("keyColumn", keyColumn));
+            script.Append(CreateVariable("customFormUrl", customFormUrl));
 
             script.Append(resource);
             return script.ToString();

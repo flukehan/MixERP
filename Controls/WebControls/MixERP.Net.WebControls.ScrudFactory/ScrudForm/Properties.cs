@@ -143,5 +143,13 @@ namespace MixERP.Net.WebControls.ScrudFactory
         /// some basic serach functionalities for the dropdownlist control.
         /// </summary>
         public string ItemSelectorPath { get; set; }
+
+        /// <summary>
+        /// Use this parameter to override the ScrudFactory's 
+        /// default Add/Edit event implementation by redirecting to a custom url.
+        /// The edit event redirects to the custom url with the KeyColumn parameter
+        /// and the selected value appended as query string data.
+        /// </summary>
+        public string CustomFormUrl { get; set; }
     }
 }
