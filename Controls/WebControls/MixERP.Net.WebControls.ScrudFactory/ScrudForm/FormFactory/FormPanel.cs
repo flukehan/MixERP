@@ -90,25 +90,27 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
                     using (HtmlTableCell controlCell = new HtmlTableCell())
                     {
-                        saveButton = new Button();
-                        saveButton.ID = "SaveButton";
-                        saveButton.Text = Resources.ScrudResource.Save;
-                        saveButton.OnClientClick = "adjustSpinnerSize();";
-                        saveButton.Click += this.SaveButton_Click;
-                        saveButton.CssClass = this.GetButtonCssClass();
+                        this.saveButton = new Button();
+                        this.saveButton.ID = "SaveButton";
+                        this.saveButton.Text = Resources.ScrudResource.Save;
+                        this.saveButton.OnClientClick = "adjustSpinnerSize();";
 
-                        controlCell.Controls.Add(saveButton);
+                        this.saveButton.Click += this.SaveButton_Click;
+
+                        this.saveButton.CssClass = this.GetButtonCssClass();
+
+                        controlCell.Controls.Add(this.saveButton);
 
 
-                        cancelButton = new Button();
-                        cancelButton.ID = "CancelButton";
-                        cancelButton.Text = Resources.ScrudResource.Cancel;
-                        cancelButton.CausesValidation = false;
-                        cancelButton.OnClientClick = "$('#FormPanel').hide(500); $('#GridPanel').show(500);";
-                        cancelButton.Click += this.CancelButton_Click;
-                        cancelButton.CssClass = this.GetButtonCssClass();
+                        this.cancelButton = new Button();
+                        this.cancelButton.ID = "CancelButton";
+                        this.cancelButton.Text = Resources.ScrudResource.Cancel;
+                        this.cancelButton.CausesValidation = false;
+                        this.cancelButton.OnClientClick = "$('#FormPanel').hide(500); $('#GridPanel').show(500);";
+                        this.cancelButton.Click += this.CancelButton_Click;
+                        this.cancelButton.CssClass = this.GetButtonCssClass();
 
-                        controlCell.Controls.Add(cancelButton);
+                        controlCell.Controls.Add(this.cancelButton);
 
                         using (HtmlInputReset resetButton = new HtmlInputReset())
                         {

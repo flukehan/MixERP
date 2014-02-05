@@ -44,6 +44,16 @@ namespace MixERP.Net.Common
 
         public static void ExecuteJavaScript(string key, string javaScript, Page page)
         {
+            if (page == null)
+            {
+                page = HttpContext.Current.Handler as System.Web.UI.Page;
+            }
+
+            if (page == null)
+            {
+                throw new InvalidOperationException("Could not register javascript on this page because the page instance was invalid or empty.");
+            }
+
             ScriptManager.RegisterStartupScript(page, typeof(System.Web.UI.Page), key, javaScript, true);
         }
 

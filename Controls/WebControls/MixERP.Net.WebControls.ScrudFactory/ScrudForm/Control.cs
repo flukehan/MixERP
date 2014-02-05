@@ -71,11 +71,12 @@ namespace MixERP.Net.WebControls.ScrudFactory
             this.Controls.Add(scrudContainer);
         }
 
+
         protected override void RecreateChildControls()
         {
             EnsureChildControls();
         }
-        
+
         protected override void Render(HtmlTextWriter w)
         {
             scrudContainer.RenderControl(w);
@@ -94,59 +95,64 @@ namespace MixERP.Net.WebControls.ScrudFactory
             {
                 if (disposing)
                 {
-                    
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(scrudContainer);
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(formPanel);
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(form);
+
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.scrudContainer);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.formPanel);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.form);
 
                     if (formGridView != null)
                     {
                         formGridView.RowDataBound -= this.FormGridView_RowDataBound;                        
                     }
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(formGridView);
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(addNewEntryLiteral);
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(requiredFieldDetailsLabel);
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(formContainer);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.formGridView);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.addNewEntryLiteral);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.requiredFieldDetailsLabel);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.formContainer);
 
-                    if (saveButton != null)
+                    if (this.saveButton != null)
                     {
-                        saveButton.Click -= this.SaveButton_Click;                        
+                        this.saveButton.Click -= this.SaveButton_Click;                        
                     }
-                    
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(saveButton);
 
-                    if (cancelButton != null)
+                    //if (this.SaveButtonClick != null)
+                    //{
+                    //    this.SaveButtonClick = null;
+                    //}
+
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.saveButton);
+
+                    if (this.cancelButton != null)
                     {
                         cancelButton.Click -= this.CancelButton_Click;                    
                     }
-                    
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(cancelButton);
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(updatePanel);
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(userIdHidden);
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(officeCodeHidden);
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(messageLabel);
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(titleLabel);
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(descriptionLabel);
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(updateProgress);
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(gridPanel);
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(formGridView);
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(pager);
 
-                    if (topCommandPanel != null)
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.cancelButton);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.updatePanel);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.userIdHidden);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.officeCodeHidden);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.messageLabel);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.titleLabel);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.descriptionLabel);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.updateProgress);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.gridPanel);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.formGridView);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.pager);
+
+                    if (this.topCommandPanel != null)
                     {
-                        topCommandPanel.DeleteButtonClick -= this.DeleteButton_Click;
-                        topCommandPanel.EditButtonClick -= this.EditButton_Click;                    
+                        this.topCommandPanel.DeleteButtonClick -= this.DeleteButton_Click;
+                        this.topCommandPanel.EditButtonClick -= this.EditButton_Click;                    
                     }
 
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(topCommandPanel);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.topCommandPanel);
 
-                    if (bottomCommandPanel != null)
+                    if (this.bottomCommandPanel != null)
                     {
-                        bottomCommandPanel.DeleteButtonClick -= this.DeleteButton_Click;
-                        bottomCommandPanel.EditButtonClick -= this.EditButton_Click;
+                        this.bottomCommandPanel.DeleteButtonClick -= this.DeleteButton_Click;
+                        this.bottomCommandPanel.EditButtonClick -= this.EditButton_Click;
                     }
 
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(bottomCommandPanel);
+                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.bottomCommandPanel);
 
 
                 }

@@ -127,9 +127,9 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
 
         private void OnEditButtonClick(object sender, EventArgs e)
         {
-            if (EditButtonClick != null)
+            if (this.EditButtonClick != null)
             {
-                EditButtonClick(this, e);
+                this.EditButtonClick(this, e);
             }
         }
 
@@ -142,9 +142,9 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
 
         private void OnDeleteButtonClick(object sender, EventArgs e)
         {
-            if (DeleteButtonClick != null)
+            if (this.DeleteButtonClick != null)
             {
-                DeleteButtonClick(this, e);
+                this.DeleteButtonClick(this, e);
             }
         }
 

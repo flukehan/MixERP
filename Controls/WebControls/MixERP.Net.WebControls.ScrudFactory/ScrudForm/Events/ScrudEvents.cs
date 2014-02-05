@@ -16,6 +16,8 @@ namespace MixERP.Net.WebControls.ScrudFactory
 {
     public partial class ScrudForm : CompositeControl
     {
+        public event EventHandler SaveButtonClick;
+
         protected void SaveButton_Click(object sender, EventArgs e)
         {
             this.Page.Validate();
@@ -24,6 +26,12 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 return;
             }
 
+            if (this.SaveButtonClick != null)
+            {
+                this.SaveButtonClick(sender, e);
+                return;
+            }
+            
             string userIdSessionKey = MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("UserIdSessionKey");
 
             if (!(Conversion.TryCastInteger(MixERP.Net.Common.Helpers.SessionHelper.GetSessionValueByKey(userIdSessionKey)) > 0))
