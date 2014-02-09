@@ -22,7 +22,7 @@ namespace MixERP.Net.DatabaseLayer.Office
 
             using(NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@StoreId", storeId);
+                command.Parameters.Add("@StoreId", storeId);
                 return MixERP.Net.DBFactory.DBOperations.GetDataTable(command).Rows.Count.Equals(1);
             }
         }

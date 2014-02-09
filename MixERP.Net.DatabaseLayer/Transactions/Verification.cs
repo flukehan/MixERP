@@ -23,7 +23,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
 
             using(NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@TransactionMasterId", transactionMasterId);
+                command.Parameters.Add("@TransactionMasterId", transactionMasterId);
 
                 using(DataTable table = MixERP.Net.DBFactory.DBOperations.GetDataTable(command))
                 {
@@ -54,10 +54,10 @@ namespace MixERP.Net.DatabaseLayer.Transactions
             string sql = "UPDATE transactions.transaction_master SET verification_status_id=@Status, verified_by_user_id=@UserId, verification_reason=@Reason WHERE transactions.transaction_master.transaction_master_id=@TransactionMasterId;";
             using(NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@Status", status);
-                command.Parameters.AddWithValue("@UserId", userId);
-                command.Parameters.AddWithValue("@reason", reason);
-                command.Parameters.AddWithValue("@TransactionMasterId", transactionMasterId);
+                command.Parameters.Add("@Status", status);
+                command.Parameters.Add("@UserId", userId);
+                command.Parameters.Add("@reason", reason);
+                command.Parameters.Add("@TransactionMasterId", transactionMasterId);
 
                 return MixERP.Net.DBFactory.DBOperations.ExecuteNonQuery(command);
             }
@@ -70,7 +70,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                 string sql = "SELECT transactions.auto_verify(@TransactionMasterId::bigint);";
                 using(NpgsqlCommand command = new NpgsqlCommand(sql))
                 {
-                    command.Parameters.AddWithValue("@TransactionMasterId", transactionMasterId);
+                    command.Parameters.Add("@TransactionMasterId", transactionMasterId);
                     return MixERP.Net.DBFactory.DBOperations.ExecuteNonQuery(command);
                 }
             }

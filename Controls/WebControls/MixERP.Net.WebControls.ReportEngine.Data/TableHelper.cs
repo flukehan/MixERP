@@ -55,7 +55,7 @@ namespace MixERP.Net.WebControls.ReportEngine.Data
                 {
                     foreach(KeyValuePair<string, string> p in parameters)
                     {
-                        command.Parameters.AddWithValue(p.Key, p.Value);
+                        command.Parameters.Add(p.Key, p.Value);
                     }
                 }
                 

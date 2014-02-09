@@ -21,7 +21,7 @@ namespace MixERP.Net.DatabaseLayer.Core
             string sql = "SELECT * FROM core.shipping_address_view WHERE party_id=@PartyId;";
             using(NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@PartyId", partyId);
+                command.Parameters.Add("@PartyId", partyId);
 
                 return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
             }
@@ -32,7 +32,7 @@ namespace MixERP.Net.DatabaseLayer.Core
             string sql = "SELECT * FROM core.shipping_address_view WHERE party_id = core.get_party_id_by_party_code(@PartyCode);";
             using(NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@PartyCode", partyCode);
+                command.Parameters.Add("@PartyCode", partyCode);
 
                 return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
             }

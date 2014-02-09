@@ -30,7 +30,7 @@ namespace MixERP.Net.DatabaseLayer.Office
             string sql = "SELECT * FROM office.cash_repositories WHERE office_id=@OfficeId;";
             using(NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@OfficeId", officeId);
+                command.Parameters.Add("@OfficeId", officeId);
                 return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
             }
         }
@@ -40,7 +40,7 @@ namespace MixERP.Net.DatabaseLayer.Office
             string sql = "SELECT transactions.get_cash_repository_balance(@CashRepositoryId);";
             using(NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@CashRepositoryId", cashRepositoryId);
+                command.Parameters.Add("@CashRepositoryId", cashRepositoryId);
                 return MixERP.Net.Common.Conversion.TryCastDecimal(MixERP.Net.DBFactory.DBOperations.GetScalarValue(command));
             }
         }

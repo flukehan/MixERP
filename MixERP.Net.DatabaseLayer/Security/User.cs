@@ -22,13 +22,13 @@ namespace MixERP.Net.DatabaseLayer.Security
             string sql = "SELECT * FROM office.sign_in(@OfficeId, @UserName, @Password, @Browser, @IPAddress, @RemoteUser, @Culture);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@OfficeId", officeId);
-                command.Parameters.AddWithValue("@UserName", userName);
-                command.Parameters.AddWithValue("@Password", password);
-                command.Parameters.AddWithValue("@Browser", browser);
-                command.Parameters.AddWithValue("@IPAddress", remoteAddress);
-                command.Parameters.AddWithValue("@RemoteUser", remoteUser);
-                command.Parameters.AddWithValue("@Culture", culture);
+                command.Parameters.Add("@OfficeId", officeId);
+                command.Parameters.Add("@UserName", userName);
+                command.Parameters.Add("@Password", password);
+                command.Parameters.Add("@Browser", browser);
+                command.Parameters.Add("@IPAddress", remoteAddress);
+                command.Parameters.Add("@RemoteUser", remoteUser);
+                command.Parameters.Add("@Culture", culture);
 
                 return MixERP.Net.Common.Conversion.TryCastLong(MixERP.Net.DBFactory.DBOperations.GetScalarValue(command));
             }
@@ -39,7 +39,7 @@ namespace MixERP.Net.DatabaseLayer.Security
             string sql = "SELECT * FROM office.sign_in_view WHERE user_name=@UserName;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@UserName", userName);
+                command.Parameters.Add("@UserName", userName);
 
                 return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
             }

@@ -32,12 +32,12 @@ namespace MixERP.Net.DBFactory
 
                 using (NpgsqlCommand command = new NpgsqlCommand(sql))
                 {
-                    command.Parameters.AddWithValue("@Schema", schema);
-                    command.Parameters.AddWithValue("@TableName", tableName);
+                    command.Parameters.Add("@Schema", schema);
+                    command.Parameters.Add("@TableName", tableName);
 
                     for (int i = 0; i < paramNames.Length; i++)
                     {
-                        command.Parameters.AddWithValue(paramNames[i], exclusions[i].Trim());
+                        command.Parameters.Add(paramNames[i], exclusions[i].Trim());
                     }
 
                     return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
@@ -49,8 +49,8 @@ namespace MixERP.Net.DBFactory
 
                 using (NpgsqlCommand command = new NpgsqlCommand(sql))
                 {
-                    command.Parameters.AddWithValue("@Schema", schema);
-                    command.Parameters.AddWithValue("@TableName", tableName);
+                    command.Parameters.Add("@Schema", schema);
+                    command.Parameters.Add("@TableName", tableName);
 
                     return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
                 }

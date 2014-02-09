@@ -90,7 +90,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
                 {
                     if (string.IsNullOrWhiteSpace(pair.Value))
                     {
-                        command.Parameters.AddWithValue("@" + pair.Key, DBNull.Value);
+                        command.Parameters.Add("@" + pair.Key, DBNull.Value);
                     }
                     else
                     {
@@ -101,18 +101,18 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
                                 using (BinaryReader reader = new BinaryReader(new BufferedStream(stream)))
                                 {
                                     byte[] byteArray = reader.ReadBytes(Convert.ToInt32(stream.Length));
-                                    command.Parameters.AddWithValue("@" + pair.Key, byteArray);
+                                    command.Parameters.Add("@" + pair.Key, byteArray);
                                 }
                             }
                         }
                         else
                         {
-                            command.Parameters.AddWithValue("@" + pair.Key, pair.Value);
+                            command.Parameters.Add("@" + pair.Key, pair.Value);
                         }
                     }
                 }
 
-                command.Parameters.AddWithValue("@AuditUserId", userId);
+                command.Parameters.Add("@AuditUserId", userId);
 
                 return MixERP.Net.DBFactory.DBOperations.ExecuteNonQuery(command);
             }
@@ -162,7 +162,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
                 {
                     if (string.IsNullOrWhiteSpace(pair.Value))
                     {
-                        command.Parameters.AddWithValue("@" + pair.Key, DBNull.Value);
+                        command.Parameters.Add("@" + pair.Key, DBNull.Value);
                     }
                     else
                     {
@@ -175,7 +175,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
                                 using (BinaryReader reader = new BinaryReader(new BufferedStream(stream)))
                                 {
                                     byte[] byteArray = reader.ReadBytes(Convert.ToInt32(stream.Length));
-                                    command.Parameters.AddWithValue("@" + pair.Key, byteArray);
+                                    command.Parameters.Add("@" + pair.Key, byteArray);
                                 }
                             }
                             finally
@@ -188,12 +188,12 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
                         }
                         else
                         {
-                            command.Parameters.AddWithValue("@" + pair.Key, pair.Value);
+                            command.Parameters.Add("@" + pair.Key, pair.Value);
                         }
                     }
                 }
 
-                command.Parameters.AddWithValue("@KeyValue", keyColumnValue);
+                command.Parameters.Add("@KeyValue", keyColumnValue);
 
                 return MixERP.Net.DBFactory.DBOperations.ExecuteNonQuery(command);
             }
@@ -210,7 +210,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
                 sql = sql.Replace("@KeyColumn", DBFactory.Sanitizer.SanitizeIdentifierName(keyColumn));
                 command.CommandText = sql;
 
-                command.Parameters.AddWithValue("@KeyValue", keyColumnValue);
+                command.Parameters.Add("@KeyValue", keyColumnValue);
 
                 return MixERP.Net.DBFactory.DBOperations.ExecuteNonQuery(command);
             }

@@ -20,7 +20,7 @@ namespace MixERP.Net.DatabaseLayer.Core
             string sql = "SELECT 1 FROM core.accounts WHERE is_cash=true AND account_id=@AccountId;";
             using(NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@AccountId", accountId);
+                command.Parameters.Add("@AccountId", accountId);
 
                 return MixERP.Net.DBFactory.DBOperations.GetDataTable(command).Rows.Count.Equals(1);
             }
@@ -31,7 +31,7 @@ namespace MixERP.Net.DatabaseLayer.Core
             string sql = "SELECT 1 FROM core.accounts WHERE is_cash=true AND account_code=@AccountCode;";
             using(NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@AccountCode", accountCode);
+                command.Parameters.Add("@AccountCode", accountCode);
 
                 return MixERP.Net.DBFactory.DBOperations.GetDataTable(command).Rows.Count.Equals(1);
             }

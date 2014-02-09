@@ -31,11 +31,11 @@ namespace MixERP.Net.DatabaseLayer.Core
             string sql = "SELECT * FROM policy.get_menu(@UserId, @OfficeId, @Culture) WHERE parent_menu_id=(SELECT menu_id FROM core.menus WHERE url=@url) AND level=@Level ORDER BY menu_id;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@UserId", userId);
-                command.Parameters.AddWithValue("@OfficeId", officeId);
-                command.Parameters.AddWithValue("@Culture", culture);
-                command.Parameters.AddWithValue("@Url", path);
-                command.Parameters.AddWithValue("@Level", level);
+                command.Parameters.Add("@UserId", userId);
+                command.Parameters.Add("@OfficeId", officeId);
+                command.Parameters.Add("@Culture", culture);
+                command.Parameters.Add("@Url", path);
+                command.Parameters.Add("@Level", level);
 
                 return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
             }
@@ -56,10 +56,10 @@ namespace MixERP.Net.DatabaseLayer.Core
             string sql = "SELECT * FROM policy.get_menu(@UserId, @OfficeId, @Culture) WHERE parent_menu_id=core.get_root_parent_menu_id(@url) ORDER BY menu_id;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@UserId", userId);
-                command.Parameters.AddWithValue("@OfficeId", officeId);
-                command.Parameters.AddWithValue("@Culture", culture);
-                command.Parameters.AddWithValue("@Url", path);
+                command.Parameters.Add("@UserId", userId);
+                command.Parameters.Add("@OfficeId", officeId);
+                command.Parameters.Add("@Culture", culture);
+                command.Parameters.Add("@Url", path);
                 return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
             }
         }
@@ -85,16 +85,16 @@ namespace MixERP.Net.DatabaseLayer.Core
 
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@UserId", userId);
-                command.Parameters.AddWithValue("@OfficeId", officeId);
-                command.Parameters.AddWithValue("@Culture", culture);
+                command.Parameters.Add("@UserId", userId);
+                command.Parameters.Add("@OfficeId", officeId);
+                command.Parameters.Add("@Culture", culture);
 
                 if (parentMenuId > 0)
                 {
-                    command.Parameters.AddWithValue("@ParentMenuId", parentMenuId);
+                    command.Parameters.Add("@ParentMenuId", parentMenuId);
                 }
 
-                command.Parameters.AddWithValue("@Level", level);
+                command.Parameters.Add("@Level", level);
 
                 return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
             }

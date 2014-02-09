@@ -33,11 +33,11 @@ namespace MixERP.Net.WebControls.ReportEngine.Data
             
             using(NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@MenuCode", menuCode);
-                command.Parameters.AddWithValue("@MenuText", menuText);
-                command.Parameters.AddWithValue("@Path", path);
-                command.Parameters.AddWithValue("@Level", level);
-                command.Parameters.AddWithValue("@ParentMenuCode", parentMenuCode);
+                command.Parameters.Add("@MenuCode", menuCode);
+                command.Parameters.Add("@MenuText", menuText);
+                command.Parameters.Add("@Path", path);
+                command.Parameters.Add("@Level", level);
+                command.Parameters.Add("@ParentMenuCode", parentMenuCode);
 
                 MixERP.Net.DBFactory.DBOperations.ExecuteNonQuery(command);
             }

@@ -58,25 +58,25 @@ namespace MixERP.Net.DatabaseLayer.Transactions
 
                         using (NpgsqlCommand stockMasterRow = new NpgsqlCommand(sql, connection))
                         {
-                            stockMasterRow.Parameters.AddWithValue("@ValueDate", valueDate);
-                            stockMasterRow.Parameters.AddWithValue("@Book", book);
-                            stockMasterRow.Parameters.AddWithValue("@PartyCode", stockMaster.PartyCode);
+                            stockMasterRow.Parameters.Add("@ValueDate", valueDate);
+                            stockMasterRow.Parameters.Add("@Book", book);
+                            stockMasterRow.Parameters.Add("@PartyCode", stockMaster.PartyCode);
 
                             if (stockMaster.PriceTypeId.Equals(0))
                             {
-                                stockMasterRow.Parameters.AddWithValue("@PriceTypeId", DBNull.Value);
+                                stockMasterRow.Parameters.Add("@PriceTypeId", DBNull.Value);
                             }
                             else
                             {
-                                stockMasterRow.Parameters.AddWithValue("@PriceTypeId", stockMaster.PriceTypeId);
+                                stockMasterRow.Parameters.Add("@PriceTypeId", stockMaster.PriceTypeId);
                             }
 
-                            stockMasterRow.Parameters.AddWithValue("@LoginId", logOnId);
-                            stockMasterRow.Parameters.AddWithValue("@UserId", userId);
-                            stockMasterRow.Parameters.AddWithValue("@OfficeId", officeId);
-                            stockMasterRow.Parameters.AddWithValue("@ReferenceNumber", referenceNumber);
+                            stockMasterRow.Parameters.Add("@LoginId", logOnId);
+                            stockMasterRow.Parameters.Add("@UserId", userId);
+                            stockMasterRow.Parameters.Add("@OfficeId", officeId);
+                            stockMasterRow.Parameters.Add("@ReferenceNumber", referenceNumber);
 
-                            stockMasterRow.Parameters.AddWithValue("@StatementReference", statementReference);
+                            stockMasterRow.Parameters.Add("@StatementReference", statementReference);
 
                             nonGlStockMasterId = MixERP.Net.Common.Conversion.TryCastLong(stockMasterRow.ExecuteScalar());
                         }
@@ -90,14 +90,14 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                         {
                             using (NpgsqlCommand stockMasterDetailRow = new NpgsqlCommand(sql, connection))
                             {
-                                stockMasterDetailRow.Parameters.AddWithValue("@NonGlStockMasterId", nonGlStockMasterId);
-                                stockMasterDetailRow.Parameters.AddWithValue("@ItemCode", model.ItemCode);
-                                stockMasterDetailRow.Parameters.AddWithValue("@Quantity", model.Quantity);
-                                stockMasterDetailRow.Parameters.AddWithValue("@UnitName", model.UnitName);
-                                stockMasterDetailRow.Parameters.AddWithValue("@Price", model.Price);
-                                stockMasterDetailRow.Parameters.AddWithValue("@Discount", model.Discount);
-                                stockMasterDetailRow.Parameters.AddWithValue("@TaxRate", model.TaxRate);
-                                stockMasterDetailRow.Parameters.AddWithValue("@Tax", model.Tax);
+                                stockMasterDetailRow.Parameters.Add("@NonGlStockMasterId", nonGlStockMasterId);
+                                stockMasterDetailRow.Parameters.Add("@ItemCode", model.ItemCode);
+                                stockMasterDetailRow.Parameters.Add("@Quantity", model.Quantity);
+                                stockMasterDetailRow.Parameters.Add("@UnitName", model.UnitName);
+                                stockMasterDetailRow.Parameters.Add("@Price", model.Price);
+                                stockMasterDetailRow.Parameters.Add("@Discount", model.Discount);
+                                stockMasterDetailRow.Parameters.Add("@TaxRate", model.TaxRate);
+                                stockMasterDetailRow.Parameters.Add("@Tax", model.Tax);
 
                                 stockMasterDetailRow.ExecuteNonQuery();
                             }
@@ -114,8 +114,8 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                                     sql = "INSERT INTO transactions.non_gl_stock_master_relations(order_non_gl_stock_master_id, quotation_non_gl_stock_master_id) SELECT @Id, @RelationId;";
                                     using (NpgsqlCommand relation = new NpgsqlCommand(sql, connection))
                                     {
-                                        relation.Parameters.AddWithValue("@Id", nonGlStockMasterId);
-                                        relation.Parameters.AddWithValue("@RelationId", tranId);
+                                        relation.Parameters.Add("@Id", nonGlStockMasterId);
+                                        relation.Parameters.Add("@RelationId", tranId);
                                         relation.ExecuteNonQuery();
                                     }                                
                                 }
@@ -142,17 +142,17 @@ namespace MixERP.Net.DatabaseLayer.Transactions
 
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@UserId", userId);
-                command.Parameters.AddWithValue("@Book", book);
-                command.Parameters.AddWithValue("@OfficeId", officeId);
-                command.Parameters.AddWithValue("@DateFrom", dateFrom);
-                command.Parameters.AddWithValue("@DateTo", dateTo);
-                command.Parameters.AddWithValue("@Office", office);
-                command.Parameters.AddWithValue("@Party", party);
-                command.Parameters.AddWithValue("@PriceType", priceType);
-                command.Parameters.AddWithValue("@User", user);
-                command.Parameters.AddWithValue("@ReferenceNumber", referenceNumber);
-                command.Parameters.AddWithValue("@StatementReference", statementReference);
+                command.Parameters.Add("@UserId", userId);
+                command.Parameters.Add("@Book", book);
+                command.Parameters.Add("@OfficeId", officeId);
+                command.Parameters.Add("@DateFrom", dateFrom);
+                command.Parameters.Add("@DateTo", dateTo);
+                command.Parameters.Add("@Office", office);
+                command.Parameters.Add("@Party", party);
+                command.Parameters.Add("@PriceType", priceType);
+                command.Parameters.Add("@User", user);
+                command.Parameters.Add("@ReferenceNumber", referenceNumber);
+                command.Parameters.Add("@StatementReference", statementReference);
 
                 return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
             }
@@ -183,7 +183,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                 //Iterate through the IDs and add PostgreSQL parameters.
                 for (int i = 0; i < ids.Count; i++)
                 {
-                    command.Parameters.AddWithValue("@Id" + MixERP.Net.Common.Conversion.TryCastString(i), ids[i]);
+                    command.Parameters.Add("@Id" + MixERP.Net.Common.Conversion.TryCastString(i), ids[i]);
                 }
 
                 //If the transactions associated with the supplied transaction ids belong to a single part,
@@ -215,7 +215,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                 //Iterate through the IDs and add PostgreSQL parameters.
                 for (int i = 0; i < ids.Count; i++)
                 {
-                    command.Parameters.AddWithValue("@Id" + MixERP.Net.Common.Conversion.TryCastString(i), ids[i]);
+                    command.Parameters.Add("@Id" + MixERP.Net.Common.Conversion.TryCastString(i), ids[i]);
                 }
 
                 return Common.Conversion.TryCastBoolean(MixERP.Net.DBFactory.DBOperations.GetScalarValue(command));
@@ -245,7 +245,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                 //Iterate through the IDs and add PostgreSQL parameters.
                 for (int i = 0; i < ids.Count; i++)
                 {
-                    command.Parameters.AddWithValue("@Id" + MixERP.Net.Common.Conversion.TryCastString(i), ids[i]);
+                    command.Parameters.Add("@Id" + MixERP.Net.Common.Conversion.TryCastString(i), ids[i]);
                 }
 
                 return Common.Conversion.TryCastBoolean(MixERP.Net.DBFactory.DBOperations.GetScalarValue(command));

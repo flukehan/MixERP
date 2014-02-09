@@ -3,6 +3,15 @@ Hello there,
 MixERP is a feature rich, easy to use, open source ERP solution which is still in alpha stage.
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
+ Development Environment Setup
+-------------------------------------------------------------------------------------------------------------------------------------------------
+Before you run the solution in your IDE, go through the Readme.txt file on the following location:
+
+/Dependencies/Mono/
+
+This explains on how to set up your development environment to target Mono Profile 3.2.3 instead of .NET Framework 4.5.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
  Installing the database:
 -------------------------------------------------------------------------------------------------------------------------------------------------
 

@@ -56,13 +56,13 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                         sql = "INSERT INTO transactions.transaction_master(transaction_master_id, transaction_counter, transaction_code, book, value_date, user_id, login_id, office_id, cost_center_id, reference_number) SELECT nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), transactions.get_new_transaction_counter(@ValueDate), transactions.get_transaction_code(@ValueDate, @OfficeId, @UserId, @LogOnId), @Book, @ValueDate, @UserId, @LogOnId, @OfficeId, @CostCenterId, @ReferenceNumber;SELECT currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));";
                         using(NpgsqlCommand master = new NpgsqlCommand(sql, connection))
                         {
-                            master.Parameters.AddWithValue("@ValueDate", valueDate);
-                            master.Parameters.AddWithValue("@OfficeId", officeId);
-                            master.Parameters.AddWithValue("@UserId", userId);
-                            master.Parameters.AddWithValue("@LogOnId", logOnId);
-                            master.Parameters.AddWithValue("@Book", "Journal");
-                            master.Parameters.AddWithValue("@CostCenterId", costCenterId);
-                            master.Parameters.AddWithValue("@ReferenceNumber", referenceNumber);
+                            master.Parameters.Add("@ValueDate", valueDate);
+                            master.Parameters.Add("@OfficeId", officeId);
+                            master.Parameters.Add("@UserId", userId);
+                            master.Parameters.Add("@LogOnId", logOnId);
+                            master.Parameters.Add("@Book", "Journal");
+                            master.Parameters.Add("@CostCenterId", costCenterId);
+                            master.Parameters.Add("@ReferenceNumber", referenceNumber);
 
                             transactionMasterId = MixERP.Net.Common.Conversion.TryCastLong(master.ExecuteScalar());
                         }
@@ -91,12 +91,12 @@ namespace MixERP.Net.DatabaseLayer.Transactions
 
                                 using(NpgsqlCommand transactionDetail = new NpgsqlCommand(sql, connection))
                                 {
-                                    transactionDetail.Parameters.AddWithValue("@TransactionMasterId", transactionMasterId);
-                                    transactionDetail.Parameters.AddWithValue("@TranType", tranType);
-                                    transactionDetail.Parameters.AddWithValue("@AccountCode", model.AccountCode);
-                                    transactionDetail.Parameters.AddWithValue("@StatementReference", model.StatementReference);
-                                    transactionDetail.Parameters.AddWithValue("@CashRepositoryName", model.CashRepositoryName);
-                                    transactionDetail.Parameters.AddWithValue("@Amount", amount);
+                                    transactionDetail.Parameters.Add("@TransactionMasterId", transactionMasterId);
+                                    transactionDetail.Parameters.Add("@TranType", tranType);
+                                    transactionDetail.Parameters.Add("@AccountCode", model.AccountCode);
+                                    transactionDetail.Parameters.Add("@StatementReference", model.StatementReference);
+                                    transactionDetail.Parameters.Add("@CashRepositoryName", model.CashRepositoryName);
+                                    transactionDetail.Parameters.Add("@Amount", amount);
                                     transactionDetail.ExecuteNonQuery();
                                 }
 

@@ -21,7 +21,7 @@ namespace MixERP.Net.DatabaseLayer.Core
             string sql = "SELECT * FROM core.get_associated_units_from_item_code(@ItemCode);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@ItemCode", itemCode);
+                command.Parameters.Add("@ItemCode", itemCode);
 
                 return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
             }
@@ -32,7 +32,7 @@ namespace MixERP.Net.DatabaseLayer.Core
             string sql = "SELECT 1 FROM core.units WHERE core.units.unit_name=@UnitName;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@UnitName", unitName);
+                command.Parameters.Add("@UnitName", unitName);
 
                 var value = MixERP.Net.DBFactory.DBOperations.GetScalarValue(command);
                 if (value != null)

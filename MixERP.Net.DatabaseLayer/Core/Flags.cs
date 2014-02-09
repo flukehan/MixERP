@@ -17,11 +17,11 @@ namespace MixERP.Net.DatabaseLayer.Core
             {
                 using (NpgsqlCommand command = new NpgsqlCommand(sql))
                 {
-                    command.Parameters.AddWithValue("@UserId", userId);
-                    command.Parameters.AddWithValue("@FlagTypeId", flagTypeId);
-                    command.Parameters.AddWithValue("@Resource", resourceName);
-                    command.Parameters.AddWithValue("@ResourceKey", resourceKey);
-                    command.Parameters.AddWithValue("@ResourceId", resourceId);
+                    command.Parameters.Add("@UserId", userId);
+                    command.Parameters.Add("@FlagTypeId", flagTypeId);
+                    command.Parameters.Add("@Resource", resourceName);
+                    command.Parameters.Add("@ResourceKey", resourceKey);
+                    command.Parameters.Add("@ResourceId", resourceId);
 
                     MixERP.Net.DBFactory.DBOperations.ExecuteNonQuery(command);
                 }

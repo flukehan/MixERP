@@ -97,7 +97,7 @@ namespace MixERP.Net.DBFactory
                 counter = 0;
                 foreach (string column in columns)
                 {
-                    command.Parameters.AddWithValue(DBFactory.Sanitizer.SanitizeIdentifierName(column.Trim()), values[counter]);
+                    command.Parameters.Add(DBFactory.Sanitizer.SanitizeIdentifierName(column.Trim()), values[counter]);
                     counter++;
                 }
 
@@ -162,12 +162,12 @@ namespace MixERP.Net.DBFactory
                 {
                     if (!string.IsNullOrWhiteSpace(column))
                     {
-                        command.Parameters.AddWithValue(DBFactory.Sanitizer.SanitizeIdentifierName(column.Trim()), "%" + values[counter].ToLower(System.Threading.Thread.CurrentThread.CurrentCulture) + "%");
+                        command.Parameters.Add(DBFactory.Sanitizer.SanitizeIdentifierName(column.Trim()), "%" + values[counter].ToLower(System.Threading.Thread.CurrentThread.CurrentCulture) + "%");
                         counter++;
                     }
                 }
 
-                command.Parameters.AddWithValue("@Limit", limit);
+                command.Parameters.Add("@Limit", limit);
 
                 return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
             }

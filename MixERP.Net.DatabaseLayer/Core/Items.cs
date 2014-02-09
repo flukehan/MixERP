@@ -20,7 +20,7 @@ namespace MixERP.Net.DatabaseLayer.Core
             string sql = "SELECT 1 FROM core.items WHERE core.items.item_code=@ItemCode;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@ItemCode", itemCode);
+                command.Parameters.Add("@ItemCode", itemCode);
 
                 return MixERP.Net.DBFactory.DBOperations.GetScalarValue(command).ToString().Equals("1");
             }
@@ -31,10 +31,10 @@ namespace MixERP.Net.DatabaseLayer.Core
             string sql = "SELECT core.get_item_selling_price(core.get_item_id_by_item_code(@ItemCode), core.get_party_type_id_by_party_code(@PartyCode), @PriceTypeId, @UnitId);";
             using(NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@ItemCode", itemCode);
-                command.Parameters.AddWithValue("@PartyCode", partyCode);
-                command.Parameters.AddWithValue("@PriceTypeId", priceTypeId);
-                command.Parameters.AddWithValue("@UnitId", unitId);
+                command.Parameters.Add("@ItemCode", itemCode);
+                command.Parameters.Add("@PartyCode", partyCode);
+                command.Parameters.Add("@PriceTypeId", priceTypeId);
+                command.Parameters.Add("@UnitId", unitId);
 
                 return MixERP.Net.Common.Conversion.TryCastDecimal(MixERP.Net.DBFactory.DBOperations.GetScalarValue(command));
             }
@@ -45,9 +45,9 @@ namespace MixERP.Net.DatabaseLayer.Core
             string sql = "SELECT core.get_item_cost_price(core.get_item_id_by_item_code(@ItemCode), core.get_party_id_by_party_code(@PartyCode), @UnitId);";
             using(NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@ItemCode", itemCode);
-                command.Parameters.AddWithValue("@PartyCode", partyCode);
-                command.Parameters.AddWithValue("@UnitId", unitId);
+                command.Parameters.Add("@ItemCode", itemCode);
+                command.Parameters.Add("@PartyCode", partyCode);
+                command.Parameters.Add("@UnitId", unitId);
 
                 return MixERP.Net.Common.Conversion.TryCastDecimal(MixERP.Net.DBFactory.DBOperations.GetScalarValue(command));
             }
@@ -58,7 +58,7 @@ namespace MixERP.Net.DatabaseLayer.Core
             string sql = "SELECT core.get_item_tax_rate(core.get_item_id_by_item_code(@ItemCode));";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@ItemCode", itemCode);
+                command.Parameters.Add("@ItemCode", itemCode);
                 return MixERP.Net.Common.Conversion.TryCastDecimal(MixERP.Net.DBFactory.DBOperations.GetScalarValue(command));
             }
         }
@@ -68,9 +68,9 @@ namespace MixERP.Net.DatabaseLayer.Core
             string sql = "SELECT core.count_item_in_stock(core.get_item_id_by_item_code(@ItemCode), @UnitId, @StoreId);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@ItemCode", itemCode);
-                command.Parameters.AddWithValue("@UnitId", unitId);
-                command.Parameters.AddWithValue("@StoreId", storeId);
+                command.Parameters.Add("@ItemCode", itemCode);
+                command.Parameters.Add("@UnitId", unitId);
+                command.Parameters.Add("@StoreId", storeId);
                 return MixERP.Net.Common.Conversion.TryCastDecimal(MixERP.Net.DBFactory.DBOperations.GetScalarValue(command));
             }
         }
@@ -80,9 +80,9 @@ namespace MixERP.Net.DatabaseLayer.Core
             string sql = "SELECT core.count_item_in_stock(core.get_item_id_by_item_code(@ItemCode), core.get_unit_id_by_unit_name(@UnitName), @StoreId);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@ItemCode", itemCode);
-                command.Parameters.AddWithValue("@UnitName", unitName);
-                command.Parameters.AddWithValue("@StoreId", storeId);
+                command.Parameters.Add("@ItemCode", itemCode);
+                command.Parameters.Add("@UnitName", unitName);
+                command.Parameters.Add("@StoreId", storeId);
                 return MixERP.Net.Common.Conversion.TryCastDecimal(MixERP.Net.DBFactory.DBOperations.GetScalarValue(command));
             }
         }
@@ -92,7 +92,7 @@ namespace MixERP.Net.DatabaseLayer.Core
             string sql = "SELECT 1 FROM core.items WHERE item_code=@ItemCode AND maintain_stock=true;";
             using(NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@ItemCode", itemCode);
+                command.Parameters.Add("@ItemCode", itemCode);
 
                 return MixERP.Net.DBFactory.DBOperations.GetDataTable(command).Rows.Count.Equals(1);
             }
