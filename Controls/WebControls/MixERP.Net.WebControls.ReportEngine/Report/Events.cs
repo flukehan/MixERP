@@ -17,7 +17,7 @@ namespace MixERP.Net.WebControls.ReportEngine
 {
     public partial class Report : CompositeControl
     {
-        public void ExcelAnchor_ServerClick(object sender, EventArgs e)
+        public void ExcelImageButton_Click(object sender, EventArgs e)
         {
             //EnsureChildControls();
             string html = reportHidden.Value;
@@ -34,7 +34,7 @@ namespace MixERP.Net.WebControls.ReportEngine
             }
         }
 
-        public void WordAnchor_ServerClick(object sender, EventArgs e)
+        public void WordImageButton_Click(object sender, EventArgs e)
         {
             //EnsureChildControls();
             string html = reportHidden.Value;

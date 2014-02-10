@@ -11,9 +11,9 @@ using System.Collections.ObjectModel;
 
 namespace MixERP.Net.FrontEnd.Sales.Confirmation
 {
-    public partial class ReportSalesQuotation : System.Web.UI.Page
+    public partial class ReportSalesQuotation : MixERP.Net.BusinessLayer.MixERPWebReportPage
     {
-        protected void Page_Load(object sender, EventArgs e)
+        protected void Page_Init(object sender, EventArgs e)
         {
             Collection<KeyValuePair<string, string>> list = new Collection<KeyValuePair<string, string>>();
             list.Add(new KeyValuePair<string, string>("@non_gl_stock_master_id", this.Request["TranId"]));

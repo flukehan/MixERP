@@ -486,6 +486,13 @@
     <Compile Include="MenuMaster.Master.designer.cs">
       <DependentUpon>MenuMaster.Master</DependentUpon>
     </Compile>
+    <Compile Include="MixERPReportMaster.Master.cs">
+      <DependentUpon>MixERPReportMaster.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MixERPReportMaster.Master.designer.cs">
+      <DependentUpon>MixERPReportMaster.Master</DependentUpon>
+    </Compile>
     <Compile Include="POS\AssignCashier.aspx.cs">
       <DependentUpon>AssignCashier.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1512,6 +1519,8 @@
     <Content Include="Scripts\date.js" />
     <Content Include="Scripts\gridster\jquery.gridster.js" />
     <Content Include="Scripts\gridster\jquery.gridster.min.css" />
+    <Content Include="Scripts\jquery-1.9.1.js" />
+    <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery-ui\css\custom-theme\images\animated-overlay.gif" />
     <Content Include="Scripts\jquery-ui\css\custom-theme\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
     <Content Include="Scripts\jquery-ui\css\custom-theme\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
@@ -1603,6 +1612,7 @@
     </Content>
     <Content Include="MixERP.Net.FrontEnd.licenseheader" />
     <Content Include="Mix Open Foundation.snk" />
+    <Content Include="MixERPReportMaster.Master" />
     <None Include="Properties\PublishProfiles\MixERP.pubxml" />
     <Content Include="Reports\Assets\ReadMe.txt" />
     <Content Include="Resource\Configuration\Switches.xml" />

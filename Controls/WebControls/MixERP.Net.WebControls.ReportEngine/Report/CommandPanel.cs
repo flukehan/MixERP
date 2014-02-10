@@ -20,14 +20,14 @@ namespace MixERP.Net.WebControls.ReportEngine
         /// CommandPanel is displayed at the top of the report.
         /// </summary>
         Panel commandPanel;
-        HtmlAnchor emailAnchor;
-        HtmlAnchor printAnchor;
-        HtmlAnchor excelAnchor;
-        HtmlAnchor wordAnchor;
-        HtmlAnchor goTopAnchor;
-        HtmlAnchor goBottomAnchor;
-        HtmlAnchor filterAnchor;
-        HtmlAnchor closeAnchor;
+        ImageButton emailImageButton;
+        ImageButton printImageButton;
+        ImageButton excelImageButton;
+        ImageButton wordImageButton;
+        ImageButton goTopImageButton;
+        ImageButton goBottomImageButton;
+        ImageButton filterImageButton;
+        ImageButton closeImageButton;
 
         private void AddCommandPanel(Panel p)
         {
@@ -49,82 +49,83 @@ namespace MixERP.Net.WebControls.ReportEngine
 
         private void AddEmailAnchor(Panel p)
         {
-            emailAnchor = new HtmlAnchor();
-            emailAnchor.ID = "SendEmailAnchor";
-            emailAnchor.InnerHtml = "<img src='" + this.Page.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("EmailIcon")) + "' />";
-            p.Controls.Add(emailAnchor);
+            emailImageButton = new ImageButton();
+            emailImageButton.ID = "SendEmailAnchor";
+            emailImageButton.ImageUrl = this.Page.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("EmailIcon"));
+            
+            p.Controls.Add(emailImageButton);
         }
 
         private void AddPrintAnchor(Panel p)
         {
-            printAnchor = new HtmlAnchor();
-            printAnchor.ID = "PrintAnchor";
-            printAnchor.HRef = "javascript:window.print();";
-            printAnchor.InnerHtml = "<img src='" + this.Page.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("PrintIcon")) + "' />";
+            printImageButton = new ImageButton();
+            printImageButton.ID = "PrintAnchor";
+            printImageButton.OnClientClick = "javascript:window.print();";
+            printImageButton.ImageUrl = this.Page.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("PrintIcon"));
 
-            p.Controls.Add(printAnchor);
+            p.Controls.Add(printImageButton);
         }
 
         private void AddExcelAnchor(Panel p)
         {
-            excelAnchor = new HtmlAnchor();
-            excelAnchor.ID = "ExcelAnchor";
-            excelAnchor.HRef = "#";
-            excelAnchor.InnerHtml = "<img src='" + this.Page.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("ExcelIcon")) + "' />";
-            excelAnchor.ServerClick += ExcelAnchor_ServerClick;
-
-            excelAnchor.Attributes.Add("onclick", this.GetReportHtmlScript());
-            p.Controls.Add(excelAnchor);
+            excelImageButton = new ImageButton();
+            excelImageButton.ID = "ExcelAnchor";
+            excelImageButton.ImageUrl = this.Page.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("ExcelIcon"));
+            excelImageButton.Click += ExcelImageButton_Click;
+            excelImageButton.OnClientClick = this.GetReportHtmlScript();
+            
+            p.Controls.Add(excelImageButton);
         }
 
         private void AddWordAnchor(Panel p)
         {
-            wordAnchor = new HtmlAnchor();
-            wordAnchor.ID = "WordAnchor";
-            wordAnchor.HRef = "#";
-            wordAnchor.InnerHtml = "<img src='" + this.Page.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("WordIcon")) + "' />";
-            wordAnchor.ServerClick += WordAnchor_ServerClick;
+            wordImageButton = new ImageButton();
+            wordImageButton.ID = "WordAnchor";
+            wordImageButton.ImageUrl = this.Page.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("WordIcon"));
+            wordImageButton.Click += WordImageButton_Click;
+            wordImageButton.OnClientClick =this.GetReportHtmlScript();
 
-            wordAnchor.Attributes.Add("onclick", this.GetReportHtmlScript());
-            p.Controls.Add(wordAnchor);
+            p.Controls.Add(wordImageButton);
         }
 
         private void AddGoTopAnchor(Panel p)
         {
-            goTopAnchor = new HtmlAnchor();
-            goTopAnchor.ID = "GoTop";
-            goTopAnchor.HRef = "javascript:window.scrollTo(0, 0);";
-            goTopAnchor.InnerHtml = "<img src='" + this.Page.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("GoTopIcon")) + "' />";
-            p.Controls.Add(goTopAnchor);
+            goTopImageButton = new ImageButton();
+            goTopImageButton.ID = "GoTop";
+            goTopImageButton.OnClientClick = "window.scrollTo(0, 0);";
+            goTopImageButton.ImageUrl = this.Page.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("GoTopIcon"));
+            
+            p.Controls.Add(goTopImageButton);
         }
 
         private void AddGoBottomAnchor(Panel p)
         {
-            goBottomAnchor = new HtmlAnchor();
-            goBottomAnchor.ID = "GoBottom";
-            goBottomAnchor.HRef = "javascript:window.scrollTo(0,document.body.scrollHeight);";
-            goBottomAnchor.InnerHtml = "<img src='" + this.Page.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("GoBottomIcon")) + "' />";
-            p.Controls.Add(goBottomAnchor);
+            goBottomImageButton = new ImageButton();
+            goBottomImageButton.ID = "GoBottom";
+            goBottomImageButton.OnClientClick = "window.scrollTo(0,document.body.scrollHeight);";
+            goBottomImageButton.ImageUrl = this.Page.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("GoBottomIcon"));
+
+            p.Controls.Add(goBottomImageButton);
         }
 
         private void AddFilterAnchor(Panel p)
         {
-            filterAnchor = new HtmlAnchor();
-            filterAnchor.ID = "FilterAnchor";
-            filterAnchor.HRef = "#";
-            filterAnchor.Attributes.Add("onclick", "$('.report-parameter').toggle(500);");
-            filterAnchor.InnerHtml = "<img src='" + this.Page.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("FilterIcon")) + "' />";
-            p.Controls.Add(filterAnchor);
+            filterImageButton = new ImageButton();
+            filterImageButton.ID = "FilterAnchor";
+            filterImageButton.OnClientClick =  "$('.report-parameter').toggle(500);";
+            filterImageButton.ImageUrl = this.Page.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("FilterIcon"));
+
+            p.Controls.Add(filterImageButton);
         }
 
         private void AddCloseAnchor(Panel p)
         {
-            closeAnchor = new HtmlAnchor();
-            closeAnchor.ID = "CloseAnchor";
-            closeAnchor.HRef = "#";
-            closeAnchor.Attributes.Add("onclick", "window.close();");
-            closeAnchor.InnerHtml = "<img src='" + this.Page.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("CloseIcon")) + "' />";
-            p.Controls.Add(closeAnchor);
+            closeImageButton = new ImageButton();
+            closeImageButton.ID = "CloseAnchor";
+            closeImageButton.OnClientClick = "window.close();";
+            closeImageButton.ImageUrl = this.Page.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("CloseIcon"));
+
+            p.Controls.Add(closeImageButton);
         }
 
         private string GetReportHtmlScript()

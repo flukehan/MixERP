@@ -11,9 +11,9 @@ using System.Collections.ObjectModel;
 
 namespace MixERP.Net.FrontEnd.Purchase.Confirmation
 {
-    public partial class DirectPurchaseInvoice : MixERP.Net.BusinessLayer.MixERPWebPage
+    public partial class DirectPurchaseInvoice : MixERP.Net.BusinessLayer.MixERPWebReportPage
     {
-        protected void Page_Load(object sender, EventArgs e)
+        protected void Page_Init(object sender, EventArgs e)
         {
             Collection<KeyValuePair<string, string>> list = new Collection<KeyValuePair<string, string>>();
             list.Add(new KeyValuePair<string, string>("@transaction_master_id", this.Request["TranId"]));

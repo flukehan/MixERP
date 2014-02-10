@@ -78,6 +78,9 @@
     <Compile Include="Helpers\ScrudHelper.cs" />
     <Compile Include="Helpers\SessionHelper.cs" />
     <Compile Include="Helpers\TableHelper.cs" />
+    <Compile Include="MixERPWebReportPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Office\CashRepositories.cs" />
     <Compile Include="Office\Offices.cs" />
     <Compile Include="Office\Stores.cs" />

@@ -83,7 +83,7 @@
             //Withdraw this transaction.                        
             if(transactionMasterId > 0)
             {
-                if(MixERP.Net.BusinessLayer.Transactions.Verification.WithdrawTransaction(transactionMasterId, MixERP.Net.BusinessLayer.Helpers.SessionHelper.UserId(), ReasonTextBox.Text))
+                if(MixERP.Net.BusinessLayer.Transactions.Verification.WithdrawTransaction(transactionMasterId, MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetUserId(), ReasonTextBox.Text))
                 {
                     MessageLabel.Text = string.Format(Resources.Labels.TransactionWithdrawnMessage, transactionDate.ToShortDateString());
                     MessageLabel.CssClass = "success vpad12";

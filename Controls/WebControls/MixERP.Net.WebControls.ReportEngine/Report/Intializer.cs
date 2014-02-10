@@ -24,7 +24,7 @@ namespace MixERP.Net.WebControls.ReportEngine
             EnsureChildControls();
 
             //Check if the set report path is a valid file.
-            if(!this.IsValid())
+            if (!this.IsValid())
             {
                 this.InitializeLiterals();
 
@@ -52,17 +52,17 @@ namespace MixERP.Net.WebControls.ReportEngine
         /// </summary>
         private void InitializeLiterals()
         {
-            if(string.IsNullOrWhiteSpace(this.ReportNotFoundErrorMessage))
+            if (string.IsNullOrWhiteSpace(this.ReportNotFoundErrorMessage))
             {
                 this.ReportNotFoundErrorMessage = "Report not found.";
             }
 
-            if(string.IsNullOrWhiteSpace(this.InvalidLocationErrorMessage))
+            if (string.IsNullOrWhiteSpace(this.InvalidLocationErrorMessage))
             {
                 this.InvalidLocationErrorMessage = "Invalid location.";
             }
 
-            if(string.IsNullOrWhiteSpace(this.RunningTotalText))
+            if (string.IsNullOrWhiteSpace(this.RunningTotalText))
             {
                 this.InvalidLocationErrorMessage = "Total";
             }
@@ -80,16 +80,16 @@ namespace MixERP.Net.WebControls.ReportEngine
             this.DecimalFieldIndicesCollection = new Collection<string>();
 
             //Loop through each datasource in the datasource list.
-            foreach(XmlNode dataSource in dataSourceList)
+            foreach (XmlNode dataSource in dataSourceList)
             {
                 //Resetting the variable for each iteration.
                 decimalFieldIndices = string.Empty;
 
                 //Loop through each datasource child node.
-                foreach(XmlNode node in dataSource.ChildNodes)
+                foreach (XmlNode node in dataSource.ChildNodes)
                 {
                     //Selecting the nodes matching the tag <DecimalFieldIndices>.
-                    if(node.Name.Equals("DecimalFieldIndices"))
+                    if (node.Name.Equals("DecimalFieldIndices"))
                     {
                         decimalFieldIndices = node.InnerText;
                     }
@@ -118,23 +118,23 @@ namespace MixERP.Net.WebControls.ReportEngine
             this.RunningTotalFieldIndicesCollection = new Collection<string>();
 
             //Loop through each datasource in the datasource list.
-            foreach(XmlNode dataSource in dataSourceList)
+            foreach (XmlNode dataSource in dataSourceList)
             {
                 //Resetting the variables for each iteration.
                 runningTotalTextColumnIndex = 0;
                 runningTotalFieldIndices = string.Empty;
 
                 //Loop through each datasource child node.
-                foreach(XmlNode node in dataSource.ChildNodes)
+                foreach (XmlNode node in dataSource.ChildNodes)
                 {
                     //Selecting the nodes matching the tag <RunningTotalTextColumnIndex>.
-                    if(node.Name.Equals("RunningTotalTextColumnIndex"))
+                    if (node.Name.Equals("RunningTotalTextColumnIndex"))
                     {
                         runningTotalTextColumnIndex = MixERP.Net.Common.Conversion.TryCastInteger(node.InnerText);
                     }
 
                     //Selecting the nodes matching the tag <RunningTotalFieldIndices>.
-                    if(node.Name.Equals("RunningTotalFieldIndices"))
+                    if (node.Name.Equals("RunningTotalFieldIndices"))
                     {
                         runningTotalFieldIndices = node.InnerText;
                     }
@@ -159,17 +159,29 @@ namespace MixERP.Net.WebControls.ReportEngine
             //Get the list of datasources for this report.
             System.Xml.XmlNodeList dataSources = XmlHelper.GetNodes(reportPath, "//DataSource");
 
+            if (dataSources.Count > 0)
+            {
+                //Check if this report has parameters assigned.
+                if (this.ParameterCollection != null)
+                {
+                    if (this.parameterCollection.Count.Equals(0))
+                    {
+                        throw new InvalidOperationException("Cannot initalize the datasource(s) when the paramter collection is empty.");
+                    }
+                }
+            }
+
             //Initializing data source collection.
             this.DataTableCollection = new Collection<System.Data.DataTable>();
 
             //Loop through each datasource in the datasource list.
-            foreach(System.Xml.XmlNode datasource in dataSources)
+            foreach (System.Xml.XmlNode datasource in dataSources)
             {
                 //Loop through each datasource child node.
-                foreach(System.Xml.XmlNode c in datasource.ChildNodes)
+                foreach (System.Xml.XmlNode c in datasource.ChildNodes)
                 {
                     //Selecting the nodes matching the tag <Query>.
-                    if(c.Name.Equals("Query"))
+                    if (c.Name.Equals("Query"))
                     {
                         index++;
                         string sql = c.InnerText;
@@ -177,15 +189,11 @@ namespace MixERP.Net.WebControls.ReportEngine
                         //Initializing query parameter collection.
                         Collection<KeyValuePair<string, string>> parameters = new Collection<KeyValuePair<string, string>>();
 
-                        //Check if this report needs has has parameters.
-                        if(this.ParameterCollection != null)
-                        {
-                            //Get the parameter collection for this datasource.
-                            parameters = this.ParameterCollection[index - 1];
-                        }
+                        //Get the parameter collection for this datasource.
+                        parameters = this.ParameterCollection[index - 1];
 
                         //Get DataTable from SQL Query and parameter collection.
-                        using(System.Data.DataTable table = MixERP.Net.WebControls.ReportEngine.Data.TableHelper.GetDataTable(sql, parameters))
+                        using (System.Data.DataTable table = MixERP.Net.WebControls.ReportEngine.Data.TableHelper.GetDataTable(sql, parameters))
                         {
                             //Add this datatable to the collection for later binding.
                             this.DataTableCollection.Add(table);
@@ -201,7 +209,7 @@ namespace MixERP.Net.WebControls.ReportEngine
             reportTitleLiteral.Text = MixERP.Net.WebControls.ReportEngine.Helpers.ReportParser.ParseExpression(title);
             reportTitleHidden.Value = reportTitleLiteral.Text;
 
-            if(!string.IsNullOrWhiteSpace(reportTitleLiteral.Text))
+            if (!string.IsNullOrWhiteSpace(reportTitleLiteral.Text))
             {
                 this.Page.Title = reportTitleLiteral.Text;
             }
@@ -229,9 +237,9 @@ namespace MixERP.Net.WebControls.ReportEngine
             XmlNodeList gridViewDataSource = XmlHelper.GetNodes(reportPath, "//GridViewDataSource");
             string indices = string.Empty;
 
-            foreach(XmlNode node in gridViewDataSource)
+            foreach (XmlNode node in gridViewDataSource)
             {
-                if(node.Attributes["Index"] != null)
+                if (node.Attributes["Index"] != null)
                 {
                     indices += node.Attributes["Index"].Value + ",";
                 }
@@ -242,15 +250,15 @@ namespace MixERP.Net.WebControls.ReportEngine
 
         private void LoadGrid(string indices)
         {
-            foreach(string data in indices.Split(','))
+            foreach (string data in indices.Split(','))
             {
                 string ds = data.Trim();
 
-                if(!string.IsNullOrWhiteSpace(ds))
+                if (!string.IsNullOrWhiteSpace(ds))
                 {
                     int index = MixERP.Net.Common.Conversion.TryCastInteger(ds);
 
-                    using(GridView grid = new GridView())
+                    using (GridView grid = new GridView())
                     {
                         grid.EnableTheming = false;
 
@@ -283,11 +291,11 @@ namespace MixERP.Net.WebControls.ReportEngine
 
         private void InstallReport()
         {
-            if(this.IsValid())
+            if (this.IsValid())
             {
                 XmlNode reportNode = XmlHelper.GetNode(reportPath, "/PesReport/Install/Report");
 
-                if(reportNode == null)
+                if (reportNode == null)
                 {
                     return;
                 }
@@ -306,14 +314,14 @@ namespace MixERP.Net.WebControls.ReportEngine
 
         private void CleanUp()
         {
-            for(int i = 0; i < this.DataTableCollection.Count - 1; i++)
+            for (int i = 0; i < this.DataTableCollection.Count - 1; i++)
             {
                 System.Data.DataTable table = this.DataTableCollection[i];
-                if(table != null)
+                if (table != null)
                 {
                     table.Dispose();
 
-                    if(table != null)
+                    if (table != null)
                     {
                         table = null;
                     }

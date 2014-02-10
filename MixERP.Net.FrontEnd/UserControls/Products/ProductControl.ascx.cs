@@ -178,6 +178,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                         detail.Discount = MixERP.Net.Common.Conversion.TryCastDecimal(ProductGridView.Rows[i].Cells[6].Text);
                         detail.TaxRate = MixERP.Net.Common.Conversion.TryCastDecimal(ProductGridView.Rows[i].Cells[8].Text);
                         detail.Tax = MixERP.Net.Common.Conversion.TryCastDecimal(ProductGridView.Rows[i].Cells[9].Text);
+                        detail.StoreId = MixERP.Net.Common.Conversion.TryCastInteger(StoreDropDownList.SelectedItem.Value);
                         collection.AddDetail(detail);
                     }
                 }
