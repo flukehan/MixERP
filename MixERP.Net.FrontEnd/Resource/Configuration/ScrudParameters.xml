@@ -18,7 +18,7 @@ http://mozilla.org/MPL/2.0/.
     <add key="GridViewDefaultWidth" value="1100" />
     <add key="GridViewCssClass" value="grid" />
     <add key="HeaderPath" value="~/Reports/Assets/Header.aspx" />
-    <add key="ItemSelectorAnchorCssClass" value="item-separator" />
+    <add key="ItemSelectorAnchorCssClass" value="item-selector" />
     <add key="ItemSelectorPath" value="~/General/ItemSelector.aspx" />
     <add key="ItemSelectorSelectAnchorCssClass" value="linkbutton" />
     <add key="ItemSeparator" value="," />

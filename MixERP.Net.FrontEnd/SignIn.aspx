@@ -28,7 +28,7 @@
                     </td>
                     <td>
                         <p>
-                            <asp:TextBox ID="UserIdTextBox" runat="server" />
+                            <asp:TextBox ID="UserIdTextBox" runat="server" Width="180px" />
                         </p>
                     </td>
                 </tr>
@@ -40,7 +40,7 @@
                     </td>
                     <td>
                         <p>
-                            <asp:TextBox ID="PasswordTextBox" runat="server" TextMode="Password" />
+                            <asp:TextBox ID="PasswordTextBox" runat="server" TextMode="Password" Width="180px" />
                         </p>
                     </td>
                 </tr>
@@ -52,7 +52,7 @@
                     </td>
                     <td>
                         <asp:DropDownList ID="BranchDropDownList" runat="server"
-                            DataTextField="office_name" DataValueField="office_id">
+                            DataTextField="office_name" DataValueField="office_id" Width="186px">
                         </asp:DropDownList>
                     </td>
                 </tr>
@@ -61,7 +61,7 @@
                     </td>
                     <td>
                         <p>
-                            <asp:DropDownList ID="LanguageDropDownList" runat="server">
+                            <asp:DropDownList ID="LanguageDropDownList" runat="server" Width="186px">
                                 <asp:ListItem Text="English (United States)" Value="en-US" />
                                 <asp:ListItem Text="English (Great Britain)" Value="en-GB" />
                                 <asp:ListItem Text="Français (France)" Value="fr-FR" />
