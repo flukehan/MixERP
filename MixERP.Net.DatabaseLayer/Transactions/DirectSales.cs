@@ -73,6 +73,8 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                             tm.Parameters.Add("@ReferenceNumber", referenceNumber);
                             tm.Parameters.Add("@StatementReference", statementReference);
 
+                            //tm.UnpreparedExecute = true;
+
                             transactionMasterId = MixERP.Net.Common.Conversion.TryCastLong(tm.ExecuteScalar());
                         }
 
@@ -191,6 +193,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                             stockMasterRow.Parameters.Add("@ShippingCharge", stockMaster.ShippingCharge);
                             stockMasterRow.Parameters.Add("@StoreId", stockMaster.StoreId);
                             stockMasterRow.Parameters.Add("@CashRepositoryId", stockMaster.CashRepositoryId);
+                            //stockMasterRow.UnpreparedExecute = true;
 
                             stockMasterId = MixERP.Net.Common.Conversion.TryCastLong(stockMasterRow.ExecuteScalar());
                         }

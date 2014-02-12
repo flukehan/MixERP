@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -24,11 +25,9 @@ namespace MixERP.Net.FrontEnd
 
         private void BindBranchDropDownList()
         {
-            using (System.Data.DataTable table = MixERP.Net.BusinessLayer.Office.Offices.GetOffices())
-            {
-                BranchDropDownList.DataSource = table;
-                BranchDropDownList.DataBind();
-            }
+            Collection<MixERP.Net.Common.Models.Office.Office> offices = MixERP.Net.BusinessLayer.Office.Offices.GetOffices();
+            BranchDropDownList.DataSource = offices;
+            BranchDropDownList.DataBind();
         }
 
         protected void Page_Load(object sender, EventArgs e)

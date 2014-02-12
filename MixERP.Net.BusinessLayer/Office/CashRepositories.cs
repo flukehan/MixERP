@@ -7,6 +7,7 @@ http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -15,12 +16,12 @@ namespace MixERP.Net.BusinessLayer.Office
 {
     public static class CashRepositories
     {
-        public static DataTable GetCashRepositories()
+        public static Collection<MixERP.Net.Common.Models.Office.CashRepository> GetCashRepositories()
         {
             return MixERP.Net.DatabaseLayer.Office.CashRepositories.GetCashRepositories();
         }
 
-        public static DataTable GetCashRepositories(int officeId)
+        public static Collection<MixERP.Net.Common.Models.Office.CashRepository> GetCashRepositories(int officeId)
         {
             //TODO: Bind this instance to a collection of entities.
             return MixERP.Net.DatabaseLayer.Office.CashRepositories.GetCashRepositories(officeId);

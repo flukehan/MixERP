@@ -40,9 +40,8 @@
     <AssemblyOriginatorKeyFile>Mix Open Foundation.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Npgsql">
-      <HintPath>..\..\..\Dependencies\Npgsql\obj\Debug-net20\Npgsql.dll</HintPath>
-    </Reference>
+    <Reference Include="Mono.Security" />
+    <Reference Include="Npgsql" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />

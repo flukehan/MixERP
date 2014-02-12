@@ -6,12 +6,12 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 
-using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using Npgsql;
 
 namespace MixERP.Net.DBFactory
 {
@@ -97,7 +97,7 @@ namespace MixERP.Net.DBFactory
                 counter = 0;
                 foreach (string column in columns)
                 {
-                    command.Parameters.Add(DBFactory.Sanitizer.SanitizeIdentifierName(column.Trim()), values[counter]);
+                    command.Parameters.Add("@" + DBFactory.Sanitizer.SanitizeIdentifierName(column.Trim()), values[counter]);
                     counter++;
                 }
 

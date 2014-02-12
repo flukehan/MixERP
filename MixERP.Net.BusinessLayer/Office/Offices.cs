@@ -7,6 +7,7 @@ http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace MixERP.Net.BusinessLayer.Office
 {
     public static class Offices
     {
-        public static DataTable GetOffices()
+        public static Collection<MixERP.Net.Common.Models.Office.Office> GetOffices()
         {
             return MixERP.Net.DatabaseLayer.Office.Offices.GetOffices();
         }

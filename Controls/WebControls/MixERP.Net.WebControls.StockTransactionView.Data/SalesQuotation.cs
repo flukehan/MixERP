@@ -9,11 +9,13 @@ http://mozilla.org/MPL/2.0/.
 using System.Collections.ObjectModel;
 using Npgsql;
 using MixERP.Net.Common;
+using System;
 
 namespace MixERP.Net.WebControls.StockTransactionView.Data
 {
     public static class SalesQuotation
     {
+        [CLSCompliant(false)]
         public static NpgsqlCommand GetSalesQuotationViewCommand(Collection<int> ids)
         {
             if (ids == null)

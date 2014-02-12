@@ -6,13 +6,10 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Globalization;
-using System.Data;
 using Npgsql;
+using System;
+using System.Data;
+using System.Globalization;
 
 namespace MixERP.Net.DBFactory
 {
@@ -20,28 +17,29 @@ namespace MixERP.Net.DBFactory
     {
         public static bool IsServerAvailable()
         {
-                try
+            try
+            {
+                using (NpgsqlConnection connection = new NpgsqlConnection(DBConnection.ConnectionString()))
                 {
-                    using (NpgsqlConnection connection = new NpgsqlConnection(DBConnection.ConnectionString()))
-                    {
-                        connection.Open();
-                    }
-
-                    return true;
+                    connection.Open();
                 }
-                catch(NpgsqlException)
-                { 
-                    //swallow exception
-                }            
+
+                return true;
+            }
+            catch (NpgsqlException)
+            {
+                //swallow exception
+            }
 
             return false;
         }
-        
-    public static bool ExecuteNonQuery(NpgsqlCommand command)
+
+        [CLSCompliant(false)]
+        public static bool ExecuteNonQuery(NpgsqlCommand command)
         {
-            if(command != null)
+            if (command != null)
             {
-                using(NpgsqlConnection connection = new NpgsqlConnection(DBConnection.ConnectionString()))
+                using (NpgsqlConnection connection = new NpgsqlConnection(DBConnection.ConnectionString()))
                 {
                     try
                     {
@@ -61,11 +59,12 @@ namespace MixERP.Net.DBFactory
             return false;
         }
 
+        [CLSCompliant(false)]
         public static object GetScalarValue(NpgsqlCommand command)
         {
-            if(command != null)
+            if (command != null)
             {
-                using(NpgsqlConnection connection = new NpgsqlConnection(DBConnection.ConnectionString()))
+                using (NpgsqlConnection connection = new NpgsqlConnection(DBConnection.ConnectionString()))
                 {
                     command.Connection = connection;
                     connection.Open();
@@ -76,17 +75,18 @@ namespace MixERP.Net.DBFactory
             return null;
         }
 
+        [CLSCompliant(false)]
         public static DataTable GetDataTable(NpgsqlCommand command, string connectionString)
         {
-            if(command != null)
+            if (command != null)
             {
-                using(NpgsqlConnection connection = new NpgsqlConnection(connectionString))
+                using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
                 {
                     command.Connection = connection;
 
-                    using(NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(command))
+                    using (NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(command))
                     {
-                        using(DataTable dataTable = new DataTable())
+                        using (DataTable dataTable = new DataTable())
                         {
                             dataTable.Locale = CultureInfo.InvariantCulture;
                             adapter.Fill(dataTable);
@@ -99,6 +99,7 @@ namespace MixERP.Net.DBFactory
             return null;
         }
 
+        [CLSCompliant(false)]
         public static DataTable GetDataTable(NpgsqlCommand command)
         {
             return GetDataTable(command, DBConnection.ConnectionString());
@@ -106,11 +107,12 @@ namespace MixERP.Net.DBFactory
 
 
 
+        [CLSCompliant(false)]
         public static NpgsqlDataReader GetDataReader(NpgsqlCommand command)
         {
-            if(command != null)
+            if (command != null)
             {
-                using(NpgsqlConnection connection = new NpgsqlConnection(DBConnection.ConnectionString()))
+                using (NpgsqlConnection connection = new NpgsqlConnection(DBConnection.ConnectionString()))
                 {
                     command.Connection = connection;
                     command.Connection.Open();
@@ -121,11 +123,12 @@ namespace MixERP.Net.DBFactory
             return null;
         }
 
+        [CLSCompliant(false)]
         public static DataView GetDataView(NpgsqlCommand command)
         {
-            if(command != null)
+            if (command != null)
             {
-                using(DataView view = new DataView(GetDataTable(command)))
+                using (DataView view = new DataView(GetDataTable(command)))
                 {
                     return view;
                 }
@@ -134,15 +137,16 @@ namespace MixERP.Net.DBFactory
             return null;
         }
 
+        [CLSCompliant(false)]
         public static NpgsqlDataAdapter GetDataAdapter(NpgsqlCommand command)
         {
-            if(command != null)
+            if (command != null)
             {
-                using(NpgsqlConnection connection = new NpgsqlConnection(DBConnection.ConnectionString()))
+                using (NpgsqlConnection connection = new NpgsqlConnection(DBConnection.ConnectionString()))
                 {
                     command.Connection = connection;
 
-                    using(NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(command))
+                    using (NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(command))
                     {
                         return adapter;
                     }
@@ -152,13 +156,14 @@ namespace MixERP.Net.DBFactory
             return null;
         }
 
+        [CLSCompliant(false)]
         public static DataSet GetDataSet(NpgsqlCommand command)
         {
-            if(command != null)
+            if (command != null)
             {
-                using(NpgsqlDataAdapter adapter = GetDataAdapter(command))
+                using (NpgsqlDataAdapter adapter = GetDataAdapter(command))
                 {
-                    using(DataSet set = new DataSet())
+                    using (DataSet set = new DataSet())
                     {
                         adapter.Fill(set);
                         set.Locale = CultureInfo.CurrentUICulture;

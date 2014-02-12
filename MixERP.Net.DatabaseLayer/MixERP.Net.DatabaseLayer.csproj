@@ -41,8 +41,11 @@
     <AssemblyOriginatorKeyFile>Mix Open Foundation.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Mono.Security">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Npgsql">
-      <HintPath>..\Dependencies\Npgsql\obj\Debug-net20\Npgsql.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -63,6 +66,7 @@
     <Compile Include="DBFactory\Sanitizer.cs" />
     <Compile Include="DBFactory\ServerConnectivity.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Helpers\ConversionHelper.cs" />
     <Compile Include="Helpers\FormHelper.cs" />
     <Compile Include="Helpers\Maintenance.cs" />
     <Compile Include="Helpers\TableHelper.cs" />

@@ -19,17 +19,9 @@ namespace MixERP.Net.WebControls.ReportEngine.Data
 
         public static void InstallReport(string menuCode, string parentMenuCode, int level, string menuText, string path)
         {
-            //Todo: Put this logic to a database function.
-            string sql = @"DO
-                            $$
-                            BEGIN
-                            IF NOT EXISTS(SELECT * FROM core.menus WHERE menu_code=@MenuCode) THEN
-                            INSERT INTO core.menus(menu_text, url, menu_code, level, parent_menu_id)
-                            SELECT @MenuText, @Path, @MenuCode, @Level, core.get_menu_id(@ParentMenuCode);
-                            END IF;
-                            END
-                            $$
-                            LANGUAGE plpgsql;";
+            string sql = @"INSERT INTO core.menus(menu_text, url, menu_code, level, parent_menu_id)
+                            SELECT @MenuText, @Path, @MenuCode, @Level, core.get_menu_id(@ParentMenuCode)
+                            WHERE NOT EXISTS(SELECT * FROM core.menus WHERE menu_code=@MenuCode);";
             
             using(NpgsqlCommand command = new NpgsqlCommand(sql))
             {
@@ -38,6 +30,7 @@ namespace MixERP.Net.WebControls.ReportEngine.Data
                 command.Parameters.Add("@Path", path);
                 command.Parameters.Add("@Level", level);
                 command.Parameters.Add("@ParentMenuCode", parentMenuCode);
+                //command.UnpreparedExecute = true;
 
                 MixERP.Net.DBFactory.DBOperations.ExecuteNonQuery(command);
             }

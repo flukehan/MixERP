@@ -52,7 +52,7 @@
                     </td>
                     <td>
                         <asp:DropDownList ID="BranchDropDownList" runat="server"
-                            DataTextField="office_name" DataValueField="office_id" Width="186px">
+                            DataTextField="OfficeName" DataValueField="OfficeId" Width="186px">
                         </asp:DropDownList>
                     </td>
                 </tr>

@@ -911,7 +911,9 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         {
             if (this.ShowCashRepository)
             {
-                using (System.Data.DataTable table = MixERP.Net.BusinessLayer.Office.CashRepositories.GetCashRepositories(MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetOfficeId()))
+                string officeId = Conversion.TryCastString(MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetOfficeId());
+
+                using (System.Data.DataTable table = MixERP.Net.BusinessLayer.Helpers.FormHelper.GetTable("office", "cash_repositories", "office_id", officeId))
                 {
                     string displayField = MixERP.Net.Common.Helpers.ConfigurationHelper.GetDbParameter("CashRepositoryDisplayField");
                     MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.BindDropDownList(CashRepositoryDropDownList, table, "cash_repository_id", displayField);

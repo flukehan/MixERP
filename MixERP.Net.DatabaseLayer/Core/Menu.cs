@@ -28,7 +28,7 @@ namespace MixERP.Net.DatabaseLayer.Core
                 return null;
             }
 
-            string sql = "SELECT * FROM policy.get_menu(@UserId, @OfficeId, @Culture) WHERE parent_menu_id=(SELECT menu_id FROM core.menus WHERE url=@url) AND level=@Level ORDER BY menu_id;";
+            string sql = "SELECT * FROM policy.get_menu(@UserId, @OfficeId, @Culture) WHERE parent_menu_id=(SELECT menu_id FROM core.menus WHERE url=@Url) AND level=@Level ORDER BY menu_id;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.Add("@UserId", userId);
@@ -53,7 +53,7 @@ namespace MixERP.Net.DatabaseLayer.Core
                 return null;
             }
 
-            string sql = "SELECT * FROM policy.get_menu(@UserId, @OfficeId, @Culture) WHERE parent_menu_id=core.get_root_parent_menu_id(@url) ORDER BY menu_id;";
+            string sql = "SELECT * FROM policy.get_menu(@UserId, @OfficeId, @Culture) WHERE parent_menu_id=core.get_root_parent_menu_id(@Url) ORDER BY menu_id;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.Add("@UserId", userId);
@@ -92,9 +92,9 @@ namespace MixERP.Net.DatabaseLayer.Core
                 if (parentMenuId > 0)
                 {
                     command.Parameters.Add("@ParentMenuId", parentMenuId);
+                    command.Parameters.Add("@Level", level);
                 }
 
-                command.Parameters.Add("@Level", level);
 
                 return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
             }

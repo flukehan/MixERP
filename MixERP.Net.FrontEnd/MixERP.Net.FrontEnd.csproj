@@ -1079,8 +1079,6 @@
     <Content Include="db\fr-FR\scrud.sql" />
     <Content Include="db\index.html" />
     <Content Include="Dependencies\AspNetPager.dll" />
-    <Content Include="Dependencies\Mono.Security.dll" />
-    <Content Include="Dependencies\Npgsql.dll" />
     <Content Include="Finance\BankReconciliation.aspx" />
     <Content Include="Finance\Confirmation\GLAdvice.aspx" />
     <Content Include="Finance\Confirmation\JournalVoucher.aspx" />
@@ -1765,6 +1763,10 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /Y "$(SolutionDir)\Dependencies\Mono\Profile\Mono\Npgsql.dll" "$(SolutionDir)\MixERP.Net.FrontEnd\bin\Npgsql.dll"
+xcopy /Y "$(SolutionDir)\Dependencies\Mono\Profile\Mono\Mono.Security.dll" "$(SolutionDir)\MixERP.Net.FrontEnd\bin\Mono.Security.dll"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

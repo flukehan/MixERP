@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Npgsql;
 
 namespace MixERP.Net.DatabaseLayer.Helpers
 {
@@ -17,7 +18,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
         public static void Vacuum()
         {
             string sql = "VACUUM;";
-            using (Npgsql.NpgsqlCommand command = new Npgsql.NpgsqlCommand(sql))
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.CommandTimeout = 3600;
                 MixERP.Net.DBFactory.DBOperations.ExecuteNonQuery(command);
@@ -27,7 +28,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
         public static void VacuumFull()
         {
             string sql = "VACUUM FULL;";
-            using (Npgsql.NpgsqlCommand command = new Npgsql.NpgsqlCommand(sql))
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.CommandTimeout = 3600;
                 MixERP.Net.DBFactory.DBOperations.ExecuteNonQuery(command);
@@ -37,7 +38,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
         public static void Analyze()
         {
             string sql = "ANALYZE;";
-            using (Npgsql.NpgsqlCommand command = new Npgsql.NpgsqlCommand(sql))
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.CommandTimeout = 3600;
                 MixERP.Net.DBFactory.DBOperations.ExecuteNonQuery(command);

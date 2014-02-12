@@ -18,7 +18,7 @@ http://mozilla.org/MPL/2.0/.
         <link href="<%=ResolveUrl("~/Scripts/jquery-ui/css/custom-theme/jquery-ui-1.10.3.custom.min.css") %>" rel="stylesheet" type="text/css" />
 
         <script src="<%=ResolveUrl("~/Scripts/jquery-1.9.1.js") %>"></script>
-        <script src="<%=ResolveUrl("~/Scripts/query-ui.js") %>"></script>
+        <script src="<%=ResolveUrl("~/Scripts/jquery-ui.js") %>"></script>
 
         <script src="<%=ResolveUrl("~/Scripts/shortcut.js") %>"></script>
         <script src="<%=ResolveUrl("~/Scripts/colorbox/jquery.colorbox-min.js") %>"></script>
