@@ -154,22 +154,10 @@ namespace MixERP.Net.WebControls.ReportEngine
         private Collection<System.Data.DataTable> DataTableCollection;
         private void SetDataSources()
         {
-            int index = 0;
+            int count = 0;
 
             //Get the list of datasources for this report.
             System.Xml.XmlNodeList dataSources = XmlHelper.GetNodes(reportPath, "//DataSource");
-
-            if (dataSources.Count > 0)
-            {
-                //Check if this report has parameters assigned.
-                if (this.ParameterCollection != null)
-                {
-                    if (this.parameterCollection.Count.Equals(0))
-                    {
-                        throw new InvalidOperationException("Cannot initalize the datasource(s) when the paramter collection is empty.");
-                    }
-                }
-            }
 
             //Initializing data source collection.
             this.DataTableCollection = new Collection<System.Data.DataTable>();
@@ -183,14 +171,21 @@ namespace MixERP.Net.WebControls.ReportEngine
                     //Selecting the nodes matching the tag <Query>.
                     if (c.Name.Equals("Query"))
                     {
-                        index++;
+                        count++;
                         string sql = c.InnerText;
 
                         //Initializing query parameter collection.
                         Collection<KeyValuePair<string, string>> parameters = new Collection<KeyValuePair<string, string>>();
 
-                        //Get the parameter collection for this datasource.
-                        parameters = this.ParameterCollection[index - 1];
+                        if (parameterCollection != null)
+                        {
+                            if (parameterCollection.Count >= count)
+                            {
+                                //Get the parameter collection for this datasource.
+                                parameters = this.ParameterCollection[count - 1];
+                            }
+                        }
+
 
                         //Get DataTable from SQL Query and parameter collection.
                         using (System.Data.DataTable table = MixERP.Net.WebControls.ReportEngine.Data.TableHelper.GetDataTable(sql, parameters))

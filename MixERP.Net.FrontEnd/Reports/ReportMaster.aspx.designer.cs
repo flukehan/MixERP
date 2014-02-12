@@ -13,12 +13,12 @@ namespace MixERP.Net.FrontEnd.Reports {
     public partial class ReportMaster {
         
         /// <summary>
-        /// IFrame1 control.
+        /// IFramePlaceholder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IFrame1;
+        protected global::System.Web.UI.WebControls.PlaceHolder IFramePlaceholder;
     }
 }

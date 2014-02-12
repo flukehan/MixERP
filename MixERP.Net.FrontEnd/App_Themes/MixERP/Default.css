@@ -175,3 +175,11 @@ input[type=checkbox], input[type=radio] {
     bottom: 2px;
     margin-right: 4px;
 }
+
+.report-image-button {
+    padding:2px;
+}
+
+.report-button {
+    font-weight:bold;
+}

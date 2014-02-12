@@ -96,6 +96,7 @@ input, select
 .content
 {
     padding: 8px;
+    height:100%;
 }
 
 #menu

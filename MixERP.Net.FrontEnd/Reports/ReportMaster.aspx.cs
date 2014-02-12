@@ -16,9 +16,15 @@ namespace MixERP.Net.FrontEnd.Reports
 {
     public partial class ReportMaster : MixERP.Net.BusinessLayer.MixERPWebPage
     {
-        protected void Page_Load(object sender, EventArgs e)
+        protected void Page_Init(object sender, EventArgs e)
         {
-            IFrame1.Attributes.Add("src", ResolveUrl("~/Reports/ReportViewer.aspx?Id=" + this.RouteData.Values["path"]));
+            using (System.Web.UI.HtmlControls.HtmlGenericControl iFrame = new System.Web.UI.HtmlControls.HtmlGenericControl())
+            {
+                iFrame.TagName = "iframe";
+                iFrame.Attributes.Add("src", ResolveUrl("~/Reports/ReportViewer.aspx?Id=" + this.RouteData.Values["path"]));
+                iFrame.Attributes.Add("style", "width:100%;height:100%;border:1px solid #C0C0C0;");
+                IFramePlaceholder.Controls.Add(iFrame);
+            }
         }
     }
 }

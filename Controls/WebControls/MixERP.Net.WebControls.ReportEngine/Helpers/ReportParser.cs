@@ -22,8 +22,8 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
                 return string.Empty;
             }
 
-            string logo = MixERP.Net.Common.Helpers.ConfigurationHelper.GetParameter("LogoPath");
-            expression = expression.Replace("{LogoPath}", MixERP.Net.Common.PageUtility.GetCurrentDomainName() + MixERP.Net.Common.PageUtility.ResolveUrl(logo));
+            string logo = MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("LogoPath");
+            expression = expression.Replace("{LogoPath}", MixERP.Net.Common.PageUtility.GetCurrentDomainName() + MixERP.Net.Common.PageUtility.ResolveUrl(logo));//Or else logo will not be exported into excel.
             expression = expression.Replace("{PrintDate}", System.DateTime.Now.ToString());
 
             foreach(var match in Regex.Matches(expression, "{.*?}"))

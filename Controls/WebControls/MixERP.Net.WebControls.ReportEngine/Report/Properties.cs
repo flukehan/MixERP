@@ -37,6 +37,8 @@ namespace MixERP.Net.WebControls.ReportEngine
             }
         }
 
+        public string ImageButtonCssClass { get; set; }
+
         public void AddParameterToCollection(Collection<KeyValuePair<string, string>> parameter)
         {
             this.parameterCollection.Add(parameter);

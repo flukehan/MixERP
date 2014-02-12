@@ -23,9 +23,22 @@ namespace MixERP.Net.FrontEnd.Reports
 {
     public partial class ReportViewer : MixERP.Net.BusinessLayer.MixERPWebReportPage
     {
+        private Button updateButton = new Button();
         protected void Page_Init(object sender, EventArgs e)
         {
             this.AddParameters();
+        }
+
+        public override void Dispose()
+        {
+            
+            if (updateButton != null)
+            {
+                updateButton.Dispose();
+                updateButton = null;
+            }
+
+            base.Dispose();
         }
 
         private void AddParameters()
@@ -61,15 +74,12 @@ namespace MixERP.Net.FrontEnd.Reports
                 }
             }
 
-            using (Button button = new Button())
-            {
-                button.ID = "UpdateButton";
-                button.Text = Resources.Titles.Update;
-                button.CssClass = "myButton";
-                button.Click += UpdateButton_Click;
+            updateButton.ID = "UpdateButton";
+            updateButton.Text = Resources.Titles.Update;
+            updateButton.CssClass = "myButton report-button";
+            updateButton.Click += UpdateButton_Click;
 
-                AddRow("", button);
-            }
+            AddRow("", updateButton);
         }
 
         protected void UpdateButton_Click(object sender, EventArgs e)
@@ -93,13 +103,11 @@ namespace MixERP.Net.FrontEnd.Reports
             }
             ReportViewer11.Path = this.ReportPath();
 
-            //ReportViewer11.ParameterCollection = ParameterHelper.BindParameters(Server.MapPath(this.ReportPath()), list);
-
             foreach (var parameter in ParameterHelper.BindParameters(Server.MapPath(this.ReportPath()), list))
             {
                 ReportViewer11.AddParameterToCollection(parameter);
             }
-            
+
             ReportViewer11.InitializeReport();
         }
 
