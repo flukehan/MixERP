@@ -1764,8 +1764,8 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Y "$(SolutionDir)\Dependencies\Mono\Profile\Mono\Npgsql.dll" "$(SolutionDir)\MixERP.Net.FrontEnd\bin\Npgsql.dll"
-xcopy /Y "$(SolutionDir)\Dependencies\Mono\Profile\Mono\Mono.Security.dll" "$(SolutionDir)\MixERP.Net.FrontEnd\bin\Mono.Security.dll"</PostBuildEvent>
+    <PostBuildEvent>copy /Y "$(SolutionDir)\Dependencies\Mono\Profile\Mono\Npgsql.dll" "$(SolutionDir)\MixERP.Net.FrontEnd\bin\Npgsql.dll"
+copy /Y "$(SolutionDir)\Dependencies\Mono\Profile\Mono\Mono.Security.dll" "$(SolutionDir)\MixERP.Net.FrontEnd\bin\Mono.Security.dll"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -8,8 +8,10 @@ http://mozilla.org/MPL/2.0/.
 
 using Npgsql;
 using System;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace MixERP.Net.DBFactory
 {
@@ -37,7 +39,7 @@ namespace MixERP.Net.DBFactory
         [CLSCompliant(false)]
         public static bool ExecuteNonQuery(NpgsqlCommand command)
         {
-            if (command != null)
+            if (ValidateCommand(command))
             {
                 using (NpgsqlConnection connection = new NpgsqlConnection(DBConnection.ConnectionString()))
                 {
@@ -59,10 +61,60 @@ namespace MixERP.Net.DBFactory
             return false;
         }
 
+        private static bool ValidateCommand(NpgsqlCommand command)
+        {
+            if (command == null)
+            {
+                return false;
+            }
+
+            return ValidateParameters(command);
+        }
+
+        private static Collection<string> GetCommandTextParameterCollection(string commandText)
+        {
+            Collection<string> parameters = new Collection<string>();
+
+            foreach (Match match in Regex.Matches(commandText, @"@(\w+)"))
+            {
+                parameters.Add(match.Value);
+            }
+
+            return parameters;
+
+        }
+
+        private static bool ValidateParameters(NpgsqlCommand command)
+        {
+            Collection<string> commandTextParameters = GetCommandTextParameterCollection(command.CommandText);
+            bool match = false;
+
+            foreach (NpgsqlParameter npgsqlParameter in command.Parameters)
+            {
+                match = false;
+
+                foreach (string commandTextParameter in commandTextParameters)
+                {
+                    if (npgsqlParameter.ParameterName.Equals(commandTextParameter))
+                    {
+                        match = true;
+                    }
+                }
+
+                if (!match)
+                {
+                    throw new InvalidOperationException("Invalid NpgsqlParameter name '" + npgsqlParameter.ParameterName + "'. Make sure that the parameter name matches with your command text.");
+                }
+            }
+
+            return true;
+        }
+
+
         [CLSCompliant(false)]
         public static object GetScalarValue(NpgsqlCommand command)
         {
-            if (command != null)
+            if (ValidateCommand(command))
             {
                 using (NpgsqlConnection connection = new NpgsqlConnection(DBConnection.ConnectionString()))
                 {
@@ -78,7 +130,7 @@ namespace MixERP.Net.DBFactory
         [CLSCompliant(false)]
         public static DataTable GetDataTable(NpgsqlCommand command, string connectionString)
         {
-            if (command != null)
+            if (ValidateCommand(command))
             {
                 using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
                 {
@@ -110,7 +162,7 @@ namespace MixERP.Net.DBFactory
         [CLSCompliant(false)]
         public static NpgsqlDataReader GetDataReader(NpgsqlCommand command)
         {
-            if (command != null)
+            if (ValidateCommand(command))
             {
                 using (NpgsqlConnection connection = new NpgsqlConnection(DBConnection.ConnectionString()))
                 {
@@ -126,7 +178,7 @@ namespace MixERP.Net.DBFactory
         [CLSCompliant(false)]
         public static DataView GetDataView(NpgsqlCommand command)
         {
-            if (command != null)
+            if (ValidateCommand(command))
             {
                 using (DataView view = new DataView(GetDataTable(command)))
                 {
@@ -140,7 +192,7 @@ namespace MixERP.Net.DBFactory
         [CLSCompliant(false)]
         public static NpgsqlDataAdapter GetDataAdapter(NpgsqlCommand command)
         {
-            if (command != null)
+            if (ValidateCommand(command))
             {
                 using (NpgsqlConnection connection = new NpgsqlConnection(DBConnection.ConnectionString()))
                 {
@@ -159,7 +211,7 @@ namespace MixERP.Net.DBFactory
         [CLSCompliant(false)]
         public static DataSet GetDataSet(NpgsqlCommand command)
         {
-            if (command != null)
+            if (ValidateCommand(command))
             {
                 using (NpgsqlDataAdapter adapter = GetDataAdapter(command))
                 {

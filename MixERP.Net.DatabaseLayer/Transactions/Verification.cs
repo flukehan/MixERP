@@ -21,15 +21,15 @@ namespace MixERP.Net.DatabaseLayer.Transactions
             MixERP.Net.Common.Models.Transactions.VerificationModel model = new MixERP.Net.Common.Models.Transactions.VerificationModel();
             string sql = "SELECT verification_status_id, office.get_user_name_by_user_id(verified_by_user_id) AS verified_by_user_name, verified_by_user_id, last_verified_on, verification_reason FROM transactions.transaction_master WHERE transaction_master_id=@TransactionMasterId;";
 
-            using(NpgsqlCommand command = new NpgsqlCommand(sql))
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.Add("@TransactionMasterId", transactionMasterId);
 
-                using(DataTable table = MixERP.Net.DBFactory.DBOperations.GetDataTable(command))
+                using (DataTable table = MixERP.Net.DBFactory.DBOperations.GetDataTable(command))
                 {
-                    if(table != null)
+                    if (table != null)
                     {
-                        if(table.Rows.Count.Equals(1))
+                        if (table.Rows.Count.Equals(1))
                         {
                             DataRow row = table.Rows[0];
 
@@ -42,8 +42,8 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                     }
                 }
             }
-            
-            
+
+
             return model;
         }
 
@@ -52,11 +52,11 @@ namespace MixERP.Net.DatabaseLayer.Transactions
             short status = MixERP.Net.Common.Models.Transactions.VerificationDomain.GetVerification(MixERP.Net.Common.Models.Transactions.VerificationType.Withdrawn);
 
             string sql = "UPDATE transactions.transaction_master SET verification_status_id=@Status, verified_by_user_id=@UserId, verification_reason=@Reason WHERE transactions.transaction_master.transaction_master_id=@TransactionMasterId;";
-            using(NpgsqlCommand command = new NpgsqlCommand(sql))
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.Add("@Status", status);
                 command.Parameters.Add("@UserId", userId);
-                command.Parameters.Add("@reason", reason);
+                command.Parameters.Add("@Reason", reason);
                 command.Parameters.Add("@TransactionMasterId", transactionMasterId);
 
                 return MixERP.Net.DBFactory.DBOperations.ExecuteNonQuery(command);
@@ -65,10 +65,10 @@ namespace MixERP.Net.DatabaseLayer.Transactions
 
         public static bool CallAutoVerification(long transactionMasterId)
         {
-            if(MixERP.Net.Common.Helpers.Switches.EnableAutoVerification())
+            if (MixERP.Net.Common.Helpers.Switches.EnableAutoVerification())
             {
                 string sql = "SELECT transactions.auto_verify(@TransactionMasterId::bigint);";
-                using(NpgsqlCommand command = new NpgsqlCommand(sql))
+                using (NpgsqlCommand command = new NpgsqlCommand(sql))
                 {
                     command.Parameters.Add("@TransactionMasterId", transactionMasterId);
                     return MixERP.Net.DBFactory.DBOperations.ExecuteNonQuery(command);
