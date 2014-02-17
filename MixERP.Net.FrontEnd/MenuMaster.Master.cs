@@ -14,7 +14,7 @@ using System.Web.UI.WebControls;
 
 namespace MixERP.Net.FrontEnd
 {
-    public partial class MenuMaster : System.Web.UI.MasterPage
+    public partial class MenuMaster : MasterPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

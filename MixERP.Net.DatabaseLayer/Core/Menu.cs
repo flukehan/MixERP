@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
+using MixERP.Net.DBFactory;
 using Npgsql;
 
 namespace MixERP.Net.DatabaseLayer.Core
@@ -37,7 +38,7 @@ namespace MixERP.Net.DatabaseLayer.Core
                 command.Parameters.Add("@Url", path);
                 command.Parameters.Add("@Level", level);
 
-                return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
+                return DBOperations.GetDataTable(command);
             }
         }
 
@@ -60,7 +61,7 @@ namespace MixERP.Net.DatabaseLayer.Core
                 command.Parameters.Add("@OfficeId", officeId);
                 command.Parameters.Add("@Culture", culture);
                 command.Parameters.Add("@Url", path);
-                return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
+                return DBOperations.GetDataTable(command);
             }
         }
 
@@ -96,7 +97,7 @@ namespace MixERP.Net.DatabaseLayer.Core
                 }
 
 
-                return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
+                return DBOperations.GetDataTable(command);
             }
         }
     }

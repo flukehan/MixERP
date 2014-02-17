@@ -7,7 +7,7 @@ using System.Web;
 
 namespace MixERP.Net.BusinessLayer
 {
-    public class MixERPWebReportPage:MixERPWebPage
+    public class MixERPWebReportPage:MixERPWebpage
     {
     }
 }

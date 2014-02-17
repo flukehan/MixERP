@@ -11,10 +11,11 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.BusinessLayer;
 
 namespace MixERP.Net.FrontEnd.CRM
 {
-    public partial class LeadFollowUp : MixERP.Net.BusinessLayer.MixERPWebPage
+    public partial class LeadFollowUp : MixERPWebpage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

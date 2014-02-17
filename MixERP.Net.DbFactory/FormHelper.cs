@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using MixERP.Net.Common;
 using Npgsql;
 
 namespace MixERP.Net.DBFactory
@@ -19,33 +21,33 @@ namespace MixERP.Net.DBFactory
     {
         public static DataTable GetView(string tableSchema, string tableName, string orderBy, int limit, int offset)
         {
-            string sql = "SELECT * FROM @TableSchema.@TableName ORDER BY @OrderBy LIMIT @Limit OFFSET @Offset;";
+            var sql = "SELECT * FROM @TableSchema.@TableName ORDER BY @OrderBy LIMIT @Limit OFFSET @Offset;";
 
-            using (NpgsqlCommand command = new NpgsqlCommand())
+            using (var command = new NpgsqlCommand())
             {
                 //We are 100% sure that the following parameters do not come from user input.
                 //Having said that, it is nice to sanitize the objects before sending it to the database server.
-                sql = sql.Replace("@TableSchema", DBFactory.Sanitizer.SanitizeIdentifierName(tableSchema));
-                sql = sql.Replace("@TableName", DBFactory.Sanitizer.SanitizeIdentifierName(tableName));
-                sql = sql.Replace("@OrderBy", DBFactory.Sanitizer.SanitizeIdentifierName(orderBy));
-                sql = sql.Replace("@Limit", MixERP.Net.Common.Conversion.TryCastString(limit));
-                sql = sql.Replace("@Offset", MixERP.Net.Common.Conversion.TryCastString(offset));
+                sql = sql.Replace("@TableSchema", Sanitizer.SanitizeIdentifierName(tableSchema));
+                sql = sql.Replace("@TableName", Sanitizer.SanitizeIdentifierName(tableName));
+                sql = sql.Replace("@OrderBy", Sanitizer.SanitizeIdentifierName(orderBy));
+                sql = sql.Replace("@Limit", Conversion.TryCastString(limit));
+                sql = sql.Replace("@Offset", Conversion.TryCastString(offset));
                 command.CommandText = sql;
 
-                return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
+                return DBOperations.GetDataTable(command);
             }
         }
 
         public static DataTable GetTable(string tableSchema, string tableName)
         {
-            string sql = "SELECT * FROM @TableSchema.@TableName;";
-            using (NpgsqlCommand command = new NpgsqlCommand())
+            var sql = "SELECT * FROM @TableSchema.@TableName;";
+            using (var command = new NpgsqlCommand())
             {
-                sql = sql.Replace("@TableSchema", DBFactory.Sanitizer.SanitizeIdentifierName(tableSchema));
-                sql = sql.Replace("@TableName", DBFactory.Sanitizer.SanitizeIdentifierName(tableName));
+                sql = sql.Replace("@TableSchema", Sanitizer.SanitizeIdentifierName(tableSchema));
+                sql = sql.Replace("@TableName", Sanitizer.SanitizeIdentifierName(tableName));
                 command.CommandText = sql;
 
-                return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
+                return DBOperations.GetDataTable(command);
             }
         }
 
@@ -61,48 +63,48 @@ namespace MixERP.Net.DBFactory
                 return null;
             }
 
-            string[] columns = columnNames.Split(',');
-            string[] values = columnValues.Split(',');
+            var columns = columnNames.Split(',');
+            var values = columnValues.Split(',');
 
             if (!columns.Length.Equals(values.Length))
             {
                 return null;
             }
 
-            int counter = 0;
-            string sql = "SELECT * FROM @TableSchema.@TableName WHERE ";
+            var counter = 0;
+            var sql = "SELECT * FROM @TableSchema.@TableName WHERE ";
 
-            foreach (string column in columns)
+            foreach (var column in columns)
             {
                 if (!counter.Equals(0))
                 {
                     sql += " AND ";
                 }
 
-                sql += DBFactory.Sanitizer.SanitizeIdentifierName(column.Trim()) + " = @" + DBFactory.Sanitizer.SanitizeIdentifierName(column.Trim());
+                sql += Sanitizer.SanitizeIdentifierName(column.Trim()) + " = @" + Sanitizer.SanitizeIdentifierName(column.Trim());
 
                 counter++;
             }
 
             sql += ";";
 
-            using (NpgsqlCommand command = new NpgsqlCommand())
+            using (var command = new NpgsqlCommand())
             {
-                sql = sql.Replace("@TableSchema", DBFactory.Sanitizer.SanitizeIdentifierName(tableSchema));
-                sql = sql.Replace("@TableName", DBFactory.Sanitizer.SanitizeIdentifierName(tableName));
+                sql = sql.Replace("@TableSchema", Sanitizer.SanitizeIdentifierName(tableSchema));
+                sql = sql.Replace("@TableName", Sanitizer.SanitizeIdentifierName(tableName));
 
 
                 command.CommandText = sql;
 
                 counter = 0;
-                foreach (string column in columns)
+                foreach (var column in columns)
                 {
-                    command.Parameters.Add("@" + DBFactory.Sanitizer.SanitizeIdentifierName(column.Trim()), values[counter]);
+                    command.Parameters.Add("@" + Sanitizer.SanitizeIdentifierName(column.Trim()), values[counter]);
                     counter++;
                 }
 
 
-                return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
+                return DBOperations.GetDataTable(command);
             }
         }
 
@@ -118,18 +120,18 @@ namespace MixERP.Net.DBFactory
                 columnValuesLike = string.Empty;
             }
 
-            string[] columns = columnNames.Split(',');
-            string[] values = columnValuesLike.Split(',');
+            var columns = columnNames.Split(',');
+            var values = columnValuesLike.Split(',');
 
             if (!columns.Length.Equals(values.Length))
             {
                 return null;
             }
 
-            int counter = 0;
-            string sql = "SELECT * FROM @TableSchema.@TableName ";
+            var counter = 0;
+            var sql = "SELECT * FROM @TableSchema.@TableName ";
 
-            foreach (string column in columns)
+            foreach (var column in columns)
             {
                 if (!string.IsNullOrWhiteSpace(column))
                 {
@@ -142,48 +144,48 @@ namespace MixERP.Net.DBFactory
                         sql += " AND ";
                     }
 
-                    sql += " lower(" + DBFactory.Sanitizer.SanitizeIdentifierName(column.Trim()) + "::text) LIKE @" + DBFactory.Sanitizer.SanitizeIdentifierName(column.Trim());
+                    sql += " lower(" + Sanitizer.SanitizeIdentifierName(column.Trim()) + "::text) LIKE @" + Sanitizer.SanitizeIdentifierName(column.Trim());
                     counter++;
                 }
             }
 
             sql += " LIMIT @Limit;";
 
-            using (NpgsqlCommand command = new NpgsqlCommand())
+            using (var command = new NpgsqlCommand())
             {
-                sql = sql.Replace("@TableSchema", DBFactory.Sanitizer.SanitizeIdentifierName(tableSchema));
-                sql = sql.Replace("@TableName", DBFactory.Sanitizer.SanitizeIdentifierName(tableName));
+                sql = sql.Replace("@TableSchema", Sanitizer.SanitizeIdentifierName(tableSchema));
+                sql = sql.Replace("@TableName", Sanitizer.SanitizeIdentifierName(tableName));
 
 
                 command.CommandText = sql;
 
                 counter = 0;
-                foreach (string column in columns)
+                foreach (var column in columns)
                 {
                     if (!string.IsNullOrWhiteSpace(column))
                     {
-                        command.Parameters.Add(DBFactory.Sanitizer.SanitizeIdentifierName(column.Trim()), "%" + values[counter].ToLower(System.Threading.Thread.CurrentThread.CurrentCulture) + "%");
+                        command.Parameters.Add(Sanitizer.SanitizeIdentifierName(column.Trim()), "%" + values[counter].ToLower(Thread.CurrentThread.CurrentCulture) + "%");
                         counter++;
                     }
                 }
 
                 command.Parameters.Add("@Limit", limit);
 
-                return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
+                return DBOperations.GetDataTable(command);
             }
         }
 
         public static int GetTotalRecords(string tableSchema, string tableName)
         {
-            string sql = "SELECT COUNT(*) FROM @TableSchema.@TableName";
-            using (NpgsqlCommand command = new NpgsqlCommand())
+            var sql = "SELECT COUNT(*) FROM @TableSchema.@TableName";
+            using (var command = new NpgsqlCommand())
             {
-                sql = sql.Replace("@TableSchema", DBFactory.Sanitizer.SanitizeIdentifierName(tableSchema));
-                sql = sql.Replace("@TableName", DBFactory.Sanitizer.SanitizeIdentifierName(tableName));
+                sql = sql.Replace("@TableSchema", Sanitizer.SanitizeIdentifierName(tableSchema));
+                sql = sql.Replace("@TableName", Sanitizer.SanitizeIdentifierName(tableName));
 
                 command.CommandText = sql;
 
-                return MixERP.Net.Common.Conversion.TryCastInteger(MixERP.Net.DBFactory.DBOperations.GetScalarValue(command));
+                return Conversion.TryCastInteger(DBOperations.GetScalarValue(command));
             }
         }
     }

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MixERP.Net.DBFactory;
 using Npgsql;
 
 namespace MixERP.Net.DatabaseLayer.Helpers
@@ -21,7 +22,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.CommandTimeout = 3600;
-                MixERP.Net.DBFactory.DBOperations.ExecuteNonQuery(command);
+                DBOperations.ExecuteNonQuery(command);
             }
         }
 
@@ -31,7 +32,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.CommandTimeout = 3600;
-                MixERP.Net.DBFactory.DBOperations.ExecuteNonQuery(command);
+                DBOperations.ExecuteNonQuery(command);
             }            
         }
 
@@ -41,7 +42,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.CommandTimeout = 3600;
-                MixERP.Net.DBFactory.DBOperations.ExecuteNonQuery(command);
+                DBOperations.ExecuteNonQuery(command);
             }
         }
     }

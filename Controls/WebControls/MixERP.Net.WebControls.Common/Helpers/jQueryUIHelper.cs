@@ -13,7 +13,7 @@ namespace MixERP.Net.WebControls.Common.Helpers
     {
         public static string GetDatePickerFormat()
         {
-            string datePattern = MixERP.Net.Common.Helpers.LocalizationHelper.GetCurrentCulture().DateTimeFormat.ShortDatePattern;
+            string datePattern = LocalizationHelper.GetCurrentCulture().DateTimeFormat.ShortDatePattern;
             return ConvertDateFormat(datePattern);
         }
 
@@ -75,12 +75,12 @@ namespace MixERP.Net.WebControls.Common.Helpers
 
         public static string GetDatePickerLocale()
         {
-            return MixERP.Net.Common.Helpers.LocalizationHelper.GetCurrentCulture().TwoLetterISOLanguageName;
+            return LocalizationHelper.GetCurrentCulture().TwoLetterISOLanguageName;
         }
 
         public static int GetWeekStartDay()
         {
-            return (int)MixERP.Net.Common.Helpers.LocalizationHelper.GetCurrentCulture().DateTimeFormat.FirstDayOfWeek;
+            return (int)LocalizationHelper.GetCurrentCulture().DateTimeFormat.FirstDayOfWeek;
         }
 
         public static bool ShowWeekNumber()

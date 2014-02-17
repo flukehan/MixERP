@@ -5,10 +5,8 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
+using MixERP.Net.WebControls.ScrudFactory.Data;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
@@ -25,10 +23,10 @@ namespace MixERP.Net.WebControls.ScrudFactory
             if (string.IsNullOrWhiteSpace(this.GetSchema())) return;
             if (string.IsNullOrWhiteSpace(this.GetView())) return;
 
-            using (System.Data.DataTable table = MixERP.Net.WebControls.ScrudFactory.Data.TableHelper.GetTable(this.GetSchema(), this.GetView(), ""))
+            using (var table = TableHelper.GetTable(this.GetSchema(), this.GetView(), ""))
             {
-                filterDropDownList.DataSource = table;
-                filterDropDownList.DataBind();
+                this.filterDropDownList.DataSource = table;
+                this.filterDropDownList.DataBind();
             }
         }
 
@@ -37,10 +35,10 @@ namespace MixERP.Net.WebControls.ScrudFactory
             if (string.IsNullOrWhiteSpace(this.GetSchema())) return;
             if (string.IsNullOrWhiteSpace(this.GetView())) return;
 
-            using (System.Data.DataTable table = MixERP.Net.WebControls.ScrudFactory.Data.FormHelper.GetTable(this.GetSchema(), this.GetView(), "", "", 10))
+            using (var table = FormHelper.GetTable(this.GetSchema(), this.GetView(), "", "", 10))
             {
-                searchGridView.DataSource = table;
-                searchGridView.DataBind();
+                this.searchGridView.DataSource = table;
+                this.searchGridView.DataBind();
             }
         }
     }

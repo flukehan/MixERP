@@ -12,10 +12,12 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.BusinessLayer;
+using MixERP.Net.BusinessLayer.Transactions;
 
 namespace MixERP.Net.FrontEnd.Sales.Entry
 {
-    public partial class Order : MixERP.Net.BusinessLayer.MixERPWebPage
+    public partial class Order : MixERPWebpage
     {
         protected void Page_Init(object sender, EventArgs e)
         {
@@ -30,11 +32,11 @@ namespace MixERP.Net.FrontEnd.Sales.Entry
         
         protected void SalesOrder_SaveButtonClick(object sender, EventArgs e)
         {
-            Collection<int> tranIdCollection = SalesOrder.GetTranIdCollection();
-            long nonGlStockMasterId = MixERP.Net.BusinessLayer.Transactions.NonGLStockTransaction.Add("Sales.Order", SalesOrder.GetForm.Date, SalesOrder.GetForm.PartyCode, SalesOrder.GetForm.PriceTypeId, SalesOrder.GetForm.Details, SalesOrder.GetForm.ReferenceNumber, SalesOrder.GetForm.StatementReference, tranIdCollection);
+            Collection<int> tranIdCollection = this.SalesOrder.GetTranIdCollection();
+            long nonGlStockMasterId = NonGLStockTransaction.Add("Sales.Order", this.SalesOrder.GetForm.Date, this.SalesOrder.GetForm.PartyCode, this.SalesOrder.GetForm.PriceTypeId, this.SalesOrder.GetForm.Details, this.SalesOrder.GetForm.ReferenceNumber, this.SalesOrder.GetForm.StatementReference, tranIdCollection);
             if (nonGlStockMasterId > 0)
             {
-                Response.Redirect("~/Sales/Order.aspx?TranId=" + nonGlStockMasterId, true);
+                this.Response.Redirect("~/Sales/Order.aspx?TranId=" + nonGlStockMasterId, true);
             }
         }
     }

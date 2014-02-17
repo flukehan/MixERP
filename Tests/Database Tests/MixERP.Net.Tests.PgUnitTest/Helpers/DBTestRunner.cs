@@ -31,7 +31,7 @@ namespace MixERP.Net.Tests.PgUnitTest.Helpers
 
         public bool RunTests()
         {
-            bool result = Helpers.TestInstaller.InstallTests();
+            bool result = TestInstaller.InstallTests();
 
             if (!result)
             {

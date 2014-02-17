@@ -17,12 +17,12 @@ namespace MixERP.Net.BusinessLayer.Core
     {
         public static DataTable GetShippingAddressView(int partyId)
         {
-            return MixERP.Net.DatabaseLayer.Core.ShippingAddresses.GetShippingAddressView(partyId);
+            return DatabaseLayer.Core.ShippingAddresses.GetShippingAddressView(partyId);
         }
 
         public static DataTable GetShippingAddressView(string partyCode)
         {
-            return MixERP.Net.DatabaseLayer.Core.ShippingAddresses.GetShippingAddressView(partyCode);
+            return DatabaseLayer.Core.ShippingAddresses.GetShippingAddressView(partyCode);
         }
 
     }

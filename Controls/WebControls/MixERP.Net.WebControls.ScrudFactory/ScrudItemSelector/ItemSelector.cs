@@ -6,81 +6,78 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using MixERP.Net.WebControls.ScrudFactory.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.WebControls.ScrudFactory.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
     public partial class ScrudItemSelector
     {
-        private void LoadItemSelector(Panel container)
+        private void LoadItemSelector(Panel panel)
         {
-            using (Panel topPanel = new Panel())
+            using (var topPanel = new Panel())
             {
                 this.LoadTopPanel(topPanel);
-                container.Controls.Add(topPanel);
+                panel.Controls.Add(topPanel);
             }
 
-            using (Panel gridPanel = new Panel())
+            using (var gridPanel = new Panel())
             {
                 this.LoadGridPanel(gridPanel);
-                container.Controls.Add(gridPanel);
+                panel.Controls.Add(gridPanel);
             }
         }
 
         private void LoadTopPanel(Panel topPanel)
         {
             topPanel.CssClass = this.TopPanelCssClass;
-            using (HtmlTable table = new HtmlTable())
+            using (var table = new HtmlTable())
             {
-                using (HtmlTableRow row = new HtmlTableRow())
+                using (var row = new HtmlTableRow())
                 {
-                    using (HtmlTableCell dropDownListCell = new HtmlTableCell())
+                    using (var dropDownListCell = new HtmlTableCell())
                     {
-                        filterDropDownList = new DropDownList();
+                        this.filterDropDownList = new DropDownList();
 
-                        filterDropDownList.ID = "FilterDropDownList";
-                        filterDropDownList.CssClass = this.FilterDropDownListCssClass;
-                        filterDropDownList.DataTextField = "column_name";
-                        filterDropDownList.DataValueField = "column_name";
-                        filterDropDownList.DataBound += this.FilterDropDownList_DataBound;
+                        this.filterDropDownList.ID = "FilterDropDownList";
+                        this.filterDropDownList.CssClass = this.FilterDropDownListCssClass;
+                        this.filterDropDownList.DataTextField = "column_name";
+                        this.filterDropDownList.DataValueField = "column_name";
+                        this.filterDropDownList.DataBound += this.FilterDropDownList_DataBound;
 
-                        dropDownListCell.Controls.Add(filterDropDownList);
+                        dropDownListCell.Controls.Add(this.filterDropDownList);
                         row.Cells.Add(dropDownListCell);
 
                     }
-                    using (HtmlTableCell textBoxCell = new HtmlTableCell())
+                    using (var textBoxCell = new HtmlTableCell())
                     {
-                        filterTextBox = new TextBox();
-                        filterTextBox.ID = "FilterTextBox";
-                        filterTextBox.CssClass = this.FilterTextBoxCssClass;
-                        textBoxCell.Controls.Add(filterTextBox);
+                        this.filterTextBox = new TextBox();
+                        this.filterTextBox.ID = "FilterTextBox";
+                        this.filterTextBox.CssClass = this.FilterTextBoxCssClass;
+                        textBoxCell.Controls.Add(this.filterTextBox);
                         row.Cells.Add(textBoxCell);
                     }
 
-                    using (HtmlTableCell buttonCell = new HtmlTableCell())
+                    using (var buttonCell = new HtmlTableCell())
                     {
-                        goButton = new Button();
-                        goButton.ID = "GoButton";
-                        goButton.CssClass = this.ButtonCssClass;
+                        this.goButton = new Button();
+                        this.goButton.ID = "GoButton";
+                        this.goButton.CssClass = this.ButtonCssClass;
 
-                        if (this.ButtonHeight != null)
+                        if (this.ButtonHeight.Value > 0)
                         {
-                            goButton.Height = this.ButtonHeight;
+                            this.goButton.Height = this.ButtonHeight;
                         }
 
-                        if (this.ButtonWidth != null)
+                        if (this.ButtonWidth.Value > 0)
                         {
-                            goButton.Width = this.ButtonWidth;
+                            this.goButton.Width = this.ButtonWidth;
                         }
 
-                        goButton.Click += this.GoButton_Click;
-                        goButton.Text = Resources.ScrudResource.Go;
-                        buttonCell.Controls.Add(goButton);
+                        this.goButton.Click += this.GoButton_Click;
+                        this.goButton.Text = ScrudResource.Go;
+                        buttonCell.Controls.Add(this.goButton);
                         row.Cells.Add(buttonCell);
                     }
 
@@ -97,36 +94,36 @@ namespace MixERP.Net.WebControls.ScrudFactory
             gridPanel.ScrollBars = ScrollBars.Auto;
             gridPanel.CssClass = this.GridPanelCssClass;
 
-            if (this.GridPanelHeight != null)
+            if (this.GridPanelHeight.Value > 0)
             {
                 gridPanel.Height = this.GridPanelHeight;
             }
 
-            if (this.GridPanelWidth != null)
+            if (this.GridPanelWidth.Value > 0)
             {
                 gridPanel.Height = this.GridPanelWidth;
             }
 
-            searchGridView = new GridView();
-            searchGridView.ID = "SearchGridView";
-            searchGridView.GridLines = GridLines.None;
-            searchGridView.CssClass = this.GridViewCssClass;
-            searchGridView.PagerStyle.CssClass = this.GridViewPagerCssClass;
-            searchGridView.RowStyle.CssClass = this.GridViewRowCssClass;
-            searchGridView.AlternatingRowStyle.CssClass = this.GridViewAlternateRowCssClass;
-            searchGridView.AutoGenerateColumns = true;
-            searchGridView.RowDataBound += this.SearchGridView_RowDataBound;
-            searchGridView.Columns.Add(this.GetSelectColumnTemplateField());
+            this.searchGridView = new GridView();
+            this.searchGridView.ID = "SearchGridView";
+            this.searchGridView.GridLines = GridLines.None;
+            this.searchGridView.CssClass = this.GridViewCssClass;
+            this.searchGridView.PagerStyle.CssClass = this.GridViewPagerCssClass;
+            this.searchGridView.RowStyle.CssClass = this.GridViewRowCssClass;
+            this.searchGridView.AlternatingRowStyle.CssClass = this.GridViewAlternateRowCssClass;
+            this.searchGridView.AutoGenerateColumns = true;
+            this.searchGridView.RowDataBound += this.SearchGridView_RowDataBound;
+            this.searchGridView.Columns.Add(GetSelectColumnTemplateField());
 
-            gridPanel.Controls.Add(searchGridView);
+            gridPanel.Controls.Add(this.searchGridView);
         }
 
-        private TemplateField GetSelectColumnTemplateField()
+        private static TemplateField GetSelectColumnTemplateField()
         {
-            TemplateField selectTemplate = new TemplateField();
-            selectTemplate.HeaderText = Resources.ScrudResource.Select;
+            var selectTemplate = new TemplateField();
+            selectTemplate.HeaderText = ScrudResource.Select;
 
-            using (ScrudItemSelectorSelectTemplate itemTemplate = new ScrudItemSelectorSelectTemplate())
+            using (var itemTemplate = new ScrudItemSelectorSelectTemplate())
             {
                 selectTemplate.ItemTemplate = itemTemplate;
             }

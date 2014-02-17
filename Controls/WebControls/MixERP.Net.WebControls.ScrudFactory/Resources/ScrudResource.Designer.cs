@@ -9,9 +9,6 @@
 //------------------------------------------------------------------------------
 
 namespace MixERP.Net.WebControls.ScrudFactory.Resources {
-    using System;
-    
-    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -142,6 +139,15 @@ namespace MixERP.Net.WebControls.ScrudFactory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The property &apos;KeyColumn&apos; cannot be left empty..
+        /// </summary>
+        internal static string KeyColumnEmptyExceptionMessage {
+            get {
+                return ResourceManager.GetString("KeyColumnEmptyExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nothing selected!.
         /// </summary>
         internal static string NothingSelected {
@@ -241,6 +247,24 @@ namespace MixERP.Net.WebControls.ScrudFactory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The property &apos;Table&apos; cannot be left empty..
+        /// </summary>
+        internal static string TableEmptyExceptionMessage {
+            get {
+                return ResourceManager.GetString("TableEmptyExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The property &apos;TableSchema&apos; cannot be left empty..
+        /// </summary>
+        internal static string TableSchemaEmptyExceptionMessage {
+            get {
+                return ResourceManager.GetString("TableSchemaEmptyExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The task was completed successfully..
         /// </summary>
         internal static string TaskCompletedSuccessfully {
@@ -255,6 +279,24 @@ namespace MixERP.Net.WebControls.ScrudFactory.Resources {
         internal static string UnknownError {
             get {
                 return ResourceManager.GetString("UnknownError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The property &apos;View&apos; cannot be left empty..
+        /// </summary>
+        internal static string ViewEmptyExceptionMessage {
+            get {
+                return ResourceManager.GetString("ViewEmptyExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The property &apos;ViewSchema&apos; cannot be left empty..
+        /// </summary>
+        internal static string ViewSchemaEmptyExceptionMessage {
+            get {
+                return ResourceManager.GetString("ViewSchemaEmptyExceptionMessage", resourceCulture);
             }
         }
         

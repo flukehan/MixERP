@@ -5,10 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 
@@ -16,9 +13,9 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 {
     public class AjaxProgressTemplate : ITemplate
     {
-        private string cssClass;
-        private string spinnerImageCssClass;
-        private string spinnerImagePath;
+        private readonly string cssClass;
+        private readonly string spinnerImageCssClass;
+        private readonly string spinnerImagePath;
 
 
         public AjaxProgressTemplate(string cssClass, string spinnerImageCssClass, string spinnerImagePath)
@@ -36,11 +33,11 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
                 return;
             }
 
-            using (HtmlGenericControl ajaxProgressDiv = new HtmlGenericControl("div"))
+            using (var ajaxProgressDiv = new HtmlGenericControl("div"))
             {
                 ajaxProgressDiv.Attributes.Add("class", this.cssClass);
 
-                using (HtmlGenericControl ajaxImage = new HtmlGenericControl("img"))
+                using (var ajaxImage = new HtmlGenericControl("img"))
                 {
                     ajaxImage.Attributes.Add("src", this.spinnerImagePath);
                     ajaxImage.Attributes.Add("class", this.spinnerImageCssClass);

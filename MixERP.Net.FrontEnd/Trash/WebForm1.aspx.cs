@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace MixERP.Net.FrontEnd.Trash
 {
-    public partial class WebForm1 : System.Web.UI.Page
+    public partial class WebForm1 : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

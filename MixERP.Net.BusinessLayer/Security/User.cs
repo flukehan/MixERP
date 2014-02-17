@@ -8,29 +8,33 @@ http://mozilla.org/MPL/2.0/.
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Security;
 using System.Data;
+using System.Web.UI;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Models.Office;
 
 namespace MixERP.Net.BusinessLayer.Security
 {
     public static class User
     {
-        public static bool SetSession(System.Web.UI.Page page, string user)
+        public static bool SetSession(Page page, string user)
         {
             if (page != null)
             {
                 try
                 {
 
-                    MixERP.Net.Common.Models.Office.SignInView signInView = GetLastSignInView(user);
+                    SignInView signInView = GetLastSignInView(user);
                     long LogOnId = signInView.LogOnId;
 
                     if (LogOnId.Equals(0))
                     {
-                        MixERP.Net.BusinessLayer.MixERPWebPage.RequestLogOnPage();
+                        MixERPWebpage.RequestLogOnPage();
                         return false;
                     }
 
@@ -44,7 +48,7 @@ namespace MixERP.Net.BusinessLayer.Security
                     page.Session["IsAdmin"] = signInView.IsAdmin;
                     page.Session["OfficeCode"] = signInView.OfficeCode;
                     page.Session["OfficeId"] = signInView.OfficeId;
-                    page.Session["NickName"] = signInView.NickName;
+                    page.Session["NickName"] = signInView.Nickname;
                     page.Session["OfficeName"] = signInView.OfficeName;
                     page.Session["RegistrationDate"] = signInView.RegistrationDate;
                     page.Session["RegistrationNumber"] = signInView.RegistrationNumber;
@@ -72,16 +76,17 @@ namespace MixERP.Net.BusinessLayer.Security
             return false;
         }
 
-        public static bool SignIn(int officeId, string userName, string password, string culture, bool remember, System.Web.UI.Page page)
+        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        public static bool SignIn(int officeId, string userName, string password, string culture, bool remember, Page page)
         {
             if (page != null)
             {
                 try
                 {
-                    string remoteAddress = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
-                    string remoteUser = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_USER"];
+                    string remoteAddress = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+                    string remoteUser = HttpContext.Current.Request.ServerVariables["REMOTE_USER"];
 
-                    long LogOnId = MixERP.Net.DatabaseLayer.Security.User.SignIn(officeId, userName, MixERP.Net.Common.Conversion.HashSha512(password, userName), page.Request.UserAgent, remoteAddress, remoteUser, culture);
+                    long LogOnId = DatabaseLayer.Security.User.SignIn(officeId, userName, Conversion.HashSha512(password, userName), page.Request.UserAgent, remoteAddress, remoteUser, culture);
 
                     if (LogOnId > 0)
                     {
@@ -110,9 +115,9 @@ namespace MixERP.Net.BusinessLayer.Security
             return false;
         }
 
-        public static MixERP.Net.Common.Models.Office.SignInView GetLastSignInView(string userName)
+        public static SignInView GetLastSignInView(string userName)
         {
-            return MixERP.Net.DatabaseLayer.Security.User.GetLastSignInView(userName);
+            return DatabaseLayer.Security.User.GetLastSignInView(userName);
         }
 
     }

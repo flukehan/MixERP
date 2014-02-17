@@ -17,17 +17,17 @@ namespace MixERP.Net.BusinessLayer.Helpers
     {
         public static void Vacuum()
         {
-            MixERP.Net.DatabaseLayer.Helpers.Maintenance.Vacuum();
+            DatabaseLayer.Helpers.Maintenance.Vacuum();
         }
 
         public static void VacuumFull()
         {
-            MixERP.Net.DatabaseLayer.Helpers.Maintenance.VacuumFull();
+            DatabaseLayer.Helpers.Maintenance.VacuumFull();
         }
 
         public static void Analyze()
         {
-            MixERP.Net.DatabaseLayer.Helpers.Maintenance.Analyze();
+            DatabaseLayer.Helpers.Maintenance.Analyze();
         }
     }
 }

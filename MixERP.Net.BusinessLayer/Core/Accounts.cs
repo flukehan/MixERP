@@ -16,12 +16,12 @@ namespace MixERP.Net.BusinessLayer.Core
     {
         public static bool IsCashAccount(int accountId)
         {
-            return MixERP.Net.DatabaseLayer.Core.Accounts.IsCashAccount(accountId);
+            return DatabaseLayer.Core.Accounts.IsCashAccount(accountId);
         }
 
         public static bool IsCashAccount(string accountCode)
         {
-            return MixERP.Net.DatabaseLayer.Core.Accounts.IsCashAccount(accountCode);
+            return DatabaseLayer.Core.Accounts.IsCashAccount(accountCode);
         }
 
     }

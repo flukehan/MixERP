@@ -5,22 +5,19 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
-    public partial class ScrudForm : CompositeControl
+    public partial class ScrudForm
     {
         private void ClearSelectedValue()
         {
-            foreach(GridViewRow row in formGridView.Rows)
+            foreach(GridViewRow row in this.formGridView.Rows)
             {
-                HtmlInputRadioButton r = (HtmlInputRadioButton)row.Controls[0].Controls[0];
+                var r = (HtmlInputRadioButton)row.Controls[0].Controls[0];
                 if(r.Checked)
                 {
                     r.Checked = false;
@@ -30,9 +27,9 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private string GetSelectedValue()
         {
-            foreach(GridViewRow row in formGridView.Rows)
+            foreach(GridViewRow row in this.formGridView.Rows)
             {
-                HtmlInputRadioButton r = (HtmlInputRadioButton)row.Controls[0].Controls[0];
+                var r = (HtmlInputRadioButton)row.Controls[0].Controls[0];
                 if(r.Checked)
                 {
                     return r.Value;

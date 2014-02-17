@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MixERP.Net.Common.Helpers;
 
 namespace MixERP.Net.Common.Models.Transactions
 {
@@ -21,7 +22,7 @@ namespace MixERP.Net.Common.Models.Transactions
             else if(type == TransactionType.Credit)
                 return "Cr";
             else
-                throw new InvalidOperationException(MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString("Warnings", "UnknownTransactionType"));
+                throw new InvalidOperationException(LocalizationHelper.GetResourceString("Warnings", "UnknownTransactionType"));
         }
 
     }

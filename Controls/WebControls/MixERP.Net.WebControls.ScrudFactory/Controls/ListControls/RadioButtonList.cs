@@ -5,14 +5,13 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Helpers;
+using MixERP.Net.WebControls.ScrudFactory.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 {
@@ -25,15 +24,15 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
                 return;
             }
 
-            using (RadioButtonList radioButtonList = GetRadioButtonList(columnName + "_radiobuttonlist", keys, values, selectedValue))
+            using (var radioButtonList = GetRadioButtonList(columnName + "_radiobuttonlist", keys, values, selectedValue))
             {
-                string label = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString(resourceClassName, columnName);
+                var label = LocalizationHelper.GetResourceString(resourceClassName, columnName);
 
                 if (!isNullable)
                 {
-                    using (RequiredFieldValidator required = ScrudFactoryHelper.GetRequiredFieldValidator(radioButtonList))
+                    using (var required = ScrudFactoryHelper.GetRequiredFieldValidator(radioButtonList))
                     {
-                        ScrudFactoryHelper.AddRow(htmlTable, label + Resources.ScrudResource.RequiredFieldIndicator, radioButtonList, required);
+                        ScrudFactoryHelper.AddRow(htmlTable, label + ScrudResource.RequiredFieldIndicator, radioButtonList, required);
                         return;
                     }
                 }
@@ -49,10 +48,10 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
                 return null;
             }
 
-            using (RadioButtonList list = new RadioButtonList())
+            using (var list = new RadioButtonList())
             {
                 list.ID = id;
-                list.ClientIDMode = System.Web.UI.ClientIDMode.Static;
+                list.ClientIDMode = ClientIDMode.Static;
 
                 list.RepeatDirection = RepeatDirection.Horizontal;
                 Helper.AddListItems(list, keys, values, selectedValues);

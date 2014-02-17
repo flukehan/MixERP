@@ -11,6 +11,8 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Text;
+using System.Threading;
+using System.Web;
 using System.Windows.Forms;
 using System.Resources;
 using System.Collections;
@@ -23,13 +25,13 @@ namespace MixERP.Net.Common.Helpers
     {
         public static string GetResourceString(string className, string key)
         {
-            if (string.IsNullOrWhiteSpace(key) || System.Web.HttpContext.Current == null)
+            if (string.IsNullOrWhiteSpace(key) || HttpContext.Current == null)
             {
                 return string.Empty;
             }
             try
             {
-                return System.Web.HttpContext.GetGlobalResourceObject(className, key, GetCurrentCulture()).ToString();
+                return HttpContext.GetGlobalResourceObject(className, key, GetCurrentCulture()).ToString();
             }
             catch
             {
@@ -39,13 +41,13 @@ namespace MixERP.Net.Common.Helpers
 
         public static string GetResourceString(string className, string key, bool throwError)
         {
-            if (string.IsNullOrWhiteSpace(key) || System.Web.HttpContext.Current == null)
+            if (string.IsNullOrWhiteSpace(key) || HttpContext.Current == null)
             {
                 return string.Empty;
             }
             try
             {
-                return System.Web.HttpContext.GetGlobalResourceObject(className, key, GetCurrentCulture()).ToString();
+                return HttpContext.GetGlobalResourceObject(className, key, GetCurrentCulture()).ToString();
             }
             catch
             {
@@ -103,7 +105,7 @@ namespace MixERP.Net.Common.Helpers
 
         public static CultureInfo GetCurrentCulture()
         {
-            CultureInfo culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
+            CultureInfo culture = Thread.CurrentThread.CurrentUICulture;
             return culture;
         }
 

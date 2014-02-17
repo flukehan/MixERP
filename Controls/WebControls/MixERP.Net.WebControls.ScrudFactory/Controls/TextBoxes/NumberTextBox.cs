@@ -6,13 +6,12 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Helpers;
+using MixERP.Net.WebControls.ScrudFactory.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 {
@@ -30,9 +29,9 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
                 return;
             }
 
-            TextBox textBox = GetNumberTextBox(columnName + "_textbox", maxLength);
-            CompareValidator numberValidator = GetNumberValidator(textBox, domain);
-            string label = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString(resourceClassName, columnName);
+            var textBox = GetNumberTextBox(columnName + "_textbox", maxLength);
+            var numberValidator = GetNumberValidator(textBox, domain);
+            var label = LocalizationHelper.GetResourceString(resourceClassName, columnName);
 
             if (!string.IsNullOrWhiteSpace(defaultValue))
             {
@@ -52,8 +51,8 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
             {
                 if (!isNullable)
                 {
-                    RequiredFieldValidator required = ScrudFactoryHelper.GetRequiredFieldValidator(textBox);
-                    ScrudFactoryHelper.AddRow(htmlTable, label + Resources.ScrudResource.RequiredFieldIndicator, textBox, numberValidator, required);
+                    var required = ScrudFactoryHelper.GetRequiredFieldValidator(textBox);
+                    ScrudFactoryHelper.AddRow(htmlTable, label + ScrudResource.RequiredFieldIndicator, textBox, numberValidator, required);
                     return;
                 }
             }
@@ -63,17 +62,17 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 
         private static TextBox GetNumberTextBox(string id, int maxLength)
         {
-            TextBox textBox = ScrudTextBox.GetTextBox(id, maxLength);
+            var textBox = ScrudTextBox.GetTextBox(id, maxLength);
             //textBox.Attributes["type"] = "number";
             return textBox;
         }
 
         private static CompareValidator GetNumberValidator(Control controlToValidate, string domain)
         {
-            using (CompareValidator validator = new CompareValidator())
+            using (var validator = new CompareValidator())
             {
                 validator.ID = controlToValidate.ID + "NumberValidator";
-                validator.ErrorMessage = "<br/>" + Resources.ScrudResource.OnlyNumbersAllowed;
+                validator.ErrorMessage = "<br/>" + ScrudResource.OnlyNumbersAllowed;
                 validator.CssClass = "form-error";
                 validator.ControlToValidate = controlToValidate.ID;
                 validator.EnableClientScript = true;

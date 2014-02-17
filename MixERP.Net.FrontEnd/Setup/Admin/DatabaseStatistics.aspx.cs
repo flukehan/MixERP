@@ -4,26 +4,29 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.BusinessLayer;
+using MixERP.Net.BusinessLayer.Helpers;
 using MixERP.Net.WebControls.ScrudFactory;
+using Resources;
 
 namespace MixERP.Net.FrontEnd.Setup.Admin
 {
-    public partial class DatabaseStatistics : MixERP.Net.BusinessLayer.MixERPWebPage
+    public partial class DatabaseStatistics : MixERPWebpage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            VacuumButton.OnClientClick = "return(confirm('" + Resources.Questions.ConfirmVacuum + "'));";
-            FullVacuumButton.OnClientClick = "return(confirm('" + Resources.Questions.ConfirmVacuumFull + "'));";
-            AnalyzeButton.OnClientClick = "return(confirm('" + Resources.Questions.ConfirmAnalyze + "'));";
+            this.VacuumButton.OnClientClick = "return(confirm('" + Questions.ConfirmVacuum + "'));";
+            this.FullVacuumButton.OnClientClick = "return(confirm('" + Questions.ConfirmVacuumFull + "'));";
+            this.AnalyzeButton.OnClientClick = "return(confirm('" + Questions.ConfirmAnalyze + "'));";
             this.AddScrud();
             this.LocalizeButtons();
         }
 
         private void LocalizeButtons()
         {
-            VacuumButton.Text = Resources.Titles.VacuumDatabase;
-            FullVacuumButton.Text = Resources.Titles.VacuumFullDatabase;
-            AnalyzeButton.Text = Resources.Titles.AnalyzeDatabse;
+            this.VacuumButton.Text = Titles.VacuumDatabase;
+            this.FullVacuumButton.Text = Titles.VacuumFullDatabase;
+            this.AnalyzeButton.Text = Titles.AnalyzeDatabse;
         }
 
         private void AddScrud()
@@ -42,33 +45,33 @@ namespace MixERP.Net.FrontEnd.Setup.Admin
                 scrud.ViewSchema = "public";
                 scrud.View = "db_stat";
 
-                scrud.Text = Resources.Titles.DatabaseStatistics;
+                scrud.Text = Titles.DatabaseStatistics;
 
-                ScriptManager1.NamingContainer.Controls.Add(scrud);
+                this.ScrudPlaceholder.Controls.Add(scrud);
             }
         }
 
         protected void VacuumButton_Click(object sender, EventArgs e)
         {
-            MixERP.Net.BusinessLayer.Helpers.Maintenance.Vacuum();
+            Maintenance.Vacuum();
             this.DisplaySuccess();
         }
 
         protected void FullVacuumButton_Click(object sender, EventArgs e)
         {
-            MixERP.Net.BusinessLayer.Helpers.Maintenance.VacuumFull();
+            Maintenance.VacuumFull();
             this.DisplaySuccess();
         }
 
         protected void AnalyzeButton_Click(object sender, EventArgs e)
         {
-            MixERP.Net.BusinessLayer.Helpers.Maintenance.Analyze();
+            Maintenance.Analyze();
             this.DisplaySuccess();
         }
 
         private void DisplaySuccess()
         {
-            MessageLiteral.Text = "<div class='success'>Task completed successfully.</div>";
+            this.MessageLiteral.Text = "<div class='success'>Task completed successfully.</div>";
         }
     }
 }

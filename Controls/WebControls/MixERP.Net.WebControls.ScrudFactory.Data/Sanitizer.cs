@@ -30,7 +30,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
         /// </returns>
         public static string SanitizeIdentifierName(string identifier)
         {
-            return MixERP.Net.DBFactory.Sanitizer.SanitizeIdentifierName(identifier);
+            return DBFactory.Sanitizer.SanitizeIdentifierName(identifier);
         }
 
     }

@@ -6,6 +6,9 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 
+using System.Diagnostics.CodeAnalysis;
+using System.Threading;
+using MixERP.Net.DBFactory;
 using Npgsql;
 using System;
 /********************************************************************************
@@ -26,30 +29,30 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
     {
         public static DataTable GetView(string tableSchema, string tableName, string orderBy, int limit, int offset)
         {
-            return MixERP.Net.DBFactory.FormHelper.GetView(tableSchema, tableName, orderBy, limit, offset);
+            return DBFactory.FormHelper.GetView(tableSchema, tableName, orderBy, limit, offset);
         }
         
         public static DataTable GetTable(string tableSchema, string tableName)
         {
-            return MixERP.Net.DBFactory.FormHelper.GetTable(tableSchema, tableName);
+            return DBFactory.FormHelper.GetTable(tableSchema, tableName);
         }
 
         public static DataTable GetTable(string tableSchema, string tableName, string columnNames, string columnValues)
         {
-            return MixERP.Net.DBFactory.FormHelper.GetTable(tableSchema, tableName, columnNames, columnValues);
+            return DBFactory.FormHelper.GetTable(tableSchema, tableName, columnNames, columnValues);
         }
 
         public static DataTable GetTable(string tableSchema, string tableName, string columnNames, string columnValuesLike, int limit)
         {
-            return MixERP.Net.DBFactory.FormHelper.GetTable(tableSchema, tableName, columnNames, columnValuesLike, limit);
+            return DBFactory.FormHelper.GetTable(tableSchema, tableName, columnNames, columnValuesLike, limit);
         }
 
         public static int GetTotalRecords(string tableSchema, string tableName)
         {
-            return MixERP.Net.DBFactory.FormHelper.GetTotalRecords(tableSchema, tableName);
+            return DBFactory.FormHelper.GetTotalRecords(tableSchema, tableName);
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
+        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times"), SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
         public static bool InsertRecord(int userId, string tableSchema, string tableName, Collection<KeyValuePair<string, string>> data, string imageColumn)
         {
             if (data == null)
@@ -114,11 +117,11 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
 
                 command.Parameters.Add("@AuditUserId", userId);
 
-                return MixERP.Net.DBFactory.DBOperations.ExecuteNonQuery(command);
+                return DBOperations.ExecuteNonQuery(command);
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
+        [SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
         public static bool UpdateRecord(int userId, string tableSchema, string tableName, Collection<KeyValuePair<string, string>> data, string keyColumn, string keyColumnValue, string imageColumn)
         {
             if (data == null)
@@ -131,7 +134,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
             int counter = 0;
 
             //Adding the current user to the column collection.
-            KeyValuePair<string, string> auditUserId = new KeyValuePair<string, string>("audit_user_id", userId.ToString(System.Threading.Thread.CurrentThread.CurrentCulture));
+            KeyValuePair<string, string> auditUserId = new KeyValuePair<string, string>("audit_user_id", userId.ToString(Thread.CurrentThread.CurrentCulture));
             data.Add(auditUserId);
 
             foreach (KeyValuePair<string, string> pair in data)
@@ -195,7 +198,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
 
                 command.Parameters.Add("@KeyValue", keyColumnValue);
 
-                return MixERP.Net.DBFactory.DBOperations.ExecuteNonQuery(command);
+                return DBOperations.ExecuteNonQuery(command);
             }
         }
 
@@ -212,7 +215,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
 
                 command.Parameters.Add("@KeyValue", keyColumnValue);
 
-                return MixERP.Net.DBFactory.DBOperations.ExecuteNonQuery(command);
+                return DBOperations.ExecuteNonQuery(command);
             }
         }
     }

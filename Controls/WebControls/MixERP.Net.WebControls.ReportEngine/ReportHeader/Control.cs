@@ -7,10 +7,13 @@ http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Microsoft.SqlServer.Server;
+using MixERP.Net.WebControls.ReportEngine.Helpers;
 
 namespace MixERP.Net.WebControls.ReportEngine
 {
@@ -21,17 +24,29 @@ namespace MixERP.Net.WebControls.ReportEngine
 
         public string GetHtml()
         {
-            return html;
+            return this.html;
+        }
+
+        private string GetPath()
+        {
+            if (!string.IsNullOrWhiteSpace(this.path))
+            {
+                return this.path;
+            }
+
+            return Common.Helpers.ConfigurationHelper.GetReportParameter("HeaderPath");
         }
 
         private bool IsValid()
         {
-            if(string.IsNullOrWhiteSpace(this.path))
+            string headerPath = this.GetPath();
+
+            if (string.IsNullOrWhiteSpace(headerPath))
             {
                 return false;
             }
 
-            if(!System.IO.File.Exists(this.Page.Server.MapPath(this.path)))
+            if (!File.Exists(this.Page.Server.MapPath(headerPath)))
             {
                 return false;
             }
@@ -42,18 +57,18 @@ namespace MixERP.Net.WebControls.ReportEngine
         private void PrepareReportHeader()
         {
 
-            string header = System.IO.File.ReadAllText(this.Page.Server.MapPath(this.Path));
-            html = MixERP.Net.WebControls.ReportEngine.Helpers.ReportParser.ParseExpression(header);
+            string header = File.ReadAllText(this.Page.Server.MapPath(this.GetPath()));
+            this.html = ReportParser.ParseExpression(header);
         }
 
         protected override void RecreateChildControls()
         {
-            EnsureChildControls();
+            this.EnsureChildControls();
         }
 
         protected override void Render(HtmlTextWriter w)
         {
-            if(!this.IsValid())
+            if (!this.IsValid())
             {
                 return;
             }

@@ -49,5 +49,7 @@
 </div>
 
 <script type="text/javascript">
-    preparePieChart('top-selling-products-datasource', 'top-selling-products-canvas', 'top-selling-products-legend', 'pie');
+    $(document).ready(function(){
+        preparePieChart('top-selling-products-datasource', 'top-selling-products-canvas', 'top-selling-products-legend', 'pie');
+    });
 </script>

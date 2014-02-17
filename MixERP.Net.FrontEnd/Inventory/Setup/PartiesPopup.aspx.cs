@@ -11,13 +11,15 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.BusinessLayer;
 using MixERP.Net.BusinessLayer.Helpers;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.ScrudFactory;
+using Resources;
 
 namespace MixERP.Net.FrontEnd.Inventory.Setup
 {
-    public partial class PartiesPopup : MixERP.Net.BusinessLayer.MixERPWebPage
+    public partial class PartiesPopup : MixERPWebpage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -29,8 +31,8 @@ namespace MixERP.Net.FrontEnd.Inventory.Setup
                 scrud.ViewSchema = "core";
                 scrud.View = "party_view";
 
-                scrud.Text = Resources.Titles.PartyMaintenance;
-                scrud.Description = Resources.Labels.PartyDescription;
+                scrud.Text = Titles.PartyMaintenance;
+                scrud.Description = Labels.PartyDescription;
                 scrud.Width = 4000;
 
                 //Party code will be automtically generated on the database.
@@ -40,7 +42,7 @@ namespace MixERP.Net.FrontEnd.Inventory.Setup
                 scrud.DisplayViews = GetDisplayViews();
                 scrud.SelectedValues = GetSelectedValues();
 
-                container.Controls.Add(scrud);
+                this.container.Controls.Add(scrud);
             }
         }
 
@@ -75,7 +77,7 @@ namespace MixERP.Net.FrontEnd.Inventory.Setup
 
         public static string GetPartyNameParameter()
         {
-            return MixERP.Net.Common.Helpers.Parameters.PartyNameFormat();
+            return Parameters.PartyNameFormat();
         }
 
     }

@@ -17,9 +17,9 @@ namespace MixERP.Net.BusinessLayer.Office
 {
     public static class Offices
     {
-        public static Collection<MixERP.Net.Common.Models.Office.Office> GetOffices()
+        public static Collection<Common.Models.Office.Office> GetOffices()
         {
-            return MixERP.Net.DatabaseLayer.Office.Offices.GetOffices();
+            return DatabaseLayer.Office.Offices.GetOffices();
         }
     }
 }

@@ -5,16 +5,12 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
+
 using System.Web.UI.WebControls;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
-    public partial class ScrudForm
+    public partial class ScrudForm : CompositeControl
     {
         /// <summary>
         /// This property when set to true will restrict a user from editing the selected row. 

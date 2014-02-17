@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace MixERP.Net.FrontEnd.UserControls
 {
-    public partial class CurrencyExtender : System.Web.UI.UserControl
+    public partial class CurrencyExtender : UserControl
     {
         protected void Page_Load(object sender, EventArgs e)
         {

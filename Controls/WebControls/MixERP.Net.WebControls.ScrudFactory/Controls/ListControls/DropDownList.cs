@@ -5,6 +5,8 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
+
+using MixERP.Net.WebControls.ScrudFactory.Data;
 using MixERP.Net.WebControls.ScrudFactory.Helpers;
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
@@ -14,14 +16,14 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.WebControls.ScrudFactory.Resources;
+using FormHelper = MixERP.Net.WebControls.ScrudFactory.Data.FormHelper;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 {
@@ -29,13 +31,13 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
     {
         public static void AddDropDownList(HtmlTable htmlTable, string resourceClassName, string itemSelectorPath, string columnName, bool isNullable, string tableSchema, string tableName, string tableColumn, string defaultValue, string displayFields, string displayViews, string selectedValues)
         {
-            string label = LocalizationHelper.GetResourceString(resourceClassName, columnName);
+            var label = LocalizationHelper.GetResourceString(resourceClassName, columnName);
 
-            DropDownList dropDownList = GetDropDownList(columnName + "_dropdownlist");
+            var dropDownList = GetDropDownList(columnName + "_dropdownlist");
 
             HtmlAnchor itemSelectorAnchor;
 
-            using (System.Data.DataTable table = MixERP.Net.WebControls.ScrudFactory.Data.FormHelper.GetTable(tableSchema, tableName))
+            using (var table = FormHelper.GetTable(tableSchema, tableName))
             {
                 SetDisplayFields(dropDownList, table, tableSchema, tableName, tableColumn, displayFields);
                 itemSelectorAnchor = GetItemSelector(dropDownList.ClientID, table,itemSelectorPath, tableSchema, tableName, tableColumn, displayViews);
@@ -50,8 +52,8 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
             }
             else
             {
-                RequiredFieldValidator required = ScrudFactoryHelper.GetRequiredFieldValidator(dropDownList);
-                ScrudFactoryHelper.AddRow(htmlTable, label + Resources.ScrudResource.RequiredFieldIndicator, dropDownList, required, itemSelectorAnchor);
+                var required = ScrudFactoryHelper.GetRequiredFieldValidator(dropDownList);
+                ScrudFactoryHelper.AddRow(htmlTable, label + ScrudResource.RequiredFieldIndicator, dropDownList, required, itemSelectorAnchor);
             }
         }
 
@@ -64,15 +66,15 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
             }
 
             //Fully qualified relation name (PostgreSQL Terminology).
-            string relation = schema + "." + table + "." + column;
+            var relation = schema + "." + table + "." + column;
 
-            char itemSeparator = char.Parse(MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("ItemSeparator"));
-            string expressionSeparator = MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("ExpressionSeparator");
+            var itemSeparator = char.Parse(ConfigurationHelper.GetScrudParameter("ItemSeparator"));
+            var expressionSeparator = ConfigurationHelper.GetScrudParameter("ExpressionSeparator");
 
-            foreach (string item in expressions.Split(itemSeparator))
+            foreach (var item in expressions.Split(itemSeparator))
             {
                 //First, trim the field to remove whitespaces.
-                string expression = item.Trim(); ;
+                var expression = item.Trim();
 
                 //Check whether this expression matches with the fully qualified column name.
                 if (expression.StartsWith(relation, StringComparison.OrdinalIgnoreCase))
@@ -89,7 +91,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
         private static void SetDisplayFields(DropDownList dropDownList, DataTable table, string tableSchema, string tableName, string tableColumn, string displayFields)
         {
             //See DisplayFields Property for more information.
-            string columnOrExpression = string.Empty;
+            var columnOrExpression = string.Empty;
 
             if (table.Rows.Count > 0)
             {
@@ -120,6 +122,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
         /// </summary>
         /// <param name="associatedControlId">ClientID of the DropDownList control to wich this control is associated to.</param>
         /// <param name="table"></param>
+        /// <param name="itemSelectorPath"></param>
         /// <param name="tableSchema"></param>
         /// <param name="tableName"></param>
         /// <param name="tableColumn"></param>
@@ -132,13 +135,13 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
                 return null;
             }
 
-            using (HtmlAnchor itemSelectorAnchor = new HtmlAnchor())
+            using (var itemSelectorAnchor = new HtmlAnchor())
             {
                 //string relation = string.Empty;
-                string viewRelation = string.Empty;
+                var viewRelation = string.Empty;
 
-                string schema = string.Empty;
-                string view = string.Empty;
+                var schema = string.Empty;
+                var view = string.Empty;
 
                 //Get the expression value of display view from comma seprated list of expressions.
                 //The expression must be a valid fully qualified table or view name.
@@ -148,15 +151,15 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
                 view = viewRelation.Split('.').Last();
 
                 //Sanitize the schema and the view
-                schema = MixERP.Net.WebControls.ScrudFactory.Data.Sanitizer.SanitizeIdentifierName(schema);
-                view = MixERP.Net.WebControls.ScrudFactory.Data.Sanitizer.SanitizeIdentifierName(view);
+                schema = Sanitizer.SanitizeIdentifierName(schema);
+                view = Sanitizer.SanitizeIdentifierName(view);
 
                 if (string.IsNullOrWhiteSpace(schema) || string.IsNullOrWhiteSpace(view))
                 {
                     return null;
                 }
 
-                itemSelectorAnchor.Attributes["class"] = MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("ItemSelectorAnchorCssClass");
+                itemSelectorAnchor.Attributes["class"] = ConfigurationHelper.GetScrudParameter("ItemSelectorAnchorCssClass");
                 itemSelectorAnchor.HRef = itemSelectorPath + "?Schema=" + schema + "&View=" + view + "&AssociatedControlId=" + associatedControlId;
 
                 return itemSelectorAnchor;
@@ -165,7 +168,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 
         private static void SetSelectedValue(DropDownList dropDownList, string schema, string table, string column, string postbackValue, string selectedValueExpressions)
         {
-            string selectedItemValue = string.Empty;
+            var selectedItemValue = string.Empty;
 
             if (dropDownList == null || string.IsNullOrWhiteSpace(schema) || string.IsNullOrWhiteSpace(table) || string.IsNullOrWhiteSpace(column))
             {
@@ -187,12 +190,12 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
                 //Find value from expressions.
                 if (!string.IsNullOrWhiteSpace(selectedValueExpressions))
                 {
-                    string value = GetExpressionValue(selectedValueExpressions, schema, table, column);
+                    var value = GetExpressionValue(selectedValueExpressions, schema, table, column);
 
                     if (value.StartsWith("'", StringComparison.OrdinalIgnoreCase))
                     {
                         //If the value starts with a quote, find the value by the text.
-                        ListItem item = dropDownList.Items.FindByText(value.Replace("'", ""));
+                        var item = dropDownList.Items.FindByText(value.Replace("'", ""));
 
                         if (item != null)
                         {
@@ -222,10 +225,10 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 
         private static DropDownList GetDropDownList(string id)
         {
-            using (DropDownList dropDownList = new DropDownList())
+            using (var dropDownList = new DropDownList())
             {
                 dropDownList.ID = id;
-                dropDownList.ClientIDMode = System.Web.UI.ClientIDMode.Static;
+                dropDownList.ClientIDMode = ClientIDMode.Static;
 
                 return dropDownList;
             }

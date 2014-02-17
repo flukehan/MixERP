@@ -5,16 +5,16 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
+using System.Globalization;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.WebControls.ScrudFactory.Resources;
 using Wuqi.Webdiyer;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
-    public partial class ScrudForm : CompositeControl
+    public partial class ScrudForm
     {
         Panel gridPanel;
         GridView formGridView;
@@ -22,51 +22,51 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private void CreateGridPanel()
         {
-            gridPanel = new Panel();
-            gridPanel.ID = "GridPanel";
-            gridPanel.ScrollBars = ScrollBars.Auto;
-            gridPanel.Width = Unit.Parse(MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("GridPanelDefaultWidth"));
+            this.gridPanel = new Panel();
+            this.gridPanel.ID = "GridPanel";
+            this.gridPanel.ScrollBars = ScrollBars.Auto;
+            this.gridPanel.Width = Unit.Parse(ConfigurationHelper.GetScrudParameter("GridPanelDefaultWidth"), CultureInfo.InvariantCulture);
 
-            this.AddGridView(gridPanel);
-            this.AddPager(gridPanel);
+            this.AddGridView(this.gridPanel);
+            this.AddPager(this.gridPanel);
         }
 
         private void AddGridView(Panel p)
         {
-            formGridView = new GridView();
-            formGridView.ID = "FormGridView";
-            formGridView.GridLines = GridLines.None;
-            formGridView.CssClass = this.GetGridViewCssClass();
-            formGridView.RowStyle.CssClass = "row";
-            formGridView.AlternatingRowStyle.CssClass = "alt";
-            formGridView.AutoGenerateColumns = true;
-            formGridView.RowDataBound += this.FormGridView_RowDataBound;
+            this.formGridView = new GridView();
+            this.formGridView.ID = "FormGridView";
+            this.formGridView.GridLines = GridLines.None;
+            this.formGridView.CssClass = this.GetGridViewCssClass();
+            this.formGridView.RowStyle.CssClass = "row";
+            this.formGridView.AlternatingRowStyle.CssClass = "alt";
+            this.formGridView.AutoGenerateColumns = true;
+            this.formGridView.RowDataBound += this.FormGridView_RowDataBound;
 
-            TemplateField selectField = new TemplateField();
-            selectField.HeaderText = Resources.ScrudResource.Select;
+            var selectField = new TemplateField();
+            selectField.HeaderText = ScrudResource.Select;
             selectField.ItemStyle.Width = 20;
-            formGridView.Columns.Add(selectField);
+            this.formGridView.Columns.Add(selectField);
 
-            p.Controls.Add(formGridView);
+            p.Controls.Add(this.formGridView);
         }
 
         private void AddPager(Panel p)
         {
-            pager = new AspNetPager();
-            pager.ID = "Pager";
-            pager.CssClass = "pager";
-            pager.UrlPaging = true;
-            pager.PagingButtonType = PagingButtonType.Text;
-            pager.NumericButtonType = PagingButtonType.Text;
-            pager.NavigationButtonType = PagingButtonType.Text;
-            pager.ShowNavigationToolTip = true;
-            pager.ShowPageIndexBox = ShowPageIndexBox.Never;
-            pager.ShowPageIndex = true;
-            pager.AlwaysShowFirstLastPageNumber = true;
-            pager.AlwaysShow = false;
-            pager.UrlPageIndexName = "page";
+            this.pager = new AspNetPager();
+            this.pager.ID = "Pager";
+            this.pager.CssClass = "pager";
+            this.pager.UrlPaging = true;
+            this.pager.PagingButtonType = PagingButtonType.Text;
+            this.pager.NumericButtonType = PagingButtonType.Text;
+            this.pager.NavigationButtonType = PagingButtonType.Text;
+            this.pager.ShowNavigationToolTip = true;
+            this.pager.ShowPageIndexBox = ShowPageIndexBox.Never;
+            this.pager.ShowPageIndex = true;
+            this.pager.AlwaysShowFirstLastPageNumber = true;
+            this.pager.AlwaysShow = false;
+            this.pager.UrlPageIndexName = "page";
 
-            p.Controls.Add(pager);
+            p.Controls.Add(this.pager);
         }
     }
 }

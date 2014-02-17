@@ -35,13 +35,13 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data.Models
 
         public void AddViewToCollection(ProductDetailsModel product)
         {
-            view.Add(product);
+            this.view.Add(product);
         }
 
         public string StatementReference { get; set; }
 
-        public MixERP.Net.Common.Models.Transactions.TranBook Book { get; set; }
-        public MixERP.Net.Common.Models.Transactions.SubTranBook SubBook { get; set; }
+        public TranBook Book { get; set; }
+        public SubTranBook SubBook { get; set; }
 
         private Collection<int> transactionIdCollection = new Collection<int>();
         public Collection<int> TransactionIdCollection

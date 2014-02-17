@@ -5,16 +5,13 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
-    public partial class ScrudForm : CompositeControl
+    public partial class ScrudForm
     {
         Label titleLabel;
         Label descriptionLabel;
@@ -26,24 +23,24 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 return;
             }
 
-            using (HtmlGenericControl heading = new HtmlGenericControl("h1"))
+            using (var heading = new HtmlGenericControl("h1"))
             {
-                titleLabel = new Label();
-                titleLabel.ID = "TitleLabel";
-                heading.Controls.Add(titleLabel);
+                this.titleLabel = new Label();
+                this.titleLabel.ID = "TitleLabel";
+                heading.Controls.Add(this.titleLabel);
                 p.Controls.Add(heading);
             }
         }
 
         private void AddDescription(Panel p)
         {
-            descriptionLabel = new Label();
-            p.Controls.Add(descriptionLabel);
+            this.descriptionLabel = new Label();
+            p.Controls.Add(this.descriptionLabel);
         }
 
         private void LoadTitle()
         {
-            titleLabel.Text = this.Text;
+            this.titleLabel.Text = this.Text;
             this.Page.Title = this.Text;
         }
 
@@ -54,7 +51,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 return;
             }
 
-            using (HtmlGenericControl ruler = new HtmlGenericControl("hr"))
+            using (var ruler = new HtmlGenericControl("hr"))
             {
                 ruler.Attributes.Add("class", "hr");
                 p.Controls.Add(ruler);
@@ -65,8 +62,8 @@ namespace MixERP.Net.WebControls.ScrudFactory
         {
             if (!string.IsNullOrWhiteSpace(this.Description))
             {
-                descriptionLabel.CssClass = "description";
-                descriptionLabel.Text = this.Description;
+                this.descriptionLabel.CssClass = "description";
+                this.descriptionLabel.Text = this.Description;
             }
         }
 

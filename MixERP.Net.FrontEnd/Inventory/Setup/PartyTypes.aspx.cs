@@ -11,11 +11,13 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.BusinessLayer;
 using MixERP.Net.WebControls.ScrudFactory;
+using Resources;
 
 namespace MixERP.Net.FrontEnd.Inventory.Setup
 {
-    public partial class PartyTypes : MixERP.Net.BusinessLayer.MixERPWebPage
+    public partial class PartyTypes : MixERPWebpage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -28,9 +30,9 @@ namespace MixERP.Net.FrontEnd.Inventory.Setup
                 scrud.ViewSchema = "core";
                 scrud.View = "party_types";
 
-                scrud.Text = Resources.Titles.PartyTypes;
+                scrud.Text = Titles.PartyTypes;
 
-                ScriptManager1.NamingContainer.Controls.Add(scrud);
+                this.ScrudPlaceholder.Controls.Add(scrud);
             }
         }
     }

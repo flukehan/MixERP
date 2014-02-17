@@ -17,12 +17,12 @@ namespace MixERP.Net.BusinessLayer.Core
     {
         public static DataTable GetUnitViewByItemCode(string itemCode)
         {
-            return MixERP.Net.DatabaseLayer.Core.Units.GetUnitViewByItemCode(itemCode);
+            return DatabaseLayer.Core.Units.GetUnitViewByItemCode(itemCode);
         }
 
         public static bool UnitExistsByName(string unitName)
         {
-            return MixERP.Net.DatabaseLayer.Core.Units.UnitExistsByName(unitName);
+            return DatabaseLayer.Core.Units.UnitExistsByName(unitName);
         }
     }
 }

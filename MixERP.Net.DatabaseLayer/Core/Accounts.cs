@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MixERP.Net.DBFactory;
 using Npgsql;
 
 namespace MixERP.Net.DatabaseLayer.Core
@@ -22,7 +23,7 @@ namespace MixERP.Net.DatabaseLayer.Core
             {
                 command.Parameters.Add("@AccountId", accountId);
 
-                return MixERP.Net.DBFactory.DBOperations.GetDataTable(command).Rows.Count.Equals(1);
+                return DBOperations.GetDataTable(command).Rows.Count.Equals(1);
             }
         }
 
@@ -33,7 +34,7 @@ namespace MixERP.Net.DatabaseLayer.Core
             {
                 command.Parameters.Add("@AccountCode", accountCode);
 
-                return MixERP.Net.DBFactory.DBOperations.GetDataTable(command).Rows.Count.Equals(1);
+                return DBOperations.GetDataTable(command).Rows.Count.Equals(1);
             }
         }
     }

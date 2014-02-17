@@ -8,11 +8,13 @@ http://mozilla.org/MPL/2.0/.
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
 using MixERP.Net.Common;
+using MixERP.Net.DBFactory;
 using Npgsql;
 using System.IO;
 
@@ -30,7 +32,7 @@ namespace MixERP.Net.Tests.PgUnitTest.Helpers
             return true;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
+        [SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
         private static void RunInstallScript()
         {
             bool run = Conversion.TryCastBoolean(ConfigurationManager.AppSettings["RunInstallScript"]);
@@ -44,18 +46,18 @@ namespace MixERP.Net.Tests.PgUnitTest.Helpers
 
             using (NpgsqlCommand command = new NpgsqlCommand(script))
             {
-                MixERP.Net.DBFactory.DBOperations.ExecuteNonQuery(command);
+                DBOperations.ExecuteNonQuery(command);
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
+        [SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
         private static void InstallUnitTests()
         {
             string sql = GetScript();
 
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                MixERP.Net.DBFactory.DBOperations.ExecuteNonQuery(command);
+                DBOperations.ExecuteNonQuery(command);
             }
         }
 
@@ -63,7 +65,7 @@ namespace MixERP.Net.Tests.PgUnitTest.Helpers
         {
             string root = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.FullName;
             string unitTestDirectory = ConfigurationManager.AppSettings["UnitTestDirectory"];
-            string directory = System.IO.Path.Combine(root, unitTestDirectory);
+            string directory = Path.Combine(root, unitTestDirectory);
 
             string sql = CombineScripts(directory);
             return sql;
@@ -87,7 +89,7 @@ namespace MixERP.Net.Tests.PgUnitTest.Helpers
         private static void RecursiveSearch(string directoryPath)
         {
             if (string.IsNullOrWhiteSpace(directoryPath)) return;
-            if (!System.IO.Directory.Exists(directoryPath)) return;
+            if (!Directory.Exists(directoryPath)) return;
 
             foreach (string subDirectory in Directory.GetDirectories(directoryPath))
             {

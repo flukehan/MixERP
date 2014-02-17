@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MixERP.Net.Common;
+using MixERP.Net.DBFactory;
 using Npgsql;
 
 namespace MixERP.Net.DatabaseLayer.Core
@@ -22,7 +24,7 @@ namespace MixERP.Net.DatabaseLayer.Core
             {
                 command.Parameters.Add("@ItemCode", itemCode);
 
-                return MixERP.Net.DBFactory.DBOperations.GetScalarValue(command).ToString().Equals("1");
+                return DBOperations.GetScalarValue(command).ToString().Equals("1");
             }
         }
 
@@ -36,7 +38,7 @@ namespace MixERP.Net.DatabaseLayer.Core
                 command.Parameters.Add("@PriceTypeId", priceTypeId);
                 command.Parameters.Add("@UnitId", unitId);
 
-                return MixERP.Net.Common.Conversion.TryCastDecimal(MixERP.Net.DBFactory.DBOperations.GetScalarValue(command));
+                return Conversion.TryCastDecimal(DBOperations.GetScalarValue(command));
             }
         }
 
@@ -49,7 +51,7 @@ namespace MixERP.Net.DatabaseLayer.Core
                 command.Parameters.Add("@PartyCode", partyCode);
                 command.Parameters.Add("@UnitId", unitId);
 
-                return MixERP.Net.Common.Conversion.TryCastDecimal(MixERP.Net.DBFactory.DBOperations.GetScalarValue(command));
+                return Conversion.TryCastDecimal(DBOperations.GetScalarValue(command));
             }
         }
 
@@ -59,7 +61,7 @@ namespace MixERP.Net.DatabaseLayer.Core
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.Add("@ItemCode", itemCode);
-                return MixERP.Net.Common.Conversion.TryCastDecimal(MixERP.Net.DBFactory.DBOperations.GetScalarValue(command));
+                return Conversion.TryCastDecimal(DBOperations.GetScalarValue(command));
             }
         }
 
@@ -71,7 +73,7 @@ namespace MixERP.Net.DatabaseLayer.Core
                 command.Parameters.Add("@ItemCode", itemCode);
                 command.Parameters.Add("@UnitId", unitId);
                 command.Parameters.Add("@StoreId", storeId);
-                return MixERP.Net.Common.Conversion.TryCastDecimal(MixERP.Net.DBFactory.DBOperations.GetScalarValue(command));
+                return Conversion.TryCastDecimal(DBOperations.GetScalarValue(command));
             }
         }
 
@@ -83,7 +85,7 @@ namespace MixERP.Net.DatabaseLayer.Core
                 command.Parameters.Add("@ItemCode", itemCode);
                 command.Parameters.Add("@UnitName", unitName);
                 command.Parameters.Add("@StoreId", storeId);
-                return MixERP.Net.Common.Conversion.TryCastDecimal(MixERP.Net.DBFactory.DBOperations.GetScalarValue(command));
+                return Conversion.TryCastDecimal(DBOperations.GetScalarValue(command));
             }
         }
 
@@ -94,7 +96,7 @@ namespace MixERP.Net.DatabaseLayer.Core
             {
                 command.Parameters.Add("@ItemCode", itemCode);
 
-                return MixERP.Net.DBFactory.DBOperations.GetDataTable(command).Rows.Count.Equals(1);
+                return DBOperations.GetDataTable(command).Rows.Count.Equals(1);
             }
         }
 

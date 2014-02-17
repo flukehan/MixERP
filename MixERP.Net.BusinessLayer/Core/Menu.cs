@@ -5,6 +5,8 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
+
+using MixERP.Net.BusinessLayer.Helpers;
 using MixERP.Net.Common;
 using System.Collections.ObjectModel;
 /********************************************************************************
@@ -20,16 +22,16 @@ namespace MixERP.Net.BusinessLayer.Core
 {
     public static class Menu
     {
-        public static Collection<MixERP.Net.Common.Models.Core.Menu> GetMenuCollection(string path, short level)
+        public static Collection<Common.Models.Core.Menu> GetMenuCollection(string path, short level)
         {
-            Collection<MixERP.Net.Common.Models.Core.Menu> collection = new Collection<Common.Models.Core.Menu>();
+            Collection<Common.Models.Core.Menu> collection = new Collection<Common.Models.Core.Menu>();
 
             string relativePath = Conversion.GetRelativePath(path);
-            int userId = MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetUserId();
-            int officeId = MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetOfficeId();
-            string culture = MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetCulture().TwoLetterISOLanguageName;
+            int userId = SessionHelper.GetUserId();
+            int officeId = SessionHelper.GetOfficeId();
+            string culture = SessionHelper.GetCulture().TwoLetterISOLanguageName;
 
-            using (DataTable table = MixERP.Net.DatabaseLayer.Core.Menu.GetMenuTable(relativePath, level, userId, officeId, culture))
+            using (DataTable table = DatabaseLayer.Core.Menu.GetMenuTable(relativePath, level, userId, officeId, culture))
             {
                 if (table == null)
                 {
@@ -38,7 +40,7 @@ namespace MixERP.Net.BusinessLayer.Core
 
                 foreach (DataRow row in table.Rows)
                 {
-                    MixERP.Net.Common.Models.Core.Menu model = new Common.Models.Core.Menu();
+                    Common.Models.Core.Menu model = new Common.Models.Core.Menu();
 
                     model.MenuId = Conversion.TryCastInteger(row["menu_id"]);
                     model.MenuText = Conversion.TryCastString(row["menu_text"]);
@@ -53,15 +55,15 @@ namespace MixERP.Net.BusinessLayer.Core
             return collection;
         }
 
-        public static Collection<MixERP.Net.Common.Models.Core.Menu> GetRootMenuCollection(string path)
+        public static Collection<Common.Models.Core.Menu> GetRootMenuCollection(string path)
         {
-            Collection<MixERP.Net.Common.Models.Core.Menu> collection = new Collection<Common.Models.Core.Menu>();
+            Collection<Common.Models.Core.Menu> collection = new Collection<Common.Models.Core.Menu>();
 
-            int userId = MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetUserId();
-            int officeId = MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetOfficeId();
-            string culture = MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetCulture().TwoLetterISOLanguageName;
+            int userId = SessionHelper.GetUserId();
+            int officeId = SessionHelper.GetOfficeId();
+            string culture = SessionHelper.GetCulture().TwoLetterISOLanguageName;
 
-            using (DataTable table = MixERP.Net.DatabaseLayer.Core.Menu.GetRootMenuTable(path, userId, officeId, culture))
+            using (DataTable table = DatabaseLayer.Core.Menu.GetRootMenuTable(path, userId, officeId, culture))
             {
                 if (table == null)
                 {
@@ -70,7 +72,7 @@ namespace MixERP.Net.BusinessLayer.Core
 
                 foreach (DataRow row in table.Rows)
                 {
-                    MixERP.Net.Common.Models.Core.Menu model = new Common.Models.Core.Menu();
+                    Common.Models.Core.Menu model = new Common.Models.Core.Menu();
 
                     model.MenuId = Conversion.TryCastInteger(row["menu_id"]);
                     model.MenuText = Conversion.TryCastString(row["menu_text"]);
@@ -86,15 +88,15 @@ namespace MixERP.Net.BusinessLayer.Core
             return collection;
         }
 
-        public static Collection<MixERP.Net.Common.Models.Core.Menu> GetMenuCollection(int parentMenuId, short level)
+        public static Collection<Common.Models.Core.Menu> GetMenuCollection(int parentMenuId, short level)
         {
-            Collection<MixERP.Net.Common.Models.Core.Menu> collection = new Collection<Common.Models.Core.Menu>();
+            Collection<Common.Models.Core.Menu> collection = new Collection<Common.Models.Core.Menu>();
 
-            int userId = MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetUserId();
-            int officeId = MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetOfficeId();
-            string culture = MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetCulture().TwoLetterISOLanguageName;
+            int userId = SessionHelper.GetUserId();
+            int officeId = SessionHelper.GetOfficeId();
+            string culture = SessionHelper.GetCulture().TwoLetterISOLanguageName;
 
-            using (DataTable table = MixERP.Net.DatabaseLayer.Core.Menu.GetMenuTable(parentMenuId, level, userId, officeId, culture))
+            using (DataTable table = DatabaseLayer.Core.Menu.GetMenuTable(parentMenuId, level, userId, officeId, culture))
             {
                 if (table == null)
                 {
@@ -103,7 +105,7 @@ namespace MixERP.Net.BusinessLayer.Core
 
                 foreach (DataRow row in table.Rows)
                 {
-                    MixERP.Net.Common.Models.Core.Menu model = new Common.Models.Core.Menu();
+                    Common.Models.Core.Menu model = new Common.Models.Core.Menu();
 
                     model.MenuId = Conversion.TryCastInteger(row["menu_id"]);
                     model.MenuText = Conversion.TryCastString(row["menu_text"]);

@@ -8,10 +8,13 @@ http://mozilla.org/MPL/2.0/.
 using System;
 using System.Collections.ObjectModel;
 using System.Web.UI.WebControls;
+using MixERP.Net.BusinessLayer;
+using MixERP.Net.BusinessLayer.Transactions;
+using Resources;
 
 namespace MixERP.Net.FrontEnd.Sales
 {
-    public partial class DeliveryWithoutOrder : MixERP.Net.BusinessLayer.MixERPWebPage
+    public partial class DeliveryWithoutOrder : MixERPWebpage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -20,17 +23,17 @@ namespace MixERP.Net.FrontEnd.Sales
 
         protected void SalesDeliveryControl_SaveButtonClick(object sender, EventArgs e)
         {
-            Collection<int> tranIdCollection = SalesDeliveryControl.GetTranIdCollection();
+            Collection<int> tranIdCollection = this.SalesDeliveryControl.GetTranIdCollection();
 
-            long transactionMasterId = MixERP.Net.BusinessLayer.Transactions.SalesDelivery.Add(SalesDeliveryControl.GetForm.Date, SalesDeliveryControl.GetForm.StoreId, SalesDeliveryControl.GetForm.PartyCode, SalesDeliveryControl.GetForm.PriceTypeId, SalesDeliveryControl.GetForm.Details, SalesDeliveryControl.GetForm.ShippingCompanyId, SalesDeliveryControl.GetForm.ShippingCharge, SalesDeliveryControl.GetForm.CostCenterId, SalesDeliveryControl.GetForm.ReferenceNumber, SalesDeliveryControl.GetForm.AgentId, SalesDeliveryControl.GetForm.StatementReference, tranIdCollection);
+            long transactionMasterId = SalesDelivery.Add(this.SalesDeliveryControl.GetForm.Date, this.SalesDeliveryControl.GetForm.StoreId, this.SalesDeliveryControl.GetForm.PartyCode, this.SalesDeliveryControl.GetForm.PriceTypeId, this.SalesDeliveryControl.GetForm.Details, this.SalesDeliveryControl.GetForm.ShippingCompanyId, this.SalesDeliveryControl.GetForm.ShippingCharge, this.SalesDeliveryControl.GetForm.CostCenterId, this.SalesDeliveryControl.GetForm.ReferenceNumber, this.SalesDeliveryControl.GetForm.AgentId, this.SalesDeliveryControl.GetForm.StatementReference, tranIdCollection);
 
             if (transactionMasterId > 0)
             {
-                Response.Redirect("~/Sales/Confirmation/DeliveryWithoutOrder.aspx?TranId=" + transactionMasterId, true);
+                this.Response.Redirect("~/Sales/Confirmation/DeliveryWithoutOrder.aspx?TranId=" + transactionMasterId, true);
             }
             else
             {
-                SalesDeliveryControl.ErrorMessage = Resources.Labels.UnknownError;
+                this.SalesDeliveryControl.ErrorMessage = Labels.UnknownError;
             }
 
         }

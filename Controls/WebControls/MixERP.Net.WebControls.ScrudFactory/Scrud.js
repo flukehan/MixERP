@@ -14,13 +14,13 @@ var deleteButtonId = "DeleteButton";
 
 var showCompact = function () {
     window.location = window.location.pathname + '?show=compact';
-}
+};
 
 var showAll = function () {
     window.location = window.location.pathname + '?show=all';
-}
+};
 
-var confirmAction = function (eventId) {
+var confirmAction = function () {
     var retVal = false;
     var selectedItemValue;
 
@@ -32,43 +32,36 @@ var confirmAction = function (eventId) {
         if (selectedItemValue == undefined) {
             alert(localizedNothingSelected);
             retVal = false;
-        }
-        else {
+        } else {
             retVal = true;
+            if (customFormUrl && keyColumn) {
+                window.location = customFormUrl + "?" + keyColumn + "=" + selectedItemValue;
+            }
         }
     }
-
-    if (retVal) {
-        if (customFormUrl && keyColumn) {
-            window.location = customFormUrl + "?" + keyColumn + "=" + selectedItemValue;
-        }
-    }
-
     return retVal;
-}
+};
 
 var getSelectedValue = function () {
     return $('[id^="SelectRadio"]:checked').val();
-}
+};
 
 var selectNode = function (id) {
-    $('[id^="SelectRadio"]').removeAttr("checked");
-    //$("#" + id).attr("checked", "checked");
-    $("#" + id).prop("checked", "checked");
-}
-
+    $('[id^="SelectRadio"]').prop("checked", false);
+    $("#" + id).prop("checked", true);
+};
 
 
 var printThis = function () {
     //Append the report template with a random number to prevent caching.
-    var randomnumber = Math.floor(Math.random() * 1200)
+    var randomnumber = Math.floor(Math.random() * 1200);
     reportTemplatePath += "?" + randomnumber;
 
     //Load report template from the path.
-    var report = $.get(reportTemplatePath, function () { }).done(function (data) {
+    $.get(reportTemplatePath, function () { }).done(function (data) {
 
         //Load report header template.
-        var report = $.get(reportHeaderPath, function () { }).done(function (header) {
+        $.get(reportHeaderPath, function () { }).done(function (header) {
             var table = $("#" + formGridViewId).clone();
             var user = $("#" + userIdHiddenId).val();
             var office = $("#" + officeCodeHiddenId).val();
@@ -80,13 +73,12 @@ var printThis = function () {
 
             table = "<table border='1' class='preview'>" + table.html() + "</table>";
 
+            data = data.replace("{Header}", header);
             data = data.replace("{ReportHeading}", $("#" + titleLabelId).html());
             data = data.replace("{PrintDate}", date);
             data = data.replace("{UserName}", user);
             data = data.replace("{OfficeCode}", office);
             data = data.replace("{Table}", table);
-            data = data.replace("{Header}", header);
-
 
             //Creating and opening a new window to display the report.
             var w = window.open();
@@ -99,9 +91,9 @@ var printThis = function () {
             //Report sent to the browser.
         });
     });
-}
+};
 
-Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function (sender, args) {
+Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
     //Fired on each ASP.net AJAX request.
     initialize();
 });
@@ -119,12 +111,12 @@ var initialize = function () {
     //Registering grid row click event to automatically select the radio.
     $('#' + formGridViewId + ' tr').click(function () {
         //Grid row was clicked. Now, searching the radio button.
-        var radio = $(this).find('td input:radio')
+        var radio = $(this).find('td input:radio');
 
         //The radio button was found.
         selectNode(radio.attr("id"));
     });
-}
+};
 
 function adjustSpinnerSize() {
     //Adjusting AJAX Spinner Size.
@@ -133,7 +125,7 @@ function adjustSpinnerSize() {
     //Todo: Adjust spinner to page.height, not doc height
     //and adjust the x and y coordinates depending upon the
     //current scroll position.
-}
+};
 
 function updateTableHeaders() {
     $("div.floating-header").each(function () {
@@ -143,6 +135,7 @@ function updateTableHeaders() {
         var scrollTop = $(window).scrollTop();
         if ((scrollTop > offset.top) && (scrollTop < offset.top + $(this).height())) {
             floatingHeaderRow.css("visibility", "visible");
+            floatingHeaderRow.css("z-index", "1");
             floatingHeaderRow.css("top", Math.min(scrollTop - offset.top, $(this).height() - floatingHeaderRow.height()) + "px");
 
             // Copy cell widths from original header
@@ -159,15 +152,15 @@ function updateTableHeaders() {
             floatingHeaderRow.css("top", "0px");
         }
     });
-}
+};
 
 $(document).ready(function () {
     $("table.grid").each(function () {
         $(this).wrap("<div class=\"floating-header\" style=\"position:relative\"></div>");
 
-        var originalHeaderRow = $("tr:first", this)
+        var originalHeaderRow = $("tr:first", this);
         originalHeaderRow.before(originalHeaderRow.clone());
-        var clonedHeaderRow = $("tr:first", this)
+        var clonedHeaderRow = $("tr:first", this);
 
         clonedHeaderRow.addClass("tableFloatingHeader");
         clonedHeaderRow.css("position", "absolute");
@@ -187,7 +180,7 @@ var addNew = function () {
         top.location = customFormUrl;
     }
 
-    $('#' + formGridViewId + 'tr').find('td input:radio').removeAttr('checked');
+    $('#' + formGridViewId + 'tr').find('td input:radio').prop('checked', false);
     $('#form1').each(function () {
         this.reset();
     });
@@ -197,7 +190,7 @@ var addNew = function () {
 
     //Prevent postback
     return false;
-}
+};
 
 $(document).ready(function () {
     shortcut.add("ESC", function () {

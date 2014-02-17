@@ -1,5 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ProductControl.ascx.cs" Inherits="MixERP.Net.FrontEnd.UserControls.Products.ProductControl" %>
-<asp:ScriptManager ID="ScriptManager1" runat="server" />
+<%@ Import Namespace="MixERP.Net.Common.Helpers" %>
+
 <div style="width: 1000px; overflow: hidden; margin: 0;">
     <asp:Label ID="TitleLabel" CssClass="title" runat="server" />
     <asp:UpdateProgress ID="UpdateProgress1" runat="server">
@@ -302,7 +303,7 @@
         var total = parseFloat2(priceTextBox.val()) * parseFloat2(quantityTextBox.val());
         var subTotal = total - parseFloat2(discountTextBox.val());
         var taxableAmount = total;
-        var taxAfterDiscount = "<%=MixERP.Net.Common.Helpers.Switches.TaxAfterDiscount().ToString()%>";
+        var taxAfterDiscount = "<%=Switches.TaxAfterDiscount().ToString()%>";
 
         if (taxAfterDiscount.toLowerCase() == "true") {
             taxableAmount = subTotal;
@@ -406,7 +407,7 @@
 
         $.ajax({
             type: "POST",
-            url: "<%=ResolveUrl("~/Services/PartyData.asmx/GetAddressByPartyCode") %>",
+            url: "<%=this.ResolveUrl("~/Services/PartyData.asmx/GetAddressByPartyCode") %>",
             data: "{partyCode:'" + partyCode + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -426,7 +427,7 @@
 
         $.ajax({
             type: "POST",
-            url: "<%=ResolveUrl("~/Services/ItemData.asmx/GetUnits") %>",
+            url: "<%=this.ResolveUrl("~/Services/ItemData.asmx/GetUnits") %>",
             data: "{itemCode:'" + itemCode + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",

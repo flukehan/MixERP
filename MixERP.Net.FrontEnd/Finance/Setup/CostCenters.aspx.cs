@@ -11,11 +11,13 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.BusinessLayer;
 using MixERP.Net.WebControls.ScrudFactory;
+using Resources;
 
 namespace MixERP.Net.FrontEnd.Finance.Setup
 {
-    public partial class CostCenters : MixERP.Net.BusinessLayer.MixERPWebPage
+    public partial class CostCenters : MixERPWebpage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -27,9 +29,9 @@ namespace MixERP.Net.FrontEnd.Finance.Setup
                 scrud.ViewSchema = "office";
                 scrud.View = "cost_center_view";
 
-                scrud.Text = Resources.Titles.CostCenters;
+                scrud.Text = Titles.CostCenters;
 
-                ScriptManager1.NamingContainer.Controls.Add(scrud);
+                this.ScrudPlaceholder.Controls.Add(scrud);
             }
         }
     }

@@ -1,16 +1,14 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>MixErp® 2013</title>
+    <title>MixERP® 2013</title>
     <link href="/Themes/purple/main.css" rel="stylesheet" type="text/css" />
     <style type="text/css" media="all">
-        html, body
-        {
+        html, body {
             padding: 4px;
         }
 
-        body
-        {
+        body {
             /* fallback */
             background-color: #FFFFFF;
             background-repeat: repeat-y;
@@ -26,20 +24,16 @@
             background: -o-linear-gradient(left, #FFFFFF, #FFFFFF);
         }
 
-        table
-        {
+        table {
             border-collapse: collapse;
         }
 
-        td
-        {
+        td {
             padding: 4px;
         }
 
-        @media print
-        {
-            .hide
-            {
+        @media print {
+            .hide {
                 display: none;
             }
         }
@@ -47,6 +41,12 @@
 </head>
 <body>
     {Header}
+    <div class="hide report-command" style="position: fixed;top:20px;right: 20px; ">
+        <a href="#">
+            <img src="/Resource/Icons/print-16.png" alt="Print" onclick="window.print();" />
+            <a href="#" onclick="top.close();"><img src="/Resource/Icons/close-16.png" alt="Close" /></a>
+        </a>
+    </div>
     <h1>
         {ReportHeading}
     </h1>
@@ -59,7 +59,8 @@
     {Table}
     <div class="hide" style="padding-top: 18px;">
         <a href="javascript:top.close();" class="menu">
-            Close This Report</a>
+            Close This Report
+        </a>
     </div>
 
     <script type="text/javascript">

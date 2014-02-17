@@ -29,7 +29,7 @@ namespace MixERP.Net.DatabaseLayer.DBFactory
         /// </returns>
         public static string SanitizeIdentifierName(string identifier)
         {
-            return MixERP.Net.DBFactory.Sanitizer.SanitizeIdentifierName(identifier);
+            return Net.DBFactory.Sanitizer.SanitizeIdentifierName(identifier);
         }
 
     }

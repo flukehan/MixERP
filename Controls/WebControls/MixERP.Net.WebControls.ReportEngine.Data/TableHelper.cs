@@ -12,7 +12,9 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
 using System.Text;
+using MixERP.Net.DBFactory;
 using Npgsql;
+using DBConnection = MixERP.Net.WebControls.ReportEngine.Data.Connection.DBConnection;
 
 namespace MixERP.Net.WebControls.ReportEngine.Data
 {
@@ -60,9 +62,9 @@ namespace MixERP.Net.WebControls.ReportEngine.Data
                 }
                 
                 //A separate connection to database using a restricted login is established here.
-                string connectionString = MixERP.Net.WebControls.ReportEngine.Data.Connection.DBConnection.ReportConnectionString();
+                string connectionString = DBConnection.ReportConnectionString();
 
-                return MixERP.Net.DBFactory.DBOperations.GetDataTable(command, connectionString);
+                return DBOperations.GetDataTable(command, connectionString);
             }
         }
     }

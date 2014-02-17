@@ -9,8 +9,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.DBFactory;
 using Npgsql;
 
@@ -19,8 +22,8 @@ namespace MixERP.Net.DatabaseLayer.Transactions
     public static class DirectSales
     {
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        public static long Add(DateTime valueDate, int officeId, int userId, long logOnId, int costCenterId, string referenceNumber, string statementReference, MixERP.Net.Common.Models.Transactions.StockMasterModel stockMaster, Collection<MixERP.Net.Common.Models.Transactions.StockMasterDetailModel> details)
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        public static long Add(DateTime valueDate, int officeId, int userId, long logOnId, int costCenterId, string referenceNumber, string statementReference, StockMasterModel stockMaster, Collection<StockMasterDetailModel> details)
         {
             if(stockMaster == null)
             {
@@ -75,7 +78,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
 
                             //tm.UnpreparedExecute = true;
 
-                            transactionMasterId = MixERP.Net.Common.Conversion.TryCastLong(tm.ExecuteScalar());
+                            transactionMasterId = Conversion.TryCastLong(tm.ExecuteScalar());
                         }
 
                         #region TransactionDetails
@@ -195,7 +198,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                             stockMasterRow.Parameters.Add("@CashRepositoryId", stockMaster.CashRepositoryId);
                             //stockMasterRow.UnpreparedExecute = true;
 
-                            stockMasterId = MixERP.Net.Common.Conversion.TryCastLong(stockMasterRow.ExecuteScalar());
+                            stockMasterId = Conversion.TryCastLong(stockMasterRow.ExecuteScalar());
                         }
 
                         #region StockDetails
@@ -203,7 +206,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                                 transactions.stock_details(stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax) 
                                 SELECT  @StockMasterId, @TranType, @StoreId, core.get_item_id_by_item_code(@ItemCode), @Quantity, core.get_unit_id_by_unit_name(@UnitName), core.get_base_quantity_by_unit_name(@UnitName, @Quantity), core.get_base_unit_id_by_unit_name(@UnitName), @Price, @Discount, @TaxRate, @Tax;";
 
-                        foreach(MixERP.Net.Common.Models.Transactions.StockMasterDetailModel model in details)
+                        foreach(StockMasterDetailModel model in details)
                         {
                             using(NpgsqlCommand stockMasterDetailRow = new NpgsqlCommand(sql, connection))
                             {

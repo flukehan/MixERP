@@ -5,17 +5,14 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
+
 using System.Web.UI.WebControls;
+using MixERP.Net.Common;
+using MixERP.Net.WebControls.ScrudFactory.Helpers;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
-    public partial class ScrudForm : CompositeControl
+    public partial class ScrudForm
     {        
         private void LoadScrudContainer(Panel p)
         {
@@ -37,8 +34,8 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private void AddJavaScript()
         {
-            string script = MixERP.Net.WebControls.ScrudFactory.Helpers.ScrudJavaScriptHelper.GetScript(this.KeyColumn, this.CustomFormUrl);            
-            MixERP.Net.Common.PageUtility.ExecuteJavaScript("scrudScript", script, this.Page);     
+            var script = ScrudJavaScriptHelper.GetScript(this.KeyColumn, this.CustomFormUrl);            
+            PageUtility.ExecuteJavaScript("scrudScript", script, this.Page);     
         }
     }
 }

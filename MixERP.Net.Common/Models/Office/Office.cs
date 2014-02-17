@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MixERP.Net.Common.Models.Office
 {
+    [SuppressMessage("Microsoft.Naming", "CA1724:TypeNamesShouldNotMatchNamespaces")]
     public class Office
     {
         public int OfficeId { get; set; }
         public string OfficeCode { get; set; }
         public string OfficeName { get; set; }
-        public string NickName { get; set; }
+        public string Nickname { get; set; }
         public DateTime RegistrationDate { get; set; }
         public string CurrencyCode { get; set; }
         public string AddressLine1 { get; set; }
@@ -28,6 +30,6 @@ namespace MixERP.Net.Common.Models.Office
         public string RegistrationNumber { get; set; }
         public string PanNumber { get; set; }
         public int? ParentOfficeId { get; set; }
-        public MixERP.Net.Common.Models.Office.Office ParentOffice { get; set; }
+        public Office ParentOffice { get; set; }
     }
 }

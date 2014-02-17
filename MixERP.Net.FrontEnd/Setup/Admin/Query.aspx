@@ -1,5 +1,9 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MenuMaster.Master" AutoEventWireup="true"
     CodeBehind="Query.aspx.cs" Inherits="MixERP.Net.FrontEnd.Setup.Admin.Query" %>
+<%@ Import Namespace="System.Data" %>
+<%@ Import Namespace="System.IO" %>
+<%@ Import Namespace="MixERP.Net.DBFactory" %>
+<%@ Import Namespace="Npgsql" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceholder" runat="server">
     <script src="/Scripts/CodeMirror/lib/codemirror.js"></script>
@@ -48,13 +52,13 @@
 
     <br />
 
-    <p class="vpad16">
+    <div class="vpad16">
         <div style="width: 100%; max-height: 400px; overflow: auto">
             <asp:GridView ID="SQLGridView" EnableTheming="false" CssClass="grid2" HeaderStyle-CssClass="grid2-header" RowStyle-CssClass="grid2-row" AlternatingRowStyle-CssClass="grid2-row-alt" runat="server" ShowHeaderWhenEmpty="true">
             </asp:GridView>
             <asp:Literal ID="MessageLiteral" runat="server" />
         </div>
-    </p>
+    </div>
 
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceholder"
@@ -97,7 +101,7 @@
 <script runat="server">
     protected void ClearButton_Click(object sender, EventArgs e)
     {
-        QueryTextBox.Text = "";
+        this.QueryTextBox.Text = "";
     }
     protected void LoadButton_Click(object sender, EventArgs e)
     {
@@ -106,41 +110,41 @@
 
     private void LoadSQL()
     {
-        string sql = System.IO.File.ReadAllText(Server.MapPath("~/db/en-US/mixerp.bak.sql"));
-        QueryTextBox.Text = sql;
+        string sql = File.ReadAllText(this.Server.MapPath("~/db/en-US/mixerp.bak.sql"));
+        this.QueryTextBox.Text = sql;
     }
 
 
     protected void RunButton_Click(object sender, EventArgs e)
     {
-        string sql = System.IO.File.ReadAllText(Server.MapPath("~/db/en-US/mixerp.bak.sql"));
-        using(System.Data.DataTable table = MixERP.Net.DBFactory.DBOperations.GetDataTable(new Npgsql.NpgsqlCommand(sql)))
+        string sql = File.ReadAllText(this.Server.MapPath("~/db/en-US/mixerp.bak.sql"));
+        using(DataTable table = DBOperations.GetDataTable(new NpgsqlCommand(sql)))
         {
-            MessageLiteral.Text = string.Format("<div class='success'>{0} row(s) affected.</div>", table.Rows.Count);
-            SQLGridView.DataSource = table;
-            SQLGridView.DataBind();
+            this.MessageLiteral.Text = string.Format("<div class='success'>{0} row(s) affected.</div>", table.Rows.Count);
+            this.SQLGridView.DataSource = table;
+            this.SQLGridView.DataBind();
         }
     }
 
     protected void LoadCustomerButton_Click(object sender, EventArgs e)
     {
-        string sql = System.IO.File.ReadAllText(Server.MapPath("~/db/en-US/party-sample.sql"));
-        using(System.Data.DataTable table = MixERP.Net.DBFactory.DBOperations.GetDataTable(new Npgsql.NpgsqlCommand(sql)))
+        string sql = File.ReadAllText(this.Server.MapPath("~/db/en-US/party-sample.sql"));
+        using(DataTable table = DBOperations.GetDataTable(new NpgsqlCommand(sql)))
         {
-            MessageLiteral.Text = string.Format("<div class='success'>{0} row(s) affected.</div>", table.Rows.Count);
-            SQLGridView.DataSource = table;
-            SQLGridView.DataBind();
+            this.MessageLiteral.Text = string.Format("<div class='success'>{0} row(s) affected.</div>", table.Rows.Count);
+            this.SQLGridView.DataSource = table;
+            this.SQLGridView.DataBind();
         }
     }
 
     protected void LoadSampleData_Click(object sender, EventArgs e)
     {
-        string sql = System.IO.File.ReadAllText(Server.MapPath("~/db/en-US/sample-data.sql"));
-        using(System.Data.DataTable table = MixERP.Net.DBFactory.DBOperations.GetDataTable(new Npgsql.NpgsqlCommand(sql)))
+        string sql = File.ReadAllText(this.Server.MapPath("~/db/en-US/sample-data.sql"));
+        using(DataTable table = DBOperations.GetDataTable(new NpgsqlCommand(sql)))
         {
-            MessageLiteral.Text = string.Format("<div class='success'>{0} row(s) affected.</div>", table.Rows.Count);
-            SQLGridView.DataSource = table;
-            SQLGridView.DataBind();
+            this.MessageLiteral.Text = string.Format("<div class='success'>{0} row(s) affected.</div>", table.Rows.Count);
+            this.SQLGridView.DataSource = table;
+            this.SQLGridView.DataBind();
         }
     }
 
@@ -148,28 +152,28 @@
     {
         try
         {
-            using(System.Data.DataTable table = MixERP.Net.DBFactory.DBOperations.GetDataTable(new Npgsql.NpgsqlCommand(QueryTextBox.Text)))
+            using(DataTable table = DBOperations.GetDataTable(new NpgsqlCommand(this.QueryTextBox.Text)))
             {
-                MessageLiteral.Text = string.Format("<div class='success'>{0} row(s) affected.</div>", table.Rows.Count);
-                SQLGridView.DataSource = table;
-                SQLGridView.DataBind();
+                this.MessageLiteral.Text = string.Format("<div class='success'>{0} row(s) affected.</div>", table.Rows.Count);
+                this.SQLGridView.DataSource = table;
+                this.SQLGridView.DataBind();
             }
         }
         catch(Exception ex)
         {
-            MessageLiteral.Text = "<div class='error'>" + ex.Message + "</div>";
+            this.MessageLiteral.Text = "<div class='error'>" + ex.Message + "</div>";
         }
     }
 
     protected void SaveButton_Click(object sender, EventArgs e)
     {
-        string sql = QueryHidden.Value;
+        string sql = this.QueryHidden.Value;
 
         if(!string.IsNullOrWhiteSpace(sql))
         {
-            string path = Server.MapPath("~/db/en-US/mixerp.postgresql.bak.sql");
-            System.IO.File.Delete(path);
-            System.IO.File.WriteAllText(path, sql, Encoding.UTF8);
+            string path = this.Server.MapPath("~/db/en-US/mixerp.postgresql.bak.sql");
+            File.Delete(path);
+            File.WriteAllText(path, sql, Encoding.UTF8);
         }
     }
 </script>

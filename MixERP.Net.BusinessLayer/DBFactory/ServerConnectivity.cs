@@ -16,7 +16,7 @@ namespace MixERP.Net.BusinessLayer.DBFactory
     {
         public static bool IsDBServerAvailable()
         {
-            return MixERP.Net.DatabaseLayer.DBFactory.ServerConnectivity.IsDBServerAvailable();
+            return DatabaseLayer.DBFactory.ServerConnectivity.IsDBServerAvailable();
         }
     }
 }

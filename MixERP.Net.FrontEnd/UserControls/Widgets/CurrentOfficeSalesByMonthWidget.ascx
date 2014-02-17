@@ -49,5 +49,7 @@
 </div>
 
 <script type="text/javascript">
-    prepareChart("curr-office-sales-by-month-datasource", "curr-office-sales-by-month-canvas", "curr-office-sales-by-month-legend", 'line');
+    $(document).ready(function(){
+        prepareChart("curr-office-sales-by-month-datasource", "curr-office-sales-by-month-canvas", "curr-office-sales-by-month-legend", 'line');
+    });
 </script>

@@ -4,11 +4,13 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.BusinessLayer;
 using MixERP.Net.WebControls.ScrudFactory;
+using Resources;
 
 namespace MixERP.Net.FrontEnd.Setup
 {
-    public partial class Departments : MixERP.Net.BusinessLayer.MixERPWebPage
+    public partial class Departments : MixERPWebpage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -21,9 +23,9 @@ namespace MixERP.Net.FrontEnd.Setup
                 scrud.ViewSchema = "office";
                 scrud.View = "departments";
 
-                scrud.Text = Resources.Titles.Departments;
+                scrud.Text = Titles.Departments;
 
-                ScriptManager1.NamingContainer.Controls.Add(scrud);
+                this.ScrudPlaceholder.Controls.Add(scrud);
             }
         }
     }

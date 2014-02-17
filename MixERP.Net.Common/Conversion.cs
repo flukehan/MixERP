@@ -5,6 +5,14 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
+
+using System.ComponentModel;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Threading;
+using System.Web.Configuration;
+using MixERP.Net.Common.Helpers;
+
 namespace MixERP.Net.Common
 {
     using System;
@@ -18,7 +26,7 @@ namespace MixERP.Net.Common
     using System.Security.Cryptography;
     using System.Text.RegularExpressions;
     using System.Web;
-    using MixERP.Net.Common.Models.Transactions;
+    using Models.Transactions;
     using System.Web.UI;
 
     public static class Conversion
@@ -30,37 +38,37 @@ namespace MixERP.Net.Common
             {
                 if (subBook == SubTranBook.Delivery)
                 {
-                    return MixERP.Net.Common.Helpers.ConfigurationHelper.GetParameter("SalesDeliveryAcronym");
+                    return ConfigurationHelper.GetParameter("SalesDeliveryAcronym");
                 }
 
                 if (subBook == SubTranBook.Direct)
                 {
-                    return MixERP.Net.Common.Helpers.ConfigurationHelper.GetParameter("SalesDirectAcronym");
+                    return ConfigurationHelper.GetParameter("SalesDirectAcronym");
                 }
 
                 if (subBook == SubTranBook.Invoice)
                 {
-                    return MixERP.Net.Common.Helpers.ConfigurationHelper.GetParameter("SalesInvoiceAcronym");
+                    return ConfigurationHelper.GetParameter("SalesInvoiceAcronym");
                 }
 
                 if (subBook == SubTranBook.Order)
                 {
-                    return MixERP.Net.Common.Helpers.ConfigurationHelper.GetParameter("SalesOrderAcronym");
+                    return ConfigurationHelper.GetParameter("SalesOrderAcronym");
                 }
 
                 if (subBook == SubTranBook.Quotation)
                 {
-                    return MixERP.Net.Common.Helpers.ConfigurationHelper.GetParameter("SalesQuotationAcronym");
+                    return ConfigurationHelper.GetParameter("SalesQuotationAcronym");
                 }
 
                 if (subBook == SubTranBook.Receipt)
                 {
-                    return MixERP.Net.Common.Helpers.ConfigurationHelper.GetParameter("SalesReceiptAcronym");
+                    return ConfigurationHelper.GetParameter("SalesReceiptAcronym");
                 }
 
                 if (subBook == SubTranBook.Return)
                 {
-                    return MixERP.Net.Common.Helpers.ConfigurationHelper.GetParameter("SaleReturnAcronym");
+                    return ConfigurationHelper.GetParameter("SaleReturnAcronym");
                 }
             }
 
@@ -68,27 +76,27 @@ namespace MixERP.Net.Common
             {
                 if (subBook == SubTranBook.Direct)
                 {
-                    return MixERP.Net.Common.Helpers.ConfigurationHelper.GetParameter("PurchaseDirectAcronym");
+                    return ConfigurationHelper.GetParameter("PurchaseDirectAcronym");
                 }
 
                 if (subBook == SubTranBook.Order)
                 {
-                    return MixERP.Net.Common.Helpers.ConfigurationHelper.GetParameter("PurchaseOrderAcronym");
+                    return ConfigurationHelper.GetParameter("PurchaseOrderAcronym");
                 }
 
                 if (subBook == SubTranBook.Payment)
                 {
-                    return MixERP.Net.Common.Helpers.ConfigurationHelper.GetParameter("PurchasePaymentAcronym");
+                    return ConfigurationHelper.GetParameter("PurchasePaymentAcronym");
                 }
 
                 if (subBook == SubTranBook.Receipt)
                 {
-                    return MixERP.Net.Common.Helpers.ConfigurationHelper.GetParameter("PurchaseGRNAcronym");
+                    return ConfigurationHelper.GetParameter("PurchaseGRNAcronym");
                 }
 
                 if (subBook == SubTranBook.Return)
                 {
-                    return MixERP.Net.Common.Helpers.ConfigurationHelper.GetParameter("PurchaseReturnAcronym");
+                    return ConfigurationHelper.GetParameter("PurchaseReturnAcronym");
                 }
             }
 
@@ -228,7 +236,7 @@ namespace MixERP.Net.Common
                     return DateTime.MinValue;
                 }
 
-                return Convert.ToDateTime(value, System.Threading.Thread.CurrentThread.CurrentCulture);
+                return Convert.ToDateTime(value, Thread.CurrentThread.CurrentCulture);
             }
             catch(FormatException)
             {
@@ -282,12 +290,12 @@ namespace MixERP.Net.Common
             {
                 if(value is string)
                 {
-                    if(value.ToString().ToLower(System.Threading.Thread.CurrentThread.CurrentCulture).Equals("yes"))
+                    if(value.ToString().ToLower(Thread.CurrentThread.CurrentCulture).Equals("yes"))
                     {
                         return true;
                     }
 
-                    if(value.ToString().ToLower(System.Threading.Thread.CurrentThread.CurrentCulture).Equals("true"))
+                    if(value.ToString().ToLower(Thread.CurrentThread.CurrentCulture).Equals("true"))
                     {
                         return true;
                     }
@@ -328,7 +336,7 @@ namespace MixERP.Net.Common
                     }
                     else
                     {
-                        if(value == System.DBNull.Value)
+                        if(value == DBNull.Value)
                         {
                             return string.Empty;
                         }
@@ -377,10 +385,10 @@ namespace MixERP.Net.Common
         }
 
 
-        public static Uri GetBackEndUrl(System.Web.HttpContext context, string relativePath)
+        public static Uri GetBackEndUrl(HttpContext context, string relativePath)
         {
             string lang = string.Empty;
-            string administrationDirectoryName = System.Web.Configuration.WebConfigurationManager.AppSettings["AdministrationDirectoryName"];
+            string administrationDirectoryName = WebConfigurationManager.AppSettings["AdministrationDirectoryName"];
 
             if(context != null)
             {
@@ -395,10 +403,10 @@ namespace MixERP.Net.Common
                         lang = context.Session["lang"] as string;
                     }
 
-                    System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo(lang);
+                    CultureInfo culture = new CultureInfo(lang);
                     if(culture.TwoLetterISOLanguageName == "iv")
                     {
-                        culture = new System.Globalization.CultureInfo("en-US");
+                        culture = new CultureInfo("en-US");
                     }
 
                     string virtualDirectory = context.Request.ApplicationPath;
@@ -456,22 +464,22 @@ namespace MixERP.Net.Common
             return (byte[])converter.ConvertTo(image, typeof(byte[]));
         }
 
-        public static System.Data.DataTable ConvertListToDataTable<T>(System.Collections.Generic.IList<T> list)
+        public static DataTable ConvertListToDataTable<T>(IList<T> list)
         {
             if(list == null)
             {
                 return null;
             }
 
-            System.ComponentModel.PropertyDescriptorCollection props = System.ComponentModel.TypeDescriptor.GetProperties(typeof(T));
+            PropertyDescriptorCollection props = TypeDescriptor.GetProperties(typeof(T));
 
-            using(System.Data.DataTable table = new System.Data.DataTable())
+            using(DataTable table = new DataTable())
             {
-                table.Locale = System.Threading.Thread.CurrentThread.CurrentCulture;
+                table.Locale = Thread.CurrentThread.CurrentCulture;
 
                 for(int i = 0; i < props.Count; i++)
                 {
-                    System.ComponentModel.PropertyDescriptor prop = props[i];
+                    PropertyDescriptor prop = props[i];
                     table.Columns.Add(prop.Name, prop.PropertyType);
                 }
                 object[] values = new object[props.Count];
@@ -487,14 +495,14 @@ namespace MixERP.Net.Common
             }
         }
 
-        public static byte[] ConvertImageToByteArray(System.Drawing.Image imageToConvert, System.Drawing.Imaging.ImageFormat formatOfImage)
+        public static byte[] ConvertImageToByteArray(Image imageToConvert, ImageFormat formatOfImage)
         {
             if(imageToConvert == null)
             {
                 return null;
             }
 
-            using(System.IO.MemoryStream ms = new System.IO.MemoryStream())
+            using(MemoryStream ms = new MemoryStream())
             {
                 imageToConvert.Save(ms, formatOfImage);
                 return ms.ToArray();

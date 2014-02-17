@@ -20,13 +20,13 @@ namespace MixERP.Net.WebControls.ReportEngine
 
         private void AddHiddenControls(Panel p)
         {
-            reportHidden = new HiddenField();
-            reportHidden.ID = "ReportHidden";
-            p.Controls.Add(reportHidden);
+            this.reportHidden = new HiddenField();
+            this.reportHidden.ID = "ReportHidden";
+            p.Controls.Add(this.reportHidden);
 
-            reportTitleHidden = new HiddenField();
-            reportTitleHidden.ID = "ReportTitleHidden";
-            p.Controls.Add(reportTitleHidden);
+            this.reportTitleHidden = new HiddenField();
+            this.reportTitleHidden.ID = "ReportTitleHidden";
+            p.Controls.Add(this.reportTitleHidden);
         }
     }
 }

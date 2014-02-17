@@ -55,9 +55,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Entity, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
@@ -78,6 +75,11 @@
     </Compile>
     <Compile Include="Account\SignOut.aspx.designer.cs">
       <DependentUpon>SignOut.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Errors.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Errors.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\ScrudResource.designer.cs">
       <AutoGen>True</AutoGen>
@@ -1567,10 +1569,10 @@
     <Content Include="spinner.gif" />
     <Content Include="Reports\Print.html" />
     <Content Include="Resource\Icons\delete-16.png" />
-    <Content Include="Themes\purple\main.css" />
-    <Content Include="Themes\purple\mixerp-logo-light.png" />
-    <Content Include="Themes\purple\padding.css" />
-    <Content Include="Themes\purple\mixerp-logo.png" />
+    <Content Include="Themes\purple\stylesheets\main.css" />
+    <Content Include="Themes\purple\images\mixerp-logo-light.png" />
+    <Content Include="Themes\purple\stylesheets\padding.css" />
+    <Content Include="Themes\purple\images\mixerp-logo.png" />
     <Content Include="Trash\WebForm1.aspx" />
     <Content Include="UserControls\CurrencyExtender.ascx" />
   </ItemGroup>
@@ -1733,6 +1735,12 @@
       <LastGenOutput>Warnings.fr.designer.cs</LastGenOutput>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\Errors.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Errors.Designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -1754,7 +1762,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>2904</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/mixerp</IISUrl>
+          <IISUrl>http://localhost:9000</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>http://demo.mixerp.org</CustomServerUrl>
@@ -1765,7 +1773,8 @@
   </ProjectExtensions>
   <PropertyGroup>
     <PostBuildEvent>copy /Y "$(SolutionDir)\Dependencies\Mono\Profile\Mono\Npgsql.dll" "$(SolutionDir)\MixERP.Net.FrontEnd\bin\Npgsql.dll"
-copy /Y "$(SolutionDir)\Dependencies\Mono\Profile\Mono\Mono.Security.dll" "$(SolutionDir)\MixERP.Net.FrontEnd\bin\Mono.Security.dll"</PostBuildEvent>
+copy /Y "$(SolutionDir)\Dependencies\Mono\Profile\Mono\Mono.Security.dll" "$(SolutionDir)\MixERP.Net.FrontEnd\bin\Mono.Security.dll"
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

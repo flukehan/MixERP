@@ -7,6 +7,7 @@ http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Xml;
@@ -18,22 +19,22 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
     {
         public static XmlNodeList GetNodes(string path, string name)
         {
-            System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
+            XmlDocument doc = new XmlDocument();
             doc.Load(path);
             return doc.SelectNodes(name);
         }
 
         public static string GetNodeText(string path, string name)
         {
-            System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
+            XmlDocument doc = new XmlDocument();
             doc.Load(path);
             return doc.SelectSingleNode(name).InnerXml;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1059:MembersShouldNotExposeCertainConcreteTypes", MessageId = "System.Xml.XmlNode")]
+        [SuppressMessage("Microsoft.Design", "CA1059:MembersShouldNotExposeCertainConcreteTypes", MessageId = "System.Xml.XmlNode")]
         public static XmlNode GetNode(string path, string name)
         {
-            System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
+            XmlDocument doc = new XmlDocument();
             doc.Load(path);
             return doc.SelectSingleNode(name);
         }

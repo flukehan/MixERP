@@ -11,10 +11,12 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.BusinessLayer;
+using Resources;
 
 namespace MixERP.Net.FrontEnd.Sales
 {
-    public partial class DirectSales : MixERP.Net.BusinessLayer.MixERPWebPage
+    public partial class DirectSales : MixERPWebpage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -23,11 +25,11 @@ namespace MixERP.Net.FrontEnd.Sales
 
         protected void Sales_SaveButtonClick(object sender, EventArgs e)
         {
-            bool isCredit = DirectSalesControl.GetForm.TransactionType.Equals(Resources.Titles.Credit); ;
-            long transactionMasterId = MixERP.Net.BusinessLayer.Transactions.DirectSales.Add(DirectSalesControl.GetForm.Date, DirectSalesControl.GetForm.StoreId, isCredit, DirectSalesControl.GetForm.PartyCode, DirectSalesControl.GetForm.AgentId, DirectSalesControl.GetForm.PriceTypeId, DirectSalesControl.GetForm.Details, DirectSalesControl.GetForm.ShippingCompanyId, DirectSalesControl.GetForm.ShippingAddressCode, DirectSalesControl.GetForm.ShippingCharge, DirectSalesControl.GetForm.CashRepositoryId, DirectSalesControl.GetForm.CostCenterId, DirectSalesControl.GetForm.ReferenceNumber, DirectSalesControl.GetForm.StatementReference);
+            bool isCredit = this.DirectSalesControl.GetForm.TransactionType.Equals(Titles.Credit); ;
+            long transactionMasterId = BusinessLayer.Transactions.DirectSales.Add(this.DirectSalesControl.GetForm.Date, this.DirectSalesControl.GetForm.StoreId, isCredit, this.DirectSalesControl.GetForm.PartyCode, this.DirectSalesControl.GetForm.AgentId, this.DirectSalesControl.GetForm.PriceTypeId, this.DirectSalesControl.GetForm.Details, this.DirectSalesControl.GetForm.ShippingCompanyId, this.DirectSalesControl.GetForm.ShippingAddressCode, this.DirectSalesControl.GetForm.ShippingCharge, this.DirectSalesControl.GetForm.CashRepositoryId, this.DirectSalesControl.GetForm.CostCenterId, this.DirectSalesControl.GetForm.ReferenceNumber, this.DirectSalesControl.GetForm.StatementReference);
             if(transactionMasterId > 0)
             {
-                Response.Redirect("~/Sales/Confirmation/DirectSales.aspx?TranId=" + transactionMasterId, true);
+                this.Response.Redirect("~/Sales/Confirmation/DirectSales.aspx?TranId=" + transactionMasterId, true);
             }
         }
 

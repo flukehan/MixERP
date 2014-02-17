@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using MixERP.Net.DBFactory;
 using Npgsql;
 
 namespace MixERP.Net.DatabaseLayer.Core
@@ -23,7 +24,7 @@ namespace MixERP.Net.DatabaseLayer.Core
             {
                 command.Parameters.Add("@ItemCode", itemCode);
 
-                return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
+                return DBOperations.GetDataTable(command);
             }
         }
 
@@ -34,7 +35,7 @@ namespace MixERP.Net.DatabaseLayer.Core
             {
                 command.Parameters.Add("@UnitName", unitName);
 
-                var value = MixERP.Net.DBFactory.DBOperations.GetScalarValue(command);
+                var value = DBOperations.GetScalarValue(command);
                 if (value != null)
                 {
                     return value.ToString().Equals("1");

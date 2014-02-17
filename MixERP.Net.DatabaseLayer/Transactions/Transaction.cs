@@ -10,6 +10,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.DBFactory;
 using Npgsql;
 
@@ -17,7 +20,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
 {
     public static class Transaction
     {
-        public static long Add(DateTime valueDate, int officeId, int userId, long logOnId, int costCenterId, string referenceNumber, Collection<MixERP.Net.Common.Models.Transactions.TransactionDetailModel> details)
+        public static long Add(DateTime valueDate, int officeId, int userId, long logOnId, int costCenterId, string referenceNumber, Collection<TransactionDetailModel> details)
         {
             if(details == null)
             {
@@ -64,16 +67,16 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                             master.Parameters.Add("@CostCenterId", costCenterId);
                             master.Parameters.Add("@ReferenceNumber", referenceNumber);
 
-                            transactionMasterId = MixERP.Net.Common.Conversion.TryCastLong(master.ExecuteScalar());
+                            transactionMasterId = Conversion.TryCastLong(master.ExecuteScalar());
                         }
 
-                        foreach(MixERP.Net.Common.Models.Transactions.TransactionDetailModel model in details)
+                        foreach(TransactionDetailModel model in details)
                         {
                             sql = "INSERT INTO transactions.transaction_details(transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, amount) SELECT @TransactionMasterId, @TranType, core.get_account_id_by_account_code(@AccountCode::text), @StatementReference, office.get_cash_repository_id_by_cash_repository_name(@CashRepositoryName::text), @Amount;";
 
                             if(model.Credit > 0 && model.Debit > 0)
                             {
-                                throw new InvalidOperationException(MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString("Warnings", "BothSidesHaveValue"));
+                                throw new InvalidOperationException(LocalizationHelper.GetResourceString("Warnings", "BothSidesHaveValue"));
                             }
                             else
                             {

@@ -5,18 +5,14 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
-using MixERP.Net.WebControls.ScrudFactory.Helpers;
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
-    public partial class ScrudItemSelector : CompositeControl, IDisposable
+    public partial class ScrudItemSelector : CompositeControl
     {
         public Panel container;
         public DropDownList filterDropDownList;
@@ -28,25 +24,25 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         protected override void CreateChildControls()
         {
-            container = new Panel();
+            this.container = new Panel();
             this.AddJavaScript();
-            this.LoadItemSelector(container);
+            this.LoadItemSelector(this.container);
             this.Initialize();
-            this.Controls.Add(container);
+            this.Controls.Add(this.container);
         }
 
 
         protected override void RecreateChildControls()
         {
-            EnsureChildControls();
+            this.EnsureChildControls();
         }
 
         protected override void Render(HtmlTextWriter w)
         {
-            container.RenderControl(w);
+            this.container.RenderControl(w);
         }
 
-        public override void Dispose()
+        public sealed override void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
@@ -59,33 +55,42 @@ namespace MixERP.Net.WebControls.ScrudFactory
             {
                 if (disposing)
                 {
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(container);
-
-                    if (filterDropDownList != null)
+                    if (this.container != null)
                     {
-                        filterDropDownList.DataBound -= this.FilterDropDownList_DataBound;
+                        this.container.Dispose();
+                        this.container = null;
                     }
 
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(filterDropDownList);
-
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(filterTextBox);
-
-                    if (searchGridView != null)
+                    if (this.filterDropDownList != null)
                     {
-                        searchGridView.RowDataBound -= this.SearchGridView_RowDataBound;
+                        this.filterDropDownList.DataBound -= this.FilterDropDownList_DataBound;
+                        this.filterDropDownList.Dispose();
+                        this.filterDropDownList = null;
                     }
 
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(searchGridView);
-
-                    if (goButton != null)
+                    if (this.filterTextBox != null)
                     {
-                        goButton.Click -= this.GoButton_Click;
+                        this.filterTextBox.Dispose();
+                        this.filterTextBox = null;
                     }
 
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(goButton);
+
+                    if (this.searchGridView != null)
+                    {
+                        this.searchGridView.RowDataBound -= this.SearchGridView_RowDataBound;
+                        this.searchGridView.Dispose();
+                        this.searchGridView = null;
+                    }
+
+                    if (this.goButton != null)
+                    {
+                        this.goButton.Click -= this.GoButton_Click;
+                        this.goButton.Dispose();
+                        this.goButton = null;
+                    }
                 }
 
-                disposed = true;
+                this.disposed = true;
             }
         }
 

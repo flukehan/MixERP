@@ -11,10 +11,11 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.BusinessLayer;
 
 namespace MixERP.Net.FrontEnd.Finance.Confirmation
 {
-    public partial class JournalVoucher : MixERP.Net.BusinessLayer.MixERPWebPage
+    public partial class JournalVoucher : MixERPWebpage
     {
         protected void Page_Init(object sender, EventArgs e)
         {

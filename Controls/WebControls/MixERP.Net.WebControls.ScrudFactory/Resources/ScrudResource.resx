@@ -144,6 +144,9 @@
   <data name="InvalidImage" xml:space="preserve">
     <value>This is not a valid image.</value>
   </data>
+  <data name="KeyColumnEmptyExceptionMessage" xml:space="preserve">
+    <value>The property 'KeyColumn' cannot be left empty.</value>
+  </data>
   <data name="NothingSelected" xml:space="preserve">
     <value>Nothing selected!</value>
   </data>
@@ -177,11 +180,23 @@
   <data name="ShowCompact" xml:space="preserve">
     <value>Show Compact</value>
   </data>
+  <data name="TableEmptyExceptionMessage" xml:space="preserve">
+    <value>The property 'Table' cannot be left empty.</value>
+  </data>
+  <data name="TableSchemaEmptyExceptionMessage" xml:space="preserve">
+    <value>The property 'TableSchema' cannot be left empty.</value>
+  </data>
   <data name="TaskCompletedSuccessfully" xml:space="preserve">
     <value>The task was completed successfully.</value>
   </data>
   <data name="UnknownError" xml:space="preserve">
     <value>Operation failed due to an unknown error.</value>
+  </data>
+  <data name="ViewEmptyExceptionMessage" xml:space="preserve">
+    <value>The property 'View' cannot be left empty.</value>
+  </data>
+  <data name="ViewSchemaEmptyExceptionMessage" xml:space="preserve">
+    <value>The property 'ViewSchema' cannot be left empty.</value>
   </data>
   <data name="YesNo" xml:space="preserve">
     <value>Yes, No</value>

@@ -25,7 +25,7 @@ namespace MixERP.Net.WebControls.ReportEngine
             set
             {
                 this.path = value;
-                EnsureChildControls();           
+                this.EnsureChildControls();           
             }
         }
     }

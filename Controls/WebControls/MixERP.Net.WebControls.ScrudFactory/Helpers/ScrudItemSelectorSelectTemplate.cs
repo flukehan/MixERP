@@ -6,36 +6,44 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.WebControls.ScrudFactory.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 {
     public class ScrudItemSelectorSelectTemplate : ITemplate, IDisposable
     {
-        public HtmlAnchor selectAnchor;
+        private HtmlAnchor selectAnchor;
         private bool disposed;
         public void InstantiateIn(Control container)
         {
-            selectAnchor = new HtmlAnchor();
-            selectAnchor.HRef = "#";
-            selectAnchor.Attributes.Add("class", MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("ItemSelectorSelectAnchorCssClass"));
-            selectAnchor.DataBinding += this.BindData;
-            selectAnchor.InnerText = Resources.ScrudResource.Select;
-            container.Controls.Add(selectAnchor);
+            if (container == null)
+            {
+                return;
+            }
+
+            this.selectAnchor = new HtmlAnchor();
+
+            this.selectAnchor.HRef = "#";
+            this.selectAnchor.Attributes.Add("class", ConfigurationHelper.GetScrudParameter("ItemSelectorSelectAnchorCssClass"));
+            this.selectAnchor.DataBinding += this.BindData;
+            this.selectAnchor.InnerText = ScrudResource.Select;
+            container.Controls.Add(this.selectAnchor);
         }
 
         public void BindData(object sender, EventArgs e)
         {
-            using (GridViewRow container = (GridViewRow)selectAnchor.NamingContainer)
+            using (var container = (GridViewRow)this.selectAnchor.NamingContainer)
             {
-                DataRowView rowView = container.DataItem as DataRowView;
-                selectAnchor.Attributes.Add("onclick", "updateValue(" + rowView[0].ToString() + ");");
+                var rowView = container.DataItem as DataRowView;
+                if (rowView != null)
+                {
+                    this.selectAnchor.Attributes.Add("onclick", "updateValue(" + rowView[0].ToString() + ");");
+                }
             }
         }
 
@@ -51,15 +59,15 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
             {
                 if (disposing)
                 {
-                    if (selectAnchor != null)
+                    if (this.selectAnchor != null)
                     {
-                        selectAnchor.DataBinding -= this.BindData;
+                        this.selectAnchor.DataBinding -= this.BindData;
+                        this.selectAnchor.Dispose();
+                        this.selectAnchor = null;
                     }
-
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(selectAnchor);
                 }
 
-                disposed = true;
+                this.disposed = true;
             }
         }
     }

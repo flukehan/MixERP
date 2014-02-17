@@ -8,8 +8,10 @@ http://mozilla.org/MPL/2.0/.
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common;
 using MixERP.Net.WebControls.Common.Helpers;
 
 namespace MixERP.Net.WebControls.Common
@@ -20,11 +22,11 @@ namespace MixERP.Net.WebControls.Common
         {
             string script = this.GetDatePickerScript(this.ID);
 
-            Page p = System.Web.HttpContext.Current.CurrentHandler as Page;
-            MixERP.Net.Common.PageUtility.ExecuteJavaScript("datePicker_" + this.ID + this.RandomNumber().ToString(), script, p);
+            Page p = HttpContext.Current.CurrentHandler as Page;
+            PageUtility.ExecuteJavaScript("datePicker_" + this.ID + RandomNumber().ToString(CultureInfo.InvariantCulture), script, p);
         }
 
-        private int RandomNumber()
+        private static int RandomNumber()
         {
             Random rnd = new Random();
             return rnd.Next(2000);

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Text;
+using MixERP.Net.Common.Helpers;
 using Npgsql;
 
 namespace MixERP.Net.WebControls.ReportEngine.Data.Connection
@@ -21,8 +22,8 @@ namespace MixERP.Net.WebControls.ReportEngine.Data.Connection
         {
             string host = ConfigurationManager.AppSettings["Server"];
             string database = ConfigurationManager.AppSettings["Database"];
-            string userName = MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("DbLoginName");
-            string password = MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("DbPassword");
+            string userName = ConfigurationHelper.GetReportParameter("DbLoginName");
+            string password = ConfigurationHelper.GetReportParameter("DbPassword");
 
             NpgsqlConnectionStringBuilder connectionStringBuilder = new NpgsqlConnectionStringBuilder();
             connectionStringBuilder.Host = host;

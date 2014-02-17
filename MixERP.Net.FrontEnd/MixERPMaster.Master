@@ -9,23 +9,17 @@ http://mozilla.org/MPL/2.0/.
 <%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MixERPMaster.Master.cs"
     Inherits="MixERP.Net.FrontEnd.MixERPMaster" %>
 
+<%@ Register TagPrefix="asp" Assembly="System.Web.Extensions" Namespace="System.Web.UI" %><%--Added for Xamarin Studio Compatibility on Mac OSX Mavericks.--%>
+
 <!DOCTYPE html>
 <html>
 <head runat="server">
     <asp:PlaceHolder ID="HeadHolder" runat="server">
-        <link href="<%=ResolveUrl("~/themes/purple/main.css") %>" rel="stylesheet" type="text/css" />
-        <link href="<%=ResolveUrl("~/Scripts/colorbox/colorbox.css") %>" rel="stylesheet" />
-        <link href="<%=ResolveUrl("~/Scripts/jquery-ui/css/custom-theme/jquery-ui-1.10.3.custom.min.css") %>" rel="stylesheet" type="text/css" />
+        <link href="<%=this.ResolveUrl("~/themes/purple/main.css") %>" rel="stylesheet" type="text/css" />
+        <link href="<%=this.ResolveUrl("~/Scripts/colorbox/colorbox.css") %>" rel="stylesheet" />
+        <link href="<%=this.ResolveUrl("~/Scripts/jquery-ui/css/custom-theme/jquery-ui-1.10.3.custom.min.css") %>" rel="stylesheet" type="text/css" />
+        <script src="<%=this.ResolveUrl("~/Scripts/jquery-1.9.1.js") %>"></script>
 
-        <script src="<%=ResolveUrl("~/Scripts/jquery-1.9.1.js") %>"></script>
-        <script src="<%=ResolveUrl("~/Scripts/jquery-ui.js") %>"></script>
-
-        <script src="<%=ResolveUrl("~/Scripts/shortcut.js") %>"></script>
-        <script src="<%=ResolveUrl("~/Scripts/colorbox/jquery.colorbox-min.js") %>"></script>
-        <script src="<%=ResolveUrl("~/Scripts/jqueryNumber/jquery.number.min.js") %>"></script>
-        <script src="<%=ResolveUrl("~/Scripts/date.js") %>"></script>
-        <script src="<%=ResolveUrl("~/Scripts/chartjs/Chart.min.js") %>"></script>
-        <script src="<%=ResolveUrl("~/Scripts/chartjs/legend.js") %>"></script>
 
     </asp:PlaceHolder>
     <title>MixERP® Beta</title>
@@ -44,17 +38,18 @@ http://mozilla.org/MPL/2.0/.
 </head>
 <body>
     <script type="text/javascript">
-        var today = "<%= System.DateTime.Now.ToShortDateString() %>";
-        var shortDateFormat = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetShortDateFormat() %>";
-        var thousandSeparator = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetThousandSeparator() %>";
-        var decimalSeparator = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetDecimalSeparator() %>";
-        var decimalPlaces = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetDecimalPlaces() %>";
-        var localizedAreYouSure = "<%= Resources.Questions.AreYouSure %>";
-        var localizedUpdateTax = "<%= Resources.Questions.UpdateTax %>";
+        var today = "<%= DateTime.Now.ToShortDateString() %>";
+        var shortDateFormat = "<%= LocalizationHelper.GetShortDateFormat() %>";
+        var thousandSeparator = "<%= LocalizationHelper.GetThousandSeparator() %>";
+        var decimalSeparator = "<%= LocalizationHelper.GetDecimalSeparator() %>";
+        var decimalPlaces = "<%= LocalizationHelper.GetDecimalPlaces() %>";
+        var localizedAreYouSure = "<%= Questions.AreYouSure %>";
+        var localizedUpdateTax = "<%= Questions.UpdateTax %>";
     </script>
-    <script src="<%=ResolveUrl("~/Scripts/mixerp.js") %>" type="text/javascript"></script>
 
     <form id="form1" runat="server" enctype="multipart/form-data" method="post" submitdisabledcontrols="true" defaultbutton="SwallowSubmitButton">
+        <asp:ScriptManager runat="server" ID="MixERPMasterScriptManager" />
+
         <div id="page">
             <a href="~/Dashboard/Index.aspx" runat="server">
                 <img runat="server" src="~/themes/purple/mixerp-logo.png" height="50" width="250" />
@@ -77,7 +72,7 @@ http://mozilla.org/MPL/2.0/.
             </div>
             <div id="footer">
                 Powered by
-            <a href="http://MixERP.Net" target="_blank">MixErp® Beta</a>
+            <a href="http://MixERP.Net" target="_blank">MixERP® Beta</a>
             </div>
         </div>
         <script type="text/javascript">
@@ -97,6 +92,15 @@ http://mozilla.org/MPL/2.0/.
 
 
         </script>
+        <script src="<%=this.ResolveUrl("~/Scripts/jquery-ui.js") %>"></script>
+        <script src="<%=this.ResolveUrl("~/Scripts/shortcut.js") %>"></script>
+        <script src="<%=this.ResolveUrl("~/Scripts/colorbox/jquery.colorbox-min.js") %>"></script>
+        <script src="<%=this.ResolveUrl("~/Scripts/jqueryNumber/jquery.number.min.js") %>"></script>
+        <script src="<%=this.ResolveUrl("~/Scripts/date.js") %>"></script>
+        <script src="<%=this.ResolveUrl("~/Scripts/chartjs/Chart.min.js") %>"></script>
+        <script src="<%=this.ResolveUrl("~/Scripts/chartjs/legend.js") %>"></script>
+        <script src="<%=this.ResolveUrl("~/Scripts/mixerp.js") %>" type="text/javascript"></script>
+
         <asp:ContentPlaceHolder ID="BottomScriptContentPlaceholder" runat="server">
         </asp:ContentPlaceHolder>
     </form>

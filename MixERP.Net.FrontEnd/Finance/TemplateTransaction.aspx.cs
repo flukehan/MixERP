@@ -11,10 +11,11 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.BusinessLayer;
 
 namespace MixERP.Net.FrontEnd.Finance
 {
-    public partial class TemplateTransaction : MixERP.Net.BusinessLayer.MixERPWebPage
+    public partial class TemplateTransaction : MixERPWebpage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

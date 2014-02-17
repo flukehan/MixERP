@@ -11,10 +11,12 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.BusinessLayer;
+using Resources;
 
 namespace MixERP.Net.FrontEnd.Purchase
 {
-    public partial class DirectPurchase : MixERP.Net.BusinessLayer.MixERPWebPage
+    public partial class DirectPurchase : MixERPWebpage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -23,12 +25,12 @@ namespace MixERP.Net.FrontEnd.Purchase
 
         protected void Purchase_SaveButtonClick(object sender, EventArgs e)
         {
-            bool isCredit = DirectPurchaseControl.GetForm.TransactionType.Equals(Resources.Titles.Credit); ;
+            bool isCredit = this.DirectPurchaseControl.GetForm.TransactionType.Equals(Titles.Credit); ;
 
-            long transactionMasterId = MixERP.Net.BusinessLayer.Transactions.DirectPurchase.Add(DirectPurchaseControl.GetForm.Date, DirectPurchaseControl.GetForm.StoreId, isCredit, DirectPurchaseControl.GetForm.PartyCode, DirectPurchaseControl.GetForm.Details, DirectPurchaseControl.GetForm.CashRepositoryId, DirectPurchaseControl.GetForm.CostCenterId, DirectPurchaseControl.GetForm.ReferenceNumber, DirectPurchaseControl.GetForm.StatementReference);
+            long transactionMasterId = BusinessLayer.Transactions.DirectPurchase.Add(this.DirectPurchaseControl.GetForm.Date, this.DirectPurchaseControl.GetForm.StoreId, isCredit, this.DirectPurchaseControl.GetForm.PartyCode, this.DirectPurchaseControl.GetForm.Details, this.DirectPurchaseControl.GetForm.CashRepositoryId, this.DirectPurchaseControl.GetForm.CostCenterId, this.DirectPurchaseControl.GetForm.ReferenceNumber, this.DirectPurchaseControl.GetForm.StatementReference);
             if(transactionMasterId > 0)
             {
-                Response.Redirect("~/Purchase/Confirmation/DirectPurchase.aspx?TranId=" + transactionMasterId, true);
+                this.Response.Redirect("~/Purchase/Confirmation/DirectPurchase.aspx?TranId=" + transactionMasterId, true);
             }
         }
 

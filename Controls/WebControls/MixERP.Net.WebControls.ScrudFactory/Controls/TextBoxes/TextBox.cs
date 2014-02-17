@@ -5,14 +5,13 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Helpers;
+using MixERP.Net.WebControls.ScrudFactory.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 {
@@ -30,16 +29,16 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
                 return;
             }
 
-            using (TextBox textBox = GetTextBox(columnName + "_textbox", maxLength))
+            using (var textBox = GetTextBox(columnName + "_textbox", maxLength))
             {
-                string label = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString(resourceClassName, columnName);
+                var label = LocalizationHelper.GetResourceString(resourceClassName, columnName);
 
                 textBox.Text = defaultValue;
 
                 if (!isNullable)
                 {
-                    RequiredFieldValidator required = ScrudFactoryHelper.GetRequiredFieldValidator(textBox);
-                    ScrudFactoryHelper.AddRow(htmlTable, label + Resources.ScrudResource.RequiredFieldIndicator, textBox, required);
+                    var required = ScrudFactoryHelper.GetRequiredFieldValidator(textBox);
+                    ScrudFactoryHelper.AddRow(htmlTable, label + ScrudResource.RequiredFieldIndicator, textBox, required);
                     return;
                 }
 
@@ -54,7 +53,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
                 return null;
             }
 
-            using (TextBox textBox = new TextBox())
+            using (var textBox = new TextBox())
             {
                 textBox.ID = id;
 
@@ -63,7 +62,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
                     textBox.MaxLength = maxLength;
                 }
 
-                textBox.ClientIDMode = System.Web.UI.ClientIDMode.Static;
+                textBox.ClientIDMode = ClientIDMode.Static;
 
                 return textBox;
             }

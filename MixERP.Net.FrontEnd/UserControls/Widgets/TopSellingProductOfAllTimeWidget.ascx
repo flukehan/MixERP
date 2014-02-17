@@ -56,5 +56,7 @@
 </div>
 
 <script type="text/javascript">
-    prepareChart("curr-office-top-selling-products-datasource", "curr-office-top-selling-products-canvas", "curr-office-top-selling-products-legend", 'bar');
+    $(document).ready(function(){
+        prepareChart("curr-office-top-selling-products-datasource", "curr-office-top-selling-products-canvas", "curr-office-top-selling-products-legend", 'bar');
+    });
 </script>

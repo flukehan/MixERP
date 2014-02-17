@@ -10,11 +10,11 @@
                     <br />
         Last Login IP : 192.168.0.200
                 <br />
-        Last Login On : <%=System.DateTime.Now.ToString() %>
+        Last Login On : <%=DateTime.Now.ToString() %>
         <br />
         Current Login IP : 192.168.0.200
                 <br />
-        Current Login On: <%=System.DateTime.Now.ToString() %>
+        Current Login On: <%=DateTime.Now.ToString() %>
         <br />
         Role : ADM (Administrators)
                     <br />

@@ -11,11 +11,13 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.BusinessLayer;
 using MixERP.Net.WebControls.ScrudFactory;
+using Resources;
 
 namespace MixERP.Net.FrontEnd.CRM.Setup
 {
-    public partial class LeadSources : MixERP.Net.BusinessLayer.MixERPWebPage
+    public partial class LeadSources : MixERPWebpage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -28,8 +30,8 @@ namespace MixERP.Net.FrontEnd.CRM.Setup
                 scrud.ViewSchema = "crm";
                 scrud.View = "lead_sources";
 
-                scrud.Text = Resources.Titles.LeadSources;
-                ScriptManager1.NamingContainer.Controls.Add(scrud);
+                scrud.Text = Titles.LeadSources;
+                this.ScrudPlaceholder.Controls.Add(scrud);
             }
         }
     }

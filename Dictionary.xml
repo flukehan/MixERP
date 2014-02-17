@@ -14,7 +14,9 @@ http://mozilla.org/MPL/2.0/.
       <Word>Cr</Word>
       <Word>Dr</Word>
       <Word>Eval</Word>
+      <Word>Javascript</Word>
       <Word>MixERP</Word>
+      <Word>Npgsql</Word>
       <Word>Scrud</Word>
       <Word>Sha</Word>
     </Recognized>
@@ -29,10 +31,13 @@ http://mozilla.org/MPL/2.0/.
       <Acronym>IP</Acronym>
       <Acronym>jQuery</Acronym>
       <Acronym>jQueryUI</Acronym>
+      <Acronym>KeyColumn</Acronym>
       <Acronym>POS</Acronym>
       <Acronym>SubTotal</Acronym>
+      <Acronym>TableSchema</Acronym>
       <Acronym>UOM</Acronym>
       <Acronym>ValueDate</Acronym>
+      <Acronym>ViewSchema</Acronym>
     </CasingExceptions>
   </Acronyms>
 </Dictionary>

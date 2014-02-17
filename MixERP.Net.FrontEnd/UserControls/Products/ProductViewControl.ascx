@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="True" CodeBehind="ProductViewControl.ascx.cs" Inherits="MixERP.Net.FrontEnd.UserControls.Products.ProductViewControl" %>
-<asp:ScriptManager runat="server" />
+<%@ Import Namespace="Resources" %>
 <h1>
     <asp:Literal ID="TitleLiteral" runat="server" />
 </h1>
@@ -125,7 +125,7 @@
         </tr>
     </table>
 </div>
-<asp:Panel ID="GridPanel" runat="server" Width="1024px" ScrollBars="Auto">
+<asp:Panel ID="GridPanel" runat="server" Width="100px" ScrollBars="Auto">
     <asp:GridView
         ID="ProductViewGridView"
         runat="server"
@@ -171,6 +171,16 @@
 
 
 <script type="text/javascript">
+    $(document).ready(function () {
+        var contentWidth = $("#content").width();
+        var menuWidth = $("#menu2").width();
+
+        var margin = 20;
+        var width = contentWidth - menuWidth - margin;
+
+        $("#GridPanel").css("width", width + "px");
+
+    });
 
     var updateFlagColor = function () {
         //Get an instance of the form grid.
@@ -239,7 +249,7 @@
 
             if (checkBox) {
                 //Check if the checkbox was selected or checked.
-                if (checkBox.attr("checked") == "checked") {
+                if (checkBox.prop("checked")) {
                     //Get ID from the associated cell.
                     var id = row.find("td:nth-child(" + idColumnPosition + ")").html();
 
@@ -255,7 +265,7 @@
             return true;
         }
         else {
-            alert("<%= Resources.Labels.NothingSelected %>");
+            alert("<%= Labels.NothingSelected %>");
             return false;
         }
 
@@ -284,22 +294,26 @@
 
 
     $('#ProductViewGridView tr').click(function () {
-        console.log('Grid row was clicked. Now, searching the radio button.');
+        //console.log('Grid row was clicked. Now, searching the radio button.');
         var checkBox = $(this).find('td input:checkbox')
-        console.log('The check box was found.');
+        //console.log('The check box was found.');
         toogleSelection(checkBox.attr("id"));
     });
 
     var toogleSelection = function (id) {
-        var attribute = $("#" + id).attr("checked");
-        if (attribute) {
-            $("#" + id).removeAttr("checked");
+
+        var property = $("#" + id).prop("checked");
+
+        if (property) {
+            $("#" + id).prop("checked", false);
         }
         else {
-            $("#" + id).attr("checked", "checked");
+            $("#" + id).prop("checked", true);
         }
 
-        console.log('Radio button "' + id + '" selected.');
+        console.log(JSON.stringify($("#" + id).attr("checked")));
+
+        console.log('Radio button selection was "' + id + '" toggled.');
     }
 
 

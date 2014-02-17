@@ -6,10 +6,10 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
+using FormHelper = MixERP.Net.WebControls.ScrudFactory.Data.FormHelper;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
@@ -18,16 +18,16 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         protected void FilterDropDownList_DataBound(object sender, EventArgs e)
         {
-            using (DropDownList FilterDropDownList = sender as DropDownList)
+            using (var dropDownList = sender as DropDownList)
             {
-                if (FilterDropDownList == null)
+                if (dropDownList == null)
                 {
                     return;
                 }
 
-                foreach (ListItem item in FilterDropDownList.Items)
+                foreach (ListItem item in dropDownList.Items)
                 {
-                    item.Text = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString("ScrudResource", item.Text);
+                    item.Text = LocalizationHelper.GetResourceString("ScrudResource", item.Text);
                 }
             }
         }
@@ -41,12 +41,12 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (e.Row.RowType == DataControlRowType.Header)
             {
-                for (int i = 0; i < e.Row.Cells.Count; i++)
+                for (var i = 0; i < e.Row.Cells.Count; i++)
                 {
-                    string cellText = e.Row.Cells[i].Text;
+                    var cellText = e.Row.Cells[i].Text;
                     if (!string.IsNullOrWhiteSpace(cellText))
                     {
-                        cellText = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString("ScrudResource", cellText);
+                        cellText = LocalizationHelper.GetResourceString("ScrudResource", cellText);
                         e.Row.Cells[i].Text = cellText;
                     }
                 }
@@ -58,21 +58,21 @@ namespace MixERP.Net.WebControls.ScrudFactory
             if (string.IsNullOrWhiteSpace(this.GetSchema())) return;
             if (string.IsNullOrWhiteSpace(this.GetView())) return;
 
-            using (System.Data.DataTable table = MixERP.Net.WebControls.ScrudFactory.Data.FormHelper.GetTable(this.GetSchema(), this.GetView(), filterDropDownList.SelectedItem.Value, filterTextBox.Text, 10))
+            using (var table = FormHelper.GetTable(this.GetSchema(), this.GetView(), this.filterDropDownList.SelectedItem.Value, this.filterTextBox.Text, 10))
             {
-                searchGridView.DataSource = table;
-                searchGridView.DataBind();
+                this.searchGridView.DataSource = table;
+                this.searchGridView.DataBind();
             }
         }
 
         private string GetSchema()
         {
-            return MixERP.Net.Common.Conversion.TryCastString(this.Page.Request["Schema"]);
+            return Conversion.TryCastString(this.Page.Request["Schema"]);
         }
 
         private string GetView()
         {
-            return MixERP.Net.Common.Conversion.TryCastString(this.Page.Request["View"]);
+            return Conversion.TryCastString(this.Page.Request["View"]);
         }
 
 

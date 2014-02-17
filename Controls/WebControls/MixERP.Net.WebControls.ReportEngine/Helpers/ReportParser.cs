@@ -7,9 +7,12 @@ http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
 
 namespace MixERP.Net.WebControls.ReportEngine.Helpers
 {
@@ -22,9 +25,9 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
                 return string.Empty;
             }
 
-            string logo = MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("LogoPath");
-            expression = expression.Replace("{LogoPath}", MixERP.Net.Common.PageUtility.GetCurrentDomainName() + MixERP.Net.Common.PageUtility.ResolveUrl(logo));//Or else logo will not be exported into excel.
-            expression = expression.Replace("{PrintDate}", System.DateTime.Now.ToString());
+            string logo = ConfigurationHelper.GetReportParameter("LogoPath");
+            expression = expression.Replace("{LogoPath}", PageUtility.GetCurrentDomainName() + PageUtility.ResolveUrl(logo));//Or else logo will not be exported into excel.
+            expression = expression.Replace("{PrintDate}", DateTime.Now.ToString());
 
             foreach(var match in Regex.Matches(expression, "{.*?}"))
             {
@@ -43,14 +46,14 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
                     string res = RemoveBraces(word);
                     string[] resource = res.Split('.');
 
-                    expression = expression.Replace(word, MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString(resource[1], resource[2]));
+                    expression = expression.Replace(word, LocalizationHelper.GetResourceString(resource[1], resource[2]));
                 }
             }
 
             return expression;
         }
 
-        public static string ParseDataSource(string expression, Collection<System.Data.DataTable> table)
+        public static string ParseDataSource(string expression, Collection<DataTable> table)
         {
             if(string.IsNullOrWhiteSpace(expression))
             {
@@ -70,7 +73,7 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
                 if(word.StartsWith("{DataSource", StringComparison.OrdinalIgnoreCase))
                 {
 
-                    int index = MixERP.Net.Common.Conversion.TryCastInteger(word.Split('.').First().Replace("{DataSource[", "").Replace("]", ""));
+                    int index = Conversion.TryCastInteger(word.Split('.').First().Replace("{DataSource[", "").Replace("]", ""));
                     string column = word.Split('.').Last().Replace("}", "");
 
                     if(table[index] != null)

@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebForm1.aspx.cs" Inherits="MixERP.Net.FrontEnd.Trash.WebForm1" %>
+<%@ Import Namespace="MixERP.Net.Common.Helpers" %>
 
 <!DOCTYPE html>
 
@@ -8,26 +9,26 @@
     <asp:PlaceHolder ID="HeadHolder" runat="server">
         <script src="//code.jquery.com/jquery-1.9.1.js" type="text/javascript"></script>
         <script src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-        <link href="<%=ResolveUrl("~/Scripts/jquery-ui/css/custom-theme/jquery-ui-1.10.3.custom.min.css") %>" rel="stylesheet" type="text/css" />
-         <script src="<%=ResolveUrl("~/Scripts/jqueryNumber/jquery.number.min.js") %>"></script>
-       <script src="<%=ResolveUrl("~/Scripts/shortcut.js") %>"></script>
+        <link href="<%=this.ResolveUrl("~/Scripts/jquery-ui/css/custom-theme/jquery-ui-1.10.3.custom.min.css") %>" rel="stylesheet" type="text/css" />
+        <script src="<%=this.ResolveUrl("~/Scripts/jqueryNumber/jquery.number.min.js") %>"></script>
+        <script src="<%=this.ResolveUrl("~/Scripts/shortcut.js") %>"></script>
         <link href="../Themes/purple/main.css" rel="stylesheet" />
     </asp:PlaceHolder>
     <title></title>
 </head>
 <body>
     <script type="text/javascript">
-        var today = "<%= System.DateTime.Now.ToShortDateString() %>";
-        var shortDateFormat = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetShortDateFormat() %>";
-        var thousandSeparator = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetThousandSeparator() %>";
-        var decimalSeparator = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetDecimalSeparator() %>";
-        var decimalPlaces = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetDecimalPlaces() %>";
+        var today = "<%= DateTime.Now.ToShortDateString() %>";
+        var shortDateFormat = "<%= LocalizationHelper.GetShortDateFormat() %>";
+        var thousandSeparator = "<%= LocalizationHelper.GetThousandSeparator() %>";
+        var decimalSeparator = "<%= LocalizationHelper.GetDecimalSeparator() %>";
+        var decimalPlaces = "<%= LocalizationHelper.GetDecimalPlaces() %>";
     </script>
 
-    <script src="<%=ResolveUrl("~/Scripts/mixerp.js") %>"></script>
+    <script src="<%=this.ResolveUrl("~/Scripts/mixerp.js") %>"></script>
 
     <form id="form1" runat="server">
-        <asp:ScriptManager ID="ScriptManager1" runat="server" />
+        <asp:PlaceHolder ID="ScrudPlaceholder" runat="server" />
         <mixerp:ScrudForm
             ID="MenuScrud"
             runat="server"

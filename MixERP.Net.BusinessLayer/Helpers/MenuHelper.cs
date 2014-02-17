@@ -12,18 +12,22 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using System.Collections.ObjectModel;
+using System.Threading;
+using System.Web.UI;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Models.Core;
 
 namespace MixERP.Net.BusinessLayer.Helpers
 {
     public static class MenuHelper
     {
-        public static string GetContentPageMenu(System.Web.UI.Control page, string path)
+        public static string GetContentPageMenu(Control page, string path)
         {
             if(page != null)
             {
                 string menu = string.Empty;
-                string relativePath = MixERP.Net.Common.Conversion.GetRelativePath(path);
-                Collection<MixERP.Net.Common.Models.Core.Menu> rootMenus = MixERP.Net.BusinessLayer.Core.Menu.GetRootMenuCollection(relativePath);
+                string relativePath = Conversion.GetRelativePath(path);
+                Collection<Menu> rootMenus = Core.Menu.GetRootMenuCollection(relativePath);
 
                 if (rootMenus == null)
                 {
@@ -32,18 +36,18 @@ namespace MixERP.Net.BusinessLayer.Helpers
 
                 if(rootMenus.Count > 0)
                 {
-                    foreach(MixERP.Net.Common.Models.Core.Menu rootMenu in rootMenus)
+                    foreach(Menu rootMenu in rootMenus)
                     {
 
-                        menu += string.Format(System.Threading.Thread.CurrentThread.CurrentCulture, "<div class='sub-menu'><div class='menu-title'>{0}</div>", rootMenu.MenuText);
+                        menu += string.Format(Thread.CurrentThread.CurrentCulture, "<div class='sub-menu'><div class='menu-title'>{0}</div>", rootMenu.MenuText);
 
-                        Collection<MixERP.Net.Common.Models.Core.Menu> childMenus = MixERP.Net.BusinessLayer.Core.Menu.GetMenuCollection(rootMenu.MenuId, 2);
+                        Collection<Menu> childMenus = Core.Menu.GetMenuCollection(rootMenu.MenuId, 2);
 
                         if(childMenus.Count > 0)
                         {
-                            foreach(MixERP.Net.Common.Models.Core.Menu childMenu in childMenus)
+                            foreach(Menu childMenu in childMenus)
                             {
-                                menu += string.Format(System.Threading.Thread.CurrentThread.CurrentCulture, "<a href='{0}' title='{1}' data-menucode='{2}' class='sub-menu-anchor'>{1}</a>", page.ResolveUrl(childMenu.Url), childMenu.MenuText, childMenu.MenuCode);
+                                menu += string.Format(Thread.CurrentThread.CurrentCulture, "<a href='{0}' title='{1}' data-menucode='{2}' class='sub-menu-anchor'>{1}</a>", page.ResolveUrl(childMenu.Url), childMenu.MenuText, childMenu.MenuCode);
                             }
                         }
 
@@ -57,27 +61,27 @@ namespace MixERP.Net.BusinessLayer.Helpers
             return null;
         }
 
-        public static string GetPageMenu(System.Web.UI.Page page)
+        public static string GetPageMenu(Page page)
         {
             if(page != null)
             {
                 string menu = string.Empty;
 
-                Collection<MixERP.Net.Common.Models.Core.Menu> menuCollection = MixERP.Net.BusinessLayer.Core.Menu.GetMenuCollection(page.Request.Url.AbsolutePath, 1);
+                Collection<Menu> menuCollection = Core.Menu.GetMenuCollection(page.Request.Url.AbsolutePath, 1);
 
                 if(menuCollection.Count > 0)
                 {
-                    foreach(MixERP.Net.Common.Models.Core.Menu model in menuCollection)
+                    foreach(Menu model in menuCollection)
                     {
-                        menu += string.Format(System.Threading.Thread.CurrentThread.CurrentCulture, "<div class='menu-panel'><div class='menu-header'>{0}</div><ul>", model.MenuText);
+                        menu += string.Format(Thread.CurrentThread.CurrentCulture, "<div class='menu-panel'><div class='menu-header'>{0}</div><ul>", model.MenuText);
 
-                        Collection<MixERP.Net.Common.Models.Core.Menu> childMenus = MixERP.Net.BusinessLayer.Core.Menu.GetMenuCollection(model.MenuId, 2);
+                        Collection<Menu> childMenus = Core.Menu.GetMenuCollection(model.MenuId, 2);
 
                         if(childMenus.Count > 0)
                         {
-                            foreach(MixERP.Net.Common.Models.Core.Menu childMenu in childMenus)
+                            foreach(Menu childMenu in childMenus)
                             {
-                                menu += string.Format(System.Threading.Thread.CurrentThread.CurrentCulture, "<li><a href='{0}' title='{1}'>{1}</a></li>", page.ResolveUrl(childMenu.Url), childMenu.MenuText);
+                                menu += string.Format(Thread.CurrentThread.CurrentCulture, "<li><a href='{0}' title='{1}'>{1}</a></li>", page.ResolveUrl(childMenu.Url), childMenu.MenuText);
                             }
                         }
 

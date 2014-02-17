@@ -5,32 +5,36 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 --%>
+
 <%@ Page Title="" Language="C#" MasterPageFile="~/ContentMaster.Master" AutoEventWireup="true" CodeBehind="JournalVoucher.aspx.cs" Inherits="MixERP.Net.FrontEnd.Finance.JournalVoucher" %>
+<%@ Import Namespace="Resources" %>
+<%@ Register TagPrefix="asp" Assembly="System.Web.Extensions" Namespace="System.Web.UI" %> <%--Added for Xamarin Studio Compatibility on Mac OSX Mavericks.--%>
+
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceholder" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceholder" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceholder" runat="server">
-    <asp:ScriptManager ID="ScriptManager1" runat="server" />
+    <asp:PlaceHolder ID="ScrudPlaceholder" runat="server" />
 
     <asp:Label ID="TitleLabel" runat="server" Text="<%$Resources:Titles, JournalVoucherEntry %>" CssClass="title" />
 
 
 
     <asp:UpdateProgress ID="UpdateProgress1" runat="server">
-        <ProgressTemplate>
+        <progresstemplate>
             <div class="ajax-container">
                 <img runat="server" alt="progress" src="~/spinner.gif" class="ajax-loader" />
             </div>
-        </ProgressTemplate>
+        </progresstemplate>
     </asp:UpdateProgress>
 
     <asp:UpdatePanel ID="UpdatePanel1" runat="server" ChildrenAsTriggers="true" UpdateMode="Always">
-        <Triggers>
+        <triggers>
             <asp:AsyncPostBackTrigger ControlID="AddButton" />
-        </Triggers>
-        <ContentTemplate>
+        </triggers>
+        <contenttemplate>
 
             <div class="vpad8">
                 <div class="form" style="width: 272px;">
@@ -153,12 +157,12 @@ http://mozilla.org/MPL/2.0/.
                     </table>
                 </div>
             </div>
-        </ContentTemplate>
+        </contenttemplate>
     </asp:UpdatePanel>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceholder" runat="server">
     <script type="text/javascript">
-        localizedAreYouSure = '<%= Resources.Questions.AreYouSure %>';
+        localizedAreYouSure = '<%= Questions.AreYouSure %>';
 
         $(document).ready(function () {
             shortcut.add("ALT+C", function () {

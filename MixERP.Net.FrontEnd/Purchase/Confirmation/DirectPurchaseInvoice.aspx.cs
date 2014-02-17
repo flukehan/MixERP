@@ -8,18 +8,19 @@ http://mozilla.org/MPL/2.0/.
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using MixERP.Net.BusinessLayer;
 
 namespace MixERP.Net.FrontEnd.Purchase.Confirmation
 {
-    public partial class DirectPurchaseInvoice : MixERP.Net.BusinessLayer.MixERPWebReportPage
+    public partial class DirectPurchaseInvoice : MixERPWebReportPage
     {
         protected void Page_Init(object sender, EventArgs e)
         {
             Collection<KeyValuePair<string, string>> list = new Collection<KeyValuePair<string, string>>();
             list.Add(new KeyValuePair<string, string>("@transaction_master_id", this.Request["TranId"]));
 
-            DirectPurchaseInvoiceReport.AddParameterToCollection(list);
-            DirectPurchaseInvoiceReport.AddParameterToCollection(list);
+            this.DirectPurchaseInvoiceReport.AddParameterToCollection(list);
+            this.DirectPurchaseInvoiceReport.AddParameterToCollection(list);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace MixERP.Net.BusinessLayer.Office
     {
         public static bool IsSalesAllowed(int storeId)
         {
-            return MixERP.Net.DatabaseLayer.Office.Stores.IsSalesAllowed(storeId);
+            return DatabaseLayer.Office.Stores.IsSalesAllowed(storeId);
         }
 
     }

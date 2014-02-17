@@ -7,17 +7,21 @@ http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
+using MixERP.Net.Common;
+
 namespace MixERP.Net.FrontEnd
 {
-    public class Global : System.Web.HttpApplication
+    public class Global : HttpApplication
     {
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         void Application_Start(object sender, EventArgs e)
         {
             RegisterRoutes(RouteTable.Routes);
@@ -32,42 +36,42 @@ namespace MixERP.Net.FrontEnd
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         void Application_End(object sender, EventArgs e)
         {
             //  Code that runs on application shutdown
 
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         void Application_Error(object sender, EventArgs e)
         {
             // Code that runs when an unhandled error occurs
-            Exception ex = Server.GetLastError();
+            Exception ex = this.Server.GetLastError();
             
             if(ex == null)
             {
                 return;
             }
 
-            if(ex is System.Threading.ThreadAbortException)
+            if(ex is ThreadAbortException)
             {
                 return;
             }
 
 
-            MixERP.Net.Common.ExceptionManager.HandleException(ex);
+            ExceptionManager.HandleException(ex);
 
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         void Session_Start(object sender, EventArgs e)
         {
             // Code that runs when a new session is started
 
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         void Session_End(object sender, EventArgs e)
         {
             // Code that runs when a session ends. 

@@ -20,7 +20,7 @@ namespace MixERP.Net.DBFactory
     {
         public static string ConnectionString()
         {
-            NpgsqlConnectionStringBuilder connectionStringBuilder = new NpgsqlConnectionStringBuilder();
+            var connectionStringBuilder = new NpgsqlConnectionStringBuilder();
             connectionStringBuilder.Host = ConfigurationManager.AppSettings["Server"];
             connectionStringBuilder.Database = ConfigurationManager.AppSettings["Database"];
             connectionStringBuilder.UserName = ConfigurationManager.AppSettings["UserId"];

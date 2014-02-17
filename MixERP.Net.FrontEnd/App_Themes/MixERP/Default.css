@@ -1,5 +1,5 @@
 ﻿html, body, table, tr, td, h1, h2, h3, h4, h5, input, select, p, textarea {
-    font-family: 'Segoe UI', 'Tahoma', 'Arial';
+    font-family: 'Segoe UI', 'Helvetica Neue', 'Tahoma', 'Arial';
 }
 
 
@@ -17,12 +17,12 @@
     padding: 12px;
 }
 
-    .sign-in input[type='text'], .sign-in input[type='password']  {
-        width:150px;
+    .sign-in input[type='text'], .sign-in input[type='password'] {
+        width: 150px;
     }
 
     .sign-in select {
-        width:180px;
+        width: 180px;
     }
 
     .sign-in:hover {
@@ -97,19 +97,8 @@ a {
             }
 
 
-
-
-
-
-
-
-
-
-
-
-
 body {
-    font-size: 11px!important;
+    font-size: 11px !important;
 }
 
 hr {
@@ -130,7 +119,7 @@ table.report tr th, table.report tr td {
 
     .table td {
         border: 1px solid gray;
-        padding: 4px!important;
+        padding: 4px !important;
     }
 
 table.horizontal > tbody > tr > td:first-child {
@@ -177,9 +166,9 @@ input[type=checkbox], input[type=radio] {
 }
 
 .report-image-button {
-    padding:2px;
+    padding: 2px;
 }
 
 .report-button {
-    font-weight:bold;
+    font-weight: bold;
 }

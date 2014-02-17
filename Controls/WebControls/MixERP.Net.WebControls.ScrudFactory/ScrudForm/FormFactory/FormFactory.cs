@@ -8,43 +8,48 @@ http://mozilla.org/MPL/2.0/.
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common;
+using MixERP.Net.WebControls.ScrudFactory.Controls;
+using MixERP.Net.WebControls.ScrudFactory.Data;
+using MixERP.Net.WebControls.ScrudFactory.Helpers;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
-    public partial class ScrudForm : CompositeControl
+    public partial class ScrudForm
     {
-        private void LoadForm(Panel container, System.Data.DataTable values)
+        private void LoadForm(Panel container, DataTable values)
         {
-            using (HtmlTable htmlTable = new HtmlTable())
+            using (var htmlTable = new HtmlTable())
             {
                 htmlTable.Attributes["class"] = "valignmiddle";
 
-                using (System.Data.DataTable table = MixERP.Net.WebControls.ScrudFactory.Data.TableHelper.GetTable(this.TableSchema, this.Table, this.Exclude))
+                using (var table = TableHelper.GetTable(this.TableSchema, this.Table, this.Exclude))
                 {
                     if (table.Rows.Count > 0)
                     {
-                        foreach (System.Data.DataRow row in table.Rows)
+                        foreach (DataRow row in table.Rows)
                         {
-                            string columnName = MixERP.Net.Common.Conversion.TryCastString(row["column_name"]);
-                            string defaultValue = MixERP.Net.Common.Conversion.TryCastString(row["column_default"]); //nextval('%_seq'::regclass)
-                            bool isSerial = defaultValue.StartsWith("nextval", StringComparison.OrdinalIgnoreCase);
-                            bool isNullable = MixERP.Net.Common.Conversion.TryCastBoolean(row["is_nullable"]);
-                            string dataType = MixERP.Net.Common.Conversion.TryCastString(row["data_type"]);
-                            string domain = MixERP.Net.Common.Conversion.TryCastString(row["domain_name"]);
-                            int maxLength = MixERP.Net.Common.Conversion.TryCastInteger(row["character_maximum_length"]);
+                            var columnName = Conversion.TryCastString(row["column_name"]);
+                            var defaultValue = Conversion.TryCastString(row["column_default"]); //nextval('%_seq'::regclass)
+                            var isSerial = defaultValue.StartsWith("nextval", StringComparison.OrdinalIgnoreCase);
+                            var isNullable = Conversion.TryCastBoolean(row["is_nullable"]);
+                            var dataType = Conversion.TryCastString(row["data_type"]);
+                            var domain = Conversion.TryCastString(row["domain_name"]);
+                            var maxLength = Conversion.TryCastInteger(row["character_maximum_length"]);
 
-                            string parentTableSchema = MixERP.Net.Common.Conversion.TryCastString(row["references_schema"]);
-                            string parentTable = MixERP.Net.Common.Conversion.TryCastString(row["references_table"]);
-                            string parentTableColumn = MixERP.Net.Common.Conversion.TryCastString(row["references_field"]);
+                            var parentTableSchema = Conversion.TryCastString(row["references_schema"]);
+                            var parentTable = Conversion.TryCastString(row["references_table"]);
+                            var parentTableColumn = Conversion.TryCastString(row["references_field"]);
 
                             if (values.Rows.Count.Equals(1))
                             {
-                                defaultValue = MixERP.Net.Common.Conversion.TryCastString(values.Rows[0][columnName]);
+                                defaultValue = Conversion.TryCastString(values.Rows[0][columnName]);
                             }
 
-                            MixERP.Net.WebControls.ScrudFactory.Helpers.ScrudFactoryHelper.AddField(htmlTable, this.GetResourceClassName(),this.GetItemSelectorPath(), columnName, defaultValue, isSerial, isNullable, dataType, domain, maxLength, parentTableSchema, parentTable, parentTableColumn, this.DisplayFields, this.DisplayViews, this.SelectedValues);
+                            ScrudFactoryHelper.AddField(htmlTable, this.GetResourceClassName(),this.GetItemSelectorPath(), columnName, defaultValue, isSerial, isNullable, dataType, domain, maxLength, parentTableSchema, parentTable, parentTableColumn, this.DisplayFields, this.DisplayViews, this.SelectedValues);
                         }
                     }
                 }
@@ -68,19 +73,19 @@ namespace MixERP.Net.WebControls.ScrudFactory
         /// KeyValuePair of column_name (key) and value.</returns>
         private Collection<KeyValuePair<string, string>> GetFormCollection(bool skipSerial)
         {
-            Collection<KeyValuePair<string, string>> list = new Collection<KeyValuePair<string, string>>();
+            var list = new Collection<KeyValuePair<string, string>>();
 
-            using (System.Data.DataTable table = MixERP.Net.WebControls.ScrudFactory.Data.TableHelper.GetTable(this.TableSchema, this.Table, this.Exclude))
+            using (var table = TableHelper.GetTable(this.TableSchema, this.Table, this.Exclude))
             {
                 if(table.Rows.Count > 0)
                 {
-                    foreach(System.Data.DataRow row in table.Rows)
+                    foreach(DataRow row in table.Rows)
                     {
-                        string columnName = MixERP.Net.Common.Conversion.TryCastString(row["column_name"]);
-                        string defaultValue = MixERP.Net.Common.Conversion.TryCastString(row["column_default"]);
-                        bool isSerial = defaultValue.StartsWith("nextval", StringComparison.OrdinalIgnoreCase);
-                        string parentTableColumn = MixERP.Net.Common.Conversion.TryCastString(row["references_field"]);
-                        string dataType = MixERP.Net.Common.Conversion.TryCastString(row["data_type"]);
+                        var columnName = Conversion.TryCastString(row["column_name"]);
+                        var defaultValue = Conversion.TryCastString(row["column_default"]);
+                        var isSerial = defaultValue.StartsWith("nextval", StringComparison.OrdinalIgnoreCase);
+                        var parentTableColumn = Conversion.TryCastString(row["references_field"]);
+                        var dataType = Conversion.TryCastString(row["data_type"]);
 
                         if(skipSerial)
                         {
@@ -114,21 +119,21 @@ namespace MixERP.Net.WebControls.ScrudFactory
                                 case "real":
                                 case "currency":
                                     //TextBox
-                                    TextBox t = (TextBox)formContainer.FindControl(columnName + "_textbox");
+                                    var t = (TextBox)this.formContainer.FindControl(columnName + "_textbox");
                                     if(t != null)
                                     {
                                         list.Add(new KeyValuePair<string, string>(columnName, t.Text));
                                     }
                                     break;
                                 case "boolean":
-                                    RadioButtonList r = (RadioButtonList)formContainer.FindControl(columnName + "_radiobuttonlist");
+                                    var r = (RadioButtonList)this.formContainer.FindControl(columnName + "_radiobuttonlist");
                                     list.Add(new KeyValuePair<string, string>(columnName, r.Text));
                                     break;
                                 case "bytea":
-                                    FileUpload f = (FileUpload)formContainer.FindControl(columnName + "_fileupload");
-                                    string file = MixERP.Net.WebControls.ScrudFactory.Controls.ScrudFileUpload.UploadFile(f);
+                                    var f = (FileUpload)this.formContainer.FindControl(columnName + "_fileupload");
+                                    var file = ScrudFileUpload.UploadFile(f);
                                     list.Add(new KeyValuePair<string, string>(columnName, file));
-                                    imageColumn = columnName;
+                                    this.imageColumn = columnName;
                                     break;
                             }
 
@@ -136,7 +141,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         else
                         {
                             //DropDownList
-                            DropDownList d = (DropDownList)formContainer.FindControl(columnName + "_dropdownlist");
+                            var d = (DropDownList)this.formContainer.FindControl(columnName + "_dropdownlist");
                             list.Add(new KeyValuePair<string, string>(columnName, d.Text));
                         }
                     }

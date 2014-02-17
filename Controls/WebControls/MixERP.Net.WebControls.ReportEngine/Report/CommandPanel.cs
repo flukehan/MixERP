@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common.Helpers;
 
 namespace MixERP.Net.WebControls.ReportEngine
 {
@@ -35,7 +36,7 @@ namespace MixERP.Net.WebControls.ReportEngine
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("ImageButtonCssClass");
+                cssClass = ConfigurationHelper.GetReportParameter("ImageButtonCssClass");
 
             }
 
@@ -44,116 +45,116 @@ namespace MixERP.Net.WebControls.ReportEngine
 
         private void AddCommandPanel(Panel p)
         {
-            commandPanel = new Panel();
-            commandPanel.CssClass = "report-command hide";
+            this.commandPanel = new Panel();
+            this.commandPanel.CssClass = "report-command hide";
 
-            this.AddEmailImageButton(commandPanel);
-            this.AddPrintImageButton(commandPanel);
-            this.AddExcelImageButton(commandPanel);
-            this.AddWordImageButton(commandPanel);
-            this.AddGoTopImageButton(commandPanel);
-            this.AddGoBottomImageButton(commandPanel);
-            this.AddFilterImageButton(commandPanel);
-            this.AddCloseImageButton(commandPanel);
+            this.AddEmailImageButton(this.commandPanel);
+            this.AddPrintImageButton(this.commandPanel);
+            this.AddExcelImageButton(this.commandPanel);
+            this.AddWordImageButton(this.commandPanel);
+            this.AddGoTopImageButton(this.commandPanel);
+            this.AddGoBottomImageButton(this.commandPanel);
+            this.AddFilterImageButton(this.commandPanel);
+            this.AddCloseImageButton(this.commandPanel);
 
-            p.Controls.Add(commandPanel);
+            p.Controls.Add(this.commandPanel);
         }
 
 
         private void AddEmailImageButton(Panel p)
         {
-            emailImageButton = new ImageButton();
-            emailImageButton.ID = "SendEmailImageButton";
-            emailImageButton.CssClass = this.GetImageButtonCssClass();
-            emailImageButton.ImageUrl = this.Page.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("EmailIcon"));
+            this.emailImageButton = new ImageButton();
+            this.emailImageButton.ID = "SendEmailImageButton";
+            this.emailImageButton.CssClass = this.GetImageButtonCssClass();
+            this.emailImageButton.ImageUrl = this.Page.ResolveUrl(ConfigurationHelper.GetReportParameter("EmailIcon"));
 
-            p.Controls.Add(emailImageButton);
+            p.Controls.Add(this.emailImageButton);
         }
 
         private void AddPrintImageButton(Panel p)
         {
-            printImageButton = new ImageButton();
-            printImageButton.ID = "PrintImageButton";
-            printImageButton.CssClass = this.GetImageButtonCssClass();
-            printImageButton.OnClientClick = "javascript:window.print();";
-            printImageButton.ImageUrl = this.Page.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("PrintIcon"));
+            this.printImageButton = new ImageButton();
+            this.printImageButton.ID = "PrintImageButton";
+            this.printImageButton.CssClass = this.GetImageButtonCssClass();
+            this.printImageButton.OnClientClick = "javascript:window.print();";
+            this.printImageButton.ImageUrl = this.Page.ResolveUrl(ConfigurationHelper.GetReportParameter("PrintIcon"));
             
-            p.Controls.Add(printImageButton);
+            p.Controls.Add(this.printImageButton);
         }
 
         private void AddExcelImageButton(Panel p)
         {
-            excelImageButton = new ImageButton();
-            excelImageButton.ID = "ExcelImageButton";
-            excelImageButton.CssClass = this.GetImageButtonCssClass();
-            excelImageButton.ImageUrl = this.Page.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("ExcelIcon"));
-            excelImageButton.Click += ExcelImageButton_Click;
-            excelImageButton.OnClientClick = this.GetReportHtmlScript();
+            this.excelImageButton = new ImageButton();
+            this.excelImageButton.ID = "ExcelImageButton";
+            this.excelImageButton.CssClass = this.GetImageButtonCssClass();
+            this.excelImageButton.ImageUrl = this.Page.ResolveUrl(ConfigurationHelper.GetReportParameter("ExcelIcon"));
+            this.excelImageButton.Click += this.ExcelImageButton_Click;
+            this.excelImageButton.OnClientClick = this.GetReportHtmlScript();
 
-            p.Controls.Add(excelImageButton);
+            p.Controls.Add(this.excelImageButton);
         }
 
         private void AddWordImageButton(Panel p)
         {
-            wordImageButton = new ImageButton();
-            wordImageButton.ID = "WordImageButton";
-            wordImageButton.CssClass = this.GetImageButtonCssClass();
-            wordImageButton.ImageUrl = this.Page.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("WordIcon"));
-            wordImageButton.Click += WordImageButton_Click;
-            wordImageButton.OnClientClick =this.GetReportHtmlScript();
+            this.wordImageButton = new ImageButton();
+            this.wordImageButton.ID = "WordImageButton";
+            this.wordImageButton.CssClass = this.GetImageButtonCssClass();
+            this.wordImageButton.ImageUrl = this.Page.ResolveUrl(ConfigurationHelper.GetReportParameter("WordIcon"));
+            this.wordImageButton.Click += this.WordImageButton_Click;
+            this.wordImageButton.OnClientClick =this.GetReportHtmlScript();
 
-            p.Controls.Add(wordImageButton);
+            p.Controls.Add(this.wordImageButton);
         }
 
         private void AddGoTopImageButton(Panel p)
         {
-            goTopImageButton = new ImageButton();
-            goTopImageButton.ID = "GoTop";
-            goTopImageButton.CssClass = this.GetImageButtonCssClass();
-            goTopImageButton.OnClientClick = "window.scrollTo(0, 0);";
-            goTopImageButton.ImageUrl = this.Page.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("GoTopIcon"));
+            this.goTopImageButton = new ImageButton();
+            this.goTopImageButton.ID = "GoTop";
+            this.goTopImageButton.CssClass = this.GetImageButtonCssClass();
+            this.goTopImageButton.OnClientClick = "window.scrollTo(0, 0);";
+            this.goTopImageButton.ImageUrl = this.Page.ResolveUrl(ConfigurationHelper.GetReportParameter("GoTopIcon"));
             
-            p.Controls.Add(goTopImageButton);
+            p.Controls.Add(this.goTopImageButton);
         }
 
         private void AddGoBottomImageButton(Panel p)
         {
-            goBottomImageButton = new ImageButton();
-            goBottomImageButton.CssClass = this.GetImageButtonCssClass();
-            goBottomImageButton.ID = "GoBottom";
-            goBottomImageButton.OnClientClick = "window.scrollTo(0,document.body.scrollHeight);";
-            goBottomImageButton.ImageUrl = this.Page.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("GoBottomIcon"));
+            this.goBottomImageButton = new ImageButton();
+            this.goBottomImageButton.CssClass = this.GetImageButtonCssClass();
+            this.goBottomImageButton.ID = "GoBottom";
+            this.goBottomImageButton.OnClientClick = "window.scrollTo(0,document.body.scrollHeight);";
+            this.goBottomImageButton.ImageUrl = this.Page.ResolveUrl(ConfigurationHelper.GetReportParameter("GoBottomIcon"));
 
-            p.Controls.Add(goBottomImageButton);
+            p.Controls.Add(this.goBottomImageButton);
         }
 
         private void AddFilterImageButton(Panel p)
         {
-            filterImageButton = new ImageButton();
-            filterImageButton.ID = "FilterImageButton";
-            filterImageButton.CssClass = this.GetImageButtonCssClass();
-            filterImageButton.OnClientClick =  "$('.report-parameter').toggle(500);";
-            filterImageButton.ImageUrl = this.Page.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("FilterIcon"));
+            this.filterImageButton = new ImageButton();
+            this.filterImageButton.ID = "FilterImageButton";
+            this.filterImageButton.CssClass = this.GetImageButtonCssClass();
+            this.filterImageButton.OnClientClick =  "$('.report-parameter').toggle(500);";
+            this.filterImageButton.ImageUrl = this.Page.ResolveUrl(ConfigurationHelper.GetReportParameter("FilterIcon"));
 
-            p.Controls.Add(filterImageButton);
+            p.Controls.Add(this.filterImageButton);
         }
 
         private void AddCloseImageButton(Panel p)
         {
-            closeImageButton = new ImageButton();
-            closeImageButton.CssClass = this.GetImageButtonCssClass();
-            closeImageButton.ID = "CloseImageButton";
-            closeImageButton.OnClientClick = "window.close();";
-            closeImageButton.ImageUrl = this.Page.ResolveUrl(MixERP.Net.Common.Helpers.ConfigurationHelper.GetReportParameter("CloseIcon"));
+            this.closeImageButton = new ImageButton();
+            this.closeImageButton.CssClass = this.GetImageButtonCssClass();
+            this.closeImageButton.ID = "CloseImageButton";
+            this.closeImageButton.OnClientClick = "window.close();";
+            this.closeImageButton.ImageUrl = this.Page.ResolveUrl(ConfigurationHelper.GetReportParameter("CloseIcon"));
 
-            p.Controls.Add(closeImageButton);
+            p.Controls.Add(this.closeImageButton);
         }
 
         private string GetReportHtmlScript()
         {
-            EnsureChildControls();
+            this.EnsureChildControls();
             StringBuilder s = new StringBuilder();
-            s.Append("$('#" + reportHidden.ClientID + "')");
+            s.Append("$('#" + this.reportHidden.ClientID + "')");
             s.Append(".val(");
             s.Append("'<html>'");
             s.Append("+");

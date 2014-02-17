@@ -29,10 +29,10 @@ namespace MixERP.Net.Common
                 exception = ex.GetBaseException();
             }
 
-            if(System.Web.HttpContext.Current.Session != null)
+            if(HttpContext.Current.Session != null)
             {
-                System.Web.HttpContext.Current.Session["ex"] = exception;
-                System.Web.HttpContext.Current.Response.Redirect("~/RuntimeError.aspx", true);
+                HttpContext.Current.Session["ex"] = exception;
+                HttpContext.Current.Response.Redirect("~/RuntimeError.aspx", true);
             }
         }
     }

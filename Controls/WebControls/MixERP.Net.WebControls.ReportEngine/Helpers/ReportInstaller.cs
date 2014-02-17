@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MixERP.Net.WebControls.ReportEngine.Data;
 
 namespace MixERP.Net.WebControls.ReportEngine.Helpers
 {
@@ -16,7 +17,7 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
     {
         public static void InstallReport(string menuCode, string parentMenuCode, int level, string menuText, string path)
         {
-            MixERP.Net.WebControls.ReportEngine.Data.Installer.InstallReport(menuCode, parentMenuCode, level, menuText, path);
+            Installer.InstallReport(menuCode, parentMenuCode, level, menuText, path);
         }
     }
 }

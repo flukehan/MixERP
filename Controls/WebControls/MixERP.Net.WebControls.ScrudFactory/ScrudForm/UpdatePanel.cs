@@ -6,25 +6,21 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web.UI.WebControls;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using MixERP.Net.WebControls.ScrudFactory.Helpers;
-using System.Reflection;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.WebControls.ScrudFactory.Controls;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
-    public partial class ScrudForm : CompositeControl
+    public partial class ScrudForm
     {
         UpdatePanel updatePanel;
         HiddenField userIdHidden;
         HiddenField officeCodeHidden;
-        Label messageLabel = new Label();
-        MixERP.Net.WebControls.ScrudFactory.Controls.CommandPanel bottomCommandPanel;
-        MixERP.Net.WebControls.ScrudFactory.Controls.CommandPanel topCommandPanel;
+        Label messageLabel;
+        CommandPanel bottomCommandPanel;
+        CommandPanel topCommandPanel;
 
 
         protected override void OnPreRender(EventArgs e)
@@ -35,47 +31,49 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private void AddScriptManager()
         {
-            ScriptManager scriptManager = ScriptManager.GetCurrent(this.Page);
+            var scriptManager = ScriptManager.GetCurrent(this.Page);
             if (scriptManager != null)
             {
-                scriptManager.RegisterAsyncPostBackControl(saveButton);
-                scriptManager.RegisterAsyncPostBackControl(cancelButton);
-                scriptManager.RegisterAsyncPostBackControl(topCommandPanel.EditButton);
-                scriptManager.RegisterAsyncPostBackControl(bottomCommandPanel.EditButton);
-                scriptManager.RegisterAsyncPostBackControl(topCommandPanel.DeleteButton);
-                scriptManager.RegisterAsyncPostBackControl(bottomCommandPanel.DeleteButton);
+                scriptManager.RegisterAsyncPostBackControl(this.saveButton);
+                scriptManager.RegisterAsyncPostBackControl(this.cancelButton);
+                scriptManager.RegisterAsyncPostBackControl(this.topCommandPanel.EditButton);
+                scriptManager.RegisterAsyncPostBackControl(this.bottomCommandPanel.EditButton);
+                scriptManager.RegisterAsyncPostBackControl(this.topCommandPanel.DeleteButton);
+                scriptManager.RegisterAsyncPostBackControl(this.bottomCommandPanel.DeleteButton);
             }
         }
 
         private void AddUpdatePanel(Panel p)
         {
-            updatePanel = new UpdatePanel();
-            updatePanel.ID = "ScrudUpdatePanel";
-            updatePanel.ChildrenAsTriggers = true;
-            updatePanel.UpdateMode = UpdatePanelUpdateMode.Conditional;
+            this.messageLabel = new Label();
 
-            updatePanel.ContentTemplateContainer.Controls.Add(this.topCommandPanel.GetCommandPanel());
-            updatePanel.ContentTemplateContainer.Controls.Add(this.messageLabel);
-            updatePanel.ContentTemplateContainer.Controls.Add(this.gridPanel);
-            updatePanel.ContentTemplateContainer.Controls.Add(this.formPanel);
-            updatePanel.ContentTemplateContainer.Controls.Add(this.bottomCommandPanel.GetCommandPanel()); //Bottom command panel.
+            this.updatePanel = new UpdatePanel();
+            this.updatePanel.ID = "ScrudUpdatePanel";
+            this.updatePanel.ChildrenAsTriggers = true;
+            this.updatePanel.UpdateMode = UpdatePanelUpdateMode.Conditional;
 
-            userIdHidden = new HiddenField();
-            officeCodeHidden = new HiddenField();
+            this.updatePanel.ContentTemplateContainer.Controls.Add(this.topCommandPanel.GetCommandPanel());
+            this.updatePanel.ContentTemplateContainer.Controls.Add(this.messageLabel);
+            this.updatePanel.ContentTemplateContainer.Controls.Add(this.gridPanel);
+            this.updatePanel.ContentTemplateContainer.Controls.Add(this.formPanel);
+            this.updatePanel.ContentTemplateContainer.Controls.Add(this.bottomCommandPanel.GetCommandPanel()); //Bottom command panel.
 
-            updatePanel.ContentTemplateContainer.Controls.Add(userIdHidden);
-            updatePanel.ContentTemplateContainer.Controls.Add(officeCodeHidden);
-            p.Controls.Add(updatePanel);
+            this.userIdHidden = new HiddenField();
+            this.officeCodeHidden = new HiddenField();
+
+            this.updatePanel.ContentTemplateContainer.Controls.Add(this.userIdHidden);
+            this.updatePanel.ContentTemplateContainer.Controls.Add(this.officeCodeHidden);
+            p.Controls.Add(this.updatePanel);
         }
 
 
         private string GetCommandPanelButtonCssClass()
         {
-            string cssClass = this.CommandPanelButtonCssClass;
+            var cssClass = this.CommandPanelButtonCssClass;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("CommandPanelButtonCssClass");
+                cssClass = ConfigurationHelper.GetScrudParameter("CommandPanelButtonCssClass");
             }
 
             return cssClass;
@@ -83,35 +81,35 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private string GetGridViewCssClass()
         {
-            string cssClass = this.GridViewCssClass;
+            var cssClass = this.GridViewCssClass;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("GridViewCssClass");
+                cssClass = ConfigurationHelper.GetScrudParameter("GridViewCssClass");
             }
 
             return cssClass;
         }
 
-        public string GetResourceClassName()
+        private string GetResourceClassName()
         {
-            string resourceClassName = this.ResourceClassName;
+            var resourceClassName = this.ResourceClassName;
 
             if (string.IsNullOrWhiteSpace(resourceClassName))
             {
-                resourceClassName = MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("ResourceClassName");
+                resourceClassName = ConfigurationHelper.GetScrudParameter("ResourceClassName");
             }
 
             return resourceClassName;
         }
 
-        public string GetItemSelectorPath()
+        private string GetItemSelectorPath()
         {
-            string itemSelectorPath = this.ItemSelectorPath;
+            var itemSelectorPath = this.ItemSelectorPath;
 
             if (string.IsNullOrWhiteSpace(itemSelectorPath))
             {
-                itemSelectorPath = MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("ItemSelectorPath");
+                itemSelectorPath = ConfigurationHelper.GetScrudParameter("ItemSelectorPath");
             }
 
             return itemSelectorPath;
@@ -119,11 +117,11 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private string GetButtonCssClass()
         {
-            string cssClass = this.ButtonCssClass;
+            var cssClass = this.ButtonCssClass;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("ButtonCssClass");
+                cssClass = ConfigurationHelper.GetScrudParameter("ButtonCssClass");
             }
 
             return cssClass;
@@ -131,15 +129,15 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private void CreateCommandPanels()
         {
-            bottomCommandPanel = new Controls.CommandPanel();
-            bottomCommandPanel.DeleteButtonClick += this.DeleteButton_Click;
-            bottomCommandPanel.EditButtonClick += this.EditButton_Click;
-            bottomCommandPanel.ButtonCssClass = this.GetCommandPanelButtonCssClass();
+            this.bottomCommandPanel = new CommandPanel();
+            this.bottomCommandPanel.DeleteButtonClick += this.DeleteButton_Click;
+            this.bottomCommandPanel.EditButtonClick += this.EditButton_Click;
+            this.bottomCommandPanel.ButtonCssClass = this.GetCommandPanelButtonCssClass();
 
-            topCommandPanel = new Controls.CommandPanel();
-            topCommandPanel.DeleteButtonClick += this.DeleteButton_Click;
-            topCommandPanel.EditButtonClick += this.EditButton_Click;
-            topCommandPanel.ButtonCssClass = this.GetCommandPanelButtonCssClass();
+            this.topCommandPanel = new CommandPanel();
+            this.topCommandPanel.DeleteButtonClick += this.DeleteButton_Click;
+            this.topCommandPanel.EditButtonClick += this.EditButton_Click;
+            this.topCommandPanel.ButtonCssClass = this.GetCommandPanelButtonCssClass();
 
         }
     }

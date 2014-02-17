@@ -8,17 +8,18 @@ http://mozilla.org/MPL/2.0/.
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using MixERP.Net.BusinessLayer;
 
 namespace MixERP.Net.FrontEnd.Finance.Confirmation
 {
-    public partial class GLAdvice : MixERP.Net.BusinessLayer.MixERPWebReportPage
+    public partial class GLAdvice : MixERPWebReportPage
     {
         protected void Page_Init(object sender, EventArgs e)
         {
             Collection<KeyValuePair<string, string>> list = new Collection<KeyValuePair<string, string>>();
             list.Add(new KeyValuePair<string, string>("@transaction_master_id", this.Request["TranId"]));
-            GLAdviceReport.AddParameterToCollection(list);
-            GLAdviceReport.AddParameterToCollection(list);
+            this.GLAdviceReport.AddParameterToCollection(list);
+            this.GLAdviceReport.AddParameterToCollection(list);
         }
 
     }

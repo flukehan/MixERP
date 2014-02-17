@@ -56,7 +56,7 @@ namespace MixERP.Net.Common.Helpers
                         return string.Empty;
                     }
 
-                    System.Reflection.Assembly assembly = results.CompiledAssembly;
+                    Assembly assembly = results.CompiledAssembly;
                     object assemblyInstance = assembly.CreateInstance("CSCodeEvaler.CSCodeEvaler");
 
                     Type assemblyInstanceType = assemblyInstance.GetType();

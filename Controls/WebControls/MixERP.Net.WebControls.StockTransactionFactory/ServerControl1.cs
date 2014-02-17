@@ -28,13 +28,13 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
         {
             get
             {
-                String s = (String)ViewState["Text"];
+                String s = (String)this.ViewState["Text"];
                 return ((s == null)? "[" + this.ID + "]" : s);
             }
  
             set
             {
-                ViewState["Text"] = value;
+                this.ViewState["Text"] = value;
             }
         }
  
@@ -45,7 +45,7 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
                 return;
             }
 
-            writer.Write(Text);
+            writer.Write(this.Text);
         }
     }
 }

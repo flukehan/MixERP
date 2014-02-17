@@ -14,6 +14,6 @@ http://mozilla.org/MPL/2.0/.
     <title></title>
 </head>
 <body>
-    <mixerp:ReportHeader runat="server" />
+    <mixerp:ReportHeader runat="server" Path="" />
 </body>
 </html>

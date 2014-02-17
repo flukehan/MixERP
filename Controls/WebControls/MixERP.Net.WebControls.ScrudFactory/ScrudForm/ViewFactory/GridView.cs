@@ -5,23 +5,23 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 using System.Web.UI.WebControls;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
+using FormHelper = MixERP.Net.WebControls.ScrudFactory.Data.FormHelper;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
-    public partial class ScrudForm : CompositeControl
+    public partial class ScrudForm
     {
         private void LoadGrid()
         {
-            bool showAll = (MixERP.Net.Common.Conversion.TryCastString(this.Page.Request.QueryString["show"]).Equals("all"));
+            var showAll = (Conversion.TryCastString(this.Page.Request.QueryString["show"]).Equals("all"));
 
             this.BindGridView();
             this.formGridView.Width = this.GetWidth();
-            this.pager.RecordCount = MixERP.Net.WebControls.ScrudFactory.Data.FormHelper.GetTotalRecords(this.ViewSchema, this.View);
+            this.pager.RecordCount = FormHelper.GetTotalRecords(this.ViewSchema, this.View);
             this.pager.PageSize = 10;
 
 
@@ -35,18 +35,18 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 this.pager.PageSize = 1000;
             }
 
-            string userNameSessionKey = MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("UserNameSessionKey");
-            string officeCodeSessionKey = MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("OfficeCodeSessionKey");
+            var userNameSessionKey = ConfigurationHelper.GetScrudParameter("UserNameSessionKey");
+            var officeCodeSessionKey = ConfigurationHelper.GetScrudParameter("OfficeCodeSessionKey");
 
-            this.userIdHidden.Value = MixERP.Net.Common.Helpers.SessionHelper.GetSessionValueByKey(userNameSessionKey);
-            this.officeCodeHidden.Value = MixERP.Net.Common.Helpers.SessionHelper.GetSessionValueByKey(officeCodeSessionKey);
+            this.userIdHidden.Value = SessionHelper.GetSessionValueByKey(userNameSessionKey);
+            this.officeCodeHidden.Value = SessionHelper.GetSessionValueByKey(officeCodeSessionKey);
         }
 
         private Unit GetWidth()
         {
             if (this.Width.Value.Equals(0))
             {
-                int width = MixERP.Net.Common.Conversion.TryCastInteger(MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("GridViewDefaultWidth"));
+                var width = Conversion.TryCastInteger(ConfigurationHelper.GetScrudParameter("GridViewDefaultWidth"));
 
                 if (width.Equals(0))
                 {
@@ -61,10 +61,10 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private void BindGridView()
         {
-            bool showAll = (MixERP.Net.Common.Conversion.TryCastString(this.Page.Request.QueryString["show"]).Equals("all"));
+            var showAll = (Conversion.TryCastString(this.Page.Request.QueryString["show"]).Equals("all"));
 
-            int limit = 10;
-            int offset = 0;
+            var limit = 10;
+            var offset = 0;
 
             if (this.PageSize != 0)
             {
@@ -78,11 +78,11 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (this.Page.Request["page"] != null)
             {
-                offset = (MixERP.Net.Common.Conversion.TryCastInteger(this.Page.Request["page"]) - 1) * limit;
+                offset = (Conversion.TryCastInteger(this.Page.Request["page"]) - 1) * limit;
             }
 
 
-            using (System.Data.DataTable table = MixERP.Net.WebControls.ScrudFactory.Data.FormHelper.GetView(this.ViewSchema, this.View, this.KeyColumn, limit, offset))
+            using (var table = FormHelper.GetView(this.ViewSchema, this.View, this.KeyColumn, limit, offset))
             {
                 this.formGridView.DataSource = table;
                 this.formGridView.DataBind();

@@ -13,6 +13,15 @@ namespace MixERP.Net.FrontEnd.Dashboard {
     public partial class Index {
         
         /// <summary>
+        /// WidgetPlaceholder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder WidgetPlaceholder;
+        
+        /// <summary>
         /// SavePositionButton control.
         /// </summary>
         /// <remarks>

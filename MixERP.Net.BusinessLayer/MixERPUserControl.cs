@@ -9,10 +9,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web.UI;
 
 namespace MixERP.Net.BusinessLayer
 {
-    public class MixERPUserControl : System.Web.UI.UserControl
+    public class MixERPUserControl : UserControl
     {
     }
 }

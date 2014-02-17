@@ -5,7 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceholder" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceholder" runat="server">
-    <asp:ScriptManager ID="ScriptManager1" runat="server" />
+    <asp:PlaceHolder ID="ScrudPlaceholder" runat="server" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceholder" runat="server">
 </asp:Content>

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using MixERP.Net.DBFactory;
 using Npgsql;
 
 namespace MixERP.Net.DatabaseLayer.Office
@@ -23,7 +24,7 @@ namespace MixERP.Net.DatabaseLayer.Office
             using(NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.Add("@StoreId", storeId);
-                return MixERP.Net.DBFactory.DBOperations.GetDataTable(command).Rows.Count.Equals(1);
+                return DBOperations.GetDataTable(command).Rows.Count.Equals(1);
             }
         }
     }

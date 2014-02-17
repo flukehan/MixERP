@@ -11,10 +11,11 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.BusinessLayer;
 
 namespace MixERP.Net.FrontEnd.General
 {
-    public partial class ItemSelector : MixERP.Net.BusinessLayer.MixERPWebPage
+    public partial class ItemSelector : MixERPWebpage
     {
   
     }

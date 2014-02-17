@@ -17,7 +17,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
     {
         public static DataTable GetTable(string schema, string tableName, string exclusion)
         {
-            return MixERP.Net.DBFactory.TableHelper.GetTable(schema, tableName, exclusion);
+            return Net.DBFactory.TableHelper.GetTable(schema, tableName, exclusion);
         }
     }
 }

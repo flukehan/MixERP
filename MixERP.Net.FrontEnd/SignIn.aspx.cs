@@ -1,18 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.BusinessLayer.DBFactory;
+using MixERP.Net.BusinessLayer.Office;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Models.Office;
+using Resources;
 
 namespace MixERP.Net.FrontEnd
 {
-    public partial class SignIn : System.Web.UI.Page
+    public partial class SignIn : Page
     {
         private void CheckDBConnectivity()
         {
-            if (!MixERP.Net.BusinessLayer.DBFactory.ServerConnectivity.IsDBServerAvailable())
+            if (!ServerConnectivity.IsDBServerAvailable())
             {
                 this.RedirectToOfflinePage();
             }
@@ -20,16 +26,17 @@ namespace MixERP.Net.FrontEnd
 
         private void RedirectToOfflinePage()
         {
-            Response.Redirect("~/offline.html");
+            this.Response.Redirect("~/offline.html");
         }
 
         private void BindBranchDropDownList()
         {
-            Collection<MixERP.Net.Common.Models.Office.Office> offices = MixERP.Net.BusinessLayer.Office.Offices.GetOffices();
-            BranchDropDownList.DataSource = offices;
-            BranchDropDownList.DataBind();
+            Collection<Office> offices = Offices.GetOffices();
+            this.BranchDropDownList.DataSource = offices;
+            this.BranchDropDownList.DataBind();
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         protected void Page_Load(object sender, EventArgs e)
         {
             this.CheckDBConnectivity();
@@ -48,20 +55,20 @@ namespace MixERP.Net.FrontEnd
                 return;
             }
 
-            UserIdTextBox.Focus();
+            this.UserIdTextBox.Focus();
 
-            if (!IsPostBack)
+            if (!this.IsPostBack)
             {
-                if (User.Identity.IsAuthenticated)
+                if (this.User.Identity.IsAuthenticated)
                 {
-                    string user = User.Identity.Name;
+                    string user = this.User.Identity.Name;
                     if (!string.IsNullOrWhiteSpace(user))
                     {
-                        string sessionUser = MixERP.Net.Common.Conversion.TryCastString(this.Page.Session["UserName"]);
+                        string sessionUser = Conversion.TryCastString(this.Page.Session["UserName"]);
 
                         if (string.IsNullOrWhiteSpace(sessionUser))
                         {
-                            if (MixERP.Net.BusinessLayer.Security.User.SetSession(this.Page, user))
+                            if (BusinessLayer.Security.User.SetSession(this.Page, user))
                             {
                                 this.RedirectToDashboard();
                             }
@@ -79,17 +86,17 @@ namespace MixERP.Net.FrontEnd
 
         private void RedirectToDashboard()
         {
-            Response.Redirect("~/Dashboard/Index.aspx", true);
+            this.Response.Redirect("~/Dashboard/Index.aspx", true);
         }
 
         protected void SignInButton_Click(object sender, EventArgs e)
         {
-            int officeId = MixERP.Net.Common.Conversion.TryCastInteger(BranchDropDownList.SelectedItem.Value);
-            bool results = MixERP.Net.BusinessLayer.Security.User.SignIn(officeId, UserIdTextBox.Text, PasswordTextBox.Text, LanguageDropDownList.SelectedItem.Value, RememberMe.Checked, this.Page);
+            int officeId = Conversion.TryCastInteger(this.BranchDropDownList.SelectedItem.Value);
+            bool results = BusinessLayer.Security.User.SignIn(officeId, this.UserIdTextBox.Text, this.PasswordTextBox.Text, this.LanguageDropDownList.SelectedItem.Value, this.RememberMe.Checked, this.Page);
 
             if (!results)
             {
-                MessageLiteral.Text = "<span class='error-message'>" + Resources.Warnings.UserIdOrPasswordIncorrect + "</span>";
+                this.MessageLiteral.Text = "<span class='error-message'>" + Warnings.UserIdOrPasswordIncorrect + "</span>";
             }
         }
     }

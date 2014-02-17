@@ -6,18 +6,15 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
+using System.Diagnostics.CodeAnalysis;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.WebControls.ScrudFactory.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
     [ToolboxData("<{0}:ScrudForm runat=server></{0}:ScrudForm>")]
-    public partial class ScrudForm : CompositeControl, IDisposable
+    public partial class ScrudForm
     {
         private bool disposed;
         Panel scrudContainer;
@@ -27,137 +24,232 @@ namespace MixERP.Net.WebControls.ScrudFactory
         {
             if (string.IsNullOrWhiteSpace(this.TableSchema))
             {
-                throw new ApplicationException("The property 'TableSchema' cannot be left empty.");
+                throw new InvalidOperationException(ScrudResource.TableSchemaEmptyExceptionMessage);
             }
 
             if (string.IsNullOrWhiteSpace(this.Table))
             {
-                throw new ApplicationException("The property 'Table' cannot be left empty.");
+                throw new InvalidOperationException(ScrudResource.TableEmptyExceptionMessage);
             }
-            
+
             if (string.IsNullOrWhiteSpace(this.ViewSchema))
             {
-                throw new ApplicationException("The property 'ViewSchema' cannot be left empty.");
+                throw new InvalidOperationException(ScrudResource.ViewSchemaEmptyExceptionMessage);
             }
 
             if (string.IsNullOrWhiteSpace(this.View))
             {
-                throw new ApplicationException("The property 'View' cannot be left empty.");
+                throw new InvalidOperationException(ScrudResource.ViewEmptyExceptionMessage);
             }
 
             if (string.IsNullOrWhiteSpace(this.KeyColumn))
             {
-                throw new ApplicationException("The property 'KeyColumn' cannot be left empty.");
+                throw new InvalidOperationException(ScrudResource.KeyColumnEmptyExceptionMessage);
             }
 
 
         }
-        
+
         protected override void CreateChildControls()
         {
             this.Validate();
 
-            scrudContainer = new Panel();
+            this.scrudContainer = new Panel();
 
-            this.LoadScrudContainer(scrudContainer);
+            this.LoadScrudContainer(this.scrudContainer);
 
             this.LoadTitle();
             this.LoadDescription();
-            
+
             this.LoadGrid();
-            
+
             this.InitializeScrudControl();
-            
-            this.Controls.Add(scrudContainer);
+
+            this.Controls.Add(this.scrudContainer);
         }
 
 
         protected override void RecreateChildControls()
         {
-            EnsureChildControls();
+            this.EnsureChildControls();
         }
 
         protected override void Render(HtmlTextWriter w)
         {
-            scrudContainer.RenderControl(w);
+            this.scrudContainer.RenderControl(w);
         }
 
-        public override void Dispose()
+        public sealed override void Dispose()
         {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
-            base.Dispose();
+            if (!this.disposed)
+            {
+                this.Dispose(true);
+                GC.SuppressFinalize(this);
+                base.Dispose();
+            }
         }
 
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
             {
                 if (disposing)
                 {
-
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.scrudContainer);
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.formPanel);
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.form);
-
-                    if (formGridView != null)
+                    if (this.scrudContainer != null)
                     {
-                        formGridView.RowDataBound -= this.FormGridView_RowDataBound;                        
+                        this.scrudContainer.Dispose();
+                        this.scrudContainer = null;
                     }
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.formGridView);
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.addNewEntryLiteral);
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.requiredFieldDetailsLabel);
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.formContainer);
+
+                    if (this.formPanel != null)
+                    {
+                        this.formPanel.Dispose();
+                        this.formPanel = null;
+                    }
+
+                    if (this.form != null)
+                    {
+                        this.form.Dispose();
+                        this.form = null;
+                    }
+
+                    if (this.formGridView != null)
+                    {
+                        this.formGridView.RowDataBound -= this.FormGridView_RowDataBound;
+                        this.formGridView.Dispose();
+                        this.formGridView = null;
+                    }
+
+                    if (this.addNewEntryLiteral != null)
+                    {
+                        this.addNewEntryLiteral.Dispose();
+                        this.addNewEntryLiteral = null;
+                    }
+
+                    if (this.requiredFieldDetailsLabel != null)
+                    {
+                        this.requiredFieldDetailsLabel.Dispose();
+                        this.requiredFieldDetailsLabel = null;
+                    }
+
+                    if (this.formContainer != null)
+                    {
+                        this.formContainer.Dispose();
+                        this.formContainer = null;
+                    }
+
 
                     if (this.saveButton != null)
                     {
-                        this.saveButton.Click -= this.SaveButton_Click;                        
+                        this.saveButton.Click -= this.SaveButton_Click;
                     }
 
+                    //Do not set the event to null.
                     //if (this.SaveButtonClick != null)
                     //{
                     //    this.SaveButtonClick = null;
                     //}
 
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.saveButton);
+                    if (this.saveButton != null)
+                    {
+                        this.saveButton.Dispose();
+                        this.saveButton = null;
+                    }
+
 
                     if (this.cancelButton != null)
                     {
-                        cancelButton.Click -= this.CancelButton_Click;                    
+                        this.cancelButton.Click -= this.CancelButton_Click;
                     }
 
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.cancelButton);
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.updatePanel);
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.userIdHidden);
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.officeCodeHidden);
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.messageLabel);
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.titleLabel);
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.descriptionLabel);
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.updateProgress);
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.gridPanel);
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.formGridView);
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.pager);
+                    if (this.cancelButton != null)
+                    {
+                        this.cancelButton.Dispose();
+                        this.cancelButton = null;
+                    }
+
+                    if (this.updatePanel != null)
+                    {
+                        this.updatePanel.Dispose();
+                        this.updatePanel = null;
+                    }
+
+                    if (this.userIdHidden != null)
+                    {
+                        this.userIdHidden.Dispose();
+                        this.userIdHidden = null;
+                    }
+
+                    if (this.officeCodeHidden != null)
+                    {
+                        this.officeCodeHidden.Dispose();
+                        this.officeCodeHidden = null;
+                    }
+
+                    if (this.messageLabel != null)
+                    {
+                        this.messageLabel.Dispose();
+                        this.messageLabel = null;
+                    }
+
+                    if (this.titleLabel != null)
+                    {
+                        this.titleLabel.Dispose();
+                        this.titleLabel = null;
+                    }
+
+                    if (this.descriptionLabel != null)
+                    {
+                        this.descriptionLabel.Dispose();
+                        this.descriptionLabel = null;
+                    }
+
+                    if (this.updateProgress != null)
+                    {
+                        this.updateProgress.Dispose();
+                        this.updateProgress = null;
+                    }
+
+                    if (this.gridPanel != null)
+                    {
+                        this.gridPanel.Dispose();
+                        this.gridPanel = null;
+                    }
+
+                    if (this.formGridView != null)
+                    {
+                        this.formGridView.Dispose();
+                        this.formGridView = null;
+                    }
+
+                    if (this.pager != null)
+                    {
+                        this.pager.Dispose();
+                        this.pager = null;
+                    }
+
 
                     if (this.topCommandPanel != null)
                     {
                         this.topCommandPanel.DeleteButtonClick -= this.DeleteButton_Click;
-                        this.topCommandPanel.EditButtonClick -= this.EditButton_Click;                    
+                        this.topCommandPanel.EditButtonClick -= this.EditButton_Click;
+                        this.topCommandPanel.Dispose();
+                        this.topCommandPanel = null;
                     }
 
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.topCommandPanel);
 
                     if (this.bottomCommandPanel != null)
                     {
                         this.bottomCommandPanel.DeleteButtonClick -= this.DeleteButton_Click;
                         this.bottomCommandPanel.EditButtonClick -= this.EditButton_Click;
+                        this.bottomCommandPanel.Dispose();
+                        this.bottomCommandPanel = null;
                     }
-
-                    MixERP.Net.Common.Helpers.DisposableHelper.DisposeObject(this.bottomCommandPanel);
-
 
                 }
 
-                disposed = true;
+                this.disposed = true;
             }
         }
 

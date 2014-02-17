@@ -1,4 +1,10 @@
-﻿using MixERP.Net.BusinessLayer.Transactions;
+﻿using System.Data;
+using System.Web.UI;
+using MixERP.Net.BusinessLayer.Core;
+using MixERP.Net.BusinessLayer.Helpers;
+using MixERP.Net.BusinessLayer.Transactions;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.WebControls.StockTransactionView.Data;
 using MixERP.Net.WebControls.StockTransactionView.Data.Models;
@@ -14,23 +20,24 @@ using System.Collections.ObjectModel;
 using System.Web;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using Resources;
 
 namespace MixERP.Net.FrontEnd.UserControls.Products
 {
     /// This class is subject to be moved to a standalone server control class library.
-    public partial class ProductViewControl : System.Web.UI.UserControl
+    public partial class ProductViewControl : UserControl
     {
-        public MixERP.Net.Common.Models.Transactions.TranBook Book { get; set; }
-        public MixERP.Net.Common.Models.Transactions.SubTranBook SubBook { get; set; }
+        public TranBook Book { get; set; }
+        public SubTranBook SubBook { get; set; }
         public string Text
         {
             get
             {
-                return TitleLiteral.Text;
+                return this.TitleLiteral.Text;
             }
             set
             {
-                TitleLiteral.Text = value;
+                this.TitleLiteral.Text = value;
             }
         }
 
@@ -41,7 +48,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         private void BindFlagTypeDropDownList()
         {
-            MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.BindDropDownList(FlagDropDownList, "core", "flag_types", "flag_type_id", "flag_type_name");
+            DropDownListHelper.BindDropDownList(this.FlagDropDownList, "core", "flag_types", "flag_type_id", "flag_type_name");
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -57,13 +64,13 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             {
                 if (this.SubBook == SubTranBook.Order)
                 {
-                    MergeToDeliveryLinkButton.Visible = true;
+                    this.MergeToDeliveryLinkButton.Visible = true;
                 }
 
                 if (this.SubBook == SubTranBook.Quotation)
                 {
-                    MergeToOrderLinkButton.Visible = true;
-                    MergeToDeliveryLinkButton.Visible = true;
+                    this.MergeToOrderLinkButton.Visible = true;
+                    this.MergeToDeliveryLinkButton.Visible = true;
                 }
             }
         }
@@ -75,10 +82,10 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 switch (this.SubBook)
                 {
                     case SubTranBook.Order:
-                        AddNewLinkButton.PostBackUrl = "~/Sales/Entry/Order.aspx";
+                        this.AddNewLinkButton.PostBackUrl = "~/Sales/Entry/Order.aspx";
                         break;
                     case SubTranBook.Quotation:
-                        AddNewLinkButton.PostBackUrl = "~/Sales/Entry/Quotation.aspx";
+                        this.AddNewLinkButton.PostBackUrl = "~/Sales/Entry/Quotation.aspx";
                         break;
                 }
             }
@@ -87,7 +94,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         private Collection<int> GetSelectedValues()
         {
             //Get the comma separated selected values.
-            string selectedValues = SelectedValuesHidden.Value;
+            string selectedValues = this.SelectedValuesHidden.Value;
 
             //Check if something was selected.
             if (string.IsNullOrWhiteSpace(selectedValues))
@@ -103,7 +110,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             foreach (string value in selectedValues.Split(','))
             {
                 //Parse the value to integer.
-                int val = MixERP.Net.Common.Conversion.TryCastInteger(value);
+                int val = Conversion.TryCastInteger(value);
 
                 //If the object "val" has a greater than zero,
                 //add it to the collection.
@@ -133,7 +140,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
             if (values.Count.Equals(0))
             {
-                ErrorLabel.Text = Resources.Warnings.NothingSelectedPleaseTryAgain;
+                this.ErrorLabel.Text = Warnings.NothingSelectedPleaseTryAgain;
                 return false;
             }
 
@@ -145,11 +152,11 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         private bool BelongToSameParty(Collection<int> values)
         {
-            bool belongToSameParty = MixERP.Net.BusinessLayer.Transactions.NonGLStockTransaction.TransactionIdsBelongToSameParty(values);
+            bool belongToSameParty = NonGLStockTransaction.TransactionIdsBelongToSameParty(values);
 
             if (!belongToSameParty)
             {
-                ErrorLabel.Text = Resources.Warnings.CannotMergeTransactionsOfDifferentParties;
+                this.ErrorLabel.Text = Warnings.CannotMergeTransactionsOfDifferentParties;
                 return false;
             }
 
@@ -158,8 +165,8 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         private bool AreAlreadyMerged(Collection<int> values)
         {
-            if (AreSalesQuotationsAlreadyMerged(values)) return true;
-            if (AreSalesOrdersAlreadyMerged(values)) return true;
+            if (this.AreSalesQuotationsAlreadyMerged(values)) return true;
+            if (this.AreSalesOrdersAlreadyMerged(values)) return true;
 
             return false;
         }
@@ -170,7 +177,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             {
                 if (NonGLStockTransaction.AreSalesQuotationsAlreadyMerged(values))
                 {
-                    ErrorLabel.Text = Resources.Labels.TransactionAlreadyMerged;
+                    this.ErrorLabel.Text = Labels.TransactionAlreadyMerged;
                     return true;
                 }
             }
@@ -184,7 +191,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             {
                 if (NonGLStockTransaction.AreSalesOrdersAlreadyMerged(values))
                 {
-                    ErrorLabel.Text = Resources.Labels.TransactionAlreadyMerged;
+                    this.ErrorLabel.Text = Labels.TransactionAlreadyMerged;
                     return true;
                 }
             }
@@ -230,22 +237,22 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         private void LoadGridView()
         {
-            DateTime dateFrom = MixERP.Net.Common.Conversion.TryCastDate(DateFromDateTextBox.Text);
-            DateTime dateTo = MixERP.Net.Common.Conversion.TryCastDate(DateToDateTextBox.Text);
-            string office = OfficeTextBox.Text;
-            string party = PartyTextBox.Text;
-            string priceType = PriceTypeTextBox.Text;
-            string user = UserTextBox.Text;
-            string referenceNumber = ReferenceNumberTextBox.Text;
-            string statementReference = StatementReferenceTextBox.Text;
+            DateTime dateFrom = Conversion.TryCastDate(this.DateFromDateTextBox.Text);
+            DateTime dateTo = Conversion.TryCastDate(this.DateToDateTextBox.Text);
+            string office = this.OfficeTextBox.Text;
+            string party = this.PartyTextBox.Text;
+            string priceType = this.PriceTypeTextBox.Text;
+            string user = this.UserTextBox.Text;
+            string referenceNumber = this.ReferenceNumberTextBox.Text;
+            string statementReference = this.StatementReferenceTextBox.Text;
             string bookName = this.GetTransactionBookName();
 
             if (this.IsNonGlTransaction())
             {
-                using (System.Data.DataTable table = MixERP.Net.BusinessLayer.Transactions.NonGLStockTransaction.GetView(bookName, dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference))
+                using (DataTable table = NonGLStockTransaction.GetView(bookName, dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference))
                 {
-                    ProductViewGridView.DataSource = table;
-                    ProductViewGridView.DataBind();
+                    this.ProductViewGridView.DataSource = table;
+                    this.ProductViewGridView.DataBind();
                 }
             }
             else
@@ -280,7 +287,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                         bookName = "Sales.Order";
                         break;
                     case SubTranBook.Payment:
-                        throw new InvalidOperationException("Invalid SubTranBook 'Sales Payment'");
+                        throw new InvalidOperationException(Errors.InvalidSubTranBookSalesPayment);
                     case SubTranBook.Quotation:
                         bookName = "Sales.Quotation";
                         break;
@@ -299,7 +306,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 switch (this.SubBook)
                 {
                     case SubTranBook.Delivery:
-                        throw new InvalidOperationException("Invalid SubTranBook 'Purchase Receipt'");
+                        throw new InvalidOperationException(Errors.InvalidSubTranBookPurchaseDelivery);
                     case SubTranBook.Direct:
                         bookName = "Purchase.Direct";
                         break;
@@ -313,9 +320,9 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                         bookName = "Purchase.Payment";
                         break;
                     case SubTranBook.Quotation:
-                        throw new InvalidOperationException("Invalid SubTranBook 'Purchase Quotation'");
+                        throw new InvalidOperationException(Errors.InvalidSubTranBookPurchaseQuotation);
                     case SubTranBook.Receipt:
-                        throw new InvalidOperationException("Invalid SubTranBook 'Purchase Receipt'");
+                        throw new InvalidOperationException(Errors.InvalidSubTranBookPurchaseReceipt);
                     case SubTranBook.Return:
                         bookName = "Purchase.Return";
                         break;
@@ -389,7 +396,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
                     if (!string.IsNullOrWhiteSpace(cellText))
                     {
-                        cellText = MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString("ScrudResource", cellText);
+                        cellText = LocalizationHelper.GetResourceString("ScrudResource", cellText);
                         e.Row.Cells[i].Text = cellText;
                     }
                 }
@@ -420,12 +427,12 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         protected void UpdateButton_Click(object sender, EventArgs e)
         {
-            int flagTypeId = MixERP.Net.Common.Conversion.TryCastInteger(FlagDropDownList.SelectedValue);
+            int flagTypeId = Conversion.TryCastInteger(this.FlagDropDownList.SelectedValue);
             string resource = this.GetTransactionTableName();
             string resourceKey = this.GetTransactionTablePrimaryKeyName();
             Collection<int> resourceIds = this.GetSelectedValues();
 
-            MixERP.Net.BusinessLayer.Core.Flags.CreateFlag(flagTypeId, resource, resourceKey, resourceIds);
+            Flags.CreateFlag(flagTypeId, resource, resourceKey, resourceIds);
             this.LoadGridView();
         }
     }

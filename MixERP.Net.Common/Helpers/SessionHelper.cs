@@ -29,7 +29,7 @@ namespace MixERP.Net.Common.Helpers
                 {
                     if (session[key] != null)
                     {
-                        return MixERP.Net.Common.Conversion.TryCastString(session[key]);
+                        return Conversion.TryCastString(session[key]);
                     }
                 }
             }

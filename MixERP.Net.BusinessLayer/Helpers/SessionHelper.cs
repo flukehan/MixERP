@@ -11,6 +11,8 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Web;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
 
 namespace MixERP.Net.BusinessLayer.Helpers
 {
@@ -18,112 +20,112 @@ namespace MixERP.Net.BusinessLayer.Helpers
     {
         public static long GetLogOnId()
         {
-            return MixERP.Net.Common.Conversion.TryCastLong(HttpContext.Current.Session["LogOnId"]);
+            return Conversion.TryCastLong(HttpContext.Current.Session["LogOnId"]);
         }
         
         public static int GetUserId()
         {
-            return MixERP.Net.Common.Conversion.TryCastInteger(HttpContext.Current.Session["UserId"]);
+            return Conversion.TryCastInteger(HttpContext.Current.Session["UserId"]);
         }
 
         public static string GetUserName()
         {
-            return MixERP.Net.Common.Conversion.TryCastString(HttpContext.Current.Session["UserName"]);
+            return Conversion.TryCastString(HttpContext.Current.Session["UserName"]);
         }
 
         public static string GetRole()
         {
-            return MixERP.Net.Common.Conversion.TryCastString(HttpContext.Current.Session["Role"]);
+            return Conversion.TryCastString(HttpContext.Current.Session["Role"]);
         }
 
         public static bool IsAdmin()
         {
-            return MixERP.Net.Common.Conversion.TryCastBoolean(HttpContext.Current.Session["IsAdmin"]);
+            return Conversion.TryCastBoolean(HttpContext.Current.Session["IsAdmin"]);
         }
 
         public static bool IsSystem()
         {
-            return MixERP.Net.Common.Conversion.TryCastBoolean(HttpContext.Current.Session["IsSystem"]);
+            return Conversion.TryCastBoolean(HttpContext.Current.Session["IsSystem"]);
         }
 
         public static int GetOfficeId()
         {
-            return MixERP.Net.Common.Conversion.TryCastInteger(HttpContext.Current.Session["OfficeId"]);
+            return Conversion.TryCastInteger(HttpContext.Current.Session["OfficeId"]);
         }
 
         public static string GetNickname()
         {
-            return MixERP.Net.Common.Conversion.TryCastString(HttpContext.Current.Session["NickName"]);
+            return Conversion.TryCastString(HttpContext.Current.Session["NickName"]);
         }
 
         public static string GetOfficeName()
         {
-            return MixERP.Net.Common.Conversion.TryCastString(HttpContext.Current.Session["OfficeName"]);
+            return Conversion.TryCastString(HttpContext.Current.Session["OfficeName"]);
         }
 
         public static DateTime GetRegistrationDate()
         {
-            return MixERP.Net.Common.Conversion.TryCastDate(HttpContext.Current.Session["RegistrationDate"]);
+            return Conversion.TryCastDate(HttpContext.Current.Session["RegistrationDate"]);
         }
 
         public static string GetRegistrationNumber()
         {
-            return MixERP.Net.Common.Conversion.TryCastString(HttpContext.Current.Session["RegistrationNumber"]);
+            return Conversion.TryCastString(HttpContext.Current.Session["RegistrationNumber"]);
         }
 
         public static string GetPanNumber()
         {
-            return MixERP.Net.Common.Conversion.TryCastString(HttpContext.Current.Session["PanNumber"]);
+            return Conversion.TryCastString(HttpContext.Current.Session["PanNumber"]);
         }
 
         public static string GetStreet()
         {
-            return MixERP.Net.Common.Conversion.TryCastString(HttpContext.Current.Session["Street"]);
+            return Conversion.TryCastString(HttpContext.Current.Session["Street"]);
         }
 
         public static string GetCity()
         {
-            return MixERP.Net.Common.Conversion.TryCastString(HttpContext.Current.Session["City"]);
+            return Conversion.TryCastString(HttpContext.Current.Session["City"]);
         }
 
         public static string GetState()
         {
-            return MixERP.Net.Common.Conversion.TryCastString(HttpContext.Current.Session["State"]);
+            return Conversion.TryCastString(HttpContext.Current.Session["State"]);
         }
 
         public static string GetCountry()
         {
-            return MixERP.Net.Common.Conversion.TryCastString(HttpContext.Current.Session["Country"]);
+            return Conversion.TryCastString(HttpContext.Current.Session["Country"]);
         }
 
         public static string GetZipCode()
         {
-            return MixERP.Net.Common.Conversion.TryCastString(HttpContext.Current.Session["ZipCode"]);
+            return Conversion.TryCastString(HttpContext.Current.Session["ZipCode"]);
         }
 
         public static string GetPhone()
         {
-            return MixERP.Net.Common.Conversion.TryCastString(HttpContext.Current.Session["Phone"]);
+            return Conversion.TryCastString(HttpContext.Current.Session["Phone"]);
         }
 
         public static string GetFax()
         {
-            return MixERP.Net.Common.Conversion.TryCastString(HttpContext.Current.Session["Fax"]);
+            return Conversion.TryCastString(HttpContext.Current.Session["Fax"]);
         }
 
         public static string GetEmail()
         {
-            return MixERP.Net.Common.Conversion.TryCastString(HttpContext.Current.Session["Email"]);
+            return Conversion.TryCastString(HttpContext.Current.Session["Email"]);
         }
 
         public static string GetUrl()
         {
-            return MixERP.Net.Common.Conversion.TryCastString(HttpContext.Current.Session["Url"]);
+            return Conversion.TryCastString(HttpContext.Current.Session["Url"]);
         }
 
         public static CultureInfo GetCulture()
         {
-            return MixERP.Net.Common.Helpers.LocalizationHelper.GetCurrentCulture();
+            return LocalizationHelper.GetCurrentCulture();
         }
     }
 }

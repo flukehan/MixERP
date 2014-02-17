@@ -16,7 +16,7 @@ namespace MixERP.Net.BusinessLayer.Core
     {
         public static bool IsCreditAllowed(string partyCode)
         {
-            return MixERP.Net.DatabaseLayer.Core.Parties.IsCreditAllowed(partyCode);
+            return DatabaseLayer.Core.Parties.IsCreditAllowed(partyCode);
         }
     }
 }

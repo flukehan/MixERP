@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace MixERP.Net.FrontEnd
 {
-    public partial class MixERPReportMaster : System.Web.UI.MasterPage
+    public partial class MixERPReportMaster : MasterPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

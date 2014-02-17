@@ -11,14 +11,16 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.BusinessLayer;
 using MixERP.Net.BusinessLayer.Helpers;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.ScrudFactory;
+using Resources;
 
 
 namespace MixERP.Net.FrontEnd.Finance.Setup
 {
-    public partial class COA : MixERP.Net.BusinessLayer.MixERPWebPage
+    public partial class COA : MixERPWebpage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -35,9 +37,9 @@ namespace MixERP.Net.FrontEnd.Finance.Setup
 
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
-                scrud.Text = Resources.Titles.ChartOfAccounts;
+                scrud.Text = Titles.ChartOfAccounts;
 
-                this.ScriptManager1.NamingContainer.Controls.Add(scrud);
+                this.ScrudPlaceholder.Controls.Add(scrud);
             }
         }
 

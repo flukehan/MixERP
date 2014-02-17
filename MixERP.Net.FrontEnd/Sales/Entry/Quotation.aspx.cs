@@ -12,10 +12,12 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.BusinessLayer;
+using MixERP.Net.BusinessLayer.Transactions;
 
 namespace MixERP.Net.FrontEnd.Sales.Entry
 {
-    public partial class Quotation : MixERP.Net.BusinessLayer.MixERPWebPage
+    public partial class Quotation : MixERPWebpage
     {
 
         protected void Page_Init(object sender, EventArgs e)
@@ -43,12 +45,12 @@ namespace MixERP.Net.FrontEnd.Sales.Entry
             //    Response.Redirect("~/Sales/Quotation.aspx?TranId=" + nonGlStockMasterId, true);
             //}
 
-            Collection<int> tranIdCollection = SalesQuotation.GetTranIdCollection();
+            Collection<int> tranIdCollection = this.SalesQuotation.GetTranIdCollection();
 
-            long nonGlStockMasterId = MixERP.Net.BusinessLayer.Transactions.NonGLStockTransaction.Add("Sales.Quotation", SalesQuotation.GetForm.Date, SalesQuotation.GetForm.PartyCode, SalesQuotation.GetForm.PriceTypeId, SalesQuotation.GetForm.Details, SalesQuotation.GetForm.ReferenceNumber, SalesQuotation.GetForm.StatementReference, tranIdCollection);
+            long nonGlStockMasterId = NonGLStockTransaction.Add("Sales.Quotation", this.SalesQuotation.GetForm.Date, this.SalesQuotation.GetForm.PartyCode, this.SalesQuotation.GetForm.PriceTypeId, this.SalesQuotation.GetForm.Details, this.SalesQuotation.GetForm.ReferenceNumber, this.SalesQuotation.GetForm.StatementReference, tranIdCollection);
             if (nonGlStockMasterId > 0)
             {
-                Response.Redirect("~/Sales/Quotation.aspx?TranId=" + nonGlStockMasterId, true);
+                this.Response.Redirect("~/Sales/Quotation.aspx?TranId=" + nonGlStockMasterId, true);
             }
 
         }

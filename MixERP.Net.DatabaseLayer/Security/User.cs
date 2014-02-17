@@ -11,6 +11,10 @@ using System.Data;
 using System.Data.Common;
 using System.Linq;
 using System.Text;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Models.Office;
+using MixERP.Net.DatabaseLayer.Helpers;
+using MixERP.Net.DBFactory;
 using Npgsql;
 
 namespace MixERP.Net.DatabaseLayer.Security
@@ -30,20 +34,20 @@ namespace MixERP.Net.DatabaseLayer.Security
                 command.Parameters.Add("@RemoteUser", remoteUser);
                 command.Parameters.Add("@Culture", culture);
 
-                return MixERP.Net.Common.Conversion.TryCastLong(MixERP.Net.DBFactory.DBOperations.GetScalarValue(command));
+                return Conversion.TryCastLong(DBOperations.GetScalarValue(command));
             }
         }
 
-        public static MixERP.Net.Common.Models.Office.SignInView GetLastSignInView(string userName)
+        public static SignInView GetLastSignInView(string userName)
         {
-            MixERP.Net.Common.Models.Office.SignInView view = new Common.Models.Office.SignInView();
+            SignInView view = new SignInView();
 
             string sql = "SELECT * FROM office.sign_in_view WHERE user_name=@UserName;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.Add("@UserName", userName);
 
-                using (DataTable table = MixERP.Net.DBFactory.DBOperations.GetDataTable(command))
+                using (DataTable table = DBOperations.GetDataTable(command))
                 {
                     if (table != null && table.Rows.Count.Equals(1))
                     {
@@ -55,37 +59,37 @@ namespace MixERP.Net.DatabaseLayer.Security
             return view;
         }
 
-        public static MixERP.Net.Common.Models.Office.SignInView GetSignInView(DataRow row)
+        public static SignInView GetSignInView(DataRow row)
         {
-            MixERP.Net.Common.Models.Office.SignInView view = new Common.Models.Office.SignInView();
+            SignInView view = new SignInView();
 
-            view.UserId = MixERP.Net.Common.Conversion.TryCastInteger(Helpers.ConversionHelper.GetColumnValue(row, "user_id"));
-            view.Role = MixERP.Net.Common.Conversion.TryCastString(Helpers.ConversionHelper.GetColumnValue(row, "role"));
-            view.IsAdmin = MixERP.Net.Common.Conversion.TryCastBoolean(Helpers.ConversionHelper.GetColumnValue(row, "is_admin"));
-            view.IsSystem = MixERP.Net.Common.Conversion.TryCastBoolean(Helpers.ConversionHelper.GetColumnValue(row, "is_system"));
-            view.UserName = MixERP.Net.Common.Conversion.TryCastString(Helpers.ConversionHelper.GetColumnValue(row, "user_name"));
-            view.FullName = MixERP.Net.Common.Conversion.TryCastString(Helpers.ConversionHelper.GetColumnValue(row, "full_name"));
-            view.LogOnId = MixERP.Net.Common.Conversion.TryCastInteger(Helpers.ConversionHelper.GetColumnValue(row, "login_id"));
-            view.OfficeId = MixERP.Net.Common.Conversion.TryCastInteger(Helpers.ConversionHelper.GetColumnValue(row, "office_id"));
-            view.Culture = MixERP.Net.Common.Conversion.TryCastString(Helpers.ConversionHelper.GetColumnValue(row, "culture"));
-            view.Office = MixERP.Net.Common.Conversion.TryCastString(Helpers.ConversionHelper.GetColumnValue(row, "office"));
-            view.OfficeCode = MixERP.Net.Common.Conversion.TryCastString(Helpers.ConversionHelper.GetColumnValue(row, "office_code"));
-            view.OfficeName = MixERP.Net.Common.Conversion.TryCastString(Helpers.ConversionHelper.GetColumnValue(row, "office_name"));
-            view.NickName = MixERP.Net.Common.Conversion.TryCastString(Helpers.ConversionHelper.GetColumnValue(row, "nick_name"));
-            view.RegistrationDate = MixERP.Net.Common.Conversion.TryCastDate(Helpers.ConversionHelper.GetColumnValue(row, "registration_date"));
-            view.RegistrationNumber = MixERP.Net.Common.Conversion.TryCastString(Helpers.ConversionHelper.GetColumnValue(row, "registration_number"));
-            view.PanNumber = MixERP.Net.Common.Conversion.TryCastString(Helpers.ConversionHelper.GetColumnValue(row, "pan_number"));
-            view.AddressLine1 = MixERP.Net.Common.Conversion.TryCastString(Helpers.ConversionHelper.GetColumnValue(row, "address_line_1"));
-            view.AddressLine2 = MixERP.Net.Common.Conversion.TryCastString(Helpers.ConversionHelper.GetColumnValue(row, "address_line_2"));
-            view.Street = MixERP.Net.Common.Conversion.TryCastString(Helpers.ConversionHelper.GetColumnValue(row, "street"));
-            view.City = MixERP.Net.Common.Conversion.TryCastString(Helpers.ConversionHelper.GetColumnValue(row, "city"));
-            view.State = MixERP.Net.Common.Conversion.TryCastString(Helpers.ConversionHelper.GetColumnValue(row, "state"));
-            view.ZipCode = MixERP.Net.Common.Conversion.TryCastString(Helpers.ConversionHelper.GetColumnValue(row, "zip_code"));
-            view.Country = MixERP.Net.Common.Conversion.TryCastString(Helpers.ConversionHelper.GetColumnValue(row, "country"));
-            view.Phone = MixERP.Net.Common.Conversion.TryCastString(Helpers.ConversionHelper.GetColumnValue(row, "phone"));
-            view.Fax = MixERP.Net.Common.Conversion.TryCastString(Helpers.ConversionHelper.GetColumnValue(row, "fax"));
-            view.Email = MixERP.Net.Common.Conversion.TryCastString(Helpers.ConversionHelper.GetColumnValue(row, "email"));
-            view.Url = new Uri(MixERP.Net.Common.Conversion.TryCastString(Helpers.ConversionHelper.GetColumnValue(row, "url")), UriKind.RelativeOrAbsolute);
+            view.UserId = Conversion.TryCastInteger(ConversionHelper.GetColumnValue(row, "user_id"));
+            view.Role = Conversion.TryCastString(ConversionHelper.GetColumnValue(row, "role"));
+            view.IsAdmin = Conversion.TryCastBoolean(ConversionHelper.GetColumnValue(row, "is_admin"));
+            view.IsSystem = Conversion.TryCastBoolean(ConversionHelper.GetColumnValue(row, "is_system"));
+            view.UserName = Conversion.TryCastString(ConversionHelper.GetColumnValue(row, "user_name"));
+            view.FullName = Conversion.TryCastString(ConversionHelper.GetColumnValue(row, "full_name"));
+            view.LogOnId = Conversion.TryCastInteger(ConversionHelper.GetColumnValue(row, "login_id"));
+            view.OfficeId = Conversion.TryCastInteger(ConversionHelper.GetColumnValue(row, "office_id"));
+            view.Culture = Conversion.TryCastString(ConversionHelper.GetColumnValue(row, "culture"));
+            view.Office = Conversion.TryCastString(ConversionHelper.GetColumnValue(row, "office"));
+            view.OfficeCode = Conversion.TryCastString(ConversionHelper.GetColumnValue(row, "office_code"));
+            view.OfficeName = Conversion.TryCastString(ConversionHelper.GetColumnValue(row, "office_name"));
+            view.Nickname = Conversion.TryCastString(ConversionHelper.GetColumnValue(row, "nick_name"));
+            view.RegistrationDate = Conversion.TryCastDate(ConversionHelper.GetColumnValue(row, "registration_date"));
+            view.RegistrationNumber = Conversion.TryCastString(ConversionHelper.GetColumnValue(row, "registration_number"));
+            view.PanNumber = Conversion.TryCastString(ConversionHelper.GetColumnValue(row, "pan_number"));
+            view.AddressLine1 = Conversion.TryCastString(ConversionHelper.GetColumnValue(row, "address_line_1"));
+            view.AddressLine2 = Conversion.TryCastString(ConversionHelper.GetColumnValue(row, "address_line_2"));
+            view.Street = Conversion.TryCastString(ConversionHelper.GetColumnValue(row, "street"));
+            view.City = Conversion.TryCastString(ConversionHelper.GetColumnValue(row, "city"));
+            view.State = Conversion.TryCastString(ConversionHelper.GetColumnValue(row, "state"));
+            view.ZipCode = Conversion.TryCastString(ConversionHelper.GetColumnValue(row, "zip_code"));
+            view.Country = Conversion.TryCastString(ConversionHelper.GetColumnValue(row, "country"));
+            view.Phone = Conversion.TryCastString(ConversionHelper.GetColumnValue(row, "phone"));
+            view.Fax = Conversion.TryCastString(ConversionHelper.GetColumnValue(row, "fax"));
+            view.Email = Conversion.TryCastString(ConversionHelper.GetColumnValue(row, "email"));
+            view.Url = new Uri(Conversion.TryCastString(ConversionHelper.GetColumnValue(row, "url")), UriKind.RelativeOrAbsolute);
 
 
             return view;

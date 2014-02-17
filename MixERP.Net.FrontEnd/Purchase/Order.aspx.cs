@@ -12,10 +12,12 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.BusinessLayer;
+using MixERP.Net.BusinessLayer.Transactions;
 
 namespace MixERP.Net.FrontEnd.Purchase
 {
-    public partial class Order : MixERP.Net.BusinessLayer.MixERPWebPage
+    public partial class Order : MixERPWebpage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -24,12 +26,12 @@ namespace MixERP.Net.FrontEnd.Purchase
 
         protected void PurchaseOrder_SaveButtonClick(object sender, EventArgs e)
         {
-            Collection<int> tranIdCollection = PurchaseOrder.GetTranIdCollection();
+            Collection<int> tranIdCollection = this.PurchaseOrder.GetTranIdCollection();
 
-            long nonGlStockMasterId = MixERP.Net.BusinessLayer.Transactions.NonGLStockTransaction.Add("Purchase.Order", PurchaseOrder.GetForm.Date, PurchaseOrder.GetForm.PartyCode, PurchaseOrder.GetForm.PriceTypeId, PurchaseOrder.GetForm.Details, PurchaseOrder.GetForm.ReferenceNumber, PurchaseOrder.GetForm.StatementReference, tranIdCollection);
+            long nonGlStockMasterId = NonGLStockTransaction.Add("Purchase.Order", this.PurchaseOrder.GetForm.Date, this.PurchaseOrder.GetForm.PartyCode, this.PurchaseOrder.GetForm.PriceTypeId, this.PurchaseOrder.GetForm.Details, this.PurchaseOrder.GetForm.ReferenceNumber, this.PurchaseOrder.GetForm.StatementReference, tranIdCollection);
             if(nonGlStockMasterId > 0)
             {
-                Response.Redirect("~/Dashboard/Index.aspx?TranId=" + nonGlStockMasterId, true);
+                this.Response.Redirect("~/Dashboard/Index.aspx?TranId=" + nonGlStockMasterId, true);
             }
         }
     }

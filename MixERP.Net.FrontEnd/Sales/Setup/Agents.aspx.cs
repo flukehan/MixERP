@@ -11,13 +11,15 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.BusinessLayer;
 using MixERP.Net.BusinessLayer.Helpers;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.ScrudFactory;
+using Resources;
 
 namespace MixERP.Net.FrontEnd.Sales.Setup
 {
-    public partial class Agents : MixERP.Net.BusinessLayer.MixERPWebPage
+    public partial class Agents : MixERPWebpage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -33,7 +35,7 @@ namespace MixERP.Net.FrontEnd.Sales.Setup
                 scrud.DisplayViews = GetDisplayViews();
                 scrud.SelectedValues = GetSelectedValues();
 
-                scrud.Text = Resources.Titles.AgentSetup;
+                scrud.Text = Titles.AgentSetup;
             }
         }
 

@@ -22,11 +22,11 @@ namespace MixERP.Net.WebControls.ReportEngine
 
         protected override void CreateChildControls()
         {
-            reportContainer = new Panel();
-            this.AddHiddenControls(reportContainer);
-            this.AddCommandPanel(reportContainer);
-            this.AddReportBody(reportContainer);
-            this.Controls.Add(reportContainer);
+            this.reportContainer = new Panel();
+            this.AddHiddenControls(this.reportContainer);
+            this.AddCommandPanel(this.reportContainer);
+            this.AddReportBody(this.reportContainer);
+            this.Controls.Add(this.reportContainer);
 
             if(this.AutoInitialize)
             {
@@ -37,12 +37,12 @@ namespace MixERP.Net.WebControls.ReportEngine
    
         protected override void RecreateChildControls()
         {
-            EnsureChildControls();
+            this.EnsureChildControls();
         }
 
         protected override void Render(HtmlTextWriter w)
         {
-            reportContainer.RenderControl(w);
+            this.reportContainer.RenderControl(w);
         }
     }
 }

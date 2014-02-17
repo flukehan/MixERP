@@ -69,7 +69,6 @@
     <Compile Include="Core\Units.cs" />
     <Compile Include="DBFactory\Sanitizer.cs" />
     <Compile Include="DBFactory\ServerConnectivity.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helpers\DropDownListHelper.cs" />
     <Compile Include="Helpers\FormHelper.cs" />
     <Compile Include="Helpers\GridviewHelper.cs" />
@@ -79,6 +78,9 @@
     <Compile Include="Helpers\SessionHelper.cs" />
     <Compile Include="Helpers\TableHelper.cs" />
     <Compile Include="MixERPWebReportPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MixERPWidget.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Office\CashRepositories.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="Transactions\NonGlStockTransaction.cs" />
     <Compile Include="Transactions\Transaction.cs" />
     <Compile Include="Transactions\Verification.cs" />
+    <Compile Include="WidgetModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MixERP.net.Common\MixERP.Net.Common.csproj">

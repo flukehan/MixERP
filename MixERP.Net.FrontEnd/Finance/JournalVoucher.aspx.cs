@@ -9,26 +9,35 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.BusinessLayer;
+using MixERP.Net.BusinessLayer.Core;
+using MixERP.Net.BusinessLayer.Helpers;
+using MixERP.Net.BusinessLayer.Transactions;
+using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Common.Models.Transactions;
+using Resources;
+using FormHelper = MixERP.Net.Common.Helpers.FormHelper;
 
 namespace MixERP.Net.FrontEnd.Finance
 {
-    public partial class JournalVoucher : MixERP.Net.BusinessLayer.MixERPWebPage
+    public partial class JournalVoucher : MixERPWebpage
     {
         protected void PostTransactionButton_Click(object sender, EventArgs e)
         {
-            DateTime valueDate = MixERP.Net.Common.Conversion.TryCastDate(ValueDateTextBox.Text);
-            string referenceNumber = ReferenceNumberTextBox.Text;
-            int costCenterId = MixERP.Net.Common.Conversion.TryCastInteger(CostCenterDropDownList.SelectedItem.Value);
+            DateTime valueDate = Conversion.TryCastDate(this.ValueDateTextBox.Text);
+            string referenceNumber = this.ReferenceNumberTextBox.Text;
+            int costCenterId = Conversion.TryCastInteger(this.CostCenterDropDownList.SelectedItem.Value);
 
-            long transactionId = MixERP.Net.BusinessLayer.Transactions.Transaction.Add(valueDate, referenceNumber, costCenterId, TransactionGridView);
+            long transactionId = Transaction.Add(valueDate, referenceNumber, costCenterId, this.TransactionGridView);
 
             if(transactionId > 0)
             {
-                Response.Redirect("~/Finance/Confirmation/JournalVoucher.aspx?TranId=" + transactionId, true);
+                this.Response.Redirect("~/Finance/Confirmation/JournalVoucher.aspx?TranId=" + transactionId, true);
             }
         }
         protected void TransactionGridView_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -52,24 +61,24 @@ namespace MixERP.Net.FrontEnd.Finance
                 return;
             }
 
-            Collection<MixERP.Net.Common.Models.Transactions.JournalDetailsModel> table = this.GetTable();
+            Collection<JournalDetailsModel> table = this.GetTable();
 
             GridViewRow row = (GridViewRow)(((ImageButton)e.CommandSource).NamingContainer);
             int index = row.RowIndex;
 
             table.RemoveAt(index);
-            Session[this.ID] = table;
+            this.Session[this.ID] = table;
             this.BindGridView();
         }
 
 
         protected void Page_Init(object sender, EventArgs e)
         {
-            if(!IsPostBack)
+            if(!this.IsPostBack)
             {
-                if(Session[this.ID] != null)
+                if(this.Session[this.ID] != null)
                 {
-                    Session.Remove(this.ID);
+                    this.Session.Remove(this.ID);
                 }
             }
             this.InitializeControls();
@@ -78,28 +87,28 @@ namespace MixERP.Net.FrontEnd.Finance
 
         private void InitializeControls()
         {
-            ValueDateLiteral.Text = HtmlControlHelper.GetLabel(ValueDateTextBox.ClientID,  Resources.Titles.ValueDate);
-            ReferenceNumberLiteral.Text = HtmlControlHelper.GetLabel(ReferenceNumberTextBox.ClientID, Resources.Titles.ReferenceNumber);
-            CostCenterLiteral.Text = HtmlControlHelper.GetLabel(CostCenterDropDownList.ClientID, Resources.Titles.CostCenter);
-            DebitTotalLiteral.Text = HtmlControlHelper.GetLabel(DebitTotalTextBox.ClientID, Resources.Titles.DebitTotal);
-            CreditTotalLiteral.Text = HtmlControlHelper.GetLabel(CreditTotalTextBox.ClientID, Resources.Titles.CreditTotal);
+            this.ValueDateLiteral.Text = HtmlControlHelper.GetLabel(this.ValueDateTextBox.ClientID,  Titles.ValueDate);
+            this.ReferenceNumberLiteral.Text = HtmlControlHelper.GetLabel(this.ReferenceNumberTextBox.ClientID, Titles.ReferenceNumber);
+            this.CostCenterLiteral.Text = HtmlControlHelper.GetLabel(this.CostCenterDropDownList.ClientID, Titles.CostCenter);
+            this.DebitTotalLiteral.Text = HtmlControlHelper.GetLabel(this.DebitTotalTextBox.ClientID, Titles.DebitTotal);
+            this.CreditTotalLiteral.Text = HtmlControlHelper.GetLabel(this.CreditTotalTextBox.ClientID, Titles.CreditTotal);
         }
 
-        private Collection<MixERP.Net.Common.Models.Transactions.JournalDetailsModel> GetTable()
+        private Collection<JournalDetailsModel> GetTable()
         {
-            if(Session[this.ID] != null)
+            if(this.Session[this.ID] != null)
             {
-                return Session[this.ID] as Collection<MixERP.Net.Common.Models.Transactions.JournalDetailsModel>;
+                return this.Session[this.ID] as Collection<JournalDetailsModel>;
             }
 
-            return new Collection<Common.Models.Transactions.JournalDetailsModel>();
+            return new Collection<JournalDetailsModel>();
         }
 
         private void AddRowToTable(string accountCode, string account, string cashRepository, string statementReference, decimal debit, decimal credit)
         {
-            Collection<MixERP.Net.Common.Models.Transactions.JournalDetailsModel> table = this.GetTable();
+            Collection<JournalDetailsModel> table = this.GetTable();
 
-            MixERP.Net.Common.Models.Transactions.JournalDetailsModel model = new Common.Models.Transactions.JournalDetailsModel();
+            JournalDetailsModel model = new JournalDetailsModel();
             model.AccountCode = accountCode;
             model.Account = account;
             model.CashRepository = cashRepository;
@@ -108,7 +117,7 @@ namespace MixERP.Net.FrontEnd.Finance
             model.Credit = credit;
 
             table.Add(model);
-            Session[this.ID] = table;
+            this.Session[this.ID] = table;
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -118,78 +127,78 @@ namespace MixERP.Net.FrontEnd.Finance
 
         protected void AddButton_Click(object sender, EventArgs e)
         {
-            string accountCode = AccountCodeTextBox.Text;
-            string account = AccountDropDownList.SelectedItem.Text;
-            string statementReference = StatementReferenceTextBox.Text;
-            string cashRepository = CashRepositoryDropDownList.SelectedItem.Text;
-            decimal debit = MixERP.Net.Common.Conversion.TryCastDecimal(DebitTextBox.Text);
-            decimal credit = MixERP.Net.Common.Conversion.TryCastDecimal(CreditTextBox.Text);
+            string accountCode = this.AccountCodeTextBox.Text;
+            string account = this.AccountDropDownList.SelectedItem.Text;
+            string statementReference = this.StatementReferenceTextBox.Text;
+            string cashRepository = this.CashRepositoryDropDownList.SelectedItem.Text;
+            decimal debit = Conversion.TryCastDecimal(this.DebitTextBox.Text);
+            decimal credit = Conversion.TryCastDecimal(this.CreditTextBox.Text);
 
             #region Validation
             if(string.IsNullOrWhiteSpace(accountCode))
             {                
-                MixERP.Net.Common.Helpers.FormHelper.MakeDirty(AccountCodeTextBox);
+                FormHelper.MakeDirty(this.AccountCodeTextBox);
                 return;
             }
             else
             {
-                MixERP.Net.Common.Helpers.FormHelper.RemoveDirty(AccountCodeTextBox);
+                FormHelper.RemoveDirty(this.AccountCodeTextBox);
             }
 
             if(string.IsNullOrWhiteSpace(account))
             {
-                MixERP.Net.Common.Helpers.FormHelper.MakeDirty(AccountDropDownList);
+                FormHelper.MakeDirty(this.AccountDropDownList);
                 return;
             }
             else
             {
-                MixERP.Net.Common.Helpers.FormHelper.RemoveDirty(AccountDropDownList);
+                FormHelper.RemoveDirty(this.AccountDropDownList);
             }
 
             if(debit.Equals(0) && credit.Equals(0))
             {
-                MixERP.Net.Common.Helpers.FormHelper.MakeDirty(DebitTextBox);
-                MixERP.Net.Common.Helpers.FormHelper.MakeDirty(CreditTextBox);
+                FormHelper.MakeDirty(this.DebitTextBox);
+                FormHelper.MakeDirty(this.CreditTextBox);
                 return;
             }
             else
             {
                 if(debit > 0 && credit > 0)
                 {
-                    MixERP.Net.Common.Helpers.FormHelper.MakeDirty(DebitTextBox);
-                    MixERP.Net.Common.Helpers.FormHelper.MakeDirty(CreditTextBox);
+                    FormHelper.MakeDirty(this.DebitTextBox);
+                    FormHelper.MakeDirty(this.CreditTextBox);
                     return;
                 }
                 else
                 {
-                    MixERP.Net.Common.Helpers.FormHelper.RemoveDirty(StatementReferenceTextBox);
+                    FormHelper.RemoveDirty(this.StatementReferenceTextBox);
                 }
             }
 
-            if(MixERP.Net.BusinessLayer.Core.Accounts.IsCashAccount(accountCode))
+            if(Accounts.IsCashAccount(accountCode))
             {
-                if(string.IsNullOrEmpty(CashRepositoryDropDownList.SelectedItem.Value))
+                if(string.IsNullOrEmpty(this.CashRepositoryDropDownList.SelectedItem.Value))
                 {
-                    MixERP.Net.Common.Helpers.FormHelper.MakeDirty(CashRepositoryDropDownList);
-                    CashRepositoryDropDownList.Focus();
+                    FormHelper.MakeDirty(this.CashRepositoryDropDownList);
+                    this.CashRepositoryDropDownList.Focus();
                     return;
                 }
                 else
                 {
-                    MixERP.Net.Common.Helpers.FormHelper.RemoveDirty(CashRepositoryDropDownList);
+                    FormHelper.RemoveDirty(this.CashRepositoryDropDownList);
                 }
             }
 
-            Collection<MixERP.Net.Common.Models.Transactions.JournalDetailsModel> table = this.GetTable();
+            Collection<JournalDetailsModel> table = this.GetTable();
 
             if(table.Count > 0)
             {
-                foreach(MixERP.Net.Common.Models.Transactions.JournalDetailsModel row in table)
+                foreach(JournalDetailsModel row in table)
                 {
                     if(row.AccountCode.Equals(accountCode))
                     {
-                        MixERP.Net.Common.Helpers.FormHelper.MakeDirty(AccountCodeTextBox);
-                        MixERP.Net.Common.Helpers.FormHelper.MakeDirty(AccountDropDownList);
+                        FormHelper.MakeDirty(this.AccountCodeTextBox);
+                        FormHelper.MakeDirty(this.AccountDropDownList);
                         return;
                     }
                 }
@@ -199,36 +208,36 @@ namespace MixERP.Net.FrontEnd.Finance
 
             this.AddRowToTable(accountCode, account, cashRepository, statementReference, debit, credit);
             this.BindGridView();
-            DebitTextBox.Text = "";
-            CreditTextBox.Text = "";
-            AccountCodeTextBox.Focus();
+            this.DebitTextBox.Text = "";
+            this.CreditTextBox.Text = "";
+            this.AccountCodeTextBox.Focus();
         }
 
         private void DataBindControls()
         {
-            string displayField = MixERP.Net.Common.Helpers.ConfigurationHelper.GetDbParameter( "CostCenterDisplayField");
-            MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.BindDropDownList(CostCenterDropDownList, "office", "cost_centers", "cost_center_id", displayField);
+            string displayField = ConfigurationHelper.GetDbParameter( "CostCenterDisplayField");
+            DropDownListHelper.BindDropDownList(this.CostCenterDropDownList, "office", "cost_centers", "cost_center_id", displayField);
         }
 
         private void BindGridView()
         {
-            Collection<MixERP.Net.Common.Models.Transactions.JournalDetailsModel> table = this.GetTable();
-            TransactionGridView.DataSource = table;
-            TransactionGridView.DataBind();
+            Collection<JournalDetailsModel> table = this.GetTable();
+            this.TransactionGridView.DataSource = table;
+            this.TransactionGridView.DataBind();
 
             if(table.Count > 0)
             {
                 decimal debit = 0;
                 decimal credit = 0;
 
-                foreach(MixERP.Net.Common.Models.Transactions.JournalDetailsModel row in table)
+                foreach(JournalDetailsModel row in table)
                 {
                     debit += row.Debit;
                     credit += row.Credit;
                 }
 
-                DebitTotalTextBox.Text = debit.ToString("G29", System.Threading.Thread.CurrentThread.CurrentCulture);
-                CreditTotalTextBox.Text = credit.ToString("G29", System.Threading.Thread.CurrentThread.CurrentCulture);
+                this.DebitTotalTextBox.Text = debit.ToString("G29", Thread.CurrentThread.CurrentCulture);
+                this.CreditTotalTextBox.Text = credit.ToString("G29", Thread.CurrentThread.CurrentCulture);
             }
 
         }

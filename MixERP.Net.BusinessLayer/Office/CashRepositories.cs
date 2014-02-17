@@ -11,25 +11,26 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
 using System.Text;
+using MixERP.Net.Common.Models.Office;
 
 namespace MixERP.Net.BusinessLayer.Office
 {
     public static class CashRepositories
     {
-        public static Collection<MixERP.Net.Common.Models.Office.CashRepository> GetCashRepositories()
+        public static Collection<CashRepository> GetCashRepositories()
         {
-            return MixERP.Net.DatabaseLayer.Office.CashRepositories.GetCashRepositories();
+            return DatabaseLayer.Office.CashRepositories.GetCashRepositories();
         }
 
-        public static Collection<MixERP.Net.Common.Models.Office.CashRepository> GetCashRepositories(int officeId)
+        public static Collection<CashRepository> GetCashRepositories(int officeId)
         {
             //TODO: Bind this instance to a collection of entities.
-            return MixERP.Net.DatabaseLayer.Office.CashRepositories.GetCashRepositories(officeId);
+            return DatabaseLayer.Office.CashRepositories.GetCashRepositories(officeId);
         }
 
         public static decimal GetBalance(int cashRepositoryId)
         {
-            return MixERP.Net.DatabaseLayer.Office.CashRepositories.GetBalance(cashRepositoryId);
+            return DatabaseLayer.Office.CashRepositories.GetBalance(cashRepositoryId);
         }
     }
 }

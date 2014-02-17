@@ -19,17 +19,17 @@ namespace MixERP.Net.DatabaseLayer.Helpers
     {
         public static DataTable GetTable(string tableSchema, string tableName)
         {
-            return MixERP.Net.DBFactory.FormHelper.GetTable(tableSchema, tableName);
+            return Net.DBFactory.FormHelper.GetTable(tableSchema, tableName);
         }
 
         public static DataTable GetTable(string tableSchema, string tableName, string columnNames, string columnValues)
         {
-            return MixERP.Net.DBFactory.FormHelper.GetTable(tableSchema, tableName, columnNames, columnValues);
+            return Net.DBFactory.FormHelper.GetTable(tableSchema, tableName, columnNames, columnValues);
         }
 
         public static DataTable GetTable(string tableSchema, string tableName, string columnNames, string columnValuesLike, int limit)
         {
-            return MixERP.Net.DBFactory.FormHelper.GetTable(tableSchema, tableName, columnNames, columnValuesLike, limit);
+            return Net.DBFactory.FormHelper.GetTable(tableSchema, tableName, columnNames, columnValuesLike, limit);
         }
     }
 }

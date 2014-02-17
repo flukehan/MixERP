@@ -62,5 +62,7 @@
 </div>
 
 <script type="text/javascript">
-    prepareChart("sales-by-month-datasource", "sales-by-month-canvas", "sales-by-month-legend", 'bar');
+    $(document).ready(function(){
+        prepareChart("sales-by-month-datasource", "sales-by-month-canvas", "sales-by-month-legend", 'bar');
+    });
 </script>

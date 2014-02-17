@@ -68,7 +68,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data
                             model.StatementReference = Conversion.TryCastString(reader["statement_reference"]);
                         }
 
-                        Common.Models.Transactions.ProductDetailsModel product = new Common.Models.Transactions.ProductDetailsModel();
+                        ProductDetailsModel product = new ProductDetailsModel();
 
                         product.ItemCode = Conversion.TryCastString(reader["item_code"]);
                         product.ItemName = Conversion.TryCastString(reader["item_name"]);

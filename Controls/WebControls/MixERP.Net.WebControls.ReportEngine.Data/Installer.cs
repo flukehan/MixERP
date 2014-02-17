@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MixERP.Net.DBFactory;
 using Npgsql;
 
 namespace MixERP.Net.WebControls.ReportEngine.Data
@@ -32,7 +33,7 @@ namespace MixERP.Net.WebControls.ReportEngine.Data
                 command.Parameters.Add("@ParentMenuCode", parentMenuCode);
                 //command.UnpreparedExecute = true;
 
-                MixERP.Net.DBFactory.DBOperations.ExecuteNonQuery(command);
+                DBOperations.ExecuteNonQuery(command);
             }
         }
     }

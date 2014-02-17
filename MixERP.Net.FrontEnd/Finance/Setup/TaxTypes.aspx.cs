@@ -11,11 +11,13 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.BusinessLayer;
 using MixERP.Net.WebControls.ScrudFactory;
+using Resources;
 
 namespace MixERP.Net.FrontEnd.Finance.Setup
 {
-    public partial class TaxTypes : MixERP.Net.BusinessLayer.MixERPWebPage
+    public partial class TaxTypes : MixERPWebpage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -28,9 +30,9 @@ namespace MixERP.Net.FrontEnd.Finance.Setup
                 scrud.ViewSchema = "core";
                 scrud.View = "tax_types";
 
-                scrud.Text = Resources.Titles.TaxTypes;
+                scrud.Text = Titles.TaxTypes;
 
-                ScriptManager1.NamingContainer.Controls.Add(scrud);
+                this.ScrudPlaceholder.Controls.Add(scrud);
             }
         }
     }

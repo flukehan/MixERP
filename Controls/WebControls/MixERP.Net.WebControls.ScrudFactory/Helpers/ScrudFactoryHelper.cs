@@ -5,22 +5,22 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
+using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.WebControls.ScrudFactory.Controls.ListControls;
 using MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes;
 using MixERP.Net.WebControls.ScrudFactory.Controls;
+using MixERP.Net.WebControls.ScrudFactory.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 {
     public static class ScrudFactoryHelper
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Web.UI.WebControls.Literal.set_Text(System.String)")]
+        [SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Web.UI.WebControls.Literal.set_Text(System.String)")]
         public static void AddRow(HtmlTable htmlTable, string label, params Control[] controls)
         {
             if (htmlTable == null)
@@ -38,20 +38,20 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
                 return;
             }
 
-            using (HtmlTableRow newRow = new HtmlTableRow())
+            using (var newRow = new HtmlTableRow())
             {
-                using (HtmlTableCell labelCell = new HtmlTableCell())
+                using (var labelCell = new HtmlTableCell())
                 {
-                    using (HtmlTableCell controlCell = new HtmlTableCell())
+                    using (var controlCell = new HtmlTableCell())
                     {
-                        using (Literal labelLiteral = new Literal())
+                        using (var labelLiteral = new Literal())
                         {
-                            labelLiteral.Text = string.Format(System.Threading.Thread.CurrentThread.CurrentCulture, "<label for='{0}'>{1}</label>", controls[0].ID, label);
+                            labelLiteral.Text = string.Format(Thread.CurrentThread.CurrentCulture, "<label for='{0}'>{1}</label>", controls[0].ID, label);
                             labelCell.Attributes.Add("class", "label-cell");
 
                             labelCell.Controls.Add(labelLiteral);
 
-                            foreach (Control control in controls)
+                            foreach (var control in controls)
                             {
                                 if (control != null)
                                 {
@@ -109,7 +109,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
                         ScrudDecimalTextBox.AddDecimalTextBox(htmlTable, resourceClassName, columnName, defaultValue, isNullable, maxLength, domain);
                         break;
                     case "boolean":
-                        ScrudRadioButtonList.AddRadioButtonList(htmlTable, resourceClassName, columnName, isNullable, Resources.ScrudResource.YesNo, "true,false", defaultValue);
+                        ScrudRadioButtonList.AddRadioButtonList(htmlTable, resourceClassName, columnName, isNullable, ScrudResource.YesNo, "true,false", defaultValue);
                         break;
                     case "date":
                         ScrudDateTextBox.AddDateTextBox(htmlTable, resourceClassName, columnName, defaultValue, isNullable);
@@ -135,10 +135,10 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
                 return null;
             }
 
-            using (RequiredFieldValidator validator = new RequiredFieldValidator())
+            using (var validator = new RequiredFieldValidator())
             {
                 validator.ID = controlToValidate.ID + "RequiredValidator";
-                validator.ErrorMessage = "<br/>" + Resources.ScrudResource.RequiredField;
+                validator.ErrorMessage = "<br/>" + ScrudResource.RequiredField;
                 validator.CssClass = "form-error";
                 validator.ControlToValidate = controlToValidate.ID;
                 validator.EnableClientScript = true;

@@ -5,36 +5,34 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Helpers;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
-    public partial class ScrudForm : CompositeControl
+    public partial class ScrudForm
     {
         UpdateProgress updateProgress;
 
         private void AddUpdateProgress(Panel p)
         {
-            updateProgress = new UpdateProgress();
-            updateProgress.ID = "ScrudUpdateProgress";
+            this.updateProgress = new UpdateProgress();
+            this.updateProgress.ID = "ScrudUpdateProgress";
 
-            updateProgress.ProgressTemplate = new AjaxProgressTemplate(this.GetUpdateProgressTemplateCssClass(), this.GetUpdateProgressSpinnerImageCssClass(), this.Page.ResolveUrl(this.GetUpdateProgressSpinnerImagePath()));
-            p.Controls.Add(updateProgress);
+            this.updateProgress.ProgressTemplate = new AjaxProgressTemplate(this.GetUpdateProgressTemplateCssClass(), this.GetUpdateProgressSpinnerImageCssClass(), this.Page.ResolveUrl(this.GetUpdateProgressSpinnerImagePath()));
+            p.Controls.Add(this.updateProgress);
         }
 
         private string GetUpdateProgressTemplateCssClass()
         {
-            string cssClass = this.UpdateProgressTemplateCssClass;
+            var cssClass = this.UpdateProgressTemplateCssClass;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter( "UpdateProgressTemplateCssClass");
+                cssClass = ConfigurationHelper.GetScrudParameter( "UpdateProgressTemplateCssClass");
             }
 
             return cssClass;
@@ -42,11 +40,11 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private string GetUpdateProgressSpinnerImageCssClass()
         {
-            string cssClass = this.UpdateProgressSpinnerImageCssClass;
+            var cssClass = this.UpdateProgressSpinnerImageCssClass;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter( "UpdateProgressSpinnerImageCssClass");
+                cssClass = ConfigurationHelper.GetScrudParameter( "UpdateProgressSpinnerImageCssClass");
             }
 
             return cssClass;
@@ -54,11 +52,11 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private string GetUpdateProgressSpinnerImagePath()
         {
-            string cssClass = this.UpdateProgressSpinnerImagePath;
+            var cssClass = this.UpdateProgressSpinnerImagePath;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = MixERP.Net.Common.Helpers.ConfigurationHelper.GetScrudParameter("UpdateProgressSpinnerImagePath");
+                cssClass = ConfigurationHelper.GetScrudParameter("UpdateProgressSpinnerImagePath");
             }
 
             return cssClass;

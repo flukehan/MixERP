@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MixERP.Net.DBFactory;
 
 namespace MixERP.Net.DatabaseLayer.DBFactory
 {
@@ -16,7 +17,7 @@ namespace MixERP.Net.DatabaseLayer.DBFactory
     {
         public static bool IsDBServerAvailable()
         {
-            return MixERP.Net.DBFactory.DBOperations.IsServerAvailable();
+            return DBOperations.IsServerAvailable();
         }
     }
 }

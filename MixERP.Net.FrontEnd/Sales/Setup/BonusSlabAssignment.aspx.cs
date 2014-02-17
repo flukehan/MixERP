@@ -11,13 +11,15 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.BusinessLayer;
 using MixERP.Net.BusinessLayer.Helpers;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.ScrudFactory;
+using Resources;
 
 namespace MixERP.Net.FrontEnd.Sales.Setup
 {
-    public partial class BonusSlabAssignment : MixERP.Net.BusinessLayer.MixERPWebPage
+    public partial class BonusSlabAssignment : MixERPWebpage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -33,8 +35,8 @@ namespace MixERP.Net.FrontEnd.Sales.Setup
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
 
-                scrud.Text = Resources.Titles.AgentBonusSlabAssignment;
-                ScriptManager1.NamingContainer.Controls.Add(scrud);
+                scrud.Text = Titles.AgentBonusSlabAssignment;
+                this.ScrudPlaceholder.Controls.Add(scrud);
             }
         }
 

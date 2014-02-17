@@ -8,18 +8,19 @@ http://mozilla.org/MPL/2.0/.
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using MixERP.Net.BusinessLayer;
 
 namespace MixERP.Net.FrontEnd.Sales.Confirmation
 {
-    public partial class ReportSalesQuotation : MixERP.Net.BusinessLayer.MixERPWebReportPage
+    public partial class ReportSalesQuotation : MixERPWebReportPage
     {
         protected void Page_Init(object sender, EventArgs e)
         {
             Collection<KeyValuePair<string, string>> list = new Collection<KeyValuePair<string, string>>();
             list.Add(new KeyValuePair<string, string>("@non_gl_stock_master_id", this.Request["TranId"]));
 
-            SalesQuotationReport.AddParameterToCollection(list);
-            SalesQuotationReport.AddParameterToCollection(list);
+            this.SalesQuotationReport.AddParameterToCollection(list);
+            this.SalesQuotationReport.AddParameterToCollection(list);
         }
     }
 }

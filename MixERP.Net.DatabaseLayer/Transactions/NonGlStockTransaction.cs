@@ -9,8 +9,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
+using MixERP.Net.Common;
 using Npgsql;
 using MixERP.Net.DBFactory;
 using MixERP.Net.Common.Models.Transactions;
@@ -19,8 +21,8 @@ namespace MixERP.Net.DatabaseLayer.Transactions
 {
     public static class NonGLStockTransaction
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        public static long Add(string book, DateTime valueDate, int officeId, int userId, long logOnId, string referenceNumber, string statementReference, MixERP.Net.Common.Models.Transactions.StockMasterModel stockMaster, Collection<MixERP.Net.Common.Models.Transactions.StockMasterDetailModel> details, Collection<int> transactionIdCollection)
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        public static long Add(string book, DateTime valueDate, int officeId, int userId, long logOnId, string referenceNumber, string statementReference, StockMasterModel stockMaster, Collection<StockMasterDetailModel> details, Collection<int> transactionIdCollection)
         {
             if (stockMaster == null)
             {
@@ -78,7 +80,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
 
                             stockMasterRow.Parameters.Add("@StatementReference", statementReference);
 
-                            nonGlStockMasterId = MixERP.Net.Common.Conversion.TryCastLong(stockMasterRow.ExecuteScalar());
+                            nonGlStockMasterId = Conversion.TryCastLong(stockMasterRow.ExecuteScalar());
                         }
 
                         #region NonGLStockDetails
@@ -86,7 +88,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                                 transactions.non_gl_stock_details(non_gl_stock_master_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax) 
                                 SELECT  @NonGlStockMasterId, core.get_item_id_by_item_code(@ItemCode), @Quantity, core.get_unit_id_by_unit_name(@UnitName), core.get_base_quantity_by_unit_name(@UnitName, @Quantity), core.get_base_unit_id_by_unit_name(@UnitName), @Price, @Discount, @TaxRate, @Tax;";
 
-                        foreach (MixERP.Net.Common.Models.Transactions.StockMasterDetailModel model in details)
+                        foreach (StockMasterDetailModel model in details)
                         {
                             using (NpgsqlCommand stockMasterDetailRow = new NpgsqlCommand(sql, connection))
                             {
@@ -136,7 +138,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
             }
         }
 
-        public static System.Data.DataTable GetView(int userId, string book, int officeId, DateTime dateFrom, DateTime dateTo, string office, string party, string priceType, string user, string referenceNumber, string statementReference)
+        public static DataTable GetView(int userId, string book, int officeId, DateTime dateFrom, DateTime dateTo, string office, string party, string priceType, string user, string referenceNumber, string statementReference)
         {
             string sql = "SELECT * FROM transactions.get_product_view(@UserId, @Book, @OfficeId, @DateFrom, @DateTo, @Office, @Party, @PriceType, @User, @ReferenceNumber, @StatementReference);";
 
@@ -154,7 +156,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                 command.Parameters.Add("@ReferenceNumber", referenceNumber);
                 command.Parameters.Add("@StatementReference", statementReference);
 
-                return MixERP.Net.DBFactory.DBOperations.GetDataTable(command);
+                return DBOperations.GetDataTable(command);
             }
         }
 
@@ -171,7 +173,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
             //Iterate through the ids and create a parameter array.
             for (int i = 0; i < ids.Count; i++)
             {
-                parameters[i] = "@Id" + MixERP.Net.Common.Conversion.TryCastString(i);
+                parameters[i] = "@Id" + Conversion.TryCastString(i);
             }
 
             //Get the count of distinct number of parties associated with the transaction id.
@@ -183,12 +185,12 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                 //Iterate through the IDs and add PostgreSQL parameters.
                 for (int i = 0; i < ids.Count; i++)
                 {
-                    command.Parameters.Add("@Id" + MixERP.Net.Common.Conversion.TryCastString(i), ids[i]);
+                    command.Parameters.Add("@Id" + Conversion.TryCastString(i), ids[i]);
                 }
 
                 //If the transactions associated with the supplied transaction ids belong to a single part,
                 //the value should equal to 1.
-                return MixERP.Net.Common.Conversion.TryCastInteger(MixERP.Net.DBFactory.DBOperations.GetScalarValue(command)).Equals(1);
+                return Conversion.TryCastInteger(DBOperations.GetScalarValue(command)).Equals(1);
             }
         }
 
@@ -205,7 +207,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
             //Iterate through the ids and create a parameter array.
             for (int i = 0; i < ids.Count; i++)
             {
-                parameters[i] = "@Id" + MixERP.Net.Common.Conversion.TryCastString(i);
+                parameters[i] = "@Id" + Conversion.TryCastString(i);
             }
 
             string sql = @"SELECT transactions.are_sales_quotations_already_merged(" + string.Join(",", parameters) + ");";
@@ -215,10 +217,10 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                 //Iterate through the IDs and add PostgreSQL parameters.
                 for (int i = 0; i < ids.Count; i++)
                 {
-                    command.Parameters.Add("@Id" + MixERP.Net.Common.Conversion.TryCastString(i), ids[i]);
+                    command.Parameters.Add("@Id" + Conversion.TryCastString(i), ids[i]);
                 }
 
-                return Common.Conversion.TryCastBoolean(MixERP.Net.DBFactory.DBOperations.GetScalarValue(command));
+                return Conversion.TryCastBoolean(DBOperations.GetScalarValue(command));
             }
         }
 
@@ -235,7 +237,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
             //Iterate through the ids and create a parameter array.
             for (int i = 0; i < ids.Count; i++)
             {
-                parameters[i] = "@Id" + MixERP.Net.Common.Conversion.TryCastString(i);
+                parameters[i] = "@Id" + Conversion.TryCastString(i);
             }
 
             string sql = @"SELECT transactions.are_sales_orders_already_merged(" + string.Join(",", parameters) + ");";
@@ -245,10 +247,10 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                 //Iterate through the IDs and add PostgreSQL parameters.
                 for (int i = 0; i < ids.Count; i++)
                 {
-                    command.Parameters.Add("@Id" + MixERP.Net.Common.Conversion.TryCastString(i), ids[i]);
+                    command.Parameters.Add("@Id" + Conversion.TryCastString(i), ids[i]);
                 }
 
-                return Common.Conversion.TryCastBoolean(MixERP.Net.DBFactory.DBOperations.GetScalarValue(command));
+                return Conversion.TryCastBoolean(DBOperations.GetScalarValue(command));
             }
         }
     }

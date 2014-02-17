@@ -4,11 +4,13 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.BusinessLayer;
 using MixERP.Net.WebControls.ScrudFactory;
+using Resources;
 
 namespace MixERP.Net.FrontEnd.Setup
 {
-    public partial class FiscalYear : MixERP.Net.BusinessLayer.MixERPWebPage
+    public partial class FiscalYear : MixERPWebpage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -21,9 +23,9 @@ namespace MixERP.Net.FrontEnd.Setup
                 scrud.ViewSchema = "core";
                 scrud.View = "fiscal_year";
 
-                scrud.Text = Resources.Titles.FiscalYear;
+                scrud.Text = Titles.FiscalYear;
 
-                ScriptManager1.NamingContainer.Controls.Add(scrud);
+                this.ScrudPlaceholder.Controls.Add(scrud);
             }
         }
     }
