@@ -25,7 +25,7 @@ using Resources;
 
 namespace MixERP.Net.FrontEnd.Reports
 {
-    public partial class ReportViewer : MixERPWebReportPage, IDisposable
+    public partial class ReportViewer : MixERPWebReportPage
     {
         private bool disposed;
         private Button updateButton = new Button();
@@ -82,10 +82,6 @@ namespace MixERP.Net.FrontEnd.Reports
                     {
 
                     }
-                    else
-                    {
-
-                    }
 
                     this.AddRow(label, textBox);
                 }
@@ -112,9 +108,11 @@ namespace MixERP.Net.FrontEnd.Reports
             {
                 TableCell cell = row.Cells[1];
 
-                if (cell.Controls[0] is TextBox)
+                var box = cell.Controls[0] as TextBox;
+
+                if (box != null)
                 {
-                    TextBox textBox = (TextBox)cell.Controls[0];
+                    TextBox textBox = box;
                     list.Add(new KeyValuePair<string, string>("@" + textBox.ID.Replace("_text_box", ""), textBox.Text));
                 }
             }

@@ -5,19 +5,16 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
-using System;
+
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Web.UI.WebControls;
 using System.Xml;
 using MixERP.Net.Common;
 using MixERP.Net.WebControls.ReportEngine.Data;
 using MixERP.Net.WebControls.ReportEngine.Helpers;
-using System.Xml.XPath;
 
 namespace MixERP.Net.WebControls.ReportEngine
 {
@@ -72,22 +69,20 @@ namespace MixERP.Net.WebControls.ReportEngine
             }
         }
 
-        private Collection<string> DecimalFieldIndicesCollection;
+        private Collection<string> decimalFieldIndicesCollection;
         private void SetDecimalFields()
         {
-            string decimalFieldIndices = string.Empty;
-
             //Get the list of datasources for this report.
             XmlNodeList dataSourceList = XmlHelper.GetNodes(this.reportPath, "//DataSource");
 
             //Initializing decimal field indices collection.
-            this.DecimalFieldIndicesCollection = new Collection<string>();
+            this.decimalFieldIndicesCollection = new Collection<string>();
 
             //Loop through each datasource in the datasource list.
             foreach (XmlNode dataSource in dataSourceList)
             {
                 //Resetting the variable for each iteration.
-                decimalFieldIndices = string.Empty;
+                string decimalFieldIndices = string.Empty;
 
                 //Loop through each datasource child node.
                 foreach (XmlNode node in dataSource.ChildNodes)
@@ -103,30 +98,28 @@ namespace MixERP.Net.WebControls.ReportEngine
                 //If a child node is found which matches the tag <DecimalFieldIncides> 
                 //under the current node, the variable "decimalFieldIndices" will have
                 //a value. If not, an empty string will be added to the collection.
-                this.DecimalFieldIndicesCollection.Add(decimalFieldIndices);
+                this.decimalFieldIndicesCollection.Add(decimalFieldIndices);
             }
         }
-        private Collection<int> RunningTotalTextColumnIndexCollection;
-        private Collection<string> RunningTotalFieldIndicesCollection;
+        private Collection<int> runningTotalTextColumnIndexCollection;
+        private Collection<string> runningTotalFieldIndicesCollection;
         private void SetRunningTotalFields()
         {
             //Get the list of datasources for this report.
             XmlNodeList dataSourceList = XmlHelper.GetNodes(this.reportPath, "//DataSource");
-            int runningTotalTextColumnIndex = 0;
-            string runningTotalFieldIndices = string.Empty;
 
             //Initializing running total text column index collection.
-            this.RunningTotalTextColumnIndexCollection = new Collection<int>();
+            this.runningTotalTextColumnIndexCollection = new Collection<int>();
 
             //Initializing running total field indices collection.
-            this.RunningTotalFieldIndicesCollection = new Collection<string>();
+            this.runningTotalFieldIndicesCollection = new Collection<string>();
 
             //Loop through each datasource in the datasource list.
             foreach (XmlNode dataSource in dataSourceList)
             {
                 //Resetting the variables for each iteration.
-                runningTotalTextColumnIndex = 0;
-                runningTotalFieldIndices = string.Empty;
+                int runningTotalTextColumnIndex = 0;
+                string runningTotalFieldIndices = string.Empty;
 
                 //Loop through each datasource child node.
                 foreach (XmlNode node in dataSource.ChildNodes)
@@ -150,12 +143,12 @@ namespace MixERP.Net.WebControls.ReportEngine
                 //under the current node, the variable "runningTotalTextColumnIndex" and "runningTotalFieldIndices" will have
                 //values. If not, an empty string for "runningTotalFieldIndices" and zero for "runningTotalTextColumnIndex" 
                 //will be added to the collection.
-                this.RunningTotalTextColumnIndexCollection.Add(runningTotalTextColumnIndex);
-                this.RunningTotalFieldIndicesCollection.Add(runningTotalFieldIndices);
+                this.runningTotalTextColumnIndexCollection.Add(runningTotalTextColumnIndex);
+                this.runningTotalFieldIndicesCollection.Add(runningTotalFieldIndices);
             }
         }
 
-        private Collection<DataTable> DataTableCollection;
+        private Collection<DataTable> dataTableCollection;
         private void SetDataSources()
         {
             int count = 0;
@@ -164,7 +157,7 @@ namespace MixERP.Net.WebControls.ReportEngine
             XmlNodeList dataSources = XmlHelper.GetNodes(this.reportPath, "//DataSource");
 
             //Initializing data source collection.
-            this.DataTableCollection = new Collection<DataTable>();
+            this.dataTableCollection = new Collection<DataTable>();
 
             //Loop through each datasource in the datasource list.
             foreach (XmlNode datasource in dataSources)
@@ -195,7 +188,7 @@ namespace MixERP.Net.WebControls.ReportEngine
                         using (DataTable table = TableHelper.GetDataTable(sql, parameters))
                         {
                             //Add this datatable to the collection for later binding.
-                            this.DataTableCollection.Add(table);
+                            this.dataTableCollection.Add(table);
                         }
                     }
                 }
@@ -218,7 +211,7 @@ namespace MixERP.Net.WebControls.ReportEngine
         {
             string topSection = XmlHelper.GetNodeText(this.reportPath, "/MixERPReport/TopSection");
             topSection = ReportParser.ParseExpression(topSection);
-            topSection = ReportParser.ParseDataSource(topSection, this.DataTableCollection);
+            topSection = ReportParser.ParseDataSource(topSection, this.dataTableCollection);
             this.topSectionLiteral.Text = topSection;
         }
 
@@ -226,7 +219,7 @@ namespace MixERP.Net.WebControls.ReportEngine
         {
             string bodySection = XmlHelper.GetNodeText(this.reportPath, "/MixERPReport/Body/Content");
             bodySection = ReportParser.ParseExpression(bodySection);
-            bodySection = ReportParser.ParseDataSource(bodySection, this.DataTableCollection);
+            bodySection = ReportParser.ParseDataSource(bodySection, this.dataTableCollection);
             this.bodyContentsLiteral.Text = bodySection;
         }
 
@@ -238,12 +231,13 @@ namespace MixERP.Net.WebControls.ReportEngine
 
             foreach (XmlNode node in gridViewDataSource)
             {
-                if (node.Attributes["Index"] != null)
+                if (node.Attributes != null && node.Attributes["Index"] != null)
                 {
                     indices += node.Attributes["Index"].Value + ",";
                 }
             }
 
+            // ReSharper disable once PossiblyMistakenUseOfParamsMethod
             this.LoadGrid(string.Concat(indices));
         }
 
@@ -270,7 +264,7 @@ namespace MixERP.Net.WebControls.ReportEngine
                         grid.DataBound += this.GridView_DataBound;
                         this.gridPlaceHolder.Controls.Add(grid);
 
-                        grid.DataSource = this.DataTableCollection[index];
+                        grid.DataSource = this.dataTableCollection[index];
                         grid.DataBind();
                     }
                 }
@@ -283,7 +277,7 @@ namespace MixERP.Net.WebControls.ReportEngine
         {
             string bottomSection = XmlHelper.GetNodeText(this.reportPath, "/MixERPReport/BottomSection");
             bottomSection = ReportParser.ParseExpression(bottomSection);
-            bottomSection = ReportParser.ParseDataSource(bottomSection, this.DataTableCollection);
+            bottomSection = ReportParser.ParseDataSource(bottomSection, this.dataTableCollection);
             this.bottomSectionLiteral.Text = bottomSection;
         }
 
@@ -299,31 +293,29 @@ namespace MixERP.Net.WebControls.ReportEngine
                     return;
                 }
 
-                string menuCode = reportNode.Attributes["MenuCode"].Value;
-                string parentMenuCode = reportNode.Attributes["ParentMenuCode"].Value;
-                int level = Conversion.TryCastInteger(reportNode.Attributes["Level"].Value);
-                string menuText = ReportParser.ParseExpression(reportNode.Attributes["MenuText"].Value);
+                if (reportNode.Attributes != null)
+                {
+                    string menuCode = reportNode.Attributes["MenuCode"].Value;
+                    string parentMenuCode = reportNode.Attributes["ParentMenuCode"].Value;
+                    int level = Conversion.TryCastInteger(reportNode.Attributes["Level"].Value);
+                    string menuText = ReportParser.ParseExpression(reportNode.Attributes["MenuText"].Value);
 
-                string path = reportNode.Attributes["Path"].Value;
+                    string path = reportNode.Attributes["Path"].Value;
 
-                ReportInstaller.InstallReport(menuCode, parentMenuCode, level, menuText, path);
+                    ReportInstaller.InstallReport(menuCode, parentMenuCode, level, menuText, path);
+                }
             }
         }
 
 
         private void CleanUp()
         {
-            for (int i = 0; i < this.DataTableCollection.Count - 1; i++)
+            for (int i = 0; i < this.dataTableCollection.Count - 1; i++)
             {
-                DataTable table = this.DataTableCollection[i];
+                DataTable table = this.dataTableCollection[i];
                 if (table != null)
                 {
                     table.Dispose();
-
-                    if (table != null)
-                    {
-                        table = null;
-                    }
                 }
 
             }

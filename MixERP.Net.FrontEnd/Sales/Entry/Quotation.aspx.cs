@@ -6,12 +6,7 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using MixERP.Net.BusinessLayer;
 using MixERP.Net.BusinessLayer.Transactions;
 
@@ -47,7 +42,7 @@ namespace MixERP.Net.FrontEnd.Sales.Entry
 
             Collection<int> tranIdCollection = this.SalesQuotation.GetTranIdCollection();
 
-            long nonGlStockMasterId = NonGLStockTransaction.Add("Sales.Quotation", this.SalesQuotation.GetForm.Date, this.SalesQuotation.GetForm.PartyCode, this.SalesQuotation.GetForm.PriceTypeId, this.SalesQuotation.GetForm.Details, this.SalesQuotation.GetForm.ReferenceNumber, this.SalesQuotation.GetForm.StatementReference, tranIdCollection);
+            long nonGlStockMasterId = NonGlStockTransaction.Add("Sales.Quotation", this.SalesQuotation.GetForm.Date, this.SalesQuotation.GetForm.PartyCode, this.SalesQuotation.GetForm.PriceTypeId, this.SalesQuotation.GetForm.Details, this.SalesQuotation.GetForm.ReferenceNumber, this.SalesQuotation.GetForm.StatementReference, tranIdCollection);
             if (nonGlStockMasterId > 0)
             {
                 this.Response.Redirect("~/Sales/Quotation.aspx?TranId=" + nonGlStockMasterId, true);

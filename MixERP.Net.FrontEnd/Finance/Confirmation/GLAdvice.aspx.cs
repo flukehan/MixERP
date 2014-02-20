@@ -12,7 +12,7 @@ using MixERP.Net.BusinessLayer;
 
 namespace MixERP.Net.FrontEnd.Finance.Confirmation
 {
-    public partial class GLAdvice : MixERPWebReportPage
+    public partial class GlAdvice : MixERPWebReportPage
     {
         protected void Page_Init(object sender, EventArgs e)
         {

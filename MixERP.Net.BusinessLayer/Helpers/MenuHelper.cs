@@ -5,12 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
-using System.Text;
-using System.Data;
+
 using System.Collections.ObjectModel;
 using System.Threading;
 using System.Web.UI;
@@ -45,7 +40,7 @@ namespace MixERP.Net.BusinessLayer.Helpers
 
                         if(childMenus.Count > 0)
                         {
-                            foreach(Menu childMenu in childMenus)
+                            foreach (Menu childMenu in childMenus)
                             {
                                 menu += string.Format(Thread.CurrentThread.CurrentCulture, "<a href='{0}' title='{1}' data-menucode='{2}' class='sub-menu-anchor'>{1}</a>", page.ResolveUrl(childMenu.Url), childMenu.MenuText, childMenu.MenuCode);
                             }

@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Threading;
 using MixERP.Net.BusinessLayer.Core;
 using MixERP.Net.BusinessLayer.Helpers;
@@ -36,7 +37,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         public int PriceTypeId { get; set; }
         public string ReferenceNumber { get; set; }
 
-        private Collection<StockMasterDetailModel> details = new Collection<StockMasterDetailModel>();
+        private readonly Collection<StockMasterDetailModel> details = new Collection<StockMasterDetailModel>();
         public Collection<StockMasterDetailModel> Details
         {
             get
@@ -382,132 +383,138 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                                             {
                                                 using (HiddenField unitIdHidden = this.UpdatePanel1.FindControl("UnitIdHidden") as HiddenField)
                                                 {
-                                                    string itemCode = itemCodeTextBox.Text;
-                                                    string itemName = itemDropDownList.SelectedItem.Text;
-                                                    int quantity = Conversion.TryCastInteger(quantityTextBox.Text);
-                                                    string unit = unitNameHidden.Value;
-                                                    int unitId = Conversion.TryCastInteger(unitIdHidden.Value);
-                                                    decimal itemInStock = 0;
-                                                    decimal price = Conversion.TryCastDecimal(priceTextBox.Text);
-                                                    decimal discount = Conversion.TryCastDecimal(discountTextBox.Text);
-                                                    decimal taxRate = Conversion.TryCastDecimal(taxRateTextBox.Text);
-                                                    decimal tax = Conversion.TryCastDecimal(taxTextBox.Text);
-                                                    int storeId = 0;
+                                                    if (itemCodeTextBox != null)
+                                                    {
+                                                        string itemCode = itemCodeTextBox.Text;
 
-                                                    if (this.StoreDropDownList.SelectedItem != null)
-                                                    {
-                                                        storeId = Conversion.TryCastInteger(this.StoreDropDownList.SelectedItem.Value);
-                                                    }
-
-                                                    #region Validation
-
-                                                    if (string.IsNullOrWhiteSpace(itemCode))
-                                                    {
-                                                        FormHelper.MakeDirty(itemCodeTextBox);
-                                                        return;
-                                                    }
-                                                    else
-                                                    {
-                                                        FormHelper.RemoveDirty(itemCodeTextBox);
-                                                    }
-
-                                                    if (!Items.ItemExistsByCode(itemCode))
-                                                    {
-                                                        FormHelper.MakeDirty(itemCodeTextBox);
-                                                        return;
-                                                    }
-                                                    else
-                                                    {
-                                                        FormHelper.RemoveDirty(itemCodeTextBox);
-                                                    }
-
-                                                    if (quantity < 1)
-                                                    {
-                                                        FormHelper.MakeDirty(quantityTextBox);
-                                                        return;
-                                                    }
-                                                    else
-                                                    {
-                                                        FormHelper.RemoveDirty(quantityTextBox);
-                                                    }
-
-                                                    if (!Units.UnitExistsByName(unit))
-                                                    {
-                                                        FormHelper.MakeDirty(unitDropDownList);
-                                                        return;
-                                                    }
-                                                    else
-                                                    {
-                                                        FormHelper.RemoveDirty(unitDropDownList);
-                                                    }
-
-                                                    if (price <= 0)
-                                                    {
-                                                        FormHelper.MakeDirty(priceTextBox);
-                                                        return;
-                                                    }
-                                                    else
-                                                    {
-                                                        FormHelper.RemoveDirty(priceTextBox);
-                                                    }
-
-                                                    if (discount < 0)
-                                                    {
-                                                        FormHelper.MakeDirty(discountTextBox);
-                                                        return;
-                                                    }
-                                                    else
-                                                    {
-                                                        if (discount > (price * quantity))
+                                                        if (itemDropDownList != null)
                                                         {
-                                                            FormHelper.MakeDirty(discountTextBox);
-                                                            return;
-                                                        }
-                                                        else
-                                                        {
-                                                            FormHelper.RemoveDirty(discountTextBox);
-                                                        }
-                                                    }
-
-                                                    if (tax < 0)
-                                                    {
-                                                        FormHelper.MakeDirty(taxTextBox);
-                                                        return;
-                                                    }
-                                                    else
-                                                    {
-                                                        FormHelper.RemoveDirty(taxTextBox);
-                                                    }
-
-                                                    if (this.VerifyStock)
-                                                    {
-                                                        if (this.Book == TranBook.Sales)
-                                                        {
-                                                            if (Items.IsStockItem(itemCode))
+                                                            string itemName = itemDropDownList.SelectedItem.Text;
+                                                            if (quantityTextBox != null)
                                                             {
-                                                                itemInStock = Items.CountItemInStock(itemCode, unitId, storeId);
-                                                                if (quantity > itemInStock)
+                                                                int quantity = Conversion.TryCastInteger(quantityTextBox.Text);
+                                                                if (unitNameHidden != null)
                                                                 {
-                                                                    FormHelper.MakeDirty(quantityTextBox);
-                                                                    this.ErrorLabel.Text = String.Format(Thread.CurrentThread.CurrentCulture, Warnings.InsufficientStockWarning, itemInStock.ToString("G29", Thread.CurrentThread.CurrentCulture), unitNameHidden.Value, itemDropDownList.SelectedItem.Text);
-                                                                    return;
+                                                                    string unit = unitNameHidden.Value;
+
+                                                                    if (unitIdHidden != null)
+                                                                    {
+                                                                        int unitId = Conversion.TryCastInteger(unitIdHidden.Value);
+                                                                        if (priceTextBox != null)
+                                                                        {
+                                                                            decimal price = Conversion.TryCastDecimal(priceTextBox.Text);
+                                                                            if (discountTextBox != null)
+                                                                            {
+                                                                                decimal discount = Conversion.TryCastDecimal(discountTextBox.Text);
+                                                                                if (taxRateTextBox != null)
+                                                                                {
+                                                                                    decimal taxRate = Conversion.TryCastDecimal(taxRateTextBox.Text);
+                                                                                    if (taxTextBox != null)
+                                                                                    {
+                                                                                        decimal tax = Conversion.TryCastDecimal(taxTextBox.Text);
+                                                                                        int storeId = 0;
+
+                                                                                        if (this.StoreDropDownList.SelectedItem != null)
+                                                                                        {
+                                                                                            storeId = Conversion.TryCastInteger(this.StoreDropDownList.SelectedItem.Value);
+                                                                                        }
+
+                                                                                        #region Validation
+
+                                                                                        if (string.IsNullOrWhiteSpace(itemCode))
+                                                                                        {
+                                                                                            FormHelper.MakeDirty(itemCodeTextBox);
+                                                                                            return;
+                                                                                        }
+
+                                                                                        FormHelper.RemoveDirty(itemCodeTextBox);
+
+                                                                                        if (!Items.ItemExistsByCode(itemCode))
+                                                                                        {
+                                                                                            FormHelper.MakeDirty(itemCodeTextBox);
+                                                                                            return;
+                                                                                        }
+                                                                                        FormHelper.RemoveDirty(itemCodeTextBox);
+
+                                                                                        if (quantity < 1)
+                                                                                        {
+                                                                                            FormHelper.MakeDirty(quantityTextBox);
+                                                                                            return;
+                                                                                        }
+                                                                                        FormHelper.RemoveDirty(quantityTextBox);
+
+                                                                                        if (!Units.UnitExistsByName(unit))
+                                                                                        {
+                                                                                            FormHelper.MakeDirty(unitDropDownList);
+                                                                                            return;
+                                                                                        }
+                                                                                        FormHelper.RemoveDirty(unitDropDownList);
+
+                                                                                        if (price <= 0)
+                                                                                        {
+                                                                                            FormHelper.MakeDirty(priceTextBox);
+                                                                                            return;
+                                                                                        }
+                                                                                        FormHelper.RemoveDirty(priceTextBox);
+
+                                                                                        if (discount < 0)
+                                                                                        {
+                                                                                            FormHelper.MakeDirty(discountTextBox);
+                                                                                            return;
+                                                                                        }
+                                                                                        if (discount > (price * quantity))
+                                                                                        {
+                                                                                            FormHelper.MakeDirty(discountTextBox);
+                                                                                            return;
+                                                                                        }
+                                                                                        FormHelper.RemoveDirty(discountTextBox);
+
+                                                                                        if (tax < 0)
+                                                                                        {
+                                                                                            FormHelper.MakeDirty(taxTextBox);
+                                                                                            return;
+                                                                                        }
+                                                                                        FormHelper.RemoveDirty(taxTextBox);
+
+                                                                                        if (this.VerifyStock)
+                                                                                        {
+                                                                                            if (this.Book == TranBook.Sales)
+                                                                                            {
+                                                                                                if (Items.IsStockItem(itemCode))
+                                                                                                {
+                                                                                                    decimal itemInStock = Items.CountItemInStock(itemCode, unitId, storeId);
+                                                                                                    if (quantity > itemInStock)
+                                                                                                    {
+                                                                                                        FormHelper.MakeDirty(quantityTextBox);
+                                                                                                        this.ErrorLabel.Text = String.Format(Thread.CurrentThread.CurrentCulture, Warnings.InsufficientStockWarning, itemInStock.ToString("G29", Thread.CurrentThread.CurrentCulture), unitNameHidden.Value, itemDropDownList.SelectedItem.Text);
+                                                                                                        return;
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                        #endregion
+
+                                                                                        this.AddRowToTable(itemCode, itemName, quantity, unit, price, discount, taxRate, tax);
+
+                                                                                        this.BindGridView();
+                                                                                        itemCodeTextBox.Text = "";
+
+                                                                                        quantityTextBox.Text = (1).ToString(CultureInfo.InvariantCulture);
+                                                                                        priceTextBox.Text = "";
+                                                                                        discountTextBox.Text = "";
+                                                                                        taxTextBox.Text = "";
+
+                                                                                        itemCodeTextBox.Focus();
+                                                                                        this.LoadFooter();
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
                                                                 }
                                                             }
                                                         }
                                                     }
-                                                    #endregion
-
-                                                    this.AddRowToTable(itemCode, itemName, quantity, unit, price, discount, taxRate, tax);
-
-                                                    this.BindGridView();
-                                                    itemCodeTextBox.Text = "";
-                                                    quantityTextBox.Text = (1).ToString(CultureInfo.InvariantCulture);
-                                                    priceTextBox.Text = "";
-                                                    discountTextBox.Text = "";
-                                                    taxTextBox.Text = "";
-
-                                                    itemCodeTextBox.Focus();
-                                                    this.LoadFooter();
                                                 }
                                             }
                                         }
@@ -542,7 +549,11 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 if (deleteImageButton != null)
                 {
                     //Tell the script manager that this button should fire an asynchronous post-back event.
-                    ScriptManager.GetCurrent(this.Page).RegisterAsyncPostBackControl(deleteImageButton);
+                    var scriptManager = ScriptManager.GetCurrent(this.Page);
+                    if (scriptManager != null)
+                    {
+                        scriptManager.RegisterAsyncPostBackControl(deleteImageButton);
+                    }
                 }
             }
         }
@@ -561,7 +572,11 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             this.AddUnitNameHidden();
             this.AddUnitIdHidden();
             this.LoadFooter();
-            ScriptManager.GetCurrent(this.Page).RegisterAsyncPostBackControl(this.ProductGridView);
+            var scriptManager = ScriptManager.GetCurrent(this.Page);
+            if (scriptManager != null)
+            {
+                scriptManager.RegisterAsyncPostBackControl(this.ProductGridView);
+            }
         }
 
         private void AddUnitNameHidden()
@@ -644,7 +659,13 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 itemDropDownList.ToolTip = Titles.CtrlI;
                 itemDropDownList.Width = 300;
 
-                ScriptManager.GetCurrent(this.Page).RegisterAsyncPostBackControl(itemDropDownList);
+                var scriptManager = ScriptManager.GetCurrent(this.Page);
+
+                if (scriptManager != null)
+                {
+                    scriptManager.RegisterAsyncPostBackControl(itemDropDownList);
+                }
+
                 AddControlToGridViewRow(row, itemDropDownList, index);
                 this.LoadItems();
             }
@@ -665,7 +686,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 quantityTextBox.CssClass = "right";
                 quantityTextBox.ToolTip = Titles.CtrlQ;
                 quantityTextBox.Width = 50;
-                quantityTextBox.Text = (1).ToString(CultureInfo.InvariantCulture); ;
+                quantityTextBox.Text = (1).ToString(CultureInfo.InvariantCulture);
 
                 AddControlToGridViewRow(row, quantityTextBox, index);
             }
@@ -686,7 +707,13 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 unitDropDownList.Attributes.Add("onchange", "$('#UnitNameHidden').val($(this).children('option').filter(':selected').text());$('#UnitIdHidden').val($(this).children('option').filter(':selected').val());");
                 unitDropDownList.ToolTip = Titles.CtrlU;
                 unitDropDownList.Width = 70;
-                ScriptManager.GetCurrent(this.Page).RegisterAsyncPostBackControl(unitDropDownList);
+                var scriptManager = ScriptManager.GetCurrent(this.Page);
+
+                if (scriptManager != null)
+                {
+                    scriptManager.RegisterAsyncPostBackControl(unitDropDownList);
+                }
+
                 AddControlToGridViewRow(row, unitDropDownList, index);
             }
         }
@@ -844,7 +871,13 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 addButton.Text = Titles.Add;
                 addButton.ToolTip = Titles.CtrlReturn;
 
-                ScriptManager.GetCurrent(this.Page).RegisterAsyncPostBackControl(addButton);
+                var scriptManager = ScriptManager.GetCurrent(this.Page);
+
+                if (scriptManager != null)
+                {
+                    scriptManager.RegisterAsyncPostBackControl(addButton);
+                }
+
                 AddControlToGridViewRow(row, addButton, index);
             }
         }
@@ -869,9 +902,8 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 return;
             }
 
-            this.PartyDropDownList.SelectedValue = this.model.PartyCode.ToString();
-            this.PartyCodeTextBox.Text = this.model.PartyCode.ToString();
-
+            this.PartyDropDownList.SelectedValue = this.model.PartyCode.ToString(LocalizationHelper.GetCurrentCulture());
+            this.PartyCodeTextBox.Text = this.model.PartyCode.ToString(LocalizationHelper.GetCurrentCulture());
 
             if (this.PriceTypeDropDownList.SelectedItem != null)
             {
@@ -1123,7 +1155,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 {
                     if (c.ID.Equals("UnitDropDownList"))
                     {
-                        this.UnitDropDownList_SelectedIndexChanged(c, e);
+                        this.UnitDropDownList_SelectedIndexChanged();
                     }
                 }
             }
@@ -1284,7 +1316,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             return productCollection;
         }
 
-        private static Collection<ProductDetailsModel> SummateProducts(Collection<ProductDetailsModel> productCollection)
+        private static Collection<ProductDetailsModel> SummateProducts(IEnumerable<ProductDetailsModel> productCollection)
         {
             //Create a new collection of products.
             Collection<ProductDetailsModel> collection = new Collection<ProductDetailsModel>();
@@ -1297,7 +1329,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
                 if (collection.Count > 0)
                 {
-                    productInCollection = collection.Where(x => x.ItemCode == product.ItemCode && x.ItemName == product.ItemName && x.Unit == product.Unit && x.Price == product.Price && x.Rate == product.Rate).FirstOrDefault();
+                    productInCollection = collection.FirstOrDefault(x => x.ItemCode == product.ItemCode && x.ItemName == product.ItemName && x.Unit == product.Unit && x.Price == product.Price && x.Rate == product.Rate);
                 }
 
                 if (productInCollection == null)
@@ -1318,12 +1350,15 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             return collection;
         }
 
-        void UnitDropDownList_SelectedIndexChanged(object sender, EventArgs e)
+        void UnitDropDownList_SelectedIndexChanged()
         {
             this.DisplayPrice();
             using (TextBox priceTextBox = this.FindFooterControl("PriceTextBox") as TextBox)
             {
-                priceTextBox.Focus();
+                if (priceTextBox != null)
+                {
+                    priceTextBox.Focus();
+                }
             }
         }
 
@@ -1345,37 +1380,63 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                                     {
                                         using (HiddenField unitIdHidden = this.UpdatePanel1.FindControl("UnitIdHidden") as HiddenField)
                                         {
-                                            string itemCode = itemDropDownList.SelectedItem.Value;
-                                            string party = string.Empty;
-
-                                            int unitId = Conversion.TryCastInteger(unitIdHidden.Value);
-
-                                            decimal price = 0;
-
-                                            if (this.Book == TranBook.Sales)
+                                            if (itemDropDownList != null)
                                             {
-                                                party = this.PartyDropDownList.SelectedItem.Value;
-                                                short priceTypeId = Conversion.TryCastShort(this.PriceTypeDropDownList.SelectedItem.Value);
-                                                price = Items.GetItemSellingPrice(itemCode, party, priceTypeId, unitId);
+                                                string itemCode = itemDropDownList.SelectedItem.Value;
+
+                                                if (unitIdHidden != null)
+                                                {
+                                                    int unitId = Conversion.TryCastInteger(unitIdHidden.Value);
+
+                                                    decimal price;
+
+                                                    string party;
+                                                    if (this.Book == TranBook.Sales)
+                                                    {
+                                                        party = this.PartyDropDownList.SelectedItem.Value;
+                                                        short priceTypeId = Conversion.TryCastShort(this.PriceTypeDropDownList.SelectedItem.Value);
+                                                        price = Items.GetItemSellingPrice(itemCode, party, priceTypeId, unitId);
+                                                    }
+                                                    else
+                                                    {
+                                                        party = this.PartyDropDownList.SelectedItem.Value;
+                                                        price = Items.GetItemCostPrice(itemCode, party, unitId);
+                                                    }
+
+                                                    if (discountTextBox != null)
+                                                    {
+                                                        decimal discount = Conversion.TryCastDecimal(discountTextBox.Text);
+                                                        decimal taxRate = Items.GetTaxRate(itemCode);
+
+
+                                                        if (priceTextBox != null)
+                                                        {
+                                                            priceTextBox.Text = price.ToString(Thread.CurrentThread.CurrentCulture);
+                                                        }
+
+                                                        if (taxRateTextBox != null)
+                                                        {
+                                                            taxRateTextBox.Text = taxRate.ToString(Thread.CurrentThread.CurrentCulture);
+                                                        }
+
+                                                        if (taxTextBox != null)
+                                                        {
+                                                            taxTextBox.Text = (((price - discount) * taxRate) / 100.00m).ToString("#.##", Thread.CurrentThread.CurrentCulture);
+                                                        }
+                                                    }
+
+                                                    if (quantityTextBox != null)
+                                                    {
+                                                        {
+                                                            decimal amount = price * Conversion.TryCastInteger(quantityTextBox.Text);
+                                                            if (amountTextBox != null)
+                                                            {
+                                                                amountTextBox.Text = amount.ToString(Thread.CurrentThread.CurrentCulture);
+                                                            }
+                                                        }
+                                                    }
+                                                }
                                             }
-                                            else
-                                            {
-                                                party = this.PartyDropDownList.SelectedItem.Value;
-                                                price = Items.GetItemCostPrice(itemCode, party, unitId);
-                                            }
-
-                                            decimal discount = Conversion.TryCastDecimal(discountTextBox.Text);
-                                            decimal taxRate = Items.GetTaxRate(itemCode);
-
-
-                                            priceTextBox.Text = price.ToString(Thread.CurrentThread.CurrentCulture);
-
-                                            taxRateTextBox.Text = taxRate.ToString(Thread.CurrentThread.CurrentCulture);
-                                            taxTextBox.Text = (((price - discount) * taxRate) / 100.00m).ToString("#.##", Thread.CurrentThread.CurrentCulture);
-
-                                            decimal amount = price * Conversion.TryCastInteger(quantityTextBox.Text);
-
-                                            amountTextBox.Text = amount.ToString(Thread.CurrentThread.CurrentCulture);
                                         }
                                     }
                                 }
@@ -1403,35 +1464,25 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 return true;
             }
 
-            if (this.ProductGridView.Rows == null)
-            {
-                return true;
-            }
-
             if (this.ProductGridView.Rows.Count.Equals(0))
             {
                 return true;
             }
 
-            string itemCode = string.Empty;
-            string itemName = string.Empty;
-            int quantity = 0;
-            string unitName = string.Empty;
             int storeId = Conversion.TryCastInteger(this.StoreDropDownList.SelectedItem.Value);
-            decimal itemInStock = 0;
 
             foreach (GridViewRow row in this.ProductGridView.Rows)
             {
                 if (row.RowType == DataControlRowType.DataRow)
                 {
-                    itemCode = row.Cells[0].Text;
-                    itemName = row.Cells[1].Text;
-                    quantity = Conversion.TryCastInteger(row.Cells[2].Text);
-                    unitName = row.Cells[3].Text;
+                    string itemCode = row.Cells[0].Text;
+                    string itemName = row.Cells[1].Text;
+                    int quantity = Conversion.TryCastInteger(row.Cells[2].Text);
+                    string unitName = row.Cells[3].Text;
 
                     if (Items.IsStockItem(itemCode))
                     {
-                        itemInStock = Items.CountItemInStock(itemCode, unitName, storeId);
+                        decimal itemInStock = Items.CountItemInStock(itemCode, unitName, storeId);
 
                         if (quantity > itemInStock)
                         {
@@ -1439,7 +1490,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                             return false;
                         }
                     }
-
                 }
             }
 
@@ -1486,8 +1536,13 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             if (valueDate.Equals(DateTime.MinValue))
             {
                 this.ErrorLabelTop.Text = Warnings.InvalidDate;
-                this.DateTextBox.CssClass = "dirty";
-                this.DateTextBox.Focus();
+                var dateTextBox = this.DateTextBox;
+
+                if (dateTextBox != null)
+                {
+                    dateTextBox.CssClass = "dirty";
+                    dateTextBox.Focus();
+                }
                 return;
             }
 

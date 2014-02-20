@@ -9,9 +9,6 @@ http://mozilla.org/MPL/2.0/.
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Configuration;
 using MixERP.Net.Common;
 using MixERP.Net.DBFactory;
@@ -46,7 +43,7 @@ namespace MixERP.Net.Tests.PgUnitTest.Helpers
 
             using (NpgsqlCommand command = new NpgsqlCommand(script))
             {
-                DBOperations.ExecuteNonQuery(command);
+                DbOperations.ExecuteNonQuery(command);
             }
         }
 
@@ -57,18 +54,28 @@ namespace MixERP.Net.Tests.PgUnitTest.Helpers
 
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                DBOperations.ExecuteNonQuery(command);
+                DbOperations.ExecuteNonQuery(command);
             }
         }
 
         private static string GetScript()
         {
-            string root = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.FullName;
-            string unitTestDirectory = ConfigurationManager.AppSettings["UnitTestDirectory"];
-            string directory = Path.Combine(root, unitTestDirectory);
+            var directoryInfo = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Parent;
 
-            string sql = CombineScripts(directory);
-            return sql;
+            if (directoryInfo != null)
+            {
+                if (directoryInfo.Parent != null)
+                {
+                    string root = directoryInfo.Parent.FullName;
+                    string unitTestDirectory = ConfigurationManager.AppSettings["UnitTestDirectory"];
+                    string directory = Path.Combine(root, unitTestDirectory);
+
+                    string sql = CombineScripts(directory);
+                    return sql;
+                }
+            }
+
+            return string.Empty;
         }
 
         private static string CombineScripts(string directory)

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/ContentMaster.Master" AutoEventWireup="true" CodeBehind="GLAccess.aspx.cs" Inherits="MixERP.Net.FrontEnd.Setup.Policy.GLAccess" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/ContentMaster.Master" AutoEventWireup="true" CodeBehind="GLAccess.aspx.cs" Inherits="MixERP.Net.FrontEnd.Setup.Policy.GlAccess" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceholder" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceholder" runat="server">

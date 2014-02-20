@@ -212,6 +212,8 @@ shortcut = {
 
 		if(ele.detachEvent) ele.detachEvent('on'+type, callback);
 		else if(ele.removeEventListener) ele.removeEventListener(type, callback, false);
-		else ele['on'+type] = false;
+		else {
+		    ele['on'+type] = false;
+		}
 	}
 }

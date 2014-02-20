@@ -6,11 +6,6 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using MixERP.Net.BusinessLayer;
 using Resources;
 
@@ -25,7 +20,7 @@ namespace MixERP.Net.FrontEnd.Purchase
 
         protected void Purchase_SaveButtonClick(object sender, EventArgs e)
         {
-            bool isCredit = this.DirectPurchaseControl.GetForm.TransactionType.Equals(Titles.Credit); ;
+            bool isCredit = this.DirectPurchaseControl.GetForm.TransactionType.Equals(Titles.Credit);
 
             long transactionMasterId = BusinessLayer.Transactions.DirectPurchase.Add(this.DirectPurchaseControl.GetForm.Date, this.DirectPurchaseControl.GetForm.StoreId, isCredit, this.DirectPurchaseControl.GetForm.PartyCode, this.DirectPurchaseControl.GetForm.Details, this.DirectPurchaseControl.GetForm.CashRepositoryId, this.DirectPurchaseControl.GetForm.CostCenterId, this.DirectPurchaseControl.GetForm.ReferenceNumber, this.DirectPurchaseControl.GetForm.StatementReference);
             if(transactionMasterId > 0)

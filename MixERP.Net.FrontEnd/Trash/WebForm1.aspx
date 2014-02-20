@@ -10,11 +10,11 @@
         <script src="//code.jquery.com/jquery-1.9.1.js" type="text/javascript"></script>
         <script src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
         <link href="<%=this.ResolveUrl("~/Scripts/jquery-ui/css/custom-theme/jquery-ui-1.10.3.custom.min.css") %>" rel="stylesheet" type="text/css" />
-        <script src="<%=this.ResolveUrl("~/Scripts/jqueryNumber/jquery.number.min.js") %>"></script>
+        <script src="<%=this.ResolveUrl("~/Scripts/jqueryNumber/jquery.number.js") %>"></script>
         <script src="<%=this.ResolveUrl("~/Scripts/shortcut.js") %>"></script>
-        <link href="../Themes/purple/main.css" rel="stylesheet" />
+        <link href="../Themes/purple/stylesheets/main.css" rel="stylesheet" />
     </asp:PlaceHolder>
-    <title></title>
+    <title>Scrud Test</title>
 </head>
 <body>
     <script type="text/javascript">
@@ -25,7 +25,7 @@
         var decimalPlaces = "<%= LocalizationHelper.GetDecimalPlaces() %>";
     </script>
 
-    <script src="<%=this.ResolveUrl("~/Scripts/mixerp.js") %>"></script>
+    <script src="<%=this.ResolveUrl("~/Scripts/mixerp/mixerp.js") %>"></script>
 
     <form id="form1" runat="server">
         <asp:PlaceHolder ID="ScrudPlaceholder" runat="server" />

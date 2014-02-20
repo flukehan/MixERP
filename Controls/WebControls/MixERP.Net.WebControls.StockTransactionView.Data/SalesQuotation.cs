@@ -66,7 +66,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data
                 //Iterate through the IDs and add PostgreSQL parameters.
                 for (int i = 0; i < ids.Count; i++)
                 {
-                    command.Parameters.Add("@Id" + Conversion.TryCastString(i), ids[i]);
+                    command.Parameters.AddWithValue("@Id" + Conversion.TryCastString(i), ids[i]);
                 }
 
                 return command;

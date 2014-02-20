@@ -15,26 +15,12 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
     public class CommandPanel : IDisposable
     {
         private bool disposed;
-        
-        private Button editButton;        
-        public Button EditButton 
-        {
-            get
-            {
-                return this.editButton;
-            }
-        }
+
+        public Button EditButton { get; private set; }
 
         public event EventHandler EditButtonClick;
 
-        private Button deleteButton;
-        public Button DeleteButton
-        {
-            get
-            {
-                return this.deleteButton;
-            }
-        }
+        public Button DeleteButton { get; private set; }
 
         public event EventHandler DeleteButtonClick;
 
@@ -58,32 +44,22 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
                         this.commandPanel = null;
                     }
 
-                    if(this.editButton !=null)
+                    if (this.EditButton != null)
                     {
-                        this.editButton.Click -= new EventHandler(this.OnEditButtonClick);
-                        
-                        if (this.EditButtonClick != null)
-                        {
-                            this.EditButtonClick = null;
-                        }
-
-                        this.editButton.Dispose();
-                        this.editButton = null;
+                        this.EditButton.Click -= this.OnEditButtonClick;
+                        this.EditButtonClick = null;
+                        this.EditButton.Dispose();
+                        this.EditButton = null;
                     }
 
 
-                    if (this.deleteButton != null)
+                    if (this.DeleteButton != null)
                     {
-                        this.deleteButton.Click -= new EventHandler(this.OnDeleteButtonClick);
-                        
-                        if (this.DeleteButtonClick != null)
-                        {
-                            this.DeleteButtonClick = null;
-                        }
-
-                        this.deleteButton.Dispose();
-                        this.deleteButton = null;
-                    }                    
+                        this.DeleteButton.Click -= this.OnDeleteButtonClick;
+                        this.DeleteButtonClick = null;
+                        this.DeleteButton.Dispose();
+                        this.DeleteButton = null;
+                    }
                 }
 
                 this.disposed = true;
@@ -91,7 +67,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
         }
         public Panel GetCommandPanel()
         {
-            this.commandPanel = new Panel {CssClass = "vpad16"};
+            this.commandPanel = new Panel { CssClass = "vpad16" };
 
             this.AddShowCompactButton(this.commandPanel);
             this.AddShowAllButton(this.commandPanel);
@@ -124,9 +100,9 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
 
         private void AddEditButton(Panel p)
         {
-            this.editButton = this.GetButton("CTRL + E", "return(confirmAction());", ScrudResource.EditSelected);
-            this.editButton.Click += new EventHandler(this.OnEditButtonClick);
-            p.Controls.Add(this.editButton);
+            this.EditButton = this.GetButton("CTRL + E", "return(confirmAction());", ScrudResource.EditSelected);
+            this.EditButton.Click += this.OnEditButtonClick;
+            p.Controls.Add(this.EditButton);
         }
 
         private void OnEditButtonClick(object sender, EventArgs e)
@@ -139,9 +115,9 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
 
         private void AddDeleteButton(Panel p)
         {
-            this.deleteButton = this.GetButton("CTRL + D", "return(confirmAction());", ScrudResource.DeleteSelected);
-            this.deleteButton.Click += new EventHandler(this.OnDeleteButtonClick);
-            p.Controls.Add(this.deleteButton);
+            this.DeleteButton = this.GetButton("CTRL + D", "return(confirmAction());", ScrudResource.DeleteSelected);
+            this.DeleteButton.Click += this.OnDeleteButtonClick;
+            p.Controls.Add(this.DeleteButton);
         }
 
         private void OnDeleteButtonClick(object sender, EventArgs e)

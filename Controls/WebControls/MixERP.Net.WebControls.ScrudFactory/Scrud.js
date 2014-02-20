@@ -149,7 +149,7 @@ function updateTableHeaders() {
         }
         else {
             floatingHeaderRow.css("visibility", "hidden");
-            floatingHeaderRow.css("top", "0px");
+            floatingHeaderRow.css("top", "0");
         }
     });
 };
@@ -164,7 +164,7 @@ $(document).ready(function () {
 
         clonedHeaderRow.addClass("tableFloatingHeader");
         clonedHeaderRow.css("position", "absolute");
-        clonedHeaderRow.css("top", "0px");
+        clonedHeaderRow.css("top", "0");
         clonedHeaderRow.css("left", $(this).css("margin-left"));
         clonedHeaderRow.css("visibility", "hidden");
 

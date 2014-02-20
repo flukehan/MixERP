@@ -10,11 +10,11 @@
                     <br />
         Last Login IP : 192.168.0.200
                 <br />
-        Last Login On : <%=DateTime.Now.ToString() %>
+        Last Login On : <%=DateTime.Now.ToString(MixERP.Net.Common.Helpers.LocalizationHelper.GetCurrentCulture()) %>
         <br />
         Current Login IP : 192.168.0.200
                 <br />
-        Current Login On: <%=DateTime.Now.ToString() %>
+        Current Login On: <%=DateTime.Now.ToString(MixERP.Net.Common.Helpers.LocalizationHelper.GetCurrentCulture()) %>
         <br />
         Role : ADM (Administrators)
                     <br />

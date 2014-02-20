@@ -7,11 +7,7 @@ http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MixERP.Net.Common.Models.Transactions;
 
 namespace MixERP.Net.WebControls.StockTransactionView.Data.Models
@@ -24,7 +20,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data.Models
         public string ReferenceNumber { get; set; }
         public int AgentId { get; set; }
 
-        private Collection<ProductDetailsModel> view = new Collection<ProductDetailsModel>();
+        private readonly Collection<ProductDetailsModel> view = new Collection<ProductDetailsModel>();
         public Collection<ProductDetailsModel> View
         {
             get
@@ -43,7 +39,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data.Models
         public TranBook Book { get; set; }
         public SubTranBook SubBook { get; set; }
 
-        private Collection<int> transactionIdCollection = new Collection<int>();
+        private readonly Collection<int> transactionIdCollection = new Collection<int>();
         public Collection<int> TransactionIdCollection
         {
             get

@@ -8,8 +8,6 @@ http://mozilla.org/MPL/2.0/.
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using MixERP.Net.BusinessLayer;
@@ -23,22 +21,84 @@ namespace MixERP.Net.FrontEnd.Dashboard
         protected void Page_Load(object sender, EventArgs e)
         {
             //Todo:Store this in database.
-            Collection<WidgetModel> models = new Collection<WidgetModel>();
-
-            models.Add(new WidgetModel { RowNumber = 1, ColumnNumber = 1, SizeX = 4, SizeY=2, WidgetSource = "~/UserControls/Widgets/SalesByOfficeWidget.ascx" });
-            models.Add(new WidgetModel { RowNumber = 1, ColumnNumber = 2, SizeX = 4, SizeY = 2, WidgetSource = "~/UserControls/Widgets/CurrentOfficeSalesByMonthWidget.ascx" });
-            models.Add(new WidgetModel { RowNumber = 2, ColumnNumber = 4, SizeX = 2, SizeY = 2, WidgetSource = "~/UserControls/Widgets/WorkflowWidget.ascx" });
-            models.Add(new WidgetModel { RowNumber = 2, ColumnNumber = 1, SizeX = 2, SizeY = 2, WidgetSource = "~/UserControls/Widgets/OfficeInformationWidget.ascx" });
-            models.Add(new WidgetModel { RowNumber = 2, ColumnNumber = 3, SizeX = 2, SizeY = 2, WidgetSource = "~/UserControls/Widgets/AlertsWidget.ascx" });
-            models.Add(new WidgetModel { RowNumber = 2, ColumnNumber = 2, SizeX = 2, SizeY = 2, WidgetSource = "~/UserControls/Widgets/LinksWidget.ascx" });
-            models.Add(new WidgetModel { RowNumber = 3, ColumnNumber = 1, SizeX = 4, SizeY = 2, WidgetSource = "~/UserControls/Widgets/TopSellingProductOfAllTimeWidget.ascx" });
-            models.Add(new WidgetModel { RowNumber = 3, ColumnNumber = 2, SizeX = 4, SizeY = 2, WidgetSource = "~/UserControls/Widgets/TopSellingProductOfAllTimeCurrentWidget.ascx" });
+            Collection<WidgetModel> models = new Collection<WidgetModel>
+            {
+                new WidgetModel
+                {
+                    RowNumber = 1,
+                    ColumnNumber = 1,
+                    SizeX = 4,
+                    SizeY = 2,
+                    WidgetSource = "~/UserControls/Widgets/SalesByOfficeWidget.ascx"
+                },
+                new WidgetModel
+                {
+                    RowNumber = 1,
+                    ColumnNumber = 2,
+                    SizeX = 4,
+                    SizeY = 2,
+                    WidgetSource = "~/UserControls/Widgets/CurrentOfficeSalesByMonthWidget.ascx"
+                },
+                new WidgetModel
+                {
+                    RowNumber = 2,
+                    ColumnNumber = 4,
+                    SizeX = 2,
+                    SizeY = 2,
+                    WidgetSource = "~/UserControls/Widgets/WorkflowWidget.ascx"
+                },
+                new WidgetModel
+                {
+                    RowNumber = 2,
+                    ColumnNumber = 1,
+                    SizeX = 2,
+                    SizeY = 2,
+                    WidgetSource = "~/UserControls/Widgets/OfficeInformationWidget.ascx"
+                },
+                new WidgetModel
+                {
+                    RowNumber = 2,
+                    ColumnNumber = 3,
+                    SizeX = 2,
+                    SizeY = 2,
+                    WidgetSource = "~/UserControls/Widgets/AlertsWidget.ascx"
+                },
+                new WidgetModel
+                {
+                    RowNumber = 2,
+                    ColumnNumber = 2,
+                    SizeX = 2,
+                    SizeY = 2,
+                    WidgetSource = "~/UserControls/Widgets/LinksWidget.ascx"
+                },
+                new WidgetModel
+                {
+                    RowNumber = 3,
+                    ColumnNumber = 1,
+                    SizeX = 4,
+                    SizeY = 2,
+                    WidgetSource = "~/UserControls/Widgets/TopSellingProductOfAllTimeWidget.ascx"
+                },
+                new WidgetModel
+                {
+                    RowNumber = 3,
+                    ColumnNumber = 2,
+                    SizeX = 4,
+                    SizeY = 2,
+                    WidgetSource = "~/UserControls/Widgets/TopSellingProductOfAllTimeCurrentWidget.ascx"
+                }
+            };
 
             this.LoadWidgets(models, this.WidgetPlaceholder);
         }
 
-        private void LoadWidgets(Collection<WidgetModel> widgetModels, PlaceHolder placeholder)
+        private void LoadWidgets(IEnumerable<WidgetModel> widgetModels, PlaceHolder placeholder)
         {
+            if (placeholder == null)
+            {
+                return;
+            }
+
             using (HtmlGenericControl div = new HtmlGenericControl())
             {
                 div.TagName = "div";
@@ -62,8 +122,10 @@ namespace MixERP.Net.FrontEnd.Dashboard
 
                             using (MixERPWidget widget = this.LoadControl(widgetModel.WidgetSource) as MixERPWidget)
                             {
-
-                                li.Controls.Add(widget);
+                                if (widget != null)
+                                {
+                                    li.Controls.Add(widget);                                    
+                                }
                             }
 
                             ul.Controls.Add(li);

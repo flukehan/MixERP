@@ -32,10 +32,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
             }
             finally
             {
-                if (stream != null)
-                {
-                    stream = null;
-                }
+                stream.Close();
             }
 
         }

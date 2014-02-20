@@ -133,14 +133,14 @@
     <value>Crédit n'est pas autorisé à ce client.</value>
   </data>
   <data name="InsufficientStockWarning" xml:space="preserve">
-    <value>Seulement { 0} { 1} de { 2} a quitté en stock.</value>
+    <value>Seulement {0} {1} de {2} a quitté en stock.</value>
     <comment>Only {Qty} {Unit} of {ItemName} left in stock.</comment>
   </data>
   <data name="InvalidDate" xml:space="preserve">
     <value>Date non valide</value>
   </data>
   <data name="InvalidLocation" xml:space="preserve">
-    <value>" { 0 }" n'est pas un chemin valide ou l'emplacement.</value>
+    <value>" {0}" n'est pas un chemin valide ou l'emplacement.</value>
   </data>
   <data name="NoItemFound" xml:space="preserve">
     <value>Aucun élément trouvé.</value>

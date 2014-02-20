@@ -8,7 +8,7 @@ http://mozilla.org/MPL/2.0/.
 <%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/MixERPReportMaster.Master" CodeBehind="ReportCustomerInvoice.aspx.cs" Inherits="MixERP.Net.FrontEnd.Sales.Confirmation.ReportCustomerInvoice" ValidateRequest="false" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<asp:Content ID="Content2" ContentPlaceHolderID="BodyPlaceholder" runat="server">
     <mixerp:Report ID="CustomerInvoiceReport" runat="server"
         Path="~/Reports/Sources/Sales.View.Sales.CustomerInvoice.xml" AutoInitialize="true" />
 </asp:Content>

@@ -10,7 +10,7 @@ http://mozilla.org/MPL/2.0/.
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<asp:Content ID="Content2" ContentPlaceHolderID="BodyPlaceholder" runat="server">
     <mixerp:Report ID="DeliveryReport" runat="server"
         Path="~/Reports/Sources/Sales.View.Sales.Delivery.xml" AutoInitialize="true" />
 </asp:Content>

@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using MixERP.Net.BusinessLayer;
 using MixERP.Net.BusinessLayer.Helpers;
 using MixERP.Net.WebControls.ScrudFactory;
@@ -71,7 +66,7 @@ namespace MixERP.Net.FrontEnd.Setup.Admin
 
         private void DisplaySuccess()
         {
-            this.MessageLiteral.Text = "<div class='success'>Task completed successfully.</div>";
+            this.MessageLiteral.Text = @"<div class='success'>" + Labels.TaskCompletedSuccessfully + @"</div>";
         }
     }
 }

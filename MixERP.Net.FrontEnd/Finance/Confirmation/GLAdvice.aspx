@@ -6,7 +6,7 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 --%>
 
-<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/MixERPReportMaster.Master" CodeBehind="GLAdvice.aspx.cs" Inherits="MixERP.Net.FrontEnd.Finance.Confirmation.GLAdvice" ValidateRequest="false" %>
+<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/MixERPReportMaster.Master" CodeBehind="GlAdvice.aspx.cs" Inherits="MixERP.Net.FrontEnd.Finance.Confirmation.GlAdvice" ValidateRequest="false" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>

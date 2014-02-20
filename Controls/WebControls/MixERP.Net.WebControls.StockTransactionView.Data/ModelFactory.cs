@@ -44,7 +44,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data
             model.Book = book;
             model.SubBook = subBook;
 
-            using (NpgsqlConnection connection = new NpgsqlConnection(DBConnection.ConnectionString()))
+            using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString()))
             {
                 using (NpgsqlCommand command = SalesQuotation.GetSalesQuotationViewCommand(ids))
                 {

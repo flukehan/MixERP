@@ -8,6 +8,7 @@ http://mozilla.org/MPL/2.0/.
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/ContentMaster.Master" AutoEventWireup="true" CodeBehind="JournalVoucher.aspx.cs" Inherits="MixERP.Net.FrontEnd.Finance.JournalVoucher" %>
 <%@ Import Namespace="Resources" %>
+<%-- ReSharper disable once AspUnusedRegisterDirectiveHighlighting --%>
 <%@ Register TagPrefix="asp" Assembly="System.Web.Extensions" Namespace="System.Web.UI" %> <%--Added for Xamarin Studio Compatibility on Mac OSX Mavericks.--%>
 
 
@@ -190,7 +191,7 @@ http://mozilla.org/MPL/2.0/.
             });
         });
 
-        var getDebit = function () {
+        var getDebit = function() {
             var drTotal = parseFloat2($("#DebitTotalTextBox").val());
             var crTotal = parseFloat2($("#CreditTotalTextBox").val());
             var debitTextBox = $("#DebitTextBox");
@@ -201,9 +202,9 @@ http://mozilla.org/MPL/2.0/.
                     debitTextBox.val(crTotal - drTotal);
                 }
             }
-        }
+        };
 
-        var getCredit = function () {
+        var getCredit = function() {
             var drTotal = parseFloat2($("#DebitTotalTextBox").val());
             var crTotal = parseFloat2($("#CreditTotalTextBox").val());
             var debitTextBox = $("#DebitTextBox");
@@ -214,7 +215,7 @@ http://mozilla.org/MPL/2.0/.
                     creditTextBox.val(drTotal - crTotal);
                 }
             }
-        }
+        };
 
     </script>
 </asp:Content>

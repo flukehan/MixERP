@@ -6,15 +6,12 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.Linq;
-using System.Text;
 using MixERP.Net.DBFactory;
 using Npgsql;
-using DBConnection = MixERP.Net.WebControls.ReportEngine.Data.Connection.DBConnection;
+using DbConnection = MixERP.Net.WebControls.ReportEngine.Data.Connection.DbConnection;
 
 namespace MixERP.Net.WebControls.ReportEngine.Data
 {
@@ -57,14 +54,14 @@ namespace MixERP.Net.WebControls.ReportEngine.Data
                 {
                     foreach(KeyValuePair<string, string> p in parameters)
                     {
-                        command.Parameters.Add(p.Key, p.Value);
+                        command.Parameters.AddWithValue(p.Key, p.Value);
                     }
                 }
                 
                 //A separate connection to database using a restricted login is established here.
-                string connectionString = DBConnection.ReportConnectionString();
+                string connectionString = DbConnection.ReportConnectionString();
 
-                return DBOperations.GetDataTable(command, connectionString);
+                return DbOperations.GetDataTable(command, connectionString);
             }
         }
     }

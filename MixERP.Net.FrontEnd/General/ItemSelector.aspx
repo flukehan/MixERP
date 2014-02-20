@@ -11,8 +11,8 @@ http://mozilla.org/MPL/2.0/.
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
-    <link href="~/themes/purple/main.css" rel="stylesheet" type="text/css" runat="server" />
+    <title>Scrud Item Selector</title>
+    <link href="/Themes/purple/stylesheets/main.css" rel="stylesheet" />
     <script src="//code.jquery.com/jquery-1.9.1.js" type="text/javascript"></script>
     <style type="text/css">
         html, body, form {

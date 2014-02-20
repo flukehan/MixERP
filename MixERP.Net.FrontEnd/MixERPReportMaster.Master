@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <title>MixERP Report</title>
     <asp:PlaceHolder runat="server">
         <script src="<%=this.ResolveUrl("~/Scripts/jquery-1.9.1.js") %>"></script>
     </asp:PlaceHolder>

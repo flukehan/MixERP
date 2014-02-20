@@ -5,15 +5,11 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
-using System;
-using System.Collections.Generic;
+
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using Microsoft.SqlServer.Server;
 using MixERP.Net.WebControls.ReportEngine.Helpers;
+using System.Web.UI.WebControls;
 
 namespace MixERP.Net.WebControls.ReportEngine
 {
@@ -69,11 +65,6 @@ namespace MixERP.Net.WebControls.ReportEngine
         protected override void Render(HtmlTextWriter w)
         {
             if (!this.IsValid())
-            {
-                return;
-            }
-
-            if (w == null)
             {
                 return;
             }

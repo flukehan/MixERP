@@ -6,12 +6,9 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Xml;
 
 namespace MixERP.Net.WebControls.ReportEngine.Helpers
@@ -38,7 +35,10 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
                     {
                         foreach(XmlNode parameterNode in parameterNodes.ChildNodes)
                         {
-                            parameters.Add(new KeyValuePair<string, string>(parameterNode.Attributes["Name"].Value, GetParameterValue(parameterNode.Attributes["Name"].Value, parameterCollection)));
+                            if (parameterNode.Attributes != null)
+                            {
+                                parameters.Add(new KeyValuePair<string, string>(parameterNode.Attributes["Name"].Value, GetParameterValue(parameterNode.Attributes["Name"].Value, parameterCollection)));
+                            }
                         }
                     }
                 }
@@ -49,7 +49,7 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
             return collection;
         }
 
-        private static string GetParameterValue(string key, Collection<KeyValuePair<string, string>> collection)
+        private static string GetParameterValue(string key, IEnumerable<KeyValuePair<string, string>> collection)
         {
             if(string.IsNullOrWhiteSpace(key))
             {
@@ -90,7 +90,7 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
                     {
                         foreach(XmlNode parameter in parameters.ChildNodes)
                         {
-                            if(!KeyExists(parameter.Attributes["Name"].Value, parameterCollection))
+                            if(parameter.Attributes != null && !KeyExists(parameter.Attributes["Name"].Value, parameterCollection))
                             {
                                 parameterCollection.Add(new KeyValuePair<string, string>(parameter.Attributes["Name"].Value, parameter.Attributes["Type"].Value));
                             }
@@ -102,7 +102,7 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
             return parameterCollection;
         }
 
-        private static bool KeyExists(string key, Collection<KeyValuePair<string, string>> collection)
+        private static bool KeyExists(string key, IEnumerable<KeyValuePair<string, string>> collection)
         {
             foreach(KeyValuePair<string, string> item in collection)
             {

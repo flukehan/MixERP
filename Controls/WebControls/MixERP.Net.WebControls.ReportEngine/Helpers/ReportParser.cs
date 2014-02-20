@@ -27,7 +27,7 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
 
             string logo = ConfigurationHelper.GetReportParameter("LogoPath");
             expression = expression.Replace("{LogoPath}", PageUtility.GetCurrentDomainName() + PageUtility.ResolveUrl(logo));//Or else logo will not be exported into excel.
-            expression = expression.Replace("{PrintDate}", DateTime.Now.ToString());
+            expression = expression.Replace("{PrintDate}", DateTime.Now.ToString(LocalizationHelper.GetCurrentCulture()));
 
             foreach(var match in Regex.Matches(expression, "{.*?}"))
             {

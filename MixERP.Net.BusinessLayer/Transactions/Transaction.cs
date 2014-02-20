@@ -6,10 +6,7 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Web.UI.WebControls;
 using MixERP.Net.BusinessLayer.Helpers;
 using MixERP.Net.Common;
@@ -22,7 +19,6 @@ namespace MixERP.Net.BusinessLayer.Transactions
         public static long Add(DateTime valueDate, string referenceNumber, int costCenterId, GridView grid)
         {
             Collection<TransactionDetailModel> details = new Collection<TransactionDetailModel>();
-            long transactionMasterId = 0;
 
             if(grid != null)
             {
@@ -43,7 +39,7 @@ namespace MixERP.Net.BusinessLayer.Transactions
             }
 
 
-            transactionMasterId = DatabaseLayer.Transactions.Transaction.Add(valueDate, SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), costCenterId, referenceNumber, details);
+            long transactionMasterId = DatabaseLayer.Transactions.Transaction.Add(valueDate, SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), costCenterId, referenceNumber, details);
             DatabaseLayer.Transactions.Verification.CallAutoVerification(transactionMasterId);
             return transactionMasterId;
         }

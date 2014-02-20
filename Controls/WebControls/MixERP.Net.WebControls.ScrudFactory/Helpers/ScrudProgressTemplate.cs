@@ -28,11 +28,6 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 
         public void InstantiateIn(Control container)
         {
-            if (container == null)
-            {
-                return;
-            }
-
             using (var ajaxProgressDiv = new HtmlGenericControl("div"))
             {
                 ajaxProgressDiv.Attributes.Add("class", this.cssClass);

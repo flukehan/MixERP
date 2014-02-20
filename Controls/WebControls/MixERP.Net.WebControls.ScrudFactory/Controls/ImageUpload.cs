@@ -82,7 +82,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
             using (var validator = new RegularExpressionValidator())
             {
                 validator.ID = controlToValidate.ID + "RegexValidator";
-                validator.ErrorMessage = "<br/>" + ScrudResource.InvalidImage;
+                validator.ErrorMessage = @"<br/>" + ScrudResource.InvalidImage;
                 validator.CssClass = "form-error";
                 validator.ControlToValidate = controlToValidate.ID;
                 validator.EnableClientScript = true;

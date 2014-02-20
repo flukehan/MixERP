@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bundle minify="true" runOnBuild="true" output="master-page.js" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://vswebessentials.com/schemas/v1/bundle.xsd">
+  <!--The order of the <file> elements determines the order of the file contents when bundled.-->
+  <file>/Scripts/jquery-ui.js</file>
+  <file>/Scripts/shortcut.js</file>
+  <file>/Scripts/colorbox/jquery.colorbox.js</file>
+  <file>/Scripts/jqueryNumber/jquery.number.js</file>
+  <file>/Scripts/date.js</file>
+  <file>/Scripts/chartjs/Chart.min.js</file>
+  <file>/Scripts/chartjs/legend.js</file>
+  <file>/Scripts/mixerp/mixerp.js</file>
+</bundle>

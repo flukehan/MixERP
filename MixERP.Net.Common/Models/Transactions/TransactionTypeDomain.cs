@@ -6,9 +6,6 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using MixERP.Net.Common.Helpers;
 
 namespace MixERP.Net.Common.Models.Transactions
@@ -19,11 +16,9 @@ namespace MixERP.Net.Common.Models.Transactions
         {
             if(type == TransactionType.Debit)
                 return "Dr";
-            else if(type == TransactionType.Credit)
+            if(type == TransactionType.Credit)
                 return "Cr";
-            else
-                throw new InvalidOperationException(LocalizationHelper.GetResourceString("Warnings", "UnknownTransactionType"));
+            throw new InvalidOperationException(LocalizationHelper.GetResourceString("Warnings", "UnknownTransactionType"));
         }
-
     }
 }

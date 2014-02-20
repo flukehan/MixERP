@@ -152,7 +152,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         private bool BelongToSameParty(Collection<int> values)
         {
-            bool belongToSameParty = NonGLStockTransaction.TransactionIdsBelongToSameParty(values);
+            bool belongToSameParty = NonGlStockTransaction.TransactionIdsBelongToSameParty(values);
 
             if (!belongToSameParty)
             {
@@ -175,7 +175,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         {
             if (this.Book == TranBook.Sales && this.SubBook == SubTranBook.Quotation)
             {
-                if (NonGLStockTransaction.AreSalesQuotationsAlreadyMerged(values))
+                if (NonGlStockTransaction.AreSalesQuotationsAlreadyMerged(values))
                 {
                     this.ErrorLabel.Text = Labels.TransactionAlreadyMerged;
                     return true;
@@ -189,7 +189,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         {
             if (this.Book == TranBook.Sales && this.SubBook == SubTranBook.Order)
             {
-                if (NonGLStockTransaction.AreSalesOrdersAlreadyMerged(values))
+                if (NonGlStockTransaction.AreSalesOrdersAlreadyMerged(values))
                 {
                     this.ErrorLabel.Text = Labels.TransactionAlreadyMerged;
                     return true;
@@ -249,20 +249,11 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
             if (this.IsNonGlTransaction())
             {
-                using (DataTable table = NonGLStockTransaction.GetView(bookName, dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference))
+                using (DataTable table = NonGlStockTransaction.GetView(bookName, dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference))
                 {
                     this.ProductViewGridView.DataSource = table;
                     this.ProductViewGridView.DataBind();
                 }
-            }
-            else
-            {
-                //Todo
-                //using (System.Data.DataTable table = MixERP.Net.BusinessLayer.Transactions.NonGLStockTransaction.GetView(bookName, dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference))
-                //{
-                //    ProductViewGridView.DataSource = table;
-                //    ProductViewGridView.DataBind();
-                //}            
             }
         }
 

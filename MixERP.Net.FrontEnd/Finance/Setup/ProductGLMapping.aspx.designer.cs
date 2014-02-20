@@ -10,6 +10,6 @@
 namespace MixERP.Net.FrontEnd.Finance.Setup {
     
     
-    public partial class ProductGLMapping {
+    public partial class ProductGlMapping {
     }
 }

@@ -17,7 +17,6 @@ http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
 using System.Collections.ObjectModel;
-using System.Web.UI.WebControls;
 
 namespace MixERP.Net.BusinessLayer.Transactions
 {
@@ -26,7 +25,6 @@ namespace MixERP.Net.BusinessLayer.Transactions
         public static long Add(DateTime valueDate, int storeId, bool isCredit, string partyCode, int agentId, int priceTypeId, Collection<StockMasterDetailModel> details, int shipperId, string shippingAddressCode, decimal shippingCharge, int cashRepositoryId, int costCenterId, string referenceNumber, string statementReference)
         {
             StockMasterModel stockMaster = new StockMasterModel();
-            long transactionMasterId = 0;
 
             stockMaster.PartyCode = partyCode;
             stockMaster.IsCredit = isCredit;
@@ -38,7 +36,7 @@ namespace MixERP.Net.BusinessLayer.Transactions
             stockMaster.CashRepositoryId = cashRepositoryId;
             stockMaster.StoreId = storeId;
 
-            transactionMasterId = DatabaseLayer.Transactions.DirectSales.Add(valueDate, SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), costCenterId, referenceNumber, statementReference, stockMaster, details);
+            long transactionMasterId = DatabaseLayer.Transactions.DirectSales.Add(valueDate, SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), costCenterId, referenceNumber, statementReference, stockMaster, details);
             DatabaseLayer.Transactions.Verification.CallAutoVerification(transactionMasterId);
             return transactionMasterId;
         }

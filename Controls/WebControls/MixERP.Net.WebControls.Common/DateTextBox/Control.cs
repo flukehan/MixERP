@@ -5,8 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
-using MixERP.Net.Common;
-using MixERP.Net.Common.Helpers;
+
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
@@ -15,18 +14,15 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common.Models.Core;
-using MixERP.Net.WebControls.Common.Helpers;
 using MixERP.Net.WebControls.Common.Resources;
 
 namespace MixERP.Net.WebControls.Common
 {
     [ToolboxData("<{0}:DateTextBox runat=server></{0}:DateTextBox>")]
-    public partial class DateTextBox : CompositeControl
+    public partial class DateTextBox //: CompositeControl
     {
         //Todo: Display localized calendar.
         TextBox textBox;
@@ -109,7 +105,7 @@ namespace MixERP.Net.WebControls.Common
                 this.Controls.Add(this.requiredValidator);
             }
 
-            this.AddjQueryUIDatePicker();
+            this.AddjQueryUiDatePicker();
         }
     }
 }

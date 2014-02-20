@@ -6,11 +6,7 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using MixERP.Net.Common;
 using Npgsql;
@@ -34,7 +30,7 @@ namespace MixERP.Net.DBFactory
                 sql = sql.Replace("@Offset", Conversion.TryCastString(offset));
                 command.CommandText = sql;
 
-                return DBOperations.GetDataTable(command);
+                return DbOperations.GetDataTable(command);
             }
         }
 
@@ -47,7 +43,7 @@ namespace MixERP.Net.DBFactory
                 sql = sql.Replace("@TableName", Sanitizer.SanitizeIdentifierName(tableName));
                 command.CommandText = sql;
 
-                return DBOperations.GetDataTable(command);
+                return DbOperations.GetDataTable(command);
             }
         }
 
@@ -99,12 +95,12 @@ namespace MixERP.Net.DBFactory
                 counter = 0;
                 foreach (var column in columns)
                 {
-                    command.Parameters.Add("@" + Sanitizer.SanitizeIdentifierName(column.Trim()), values[counter]);
+                    command.Parameters.AddWithValue("@" + Sanitizer.SanitizeIdentifierName(column.Trim()), values[counter]);
                     counter++;
                 }
 
 
-                return DBOperations.GetDataTable(command);
+                return DbOperations.GetDataTable(command);
             }
         }
 
@@ -164,14 +160,14 @@ namespace MixERP.Net.DBFactory
                 {
                     if (!string.IsNullOrWhiteSpace(column))
                     {
-                        command.Parameters.Add(Sanitizer.SanitizeIdentifierName(column.Trim()), "%" + values[counter].ToLower(Thread.CurrentThread.CurrentCulture) + "%");
+                        command.Parameters.AddWithValue(Sanitizer.SanitizeIdentifierName(column.Trim()), "%" + values[counter].ToLower(Thread.CurrentThread.CurrentCulture) + "%");
                         counter++;
                     }
                 }
 
-                command.Parameters.Add("@Limit", limit);
+                command.Parameters.AddWithValue("@Limit", limit);
 
-                return DBOperations.GetDataTable(command);
+                return DbOperations.GetDataTable(command);
             }
         }
 
@@ -185,7 +181,7 @@ namespace MixERP.Net.DBFactory
 
                 command.CommandText = sql;
 
-                return Conversion.TryCastInteger(DBOperations.GetScalarValue(command));
+                return Conversion.TryCastInteger(DbOperations.GetScalarValue(command));
             }
         }
     }

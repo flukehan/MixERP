@@ -6,19 +6,15 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 
 namespace MixERP.Net.WebControls.ReportEngine
 {
-    public partial class Report : CompositeControl
+    public partial class Report //: CompositeControl
     {
         public void ExcelImageButton_Click(object sender, EventArgs e)
         {
@@ -63,7 +59,7 @@ namespace MixERP.Net.WebControls.ReportEngine
 
             int arg = Conversion.TryCastInteger(grid.ID.Replace("GridView", ""));
 
-            if(string.IsNullOrWhiteSpace(this.RunningTotalFieldIndicesCollection[arg]))
+            if(string.IsNullOrWhiteSpace(this.runningTotalFieldIndicesCollection[arg]))
             {
                 return;
             }
@@ -75,17 +71,17 @@ namespace MixERP.Net.WebControls.ReportEngine
 
             grid.FooterRow.Visible = true;
 
-            for(int i = 0; i < this.RunningTotalTextColumnIndexCollection[arg]; i++)
+            for(int i = 0; i < this.runningTotalTextColumnIndexCollection[arg]; i++)
             {
                 grid.FooterRow.Cells[i].Visible = false;
             }
 
-            grid.FooterRow.Cells[this.RunningTotalTextColumnIndexCollection[arg]].ColumnSpan = this.RunningTotalTextColumnIndexCollection[arg] + 1;
-            grid.FooterRow.Cells[this.RunningTotalTextColumnIndexCollection[arg]].Text = this.RunningTotalText;
-            grid.FooterRow.Cells[this.RunningTotalTextColumnIndexCollection[arg]].Style.Add("text-align", "right");
-            grid.FooterRow.Cells[this.RunningTotalTextColumnIndexCollection[arg]].Font.Bold = true;
+            grid.FooterRow.Cells[this.runningTotalTextColumnIndexCollection[arg]].ColumnSpan = this.runningTotalTextColumnIndexCollection[arg] + 1;
+            grid.FooterRow.Cells[this.runningTotalTextColumnIndexCollection[arg]].Text = this.RunningTotalText;
+            grid.FooterRow.Cells[this.runningTotalTextColumnIndexCollection[arg]].Style.Add("text-align", "right");
+            grid.FooterRow.Cells[this.runningTotalTextColumnIndexCollection[arg]].Font.Bold = true;
 
-            foreach(string field in this.RunningTotalFieldIndicesCollection[arg].Split(','))
+            foreach(string field in this.runningTotalFieldIndicesCollection[arg].Split(','))
             {
                 int index = Conversion.TryCastInteger(field.Trim());
 
@@ -127,13 +123,13 @@ namespace MixERP.Net.WebControls.ReportEngine
                 int arg = Conversion.TryCastInteger(grid.ID.Replace("GridView", ""));
 
                 //Apply formatting on decimal fields
-                if(string.IsNullOrWhiteSpace(this.DecimalFieldIndicesCollection[arg]))
+                if(string.IsNullOrWhiteSpace(this.decimalFieldIndicesCollection[arg]))
                 {
                     return;
                 }
 
 
-                string decimalFields = this.DecimalFieldIndicesCollection[arg];
+                string decimalFields = this.decimalFieldIndicesCollection[arg];
                 foreach(string fieldIndex in decimalFields.Split(','))
                 {
                     int index = Conversion.TryCastInteger(fieldIndex);

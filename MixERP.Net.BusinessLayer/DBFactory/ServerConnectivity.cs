@@ -5,18 +5,14 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace MixERP.Net.BusinessLayer.DBFactory
 {
     public static class ServerConnectivity
     {
-        public static bool IsDBServerAvailable()
+        public static bool IsDbServerAvailable()
         {
-            return DatabaseLayer.DBFactory.ServerConnectivity.IsDBServerAvailable();
+            return DatabaseLayer.DBFactory.ServerConnectivity.IsDbServerAvailable();
         }
     }
 }

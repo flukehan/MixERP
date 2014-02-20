@@ -6,11 +6,6 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
 using MixERP.Net.Tests.PgUnitTest.Helpers;
 
@@ -20,11 +15,11 @@ namespace MixERP.Net.Tests.PgUnitTest
     public class DatabaseTest
     {
         [Test]
-        public void RunDBTests()
+        public void RunDbTests()
         {
-            DBTestRunner runner = new DBTestRunner();
-            
-            bool expected = true;
+            DbTestRunner runner = new DbTestRunner();
+
+            const bool expected = true;
             bool actual = runner.RunTests();
             string message = runner.Message;
 

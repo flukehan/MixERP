@@ -6,10 +6,7 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Web;
 using System.Web.Security;
@@ -53,11 +50,6 @@ namespace MixERP.Net.BusinessLayer
             }
 
             base.OnLoad(e);
-        }
-
-        protected override void OnPreInit(EventArgs e)
-        {
-            base.OnPreInit(e);
         }
 
         protected override void InitializeCulture()
@@ -125,7 +117,15 @@ namespace MixERP.Net.BusinessLayer
             }
 
             string currentPage = HttpContext.Current.Request.Url.AbsolutePath;
-            string loginUrl = (HttpContext.Current.Handler as Page).ResolveUrl(FormsAuthentication.LoginUrl);
+
+            Page page = HttpContext.Current.Handler as Page;
+
+            if (page == null)
+            {
+                return;
+            }
+
+            string loginUrl = (page).ResolveUrl(FormsAuthentication.LoginUrl);
 
             if (currentPage != loginUrl)
             {

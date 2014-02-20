@@ -72,7 +72,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
             using (var validator = new CompareValidator())
             {
                 validator.ID = controlToValidate.ID + "NumberValidator";
-                validator.ErrorMessage = "<br/>" + ScrudResource.OnlyNumbersAllowed;
+                validator.ErrorMessage = @"<br/>" + ScrudResource.OnlyNumbersAllowed;
                 validator.CssClass = "form-error";
                 validator.ControlToValidate = controlToValidate.ID;
                 validator.EnableClientScript = true;

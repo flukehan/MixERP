@@ -10,7 +10,7 @@ http://mozilla.org/MPL/2.0/.
 
 <configuration>
   <appSettings>
-    <add key="LogoPath" value="~/Themes/purple/mixerp-logo-light.png" />
+    <add key="LogoPath" value="~/Themes/purple/images/mixerp-logo-light.png" />
     <add key="HeaderPath" value="~/Reports/Assets/Header.html" />
     <add key="DbLoginName" value="report_user" />
     <add key="DbPassword" value="change-on-deloyment" />

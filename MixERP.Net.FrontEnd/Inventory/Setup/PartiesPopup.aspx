@@ -12,13 +12,13 @@ http://mozilla.org/MPL/2.0/.
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <link href="~/themes/purple/main.css" rel="stylesheet" type="text/css" runat="server" />
+    <link href="/Themes/purple/stylesheets/main.css" rel="stylesheet" />
     <script src="//code.jquery.com/jquery-1.9.1.js" type="text/javascript"></script>
     <script src="/Scripts/shortcut.js"></script>
     <script src="/Scripts/colorbox/jquery.colorbox-min.js"></script>
     <link href="/Scripts/colorbox/colorbox.css" rel="stylesheet" />
 
-    <title></title>
+    <title>Select Party</title>
 
     <style type="text/css">
         form {
@@ -42,21 +42,21 @@ http://mozilla.org/MPL/2.0/.
             });
 
 
-            var updatePartyName = function (p) {
+            var updatePartyName = function(p) {
                 var firstName = $("#first_name_textbox").val();
                 var middleName = $("#middle_name_textbox").val();
                 var lastName = $("#last_name_textbox").val();
 
                 var partyName = p.replace("FirstName", firstName);
-                var partyName = partyName.replace("MiddleName", middleName);
-                var partyName = partyName.replace("LastName", lastName);
+                partyName = partyName.replace("MiddleName", middleName);
+                partyName = partyName.replace("LastName", lastName);
 
                 var partyNameTextBox = $("#party_name_textbox");
 
                 if (partyNameTextBox.val() == "") {
                     $("#party_name_textbox").val(partyName.trim().replace(/ +(?= )/g, ''));
                 }
-            }
+            };
 
             var isInIframe = (window.location != window.parent.location) ? true : false;
 

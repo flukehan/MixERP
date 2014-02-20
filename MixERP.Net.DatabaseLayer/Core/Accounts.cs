@@ -5,10 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 using MixERP.Net.DBFactory;
 using Npgsql;
 
@@ -18,23 +15,24 @@ namespace MixERP.Net.DatabaseLayer.Core
     {
         public static bool IsCashAccount(int accountId)
         {
-            string sql = "SELECT 1 FROM core.accounts WHERE is_cash=true AND account_id=@AccountId;";
+            const string sql = "SELECT 1 FROM core.accounts WHERE is_cash=true AND account_id=@AccountId;";
+            
             using(NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.Add("@AccountId", accountId);
+                command.Parameters.AddWithValue("@AccountId", accountId);
 
-                return DBOperations.GetDataTable(command).Rows.Count.Equals(1);
+                return DbOperations.GetDataTable(command).Rows.Count.Equals(1);
             }
         }
 
         public static bool IsCashAccount(string accountCode)
         {
-            string sql = "SELECT 1 FROM core.accounts WHERE is_cash=true AND account_code=@AccountCode;";
+            const string sql = "SELECT 1 FROM core.accounts WHERE is_cash=true AND account_code=@AccountCode;";
             using(NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.Add("@AccountCode", accountCode);
+                command.Parameters.AddWithValue("@AccountCode", accountCode);
 
-                return DBOperations.GetDataTable(command).Rows.Count.Equals(1);
+                return DbOperations.GetDataTable(command).Rows.Count.Equals(1);
             }
         }
     }

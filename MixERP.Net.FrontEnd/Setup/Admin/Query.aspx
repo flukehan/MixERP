@@ -71,7 +71,7 @@
             mime = window.location.href.substr(window.location.href.indexOf('mime=') + 5);
         }
 
-        editor = CodeMirror.fromTextArea(document.getElementById("QueryTextBox"), {
+        editor = CodeMirror.fromTextArea(document.getElementById('QueryTextBox'), {
             mode: mime,
             lineNumbers: true,
             matchBrackets: true,
@@ -105,10 +105,10 @@
     }
     protected void LoadButton_Click(object sender, EventArgs e)
     {
-        this.LoadSQL();
+        this.LoadSql();
     }
 
-    private void LoadSQL()
+    private void LoadSql()
     {
         string sql = File.ReadAllText(this.Server.MapPath("~/db/en-US/mixerp.bak.sql"));
         this.QueryTextBox.Text = sql;
@@ -118,7 +118,7 @@
     protected void RunButton_Click(object sender, EventArgs e)
     {
         string sql = File.ReadAllText(this.Server.MapPath("~/db/en-US/mixerp.bak.sql"));
-        using(DataTable table = DBOperations.GetDataTable(new NpgsqlCommand(sql)))
+        using(DataTable table = DbOperations.GetDataTable(new NpgsqlCommand(sql)))
         {
             this.MessageLiteral.Text = string.Format("<div class='success'>{0} row(s) affected.</div>", table.Rows.Count);
             this.SQLGridView.DataSource = table;
@@ -129,7 +129,7 @@
     protected void LoadCustomerButton_Click(object sender, EventArgs e)
     {
         string sql = File.ReadAllText(this.Server.MapPath("~/db/en-US/party-sample.sql"));
-        using(DataTable table = DBOperations.GetDataTable(new NpgsqlCommand(sql)))
+        using(DataTable table = DbOperations.GetDataTable(new NpgsqlCommand(sql)))
         {
             this.MessageLiteral.Text = string.Format("<div class='success'>{0} row(s) affected.</div>", table.Rows.Count);
             this.SQLGridView.DataSource = table;
@@ -140,7 +140,7 @@
     protected void LoadSampleData_Click(object sender, EventArgs e)
     {
         string sql = File.ReadAllText(this.Server.MapPath("~/db/en-US/sample-data.sql"));
-        using(DataTable table = DBOperations.GetDataTable(new NpgsqlCommand(sql)))
+        using(DataTable table = DbOperations.GetDataTable(new NpgsqlCommand(sql)))
         {
             this.MessageLiteral.Text = string.Format("<div class='success'>{0} row(s) affected.</div>", table.Rows.Count);
             this.SQLGridView.DataSource = table;
@@ -152,7 +152,7 @@
     {
         try
         {
-            using(DataTable table = DBOperations.GetDataTable(new NpgsqlCommand(this.QueryTextBox.Text)))
+            using(DataTable table = DbOperations.GetDataTable(new NpgsqlCommand(this.QueryTextBox.Text)))
             {
                 this.MessageLiteral.Text = string.Format("<div class='success'>{0} row(s) affected.</div>", table.Rows.Count);
                 this.SQLGridView.DataSource = table;
@@ -161,7 +161,7 @@
         }
         catch(Exception ex)
         {
-            this.MessageLiteral.Text = "<div class='error'>" + ex.Message + "</div>";
+            this.MessageLiteral.Text = @"<div class='error'>" + ex.Message + @"</div>";
         }
     }
 

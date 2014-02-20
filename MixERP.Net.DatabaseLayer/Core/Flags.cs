@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
+﻿using System.Diagnostics.CodeAnalysis;
 using MixERP.Net.DBFactory;
 using Npgsql;
 using System.Collections.ObjectModel;
@@ -41,19 +37,19 @@ namespace MixERP.Net.DatabaseLayer.Core
                 return;
             }
 
-            string sql = "SELECT core.create_flag(@UserId, @FlagTypeId, @Resource, @ResourceKey, @ResourceId);";
+            const string sql = "SELECT core.create_flag(@UserId, @FlagTypeId, @Resource, @ResourceKey, @ResourceId);";
 
             foreach (int resourceId in resourceIds)
             {
                 using (NpgsqlCommand command = new NpgsqlCommand(sql))
                 {
-                    command.Parameters.Add("@UserId", userId);
-                    command.Parameters.Add("@FlagTypeId", flagTypeId);
-                    command.Parameters.Add("@Resource", resourceName);
-                    command.Parameters.Add("@ResourceKey", resourceKey);
-                    command.Parameters.Add("@ResourceId", resourceId);
+                    command.Parameters.AddWithValue("@UserId", userId);
+                    command.Parameters.AddWithValue("@FlagTypeId", flagTypeId);
+                    command.Parameters.AddWithValue("@Resource", resourceName);
+                    command.Parameters.AddWithValue("@ResourceKey", resourceKey);
+                    command.Parameters.AddWithValue("@ResourceId", resourceId);
 
-                    DBOperations.ExecuteNonQuery(command);
+                    DbOperations.ExecuteNonQuery(command);
                 }
             }
         }

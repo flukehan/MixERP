@@ -6,14 +6,10 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
-using System.Collections.Generic;
 using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
 using System.Web;
 using System.Web.Security;
-using System.Data;
 using System.Web.UI;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Models.Office;
@@ -30,9 +26,9 @@ namespace MixERP.Net.BusinessLayer.Security
                 {
 
                     SignInView signInView = GetLastSignInView(user);
-                    long LogOnId = signInView.LogOnId;
+                    long logOnId = signInView.LogOnId;
 
-                    if (LogOnId.Equals(0))
+                    if (logOnId.Equals(0))
                     {
                         MixERPWebpage.RequestLogOnPage();
                         return false;
@@ -86,9 +82,9 @@ namespace MixERP.Net.BusinessLayer.Security
                     string remoteAddress = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
                     string remoteUser = HttpContext.Current.Request.ServerVariables["REMOTE_USER"];
 
-                    long LogOnId = DatabaseLayer.Security.User.SignIn(officeId, userName, Conversion.HashSha512(password, userName), page.Request.UserAgent, remoteAddress, remoteUser, culture);
+                    long logOnId = DatabaseLayer.Security.User.SignIn(officeId, userName, Conversion.HashSha512(password, userName), page.Request.UserAgent, remoteAddress, remoteUser, culture);
 
-                    if (LogOnId > 0)
+                    if (logOnId > 0)
                     {
                         page.Session["Culture"] = culture;
                         SetSession(page, userName);
@@ -106,6 +102,7 @@ namespace MixERP.Net.BusinessLayer.Security
                         return true;
                     }
                 }
+                // ReSharper disable once EmptyGeneralCatchClause
                 catch
                 {
                     //Swallow the exception here

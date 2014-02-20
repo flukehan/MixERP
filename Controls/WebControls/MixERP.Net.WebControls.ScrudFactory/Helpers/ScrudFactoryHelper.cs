@@ -138,7 +138,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
             using (var validator = new RequiredFieldValidator())
             {
                 validator.ID = controlToValidate.ID + "RequiredValidator";
-                validator.ErrorMessage = "<br/>" + ScrudResource.RequiredField;
+                validator.ErrorMessage = @"<br/>" + ScrudResource.RequiredField;
                 validator.CssClass = "form-error";
                 validator.ControlToValidate = controlToValidate.ID;
                 validator.EnableClientScript = true;

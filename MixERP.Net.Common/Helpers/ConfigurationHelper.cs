@@ -5,16 +5,9 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
+
 using System.Configuration;
-using System.IO;
-using System.Linq;
-using System.Runtime.Remoting;
-using System.Text;
 using System.Web;
-using System.Xml;
 
 namespace MixERP.Net.Common.Helpers
 {
@@ -52,13 +45,16 @@ namespace MixERP.Net.Common.Helpers
 
         public static string GetConfigurationValues(string configFileName, string sectionName)
         {
-            ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap() { ExeConfigFilename = configFileName };
+            ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap { ExeConfigFilename = configFileName };
             Configuration config = ConfigurationManager.OpenMappedExeConfiguration(configFileMap, ConfigurationUserLevel.None);
             AppSettingsSection section = config.GetSection("appSettings") as AppSettingsSection;
 
-            if (section.Settings[sectionName] != null)
+            if (section != null)
             {
-                return section.Settings[sectionName].Value;
+                if (section.Settings[sectionName] != null)
+                {
+                    return section.Settings[sectionName].Value;
+                }
             }
 
             return string.Empty;

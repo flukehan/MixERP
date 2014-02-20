@@ -6,10 +6,7 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Globalization;
@@ -27,20 +24,26 @@ namespace MixERP.Net.Common
             }
         }
 
-        public static string GetUserIPAddress()
+        public static string GetUserIpAddress()
         {
             Page page = HttpContext.Current.Handler as Page;
-            string ip = page.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-            if(!string.IsNullOrEmpty(ip))
+
+            if (page != null)
             {
-                string[] ipRange = ip.Split(',');
-                ip = ipRange[0];
+                string ip = page.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+                if(!string.IsNullOrEmpty(ip))
+                {
+                    string[] ipRange = ip.Split(',');
+                    ip = ipRange[0];
+                }
+                else
+                {
+                    ip = page.Request.ServerVariables["REMOTE_ADDR"];
+                }
+                return ip.Trim();
             }
-            else
-            {
-                ip = page.Request.ServerVariables["REMOTE_ADDR"];
-            }
-            return ip.Trim();
+
+            return string.Empty;
         }
 
         public static void ExecuteJavaScript(string key, string javaScript, Page page)
@@ -123,7 +126,7 @@ namespace MixERP.Net.Common
             {
                 if(InvalidPasswordAttempts(page, 0) >= Conversion.TryCastInteger(ConfigurationManager.AppSettings["MaxInvalidPasswordAttempts"]))
                 {
-                    page.Response.Redirect("~/access-denied");
+                    page.Response.Redirect("~/Static/AcessIsDenied.html");
                 }
             }
         }
@@ -168,7 +171,7 @@ namespace MixERP.Net.Common
                 return string.Empty;
             }
 
-            string prefix = "http";
+            const string prefix = "http";
 
             if(url.Substring(0, prefix.Length) != prefix)
             {
@@ -194,12 +197,13 @@ namespace MixERP.Net.Common
 
         private class MyClient : WebClient
         {
-            public bool HeadOnly { get; set; }
+            public bool HeadOnly { private get; set; }
 
             protected override WebRequest GetWebRequest(Uri address)
             {
                 WebRequest req = base.GetWebRequest(address);
-                if(this.HeadOnly && req.Method == "GET")
+                
+                if(req != null && (this.HeadOnly && req.Method == "GET"))
                 {
                     req.Method = "HEAD";
                 }

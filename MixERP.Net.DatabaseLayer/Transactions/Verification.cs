@@ -5,11 +5,8 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
-using System;
-using System.Collections.Generic;
+
 using System.Data;
-using System.Linq;
-using System.Text;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models.Transactions;
@@ -23,13 +20,13 @@ namespace MixERP.Net.DatabaseLayer.Transactions
         public static VerificationModel GetVerificationStatus(long transactionMasterId)
         {
             VerificationModel model = new VerificationModel();
-            string sql = "SELECT verification_status_id, office.get_user_name_by_user_id(verified_by_user_id) AS verified_by_user_name, verified_by_user_id, last_verified_on, verification_reason FROM transactions.transaction_master WHERE transaction_master_id=@TransactionMasterId;";
+            const string sql = "SELECT verification_status_id, office.get_user_name_by_user_id(verified_by_user_id) AS verified_by_user_name, verified_by_user_id, last_verified_on, verification_reason FROM transactions.transaction_master WHERE transaction_master_id=@TransactionMasterId;";
 
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.Add("@TransactionMasterId", transactionMasterId);
+                command.Parameters.AddWithValue("@TransactionMasterId", transactionMasterId);
 
-                using (DataTable table = DBOperations.GetDataTable(command))
+                using (DataTable table = DbOperations.GetDataTable(command))
                 {
                     if (table != null)
                     {
@@ -55,15 +52,15 @@ namespace MixERP.Net.DatabaseLayer.Transactions
         {
             short status = VerificationDomain.GetVerification(VerificationType.Withdrawn);
 
-            string sql = "UPDATE transactions.transaction_master SET verification_status_id=@Status, verified_by_user_id=@UserId, verification_reason=@Reason WHERE transactions.transaction_master.transaction_master_id=@TransactionMasterId;";
+            const string sql = "UPDATE transactions.transaction_master SET verification_status_id=@Status, verified_by_user_id=@UserId, verification_reason=@Reason WHERE transactions.transaction_master.transaction_master_id=@TransactionMasterId;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.Add("@Status", status);
-                command.Parameters.Add("@UserId", userId);
-                command.Parameters.Add("@Reason", reason);
-                command.Parameters.Add("@TransactionMasterId", transactionMasterId);
+                command.Parameters.AddWithValue("@Status", status);
+                command.Parameters.AddWithValue("@UserId", userId);
+                command.Parameters.AddWithValue("@Reason", reason);
+                command.Parameters.AddWithValue("@TransactionMasterId", transactionMasterId);
 
-                return DBOperations.ExecuteNonQuery(command);
+                return DbOperations.ExecuteNonQuery(command);
             }
         }
 
@@ -71,11 +68,11 @@ namespace MixERP.Net.DatabaseLayer.Transactions
         {
             if (Switches.EnableAutoVerification())
             {
-                string sql = "SELECT transactions.auto_verify(@TransactionMasterId::bigint);";
+                const string sql = "SELECT transactions.auto_verify(@TransactionMasterId::bigint);";
                 using (NpgsqlCommand command = new NpgsqlCommand(sql))
                 {
-                    command.Parameters.Add("@TransactionMasterId", transactionMasterId);
-                    return DBOperations.ExecuteNonQuery(command);
+                    command.Parameters.AddWithValue("@TransactionMasterId", transactionMasterId);
+                    return DbOperations.ExecuteNonQuery(command);
                 }
             }
 

@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="TransactionChecklistControl.ascx.cs" Inherits="MixERP.Net.FrontEnd.UserControls.TransactionChecklistControl" %>
-<%@ Import Namespace="MixERP.Net.BusinessLayer.Helpers" %>
 <%@ Import Namespace="MixERP.Net.BusinessLayer.Transactions" %>
 <%@ Import Namespace="MixERP.Net.Common" %>
+<%@ Import Namespace="MixERP.Net.Common.Helpers" %>
 <%@ Import Namespace="MixERP.Net.Common.Models.Transactions" %>
 <%@ Import Namespace="Resources" %>
 <h1>
@@ -65,12 +65,12 @@
     public bool DisplayEmailInvoiceButton { get; set; }
     public bool DisplayCustomerInvoiceButton { get; set; }
     public bool DisplayPrintReceiptButton { get; set; }
-    public bool DisplayPrintGLEntryButton { get; set; }
+    public bool DisplayPrintGlEntryButton { get; set; }
     public bool DisplayAttachmentButton { get; set; }
-    public bool IsNonGLTransaction { get; set; }
+    public bool IsNonGlTransaction { get; set; }
     public string InvoicePath { get; set; }
     public string CustomerInvoicePath { get; set; }
-    public string GLAdvicePath { get; set; }
+    public string GlAdvicePath { get; set; }
 
     protected void OkButton_Click(object sender, EventArgs e)
     {
@@ -88,7 +88,7 @@
             //Withdraw this transaction.                        
             if(transactionMasterId > 0)
             {
-                if(Verification.WithdrawTransaction(transactionMasterId, SessionHelper.GetUserId(), this.ReasonTextBox.Text))
+                if(Verification.WithdrawTransaction(transactionMasterId, MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetUserId(), this.ReasonTextBox.Text))
                 {
                     this.MessageLabel.Text = string.Format(Labels.TransactionWithdrawnMessage, transactionDate.ToShortDateString());
                     this.MessageLabel.CssClass = "success vpad12";
@@ -112,12 +112,12 @@
         this.EmailInvoiceButton.Visible = this.DisplayEmailInvoiceButton;
         this.CustomerInvoiceButton.Visible = this.DisplayCustomerInvoiceButton;
         this.PrintReceiptButton.Visible = this.DisplayPrintReceiptButton;
-        this.PrintGLButton.Visible = this.DisplayPrintGLEntryButton;
+        this.PrintGLButton.Visible = this.DisplayPrintGlEntryButton;
         this.AttachmentButton.Visible = this.DisplayAttachmentButton;
 
         string invoiceUrl = this.ResolveUrl(this.InvoicePath + "?TranId=" + this.Request["TranId"]);
         string customerInvoiceUrl = this.ResolveUrl(this.CustomerInvoicePath + "?TranId=" + this.Request["TranId"]);
-        string glAdviceUrl = this.ResolveUrl(this.GLAdvicePath + "?TranId=" + this.Request["TranId"]);
+        string glAdviceUrl = this.ResolveUrl(this.GlAdvicePath + "?TranId=" + this.Request["TranId"]);
 
         this.ViewInvoiceButton.Attributes.Add("onclick", "showWindow('" + invoiceUrl + "');return false;");
         this.CustomerInvoiceButton.Attributes.Add("onclick", "showWindow('" + customerInvoiceUrl + "');return false;");
@@ -135,14 +135,14 @@
         {
             case -3:
                 this.VerificationLabel.CssClass = "info pink";
-                this.VerificationLabel.Text = string.Format(Labels.VerificationRejectedMessage, model.VerifierName, model.VerifiedDate.ToString(), model.VerificationReason);
+                this.VerificationLabel.Text = string.Format(Labels.VerificationRejectedMessage, model.VerifierName, model.VerifiedDate.ToString(LocalizationHelper.GetCurrentCulture()), model.VerificationReason);
                 break;
             case -2:
                 this.VerificationLabel.CssClass = "info red";
-                this.VerificationLabel.Text = string.Format(Labels.VerificationClosedMessage, model.VerifierName, model.VerifiedDate.ToString(), model.VerificationReason);
+                this.VerificationLabel.Text = string.Format(Labels.VerificationClosedMessage, model.VerifierName, model.VerifiedDate.ToString(LocalizationHelper.GetCurrentCulture()), model.VerificationReason);
                 break;
             case -1:
-                this.VerificationLabel.Text = string.Format(Labels.VerificationWithdrawnMessage, model.VerifierName, model.VerifiedDate.ToString(), model.VerificationReason);
+                this.VerificationLabel.Text = string.Format(Labels.VerificationWithdrawnMessage, model.VerifierName, model.VerifiedDate.ToString(LocalizationHelper.GetCurrentCulture()), model.VerificationReason);
                 this.VerificationLabel.CssClass = "info yellow";
                 break;
             case 0:
@@ -151,7 +151,7 @@
                 break;
             case 1:
             case 2:
-                this.VerificationLabel.Text = string.Format(Labels.VerificationApprovedMessage, model.VerifierName, model.VerifiedDate.ToString());
+                this.VerificationLabel.Text = string.Format(Labels.VerificationApprovedMessage, model.VerifierName, model.VerifiedDate.ToString(LocalizationHelper.GetCurrentCulture()));
                 this.VerificationLabel.CssClass = "info green";
                 break;
         }

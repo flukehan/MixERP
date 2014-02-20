@@ -9,7 +9,7 @@ using MixERP.Net.Common.Helpers;
 
 namespace MixERP.Net.WebControls.Common.Helpers
 {
-    public static class JQueryUIHelper
+    public static class JQueryUiHelper
     {
         public static string GetDatePickerFormat()
         {
@@ -21,7 +21,6 @@ namespace MixERP.Net.WebControls.Common.Helpers
         /// Credit to: http://www.rajeeshcv.com/post/details/31/jqueryui-datepicker-in-asp-net-mvc
         /// Converts the .net supported date format current culture format into JQuery Datepicker format.
         /// </summary>
-        /// <param name="html">HtmlHelper object.</param>
         /// <param name="format">Date format supported by .NET.</param>
         /// <returns>Format string that supported in JQuery Datepicker.</returns>
         private static string ConvertDateFormat(string format)

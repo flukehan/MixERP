@@ -22,28 +22,29 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 return;
             }
 
-            if(e.Row.RowType == DataControlRowType.DataRow)
+            switch (e.Row.RowType)
             {
-                using (var radio = new HtmlInputRadioButton())
-                {
-                    radio.ClientIDMode = ClientIDMode.Static;
-                    radio.Name = "SelectRadio";
-                    radio.ID = "SelectRadio";
-                    radio.ClientIDMode = ClientIDMode.Predictable;
-                    radio.Value = e.Row.Cells[1].Text;
-                    //radio.Attributes.Add("onclick", "selectNode(this.id);");
-                    e.Row.Cells[0].Controls.Add(radio);
-                }
-            }
-            else if(e.Row.RowType == DataControlRowType.Header)
-            {
-                for(var i = 1; i < e.Row.Cells.Count; i++)
-                {
-                    var cellText = e.Row.Cells[i].Text;
+                case DataControlRowType.DataRow:
+                    using (var radio = new HtmlInputRadioButton())
+                    {
+                        radio.ClientIDMode = ClientIDMode.Static;
+                        radio.Name = "SelectRadio";
+                        radio.ID = "SelectRadio";
+                        radio.ClientIDMode = ClientIDMode.Predictable;
+                        radio.Value = e.Row.Cells[1].Text;
+                        //radio.Attributes.Add("onclick", "selectNode(this.id);");
+                        e.Row.Cells[0].Controls.Add(radio);
+                    }
+                    break;
+                case DataControlRowType.Header:
+                    for(var i = 1; i < e.Row.Cells.Count; i++)
+                    {
+                        var cellText = e.Row.Cells[i].Text;
 
-                    cellText = LocalizationHelper.GetResourceString(this.GetResourceClassName(), cellText);
-                    e.Row.Cells[i].Text = cellText;
-                }
+                        cellText = LocalizationHelper.GetResourceString(this.GetResourceClassName(), cellText);
+                        e.Row.Cells[i].Text = cellText;
+                    }
+                    break;
             }
         }
     }

@@ -6,11 +6,8 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using MixERP.Net.BusinessLayer;
@@ -50,7 +47,12 @@ namespace MixERP.Net.FrontEnd.Finance
             if(e.Row.RowType == DataControlRowType.DataRow)
             {
                 ImageButton lb = e.Row.FindControl("DeleteImageButton") as ImageButton;
-                ScriptManager.GetCurrent(this.Page).RegisterAsyncPostBackControl(lb);
+                var current = ScriptManager.GetCurrent(this.Page);
+
+                if (current != null)
+                {
+                    current.RegisterAsyncPostBackControl(lb);
+                }
             }
         }
 
@@ -140,20 +142,16 @@ namespace MixERP.Net.FrontEnd.Finance
                 FormHelper.MakeDirty(this.AccountCodeTextBox);
                 return;
             }
-            else
-            {
-                FormHelper.RemoveDirty(this.AccountCodeTextBox);
-            }
+            
+            FormHelper.RemoveDirty(this.AccountCodeTextBox);
 
             if(string.IsNullOrWhiteSpace(account))
             {
                 FormHelper.MakeDirty(this.AccountDropDownList);
                 return;
             }
-            else
-            {
-                FormHelper.RemoveDirty(this.AccountDropDownList);
-            }
+            
+            FormHelper.RemoveDirty(this.AccountDropDownList);
 
             if(debit.Equals(0) && credit.Equals(0))
             {
@@ -161,19 +159,15 @@ namespace MixERP.Net.FrontEnd.Finance
                 FormHelper.MakeDirty(this.CreditTextBox);
                 return;
             }
-            else
+            
+            if(debit > 0 && credit > 0)
             {
-                if(debit > 0 && credit > 0)
-                {
-                    FormHelper.MakeDirty(this.DebitTextBox);
-                    FormHelper.MakeDirty(this.CreditTextBox);
-                    return;
-                }
-                else
-                {
-                    FormHelper.RemoveDirty(this.StatementReferenceTextBox);
-                }
+                FormHelper.MakeDirty(this.DebitTextBox);
+                FormHelper.MakeDirty(this.CreditTextBox);
+                return;
             }
+
+            FormHelper.RemoveDirty(this.StatementReferenceTextBox);
 
             if(Accounts.IsCashAccount(accountCode))
             {
@@ -183,10 +177,8 @@ namespace MixERP.Net.FrontEnd.Finance
                     this.CashRepositoryDropDownList.Focus();
                     return;
                 }
-                else
-                {
-                    FormHelper.RemoveDirty(this.CashRepositoryDropDownList);
-                }
+                
+                FormHelper.RemoveDirty(this.CashRepositoryDropDownList);
             }
 
             Collection<JournalDetailsModel> table = this.GetTable();

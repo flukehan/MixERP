@@ -5,16 +5,13 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
-using System;
+
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Web.UI.WebControls;
 
 namespace MixERP.Net.WebControls.ReportEngine
 {
-    public partial class Report : CompositeControl
+    public partial class Report //: CompositeControl
     {
         public string Path { get; set; }
         public bool AutoInitialize { get; set; }
@@ -28,7 +25,7 @@ namespace MixERP.Net.WebControls.ReportEngine
         /// parameters stored in KeyValuePair.
         /// </summary>
 
-        private Collection<Collection<KeyValuePair<string, string>>> parameterCollection = new Collection<Collection<KeyValuePair<string, string>>>();
+        private readonly Collection<Collection<KeyValuePair<string, string>>> parameterCollection = new Collection<Collection<KeyValuePair<string, string>>>();
         public Collection<Collection<KeyValuePair<string, string>>> ParameterCollection 
         {
             get

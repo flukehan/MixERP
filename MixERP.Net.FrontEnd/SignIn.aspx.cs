@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using MixERP.Net.BusinessLayer.DBFactory;
 using MixERP.Net.BusinessLayer.Office;
 using MixERP.Net.Common;
@@ -16,9 +12,9 @@ namespace MixERP.Net.FrontEnd
 {
     public partial class SignIn : Page
     {
-        private void CheckDBConnectivity()
+        private void CheckDbConnectivity()
         {
-            if (!ServerConnectivity.IsDBServerAvailable())
+            if (!ServerConnectivity.IsDbServerAvailable())
             {
                 this.RedirectToOfflinePage();
             }
@@ -39,7 +35,7 @@ namespace MixERP.Net.FrontEnd
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.CheckDBConnectivity();
+            this.CheckDbConnectivity();
 
             try
             {
@@ -96,7 +92,7 @@ namespace MixERP.Net.FrontEnd
 
             if (!results)
             {
-                this.MessageLiteral.Text = "<span class='error-message'>" + Warnings.UserIdOrPasswordIncorrect + "</span>";
+                this.MessageLiteral.Text = @"<span class='error-message'>" + Warnings.UserIdOrPasswordIncorrect + @"</span>";
             }
         }
     }

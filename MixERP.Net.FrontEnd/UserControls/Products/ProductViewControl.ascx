@@ -137,13 +137,13 @@
             <asp:TemplateField HeaderStyle-Width="56px" HeaderText="actions">
                 <ItemTemplate>
                     <a href="#" id="PreviewAnchor" runat="server" title="Quick Preview" class="preview">
-                        <img runat="server" src="~/Resource/Icons/search-16.png" />
+                        <img runat="server" src="~/Resource/Icons/search-16.png" alt="Search" />
                     </a>
                     <a href="#" id="PrintAnchor" runat="server" title="Print">
-                        <img runat="server" src="~/Resource/Icons/print-16.png" />
+                        <img runat="server" src="~/Resource/Icons/print-16.png" alt="Print" />
                     </a>
                     <a href="#" title="Go To Top" onclick="window.scroll(0);">
-                        <img runat="server" src="~/Resource/Icons/top-16.png" />
+                        <img runat="server" src="~/Resource/Icons/top-16.png" alt="Go to Top" />
                     </a>
                 </ItemTemplate>
             </asp:TemplateField>
@@ -219,7 +219,7 @@
                 }
             }
         });
-    }
+    };
 
     updateFlagColor();
 
@@ -263,14 +263,11 @@
         if (selection.length > 0) {
             $("#SelectedValuesHidden").val(selection.join(','));
             return true;
-        }
-        else {
+        } else {
             alert("<%= Labels.NothingSelected %>");
             return false;
         }
-
-        return false;
-    }
+    };
 
     //Get FlagButton instance.
     var flagButton = $("#flagButton");
@@ -295,7 +292,7 @@
 
     $('#ProductViewGridView tr').click(function () {
         //console.log('Grid row was clicked. Now, searching the radio button.');
-        var checkBox = $(this).find('td input:checkbox')
+        var checkBox = $(this).find('td input:checkbox');
         //console.log('The check box was found.');
         toogleSelection(checkBox.attr("id"));
     });
@@ -306,15 +303,14 @@
 
         if (property) {
             $("#" + id).prop("checked", false);
-        }
-        else {
+        } else {
             $("#" + id).prop("checked", true);
         }
 
         console.log(JSON.stringify($("#" + id).attr("checked")));
 
         console.log('Radio button selection was "' + id + '" toggled.');
-    }
+    };
 
 
 
@@ -348,7 +344,7 @@
                 event.stopPropagation();
             });
 
-            obj.opts.on('click', function (e) {
+            obj.opts.on('click', function () {
                 var opt = $(this);
                 obj.val = opt.text();
                 obj.index = opt.index();
@@ -362,12 +358,9 @@
         getIndex: function () {
             return this.index;
         }
-    }
+    };
 
     $(function () {
-
-        var dd = new DropDown($('#dd'));
-
         $(document).click(function () {
             // all dropdowns
             $('.wrapper-dropdown-5').removeClass('active');

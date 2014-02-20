@@ -10,7 +10,7 @@
 namespace MixERP.Net.FrontEnd.Finance.Confirmation {
     
     
-    public partial class GLAdvice {
+    public partial class GlAdvice {
         
         /// <summary>
         /// GLAdviceReport control.

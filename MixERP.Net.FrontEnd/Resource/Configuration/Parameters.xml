@@ -13,7 +13,7 @@ http://mozilla.org/MPL/2.0/.
     <add key="DatePickerShowWeekNumber" value="true" />
     <add key="DatePickerNumberOfMonths" value="[2, 3]" />
 
-    <add key="LogoPath" value="~/Themes/purple/mixerp-logo-light.png" />
+    <add key="LogoPath" value="~/Themes/purple/images/mixerp-logo-light.png" />
     <add key="PartyName" value="FirstName MiddleName LastName" />    
     <add key="SalesDeliveryAcronym" value="SD" />
     <add key="SalesDirectAcronym" value="SDIR" />

@@ -5,8 +5,8 @@
 .breakpoint { color: #822; }
 
 /*<!--match-->*/
-span.CodeMirror-matchhighlight { background: #494949 }
-.CodeMirror-focused span.CodeMirror-matchhighlight { background: #314D67; !important }
+span.CodeMirror-matchhighlight { background: #494949; }
+.CodeMirror-focused span.CodeMirror-matchhighlight { background: #314D67 !important; }
 
 /*<!--activeline-->*/
 .activeline {background: #253540 !important;}

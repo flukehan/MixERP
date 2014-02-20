@@ -13,10 +13,8 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
-using System.Linq;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.Web.UI.WebControls;
@@ -38,53 +36,44 @@ namespace MixERP.Net.FrontEnd.Services
     [ScriptService]
     public class AccountData : WebService
     {
-        [WebMethod(EnableSession=true)]
+        [WebMethod(EnableSession = true)]
         public Collection<ListItem> GetAccounts()
         {
-            if(Switches.AllowParentAccountInGLTransaction())
+            if (Switches.AllowParentAccountInGlTransaction())
             {
-                if(SessionHelper.IsAdmin())
+                if (SessionHelper.IsAdmin())
                 {
-                    using(DataTable table = FormHelper.GetTable("core", "accounts"))
+                    using (DataTable table = FormHelper.GetTable("core", "accounts"))
                     {
                         return GetValues(table);
                     }
                 }
-                else
+
+                using (DataTable table = FormHelper.GetTable("core", "accounts", "confidential", "0"))
                 {
-                    using(DataTable table = FormHelper.GetTable("core", "accounts", "confidential", "0"))
-                    {
-                        return GetValues(table);
-                    }
-                }
-            }
-            else
-            {
-                if(SessionHelper.IsAdmin())
-                {
-                    using(DataTable table = FormHelper.GetTable("core", "account_view", "has_child", "0"))
-                    {
-                        return GetValues(table);
-                    }
-                }
-                else
-                {
-                    {
-                        using(DataTable table = FormHelper.GetTable("core", "account_view", "has_child, confidential", "0, 0"))
-                        {
-                            return GetValues(table);
-                        }
-                    }
+                    return GetValues(table);
                 }
             }
 
+            if (SessionHelper.IsAdmin())
+            {
+                using (DataTable table = FormHelper.GetTable("core", "account_view", "has_child", "0"))
+                {
+                    return GetValues(table);
+                }
+            }
+
+            using (DataTable table = FormHelper.GetTable("core", "account_view", "has_child, confidential", "0, 0"))
+            {
+                return GetValues(table);
+            }
         }
 
         private static Collection<ListItem> GetValues(DataTable table)
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            foreach(DataRow dr in table.Rows)
+            foreach (DataRow dr in table.Rows)
             {
                 values.Add(new ListItem(dr["account_name"].ToString(), dr["account_code"].ToString()));
             }
@@ -97,11 +86,11 @@ namespace MixERP.Net.FrontEnd.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            if(Accounts.IsCashAccount(accountCode))
+            if (Accounts.IsCashAccount(accountCode))
             {
-                using(DataTable table = FormHelper.GetTable("office", "cash_repositories"))
+                using (DataTable table = FormHelper.GetTable("office", "cash_repositories"))
                 {
-                    foreach(DataRow dr in table.Rows)
+                    foreach (DataRow dr in table.Rows)
                     {
                         values.Add(new ListItem(dr["cash_repository_name"].ToString(), dr["cash_repository_code"].ToString()));
                     }

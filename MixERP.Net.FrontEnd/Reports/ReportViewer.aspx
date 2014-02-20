@@ -10,7 +10,7 @@ http://mozilla.org/MPL/2.0/.
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<asp:Content ID="Content2" ContentPlaceHolderID="BodyPlaceholder" runat="server">
     <asp:Panel runat="server" ID="ReportParameterPanel" class="report-parameter hide">
         <asp:Table ID="ReportParameterTable" runat="server" />
         <a href="#" onclick="$('.report-parameter').toggle(500);" class="menu" style="float: right; padding: 4px;">Close This Form</a>

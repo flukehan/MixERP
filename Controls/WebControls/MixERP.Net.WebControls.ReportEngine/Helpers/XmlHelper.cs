@@ -5,13 +5,9 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
-using System;
-using System.Collections.Generic;
+
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
 using System.Xml;
-using System.Xml.XPath;
 
 namespace MixERP.Net.WebControls.ReportEngine.Helpers
 {
@@ -28,7 +24,14 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(path);
-            return doc.SelectSingleNode(name).InnerXml;
+            var selectSingleNode = doc.SelectSingleNode(name);
+
+            if (selectSingleNode != null)
+            {
+                return selectSingleNode.InnerXml;
+            }
+
+            return string.Empty;
         }
 
         [SuppressMessage("Microsoft.Design", "CA1059:MembersShouldNotExposeCertainConcreteTypes", MessageId = "System.Xml.XmlNode")]

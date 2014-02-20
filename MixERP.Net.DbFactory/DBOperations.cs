@@ -15,13 +15,13 @@ using System.Text.RegularExpressions;
 
 namespace MixERP.Net.DBFactory
 {
-    public static class DBOperations
+    public static class DbOperations
     {
         public static bool IsServerAvailable()
         {
             try
             {
-                using (var connection = new NpgsqlConnection(DBConnection.ConnectionString()))
+                using (var connection = new NpgsqlConnection(DbConnection.ConnectionString()))
                 {
                     connection.Open();
                 }
@@ -43,20 +43,13 @@ namespace MixERP.Net.DBFactory
             {
                 if (ValidateCommand(command))
                 {
-                    using (var connection = new NpgsqlConnection(DBConnection.ConnectionString()))
+                    using (var connection = new NpgsqlConnection(DbConnection.ConnectionString()))
                     {
-                        try
-                        {
-                            command.Connection = connection;
-                            connection.Open();
+                        command.Connection = connection;
+                        connection.Open();
 
-                            command.ExecuteNonQuery();
-                            return true;
-                        }
-                        catch
-                        {
-                            throw;
-                        }
+                        command.ExecuteNonQuery();
+                        return true;
                     }
                 }
             }
@@ -116,7 +109,7 @@ namespace MixERP.Net.DBFactory
 
                 if (ValidateCommand(command))
                 {
-                    using (var connection = new NpgsqlConnection(DBConnection.ConnectionString()))
+                    using (var connection = new NpgsqlConnection(DbConnection.ConnectionString()))
                     {
                         command.Connection = connection;
                         connection.Open();
@@ -158,7 +151,7 @@ namespace MixERP.Net.DBFactory
         [CLSCompliant(false)]
         public static DataTable GetDataTable(NpgsqlCommand command)
         {
-            return GetDataTable(command, DBConnection.ConnectionString());
+            return GetDataTable(command, DbConnection.ConnectionString());
         }
 
 
@@ -170,7 +163,7 @@ namespace MixERP.Net.DBFactory
             {
                 if (ValidateCommand(command))
                 {
-                    using (var connection = new NpgsqlConnection(DBConnection.ConnectionString()))
+                    using (var connection = new NpgsqlConnection(DbConnection.ConnectionString()))
                     {
                         command.Connection = connection;
                         command.Connection.Open();
@@ -203,7 +196,7 @@ namespace MixERP.Net.DBFactory
             {
                 if (ValidateCommand(command))
                 {
-                    using (var connection = new NpgsqlConnection(DBConnection.ConnectionString()))
+                    using (var connection = new NpgsqlConnection(DbConnection.ConnectionString()))
                     {
                         command.Connection = connection;
 

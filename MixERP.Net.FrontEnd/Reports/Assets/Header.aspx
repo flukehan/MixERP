@@ -11,7 +11,7 @@ http://mozilla.org/MPL/2.0/.
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <title>MixERP WebReport</title>
 </head>
 <body>
     <mixerp:ReportHeader runat="server" Path="" />

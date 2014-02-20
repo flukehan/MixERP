@@ -6,16 +6,16 @@
                 Math.max(D.body.clientHeight, D.documentElement.clientHeight)
             );
 
-}
+};
 
-var selectDropDownListByValue = function (textBoxId, dropDownListId) {
+var selectDropDownListByValue = function(textBoxId, dropDownListId) {
     var listControl = $("#" + dropDownListId);
     var textBox = $("#" + textBoxId);
     var selectedValue = textBox.val();
     var exists;
 
     if (listControl.length) {
-        listControl.find('option').each(function () {
+        listControl.find('option').each(function() {
             if (this.value == selectedValue) {
                 exists = true;
             }
@@ -24,50 +24,47 @@ var selectDropDownListByValue = function (textBoxId, dropDownListId) {
 
     if (exists) {
         listControl.val(selectedValue).trigger('change');
-    }
-    else {
+    } else {
         textBox.val('');
     }
 
     triggerChange(dropDownListId);
-}
+};
 
-var triggerChange = function (controlId) {
+var triggerChange = function(controlId) {
     var element = document.getElementById(controlId);
 
     if ('createEvent' in document) {
         var evt = document.createEvent("HTMLEvents");
         evt.initEvent("change", false, true);
         element.dispatchEvent(evt);
-    }
-    else {
+    } else {
         if ("fireEvent" in element)
             element.fireEvent("onchange");
     }
 
-}
+};
 
-var parseFloat2 = function (arg) {
+var parseFloat2 = function(arg) {
     return parseFloat(arg || 0);
-}
+};
 
-var confirmAction = function () {
+var confirmAction = function() {
     return confirm(localizedAreYouSure);
-}
+};
 
 
 /******************************************************************************************************
 DATE EXPRESSION START
 ******************************************************************************************************/
 
-var validateByControlId = function (controlId) {
+var validateByControlId = function(controlId) {
     if (typeof Page_ClientValidate === "function") {
         Page_ClientValidate(controlId);
-    }
-    else {
+    } else {
         console.log("The function Page_ClientValidate was not found.");
     }
-}
+};
 
 $(document).ready(function () {
     $(".date").blur(function () {
@@ -75,6 +72,7 @@ $(document).ready(function () {
         var control = $(this);
         var value = control.val().trim().toLowerCase();
         var result;
+        var number;
 
         if (value == "d") {
             result = dateAdd(today, "d", 0);
@@ -133,28 +131,28 @@ $(document).ready(function () {
         }
 
         if (value.indexOf("d") >= 0) {
-            var number = parseInt(value.replace("d"));
+            number = parseInt(value.replace("d"));
             control.val(dateAdd(today, "d", number));
             validateByControlId(control.attr("id"));
             return;
         }
 
         if (value.indexOf("w") >= 0) {
-            var number = parseInt(value.replace("w"));
+            number = parseInt(value.replace("w"));
             control.val(dateAdd(today, "d", number * 7));
             validateByControlId(control.attr("id"));
             return;
         }
 
         if (value.indexOf("m") >= 0) {
-            var number = parseInt(value.replace("m"));
+            number = parseInt(value.replace("m"));
             control.val(dateAdd(today, "m", number));
             validateByControlId(control.attr("id"));
             return;
         }
 
         if (value.indexOf("y") >= 0) {
-            var number = parseInt(value.replace("y"));
+            number = parseInt(value.replace("y"));
             control.val(dateAdd(today, "y", number));
             validateByControlId(control.attr("id"));
             return;
@@ -164,7 +162,7 @@ $(document).ready(function () {
 
 function dateAdd(dt, expression, number) {
     var d = Date.parseExact(dt, shortDateFormat);
-    var ret;
+    var ret = new Date();
 
     if (expression == "d") {
         ret = new Date(d.getFullYear(), d.getMonth(), d.getDate() + parseInt(number));
@@ -179,17 +177,19 @@ function dateAdd(dt, expression, number) {
     }
 
     return ret.toString(shortDateFormat);
-}
+};
 
 /******************************************************************************************************
 DATE EXPRESSION END
 ******************************************************************************************************/
 
-var showWindow = function (url) {
+var showWindow = function(url) {
     newwindow = window.open(url, name, 'width=' + $('html').width() + ',height=' + $('html').height() + ',toolbar=0,menubar=0,location=0,scrollbars=1,resizable=1');
     newwindow.moveTo(0, 0);
-    if (window.focus) { newwindow.focus() }
-}
+    if (window.focus) {
+        newwindow.focus();
+    }
+};
 
 
 $(document).ready(function () {
@@ -200,13 +200,13 @@ $(document).ready(function () {
     }
 });
 
-function Page_EndRequest(sender, args) {
+function Page_EndRequest() {
     setNumberFormat();
 }
 
-var setNumberFormat = function () {
+var setNumberFormat = function() {
     $('input.number').number(true, decimalPlaces, decimalSeparator, thousandSeparator);
-}
+};
 
 
 
@@ -220,7 +220,7 @@ function getFillColor(index) {
     var color = hexToRgb(chartColors[index]);
     var opacity = 0.8;
     return "rgba(" + color.r + "," + color.g + "," + color.b + "," + opacity + ")";
-}
+};
 
 function hexToRgb(hex) {
     // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
@@ -235,7 +235,7 @@ function hexToRgb(hex) {
         g: parseInt(result[2], 16),
         b: parseInt(result[3], 16)
     } : null;
-}
+};
 
 function prepareChart(datasourceId, canvasId, legendId, type) {
     var table = $("#" + datasourceId);
@@ -294,26 +294,26 @@ function prepareChart(datasourceId, canvasId, legendId, type) {
     });
 
 
-    var data = {
+    var reportData = {
         labels: labels,
         datasets: datasets
-    }
+    };
 
     var ctx = document.getElementById(canvasId).getContext("2d");
 
     switch (type) {
         case "line":
-            new Chart(ctx).Line(data);
+            new Chart(ctx).Line(reportData);
             break;
         case "radar":
-            new Chart(ctx).Radar(data);
+            new Chart(ctx).Radar(reportData);
             break;
         default:
-            new Chart(ctx).Bar(data);
+            new Chart(ctx).Bar(reportData);
             break;
     }
 
-    legend(document.getElementById(legendId), data);
+    legend(document.getElementById(legendId), reportData);
     table.hide();
 }
 
@@ -365,19 +365,19 @@ function preparePieChart(datasourceId, canvasId, legendId, type) {
 
     legend(document.getElementById(legendId), data);
     table.hide();
-}
+};
 
 /******************************************************************************************************
 Chart END
 ******************************************************************************************************/
 
-var parseFormattedNumber = function (input) {
+var parseFormattedNumber = function(input) {
     var result = input.replace(thousandSeparator, "");
     result = result.replace(decimalSeparator, ".");
     return result;
-}
+};
 
-var getFormattedNumber = function (input) {
+var getFormattedNumber = function(input) {
     var result = input.replace(".", decimalSeparator);
     return result;
-}
+};

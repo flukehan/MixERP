@@ -6,14 +6,10 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Threading;
 using System.Web;
 using System.Web.Routing;
-using System.Web.Security;
-using System.Web.SessionState;
 using MixERP.Net.Common;
 
 namespace MixERP.Net.FrontEnd
@@ -60,7 +56,7 @@ namespace MixERP.Net.FrontEnd
             }
 
 
-            ExceptionManager.HandleException(ex);
+            MixERPExceptionManager.HandleException(ex);
 
         }
 

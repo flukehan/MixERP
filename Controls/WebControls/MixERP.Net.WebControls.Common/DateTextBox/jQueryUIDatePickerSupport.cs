@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.WebControls.Common.Helpers;
 
@@ -18,7 +17,7 @@ namespace MixERP.Net.WebControls.Common
 {
     public partial class DateTextBox
     {
-        private void AddjQueryUIDatePicker()
+        private void AddjQueryUiDatePicker()
         {
             string script = this.GetDatePickerScript(this.ID);
 
@@ -34,11 +33,10 @@ namespace MixERP.Net.WebControls.Common
 
         private string GetDatePickerScript(string controlId)
         {
-            string script = string.Empty;
             string selector = "$('#" + controlId + "')";
-            string locale = JQueryUIHelper.GetDatePickerLocale();
+            string locale = JQueryUiHelper.GetDatePickerLocale();
 
-            script = "$(function() {" + selector + ".datepicker({";
+            string script = "$(function() {" + selector + ".datepicker({";
             script += this.GetParameters();
             script += "}";
 
@@ -60,12 +58,12 @@ namespace MixERP.Net.WebControls.Common
             string script = string.Empty;
             int index = 0;
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            string format = JQueryUIHelper.GetDatePickerFormat();
-            bool showWeekNumber = JQueryUIHelper.ShowWeekNumber();
-            int weekStartDay = JQueryUIHelper.GetWeekStartDay();
+            string format = JQueryUiHelper.GetDatePickerFormat();
+            bool showWeekNumber = JQueryUiHelper.ShowWeekNumber();
+            int weekStartDay = JQueryUiHelper.GetWeekStartDay();
             DateTime? minDate = this.MinDate;
             DateTime? maxDate = this.MaxDate;
-            string numberOfMonths = JQueryUIHelper.GetNumberOfMonths();
+            string numberOfMonths = JQueryUiHelper.GetNumberOfMonths();
 
             parameters.Add("dateFormat", "'" + format + "'");
 

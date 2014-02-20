@@ -225,12 +225,12 @@
     <Compile Include="Finance\BankReconciliation.aspx.designer.cs">
       <DependentUpon>BankReconciliation.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Finance\Confirmation\GLAdvice.aspx.cs">
-      <DependentUpon>GLAdvice.aspx</DependentUpon>
+    <Compile Include="Finance\Confirmation\GlAdvice.aspx.cs">
+      <DependentUpon>GlAdvice.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Finance\Confirmation\GLAdvice.aspx.designer.cs">
-      <DependentUpon>GLAdvice.aspx</DependentUpon>
+    <Compile Include="Finance\Confirmation\GlAdvice.aspx.designer.cs">
+      <DependentUpon>GlAdvice.aspx</DependentUpon>
     </Compile>
     <Compile Include="Finance\Confirmation\JournalVoucher.aspx.cs">
       <DependentUpon>JournalVoucher.aspx</DependentUpon>
@@ -1050,7 +1050,54 @@
     </Content>
     <Content Include="Account\ChangePassword.aspx" />
     <Content Include="Account\SignOut.aspx" />
-    <Content Include="App_Themes\MixERP\Default.css" />
+    <Content Include="Scripts\colorbox\colorbox.css" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-ar.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-bg.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-ca.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-cs.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-da.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-de.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-es.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-et.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-fa.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-fi.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-fr.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-gl.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-gr.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-he.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-hr.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-hu.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-id.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-it.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-ja.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-kr.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-lv.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-nl.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-no.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-pl.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-pt-br.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-ro.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-ru.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-si.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-sk.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-sr.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-sv.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-tr.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-uk.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-zh-CN.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-zh-TW.js" />
+    <Content Include="Scripts\colorbox\jquery.colorbox-min.js" />
+    <Content Include="Scripts\colorbox\jquery.colorbox.js" />
+    <Content Include="Scripts\jqueryNumber\jquery.number.js" />
+    <Content Include="bundles\scripts\master-page.js">
+      <DependentUpon>master-page.js.bundle</DependentUpon>
+    </Content>
+    <Content Include="bundles\scripts\master-page.min.js">
+      <DependentUpon>master-page.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\mixerp.js" />
+    <Content Include="Static\AccessIsDenied.html" />
+    <Content Include="Themes\purple\stylesheets\default.css" />
     <Content Include="CRM\ConvertLeadToOpportunity.aspx" />
     <Content Include="CRM\Index.aspx" />
     <Content Include="CRM\Lead.aspx" />
@@ -1082,7 +1129,7 @@
     <Content Include="db\index.html" />
     <Content Include="Dependencies\AspNetPager.dll" />
     <Content Include="Finance\BankReconciliation.aspx" />
-    <Content Include="Finance\Confirmation\GLAdvice.aspx" />
+    <Content Include="Finance\Confirmation\GlAdvice.aspx" />
     <Content Include="Finance\Confirmation\JournalVoucher.aspx" />
     <Content Include="Finance\Index.aspx" />
     <Content Include="Finance\JournalVoucher.aspx" />
@@ -1485,37 +1532,6 @@
     <Content Include="Scripts\CodeMirror\theme\visual-studio.css" />
     <Content Include="Scripts\CodeMirror\theme\xq-dark.css" />
     <Content Include="Scripts\CodeMirror\theme\xq-light.css" />
-    <Content Include="Scripts\colorbox\colorbox.css" />
-    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-ar.js" />
-    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-bg.js" />
-    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-cs.js" />
-    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-da.js" />
-    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-de.js" />
-    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-es.js" />
-    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-et.js" />
-    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-fa.js" />
-    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-fi.js" />
-    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-fr.js" />
-    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-hr.js" />
-    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-hu.js" />
-    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-id.js" />
-    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-it.js" />
-    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-ja.js" />
-    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-kr.js" />
-    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-lv.js" />
-    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-nl.js" />
-    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-no.js" />
-    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-pl.js" />
-    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-pt-br.js" />
-    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-ro.js" />
-    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-ru.js" />
-    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-sk.js" />
-    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-sv.js" />
-    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-tr.js" />
-    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-zh-CN.js" />
-    <Content Include="Scripts\colorbox\images\controls.png" />
-    <Content Include="Scripts\colorbox\images\loading.gif" />
-    <Content Include="Scripts\colorbox\jquery.colorbox-min.js" />
     <Content Include="Scripts\date.js" />
     <Content Include="Scripts\gridster\jquery.gridster.js" />
     <Content Include="Scripts\gridster\jquery.gridster.min.css" />
@@ -1538,8 +1554,7 @@
     <Content Include="Scripts\jquery-ui\css\custom-theme\images\ui-icons_ffffff_256x240.png" />
     <Content Include="Scripts\jquery-ui\css\custom-theme\jquery-ui-1.10.3.custom.css" />
     <Content Include="Scripts\jquery-ui\css\custom-theme\jquery-ui-1.10.3.custom.min.css" />
-    <Content Include="Scripts\jqueryNumber\jquery.number.min.js" />
-    <Content Include="Scripts\mixerp.js" />
+    <Content Include="Scripts\mixerp\mixerp.js" />
     <Content Include="Scripts\shortcut.js" />
     <Content Include="Services\AccountData.asmx" />
     <Content Include="Services\ItemData.asmx" />
@@ -1571,8 +1586,20 @@
     <Content Include="Resource\Icons\delete-16.png" />
     <Content Include="Themes\purple\stylesheets\main.css" />
     <Content Include="Themes\purple\images\mixerp-logo-light.png" />
+    <Content Include="bundles\stylesheets\master-page.css">
+      <DependentUpon>master-page.css.bundle</DependentUpon>
+    </Content>
+    <Content Include="bundles\stylesheets\master-page.min.css">
+      <DependentUpon>master-page.css</DependentUpon>
+    </Content>
     <Content Include="Themes\purple\stylesheets\padding.css" />
     <Content Include="Themes\purple\images\mixerp-logo.png" />
+    <Content Include="bundles\stylesheets\sign-in.css">
+      <DependentUpon>sign-in.css.bundle</DependentUpon>
+    </Content>
+    <Content Include="bundles\stylesheets\sign-in.min.css">
+      <DependentUpon>sign-in.css</DependentUpon>
+    </Content>
     <Content Include="Trash\WebForm1.aspx" />
     <Content Include="UserControls\CurrencyExtender.ascx" />
   </ItemGroup>
@@ -1620,6 +1647,15 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Resource\Configuration\DbParameters.xml" />
+    <Content Include="Scripts\colorbox\bower.json" />
+    <Content Include="Scripts\colorbox\colorbox.ai" />
+    <Content Include="Scripts\colorbox\colorbox.jquery.json" />
+    <None Include="bundles\scripts\master-page.js.bundle" />
+    <Content Include="bundles\scripts\master-page.min.js.map">
+      <DependentUpon>master-page.min.js</DependentUpon>
+    </Content>
+    <None Include="bundles\stylesheets\master-page.css.bundle" />
+    <None Include="bundles\stylesheets\sign-in.css.bundle" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1707,12 +1743,14 @@
     <Content Include="App_GlobalResources\ScrudResource.fr.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>ScrudResource.fr.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\Labels.fr.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Labels.fr.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
@@ -1733,6 +1771,7 @@
     <Content Include="App_GlobalResources\Warnings.fr.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Warnings.fr.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
@@ -1772,9 +1811,8 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>copy /Y "$(SolutionDir)\Dependencies\Mono\Profile\Mono\Npgsql.dll" "$(SolutionDir)\MixERP.Net.FrontEnd\bin\Npgsql.dll"
-copy /Y "$(SolutionDir)\Dependencies\Mono\Profile\Mono\Mono.Security.dll" "$(SolutionDir)\MixERP.Net.FrontEnd\bin\Mono.Security.dll"
-</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -5,11 +5,8 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
-using System;
-using System.Collections.Generic;
+
 using System.Data;
-using System.Linq;
-using System.Text;
 using MixERP.Net.DBFactory;
 using Npgsql;
 
@@ -19,23 +16,23 @@ namespace MixERP.Net.DatabaseLayer.Core
     {
         public static DataTable GetUnitViewByItemCode(string itemCode)
         {
-            string sql = "SELECT * FROM core.get_associated_units_from_item_code(@ItemCode);";
+            const string sql = "SELECT * FROM core.get_associated_units_from_item_code(@ItemCode);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.Add("@ItemCode", itemCode);
+                command.Parameters.AddWithValue("@ItemCode", itemCode);
 
-                return DBOperations.GetDataTable(command);
+                return DbOperations.GetDataTable(command);
             }
         }
 
         public static bool UnitExistsByName(string unitName)
         {
-            string sql = "SELECT 1 FROM core.units WHERE core.units.unit_name=@UnitName;";
+            const string sql = "SELECT 1 FROM core.units WHERE core.units.unit_name=@UnitName;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.Add("@UnitName", unitName);
+                command.Parameters.AddWithValue("@UnitName", unitName);
 
-                var value = DBOperations.GetScalarValue(command);
+                var value = DbOperations.GetScalarValue(command);
                 if (value != null)
                 {
                     return value.ToString().Equals("1");

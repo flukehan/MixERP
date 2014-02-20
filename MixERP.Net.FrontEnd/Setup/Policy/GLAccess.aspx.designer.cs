@@ -10,6 +10,6 @@
 namespace MixERP.Net.FrontEnd.Setup.Policy {
     
     
-    public partial class GLAccess {
+    public partial class GlAccess {
     }
 }

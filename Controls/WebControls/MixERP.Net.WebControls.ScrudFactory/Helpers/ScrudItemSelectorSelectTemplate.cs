@@ -21,11 +21,6 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
         private bool disposed;
         public void InstantiateIn(Control container)
         {
-            if (container == null)
-            {
-                return;
-            }
-
             this.selectAnchor = new HtmlAnchor();
 
             this.selectAnchor.HRef = "#";
@@ -42,7 +37,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
                 var rowView = container.DataItem as DataRowView;
                 if (rowView != null)
                 {
-                    this.selectAnchor.Attributes.Add("onclick", "updateValue(" + rowView[0].ToString() + ");");
+                    this.selectAnchor.Attributes.Add("onclick", "updateValue(" + rowView[0] + ");");
                 }
             }
         }

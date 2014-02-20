@@ -91,13 +91,12 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
         private static void SetDisplayFields(DropDownList dropDownList, DataTable table, string tableSchema, string tableName, string tableColumn, string displayFields)
         {
             //See DisplayFields Property for more information.
-            var columnOrExpression = string.Empty;
 
             if (table.Rows.Count > 0)
             {
                 //Get the expression value of display field from comma seprated list of expressions.
                 //The expression can be either the column name or a column expression.
-                columnOrExpression = GetExpressionValue(displayFields, tableSchema, tableName, tableColumn);
+                string columnOrExpression = GetExpressionValue(displayFields, tableSchema, tableName, tableColumn);
 
                 //Let's check whether the display field expression really exists.
                 //If it does not exist, it is probably an expression column.
@@ -138,17 +137,13 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
             using (var itemSelectorAnchor = new HtmlAnchor())
             {
                 //string relation = string.Empty;
-                var viewRelation = string.Empty;
-
-                var schema = string.Empty;
-                var view = string.Empty;
 
                 //Get the expression value of display view from comma seprated list of expressions.
                 //The expression must be a valid fully qualified table or view name.
-                viewRelation = GetExpressionValue(displayViews, tableSchema, tableName, tableColumn);
+                string viewRelation = GetExpressionValue(displayViews, tableSchema, tableName, tableColumn);
 
-                schema = viewRelation.Split('.').First();
-                view = viewRelation.Split('.').Last();
+                string schema = viewRelation.Split('.').First();
+                string view = viewRelation.Split('.').Last();
 
                 //Sanitize the schema and the view
                 schema = Sanitizer.SanitizeIdentifierName(schema);

@@ -142,29 +142,29 @@
     <value>La tâche a été achevée avec succès.</value>
   </data>
   <data name="TransactionWithdrawnMessage" xml:space="preserve">
-    <value>La transaction a été retiré avec succès. En outre, cette action aura des répercussions sur l'ensemble des rapports produits sur et après " { 0 } ".</value>
+    <value>La transaction a été retiré avec succès. En outre, cette action aura des répercussions sur l'ensemble des rapports produits sur et après " {0} ".</value>
     <comment>The transaction was withdrawn successfully. Moreover, this action will affect the all the reports produced on and after "1/1/2013".</comment>
   </data>
   <data name="UnknownError" xml:space="preserve">
     <value>Erreur inconnue s'est produite.</value>
   </data>
   <data name="VerificationApprovedMessage" xml:space="preserve">
-    <value>Cette transaction a été approuvée par { 0} sur { 1 }.</value>
+    <value>Cette transaction a été approuvée par {0} sur {1}.</value>
     <comment>This transaction was approved by administrator on 1/1/2013.</comment>
   </data>
   <data name="VerificationAwaitingMessage" xml:space="preserve">
     <value>Cette transaction est en attente de vérification d'un administrateur.</value>
   </data>
   <data name="VerificationClosedMessage" xml:space="preserve">
-    <value>Cette transaction a été fermée par { 0} sur { 1 }.  Raison : " { 2 } ".</value>
+    <value>Cette transaction a été fermée par {0} sur {1}.  Raison : " {2} ".</value>
     <comment>This transaction was closed by administrator on 1/1/2013. Reason: "Mistake entry.".</comment>
   </data>
   <data name="VerificationRejectedMessage" xml:space="preserve">
-    <value>Cette transaction a été rejetée par { 0} sur { 1 }.  Raison : " { 2 } ".</value>
+    <value>Cette transaction a été rejetée par {0} sur {1}.  Raison : " {2} ".</value>
     <comment>This transaction was rejected by administrator on 1/1/2013. Reason: "Mistake entry.".</comment>
   </data>
   <data name="VerificationWithdrawnMessage" xml:space="preserve">
-    <value>Cette transaction a été retiré par { 0} sur { 1 }.  Raison : " { 2 } ".</value>
+    <value>Cette transaction a été retiré par {0} sur {1}.  Raison : " {2} ".</value>
     <comment>This transaction was withdrawn by administrator on 1/1/2013. Reason: "Mistake entry.".</comment>
   </data>
 </root>

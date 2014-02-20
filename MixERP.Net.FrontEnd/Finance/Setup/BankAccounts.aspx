@@ -19,6 +19,3 @@ http://mozilla.org/MPL/2.0/.
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceholder" runat="server">
 </asp:Content>
-<script runat="server">
-
-</script>

@@ -1,12 +1,11 @@
 ﻿html, body, table, tr, td, h1, h2, h3, h4, h5, input, select, p, textarea {
-    margin: 0px;
-    padding: 0px;
-    font-family: 'Segoe UI', 'Helvetica Neue', 'Open Sans', open-sans, 'Source Sans Pro', MyriadPro-Regular, 'Myriad Pro Regular', MyriadPro, 'Myriad Pro', 'Lucida Grande', 'Droid Sans', Ubuntu, sans-serif;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', 'Tahoma', 'Arial', 'Open Sans', open-sans, 'Source Sans Pro', MyriadPro-Regular, 'Myriad Pro Regular', MyriadPro, 'Myriad Pro', 'Lucida Grande', 'Droid Sans', Ubuntu, sans-serif;
 }
 
 .menu-header, h1, h2, h3, h4, h5, .title, .menu-title {
-    font-family: 'Segoe UI Light', 'Helvetica Neue', 'Geneva', 'Open Sans', open-sans, 'DejaVu Sans', 'Liberation Sans', Freesans, 'DejaVu Sans', sans-serif !important;
-    font-weight: lighter;
+    font-family: 'Segoe UI Light', Tahoma, Geneva, Arial, 'Open Sans', open-sans, 'DejaVu Sans', 'Liberation Sans', Freesans, 'DejaVu Sans', sans-serif !important;
 }
 
 html {
@@ -30,7 +29,7 @@ form {
 }
 
 p {
-    padding: 3px 0px 3px 0px;
+    padding: 3px 0 3px 0;
 }
 
 html, body, input, select, textarea {
@@ -38,19 +37,7 @@ html, body, input, select, textarea {
 }
 
 body {
-    /* fallback */
     background-color: #6532B8;
-    background-repeat: repeat-y;
-    /* Safari 4-5, Chrome 1-9 */
-    background: -webkit-gradient(linear, left top, right top, from(#7B4FC2), to(#6532B8));
-    /* Safari 5.1, Chrome 10+ */
-    background: -webkit-linear-gradient(left, #6532B8, #7B4FC2);
-    /* Firefox 3.6+ */
-    background: -moz-linear-gradient(left, #6532B8, #7B4FC2);
-    /* IE 10 */
-    background: -ms-linear-gradient(left, #6532B8, #7B4FC2);
-    /* Opera 11.10+ */
-    background: -o-linear-gradient(left, #6532B8, #7B4FC2);
 }
 
 
@@ -75,7 +62,7 @@ input, select {
 #content {
     background-color: White;
     width: 100%;
-    padding: 0px;
+    padding: 0;
     padding-right: 16px;
     height: 100%;
 }
@@ -88,7 +75,7 @@ input, select {
 #menu {
     background-color: #8765C5;
     width: 100%;
-    padding: 12px 0px 12px 16px;
+    padding: 12px 0 12px 16px;
     font-weight: bold;
     height: 14px;
 }
@@ -129,7 +116,7 @@ input, select {
         padding: 16px 4px 7px 7px;
         width: 24px;
         height: 24px;
-        margin: 0px;
+        margin: 0;
     }
 
 .error {
@@ -171,14 +158,14 @@ h5 {
 
 .hr {
     border: 1px dotted #C0C0C0;
-    border-top: 0px;
+    border-top: 0;
 }
 
 
 .menu-panel {
     font-size: 11px;
     width: 240px;
-    margin: 12px 12px 0px 0px;
+    margin: 12px 12px 0 0;
     float: left;
     cursor: pointer;
     height: 400px;
@@ -200,8 +187,8 @@ h5 {
 }
 
 .menu-panel ul {
-    maring: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     list-style-type: none;
 }
 
@@ -223,7 +210,7 @@ h5 {
 
 #GridPanel {
     border: 1px solid #A89CEB;
-    margin: 0px;
+    margin: 0;
 }
 
 .grid {
@@ -282,7 +269,7 @@ table.grid th[scope=col] {
 
 
 .pager {
-    margin: 8px 0px 8px 4px;
+    margin: 8px 0 8px 4px;
 }
 
     .pager a, .pager span {
@@ -312,13 +299,17 @@ table.grid th[scope=col] {
 ::-webkit-scrollbar-track {
     background: #eee;
     border: thin solid lightgray;
-    box-shadow: 0px 0px 3px #dfdfdf inset;
+    -webkit-box-shadow: 0 0 3px #dfdfdf inset;
+    -ms-box-shadow: 0 0 3px #dfdfdf inset;
+    box-shadow: 0 0 3px #dfdfdf inset;
+    -ms-border-radius: 10px;
     border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
     background: #999;
     border: thin solid gray;
+    -ms-border-radius: 10px;
     border-radius: 10px;
 }
 
@@ -337,7 +328,7 @@ table.grid th[scope=col] {
 
 .form-error {
     color: #CC3300;
-    padding: 4px 0px 4px 0px;
+    padding: 4px 0 4px 0;
     font-weight: bold;
 }
 
@@ -392,8 +383,8 @@ label {
 }
 
     #menu-table td {
-        padding: 0px;
-        margin: 0px;
+        padding: 0;
+        margin: 0;
         vertical-align: top;
     }
 
@@ -412,7 +403,7 @@ label {
 .menu-title {
     color: #7710BC;
     font-size: 16px;
-    padding: 8px 0px 2px 0px;
+    padding: 8px 0 2px 0;
     padding: 12px;
     font-weight: bold;
 }
@@ -446,43 +437,43 @@ a.sub-menu-anchor, a.sub-menu-anchor:visited {
 
 .vpad2 {
     display: block;
-    padding: 2px 0px 2px 0px;
+    padding: 2px 0 2px 0;
 }
 
 .vpad4 {
     display: block;
-    padding: 4px 0px 4px 0px !important;
+    padding: 4px 0 4px 0 !important;
 }
 
 .vpad6 {
     display: block;
-    padding: 6px 0px 6px 0px !important;
+    padding: 6px 0 6px 0 !important;
 }
 
 .vpad8 {
     display: block;
-    padding: 8px 0px 8px 0px !important;
+    padding: 8px 0 8px 0 !important;
 }
 
 .vpad10 {
     display: block;
-    padding: 10px 0px 10px 0px !important;
+    padding: 10px 0 10px 0 !important;
 }
 
 .vpad12 {
     display: block;
-    padding: 12px 0px 12px 0px !important;
+    padding: 12px 0 12px 0 !important;
 }
 
 .vpad14 {
     display: block;
-    padding: 14px 0px 14px 0px !important;
+    padding: 14px 0 14px 0 !important;
 }
 
 
 .vpad16 {
     display: block;
-    padding: 16px 0px 16px 0px !important;
+    padding: 16px 0 16px 0 !important;
 }
 
 /* Todo: Check if still in use. */
@@ -598,7 +589,7 @@ a.sub-menu-anchor, a.sub-menu-anchor:visited {
 }
 
     #FormTable td {
-        padding: 0px 1px 0px 1px;
+        padding: 0 1px 0 1px;
         vertical-align: middle;
     }
 
@@ -613,7 +604,7 @@ a.sub-menu-anchor, a.sub-menu-anchor:visited {
     }
 
 textarea {
-    margin-left: 0px;
+    margin-left: 0;
     padding: 4px;
 }
 
@@ -673,7 +664,7 @@ textarea {
 }
 
 input.date {
-    background: white url(../../Resource/Icons/calendar-16.png) no-repeat scroll;
+    background: white url('/Resource/Icons/calendar-16.png') no-repeat scroll;
     background-position: 95% 50%;
     padding-right: 16px;
     cursor: pointer;
@@ -695,15 +686,22 @@ input.date {
 
 
 .button {
-    -moz-box-shadow: inset 0px 1px 0px 0px #d197fe;
-    -webkit-box-shadow: inset 0px 1px 0px 0px #d197fe;
-    box-shadow: inset 0px 1px 0px 0px #d197fe;
+    -moz-box-shadow: inset 0 1px 0 0 #d197fe;
+    -webkit-box-shadow: inset 0 1px 0 0 #d197fe;
+    -ms-box-shadow: inset 0 1px 0 0 #d197fe;
+    box-shadow: inset 0 1px 0 0 #d197fe;
+    /* ReSharper disable once InvalidValue */
     background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #a53df6), color-stop(1, #7c16cb) );
+    /* ReSharper disable once InvalidValue */
     background: -moz-linear-gradient( center top, #a53df6 5%, #7c16cb 100% );
+    -webkit-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#a53df6', endColorstr='#7c16cb');
+    -moz-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#a53df6', endColorstr='#7c16cb');
+    -o-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#a53df6', endColorstr='#7c16cb');
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#a53df6', endColorstr='#7c16cb');
     background-color: #a53df6;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
+    -ms-border-radius: 2px;
     border-radius: 2px;
     border: 1px solid #9c33ed;
     display: inline-block;
@@ -712,12 +710,18 @@ input.date {
     font-weight: bold;
     padding: 6px 18px;
     text-decoration: none;
-    text-shadow: 1px 1px 0px #7d15cd;
+    -ms-text-shadow: 1px 1px 0 #7d15cd;
+    text-shadow: 1px 1px 0 #7d15cd;
 }
 
-    .button:hover {
+.button:hover {
+        /* ReSharper disable once InvalidValue */
         background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #7c16cb), color-stop(1, #a53df6) );
+        /* ReSharper disable once InvalidValue */
         background: -moz-linear-gradient( center top, #7c16cb 5%, #a53df6 100% );
+        -webkit-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7c16cb', endColorstr='#a53df6');
+        -moz-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7c16cb', endColorstr='#a53df6');
+        -o-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7c16cb', endColorstr='#a53df6');
         filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7c16cb', endColorstr='#a53df6');
         background-color: #7c16cb;
     }
@@ -738,7 +742,7 @@ input.date {
 }
 
 .item-selector {
-    background: url('../../Resource/Icons/search-16.png') no-repeat;
+    background: url('/Resource/Icons/search-16.png') no-repeat;
     background-position: 4px 4px;
     height: 20px;
     width: 20px;
@@ -798,8 +802,8 @@ input.date {
 
 .panel-content ul {
     list-style: none;
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
 }
 
     .panel-content ul li:before {
@@ -849,11 +853,27 @@ input.date {
 
 #SearchTextBox {
     border: 1px solid #CA95FF;
-    margin: 0px;
+    margin: 0;
     height: 18px;
     width: 95%;
-    background-image: url('../../Resource/Icons/find-16.png');
+    background-image: url('/Resource/Icons/find-16.png');
     background-repeat: no-repeat;
+    -moz-background-position-x: right;
+    -o-background-position-x: right;
     background-position-x: right;
+    -moz-background-position-y: center;
+    -o-background-position-y: center;
     background-position-y: center;
+}
+
+.number {
+    
+}
+
+.preview {
+    
+}
+
+.note {
+    
 }

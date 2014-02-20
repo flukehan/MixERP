@@ -6,8 +6,6 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Microsoft.CSharp;
 using System.CodeDom.Compiler;
@@ -58,6 +56,11 @@ namespace MixERP.Net.Common.Helpers
 
                     Assembly assembly = results.CompiledAssembly;
                     object assemblyInstance = assembly.CreateInstance("CSCodeEvaler.CSCodeEvaler");
+
+                    if (assemblyInstance == null)
+                    {
+                        return string.Empty;
+                    }
 
                     Type assemblyInstanceType = assemblyInstance.GetType();
                     MethodInfo info = assemblyInstanceType.GetMethod("EvalCode");

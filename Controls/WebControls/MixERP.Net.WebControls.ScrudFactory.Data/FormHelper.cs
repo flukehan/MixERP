@@ -93,7 +93,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
                 {
                     if (string.IsNullOrWhiteSpace(pair.Value))
                     {
-                        command.Parameters.Add("@" + pair.Key, DBNull.Value);
+                        command.Parameters.AddWithValue("@" + pair.Key, DBNull.Value);
                     }
                     else
                     {
@@ -104,20 +104,20 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
                                 using (BinaryReader reader = new BinaryReader(new BufferedStream(stream)))
                                 {
                                     byte[] byteArray = reader.ReadBytes(Convert.ToInt32(stream.Length));
-                                    command.Parameters.Add("@" + pair.Key, byteArray);
+                                    command.Parameters.AddWithValue("@" + pair.Key, byteArray);
                                 }
                             }
                         }
                         else
                         {
-                            command.Parameters.Add("@" + pair.Key, pair.Value);
+                            command.Parameters.AddWithValue("@" + pair.Key, pair.Value);
                         }
                     }
                 }
 
-                command.Parameters.Add("@AuditUserId", userId);
+                command.Parameters.AddWithValue("@AuditUserId", userId);
 
-                return DBOperations.ExecuteNonQuery(command);
+                return DbOperations.ExecuteNonQuery(command);
             }
         }
 
@@ -165,7 +165,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
                 {
                     if (string.IsNullOrWhiteSpace(pair.Value))
                     {
-                        command.Parameters.Add("@" + pair.Key, DBNull.Value);
+                        command.Parameters.AddWithValue("@" + pair.Key, DBNull.Value);
                     }
                     else
                     {
@@ -178,27 +178,24 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
                                 using (BinaryReader reader = new BinaryReader(new BufferedStream(stream)))
                                 {
                                     byte[] byteArray = reader.ReadBytes(Convert.ToInt32(stream.Length));
-                                    command.Parameters.Add("@" + pair.Key, byteArray);
+                                    command.Parameters.AddWithValue("@" + pair.Key, byteArray);
                                 }
                             }
                             finally
                             {
-                                if (stream != null)
-                                {
-                                    stream = null;
-                                }
+                                stream.Close();
                             }
                         }
                         else
                         {
-                            command.Parameters.Add("@" + pair.Key, pair.Value);
+                            command.Parameters.AddWithValue("@" + pair.Key, pair.Value);
                         }
                     }
                 }
 
-                command.Parameters.Add("@KeyValue", keyColumnValue);
+                command.Parameters.AddWithValue("@KeyValue", keyColumnValue);
 
-                return DBOperations.ExecuteNonQuery(command);
+                return DbOperations.ExecuteNonQuery(command);
             }
         }
 
@@ -213,9 +210,9 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
                 sql = sql.Replace("@KeyColumn", DBFactory.Sanitizer.SanitizeIdentifierName(keyColumn));
                 command.CommandText = sql;
 
-                command.Parameters.Add("@KeyValue", keyColumnValue);
+                command.Parameters.AddWithValue("@KeyValue", keyColumnValue);
 
-                return DBOperations.ExecuteNonQuery(command);
+                return DbOperations.ExecuteNonQuery(command);
             }
         }
     }

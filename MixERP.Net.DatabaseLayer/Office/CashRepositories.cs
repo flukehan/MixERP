@@ -5,11 +5,8 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
-using System;
-using System.Collections.Generic;
+
 using System.Data;
-using System.Linq;
-using System.Text;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Models.Office;
 using MixERP.Net.DatabaseLayer.Helpers;
@@ -25,14 +22,14 @@ namespace MixERP.Net.DatabaseLayer.Office
         {
             CashRepository cashRepository = new CashRepository();
 
-            if (cashRepositoryId != null || cashRepositoryId != 0)
+            if (cashRepositoryId != null && cashRepositoryId != 0)
             {
-                string sql = "SELECT * FROM office.cash_repositories WHERE cash_repository_id=@CashRepositoryId;";
+                const string sql = "SELECT * FROM office.cash_repositories WHERE cash_repository_id=@CashRepositoryId;";
                 using (NpgsqlCommand command = new NpgsqlCommand(sql))
                 {
-                    command.Parameters.Add("@CashRepositoryId", cashRepositoryId);
+                    command.Parameters.AddWithValue("@CashRepositoryId", cashRepositoryId);
 
-                    using (DataTable table = DBOperations.GetDataTable(command))
+                    using (DataTable table = DbOperations.GetDataTable(command))
                     {
                         if (table != null)
                         {
@@ -50,20 +47,20 @@ namespace MixERP.Net.DatabaseLayer.Office
 
         public static Collection<CashRepository> GetCashRepositories()
         {
-            string sql = "SELECT * FROM office.cash_repositories;";
+            const string sql = "SELECT * FROM office.cash_repositories;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                return GetCashRepositories(DBOperations.GetDataTable(command));
+                return GetCashRepositories(DbOperations.GetDataTable(command));
             }
         }
 
         public static Collection<CashRepository> GetCashRepositories(int officeId)
         {
-            string sql = "SELECT * FROM office.cash_repositories WHERE office_id=@OfficeId;";
+            const string sql = "SELECT * FROM office.cash_repositories WHERE office_id=@OfficeId;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.Add("@OfficeId", officeId);
-                return GetCashRepositories(DBOperations.GetDataTable(command));
+                command.Parameters.AddWithValue("@OfficeId", officeId);
+                return GetCashRepositories(DbOperations.GetDataTable(command));
             }
         }
 
@@ -109,11 +106,11 @@ namespace MixERP.Net.DatabaseLayer.Office
 
         public static decimal GetBalance(int cashRepositoryId)
         {
-            string sql = "SELECT transactions.get_cash_repository_balance(@CashRepositoryId);";
+            const string sql = "SELECT transactions.get_cash_repository_balance(@CashRepositoryId);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.Add("@CashRepositoryId", cashRepositoryId);
-                return Conversion.TryCastDecimal(DBOperations.GetScalarValue(command));
+                command.Parameters.AddWithValue("@CashRepositoryId", cashRepositoryId);
+                return Conversion.TryCastDecimal(DbOperations.GetScalarValue(command));
             }
         }
 

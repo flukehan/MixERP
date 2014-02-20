@@ -7,7 +7,6 @@ http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 

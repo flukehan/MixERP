@@ -6,11 +6,7 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
-using System.Linq;
-using System.Text;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Models.Office;
 using MixERP.Net.DatabaseLayer.Helpers;
@@ -23,18 +19,18 @@ namespace MixERP.Net.DatabaseLayer.Security
     {
         public static long SignIn(int officeId, string userName, string password, string browser, string remoteAddress, string remoteUser, string culture)
         {
-            string sql = "SELECT * FROM office.sign_in(@OfficeId, @UserName, @Password, @Browser, @IPAddress, @RemoteUser, @Culture);";
+            const string sql = "SELECT * FROM office.sign_in(@OfficeId, @UserName, @Password, @Browser, @IPAddress, @RemoteUser, @Culture);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.Add("@OfficeId", officeId);
-                command.Parameters.Add("@UserName", userName);
-                command.Parameters.Add("@Password", password);
-                command.Parameters.Add("@Browser", browser);
-                command.Parameters.Add("@IPAddress", remoteAddress);
-                command.Parameters.Add("@RemoteUser", remoteUser);
-                command.Parameters.Add("@Culture", culture);
+                command.Parameters.AddWithValue("@OfficeId", officeId);
+                command.Parameters.AddWithValue("@UserName", userName);
+                command.Parameters.AddWithValue("@Password", password);
+                command.Parameters.AddWithValue("@Browser", browser);
+                command.Parameters.AddWithValue("@IPAddress", remoteAddress);
+                command.Parameters.AddWithValue("@RemoteUser", remoteUser);
+                command.Parameters.AddWithValue("@Culture", culture);
 
-                return Conversion.TryCastLong(DBOperations.GetScalarValue(command));
+                return Conversion.TryCastLong(DbOperations.GetScalarValue(command));
             }
         }
 
@@ -42,12 +38,12 @@ namespace MixERP.Net.DatabaseLayer.Security
         {
             SignInView view = new SignInView();
 
-            string sql = "SELECT * FROM office.sign_in_view WHERE user_name=@UserName;";
+            const string sql = "SELECT * FROM office.sign_in_view WHERE user_name=@UserName;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.Add("@UserName", userName);
+                command.Parameters.AddWithValue("@UserName", userName);
 
-                using (DataTable table = DBOperations.GetDataTable(command))
+                using (DataTable table = DbOperations.GetDataTable(command))
                 {
                     if (table != null && table.Rows.Count.Equals(1))
                     {
