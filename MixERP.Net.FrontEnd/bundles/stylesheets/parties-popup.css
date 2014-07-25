@@ -877,184 +877,47 @@ input.date {
 .note {
     
 }
-html, body, table, tr, td, h1, h2, h3, h4, h5, input, select, p, textarea {
-    font-family: 'Segoe UI', 'Helvetica Neue', 'Tahoma', 'Arial';
-}
+/*
+    Colorbox Core Style:
+    The following CSS is consistent between example themes and should not be altered.
+*/
+#colorbox, #cboxOverlay, #cboxWrapper{position:absolute; top:0; left:0; z-index:9999; overflow:hidden;}
+#cboxOverlay{position:fixed; width:100%; height:100%;}
+#cboxMiddleLeft, #cboxBottomLeft{clear:left;}
+#cboxContent{position:relative;}
+#cboxLoadedContent{overflow:auto; -webkit-overflow-scrolling: touch;}
+#cboxTitle{margin:0;}
+#cboxLoadingOverlay, #cboxLoadingGraphic{position:absolute; top:0; left:0; width:100%; height:100%;}
+#cboxPrevious, #cboxNext, #cboxClose, #cboxSlideshow{cursor:pointer;}
+.cboxPhoto{float:left; margin:auto; border:0; display:block; max-width:none; -ms-interpolation-mode:bicubic;}
+.cboxIframe{width:100%; height:100%; display:block; border:0;}
+#colorbox, #cboxContent, #cboxLoadedContent{box-sizing:content-box; -moz-box-sizing:content-box; -webkit-box-sizing:content-box;}
 
+/* 
+    User Style:
+    Change the following styles to modify the appearance of Colorbox.  They are
+    ordered & tabbed in a way that represents the nesting of the generated HTML.
+*/
+#cboxOverlay{background:#000;}
+#colorbox{outline:0;}
+    #cboxContent{margin-top:20px;background:#000;}
+        .cboxIframe{background:#fff;}
+        #cboxError{padding:50px; border:1px solid #ccc;}
+        #cboxLoadedContent{border:5px solid #000; background:#fff;}
+        #cboxTitle{position:absolute; top:-20px; left:0; color:#ccc;}
+        #cboxCurrent{position:absolute; top:-20px; right:0px; color:#ccc;}
+        #cboxLoadingGraphic{background:url(../../Scripts/colorbox/images/loading.gif) no-repeat center center;}
 
-.sign-in-logo {
-    width: 330px;
-    margin: auto;
-    margin-top: 160px;
-}
-
-.sign-in {
-    width: 350px;
-    margin: auto;
-    height: 280px;
-    background-color: #F0F0F0;
-    padding: 12px;
-}
-
-    .sign-in input[type='text'], .sign-in input[type='password'] {
-        width: 150px;
-    }
-
-    .sign-in select {
-        width: 180px;
-    }
-
-    .sign-in:hover {
-        background-color: #F0F0E0;
-    }
-
-a img {
-    border: none;
-}
-
-a {
-    text-decoration: none;
-}
-
-    h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover, a:hover, span:hover, table:hover, tr:hover, td:hover, div:hover {
-        -webkit-transition: all 500ms ease;
-        -moz-transition: all 500ms ease;
-        -o-transition: all 500ms ease;
-        -ms-transition: all 500ms ease;
-        transition: all 500ms ease;
-    }
-
-.ajax-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
-    background-color: #A7D0D9;
-    -ms-opacity: .5;
-    opacity: .5;
-}
-
-.ajax-loader {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin-left: -32px; /* -1 * image width / 2 */
-    margin-top: -32px; /* -1 * image height / 2 */
-    display: block;
-    -ms-opacity: 0.9;
-    opacity: 0.9;
-}
-
-
-.report-parameter {
-    border: 1px solid #EDCAF7;
-    background-color: #F8EBFC;
-    position: absolute;
-    right: 20px;
-    top: 50px;
-    padding: 12px;
-}
-
-    .report-parameter table {
-        border-collapse: collapse;
-        color: #8F16B8;
-    }
-
-        .report-parameter table tr td, .report-parameter table tr td input {
-            outline: none;
-            font-size: 11px;
-            color: #8F16B8;
-        }
-
-            .report-parameter table tr td input {
-                border: 1px solid #F3DFFF;
-            }
-
-            .report-parameter table tr td:first-child {
-                padding: 4px;
-                width: 132px;
-            }
-
-
-body {
-    font-size: 11px !important;
-}
-
-hr {
-    border: 1px solid gray;
-    border-top: 0;
-}
-
-table.report tr th, table.report tr td {
-    padding: 4px;
-}
-
-
-.table {
-    border-collapse: collapse;
-    border: 1px solid gray;
-    -moz-min-width: 400px;
-    -ms-min-width: 400px;
-    -o-min-width: 400px;
-    -webkit-min-width: 400px;
-    min-width: 400px;
-}
-
-.table td {
-        border: 1px solid gray;
-        padding: 4px !important;
-    }
-
-table.horizontal > tbody > tr > td:first-child {
-    width: 180px;
-    font-weight: bold;
-}
-
-
-.report-command {
-    border: 1px solid #EDCAF7;
-    position: absolute;
-    padding: 4px 12px 4px 12px;
-    top: 20px;
-    right: 20px;
-    background-color: #F8EBFC;
-}
-
-    .report-command:hover {
-        background-color: #F2DAFA;
-    }
-
-    .report-command a img {
-        padding: 2px;
-    }
-
-@media print {
-    .hide {
-        display: none;
-    }
-}
-
-.legend .legend-title {
-    margin: 0.5em;
-    border-style: solid;
-    border-width: 0 0 0 1em;
-    padding: 0 0.3em;
-}
-
-input[type=checkbox], input[type=radio] {
-    vertical-align: middle;
-    position: relative;
-    bottom: 2px;
-    margin-right: 4px;
-}
-
-.report-image-button {
-    padding: 2px;
-}
-
-.report-button {
-    font-weight: bold;
-}
-
+        /* these elements are buttons, and may need to have additional styles reset to avoid unwanted base styles */
+        #cboxPrevious, #cboxNext, #cboxSlideshow, #cboxClose {border:0; padding:0; margin:0; overflow:visible; width:auto; background:none; }
+        
+        /* avoid outlines on :active (mouseclick), but preserve outlines on :focus (tabbed navigating) */
+        #cboxPrevious:active, #cboxNext:active, #cboxSlideshow:active, #cboxClose:active {outline:0;}
+        
+        #cboxSlideshow{position:absolute; top:-20px; right:90px; color:#fff;}
+        #cboxPrevious{position:absolute; top:50%; left:5px; margin-top:-32px; background:url(../../Scripts/colorbox/images/controls.png) no-repeat top left; width:28px; height:65px; text-indent:-9999px;}
+        #cboxPrevious:hover{background-position:bottom left;}
+        #cboxNext{position:absolute; top:50%; right:5px; margin-top:-32px; background:url(../../Scripts/colorbox/images/controls.png) no-repeat top right; width:28px; height:65px; text-indent:-9999px;}
+        #cboxNext:hover{background-position:bottom right;}
+        #cboxClose{position:absolute; top:5px; right:5px; display:block; background:url(../../Scripts/colorbox/images/controls.png) no-repeat top center; width:38px; height:19px; text-indent:-9999px;}
+        #cboxClose:hover{background-position:bottom center;}

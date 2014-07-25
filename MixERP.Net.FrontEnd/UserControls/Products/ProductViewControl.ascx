@@ -134,8 +134,11 @@
         AutoGenerateColumns="false"
         OnRowDataBound="ProductViewGridView_RowDataBound">
         <Columns>
-            <asp:TemplateField HeaderStyle-Width="56px" HeaderText="actions">
+            <asp:TemplateField HeaderStyle-Width="72px" HeaderText="actions">
                 <ItemTemplate>
+                    <a href="#" id="ChecklistAnchor" runat="server" title="Go to Checklist">
+                        <img runat="server" src="~/Resource/Icons/checklist-16.png" alt="Go to Checklist" />
+                    </a>
                     <a href="#" id="PreviewAnchor" runat="server" title="Quick Preview" class="preview">
                         <img runat="server" src="~/Resource/Icons/search-16.png" alt="Search" />
                     </a>

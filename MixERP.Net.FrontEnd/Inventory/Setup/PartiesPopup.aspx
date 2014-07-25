@@ -6,17 +6,14 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 --%>
 
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="PartiesPopup.aspx.cs" Inherits="MixERP.Net.FrontEnd.Inventory.Setup.PartiesPopup" %>
+<%@ Page Language="C#" AutoEventWireup="true" EnableViewState="false" CodeBehind="PartiesPopup.aspx.cs" Inherits="MixERP.Net.FrontEnd.Inventory.Setup.PartiesPopup" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <link href="/Themes/purple/stylesheets/main.css" rel="stylesheet" />
-    <script src="//code.jquery.com/jquery-1.9.1.js" type="text/javascript"></script>
-    <script src="/Scripts/shortcut.js"></script>
-    <script src="/Scripts/colorbox/jquery.colorbox-min.js"></script>
-    <link href="/Scripts/colorbox/colorbox.css" rel="stylesheet" />
+
+    <link href="/bundles/stylesheets/parties-popup.min.css" rel="stylesheet" />
 
     <title>Select Party</title>
 
@@ -32,6 +29,18 @@ http://mozilla.org/MPL/2.0/.
 </head>
 <body>
     <form id="form1" runat="server">
+        <asp:ScriptManager runat="server" ID="ScriptManager1">
+            <CompositeScript>
+                <Scripts>
+                    <asp:ScriptReference Name="MicrosoftAjax.js" Assembly="System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" />
+                    <asp:ScriptReference Name="MicrosoftAjaxWebForms.js" Assembly="System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" />
+                    <asp:ScriptReference Name="WebForms.js" Assembly="System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+                    <asp:ScriptReference Path="/bundles/scripts/parties-popup.min.js" />
+                </Scripts>
+            </CompositeScript>
+        </asp:ScriptManager>
+
+
         <div class="container" runat="server" id="container">
             <asp:PlaceHolder ID="ScrudPlaceholder" runat="server" />
         </div>
@@ -42,7 +51,7 @@ http://mozilla.org/MPL/2.0/.
             });
 
 
-            var updatePartyName = function(p) {
+            var updatePartyName = function (p) {
                 var firstName = $("#first_name_textbox").val();
                 var middleName = $("#middle_name_textbox").val();
                 var lastName = $("#last_name_textbox").val();

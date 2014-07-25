@@ -10,15 +10,14 @@ http://mozilla.org/MPL/2.0/.
     Inherits="MixERP.Net.FrontEnd.MixERPMaster" %>
 
 <%-- ReSharper disable once AspUnusedRegisterDirectiveHighlighting --%>
-<%@ Register TagPrefix="asp" Assembly="System.Web.Extensions" Namespace="System.Web.UI" %><%--Added for Xamarin Studio Compatibility on Mac OSX Mavericks.--%>
+<%@ Register TagPrefix="asp" Assembly="System.Web.Extensions" Namespace="System.Web.UI" %>
+<%--Added for Xamarin Studio Compatibility on Mac OSX Mavericks.--%>
 
 <!DOCTYPE html>
 <html>
 <head runat="server">
     <asp:PlaceHolder ID="HeadHolder" runat="server">
         <link href="/bundles/stylesheets/master-page.min.css" rel="stylesheet" />
-        <script src="<%=this.ResolveUrl("~/Scripts/jquery-1.9.1.js") %>"></script>
-
     </asp:PlaceHolder>
     <title>MixERP® Beta</title>
     <asp:ContentPlaceHolder ID="ScriptContentPlaceholder" runat="server">
@@ -46,7 +45,16 @@ http://mozilla.org/MPL/2.0/.
     </script>
 
     <form id="form1" runat="server" enctype="multipart/form-data" method="post" submitdisabledcontrols="true" defaultbutton="SwallowSubmitButton">
-        <asp:ScriptManager runat="server" ID="MixERPMasterScriptManager" />
+        <asp:ScriptManager runat="server" ID="MixERPMasterScriptManager">
+            <compositescript>
+                <Scripts>
+                    <asp:ScriptReference name="MicrosoftAjax.js" assembly="System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" />
+                    <asp:ScriptReference name="MicrosoftAjaxWebForms.js" assembly="System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" />
+                    <asp:ScriptReference Name="WebForms.js" Assembly="System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+                    <asp:ScriptReference Path="/bundles/scripts/master-page.min.js" />                                                                                                                   
+                </Scripts>
+            </compositescript>
+        </asp:ScriptManager>
 
         <div id="page">
             <a href="~/Dashboard/Index.aspx" runat="server">
@@ -89,7 +97,6 @@ http://mozilla.org/MPL/2.0/.
                 $(".preview").colorbox({ iframe: true, innerWidth: 1024, innerHeight: 450, overlayClose: false });
             };
         </script>
-        <script src="/bundles/scripts/master-page.min.js"></script>
         <asp:ContentPlaceHolder ID="BottomScriptContentPlaceholder" runat="server">
         </asp:ContentPlaceHolder>
     </form>

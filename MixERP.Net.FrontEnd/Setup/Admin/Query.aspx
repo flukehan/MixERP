@@ -1,27 +1,24 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MenuMaster.Master" AutoEventWireup="true"
     CodeBehind="Query.aspx.cs" Inherits="MixERP.Net.FrontEnd.Setup.Admin.Query" %>
+
 <%@ Import Namespace="System.Data" %>
 <%@ Import Namespace="System.IO" %>
 <%@ Import Namespace="MixERP.Net.DBFactory" %>
 <%@ Import Namespace="Npgsql" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceholder" runat="server">
-    <script src="/Scripts/CodeMirror/lib/codemirror.js"></script>
-    <script src="/Scripts/CodeMirror/mode/sql/sql.js"></script>
+    <script src="/bundles/scripts/query.min.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceholder" runat="server">
-    <link href="/Scripts/CodeMirror/lib/codemirror.css" rel="stylesheet" />
-    <link href="/Scripts/CodeMirror/theme/visual-studio.css" rel="stylesheet" />
+    <link href="/bundles/stylesheets/query.min.css" rel="stylesheet" />
 
     <style type="text/css">
-        .CodeMirror
-        {
+        .CodeMirror {
             border: 1px solid #eee;
             height: auto;
         }
 
-        .CodeMirror-scroll
-        {
+        .CodeMirror-scroll {
             overflow-y: hidden;
             overflow-x: auto;
         }
@@ -118,7 +115,7 @@
     protected void RunButton_Click(object sender, EventArgs e)
     {
         string sql = File.ReadAllText(this.Server.MapPath("~/db/en-US/mixerp.bak.sql"));
-        using(DataTable table = DbOperations.GetDataTable(new NpgsqlCommand(sql)))
+        using (DataTable table = DbOperations.GetDataTable(new NpgsqlCommand(sql)))
         {
             this.MessageLiteral.Text = string.Format("<div class='success'>{0} row(s) affected.</div>", table.Rows.Count);
             this.SQLGridView.DataSource = table;
@@ -129,7 +126,7 @@
     protected void LoadCustomerButton_Click(object sender, EventArgs e)
     {
         string sql = File.ReadAllText(this.Server.MapPath("~/db/en-US/party-sample.sql"));
-        using(DataTable table = DbOperations.GetDataTable(new NpgsqlCommand(sql)))
+        using (DataTable table = DbOperations.GetDataTable(new NpgsqlCommand(sql)))
         {
             this.MessageLiteral.Text = string.Format("<div class='success'>{0} row(s) affected.</div>", table.Rows.Count);
             this.SQLGridView.DataSource = table;
@@ -140,7 +137,7 @@
     protected void LoadSampleData_Click(object sender, EventArgs e)
     {
         string sql = File.ReadAllText(this.Server.MapPath("~/db/en-US/sample-data.sql"));
-        using(DataTable table = DbOperations.GetDataTable(new NpgsqlCommand(sql)))
+        using (DataTable table = DbOperations.GetDataTable(new NpgsqlCommand(sql)))
         {
             this.MessageLiteral.Text = string.Format("<div class='success'>{0} row(s) affected.</div>", table.Rows.Count);
             this.SQLGridView.DataSource = table;
@@ -152,14 +149,14 @@
     {
         try
         {
-            using(DataTable table = DbOperations.GetDataTable(new NpgsqlCommand(this.QueryTextBox.Text)))
+            using (DataTable table = DbOperations.GetDataTable(new NpgsqlCommand(this.QueryTextBox.Text)))
             {
                 this.MessageLiteral.Text = string.Format("<div class='success'>{0} row(s) affected.</div>", table.Rows.Count);
                 this.SQLGridView.DataSource = table;
                 this.SQLGridView.DataBind();
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             this.MessageLiteral.Text = @"<div class='error'>" + ex.Message + @"</div>";
         }
@@ -169,7 +166,7 @@
     {
         string sql = this.QueryHidden.Value;
 
-        if(!string.IsNullOrWhiteSpace(sql))
+        if (!string.IsNullOrWhiteSpace(sql))
         {
             string path = this.Server.MapPath("~/db/en-US/mixerp.postgresql.bak.sql");
             File.Delete(path);

@@ -267,7 +267,7 @@
         showShippingAddress();
     }
 
-    var getPrice = function() {
+    var getPrice = function () {
         //var itemDropDownList = $('#ItemDropDownList');
         var unitDropDownList = $('#UnitDropDownList');
 
@@ -277,7 +277,7 @@
     };
 
 
-    var calculateAmount = function() {
+    var calculateAmount = function () {
         var quantityTextBox = $("#QuantityTextBox");
         var priceTextBox = $("#PriceTextBox");
         var amountTextBox = $("#AmountTextBox");
@@ -292,7 +292,7 @@
         totalTextBox.val(parseFloat2(subTotalTextBox.val()) + parseFloat2(taxTextBox.val()));
     };
 
-    var updateTax = function() {
+    var updateTax = function () {
         var taxRateTextBox = $("#TaxRateTextBox");
         var taxTextBox = $("#TaxTextBox");
         var priceTextBox = $("#PriceTextBox");
@@ -322,7 +322,7 @@
         }
     };
 
-    var showShippingAddress = function() {
+    var showShippingAddress = function () {
         $('#ShippingAddressTextBox').val(($('#ShippingAddressDropDownList').val()));
     };
 
@@ -387,6 +387,7 @@
     }
 
     function initializeAjaxData() {
+        console.log('Initializing AJAX data.');
         loadAddresses();
         loadUnits();
 
@@ -420,6 +421,7 @@
     };
 
     function loadUnits() {
+        console.log('Loading units.');
         var itemCode = $("#ItemDropDownList").val();
         $("#UnitDropDownList").empty();
 

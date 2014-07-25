@@ -7,6 +7,7 @@
     <title>MixERP Report</title>
     <asp:PlaceHolder runat="server">
         <script src="<%=this.ResolveUrl("~/Scripts/jquery-1.9.1.js") %>"></script>
+        <link href="/Themes/purple/stylesheets/default.css" rel="stylesheet" />
     </asp:PlaceHolder>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>

@@ -20,7 +20,55 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data
 {
     public static class ModelFactory
     {
-        public static MergeModel GetMergeModel(Collection<int> ids, TranBook book, SubTranBook subBook)
+        private static NpgsqlCommand GetViewCommand(TranBook tranBook, SubTranBook subTranBook, Collection<int> ids)
+        {
+            if (tranBook == TranBook.Sales)
+            {
+                switch (subTranBook)
+                {
+                    case SubTranBook.Delivery:
+                        break;
+                    case SubTranBook.Direct:
+                        break;
+                    case SubTranBook.Invoice:
+                        break;
+                    case SubTranBook.Order:
+                        //return SalesOrder.GetSalesOrderViewCommand(ids);
+                    case SubTranBook.Payment:
+                        throw new InvalidOperationException(Common.Helpers.LocalizationHelper.GetResourceString("Errors", "InvalidSubTranBookSalesPayment"));
+                    case SubTranBook.Quotation:
+                        return SalesQuotation.GetSalesQuotationViewCommand(ids);
+                    case SubTranBook.Receipt:
+                        break;
+                    case SubTranBook.Return:
+                        break;
+                }
+            }
+
+            switch (subTranBook)
+            {
+                case SubTranBook.Delivery:
+                    throw new InvalidOperationException(Common.Helpers.LocalizationHelper.GetResourceString("Errors", "InvalidSubTranBookPurchaseDelivery"));
+                case SubTranBook.Direct:
+                    break;
+                case SubTranBook.Invoice:
+                    break;
+                case SubTranBook.Order:
+                    break;
+                case SubTranBook.Payment:
+                    break;
+                case SubTranBook.Quotation:
+                    throw new InvalidOperationException(Common.Helpers.LocalizationHelper.GetResourceString("Errors", "InvalidSubTranBookPurchaseQuotation"));
+                case SubTranBook.Receipt:
+                    throw new InvalidOperationException(Common.Helpers.LocalizationHelper.GetResourceString("Errors", "InvalidSubTranBookPurchaseReceipt"));
+            }
+
+
+            return null;
+
+        }
+
+        public static MergeModel GetMergeModel(Collection<int> ids, TranBook tranBook, SubTranBook subTranBook)
         {
             int rowIndex = 0;
 
@@ -35,18 +83,18 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data
             }
 
             MergeModel model = new MergeModel();
-            
+
             foreach (int tranId in ids)
             {
                 model.AddTransactionIdToCollection(tranId);
             }
 
-            model.Book = book;
-            model.SubBook = subBook;
+            model.Book = tranBook;
+            model.SubBook = subTranBook;
 
             using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString()))
             {
-                using (NpgsqlCommand command = SalesQuotation.GetSalesQuotationViewCommand(ids))
+                using (NpgsqlCommand command = GetViewCommand(tranBook, subTranBook, ids))
                 {
                     command.Connection = connection;
                     command.Connection.Open();
@@ -100,7 +148,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data
                     model.StatementReference += Environment.NewLine;
                 }
 
-                model.StatementReference += "(" + Conversion.GetBookAcronym(book, subBook) + "# " + string.Join(",", ids) + ")";
+                model.StatementReference += "(" + Conversion.GetBookAcronym(tranBook, subTranBook) + "# " + string.Join(",", ids) + ")";
             }
 
             return model;

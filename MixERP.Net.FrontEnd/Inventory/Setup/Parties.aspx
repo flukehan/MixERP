@@ -11,6 +11,10 @@ http://mozilla.org/MPL/2.0/.
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceholder" runat="server">
     <style type="text/css">
+        #menu-table {
+            width: 100%;
+        }
+
         .content, iframe
         {
             height:100%;
@@ -27,6 +31,7 @@ http://mozilla.org/MPL/2.0/.
         {
             background-color: white;
         }
+
     </style>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceholder" runat="server">

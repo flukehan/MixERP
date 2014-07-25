@@ -622,6 +622,13 @@
     <Compile Include="RuntimeError.aspx.designer.cs">
       <DependentUpon>RuntimeError.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Sales\Confirmation\Order.aspx.cs">
+      <DependentUpon>Order.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Sales\Confirmation\Order.aspx.designer.cs">
+      <DependentUpon>Order.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Sales\Confirmation\Quotation.aspx.cs">
       <DependentUpon>Quotation.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -670,6 +677,13 @@
     </Compile>
     <Compile Include="Sales\Confirmation\ReportDirectSalesInvoice.aspx.designer.cs">
       <DependentUpon>ReportDirectSalesInvoice.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Sales\Confirmation\ReportSalesOrder.aspx.cs">
+      <DependentUpon>ReportSalesOrder.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Sales\Confirmation\ReportSalesOrder.aspx.designer.cs">
+      <DependentUpon>ReportSalesOrder.aspx</DependentUpon>
     </Compile>
     <Compile Include="Sales\Confirmation\ReportSalesQuotation.aspx.cs">
       <DependentUpon>ReportSalesQuotation.aspx</DependentUpon>
@@ -1050,6 +1064,21 @@
     </Content>
     <Content Include="Account\ChangePassword.aspx" />
     <Content Include="Account\SignOut.aspx" />
+    <Content Include="bundles\scripts\master-page.js">
+      <DependentUpon>master-page.js.bundle</DependentUpon>
+    </Content>
+    <Content Include="bundles\scripts\master-page.min.js">
+      <DependentUpon>master-page.js</DependentUpon>
+    </Content>
+    <Content Include="bundles\sql\mixeerp-sample-data-bundled.sql">
+      <DependentUpon>mixerp-db-sample.sql.bundle</DependentUpon>
+    </Content>
+    <Content Include="bundles\sql\mixerp-blank-db-bundled.sql">
+      <DependentUpon>mixerp-blank-db.sql.bundle</DependentUpon>
+    </Content>
+    <Content Include="Resource\Icons\checklist-16.png" />
+    <Content Include="Sales\Confirmation\Order.aspx" />
+    <Content Include="Sales\Confirmation\ReportSalesOrder.aspx" />
     <Content Include="Scripts\colorbox\colorbox.css" />
     <Content Include="Scripts\colorbox\i18n\jquery.colorbox-ar.js" />
     <Content Include="Scripts\colorbox\i18n\jquery.colorbox-bg.js" />
@@ -1089,13 +1118,19 @@
     <Content Include="Scripts\colorbox\jquery.colorbox-min.js" />
     <Content Include="Scripts\colorbox\jquery.colorbox.js" />
     <Content Include="Scripts\jqueryNumber\jquery.number.js" />
-    <Content Include="bundles\scripts\master-page.js">
-      <DependentUpon>master-page.js.bundle</DependentUpon>
-    </Content>
-    <Content Include="bundles\scripts\master-page.min.js">
-      <DependentUpon>master-page.js</DependentUpon>
-    </Content>
     <Content Include="Scripts\mixerp.js" />
+    <Content Include="bundles\scripts\parties-popup.js">
+      <DependentUpon>parties-popup.js.bundle</DependentUpon>
+    </Content>
+    <Content Include="bundles\scripts\parties-popup.min.js">
+      <DependentUpon>parties-popup.js</DependentUpon>
+    </Content>
+    <Content Include="bundles\scripts\query.js">
+      <DependentUpon>query.js.bundle</DependentUpon>
+    </Content>
+    <Content Include="bundles\scripts\query.min.js">
+      <DependentUpon>query.js</DependentUpon>
+    </Content>
     <Content Include="Static\AccessIsDenied.html" />
     <Content Include="Themes\purple\stylesheets\default.css" />
     <Content Include="CRM\ConvertLeadToOpportunity.aspx" />
@@ -1112,10 +1147,10 @@
     <Content Include="db\en-US\index.html" />
     <Content Include="db\en-US\mixerp-db-logic.sql" />
     <Content Include="db\en-US\mixerp.sql" />
-    <Content Include="db\en-US\samples %28optional%29\0. core.menu_locale.de.sql" />
-    <Content Include="db\en-US\samples %28optional%29\0. core.menu_locale.fr.sql" />
-    <Content Include="db\en-US\samples %28optional%29\0. party-sample.sql" />
-    <Content Include="db\en-US\samples %28optional%29\1. sample-data.sql" />
+    <Content Include="db\en-US\samples %28optional%29\core.menu_locale.de.sql" />
+    <Content Include="db\en-US\samples %28optional%29\core.menu_locale.fr.sql" />
+    <Content Include="db\en-US\samples %28optional%29\party-sample.sql" />
+    <Content Include="db\en-US\samples %28optional%29\sample-data.sql" />
     <Content Include="db\en-US\samples %28optional%29\index.html" />
     <Content Include="db\fr-FR\index.html" />
     <Content Include="db\fr-FR\mixerp-db-logic.sql" />
@@ -1600,6 +1635,18 @@
     <Content Include="bundles\stylesheets\sign-in.min.css">
       <DependentUpon>sign-in.css</DependentUpon>
     </Content>
+    <Content Include="bundles\stylesheets\parties-popup.css">
+      <DependentUpon>parties-popup.css.bundle</DependentUpon>
+    </Content>
+    <Content Include="bundles\stylesheets\parties-popup.min.css">
+      <DependentUpon>parties-popup.css</DependentUpon>
+    </Content>
+    <Content Include="bundles\stylesheets\query.css">
+      <DependentUpon>query.css.bundle</DependentUpon>
+    </Content>
+    <Content Include="bundles\stylesheets\query.min.css">
+      <DependentUpon>query.css</DependentUpon>
+    </Content>
     <Content Include="Trash\WebForm1.aspx" />
     <Content Include="UserControls\CurrencyExtender.ascx" />
   </ItemGroup>
@@ -1640,6 +1687,11 @@
     <Content Include="MixERP.Net.FrontEnd.licenseheader" />
     <Content Include="Mix Open Foundation.snk" />
     <Content Include="MixERPReportMaster.Master" />
+    <Content Include="bundles\scripts\master-page.min.js.map">
+      <DependentUpon>master-page.min.js</DependentUpon>
+    </Content>
+    <Content Include="bundles\sql\mixerp-blank-db.sql.bundle" />
+    <Content Include="bundles\sql\mixerp-db-sample.sql.bundle" />
     <None Include="Properties\PublishProfiles\MixERP.pubxml" />
     <Content Include="Reports\Assets\ReadMe.txt" />
     <Content Include="Resource\Configuration\Switches.xml" />
@@ -1651,11 +1703,18 @@
     <Content Include="Scripts\colorbox\colorbox.ai" />
     <Content Include="Scripts\colorbox\colorbox.jquery.json" />
     <None Include="bundles\scripts\master-page.js.bundle" />
-    <Content Include="bundles\scripts\master-page.min.js.map">
-      <DependentUpon>master-page.min.js</DependentUpon>
-    </Content>
     <None Include="bundles\stylesheets\master-page.css.bundle" />
     <None Include="bundles\stylesheets\sign-in.css.bundle" />
+    <None Include="bundles\scripts\parties-popup.js.bundle" />
+    <Content Include="bundles\scripts\parties-popup.min.js.map">
+      <DependentUpon>parties-popup.min.js</DependentUpon>
+    </Content>
+    <None Include="bundles\stylesheets\parties-popup.css.bundle" />
+    <None Include="bundles\scripts\query.js.bundle" />
+    <Content Include="bundles\scripts\query.min.js.map">
+      <DependentUpon>query.min.js</DependentUpon>
+    </Content>
+    <None Include="bundles\stylesheets\query.css.bundle" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

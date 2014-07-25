@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bundle minify="true" runOnBuild="true" output="query.js" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://vswebessentials.com/schemas/v1/bundle.xsd">
+	<file>/Scripts/CodeMirror/lib/codemirror.js</file>
+	<file>/Scripts/CodeMirror/mode/sql/sql.js</file>
+</bundle>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bundle minify="false" runOnBuild="true" output="mixerp-blank-db-bundled.sql" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://vswebessentials.com/schemas/v1/bundle.xsd">
+  <file>/db/en-US/mixerp.sql</file>
+  <file>/db/en-US/mixerp-db-logic.sql</file>
+  <file>/db/en-US/scrud.sql</file>
+</bundle>

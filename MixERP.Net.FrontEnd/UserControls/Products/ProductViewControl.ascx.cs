@@ -41,6 +41,9 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             }
         }
 
+        public string ChecklistUrl { get; set; }
+        public string PreviewUrl { get; set; }
+
         protected void Page_Init()
         {
             this.BindFlagTypeDropDownList();
@@ -342,9 +345,9 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
             if (this.Book == TranBook.Purchase)
             {
-                if(this.SubBook == SubTranBook.Order)
+                if (this.SubBook == SubTranBook.Order)
                 {
-                        isNonGlTransaction = true;
+                    isNonGlTransaction = true;
                 }
             }
 
@@ -369,7 +372,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             {
                 key = "non_gl_stock_master_id";
             }
-            return key;        
+            return key;
         }
 
         protected void ProductViewGridView_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -396,22 +399,42 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 string id = e.Row.Cells[2].Text;
-
+                //Todo: Fix 403 errors.
                 if (!string.IsNullOrWhiteSpace(id))
                 {
-                    string popUpQuotationPreviewUrl = this.Page.ResolveUrl("~/Sales/Confirmation/ReportSalesQuotation.aspx?TranId=" + id);
-
-                    HtmlAnchor previewAnchor = (HtmlAnchor)e.Row.Cells[0].FindControl("PreviewAnchor");
-                    if (previewAnchor != null)
+                    if (!string.IsNullOrWhiteSpace(this.PreviewUrl))
                     {
-                        previewAnchor.HRef = popUpQuotationPreviewUrl;
+                        string popUpQuotationPreviewUrl = this.Page.ResolveUrl(this.PreviewUrl + "?TranId=" + id);
+
+                        using (HtmlAnchor previewAnchor = (HtmlAnchor)e.Row.Cells[0].FindControl("PreviewAnchor"))
+                        {
+                            if (previewAnchor != null)
+                            {
+                                previewAnchor.HRef = popUpQuotationPreviewUrl;
+                            }
+                        }
+
+                        using (HtmlAnchor printAnchor = (HtmlAnchor)e.Row.Cells[0].FindControl("PrintAnchor"))
+                        {
+                            if (printAnchor != null)
+                            {
+                                printAnchor.Attributes.Add("onclick", "showWindow('" + popUpQuotationPreviewUrl + "');return false;");
+                            }
+                        }
                     }
 
-                    HtmlAnchor printAnchor = (HtmlAnchor)e.Row.Cells[0].FindControl("PrintAnchor");
-                    if (printAnchor != null)
+                    using (HtmlAnchor checklistAnchor = (HtmlAnchor)e.Row.Cells[0].FindControl("ChecklistAnchor"))
                     {
-                        printAnchor.Attributes.Add("onclick", "showWindow('" + popUpQuotationPreviewUrl + "');return false;");
+                        if (!string.IsNullOrWhiteSpace(this.ChecklistUrl))
+                        {
+                            if (checklistAnchor != null)
+                            {
+                                string checkListUrl = this.Page.ResolveUrl(this.ChecklistUrl + "?TranId=" + id);
+                                checklistAnchor.HRef = checkListUrl;
+                            }
+                        }
                     }
+
                 }
             }
         }

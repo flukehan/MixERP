@@ -40,18 +40,15 @@ http://mozilla.org/MPL/2.0/.
     </div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceholder" runat="server">
-    <script src="<%=this.ResolveUrl("~/Scripts/gridster/jquery.gridster.js") %>"></script>
     <script type="text/javascript">
         var gridster;
 
         $(function () {
-
             gridster = $(".gridster > ul").gridster({
                 widget_margins: [10, 10],
                 widget_base_dimensions: [116, 122],
                 min_cols: 2
             }).data('gridster');
-
         });
     </script>
     <style type="text/css">

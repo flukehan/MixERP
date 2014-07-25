@@ -19,6 +19,28 @@ namespace MixERP.Net.BusinessLayer
 {
     public class MixERPWebpage : Page
     {
+        private class MixERPPageStatePersister : PageStatePersister
+        {
+            public MixERPPageStatePersister(Page p) : base(p) { }
+            public override void Load() { }
+            public override void Save() { }
+        }
+
+        private MixERPPageStatePersister pageStatePersister;
+
+        protected override PageStatePersister PageStatePersister
+        {
+            get
+            {
+                if (pageStatePersister == null)
+                {
+                    pageStatePersister = new MixERPPageStatePersister(this);
+                }
+
+                return pageStatePersister;
+            }
+        }
+
         /// <summary>
         /// Use this parameter on the Page_Init event of member pages.
         /// This parameter ensures that the user is not redirected to the login page 

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bundle minify="true" runOnBuild="true" output="parties-popup.js" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://vswebessentials.com/schemas/v1/bundle.xsd">
+  <file>/Scripts/jquery-1.9.1.js</file>
+  <file>/Scripts/shortcut.js</file>
+  <file>/Scripts/colorbox/jquery.colorbox.js</file>
+</bundle>
