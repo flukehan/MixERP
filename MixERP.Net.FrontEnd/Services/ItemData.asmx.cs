@@ -28,20 +28,35 @@ namespace MixERP.Net.FrontEnd.Services
     /// </summary>
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
-    [ToolboxItem(false)]
-    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
     [ScriptService]
     public class ItemData : WebService
     {
 
         [WebMethod]
-        public Collection<ListItem> GetItems()
+        public Collection<ListItem> GetItems(string tranBook)
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using(DataTable table = FormHelper.GetTable("core", "items"))
+            switch (tranBook)
             {
-                foreach(DataRow dr in table.Rows)
+                case "Sales":
+                    values = this.GetItems();
+                    break;
+                case "Purchase":
+                    values = this.GetStockItems();
+                    break;
+            }
+
+            return values;
+        }
+
+        private Collection<ListItem> GetItems()
+        {
+            Collection<ListItem> values = new Collection<ListItem>();
+
+            using (DataTable table = FormHelper.GetTable("core", "items"))
+            {
+                foreach (DataRow dr in table.Rows)
                 {
                     values.Add(new ListItem(dr["item_name"].ToString(), dr["item_code"].ToString()));
                 }
@@ -50,14 +65,13 @@ namespace MixERP.Net.FrontEnd.Services
             }
         }
 
-        [WebMethod]
-        public Collection<ListItem> GetStockItems()
+        private Collection<ListItem> GetStockItems()
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using(DataTable table = FormHelper.GetTable("core", "items", "maintain_stock", "true"))
+            using (DataTable table = FormHelper.GetTable("core", "items", "maintain_stock", "true"))
             {
-                foreach(DataRow dr in table.Rows)
+                foreach (DataRow dr in table.Rows)
                 {
                     values.Add(new ListItem(dr["item_name"].ToString(), dr["item_code"].ToString()));
                 }
@@ -80,6 +94,30 @@ namespace MixERP.Net.FrontEnd.Services
 
                 return values;
             }
+        }
+
+        [WebMethod]
+        public decimal GetPrice(string tranBook, string itemCode, string partyCode, int priceTypeId, int unitId)
+        {
+            decimal price = 0;
+
+            switch (tranBook)
+            {
+                case "Sales":
+                    price = Items.GetItemSellingPrice(itemCode, partyCode, priceTypeId, unitId);
+                    break;
+                case "Purchase":
+                    price = Items.GetItemCostPrice(itemCode, partyCode, unitId);
+                    break;
+            }
+
+            return price;
+        }
+
+        [WebMethod]
+        public decimal GetTaxRate(string itemCode)
+        {
+            return Items.GetTaxRate(itemCode);
         }
 
     }

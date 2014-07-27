@@ -1076,6 +1076,12 @@
     <Content Include="bundles\sql\mixerp-blank-db-bundled.sql">
       <DependentUpon>mixerp-blank-db.sql.bundle</DependentUpon>
     </Content>
+    <Content Include="bundles\sql\mixerp-blank-db.sql">
+      <DependentUpon>mixerp-blank-db.sql.bundle</DependentUpon>
+    </Content>
+    <Content Include="bundles\sql\mixerp-db-sample.sql">
+      <DependentUpon>mixerp-db-sample.sql.bundle</DependentUpon>
+    </Content>
     <Content Include="Resource\Icons\checklist-16.png" />
     <Content Include="Sales\Confirmation\Order.aspx" />
     <Content Include="Sales\Confirmation\ReportSalesOrder.aspx" />

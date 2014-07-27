@@ -65,7 +65,7 @@
                                 onblur="selectDropDownListByValue(this.id, 'PartyDropDownList');"
                                 ToolTip="F2" />
                             <asp:DropDownList ID="PartyDropDownList" runat="server" Width="150"
-                                onchange="if(this.selectedIndex == 0) { return false };document.getElementById('PartyCodeTextBox').value = this.options[this.selectedIndex].value;"
+                                onchange="if(this.selectedIndex == 0) { return false };document.getElementById('PartyCodeTextBox').value = this.options[this.selectedIndex].value;document.getElementById('PartyHidden').value = this.options[this.selectedIndex].value;"
                                 ToolTip="F2">
                             </asp:DropDownList>
                             <asp:HiddenField ID="PartyHidden" runat="server" />
@@ -122,8 +122,6 @@
                     <HeaderStyle CssClass="grid2-header" />
                     <RowStyle CssClass="grid2-row" />
                 </asp:GridView>
-                <%--                <asp:HiddenField ID="UnitNameHidden" runat="server" />
-                <asp:HiddenField ID="UnitIdHidden" runat="server" />--%>
 
                 <asp:Panel ID="FormPanel" runat="server" Enabled="false">
                     <asp:Label ID="ErrorLabel" runat="server" CssClass="error" />
@@ -268,12 +266,53 @@
     }
 
     var getPrice = function () {
-        //var itemDropDownList = $('#ItemDropDownList');
-        var unitDropDownList = $('#UnitDropDownList');
+        var tranBook = "<%=this.GetTranBook() %>";
+        var itemCode = $("#ItemCodeHidden").val();
+        var partyCode = $("#PartyHidden").val();
+        var priceTypeId = $("#PriceTypeDropDownList").val();
+        var unitId = $("#UnitIdHidden").val();
 
-        if (unitDropDownList.val()) {
-            triggerChange(unitDropDownList.attr('id'));
-        }
+
+        if (!unitId) return;
+
+
+        var priceTextBox = $("#PriceTextBox");
+        var taxRateTextBox = $("#TaxRateTextBox");
+
+
+        $.ajax({
+            type: "POST",
+            url: "<%=this.ResolveUrl("~/Services/ItemData.asmx/GetPrice") %>",
+            data: "{tranBook:'" + tranBook + "', itemCode:'" + itemCode + "', partyCode:'" + partyCode + "', priceTypeId:'" + priceTypeId + "', unitId:'" + unitId + "'}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                priceTextBox.val(msg.d);
+            },
+            error: function (xhr) {
+                var err = eval("(" + xhr.responseText + ")");
+                alert(err);
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "<%=this.ResolveUrl("~/Services/ItemData.asmx/GetTaxRate") %>",
+            data: "{itemCode:'" + itemCode + "'}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                taxRateTextBox.val(msg.d);
+            },
+            error: function (xhr) {
+                var err = eval("(" + xhr.responseText + ")");
+                alert(err);
+            }
+        });
+
+
+
+        calculateAmount();
     };
 
 
@@ -310,8 +349,17 @@
 
         var tax = (taxableAmount * parseFloat2(parseFormattedNumber(taxRateTextBox.val()))) / 100;
 
+        if (parseFloat2(taxTextBox.val()) == 0) {
+            if (tax.toFixed) {
+                taxTextBox.val(getFormattedNumber(tax.toFixed(2)));
+            } else {
+                taxTextBox.val(getFormattedNumber(tax));
+            }
+        }
+
         if (parseFloat2(tax).toFixed(2) != parseFloat2(parseFormattedNumber(taxTextBox.val())).toFixed(2)) {
             var question = confirm(localizedUpdateTax);
+
             if (question) {
                 if (tax.toFixed) {
                     taxTextBox.val(getFormattedNumber(tax.toFixed(2)));
@@ -336,6 +384,7 @@
             }
         });
     });
+
 
 
     $(document).ready(function () {
@@ -364,6 +413,11 @@
             $('#DiscountTextBox').focus();
         });
 
+        shortcut.add("CTRL+R", function () {
+            //Refresh Non-Disabled Dropdownlist
+            //Persist their values
+        });
+
         shortcut.add("CTRL+T", function () {
             $('#TaxTextBox').focus();
         });
@@ -388,17 +442,39 @@
 
     function initializeAjaxData() {
         console.log('Initializing AJAX data.');
-        loadAddresses();
-        loadUnits();
 
+        loadParties();
         $("#PartyDropDownList").change(function () {
             loadAddresses();
         });
+        loadAddresses();
 
+        loadItems();
         $("#ItemDropDownList").change(function () {
             loadUnits();
         });
+
+        loadUnits();
     }
+
+    function loadParties() {
+
+        $("#PartyDropDownList").empty();
+
+        $.ajax({
+            type: "POST",
+            url: "<%=this.ResolveUrl("~/Services/PartyData.asmx/GetParties") %>",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                bindParties(msg.d);
+            },
+            error: function (xhr) {
+                var err = eval("(" + xhr.responseText + ")");
+                addListItem("PartyDropDownList", 0, err.Message);
+            }
+        });
+    };
 
     function loadAddresses() {
         var partyCode = $("#PartyDropDownList").val();
@@ -416,6 +492,25 @@
             error: function (xhr) {
                 var err = eval("(" + xhr.responseText + ")");
                 addListItem("ShippingAddressDropDownList", 0, err.Message);
+            }
+        });
+    };
+
+    function loadItems() {
+        $("#ItemDropDownList").empty();
+        $.ajax({
+
+            type: "POST",
+            url: "<%=this.ResolveUrl("~/Services/ItemData.asmx/GetItems") %>",
+            data: "{tranBook:'<%=this.GetTranBook() %>'}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                bindItems(msg.d);
+            },
+            error: function (xhr) {
+                var err = eval("(" + xhr.responseText + ")");
+                addListItem("ItemDropDownList", 0, err.Message);
             }
         });
     };
@@ -462,6 +557,36 @@
         });
 
         $("#ShippingAddressDropDownList").val($("#ShippingAddressCodeHidden").val());
+    }
+
+    function bindParties(data) {
+        if (data.length == 0) {
+            addListItem("PartyDropDownList", "", noneLocalized);
+            return;
+        }
+
+        addListItem("PartyDropDownList", "", selectLocalized);
+
+        $.each(data, function () {
+            addListItem("PartyDropDownList", this['Value'], this['Text']);
+        });
+
+        $("#PartyDropDownList").val($("#PartyHidden").val());
+    }
+
+    function bindItems(data) {
+        if (data.length == 0) {
+            addListItem("ItemDropDownList", "", noneLocalized);
+            return;
+        }
+
+        addListItem("ItemDropDownList", "", selectLocalized);
+
+        $.each(data, function () {
+            addListItem("ItemDropDownList", this['Value'], this['Text']);
+        });
+
+        $("#ItemDropDownList").val($("#ItemCodeHidden").val());
     }
 
     function bindUnits(data) {

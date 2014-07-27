@@ -33,7 +33,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data
                     case SubTranBook.Invoice:
                         break;
                     case SubTranBook.Order:
-                        //return SalesOrder.GetSalesOrderViewCommand(ids);
+                        return SalesOrder.GetSalesOrderViewCommand(ids);
                     case SubTranBook.Payment:
                         throw new InvalidOperationException(Common.Helpers.LocalizationHelper.GetResourceString("Errors", "InvalidSubTranBookSalesPayment"));
                     case SubTranBook.Quotation:
