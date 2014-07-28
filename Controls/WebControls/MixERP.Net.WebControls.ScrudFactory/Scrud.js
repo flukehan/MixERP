@@ -116,7 +116,26 @@ var initialize = function () {
         //The radio button was found.
         selectNode(radio.attr("id"));
     });
+
+    saveAndClose();
 };
+
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+function saveAndClose() {
+    var lastValue = parseFloat2($("#LastValueHidden").val());
+
+    if (lastValue > 0) {
+        var ctl = getParameterByName('AssociatedControlId');
+        $('#' + ctl, parent.document.body).val(lastValue);
+        top.close();
+    }
+}
 
 function adjustSpinnerSize() {
     //Adjusting AJAX Spinner Size.

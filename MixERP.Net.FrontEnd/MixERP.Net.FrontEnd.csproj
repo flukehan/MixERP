@@ -411,6 +411,13 @@
     <Compile Include="Inventory\Setup\Items.aspx.designer.cs">
       <DependentUpon>Items.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Inventory\Setup\ItemsPopup.aspx.cs">
+      <DependentUpon>ItemsPopup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inventory\Setup\ItemsPopup.aspx.designer.cs">
+      <DependentUpon>ItemsPopup.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Inventory\Setup\Parties.aspx.cs">
       <DependentUpon>Parties.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1082,6 +1089,7 @@
     <Content Include="bundles\sql\mixerp-db-sample.sql">
       <DependentUpon>mixerp-db-sample.sql.bundle</DependentUpon>
     </Content>
+    <Content Include="Inventory\Setup\ItemsPopup.aspx" />
     <Content Include="Resource\Icons\checklist-16.png" />
     <Content Include="Sales\Confirmation\Order.aspx" />
     <Content Include="Sales\Confirmation\ReportSalesOrder.aspx" />

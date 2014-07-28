@@ -386,10 +386,14 @@
     });
 
 
-
     $(document).ready(function () {
         shortcut.add("F2", function () {
-            var url = "/Items/Setup/PartiesPopup.aspx";
+            var url = "/Inventory/Setup/PartiesPopup.aspx?modal=1&AssociatedControlId=PartyHidden";
+            showWindow(url);
+        });
+
+        shortcut.add("F4", function () {
+            var url = "/Inventory/Setup/ItemsPopup.aspx?modal=1&AssociatedControlId=ItemCodeHidden";
             showWindow(url);
         });
 
@@ -416,6 +420,7 @@
         shortcut.add("CTRL+R", function () {
             //Refresh Non-Disabled Dropdownlist
             //Persist their values
+            initializeAjaxData();
         });
 
         shortcut.add("CTRL+T", function () {
@@ -458,9 +463,6 @@
     }
 
     function loadParties() {
-
-        $("#PartyDropDownList").empty();
-
         $.ajax({
             type: "POST",
             url: "<%=this.ResolveUrl("~/Services/PartyData.asmx/GetParties") %>",
@@ -478,7 +480,6 @@
 
     function loadAddresses() {
         var partyCode = $("#PartyDropDownList").val();
-        $("#ShippingAddressDropDownList").empty();
 
         $.ajax({
             type: "POST",
@@ -497,7 +498,6 @@
     };
 
     function loadItems() {
-        $("#ItemDropDownList").empty();
         $.ajax({
 
             type: "POST",
@@ -517,8 +517,7 @@
 
     function loadUnits() {
         console.log('Loading units.');
-        var itemCode = $("#ItemDropDownList").val();
-        $("#UnitDropDownList").empty();
+        var itemCode = $("#ItemCodeHidden").val();
 
         $.ajax({
             type: "POST",
@@ -545,6 +544,8 @@
     var noneLocalized = "None";
 
     function bindAddresses(data) {
+        $("#ShippingAddressDropDownList").empty();
+
         if (data.length == 0) {
             addListItem("ShippingAddressDropDownList", "", noneLocalized);
             return;
@@ -560,6 +561,8 @@
     }
 
     function bindParties(data) {
+        $("#PartyDropDownList").empty();
+
         if (data.length == 0) {
             addListItem("PartyDropDownList", "", noneLocalized);
             return;
@@ -575,6 +578,8 @@
     }
 
     function bindItems(data) {
+        $("#ItemDropDownList").empty();
+
         if (data.length == 0) {
             addListItem("ItemDropDownList", "", noneLocalized);
             return;
@@ -590,6 +595,8 @@
     }
 
     function bindUnits(data) {
+        $("#UnitDropDownList").empty();
+
         if (data.length == 0) {
             addListItem("UnitDropDownList", "", noneLocalized);
             return;

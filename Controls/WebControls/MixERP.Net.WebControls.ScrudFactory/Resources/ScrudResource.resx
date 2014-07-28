@@ -192,6 +192,9 @@
   <data name="UnknownError" xml:space="preserve">
     <value>Operation failed due to an unknown error.</value>
   </data>
+  <data name="Use" xml:space="preserve">
+    <value>Use</value>
+  </data>
   <data name="ViewEmptyExceptionMessage" xml:space="preserve">
     <value>The property 'View' cannot be left empty.</value>
   </data>

@@ -8,6 +8,7 @@ http://mozilla.org/MPL/2.0/.
 
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
+using MixERP.Net.Common;
 using MixERP.Net.DBFactory;
 using Npgsql;
 using System;
@@ -53,11 +54,11 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
         }
 
         [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times"), SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
-        public static bool InsertRecord(int userId, string tableSchema, string tableName, Collection<KeyValuePair<string, string>> data, string imageColumn)
+        public static long InsertRecord(int userId, string tableSchema, string tableName, Collection<KeyValuePair<string, string>> data, string imageColumn)
         {
             if (data == null)
             {
-                return false;
+                return 0;
             }
 
             string columns = string.Empty;
@@ -81,7 +82,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
                 }
             }
 
-            string sql = "INSERT INTO @TableSchema.@TableName(" + columns + ", audit_user_id) SELECT " + columnParamters + ", @AuditUserId;";
+            string sql = "INSERT INTO @TableSchema.@TableName(" + columns + ", audit_user_id) SELECT " + columnParamters + ", @AuditUserId;SELECT LASTVAL();";
             using (NpgsqlCommand command = new NpgsqlCommand())
             {
                 sql = sql.Replace("@TableSchema", DBFactory.Sanitizer.SanitizeIdentifierName(tableSchema));
@@ -117,7 +118,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
 
                 command.Parameters.AddWithValue("@AuditUserId", userId);
 
-                return DbOperations.ExecuteNonQuery(command);
+                return Conversion.TryCastLong(DbOperations.GetScalarValue(command));
             }
         }
 

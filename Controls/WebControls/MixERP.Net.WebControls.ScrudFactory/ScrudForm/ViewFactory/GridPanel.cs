@@ -19,6 +19,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
         Panel gridPanel;
         GridView formGridView;
         AspNetPager pager;
+        TextBox lastValueHiddenTextBox;
 
         private void CreateGridPanel()
         {
@@ -29,6 +30,15 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             this.AddGridView(this.gridPanel);
             this.AddPager(this.gridPanel);
+            this.AddLastValueHiddenField(this.gridPanel);
+        }
+
+        private void AddLastValueHiddenField(Panel p)
+        {
+            this.lastValueHiddenTextBox = new TextBox();
+            this.lastValueHiddenTextBox.ID = "LastValueHidden";
+            this.lastValueHiddenTextBox.Style.Add("display", "none;");
+            p.Controls.Add(lastValueHiddenTextBox);
         }
 
         private void AddGridView(Panel p)

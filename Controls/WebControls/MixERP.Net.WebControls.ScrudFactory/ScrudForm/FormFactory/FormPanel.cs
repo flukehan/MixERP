@@ -8,6 +8,8 @@ http://mozilla.org/MPL/2.0/.
 
 using System.Data;
 using System.Threading;
+using System.Web;
+using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.WebControls.ScrudFactory.Resources;
@@ -21,6 +23,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
         Literal addNewEntryLiteral;
         Label requiredFieldDetailsLabel;
         Panel formContainer;
+        Button useButton;
         Button saveButton;
         Button cancelButton;
 
@@ -69,6 +72,25 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         }
 
+        private bool IsModal()
+        {
+            Page page = HttpContext.Current.CurrentHandler as Page;
+
+            if (page != null)
+            {
+                var modal = page.Request.QueryString["modal"];
+                if (modal != null)
+                {
+                    if (modal.Equals("1"))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
         private void AddFormContainer(Panel p)
         {
             this.formContainer = new Panel();
@@ -90,6 +112,21 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
                     using (var controlCell = new HtmlTableCell())
                     {
+                        if (this.IsModal())
+                        {
+                            this.useButton = new Button();
+                            this.useButton.ID = "UseButton";
+                            this.useButton.Text = ScrudResource.Use;
+                            this.useButton.OnClientClick = "adjustSpinnerSize();";
+
+                            this.useButton.Click += this.UseButton_Click;
+
+                            this.useButton.CssClass = this.GetButtonCssClass();
+
+                            controlCell.Controls.Add(this.useButton);
+                        }
+
+
                         this.saveButton = new Button();
                         this.saveButton.ID = "SaveButton";
                         this.saveButton.Text = ScrudResource.Save;

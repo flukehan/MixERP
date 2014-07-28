@@ -2844,7 +2844,7 @@ CREATE TABLE core.items
 	item_name 				national character varying(150) NOT NULL,
 	item_group_id 				integer NOT NULL REFERENCES core.item_groups(item_group_id),
 	brand_id 				integer NOT NULL REFERENCES core.brands(brand_id),
-	preferred_supplier_id 			integer NULL REFERENCES core.parties(party_id) 
+	preferred_supplier_id 			integer NOT NULL REFERENCES core.parties(party_id) 
 						CONSTRAINT items_preferred_supplier_id_chk CHECK(core.is_supplier(preferred_supplier_id) = true),
 	lead_time_in_days 			integer NOT NULL DEFAULT(0),
 	unit_id 				integer NOT NULL REFERENCES core.units(unit_id),

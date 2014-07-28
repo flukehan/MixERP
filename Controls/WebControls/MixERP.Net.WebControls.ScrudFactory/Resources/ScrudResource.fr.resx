@@ -183,6 +183,9 @@
   <data name="UnknownError" xml:space="preserve">
     <value>Echec de l'opération en raison d'une erreur inconnue.</value>
   </data>
+  <data name="Use" xml:space="preserve">
+    <value>Utilisation</value>
+  </data>
   <data name="YesNo" xml:space="preserve">
     <value>Oui, Non</value>
   </data>

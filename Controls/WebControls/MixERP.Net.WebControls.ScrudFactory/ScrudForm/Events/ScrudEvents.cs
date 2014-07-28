@@ -8,9 +8,12 @@ http://mozilla.org/MPL/2.0/.
 using System;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Threading;
+using System.Web.UI;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.WebControls.ScrudFactory.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Resources;
 using FormHelper = MixERP.Net.WebControls.ScrudFactory.Data.FormHelper;
 
@@ -19,8 +22,8 @@ namespace MixERP.Net.WebControls.ScrudFactory
     public partial class ScrudForm
     {
         public event EventHandler SaveButtonClick;
+        public event EventHandler UseButtonClick;
 
-        [SuppressMessage("Microsoft.Globalization", "CA1306:SetLocaleForDataTypes")]
         protected void SaveButton_Click(object sender, EventArgs e)
         {
             this.Page.Validate();
@@ -34,7 +37,30 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 this.SaveButtonClick(sender, e);
                 return;
             }
-            
+
+            this.Save(false);
+        }
+
+        protected void UseButton_Click(object sender, EventArgs e)
+        {
+            this.Page.Validate();
+            if (!this.Page.IsValid)
+            {
+                return;
+            }
+
+            if (this.UseButtonClick != null)
+            {
+                this.UseButtonClick(sender, e);
+                return;
+            }
+
+            this.Save(true);
+        }
+
+        [SuppressMessage("Microsoft.Globalization", "CA1306:SetLocaleForDataTypes")]
+        private void Save(bool closeForm)
+        {
             var userIdSessionKey = ConfigurationHelper.GetScrudParameter("UserIdSessionKey");
 
             if (!(Conversion.TryCastInteger(SessionHelper.GetSessionValueByKey(userIdSessionKey)) > 0))
@@ -44,20 +70,24 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             var list = this.GetFormCollection(true);
             var id = this.GetSelectedValue();
+            lastValueHiddenTextBox.Text = id;
 
             var userId = Conversion.TryCastInteger(this.Page.Session[userIdSessionKey]);
 
-            if(string.IsNullOrWhiteSpace(id))
+            if (string.IsNullOrWhiteSpace(id))
             {
-                if(this.DenyAdd)
+                if (this.DenyAdd)
                 {
                     this.messageLabel.CssClass = "failure";
                     this.messageLabel.Text = ScrudResource.AccessDenied;
                 }
                 else
                 {
-                    if (FormHelper.InsertRecord(userId, this.TableSchema, this.Table, list, this.imageColumn))
+                    var lastValue = FormHelper.InsertRecord(userId, this.TableSchema, this.Table, list, this.imageColumn);
+
+                    if (lastValue > 0)
                     {
+                        lastValueHiddenTextBox.Text = lastValue.ToString(CultureInfo.InvariantCulture);
                         //Clear the form container.
                         this.formContainer.Controls.Clear();
 
@@ -70,13 +100,12 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         //Refresh the grid.
                         this.BindGridView();
                         this.DisplaySuccess();
-
                     }
                 }
             }
             else
             {
-                if(this.DenyEdit)
+                if (this.DenyEdit)
                 {
                     this.messageLabel.CssClass = "failure";
                     this.messageLabel.Text = ScrudResource.AccessDenied;
@@ -89,7 +118,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         this.formContainer.Controls.Clear();
 
                         //Load the form again.
-                        using(var table = new DataTable())
+                        using (var table = new DataTable())
                         {
                             table.Locale = Thread.CurrentThread.CurrentCulture;
 
