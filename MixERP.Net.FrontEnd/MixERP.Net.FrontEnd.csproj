@@ -1093,6 +1093,7 @@
     <Content Include="Resource\Icons\checklist-16.png" />
     <Content Include="Sales\Confirmation\Order.aspx" />
     <Content Include="Sales\Confirmation\ReportSalesOrder.aspx" />
+    <Content Include="Sales\Entry\test.html" />
     <Content Include="Scripts\colorbox\colorbox.css" />
     <Content Include="Scripts\colorbox\i18n\jquery.colorbox-ar.js" />
     <Content Include="Scripts\colorbox\i18n\jquery.colorbox-bg.js" />

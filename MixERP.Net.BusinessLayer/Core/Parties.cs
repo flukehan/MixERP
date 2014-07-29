@@ -14,5 +14,10 @@ namespace MixERP.Net.BusinessLayer.Core
         {
             return DatabaseLayer.Core.Parties.IsCreditAllowed(partyCode);
         }
+
+        public static string GetPartyCodeByPartyId(int partyId)
+        {
+            return DatabaseLayer.Core.Parties.GetPartyCodeByPartyId(partyId);
+        }
     }
 }

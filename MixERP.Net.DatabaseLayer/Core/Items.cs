@@ -97,5 +97,16 @@ namespace MixERP.Net.DatabaseLayer.Core
             }
         }
 
+
+        public static string GetItemCodeByItemId(int itemId)
+        {
+            const string sql = "SELECT item_code FROM core.items WHERE item_id=@ItemId;";
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                command.Parameters.AddWithValue("@ItemId", itemId);
+
+                return Conversion.TryCastString(DbOperations.GetScalarValue(command));
+            }
+        }
     }
 }

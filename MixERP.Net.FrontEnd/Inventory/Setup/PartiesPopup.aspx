@@ -45,13 +45,23 @@ http://mozilla.org/MPL/2.0/.
             <asp:PlaceHolder ID="ScrudPlaceholder" runat="server" />
         </div>
         <script type="text/javascript">
-            $("#party_name_textbox").focus(function () {
-                var p = "<%= GetPartyNameParameter() %>";
-                updatePartyName(p);
+
+            $("#first_name_textbox").blur(function () {
+                updatePartyName();
             });
 
+            $("#middle_name_textbox").blur(function () {
+                updatePartyName();
+            });
 
-            var updatePartyName = function (p) {
+            $("#last_name_textbox").blur(function () {
+                updatePartyName();
+            });            
+
+
+            var updatePartyName = function () {
+                var p = "<%= GetPartyNameParameter() %>";
+
                 var firstName = $("#first_name_textbox").val();
                 var middleName = $("#middle_name_textbox").val();
                 var lastName = $("#last_name_textbox").val();
@@ -62,9 +72,9 @@ http://mozilla.org/MPL/2.0/.
 
                 var partyNameTextBox = $("#party_name_textbox");
 
-                if (partyNameTextBox.val() == "") {
+                //if (partyNameTextBox.val() == "") {
                     $("#party_name_textbox").val(partyName.trim().replace(/ +(?= )/g, ''));
-                }
+                //}
             };
 
             var isInIframe = (window.location != window.parent.location) ? true : false;

@@ -129,11 +129,16 @@ function getParameterByName(name) {
 
 function saveAndClose() {
     var lastValue = parseFloat2($("#LastValueHidden").val());
+    var ctl = getParameterByName('AssociatedControlId');
+    var associatedControl = window.opener.$('#' + ctl);
+    var callBackFunctionName = getParameterByName('CallBackFunctionName');
 
     if (lastValue > 0) {
-        var ctl = getParameterByName('AssociatedControlId');
-        $('#' + ctl, parent.document.body).val(lastValue);
-        top.close();
+        if (window.opener && !window.opener.closed) {
+            window.opener[callBackFunctionName]();
+            associatedControl.val(lastValue);
+            top.close();
+        }
     }
 }
 

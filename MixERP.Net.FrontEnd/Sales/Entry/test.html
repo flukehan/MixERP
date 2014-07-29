@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="../../bundles/scripts/master-page.js.bundle" type="text/javascript"></script>
+    <script type="text/javascript">
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
+
+        function buttunClicked() {
+            window.opener["initializeAjaxData"]();
+        }
+    </script>
+</head>
+<body>
+    <input type="button" value="click me" onclick="buttunClicked();"/>
+</body>
+</html>

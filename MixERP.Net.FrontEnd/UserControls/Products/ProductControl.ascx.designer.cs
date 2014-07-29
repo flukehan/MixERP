@@ -157,13 +157,22 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::System.Web.UI.WebControls.DropDownList PartyDropDownList;
         
         /// <summary>
-        /// PartyHidden control.
+        /// PartyCodeHidden control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField PartyHidden;
+        protected global::System.Web.UI.WebControls.HiddenField PartyCodeHidden;
+        
+        /// <summary>
+        /// PartyIdHidden control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField PartyIdHidden;
         
         /// <summary>
         /// PriceTypeDropDownList control.

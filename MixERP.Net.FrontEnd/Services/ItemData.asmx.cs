@@ -113,5 +113,11 @@ namespace MixERP.Net.FrontEnd.Services
             return Items.GetTaxRate(itemCode);
         }
 
+        [WebMethod]
+        public string GetItemCodeByItemId(int itemId)
+        {
+            return Items.GetItemCodeByItemId(itemId);
+        }
+
     }
 }

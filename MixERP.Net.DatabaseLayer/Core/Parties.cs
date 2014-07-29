@@ -6,6 +6,7 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 
+using MixERP.Net.Common;
 using MixERP.Net.DBFactory;
 using Npgsql;
 
@@ -21,6 +22,17 @@ namespace MixERP.Net.DatabaseLayer.Core
             {
                 command.Parameters.AddWithValue("@PartyCode", partyCode);
                 return DbOperations.GetDataTable(command).Rows.Count.Equals(1);
+            }
+        }
+
+        public static string GetPartyCodeByPartyId(int partyId)
+        {
+            const string sql = "SELECT party_code FROM core.parties WHERE party_id=@PartyId;";
+
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                command.Parameters.AddWithValue("@PartyId", partyId);
+                return Conversion.TryCastString(DbOperations.GetScalarValue((command)));
             }
         }
     }

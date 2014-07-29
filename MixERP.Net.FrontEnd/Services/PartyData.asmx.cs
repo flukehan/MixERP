@@ -58,6 +58,12 @@ namespace MixERP.Net.FrontEnd.Services
 
             return values;
         }
+
+        [WebMethod]
+        public string GetPartyCodeByPartyId(int partyId)
+        {
+            return Parties.GetPartyCodeByPartyId(partyId);
+        }
     }
 
 }

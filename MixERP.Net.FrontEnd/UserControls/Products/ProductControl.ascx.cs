@@ -675,6 +675,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             this.BindGridView();
             this.AddUnitNameHidden();
             this.AddUnitIdHidden();
+            this.AddItemIdHidden();
             this.AddItemCodeHidden();
             this.LoadFooter();
             var scriptManager = ScriptManager.GetCurrent(this.Page);
@@ -704,13 +705,23 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             }
         }
 
+        private void AddItemIdHidden()
+        {
+            using (HiddenField itemIdHidden = new HiddenField())
+            {
+                itemIdHidden.ID = "ItemIdHidden";
+                itemIdHidden.ClientIDMode = ClientIDMode.Static;
+                this.UpdatePanel1.ContentTemplateContainer.Controls.Add(itemIdHidden);
+            }
+        }
+
         private void AddItemCodeHidden()
         {
-            using (HiddenField unitIdHidden = new HiddenField())
+            using (HiddenField itemCodeHidden = new HiddenField())
             {
-                unitIdHidden.ID = "ItemCodeHidden";
-                unitIdHidden.ClientIDMode = ClientIDMode.Static;
-                this.UpdatePanel1.ContentTemplateContainer.Controls.Add(unitIdHidden);
+                itemCodeHidden.ID = "ItemCodeHidden";
+                itemCodeHidden.ClientIDMode = ClientIDMode.Static;
+                this.UpdatePanel1.ContentTemplateContainer.Controls.Add(itemCodeHidden);
             }
         }
 
@@ -1017,7 +1028,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 return;
             }
 
-            this.PartyHidden.Value = this.model.PartyCode.ToString(LocalizationHelper.GetCurrentCulture());
+            this.PartyCodeHidden.Value = this.model.PartyCode.ToString(LocalizationHelper.GetCurrentCulture());
             this.PartyCodeTextBox.Text = this.model.PartyCode.ToString(LocalizationHelper.GetCurrentCulture());
 
             if (this.PriceTypeDropDownList.SelectedItem != null)

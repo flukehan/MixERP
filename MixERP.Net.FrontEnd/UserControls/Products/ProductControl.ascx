@@ -65,10 +65,11 @@
                                 onblur="selectDropDownListByValue(this.id, 'PartyDropDownList');"
                                 ToolTip="F2" />
                             <asp:DropDownList ID="PartyDropDownList" runat="server" Width="150"
-                                onchange="if(this.selectedIndex == 0) { return false };document.getElementById('PartyCodeTextBox').value = this.options[this.selectedIndex].value;document.getElementById('PartyHidden').value = this.options[this.selectedIndex].value;"
+                                onchange="if(this.selectedIndex == 0) { return false };document.getElementById('PartyCodeTextBox').value = this.options[this.selectedIndex].value;document.getElementById('PartyCodeHidden').value = this.options[this.selectedIndex].value;"
                                 ToolTip="F2">
                             </asp:DropDownList>
-                            <asp:HiddenField ID="PartyHidden" runat="server" />
+                            <asp:HiddenField ID="PartyCodeHidden" runat="server" />
+                            <asp:HiddenField ID="PartyIdHidden" runat="server" />
                         </td>
                         <td>
                             <asp:DropDownList ID="PriceTypeDropDownList" runat="server" Width="80">
@@ -268,7 +269,7 @@
     var getPrice = function () {
         var tranBook = "<%=this.GetTranBook() %>";
         var itemCode = $("#ItemCodeHidden").val();
-        var partyCode = $("#PartyHidden").val();
+        var partyCode = $("#PartyCodeHidden").val();
         var priceTypeId = $("#PriceTypeDropDownList").val();
         var unitId = $("#UnitIdHidden").val();
 
@@ -388,12 +389,13 @@
 
     $(document).ready(function () {
         shortcut.add("F2", function () {
-            var url = "/Inventory/Setup/PartiesPopup.aspx?modal=1&AssociatedControlId=PartyHidden";
+            var url = "/Inventory/Setup/PartiesPopup.aspx?modal=1&CallBackFunctionName=initializeAjaxData&AssociatedControlId=PartyIdHidden";
             showWindow(url);
         });
 
         shortcut.add("F4", function () {
-            var url = "/Inventory/Setup/ItemsPopup.aspx?modal=1&AssociatedControlId=ItemCodeHidden";
+            var url = "/Inventory/Setup/ItemsPopup.aspx?modal=1&CallBackFunctionName=initializeAjaxData&AssociatedControlId=ItemIdHidden";
+            //var url = "test.html";
             showWindow(url);
         });
 
@@ -448,6 +450,8 @@
     function initializeAjaxData() {
         console.log('Initializing AJAX data.');
 
+        processCallBackActions();
+
         loadParties();
         $("#PartyDropDownList").change(function () {
             loadAddresses();
@@ -461,6 +465,64 @@
 
         loadUnits();
     }
+
+    function processCallBackActions() {
+        var itemIdHidden = $("#ItemIdHidden");
+        var itemId = parseFloat2(itemIdHidden.val());
+
+        itemIdHidden.val("");
+
+        var itemCode = "";
+        var itemCodeHidden = $("#ItemCodeHidden");
+
+
+        if (itemId > 0) {
+            $.ajax({
+                type: "POST",
+                url: "<%=this.ResolveUrl("~/Services/ItemData.asmx/GetItemCodeByItemId") %>",
+                data: "{itemId:'" + itemId + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    itemCode = msg.d;
+                    itemCodeHidden.val(itemCode);
+                },
+                error: function (xhr) {
+                    var err = eval("(" + xhr.responseText + ")");
+                    alert(err);
+                }
+            });
+        }
+
+
+        var partyIdHidden = $("#PartyIdHidden");
+        var partyId = parseFloat2(partyIdHidden.val());
+
+        partyIdHidden.val("");
+
+        var partyCode = "";
+        var partyCodeHidden = $("#PartyCodeHidden");
+
+        if (partyId > 0) {
+            $.ajax({
+                type: "POST",
+                url: "<%=this.ResolveUrl("~/Services/PartyData.asmx/GetPartyCodeByPartyId") %>",
+                data: "{partyId:'" + partyId + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    partyCode = msg.d;
+                    partyCodeHidden.val(partyCode);
+                },
+                error: function (xhr) {
+                    var err = eval("(" + xhr.responseText + ")");
+                    alert(err);
+                }
+            });
+        }
+    }
+
+
 
     function loadParties() {
         $.ajax({
@@ -574,7 +636,8 @@
             addListItem("PartyDropDownList", this['Value'], this['Text']);
         });
 
-        $("#PartyDropDownList").val($("#PartyHidden").val());
+        $("#PartyCodeTextBox").val($("#PartyCodeHidden").val());
+        $("#PartyDropDownList").val($("#PartyCodeHidden").val());
     }
 
     function bindItems(data) {
@@ -591,6 +654,7 @@
             addListItem("ItemDropDownList", this['Value'], this['Text']);
         });
 
+        $("#ItemCodeTextBox").val($("#ItemCodeHidden").val());
         $("#ItemDropDownList").val($("#ItemCodeHidden").val());
     }
 

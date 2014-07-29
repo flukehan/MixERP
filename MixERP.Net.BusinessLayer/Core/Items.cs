@@ -44,5 +44,10 @@ namespace MixERP.Net.BusinessLayer.Core
         {
             return DatabaseLayer.Core.Items.IsStockItem(itemCode);
         }
+
+        public static string GetItemCodeByItemId(int itemId)
+        {
+            return DatabaseLayer.Core.Items.GetItemCodeByItemId(itemId);
+        }
     }
 }
