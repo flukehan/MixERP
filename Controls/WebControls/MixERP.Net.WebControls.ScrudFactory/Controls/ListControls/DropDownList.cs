@@ -29,7 +29,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 {
     public static class ScrudDropDownList
     {
-        public static void AddDropDownList(HtmlTable htmlTable, string resourceClassName, string itemSelectorPath, string columnName, bool isNullable, string tableSchema, string tableName, string tableColumn, string defaultValue, string displayFields, string displayViews, string selectedValues)
+        public static void AddDropDownList(HtmlTable htmlTable, string resourceClassName, string itemSelectorPath, string columnName, bool isNullable, string tableSchema, string tableName, string tableColumn, string defaultValue, string displayFields, string displayViews, bool useDisplayViewsAsParent, string selectedValues)
         {
             var label = LocalizationHelper.GetResourceString(resourceClassName, columnName);
 
@@ -37,10 +37,10 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 
             HtmlAnchor itemSelectorAnchor;
 
-            using (var table = FormHelper.GetTable(tableSchema, tableName))
+            using (var table = GetTable(tableSchema, tableName, tableColumn, displayViews, useDisplayViewsAsParent))
             {
                 SetDisplayFields(dropDownList, table, tableSchema, tableName, tableColumn, displayFields);
-                itemSelectorAnchor = GetItemSelector(dropDownList.ClientID, table,itemSelectorPath, tableSchema, tableName, tableColumn, displayViews);
+                itemSelectorAnchor = GetItemSelector(dropDownList.ClientID, table, itemSelectorPath, tableSchema, tableName, tableColumn, displayViews);
             }
 
             SetSelectedValue(dropDownList, tableSchema, tableName, tableColumn, defaultValue, selectedValues);
@@ -55,6 +55,32 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
                 var required = ScrudFactoryHelper.GetRequiredFieldValidator(dropDownList);
                 ScrudFactoryHelper.AddRow(htmlTable, label + ScrudResource.RequiredFieldIndicator, dropDownList, required, itemSelectorAnchor);
             }
+        }
+
+        private static DataTable GetTable(string tableSchema, string tableName, string tableColumn, string displayViews, bool useDisplayViewsAsParent)
+        {
+            if (useDisplayViewsAsParent)
+            {
+                //Get the expression value of display view from comma seprated list of expressions.
+                //The expression must be a valid fully qualified table or view name.
+                string viewRelation = GetExpressionValue(displayViews, tableSchema, tableName, tableColumn);
+
+                string schema = viewRelation.Split('.').First();
+                string view = viewRelation.Split('.').Last();
+
+                //Sanitize the schema and the view
+                schema = Sanitizer.SanitizeIdentifierName(schema);
+                view = Sanitizer.SanitizeIdentifierName(view);
+
+                if (string.IsNullOrWhiteSpace(schema) || string.IsNullOrWhiteSpace(view))
+                {
+                    return FormHelper.GetTable(tableSchema, tableName);
+                }
+
+                return FormHelper.GetTable(schema, view);
+            }
+
+            return FormHelper.GetTable(tableSchema, tableName);
         }
 
 

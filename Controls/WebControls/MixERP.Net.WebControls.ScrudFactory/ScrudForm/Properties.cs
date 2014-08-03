@@ -56,6 +56,14 @@ namespace MixERP.Net.WebControls.ScrudFactory
         public string DisplayFields { get; set; }
 
         /// <summary>
+        /// If the table has foreign keys, set this to override the data being populated on the
+        /// respective DropDownList control. Setting this will allow the Scrud to
+        /// fetch the data from the DisplayViews Expression Tables instead of the original parent table.
+        /// </summary>
+        public bool UseDisplayViewsAsParents { get; set; }
+
+
+        /// <summary>
         /// This property when set a value will enable a popup selection of foreign keys 
         /// by displaying the base tables. Set this to a comma separated list of the name of 
         /// the Database View or Database Table to be displayed on the popup window.

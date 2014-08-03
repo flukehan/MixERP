@@ -495,6 +495,13 @@
     <Compile Include="MenuMaster.Master.designer.cs">
       <DependentUpon>MenuMaster.Master</DependentUpon>
     </Compile>
+    <Compile Include="MixERPBlankMaster.Master.cs">
+      <DependentUpon>MixERPBlankMaster.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MixERPBlankMaster.Master.designer.cs">
+      <DependentUpon>MixERPBlankMaster.Master</DependentUpon>
+    </Compile>
     <Compile Include="MixERPReportMaster.Master.cs">
       <DependentUpon>MixERPReportMaster.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1707,6 +1714,7 @@
     </Content>
     <Content Include="bundles\sql\mixerp-blank-db.sql.bundle" />
     <Content Include="bundles\sql\mixerp-db-sample.sql.bundle" />
+    <Content Include="MixERPBlankMaster.Master" />
     <None Include="Properties\PublishProfiles\MixERP.pubxml" />
     <Content Include="Reports\Assets\ReadMe.txt" />
     <Content Include="Resource\Configuration\Switches.xml" />

@@ -6,13 +6,9 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 --%>
 
-<%@ Page Language="C#" AutoEventWireup="true" EnableViewState="false" CodeBehind="PartiesPopup.aspx.cs" Inherits="MixERP.Net.FrontEnd.Inventory.Setup.PartiesPopup" %>
+<%@ Page Language="C#" AutoEventWireup="true" EnableViewState="false" MasterPageFile="~/MixERPBlankMaster.Master" CodeBehind="PartiesPopup.aspx.cs" Inherits="MixERP.Net.FrontEnd.Inventory.Setup.PartiesPopup" %>
 
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-
+<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolderHead" runat="server">
     <link href="/bundles/stylesheets/parties-popup.min.css" rel="stylesheet" />
 
     <title>Select Party</title>
@@ -26,19 +22,8 @@ http://mozilla.org/MPL/2.0/.
             width: 99% !important;
         }
     </style>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <asp:ScriptManager runat="server" ID="ScriptManager1">
-            <CompositeScript>
-                <Scripts>
-                    <asp:ScriptReference Name="MicrosoftAjax.js" Assembly="System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" />
-                    <asp:ScriptReference Name="MicrosoftAjaxWebForms.js" Assembly="System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" />
-                    <asp:ScriptReference Name="WebForms.js" Assembly="System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-                    <asp:ScriptReference Path="/bundles/scripts/master-page.min.js" />
-                </Scripts>
-            </CompositeScript>
-        </asp:ScriptManager>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderBody" runat="server">
 
 
         <div class="container" runat="server" id="container">
@@ -84,6 +69,4 @@ http://mozilla.org/MPL/2.0/.
             }
 
         </script>
-    </form>
-</body>
-</html>
+</asp:Content>

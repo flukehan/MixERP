@@ -23,6 +23,7 @@ namespace MixERP.Net.FrontEnd.Inventory.Setup
 
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
+                scrud.UseDisplayViewsAsParents = true;
 
                 scrud.Text = Titles.Items;
 
@@ -46,7 +47,7 @@ namespace MixERP.Net.FrontEnd.Inventory.Setup
             List<string> displayViews = new List<string>();
             ScrudHelper.AddDisplayView(displayViews, "core.item_groups.item_group_id", "core.item_groups");
             ScrudHelper.AddDisplayView(displayViews, "core.brands.brand_id", "core.brands");
-            ScrudHelper.AddDisplayView(displayViews, "core.parties.party_id", "core.party_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.parties.party_id", "core.supplier_view");
             ScrudHelper.AddDisplayView(displayViews, "core.units.unit_id", "core.unit_view");
             ScrudHelper.AddDisplayView(displayViews, "core.taxes.tax_id", "core.tax_view");
             return string.Join(",", displayViews);

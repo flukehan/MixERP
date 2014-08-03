@@ -2476,6 +2476,8 @@ CREATE VIEW core.party_view
 AS
 SELECT
 	core.parties.party_id,
+	core.party_types.party_type_id,
+	core.party_types.is_supplier,
 	core.party_types.party_type_code || ' (' || core.party_types.party_type_name || ')' AS party_type,
 	core.parties.party_code,
 	core.parties.first_name,
@@ -2527,6 +2529,12 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+
+CREATE VIEW core.supplier_view
+AS
+SELECT * FROM core.party_view
+WHERE is_supplier=true;
+
 
 CREATE TABLE core.shipping_addresses
 (
