@@ -10,8 +10,8 @@
   </settings>
   <!--The order of the <file> elements determines the order of the files in the bundle.-->
   <files>
-    <file>/C:\Users\Binod\Desktop\mixerp\0. GitHub\MixERP.net.FrontEnd\Scripts\jquery-1.9.1.js</file>
-    <file>/C:\Users\Binod\Desktop\mixerp\0. GitHub\MixERP.net.FrontEnd\Scripts\shortcut.js</file>
-    <file>/C:\Users\Binod\Desktop\mixerp\0. GitHub\MixERP.net.FrontEnd\Scripts\colorbox\jquery.colorbox.js</file>
+    <file>/Scripts/jquery-1.9.1.js</file>
+    <file>/Scripts/shortcut.js</file>
+    <file>/Scripts/colorbox/jquery.colorbox.js</file>
   </files>
 </bundle>

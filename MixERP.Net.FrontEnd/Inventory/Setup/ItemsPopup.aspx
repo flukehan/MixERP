@@ -10,18 +10,14 @@
         #GridPanel {
             width: 99% !important;
         }
+
+        .container {
+            padding:24px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderBody" runat="server">
     <div class="container" runat="server" id="container">
         <asp:PlaceHolder ID="ScrudPlaceholder" runat="server" />
     </div>
-
-    <script type="text/javascript">
-        var isInIframe = (window.location != window.parent.location) ? true : false;
-
-        if (!isInIframe) {
-            $(".container").css("padding", "24px");
-        }
-    </script>
 </asp:Content>

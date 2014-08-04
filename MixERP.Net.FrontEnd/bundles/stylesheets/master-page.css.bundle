@@ -12,9 +12,9 @@
   </settings>
   <!--The order of the <file> elements determines the order of the files in the bundle.-->
   <files>
-    <file>/C:\Users\Binod\Desktop\mixerp\0. GitHub\MixERP.net.FrontEnd\Themes\purple\stylesheets\default.css</file>
-    <file>/C:\Users\Binod\Desktop\mixerp\0. GitHub\MixERP.net.FrontEnd\Themes\purple\stylesheets\main.css</file>
-    <file>/C:\Users\Binod\Desktop\mixerp\0. GitHub\MixERP.net.FrontEnd\Scripts\colorbox\colorbox.css</file>
-    <file>/C:\Users\Binod\Desktop\mixerp\0. GitHub\MixERP.net.FrontEnd\Scripts\jquery-ui\css\custom-theme\jquery-ui-1.10.3.custom.min.css</file>
+    <file>/Themes/purple/stylesheets/default.css</file>
+    <file>/Themes/purple/stylesheets/main.css</file>
+    <file>/Scripts/colorbox/colorbox.css</file>
+    <file>/Scripts/jquery-ui/css/custom-theme/jquery-ui-1.10.3.custom.min.css</file>
   </files>
 </bundle>

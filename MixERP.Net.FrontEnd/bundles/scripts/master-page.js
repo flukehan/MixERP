@@ -30070,14 +30070,15 @@ function legend(parent, data) {
 
 }(jQuery, window, document));
 
-///#source 1 1 /Scripts/mixerp/mixerp.js
+///#source 1 1 /Scripts/mixerp.js
 function getDocHeight() {
-    var d = document;
+    var D = document;
     return Math.max(
-                Math.max(d.body.scrollHeight, d.documentElement.scrollHeight),
-                Math.max(d.body.offsetHeight, d.documentElement.offsetHeight),
-                Math.max(d.body.clientHeight, d.documentElement.clientHeight)
+                Math.max(D.body.scrollHeight, D.documentElement.scrollHeight),
+                Math.max(D.body.offsetHeight, D.documentElement.offsetHeight),
+                Math.max(D.body.clientHeight, D.documentElement.clientHeight)
             );
+
 };
 
 var selectDropDownListByValue = function(textBoxId, dropDownListId) {
@@ -30256,13 +30257,7 @@ DATE EXPRESSION END
 ******************************************************************************************************/
 
 var showWindow = function(url) {
-    var newwindow = window.open(url, name, 'width=' + $('html').width() + ',height=' + $('html').height() + ',toolbar=0,menubar=0,location=0,scrollbars=1,resizable=1');
-
-    newwindow.moveTo(0, 0);
-
-    if (window.focus) {
-        newwindow.focus();
-    }
+    $.colorbox({ width: +$('html').width() * 0.7, height: +$('html').height() * 0.7, iframe: true, href: url });
 };
 
 
@@ -30276,7 +30271,7 @@ $(document).ready(function () {
 
 function Page_EndRequest() {
     setNumberFormat();
-};
+}
 
 var setNumberFormat = function() {
     $('input.number').number(true, decimalPlaces, decimalSeparator, thousandSeparator);
@@ -30368,7 +30363,7 @@ function prepareChart(datasourceId, canvasId, legendId, type) {
     });
 
 
-    var chartData = {
+    var reportData = {
         labels: labels,
         datasets: datasets
     };
@@ -30377,27 +30372,27 @@ function prepareChart(datasourceId, canvasId, legendId, type) {
 
     switch (type) {
         case "line":
-            new Chart(ctx).Line(chartData);
+            new Chart(ctx).Line(reportData);
             break;
         case "radar":
-            new Chart(ctx).Radar(chartData);
+            new Chart(ctx).Radar(reportData);
             break;
         default:
-            new Chart(ctx).Bar(chartData);
+            new Chart(ctx).Bar(reportData);
             break;
     }
 
-    legend(document.getElementById(legendId), chartData);
+    legend(document.getElementById(legendId), reportData);
     table.hide();
-};
+}
 
 function preparePieChart(datasourceId, canvasId, legendId, type) {
     var table = $("#" + datasourceId);
     var value;
     var data = [];
-    
+
     //Reset the counter.
-    var index = 0;
+    index = 0;
 
     //Loop through each row of the table body.
     table.find("tbody tr").each(function () {
@@ -30406,7 +30401,7 @@ function preparePieChart(datasourceId, canvasId, legendId, type) {
         var row = $(this);
 
         //The first column of each row is the legend.
-        var title = row.find(">:first-child").html();
+        title = row.find(">:first-child").html();
 
         //The first column of each row is the legend.
         value = parseInt(row.find("td").html());

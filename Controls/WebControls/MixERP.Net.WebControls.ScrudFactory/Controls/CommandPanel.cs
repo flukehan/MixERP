@@ -9,6 +9,8 @@ using System;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.WebControls.ScrudFactory.Resources;
+using System.Web.UI;
+using System.Web;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls
 {
@@ -69,6 +71,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
         {
             this.commandPanel = new Panel { CssClass = "vpad16" };
 
+            this.AddSelectButton(this.commandPanel);
             this.AddShowCompactButton(this.commandPanel);
             this.AddShowAllButton(this.commandPanel);
             this.AddAddButton(this.commandPanel);
@@ -79,6 +82,35 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
         }
 
         private Panel commandPanel;
+
+        private bool IsModal()
+        {
+            Page page = HttpContext.Current.CurrentHandler as Page;
+
+            if (page != null)
+            {
+                var modal = page.Request.QueryString["modal"];
+                if (modal != null)
+                {
+                    if (modal.Equals("1"))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        //Todo:Complete this implementation
+        private void AddSelectButton(Panel p)
+        {
+            if (this.IsModal())
+            {
+                var addSelectButton = this.GetInputButton("RETURN", "selectAndClose();", ScrudResource.Select);
+                p.Controls.Add(addSelectButton);            
+            }
+        }
 
         private void AddShowCompactButton(Panel p)
         {

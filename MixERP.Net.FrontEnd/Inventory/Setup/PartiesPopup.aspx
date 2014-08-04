@@ -21,6 +21,10 @@ http://mozilla.org/MPL/2.0/.
         #GridPanel {
             width: 99% !important;
         }
+
+        .container {
+            padding:24px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderBody" runat="server">
@@ -63,10 +67,5 @@ http://mozilla.org/MPL/2.0/.
             };
 
             var isInIframe = (window.location != window.parent.location) ? true : false;
-
-            if (!isInIframe) {
-                $(".container").css("padding", "24px");
-            }
-
         </script>
 </asp:Content>

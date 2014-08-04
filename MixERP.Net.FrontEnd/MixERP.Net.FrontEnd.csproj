@@ -1611,7 +1611,6 @@
     <Content Include="Scripts\jquery-ui\css\custom-theme\images\ui-icons_ffffff_256x240.png" />
     <Content Include="Scripts\jquery-ui\css\custom-theme\jquery-ui-1.10.3.custom.css" />
     <Content Include="Scripts\jquery-ui\css\custom-theme\jquery-ui-1.10.3.custom.min.css" />
-    <Content Include="Scripts\mixerp\mixerp.js" />
     <Content Include="Scripts\shortcut.js" />
     <Content Include="Services\AccountData.asmx" />
     <Content Include="Services\ItemData.asmx" />

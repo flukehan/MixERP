@@ -5,11 +5,6 @@ var officeCodeHiddenId = "OfficeCodeHidden";
 var titleLabelId = "TitleLabel";
 var formPanelId = "FormPanel";
 var cancelButtonId = "CancelButton";
-var showCompactButtonId = "ShowCompactButton";
-var showAllButtonId = "ShowAllButton";
-var addButtonId = "AddButton";
-var editButtonId = "EditButton";
-var deleteButtonId = "DeleteButton";
 
 
 var showCompact = function () {
@@ -41,6 +36,12 @@ var confirmAction = function () {
     }
     return retVal;
 };
+
+var selectAndClose = function () {
+    var lastValueHidden = $("#LastValueHidden");
+    lastValueHidden.val(getSelectedValue());
+    saveAndClose();
+}
 
 var getSelectedValue = function () {
     return $('[id^="SelectRadio"]:checked').val();
@@ -128,17 +129,31 @@ function getParameterByName(name) {
 }
 
 function saveAndClose() {
+    var parent;
+
     if (window.opener && window.opener.document) {
+        parent = window.opener;
+    }
+
+    if (parent == undefined) {
+        parent = window.parent;
+    }
+
+    if (parent) {
         var lastValue = parseFloat2($("#LastValueHidden").val());
         var ctl = getParameterByName('AssociatedControlId');
-        var associatedControl = window.opener.$('#' + ctl);
+        var associatedControl = parent.$('#' + ctl);
         var callBackFunctionName = getParameterByName('CallBackFunctionName');
 
         if (lastValue > 0) {
-            if (window.opener && !window.opener.closed) {
-                window.opener[callBackFunctionName]();
-                associatedControl.val(lastValue);
+            associatedControl.val(lastValue);
+            parent[callBackFunctionName]();
+
+            if (window.opener && window.opener.document) {
                 top.close();
+            }
+            else {
+                parent.jQuery.colorbox.close();
             }
         }
     }
@@ -231,24 +246,20 @@ $(document).ready(function () {
         }
     });
 
+    shortcut.add("RETURN", function () {
+        selectAndClose();
+    });
+
     shortcut.add("ALT+C", function () {
-        $('#' + showCompactButtonId).click();
+        showCompact();
     });
 
     shortcut.add("CTRL+S", function () {
-        $('#' + showAllButtonId).click();
+        showAll();
     });
 
     shortcut.add("ALT+A", function () {
-        $('#' + addButtonId).click();
-    });
-
-    shortcut.add("CTRL+E", function () {
-        $('#' + editButtonId).click();
-    });
-
-    shortcut.add("CTRL+D", function () {
-        $('#' + deleteButtonId).click();
+        return (addNew());
     });
 
     shortcut.add("CTRL+P", function () {

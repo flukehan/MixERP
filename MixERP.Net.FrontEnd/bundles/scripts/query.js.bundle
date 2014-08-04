@@ -10,7 +10,7 @@
   </settings>
   <!--The order of the <file> elements determines the order of the files in the bundle.-->
   <files>
-    <file>/C:\Users\Binod\Desktop\mixerp\0. GitHub\MixERP.net.FrontEnd\Scripts\CodeMirror\lib\codemirror.js</file>
-    <file>/C:\Users\Binod\Desktop\mixerp\0. GitHub\MixERP.net.FrontEnd\Scripts\CodeMirror\mode\sql\sql.js</file>
+    <file>/Scripts/CodeMirror/lib/codemirror.js</file>
+    <file>/Scripts/CodeMirror/mode/sql/sql.js</file>
   </files>
 </bundle>

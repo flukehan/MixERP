@@ -10,15 +10,15 @@
   </settings>
   <!--The order of the <file> elements determines the order of the files in the bundle.-->
   <files>
-    <file>/C:\Users\Binod\Desktop\mixerp\0. GitHub\MixERP.net.FrontEnd\Scripts\jquery-1.9.1.js</file>
-    <file>/C:\Users\Binod\Desktop\mixerp\0. GitHub\MixERP.net.FrontEnd\Scripts\jquery-ui.js</file>
-    <file>/C:\Users\Binod\Desktop\mixerp\0. GitHub\MixERP.net.FrontEnd\Scripts\shortcut.js</file>
-    <file>/C:\Users\Binod\Desktop\mixerp\0. GitHub\MixERP.net.FrontEnd\Scripts\colorbox\jquery.colorbox.js</file>
-    <file>/C:\Users\Binod\Desktop\mixerp\0. GitHub\MixERP.net.FrontEnd\Scripts\jqueryNumber\jquery.number.js</file>
-    <file>/C:\Users\Binod\Desktop\mixerp\0. GitHub\MixERP.net.FrontEnd\Scripts\date.js</file>
-    <file>/C:\Users\Binod\Desktop\mixerp\0. GitHub\MixERP.net.FrontEnd\Scripts\chartjs\Chart.min.js</file>
-    <file>/C:\Users\Binod\Desktop\mixerp\0. GitHub\MixERP.net.FrontEnd\Scripts\chartjs\legend.js</file>
-    <file>/C:\Users\Binod\Desktop\mixerp\0. GitHub\MixERP.net.FrontEnd\Scripts\gridster\jquery.gridster.js</file>
-    <file>/C:\Users\Binod\Desktop\mixerp\0. GitHub\MixERP.net.FrontEnd\Scripts\mixerp\mixerp.js</file>
+    <file>/Scripts/jquery-1.9.1.js</file>
+    <file>/Scripts/jquery-ui.js</file>
+    <file>/Scripts/shortcut.js</file>
+    <file>/Scripts/colorbox/jquery.colorbox.js</file>
+    <file>/Scripts/jqueryNumber/jquery.number.js</file>
+    <file>/Scripts/date.js</file>
+    <file>/Scripts/chartjs/Chart.min.js</file>
+    <file>/Scripts/chartjs/legend.js</file>
+    <file>/Scripts/gridster/jquery.gridster.js</file>
+    <file>/Scripts/mixerp.js</file>
   </files>
 </bundle>

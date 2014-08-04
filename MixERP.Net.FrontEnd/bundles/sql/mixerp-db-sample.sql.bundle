@@ -10,12 +10,12 @@
   </settings>
   <!--The order of the <file> elements determines the order of the files in the bundle.-->
   <files>
-    <file>/C:\Users\Binod\Desktop\mixerp\0. GitHub\MixERP.net.FrontEnd\db\en-US\mixerp.sql</file>
-    <file>/C:\Users\Binod\Desktop\mixerp\0. GitHub\MixERP.net.FrontEnd\db\en-US\mixerp-db-logic.sql</file>
-    <file>/C:\Users\Binod\Desktop\mixerp\0. GitHub\MixERP.net.FrontEnd\db\en-US\scrud.sql</file>
-    <file>/C:\Users\Binod\Desktop\mixerp\0. GitHub\MixERP.net.FrontEnd\db\en-US\samples (optional)\core.menu_locale.de.sql</file>
-    <file>/C:\Users\Binod\Desktop\mixerp\0. GitHub\MixERP.net.FrontEnd\db\en-US\samples (optional)\core.menu_locale.fr.sql</file>
-    <file>/C:\Users\Binod\Desktop\mixerp\0. GitHub\MixERP.net.FrontEnd\db\en-US\samples (optional)\party-sample.sql</file>
-    <file>/C:\Users\Binod\Desktop\mixerp\0. GitHub\MixERP.net.FrontEnd\db\en-US\samples (optional)\sample-data.sql</file>
+    <file>/db/en-US/mixerp.sql</file>
+    <file>/db/en-US/mixerp-db-logic.sql</file>
+    <file>/db/en-US/scrud.sql</file>
+    <file>/db/en-US/samples (optional)/core.menu_locale.de.sql</file>
+    <file>/db/en-US/samples (optional)/core.menu_locale.fr.sql</file>
+    <file>/db/en-US/samples (optional)/party-sample.sql</file>
+    <file>/db/en-US/samples (optional)/sample-data.sql</file>
   </files>
 </bundle>

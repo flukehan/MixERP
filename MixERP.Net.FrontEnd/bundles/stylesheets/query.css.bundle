@@ -12,7 +12,7 @@
   </settings>
   <!--The order of the <file> elements determines the order of the files in the bundle.-->
   <files>
-    <file>/C:\Users\Binod\Desktop\mixerp\0. GitHub\MixERP.net.FrontEnd\Scripts\CodeMirror\lib\codemirror.css</file>
-    <file>/C:\Users\Binod\Desktop\mixerp\0. GitHub\MixERP.net.FrontEnd\Scripts\CodeMirror\theme\visual-studio.css</file>
+    <file>/Scripts/CodeMirror/lib\codemirror.css</file>
+    <file>/Scripts/CodeMirror/theme/visual-studio.css</file>
   </files>
 </bundle>

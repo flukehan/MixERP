@@ -10,8 +10,8 @@
   </settings>
   <!--The order of the <file> elements determines the order of the files in the bundle.-->
   <files>
-    <file>/C:\Users\Binod\Desktop\mixerp\0. GitHub\MixERP.net.FrontEnd\db\en-US\mixerp.sql</file>
-    <file>/C:\Users\Binod\Desktop\mixerp\0. GitHub\MixERP.net.FrontEnd\db\en-US\mixerp-db-logic.sql</file>
-    <file>/C:\Users\Binod\Desktop\mixerp\0. GitHub\MixERP.net.FrontEnd\db\en-US\scrud.sql</file>
+    <file>/db/en-US/mixerp.sql</file>
+    <file>/db/en-US/mixerp-db-logic.sql</file>
+    <file>/db/en-US/scrud.sql</file>
   </files>
 </bundle>
