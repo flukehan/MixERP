@@ -2,7 +2,33 @@
 <%@ Import Namespace="MixERP.Net.Common.Helpers" %>
 
 <div style="width: 1000px; overflow: hidden; margin: 0;">
+    <div id="info-panel">
+        S H O R T C U T S :
+        <br />
+        <hr class="hr" style="border-color: #d2a48a;" />
+        <table border="0">
+            <tr>
+                <td>F2
+                </td>
+                <td>Add a New Party
+                </td>
+            </tr>
+            <tr>
+                <td>F4
+                </td>
+                <td>Add a New Item
+                </td>
+            </tr>
+            <tr>
+                <td>CTRL + RET
+                </td>
+                <td>Add a New Row
+                </td>
+            </tr>
+        </table>
+    </div>
     <asp:Label ID="TitleLabel" CssClass="title" runat="server" />
+
     <asp:UpdateProgress ID="UpdateProgress1" runat="server">
         <ProgressTemplate>
             <div class="ajax-container">
@@ -440,7 +466,14 @@
 
     $().ready(function () {
         initializeAjaxData();
+        bounceInfoPanel();
     });
+
+    var bounceInfoPanel = function () {
+        var options = {};
+        var panel = $("#info-panel");
+        panel.effect("bounce", options, 200).effect("fade", options, 1000);
+    }
 
     //Called on Ajax Postback caused by ASP.net
     function Page_EndRequest() {
@@ -578,12 +611,13 @@
     };
 
     function loadUnits() {
-        console.log('Loading units.');
         var itemCode = $("#ItemCodeHidden").val();
+        if (itemCode) {
+            console.log('Loading units.');
 
-        $.ajax({
-            type: "POST",
-            url: "<%=this.ResolveUrl("~/Services/ItemData.asmx/GetUnits") %>",
+            $.ajax({
+                type: "POST",
+                url: "<%=this.ResolveUrl("~/Services/ItemData.asmx/GetUnits") %>",
             data: "{itemCode:'" + itemCode + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -596,82 +630,83 @@
             }
         });
     }
+}
 
-    function addListItem(dropDownListId, value, text) {
-        var dropDownList = $("#" + dropDownListId);
-        dropDownList.append($("<option></option>").val(value).html(text));
+function addListItem(dropDownListId, value, text) {
+    var dropDownList = $("#" + dropDownListId);
+    dropDownList.append($("<option></option>").val(value).html(text));
+}
+
+var selectLocalized = "Select";
+var noneLocalized = "None";
+
+function bindAddresses(data) {
+    $("#ShippingAddressDropDownList").empty();
+
+    if (data.length == 0) {
+        addListItem("ShippingAddressDropDownList", "", noneLocalized);
+        return;
     }
 
-    var selectLocalized = "Select";
-    var noneLocalized = "None";
+    addListItem("ShippingAddressDropDownList", "", selectLocalized);
 
-    function bindAddresses(data) {
-        $("#ShippingAddressDropDownList").empty();
+    $.each(data, function () {
+        addListItem("ShippingAddressDropDownList", this['Value'], this['Text']);
+    });
 
-        if (data.length == 0) {
-            addListItem("ShippingAddressDropDownList", "", noneLocalized);
-            return;
-        }
+    $("#ShippingAddressDropDownList").val($("#ShippingAddressCodeHidden").val());
+}
 
-        addListItem("ShippingAddressDropDownList", "", selectLocalized);
+function bindParties(data) {
+    $("#PartyDropDownList").empty();
 
-        $.each(data, function () {
-            addListItem("ShippingAddressDropDownList", this['Value'], this['Text']);
-        });
-
-        $("#ShippingAddressDropDownList").val($("#ShippingAddressCodeHidden").val());
+    if (data.length == 0) {
+        addListItem("PartyDropDownList", "", noneLocalized);
+        return;
     }
 
-    function bindParties(data) {
-        $("#PartyDropDownList").empty();
+    addListItem("PartyDropDownList", "", selectLocalized);
 
-        if (data.length == 0) {
-            addListItem("PartyDropDownList", "", noneLocalized);
-            return;
-        }
+    $.each(data, function () {
+        addListItem("PartyDropDownList", this['Value'], this['Text']);
+    });
 
-        addListItem("PartyDropDownList", "", selectLocalized);
+    $("#PartyCodeTextBox").val($("#PartyCodeHidden").val());
+    $("#PartyDropDownList").val($("#PartyCodeHidden").val());
+}
 
-        $.each(data, function () {
-            addListItem("PartyDropDownList", this['Value'], this['Text']);
-        });
+function bindItems(data) {
+    $("#ItemDropDownList").empty();
 
-        $("#PartyCodeTextBox").val($("#PartyCodeHidden").val());
-        $("#PartyDropDownList").val($("#PartyCodeHidden").val());
+    if (data.length == 0) {
+        addListItem("ItemDropDownList", "", noneLocalized);
+        return;
     }
 
-    function bindItems(data) {
-        $("#ItemDropDownList").empty();
+    addListItem("ItemDropDownList", "", selectLocalized);
 
-        if (data.length == 0) {
-            addListItem("ItemDropDownList", "", noneLocalized);
-            return;
-        }
+    $.each(data, function () {
+        addListItem("ItemDropDownList", this['Value'], this['Text']);
+    });
 
-        addListItem("ItemDropDownList", "", selectLocalized);
+    $("#ItemCodeTextBox").val($("#ItemCodeHidden").val());
+    $("#ItemDropDownList").val($("#ItemCodeHidden").val());
+}
 
-        $.each(data, function () {
-            addListItem("ItemDropDownList", this['Value'], this['Text']);
-        });
+function bindUnits(data) {
+    $("#UnitDropDownList").empty();
 
-        $("#ItemCodeTextBox").val($("#ItemCodeHidden").val());
-        $("#ItemDropDownList").val($("#ItemCodeHidden").val());
+    if (data.length == 0) {
+        addListItem("UnitDropDownList", "", noneLocalized);
+        return;
     }
 
-    function bindUnits(data) {
-        $("#UnitDropDownList").empty();
+    addListItem("UnitDropDownList", "", selectLocalized);
 
-        if (data.length == 0) {
-            addListItem("UnitDropDownList", "", noneLocalized);
-            return;
-        }
+    $.each(data, function () {
+        addListItem("UnitDropDownList", this['Value'], this['Text']);
+    });
 
-        addListItem("UnitDropDownList", "", selectLocalized);
-
-        $.each(data, function () {
-            addListItem("UnitDropDownList", this['Value'], this['Text']);
-        });
-
-        $("#UnitDropDownList").val($("#UnitIdHidden").val());
-    }
+    $("#UnitDropDownList").val($("#UnitIdHidden").val());
+}
 </script>

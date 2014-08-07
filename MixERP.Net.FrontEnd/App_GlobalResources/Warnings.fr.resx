@@ -139,6 +139,9 @@
   <data name="InvalidDate" xml:space="preserve">
     <value>Date non valide</value>
   </data>
+  <data name="InvalidFile" xml:space="preserve">
+    <value>Invalid File</value>
+  </data>
   <data name="InvalidLocation" xml:space="preserve">
     <value>" {0}" n'est pas un chemin valide ou l'emplacement.</value>
   </data>

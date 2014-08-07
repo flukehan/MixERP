@@ -83,7 +83,7 @@ var printThis = function () {
 
             //Creating and opening a new window to display the report.
             var w = window.open();
-            w.moveTo(0, 0);
+            //w.moveTo(0, 0);
             w.resizeTo(screen.width, screen.height);
 
             //Writing the report to the window.

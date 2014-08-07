@@ -300,7 +300,8 @@ CREATE TABLE core.flags
 	flag_type_id				integer NOT NULL REFERENCES core.flag_types(flag_type_id),
 	resource				text, --Fully qualified resource name. Example: transactions.non_gl_stock_master.
 	resource_key				text, --The unique idenfier for lookup. Example: non_gl_stock_master_id,
-	resource_id				integer --The value of the unique identifier to lookup for
+	resource_id				integer, --The value of the unique identifier to lookup for,
+	flagged_on				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
 
 CREATE UNIQUE INDEX flags_user_id_resource_resource_id_uix
@@ -423,6 +424,26 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+
+
+CREATE TABLE transactions.attachments
+(
+	attachment_id				BIGSERIAL NOT NULL PRIMARY KEY,
+	user_id					integer NOT NULL CONSTRAINT attachments_users_fk REFERENCES office.users(user_id),
+	resource				text, --Fully qualified resource name. Example: transactions.non_gl_stock_master.
+	resource_key				text, --The unique idenfier for lookup. Example: non_gl_stock_master_id,
+	resource_id				integer, --The value of the unique identifier to lookup for,
+	original_file_name			text NOT NULL,
+	file_extension				national character varying(12) NOT NULL,
+	file_size				integer NOT NULL,
+	file_path				text NOT NULL,
+	comment					national character varying(96) NOT NULL CONSTRAINT attachments_comment_df DEFAULT(''),
+	added_on				TIMESTAMP WITH TIME ZONE NOT NULL CONSTRAINT attachments_added_on_df DEFAULT(NOW())
+);
+
+CREATE UNIQUE INDEX attachments_file_path_uix
+ON transactions.attachments(UPPER(file_path));
+
 
 CREATE TABLE core.currencies
 (

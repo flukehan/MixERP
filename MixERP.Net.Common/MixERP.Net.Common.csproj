@@ -66,8 +66,9 @@
     <Compile Include="Helpers\Parameters.cs" />
     <Compile Include="Helpers\SessionHelper.cs" />
     <Compile Include="Helpers\Switches.cs" />
+    <Compile Include="Models\Core\Attachment.cs" />
     <Compile Include="Models\Core\Frequency.cs" />
-    <Compile Include="Models\Core\Menus.cs" />
+    <Compile Include="Models\Core\Menu.cs" />
     <Compile Include="Models\Core\ProductControlModel.cs" />
     <Compile Include="Models\Office\CashRepository.cs" />
     <Compile Include="Models\Office\Office.cs" />

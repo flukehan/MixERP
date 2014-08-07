@@ -362,6 +362,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Handlers\FileUpload.ashx.cs">
+      <DependentUpon>FileUpload.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Inventory\Adjustment.aspx.cs">
       <DependentUpon>Adjustment.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -977,12 +980,26 @@
     <Compile Include="SignIn.aspx.designer.cs">
       <DependentUpon>SignIn.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Test\WebForm1.aspx.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Test\WebForm1.aspx.designer.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Trash\WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Trash\WebForm1.aspx.designer.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\AttachmentUserControl.ascx.cs">
+      <DependentUpon>AttachmentUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\AttachmentUserControl.ascx.designer.cs">
+      <DependentUpon>AttachmentUserControl.ascx</DependentUpon>
     </Compile>
     <Compile Include="UserControls\CurrencyExtender.ascx.cs">
       <DependentUpon>CurrencyExtender.ascx</DependentUpon>
@@ -1154,6 +1171,8 @@
       <DependentUpon>query.js</DependentUpon>
     </Content>
     <Content Include="Static\AccessIsDenied.html" />
+    <Content Include="Static\Attachments\index.html" />
+    <Content Include="Test\WebForm1.aspx" />
     <Content Include="Themes\purple\stylesheets\default.css" />
     <Content Include="CRM\ConvertLeadToOpportunity.aspx" />
     <Content Include="CRM\Index.aspx" />
@@ -1669,6 +1688,7 @@
       <DependentUpon>query.css</DependentUpon>
     </Content>
     <Content Include="Trash\WebForm1.aspx" />
+    <Content Include="UserControls\AttachmentUserControl.ascx" />
     <Content Include="UserControls\CurrencyExtender.ascx" />
   </ItemGroup>
   <ItemGroup>
@@ -1714,6 +1734,7 @@
     <Content Include="bundles\sql\mixerp-blank-db.sql.bundle" />
     <Content Include="bundles\sql\mixerp-db-sample.sql.bundle" />
     <Content Include="MixERPBlankMaster.Master" />
+    <Content Include="Handlers\FileUpload.ashx" />
     <None Include="Properties\PublishProfiles\MixERP.pubxml" />
     <Content Include="Reports\Assets\ReadMe.txt" />
     <Content Include="Resource\Configuration\Switches.xml" />

@@ -123,7 +123,7 @@ table.report tr th, table.report tr td {
     min-width: 400px;
 }
 
-.table td {
+    .table td {
         border: 1px solid gray;
         padding: 4px !important;
     }
@@ -178,3 +178,23 @@ input[type=checkbox], input[type=radio] {
 .report-button {
     font-weight: bold;
 }
+
+
+#info-panel, .info-panel {
+    font-family: Courier New, Courier, monospace;
+    position: absolute;
+    right: 64px;
+    top: 200px;
+    width: 240px;
+    background-color: #f9fadd;
+    padding: 16px;
+    display: block;
+    border: 1px solid #f5ec15;
+    color: #d2a48a;
+    font-weight: bold;
+}
+
+    #info-panel table td {
+        font-family: Courier New, Courier, monospace;
+        padding: 8px;
+    }
