@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
-using System.Drawing;
-using System.Drawing.Imaging;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -33,7 +32,7 @@ namespace MixERP.Net.FrontEnd.Handlers
 
                     if (this.GetAllowedExtensions().Contains(extension.Replace(".","")))
                     {
-                        string fileName = this.RandomNumber().ToString() + "_" + Path.GetFileName(file.FileName);
+                        string fileName = this.RandomNumber().ToString(CultureInfo.InvariantCulture) + "_" + Path.GetFileName(file.FileName);
                         string savePath = context.Server.MapPath(attachmentsDirectory + fileName);
                         file.SaveAs(savePath);
                         uploadedFiles.Add(fileName);

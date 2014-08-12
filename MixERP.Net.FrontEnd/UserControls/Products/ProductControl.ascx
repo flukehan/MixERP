@@ -5,8 +5,8 @@
     <div id="info-panel">
         S H O R T C U T S :
         <br />
-        <hr class="hr" style="border-color: #d2a48a;" />
-        <table border="0">
+        <hr class="hr" style="border-color: #97d300;" />
+        <table>
             <tr>
                 <td>F2
                 </td>
@@ -37,255 +37,372 @@
         </ProgressTemplate>
     </asp:UpdateProgress>
 
-    <asp:UpdatePanel ID="UpdatePanel1" runat="server" ChildrenAsTriggers="true" UpdateMode="Always">
-        <Triggers>
-            <asp:AsyncPostBackTrigger ControlID="CashRepositoryDropDownList" />
-            <asp:AsyncPostBackTrigger ControlID="ProductGridView" />
-            <asp:AsyncPostBackTrigger ControlID="OkButton" />
-            <asp:AsyncPostBackTrigger ControlID="CancelButton" />
-            <asp:AsyncPostBackTrigger ControlID="ShippingChargeTextBox" />
-            <asp:PostBackTrigger ControlID="SaveButton" />
-        </Triggers>
-        <ContentTemplate>
-            <asp:HiddenField ID="ModeHiddenField" runat="server" />
+    <asp:HiddenField ID="ModeHiddenField" runat="server" />
 
-            <asp:Panel ID="TopPanel" CssClass="form" runat="server">
-                <table class="form-table">
-                    <tr>
-                        <td>
-                            <asp:Literal ID="DateLiteral" runat="server" />
-                        </td>
-                        <td>
-                            <asp:Literal ID="StoreLiteral" runat="server" />
-                        </td>
-                        <td>
-                            <asp:Literal ID="TransactionTypeLiteral" runat="server" />
-                        </td>
-                        <td>
-                            <asp:Literal ID="PartyLiteral" runat="server" />
-                        </td>
-                        <td>
-                            <asp:Literal ID="PriceTypeLiteral" runat="server" />
-                        </td>
-                        <td>
-                            <asp:Literal ID="ReferenceNumberLiteral" runat="server" />
-                        </td>
-                        <td></td>
-                    </tr>
-                    <tr style="vertical-align: middle;">
-                        <td>
-                            <mixerp:DateTextBox ID="DateTextBox" runat="server" Width="70" CssClass="date" />
-                        </td>
-                        <td>
-                            <asp:DropDownList ID="StoreDropDownList" runat="server" Width="80">
-                            </asp:DropDownList>
-                        </td>
-                        <td>
-                            <asp:RadioButtonList ID="TransactionTypeRadioButtonList" runat="server" RepeatDirection="Horizontal">
-                                <asp:ListItem Text="<%$ Resources:Titles, Cash %>" Value="<%$ Resources:Titles, Cash %>" Selected="True" />
-                                <asp:ListItem Text="<%$ Resources:Titles, Credit %>" Value="<%$ Resources:Titles, Credit %>" />
-                            </asp:RadioButtonList>
-                        </td>
-                        <td>
-                            <asp:TextBox ID="PartyCodeTextBox" runat="server" Width="80"
-                                onblur="selectDropDownListByValue(this.id, 'PartyDropDownList');"
-                                ToolTip="F2" />
-                            <asp:DropDownList ID="PartyDropDownList" runat="server" Width="150"
-                                onchange="if(this.selectedIndex == 0) { return false };document.getElementById('PartyCodeTextBox').value = this.options[this.selectedIndex].value;document.getElementById('PartyCodeHidden').value = this.options[this.selectedIndex].value;"
-                                ToolTip="F2">
-                            </asp:DropDownList>
-                            <asp:HiddenField ID="PartyCodeHidden" runat="server" />
-                            <asp:HiddenField ID="PartyIdHidden" runat="server" />
-                        </td>
-                        <td>
-                            <asp:DropDownList ID="PriceTypeDropDownList" runat="server" Width="80">
-                            </asp:DropDownList>
-                        </td>
-                        <td>
-                            <asp:TextBox ID="ReferenceNumberTextBox" runat="server" Width="60" MaxLength="24" />
-                        </td>
-                        <td>
-                            <asp:Button ID="OkButton" runat="server" Text="<%$ Resources:Titles, OK %>" Width="40" OnClick="OkButton_Click" />
-                            <asp:Button ID="CancelButton" runat="server" Text="<%$ Resources:Titles, Cancel %>" Width="50" Enabled="false" OnClick="CancelButton_Click" />
-                        </td>
-                    </tr>
-                </table>
-            </asp:Panel>
+    <asp:Panel ID="TopPanel" CssClass="form" runat="server">
+        <table class="form-table">
+            <tr>
+                <td>
+                    <asp:Literal ID="DateLiteral" runat="server" />
+                </td>
+                <td>
+                    <asp:Literal ID="StoreLiteral" runat="server" />
+                </td>
+                <td>
+                    <asp:Literal ID="TransactionTypeLiteral" runat="server" />
+                </td>
+                <td>
+                    <asp:Literal ID="PartyLiteral" runat="server" />
+                </td>
+                <td>
+                    <asp:Literal ID="PriceTypeLiteral" runat="server" />
+                </td>
+                <td>
+                    <asp:Literal ID="ReferenceNumberLiteral" runat="server" />
+                </td>
+                <td></td>
+            </tr>
+            <tr style="vertical-align: middle;">
+                <td>
+                    <mixerp:DateTextBox ID="DateTextBox" runat="server" Width="70" CssClass="date" />
+                </td>
+                <td>
+                    <asp:DropDownList ID="StoreDropDownList" runat="server" Width="80">
+                    </asp:DropDownList>
+                </td>
+                <td>
+                    <asp:RadioButtonList ID="TransactionTypeRadioButtonList" runat="server" RepeatDirection="Horizontal">
+                        <asp:ListItem Text="<%$ Resources:Titles, Cash %>" Value="<%$ Resources:Titles, Cash %>" Selected="True" />
+                        <asp:ListItem Text="<%$ Resources:Titles, Credit %>" Value="<%$ Resources:Titles, Credit %>" />
+                    </asp:RadioButtonList>
+                </td>
+                <td>
+                    <asp:TextBox ID="PartyCodeTextBox" runat="server" Width="80"
+                        onblur="selectDropDownListByValue(this.id, 'PartyDropDownList');"
+                        ToolTip="F2" />
+                    <asp:DropDownList ID="PartyDropDownList" runat="server" Width="150"
+                        onchange="if(this.selectedIndex == 0) { return false };document.getElementById('PartyCodeTextBox').value = this.options[this.selectedIndex].value;document.getElementById('PartyCodeHidden').value = this.options[this.selectedIndex].value;"
+                        ToolTip="F2">
+                    </asp:DropDownList>
+                    <asp:HiddenField ID="PartyCodeHidden" runat="server" />
+                    <asp:HiddenField ID="PartyIdHidden" runat="server" />
+                </td>
+                <td>
+                    <asp:DropDownList ID="PriceTypeDropDownList" runat="server" Width="80">
+                    </asp:DropDownList>
+                </td>
+                <td>
+                    <asp:TextBox ID="ReferenceNumberTextBox" runat="server" Width="60" MaxLength="24" />
+                </td>
+            </tr>
+        </table>
+    </asp:Panel>
 
-            <p>
-                <asp:Label ID="ErrorLabelTop" runat="server" CssClass="error" />
-            </p>
-            <div class="center">
-                <asp:GridView ID="ProductGridView" runat="server" EnableTheming="False"
-                    CssClass="grid2 grid3" ShowHeaderWhenEmpty="true"
-                    AlternatingRowStyle-CssClass="grid2-row-alt"
-                    OnRowDataBound="ProductGridView_RowDataBound"
-                    OnRowCommand="ProductGridView_RowCommand"
-                    AutoGenerateColumns="False"
-                    ShowFooter="true">
-                    <Columns>
-                        <asp:BoundField DataField="ItemCode" HeaderText="<%$ Resources:Titles, Code %>" />
-                        <asp:BoundField DataField="ItemName" HeaderText="<%$ Resources:Titles, ItemName %>" />
-                        <asp:BoundField DataField="Quantity" HeaderText="<%$ Resources:Titles, QuantityAbbreviated %>" ItemStyle-CssClass="right" HeaderStyle-CssClass="right" />
-                        <asp:BoundField DataField="Unit" HeaderText="<%$ Resources:Titles, Unit %>" />
-                        <asp:BoundField DataField="Price" HeaderText="<%$ Resources:Titles, Price %>" ItemStyle-CssClass="right" HeaderStyle-CssClass="right" DataFormatString="{0:N}" />
-                        <asp:BoundField DataField="Amount" HeaderText="<%$ Resources:Titles, Amount %>" ItemStyle-CssClass="right" HeaderStyle-CssClass="right" DataFormatString="{0:N}" />
-                        <asp:BoundField DataField="Discount" HeaderText="<%$ Resources:Titles, Discount %>" ItemStyle-CssClass="right" HeaderStyle-CssClass="right" DataFormatString="{0:N}" />
-                        <asp:BoundField DataField="SubTotal" HeaderText="<%$ Resources:Titles, SubTotal %>" ItemStyle-CssClass="right" HeaderStyle-CssClass="right" DataFormatString="{0:N}" />
-                        <asp:BoundField DataField="Rate" HeaderText="<%$ Resources:Titles, Rate %>" ItemStyle-CssClass="right" HeaderStyle-CssClass="right" DataFormatString="{0:N}" />
-                        <asp:BoundField DataField="Tax" HeaderText="<%$ Resources:Titles, Tax %>" ItemStyle-CssClass="right" HeaderStyle-CssClass="right" DataFormatString="{0:N}" />
-                        <asp:BoundField DataField="Total" HeaderText="<%$ Resources:Titles, Total %>" ItemStyle-CssClass="right" HeaderStyle-CssClass="right" DataFormatString="{0:N}" />
-                        <asp:TemplateField ShowHeader="False" HeaderText="<%$ Resources:Titles, Action %>">
-                            <ItemTemplate>
-                                <asp:ImageButton ID="DeleteImageButton" ClientIDMode="Predictable" runat="server"
-                                    CausesValidation="false"
-                                    OnClientClick="return(confirmAction());"
-                                    ImageUrl="~/Resource/Icons/delete-16.png" />
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                    </Columns>
-                    <AlternatingRowStyle CssClass="grid2-row-alt" />
-                    <FooterStyle CssClass="grid2-footer" />
-                    <HeaderStyle CssClass="grid2-header" />
-                    <RowStyle CssClass="grid2-row" />
-                </asp:GridView>
+    <p>
+        <asp:Label ID="ErrorLabelTop" runat="server" CssClass="error" />
+    </p>
+    <div class="center">
 
-                <asp:Panel ID="FormPanel" runat="server" Enabled="false">
-                    <asp:Label ID="ErrorLabel" runat="server" CssClass="error" />
-                </asp:Panel>
-                <div class="vpad8"></div>
-                <asp:Panel ID="BottomPanel" CssClass="form" runat="server" Width="600px" Enabled="false">
-                    <asp:Table runat="server" CssClass="form-table grid3">
-                        <asp:TableRow ID="ShippingAddressRow" runat="server">
-                            <asp:TableCell Style="vertical-align: top!important;">
-                                <asp:Literal ID="ShippingAddressDropDownListLabelLiteral" runat="server" />
-                            </asp:TableCell><asp:TableCell>
-                                <asp:DropDownList ID="ShippingAddressDropDownList" runat="server" Width="200" onchange="showShippingAddress()">
-                                </asp:DropDownList>
-                                <asp:HiddenField ID="ShippingAddressCodeHidden" runat="server" />
-                                <p>
-                                    <asp:TextBox
-                                        ID="ShippingAddressTextBox"
-                                        runat="server"
-                                        ReadOnly="true"
-                                        TextMode="MultiLine"
-                                        Width="410px"
-                                        Height="72px" />
-                                </p>
-                            </asp:TableCell>
-                        </asp:TableRow>
-                        <asp:TableRow ID="ShippingCompanyRow" runat="server">
-                            <asp:TableCell>
-                                <asp:Literal ID="ShippingCompanyDropDownListLabelLiteral" runat="server" />
-                            </asp:TableCell><asp:TableCell>
-                                <asp:DropDownList ID="ShippingCompanyDropDownList" runat="server" Width="200">
-                                </asp:DropDownList>
-                            </asp:TableCell>
-                        </asp:TableRow>
-                        <asp:TableRow ID="ShippingChargeRow" runat="server">
-                            <asp:TableCell>
-                                <asp:Literal ID="ShippingChargeTextBoxLabelLiteral" runat="server" />
-                            </asp:TableCell><asp:TableCell>
-                                <asp:TextBox ID="ShippingChargeTextBox" runat="server" AutoPostBack="true" CssClass="number" OnTextChanged="ShippingChargeTextBox_TextChanged" Width="100px">
-                                </asp:TextBox>
-                            </asp:TableCell>
-                        </asp:TableRow>
-                        <asp:TableRow>
-                            <asp:TableCell>
-                                <asp:Literal ID="TotalsLiteral" runat="server" Text="<%$Resources:Titles, Totals %>">
-                                </asp:Literal>
-                            </asp:TableCell><asp:TableCell>
-                                <table style="border-collapse: collapse; width: 100%;">
-                                    <tr>
-                                        <td>
-                                            <asp:Literal ID="RunningTotalTextBoxLabelLiteral" runat="server" />
-                                        </td>
-                                        <td>
-                                            <asp:Literal ID="TaxTotalTextBoxLabelLiteral" runat="server" />
-                                        </td>
-                                        <td>
-                                            <asp:Literal ID="GrandTotalTextBoxLabelLiteral" runat="server" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <asp:TextBox ID="RunningTotalTextBox" runat="server" Width="100" ReadOnly="true" />
 
-                                        </td>
-                                        <td>
-                                            <asp:TextBox ID="TaxTotalTextBox" runat="server" Width="100" ReadOnly="true" />
+        <asp:HiddenField ID="ProductGridViewDataHidden" runat="server" />
+        <table id="ProductGridView" class="grid2 grid3" style="width: 100%;" runat="server">
+            <tbody>
+                <tr class="grid2-header">
+                    <th scope="col">
+                        <asp:Literal runat="server" Text="<%$ Resources:Titles,Code %>" />
+                    </th>
+                    <th>
+                        <asp:Literal runat="server" Text="<%$ Resources:Titles,ItemName %>" />
+                    </th>
+                    <th class="right">
+                        <asp:Literal runat="server" Text="<%$ Resources:Titles,QuantityAbbreviated %>" />
+                    </th>
+                    <th>
+                        <asp:Literal runat="server" Text="<%$ Resources:Titles,Unit%>" />
+                    </th>
+                    <th class="right">
+                        <asp:Literal runat="server" Text="<%$ Resources:Titles,Price %>" />
+                    </th>
+                    <th class="right">
+                        <asp:Literal runat="server" Text="<%$ Resources:Titles,Amount %>" />
+                    </th>
+                    <th class="right">
+                        <asp:Literal runat="server" Text="<%$ Resources:Titles,Discount %>" />
+                    </th>
+                    <th class="right">
+                        <asp:Literal runat="server" Text="<%$ Resources:Titles,SubTotal %>" />
+                    </th>
+                    <th class="right">
+                        <asp:Literal runat="server" Text="<%$ Resources:Titles,Rate %>" />
+                    </th>
+                    <th class="right">
+                        <asp:Literal runat="server" Text="<%$ Resources:Titles,Tax %>" />
+                    </th>
+                    <th class="right">
+                        <asp:Literal runat="server" Text="<%$ Resources:Titles,Total %>" />
+                    </th>
+                    <th>
+                        <asp:Literal runat="server" Text="<%$ Resources:Titles,Action %>" />
+                    </th>
+                </tr>
+                <tr class="grid2-footer">
+                    <td>
+                        <input type="text"
+                            id="ItemCodeTextBox"
+                            onblur="selectDropDownListByValue(this.id, 'ItemDropDownList');"
+                            title='<asp:Literal runat="server" Text="<%$Resources:Titles,AltC%>" />'
+                            style="width: 60px;" />
+                    </td>
+                    <td>
+                        <select name="ItemDropDownList"
+                            id="ItemDropDownList"
+                            onchange="document.getElementById('ItemCodeTextBox').value = this.options[this.selectedIndex].value;document.getElementById('ItemCodeHidden').value = this.options[this.selectedIndex].value;if(this.selectedIndex == 0) { return false; };"
+                            onblur="getPrice();"
+                            style="width: 300px;"
+                            title='<asp:Literal runat="server" Text="<%$Resources:Titles,CtrlI%>" />'>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text"
+                            id="QuantityTextBox"
+                            class="right"
+                            onblur="updateTax();calculateAmount();"
+                            title='<asp:Literal runat="server" Text="<%$Resources:Titles,CtrlQ%>" />'
+                            style="width: 50px;"
+                            value="1" />
+                    </td>
+                    <td>
+                        <select name="UnitDropDownList"
+                            id="UnitDropDownList"
+                            onchange="$('#UnitNameHidden').val($(this).children('option').filter(':selected').text());$('#UnitIdHidden').val($(this).children('option').filter(':selected').val());"
+                            onblur="getPrice();"
+                            style="width: 70px;"
+                            title='<asp:Literal runat="server" Text="<%$Resources:Titles,CtrlU%>" />'>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text"
+                            id="PriceTextBox"
+                            class="right number"
+                            onblur="updateTax();calculateAmount();"
+                            title='<asp:Literal runat="server" Text="<%$Resources:Titles,AltP%>" />'
+                            style="width: 65px;" />
+                    </td>
+                    <td>
+                        <input type="text"
+                            id="AmountTextBox"
+                            readonly="readonly"
+                            class="right number"
+                            onblur="updateTax();calculateAmount();"
+                            style="width: 70px;" />
+                    </td>
+                    <td>
+                        <input type="text"
+                            id="DiscountTextBox"
+                            class="right number"
+                            onblur="updateTax();calculateAmount();"
+                            title='<asp:Literal runat="server" Text="<%$Resources:Titles,CtrlD%>" />'
+                            style="width: 50px;" />
+                    </td>
+                    <td>
+                        <input type="text"
+                            id="SubTotalTextBox"
+                            readonly="readonly"
+                            class="right number"
+                            onblur="updateTax();calculateAmount();"
+                            style="width: 70px;" />
+                    </td>
+                    <td>
+                        <input type="text"
+                            id="TaxRateTextBox"
+                            class="right"
+                            onblur="updateTax();calculateAmount();"
+                            style="width: 40px;" />
+                    </td>
+                    <td>
+                        <input type="text"
+                            id="TaxTextBox"
+                            class="right number"
+                            onblur="calculateAmount();"
+                            title='<asp:Literal runat="server" Text="<%$Resources:Titles,CtrlT%>" />'
+                            style="width: 50px;" />
+                    </td>
+                    <td>
+                        <input type="text"
+                            id="TotalTextBox"
+                            readonly="readonly"
+                            class="right number"
+                            onblur="updateTax();calculateAmount();"
+                            style="width: 70px;" />
+                    </td>
+                    <td>
+                        <input type="button"
+                            id="AddButton"
+                            class="button"
+                            onclick="updateTax(); calculateAmount(); addRow();"
+                            value='<asp:Literal runat="server" Text="<%$Resources:Titles,Add%>" />'
+                            title='<asp:Literal runat="server" Text="<%$Resources:Titles,CtrlReturn%>" />' />
 
-                                        </td>
-                                        <td>
-                                            <asp:TextBox ID="GrandTotalTextBox" runat="server" Width="100" ReadOnly="true" />
-                                        </td>
-                                    </tr>
-                                </table>
-                            </asp:TableCell>
-                        </asp:TableRow>
-                        <asp:TableRow ID="CashRepositoryRow" runat="server">
-                            <asp:TableCell runat="server">
-                                <asp:Literal ID="CashRepositoryDropDownListLabelLiteral" runat="server" />
-                            </asp:TableCell><asp:TableCell>
-                                <asp:DropDownList ID="CashRepositoryDropDownList" runat="server"
-                                    AutoPostBack="true"
-                                    OnSelectedIndexChanged="CashRepositoryDropDownList_SelectIndexChanged"
-                                    Width="300px">
-                                </asp:DropDownList>
-                            </asp:TableCell>
-                        </asp:TableRow>
-                        <asp:TableRow ID="CashRepositoryBalanceRow" runat="server">
-                            <asp:TableCell>
-                                <asp:Literal ID="CashRepositoryBalanceTextBoxLabelLiteral" runat="server" />
-                            </asp:TableCell><asp:TableCell>
-                                <asp:TextBox ID="CashRepositoryBalanceTextBox" runat="server" Width="100" ReadOnly="true" />
-                                <asp:Literal ID="DrLiteral" runat="server" Text="<%$Resources:Titles, Dr %>" />
-                            </asp:TableCell>
-                        </asp:TableRow>
-                        <asp:TableRow ID="CostCenterRow" runat="server">
-                            <asp:TableCell>
-                                <asp:Literal ID="CostCenterDropDownListLabelLiteral" runat="server" />
-                            </asp:TableCell><asp:TableCell>
-                                <asp:DropDownList ID="CostCenterDropDownList" runat="server" Width="300">
-                                </asp:DropDownList>
-                            </asp:TableCell>
-                        </asp:TableRow>
-                        <asp:TableRow ID="SalespersonRow" runat="server">
-                            <asp:TableCell>
-                                <asp:Literal ID="SalespersonDropDownListLabelLiteral" runat="server" />
-                            </asp:TableCell><asp:TableCell>
-                                <asp:DropDownList ID="SalespersonDropDownList" runat="server" Width="300">
-                                </asp:DropDownList>
-                            </asp:TableCell>
-                        </asp:TableRow>
-                        <asp:TableRow>
-                            <asp:TableCell>
-                                <asp:Literal ID="StatementReferenceTextBoxLabelLiteral" runat="server" />
-                            </asp:TableCell><asp:TableCell>
-                                <asp:TextBox ID="StatementReferenceTextBox" runat="server" TextMode="MultiLine" Width="410" Height="100">
-                                </asp:TextBox>
-                            </asp:TableCell>
-                        </asp:TableRow>
-                        <asp:TableRow>
-                            <asp:TableCell>
-                                &nbsp;
-                            </asp:TableCell><asp:TableCell>
-                                <asp:Button ID="SaveButton" runat="server" CssClass="button" Text="<%$Resources:Titles, Save %>" OnClick="SaveButton_Click" />
-                            </asp:TableCell>
-                        </asp:TableRow>
-                    </asp:Table>
-                </asp:Panel>
-                <p>
-                    <asp:Label ID="ErrorLabelBottom" runat="server" CssClass="error" />
-                </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-            </div>
-        </ContentTemplate>
-    </asp:UpdatePanel>
+        <asp:Panel ID="FormPanel" runat="server" Enabled="false">
+            <asp:Label ID="ErrorLabel" runat="server" CssClass="error" />
+        </asp:Panel>
+        <div class="vpad8"></div>
+
+        <asp:Label ID="AttachmentLabel" runat="server" Text="<%$ Resources:Titles, AttachmentsPlus %>" CssClass="sub-title" onclick="$('#attachment').show(500);" />
+
+        <div id="attachment" style="display: none; margin: 4px;">
+            <mixerp:Attachment ID="Attachment1" runat="server" />
+        </div>
+
+        <asp:Panel ID="BottomPanel" CssClass="form" runat="server" Style="margin: 4px;">
+            <asp:Table runat="server" CssClass="form-table grid3">
+                <asp:TableRow ID="ShippingAddressRow" runat="server">
+                    <asp:TableCell Style="vertical-align: top!important;">
+                        <asp:Literal ID="ShippingAddressDropDownListLabelLiteral" runat="server" />
+                    </asp:TableCell><asp:TableCell>
+                        <asp:DropDownList ID="ShippingAddressDropDownList" runat="server" Width="200" onchange="showShippingAddress()">
+                        </asp:DropDownList>
+                        <asp:HiddenField ID="ShippingAddressCodeHidden" runat="server" />
+                        <p>
+                            <asp:TextBox
+                                ID="ShippingAddressTextBox"
+                                runat="server"
+                                ReadOnly="true"
+                                TextMode="MultiLine"
+                                Width="410px"
+                                Height="72px" />
+                        </p>
+                    </asp:TableCell>
+                </asp:TableRow>
+                <asp:TableRow ID="ShippingCompanyRow" runat="server">
+                    <asp:TableCell>
+                        <asp:Literal ID="ShippingCompanyDropDownListLabelLiteral" runat="server" />
+                    </asp:TableCell><asp:TableCell>
+                        <asp:DropDownList ID="ShippingCompanyDropDownList" runat="server" Width="200">
+                        </asp:DropDownList>
+                    </asp:TableCell>
+                </asp:TableRow>
+                <asp:TableRow ID="ShippingChargeRow" runat="server">
+                    <asp:TableCell>
+                        <asp:Literal ID="ShippingChargeTextBoxLabelLiteral" runat="server" />
+                    </asp:TableCell><asp:TableCell>
+                        <asp:TextBox ID="ShippingChargeTextBox" runat="server" CssClass="number" Width="100px">
+                        </asp:TextBox>
+                    </asp:TableCell>
+                </asp:TableRow>
+                <asp:TableRow>
+                    <asp:TableCell>
+                        <asp:Literal ID="TotalsLiteral" runat="server" Text="<%$Resources:Titles, Totals %>">
+                        </asp:Literal>
+                    </asp:TableCell><asp:TableCell>
+                        <table style="border-collapse: collapse; width: 100%;">
+                            <tr>
+                                <td>
+                                    <asp:Literal ID="RunningTotalTextBoxLabelLiteral" runat="server" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="TaxTotalTextBoxLabelLiteral" runat="server" />
+                                </td>
+                                <td>
+                                    <asp:Literal ID="GrandTotalTextBoxLabelLiteral" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:TextBox ID="RunningTotalTextBox" runat="server" Width="100" ReadOnly="true" />
+
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="TaxTotalTextBox" runat="server" Width="100" ReadOnly="true" />
+
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="GrandTotalTextBox" runat="server" Width="100" ReadOnly="true" />
+                                </td>
+                            </tr>
+                        </table>
+                    </asp:TableCell>
+                </asp:TableRow>
+                <asp:TableRow ID="CashRepositoryRow" runat="server">
+                    <asp:TableCell runat="server">
+                        <asp:Literal ID="CashRepositoryDropDownListLabelLiteral" runat="server" />
+                    </asp:TableCell><asp:TableCell>
+                        <asp:DropDownList ID="CashRepositoryDropDownList" runat="server"
+                            AutoPostBack="true"
+                            OnSelectedIndexChanged="CashRepositoryDropDownList_SelectIndexChanged"
+                            Width="300px">
+                        </asp:DropDownList>
+                    </asp:TableCell>
+                </asp:TableRow>
+                <asp:TableRow ID="CashRepositoryBalanceRow" runat="server">
+                    <asp:TableCell>
+                        <asp:Literal ID="CashRepositoryBalanceTextBoxLabelLiteral" runat="server" />
+                    </asp:TableCell><asp:TableCell>
+                        <asp:TextBox ID="CashRepositoryBalanceTextBox" runat="server" Width="100" ReadOnly="true" />
+                        <asp:Literal ID="DrLiteral" runat="server" Text="<%$Resources:Titles, Dr %>" />
+                    </asp:TableCell>
+                </asp:TableRow>
+                <asp:TableRow ID="CostCenterRow" runat="server">
+                    <asp:TableCell>
+                        <asp:Literal ID="CostCenterDropDownListLabelLiteral" runat="server" />
+                    </asp:TableCell><asp:TableCell>
+                        <asp:DropDownList ID="CostCenterDropDownList" runat="server" Width="300">
+                        </asp:DropDownList>
+                    </asp:TableCell>
+                </asp:TableRow>
+                <asp:TableRow ID="SalespersonRow" runat="server">
+                    <asp:TableCell>
+                        <asp:Literal ID="SalespersonDropDownListLabelLiteral" runat="server" />
+                    </asp:TableCell><asp:TableCell>
+                        <asp:DropDownList ID="SalespersonDropDownList" runat="server" Width="300">
+                        </asp:DropDownList>
+                    </asp:TableCell>
+                </asp:TableRow>
+                <asp:TableRow>
+                    <asp:TableCell>
+                        <asp:Literal ID="StatementReferenceTextBoxLabelLiteral" runat="server" />
+                    </asp:TableCell><asp:TableCell>
+                        <asp:TextBox ID="StatementReferenceTextBox" runat="server" TextMode="MultiLine" Width="410" Height="100">
+                        </asp:TextBox>
+                    </asp:TableCell>
+                </asp:TableRow>
+                <asp:TableRow>
+                    <asp:TableCell>
+                                    &nbsp;
+                    </asp:TableCell>
+                    <asp:TableCell>
+                        <asp:Button ID="SaveButton" runat="server" CssClass="button" Text="<%$Resources:Titles, Save %>" />
+                    </asp:TableCell>
+                </asp:TableRow>
+            </asp:Table>
+        </asp:Panel>
+
+        <asp:HiddenField ID="ItemCodeHidden" runat="server"></asp:HiddenField>
+        <asp:HiddenField ID="ItemIdHidden" runat="server"></asp:HiddenField>
+        <asp:HiddenField ID="UnitIdHidden" runat="server"></asp:HiddenField>
+        <asp:HiddenField ID="UnitNameHidden" runat="server"></asp:HiddenField>
+
+        <p>
+            <asp:Label ID="ErrorLabelBottom" runat="server" CssClass="error" />
+        </p>
+
+    </div>
 </div>
+
 <script type="text/javascript">
     $(document).ready(function () {
         Sys.WebForms.PageRequestManager.getInstance().add_endRequest(AjaxPageLoadHandler);
+    });
+
+
+    $("#SaveButton").click(function () {
+        updateData();
+        alert('foo');
     });
 
     function AjaxPageLoadHandler() {
@@ -318,7 +435,7 @@
             },
             error: function (xhr) {
                 var err = eval("(" + xhr.responseText + ")");
-                alert(err);
+                $.notify(err, "error");
             }
         });
 
@@ -333,13 +450,341 @@
             },
             error: function (xhr) {
                 var err = eval("(" + xhr.responseText + ")");
-                alert(err);
+                $.notify(err, "error");
             }
         });
 
 
 
         calculateAmount();
+    };
+
+
+    var addRow = function () {
+        var errorLabel = $("#ErrorLabel");
+        var itemCodeTextBox = $("#ItemCodeTextBox");
+        var itemDropDownList = $("#ItemDropDownList");
+        var quantityTextBox = $("#QuantityTextBox");
+        var unitDropDownList = $("#UnitDropDownList");
+        var unitIdHidden = $("#UnitIdHidden");
+        var unitNameHidden = $("#UnitNameHidden");
+        var priceTextBox = $("#PriceTextBox");
+        var discountTextBox = $("#DiscountTextBox");
+        var taxRateTextBox = $("#TaxRateTextBox");
+        var taxTextBox = $("#TaxTextBox");
+        var storeDropDownList = $("#StoreDropDownList");
+        var verifyStock = ("<%= this.VerifyStock %>" == "True");
+        var isSales = ("<%= this.Book %>" == "Sales");
+
+        var itemCode = itemCodeTextBox.val();
+        var itemName = itemDropDownList.find("option:selected").text();
+        var quantity = parseFloat2(quantityTextBox.val());
+        var unitId = parseFloat2(unitIdHidden.val());
+        var unitName = unitNameHidden.val();
+        var price = parseFloat2(priceTextBox.val());
+        var discount = parseFloat2(discountTextBox.val());
+        var taxRate = parseFloat2(taxRateTextBox.val());
+        var tax = parseFloat2(taxTextBox.val());
+        var storeId = parseFloat2(storeDropDownList.val());
+
+        var insufficientStockWarningLocalized = "<%= Resources.Warnings.InsufficientStockWarning %>";
+
+        if (isNullOrWhiteSpace(itemCode)) {
+            makeDirty(itemCodeTextBox);
+            return;
+        }
+
+        removeDirty(itemCodeTextBox);
+
+        if (quantity < 1) {
+            makeDirty(quantityTextBox);
+            return;
+        }
+
+        removeDirty(quantityTextBox);
+
+        if (price <= 0) {
+            makeDirty(priceTextBox);
+            return;
+        }
+
+        removeDirty(priceTextBox);
+
+        if (discount < 0) {
+            makeDirty(discountTextBox);
+            return;
+        }
+
+        removeDirty(discountTextBox);
+
+        if (discount > (price * quantity)) {
+            makeDirty(discountTextBox);
+            return;
+        }
+
+        removeDirty(discountTextBox);
+
+        if (tax < 0) {
+            makeDirty(taxTextBox);
+            return;
+        }
+
+        removeDirty(taxTextBox);
+
+        //alert('foo');
+
+        var ajaxItemCodeExists = itemCodeExists(itemCode);
+        var ajaxUnitNameExists = unitNameExists(unitName);
+        var ajaxIsStockItem = isStockItem(itemCode);
+        var ajaxCountItemInStock = countItemInStock(itemCode, unitId, storeId);
+
+        ajaxItemCodeExists.done(function (response) {
+            var itemCodeExists = response.d;
+
+            if (!itemCodeExists) {
+                $.notify(String.format("Item '{0}' does not exist.", itemCode), "error");
+                makeDirty(itemCodeTextBox);
+                return;
+            }
+
+
+            removeDirty(itemCodeTextBox);
+
+
+            ajaxUnitNameExists.done(function (response) {
+                var unitNameExists = response.d;
+
+                if (!unitNameExists) {
+                    $.notify(String.format("Unit '{0}' does not exist.", unitName), "error");
+                    makeDirty(unitDropDownList);
+                    return;
+                }
+
+                removeDirty(unitDropDownList);
+
+                if (!verifyStock || !isSales) {
+                    addRowToTable(itemCode, itemName, quantity, unitName, price, discount, taxRate, tax);
+                    return;
+                }
+
+                ajaxIsStockItem.done(function (response) {
+                    var isStockItem = response.d;
+
+                    if (!isStockItem) {
+                        addRowToTable(itemCode, itemName, quantity, unitName, price, discount, taxRate, tax);
+                        return;
+                    }
+
+                    ajaxCountItemInStock.done(function (response) {
+                        var itemInStock = parseFloat2(response.d);
+
+                        if (quantity > itemInStock) {
+                            makeDirty(quantityTextBox);
+                            errorLabel.html(String.format(insufficientStockWarningLocalized, itemInStock, unitName, itemName));
+                            return;
+                        }
+
+                        addRowToTable(itemCode, itemName, quantity, unitName, price, discount, taxRate, tax);
+                    });
+
+                });
+            });
+        });
+    };
+
+
+    var summate = function () {
+        var runningTotal = getSum(4);
+        var taxTotal = getSum(9);
+        var grandTotal = getSum(10);
+
+        $("#RunningTotalTextBox").val(runningTotal);
+        $("#TaxTotalTextBox").val(taxTotal);
+        $("#GrandTotalTextBox").val(grandTotal);
+
+    };
+
+    var getSum = function (index) {
+        var total = 0;
+
+        $('#ProductGridView tr').each(function () {
+            var value = parseFloat2($('td', this).eq(index).text());
+            total += value;
+        });
+
+        return total;
+    };
+
+    var itemCodeExists = function (itemCode) {
+        return $.ajax({
+            type: "POST",
+            url: "<%=this.ResolveUrl("~/Services/ItemData.asmx/ItemCodeExists") %>",
+            data: "{itemCode:'" + itemCode + "'}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+        });
+    };
+
+
+    var countItemInStock = function (itemCode, unitId, storeId) {
+        return $.ajax({
+            type: "POST",
+            url: "<%=this.ResolveUrl("~/Services/ItemData.asmx/CountItemInStock") %>",
+            data: "{itemCode:'" + itemCode + "', unitId:'" + unitId + "', storeId:'" + storeId + "'}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+        });
+    };
+
+    var countItemInStockByUnitName = function (itemCode, unitName, storeId) {
+        return $.ajax({
+            type: "POST",
+            url: "<%=this.ResolveUrl("~/Services/ItemData.asmx/CountItemInStockByUnitName") %>",
+            data: "{itemCode:'" + itemCode + "', unitId:'" + unitId + "', storeId:'" + storeId + "'}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+        });
+    };
+
+    var isStockItem = function (itemCode) {
+        return $.ajax({
+            type: "POST",
+            url: "<%=this.ResolveUrl("~/Services/ItemData.asmx/IsStockItem") %>",
+            data: "{itemCode:'" + itemCode + "'}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+        });
+    };
+
+    var unitNameExists = function (unitName) {
+        return $.ajax({
+            type: "POST",
+            url: "<%=this.ResolveUrl("~/Services/ItemData.asmx/UnitNameExists") %>",
+            data: "{unitName:'" + unitName + "'}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+        });
+    };
+
+    var updateData = function () {
+        var targetControl = $("#ProductGridViewDataHidden");
+        var colData = new Array;
+        var rowData = new Array;
+
+        var grid = $("#ProductGridView");
+        var rows = grid.find("tr:not(:first-child):not(:last-child)");
+
+        rows.each(function () {
+            var row = $(this);
+
+            colData = new Array();
+
+            row.find("td:not(:last-child)").each(function () {
+                colData.push($(this).html());
+            });
+
+            rowData.push(colData);
+        });
+
+        data = JSON.stringify(rowData);
+        targetControl.val(data);
+    };
+
+
+    var clearData = function () {
+        var grid = $("#ProductGridView");
+        var rows = grid.find("tr:not(:first-child):not(:last-child)");
+        rows.remove();
+    };
+
+    var restoreData = function () {
+
+        var sourceControl = $("#ProductGridViewDataHidden");
+
+        if (isNullOrWhiteSpace(sourceControl.val())) {
+            return;
+        }
+
+        rowData = JSON.parse(sourceControl.val());
+
+        for (var i = 0; i < rowData.length; i++) {
+            var itemCode = rowData[i][0];
+            var itemName = rowData[i][1];
+            var quantity = parseFloat2(rowData[i][2]);
+            var unitName = rowData[i][3];
+            var price = parseFloat2(rowData[i][4]);
+            var discount = parseFloat2(rowData[i][6]);
+            var taxRate = parseFloat2(rowData[i][8]);
+            var tax = parseFloat2(rowData[i][9]);
+
+            addRowToTable(itemCode, itemName, quantity, unitName, price, discount, taxRate, tax);
+        }
+    };
+
+
+    var addRowToTable = function (itemCode, itemName, quantity, unitName, price, discount, taxRate, tax) {
+
+        var grid = $("#ProductGridView");
+        var rows = grid.find("tr:not(:first-child):not(:last-child)");
+        var amount = price * quantity;
+        var subTotal = amount - discount;
+        var total = subTotal + tax;
+        var match = false;
+
+
+        rows.each(function () {
+            var row = $(this);
+            if (getColumnText(row, 0) == itemCode &&
+                getColumnText(row, 1) == itemName &&
+                getColumnText(row, 3) == unitName &&
+                getColumnText(row, 4) == price &&
+                getColumnText(row, 8) == taxRate &&
+                parseFloat(getColumnText(row, 5)) / parseFloat(getColumnText(row, 6)) == amount / discount) {
+
+                setColumnText(row, 2, parseFloat2(getColumnText(row, 2)) + quantity);
+                setColumnText(row, 5, parseFloat2(getColumnText(row, 5)) + amount);
+                setColumnText(row, 6, parseFloat2(getColumnText(row, 6)) + discount);
+                setColumnText(row, 7, parseFloat2(getColumnText(row, 7)) + subTotal);
+                setColumnText(row, 9, parseFloat2(getColumnText(row, 9)) + tax);
+                setColumnText(row, 10, parseFloat2(getColumnText(row, 10)) + total);
+
+                match = true;
+                return;
+            }
+        });
+
+        if (!match) {
+            var html = "<tr class='grid2-row'><td>" + itemCode + "</td><td>" + itemName + "</td><td class='right'>" + quantity + "</td><td>" + unitName + "</td><td class='right'>" + price + "</td><td class='right'>" + amount + "</td><td class='right'>" + discount + "</td><td class='right'>" + subTotal + "</td><td class='right'>" + taxRate + "</td><td class='right'>" + tax + "</td><td class='right'>" + total
+                + "</td><td><input type='image' src='/Resource/Icons/delete-16.png' onclick='removeRow($(this));' /> </td></tr>";
+            grid.find("tr:last").before(html);
+        }
+
+        summate();
+
+        $("#ItemCodeTextBox").val("");
+        $("#QuantityTextBox").val(1);
+        $("#PriceTextBox").val("");
+        $("#DiscountTextBox").val("");
+        $("#TaxTextBox").val("");
+        $("#ErrorLabel").html("");
+        $("#ItemCodeTextBox").focus();
+    };
+
+
+    var removeRow = function (cell) {
+        var areYouSureLocalized = "<%=Resources.Questions.AreYouSure %>";
+
+        if (confirm(areYouSureLocalized)) {
+            cell.closest('tr').remove();
+        }
+    };
+
+    var getColumnText = function (row, columnIndex) {
+        return row.find("td:eq(" + columnIndex + ")").html();
+    };
+
+    var setColumnText = function (row, columnIndex, value) {
+        row.find("td:eq(" + columnIndex + ")").html(value);
     };
 
 
@@ -472,13 +917,13 @@
     var bounceInfoPanel = function () {
         var options = {};
         var panel = $("#info-panel");
-        panel.effect("bounce", options, 200).effect("fade", options, 1000);
-    }
+        panel.effect("bounce", options, 500).delay(2000).effect("fade", options, 500);
+    };
 
     //Called on Ajax Postback caused by ASP.net
     function Page_EndRequest() {
         initializeAjaxData();
-    }
+    };
 
     function initializeAjaxData() {
         console.log('Initializing AJAX data.');
@@ -497,7 +942,8 @@
         });
 
         loadUnits();
-    }
+        restoreData();
+    };
 
     function processCallBackActions() {
         var itemIdHidden = $("#ItemIdHidden");
@@ -522,7 +968,7 @@
                 },
                 error: function (xhr) {
                     var err = eval("(" + xhr.responseText + ")");
-                    alert(err);
+                    $.notify(err, "error");
                 }
             });
         }
@@ -549,7 +995,7 @@
                 },
                 error: function (xhr) {
                     var err = eval("(" + xhr.responseText + ")");
-                    alert(err);
+                    $.notify(err, "error");
                 }
             });
         }
@@ -612,12 +1058,11 @@
 
     function loadUnits() {
         var itemCode = $("#ItemCodeHidden").val();
-        if (itemCode) {
-            console.log('Loading units.');
+        console.log('Loading units.');
 
-            $.ajax({
-                type: "POST",
-                url: "<%=this.ResolveUrl("~/Services/ItemData.asmx/GetUnits") %>",
+        $.ajax({
+            type: "POST",
+            url: "<%=this.ResolveUrl("~/Services/ItemData.asmx/GetUnits") %>",
             data: "{itemCode:'" + itemCode + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -629,84 +1074,84 @@
                 addListItem("UnitDropDownList", 0, err.Message);
             }
         });
-    }
-}
+    };
 
-function addListItem(dropDownListId, value, text) {
-    var dropDownList = $("#" + dropDownListId);
-    dropDownList.append($("<option></option>").val(value).html(text));
-}
 
-var selectLocalized = "Select";
-var noneLocalized = "None";
-
-function bindAddresses(data) {
-    $("#ShippingAddressDropDownList").empty();
-
-    if (data.length == 0) {
-        addListItem("ShippingAddressDropDownList", "", noneLocalized);
-        return;
+    function addListItem(dropDownListId, value, text) {
+        var dropDownList = $("#" + dropDownListId);
+        dropDownList.append($("<option></option>").val(value).html(text));
     }
 
-    addListItem("ShippingAddressDropDownList", "", selectLocalized);
+    var selectLocalized = "Select";
+    var noneLocalized = "None";
 
-    $.each(data, function () {
-        addListItem("ShippingAddressDropDownList", this['Value'], this['Text']);
-    });
+    function bindAddresses(data) {
+        $("#ShippingAddressDropDownList").empty();
 
-    $("#ShippingAddressDropDownList").val($("#ShippingAddressCodeHidden").val());
-}
+        if (data.length == 0) {
+            addListItem("ShippingAddressDropDownList", "", noneLocalized);
+            return;
+        }
 
-function bindParties(data) {
-    $("#PartyDropDownList").empty();
+        addListItem("ShippingAddressDropDownList", "", selectLocalized);
 
-    if (data.length == 0) {
-        addListItem("PartyDropDownList", "", noneLocalized);
-        return;
+        $.each(data, function () {
+            addListItem("ShippingAddressDropDownList", this['Value'], this['Text']);
+        });
+
+        $("#ShippingAddressDropDownList").val($("#ShippingAddressCodeHidden").val());
     }
 
-    addListItem("PartyDropDownList", "", selectLocalized);
+    function bindParties(data) {
+        $("#PartyDropDownList").empty();
 
-    $.each(data, function () {
-        addListItem("PartyDropDownList", this['Value'], this['Text']);
-    });
+        if (data.length == 0) {
+            addListItem("PartyDropDownList", "", noneLocalized);
+            return;
+        }
 
-    $("#PartyCodeTextBox").val($("#PartyCodeHidden").val());
-    $("#PartyDropDownList").val($("#PartyCodeHidden").val());
-}
+        addListItem("PartyDropDownList", "", selectLocalized);
 
-function bindItems(data) {
-    $("#ItemDropDownList").empty();
+        $.each(data, function () {
+            addListItem("PartyDropDownList", this['Value'], this['Text']);
+        });
 
-    if (data.length == 0) {
-        addListItem("ItemDropDownList", "", noneLocalized);
-        return;
+        $("#PartyCodeTextBox").val($("#PartyCodeHidden").val());
+        $("#PartyDropDownList").val($("#PartyCodeHidden").val());
     }
 
-    addListItem("ItemDropDownList", "", selectLocalized);
+    function bindItems(data) {
+        $("#ItemDropDownList").empty();
 
-    $.each(data, function () {
-        addListItem("ItemDropDownList", this['Value'], this['Text']);
-    });
+        if (data.length == 0) {
+            addListItem("ItemDropDownList", "", noneLocalized);
+            return;
+        }
 
-    $("#ItemCodeTextBox").val($("#ItemCodeHidden").val());
-    $("#ItemDropDownList").val($("#ItemCodeHidden").val());
-}
+        addListItem("ItemDropDownList", "", selectLocalized);
 
-function bindUnits(data) {
-    $("#UnitDropDownList").empty();
+        $.each(data, function () {
+            addListItem("ItemDropDownList", this['Value'], this['Text']);
+        });
 
-    if (data.length == 0) {
-        addListItem("UnitDropDownList", "", noneLocalized);
-        return;
+        $("#ItemCodeTextBox").val($("#ItemCodeHidden").val());
+        $("#ItemDropDownList").val($("#ItemCodeHidden").val());
     }
 
-    addListItem("UnitDropDownList", "", selectLocalized);
+    function bindUnits(data) {
+        $("#UnitDropDownList").empty();
 
-    $.each(data, function () {
-        addListItem("UnitDropDownList", this['Value'], this['Text']);
-    });
+        if (data.length == 0) {
+            addListItem("UnitDropDownList", "", noneLocalized);
+            return;
+        }
 
-    $("#UnitDropDownList").val($("#UnitIdHidden").val());
-}
+        addListItem("UnitDropDownList", "", selectLocalized);
+
+        $.each(data, function () {
+            addListItem("UnitDropDownList", this['Value'], this['Text']);
+        });
+
+        $("#UnitDropDownList").val($("#UnitIdHidden").val());
+    }
 </script>

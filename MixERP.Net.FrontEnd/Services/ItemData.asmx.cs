@@ -43,6 +43,12 @@ namespace MixERP.Net.FrontEnd.Services
             return values;
         }
 
+        [WebMethod]
+        public bool IsStockItem(string itemCode)
+        {
+            return Items.IsStockItem(itemCode);
+        }
+
         private Collection<ListItem> GetItems()
         {
             Collection<ListItem> values = new Collection<ListItem>();
@@ -74,6 +80,12 @@ namespace MixERP.Net.FrontEnd.Services
         }
 
         [WebMethod]
+        public decimal CountItemInStock(string itemCode, int unitId, int storeId)
+        {
+            return Items.CountItemInStock(itemCode, unitId, storeId);
+        }
+        
+        [WebMethod]
         public Collection<ListItem> GetUnits(string itemCode)
         {
             Collection<ListItem> values = new Collection<ListItem>();
@@ -87,6 +99,12 @@ namespace MixERP.Net.FrontEnd.Services
 
                 return values;
             }
+        }
+
+        [WebMethod]
+        public bool UnitNameExists(string unitName)
+        {
+            return Units.UnitExistsByName(unitName);
         }
 
         [WebMethod]
@@ -119,5 +137,10 @@ namespace MixERP.Net.FrontEnd.Services
             return Items.GetItemCodeByItemId(itemId);
         }
 
+        [WebMethod]
+        public bool ItemCodeExists(string itemCode)
+        {
+            return Items.ItemExistsByCode(itemCode);
+        }
     }
 }

@@ -1,78 +1,157 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="AttachmentUserControl.ascx.cs" Inherits="MixERP.Net.FrontEnd.UserControls.AttachmentUserControl" %>
 
+<%-- ReSharper disable once CssBrowserCompatibility --%>
 <style type="text/css">
+    .sub-title {
+        color: #a53df6;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    #fileUploads p {
+        width: 100%;
+    }
+
+    progress {
+        width: 100px;
+        margin-right: 4px;
+    }
+
+    #fileUploads tr td {
+        padding: 0px !important;
+    }
+
+    #fileUploads table tr td:first-child {
+        width: 100px;
+    }
+
+    #fileUploads table tr td:nth-child(2) {
+        width: 300px;
+    }
+
+    #fileUploads span {
+        padding: 4px;
+    }
+
+    #fileUploads input[type=text] {
+        width: 240px;
+    }
+
+    #fileUploads input[type=button] {
+        margin-left: 2px;
+    }
+
+    #fileUploads p {
+        padding: 4px;
+    }
+
+    #fileUploads thead tr td {
+        background-color: #9900CC;
+    }
+
+    progress {
+        -webkit-appearance: progress-bar;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        display: inline-block;
+        height: 1em;
+        width: 10em;
+        vertical-align: -0.2em;
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        border: solid 1px #808080;
+        width: 200px;
+        height: 10px;
+        -webkit-writing-mode: horizontal-tb;
+    }
+
+    .button {
+        padding: 4px 8px 4px 8px;
+    }
+    
+    .nodpad {
+        padding: 0px;
+    }
 </style>
 
 <div>
     <asp:HiddenField ID="UploadedFiles" runat="server" />
 
     <div id="fileUploads">
-        <table class="grid nopad">
-            <tr>
-                <td><span>Comment</span>
-                </td>
-                <td><span>Browser</span>
-                </td>
-                <td><span>File Path</span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="text" id="commentTextBox1" />
-                </td>
-                <td>
-                    <input type="file" id="fileUpload1" class="hidden upload" name="file" />
-                    <input type="button" id="browseButton1" class="browse" value="Browse" />
-                    <progress id="progress1" value="0" max="100"></progress>
-                </td>
-                <td>
-                    <p id="filePath1"></p>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="text" id="commentTextBox2" />
-                </td>
-                <td>
-                    <input type="file" id="fileUpload2" class="hidden upload" name="file" />
-                    <input type="button" id="browseButton2" class="browse" value="Browse" />
-                    <progress id="progress2" value="0" max="100"></progress>
-                </td>
-                <td>
-                    <p id="filePath2"></p>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="text" id="commentTextBox3" />
-                </td>
-                <td>
-                    <input type="file" id="fileUpload3" class="hidden upload" name="file" />
-                    <input type="button" id="browseButton3" class="browse" value="Browse" />
-                    <progress id="progress3" value="0" max="100"></progress>
-                </td>
-                <td>
-                    <p id="filePath3"></p>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="text" id="commentTextBox4" />
-                </td>
-                <td>
-                    <input type="file" id="fileUpload4" class="hidden upload" name="file" />
-                    <input type="button" id="browseButton4" class="browse" value="Browse" />
-                    <progress id="progress4" value="0" max="100"></progress>
-                </td>
-                <td>
-                    <p id="filePath4"></p>
-                </td>
-            </tr>
+        <table class="grid nopad form-table grid3" style="width: 100%;">
+            <tbody>
+                <tr>
+                    <th><span>Comment</span>
+                    </th>
+                    <th><span>Upload</span>
+                    </th>
+                    <th><span>File Path</span>
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" id="commentTextBox1" />
+                    </td>
+                    <td>
+                        <input type="file" id="fileUpload1" class="hidden upload" name="file" />
+                        <input type="button" id="browseButton1" class="browse button" value="Browse" />
+                        <progress id="progress1" value="0" max="100"></progress>
+                    </td>
+                    <td>
+                        <p id="filePath1" class="path"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" id="commentTextBox2" />
+                    </td>
+                    <td>
+                        <input type="file" id="fileUpload2" class="hidden upload" name="file" />
+                        <input type="button" id="browseButton2" class="browse button" value="Browse" />
+                        <progress id="progress2" value="0" max="100"></progress>
+                    </td>
+                    <td>
+                        <p id="filePath2" class="path"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" id="commentTextBox3" />
+                    </td>
+                    <td>
+                        <input type="file" id="fileUpload3" class="hidden upload" name="file" />
+                        <input type="button" id="browseButton3" class="browse button" value="Browse" />
+                        <progress id="progress3" value="0" max="100"></progress>
+                    </td>
+                    <td>
+                        <p id="filePath3" class="path"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" id="commentTextBox4" />
+                    </td>
+                    <td>
+                        <input type="file" id="fileUpload4" class="hidden upload" name="file" />
+                        <input type="button" id="browseButton4" class="browse button" value="Browse" />
+                        <progress id="progress4" value="0" max="100"></progress>
+                    </td>
+                    <td>
+                        <p id="filePath4" class="path"></p>
+                    </td>
+                </tr>
+            </tbody>
         </table>
     </div>
 
-    <input type="button" id="uploadButton" value="Upload" />
-    <input type="button" id="UndoButton" runat="server" value="Undo" onserverclick="UndoButton_ServerClick" />
+    <input type="button" id="uploadButton" value="Upload" class="button" />
+    <input type="button" id="undoButton" value="Undo" class="button" />
     <p>
         <asp:Label ID="WarningLabel" runat="server" CssClass="error" />
     </p>
@@ -80,48 +159,6 @@
 
 </div>
 
-<script type="text/javascript">
-    $(window).load(function () {
-        $('.browse').on('click', function () { // use .live() for older versions of jQuery
-            var counter = this.id.replace("browseButton", "");
-            var targetControlSelector = "#fileUpload" + counter;
-            var filePathSelector = "#filePath" + counter;
-
-            $(targetControlSelector).click();
-            return false;
-        });
-    });
-
-    $(function () {
-        $("input:file").change(function () {
-            var invalidFileLocalized = "<%= Resources.Warnings.InvalidFile %>";
-            var counter = this.id.replace("fileUpload", "");
-            var filePathSelector = "#filePath" + counter;
-            var fileName = $(this).val();
-
-            if (fileName) {
-                if (validate(fileName)) {
-                    $(filePathSelector).html(fileName);
-                    $(filePathSelector).removeClass("error-message");
-                    return;
-                }
-
-                $(filePathSelector).html(invalidFileLocalized + " " + fileName);
-                $(filePathSelector).addClass("error-message");
-                $(this).val("");
-            }
-        });
-    });
-
-    var validate = function (fileName) {
-        var allowedExtensions = "<%= this.GetAllowedExtensions() %>".split(",");
-        var ext = fileName.split('.').pop();
-
-        var index = $.inArray(ext, allowedExtensions);
-        return index > -1;
-    }
-
-</script>
 <script type="text/javascript">
     // Ajax File upload with jQuery and XHR2
     // Sean Clark http://square-bracket.com
@@ -189,36 +226,130 @@
 
 
 </script>
+<script type="text/javascript">
+    $(window).load(function () {
+        $('.browse').on('click', function () { // use .live() for older versions of jQuery
+            var counter = this.id.replace("browseButton", "");
+            var targetControlSelector = "#fileUpload" + counter;
+
+            $(targetControlSelector).click();
+            return false;
+        });
+    });
+
+    $(function () {
+        $("input:file").change(function () {
+            var invalidFileLocalized = "<%= Resources.Warnings.InvalidFile %>";
+            var counter = this.id.replace("fileUpload", "");
+            var filePathSelector = "#filePath" + counter;
+            var fileName = $(this).val();
+
+            if (fileName) {
+                if (validate(fileName)) {
+                    $(filePathSelector).html(fileName);
+                    $(filePathSelector).removeClass("error-message");
+                    return;
+                }
+
+                $(filePathSelector).html(invalidFileLocalized + " " + fileName);
+                $(filePathSelector).addClass("error-message");
+                $(this).val("");
+            }
+        });
+    });
+
+    var validate = function (fileName) {
+        var allowedExtensions = "<%= this.GetAllowedExtensions() %>".split(",");
+        var ext = fileName.split('.').pop();
+
+        var index = $.inArray(ext, allowedExtensions);
+        return index > -1;
+    };
+
+</script>
 
 <script type="text/javascript">
+
+    $.fn.disable = function () {
+        return this.each(function () {
+            if (typeof this.disabled != "undefined") this.disabled = true;
+        });
+    };
+
+    $.fn.enable = function () {
+        return this.each(function () {
+            if (typeof this.disabled != "undefined") this.disabled = false;
+        });
+    };
+
     var uploadedFiles = $("#UploadedFiles");
+    var areYouSureLocalized = "<%= Resources.Questions.AreYouSure %>";
+
+    $("#undoButton").on("click", function () {
+        $(".browse").prop('disabled', false);
+        var uploadedFiles = $("#UploadedFiles");
+        var paragraphs = $(".path");
+        var progressBars = $("progress");
+        var uploadedFilesDeletedLocalized = "<%= Resources.Labels.UploadedFilesDeleted %>";
+
+        if (uploadedFiles.val() != "") {
+            if (confirm(areYouSureLocalized)) {
+                $.ajax({
+                    type: "POST",
+                    url: "<%=this.ResolveUrl("~/Services/UploadHelper.asmx/UndoUpload") %>",
+                    data: "{'uploadedFiles': '" + uploadedFiles.val() + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function () {
+                        $.notify(uploadedFilesDeletedLocalized, "success");
+                    },
+                    error: function (e) {
+                        $.notify(e.error, "error");
+                    }
+                });
+
+                uploadedFiles.val("");
+                progressBars.val(0);
+                paragraphs.html("");
+                $("#fileUploads table *").enable();
+
+            }
+        }
+    });
+
 
     $("#uploadButton").on("click", function () {
         if (haveFile()) {
             if (validateDuplicates()) {
-                $(".upload").each(function () {
-                    var fileUploadButtonId = $(this).attr("id");
-                    var counter = fileUploadButtonId.replace("fileUpload", "");
-                    var browseButtonSelector = "#browseButton" + counter;
-                    var commentTextBoxSelector = "#commentTextBox" + counter;
-                    var progressBarSelector = "#progress" + counter;
 
-                    var comment = $(commentTextBoxSelector).val();
+                if (confirm(areYouSureLocalized)) {
 
-                    $(this).upload("/Handlers/FileUpload.ashx", function (success) {
-                        if (uploadedFiles.val() == '') {
-                            uploadedFiles.val(comment + "|" + success);
-                        }
-                        else {
-                            uploadedFiles.val(uploadedFiles.val() + ',' + comment + "|" + success);
-                        }
+                    $(".upload").each(function () {
+                        var fileUploadButtonId = $(this).attr("id");
+                        var counter = fileUploadButtonId.replace("fileUpload", "");
+                        var browseButtonSelector = "#browseButton" + counter;
+                        var commentTextBoxSelector = "#commentTextBox" + counter;
+                        var progressBarSelector = "#progress" + counter;
 
-                        $(browseButtonSelector).prop("disabled", true);
-                        $("#" + fileUploadButtonId).val(""); //Clear file upload control.
-                    }, function (progress, value) {
-                        $(progressBarSelector).val(value);
+                        var comment = $(commentTextBoxSelector).val();
+
+                        $(this).upload("/Handlers/FileUpload.ashx", function (success) {
+                            if (uploadedFiles.val() == '') {
+                                uploadedFiles.val(comment + "|" + success);
+                            }
+                            else {
+                                uploadedFiles.val(uploadedFiles.val() + ',' + comment + "|" + success);
+                            }
+
+                            $(browseButtonSelector).prop("disabled", true);
+                            $("#" + fileUploadButtonId).val(""); //Clear file upload control.
+                        }, function (progress, value) {
+                            $(progressBarSelector).val(value);
+                        });
                     });
-                });
+
+                    $("#fileUploads table *").disable();
+                }
             }
         }
     });
@@ -235,7 +366,7 @@
         });
 
         return files.length > 0;
-    }
+    };
 
     var validateDuplicates = function () {
         var files = new Array();
@@ -263,10 +394,9 @@
         if (duplicates == "") { //No duplicate found.
             warningLabel.html("");
             return true;
-        }
-        else {
+        } else {
             warningLabel.html(duplicateFileLocalized + " : " + duplicates.join());
             return false;
         }
-    }
+    };
 </script>

@@ -31,15 +31,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::System.Web.UI.UpdateProgress UpdateProgress1;
         
         /// <summary>
-        /// UpdatePanel1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
-        
-        /// <summary>
         /// ModeHiddenField control.
         /// </summary>
         /// <remarks>
@@ -193,24 +184,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::System.Web.UI.WebControls.TextBox ReferenceNumberTextBox;
         
         /// <summary>
-        /// OkButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button OkButton;
-        
-        /// <summary>
-        /// CancelButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CancelButton;
-        
-        /// <summary>
         /// ErrorLabelTop control.
         /// </summary>
         /// <remarks>
@@ -220,13 +193,22 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::System.Web.UI.WebControls.Label ErrorLabelTop;
         
         /// <summary>
+        /// ProductGridViewDataHidden control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField ProductGridViewDataHidden;
+        
+        /// <summary>
         /// ProductGridView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView ProductGridView;
+        protected global::System.Web.UI.HtmlControls.HtmlTable ProductGridView;
         
         /// <summary>
         /// FormPanel control.
@@ -245,6 +227,24 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label ErrorLabel;
+        
+        /// <summary>
+        /// AttachmentLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label AttachmentLabel;
+        
+        /// <summary>
+        /// Attachment1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::MixERP.Net.FrontEnd.UserControls.AttachmentUserControl Attachment1;
         
         /// <summary>
         /// BottomPanel control.
@@ -560,6 +560,42 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button SaveButton;
+        
+        /// <summary>
+        /// ItemCodeHidden control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField ItemCodeHidden;
+        
+        /// <summary>
+        /// ItemIdHidden control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField ItemIdHidden;
+        
+        /// <summary>
+        /// UnitIdHidden control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField UnitIdHidden;
+        
+        /// <summary>
+        /// UnitNameHidden control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField UnitNameHidden;
         
         /// <summary>
         /// ErrorLabelBottom control.

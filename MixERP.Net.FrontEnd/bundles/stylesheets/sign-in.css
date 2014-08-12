@@ -874,55 +874,6 @@ input.date {
 
 .note {
 }
-
-.hidden {
-    display: none;
-}
-
-#fileUploads p {
-    width: 520px;
-}
-
-progress {
-    width: 100px;
-    margin-right: 4px;
-}
-
-#fileUploads tr td {
-    padding: 0px !important;
-}
-
-#fileUploads span {
-    padding: 4px;
-}
-
-#fileUploads input[type=text] {
-    width: 240px;
-}
-
-#fileUploads input[type=button] {
-    margin-left: 2px;
-}
-
-#fileUploads p {
-    padding: 4px;
-}
-
-progress {
-    -webkit-appearance: progress-bar;
-    box-sizing: border-box;
-    display: inline-block;
-    height: 1em;
-    width: 10em;
-    vertical-align: -0.2em;
-    appearance: none;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    border: solid 1px #808080;
-    width: 200px;
-    height: 10px;
-    -webkit-writing-mode: horizontal-tb;
-}
 html, body, table, tr, td, h1, h2, h3, h4, h5, input, select, p, textarea {
     font-family: 'Segoe UI', 'Helvetica Neue', 'Tahoma', 'Arial';
 }
@@ -1106,21 +1057,23 @@ input[type=checkbox], input[type=radio] {
 
 
 #info-panel, .info-panel {
-    font-family: Courier New, Courier, monospace;
     position: absolute;
-    right: 64px;
-    top: 200px;
+    right: 20px;
+    top: 20px;
     width: 240px;
-    background-color: #f9fadd;
+    background-color: #F1FCD9;
     padding: 16px;
     display: block;
-    border: 1px solid #f5ec15;
-    color: #d2a48a;
+    border: 1px solid #d6eaaa;
+    color: #1C8F0A;
     font-weight: bold;
+    font-weight: bold;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    border-radius: 8px;
 }
 
-    #info-panel table td {
-        font-family: Courier New, Courier, monospace;
+#info-panel table td {
         padding: 8px;
     }
 

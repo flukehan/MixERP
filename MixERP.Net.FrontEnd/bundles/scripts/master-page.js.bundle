@@ -20,5 +20,6 @@
     <file>/Scripts/chartjs/legend.js</file>
     <file>/Scripts/gridster/jquery.gridster.js</file>
     <file>/Scripts/mixerp.js</file>
+    <file>/Scripts/notify-combined.min.js</file>
   </files>
 </bundle>

@@ -62,7 +62,7 @@ http://mozilla.org/MPL/2.0/.
                 var partyNameTextBox = $("#party_name_textbox");
 
                 //if (partyNameTextBox.val() == "") {
-                    $("#party_name_textbox").val(partyName.trim().replace(/ +(?= )/g, ''));
+                partyNameTextBox.val(partyName.trim().replace(/ +(?= )/g, ''));
                 //}
             };
 

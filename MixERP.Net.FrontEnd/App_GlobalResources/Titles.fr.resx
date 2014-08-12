@@ -636,4 +636,7 @@
   <data name="YesNo" xml:space="preserve">
     <value>Oui, Non</value>
   </data>
+  <data name="AttachmentsPlus" xml:space="preserve">
+    <value>Attachments (+)</value>
+  </data>
 </root>

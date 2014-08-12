@@ -826,6 +826,10 @@
       <DependentUpon>PartyData.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Services\UploadHelper.asmx.cs">
+      <DependentUpon>UploadHelper.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Setup\Admin\Backup.aspx.cs">
       <DependentUpon>Backup.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1101,9 +1105,6 @@
     <Content Include="bundles\scripts\master-page.min.js">
       <DependentUpon>master-page.js</DependentUpon>
     </Content>
-    <Content Include="bundles\sql\mixeerp-sample-data-bundled.sql">
-      <DependentUpon>mixerp-db-sample.sql.bundle</DependentUpon>
-    </Content>
     <Content Include="bundles\sql\mixerp-blank-db-bundled.sql">
       <DependentUpon>mixerp-blank-db.sql.bundle</DependentUpon>
     </Content>
@@ -1115,6 +1116,7 @@
     </Content>
     <Content Include="Inventory\Setup\ItemsPopup.aspx" />
     <Content Include="Resource\Icons\checklist-16.png" />
+    <Content Include="Resource\Icons\insert-16.png" />
     <Content Include="Sales\Confirmation\Order.aspx" />
     <Content Include="Sales\Confirmation\ReportSalesOrder.aspx" />
     <Content Include="Sales\Entry\test.html" />
@@ -1170,6 +1172,8 @@
     <Content Include="bundles\scripts\query.min.js">
       <DependentUpon>query.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\notify-combined.min.js" />
+    <Content Include="Services\UploadHelper.asmx" />
     <Content Include="Static\AccessIsDenied.html" />
     <Content Include="Static\Attachments\index.html" />
     <Content Include="Test\WebForm1.aspx" />

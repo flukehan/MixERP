@@ -37,11 +37,11 @@ var confirmAction = function () {
     return retVal;
 };
 
-var selectAndClose = function () {
+var selectAndClose = function() {
     var lastValueHidden = $("#LastValueHidden");
     lastValueHidden.val(getSelectedValue());
     saveAndClose();
-}
+};
 
 var getSelectedValue = function () {
     return $('[id^="SelectRadio"]:checked').val();

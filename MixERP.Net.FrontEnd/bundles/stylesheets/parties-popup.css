@@ -874,55 +874,6 @@ input.date {
 
 .note {
 }
-
-.hidden {
-    display: none;
-}
-
-#fileUploads p {
-    width: 520px;
-}
-
-progress {
-    width: 100px;
-    margin-right: 4px;
-}
-
-#fileUploads tr td {
-    padding: 0px !important;
-}
-
-#fileUploads span {
-    padding: 4px;
-}
-
-#fileUploads input[type=text] {
-    width: 240px;
-}
-
-#fileUploads input[type=button] {
-    margin-left: 2px;
-}
-
-#fileUploads p {
-    padding: 4px;
-}
-
-progress {
-    -webkit-appearance: progress-bar;
-    box-sizing: border-box;
-    display: inline-block;
-    height: 1em;
-    width: 10em;
-    vertical-align: -0.2em;
-    appearance: none;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    border: solid 1px #808080;
-    width: 200px;
-    height: 10px;
-    -webkit-writing-mode: horizontal-tb;
-}
 /*
     Colorbox Core Style:
     The following CSS is consistent between example themes and should not be altered.

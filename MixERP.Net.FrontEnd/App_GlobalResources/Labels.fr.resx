@@ -148,6 +148,9 @@
   <data name="UnknownError" xml:space="preserve">
     <value>Erreur inconnue s'est produite.</value>
   </data>
+  <data name="UploadedFilesDeleted" xml:space="preserve">
+    <value>The uploaded files were successfully deleted.</value>
+  </data>
   <data name="VerificationApprovedMessage" xml:space="preserve">
     <value>Cette transaction a été approuvée par {0} sur {1}.</value>
     <comment>This transaction was approved by administrator on 1/1/2013.</comment>

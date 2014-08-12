@@ -660,4 +660,10 @@
   <data name="CtrlU" xml:space="preserve">
     <value>Press Ctrl + U</value>
   </data>
+  <data name="Attachments" xml:space="preserve">
+    <value>Attachments</value>
+  </data>
+  <data name="AttachmentsPlus" xml:space="preserve">
+    <value>Attachments (+)</value>
+  </data>
 </root>

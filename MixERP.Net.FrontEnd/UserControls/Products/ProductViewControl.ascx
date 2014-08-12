@@ -267,7 +267,7 @@
             $("#SelectedValuesHidden").val(selection.join(','));
             return true;
         } else {
-            alert("<%= Labels.NothingSelected %>");
+            $.notify("<%= Labels.NothingSelected %>", "error");
             return false;
         }
     };

@@ -45,8 +45,15 @@ var triggerChange = function(controlId) {
 
 };
 
-var parseFloat2 = function(arg) {
-    return parseFloat(arg || 0);
+var parseFloat2 = function (arg) {
+    var val = parseFloat(arg || 0);
+
+    if (isNaN(val))
+    {
+        val = 0;
+    }
+
+    return val;
 };
 
 var confirmAction = function() {
@@ -377,3 +384,30 @@ var getFormattedNumber = function(input) {
     var result = input.replace(".", decimalSeparator);
     return result;
 };
+
+
+var makeDirty = function(obj) {
+    obj.addClass("dirty");
+};
+
+var removeDirty = function(obj) {
+    obj.removeClass("dirty");
+};
+
+var isNullOrWhiteSpace = function(obj) {
+    return (!obj || $.trim(obj) === "");
+};
+
+if (!String.prototype.format) {
+    String.prototype.format = function () {
+        var args = arguments;
+        return this.replace(/{(\d+)}/g, function (match, number) {
+            return typeof args[number] != 'undefined'
+              ? args[number]
+              : match
+            ;
+        });
+    };
+};
+
+

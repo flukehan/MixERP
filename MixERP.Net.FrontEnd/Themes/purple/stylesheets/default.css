@@ -181,20 +181,22 @@ input[type=checkbox], input[type=radio] {
 
 
 #info-panel, .info-panel {
-    font-family: Courier New, Courier, monospace;
     position: absolute;
-    right: 64px;
-    top: 200px;
+    right: 20px;
+    top: 20px;
     width: 240px;
-    background-color: #f9fadd;
+    background-color: #F1FCD9;
     padding: 16px;
     display: block;
-    border: 1px solid #f5ec15;
-    color: #d2a48a;
+    border: 1px solid #d6eaaa;
+    color: #1C8F0A;
     font-weight: bold;
+    font-weight: bold;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    border-radius: 8px;
 }
 
-    #info-panel table td {
-        font-family: Courier New, Courier, monospace;
+#info-panel table td {
         padding: 8px;
     }
