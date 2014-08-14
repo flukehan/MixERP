@@ -82,6 +82,13 @@ namespace MixERP.Net.FrontEnd.Services
         }
 
         [WebMethod]
+        public decimal GetCashRepositoryBalance(int cashRepositoryId)
+        {
+            return 200;
+            return BusinessLayer.Office.CashRepositories.GetBalance(cashRepositoryId);
+        }
+
+        [WebMethod]
         public Collection<ListItem> GetCashRepositories(string accountCode)
         {
             Collection<ListItem> values = new Collection<ListItem>();

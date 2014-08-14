@@ -115,6 +115,33 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add a New Item.
+        /// </summary>
+        internal static string AddNewItem {
+            get {
+                return ResourceManager.GetString("AddNewItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a New Party.
+        /// </summary>
+        internal static string AddNewParty {
+            get {
+                return ResourceManager.GetString("AddNewParty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a New Row.
+        /// </summary>
+        internal static string AddNewRow {
+            get {
+                return ResourceManager.GetString("AddNewRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ageing Slab Setup.
         /// </summary>
         internal static string AgeingSlabSetup {
@@ -880,6 +907,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to None.
+        /// </summary>
+        internal static string None {
+            get {
+                return ResourceManager.GetString("None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Office.
         /// </summary>
         internal static string Office {
@@ -1344,6 +1380,15 @@ namespace Resources {
         internal static string ShippingCompany {
             get {
                 return ResourceManager.GetString("ShippingCompany", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shortcuts.
+        /// </summary>
+        internal static string Shortcuts {
+            get {
+                return ResourceManager.GetString("Shortcuts", resourceCulture);
             }
         }
         

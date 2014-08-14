@@ -11,7 +11,7 @@ http://mozilla.org/MPL/2.0/.
 <asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceholder" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceholder" runat="server">
-    <link href="<%=this.ResolveUrl("~/Scripts/gridster/jquery.gridster.min.css") %>" rel="stylesheet" />
+    <link href="/Scripts/gridster/jquery.gridster.min.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceholder" runat="server">
 

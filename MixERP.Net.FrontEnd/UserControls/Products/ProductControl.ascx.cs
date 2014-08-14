@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data;
-using System.Threading;
-using MixERP.Net.BusinessLayer.Core;
 using MixERP.Net.BusinessLayer.Helpers;
-using MixERP.Net.BusinessLayer.Office;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models.Transactions;
@@ -351,7 +348,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 {
                     string displayField = ConfigurationHelper.GetDbParameter("CashRepositoryDisplayField");
                     DropDownListHelper.BindDropDownList(this.CashRepositoryDropDownList, table, "cash_repository_id", displayField);
-                    this.UpdateRepositoryBalance();
                 }
             }
             else
@@ -527,22 +523,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             }
         }
 
-        protected void CashRepositoryDropDownList_SelectIndexChanged(object sender, EventArgs e)
-        {
-            this.UpdateRepositoryBalance();
-        }
-
-        private void UpdateRepositoryBalance()
-        {
-            if (this.CashRepositoryBalanceRow.Visible)
-            {
-                if (this.CashRepositoryDropDownList.SelectedItem != null)
-                {
-                    this.CashRepositoryBalanceTextBox.Text = CashRepositories.GetBalance(Conversion.TryCastInteger(this.CashRepositoryDropDownList.SelectedItem.Value)).ToString(Thread.CurrentThread.CurrentCulture);
-                }
-            }
-        }
-
         private Collection<ProductDetailsModel> GetTable()
         {
             Collection<ProductDetailsModel> productCollection = new Collection<ProductDetailsModel>();
@@ -595,56 +575,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             }
 
             return collection;
-        }
-
-        private bool VerifyQuantity()
-        {
-            //Todo
-            //if (!this.VerifyStock)
-            //{
-            //    return true;
-            //}
-
-            //if (this.Book != TranBook.Sales)
-            //{
-            //    return true;
-            //}
-
-            //if (this.ProductGridView == null)
-            //{
-            //    return true;
-            //}
-
-            //if (this.ProductGridView.Rows.Count.Equals(0))
-            //{
-            //    return true;
-            //}
-
-            //int storeId = Conversion.TryCastInteger(this.StoreDropDownList.SelectedItem.Value);
-
-            //foreach (GridViewRow row in this.ProductGridView.Rows)
-            //{
-            //    if (row.RowType == DataControlRowType.DataRow)
-            //    {
-            //        string itemCode = row.Cells[0].Text;
-            //        string itemName = row.Cells[1].Text;
-            //        int quantity = Conversion.TryCastInteger(row.Cells[2].Text);
-            //        string unitName = row.Cells[3].Text;
-
-            //        if (Items.IsStockItem(itemCode))
-            //        {
-            //            decimal itemInStock = Items.CountItemInStock(itemCode, unitName, storeId);
-
-            //            if (quantity > itemInStock)
-            //            {
-            //                this.ErrorLabel.Text = String.Format(Thread.CurrentThread.CurrentCulture, Warnings.InsufficientStockWarning, itemInStock.ToString("G29", Thread.CurrentThread.CurrentCulture), unitName, itemName);
-            //                return false;
-            //            }
-            //        }
-            //    }
-            //}
-
-            return true;
         }
     }
 }

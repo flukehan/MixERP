@@ -1173,6 +1173,7 @@
       <DependentUpon>query.js</DependentUpon>
     </Content>
     <Content Include="Scripts\notify-combined.min.js" />
+    <Content Include="Scripts\UserControls\ProductControl.js" />
     <Content Include="Services\UploadHelper.asmx" />
     <Content Include="Static\AccessIsDenied.html" />
     <Content Include="Static\Attachments\index.html" />

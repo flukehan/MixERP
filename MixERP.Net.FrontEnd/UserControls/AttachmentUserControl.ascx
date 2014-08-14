@@ -288,15 +288,15 @@
     $("#undoButton").on("click", function () {
         $(".browse").prop('disabled', false);
         var uploadedFiles = $("#UploadedFiles");
-        var paragraphs = $(".path");
-        var progressBars = $("progress");
+        //var paragraphs = $(".path");
+        //var progressBars = $("progress");
         var uploadedFilesDeletedLocalized = "<%= Resources.Labels.UploadedFilesDeleted %>";
 
         if (uploadedFiles.val() != "") {
             if (confirm(areYouSureLocalized)) {
                 $.ajax({
                     type: "POST",
-                    url: "<%=this.ResolveUrl("~/Services/UploadHelper.asmx/UndoUpload") %>",
+                    url: "/Services/UploadHelper.asmx/UndoUpload",
                     data: "{'uploadedFiles': '" + uploadedFiles.val() + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",

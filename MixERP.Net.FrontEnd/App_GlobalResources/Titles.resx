@@ -666,4 +666,19 @@
   <data name="AttachmentsPlus" xml:space="preserve">
     <value>Attachments (+)</value>
   </data>
+  <data name="None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="AddNewItem" xml:space="preserve">
+    <value>Add a New Item</value>
+  </data>
+  <data name="AddNewParty" xml:space="preserve">
+    <value>Add a New Party</value>
+  </data>
+  <data name="AddNewRow" xml:space="preserve">
+    <value>Add a New Row</value>
+  </data>
+  <data name="Shortcuts" xml:space="preserve">
+    <value>Shortcuts</value>
+  </data>
 </root>

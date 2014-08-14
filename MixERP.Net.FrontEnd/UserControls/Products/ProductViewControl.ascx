@@ -310,9 +310,9 @@
             $("#" + id).prop("checked", true);
         }
 
-        console.log(JSON.stringify($("#" + id).attr("checked")));
+        logToConsole(JSON.stringify($("#" + id).attr("checked")));
 
-        console.log('Radio button selection was "' + id + '" toggled.');
+        logToConsole('Radio button selection was "' + id + '" toggled.');
     };
 
 

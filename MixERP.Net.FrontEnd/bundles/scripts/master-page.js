@@ -30142,7 +30142,7 @@ var validateByControlId = function(controlId) {
     if (typeof Page_ClientValidate === "function") {
         Page_ClientValidate(controlId);
     } else {
-        console.log("The function Page_ClientValidate was not found.");
+        logToConsole("The function Page_ClientValidate was not found.");
     }
 };
 
@@ -30461,6 +30461,7 @@ var getFormattedNumber = function(input) {
 
 var makeDirty = function(obj) {
     obj.addClass("dirty");
+    obj.focus();
 };
 
 var removeDirty = function(obj) {
@@ -30484,6 +30485,42 @@ if (!String.prototype.format) {
 };
 
 
+function displayMessage(a,b,c) {
+    $.notify(a, b, c);
+};
+
+function logToConsole(message) {
+    console.log(message);
+};
+
+function logToConsole2(message) {
+    console.log(JSON.stringify(message));
+};
+
+var sumOfColumn = function (tableSelector, columnIndex) {
+    var total = 0;
+
+    $(tableSelector).find('tr').each(function () {
+        var value = parseFloat2($('td', this).eq(columnIndex).text());
+        total += value;
+    });
+
+    return total;
+};
+
+var getColumnText = function (row, columnIndex) {
+    return row.find("td:eq(" + columnIndex + ")").html();
+};
+
+var setColumnText = function (row, columnIndex, value) {
+    row.find("td:eq(" + columnIndex + ")").html(value);
+};
+
+var bounceThis = function (selector) {
+    var options = {};
+    var panel = $(selector);
+    panel.effect("bounce", options, 500).delay(2000).effect("fade", options, 500);
+};
 
 ///#source 1 1 /Scripts/notify-combined.min.js
 /** Notify.js - v0.3.1 - 2014/06/29
