@@ -12,8 +12,7 @@ SELECT core.get_menu_id('SAQ'), 'fr', 'Ventes & Devis' UNION ALL
 SELECT core.get_menu_id('DRS'), 'fr', 'vente directe' UNION ALL
 SELECT core.get_menu_id('SQ'), 'fr', 'Offre de vente' UNION ALL
 SELECT core.get_menu_id('SO'), 'fr', 'commande' UNION ALL
-SELECT core.get_menu_id('DSO'), 'fr', 'Livraison de la commande client' UNION ALL
-SELECT core.get_menu_id('DWO'), 'fr', 'Livraison Sans Commande' UNION ALL
+SELECT core.get_menu_id('SD'), 'fr', 'Livraison Sans Commande' UNION ALL
 SELECT core.get_menu_id('ISD'), 'fr', 'Facture pour les ventes Livraison' UNION ALL
 SELECT core.get_menu_id('RFC'), 'fr', 'Réception de la clientèle' UNION ALL
 SELECT core.get_menu_id('SR'), 'fr', 'ventes Retour' UNION ALL

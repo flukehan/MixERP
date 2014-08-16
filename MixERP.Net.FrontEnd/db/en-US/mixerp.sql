@@ -1016,6 +1016,20 @@ INSERT INTO core.price_types(price_type_code, price_type_name)
 SELECT 'RET', 'Retail' UNION ALL
 SELECT 'WHO', 'Wholesale';
 
+CREATE FUNCTION core.get_price_type_name_by_price_type_id(integer)
+RETURNS text
+AS
+$$
+BEGIN
+	RETURN
+	(
+		SELECT price_type_name
+		FROM core.price_types
+		WHERE price_type_id=$1
+	);
+END
+$$
+LANGUAGE plpgsql;
 
 
 CREATE TABLE core.menus
@@ -1134,8 +1148,7 @@ INSERT INTO core.menus(menu_text, url, menu_code, level, parent_menu_id)
 UNION ALL SELECT 'Direct Sales', '~/Sales/DirectSales.aspx', 'DRS', 2, core.get_menu_id('SAQ')
 UNION ALL SELECT 'Sales Quotation', '~/Sales/Quotation.aspx', 'SQ', 2, core.get_menu_id('SAQ')
 UNION ALL SELECT 'Sales Order', '~/Sales/Order.aspx', 'SO', 2, core.get_menu_id('SAQ')
-UNION ALL SELECT 'Delivery for Sales Order', '~/Sales/DeliveryForOrder.aspx', 'DSO', 2, core.get_menu_id('SAQ')
-UNION ALL SELECT 'Delivery Without Sales Order', '~/Sales/DeliveryWithoutOrder.aspx', 'DWO', 2, core.get_menu_id('SAQ')
+UNION ALL SELECT 'Sales Delivery', '~/Sales/Delivery.aspx', 'SD', 2, core.get_menu_id('SAQ')
 UNION ALL SELECT 'Invoice for Sales Delivery', '~/Sales/Invoice.aspx', 'ISD', 2, core.get_menu_id('SAQ')
 UNION ALL SELECT 'Receipt from Customer', '~/Sales/Receipt.aspx', 'RFC', 2, core.get_menu_id('SAQ')
 UNION ALL SELECT 'Sales Return', '~/Sales/Return.aspx', 'SR', 2, core.get_menu_id('SAQ')
@@ -2198,6 +2211,22 @@ ON core.agents(UPPER(agent_name));
 INSERT INTO core.agents(agent_code, agent_name, address, contact_number, commission_rate, account_id)
 SELECT 'OFF', 'Office', 'Office', '', 0, (SELECT account_id FROM core.accounts WHERE account_code='20100');
 
+CREATE FUNCTION core.get_agent_name_by_agent_id(integer)
+RETURNS text
+AS
+$$
+BEGIN
+	RETURN
+	(
+		SELECT agent_name
+		FROM core.agents
+		WHERE agent_id=$1
+	);
+END
+$$
+LANGUAGE plpgsql;
+
+
 CREATE VIEW core.agent_view
 AS
 SELECT
@@ -2574,7 +2603,8 @@ CREATE TABLE core.shipping_addresses
 CREATE UNIQUE INDEX shipping_addresses_shipping_address_code_uix
 ON core.shipping_addresses(UPPER(shipping_address_code), party_id);
 
-CREATE FUNCTION core.get_shipping_address_id_by_shipping_address_code(text)
+
+CREATE FUNCTION core.get_shipping_address_id_by_shipping_address_code(text, integer)
 RETURNS smallint
 AS
 $$
@@ -2587,10 +2617,33 @@ BEGIN
 			core.shipping_addresses
 		WHERE 
 			core.shipping_addresses.shipping_address_code=$1
+		AND
+			core.shipping_addresses.party_id=$2
 	);
 END
 $$
 LANGUAGE plpgsql;
+
+
+
+CREATE FUNCTION core.get_shipping_address_code_by_shipping_address_id(integer)
+RETURNS text
+AS
+$$
+BEGIN
+	RETURN
+	(
+		SELECT
+			shipping_address_code
+		FROM
+			core.shipping_addresses
+		WHERE 
+			core.shipping_addresses.shipping_address_id=$1
+	);
+END
+$$
+LANGUAGE plpgsql;
+
 
 CREATE FUNCTION core.update_shipping_address_code_trigger()
 RETURNS TRIGGER
@@ -2759,6 +2812,24 @@ CREATE TRIGGER update_shipper_code
 AFTER INSERT
 ON core.shippers
 FOR EACH ROW EXECUTE PROCEDURE core.update_shipper_code();
+
+
+
+
+CREATE FUNCTION core.get_shipper_name_by_shipper_id(integer)
+RETURNS text
+AS
+$$
+BEGIN
+	RETURN
+	(
+		SELECT company_name
+		FROM core.shippers
+		WHERE shipper_id=$1
+	);
+END
+$$
+LANGUAGE plpgsql;
 
 
 CREATE FUNCTION core.get_account_id_by_shipper_id(integer)
@@ -3136,6 +3207,23 @@ ON office.stores(UPPER(store_code));
 
 CREATE UNIQUE INDEX stores_store_name_uix
 ON office.stores(UPPER(store_name));
+
+
+
+CREATE FUNCTION office.get_store_name_by_store_id(integer)
+RETURNS text
+AS
+$$
+BEGIN
+	RETURN
+	(
+		SELECT store_name
+		FROM office.stores
+		WHERE store_id=$1
+	);
+END
+$$
+LANGUAGE plpgsql;
 
 
 --TODO

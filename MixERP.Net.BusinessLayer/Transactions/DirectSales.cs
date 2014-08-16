@@ -7,6 +7,7 @@ http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 
 using MixERP.Net.BusinessLayer.Helpers;
+using MixERP.Net.Common.Models.Core;
 using MixERP.Net.Common.Models.Transactions;
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
@@ -22,7 +23,7 @@ namespace MixERP.Net.BusinessLayer.Transactions
 {
     public static class DirectSales
     {
-        public static long Add(DateTime valueDate, int storeId, bool isCredit, string partyCode, int agentId, int priceTypeId, Collection<StockMasterDetailModel> details, int shipperId, string shippingAddressCode, decimal shippingCharge, int cashRepositoryId, int costCenterId, string referenceNumber, string statementReference)
+        public static long Add(DateTime valueDate, int storeId, bool isCredit, string partyCode, int agentId, int priceTypeId, Collection<StockMasterDetailModel> details, int shipperId, string shippingAddressCode, decimal shippingCharge, int cashRepositoryId, int costCenterId, string referenceNumber, string statementReference, Collection<Attachment> attachments)
         {
             StockMasterModel stockMaster = new StockMasterModel();
 
@@ -36,7 +37,7 @@ namespace MixERP.Net.BusinessLayer.Transactions
             stockMaster.CashRepositoryId = cashRepositoryId;
             stockMaster.StoreId = storeId;
 
-            long transactionMasterId = DatabaseLayer.Transactions.DirectSales.Add(valueDate, SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), costCenterId, referenceNumber, statementReference, stockMaster, details);
+            long transactionMasterId = DatabaseLayer.Transactions.DirectSales.Add(valueDate, SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), costCenterId, referenceNumber, statementReference, stockMaster, details, attachments);
             DatabaseLayer.Transactions.Verification.CallAutoVerification(transactionMasterId);
             return transactionMasterId;
         }

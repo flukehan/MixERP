@@ -57,7 +57,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data
                         INNER JOIN core.units
                         ON transactions.non_gl_stock_details.unit_id = core.units.unit_id
                         INNER JOIN core.parties
-                        ON transactions.non_gl_stock_master.party_id = core.parties.partcy_id
+                        ON transactions.non_gl_stock_master.party_id = core.parties.party_id
                         WHERE transactions.non_gl_stock_master.book = 'Sales.Quotation'
                         AND transactions.non_gl_stock_master.non_gl_stock_master_id IN(" + string.Join(",", parameters) + ");";
 

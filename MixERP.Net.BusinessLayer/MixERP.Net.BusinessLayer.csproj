@@ -88,6 +88,7 @@
     <Compile Include="Office\Stores.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\User.cs" />
+    <Compile Include="Transactions\GLStockTransaction.cs" />
     <Compile Include="Transactions\SalesDelivery.cs" />
     <Compile Include="Transactions\DirectPurchase.cs" />
     <Compile Include="Transactions\DirectSales.cs" />

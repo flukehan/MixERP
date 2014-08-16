@@ -53,6 +53,7 @@ var taxTotalTextBox = $("#TaxTotalTextBox");
 var taxTextBox = $("#TaxTextBox");
 var totalTextBox = $("#TotalTextBox");
 var tranIdCollectionHiddenField = $("#TranIdCollectionHiddenField");
+var transactionTypeRadioButtonList = $("#TransactionTypeRadioButtonList");
 
 var unitIdHidden = $("#UnitIdHidden");
 var unitDropDownList = $("#UnitDropDownList");
@@ -60,6 +61,30 @@ var unitNameHidden = $("#UnitNameHidden");
 
 
 
+//Variables
+var agentId;
+var attachments;
+
+var cashRepositoryId;
+var costCenterId;
+
+var data;
+
+var partyCode;
+var priceTypeId;
+
+var referenceNumber;
+
+var shippingAddressCode;
+var shipperId;
+var shippingCharge;
+var statementReference;
+var storeId;
+
+var transactionIds;
+var transactionType;
+
+var valueDate;
 
 
 //Page Load Event
@@ -238,7 +263,7 @@ function isDate(val) {
 
 
 var validateProductControl = function () {
-    var valueDate = dateTextBox.val();
+    valueDate = dateTextBox.val();
     errorLabelBottom.html("");
 
     removeDirty(dateTextBox);
@@ -322,6 +347,29 @@ var validateProductControl = function () {
 
 
     updateData();
+
+    agentId = parseFloat2(salesPersonDropDownList.getSelectedValue());
+    attachments = uploadedFilesHidden.val();
+
+    cashRepositoryId = parseFloat2(cashRepositoryDropDownList.getSelectedValue());
+    costCenterId = parseFloat2(costCenterDropDownList.getSelectedValue());
+
+    data = productGridViewDataHidden.val();
+
+    partyCode = partyDropDownList.getSelectedValue();
+    priceTypeId = parseFloat2(priceTypeDropDownList.getSelectedValue());
+
+    referenceNumber = referenceNumberTextBox.getSelectedValue();
+
+    shippingAddressCode = shippingAddressDropDownList.getSelectedText();
+    shipperId = parseFloat2(shippingCompanyDropDownList.getSelectedValue());
+    shippingCharge = parseFloat2(shippingChargeTextBox.val());
+    statementReference = statementReferenceTextBox.val();
+    storeId = parseFloat2(storeDropDownList.getSelectedValue());
+
+    transactionIds = tranIdCollectionHiddenField.val();
+    transactionType = transactionTypeRadioButtonList.find("input:checked").val();
+
     return true;
 };
 

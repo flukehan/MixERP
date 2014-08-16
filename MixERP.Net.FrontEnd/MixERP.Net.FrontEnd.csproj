@@ -639,6 +639,13 @@
     <Compile Include="RuntimeError.aspx.designer.cs">
       <DependentUpon>RuntimeError.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Sales\Confirmation\Delivery.aspx.cs">
+      <DependentUpon>Delivery.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Sales\Confirmation\Delivery.aspx.designer.cs">
+      <DependentUpon>Delivery.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Sales\Confirmation\Order.aspx.cs">
       <DependentUpon>Order.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -666,13 +673,6 @@
     </Compile>
     <Compile Include="Sales\Confirmation\ReportDelivery.aspx.designer.cs">
       <DependentUpon>ReportDelivery.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Sales\Confirmation\DeliveryWithoutOrder.aspx.cs">
-      <DependentUpon>DeliveryWithoutOrder.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Sales\Confirmation\DeliveryWithoutOrder.aspx.designer.cs">
-      <DependentUpon>DeliveryWithoutOrder.aspx</DependentUpon>
     </Compile>
     <Compile Include="Sales\Confirmation\DirectSales.aspx.cs">
       <DependentUpon>DirectSales.aspx</DependentUpon>
@@ -709,25 +709,32 @@
     <Compile Include="Sales\Confirmation\ReportSalesQuotation.aspx.designer.cs">
       <DependentUpon>ReportSalesQuotation.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Sales\DeliveryForOrder.aspx.cs">
-      <DependentUpon>DeliveryForOrder.aspx</DependentUpon>
+    <Compile Include="Sales\Delivery.aspx.cs">
+      <DependentUpon>Delivery.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Sales\DeliveryForOrder.aspx.designer.cs">
-      <DependentUpon>DeliveryForOrder.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Sales\DeliveryWithoutOrder.aspx.cs">
-      <DependentUpon>DeliveryWithoutOrder.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Sales\DeliveryWithoutOrder.aspx.designer.cs">
-      <DependentUpon>DeliveryWithoutOrder.aspx</DependentUpon>
+    <Compile Include="Sales\Delivery.aspx.designer.cs">
+      <DependentUpon>Delivery.aspx</DependentUpon>
     </Compile>
     <Compile Include="Sales\DirectSales.aspx.cs">
       <DependentUpon>DirectSales.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Sales\DirectSales.aspx.designer.cs">
+      <DependentUpon>DirectSales.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Sales\Entry\Delivery.aspx.cs">
+      <DependentUpon>Delivery.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Sales\Entry\Delivery.aspx.designer.cs">
+      <DependentUpon>Delivery.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Sales\Entry\DirectSales.aspx.cs">
+      <DependentUpon>DirectSales.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Sales\Entry\DirectSales.aspx.designer.cs">
       <DependentUpon>DirectSales.aspx</DependentUpon>
     </Compile>
     <Compile Include="Sales\Entry\Order.aspx.cs">
@@ -824,6 +831,14 @@
     </Compile>
     <Compile Include="Services\PartyData.asmx.cs">
       <DependentUpon>PartyData.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\Sales\Delivery.asmx.cs">
+      <DependentUpon>Delivery.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\Sales\DirectSales.asmx.cs">
+      <DependentUpon>DirectSales.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Services\Sales\SalesOrder.asmx.cs">
@@ -1125,8 +1140,12 @@
     <Content Include="Inventory\Setup\ItemsPopup.aspx" />
     <Content Include="Resource\Icons\checklist-16.png" />
     <Content Include="Resource\Icons\insert-16.png" />
+    <Content Include="Sales\Confirmation\Delivery.aspx" />
     <Content Include="Sales\Confirmation\Order.aspx" />
     <Content Include="Sales\Confirmation\ReportSalesOrder.aspx" />
+    <Content Include="Sales\Delivery.aspx" />
+    <Content Include="Sales\Entry\Delivery.aspx" />
+    <Content Include="Sales\Entry\DirectSales.aspx" />
     <Content Include="Sales\Entry\test.html" />
     <Content Include="Scripts\ajax-file-upload.js" />
     <Content Include="Scripts\colorbox\colorbox.css" />
@@ -1184,6 +1203,9 @@
     <Content Include="Scripts\notify-combined.min.js" />
     <Content Include="Scripts\UserControls\AttachmentUserControl.js" />
     <Content Include="Scripts\UserControls\ProductControl.js" />
+    <Content Include="Scripts\UserControls\ProductViewControl.js" />
+    <Content Include="Services\Sales\Delivery.asmx" />
+    <Content Include="Services\Sales\DirectSales.asmx" />
     <Content Include="Services\Sales\SalesOrder.asmx" />
     <Content Include="Services\Sales\SalesQuotation.asmx" />
     <Content Include="Services\UploadHelper.asmx" />
@@ -1324,13 +1346,10 @@
     <Content Include="Sales\Confirmation\Quotation.aspx" />
     <Content Include="Sales\Confirmation\ReportCustomerInvoice.aspx" />
     <Content Include="Sales\Confirmation\ReportDelivery.aspx" />
-    <Content Include="Sales\Confirmation\DeliveryWithoutOrder.aspx" />
     <Content Include="Sales\Confirmation\DirectSales.aspx" />
     <Content Include="Sales\Confirmation\ReportDeliveryNote.aspx" />
     <Content Include="Sales\Confirmation\ReportDirectSalesInvoice.aspx" />
     <Content Include="Sales\Confirmation\ReportSalesQuotation.aspx" />
-    <Content Include="Sales\DeliveryForOrder.aspx" />
-    <Content Include="Sales\DeliveryWithoutOrder.aspx" />
     <Content Include="Sales\DirectSales.aspx" />
     <Content Include="Sales\Entry\Order.aspx" />
     <Content Include="Sales\Entry\Quotation.aspx" />

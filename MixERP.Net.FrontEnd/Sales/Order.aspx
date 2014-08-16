@@ -17,6 +17,7 @@ http://mozilla.org/MPL/2.0/.
         runat="server"
         Book="Sales" SubBook="Order"
         Text="<%$Resources:Titles, SalesOrder %>"
+        AddNewUrl="~/Sales/Entry/Order.aspx"
         PreviewUrl="~/Sales/Confirmation/ReportSalesOrder.aspx"
         ChecklistUrl="~/Sales/Confirmation/Order.aspx" />
 </asp:Content>

@@ -28,23 +28,6 @@ http://mozilla.org/MPL/2.0/.
         });
 
         var save = function() {
-            var valueDate = dateTextBox.val();
-            var storeId = parseFloat2(storeDropDownList.getSelectedValue());
-            var partyCode = partyDropDownList.getSelectedValue();
-            var priceTypeId = parseFloat2(priceTypeDropDownList.getSelectedValue());
-            var referenceNumber = referenceNumberTextBox.getSelectedValue();
-
-            var data = productGridViewDataHidden.val();
-            var shippingAddressCode = shippingAddressDropDownList.getSelectedText();
-            var shipperId = parseFloat2(shippingCompanyDropDownList.getSelectedValue());
-            var shippingCharge = parseFloat2(shippingChargeTextBox.val());
-            var cashRepositoryId = parseFloat2(cashRepositoryDropDownList.getSelectedValue());
-            var costCenterId = parseFloat2(costCenterDropDownList.getSelectedValue());
-            var agentId = parseFloat2(salesPersonDropDownList.getSelectedValue());
-            var statementReference = statementReferenceTextBox.val();
-            var transactionIds = tranIdCollectionHiddenField.val();
-            var attachments = uploadedFilesHidden.val();
-
             var ajaxSaveOder = saveOrder(valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, cashRepositoryId, costCenterId, agentId, statementReference, transactionIds, attachments);
 
             ajaxSaveOder.done(function (response) {

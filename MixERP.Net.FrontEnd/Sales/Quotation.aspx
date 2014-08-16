@@ -18,6 +18,7 @@ http://mozilla.org/MPL/2.0/.
         Book="Sales"
         SubBook="Quotation"
         Text="<%$Resources:Titles, SalesQuotation %>"
+        AddNewUrl="~/Sales/Entry/Quotation.aspx"
         PreviewUrl="~/Sales/Confirmation/ReportSalesQuotation.aspx"
         ChecklistUrl="~/Sales/Confirmation/Quotation.aspx" />
 </asp:Content>

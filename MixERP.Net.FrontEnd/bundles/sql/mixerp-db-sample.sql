@@ -1016,6 +1016,20 @@ INSERT INTO core.price_types(price_type_code, price_type_name)
 SELECT 'RET', 'Retail' UNION ALL
 SELECT 'WHO', 'Wholesale';
 
+CREATE FUNCTION core.get_price_type_name_by_price_type_id(integer)
+RETURNS text
+AS
+$$
+BEGIN
+	RETURN
+	(
+		SELECT price_type_name
+		FROM core.price_types
+		WHERE price_type_id=$1
+	);
+END
+$$
+LANGUAGE plpgsql;
 
 
 CREATE TABLE core.menus
@@ -1134,8 +1148,7 @@ INSERT INTO core.menus(menu_text, url, menu_code, level, parent_menu_id)
 UNION ALL SELECT 'Direct Sales', '~/Sales/DirectSales.aspx', 'DRS', 2, core.get_menu_id('SAQ')
 UNION ALL SELECT 'Sales Quotation', '~/Sales/Quotation.aspx', 'SQ', 2, core.get_menu_id('SAQ')
 UNION ALL SELECT 'Sales Order', '~/Sales/Order.aspx', 'SO', 2, core.get_menu_id('SAQ')
-UNION ALL SELECT 'Delivery for Sales Order', '~/Sales/DeliveryForOrder.aspx', 'DSO', 2, core.get_menu_id('SAQ')
-UNION ALL SELECT 'Delivery Without Sales Order', '~/Sales/DeliveryWithoutOrder.aspx', 'DWO', 2, core.get_menu_id('SAQ')
+UNION ALL SELECT 'Sales Delivery', '~/Sales/Delivery.aspx', 'SD', 2, core.get_menu_id('SAQ')
 UNION ALL SELECT 'Invoice for Sales Delivery', '~/Sales/Invoice.aspx', 'ISD', 2, core.get_menu_id('SAQ')
 UNION ALL SELECT 'Receipt from Customer', '~/Sales/Receipt.aspx', 'RFC', 2, core.get_menu_id('SAQ')
 UNION ALL SELECT 'Sales Return', '~/Sales/Return.aspx', 'SR', 2, core.get_menu_id('SAQ')
@@ -2198,6 +2211,22 @@ ON core.agents(UPPER(agent_name));
 INSERT INTO core.agents(agent_code, agent_name, address, contact_number, commission_rate, account_id)
 SELECT 'OFF', 'Office', 'Office', '', 0, (SELECT account_id FROM core.accounts WHERE account_code='20100');
 
+CREATE FUNCTION core.get_agent_name_by_agent_id(integer)
+RETURNS text
+AS
+$$
+BEGIN
+	RETURN
+	(
+		SELECT agent_name
+		FROM core.agents
+		WHERE agent_id=$1
+	);
+END
+$$
+LANGUAGE plpgsql;
+
+
 CREATE VIEW core.agent_view
 AS
 SELECT
@@ -2574,7 +2603,8 @@ CREATE TABLE core.shipping_addresses
 CREATE UNIQUE INDEX shipping_addresses_shipping_address_code_uix
 ON core.shipping_addresses(UPPER(shipping_address_code), party_id);
 
-CREATE FUNCTION core.get_shipping_address_id_by_shipping_address_code(text)
+
+CREATE FUNCTION core.get_shipping_address_id_by_shipping_address_code(text, integer)
 RETURNS smallint
 AS
 $$
@@ -2587,10 +2617,33 @@ BEGIN
 			core.shipping_addresses
 		WHERE 
 			core.shipping_addresses.shipping_address_code=$1
+		AND
+			core.shipping_addresses.party_id=$2
 	);
 END
 $$
 LANGUAGE plpgsql;
+
+
+
+CREATE FUNCTION core.get_shipping_address_code_by_shipping_address_id(integer)
+RETURNS text
+AS
+$$
+BEGIN
+	RETURN
+	(
+		SELECT
+			shipping_address_code
+		FROM
+			core.shipping_addresses
+		WHERE 
+			core.shipping_addresses.shipping_address_id=$1
+	);
+END
+$$
+LANGUAGE plpgsql;
+
 
 CREATE FUNCTION core.update_shipping_address_code_trigger()
 RETURNS TRIGGER
@@ -2759,6 +2812,24 @@ CREATE TRIGGER update_shipper_code
 AFTER INSERT
 ON core.shippers
 FOR EACH ROW EXECUTE PROCEDURE core.update_shipper_code();
+
+
+
+
+CREATE FUNCTION core.get_shipper_name_by_shipper_id(integer)
+RETURNS text
+AS
+$$
+BEGIN
+	RETURN
+	(
+		SELECT company_name
+		FROM core.shippers
+		WHERE shipper_id=$1
+	);
+END
+$$
+LANGUAGE plpgsql;
 
 
 CREATE FUNCTION core.get_account_id_by_shipper_id(integer)
@@ -3136,6 +3207,23 @@ ON office.stores(UPPER(store_code));
 
 CREATE UNIQUE INDEX stores_store_name_uix
 ON office.stores(UPPER(store_name));
+
+
+
+CREATE FUNCTION office.get_store_name_by_store_id(integer)
+RETURNS text
+AS
+$$
+BEGIN
+	RETURN
+	(
+		SELECT store_name
+		FROM office.stores
+		WHERE store_id=$1
+	);
+END
+$$
+LANGUAGE plpgsql;
 
 
 --TODO
@@ -4643,7 +4731,7 @@ $$
 LANGUAGE plpgsql;
 
 
-DROP FUNCTION IF EXISTS transactions.get_product_view
+DROP FUNCTION IF EXISTS transactions.get_non_gl_product_view
 (
 	text,
 	date, 
@@ -4656,7 +4744,7 @@ DROP FUNCTION IF EXISTS transactions.get_product_view
 	text
 );
 
-DROP FUNCTION IF EXISTS transactions.get_product_view
+DROP FUNCTION IF EXISTS transactions.get_non_gl_product_view
 (	
 	user_id_				integer,
 	book_					text,
@@ -4671,7 +4759,7 @@ DROP FUNCTION IF EXISTS transactions.get_product_view
 	statement_reference_			text
  );
 
-CREATE FUNCTION transactions.get_product_view
+CREATE FUNCTION transactions.get_non_gl_product_view
 (
 	user_id_				integer,
 	book_					text,
@@ -4880,6 +4968,170 @@ END
 $$
 LANGUAGE plpgsql;
 
+
+DROP FUNCTION IF EXISTS transactions.get_product_view
+(
+	text,
+	date, 
+	date, 
+	national character varying(12),
+	text,	
+	text,
+	national character varying(50),
+	national character varying(24),
+	text
+);
+
+DROP FUNCTION IF EXISTS transactions.get_product_view
+(	
+	user_id_				integer,
+	book_					text,
+	office_id_				integer,
+	date_from_				date, 
+	date_to_				date, 
+	office_					national character varying(12),
+	party_					text,	
+	price_type_				text,
+	user_					national character varying(50),
+	reference_number_			national character varying(24),
+	statement_reference_			text
+ );
+
+CREATE FUNCTION transactions.get_product_view
+(
+	user_id_				integer,
+	book_					text,
+	office_id_				integer,
+	date_from_				date, 
+	date_to_				date, 
+	office_					national character varying(12),
+	party_					text,	
+	price_type_				text,
+	user_					national character varying(50),
+	reference_number_			national character varying(24),
+	statement_reference_			text
+ )
+RETURNS TABLE
+(
+	id					bigint,
+	value_date				date,
+	office					national character varying(12),
+	party					text,
+	price_type				text,
+	amount					money_strict,
+	transaction_ts				TIMESTAMP WITH TIME ZONE,
+	"user"					national character varying(50),
+	reference_number			national character varying(24),
+	statement_reference			text,
+	agent					text,
+	is_credit				boolean,
+	shipper					text,
+	shipping_address_code			text,
+	store					text,	
+	flag_background_color			text,
+	flag_foreground_color			text
+)
+AS
+$$
+BEGIN
+	RETURN QUERY 
+	WITH RECURSIVE office_cte(office_id) AS 
+	(
+		SELECT office_id_
+		UNION ALL
+		SELECT
+			c.office_id
+		FROM 
+		office_cte AS p, 
+		office.offices AS c 
+	    WHERE 
+		parent_office_id = p.office_id
+	)
+
+	SELECT
+		transactions.stock_master.stock_master_id AS id,
+		transactions.transaction_master.value_date,
+		office.offices.office_code AS office,
+		core.parties.party_code || ' (' || core.parties.party_name || ')' AS party,
+		core.price_types.price_type_code || ' (' || core.price_types.price_type_name || ')' AS price_type,
+		SUM(transactions.stock_details.price * transactions.stock_details.quantity + tax - discount)::money_strict AS amount,
+		transactions.transaction_master.transaction_ts,
+		office.users.user_name AS user,
+		transactions.transaction_master.reference_number,
+		transactions.transaction_master.statement_reference,
+		core.get_agent_name_by_agent_id(transactions.stock_master.agent_id),
+		transactions.stock_master.is_credit,
+		core.get_shipper_name_by_shipper_id(transactions.stock_master.shipper_id),
+		core.get_shipping_address_code_by_shipping_address_id(transactions.stock_master.shipping_address_id),
+		office.get_store_name_by_store_id(transactions.stock_master.store_id),
+		core.get_flag_background_color(core.get_flag_type_id(user_id_, 'transactions.stock_master', 'stock_master_id', transactions.stock_master.stock_master_id)) AS flag_bg,
+		core.get_flag_foreground_color(core.get_flag_type_id(user_id_, 'transactions.stock_master', 'stock_master_id', transactions.stock_master.stock_master_id)) AS flag_fg
+	FROM transactions.stock_master
+	INNER JOIN transactions.stock_details
+	ON transactions.stock_master.stock_master_id = transactions.stock_details.stock_master_id
+	INNER JOIN core.parties
+	ON transactions.stock_master.party_id = core.parties.party_id
+	INNER JOIN core.price_types
+	ON transactions.stock_master.price_type_id = core.price_types.price_type_id
+	INNER JOIN transactions.transaction_master
+	ON transactions.transaction_master.transaction_master_id=transactions.stock_master.transaction_master_id
+	INNER JOIN office.users
+	ON transactions.transaction_master.user_id = office.users.user_id
+	INNER JOIN office.offices
+	ON transactions.transaction_master.office_id = office.offices.office_id
+	WHERE transactions.transaction_master.book = book_
+	AND transactions.transaction_master.verification_status_id > 0
+	AND transactions.transaction_master.value_date BETWEEN date_from_ AND date_to_
+	AND 
+	lower
+	(
+		core.parties.party_code || ' (' || core.parties.party_name || ')'
+	) LIKE '%' || lower(party_) || '%'
+	AND
+	lower
+	(
+		core.price_types.price_type_code || ' (' || core.price_types.price_type_name || ')'
+	) LIKE '%' || lower(price_type_) || '%'
+	AND 
+	lower
+	(
+		office.users.user_name
+	)  LIKE '%' || lower(user_) || '%'
+	AND 
+	lower
+	(
+		transactions.transaction_master.reference_number
+	) LIKE '%' || lower(reference_number_) || '%'
+	AND 
+	lower
+	(
+		transactions.transaction_master.statement_reference
+	) LIKE '%' || lower(statement_reference_) || '%'	
+	AND lower
+	(
+		office.offices.office_code
+	) LIKE '%' || lower(office_) || '%'	
+	AND office.offices.office_id IN (SELECT office_id FROM office_cte)
+	GROUP BY 
+		transactions.stock_master.stock_master_id,
+		transactions.transaction_master.value_date,
+		office.offices.office_code,
+		core.parties.party_code,
+		core.parties.party_name,
+		core.price_types.price_type_code,
+		core.price_types.price_type_name,
+		transactions.transaction_master.transaction_ts,
+		office.users.user_name,
+		transactions.transaction_master.reference_number,
+		transactions.transaction_master.statement_reference		
+	LIMIT 100;
+END
+$$
+LANGUAGE plpgsql;
+
+
+INSERT INTO policy.auto_verification_policy
+SELECT 2, true, 0, true, 0, true, 0, NOW(), '1-1-2020', true;
 DROP SCHEMA IF EXISTS scrud CASCADE;
 CREATE SCHEMA scrud;
 
@@ -5030,8 +5282,7 @@ SELECT core.get_menu_id('SAQ'), 'fr', 'Ventes & Devis' UNION ALL
 SELECT core.get_menu_id('DRS'), 'fr', 'vente directe' UNION ALL
 SELECT core.get_menu_id('SQ'), 'fr', 'Offre de vente' UNION ALL
 SELECT core.get_menu_id('SO'), 'fr', 'commande' UNION ALL
-SELECT core.get_menu_id('DSO'), 'fr', 'Livraison de la commande client' UNION ALL
-SELECT core.get_menu_id('DWO'), 'fr', 'Livraison Sans Commande' UNION ALL
+SELECT core.get_menu_id('SD'), 'fr', 'Livraison Sans Commande' UNION ALL
 SELECT core.get_menu_id('ISD'), 'fr', 'Facture pour les ventes Livraison' UNION ALL
 SELECT core.get_menu_id('RFC'), 'fr', 'Réception de la clientèle' UNION ALL
 SELECT core.get_menu_id('SR'), 'fr', 'ventes Retour' UNION ALL

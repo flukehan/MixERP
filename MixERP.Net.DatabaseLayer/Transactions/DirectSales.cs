@@ -8,8 +8,10 @@ http://mozilla.org/MPL/2.0/.
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using MixERP.Net.Common;
+using MixERP.Net.Common.Models.Core;
 using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.DBFactory;
 using Npgsql;
@@ -20,7 +22,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
     {
 
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        public static long Add(DateTime valueDate, int officeId, int userId, long logOnId, int costCenterId, string referenceNumber, string statementReference, StockMasterModel stockMaster, Collection<StockMasterDetailModel> details)
+        public static long Add(DateTime valueDate, int officeId, int userId, long logOnId, int costCenterId, string referenceNumber, string statementReference, StockMasterModel stockMaster, Collection<StockMasterDetailModel> details, Collection<Attachment> attachments)
         {
             if(stockMaster == null)
             {
@@ -166,7 +168,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
 
                         #region StockMaster
 
-                        sql = "INSERT INTO transactions.stock_master(stock_master_id, transaction_master_id, party_id, agent_id, price_type_id, is_credit, shipper_id, shipping_address_id, shipping_charge, store_id, cash_repository_id) SELECT nextval(pg_get_serial_sequence('transactions.stock_master', 'stock_master_id')), @TransactionMasterId, core.get_party_id_by_party_code(@PartyCode), @AgentId, @PriceTypeId, @IsCredit, @ShipperId, core.get_shipping_address_id_by_shipping_address_code(@ShippingAddressCode), @ShippingCharge, @StoreId, @CashRepositoryId; SELECT currval(pg_get_serial_sequence('transactions.stock_master', 'stock_master_id'));";
+                        sql = "INSERT INTO transactions.stock_master(stock_master_id, transaction_master_id, party_id, agent_id, price_type_id, is_credit, shipper_id, shipping_address_id, shipping_charge, store_id, cash_repository_id) SELECT nextval(pg_get_serial_sequence('transactions.stock_master', 'stock_master_id')), @TransactionMasterId, core.get_party_id_by_party_code(@PartyCode), @AgentId, @PriceTypeId, @IsCredit, @ShipperId, core.get_shipping_address_id_by_shipping_address_code(@ShippingAddressCode, core.get_party_id_by_party_code(@PartyCode)), @ShippingCharge, @StoreId, @CashRepositoryId; SELECT currval(pg_get_serial_sequence('transactions.stock_master', 'stock_master_id'));";
 
                         long stockMasterId;
                         using(NpgsqlCommand stockMasterRow = new NpgsqlCommand(sql, connection))
@@ -221,6 +223,31 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                         }
 
                         #endregion
+
+                        #endregion
+
+                        #region Attachment
+
+                        if (attachments != null && attachments.Count > 0)
+                        {
+                            foreach (Attachment attachment in attachments)
+                            {
+                                sql = "INSERT INTO transactions.attachments(user_id, resource, resource_key, resource_id, original_file_name, file_extension, file_path, comment) SELECT @UserId, @Resource, @ResourceKey, @ResourceId, @OriginalFileName, @FileExtension, @FilePath, @Comment;";
+                                using (NpgsqlCommand attachmentCommand = new NpgsqlCommand(sql, connection))
+                                {
+                                    attachmentCommand.Parameters.AddWithValue("@UserId", userId);
+                                    attachmentCommand.Parameters.AddWithValue("@Resource", "transactions.transaction_master");
+                                    attachmentCommand.Parameters.AddWithValue("@ResourceKey", "transaction_master_id");
+                                    attachmentCommand.Parameters.AddWithValue("@ResourceId", stockMasterId);
+                                    attachmentCommand.Parameters.AddWithValue("@OriginalFileName", attachment.OriginalFileName);
+                                    attachmentCommand.Parameters.AddWithValue("@FileExtension", Path.GetExtension(attachment.OriginalFileName));
+                                    attachmentCommand.Parameters.AddWithValue("@FilePath", attachment.FilePath);
+                                    attachmentCommand.Parameters.AddWithValue("@Comment", attachment.Comment);
+
+                                    attachmentCommand.ExecuteNonQuery();
+                                }
+                            }
+                        }
 
                         #endregion
 

@@ -44,6 +44,8 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         public string ChecklistUrl { get; set; }
         public string PreviewUrl { get; set; }
 
+        public string AddNewUrl { get; set; }
+
         protected void Page_Init()
         {
             this.BindFlagTypeDropDownList();
@@ -80,18 +82,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         private void InitializePostBackUrls()
         {
-            if (this.Book == TranBook.Sales)
-            {
-                switch (this.SubBook)
-                {
-                    case SubTranBook.Order:
-                        this.AddNewLinkButton.PostBackUrl = "~/Sales/Entry/Order.aspx";
-                        break;
-                    case SubTranBook.Quotation:
-                        this.AddNewLinkButton.PostBackUrl = "~/Sales/Entry/Quotation.aspx";
-                        break;
-                }
-            }
+            this.AddNewLinkButton.PostBackUrl = this.AddNewUrl;
         }
 
         private Collection<int> GetSelectedValues()
@@ -228,7 +219,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
             if (this.IsValid())
             {
-                this.Merge(values, "~/Sales/DeliveryWithoutOrder.aspx");
+                this.Merge(values, "~/Sales/Entry/Delivery.aspx");
             }
         }
 
@@ -250,13 +241,22 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             string statementReference = this.StatementReferenceTextBox.Text;
             string bookName = this.GetTransactionBookName();
 
+
             if (this.IsNonGlTransaction())
             {
                 using (DataTable table = NonGlStockTransaction.GetView(bookName, dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference))
                 {
                     this.ProductViewGridView.DataSource = table;
                     this.ProductViewGridView.DataBind();
+                    return;
                 }
+            }
+
+            using (DataTable table = GLStockTransaction.GetView(bookName, dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference))
+            {
+                this.ProductViewGridView.DataSource = table;
+                this.ProductViewGridView.DataBind();
+                return;
             }
         }
 

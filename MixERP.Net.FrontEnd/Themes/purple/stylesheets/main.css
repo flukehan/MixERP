@@ -21,7 +21,10 @@ body {
 #page {
     width: 95%;
     height: 100%;
-    display: table;
+}
+
+#content {
+    height: 100%;
 }
 
 form {

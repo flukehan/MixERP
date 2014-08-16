@@ -163,7 +163,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
 
         public static DataTable GetView(int userId, string book, int officeId, DateTime dateFrom, DateTime dateTo, string office, string party, string priceType, string user, string referenceNumber, string statementReference)
         {
-            const string sql = "SELECT * FROM transactions.get_product_view(@UserId, @Book, @OfficeId, @DateFrom, @DateTo, @Office, @Party, @PriceType, @User, @ReferenceNumber, @StatementReference);";
+            const string sql = "SELECT * FROM transactions.get_non_gl_product_view(@UserId, @Book, @OfficeId, @DateFrom, @DateTo, @Office, @Party, @PriceType, @User, @ReferenceNumber, @StatementReference);";
 
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {

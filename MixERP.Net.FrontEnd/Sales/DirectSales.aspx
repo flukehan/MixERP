@@ -5,6 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 If a copy of the MPL was not distributed  with this file, You can obtain one at 
 http://mozilla.org/MPL/2.0/.
 --%>
+
 <%@ Page Title="" Language="C#" MasterPageFile="~/ContentMaster.Master" AutoEventWireup="true" CodeBehind="DirectSales.aspx.cs" Inherits="MixERP.Net.FrontEnd.Sales.DirectSales" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceholder" runat="server">
@@ -12,28 +13,12 @@ http://mozilla.org/MPL/2.0/.
 <asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceholder" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceholder" runat="server">
-    <mixerp:Product runat="server"
-        ID="DirectSalesControl"
-        Book="Sales"
-        SubBook="Direct"
+    <mixerp:ProductView
+        runat="server"
+        Book="Sales" SubBook="Direct"
         Text="<%$Resources:Titles, DirectSales %>"
-        DisplayTransactionTypeRadioButtonList="true"
-        ShowCashRepository="true"
-        VerifyStock="true"
-        TopPanelWidth="850"
-        OnSaveButtonClick="Sales_SaveButtonClick" />
-    
-    
-    <asp:button runat="server" OnClick="button_click" />
-</asp:Content>
+        AddNewUrl="~/Sales/Entry/DirectSales.aspx"
+        PreviewUrl="~/Sales/Confirmation/ReportDirectSales.aspx"
+        ChecklistUrl="~/Sales/Confirmation/DirectSales.aspx" /></asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceholder" runat="server">
 </asp:Content>
-
-<script runat="server">
-
-    public void button_click(object sender, EventArgs e)
-    {
-        string josn = "";
-    }
-
-</script>
