@@ -18,16 +18,5 @@ namespace MixERP.Net.FrontEnd.Purchase
         {
 
         }
-
-        protected void PurchaseOrder_SaveButtonClick(object sender, EventArgs e)
-        {
-            Collection<int> tranIdCollection = this.PurchaseOrder.GetTranIdCollection();
-
-            long nonGlStockMasterId = NonGlStockTransaction.Add("Purchase.Order", this.PurchaseOrder.GetForm.Date, this.PurchaseOrder.GetForm.PartyCode, this.PurchaseOrder.GetForm.PriceTypeId, this.PurchaseOrder.GetForm.Details, this.PurchaseOrder.GetForm.ReferenceNumber, this.PurchaseOrder.GetForm.StatementReference, tranIdCollection);
-            if(nonGlStockMasterId > 0)
-            {
-                this.Response.Redirect("~/Dashboard/Index.aspx?TranId=" + nonGlStockMasterId, true);
-            }
-        }
     }
 }

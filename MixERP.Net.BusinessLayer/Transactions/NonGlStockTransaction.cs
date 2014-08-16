@@ -7,6 +7,7 @@ http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 
 using MixERP.Net.BusinessLayer.Helpers;
+using MixERP.Net.Common.Models.Core;
 using MixERP.Net.Common.Models.Transactions;
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
@@ -24,14 +25,14 @@ namespace MixERP.Net.BusinessLayer.Transactions
 {
     public static class NonGlStockTransaction
     {
-        public static long Add(string book, DateTime valueDate, string partyCode, int priceTypeId, Collection<StockMasterDetailModel> details, string referenceNumber, string statementReference, Collection<int> transactionIdCollection)
+        public static long Add(string book, DateTime valueDate, string partyCode, int priceTypeId, Collection<StockMasterDetailModel> details, string referenceNumber, string statementReference, Collection<int> transactionIdCollection, Collection<Attachment> attachments)
         {
             StockMasterModel stockMaster = new StockMasterModel();
 
             stockMaster.PartyCode = partyCode;
             stockMaster.PriceTypeId = priceTypeId;
 
-            long nonGlStockMasterId = DatabaseLayer.Transactions.NonGlStockTransaction.Add(book, valueDate, SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), referenceNumber, statementReference, stockMaster, details, transactionIdCollection);
+            long nonGlStockMasterId = DatabaseLayer.Transactions.NonGlStockTransaction.Add(book, valueDate, SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), referenceNumber, statementReference, stockMaster, details, transactionIdCollection, attachments);
             return nonGlStockMasterId;
         }
 

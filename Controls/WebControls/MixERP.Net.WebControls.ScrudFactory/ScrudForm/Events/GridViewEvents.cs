@@ -32,7 +32,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         radio.ID = "SelectRadio";
                         radio.ClientIDMode = ClientIDMode.Predictable;
                         radio.Value = e.Row.Cells[1].Text;
-                        //radio.Attributes.Add("onclick", "selectNode(this.id);");
+                        //radio.Attributes.Add("onclick", "scrudSelectRadioById(this.id);");
                         e.Row.Cells[0].Controls.Add(radio);
                     }
                     break;

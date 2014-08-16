@@ -4,10 +4,14 @@ var amountTextBox = $("#AmountTextBox");
 
 var cashRepositoryDropDownList = $("#CashRepositoryDropDownList");
 var cashRepositoryBalanceTextBox = $("#CashRepositoryBalanceTextBox");
+var costCenterDropDownList = $("#CostCenterDropDownList");
 
+var dateTextBox = $("#DateTextBox");
 var discountTextBox = $("#DiscountTextBox");
 
 var errorLabel = $("#ErrorLabel");
+var errorLabelBottom = $("#ErrorLabelBottom");
+var errorLabelTop = $("#ErrorLabelTop");
 
 var grandTotalTextBox = $("#GrandTotalTextBox");
 
@@ -24,16 +28,23 @@ var productGridView = $("#ProductGridView");
 var productGridViewDataHidden = $("#ProductGridViewDataHidden");
 var priceTextBox = $("#PriceTextBox");
 var priceTypeDropDownList = $("#PriceTypeDropDownList");
+var priceTypeIdHidden = $("#PriceTypeIdHidden");
 
 var quantityTextBox = $("#QuantityTextBox");
 
 var runningTotalTextBox = $("#RunningTotalTextBox");
+var referenceNumberTextBox = $("#ReferenceNumberTextBox");
 
 var saveButton = $("#SaveButton");
+
+var salesPersonDropDownList = $("#SalespersonDropDownList");
+
 var shippingAddressCodeHidden = $("#ShippingAddressCodeHidden");
 var shippingAddressDropDownList = $("#ShippingAddressDropDownList");
 var shippingAddressTextBox = $("#ShippingAddressTextBox");
 var shippingChargeTextBox = $("#ShippingChargeTextBox");
+var shippingCompanyDropDownList = $("#ShippingCompanyDropDownList");
+var statementReferenceTextBox = $("#StatementReferenceTextBox");
 var storeDropDownList = $("#StoreDropDownList");
 var subTotalTextBox = $("#SubtotalTextBox");
 
@@ -41,6 +52,7 @@ var taxRateTextBox = $("#TaxRateTextBox");
 var taxTotalTextBox = $("#TaxTotalTextBox");
 var taxTextBox = $("#TaxTextBox");
 var totalTextBox = $("#TotalTextBox");
+var tranIdCollectionHiddenField = $("#TranIdCollectionHiddenField");
 
 var unitIdHidden = $("#UnitIdHidden");
 var unitDropDownList = $("#UnitDropDownList");
@@ -70,6 +82,7 @@ function initializeAjaxData() {
     logToConsole("Initializing AJAX data.");
 
     processCallBackActions();
+    loadPriceTypes();
 
     loadParties();
     partyDropDownList.change(function () {
@@ -84,6 +97,14 @@ function initializeAjaxData() {
     });
 
     loadUnits();
+
+
+    loadCostCenters();
+    loadStores();
+    loadCashRepositories();
+    loadAgents();
+    loadShippers();
+
     restoreData();
 };
 
@@ -106,8 +127,8 @@ function processCallBackActions() {
                 itemCodeHidden.val(itemCode);
             },
             error: function (xhr) {
-                var err = eval("(" + xhr.responseText + ")");
-                $.notify(err, "error");
+                var err = xhr.responseText;
+                logError(err, "error");
             }
         });
     }
@@ -130,8 +151,8 @@ function processCallBackActions() {
                 partyCodeHidden.val(partyCode);
             },
             error: function (xhr) {
-                var err = eval("(" + xhr.responseText + ")");
-                $.notify(err, "error");
+                var err = xhr.responseText;
+                logError(err, "error");
             }
         });
     }
@@ -142,7 +163,7 @@ function processCallBackActions() {
 
 //Control Events
 
-addButton.click(function() {
+addButton.click(function () {
     updateTax();
     calculateAmount();
     addRow();
@@ -157,15 +178,15 @@ cashRepositoryDropDownList.change(function () {
     $.ajax({
         type: "POST",
         url: "/Services/AccountData.asmx/GetCashRepositoryBalance",
-        data: "{cashRepositoryId:'" + cashRepositoryDropDownList.find("option:selected").val() + "'}",
+        data: "{cashRepositoryId:'" + cashRepositoryDropDownList.getSelectedValue() + "'}",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {
             cashRepositoryBalanceTextBox.val(msg.d);
         },
         error: function (xhr) {
-            var err = eval("(" + xhr.responseText + ")");
-            $.notify(err, "error");
+            var err = xhr.responseText;
+            logError(err, "error");
         }
     });
 
@@ -176,27 +197,26 @@ discountTextBox.blur(function () {
     calculateAmount();
 });
 
-itemCodeTextBox.blur(function() {
+itemCodeTextBox.blur(function () {
     selectDropDownListByValue(this.id, 'ItemDropDownList');
 });
 
-itemDropDownList.blur(function() {
+itemDropDownList.blur(function () {
     getPrice();
 });
 
-itemDropDownList.change(function() {
-    itemCodeTextBox.val(itemDropDownList.find("option:selected").val());
-    itemCodeHidden.val(itemDropDownList.find("option:selected").val());
+itemDropDownList.change(function () {
+    itemCodeTextBox.val(itemDropDownList.getSelectedValue());
+    itemCodeHidden.val(itemDropDownList.getSelectedValue());
 });
 
-partyCodeTextBox.blur(function() {
+partyCodeTextBox.blur(function () {
     selectDropDownListByValue(this.id, 'PartyDropDownList');
 });
 
-partyDropDownList.change(function()
-{
-    partyCodeTextBox.val(partyDropDownList.find("option:selected").val());
-    partyCodeHidden.val(partyDropDownList.find("option:selected").val());
+partyDropDownList.change(function () {
+    partyCodeTextBox.val(partyDropDownList.getSelectedValue());
+    partyCodeHidden.val(partyDropDownList.getSelectedValue());
     showShippingAddress();
 });
 
@@ -205,21 +225,111 @@ priceTextBox.blur(function () {
     calculateAmount();
 });
 
-quantityTextBox.blur(function() {
+quantityTextBox.blur(function () {
     updateTax();
     calculateAmount();
 });
 
-saveButton.click(function () {
-    updateData();
-});
+//Todo:Need to support localized dates
+function isDate(val) {
+    var d = new Date(val);
+    return !isNaN(d.valueOf());
+}
 
-shippingAddressDropDownList.change(function() {
+
+var validateProductControl = function () {
+    var valueDate = dateTextBox.val();
+    errorLabelBottom.html("");
+
+    removeDirty(dateTextBox);
+    removeDirty(partyCodeTextBox);
+    removeDirty(partyDropDownList);
+    removeDirty(priceTypeDropDownList);
+    removeDirty(storeDropDownList);
+    removeDirty(shippingCompanyDropDownList);
+    removeDirty(cashRepositoryDropDownList);
+    removeDirty(costCenterDropDownList);
+    removeDirty(salesPersonDropDownList);
+
+    if (!isDate(valueDate)) {
+        makeDirty(dateTextBox);
+        errorLabelBottom.html(invalidDateWarningLocalized);
+        return false;
+    };
+
+    if (storeDropDownList.length) {
+        if (parseFloat2(storeDropDownList.getSelectedValue()) <= 0) {
+            makeDirty(storeDropDownList);
+            errorLabelBottom.html(invalidStoreWarningLocalized);
+            return false;
+        };
+    };
+
+    if (isNullOrWhiteSpace(partyCodeTextBox.val())) {
+        errorLabelBottom.html(invalidPartyWarningLocalized);
+        makeDirty(partyCodeTextBox);
+        makeDirty(partyDropDownList);
+        return false;
+    };
+
+    if (priceTypeDropDownList.length) {
+        if (parseFloat2(priceTypeDropDownList.getSelectedValue()) <= 0) {
+            makeDirty(priceTypeDropDownList);
+            errorLabelBottom.html(invalidPriceTypeWarningLocalized);
+            return false;
+        };
+    }
+
+
+    if (productGridView.find("tr").length == 2) {
+        errorLabelBottom.html(gridViewEmptyWarningLocalized);
+        return false;
+    };
+
+    if (shippingCompanyDropDownList.length) {
+        if (parseFloat2(shippingCompanyDropDownList.getSelectedValue()) <= 0) {
+            makeDirty(shippingCompanyDropDownList);
+            errorLabelBottom.html(invalidShippingCompanyWarningLocalized);
+            return false;
+        };
+    };
+
+    if (cashRepositoryDropDownList.length) {
+        if (parseFloat2(cashRepositoryDropDownList.getSelectedValue()) <= 0) {
+            makeDirty(cashRepositoryDropDownList);
+            errorLabelBottom.html(invalidCashRepositoryWarningLocalized);
+            return false;
+        };
+    };
+
+
+    if (costCenterDropDownList.length) {
+        if (parseFloat2(costCenterDropDownList.getSelectedValue()) <= 0) {
+            makeDirty(costCenterDropDownList);
+            errorLabelBottom.html(invalidCostCenterWarningLocalized);
+            return false;
+        };
+    };
+
+    if (salesPersonDropDownList.length) {
+        if (parseFloat2(salesPersonDropDownList.getSelectedValue()) <= 0) {
+            makeDirty(salesPersonDropDownList);
+            errorLabelBottom.html(invalidSalesPersonWarningLocalized);
+            return false;
+        };
+    };
+
+
+
+    updateData();
+    return true;
+};
+
+shippingAddressDropDownList.change(function () {
     showShippingAddress();
 });
 
-shippingChargeTextBox.blur(function()
-{
+shippingChargeTextBox.blur(function () {
     summate();
 });
 
@@ -232,23 +342,16 @@ taxTextBox.blur(function () {
     calculateAmount();
 });
 
-unitDropDownList.change(function() {
-    unitNameHidden.val($(this).children('option').filter(':selected').text());
-    unitIdHidden.val($(this).children('option').filter(':selected').val());
+unitDropDownList.change(function () {
+    unitNameHidden.val($(this).getSelectedText());
+    unitIdHidden.val($(this).getSelectedValue());
 });
 
 unitDropDownList.blur(function () {
     getPrice();
 });
 
-
-
-
-
-//List Control Bindings
-
-function addListItem(dropDownListId, value, text) {
-    var dropDownList = $("#" + dropDownListId);
+function appendItem(dropDownList, value, text) {
     dropDownList.append($("<option></option>").val(value).html(text));
 };
 
@@ -256,31 +359,76 @@ function bindAddresses(data) {
     shippingAddressDropDownList.empty();
 
     if (data.length == 0) {
-        addListItem("ShippingAddressDropDownList", "", noneLocalized);
+        appendItem(shippingAddressDropDownList, "", noneLocalized);
         return;
     }
 
-    addListItem("ShippingAddressDropDownList", "", selectLocalized);
+    appendItem(shippingAddressDropDownList, "", selectLocalized);
 
     $.each(data, function () {
-        addListItem("ShippingAddressDropDownList", this["Value"], this["Text"]);
+        appendItem(shippingAddressDropDownList, this["Value"], this["Text"]);
     });
 
     shippingAddressDropDownList.val(shippingAddressCodeHidden.val());
+};
+
+function bindAgents(data) {
+    salesPersonDropDownList.empty();
+
+    if (data.length == 0) {
+        appendItem(salesPersonDropDownList, "", noneLocalized);
+        return;
+    }
+
+    appendItem(salesPersonDropDownList, "", selectLocalized);
+
+    $.each(data, function () {
+        appendItem(salesPersonDropDownList, this["Value"], this["Text"]);
+    });
+};
+
+function bindCashRepositories(data) {
+    cashRepositoryDropDownList.empty();
+
+    if (data.length == 0) {
+        appendItem(cashRepositoryDropDownList, "", noneLocalized);
+        return;
+    }
+
+    appendItem(cashRepositoryDropDownList, "", selectLocalized);
+
+    $.each(data, function () {
+        appendItem(cashRepositoryDropDownList, this["Value"], this["Text"]);
+    });
+};
+
+function bindCostCenters(data) {
+    costCenterDropDownList.empty();
+
+    if (data.length == 0) {
+        appendItem(costCenterDropDownList, "", noneLocalized);
+        return;
+    }
+
+    appendItem(costCenterDropDownList, "", selectLocalized);
+
+    $.each(data, function () {
+        appendItem(costCenterDropDownList, this["Value"], this["Text"]);
+    });
 };
 
 function bindItems(data) {
     itemDropDownList.empty();
 
     if (data.length == 0) {
-        addListItem("ItemDropDownList", "", noneLocalized);
+        appendItem(itemDropDownList, "", noneLocalized);
         return;
     }
 
-    addListItem("ItemDropDownList", "", selectLocalized);
+    appendItem(itemDropDownList, "", selectLocalized);
 
     $.each(data, function () {
-        addListItem("ItemDropDownList", this["Value"], this["Text"]);
+        appendItem(itemDropDownList, this["Value"], this["Text"]);
     });
 
     itemCodeTextBox.val(itemCodeHidden.val());
@@ -291,32 +439,79 @@ function bindParties(data) {
     partyDropDownList.empty();
 
     if (data.length == 0) {
-        addListItem("PartyDropDownList", "", noneLocalized);
+        appendItem(partyDropDownList, "", noneLocalized);
         return;
     }
 
-    addListItem("PartyDropDownList", "", selectLocalized);
+    appendItem(partyDropDownList, "", selectLocalized);
 
     $.each(data, function () {
-        addListItem("PartyDropDownList", this["Value"], this["Text"]);
+        appendItem(partyDropDownList, this["Value"], this["Text"]);
     });
 
     partyCodeTextBox.val(partyCodeHidden.val());
     partyDropDownList.val(partyCodeHidden.val());
 };
 
+function bindPriceTypes(data) {
+    priceTypeDropDownList.empty();
+
+    if (data.length == 0) {
+        appendItem(priceTypeDropDownList, "", noneLocalized);
+        return;
+    }
+
+    appendItem(priceTypeDropDownList, "", selectLocalized);
+
+    $.each(data, function () {
+        appendItem(priceTypeDropDownList, this["Value"], this["Text"]);
+    });
+
+    priceTypeDropDownList.val(priceTypeIdHidden.val());
+};
+
+function bindShippers(data) {
+    shippingCompanyDropDownList.empty();
+
+    if (data.length == 0) {
+        appendItem(shippingCompanyDropDownList, "", noneLocalized);
+        return;
+    }
+
+    appendItem(shippingCompanyDropDownList, "", selectLocalized);
+
+    $.each(data, function () {
+        appendItem(shippingCompanyDropDownList, this["Value"], this["Text"]);
+    });
+};
+
+function bindStores(data) {
+    storeDropDownList.empty();
+
+    if (data.length == 0) {
+        appendItem(storeDropDownList, "", noneLocalized);
+        return;
+    }
+
+    appendItem(storeDropDownList, "", selectLocalized);
+
+    $.each(data, function () {
+        appendItem(storeDropDownList, this["Value"], this["Text"]);
+    });
+};
+
 function bindUnits(data) {
     unitDropDownList.empty();
 
     if (data.length == 0) {
-        addListItem("UnitDropDownList", "", noneLocalized);
+        appendItem(unitDropDownList, "", noneLocalized);
         return;
     }
 
-    addListItem("UnitDropDownList", "", selectLocalized);
+    appendItem(unitDropDownList, "", selectLocalized);
 
     $.each(data, function () {
-        addListItem("UnitDropDownList", this["Value"], this["Text"]);
+        appendItem(unitDropDownList, this["Value"], this["Text"]);
     });
 
     unitDropDownList.val(unitIdHidden.val());
@@ -335,10 +530,64 @@ function loadAddresses() {
             bindAddresses(msg.d);
         },
         error: function (xhr) {
-            var err = eval("(" + xhr.responseText + ")");
-            addListItem("ShippingAddressDropDownList", 0, err.Message);
+            var err = xhr.responseText;
+            appendItem(shippingAddressDropDownList, 0, err.Message);
         }
     });
+};
+
+function loadAgents() {
+    if (salesPersonDropDownList.length) {
+        $.ajax({
+            type: "POST",
+            url: "/Services/ItemData.asmx/GetAgents",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                bindAgents(msg.d);
+            },
+            error: function (xhr) {
+                var err = xhr.responseText;
+                appendItem(salesPersonDropDownList, 0, err.Message);
+            }
+        });
+    }
+};
+
+function loadCashRepositories() {
+    if (cashRepositoryDropDownList.length) {
+        $.ajax({
+            type: "POST",
+            url: "/Services/AccountData.asmx/GetCashRepositories",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                bindCashRepositories(msg.d);
+            },
+            error: function (xhr) {
+                var err = xhr.responseText;
+                appendItem(cashRepositoryDropDownList, 0, err.Message);
+            }
+        });
+    }
+};
+
+function loadCostCenters() {
+    if (costCenterDropDownList.length) {
+        $.ajax({
+            type: "POST",
+            url: "/Services/AccountData.asmx/GetCostCenters",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                bindCostCenters(msg.d);
+            },
+            error: function (xhr) {
+                var err = xhr.responseText;
+                appendItem(costCenterDropDownList, 0, err.Message);
+            }
+        });
+    }
 };
 
 function loadItems() {
@@ -352,8 +601,8 @@ function loadItems() {
             bindItems(msg.d);
         },
         error: function (xhr) {
-            var err = eval("(" + xhr.responseText + ")");
-            addListItem("ItemDropDownList", 0, err.Message);
+            var err = xhr.responseText;
+            appendItem(itemDropDownList, 0, err.Message);
         }
     });
 };
@@ -368,10 +617,64 @@ function loadParties() {
             bindParties(msg.d);
         },
         error: function (xhr) {
-            var err = eval("(" + xhr.responseText + ")");
-            addListItem("PartyDropDownList", 0, err.Message);
+            var err = xhr.responseText;
+            appendItem(partyDropDownList, 0, err.Message);
         }
     });
+};
+
+function loadPriceTypes() {
+    if (priceTypeDropDownList.length) {
+        $.ajax({
+            type: "POST",
+            url: "/Services/ItemData.asmx/GetPriceTypes",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                bindPriceTypes(msg.d);
+            },
+            error: function (xhr) {
+                var err = xhr.responseText;
+                appendItem(priceTypeDropDownList, 0, err.Message);
+            }
+        });
+    }
+};
+
+function loadShippers() {
+    if (shippingCompanyDropDownList.length) {
+        $.ajax({
+            type: "POST",
+            url: "/Services/ItemData.asmx/GetShippers",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                bindShippers(msg.d);
+            },
+            error: function (xhr) {
+                var err = xhr.responseText;
+                appendItem(shippingCompanyDropDownList, 0, err.Message);
+            }
+        });
+    }
+};
+
+function loadStores() {
+    if (storeDropDownList.length) {
+        $.ajax({
+            type: "POST",
+            url: "/Services/ItemData.asmx/GetStores",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                bindStores(msg.d);
+            },
+            error: function (xhr) {
+                var err = xhr.responseText;
+                appendItem(storeDropDownList, 0, err.Message);
+            }
+        });
+    }
 };
 
 function loadUnits() {
@@ -388,13 +691,11 @@ function loadUnits() {
             bindUnits(msg.d);
         },
         error: function (xhr) {
-            var err = eval("(" + xhr.responseText + ")");
-            addListItem("UnitDropDownList", 0, err.Message);
+            var err = xhr.responseText;
+            appendItem(unitDropDownList, 0, err.Message);
         }
     });
 };
-
-
 
 
 
@@ -458,8 +759,6 @@ var updateData = function () {
 
 
 
-
-
 //New Row Helper Function
 var calculateAmount = function () {
 
@@ -502,12 +801,10 @@ var updateTax = function () {
     }
 };
 
-
 //GridView Manipulation
 var addRow = function () {
-
     var itemCode = itemCodeTextBox.val();
-    var itemName = itemDropDownList.find("option:selected").text();
+    var itemName = itemDropDownList.getSelectedText();
     var quantity = parseFloat2(quantityTextBox.val());
     var unitId = parseFloat2(unitIdHidden.val());
     var unitName = unitNameHidden.val();
@@ -738,13 +1035,15 @@ var countItemInStockByUnitName = function (itemCode, unitName, storeId) {
 var getPrice = function () {
     var itemCode = itemCodeHidden.val();
     var partyCode = partyCodeHidden.val();
-    var priceTypeId = priceTypeDropDownList.val();
+    var priceTypeId = parseFloat2(priceTypeDropDownList.val());
     var unitId = unitIdHidden.val();
 
-
     if (!unitId) return;
-
-
+    if (priceTypeId <= 0) {
+        $.notify(invalidPriceTypeWarningLocalized, "error");
+        priceTypeDropDownList.focus();
+        return;
+    };
 
 
     $.ajax({
@@ -757,8 +1056,8 @@ var getPrice = function () {
             priceTextBox.val(msg.d);
         },
         error: function (xhr) {
-            var err = eval("(" + xhr.responseText + ")");
-            $.notify(err, "error");
+            var err = xhr.responseText;
+            logError(err, "error");
         }
     });
 
@@ -772,8 +1071,8 @@ var getPrice = function () {
             taxRateTextBox.val(msg.d);
         },
         error: function (xhr) {
-            var err = eval("(" + xhr.responseText + ")");
-            $.notify(err, "error");
+            var err = xhr.responseText;
+            logError(err, "error");
         }
     });
 

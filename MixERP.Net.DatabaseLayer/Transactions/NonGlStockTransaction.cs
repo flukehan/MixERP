@@ -9,7 +9,9 @@ using System;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using MixERP.Net.Common;
+using MixERP.Net.Common.Models.Core;
 using Npgsql;
 using MixERP.Net.DBFactory;
 using MixERP.Net.Common.Models.Transactions;
@@ -19,7 +21,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
     public static class NonGlStockTransaction
     {
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        public static long Add(string book, DateTime valueDate, int officeId, int userId, long logOnId, string referenceNumber, string statementReference, StockMasterModel stockMaster, Collection<StockMasterDetailModel> details, Collection<int> transactionIdCollection)
+        public static long Add(string book, DateTime valueDate, int officeId, int userId, long logOnId, string referenceNumber, string statementReference, StockMasterModel stockMaster, Collection<StockMasterDetailModel> details, Collection<int> transactionIdCollection, Collection<Attachment> attachments)
         {
             if (stockMaster == null)
             {
@@ -114,10 +116,36 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                                         relation.Parameters.AddWithValue("@Id", nonGlStockMasterId);
                                         relation.Parameters.AddWithValue("@RelationId", tranId);
                                         relation.ExecuteNonQuery();
-                                    }                                
+                                    }
                                 }
                             }
                         }
+
+
+                        #region Attachment
+
+                        if (attachments != null && attachments.Count > 0)
+                        {
+                            foreach (Attachment attachment in attachments)
+                            {
+                                sql = "INSERT INTO transactions.attachments(user_id, resource, resource_key, resource_id, original_file_name, file_extension, file_path, comment) SELECT @UserId, @Resource, @ResourceKey, @ResourceId, @OriginalFileName, @FileExtension, @FilePath, @Comment;";
+                                using (NpgsqlCommand attachmentCommand = new NpgsqlCommand(sql, connection))
+                                {
+                                    attachmentCommand.Parameters.AddWithValue("@UserId", userId);
+                                    attachmentCommand.Parameters.AddWithValue("@Resource", "transactions.non_gl_stock_master");
+                                    attachmentCommand.Parameters.AddWithValue("@ResourceKey", "non_gl_stock_master_id");
+                                    attachmentCommand.Parameters.AddWithValue("@ResourceId", nonGlStockMasterId);
+                                    attachmentCommand.Parameters.AddWithValue("@OriginalFileName", attachment.OriginalFileName);
+                                    attachmentCommand.Parameters.AddWithValue("@FileExtension", Path.GetExtension(attachment.OriginalFileName));
+                                    attachmentCommand.Parameters.AddWithValue("@FilePath", attachment.FilePath);
+                                    attachmentCommand.Parameters.AddWithValue("@Comment", attachment.Comment);
+
+                                    attachmentCommand.ExecuteNonQuery();
+                                }
+                            }
+                        }
+
+                        #endregion
 
                         #endregion
 

@@ -37,7 +37,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
                 var rowView = container.DataItem as DataRowView;
                 if (rowView != null)
                 {
-                    this.selectAnchor.Attributes.Add("onclick", "updateValue(" + rowView[0] + ");");
+                    this.selectAnchor.Attributes.Add("onclick", "sisUpdateValue(" + rowView[0] + ");");
                 }
             }
         }

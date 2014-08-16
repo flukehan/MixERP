@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Linq;
+using System.Web.Script.Serialization;
 using System.Web.Script.Services;
 using System.Web.Services;
 using MixERP.Net.Common.Models.Core;
@@ -17,15 +18,18 @@ namespace MixERP.Net.FrontEnd.Services
     public class UploadHelper : WebService
     {
 
+
         [WebMethod]
-        public bool UndoUpload(string uploadedFiles)
+        public bool UndoUpload(string uploadedFilesJson)
         {
-            Collection<Attachment> attachments = this.GetAttachments(uploadedFiles);
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            Attachment[] uploads = js.Deserialize<Attachment[]>(uploadedFilesJson);
+
             string attachmentsDirectory = ConfigurationManager.AppSettings["AttachmentsDirectory"];
 
-            foreach (Attachment attachment in attachments)
+            foreach (var upload in uploads)
             {
-                string path = Server.MapPath(attachmentsDirectory + attachment.FilePath);
+                string path = Server.MapPath(attachmentsDirectory + upload.FilePath);
 
                 if (System.IO.File.Exists(path))
                 {
@@ -34,27 +38,6 @@ namespace MixERP.Net.FrontEnd.Services
             }
 
             return true;
-        }
-
-        public Collection<Attachment> GetAttachments(string uploadedFiles)
-        {
-            Collection<Attachment> attachments = new Collection<Attachment>();
-
-            string uploads = uploadedFiles;
-
-            List<string> data = uploads.Split(',').ToList();
-
-            foreach (string item in data)
-            {
-                Attachment attachment = new Attachment();
-                attachment.Comment = item.Split('|')[0];
-                attachment.FilePath = item.Split('|')[1];
-
-                attachments.Add(attachment);
-            }
-
-
-            return attachments;
         }
 
     }

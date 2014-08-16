@@ -435,7 +435,6 @@ CREATE TABLE transactions.attachments
 	resource_id				integer, --The value of the unique identifier to lookup for,
 	original_file_name			text NOT NULL,
 	file_extension				national character varying(12) NOT NULL,
-	file_size				integer NOT NULL,
 	file_path				text NOT NULL,
 	comment					national character varying(96) NOT NULL CONSTRAINT attachments_comment_df DEFAULT(''),
 	added_on				TIMESTAMP WITH TIME ZONE NOT NULL CONSTRAINT attachments_added_on_df DEFAULT(NOW())

@@ -30485,8 +30485,14 @@ if (!String.prototype.format) {
 };
 
 
-function displayMessage(a,b,c) {
-    $.notify(a, b, c);
+function displayMessage(a,b) {
+    $.notify(a, b);
+};
+
+var logError = function(a, b)
+{
+    //Todo
+    $.notify(a, b);
 };
 
 function logToConsole(message) {
@@ -30522,6 +30528,33 @@ var bounceThis = function (selector) {
     panel.effect("bounce", options, 500).delay(2000).effect("fade", options, 500);
 };
 
+
+jQuery.fn.getSelectedItem = function () {
+    var listItem = $(this[0]);
+    return listItem.find("option:selected");
+};
+
+
+jQuery.fn.getSelectedValue = function () {
+    return $(this[0]).getSelectedItem().val();
+};
+
+jQuery.fn.getSelectedText = function () {
+    return $(this[0]).getSelectedItem().text();
+};
+
+var appendParameter = function (data, parameter, value) {
+    if (!isNullOrWhiteSpace(data)) {
+        data += ",";
+    };
+
+    if (value == undefined) {
+        value = "";
+    };
+
+    data += parameter + ":'" + value + "'";
+    return data;
+};
 ///#source 1 1 /Scripts/notify-combined.min.js
 /** Notify.js - v0.3.1 - 2014/06/29
  * http://notifyjs.com/

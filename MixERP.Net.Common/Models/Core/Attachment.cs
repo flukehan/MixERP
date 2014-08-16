@@ -4,5 +4,6 @@
     {
         public string Comment { get; set; }
         public string FilePath { get; set; }
+        public string OriginalFileName { get; set; }
     }
 }

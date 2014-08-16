@@ -135,18 +135,42 @@
   <data name="CreditNotAllowed" xml:space="preserve">
     <value>Credit is not allowed to this customer.</value>
   </data>
+  <data name="GridViewEmpty" xml:space="preserve">
+    <value>The gridview is empty.</value>
+  </data>
   <data name="InsufficientStockWarning" xml:space="preserve">
     <value>Only {0} {1} of {2} left in stock.</value>
     <comment>Only {Qty} {Unit} of {ItemName} left in stock.</comment>
   </data>
+  <data name="InvalidCashRepository" xml:space="preserve">
+    <value>Invalid cash repository.</value>
+  </data>
+  <data name="InvalidCostCenter" xml:space="preserve">
+    <value>Invalid cost center.</value>
+  </data>
   <data name="InvalidDate" xml:space="preserve">
-    <value>Invalid date</value>
+    <value>Invalid date.</value>
   </data>
   <data name="InvalidFile" xml:space="preserve">
-    <value>Invalid File</value>
+    <value>Invalid file.</value>
   </data>
   <data name="InvalidLocation" xml:space="preserve">
     <value>"{0}" is not a valid path or location.</value>
+  </data>
+  <data name="InvalidParty" xml:space="preserve">
+    <value>Invalid party.</value>
+  </data>
+  <data name="InvalidPriceType" xml:space="preserve">
+    <value>Invalid price type.</value>
+  </data>
+  <data name="InvalidSalesPerson" xml:space="preserve">
+    <value>Invalid sales person</value>
+  </data>
+  <data name="InvalidShippingCompany" xml:space="preserve">
+    <value>Invalid shipping company.</value>
+  </data>
+  <data name="InvalidStore" xml:space="preserve">
+    <value>Invalid store.</value>
   </data>
   <data name="NoItemFound" xml:space="preserve">
     <value>No item found.</value>

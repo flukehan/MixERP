@@ -115,6 +115,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The gridview is empty..
+        /// </summary>
+        internal static string GridViewEmpty {
+            get {
+                return ResourceManager.GetString("GridViewEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Only {0} {1} of {2} left in stock..
         /// </summary>
         internal static string InsufficientStockWarning {
@@ -124,7 +133,25 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid date.
+        ///   Looks up a localized string similar to Invalid cash repository..
+        /// </summary>
+        internal static string InvalidCashRepository {
+            get {
+                return ResourceManager.GetString("InvalidCashRepository", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid cost center..
+        /// </summary>
+        internal static string InvalidCostCenter {
+            get {
+                return ResourceManager.GetString("InvalidCostCenter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid date..
         /// </summary>
         internal static string InvalidDate {
             get {
@@ -133,7 +160,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid File.
+        ///   Looks up a localized string similar to Invalid file..
         /// </summary>
         internal static string InvalidFile {
             get {
@@ -147,6 +174,51 @@ namespace Resources {
         internal static string InvalidLocation {
             get {
                 return ResourceManager.GetString("InvalidLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid party..
+        /// </summary>
+        internal static string InvalidParty {
+            get {
+                return ResourceManager.GetString("InvalidParty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid price type..
+        /// </summary>
+        internal static string InvalidPriceType {
+            get {
+                return ResourceManager.GetString("InvalidPriceType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid sales person.
+        /// </summary>
+        internal static string InvalidSalesPerson {
+            get {
+                return ResourceManager.GetString("InvalidSalesPerson", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid shipping company..
+        /// </summary>
+        internal static string InvalidShippingCompany {
+            get {
+                return ResourceManager.GetString("InvalidShippingCompany", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid store..
+        /// </summary>
+        internal static string InvalidStore {
+            get {
+                return ResourceManager.GetString("InvalidStore", resourceCulture);
             }
         }
         

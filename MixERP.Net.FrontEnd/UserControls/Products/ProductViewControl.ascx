@@ -130,7 +130,7 @@
         ID="ProductViewGridView"
         runat="server"
         CssClass="grid"
-        Width="1424px"
+        Width="100%"
         AutoGenerateColumns="false"
         OnRowDataBound="ProductViewGridView_RowDataBound">
         <Columns>
@@ -165,7 +165,7 @@
             <asp:BoundField DataField="transaction_ts" HeaderText="transaction_ts" DataFormatString="{0:D}" />
             <asp:BoundField DataField="user" HeaderText="user" />
             <asp:BoundField DataField="statement_reference" HeaderText="statement_reference" />
-            <asp:BoundField DataField="flag_background_color" HeaderText="flag_background_color" />
+            <asp:BoundField DataField="flag_background_color" HeaderText="flag_background_color"  />
             <asp:BoundField DataField="flag_foreground_color" HeaderText="flag_foreground_color" />
         </Columns>
     </asp:GridView>
@@ -212,6 +212,7 @@
                     row.find("td").each(function () {
                         //Prevent border display by unsetting the border information for each cell.
                         $(this).css("border", "none");
+
                     });
                 }
             }
@@ -221,6 +222,9 @@
                     row.find("td").css("color", foreground);
                 }
             }
+
+            row.find(":nth-child(" + bgColorColumnPos + ")").hide();
+            row.find(":nth-child(" + fgColorColumnPos + ")").hide();
         });
     };
 

@@ -13,13 +13,13 @@ namespace MixERP.Net.FrontEnd.UserControls {
     public partial class AttachmentUserControl {
         
         /// <summary>
-        /// UploadedFiles control.
+        /// UploadedFilesHidden control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField UploadedFiles;
+        protected global::System.Web.UI.WebControls.HiddenField UploadedFilesHidden;
         
         /// <summary>
         /// WarningLabel control.

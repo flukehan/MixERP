@@ -57,6 +57,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
         }
 
         [SuppressMessage("Microsoft.Globalization", "CA1306:SetLocaleForDataTypes")]
+        // ReSharper disable once UnusedParameter.Local
         private void Save(bool closeForm)
         {
             var userIdSessionKey = ConfigurationHelper.GetScrudParameter("UserIdSessionKey");

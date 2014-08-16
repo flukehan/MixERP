@@ -22,6 +22,18 @@ http://mozilla.org/MPL/2.0/.
         VerifyStock="true"
         TopPanelWidth="850"
         OnSaveButtonClick="Sales_SaveButtonClick" />
+    
+    
+    <asp:button runat="server" OnClick="button_click" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceholder" runat="server">
 </asp:Content>
+
+<script runat="server">
+
+    public void button_click(object sender, EventArgs e)
+    {
+        string josn = "";
+    }
+
+</script>

@@ -81,30 +81,72 @@ namespace MixERP.Net.FrontEnd.Services
             return values;
         }
 
+
         [WebMethod]
-        public decimal GetCashRepositoryBalance(int cashRepositoryId)
+        public Collection<ListItem> GetCashRepositories()
         {
-            return 200;
-            return BusinessLayer.Office.CashRepositories.GetBalance(cashRepositoryId);
+            Collection<ListItem> values = new Collection<ListItem>();
+
+            using (DataTable table = FormHelper.GetTable("office", "cash_repositories"))
+            {
+                string displayField = ConfigurationHelper.GetDbParameter("CashRepositoryDisplayField");
+                table.Columns.Add("cash_repository", typeof(string), displayField);
+
+                foreach (DataRow dr in table.Rows)
+                {
+                    values.Add(new ListItem(dr["cash_repository"].ToString(), dr["cash_repository_id"].ToString()));
+                }
+            }
+            return values;
         }
 
         [WebMethod]
-        public Collection<ListItem> GetCashRepositories(string accountCode)
+        public Collection<ListItem> GetCostCenters()
+        {
+            Collection<ListItem> values = new Collection<ListItem>();
+
+            using (DataTable table = FormHelper.GetTable("office", "cost_centers"))
+            {
+                string displayField = ConfigurationHelper.GetDbParameter("CostCenterDisplayField");
+                table.Columns.Add("cost_center", typeof(string), displayField);
+
+                foreach (DataRow dr in table.Rows)
+                {
+                    values.Add(new ListItem(dr["cost_center"].ToString(), dr["cost_center_id"].ToString()));
+                }
+            }
+
+            return values;
+        }
+
+
+        [WebMethod]
+        public Collection<ListItem> GetCashRepositoriesByAccountCode(string accountCode)
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
             if (Accounts.IsCashAccount(accountCode))
             {
-                using (DataTable table = FormHelper.GetTable("office", "cash_repositories"))
+                using (DataTable table = FormHelper.GetTable("office", "cost_centers"))
                 {
+                    string displayField = ConfigurationHelper.GetDbParameter("CashRepositoryDisplayField");
+                    table.Columns.Add("cash_repository", typeof(string), displayField);
+
                     foreach (DataRow dr in table.Rows)
                     {
-                        values.Add(new ListItem(dr["cash_repository_name"].ToString(), dr["cash_repository_code"].ToString()));
+                        values.Add(new ListItem(dr["cash_repository"].ToString(), dr["cash_repository_code"].ToString()));
                     }
                 }
             }
 
             return values;
         }
+
+        [WebMethod]
+        public decimal GetCashRepositoryBalance(int cashRepositoryId)
+        {
+            return BusinessLayer.Office.CashRepositories.GetBalance(cashRepositoryId);
+        }
+
     }
 }

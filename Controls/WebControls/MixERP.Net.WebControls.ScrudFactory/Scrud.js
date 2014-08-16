@@ -7,22 +7,22 @@ var formPanelId = "FormPanel";
 var cancelButtonId = "CancelButton";
 
 
-var showCompact = function () {
+var scrudShowCompact = function () {
     window.location = window.location.pathname + '?show=compact';
 };
 
-var showAll = function () {
+var scrudShowAll = function () {
     window.location = window.location.pathname + '?show=all';
 };
 
-var confirmAction = function () {
+var scrudConfirmAction = function () {
     var retVal = false;
     var selectedItemValue;
 
     var confirmed = confirm(localizedAreYouSure);
 
     if (confirmed) {
-        selectedItemValue = getSelectedValue();
+        selectedItemValue = scrudGetSelectedRadioValue();
 
         if (selectedItemValue == undefined) {
             alert(localizedNothingSelected);
@@ -37,23 +37,23 @@ var confirmAction = function () {
     return retVal;
 };
 
-var selectAndClose = function() {
+var scrudSelectAndClose = function () {
     var lastValueHidden = $("#LastValueHidden");
-    lastValueHidden.val(getSelectedValue());
-    saveAndClose();
+    lastValueHidden.val(scrudGetSelectedRadioValue());
+    scrudSaveAndClose();
 };
 
-var getSelectedValue = function () {
+var scrudGetSelectedRadioValue = function () {
     return $('[id^="SelectRadio"]:checked').val();
 };
 
-var selectNode = function (id) {
+var scrudSelectRadioById = function (id) {
     $('[id^="SelectRadio"]').prop("checked", false);
     $("#" + id).prop("checked", true);
 };
 
 
-var printThis = function () {
+var scrudPrintGridView = function () {
     //Append the report template with a random number to prevent caching.
     var randomnumber = Math.floor(Math.random() * 1200);
     reportTemplatePath += "?" + randomnumber;
@@ -107,7 +107,7 @@ var initialize = function () {
     //Adjusting panel size.
     var gridPanel = $('#' + gridPanelId);
     gridPanel.css("width", $(window).width() - parseInt(containerMargin));
-    adjustSpinnerSize();
+    scrudAdjustSpinnerSize();
 
     //Registering grid row click event to automatically select the radio.
     $('#' + formGridViewId + ' tr').click(function () {
@@ -115,20 +115,20 @@ var initialize = function () {
         var radio = $(this).find('td input:radio');
 
         //The radio button was found.
-        selectNode(radio.attr("id"));
+        scrudSelectRadioById(radio.attr("id"));
     });
 
-    saveAndClose();
+    scrudSaveAndClose();
 };
 
-function getParameterByName(name) {
+function scrudGetParameterByName(name) {
     name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
         results = regex.exec(location.search);
     return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-function saveAndClose() {
+function scrudSaveAndClose() {
     var parent;
 
     if (window.opener && window.opener.document) {
@@ -141,13 +141,16 @@ function saveAndClose() {
 
     if (parent) {
         var lastValue = parseFloat2($("#LastValueHidden").val());
-        var ctl = getParameterByName('AssociatedControlId');
+        var ctl = scrudGetParameterByName('AssociatedControlId');
         var associatedControl = parent.$('#' + ctl);
-        var callBackFunctionName = getParameterByName('CallBackFunctionName');
+        var callBackFunctionName = scrudGetParameterByName('CallBackFunctionName');
 
         if (lastValue > 0) {
             associatedControl.val(lastValue);
-            parent[callBackFunctionName]();
+
+            if (callBackFunctionName) {
+                parent[callBackFunctionName]();
+            };
 
             if (window.opener && window.opener.document) {
                 top.close();
@@ -159,7 +162,7 @@ function saveAndClose() {
     }
 }
 
-function adjustSpinnerSize() {
+function scrudAdjustSpinnerSize() {
     //Adjusting AJAX Spinner Size.
 
     $(".ajax-container").height($(document).height());
@@ -168,7 +171,7 @@ function adjustSpinnerSize() {
     //current scroll position.
 };
 
-function updateTableHeaders() {
+function scrudUpdateTableHeaders() {
     $("div.floating-header").each(function () {
         var originalHeaderRow = $(".tableFloatingHeaderOriginal", this);
         var floatingHeaderRow = $(".tableFloatingHeader", this);
@@ -211,12 +214,12 @@ $(document).ready(function () {
 
         originalHeaderRow.addClass("tableFloatingHeaderOriginal");
     });
-    updateTableHeaders();
-    $(window).scroll(updateTableHeaders);
-    $(window).resize(updateTableHeaders);
+    scrudUpdateTableHeaders();
+    $(window).scroll(scrudUpdateTableHeaders);
+    $(window).resize(scrudUpdateTableHeaders);
 });
 
-var addNew = function () {
+var scrudAddNew = function () {
     if (customFormUrl) {
         top.location = customFormUrl;
     }
@@ -247,23 +250,23 @@ $(document).ready(function () {
     });
 
     shortcut.add("RETURN", function () {
-        selectAndClose();
+        scrudSelectAndClose();
     });
 
     shortcut.add("ALT+C", function () {
-        showCompact();
+        scrudShowCompact();
     });
 
     shortcut.add("CTRL+S", function () {
-        showAll();
+        scrudShowAll();
     });
 
     shortcut.add("ALT+A", function () {
-        return (addNew());
+        return (scrudAddNew());
     });
 
     shortcut.add("CTRL+P", function () {
-        printThis();
+        scrudPrintGridView();
     });
 
 });

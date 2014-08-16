@@ -23,16 +23,5 @@ namespace MixERP.Net.FrontEnd.Sales.Entry
         {
 
         }
-
-        
-        protected void SalesOrder_SaveButtonClick(object sender, EventArgs e)
-        {
-            Collection<int> tranIdCollection = this.SalesOrder.GetTranIdCollection();
-            long nonGlStockMasterId = NonGlStockTransaction.Add("Sales.Order", this.SalesOrder.GetForm.Date, this.SalesOrder.GetForm.PartyCode, this.SalesOrder.GetForm.PriceTypeId, this.SalesOrder.GetForm.Details, this.SalesOrder.GetForm.ReferenceNumber, this.SalesOrder.GetForm.StatementReference, tranIdCollection);
-            if (nonGlStockMasterId > 0)
-            {
-                this.Response.Redirect("~/Sales/Order.aspx?TranId=" + nonGlStockMasterId, true);
-            }
-        }
     }
 }

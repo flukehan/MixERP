@@ -160,7 +160,7 @@ namespace MixERP.Net.DBFactory
                 {
                     if (!string.IsNullOrWhiteSpace(column))
                     {
-                        command.Parameters.AddWithValue(Sanitizer.SanitizeIdentifierName(column.Trim()), "%" + values[counter].ToLower(Thread.CurrentThread.CurrentCulture) + "%");
+                        command.Parameters.AddWithValue("@" + Sanitizer.SanitizeIdentifierName(column.Trim()), "%" + values[counter].ToLower(Thread.CurrentThread.CurrentCulture) + "%");
                         counter++;
                     }
                 }

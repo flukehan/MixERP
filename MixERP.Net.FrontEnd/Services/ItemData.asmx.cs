@@ -13,6 +13,7 @@ using System.Web.Services;
 using System.Web.UI.WebControls;
 using MixERP.Net.BusinessLayer.Core;
 using MixERP.Net.BusinessLayer.Helpers;
+using MixERP.Net.Common.Helpers;
 
 namespace MixERP.Net.FrontEnd.Services
 {
@@ -44,6 +45,63 @@ namespace MixERP.Net.FrontEnd.Services
         }
 
         [WebMethod]
+        public Collection<ListItem> GetStores()
+        {
+            Collection<ListItem> values = new Collection<ListItem>();
+
+            using (DataTable table = BusinessLayer.Helpers.FormHelper.GetTable("office", "stores"))
+            {
+                string displayField = ConfigurationHelper.GetDbParameter("StoreDisplayField");
+                table.Columns.Add("store", typeof(string), displayField);
+
+                foreach (DataRow dr in table.Rows)
+                {
+                    values.Add(new ListItem(dr["store"].ToString(), dr["store_id"].ToString()));
+                }
+
+                return values;
+            }
+        }
+
+        [WebMethod]
+        public Collection<ListItem> GetAgents()
+        {
+            Collection<ListItem> values = new Collection<ListItem>();
+
+            using (DataTable table = BusinessLayer.Helpers.FormHelper.GetTable("core", "agents"))
+            {
+                string displayField = ConfigurationHelper.GetDbParameter("AgentDisplayField");
+                table.Columns.Add("agent", typeof(string), displayField);
+
+                foreach (DataRow dr in table.Rows)
+                {
+                    values.Add(new ListItem(dr["agent"].ToString(), dr["agent_id"].ToString()));
+                }
+
+                return values;
+            }
+        }
+
+        [WebMethod]
+        public Collection<ListItem> GetShippers()
+        {
+            Collection<ListItem> values = new Collection<ListItem>();
+
+            using (DataTable table = BusinessLayer.Helpers.FormHelper.GetTable("core", "shippers"))
+            {
+                string displayField = ConfigurationHelper.GetDbParameter("ShipperDisplayField");
+                table.Columns.Add("shipper", typeof(string), displayField);
+
+                foreach (DataRow dr in table.Rows)
+                {
+                    values.Add(new ListItem(dr["shipper"].ToString(), dr["shipper_id"].ToString()));
+                }
+
+                return values;
+            }
+        }
+
+        [WebMethod]
         public bool IsStockItem(string itemCode)
         {
             return Items.IsStockItem(itemCode);
@@ -53,7 +111,7 @@ namespace MixERP.Net.FrontEnd.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = FormHelper.GetTable("core", "items"))
+            using (DataTable table = BusinessLayer.Helpers.FormHelper.GetTable("core", "items"))
             {
                 foreach (DataRow dr in table.Rows)
                 {
@@ -68,7 +126,7 @@ namespace MixERP.Net.FrontEnd.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = FormHelper.GetTable("core", "items", "maintain_stock", "true"))
+            using (DataTable table = BusinessLayer.Helpers.FormHelper.GetTable("core", "items", "maintain_stock", "true"))
             {
                 foreach (DataRow dr in table.Rows)
                 {
@@ -84,7 +142,7 @@ namespace MixERP.Net.FrontEnd.Services
         {
             return Items.CountItemInStock(itemCode, unitId, storeId);
         }
-        
+
         [WebMethod]
         public Collection<ListItem> GetUnits(string itemCode)
         {
@@ -100,6 +158,26 @@ namespace MixERP.Net.FrontEnd.Services
                 return values;
             }
         }
+
+        [WebMethod]
+        public Collection<ListItem> GetPriceTypes()
+        {
+            Collection<ListItem> values = new Collection<ListItem>();
+
+            using (DataTable table = BusinessLayer.Helpers.FormHelper.GetTable("core", "price_types"))
+            {
+                string displayField = ConfigurationHelper.GetDbParameter("PriceTypeDisplayField");
+                table.Columns.Add("price_type", typeof(string), displayField);
+
+                foreach (DataRow dr in table.Rows)
+                {
+                    values.Add(new ListItem(dr["price_type"].ToString(), dr["price_type_id"].ToString()));
+                }
+            }
+
+            return values;
+        }
+
 
         [WebMethod]
         public bool UnitNameExists(string unitName)

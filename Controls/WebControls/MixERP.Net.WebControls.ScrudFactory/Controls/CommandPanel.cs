@@ -107,32 +107,32 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
         {
             if (this.IsModal())
             {
-                var addSelectButton = this.GetInputButton("RETURN", "selectAndClose();", ScrudResource.Select);
+                var addSelectButton = this.GetInputButton("RETURN", "scrudSelectAndClose();", ScrudResource.Select);
                 p.Controls.Add(addSelectButton);            
             }
         }
 
         private void AddShowCompactButton(Panel p)
         {
-            var showCompactButton = this.GetInputButton("ALT + C", "showCompact();", ScrudResource.ShowCompact);
+            var showCompactButton = this.GetInputButton("ALT + C", "scrudShowCompact();", ScrudResource.ShowCompact);
             p.Controls.Add(showCompactButton);
         }
 
         private void AddShowAllButton(Panel p)
         {
-            var showAllButton = this.GetInputButton("CTRL + S", "showAll();", ScrudResource.ShowAll);
+            var showAllButton = this.GetInputButton("CTRL + S", "scrudShowAll();", ScrudResource.ShowAll);
             p.Controls.Add(showAllButton);
         }
 
         private void AddAddButton(Panel p)
         {
-            var addButton = this.GetInputButton("ALT + A", "return(addNew());", ScrudResource.AddNew);
+            var addButton = this.GetInputButton("ALT + A", "return(scrudAddNew());", ScrudResource.AddNew);
             p.Controls.Add(addButton);
         }
 
         private void AddEditButton(Panel p)
         {
-            this.EditButton = this.GetButton("CTRL + E", "return(confirmAction());", ScrudResource.EditSelected);
+            this.EditButton = this.GetButton("CTRL + E", "return(scrudConfirmAction());", ScrudResource.EditSelected);
             this.EditButton.Click += this.OnEditButtonClick;
             p.Controls.Add(this.EditButton);
         }
@@ -147,7 +147,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
 
         private void AddDeleteButton(Panel p)
         {
-            this.DeleteButton = this.GetButton("CTRL + D", "return(confirmAction());", ScrudResource.DeleteSelected);
+            this.DeleteButton = this.GetButton("CTRL + D", "return(scrudConfirmAction());", ScrudResource.DeleteSelected);
             this.DeleteButton.Click += this.OnDeleteButtonClick;
             p.Controls.Add(this.DeleteButton);
         }
@@ -162,7 +162,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
 
         private void AddPrintButton(Panel p)
         {
-            var printButton = this.GetInputButton("CTRL + P", "printThis();", ScrudResource.Print);
+            var printButton = this.GetInputButton("CTRL + P", "scrudPrintGridView();", ScrudResource.Print);
             p.Controls.Add(printButton);
         }
 

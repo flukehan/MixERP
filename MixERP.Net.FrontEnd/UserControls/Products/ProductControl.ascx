@@ -34,7 +34,6 @@
 
     <asp:Label ID="TitleLabel" CssClass="title" runat="server" />
 
-    <asp:HiddenField ID="ModeHiddenField" runat="server" />
 
     <asp:Panel ID="TopPanel" CssClass="form" runat="server">
         <table class="form-table">
@@ -79,8 +78,6 @@
                     <asp:DropDownList ID="PartyDropDownList" runat="server" Width="150"
                         ToolTip="F2">
                     </asp:DropDownList>
-                    <asp:HiddenField ID="PartyCodeHidden" runat="server" />
-                    <asp:HiddenField ID="PartyIdHidden" runat="server" />
                 </td>
                 <td>
                     <asp:DropDownList ID="PriceTypeDropDownList" runat="server" Width="80">
@@ -99,7 +96,6 @@
     <div class="center">
 
 
-        <asp:HiddenField ID="ProductGridViewDataHidden" runat="server" />
         <table id="ProductGridView" class="grid2 grid3" style="width: 100%;" runat="server">
             <tbody>
                 <tr class="grid2-header">
@@ -248,7 +244,6 @@
                     </asp:TableCell><asp:TableCell>
                         <asp:DropDownList ID="ShippingAddressDropDownList" runat="server" Width="200">
                         </asp:DropDownList>
-                        <asp:HiddenField ID="ShippingAddressCodeHidden" runat="server" />
                         <p>
                             <asp:TextBox
                                 ID="ShippingAddressTextBox"
@@ -355,7 +350,7 @@
                                     &nbsp;
                     </asp:TableCell>
                     <asp:TableCell>
-                        <asp:Button ID="SaveButton" runat="server" CssClass="button" Text="<%$Resources:Titles, Save %>" />
+                        <input type="button" id="SaveButton" class="button" value='<asp:Literal runat="server" Text="<%$Resources:Titles, Save%>" />' />
                     </asp:TableCell>
                 </asp:TableRow>
             </asp:Table>
@@ -363,9 +358,15 @@
 
         <asp:HiddenField ID="ItemCodeHidden" runat="server"></asp:HiddenField>
         <asp:HiddenField ID="ItemIdHidden" runat="server"></asp:HiddenField>
+        <asp:HiddenField ID="ModeHiddenField" runat="server" />
+        <asp:HiddenField ID="PartyCodeHidden" runat="server" />
+        <asp:HiddenField ID="PartyIdHidden" runat="server" />
+        <asp:HiddenField ID="ProductGridViewDataHidden" runat="server" />
+        <asp:HiddenField ID="PriceTypeIdHidden" runat="server" />
+        <asp:HiddenField ID="ShippingAddressCodeHidden" runat="server" />
+        <asp:HiddenField ID="TranIdCollectionHiddenField" runat="server"></asp:HiddenField>
         <asp:HiddenField ID="UnitIdHidden" runat="server"></asp:HiddenField>
         <asp:HiddenField ID="UnitNameHidden" runat="server"></asp:HiddenField>
-
         <p>
             <asp:Label ID="ErrorLabelBottom" runat="server" CssClass="error" />
         </p>
@@ -382,9 +383,25 @@
 
 
     var areYouSureLocalized = "<%=Resources.Questions.AreYouSure %>";
-    var selectLocalized = "<%=Resources.Titles.Select %>";
-    var noneLocalized = "<%=Resources.Titles.None %>";
+
+    var gridViewEmptyWarningLocalized = "<%=Resources.Warnings.GridViewEmpty%>";
+
     var insufficientStockWarningLocalized = "<%= Resources.Warnings.InsufficientStockWarning %>";
+    var invalidDateWarningLocalized = "<%= Resources.Warnings.InvalidDate %>";
+    var invalidPartyWarningLocalized = "<%= Resources.Warnings.InvalidParty %>";
+    var invalidPriceTypeWarningLocalized = "<%= Resources.Warnings.InvalidPriceType %>";
+    var invalidStoreWarningLocalized = "<%=Resources.Warnings.InvalidStore%>";
+
+    var invalidShippingCompanyWarningLocalized = "<%=Resources.Warnings.InvalidShippingCompany%>";
+    var invalidCashRepositoryWarningLocalized = "<%=Resources.Warnings.InvalidCashRepository%>";
+    var invalidCostCenterWarningLocalized = "<%=Resources.Warnings.InvalidCostCenter%>";
+    var invalidSalesPersonWarningLocalized = "<%=Resources.Warnings.InvalidSalesPerson%>";
+
+    var salesNotAllowedHereWarningLocalized = "<%=Resources.Warnings.SalesNotAllowedHere%>";
+
+    var noneLocalized = "<%=Resources.Titles.None %>";
+    var selectLocalized = "<%=Resources.Titles.Select %>";
+
 
 </script>
 

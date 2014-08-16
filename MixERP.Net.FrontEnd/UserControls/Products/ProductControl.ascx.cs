@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using MixERP.Net.BusinessLayer.Helpers;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
@@ -19,7 +21,6 @@ using System.Web.UI.WebControls;
 using System.Globalization;
 using MixERP.Net.WebControls.StockTransactionView.Data.Models;
 using Resources;
-using FormHelper = MixERP.Net.Common.Helpers.FormHelper;
 using SessionHelper = MixERP.Net.BusinessLayer.Helpers.SessionHelper;
 using System.Web.Script.Serialization;
 
@@ -277,11 +278,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
             this.PartyCodeHidden.Value = this.model.PartyCode.ToString(LocalizationHelper.GetCurrentCulture());
             this.PartyCodeTextBox.Text = this.model.PartyCode.ToString(LocalizationHelper.GetCurrentCulture());
-
-            if (this.PriceTypeDropDownList.SelectedItem != null)
-            {
-                DropDownListHelper.SetSelectedValue(this.PriceTypeDropDownList, this.model.PriceTypeId.ToString(SessionHelper.GetCulture()));
-            }
+            this.PriceTypeIdHidden.Value = this.model.PriceTypeId.ToString(SessionHelper.GetCulture());
 
             this.ReferenceNumberTextBox.Text = this.model.ReferenceNumber;
             this.StatementReferenceTextBox.Text = this.model.StatementReference;
@@ -298,6 +295,11 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             if (this.Session["TranIdCollection"] != null)
             {
                 tranIdCollection = this.Session["TranIdCollection"] as Collection<int>;
+                
+                if (tranIdCollection != null)
+                {
+                    TranIdCollectionHiddenField.Value = string.Join(",", tranIdCollection);
+                }
             }
 
             return tranIdCollection;
@@ -311,51 +313,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             }
         }
 
-        private void LoadCostCenters()
-        {
-            if (this.SubBook == SubTranBook.Direct || this.SubBook == SubTranBook.Invoice || this.SubBook == SubTranBook.Delivery || this.SubBook == SubTranBook.Receipt)
-            {
-                string displayField = ConfigurationHelper.GetDbParameter("CostCenterDisplayField");
-                DropDownListHelper.BindDropDownList(this.CostCenterDropDownList, "office", "cost_centers", "cost_center_id", displayField);
-            }
-            else
-            {
-                this.CostCenterRow.Visible = false;
-            }
-        }
-
-        private void LoadStores()
-        {
-            if (this.SubBook == SubTranBook.Direct || this.SubBook == SubTranBook.Invoice || this.SubBook == SubTranBook.Delivery || this.SubBook == SubTranBook.Receipt)
-            {
-                string displayField = ConfigurationHelper.GetDbParameter("StoreDisplayField");
-                DropDownListHelper.BindDropDownList(this.StoreDropDownList, "office", "stores", "store_id", displayField);
-            }
-            else
-            {
-                this.StoreLiteral.Visible = false;
-                this.StoreDropDownList.Visible = false;
-            }
-        }
-
-        private void LoadCashRepositories()
-        {
-            if (this.ShowCashRepository)
-            {
-                string officeId = Conversion.TryCastString(SessionHelper.GetOfficeId());
-
-                using (DataTable table = BusinessLayer.Helpers.FormHelper.GetTable("office", "cash_repositories", "office_id", officeId))
-                {
-                    string displayField = ConfigurationHelper.GetDbParameter("CashRepositoryDisplayField");
-                    DropDownListHelper.BindDropDownList(this.CashRepositoryDropDownList, table, "cash_repository_id", displayField);
-                }
-            }
-            else
-            {
-                this.CashRepositoryRow.Visible = false;
-                this.CashRepositoryBalanceRow.Visible = false;
-            }
-        }
 
         private void LoadLabels()
         {
@@ -402,14 +359,9 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             return "Purchase";
         }
 
-        private void LoadPriceTypes()
+        private void SetVisibleStates()
         {
-            if (this.Book == TranBook.Sales)
-            {
-                string displayField = ConfigurationHelper.GetDbParameter("PriceTypeDisplayField");
-                DropDownListHelper.BindDropDownList(this.PriceTypeDropDownList, "core", "price_types", "price_type_id", displayField);
-            }
-            else
+            if (this.Book != TranBook.Sales)
             {
                 this.PriceTypeLiteral.Visible = false;
                 this.PriceTypeDropDownList.Visible = false;
@@ -421,63 +373,13 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         }
 
-        private void LoadSalesperson()
-        {
-            this.SalespersonRow.Visible = false;
-
-            if (this.Book == TranBook.Sales)
-            {
-                string displayField = ConfigurationHelper.GetDbParameter("AgentDisplayField");
-                DropDownListHelper.BindDropDownList(this.SalespersonDropDownList, "core", "agents", "agent_id", displayField);
-                this.SalespersonRow.Visible = true;
-            }
-        }
-
-        private void LoadShippers()
-        {
-            this.ShippingAddressRow.Visible = false;
-            this.ShippingChargeRow.Visible = false;
-            this.ShippingCompanyRow.Visible = false;
-
-            if (this.Book == TranBook.Sales)
-            {
-                if (this.SubBook == SubTranBook.Direct || this.SubBook == SubTranBook.Delivery)
-                {
-                    string displayField = ConfigurationHelper.GetDbParameter("ShipperDisplayField");
-                    DropDownListHelper.BindDropDownList(this.ShippingCompanyDropDownList, "core", "shippers", "shipper_id", displayField);
-
-                    this.ShippingAddressRow.Visible = true;
-                    this.ShippingChargeRow.Visible = true;
-                    this.ShippingCompanyRow.Visible = true;
-                }
-            }
-        }
-
         private void InitializeControls()
         {
             this.LoadLabels();
             this.LoadTransactionTypeLabel();
-            this.LoadPriceTypes();
-            this.LoadShippers();
-            this.LoadCostCenters();
-            this.LoadSalesperson();
-            this.LoadStores();
-            this.LoadCashRepositories();
-            this.LoadParties();
+            this.SetVisibleStates();
         }
 
-        //Todo:Remove this implementation
-        private void LoadParties()
-        {
-            //using (PartyData data = new PartyData())
-            //{
-            //    this.PartyDropDownList.DataSource = data.GetParties();
-            //    this.PartyDropDownList.DataTextField = "Text";
-            //    this.PartyDropDownList.DataValueField = "Value";
-            //    this.PartyDropDownList.DataBind();
-            //    this.PartyDropDownList.Items.Insert(0, new ListItem(Titles.Select, string.Empty));
-            //}
-        }
         #endregion
 
         protected void Page_Load(object sender, EventArgs e)

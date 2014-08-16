@@ -117,7 +117,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                             this.useButton = new Button();
                             this.useButton.ID = "UseButton";
                             this.useButton.Text = ScrudResource.Use;
-                            this.useButton.OnClientClick = "adjustSpinnerSize();";
+                            this.useButton.OnClientClick = "scrudAdjustSpinnerSize();";
 
                             this.useButton.Click += this.UseButton_Click;
 
@@ -130,7 +130,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         this.saveButton = new Button();
                         this.saveButton.ID = "SaveButton";
                         this.saveButton.Text = ScrudResource.Save;
-                        this.saveButton.OnClientClick = "adjustSpinnerSize();";
+                        this.saveButton.OnClientClick = "scrudAdjustSpinnerSize();";
 
                         this.saveButton.Click += this.SaveButton_Click;
 
