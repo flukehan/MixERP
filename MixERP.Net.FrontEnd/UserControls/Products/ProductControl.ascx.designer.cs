@@ -22,15 +22,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::System.Web.UI.WebControls.Label TitleLabel;
         
         /// <summary>
-        /// TopPanel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel TopPanel;
-        
-        /// <summary>
         /// DateLiteral control.
         /// </summary>
         /// <remarks>
@@ -38,51 +29,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal DateLiteral;
-        
-        /// <summary>
-        /// StoreLiteral control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal StoreLiteral;
-        
-        /// <summary>
-        /// TransactionTypeLiteral control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal TransactionTypeLiteral;
-        
-        /// <summary>
-        /// PartyLiteral control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal PartyLiteral;
-        
-        /// <summary>
-        /// PriceTypeLiteral control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal PriceTypeLiteral;
-        
-        /// <summary>
-        /// ReferenceNumberLiteral control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ReferenceNumberLiteral;
         
         /// <summary>
         /// DateTextBox control.
@@ -94,6 +40,15 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::MixERP.Net.WebControls.Common.DateTextBox DateTextBox;
         
         /// <summary>
+        /// StoreLiteral control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal StoreLiteral;
+        
+        /// <summary>
         /// StoreDropDownList control.
         /// </summary>
         /// <remarks>
@@ -103,13 +58,13 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::System.Web.UI.WebControls.DropDownList StoreDropDownList;
         
         /// <summary>
-        /// TransactionTypeRadioButtonList control.
+        /// PartyLiteral control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList TransactionTypeRadioButtonList;
+        protected global::System.Web.UI.WebControls.Literal PartyLiteral;
         
         /// <summary>
         /// PartyCodeTextBox control.
@@ -121,6 +76,15 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::System.Web.UI.WebControls.TextBox PartyCodeTextBox;
         
         /// <summary>
+        /// Literal1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal Literal1;
+        
+        /// <summary>
         /// PartyDropDownList control.
         /// </summary>
         /// <remarks>
@@ -128,6 +92,15 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList PartyDropDownList;
+        
+        /// <summary>
+        /// PriceTypeLiteral control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal PriceTypeLiteral;
         
         /// <summary>
         /// PriceTypeDropDownList control.
@@ -139,6 +112,15 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::System.Web.UI.WebControls.DropDownList PriceTypeDropDownList;
         
         /// <summary>
+        /// ReferenceNumberLiteral control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ReferenceNumberLiteral;
+        
+        /// <summary>
         /// ReferenceNumberTextBox control.
         /// </summary>
         /// <remarks>
@@ -146,6 +128,24 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox ReferenceNumberTextBox;
+        
+        /// <summary>
+        /// TransactionTypeLiteral control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal TransactionTypeLiteral;
+        
+        /// <summary>
+        /// TransactionTypeRadioButtonList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButtonList TransactionTypeRadioButtonList;
         
         /// <summary>
         /// ErrorLabelTop control.

@@ -1,4 +1,22 @@
-﻿using System.Data;
+﻿/********************************************************************************
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This file is part of MixERP.
+
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
+***********************************************************************************/
+using System.Data;
 using System.Web.UI;
 using MixERP.Net.BusinessLayer.Core;
 using MixERP.Net.BusinessLayer.Helpers;
@@ -8,13 +26,6 @@ using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.WebControls.StockTransactionView.Data;
 using MixERP.Net.WebControls.StockTransactionView.Data.Models;
-/********************************************************************************
-Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
-
-This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
-If a copy of the MPL was not distributed  with this file, You can obtain one at 
-http://mozilla.org/MPL/2.0/.
-***********************************************************************************/
 using System;
 using System.Collections.ObjectModel;
 using System.Web;
@@ -69,20 +80,20 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             {
                 if (this.SubBook == SubTranBook.Order)
                 {
-                    this.MergeToDeliveryLinkButton.Visible = true;
+                    this.MergeToDeliveryButton.Visible = true;
                 }
 
                 if (this.SubBook == SubTranBook.Quotation)
                 {
-                    this.MergeToOrderLinkButton.Visible = true;
-                    this.MergeToDeliveryLinkButton.Visible = true;
+                    this.MergeToOrderButton.Visible = true;
+                    this.MergeToDeliveryButton.Visible = true;
                 }
             }
         }
 
         private void InitializePostBackUrls()
         {
-            this.AddNewLinkButton.PostBackUrl = this.AddNewUrl;
+            this.AddNewButton.Attributes.Add("onclick",  "window.location='" + ResolveUrl(this.AddNewUrl) + "'");
         }
 
         private Collection<int> GetSelectedValues()
@@ -117,7 +128,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             return values;
         }
 
-        protected void MergeToOrderLinkButton_Click(object sender, EventArgs e)
+        protected void MergeToOrderButton_Click(object sender, EventArgs e)
         {
             Collection<int> values = this.GetSelectedValues();
 
@@ -213,7 +224,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             HttpContext.Current.Response.Redirect(link);
         }
 
-        protected void MergeToDeliveryLinkButton_Click(object sender, EventArgs e)
+        protected void MergeToDeliveryButton_Click(object sender, EventArgs e)
         {
             Collection<int> values = this.GetSelectedValues();
 
@@ -256,7 +267,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             {
                 this.ProductViewGridView.DataSource = table;
                 this.ProductViewGridView.DataBind();
-                return;
             }
         }
 

@@ -1,21 +1,12 @@
-﻿var formGridViewId = "FormGridView";
-var gridPanelId = "GridPanel";
-var userIdHiddenId = "UserIdHidden";
-var officeCodeHiddenId = "OfficeCodeHidden";
-var titleLabelId = "TitleLabel";
-var formPanelId = "FormPanel";
-var cancelButtonId = "CancelButton";
-
-
-var scrudShowCompact = function () {
+﻿var scrudShowCompact = function() {
     window.location = window.location.pathname + '?show=compact';
 };
 
-var scrudShowAll = function () {
+var scrudShowAll = function() {
     window.location = window.location.pathname + '?show=all';
 };
 
-var scrudConfirmAction = function () {
+var scrudConfirmAction = function() {
     var retVal = false;
     var selectedItemValue;
 
@@ -37,32 +28,26 @@ var scrudConfirmAction = function () {
     return retVal;
 };
 
-var scrudSelectAndClose = function () {
+var scrudSelectAndClose = function() {
     var lastValueHidden = $("#LastValueHidden");
     lastValueHidden.val(scrudGetSelectedRadioValue());
     scrudSaveAndClose();
 };
 
-var scrudGetSelectedRadioValue = function () {
+var scrudGetSelectedRadioValue = function() {
     return $('[id^="SelectRadio"]:checked').val();
 };
 
-var scrudSelectRadioById = function (id) {
+var scrudSelectRadioById = function(id) {
     $('[id^="SelectRadio"]').prop("checked", false);
     $("#" + id).prop("checked", true);
 };
 
-
-var scrudPrintGridView = function () {
-    //Append the report template with a random number to prevent caching.
-    var randomnumber = Math.floor(Math.random() * 1200);
-    reportTemplatePath += "?" + randomnumber;
-
+var scrudPrintGridView = function() {
     //Load report template from the path.
-    $.get(reportTemplatePath, function () { }).done(function (data) {
-
+    $.get(reportTemplatePath, function() {}).done(function(data) {
         //Load report header template.
-        $.get(reportHeaderPath, function () { }).done(function (header) {
+        $.get(reportHeaderPath, function() {}).done(function(header) {
             var table = $("#" + formGridViewId).clone();
             var user = $("#" + userIdHiddenId).val();
             var office = $("#" + officeCodeHiddenId).val();
@@ -94,23 +79,18 @@ var scrudPrintGridView = function () {
     });
 };
 
-Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
+Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function() {
     //Fired on each ASP.net AJAX request.
-    initialize();
+    scrudInitialize();
 });
 
-$(document).ready(function () {
-    initialize();
+$(document).ready(function() {
+    scrudInitialize();
 });
 
-var initialize = function () {
-    //Adjusting panel size.
-    var gridPanel = $('#' + gridPanelId);
-    gridPanel.css("width", $(window).width() - parseInt(containerMargin));
-    scrudAdjustSpinnerSize();
-
+var scrudInitialize = function() {
     //Registering grid row click event to automatically select the radio.
-    $('#' + formGridViewId + ' tr').click(function () {
+    $('#' + formGridViewId + ' tr').click(function() {
         //Grid row was clicked. Now, searching the radio button.
         var radio = $(this).find('td input:radio');
 
@@ -128,7 +108,7 @@ function scrudGetParameterByName(name) {
     return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-function scrudSaveAndClose() {
+function getParent() {
     var parent;
 
     if (window.opener && window.opener.document) {
@@ -138,6 +118,13 @@ function scrudSaveAndClose() {
     if (parent == undefined) {
         parent = window.parent;
     }
+
+    return parent;
+
+};
+
+function scrudSaveAndClose() {
+    var parent = getParent();
 
     if (parent) {
         var lastValue = parseFloat2($("#LastValueHidden").val());
@@ -152,15 +139,19 @@ function scrudSaveAndClose() {
                 parent[callBackFunctionName]();
             };
 
-            if (window.opener && window.opener.document) {
-                top.close();
-            }
-            else {
-                parent.jQuery.colorbox.close();
-            }
+            closeWindow();
         }
     }
 }
+
+function closeWindow() {
+    if (window.opener && window.opener.document) {
+        top.close();
+    } else {
+        parent.jQuery.colorbox.close();
+    };
+};
+
 
 function scrudAdjustSpinnerSize() {
     //Adjusting AJAX Spinner Size.
@@ -172,7 +163,7 @@ function scrudAdjustSpinnerSize() {
 };
 
 function scrudUpdateTableHeaders() {
-    $("div.floating-header").each(function () {
+    $("div.floating-header").each(function() {
         var originalHeaderRow = $(".tableFloatingHeaderOriginal", this);
         var floatingHeaderRow = $(".tableFloatingHeader", this);
         var offset = $(this).offset();
@@ -183,23 +174,22 @@ function scrudUpdateTableHeaders() {
             floatingHeaderRow.css("top", Math.min(scrollTop - offset.top, $(this).height() - floatingHeaderRow.height()) + "px");
 
             // Copy cell widths from original header
-            $("th", floatingHeaderRow).each(function (index) {
+            $("th", floatingHeaderRow).each(function(index) {
                 var cellWidth = $("th", originalHeaderRow).eq(index).css('width');
                 $(this).css('width', cellWidth);
             });
 
             // Copy row width from whole table
             floatingHeaderRow.css("width", $("table.grid").css("width"));
-        }
-        else {
+        } else {
             floatingHeaderRow.css("visibility", "hidden");
             floatingHeaderRow.css("top", "0");
         }
     });
 };
 
-$(document).ready(function () {
-    $("table.grid").each(function () {
+$(document).ready(function() {
+    $("table.grid").each(function() {
         $(this).wrap("<div class=\"floating-header\" style=\"position:relative\"></div>");
 
         var originalHeaderRow = $("tr:first", this);
@@ -219,13 +209,13 @@ $(document).ready(function () {
     $(window).resize(scrudUpdateTableHeaders);
 });
 
-var scrudAddNew = function () {
+var scrudAddNew = function() {
     if (customFormUrl) {
         top.location = customFormUrl;
     }
 
     $('#' + formGridViewId + 'tr').find('td input:radio').prop('checked', false);
-    $('#form1').each(function () {
+    $('#form1').each(function() {
         this.reset();
     });
 
@@ -236,37 +226,44 @@ var scrudAddNew = function () {
     return false;
 };
 
-$(document).ready(function () {
+$(document).ready(function() {
     shortcut.add("ESC", function () {
-        if (!$('#' + formPanelId).is(':hidden')) {
 
-            if ($("#colorbox").css("display") != "block") {
-                var result = confirm(localizedAreYouSure);
-                if (result) {
-                    $('#' + cancelButtonId).click();
-                }
-            }
+        if ($('#' + formPanelId).is(':hidden')) {
+            return;
+        };
+
+        if ($("#colorbox").css("display") == "block") {
+            return;
+        };
+
+        if ($("body").attr("class") == "modal-open") {
+            return;
+        };
+    
+        var result = confirm(localizedAreYouSure);
+        if (result) {
+            $('#' + cancelButtonId).click();
         }
     });
 
-    shortcut.add("RETURN", function () {
+    shortcut.add("RETURN", function() {
         scrudSelectAndClose();
     });
 
-    shortcut.add("ALT+C", function () {
+    shortcut.add("ALT+C", function() {
         scrudShowCompact();
     });
 
-    shortcut.add("CTRL+S", function () {
+    shortcut.add("CTRL+S", function() {
         scrudShowAll();
     });
 
-    shortcut.add("ALT+A", function () {
+    shortcut.add("ALT+A", function() {
         return (scrudAddNew());
     });
 
-    shortcut.add("CTRL+P", function () {
+    shortcut.add("CTRL+P", function() {
         scrudPrintGridView();
     });
-
 });

@@ -1,61 +1,51 @@
 ﻿/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
-This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
-If a copy of the MPL was not distributed  with this file, You can obtain one at 
-http://mozilla.org/MPL/2.0/.
-***********************************************************************************/
+This file is part of MixERP.
 
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.UI.WebControls;
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
+***********************************************************************************/
 using MixERP.Net.Common;
 using MixERP.Net.WebControls.ScrudFactory.Helpers;
-using System;
+using System.Web.UI.WebControls;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
     public partial class ScrudForm
-    {        
+    {
+        private void AddScrudScript()
+        {
+            var script = ScrudJavaScriptHelper.GetScript(this.KeyColumn, this.CustomFormUrl, this.formGridView.ID, this.gridPanel.ID, this.userIdHidden.ID, this.officeCodeHidden.ID, this.titleLabel.ID, this.formPanel.ID, this.cancelButton.ID);
+            PageUtility.ExecuteJavaScript("scrudScript", script, this.Page);
+        }
+
         private void LoadScrudContainer(Panel p)
         {
-            this.AddJavaScript();
-            
             this.AddUpdateProgress(p);
 
             this.AddTitle(p);
-            
+
             AddRuler(p);
-            
+
             this.AddDescription(p);
 
             this.CreateCommandPanels();
             this.CreateGridPanel();
             this.CreateFormPanel();
             this.AddUpdatePanel(p);
-        }
 
-        private void AddJavaScript()
-        {
-            var script = ScrudJavaScriptHelper.GetScript(this.KeyColumn, this.CustomFormUrl);            
-            PageUtility.ExecuteJavaScript("scrudScript", script, this.Page);     
-        }
-
-        public bool ListContainNames(List<string> listNames)
-        {
-            if (listNames == null) return false;
-            if (listNames.Any())
-            {
-                if (listNames.ElementAt(0).Contains("smith"))
-                {
-                    throw new Exception("should not contain smith");
-                }
-                if (listNames.ElementAt(0).Contains("david"))
-                {
-                    return true;
-                }
-            }
-            return false;
+            this.AddScrudScript();
         }
     }
 }

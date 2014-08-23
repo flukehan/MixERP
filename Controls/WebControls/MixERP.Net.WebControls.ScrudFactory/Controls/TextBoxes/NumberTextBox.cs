@@ -1,23 +1,35 @@
 ﻿/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
-This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
-If a copy of the MPL was not distributed  with this file, You can obtain one at 
-http://mozilla.org/MPL/2.0/.
+This file is part of MixERP.
+
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.WebControls.ScrudFactory.Helpers;
+using MixERP.Net.WebControls.ScrudFactory.Resources;
 using System;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.WebControls.ScrudFactory.Helpers;
-using MixERP.Net.WebControls.ScrudFactory.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 {
     public static class ScrudNumberTextBox
     {
-        public static void AddNumberTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isSerial, bool isNullable, int maxLength, string domain)
+        public static void AddNumberTextBox(HtmlTable htmlTable, string resourceClassName, string columnName,
+            string defaultValue, bool isSerial, bool isNullable, int maxLength, string domain, string errorCssClass)
         {
             if (htmlTable == null)
             {
@@ -30,7 +42,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
             }
 
             var textBox = GetNumberTextBox(columnName + "_textbox", maxLength);
-            var numberValidator = GetNumberValidator(textBox, domain);
+            var numberValidator = GetNumberValidator(textBox, domain, errorCssClass);
             var label = LocalizationHelper.GetResourceString(resourceClassName, columnName);
 
             if (!string.IsNullOrWhiteSpace(defaultValue))
@@ -51,8 +63,9 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
             {
                 if (!isNullable)
                 {
-                    var required = ScrudFactoryHelper.GetRequiredFieldValidator(textBox);
-                    ScrudFactoryHelper.AddRow(htmlTable, label + ScrudResource.RequiredFieldIndicator, textBox, numberValidator, required);
+                    var required = ScrudFactoryHelper.GetRequiredFieldValidator(textBox, errorCssClass);
+                    ScrudFactoryHelper.AddRow(htmlTable, label + ScrudResource.RequiredFieldIndicator, textBox,
+                        numberValidator, required);
                     return;
                 }
             }
@@ -67,13 +80,13 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
             return textBox;
         }
 
-        private static CompareValidator GetNumberValidator(Control controlToValidate, string domain)
+        private static CompareValidator GetNumberValidator(Control controlToValidate, string domain, string cssClass)
         {
             using (var validator = new CompareValidator())
             {
                 validator.ID = controlToValidate.ID + "NumberValidator";
                 validator.ErrorMessage = @"<br/>" + ScrudResource.OnlyNumbersAllowed;
-                validator.CssClass = "form-error";
+                validator.CssClass = cssClass;
                 validator.ControlToValidate = controlToValidate.ID;
                 validator.EnableClientScript = true;
                 validator.SetFocusOnError = true;

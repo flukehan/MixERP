@@ -1,25 +1,38 @@
 ﻿/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
-This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
-If a copy of the MPL was not distributed  with this file, You can obtain one at 
-http://mozilla.org/MPL/2.0/.
+This file is part of MixERP.
+
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using MixERP.Net.BusinessLayer;
-using MixERP.Net.Common;
 using System.Collections.ObjectModel;
 
 namespace MixERP.Net.FrontEnd.Dashboard
 {
-    public partial class Index : MixERPWebpage
+    public partial class Index : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
             //Todo:Store this in database.
             Collection<WidgetModel> models = new Collection<WidgetModel>
             {
@@ -27,64 +40,52 @@ namespace MixERP.Net.FrontEnd.Dashboard
                 {
                     RowNumber = 1,
                     ColumnNumber = 1,
-                    SizeX = 4,
-                    SizeY = 2,
+                    ColSpan = 2,
                     WidgetSource = "~/UserControls/Widgets/SalesByOfficeWidget.ascx"
                 },
                 new WidgetModel
                 {
                     RowNumber = 1,
                     ColumnNumber = 2,
-                    SizeX = 4,
-                    SizeY = 2,
+                    ColSpan = 2,
                     WidgetSource = "~/UserControls/Widgets/CurrentOfficeSalesByMonthWidget.ascx"
                 },
                 new WidgetModel
                 {
                     RowNumber = 2,
                     ColumnNumber = 4,
-                    SizeX = 2,
-                    SizeY = 2,
                     WidgetSource = "~/UserControls/Widgets/WorkflowWidget.ascx"
                 },
                 new WidgetModel
                 {
                     RowNumber = 2,
                     ColumnNumber = 1,
-                    SizeX = 2,
-                    SizeY = 2,
                     WidgetSource = "~/UserControls/Widgets/OfficeInformationWidget.ascx"
                 },
                 new WidgetModel
                 {
                     RowNumber = 2,
                     ColumnNumber = 3,
-                    SizeX = 2,
-                    SizeY = 2,
                     WidgetSource = "~/UserControls/Widgets/AlertsWidget.ascx"
                 },
                 new WidgetModel
                 {
                     RowNumber = 2,
                     ColumnNumber = 2,
-                    SizeX = 2,
-                    SizeY = 2,
                     WidgetSource = "~/UserControls/Widgets/LinksWidget.ascx"
                 },
                 new WidgetModel
                 {
                     RowNumber = 3,
                     ColumnNumber = 1,
-                    SizeX = 4,
-                    SizeY = 2,
+                    ColSpan = 2,
                     WidgetSource = "~/UserControls/Widgets/TopSellingProductOfAllTimeWidget.ascx"
                 },
                 new WidgetModel
                 {
                     RowNumber = 3,
                     ColumnNumber = 2,
-                    SizeX = 4,
-                    SizeY = 2,
+                    ColSpan = 2,
                     WidgetSource = "~/UserControls/Widgets/TopSellingProductOfAllTimeCurrentWidget.ascx"
                 }
             };
@@ -99,44 +100,38 @@ namespace MixERP.Net.FrontEnd.Dashboard
                 return;
             }
 
-            using (HtmlGenericControl div = new HtmlGenericControl())
+            //
+            var groups = widgetModels.OrderBy(x => x.RowNumber).ThenBy(x => x.ColumnNumber).GroupBy(x => new { x.RowNumber });
+
+            foreach (var group in groups)
             {
-                div.TagName = "div";
-                div.Attributes.Add("class", "gridster ready");
-
-                using (HtmlGenericControl ul = new HtmlGenericControl())
+                foreach (var item in group)
                 {
-                    ul.TagName = "ul";
-                    ul.Attributes.Add("style", "position: relative;");
-
-                    foreach (WidgetModel widgetModel in widgetModels.OrderBy(x=>x.RowNumber).ThenBy(x=>x.ColumnNumber))
+                    using (HtmlGenericControl div = new HtmlGenericControl())
                     {
-                        using (HtmlGenericControl li = new HtmlGenericControl())
+
+                        div.TagName = "div";
+                        div.Attributes.Add("class", "sortable-item col-md-" + 12 / group.Count());
+
+                        if (item.ColSpan > 1)
                         {
-                            li.TagName = "li";
-                            li.Attributes.Add("data-row", Conversion.TryCastString(widgetModel.RowNumber));
-                            li.Attributes.Add("data-col", Conversion.TryCastString(widgetModel.ColumnNumber));
-                            li.Attributes.Add("class", "gs_w");
-                            li.Attributes.Add("data-sizex", Conversion.TryCastString(widgetModel.SizeX));
-                            li.Attributes.Add("data-sizey", Conversion.TryCastString(widgetModel.SizeY));
-
-                            using (MixERPWidget widget = this.LoadControl(widgetModel.WidgetSource) as MixERPWidget)
-                            {
-                                if (widget != null)
-                                {
-                                    li.Controls.Add(widget);                                    
-                                }
-                            }
-
-                            ul.Controls.Add(li);
+                            div.Attributes.Add("data-ss-colspan", item.ColSpan.ToString(CultureInfo.CurrentUICulture));
                         }
+
+                        using (MixERPWidget widget = this.LoadControl(item.WidgetSource) as MixERPWidget)
+                        {
+                            if (widget != null)
+                            {
+                                div.Controls.Add(widget);
+                            }
+                        }
+
+
+                        placeholder.Controls.Add(div);
                     }
-
-                    div.Controls.Add(ul);
                 }
-
-                placeholder.Controls.Add(div);
             }
+
         }
 
     }

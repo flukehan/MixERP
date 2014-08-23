@@ -1,19 +1,73 @@
 ﻿/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
-This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
-If a copy of the MPL was not distributed  with this file, You can obtain one at 
-http://mozilla.org/MPL/2.0/.
+This file is part of MixERP.
+
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 using MixERP.Net.WebControls.ScrudFactory.Helpers;
+using MixERP.Net.WebControls.ScrudFactory.Resources;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using MixERP.Net.WebControls.ScrudFactory.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
     public partial class ScrudItemSelector
     {
+        private static TemplateField GetSelectColumnTemplateField()
+        {
+            var selectTemplate = new TemplateField();
+            selectTemplate.HeaderText = ScrudResource.Select;
+
+            using (var itemTemplate = new ScrudItemSelectorSelectTemplate())
+            {
+                selectTemplate.ItemTemplate = itemTemplate;
+            }
+
+            return selectTemplate;
+        }
+
+        private void LoadGridPanel(Panel gridPanel)
+        {
+            gridPanel.ID = "GridPanel";
+            gridPanel.ScrollBars = ScrollBars.Auto;
+            gridPanel.CssClass = this.GridPanelCssClass;
+
+            if (this.GridPanelHeight.Value > 0)
+            {
+                gridPanel.Height = this.GridPanelHeight;
+            }
+
+            if (this.GridPanelWidth.Value > 0)
+            {
+                gridPanel.Height = this.GridPanelWidth;
+            }
+
+            this.searchGridView = new GridView();
+            this.searchGridView.ID = "SearchGridView";
+            this.searchGridView.GridLines = GridLines.None;
+            this.searchGridView.CssClass = this.GridViewCssClass;
+            this.searchGridView.PagerStyle.CssClass = this.GridViewPagerCssClass;
+            this.searchGridView.RowStyle.CssClass = this.GridViewRowCssClass;
+            this.searchGridView.AlternatingRowStyle.CssClass = this.GridViewAlternateRowCssClass;
+            this.searchGridView.AutoGenerateColumns = true;
+            this.searchGridView.RowDataBound += this.SearchGridView_RowDataBound;
+            this.searchGridView.Columns.Add(GetSelectColumnTemplateField());
+
+            gridPanel.Controls.Add(this.searchGridView);
+        }
+
         private void LoadItemSelector(Panel panel)
         {
             using (var topPanel = new Panel())
@@ -48,7 +102,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
                         dropDownListCell.Controls.Add(this.filterDropDownList);
                         row.Cells.Add(dropDownListCell);
-
                     }
                     using (var textBoxCell = new HtmlTableCell())
                     {
@@ -81,57 +134,10 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         row.Cells.Add(buttonCell);
                     }
 
-
                     table.Rows.Add(row);
                     topPanel.Controls.Add(table);
                 }
             }
         }
-
-        private void LoadGridPanel(Panel gridPanel)
-        {
-            gridPanel.ID = "GridPanel";
-            gridPanel.ScrollBars = ScrollBars.Auto;
-            gridPanel.CssClass = this.GridPanelCssClass;
-
-            if (this.GridPanelHeight.Value > 0)
-            {
-                gridPanel.Height = this.GridPanelHeight;
-            }
-
-            if (this.GridPanelWidth.Value > 0)
-            {
-                gridPanel.Height = this.GridPanelWidth;
-            }
-
-            this.searchGridView = new GridView();
-            this.searchGridView.ID = "SearchGridView";
-            this.searchGridView.GridLines = GridLines.None;
-            this.searchGridView.CssClass = this.GridViewCssClass;
-            this.searchGridView.PagerStyle.CssClass = this.GridViewPagerCssClass;
-            this.searchGridView.RowStyle.CssClass = this.GridViewRowCssClass;
-            this.searchGridView.AlternatingRowStyle.CssClass = this.GridViewAlternateRowCssClass;
-            this.searchGridView.AutoGenerateColumns = true;
-            this.searchGridView.RowDataBound += this.SearchGridView_RowDataBound;
-            this.searchGridView.Columns.Add(GetSelectColumnTemplateField());
-
-            gridPanel.Controls.Add(this.searchGridView);
-        }
-
-        private static TemplateField GetSelectColumnTemplateField()
-        {
-            var selectTemplate = new TemplateField();
-            selectTemplate.HeaderText = ScrudResource.Select;
-
-            using (var itemTemplate = new ScrudItemSelectorSelectTemplate())
-            {
-                selectTemplate.ItemTemplate = itemTemplate;
-            }
-
-            return selectTemplate;
-        }
-
-
-
     }
 }

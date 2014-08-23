@@ -1,21 +1,31 @@
 ﻿/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
-This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
-If a copy of the MPL was not distributed  with this file, You can obtain one at 
-http://mozilla.org/MPL/2.0/.
+This file is part of MixERP.
+
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
-using System;
-using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
+using System;
+using System.Web.UI.WebControls;
 using FormHelper = MixERP.Net.WebControls.ScrudFactory.Data.FormHelper;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
     public partial class ScrudItemSelector
     {
-
         protected void FilterDropDownList_DataBound(object sender, EventArgs e)
         {
             using (var dropDownList = sender as DropDownList)
@@ -29,6 +39,18 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 {
                     item.Text = LocalizationHelper.GetResourceString("ScrudResource", item.Text);
                 }
+            }
+        }
+
+        protected void GoButton_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(this.GetSchema())) return;
+            if (string.IsNullOrWhiteSpace(this.GetView())) return;
+
+            using (var table = FormHelper.GetTable(this.GetSchema(), this.GetView(), this.filterDropDownList.SelectedItem.Value, this.filterTextBox.Text, 10))
+            {
+                this.searchGridView.DataSource = table;
+                this.searchGridView.DataBind();
             }
         }
 
@@ -53,18 +75,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
             }
         }
 
-        protected void GoButton_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(this.GetSchema())) return;
-            if (string.IsNullOrWhiteSpace(this.GetView())) return;
-
-            using (var table = FormHelper.GetTable(this.GetSchema(), this.GetView(), this.filterDropDownList.SelectedItem.Value, this.filterTextBox.Text, 10))
-            {
-                this.searchGridView.DataSource = table;
-                this.searchGridView.DataBind();
-            }
-        }
-
         private string GetSchema()
         {
             return Conversion.TryCastString(this.Page.Request["Schema"]);
@@ -74,7 +84,5 @@ namespace MixERP.Net.WebControls.ScrudFactory
         {
             return Conversion.TryCastString(this.Page.Request["View"]);
         }
-
-
     }
 }

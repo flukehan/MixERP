@@ -3,27 +3,57 @@
 <!--
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
-This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
-If a copy of the MPL was not distributed  with this file, You can obtain one at 
-http://mozilla.org/MPL/2.0/.
--->
+This file is part of MixERP.
 
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
+-->
 <configuration>
   <appSettings>
-    <add key="ButtonCssClass" value="button" />
-    <add key="CommandPanelButtonCssClass" value="menu" />
+    <add key="AddButtonCssClass" value="glyphicon glyphicon-plus-sign" />
+    <add key="AllButtonCssClass" value="glyphicon glyphicon-resize-full" />
+    <add key="ButtonCssClass" value="btn btn-default btn-sm scrud-button" />
+    <add key="CommandPanelButtonCssClass" value="btn btn-default btn-sm scrud-command-panel-button" />
+    <add key="CommandPanelCssClass" value="vpad16" />
+    <add key="CompactButtonCssClass" value="glyphicon glyphicon-resize-small" />
+    <add key="DateControlCssClass" value="date" />
+    <add key="DeleteButtonCssClass" value="glyphicon glyphicon-minus-sign" />
+    <add key="DescriptionCssClass" value="lead" />
+    <add key="EditButtonCssClass" value="glyphicon glyphicon-pencil" />
+    <add key="ErrorCssClass" value="error-message" />
     <add key="ExpressionSeparator" value="-->" />
-    <add key="GridContainerMargin" value="340" />
-    <add key="GridPanelDefaultWidth" value="1000" />
-    <add key="GridViewDefaultWidth" value="1100" />
-    <add key="GridViewCssClass" value="grid" />
+    <add key="FailiureCssClass" value="failure" />
+    <add key="FormCssClass" value="form" />
+    <add key="FormPanelButtonCssClass" value="panel panel-default" />
+    <add key="GridPanelCssClass" value="panel" />
+    <add key="GridViewAlternateRowCssClass" value="gridview-row-alt pointer" />
+    <add key="GridViewCssClass" value="scrud-grid table-bordered table-responsive" />
+    <add key="GridViewDefaultWidth" value="100%" />
+    <add key="GridViewRowCssClass" value="gridview-row pointer" />
     <add key="HeaderPath" value="~/Reports/Assets/Header.aspx" />
-    <add key="ItemSelectorAnchorCssClass" value="item-selector" />
+    <add key="ItemSelectorAnchorCssClass" value="" />
     <add key="ItemSelectorPath" value="~/General/ItemSelector.aspx" />
     <add key="ItemSelectorSelectAnchorCssClass" value="linkbutton" />
     <add key="ItemSeparator" value="," />
     <add key="OfficeCodeSessionKey" value="OfficeCode" />
+    <add key="PagerCssClass" value="pagination" />
+    <add key="PagerCurrentPageCssClass" value="btn btn-info btn-sm" />
+    <add key="PagerPageButtonCssClass" value="btn btn-default  btn-sm" />
+    <add key="PrintButtonCssClass" value="glyphicon glyphicon-print" />
     <add key="ResourceClassName" value="ScrudResource" />
+    <add key="SelectButtonCssClass" value="glyphicon glyphicon-ok" />
+    <add key="SaveButtonCssClass" value="btn btn-sm scrud-command-panel-button scrud-command-panel-button btn-primary" />
+    <add key="SuccessCssClass" value="success" />
     <add key="TemplatePath" value="~/Reports/Print.html" />
     <add key="TempMediaPath" value="~/Media/Temp" />
     <add key="UpdateProgressSpinnerImageCssClass" value="ajax-loader" />

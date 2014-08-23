@@ -1116,4 +1116,25 @@
   <data name="flag_foreground_color" xml:space="preserve">
     <value>Foreground Color</value>
   </data>
+  <data name="height_in_centimeters" xml:space="preserve">
+    <value>Height in Centimeters</value>
+  </data>
+  <data name="length_in_centimeters" xml:space="preserve">
+    <value>Length in Centimeters</value>
+  </data>
+  <data name="machinable" xml:space="preserve">
+    <value>Machinable</value>
+  </data>
+  <data name="preferred_shipping_mail_type_id" xml:space="preserve">
+    <value>Preferred Shipping Mail Type Id</value>
+  </data>
+  <data name="shipping_package_shape_id" xml:space="preserve">
+    <value>Shipping Package Shape Id</value>
+  </data>
+  <data name="weight_in_grams" xml:space="preserve">
+    <value>Weight in Grams</value>
+  </data>
+  <data name="width_in_centimeters" xml:space="preserve">
+    <value>Width in Centimeters</value>
+  </data>
 </root>

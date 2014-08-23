@@ -1,9 +1,20 @@
 ﻿<%-- 
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
-This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
-If a copy of the MPL was not distributed  with this file, You can obtain one at 
-http://mozilla.org/MPL/2.0/.
+This file is part of MixERP.
+
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 --%>
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ItemSelector.aspx.cs" Inherits="MixERP.Net.FrontEnd.General.ItemSelector" %>
 
@@ -12,15 +23,18 @@ http://mozilla.org/MPL/2.0/.
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Scrud Item Selector</title>
-    <link href="/Themes/purple/stylesheets/main.css" rel="stylesheet" />
+
     <script src="//code.jquery.com/jquery-1.9.1.js" type="text/javascript"></script>
+    <link href="/Scripts/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/Scripts/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" />
+
     <style type="text/css">
         html, body, form {
             height: 100%;
+            background-color: white !important;
         }
 
         form {
-            background-color: white !important;
             padding: 12px;
         }
 
@@ -36,14 +50,14 @@ http://mozilla.org/MPL/2.0/.
 <body>
     <form id="form1" runat="server">
         <mixerp:ScrudItemSelector runat="server"
-            TopPanelCssClass="vpad8"
+            TopPanelCssClass="vpad16"
             TopPanelTableCssClass="valignmiddle"
-            FilterDropDownListCssClass="filter"
-            FilterTextBoxCssClass=""
-            ButtonCssClass="button"
-            GridViewCssClass="grid"
+            FilterDropDownListCssClass="form-control input-sm pad-right"
+            FilterTextBoxCssClass="form-control input-sm"
+            ButtonCssClass="btn btn-default btn-sm"
+            GridViewCssClass="table table-bordered table-hover"
             GridViewPagerCssClass="gridpager"
-            GridViewRowCssClass="row"
+            GridViewRowCssClass=""
             GridViewAlternateRowCssClass="alt" />
     </form>
 </body>

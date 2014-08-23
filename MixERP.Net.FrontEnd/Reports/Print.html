@@ -2,14 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>MixERP® 2013</title>
-    <link href="/Themes/purple/stylesheets/main.css" rel="stylesheet" />
     <style type="text/css" media="all">
         html, body {
             padding: 4px;
         }
 
-        body {
-            background-color: #FFFFFF;
+        html, body, div, table {
+            background-color: #FFFFFF !important;
         }
 
         table {
@@ -25,6 +24,11 @@
                 display: none;
             }
         }
+
+        .report-command {
+            padding: 12px;
+            background-color: #e7ecf8;
+        }
     </style>
 </head>
 <body>
@@ -38,7 +42,7 @@
     <h1>
         {ReportHeading}
     </h1>
-    <hr class="hr" />
+    <hr />
     Printed On: {PrintDate}<br />
     User: {UserName}<br />
     Office Code: {OfficeCode}
@@ -46,7 +50,7 @@
     <br />
     {Table}
     <div class="hide" style="padding-top: 18px;">
-        <a href="javascript:top.close();" class="menu">
+        <a href="javascript:top.close();">
             Close This Report
         </a>
     </div>
@@ -54,7 +58,7 @@
     <script type="text/javascript">
         document.onkeydown = function (evt) {
             evt = evt || window.event;
-            if (evt.keyCode == 27) {
+            if (evt.keyCode == 27) {//ESC
                 top.close();
             }
         };

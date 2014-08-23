@@ -1,74 +1,111 @@
 ﻿/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
-This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
-If a copy of the MPL was not distributed  with this file, You can obtain one at 
-http://mozilla.org/MPL/2.0/.
-***********************************************************************************/
+This file is part of MixERP.
 
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
+***********************************************************************************/
+using MixERP.Net.WebControls.ScrudFactory.Controls;
+using MixERP.Net.WebControls.ScrudFactory.Controls.ListControls;
+using MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes;
+using MixERP.Net.WebControls.ScrudFactory.Resources;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using MixERP.Net.WebControls.ScrudFactory.Controls.ListControls;
-using MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes;
-using MixERP.Net.WebControls.ScrudFactory.Controls;
-using MixERP.Net.WebControls.ScrudFactory.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 {
     public static class ScrudFactoryHelper
     {
         [SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Web.UI.WebControls.Literal.set_Text(System.String)")]
-        public static void AddRow(HtmlTable htmlTable, string label, params Control[] controls)
+        public static void AddDropDownList(HtmlTable htmlTable, string p, DropDownList dropDownList, HtmlAnchor itemSelectorAnchor, RequiredFieldValidator required)
         {
             if (htmlTable == null)
             {
                 return;
             }
 
-            if (controls == null)
+            if (dropDownList == null)
             {
                 return;
             }
 
-            if (controls.Length.Equals(0))
+            using (var labelCell = new HtmlTableCell())
             {
-                return;
-            }
-
-            using (var newRow = new HtmlTableRow())
-            {
-                using (var labelCell = new HtmlTableCell())
+                using (var controlCell = new HtmlTableCell())
                 {
-                    using (var controlCell = new HtmlTableCell())
+                    using (var labelLiteral = new Literal())
                     {
-                        using (var labelLiteral = new Literal())
+                        labelLiteral.Text = string.Format(Thread.CurrentThread.CurrentCulture, "<label for='{0}'>{1}</label>", dropDownList.ID, p);
+                        labelCell.Attributes.Add("class", "label-cell");
+
+                        labelCell.Controls.Add(labelLiteral);
+                        controlCell.Attributes.Add("class", "control-cell");
+
+                        dropDownList.Attributes.Add("class", "form-control input-sm");
+
+                        using (HtmlTable t = new HtmlTable())
                         {
-                            labelLiteral.Text = string.Format(Thread.CurrentThread.CurrentCulture, "<label for='{0}'>{1}</label>", controls[0].ID, label);
-                            labelCell.Attributes.Add("class", "label-cell");
-
-                            labelCell.Controls.Add(labelLiteral);
-
-                            foreach (var control in controls)
+                            using (HtmlTableRow row = new HtmlTableRow())
                             {
-                                if (control != null)
+                                using (HtmlTableCell cell1 = new HtmlTableCell())
                                 {
-                                    controlCell.Controls.Add(control);
+                                    cell1.Controls.Add(dropDownList);
+
+                                    if (required != null)
+                                    {
+                                        cell1.Controls.Add(required);
+                                    }
+
+                                    row.Cells.Add(cell1);
+                                }
+
+                                using (HtmlTableCell cell2 = new HtmlTableCell())
+                                {
+                                    if (itemSelectorAnchor != null)
+                                    {
+                                        cell2.Controls.Add(itemSelectorAnchor);
+                                        cell2.Style.Add("width", "24px");
+                                    }
+
+                                    row.Cells.Add(cell2);
+                                }
+
+                                t.Style.Add("width", "100%");
+                                t.Rows.Add(row);
+                                t.Attributes.Add("role", "item-selector-table");
+
+                                controlCell.Controls.Add(t);
+
+                                using (var newRow = new HtmlTableRow())
+                                {
+                                    newRow.Attributes.Add("class", "form-group");
+
+                                    newRow.Cells.Add(labelCell);
+                                    newRow.Cells.Add(controlCell);
+                                    htmlTable.Rows.Add(newRow);
                                 }
                             }
-
-                            newRow.Cells.Add(labelCell);
-                            newRow.Cells.Add(controlCell);
-                            htmlTable.Rows.Add(newRow);
                         }
                     }
                 }
             }
         }
 
-        public static void AddField(HtmlTable htmlTable, string resourceClassName, string itemSelectorPath, string columnName, string defaultValue, bool isSerial, bool isNullable, string dataType, string domain, int maxLength, string parentTableSchema, string parentTable, string parentTableColumn, string displayFields, string displayViews, bool useDisplayFieldAsParent, string selectedValues)
+        public static void AddField(HtmlTable htmlTable, string resourceClassName, string itemSelectorPath, string columnName, string defaultValue, bool isSerial, bool isNullable, string dataType, string domain, int maxLength, string parentTableSchema, string parentTable, string parentTableColumn, string displayFields, string displayViews, bool useDisplayFieldAsParent, string selectedValues, string errorCssClass)
         {
             if (htmlTable == null)
             {
@@ -92,13 +129,15 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
                     case "varchar":
                     case "nvarchar":
                     case "text":
-                        ScrudTextBox.AddTextBox(htmlTable, resourceClassName, columnName, defaultValue, isNullable, maxLength);
+                        ScrudTextBox.AddTextBox(htmlTable, resourceClassName, columnName, defaultValue, isNullable, maxLength, errorCssClass);
                         break;
+
                     case "smallint":
                     case "integer":
                     case "bigint":
-                        ScrudNumberTextBox.AddNumberTextBox(htmlTable, resourceClassName, columnName, defaultValue, isSerial, isNullable, maxLength, domain);
+                        ScrudNumberTextBox.AddNumberTextBox(htmlTable, resourceClassName, columnName, defaultValue, isSerial, isNullable, maxLength, domain, errorCssClass);
                         break;
+
                     case "numeric":
                     case "money":
                     case "double":
@@ -106,17 +145,21 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
                     case "float":
                     case "real":
                     case "currency":
-                        ScrudDecimalTextBox.AddDecimalTextBox(htmlTable, resourceClassName, columnName, defaultValue, isNullable, maxLength, domain);
+                        ScrudDecimalTextBox.AddDecimalTextBox(htmlTable, resourceClassName, columnName, defaultValue, isNullable, maxLength, domain, errorCssClass);
                         break;
+
                     case "boolean":
-                        ScrudRadioButtonList.AddRadioButtonList(htmlTable, resourceClassName, columnName, isNullable, ScrudResource.YesNo, "true,false", defaultValue);
+                        ScrudRadioButtonList.AddRadioButtonList(htmlTable, resourceClassName, columnName, isNullable, ScrudResource.YesNo, "true,false", defaultValue, errorCssClass);
                         break;
+
                     case "date":
-                        ScrudDateTextBox.AddDateTextBox(htmlTable, resourceClassName, columnName, defaultValue, isNullable);
+                        ScrudDateTextBox.AddDateTextBox(htmlTable, resourceClassName, columnName, defaultValue, isNullable, errorCssClass);
                         break;
+
                     case "bytea":
-                        ScrudFileUpload.AddFileUpload(htmlTable, resourceClassName, columnName, isNullable);
+                        ScrudFileUpload.AddFileUpload(htmlTable, resourceClassName, columnName, isNullable, errorCssClass);
                         break;
+
                     case "timestamp with time zone":
                         //Do not show this field
                         break;
@@ -125,11 +168,81 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
             else
             {
                 //Todo: Add an implementation of overriding the behavior of the parent table data being populated into the list.
-                ScrudDropDownList.AddDropDownList(htmlTable, resourceClassName, itemSelectorPath, columnName, isNullable, parentTableSchema, parentTable, parentTableColumn, defaultValue, displayFields, displayViews, useDisplayFieldAsParent ,selectedValues);
+                ScrudDropDownList.AddDropDownList(htmlTable, resourceClassName, itemSelectorPath, columnName, isNullable, parentTableSchema, parentTable, parentTableColumn, defaultValue, displayFields, displayViews, useDisplayFieldAsParent, selectedValues, errorCssClass);
             }
         }
 
-        public static RequiredFieldValidator GetRequiredFieldValidator(Control controlToValidate)
+        public static void AddRow(HtmlTable htmlTable, string label, params Control[] controls)
+        {
+            if (htmlTable == null)
+            {
+                return;
+            }
+
+            if (controls == null)
+            {
+                return;
+            }
+
+            if (controls.Length.Equals(0))
+            {
+                return;
+            }
+
+            using (var labelCell = new HtmlTableCell())
+            {
+                using (var controlCell = new HtmlTableCell())
+                {
+                    using (var labelLiteral = new Literal())
+                    {
+                        labelLiteral.Text = string.Format(Thread.CurrentThread.CurrentCulture, "<label for='{0}'>{1}</label>", controls[0].ID, label);
+                        labelCell.Attributes.Add("class", "label-cell");
+
+                        labelCell.Controls.Add(labelLiteral);
+                        controlCell.Attributes.Add("class", "control-cell");
+
+                        foreach (var control in controls)
+                        {
+                            if (control != null)
+                            {
+                                if (control is WebControl)
+                                {
+                                    using (WebControl c = control as WebControl)
+                                    {
+                                        if (control is RadioButtonList)
+                                        {
+                                            c.Attributes.Add("class", "input-sm");
+                                        }
+                                        else
+                                        {
+                                            c.Attributes.Add("class", "form-control input-sm");
+
+                                        }
+
+                                        controlCell.Controls.Add(c);
+                                    }
+                                }
+                                else
+                                {
+                                    controlCell.Controls.Add(control);
+                                }
+                            }
+                        }
+
+                        using (var newRow = new HtmlTableRow())
+                        {
+                            newRow.Attributes.Add("class", "form-group");
+
+                            newRow.Cells.Add(labelCell);
+                            newRow.Cells.Add(controlCell);
+                            htmlTable.Rows.Add(newRow);
+                        }
+                    }
+                }
+            }
+        }
+
+        public static RequiredFieldValidator GetRequiredFieldValidator(Control controlToValidate, string cssClass)
         {
             if (controlToValidate == null)
             {
@@ -140,7 +253,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
             {
                 validator.ID = controlToValidate.ID + "RequiredValidator";
                 validator.ErrorMessage = @"<br/>" + ScrudResource.RequiredField;
-                validator.CssClass = "form-error";
+                validator.CssClass = cssClass;
                 validator.ControlToValidate = controlToValidate.ID;
                 validator.EnableClientScript = true;
                 validator.SetFocusOnError = true;

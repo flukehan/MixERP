@@ -8,14 +8,14 @@
 
 };
 
-var selectDropDownListByValue = function(textBoxId, dropDownListId) {
+var selectDropDownListByValue = function (textBoxId, dropDownListId) {
     var listControl = $("#" + dropDownListId);
     var textBox = $("#" + textBoxId);
     var selectedValue = textBox.val();
     var exists;
 
     if (listControl.length) {
-        listControl.find('option').each(function() {
+        listControl.find('option').each(function () {
             if (this.value == selectedValue) {
                 exists = true;
             }
@@ -31,7 +31,7 @@ var selectDropDownListByValue = function(textBoxId, dropDownListId) {
     triggerChange(dropDownListId);
 };
 
-var triggerChange = function(controlId) {
+var triggerChange = function (controlId) {
     var element = document.getElementById(controlId);
 
     if ('createEvent' in document) {
@@ -45,18 +45,45 @@ var triggerChange = function(controlId) {
 
 };
 
+
+var triggerClick = function (controlId) {
+    var element = document.getElementById(controlId);
+
+    if ('createEvent' in document) {
+        var evt = document.createEvent("HTMLEvents");
+        evt.initEvent("click", false, true);
+        element.dispatchEvent(evt);
+    } else {
+        if ("fireEvent" in element)
+            element.fireEvent("onclick");
+    }
+
+};
+
+//function fireEvent(element, event) {
+//    if (document.createEvent) {
+//        // dispatch for firefox + others
+//        var evt = document.createEvent("HTMLEvents");
+//        evt.initEvent(event, true, true); // event type,bubbling,cancelable
+//        return !element.dispatchEvent(evt);
+//    } else {
+//        // dispatch for IE
+//        var evt = document.createEventObject();
+//        return element.fireEvent('on' + event, evt);
+//    }
+//};
+
 var parseFloat2 = function (arg) {
     var val = parseFloat(arg || 0);
 
-    if (isNaN(val))
-    {
+    if (isNaN(val)) {
         val = 0;
     }
 
     return val;
 };
 
-var confirmAction = function() {
+var confirmAction = function () {
     return confirm(localizedAreYouSure);
 };
 
@@ -65,7 +92,7 @@ var confirmAction = function() {
 DATE EXPRESSION START
 ******************************************************************************************************/
 
-var validateByControlId = function(controlId) {
+var validateByControlId = function (controlId) {
     if (typeof Page_ClientValidate === "function") {
         Page_ClientValidate(controlId);
     } else {
@@ -190,7 +217,7 @@ function dateAdd(dt, expression, number) {
 DATE EXPRESSION END
 ******************************************************************************************************/
 
-var showWindow = function(url) {
+var showWindow = function (url) {
     $.colorbox({ width: +$('html').width() * 0.7, height: +$('html').height() * 0.7, iframe: true, href: url });
 };
 
@@ -207,7 +234,7 @@ function Page_EndRequest() {
     setNumberFormat();
 }
 
-var setNumberFormat = function() {
+var setNumberFormat = function () {
     $('input.number').number(true, decimalPlaces, decimalSeparator, thousandSeparator);
 };
 
@@ -374,28 +401,28 @@ function preparePieChart(datasourceId, canvasId, legendId, type) {
 Chart END
 ******************************************************************************************************/
 
-var parseFormattedNumber = function(input) {
+var parseFormattedNumber = function (input) {
     var result = input.replace(thousandSeparator, "");
     result = result.replace(decimalSeparator, ".");
     return result;
 };
 
-var getFormattedNumber = function(input) {
+var getFormattedNumber = function (input) {
     var result = input.replace(".", decimalSeparator);
     return result;
 };
 
 
-var makeDirty = function(obj) {
+var makeDirty = function (obj) {
     obj.addClass("dirty");
     obj.focus();
 };
 
-var removeDirty = function(obj) {
+var removeDirty = function (obj) {
     obj.removeClass("dirty");
 };
 
-var isNullOrWhiteSpace = function(obj) {
+var isNullOrWhiteSpace = function (obj) {
     return (!obj || $.trim(obj) === "");
 };
 
@@ -412,12 +439,11 @@ if (!String.prototype.format) {
 };
 
 
-function displayMessage(a,b) {
+function displayMessage(a, b) {
     $.notify(a, b);
 };
 
-var logError = function(a, b)
-{
+var logError = function (a, b) {
     //Todo
     $.notify(a, b);
 };
@@ -449,10 +475,10 @@ var setColumnText = function (row, columnIndex, value) {
     row.find("td:eq(" + columnIndex + ")").html(value);
 };
 
-var bounceThis = function (selector) {
+var fadeThis = function (selector) {
     var options = {};
     var panel = $(selector);
-    panel.effect("bounce", options, 500).delay(2000).effect("fade", options, 500);
+    panel.effect("fade", options, 5000);
 };
 
 
@@ -481,4 +507,50 @@ var appendParameter = function (data, parameter, value) {
 
     data += parameter + ":'" + value + "'";
     return data;
+};
+
+
+
+var initializeItemSelector = function () {
+    console.log("Initializing item selector");
+    var itemSelector = $("[role=item-selector]");
+    var modalTemplatePath = "/Static/Templates/ModalTemplate.html";//Todo
+
+
+    itemSelector.each(function () {
+        var selector = $(this);
+        var href = selector.prop("href");
+        selector.attr("data-url", href);
+        selector.prop("href", "javascript:void(0);");
+    });
+
+    itemSelector.click(function () {
+        var href = $(this).attr("data-url");
+        var title = $(this).attr("data-title");
+        var randomnumber = Math.floor(Math.random() * 1200);
+        modalTemplatePath += "?" + randomnumber;
+
+        $.get(modalTemplatePath, function () { }).done(function (data) {
+            var itemSelectorDiv = $(data);
+            if (!isNullOrWhiteSpace(title)) {
+                itemSelectorDiv.find(".modal-title").html(title);
+            };
+
+
+            $("body").append(itemSelectorDiv);
+
+            itemSelectorDiv.find(".modal-body").html('<iframe width="100%" height="100%" frameborder="0" allowtransparency="true" src="' + href + '"></iframe>');
+
+
+
+            itemSelectorDiv.modal('show');
+        });
+
+
+
+    });
+};
+
+var closeItemSelector = function () {
+    $('.item-selector-modal').modal('hide');
 };

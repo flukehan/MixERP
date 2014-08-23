@@ -1,4 +1,7 @@
-﻿$(document).ready(function () {
+﻿var flagPopunder = $("#flag-popunder");
+var flagButton = $("#flagButton");
+
+$(document).ready(function () {
     var contentWidth = $("#content").width();
     var menuWidth = $("#menu2").width();
 
@@ -95,29 +98,24 @@ var getSelectedItems = function () {
         $("#SelectedValuesHidden").val(selection.join(','));
         return true;
     } else {
-        $.notify("<%= Labels.NothingSelected %>", "error");
+        $.notify(nothingSelectedLocalized, "error");
         return false;
     }
 };
 
-//Get FlagButton instance.
-var flagButton = $("#flagButton");
-
 flagButton.click(function () {
-    //Get flag div instance which will be displayed under the button.
-    var popunder = $("#flag-popunder");
 
-    //Get FlagButton's position and height information.
-    var left = $(this).position().left;
-    var top = $(this).position().top;
-    var height = $(this).height();
 
-    //Margin in pixels.
-    var margin = 12;
+    flagPopunder.position({
+        my: "left top",
+        at: "left bottom",
+        of: flagButton, // or $("#otherdiv)
+        collision: "fit"
+    });
 
-    popunder.css("left", left);
-    popunder.css("top", top + height + margin);
-    popunder.show(500);
+    flagPopunder.css("position", "fixed");
+
+    flagPopunder.show(500);
 });
 
 

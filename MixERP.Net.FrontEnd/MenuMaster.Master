@@ -1,12 +1,4 @@
-﻿<%-- 
-Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
-
-This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
-If a copy of the MPL was not distributed  with this file, You can obtain one at 
-http://mozilla.org/MPL/2.0/.
---%>
-
-<%@ Master Language="C#" MasterPageFile="~/MixERPMaster.Master" AutoEventWireup="true"
+﻿<%@ Master Language="C#" MasterPageFile="~/MixERPMaster.Master" AutoEventWireup="true"
     CodeBehind="MenuMaster.Master.cs" Inherits="MixERP.Net.FrontEnd.MenuMaster" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceholder" runat="server">
@@ -18,7 +10,7 @@ http://mozilla.org/MPL/2.0/.
     </asp:ContentPlaceHolder>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceholder" runat="server">
-    <div class="content">
+    <div class="container-fluid">
         <asp:ContentPlaceHolder ID="BodyContentPlaceholder" runat="server">
         </asp:ContentPlaceHolder>
     </div>

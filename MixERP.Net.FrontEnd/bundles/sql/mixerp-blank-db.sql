@@ -1,9 +1,20 @@
 ﻿/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
-This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
-If a copy of the MPL was not distributed  with this file, You can obtain one at 
-http://mozilla.org/MPL/2.0/.
+This file is part of MixERP.
+
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 /********************************************************************************
@@ -287,11 +298,11 @@ CREATE TABLE core.flag_types
 );
 
 INSERT INTO core.flag_types(flag_type_name, background_color, foreground_color)
-SELECT 'Critical', 		'#CC0404', '#FFFFFF' UNION ALL
-SELECT 'Important',		'#A3159E', '#FFFFFF' UNION ALL
-SELECT 'Review', 		'#142F82', '#FFFFFF' UNION ALL
-SELECT 'Todo', 			'#F9FF4F', '#000000' UNION ALL
-SELECT 'OK', 			'#95F75C', '#000000';
+SELECT 'Critical', 		'#FA5882', '#FFFFFF' UNION ALL
+SELECT 'Important',		'#F6CEF5', '#000000' UNION ALL
+SELECT 'Review', 		'#CEECF5', '#000000' UNION ALL
+SELECT 'Todo', 			'#F7F8E0', '#000000' UNION ALL
+SELECT 'OK', 			'#D0F5A9', '#000000';
 
 CREATE TABLE core.flags
 (
@@ -2935,6 +2946,54 @@ ON core.item_groups(UPPER(item_group_name));
 INSERT INTO core.item_groups(item_group_code, item_group_name, tax_id)
 SELECT 'DEF', 'Default', 1;
 
+CREATE TABLE core.shipping_mail_types
+(
+	shipping_mail_type_id			SERIAL NOT NULL PRIMARY KEY,
+	shipping_mail_type_code			national character varying(12) NOT NULL,
+	shipping_mail_type_name			national character varying(64) NOT NULL,
+	audit_user_id				integer NULL REFERENCES office.users(user_id),
+	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+);
+
+CREATE UNIQUE INDEX shipping_mail_types_shipping_mail_type_code_uix
+ON core.shipping_mail_types(UPPER(shipping_mail_type_code));
+
+CREATE UNIQUE INDEX shipping_mail_types_shipping_mail_type_name_uix
+ON core.shipping_mail_types(UPPER(shipping_mail_type_name));
+
+INSERT INTO core.shipping_mail_types(shipping_mail_type_code, shipping_mail_type_name)
+SELECT 'FCM', 	'First Class Mail'			UNION ALL
+SELECT 'PM', 	'Priority Mail'			UNION ALL
+SELECT 'PP', 	'Parcel Post'			UNION ALL
+SELECT 'EM', 	'Express Mail'			UNION ALL
+SELECT 'MM', 	'Media Mail';
+
+
+
+
+CREATE TABLE core.shipping_package_shapes
+(
+	shipping_package_shape_id		SERIAL NOT NULL PRIMARY KEY,
+	shipping_package_shape_code		national character varying(12) NOT NULL,
+	shipping_package_shape_name		national character varying(64) NOT NULL,
+	is_rectangular				boolean NOT NULL DEFAULT(false),
+	audit_user_id				integer NULL REFERENCES office.users(user_id),
+	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())	
+);
+
+
+
+CREATE UNIQUE INDEX shipping_package_shapes_shipping_package_shape_code_uix
+ON core.shipping_package_shapes(UPPER(shipping_package_shape_code));
+
+CREATE UNIQUE INDEX shipping_package_shapes_shipping_package_shape_name_uix
+ON core.shipping_package_shapes(UPPER(shipping_package_shape_name));
+
+INSERT INTO core.shipping_package_shapes(shipping_package_shape_code, is_rectangular, shipping_package_shape_name)
+SELECT 'REC',	true,	'Rectangular Box Packaging'			UNION ALL
+SELECT 'IRR',	false,	'Irregular Packaging';
+
+
 
 CREATE TABLE core.items
 (
@@ -2946,6 +3005,14 @@ CREATE TABLE core.items
 	preferred_supplier_id 			integer NOT NULL REFERENCES core.parties(party_id) 
 						CONSTRAINT items_preferred_supplier_id_chk CHECK(core.is_supplier(preferred_supplier_id) = true),
 	lead_time_in_days 			integer NOT NULL DEFAULT(0),
+	weight_in_grams				float NOT NULL DEFAULT(0),	
+	width_in_centimeters			float NOT NULL DEFAULT(0),
+	height_in_centimeters			float NOT NULL DEFAULT(0),
+	length_in_centimeters			float NOT NULL DEFAULT(0),
+	machinable				boolean NOT NULL DEFAULT(false),
+	preferred_shipping_mail_type_id		integer NULL REFERENCES core.shipping_mail_types(shipping_mail_type_id),
+	shipping_package_shape_id		integer NULL REFERENCES core.shipping_package_shapes(shipping_package_shape_id),
+	
 	unit_id 				integer NOT NULL REFERENCES core.units(unit_id),
 	hot_item 				boolean NOT NULL,
 	cost_price 				money_strict NOT NULL,
@@ -4019,6 +4086,25 @@ SELECT
 FROM policy.auto_verification_policy
 INNER JOIN office.users
 ON policy.auto_verification_policy.user_id=office.users.user_id;
+
+/********************************************************************************
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This file is part of MixERP.
+
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
+***********************************************************************************/
 
 DROP FUNCTION IF EXISTS core.is_leap_year(integer);
 CREATE FUNCTION core.is_leap_year(integer)
@@ -5132,6 +5218,25 @@ LANGUAGE plpgsql;
 
 INSERT INTO policy.auto_verification_policy
 SELECT 2, true, 0, true, 0, true, 0, NOW(), '1-1-2020', true;
+/********************************************************************************
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This file is part of MixERP.
+
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
+***********************************************************************************/
+
 DROP SCHEMA IF EXISTS scrud CASCADE;
 CREATE SCHEMA scrud;
 

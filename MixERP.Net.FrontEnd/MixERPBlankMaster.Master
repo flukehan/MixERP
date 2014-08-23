@@ -5,41 +5,61 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-    <script type="text/javascript">
-        var today = "<%= DateTime.Now.ToShortDateString() %>";
-        var shortDateFormat = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetShortDateFormat() %>";
-        var thousandSeparator = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetThousandSeparator() %>";
-        var decimalSeparator = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetDecimalSeparator() %>";
-        var decimalPlaces = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetDecimalPlaces() %>";
-        var localizedAreYouSure = "<%= Resources.Questions.AreYouSure %>";
-        var localizedUpdateTax = "<%= Resources.Questions.UpdateTax %>";
-    </script>
+
+    <style type="text/css">
+        body {
+            background-color: white !important;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+
+    <link href="/Scripts/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/Scripts/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" />
+    <script src="/bundles/scripts/master-page.js"></script>
+    <script src="/Scripts/bootstrap/js/bootstrap.min.js"></script>
+
     <asp:ContentPlaceHolder ID="ContentPlaceHolderHead" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
     <form id="form1" runat="server">
-    <asp:ScriptManager runat="server" ID="ScriptManager1">
-        <compositescript>
-                <Scripts>
-                    <asp:ScriptReference Name="MicrosoftAjax.js" Assembly="System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" />
-                    <asp:ScriptReference Name="MicrosoftAjaxWebForms.js" Assembly="System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" />
-                    <asp:ScriptReference Name="WebForms.js" Assembly="System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-                    <asp:ScriptReference Path="/bundles/scripts/master-page.min.js" />
-                </Scripts>
-            </compositescript>
-    </asp:ScriptManager>
-        <div>
-            <asp:ContentPlaceHolder ID="ContentPlaceHolderBody" runat="server">
-            </asp:ContentPlaceHolder>
+        <script type="text/javascript">
+            function pageLoad() {
+                $(".item-selector").colorbox({ iframe: true, innerWidth: 1024, innerHeight: 450, overlayClose: false });
+                $(".preview").colorbox({ iframe: true, innerWidth: 1024, innerHeight: 450, overlayClose: false });
+            };
+            var today = "<%= DateTime.Now.ToShortDateString() %>";
+            var shortDateFormat = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetShortDateFormat() %>";
+            var thousandSeparator = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetThousandSeparator() %>";
+            var decimalSeparator = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetDecimalSeparator() %>";
+            var decimalPlaces = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetDecimalPlaces() %>";
+            var localizedAreYouSure = "<%= Resources.Questions.AreYouSure %>";
+            var localizedUpdateTax = "<%= Resources.Questions.UpdateTax %>";
 
-            <script type="text/javascript">
-                function pageLoad() {
-                    $(".item-selector").colorbox({ iframe: true, innerWidth: 1024, innerHeight: 450, overlayClose: false });
-                    $(".preview").colorbox({ iframe: true, innerWidth: 1024, innerHeight: 450, overlayClose: false });
-                };
-            </script>
+
+            Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
+                //Fired on each ASP.net AJAX request.
+                initializeItemSelector();
+            });
+
+            $(document).on('ready', function () {
+                initializeItemSelector();
+            });
+
+
+        </script>
+
+        <asp:ScriptManager runat="server" ID="ScriptManager1" />
+
+        <div class="row left">
+            <div class="col-md-12">
+                <asp:ContentPlaceHolder ID="ContentPlaceHolderBody" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
         </div>
+
+
     </form>
 </body>
 </html>

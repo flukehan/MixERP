@@ -1,18 +1,29 @@
 ﻿/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
-This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
-If a copy of the MPL was not distributed  with this file, You can obtain one at 
-http://mozilla.org/MPL/2.0/.
+This file is part of MixERP.
+
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
+using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.WebControls.ScrudFactory.Resources;
 using System;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Threading;
-using MixERP.Net.Common;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.WebControls.ScrudFactory.Resources;
 using FormHelper = MixERP.Net.WebControls.ScrudFactory.Data.FormHelper;
 
 namespace MixERP.Net.WebControls.ScrudFactory
@@ -20,7 +31,72 @@ namespace MixERP.Net.WebControls.ScrudFactory
     public partial class ScrudForm
     {
         public event EventHandler SaveButtonClick;
+
         public event EventHandler UseButtonClick;
+
+        protected void CancelButton_Click(object sender, EventArgs e)
+        {
+            //Clear the form.
+            this.formContainer.Controls.Clear();
+
+            //Clear grid selection.
+            this.ClearSelectedValue();
+
+            //Load the form again.
+            using (var table = new DataTable())
+            {
+                table.Locale = Thread.CurrentThread.CurrentCulture;
+                this.LoadForm(this.formContainer, table);
+            }
+        }
+
+        protected void DeleteButton_Click(object sender, EventArgs e)
+        {
+            var id = this.GetSelectedValue();
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                return;
+            }
+
+            if (this.DenyDelete)
+            {
+                this.messageLabel.CssClass = this.GetFailureCssClass();
+                this.messageLabel.Text = ScrudResource.AccessDenied;
+                return;
+            }
+
+            if (FormHelper.DeleteRecord(this.TableSchema, this.Table, this.KeyColumn, id))
+            {
+                //Refresh the grid.
+                this.BindGridView();
+
+                this.DisplaySuccess();
+            }
+        }
+
+        protected void EditButton_Click(object sender, EventArgs e)
+        {
+            var id = this.GetSelectedValue();
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                return;
+            }
+
+            using (var table = FormHelper.GetTable(this.TableSchema, this.Table, this.KeyColumn, id))
+            {
+                if (table.Rows.Count.Equals(1))
+                {
+                    //Clear the form container.
+                    this.formContainer.Controls.Clear();
+
+                    //Load the form again in the container with values
+                    //retrieved from database.
+                    this.LoadForm(this.formContainer, table);
+                    this.gridPanel.Attributes["style"] = "display:none;";
+                    this.formPanel.Attributes["style"] = "display:block;";
+                }
+            }
+        }
 
         protected void SaveButton_Click(object sender, EventArgs e)
         {
@@ -77,7 +153,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             {
                 if (this.DenyAdd)
                 {
-                    this.messageLabel.CssClass = "failure";
+                    this.messageLabel.CssClass = this.GetFailureCssClass();
                     this.messageLabel.Text = ScrudResource.AccessDenied;
                 }
                 else
@@ -106,7 +182,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             {
                 if (this.DenyEdit)
                 {
-                    this.messageLabel.CssClass = "failure";
+                    this.messageLabel.CssClass = this.GetFailureCssClass();
                     this.messageLabel.Text = ScrudResource.AccessDenied;
                 }
                 else
@@ -131,76 +207,11 @@ namespace MixERP.Net.WebControls.ScrudFactory
                     }
                     else
                     {
-                        this.messageLabel.CssClass = "failure";
+                        this.messageLabel.CssClass = this.GetFailureCssClass();
                         this.messageLabel.Text = ScrudResource.UnknownError;
                     }
                 }
             }
-        }
-
-        protected void CancelButton_Click(object sender, EventArgs e)
-        {
-            //Clear the form.
-            this.formContainer.Controls.Clear();
-
-            //Clear grid selection.
-            this.ClearSelectedValue();
-
-            //Load the form again.
-            using(var table = new DataTable())
-            {
-                table.Locale = Thread.CurrentThread.CurrentCulture;
-                this.LoadForm(this.formContainer, table);
-            }
-        }
-
-        protected void EditButton_Click(object sender, EventArgs e)
-        {
-            var id = this.GetSelectedValue();
-            if(string.IsNullOrWhiteSpace(id))
-            {
-                return;
-            }
-
-            using (var table = FormHelper.GetTable(this.TableSchema, this.Table, this.KeyColumn, id))
-            {
-                if(table.Rows.Count.Equals(1))
-                {
-                    //Clear the form container.
-                    this.formContainer.Controls.Clear();
-
-                    //Load the form again in the container with values 
-                    //retrieved from database.
-                    this.LoadForm(this.formContainer, table);
-                    this.gridPanel.Attributes["style"] = "display:none;";
-                    this.formPanel.Attributes["style"] = "display:block;";
-                }
-            }
-        }
-
-        protected void DeleteButton_Click(object sender, EventArgs e)
-        {
-            var id = this.GetSelectedValue();
-            if(string.IsNullOrWhiteSpace(id))
-            {
-                return;
-            }
-
-            if(this.DenyDelete)
-            {
-                this.messageLabel.CssClass = "failure";
-                this.messageLabel.Text = ScrudResource.AccessDenied;
-                return;
-            }
-
-            if (FormHelper.DeleteRecord(this.TableSchema, this.Table, this.KeyColumn, id))
-            {
-                //Refresh the grid.
-                this.BindGridView();
-
-                this.DisplaySuccess();
-            }
-
         }
     }
 }

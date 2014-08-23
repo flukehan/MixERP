@@ -1,52 +1,88 @@
 ﻿/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
-This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
-If a copy of the MPL was not distributed  with this file, You can obtain one at 
-http://mozilla.org/MPL/2.0/.
-***********************************************************************************/
+This file is part of MixERP.
 
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
+***********************************************************************************/
 using System.Web.UI.WebControls;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
     public partial class ScrudForm : CompositeControl
     {
+        public string AddButtonCssClass { get; set; }
+
+        public string AllButtonCssClass { get; set; }
+
+        public string ButtonCssClass { get; set; }
+
+        public string CommandPanelButtonCssClass { get; set; }
+
+        public string CommandPanelCssClass { get; set; }
+
+        public string CompactButtonCssClass { get; set; }
+
         /// <summary>
-        /// This property when set to true will restrict a user from editing the selected row. 
-        /// This property could be enabled at runtime depending upon 
+        /// Use this parameter to override the ScrudFactory's
+        /// default Add/Edit event implementation by redirecting to a custom url.
+        /// The edit event redirects to the custom url with the KeyColumn parameter
+        /// and the selected value appended as query string data.
+        /// </summary>
+        public string CustomFormUrl { get; set; }
+
+        public string DateControlCssClass { get; set; }
+
+        public string DeleteButtonCssClass { get; set; }
+
+        /// <summary>
+        /// This property when set to true will restrict a user from adding a new row to the view.
+        /// This property could be enabled at runtime depending upon
         /// the currently signed in user's role or authorization policy defined by the administrator.
         /// </summary>
-        public bool DenyEdit { get; set; }
-        
+        public bool DenyAdd { get; set; }
+
         /// <summary>
-        /// This property when set to true will restrict a user from deleting the selected row. 
-        /// This property could be enabled at runtime depending upon 
+        /// This property when set to true will restrict a user from deleting the selected row.
+        /// This property could be enabled at runtime depending upon
         /// the currently signed in user's role or authorization policy defined by the administrator.
         /// </summary>
         public bool DenyDelete { get; set; }
 
         /// <summary>
-        /// This property when set to true will restrict a user from adding a new row to the view. 
-        /// This property could be enabled at runtime depending upon 
+        /// This property when set to true will restrict a user from editing the selected row.
+        /// This property could be enabled at runtime depending upon
         /// the currently signed in user's role or authorization policy defined by the administrator.
         /// </summary>
-        public bool DenyAdd { get; set; }
-        
-        /// <summary>
-        /// Description is displayed under the form title. 
-        /// Use this property if you want to provide a special hint to the user.
-        /// </summary>   
-        public string Description { get; set; }
+        public bool DenyEdit { get; set; }
 
         /// <summary>
-        /// If the table has foreign keys, set this to a comma separated list of 
-        /// the name of the field or Column Expression to be displayed on the 
+        /// Description is displayed under the form title.
+        /// Use this property if you want to provide a special hint to the user.
+        /// </summary>
+        public string Description { get; set; }
+
+        public string DescriptionCssClass { get; set; }
+
+        /// <summary>
+        /// If the table has foreign keys, set this to a comma separated list of
+        /// the name of the field or Column Expression to be displayed on the
         /// respective DropDownList control.
         /// <strong>About Column Expression</strong>
-        /// Expressions could be used instead of column name. 
+        /// Expressions could be used instead of column name.
         /// Please refer to the following MSDN articles for more information on using Expression Columns:
-        /// http://msdn.microsoft.com/en-us/library/zwxk25bd(v=vs.100).aspx 
+        /// http://msdn.microsoft.com/en-us/library/zwxk25bd(v=vs.100).aspx
         /// http://msdn.microsoft.com/en-us/library/system.data.datacolumn.expression(v=vs.100).aspx
         /// <strong>Syntax</strong>
         /// Comma separated list of [Fully qualified column]-->[display_column or expression]
@@ -56,16 +92,8 @@ namespace MixERP.Net.WebControls.ScrudFactory
         public string DisplayFields { get; set; }
 
         /// <summary>
-        /// If the table has foreign keys, set this to override the data being populated on the
-        /// respective DropDownList control. Setting this will allow the Scrud to
-        /// fetch the data from the DisplayViews Expression Tables instead of the original parent table.
-        /// </summary>
-        public bool UseDisplayViewsAsParents { get; set; }
-
-
-        /// <summary>
-        /// This property when set a value will enable a popup selection of foreign keys 
-        /// by displaying the base tables. Set this to a comma separated list of the name of 
+        /// This property when set a value will enable a popup selection of foreign keys
+        /// by displaying the base tables. Set this to a comma separated list of the name of
         /// the Database View or Database Table to be displayed on the popup window.
         /// <strong>Syntax</strong>
         /// Comma separated list of [Fully qualified column]-->[fully qualified PostgreSQL view]
@@ -76,26 +104,71 @@ namespace MixERP.Net.WebControls.ScrudFactory
         /// </summary>
         public string DisplayViews { get; set; }
 
+        public string EditButtonCssClass { get; set; }
+
+        public string ErrorCssClass { get; set; }
+
         /// <summary>
         /// Exclude a comma separated list of columns for CRUD operation.
         /// </summary>
         public string Exclude { get; set; }
+
+        public string FailureCssClass { get; set; }
+
+        public string FormCssClass { get; set; }
+
+        public string FormPanelButtonCssClass { get; set; }
+
+        public string GridPanelCssClass { get; set; }
+
+        public string GridViewAlternateRowCssClass { get; set; }
+
+        public string GridViewCssClass { get; set; }
+
+        public string GridViewRowCssClass { get; set; }
+
+        /// <summary>
+        /// Use this parameter to override "ItemSelectorPath" key in the configuration file.
+        /// ItemSelectorPath is a page which pops up on iframe and provides
+        /// some basic serach functionalities for the dropdownlist control.
+        /// </summary>
+        public string ItemSelectorPath { get; set; }
 
         /// <summary>
         /// The name of the primary key column.
         /// </summary>
         public string KeyColumn { get; set; }
 
+        public string PagerCssClass { get; set; }
+
+        public string PagerCurrentPageCssClass { get; set; }
+
+        public string PagerPageButtonCssClass { get; set; }
+
         /// <summary>
         /// Set this to override the default page size of the view, which is 10.
         /// </summary>
         public int PageSize { get; set; }
 
+        public string PrintButtonCssClass { get; set; }
+
         /// <summary>
-        /// If the table has foreign keys, set this to a comma separated list of 
+        /// Use this parameter to override the "ResourceClassName" key in the configuration file.
+        /// ResourceClassName contains localized resource strings of database table column names.
+        /// </summary>
+        public string ResourceClassName { get; set; }
+
+        public string SaveButtonCssClass { get; set; }
+
+        public string SelectButtonCssClass { get; set; }
+
+        /// <summary>
+        /// If the table has foreign keys, set this to a comma separated list of
         /// the selected values to be displayed on the respective DropDownList control.
         /// </summary>
         public string SelectedValues { get; set; }
+
+        public string SuccessCssClass { get; set; }
 
         /// <summary>
         /// The name of the table to perform CRUD operation against.
@@ -107,12 +180,24 @@ namespace MixERP.Net.WebControls.ScrudFactory
         /// </summary>
         public string TableSchema { get; set; }
 
-
         /// <summary>
         /// The heading or title of this form.
         /// </summary>
         public string Text { get; set; }
-        
+
+        public string UpdateProgressSpinnerImageCssClass { get; set; }
+
+        public string UpdateProgressSpinnerImagePath { get; set; }
+
+        public string UpdateProgressTemplateCssClass { get; set; }
+
+        /// <summary>
+        /// If the table has foreign keys, set this to override the data being populated on the
+        /// respective DropDownList control. Setting this will allow the Scrud to
+        /// fetch the data from the DisplayViews Expression Tables instead of the original parent table.
+        /// </summary>
+        public bool UseDisplayViewsAsParents { get; set; }
+
         /// <summary>
         /// The name of the database view or table to select and display the resultset from.
         /// </summary>
@@ -127,33 +212,5 @@ namespace MixERP.Net.WebControls.ScrudFactory
         /// The full inner width of the grid.
         /// </summary>
         public override Unit Width { get; set; }
-
-        public string UpdateProgressTemplateCssClass { get; set; }
-        public string UpdateProgressSpinnerImageCssClass { get; set; }
-        public string UpdateProgressSpinnerImagePath { get; set; }
-        public string CommandPanelButtonCssClass { get; set; }
-        public string GridViewCssClass { get; set; }
-        public string ButtonCssClass { get; set; }
-
-        /// <summary>
-        /// Use this parameter to override the "ResourceClassName" key in the configuration file.
-        /// ResourceClassName contains localized resource strings of database table column names.
-        /// </summary>
-        public string ResourceClassName { get; set; }
-
-        /// <summary>
-        /// Use this parameter to override "ItemSelectorPath" key in the configuration file.
-        /// ItemSelectorPath is a page which pops up on iframe and provides 
-        /// some basic serach functionalities for the dropdownlist control.
-        /// </summary>
-        public string ItemSelectorPath { get; set; }
-
-        /// <summary>
-        /// Use this parameter to override the ScrudFactory's 
-        /// default Add/Edit event implementation by redirecting to a custom url.
-        /// The edit event redirects to the custom url with the KeyColumn parameter
-        /// and the selected value appended as query string data.
-        /// </summary>
-        public string CustomFormUrl { get; set; }
     }
 }

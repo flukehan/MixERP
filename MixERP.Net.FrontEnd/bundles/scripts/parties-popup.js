@@ -1,17 +1,4 @@
 ﻿///#source 1 1 /Scripts/jquery-1.9.1.js
-/*!
- * jQuery JavaScript Library v1.9.1
- * http://jquery.com/
- *
- * Includes Sizzle.js
- * http://sizzlejs.com/
- *
- * Copyright 2005, 2012 jQuery Foundation, Inc. and other contributors
- * Released under the MIT license
- * http://jquery.org/license
- *
- * Date: 2013-2-4
- */
 (function( window, undefined ) {
 
 // Can't do this because several apps including ASP.NET trace
@@ -9819,12 +9806,6 @@ shortcut = {
 }
 
 ///#source 1 1 /Scripts/colorbox/jquery.colorbox.js
-/*!
-	Colorbox v1.4.37 - 2014-02-11
-	jQuery lightbox and modal window plugin
-	(c) 2014 Jack Moore - http://www.jacklmoore.com/colorbox
-	license: http://www.opensource.org/licenses/mit-license.php
-*/
 var jqueryColorBox = function ($, document, window) {
     var
         // Default settings object.

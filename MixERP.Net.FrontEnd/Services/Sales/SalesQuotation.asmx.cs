@@ -1,14 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Web;
-using System.Web.Script.Serialization;
-using System.Web.Services;
+﻿/********************************************************************************
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This file is part of MixERP.
+
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
+***********************************************************************************/
 using MixERP.Net.BusinessLayer.Transactions;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Models.Core;
 using MixERP.Net.Common.Models.Transactions;
+using System;
+using System.Collections.ObjectModel;
+using System.Web.Script.Serialization;
+using System.Web.Services;
 
 namespace MixERP.Net.FrontEnd.Services.Sales
 {
@@ -20,7 +35,7 @@ namespace MixERP.Net.FrontEnd.Services.Sales
     [System.ComponentModel.ToolboxItem(false)]
     // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
     [System.Web.Script.Services.ScriptService]
-    public class SalesQuotation : System.Web.Services.WebService
+    public class SalesQuotation : WebService
     {
 
         [WebMethod(EnableSession = true)]

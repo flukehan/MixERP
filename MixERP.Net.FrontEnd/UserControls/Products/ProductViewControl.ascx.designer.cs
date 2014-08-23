@@ -11,7 +11,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
     
     
     public partial class ProductViewControl {
-                
+        
         /// <summary>
         /// TitleLiteral control.
         /// </summary>
@@ -22,31 +22,31 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::System.Web.UI.WebControls.Literal TitleLiteral;
         
         /// <summary>
-        /// AddNewLinkButton control.
+        /// AddNewButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton AddNewLinkButton;
+        protected global::System.Web.UI.HtmlControls.HtmlButton AddNewButton;
         
         /// <summary>
-        /// MergeToOrderLinkButton control.
+        /// MergeToOrderButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton MergeToOrderLinkButton;
+        protected global::System.Web.UI.HtmlControls.HtmlButton MergeToOrderButton;
         
         /// <summary>
-        /// MergeToDeliveryLinkButton control.
+        /// MergeToDeliveryButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton MergeToDeliveryLinkButton;
+        protected global::System.Web.UI.HtmlControls.HtmlButton MergeToDeliveryButton;
         
         /// <summary>
         /// FlagDropDownList control.

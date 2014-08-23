@@ -69,6 +69,7 @@
       <DependentUpon>ScrudResource.resx</DependentUpon>
     </Compile>
     <Compile Include="ScrudForm\FormFactory\Alert.cs" />
+    <Compile Include="ScrudForm\Styling.cs" />
     <Compile Include="ScrudForm\UpdatePanel.cs" />
     <Compile Include="Controls\CommandPanel.cs" />
     <Compile Include="ScrudForm\FormFactory\FormPanel.cs" />

@@ -1,11 +1,21 @@
 ﻿/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
-This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
-If a copy of the MPL was not distributed  with this file, You can obtain one at 
-http://mozilla.org/MPL/2.0/.
-***********************************************************************************/
+This file is part of MixERP.
 
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
+***********************************************************************************/
 using System;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -17,10 +27,16 @@ namespace MixERP.Net.WebControls.ScrudFactory
         public Panel container;
         public DropDownList filterDropDownList;
         public TextBox filterTextBox;
-        public GridView searchGridView;
         public Button goButton;
-
+        public GridView searchGridView;
         private bool disposed;
+
+        public sealed override void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+            base.Dispose();
+        }
 
         protected override void CreateChildControls()
         {
@@ -29,24 +45,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
             this.LoadItemSelector(this.container);
             this.Initialize();
             this.Controls.Add(this.container);
-        }
-
-
-        protected override void RecreateChildControls()
-        {
-            this.EnsureChildControls();
-        }
-
-        protected override void Render(HtmlTextWriter w)
-        {
-            this.container.RenderControl(w);
-        }
-
-        public sealed override void Dispose()
-        {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
-            base.Dispose();
         }
 
         protected virtual void Dispose(bool disposing)
@@ -74,7 +72,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         this.filterTextBox = null;
                     }
 
-
                     if (this.searchGridView != null)
                     {
                         this.searchGridView.RowDataBound -= this.SearchGridView_RowDataBound;
@@ -94,5 +91,14 @@ namespace MixERP.Net.WebControls.ScrudFactory
             }
         }
 
+        protected override void RecreateChildControls()
+        {
+            this.EnsureChildControls();
+        }
+
+        protected override void Render(HtmlTextWriter w)
+        {
+            this.container.RenderControl(w);
+        }
     }
 }

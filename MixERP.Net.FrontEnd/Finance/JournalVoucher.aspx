@@ -1,11 +1,21 @@
 ﻿<%-- 
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
-This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
-If a copy of the MPL was not distributed  with this file, You can obtain one at 
-http://mozilla.org/MPL/2.0/.
---%>
+This file is part of MixERP.
 
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
+--%>
 <%@ Page Title="" Language="C#" MasterPageFile="~/ContentMaster.Master" AutoEventWireup="true" CodeBehind="JournalVoucher.aspx.cs" Inherits="MixERP.Net.FrontEnd.Finance.JournalVoucher" %>
 <%@ Import Namespace="Resources" %>
 <%-- ReSharper disable once AspUnusedRegisterDirectiveHighlighting --%>
@@ -19,7 +29,7 @@ http://mozilla.org/MPL/2.0/.
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceholder" runat="server">
     <asp:PlaceHolder ID="ScrudPlaceholder" runat="server" />
 
-    <asp:Label ID="TitleLabel" runat="server" Text="<%$Resources:Titles, JournalVoucherEntry %>" CssClass="title" />
+    <asp:Label ID="TitleLabel" runat="server" Text="<%$Resources:Titles, JournalVoucherEntry %>" />
 
 
 

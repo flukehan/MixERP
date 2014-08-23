@@ -1,15 +1,26 @@
 ﻿/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
-This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
-If a copy of the MPL was not distributed  with this file, You can obtain one at 
-http://mozilla.org/MPL/2.0/.
+This file is part of MixERP.
+
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
+using MixERP.Net.WebControls.ScrudFactory.Resources;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using MixERP.Net.WebControls.ScrudFactory.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
@@ -17,37 +28,17 @@ namespace MixERP.Net.WebControls.ScrudFactory
     public partial class ScrudForm
     {
         private bool disposed;
-        Panel scrudContainer;
         private string imageColumn = string.Empty;
+        private Panel scrudContainer;
 
-        private void Validate()
+        public override sealed void Dispose()
         {
-            if (string.IsNullOrWhiteSpace(this.TableSchema))
+            if (!this.disposed)
             {
-                throw new InvalidOperationException(ScrudResource.TableSchemaEmptyExceptionMessage);
+                this.Dispose(true);
+                GC.SuppressFinalize(this);
+                base.Dispose();
             }
-
-            if (string.IsNullOrWhiteSpace(this.Table))
-            {
-                throw new InvalidOperationException(ScrudResource.TableEmptyExceptionMessage);
-            }
-
-            if (string.IsNullOrWhiteSpace(this.ViewSchema))
-            {
-                throw new InvalidOperationException(ScrudResource.ViewSchemaEmptyExceptionMessage);
-            }
-
-            if (string.IsNullOrWhiteSpace(this.View))
-            {
-                throw new InvalidOperationException(ScrudResource.ViewEmptyExceptionMessage);
-            }
-
-            if (string.IsNullOrWhiteSpace(this.KeyColumn))
-            {
-                throw new InvalidOperationException(ScrudResource.KeyColumnEmptyExceptionMessage);
-            }
-
-
         }
 
         protected override void CreateChildControls()
@@ -66,27 +57,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
             this.InitializeScrudControl();
 
             this.Controls.Add(this.scrudContainer);
-        }
-
-
-        protected override void RecreateChildControls()
-        {
-            this.EnsureChildControls();
-        }
-
-        protected override void Render(HtmlTextWriter w)
-        {
-            this.scrudContainer.RenderControl(w);
-        }
-
-        public sealed override void Dispose()
-        {
-            if (!this.disposed)
-            {
-                this.Dispose(true);
-                GC.SuppressFinalize(this);
-                base.Dispose();
-            }
         }
 
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
@@ -121,16 +91,10 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         this.formGridView = null;
                     }
 
-                    if (this.addNewEntryLiteral != null)
+                    if (this.requiredFieldDetailsLiteral != null)
                     {
-                        this.addNewEntryLiteral.Dispose();
-                        this.addNewEntryLiteral = null;
-                    }
-
-                    if (this.requiredFieldDetailsLabel != null)
-                    {
-                        this.requiredFieldDetailsLabel.Dispose();
-                        this.requiredFieldDetailsLabel = null;
+                        this.requiredFieldDetailsLiteral.Dispose();
+                        this.requiredFieldDetailsLiteral = null;
                     }
 
                     if (this.formContainer != null)
@@ -138,7 +102,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         this.formContainer.Dispose();
                         this.formContainer = null;
                     }
-
 
                     if (this.saveButton != null)
                     {
@@ -156,7 +119,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         this.saveButton.Dispose();
                         this.saveButton = null;
                     }
-
 
                     if (this.cancelButton != null)
                     {
@@ -229,7 +191,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         this.pager = null;
                     }
 
-
                     if (this.topCommandPanel != null)
                     {
                         this.topCommandPanel.DeleteButtonClick -= this.DeleteButton_Click;
@@ -238,7 +199,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         this.topCommandPanel = null;
                     }
 
-
                     if (this.bottomCommandPanel != null)
                     {
                         this.bottomCommandPanel.DeleteButtonClick -= this.DeleteButton_Click;
@@ -246,13 +206,48 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         this.bottomCommandPanel.Dispose();
                         this.bottomCommandPanel = null;
                     }
-
                 }
 
                 this.disposed = true;
             }
         }
 
+        protected override void RecreateChildControls()
+        {
+            this.EnsureChildControls();
+        }
 
+        protected override void Render(HtmlTextWriter w)
+        {
+            this.scrudContainer.RenderControl(w);
+        }
+
+        private void Validate()
+        {
+            if (string.IsNullOrWhiteSpace(this.TableSchema))
+            {
+                throw new InvalidOperationException(ScrudResource.TableSchemaEmptyExceptionMessage);
+            }
+
+            if (string.IsNullOrWhiteSpace(this.Table))
+            {
+                throw new InvalidOperationException(ScrudResource.TableEmptyExceptionMessage);
+            }
+
+            if (string.IsNullOrWhiteSpace(this.ViewSchema))
+            {
+                throw new InvalidOperationException(ScrudResource.ViewSchemaEmptyExceptionMessage);
+            }
+
+            if (string.IsNullOrWhiteSpace(this.View))
+            {
+                throw new InvalidOperationException(ScrudResource.ViewEmptyExceptionMessage);
+            }
+
+            if (string.IsNullOrWhiteSpace(this.KeyColumn))
+            {
+                throw new InvalidOperationException(ScrudResource.KeyColumnEmptyExceptionMessage);
+            }
+        }
     }
 }

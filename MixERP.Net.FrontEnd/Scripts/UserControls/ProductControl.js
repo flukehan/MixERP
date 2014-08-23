@@ -1,7 +1,7 @@
 ﻿//Controls
 var addButton = $("#AddButton");
 var amountTextBox = $("#AmountTextBox");
-
+var attachmentLabel = $("#AttachmentLabel");
 var cashRepositoryDropDownList = $("#CashRepositoryDropDownList");
 var cashRepositoryBalanceTextBox = $("#CashRepositoryBalanceTextBox");
 var costCenterDropDownList = $("#CostCenterDropDownList");
@@ -100,7 +100,7 @@ $(document).ready(function () {
     addShortCuts();
 
     initializeAjaxData();
-    bounceThis("#info-panel");
+    fadeThis("#info-panel");
 });
 
 function initializeAjaxData() {
@@ -198,6 +198,18 @@ amountTextBox.blur(function () {
     updateTax();
     calculateAmount();
 });
+
+attachmentLabel.click(function() {
+    $('#attachment').show(500).after(function() {
+        repaint();
+    });
+});
+
+var repaint = function () {
+    setTimeout(function () {
+        $(document).trigger('resize');
+    }, 1000);
+};
 
 cashRepositoryDropDownList.change(function () {
     $.ajax({
@@ -923,8 +935,8 @@ var addRow = function () {
         removeDirty(itemCodeTextBox);
 
 
-        ajaxUnitNameExists.done(function (result) {
-            var unitNameExists = result.d;
+        ajaxUnitNameExists.done(function (ajaxUnitNameExistsResult) {
+            var unitNameExists = ajaxUnitNameExistsResult.d;
 
             if (!unitNameExists) {
                 $.notify(String.format("Unit '{0}' does not exist.", unitName), "error");
@@ -939,18 +951,16 @@ var addRow = function () {
                 return;
             }
 
-            // ReSharper disable once DuplicatingLocalDeclaration
-            ajaxIsStockItem.done(function (result) {
-                var isStockItem = result.d;
+            ajaxIsStockItem.done(function (ajaxIsStockItemResult) {
+                var isStockItem = ajaxIsStockItemResult.d;
 
                 if (!isStockItem) {
                     addRowToTable(itemCode, itemName, quantity, unitName, price, discount, taxRate, tax);
                     return;
                 }
 
-                // ReSharper disable once DuplicatingLocalDeclaration
-                ajaxCountItemInStock.done(function (result) {
-                    var itemInStock = parseFloat2(result.d);
+                ajaxCountItemInStock.done(function (ajaxCountItemInStockResult) {
+                    var itemInStock = parseFloat2(ajaxCountItemInStockResult.d);
 
                     if (quantity > itemInStock) {
                         makeDirty(quantityTextBox);
@@ -998,7 +1008,7 @@ var addRowToTable = function (itemCode, itemName, quantity, unitName, price, dis
     });
 
     if (!match) {
-        var html = "<tr class='grid2-row'><td>" + itemCode + "</td><td>" + itemName + "</td><td class='right'>" + quantity + "</td><td>" + unitName + "</td><td class='right'>" + price + "</td><td class='right'>" + amount + "</td><td class='right'>" + discount + "</td><td class='right'>" + subTotal + "</td><td class='right'>" + taxRate + "</td><td class='right'>" + tax + "</td><td class='right'>" + total
+        var html = "<tr class='grid2-row'><td>" + itemCode + "</td><td>" + itemName + "</td><td class='text-right'>" + quantity + "</td><td>" + unitName + "</td><td class='text-right'>" + price + "</td><td class='text-right'>" + amount + "</td><td class='text-right'>" + discount + "</td><td class='text-right'>" + subTotal + "</td><td class='text-right'>" + taxRate + "</td><td class='text-right'>" + tax + "</td><td class='text-right'>" + total
             + "</td><td><input type='image' src='/Resource/Icons/delete-16.png' onclick='removeRow($(this));' /> </td></tr>";
         grid.find("tr:last").before(html);
     }
@@ -1012,7 +1022,9 @@ var addRowToTable = function (itemCode, itemName, quantity, unitName, price, dis
     taxTextBox.val("");
     errorLabel.html("");
     itemCodeTextBox.focus();
+    repaint();
 };
+
 
 var removeRow = function (cell) {
 

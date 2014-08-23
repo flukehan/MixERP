@@ -1,9 +1,3 @@
-/*!
-	Colorbox v1.4.37 - 2014-02-11
-	jQuery lightbox and modal window plugin
-	(c) 2014 Jack Moore - http://www.jacklmoore.com/colorbox
-	license: http://www.opensource.org/licenses/mit-license.php
-*/
 var jqueryColorBox = function ($, document, window) {
     var
         // Default settings object.

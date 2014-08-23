@@ -1007,13 +1007,6 @@
     <Compile Include="SignIn.aspx.designer.cs">
       <DependentUpon>SignIn.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Test\WebForm1.aspx.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Test\WebForm1.aspx.designer.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Trash\WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1122,14 +1115,17 @@
     </Content>
     <Content Include="Account\ChangePassword.aspx" />
     <Content Include="Account\SignOut.aspx" />
+    <Content Include="App_Themes\MixERP\mixerp.css">
+      <DependentUpon>mixerp.less</DependentUpon>
+    </Content>
+    <Content Include="App_Themes\MixERP\mixerp.min.css">
+      <DependentUpon>mixerp.css</DependentUpon>
+    </Content>
     <Content Include="bundles\scripts\master-page.js">
       <DependentUpon>master-page.js.bundle</DependentUpon>
     </Content>
     <Content Include="bundles\scripts\master-page.min.js">
       <DependentUpon>master-page.js</DependentUpon>
-    </Content>
-    <Content Include="bundles\sql\mixerp-blank-db-bundled.sql">
-      <DependentUpon>mixerp-blank-db.sql.bundle</DependentUpon>
     </Content>
     <Content Include="bundles\sql\mixerp-blank-db.sql">
       <DependentUpon>mixerp-blank-db.sql.bundle</DependentUpon>
@@ -1148,6 +1144,12 @@
     <Content Include="Sales\Entry\DirectSales.aspx" />
     <Content Include="Sales\Entry\test.html" />
     <Content Include="Scripts\ajax-file-upload.js" />
+    <Content Include="Scripts\bootstrap\css\bootstrap-theme.css" />
+    <Content Include="Scripts\bootstrap\css\bootstrap-theme.min.css" />
+    <Content Include="Scripts\bootstrap\css\bootstrap.css" />
+    <Content Include="Scripts\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Scripts\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Scripts\bootstrap\js\bootstrap.min.js" />
     <Content Include="Scripts\colorbox\colorbox.css" />
     <Content Include="Scripts\colorbox\i18n\jquery.colorbox-ar.js" />
     <Content Include="Scripts\colorbox\i18n\jquery.colorbox-bg.js" />
@@ -1211,7 +1213,8 @@
     <Content Include="Services\UploadHelper.asmx" />
     <Content Include="Static\AccessIsDenied.html" />
     <Content Include="Static\Attachments\index.html" />
-    <Content Include="Test\WebForm1.aspx" />
+    <Content Include="Static\Templates\ModalTemplate.html" />
+    <Content Include="Test\HtmlPage1.html" />
     <Content Include="Themes\purple\stylesheets\default.css" />
     <Content Include="CRM\ConvertLeadToOpportunity.aspx" />
     <Content Include="CRM\Index.aspx" />
@@ -1325,7 +1328,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Resource\Configuration\index.html" />
-    <Content Include="Resource\Configuration\ScrudParameters.xml" />
+    <Content Include="Resource\Configuration\ScrudParameters.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Resource\Configuration\ReportParameters.xml" />
     <Content Include="Resource\Icons\bottom-16.png" />
     <Content Include="Resource\Icons\calendar-16.png" />
@@ -1645,8 +1650,6 @@
     <Content Include="Scripts\CodeMirror\theme\xq-dark.css" />
     <Content Include="Scripts\CodeMirror\theme\xq-light.css" />
     <Content Include="Scripts\date.js" />
-    <Content Include="Scripts\gridster\jquery.gridster.js" />
-    <Content Include="Scripts\gridster\jquery.gridster.min.css" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery-ui\css\custom-theme\images\animated-overlay.gif" />
@@ -1771,6 +1774,10 @@
     <Content Include="bundles\sql\mixerp-db-sample.sql.bundle" />
     <Content Include="MixERPBlankMaster.Master" />
     <Content Include="Handlers\FileUpload.ashx" />
+    <Content Include="App_Themes\MixERP\mixerp.less" />
+    <Content Include="App_Themes\MixERP\mixerp.css.map">
+      <DependentUpon>mixerp.css</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\MixERP.pubxml" />
     <Content Include="Reports\Assets\ReadMe.txt" />
     <Content Include="Resource\Configuration\Switches.xml" />
@@ -1794,6 +1801,11 @@
       <DependentUpon>query.min.js</DependentUpon>
     </Content>
     <None Include="bundles\stylesheets\query.css.bundle" />
+    <Content Include="Scripts\bootstrap\css\bootstrap-theme.css.map" />
+    <Content Include="Scripts\bootstrap\css\bootstrap.css.map" />
+    <Content Include="Scripts\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Scripts\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Scripts\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
