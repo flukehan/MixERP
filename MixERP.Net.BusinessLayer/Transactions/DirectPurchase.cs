@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 using MixERP.Net.BusinessLayer.Helpers;
+using MixERP.Net.Common.Models.Core;
 using MixERP.Net.Common.Models.Transactions;
 using System;
 using System.Collections.ObjectModel;
@@ -25,7 +26,7 @@ namespace MixERP.Net.BusinessLayer.Transactions
 {
     public static class DirectPurchase
     {
-        public static long Add(DateTime valueDate, int storeId, bool isCredit, string partyCode, Collection<StockMasterDetailModel> details, int cashRepositoryId, int costCenterId, string referenceNumber, string statementReference)
+        public static long Add(DateTime valueDate, int storeId, bool isCredit, string partyCode, Collection<StockMasterDetailModel> details, int cashRepositoryId, int costCenterId, string referenceNumber, string statementReference, Collection<Attachment> attachments)
         {
             StockMasterModel stockMaster = new StockMasterModel();
 
@@ -39,7 +40,7 @@ namespace MixERP.Net.BusinessLayer.Transactions
                 statementReference = statementReference.Replace("&nbsp;", " ").Trim();
             }
 
-            long transactionMasterId = DatabaseLayer.Transactions.DirectPurchase.Add(valueDate, SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), costCenterId, referenceNumber, statementReference, stockMaster, details);
+            long transactionMasterId = DatabaseLayer.Transactions.DirectPurchase.Add(valueDate, SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), costCenterId, referenceNumber, statementReference, stockMaster, details, attachments);
             DatabaseLayer.Transactions.Verification.CallAutoVerification(transactionMasterId);
             return transactionMasterId;
         }

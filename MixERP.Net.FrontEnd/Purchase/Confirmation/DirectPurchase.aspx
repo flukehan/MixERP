@@ -16,7 +16,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 --%>
+
 <%@ Page Title="" Language="C#" MasterPageFile="~/ContentMaster.Master" AutoEventWireup="true" CodeBehind="DirectPurchase.aspx.cs" Inherits="MixERP.Net.FrontEnd.Purchase.Confirmation.DirectPurchase" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceholder" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceholder" runat="server">
@@ -28,11 +30,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
         DisplayEmailInvoiceButton="true"
         DisplayCustomerInvoiceButton="false"
         DisplayPrintReceiptButton="false"
-        DisplayPrintGLEntryButton="true"
+        DisplayPrintGlEntryButton="true"
         DisplayAttachmentButton="true"
         InvoicePath="~/Purchase/Confirmation/DirectPurchaseInvoice.aspx"
-        GLAdvicePath="~/Finance/Confirmation/GLAdvice.aspx"        
-         />
+        GlAdvicePath="~/Finance/Confirmation/GLAdvice.aspx" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceholder" runat="server">
 </asp:Content>

@@ -28,9 +28,12 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
         Book="Sales"
         SubBook="Delivery"
         Text="<%$Resources:Titles, DeliveryWithoutSalesOrder %>"
-        DisplayTransactionTypeRadioButtonList="false"
-        ShowCashRepository="false"
-        VerifyStock="true"
+        ShowPriceTypes="True"
+        ShowShippingInformation="True"
+        ShowSalesAgents="True"
+        ShowStore="True"
+        ShowCostCenter="True"
+        VerifyStock="True"
         TopPanelWidth="750" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceholder" runat="server">
@@ -50,7 +53,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
             });
 
             ajaxSalesDelivery.fail(function (jqXHR) {
-                logError(jqXHR.responseText);
+                var errorMessage = JSON.parse(jqXHR.responseText).Message;
+                errorLabelBottom.html(errorMessage);
+                logError(errorMessage);
             });
 
         };

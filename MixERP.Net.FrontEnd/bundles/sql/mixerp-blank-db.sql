@@ -1180,7 +1180,7 @@ UNION ALL SELECT 'Counter Setup', '~/Setup/Counters.aspx', 'SCS', 2, core.get_me
 UNION ALL SELECT 'Purchase & Quotation', NULL, 'PUQ', 1, core.get_menu_id('PU')
 UNION ALL SELECT 'Direct Purchase', '~/Purchase/DirectPurchase.aspx', 'DRP', 2, core.get_menu_id('PUQ')
 UNION ALL SELECT 'Purchase Order', '~/Purchase/Order.aspx', 'PO', 2, core.get_menu_id('PUQ')
-UNION ALL SELECT 'GRN against PO', '~/Purchase/GRN.aspx', 'GRN', 2, core.get_menu_id('PUQ')
+UNION ALL SELECT 'GRN Entry', '~/Purchase/GRN.aspx', 'GRN', 2, core.get_menu_id('PUQ')
 UNION ALL SELECT 'Purchase Invoice Against GRN', '~/Purchase/Invoice.aspx', 'PAY', 2, core.get_menu_id('PUQ')
 UNION ALL SELECT 'Payment to Supplier', '~/Purchase/Payment.aspx', 'PAS', 2, core.get_menu_id('PUQ')
 UNION ALL SELECT 'Purchase Return', '~/Purchase/Return.aspx', 'PR', 2, core.get_menu_id('PUQ')
@@ -4909,12 +4909,12 @@ BEGIN
 	ON transactions.non_gl_stock_master.non_gl_stock_master_id = transactions.non_gl_stock_details.non_gl_stock_master_id
 	INNER JOIN core.parties
 	ON transactions.non_gl_stock_master.party_id = core.parties.party_id
-	INNER JOIN core.price_types
-	ON transactions.non_gl_stock_master.price_type_id = core.price_types.price_type_id
 	INNER JOIN office.users
 	ON transactions.non_gl_stock_master.user_id = office.users.user_id
 	INNER JOIN office.offices
 	ON transactions.non_gl_stock_master.office_id = office.offices.office_id
+	LEFT OUTER JOIN core.price_types
+	ON transactions.non_gl_stock_master.price_type_id = core.price_types.price_type_id
 	WHERE transactions.non_gl_stock_master.book = book_
 	AND transactions.non_gl_stock_master.value_date BETWEEN date_from_ AND date_to_
 	AND 
@@ -4925,7 +4925,7 @@ BEGIN
 	AND
 	lower
 	(
-		core.price_types.price_type_code || ' (' || core.price_types.price_type_name || ')'
+		COALESCE(core.price_types.price_type_code, '') || ' (' || COALESCE(core.price_types.price_type_name, '') || ')'
 	) LIKE '%' || lower(price_type_) || '%'
 	AND 
 	lower
@@ -5157,14 +5157,14 @@ BEGIN
 	ON transactions.stock_master.stock_master_id = transactions.stock_details.stock_master_id
 	INNER JOIN core.parties
 	ON transactions.stock_master.party_id = core.parties.party_id
-	INNER JOIN core.price_types
-	ON transactions.stock_master.price_type_id = core.price_types.price_type_id
 	INNER JOIN transactions.transaction_master
 	ON transactions.transaction_master.transaction_master_id=transactions.stock_master.transaction_master_id
 	INNER JOIN office.users
 	ON transactions.transaction_master.user_id = office.users.user_id
 	INNER JOIN office.offices
 	ON transactions.transaction_master.office_id = office.offices.office_id
+	LEFT OUTER JOIN core.price_types
+	ON transactions.stock_master.price_type_id = core.price_types.price_type_id
 	WHERE transactions.transaction_master.book = book_
 	AND transactions.transaction_master.verification_status_id > 0
 	AND transactions.transaction_master.value_date BETWEEN date_from_ AND date_to_
@@ -5176,7 +5176,7 @@ BEGIN
 	AND
 	lower
 	(
-		core.price_types.price_type_code || ' (' || core.price_types.price_type_name || ')'
+		COALESCE(core.price_types.price_type_code, '') || ' (' || COALESCE(core.price_types.price_type_name, '') || ')'
 	) LIKE '%' || lower(price_type_) || '%'
 	AND 
 	lower
@@ -5217,7 +5217,7 @@ LANGUAGE plpgsql;
 
 
 INSERT INTO policy.auto_verification_policy
-SELECT 2, true, 0, true, 0, true, 0, NOW(), '1-1-2020', true;
+SELECT 2, true, 0, true, 0, true, 0, '1-1-2010', '1-1-2020', true;
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 

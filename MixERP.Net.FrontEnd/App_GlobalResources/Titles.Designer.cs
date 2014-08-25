@@ -889,6 +889,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Merge Batch to GRN.
+        /// </summary>
+        internal static string MergeBatchToGRN {
+            get {
+                return ResourceManager.GetString("MergeBatchToGRN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Merge Batch to Sales Delivery.
         /// </summary>
         internal static string MergeBatchToSalesDelivery {
@@ -1704,15 +1713,6 @@ namespace Resources {
         internal static string VoucherVerificationPolicy {
             get {
                 return ResourceManager.GetString("VoucherVerificationPolicy", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Withdrawal Reason.
-        /// </summary>
-        internal static string WithdrawalReason {
-            get {
-                return ResourceManager.GetString("WithdrawalReason", resourceCulture);
             }
         }
         

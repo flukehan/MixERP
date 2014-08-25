@@ -16,6 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
+
+using System.Runtime.Versioning;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Models.Core;
 using MixERP.Net.Common.Models.Transactions;
@@ -23,6 +25,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Web.Script.Serialization;
 using System.Web.Services;
+using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
 
 namespace MixERP.Net.FrontEnd.Services.Sales
 {
@@ -40,7 +43,7 @@ namespace MixERP.Net.FrontEnd.Services.Sales
         [WebMethod(EnableSession = true)]
         public long Save(DateTime valueDate, int storeId, string partyCode, int priceTypeId, string referenceNumber, string data, string statementReference, string transactionType, int agentId, int shipperId, string shippingAddressCode, decimal shippingCharge, int cashRepositoryId, int costCenterId, string transactionIds, string attachmentsJSON)
         {
-            Collection<StockMasterDetailModel> details = this.GetDetails(data, storeId);
+            Collection<StockMasterDetailModel> details = CollectionHelper.GetDetails(data, storeId);
             Collection<int> tranIds = new Collection<int>();
 
             JavaScriptSerializer js = new JavaScriptSerializer();
@@ -55,37 +58,37 @@ namespace MixERP.Net.FrontEnd.Services.Sales
                 }
             }
 
-            bool isCredit = !transactionType.Equals("Cash");
+            bool isCredit = !transactionType.ToLower().Equals("cash");
+
+
+            if (isCredit && cashRepositoryId > 0)
+            {
+                throw new InvalidOperationException("Invalid cash repository specified in credit transaction.");
+            }
+
+            if (!BusinessLayer.Office.Stores.IsSalesAllowed(storeId))
+            {
+                throw new InvalidOperationException("Sales is not allowed here.");
+            }
+
+
+            foreach (StockMasterDetailModel model in details)
+            {
+                if (BusinessLayer.Core.Items.IsStockItem(model.ItemCode))
+                {
+                    decimal available = BusinessLayer.Core.Items.CountItemInStock(model.ItemCode, model.UnitName, model.StoreId);
+
+                    if (available < model.Quantity)
+                    {
+                        throw new InvalidOperationException(string.Format(Resources.Warnings.InsufficientStockWarning, available, model.UnitName, model.ItemCode));
+                    }
+                }
+            }
+
 
             return BusinessLayer.Transactions.DirectSales.Add(valueDate, storeId, isCredit, partyCode,
                 agentId, priceTypeId, details, shipperId, shippingAddressCode, shippingCharge, cashRepositoryId,
                 costCenterId, referenceNumber, statementReference, attachments);
         }
-
-        public Collection<StockMasterDetailModel> GetDetails(string json, int storeId)
-        {
-            Collection<StockMasterDetailModel> details = new Collection<StockMasterDetailModel>();
-            var jss = new JavaScriptSerializer();
-
-            dynamic result = jss.Deserialize<dynamic>(json);
-
-            foreach (var item in result)
-            {
-                StockMasterDetailModel detail = new StockMasterDetailModel();
-                detail.ItemCode = item[0];
-                detail.Quantity = Conversion.TryCastInteger(item[2]);
-                detail.UnitName = item[3];
-                detail.Price = Conversion.TryCastDecimal(item[4]);
-                detail.Discount = Conversion.TryCastDecimal(item[6]);
-                detail.TaxRate = Conversion.TryCastDecimal(item[8]);
-                detail.Tax = Conversion.TryCastDecimal(item[9]);
-                detail.StoreId = storeId;
-
-                details.Add(detail);
-            }
-
-            return details;
-        }
-
     }
 }

@@ -1180,7 +1180,7 @@ UNION ALL SELECT 'Counter Setup', '~/Setup/Counters.aspx', 'SCS', 2, core.get_me
 UNION ALL SELECT 'Purchase & Quotation', NULL, 'PUQ', 1, core.get_menu_id('PU')
 UNION ALL SELECT 'Direct Purchase', '~/Purchase/DirectPurchase.aspx', 'DRP', 2, core.get_menu_id('PUQ')
 UNION ALL SELECT 'Purchase Order', '~/Purchase/Order.aspx', 'PO', 2, core.get_menu_id('PUQ')
-UNION ALL SELECT 'GRN against PO', '~/Purchase/GRN.aspx', 'GRN', 2, core.get_menu_id('PUQ')
+UNION ALL SELECT 'GRN Entry', '~/Purchase/GRN.aspx', 'GRN', 2, core.get_menu_id('PUQ')
 UNION ALL SELECT 'Purchase Invoice Against GRN', '~/Purchase/Invoice.aspx', 'PAY', 2, core.get_menu_id('PUQ')
 UNION ALL SELECT 'Payment to Supplier', '~/Purchase/Payment.aspx', 'PAS', 2, core.get_menu_id('PUQ')
 UNION ALL SELECT 'Purchase Return', '~/Purchase/Return.aspx', 'PR', 2, core.get_menu_id('PUQ')

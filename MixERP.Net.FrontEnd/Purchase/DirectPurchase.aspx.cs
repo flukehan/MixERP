@@ -28,17 +28,5 @@ namespace MixERP.Net.FrontEnd.Purchase
         {
 
         }
-
-        protected void Purchase_SaveButtonClick(object sender, EventArgs e)
-        {
-            bool isCredit = this.DirectPurchaseControl.GetForm.TransactionType.Equals(Titles.Credit);
-
-            long transactionMasterId = BusinessLayer.Transactions.DirectPurchase.Add(this.DirectPurchaseControl.GetForm.Date, this.DirectPurchaseControl.GetForm.StoreId, isCredit, this.DirectPurchaseControl.GetForm.PartyCode, this.DirectPurchaseControl.GetForm.Details, this.DirectPurchaseControl.GetForm.CashRepositoryId, this.DirectPurchaseControl.GetForm.CostCenterId, this.DirectPurchaseControl.GetForm.ReferenceNumber, this.DirectPurchaseControl.GetForm.StatementReference);
-            if(transactionMasterId > 0)
-            {
-                this.Response.Redirect("~/Purchase/Confirmation/DirectPurchase.aspx?TranId=" + transactionMasterId, true);
-            }
-        }
-
     }
 }

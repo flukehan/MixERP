@@ -39,13 +39,20 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
             <asp:Literal runat="server" Text="<%$Resources:Titles, MergeBatchToSalesOrder %>"></asp:Literal>
         </button>
 
-        <button type="button" id="MergeToDeliveryButton" runat="server" 
-            class="btn btn-default btn-sm" 
-            onclick="if(!getSelectedItems()){return;};" 
+        <button type="button" id="MergeToDeliveryButton" runat="server"
+            class="btn btn-default btn-sm"
+            onclick="if(!getSelectedItems()){return;};"
             onserverclick="MergeToDeliveryButton_Click" visible="false">
             <span class="glyphicon glyphicon-tree-deciduous"></span>
             <asp:Literal runat="server" Text="<%$Resources:Titles, MergeBatchToSalesDelivery %>"></asp:Literal>
         </button>
+
+        <button type="button" id="MergeToGRNButton" runat="server" class="btn btn-default btn-sm"
+            onclick="if(!getSelectedItems()){return;};" onserverclick="MergeToGRNButton_Click" visible="False">
+            <span class="glyphicon glyphicon-tree-conifer"></span>
+            <asp:Literal runat="server" Text="<%$Resources:Titles, MergeBatchToGRN %>"></asp:Literal>
+        </button>
+
 
         <button type="button" id="flagButton" class="btn btn-default btn-sm">
             <span class="glyphicon glyphicon-flag"></span>&nbsp;Flag
@@ -98,38 +105,38 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
     <div class="row" style="margin-left: 8px;">
 
         <div class="col-md-1 pad4">
-            <mixerp:DateTextBox ID="DateFromDateTextBox" runat="server" CssClass="date form-control " Mode="MonthStartDate" Required="true" placeholder="Date From" />
+            <mixerp:DateTextBox ID="DateFromDateTextBox" runat="server" CssClass="date form-control input-sm" Mode="MonthStartDate" Required="true" placeholder="Date From" />
         </div>
 
         <div class="col-md-1 pad4">
-            <mixerp:DateTextBox ID="DateToDateTextBox" runat="server" CssClass="date form-control" Mode="MonthEndDate" Required="true" placeholder="Date To" />
+            <mixerp:DateTextBox ID="DateToDateTextBox" runat="server" CssClass="date form-control input-sm" Mode="MonthEndDate" Required="true" placeholder="Date To" />
         </div>
 
         <div class="col-md-1 pad4">
-            <asp:TextBox ID="OfficeTextBox" runat="server" CssClass="form-control" placeholder="Office" />
+            <asp:TextBox ID="OfficeTextBox" runat="server" CssClass="form-control input-sm" placeholder="Office" />
         </div>
 
         <div class="col-md-1 pad4">
-            <asp:TextBox ID="PartyTextBox" runat="server" CssClass="form-control" placeholder="Party" />
+            <asp:TextBox ID="PartyTextBox" runat="server" CssClass="form-control input-sm" placeholder="Party" />
         </div>
 
         <div class="col-md-1 pad4">
-            <asp:TextBox ID="PriceTypeTextBox" runat="server" CssClass="form-control" placeholder="Price Type" />
+            <asp:TextBox ID="PriceTypeTextBox" runat="server" CssClass="form-control input-sm" placeholder="Price Type" />
         </div>
 
         <div class="col-md-1 pad4">
-            <asp:TextBox ID="UserTextBox" runat="server" CssClass="form-control" placeholder="User" />
+            <asp:TextBox ID="UserTextBox" runat="server" CssClass="form-control input-sm" placeholder="User" />
         </div>
 
         <div class="col-md-2 pad4">
-            <asp:TextBox ID="ReferenceNumberTextBox" runat="server" CssClass="form-control" placeholder="Reference Number" />
+            <asp:TextBox ID="ReferenceNumberTextBox" runat="server" CssClass="form-control input-sm" placeholder="Reference Number" />
         </div>
 
         <div class="col-md-2 pad4">
-            <asp:TextBox ID="StatementReferenceTextBox" runat="server" CssClass="form-control" placeholder="Statement Reference" />
+            <asp:TextBox ID="StatementReferenceTextBox" runat="server" CssClass="form-control input-sm" placeholder="Statement Reference" />
         </div>
         <div class="col-md-1 pad4">
-            <asp:Button ID="ShowButton" runat="server" Text="Show" CssClass="btn btn-default" OnClick="ShowButton_Click" />
+            <asp:Button ID="ShowButton" runat="server" Text="Show" CssClass="btn btn-default input-sm" OnClick="ShowButton_Click" />
         </div>
 
     </div>

@@ -33,41 +33,6 @@ using SessionHelper = MixERP.Net.BusinessLayer.Helpers.SessionHelper;
 
 namespace MixERP.Net.FrontEnd.UserControls.Products
 {
-    public class ControlData
-    {
-        public DateTime Date { get; set; }
-        public int StoreId { get; set; }
-        public string TransactionType { get; set; }
-        public string PartyCode { get; set; }
-        public int PriceTypeId { get; set; }
-        public string ReferenceNumber { get; set; }
-
-        private readonly Collection<StockMasterDetailModel> details = new Collection<StockMasterDetailModel>();
-        public Collection<StockMasterDetailModel> Details
-        {
-            get
-            {
-                return this.details;
-            }
-        }
-
-        public void AddDetail(StockMasterDetailModel detail)
-        {
-            this.details.Add(detail);
-        }
-
-        public decimal RunningTotal { get; set; }
-        public decimal TaxTotal { get; set; }
-        public decimal GrandTotal { get; set; }
-        public string ShippingAddressCode { get; set; }
-        public int ShippingCompanyId { get; set; }
-        public decimal ShippingCharge { get; set; }
-        public int CashRepositoryId { get; set; }
-        public int CostCenterId { get; set; }
-        public int AgentId { get; set; }
-        public string StatementReference { get; set; }
-    }
-
     /// <summary>
     /// Todo: This class is subject to be moved to a standalone server control class library.
     /// This UserControl provides a common interface for all transactions that are related to
@@ -76,6 +41,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
     /// </summary>
     public partial class ProductControl : UserControl
     {
+        #region Properties
         /// <summary>
         /// Transaction book for products are Sales and Purchase.
         /// </summary>
@@ -93,10 +59,43 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         public string Text { get; set; }
 
         /// <summary>
-        /// This property when set to true will display the RadioButtonList control which contains the transaction types.
+        /// This property when set to true will display transaction types.
         /// Transaction types are Cash and Credit.
         /// </summary>
-        public bool DisplayTransactionTypeRadioButtonList { get; set; }
+        public bool ShowTransactionType { get; set; }
+
+        /// <summary>
+        /// This property when set to true will display stores.
+        /// </summary>
+        public bool ShowStore { get; set; }
+
+        /// <summary>
+        /// This property when set to true will display stores.
+        /// </summary>
+        public bool ShowPriceTypes { get; set; }
+
+
+        /// <summary>
+        /// This property when enabled will display cash repositories and their available balance.
+        /// Not all available cash repositories will be displayed here but those which belong to the current (or logged in) branch office.
+        /// This property must be enabled for transactions which have affect on cash ledger, namely "Direct Purchase" and "Direct Sales".
+        /// </summary>
+        public bool ShowCashRepository { get; set; }
+
+        /// <summary>
+        /// This property when enabled will display shipping information, such as shipping address, shipping company, and shipping costs.
+        /// </summary>
+        public bool ShowShippingInformation { get; set; }
+
+        /// <summary>
+        /// This property when enabled will display cost centers.
+        /// </summary>
+        public bool ShowCostCenter { get; set; }
+
+        /// <summary>
+        /// This property when enabled will display sales agents.
+        /// </summary>
+        public bool ShowSalesAgents { get; set; }
 
         /// <summary>
         /// This property when set to true will verify the stock against the credit inventory transactions or "Sales".
@@ -108,12 +107,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         /// </summary>
         public bool VerifyStock { get; set; }
 
-        /// <summary>
-        /// This property when enabled will display cash repositories and their available balance.
-        /// Not all available cash repositories will be displayed here but those which belong to the current (or logged in) branch office.
-        /// This property must be enabled for transactions which have affect on cash ledger, namely "Direct Purchase" and "Direct Sales".
-        /// </summary>
-        public bool ShowCashRepository { get; set; }
 
         /// <summary>
         /// This property is used to temporarily store pre assigned instance of transactions for merging transactions
@@ -126,110 +119,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         /// <summary>
         /// This class is a representation of the controls in this UserControl.
         /// </summary>
-
-        public string ErrorMessage
-        {
-            get
-            {
-                if (this.ErrorLabel != null)
-                {
-                    return this.ErrorLabelBottom.Text;
-                }
-
-                return string.Empty;
-            }
-            set
-            {
-                if (this.ErrorLabel != null)
-                {
-                    this.ErrorLabelBottom.Text = value;
-                }
-            }
-        }
-
-        private static string GetDropDownValue(ListControl listControl)
-        {
-            if (listControl != null)
-            {
-                if (listControl.SelectedItem != null)
-                {
-                    return listControl.SelectedItem.Value;
-                }
-            }
-
-            return string.Empty;
-        }
-
-        /// <summary>
-        /// This function returns a new instance of ControlCollection class.
-        /// The control collection is processed on the page which contains this UserControl
-        /// for transaction posting.
-        /// </summary>
-        /// <returns></returns>
-        private ControlData GetControls()
-        {
-            //Todo
-            ControlData collection = new ControlData();
-            collection.Date = Conversion.TryCastDate(this.DateTextBox.Text);
-
-            collection.StoreId = Conversion.TryCastInteger(GetDropDownValue(this.StoreDropDownList));
-            collection.TransactionType = this.TransactionTypeRadioButtonList.SelectedItem.Value;
-            collection.PartyCode = this.PartyCodeTextBox.Text;
-            collection.PriceTypeId = Conversion.TryCastInteger(GetDropDownValue(this.PriceTypeDropDownList));
-            collection.ReferenceNumber = this.ReferenceNumberTextBox.Text;
-            collection.RunningTotal = Conversion.TryCastDecimal(this.RunningTotalTextBox.Text);
-            collection.TaxTotal = Conversion.TryCastDecimal(this.TaxTotalTextBox.Text);
-            collection.GrandTotal = Conversion.TryCastDecimal(this.GrandTotalTextBox.Text);
-            collection.ShippingAddressCode = this.ShippingAddressCodeHidden.Value;
-            collection.ShippingCompanyId = Conversion.TryCastInteger(GetDropDownValue(this.ShippingCompanyDropDownList));
-            collection.ShippingCharge = Conversion.TryCastDecimal(this.ShippingChargeTextBox.Text);
-            collection.CashRepositoryId = Conversion.TryCastInteger(GetDropDownValue(this.CashRepositoryDropDownList));
-            collection.CostCenterId = Conversion.TryCastInteger(GetDropDownValue(this.CostCenterDropDownList));
-            collection.AgentId = Conversion.TryCastInteger(GetDropDownValue(this.SalespersonDropDownList));
-            collection.StatementReference = this.StatementReferenceTextBox.Text;
-
-            string json = ProductGridViewDataHidden.Value;
-
-            var jss = new JavaScriptSerializer();
-
-            dynamic result = jss.Deserialize<dynamic>(json);
-
-            foreach (var item in result)
-            {
-                StockMasterDetailModel detail = new StockMasterDetailModel();
-                detail.ItemCode = item[0];
-                detail.Quantity = Conversion.TryCastInteger(item[2]);
-                detail.UnitName = item[3];
-                detail.Price = Conversion.TryCastDecimal(item[4]);
-                detail.Discount = Conversion.TryCastDecimal(item[6]);
-                detail.TaxRate = Conversion.TryCastDecimal(item[8]);
-                detail.Tax = Conversion.TryCastDecimal(item[9]);
-
-                if (this.StoreDropDownList.SelectedItem != null)
-                {
-                    detail.StoreId = Conversion.TryCastInteger(this.StoreDropDownList.SelectedItem.Value);
-                }
-
-                collection.AddDetail(detail);
-            }
-
-            return collection;
-        }
-
-        /// <summary>
-        /// This property provides a read-only access to all the controls of this UserControl.
-        /// This property is accessed after the user clicks the "Save" button.
-        /// The values of each control is read and then sent to the transaction posting engine.
-        /// </summary>
-        public ControlData GetForm
-        {
-            get
-            {
-                return this.GetControls();
-            }
-        }
-
-
+        #endregion
 
         #region "Page Initialization"
         protected void Page_Init(object sender, EventArgs e)
@@ -244,10 +134,19 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             this.BindGridView();
         }
 
+        private void ClearSession(string key)
+        {
+            if (this.Session[key] != null)
+            {
+                this.Session.Remove(key);
+            }
+        }
 
-        #region "GridView Footer"
-
-        #endregion
+        private void InitializeControls()
+        {
+            this.LoadLabels();
+            this.SetVisibleStates();
+        }
 
         private void LoadValuesFromSession()
         {
@@ -271,117 +170,16 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             this.StatementReferenceTextBox.Text = this.model.StatementReference;
 
             this.Session[this.ID] = this.model.View;
-            this.Session["TranIdCollection"] = this.model.TransactionIdCollection;
+            TranIdCollectionHiddenField.Value = string.Join(",", this.model.TransactionIdCollection);
             this.ClearSession("Product");
         }
 
-        public Collection<int> GetTranIdCollection()
-        {
-            Collection<int> tranIdCollection = new Collection<int>();
 
-            if (this.Session["TranIdCollection"] != null)
-            {
-                tranIdCollection = this.Session["TranIdCollection"] as Collection<int>;
-                
-                if (tranIdCollection != null)
-                {
-                    TranIdCollectionHiddenField.Value = string.Join(",", tranIdCollection);
-                }
-            }
-
-            return tranIdCollection;
-        }
-
-        private void ClearSession(string key)
-        {
-            if (this.Session[key] != null)
-            {
-                this.Session.Remove(key);
-            }
-        }
-
-
-        private void LoadLabels()
-        {
-            this.DateLiteral.Text = HtmlControlHelper.GetLabel(this.DateTextBox.ClientID, Titles.ValueDate);
-            this.StoreLiteral.Text = HtmlControlHelper.GetLabel(this.StoreDropDownList.ClientID, Titles.SelectStore);
-
-            this.PartyLiteral.Text = HtmlControlHelper.GetLabel(this.PartyCodeTextBox.ClientID, Titles.SelectParty);
-            this.PriceTypeLiteral.Text = HtmlControlHelper.GetLabel(this.PriceTypeDropDownList.ClientID, Titles.PriceType);
-            this.ReferenceNumberLiteral.Text = HtmlControlHelper.GetLabel(this.ReferenceNumberTextBox.ClientID, Titles.ReferenceNumberAbbreviated);
-
-            this.RunningTotalTextBoxLabelLiteral.Text = HtmlControlHelper.GetLabel(this.RunningTotalTextBox.ClientID, Titles.RunningTotal);
-            this.TaxTotalTextBoxLabelLiteral.Text = HtmlControlHelper.GetLabel(this.TaxTotalTextBox.ClientID, Titles.TaxTotal);
-            this.GrandTotalTextBoxLabelLiteral.Text = HtmlControlHelper.GetLabel(this.GrandTotalTextBox.ClientID, Titles.GrandTotal);
-            this.ShippingAddressDropDownListLabelLiteral.Text = HtmlControlHelper.GetLabel(this.ShippingAddressDropDownList.ClientID, Titles.ShippingAddress);
-            this.ShippingCompanyDropDownListLabelLiteral.Text = HtmlControlHelper.GetLabel(this.ShippingCompanyDropDownList.ClientID, Titles.ShippingCompany);
-            this.ShippingChargeTextBoxLabelLiteral.Text = HtmlControlHelper.GetLabel(this.ShippingChargeTextBox.ClientID, Titles.ShippingCharge);
-            this.CashRepositoryDropDownListLabelLiteral.Text = HtmlControlHelper.GetLabel(this.CashRepositoryDropDownList.ClientID, Titles.CashRepository);
-            this.CashRepositoryBalanceTextBoxLabelLiteral.Text = HtmlControlHelper.GetLabel(this.CashRepositoryBalanceTextBox.ClientID, Titles.CashRepositoryBalance);
-            this.CostCenterDropDownListLabelLiteral.Text = HtmlControlHelper.GetLabel(this.CostCenterDropDownList.ClientID, Titles.CostCenter);
-            this.SalespersonDropDownListLabelLiteral.Text = HtmlControlHelper.GetLabel(this.SalespersonDropDownList.ClientID, Titles.Salesperson);
-            this.StatementReferenceTextBoxLabelLiteral.Text = HtmlControlHelper.GetLabel(this.StatementReferenceTextBox.ClientID, Titles.StatementReference);
-        }
-
-        private void LoadTransactionTypeLabel()
-        {
-            if (this.Book == TranBook.Sales)
-            {
-                this.TransactionTypeLiteral.Text = HtmlControlHelper.GetLabel(Titles.SalesType);
-            }
-            else
-            {
-                this.TransactionTypeLiteral.Text = HtmlControlHelper.GetLabel(Titles.PurchaseType);
-            }
-        }
-
-
-        public string GetTranBook()
-        {
-            if (this.Book == TranBook.Sales)
-            {
-                return "Sales";
-            }
-
-            return "Purchase";
-        }
-
-        private void SetVisibleStates()
-        {
-            if (this.Book != TranBook.Sales)
-            {
-                this.PriceTypeLiteral.Visible = false;
-                this.PriceTypeDropDownList.Visible = false;
-
-                this.ShippingAddressRow.Visible = false;
-                this.ShippingChargeRow.Visible = false;
-                this.ShippingCompanyRow.Visible = false;
-            }
-
-        }
-
-        private void InitializeControls()
-        {
-            this.LoadLabels();
-            this.LoadTransactionTypeLabel();
-            this.SetVisibleStates();
-        }
-
-        #endregion
-
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            //Moved from Page_Init
-            this.TitleLabel.Text = this.Text;
-            this.Page.Title = this.Text;
-            this.TransactionTypeLiteral.Visible = this.DisplayTransactionTypeRadioButtonList;
-            this.TransactionTypeRadioButtonList.Visible = this.DisplayTransactionTypeRadioButtonList;
-        }
-
+        #region "JSON Grid Binding"
         private void BindGridView()
         {
-            //Todo:
             Collection<ProductDetailsModel> table = this.GetTable();
+
             if (table.Count > 0)
             {
                 List<string[]> rowData = new List<string[]>();
@@ -465,5 +263,72 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
             return collection;
         }
+
+        #endregion
+
+        private void LoadLabels()
+        {
+            this.DateLiteral.Text = HtmlControlHelper.GetLabel(this.DateTextBox.ClientID, Titles.ValueDate);
+            this.StoreLiteral.Text = HtmlControlHelper.GetLabel(this.StoreDropDownList.ClientID, Titles.SelectStore);
+
+            this.PartyLiteral.Text = HtmlControlHelper.GetLabel(this.PartyCodeTextBox.ClientID, Titles.SelectParty);
+            this.PriceTypeLiteral.Text = HtmlControlHelper.GetLabel(this.PriceTypeDropDownList.ClientID, Titles.PriceType);
+            this.ReferenceNumberLiteral.Text = HtmlControlHelper.GetLabel(this.ReferenceNumberTextBox.ClientID, Titles.ReferenceNumberAbbreviated);
+
+            this.RunningTotalTextBoxLabelLiteral.Text = HtmlControlHelper.GetLabel(this.RunningTotalTextBox.ClientID, Titles.RunningTotal);
+            this.TaxTotalTextBoxLabelLiteral.Text = HtmlControlHelper.GetLabel(this.TaxTotalTextBox.ClientID, Titles.TaxTotal);
+            this.GrandTotalTextBoxLabelLiteral.Text = HtmlControlHelper.GetLabel(this.GrandTotalTextBox.ClientID, Titles.GrandTotal);
+            this.ShippingAddressDropDownListLabelLiteral.Text = HtmlControlHelper.GetLabel(this.ShippingAddressDropDownList.ClientID, Titles.ShippingAddress);
+            this.ShippingCompanyDropDownListLabelLiteral.Text = HtmlControlHelper.GetLabel(this.ShippingCompanyDropDownList.ClientID, Titles.ShippingCompany);
+            this.ShippingChargeTextBoxLabelLiteral.Text = HtmlControlHelper.GetLabel(this.ShippingChargeTextBox.ClientID, Titles.ShippingCharge);
+            this.CashRepositoryDropDownListLabelLiteral.Text = HtmlControlHelper.GetLabel(this.CashRepositoryDropDownList.ClientID, Titles.CashRepository);
+            this.CashRepositoryBalanceTextBoxLabelLiteral.Text = HtmlControlHelper.GetLabel(this.CashRepositoryBalanceTextBox.ClientID, Titles.CashRepositoryBalance);
+            this.CostCenterDropDownListLabelLiteral.Text = HtmlControlHelper.GetLabel(this.CostCenterDropDownList.ClientID, Titles.CostCenter);
+            this.SalespersonDropDownListLabelLiteral.Text = HtmlControlHelper.GetLabel(this.SalespersonDropDownList.ClientID, Titles.Salesperson);
+            this.StatementReferenceTextBoxLabelLiteral.Text = HtmlControlHelper.GetLabel(this.StatementReferenceTextBox.ClientID, Titles.StatementReference);
+
+            if (this.Book == TranBook.Sales)
+            {
+                this.TransactionTypeLiteral.Text = HtmlControlHelper.GetLabel(Titles.SalesType);
+            }
+            else
+            {
+                this.TransactionTypeLiteral.Text = HtmlControlHelper.GetLabel(Titles.PurchaseType);
+            }
+        }
+
+        public string GetTranBook()
+        {
+            if (this.Book == TranBook.Sales)
+            {
+                return "Sales";
+            }
+
+            return "Purchase";
+        }
+
+        private void SetVisibleStates()
+        {
+            this.CashRepositoryRow.Visible = this.ShowCashRepository;
+            this.CashRepositoryBalanceRow.Visible = this.ShowCashRepository;
+            this.StoreDiv.Visible = this.ShowStore;
+            this.TransactionTypeDiv.Visible = this.ShowTransactionType;
+            this.PriceTypeDiv.Visible = this.ShowPriceTypes;
+            this.ShippingAddressRow.Visible = this.ShowShippingInformation;
+            this.ShippingCompanyRow.Visible = this.ShowShippingInformation;
+            this.ShippingChargeRow.Visible = this.ShowShippingInformation;
+            this.CostCenterRow.Visible = this.ShowCostCenter;
+            this.SalespersonRow.Visible = this.ShowSalesAgents;
+        }
+
+
+        #endregion
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            this.TitleLabel.Text = this.Text;
+            this.Page.Title = this.Text;
+        }
+
     }
 }

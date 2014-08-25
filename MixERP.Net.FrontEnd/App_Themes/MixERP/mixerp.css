@@ -138,10 +138,10 @@ h6 {
 #sortable-container .panel-body {
   overflow-x: auto;
 }
-.modal-body {
+.item-selector-modal .modal-body {
   height: 80vh;
 }
-.modal-dialog {
+.item-selector-modal .modal-dialog {
   width: 80vw;
 }
 .nopadding {
@@ -198,5 +198,8 @@ h6 {
 .dirty {
   border-color: red;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+}
+.span-icon {
+  padding: 4px;
 }
 /*# sourceMappingURL=mixerp.css.map */

@@ -89,11 +89,19 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                     this.MergeToDeliveryButton.Visible = true;
                 }
             }
+
+            if (this.Book == TranBook.Purchase)
+            {
+                if (this.SubBook == SubTranBook.Order)
+                {
+                    this.MergeToGRNButton.Visible = true;
+                }
+            }
         }
 
         private void InitializePostBackUrls()
         {
-            this.AddNewButton.Attributes.Add("onclick",  "window.location='" + ResolveUrl(this.AddNewUrl) + "'");
+            this.AddNewButton.Attributes.Add("onclick", "window.location='" + ResolveUrl(this.AddNewUrl) + "'");
         }
 
         private Collection<int> GetSelectedValues()
@@ -234,6 +242,16 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             }
         }
 
+        protected void MergeToGRNButton_Click(object sender, EventArgs e)
+        {
+            Collection<int> values = this.GetSelectedValues();
+
+            if (this.IsValid())
+            {
+                this.Merge(values, "~/Purchase/Entry/GRN.aspx");
+            }
+
+        }
 
         protected void ShowButton_Click(object sender, EventArgs e)
         {
@@ -326,7 +344,8 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                     case SubTranBook.Quotation:
                         throw new InvalidOperationException(Errors.InvalidSubTranBookPurchaseQuotation);
                     case SubTranBook.Receipt:
-                        throw new InvalidOperationException(Errors.InvalidSubTranBookPurchaseReceipt);
+                        bookName = "Purchase.Receipt"; //Also known as GRN
+                        break;
                     case SubTranBook.Return:
                         bookName = "Purchase.Return";
                         break;

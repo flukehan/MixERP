@@ -527,11 +527,11 @@ var initializeItemSelector = function () {
     itemSelector.click(function () {
         var href = $(this).attr("data-url");
         var title = $(this).attr("data-title");
-        var randomnumber = Math.floor(Math.random() * 1200);
-        modalTemplatePath += "?" + randomnumber;
+
 
         $.get(modalTemplatePath, function () { }).done(function (data) {
             var itemSelectorDiv = $(data);
+
             if (!isNullOrWhiteSpace(title)) {
                 itemSelectorDiv.find(".modal-title").html(title);
             };
@@ -540,7 +540,7 @@ var initializeItemSelector = function () {
             $("body").append(itemSelectorDiv);
 
             itemSelectorDiv.find(".modal-body").html('<iframe width="100%" height="100%" frameborder="0" allowtransparency="true" src="' + href + '"></iframe>');
-
+            itemSelectorDiv.addClass("item-selector-modal");
 
 
             itemSelectorDiv.modal('show');
@@ -553,4 +553,60 @@ var initializeItemSelector = function () {
 
 var closeItemSelector = function () {
     $('.item-selector-modal').modal('hide');
+};
+
+
+var focusNextElement = function () {
+    var $this = document.activeElement;
+
+    // if we haven't stored the tabbing order
+    if (!$this.form.tabOrder) {
+
+        var els = $this.form.elements,
+            ti = [],
+            rest = [];
+
+        // store all focusable form elements with tabIndex > 0
+        for (var i = 0, il = els.length; i < il; i++) {
+            if (els[i].tabIndex > 0 &&
+                !els[i].disabled &&
+                !els[i].hidden &&
+                !els[i].readOnly &&
+                els[i].type !== 'hidden') {
+                ti.push(els[i]);
+            }
+        }
+
+        // sort them by tabIndex order
+        ti.sort(function (a, b) { return a.tabIndex - b.tabIndex; });
+
+        // store the rest of the elements in order
+        for (i = 0, il = els.length; i < il; i++) {
+            if (els[i].tabIndex == 0 &&
+                !els[i].disabled &&
+                !els[i].hidden &&
+                !els[i].readOnly &&
+                els[i].type !== 'hidden') {
+                rest.push(els[i]);
+            }
+        }
+
+        // store the full tabbing order
+        $this.form.tabOrder = ti.concat(rest);
+    }
+
+    // find the next element in the tabbing order and focus it
+    // if the last element of the form then blur
+    // (this can be changed to focus the next <form> if any)
+    for (var j = 0, jl = $this.form.tabOrder.length; j < jl; j++) {
+        if ($this === $this.form.tabOrder[j]) {
+            if (j + 1 < jl) {
+                $($this.form.tabOrder[j + 1]).focus();
+            } else {
+                $($this).blur();
+            }
+        }
+    }
+
+
 };

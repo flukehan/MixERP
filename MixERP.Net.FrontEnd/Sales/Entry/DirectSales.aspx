@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 --%>
+
 <%@ Page Title="" Language="C#" MasterPageFile="~/ContentMaster.Master" AutoEventWireup="true" CodeBehind="DirectSales.aspx.cs" Inherits="MixERP.Net.FrontEnd.Sales.Entry.DirectSales" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceholder" runat="server">
@@ -28,8 +29,13 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
         Book="Sales"
         SubBook="Direct"
         Text="<%$Resources:Titles, DirectSales %>"
-        DisplayTransactionTypeRadioButtonList="true"
-        ShowCashRepository="true"
+        ShowPriceTypes="True"
+        ShowShippingInformation="True"
+        ShowSalesAgents="True"
+        ShowStore="True"
+        ShowCashRepository="True"
+        ShowTransactionType="True"
+        ShowCostCenter="True"
         VerifyStock="true"
         TopPanelWidth="850" />
 </asp:Content>
@@ -50,9 +56,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
             });
 
             ajaxsaveDirectSales.fail(function (jqXHR) {
-                logError(jqXHR.responseText);
+                var errorMessage = JSON.parse(jqXHR.responseText).Message;
+                errorLabelBottom.html(errorMessage);
+                logError(errorMessage);
             });
-
         };
 
         var saveDirectSales = function (valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, statementReference, transactionType, agentId, shipperId, shippingAddressCode, shippingCharge, cashRepositoryId, costCenterId, transactionIds, attachments) {

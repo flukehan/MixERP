@@ -135,4 +135,7 @@
   <data name="UpdateTax" xml:space="preserve">
     <value>Update tax?</value>
   </data>
+  <data name="WithdrawalReason" xml:space="preserve">
+    <value>Why do you want to withdraw this transaction?</value>
+  </data>
 </root>

@@ -27,7 +27,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
         Book="Sales"
         SubBook="Order"
         Text="<%$Resources:Titles, SalesOrder %>"
-        DisplayTransactionTypeRadioButtonList="false"
+        ShowPriceTypes="True"
+        ShowShippingInformation="True"
+        ShowSalesAgents="True"
+        ShowStore="True"
          />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceholder" runat="server">
@@ -47,7 +50,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
             });
 
             ajaxSaveOder.fail(function (jqXHR) {
-                logError(jqXHR.responseText);
+                var errorMessage = JSON.parse(jqXHR.responseText).Message;
+                errorLabelBottom.html(errorMessage);
+                logError(errorMessage);
             });
 
         };
@@ -69,7 +74,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
             return $.ajax({
                 type: "POST",
-                url: "/Services/Sales/SalesOrder.asmx/Save",
+                url: "/Services/Sales/Order.asmx/Save",
                 data: d,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json"

@@ -570,9 +570,6 @@
   <data name="WithdrawTransaction" xml:space="preserve">
     <value>Withdraw Transaction</value>
   </data>
-  <data name="WithdrawalReason" xml:space="preserve">
-    <value>Withdrawal Reason</value>
-  </data>
   <data name="Go" xml:space="preserve">
     <value>Go</value>
   </data>
@@ -680,5 +677,8 @@
   </data>
   <data name="Shortcuts" xml:space="preserve">
     <value>Shortcuts</value>
+  </data>
+  <data name="MergeBatchToGRN" xml:space="preserve">
+    <value>Merge Batch to GRN</value>
   </data>
 </root>

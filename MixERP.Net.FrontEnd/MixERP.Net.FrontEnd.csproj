@@ -555,12 +555,47 @@
     <Compile Include="Purchase\Confirmation\DirectPurchaseInvoice.aspx.designer.cs">
       <DependentUpon>DirectPurchaseInvoice.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Purchase\Confirmation\GRN.aspx.cs">
+      <DependentUpon>GRN.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Purchase\Confirmation\GRN.aspx.designer.cs">
+      <DependentUpon>GRN.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Purchase\Confirmation\Order.aspx.cs">
+      <DependentUpon>Order.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Purchase\Confirmation\Order.aspx.designer.cs">
+      <DependentUpon>Order.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Purchase\DirectPurchase.aspx.cs">
       <DependentUpon>DirectPurchase.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Purchase\DirectPurchase.aspx.designer.cs">
       <DependentUpon>DirectPurchase.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Purchase\Entry\DirectPurchase.aspx.cs">
+      <DependentUpon>DirectPurchase.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Purchase\Entry\DirectPurchase.aspx.designer.cs">
+      <DependentUpon>DirectPurchase.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Purchase\Entry\GRN.aspx.cs">
+      <DependentUpon>GRN.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Purchase\Entry\GRN.aspx.designer.cs">
+      <DependentUpon>GRN.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Purchase\Entry\Order.aspx.cs">
+      <DependentUpon>Order.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Purchase\Entry\Order.aspx.designer.cs">
+      <DependentUpon>Order.aspx</DependentUpon>
     </Compile>
     <Compile Include="Purchase\GRN.aspx.cs">
       <DependentUpon>GRN.aspx</DependentUpon>
@@ -833,6 +868,18 @@
       <DependentUpon>PartyData.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Services\Purchase\DirectPurchase.asmx.cs">
+      <DependentUpon>DirectPurchase.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\Purchase\GRN.asmx.cs">
+      <DependentUpon>GRN.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\Purchase\Order.asmx.cs">
+      <DependentUpon>Order.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Services\Sales\Delivery.asmx.cs">
       <DependentUpon>Delivery.asmx</DependentUpon>
       <SubType>Component</SubType>
@@ -841,12 +888,12 @@
       <DependentUpon>DirectSales.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Services\Sales\SalesOrder.asmx.cs">
-      <DependentUpon>SalesOrder.asmx</DependentUpon>
+    <Compile Include="Services\Sales\Order.asmx.cs">
+      <DependentUpon>Order.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Services\Sales\SalesQuotation.asmx.cs">
-      <DependentUpon>SalesQuotation.asmx</DependentUpon>
+    <Compile Include="Services\Sales\Quotation.asmx.cs">
+      <DependentUpon>Quotation.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Services\UploadHelper.asmx.cs">
@@ -1134,6 +1181,11 @@
       <DependentUpon>mixerp-db-sample.sql.bundle</DependentUpon>
     </Content>
     <Content Include="Inventory\Setup\ItemsPopup.aspx" />
+    <Content Include="Purchase\Confirmation\GRN.aspx" />
+    <Content Include="Purchase\Confirmation\Order.aspx" />
+    <Content Include="Purchase\Entry\DirectPurchase.aspx" />
+    <Content Include="Purchase\Entry\GRN.aspx" />
+    <Content Include="Purchase\Entry\Order.aspx" />
     <Content Include="Resource\Icons\checklist-16.png" />
     <Content Include="Resource\Icons\insert-16.png" />
     <Content Include="Sales\Confirmation\Delivery.aspx" />
@@ -1206,10 +1258,13 @@
     <Content Include="Scripts\UserControls\AttachmentUserControl.js" />
     <Content Include="Scripts\UserControls\ProductControl.js" />
     <Content Include="Scripts\UserControls\ProductViewControl.js" />
+    <Content Include="Services\Purchase\DirectPurchase.asmx" />
+    <Content Include="Services\Purchase\GRN.asmx" />
+    <Content Include="Services\Purchase\Order.asmx" />
     <Content Include="Services\Sales\Delivery.asmx" />
     <Content Include="Services\Sales\DirectSales.asmx" />
-    <Content Include="Services\Sales\SalesOrder.asmx" />
-    <Content Include="Services\Sales\SalesQuotation.asmx" />
+    <Content Include="Services\Sales\Order.asmx" />
+    <Content Include="Services\Sales\Quotation.asmx" />
     <Content Include="Services\UploadHelper.asmx" />
     <Content Include="Static\AccessIsDenied.html" />
     <Content Include="Static\Attachments\index.html" />
@@ -1834,6 +1889,10 @@
     <ProjectReference Include="..\Controls\WebControls\MixERP.Net.WebControls.ScrudFactory\MixERP.Net.WebControls.ScrudFactory.csproj">
       <Project>{07ddce95-a18f-4a35-b892-ce09ead2aa65}</Project>
       <Name>MixERP.Net.WebControls.ScrudFactory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Controls\WebControls\MixERP.Net.WebControls.StockTransactionFactory\MixERP.Net.WebControls.StockTransactionFactory.csproj">
+      <Project>{1c84e528-87ed-4b69-bfc3-81d675cb153e}</Project>
+      <Name>MixERP.Net.WebControls.StockTransactionFactory</Name>
     </ProjectReference>
     <ProjectReference Include="..\Controls\WebControls\MixERP.Net.WebControls.StockTransactionView.Data\MixERP.Net.WebControls.StockTransactionView.Data.csproj">
       <Project>{f8499d93-ced5-4a3d-a22b-cf21171ede6b}</Project>

@@ -70,6 +70,8 @@ var costCenterId;
 
 var data;
 
+var isCredit = false;
+
 var partyCode;
 var priceTypeId;
 
@@ -98,27 +100,30 @@ $(document).ready(function () {
     });
 
     addShortCuts();
-
     initializeAjaxData();
     fadeThis("#info-panel");
 });
 
 function initializeAjaxData() {
-    logToConsole("Initializing AJAX data.");
 
     processCallBackActions();
     loadPriceTypes();
 
     loadParties();
+
     partyDropDownList.change(function () {
+        partyCodeTextBox.val(partyDropDownList.getSelectedValue());
+        partyCodeHidden.val(partyDropDownList.getSelectedValue());
+        showShippingAddress();
         loadAddresses();
     });
+
     loadAddresses();
 
     loadItems();
 
-    itemDropDownList.change(function () {
-        loadUnits();
+    itemDropDownList.blur(function () {
+        itemDropDownList_OnBlur();
     });
 
     loadUnits();
@@ -132,6 +137,29 @@ function initializeAjaxData() {
 
     restoreData();
 };
+
+
+itemDropDownList.keydown(function (event) {
+    if (event.ctrlKey) {
+        if (event.key == "Enter") {
+            itemDropDownList_OnBlur();
+            focusNextElement();
+
+            //Swallow the key combination on the document level.
+            return false;
+        };
+    };
+
+    return true;
+});
+
+function itemDropDownList_OnBlur() {
+    itemCodeTextBox.val(itemDropDownList.getSelectedValue());
+    itemCodeHidden.val(itemDropDownList.getSelectedValue());
+    loadUnits();
+    getPrice();
+};
+
 
 function processCallBackActions() {
     var itemId = parseFloat2(itemIdHidden.val());
@@ -199,8 +227,8 @@ amountTextBox.blur(function () {
     calculateAmount();
 });
 
-attachmentLabel.click(function() {
-    $('#attachment').show(500).after(function() {
+attachmentLabel.click(function () {
+    $('#attachment').show(500).after(function () {
         repaint();
     });
 });
@@ -212,21 +240,22 @@ var repaint = function () {
 };
 
 cashRepositoryDropDownList.change(function () {
-    $.ajax({
-        type: "POST",
-        url: "/Services/AccountData.asmx/GetCashRepositoryBalance",
-        data: "{cashRepositoryId:'" + cashRepositoryDropDownList.getSelectedValue() + "'}",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (msg) {
-            cashRepositoryBalanceTextBox.val(msg.d);
-        },
-        error: function (xhr) {
-            var err = xhr.responseText;
-            logError(err, "error");
-        }
-    });
-
+    if (cashRepositoryDropDownList.getSelectedValue()) {
+        $.ajax({
+            type: "POST",
+            url: "/Services/AccountData.asmx/GetCashRepositoryBalance",
+            data: "{cashRepositoryId:'" + cashRepositoryDropDownList.getSelectedValue() + "'}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                cashRepositoryBalanceTextBox.val(msg.d);
+            },
+            error: function (xhr) {
+                var err = xhr.responseText;
+                logError(err, "error");
+            }
+        });
+    };
 });
 
 discountTextBox.blur(function () {
@@ -238,23 +267,10 @@ itemCodeTextBox.blur(function () {
     selectDropDownListByValue(this.id, 'ItemDropDownList');
 });
 
-itemDropDownList.blur(function () {
-    getPrice();
-});
 
-itemDropDownList.change(function () {
-    itemCodeTextBox.val(itemDropDownList.getSelectedValue());
-    itemCodeHidden.val(itemDropDownList.getSelectedValue());
-});
 
 partyCodeTextBox.blur(function () {
     selectDropDownListByValue(this.id, 'PartyDropDownList');
-});
-
-partyDropDownList.change(function () {
-    partyCodeTextBox.val(partyDropDownList.getSelectedValue());
-    partyCodeHidden.val(partyDropDownList.getSelectedValue());
-    showShippingAddress();
 });
 
 priceTextBox.blur(function () {
@@ -287,6 +303,12 @@ var validateProductControl = function () {
     removeDirty(cashRepositoryDropDownList);
     removeDirty(costCenterDropDownList);
     removeDirty(salesPersonDropDownList);
+
+    transactionType = transactionTypeRadioButtonList.find("input:checked").val();
+
+    if (transactionType) {
+        isCredit = (transactionType.toLowerCase() == "credit");
+    };
 
     if (!isDate(valueDate)) {
         makeDirty(dateTextBox);
@@ -332,11 +354,13 @@ var validateProductControl = function () {
     };
 
     if (cashRepositoryDropDownList.length) {
-        if (parseFloat2(cashRepositoryDropDownList.getSelectedValue()) <= 0) {
-            makeDirty(cashRepositoryDropDownList);
-            errorLabelBottom.html(invalidCashRepositoryWarningLocalized);
-            return false;
-        };
+        if (!isCredit) {
+            if (parseFloat2(cashRepositoryDropDownList.getSelectedValue()) <= 0) {
+                makeDirty(cashRepositoryDropDownList);
+                errorLabelBottom.html(invalidCashRepositoryWarningLocalized);
+                return false;
+            };
+        }
     };
 
 
@@ -380,7 +404,6 @@ var validateProductControl = function () {
     storeId = parseFloat2(storeDropDownList.getSelectedValue());
 
     transactionIds = tranIdCollectionHiddenField.val();
-    transactionType = transactionTypeRadioButtonList.find("input:checked").val();
 
     return true;
 };
@@ -739,7 +762,6 @@ function loadStores() {
 
 function loadUnits() {
     var itemCode = itemCodeHidden.val();
-    logToConsole("Loading units.");
 
     $.ajax({
         type: "POST",
@@ -863,6 +885,10 @@ var updateTax = function () {
 
 //GridView Manipulation
 var addRow = function () {
+
+    itemCodeTextBox.val(itemDropDownList.getSelectedValue());
+    itemCodeHidden.val(itemDropDownList.getSelectedValue());
+
     var itemCode = itemCodeTextBox.val();
     var itemName = itemDropDownList.getSelectedText();
     var quantity = parseFloat2(quantityTextBox.val());
@@ -1002,6 +1028,8 @@ var addRowToTable = function (itemCode, itemName, quantity, unitName, price, dis
             setColumnText(row, 9, parseFloat2(getColumnText(row, 9)) + tax);
             setColumnText(row, 10, parseFloat2(getColumnText(row, 10)) + total);
 
+            addDanger(row);
+
             match = true;
             return;
         }
@@ -1009,7 +1037,7 @@ var addRowToTable = function (itemCode, itemName, quantity, unitName, price, dis
 
     if (!match) {
         var html = "<tr class='grid2-row'><td>" + itemCode + "</td><td>" + itemName + "</td><td class='text-right'>" + quantity + "</td><td>" + unitName + "</td><td class='text-right'>" + price + "</td><td class='text-right'>" + amount + "</td><td class='text-right'>" + discount + "</td><td class='text-right'>" + subTotal + "</td><td class='text-right'>" + taxRate + "</td><td class='text-right'>" + tax + "</td><td class='text-right'>" + total
-            + "</td><td><input type='image' src='/Resource/Icons/delete-16.png' onclick='removeRow($(this));' /> </td></tr>";
+            + "</td><td><span class='glyphicon glyphicon-remove-circle pointer span-icon' onclick='removeRow($(this));'></span><span class='glyphicon glyphicon-ok-sign pointer span-icon' onclick='toggleDanger($(this));'></span><span class='glyphicon glyphicon glyphicon-thumbs-up pointer span-icon' onclick='toggleSuccess($(this));'></span></td></tr>";
         grid.find("tr:last").before(html);
     }
 
@@ -1027,12 +1055,31 @@ var addRowToTable = function (itemCode, itemName, quantity, unitName, price, dis
 
 
 var removeRow = function (cell) {
+    var result = confirm(areYouSureLocalized);
 
-    if (confirm(areYouSureLocalized)) {
+    if (result) {
         cell.closest("tr").remove();
     }
 };
 
+var toggleDanger = function(cell)
+{
+    var row = cell.closest("tr");
+    row.removeClass("alert-success");
+    row.toggleClass("alert alert-danger");
+};
+
+
+var addDanger = function (row) {
+    row.removeClass("alert-success");
+    row.addClass("alert alert-danger");
+};
+
+
+var toggleSuccess = function (cell) {
+    var row = cell.closest("tr");
+    row.toggleClass("alert alert-success");
+};
 
 
 //Boolean Validation
@@ -1099,11 +1146,15 @@ var getPrice = function () {
     var unitId = unitIdHidden.val();
 
     if (!unitId) return;
-    if (priceTypeId <= 0) {
-        $.notify(invalidPriceTypeWarningLocalized, "error");
-        priceTypeDropDownList.focus();
-        return;
+
+    if (tranBook.toLowerCase() == "sales") {
+        if (priceTypeId <= 0) {
+            $.notify(invalidPriceTypeWarningLocalized, "error");
+            priceTypeDropDownList.focus();
+            return;
+        };
     };
+
 
 
     $.ajax({
@@ -1114,6 +1165,7 @@ var getPrice = function () {
         dataType: "json",
         success: function (msg) {
             priceTextBox.val(msg.d);
+            taxTextBox.val("");
         },
         error: function (xhr) {
             var err = xhr.responseText;

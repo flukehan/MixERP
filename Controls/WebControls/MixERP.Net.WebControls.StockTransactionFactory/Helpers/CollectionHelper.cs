@@ -16,50 +16,17 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
-using MixERP.Net.BusinessLayer.Transactions;
+
 using MixERP.Net.Common;
-using MixERP.Net.Common.Models.Core;
 using MixERP.Net.Common.Models.Transactions;
-using System;
 using System.Collections.ObjectModel;
 using System.Web.Script.Serialization;
-using System.Web.Services;
 
-namespace MixERP.Net.FrontEnd.Services.Sales
+namespace MixERP.Net.WebControls.StockTransactionFactory.Helpers
 {
-    /// <summary>
-    /// Summary description for SalesQuotation
-    /// </summary>
-    [WebService(Namespace = "http://tempuri.org/")]
-    [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
-    [System.ComponentModel.ToolboxItem(false)]
-    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
-    [System.Web.Script.Services.ScriptService]
-    public class SalesQuotation : WebService
+    public class CollectionHelper
     {
-
-        [WebMethod(EnableSession = true)]
-        public long Save(DateTime valueDate, int storeId, string partyCode, int priceTypeId, string referenceNumber, string data, string statementReference, string transactionIds, string attachmentsJSON)
-        {
-            Collection<StockMasterDetailModel> details = this.GetDetails(data, storeId);
-            Collection<int> tranIds = new Collection<int>();
-
-            JavaScriptSerializer js = new JavaScriptSerializer();
-            Collection<Attachment> attachments = js.Deserialize<Collection<Attachment>>(attachmentsJSON);
-
-            if (!string.IsNullOrWhiteSpace(transactionIds))
-            {
-                foreach (var transactionId in transactionIds.Split(','))
-                {
-                    tranIds.Add(Conversion.TryCastInteger(transactionId));
-                }
-            }
-
-
-            return NonGlStockTransaction.Add("Sales.Quotation", valueDate, partyCode, priceTypeId, details, referenceNumber, statementReference, tranIds, attachments);
-        }
-
-        public Collection<StockMasterDetailModel> GetDetails(string json, int storeId)
+        public static Collection<StockMasterDetailModel> GetDetails(string json, int storeId)
         {
             Collection<StockMasterDetailModel> details = new Collection<StockMasterDetailModel>();
             var jss = new JavaScriptSerializer();
@@ -83,5 +50,6 @@ namespace MixERP.Net.FrontEnd.Services.Sales
 
             return details;
         }
+
     }
 }

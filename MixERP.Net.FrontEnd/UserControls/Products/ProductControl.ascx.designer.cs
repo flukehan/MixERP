@@ -40,6 +40,15 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::MixERP.Net.WebControls.Common.DateTextBox DateTextBox;
         
         /// <summary>
+        /// StoreDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl StoreDiv;
+        
+        /// <summary>
         /// StoreLiteral control.
         /// </summary>
         /// <remarks>
@@ -94,6 +103,15 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::System.Web.UI.WebControls.DropDownList PartyDropDownList;
         
         /// <summary>
+        /// PriceTypeDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl PriceTypeDiv;
+        
+        /// <summary>
         /// PriceTypeLiteral control.
         /// </summary>
         /// <remarks>
@@ -128,6 +146,15 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox ReferenceNumberTextBox;
+        
+        /// <summary>
+        /// TransactionTypeDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TransactionTypeDiv;
         
         /// <summary>
         /// TransactionTypeLiteral control.

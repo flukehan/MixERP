@@ -113,5 +113,14 @@ namespace Resources {
                 return ResourceManager.GetString("UpdateTax", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Why do you want to withdraw this transaction?.
+        /// </summary>
+        internal static string WithdrawalReason {
+            get {
+                return ResourceManager.GetString("WithdrawalReason", resourceCulture);
+            }
+        }
     }
 }

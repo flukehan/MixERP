@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 --%>
+
 <%@ Page Title="" Language="C#" MasterPageFile="~/ContentMaster.Master" AutoEventWireup="true" CodeBehind="Quotation.aspx.cs" Inherits="MixERP.Net.FrontEnd.Sales.Entry.Quotation" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceholder" runat="server">
@@ -28,10 +29,16 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
         Book="Sales"
         SubBook="Quotation"
         Text="<%$Resources:Titles, SalesQuotation %>"
-        DisplayTransactionTypeRadioButtonList="false" />
+        ShowPriceTypes="True"
+        ShowShippingInformation="True"
+        ShowSalesAgents="True"
+        ShowStore="True" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceholder" runat="server">
     <script type="text/javascript">
+
+
+
         saveButton.click(function () {
             if (validateProductControl()) {
                 save();
@@ -47,7 +54,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
             });
 
             ajaxSaveQuotation.fail(function (jqXHR) {
-                logError(jqXHR.responseText);
+                var errorMessage = JSON.parse(jqXHR.responseText).Message;
+                errorLabelBottom.html(errorMessage);
+                logError(errorMessage);
             });
 
         };
@@ -68,7 +77,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
             return $.ajax({
                 type: "POST",
-                url: "/Services/Sales/SalesQuotation.asmx/Save",
+                url: "/Services/Sales/Quotation.asmx/Save",
                 data: d,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json"

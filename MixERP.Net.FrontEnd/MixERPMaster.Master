@@ -105,10 +105,22 @@
 
         <script type="text/javascript">
 
+            function keypressHandler(e) {
+                if (e.which == 13) {
+                    $(this).blur();
+                    return false;
+                }
+            }
+
+            $('form').keypress(keypressHandler);
+
+
             Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
                 //Fired on each ASP.net AJAX request.
                 initializeItemSelector();
             });
+
+
 
 
             //Todo:Document this

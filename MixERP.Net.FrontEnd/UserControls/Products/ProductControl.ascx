@@ -19,6 +19,20 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ProductControl.ascx.cs" Inherits="MixERP.Net.FrontEnd.UserControls.Products.ProductControl" %>
 <%@ Import Namespace="MixERP.Net.Common.Helpers" %>
 
+<style type="text/css">
+    table input[type=radio] {
+        margin: 4px;
+    }
+
+    table.input-sm {
+        margin: 4px 0 4px 0!important;
+    }
+
+    table.input-sm tr {
+        vertical-align: bottom;
+    }
+</style>
+
 <div id="info-panel">
     <asp:Literal runat="server" Text="<%$Resources:Titles,ShortCuts %>"></asp:Literal>
     <hr class="hr" style="border-color: #97d300;" />
@@ -59,16 +73,18 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
         <div class="col-md-1 pad4">
             <div class="form-group">
                 <asp:Literal ID="DateLiteral" runat="server" />
-                <mixerp:DateTextBox ID="DateTextBox" runat="server" CssClass="date form-control input-sm" />
+                <mixerp:DateTextBox ID="DateTextBox" runat="server" Mode="Today" CssClass="date form-control input-sm" />
             </div>
         </div>
-        <div class="col-md-1 pad4">
+
+        <div class="col-md-1 pad4" id="StoreDiv" runat="server">
             <div class="form-group">
                 <asp:Literal ID="StoreLiteral" runat="server" />
                 <asp:DropDownList ID="StoreDropDownList" runat="server" CssClass="form-control input-sm">
                 </asp:DropDownList>
             </div>
         </div>
+
         <div class="col-md-1 pad4">
             <div class="form-group">
                 <asp:Literal ID="PartyLiteral" runat="server" />
@@ -83,20 +99,23 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
                 ToolTip="F2" CssClass="form-control  input-sm">
             </asp:DropDownList>
         </div>
-        <div class="col-md-1 pad4">
+
+        <div class="col-md-1 pad4" id="PriceTypeDiv" runat="server">
             <div class="form-group">
                 <asp:Literal ID="PriceTypeLiteral" runat="server" />
                 <asp:DropDownList ID="PriceTypeDropDownList" runat="server" CssClass="form-control  input-sm">
                 </asp:DropDownList>
             </div>
         </div>
+
         <div class="col-md-1 pad4">
             <div class="form-group">
                 <asp:Literal ID="ReferenceNumberLiteral" runat="server" />
                 <asp:TextBox ID="ReferenceNumberTextBox" runat="server" MaxLength="24" CssClass="form-control  input-sm" />
             </div>
         </div>
-        <div class="col-md-1">
+
+        <div class="col-md-2" id="TransactionTypeDiv" runat="server">
             <div class="form-group">
                 <asp:Literal ID="TransactionTypeLiteral" runat="server" />
                 <asp:RadioButtonList ID="TransactionTypeRadioButtonList" runat="server" CssClass="input-sm" RepeatDirection="Horizontal">
@@ -105,7 +124,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
                 </asp:RadioButtonList>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
         </div>
     </div>
 </div>
@@ -141,7 +160,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
                 <th class="text-right" style="width: 100px;">
                     <asp:Literal runat="server" Text="<%$ Resources:Titles,SubTotal %>" />
                 </th>
-                <th class="text-right" style="width: 40px;">
+                <th class="text-right" style="width: 60px;">
                     <asp:Literal runat="server" Text="<%$ Resources:Titles,Rate %>" />
                 </th>
                 <th class="text-right" style="width: 100px;">
@@ -209,7 +228,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
                 <td>
                     <input type="text"
                         id="TaxRateTextBox"
-                        class="text-right form-control" />
+                        class="text-right form-control input-sm" />
                 </td>
                 <td>
                     <input type="text"
@@ -251,7 +270,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    <asp:Panel ID="BottomPanel" CssClass="table-form-pad grey" runat="server" Style="margin: 4px;width: 780px;">
+    <asp:Panel ID="BottomPanel" CssClass="table-form-pad grey" runat="server" Style="margin: 4px; width: 780px;">
         <asp:Table runat="server">
             <asp:TableRow ID="ShippingAddressRow" runat="server">
                 <asp:TableCell Style="vertical-align: top!important;" Width="190px">

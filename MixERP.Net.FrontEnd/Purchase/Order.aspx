@@ -23,14 +23,13 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 <asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceholder" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceholder" runat="server">
-    <mixerp:Product runat="server"
-        ID="PurchaseOrder"
-        Book="Purchase"
-        SubBook="Order"
+        <mixerp:ProductView
+        runat="server"
+        Book="Purchase" SubBook="Order"
         Text="<%$Resources:Titles, PurchaseOrder %>"
-        DisplayTransactionTypeRadioButtonList="false"
-        OnSaveButtonClick="PurchaseOrder_SaveButtonClick"
-         />
+        AddNewUrl="~/Purchase/Entry/Order.aspx"
+        PreviewUrl="~/Purchase/Confirmation/ReportPurchaseOrder.aspx"
+        ChecklistUrl="~/Purchase/Confirmation/PurchaseOrder.aspx" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceholder" runat="server">
 </asp:Content>

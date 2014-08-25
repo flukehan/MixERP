@@ -22,59 +22,84 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 <%@ Import Namespace="MixERP.Net.Common.Helpers" %>
 <%@ Import Namespace="MixERP.Net.Common.Models.Transactions" %>
 <%@ Import Namespace="Resources" %>
+
 <h1>
     <asp:Literal ID="TitleLiteral" runat="server" Text="<%$Resources:Titles, TransactionPostedSuccessfully %>" />
 </h1>
 
 
-<asp:Label ID="VerificationLabel" runat="server" />
 
+<h4 class="vpad16">
+    <asp:Label ID="VerificationLabel" runat="server" />
+</h4>
 
 <br />
 
-<div style="float: left;">
-    <h2>
-        <asp:Literal ID="ChecklistLiteral" runat="server" Text="<%$Resources:Titles, Checklists %>" />
-    </h2>
-    <div class="transaction-confirmation" style="margin-top: 12px;">
-        <asp:LinkButton ID="WithdrawButton" runat="server" Text="<%$Resources:Titles, WithdrawThisTransaction %>" OnClientClick="$('#withdraw').toggle(200);return(false);" CssClass="linkblock" CausesValidation="false" />
-        <asp:LinkButton ID="ViewInvoiceButton" runat="server" Text="<%$Resources:Titles, ViewThisInvoice %>" CssClass="linkblock" CausesValidation="false" />
-        <asp:LinkButton ID="EmailInvoiceButton" runat="server" Text="<%$Resources:Titles, EmailThisInvoice %>" CssClass="linkblock" CausesValidation="false" />
-        <asp:LinkButton ID="CustomerInvoiceButton" runat="server" Text="<%$Resources:Titles, PrintThisInvoice %>" CssClass="linkblock" CausesValidation="false" />
-        <asp:LinkButton ID="PrintReceiptButton" runat="server" Text="<%$Resources:Titles, PrintReceipt %>" CssClass="linkblock" CausesValidation="false" />
-        <asp:LinkButton ID="PrintGLButton" runat="server" Text="<%$Resources:Titles, PrintGLEntry %>" CssClass="linkblock" CausesValidation="false" />
-        <asp:LinkButton ID="AttachmentButton" runat="server" Text="<%$Resources:Titles, UploadAttachmentForThisTransaction %>" CssClass="linkblock" CausesValidation="false" />
-        <asp:LinkButton ID="BackButton" runat="server" Text="<%$Resources:Titles, Back %>" OnClientClick="javascript:history.go(-1);return false;" CssClass="linkblock" CausesValidation="false" />
+
+<div class="panel panel-default panel-info" style="max-width: 400px;">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            <asp:Literal ID="ChecklistLiteral" runat="server" Text="<%$Resources:Titles, Checklists %>" /></h3>
     </div>
-</div>
-
-<div id="withdraw" style="float: left; margin-left: 12px; display: none;">
-    <h2>
-        <asp:Literal ID="WithdrawTransactionLiteral" runat="server" Text="<%$Resources:Titles, WithdrawTransaction %>" />
-    </h2>
-
-    <div class="transaction-confirmation" style="margin-top: 12px;">
-        <p>
-            <asp:Literal ID="ReasonLiteral" runat="server" Text="<%$Resources:Titles, WithdrawalReason %>" />
-        </p>
-        <p>
-            <asp:TextBox ID="ReasonTextBox" runat="server" TextMode="MultiLine" Width="96%" Height="120" />
-        </p>
-        <p>
-            <asp:RequiredFieldValidator ID="ReasonTextBoxRequired" runat="server" ControlToValidate="ReasonTextBox" ErrorMessage="<%$Resources:Labels, FieldRequired %>" CssClass="form-error" Display="Dynamic" />
-        </p>
-
-        <p>
-            <asp:Button ID="OkButton" runat="server" Text="<%$Resources:Titles, OK %>" CssClass="button" OnClick="OkButton_Click" />
-            <asp:Button ID="CancelButton" runat="server" Text="<%$Resources:Titles, Cancel %>" CssClass="button" CausesValidation="false" OnClientClick="$('#withdraw').toggle(200);return(false);" />
-        </p>
+    <div class="panel-body">
+        <div class="list-group">
+            <asp:LinkButton ID="WithdrawButton" runat="server" Text="<%$Resources:Titles, WithdrawThisTransaction %>" OnClientClick="$('#WithdrawDiv').toggle(200);return(false);" CssClass="list-group-item" CausesValidation="false" />
+            <asp:LinkButton ID="ViewInvoiceButton" runat="server" Text="<%$Resources:Titles, ViewThisInvoice %>" CssClass="list-group-item" CausesValidation="false" />
+            <asp:LinkButton ID="EmailInvoiceButton" runat="server" Text="<%$Resources:Titles, EmailThisInvoice %>" CssClass="list-group-item" CausesValidation="false" />
+            <asp:LinkButton ID="CustomerInvoiceButton" runat="server" Text="<%$Resources:Titles, PrintThisInvoice %>" CssClass="list-group-item" CausesValidation="false" />
+            <asp:LinkButton ID="PrintReceiptButton" runat="server" Text="<%$Resources:Titles, PrintReceipt %>" CssClass="list-group-item" CausesValidation="false" />
+            <asp:LinkButton ID="PrintGLButton" runat="server" Text="<%$Resources:Titles, PrintGLEntry %>" CssClass="list-group-item" CausesValidation="false" />
+            <asp:LinkButton ID="AttachmentButton" runat="server" Text="<%$Resources:Titles, UploadAttachmentForThisTransaction %>" CssClass="list-group-item" CausesValidation="false" />
+            <asp:LinkButton ID="BackButton" runat="server" Text="<%$Resources:Titles, Back %>" OnClientClick="javascript:history.go(-1);return false;" CssClass="list-group-item" CausesValidation="false" />
+        </div>
 
     </div>
 </div>
 
-<div style="clear: both;"></div>
+
+<div id="WithdrawDiv" class="panel panel-default panel-warning" style="max-width: 400px;">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            <asp:Literal ID="WithdrawTransactionLiteral" runat="server" Text="<%$Resources:Titles, WithdrawTransaction %>" /></h3>
+    </div>
+    <div class="panel-body">
+        <p>
+            <asp:Literal ID="ReasonLiteral" runat="server" Text="<%$Resources:Questions, WithdrawalReason %>" />
+        </p>
+        <p>
+            <asp:TextBox ID="ReasonTextBox" runat="server" TextMode="MultiLine" CssClass="form-control input-sm" Rows="5" />
+        </p>
+        <p>
+            <asp:RequiredFieldValidator ID="ReasonTextBoxRequired" runat="server" ControlToValidate="ReasonTextBox" ErrorMessage="<%$Resources:Labels, FieldRequired %>" CssClass="error-message" Display="Dynamic" />
+        </p>
+
+        <p>
+            <asp:Button ID="OkButton" runat="server" Text="<%$Resources:Titles, OK %>" CssClass="btn btn-sm btn-warning" OnClick="OkButton_Click" />
+            <asp:Button ID="CancelButton" runat="server" Text="<%$Resources:Titles, Cancel %>" CssClass="btn btn-default btn-sm" CausesValidation="false" OnClientClick="$('#WithdrawDiv').toggle(200);return(false);" />
+        </p>
+
+    </div>
+</div>
 
 <asp:Label ID="MessageLabel" runat="server" />
+
+<script type="text/javascript">
+    var withdrawDiv = $("#WithdrawDiv");
+    var widthdrawButton = $("#WithdrawButton");
+
+    $(document).ready(function () {
+
+
+        withdrawDiv.position({
+            my: "left top",
+            at: "right top",
+            of: "#WithdrawButton",
+            collision: "fit"
+        });
+
+        withdrawDiv.hide();
+    });
+</script>
 
 
 <script runat="server">
@@ -97,16 +122,16 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
         long transactionMasterId = Conversion.TryCastLong(this.Request["TranId"]);
 
         VerificationModel model = Verification.GetVerificationStatus(transactionMasterId);
-        if(
+        if (
             model.Verification.Equals(0) //Awaiting verification 
             ||
             model.Verification.Equals(2) //Automatically Approved by Workflow
             )
         {
             //Withdraw this transaction.                        
-            if(transactionMasterId > 0)
+            if (transactionMasterId > 0)
             {
-                if(Verification.WithdrawTransaction(transactionMasterId, MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetUserId(), this.ReasonTextBox.Text))
+                if (Verification.WithdrawTransaction(transactionMasterId, MixERP.Net.BusinessLayer.Helpers.SessionHelper.GetUserId(), this.ReasonTextBox.Text))
                 {
                     this.MessageLabel.Text = string.Format(Labels.TransactionWithdrawnMessage, transactionDate.ToShortDateString());
                     this.MessageLabel.CssClass = "success vpad12";
@@ -149,28 +174,28 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
         long transactionMasterId = Conversion.TryCastLong(this.Request["TranId"]);
         VerificationModel model = Verification.GetVerificationStatus(transactionMasterId);
 
-        switch(model.Verification)
+        switch (model.Verification)
         {
             case -3:
-                this.VerificationLabel.CssClass = "info pink";
+                this.VerificationLabel.CssClass = "alert-danger";
                 this.VerificationLabel.Text = string.Format(Labels.VerificationRejectedMessage, model.VerifierName, model.VerifiedDate.ToString(LocalizationHelper.GetCurrentCulture()), model.VerificationReason);
                 break;
             case -2:
-                this.VerificationLabel.CssClass = "info red";
+                this.VerificationLabel.CssClass = "alert-warning";
                 this.VerificationLabel.Text = string.Format(Labels.VerificationClosedMessage, model.VerifierName, model.VerifiedDate.ToString(LocalizationHelper.GetCurrentCulture()), model.VerificationReason);
                 break;
             case -1:
                 this.VerificationLabel.Text = string.Format(Labels.VerificationWithdrawnMessage, model.VerifierName, model.VerifiedDate.ToString(LocalizationHelper.GetCurrentCulture()), model.VerificationReason);
-                this.VerificationLabel.CssClass = "info yellow";
+                this.VerificationLabel.CssClass = "alert-warning";
                 break;
             case 0:
                 this.VerificationLabel.Text = Labels.VerificationAwaitingMessage;
-                this.VerificationLabel.CssClass = "info purple";
+                this.VerificationLabel.CssClass = "alert-info";
                 break;
             case 1:
             case 2:
                 this.VerificationLabel.Text = string.Format(Labels.VerificationApprovedMessage, model.VerifierName, model.VerifiedDate.ToString(LocalizationHelper.GetCurrentCulture()));
-                this.VerificationLabel.CssClass = "info green";
+                this.VerificationLabel.CssClass = "alert-success";
                 break;
         }
     }
