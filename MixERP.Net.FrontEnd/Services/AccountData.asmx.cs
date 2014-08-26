@@ -16,6 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
+
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
@@ -87,6 +89,46 @@ namespace MixERP.Net.FrontEnd.Services
 
 
         [WebMethod]
+        public bool AccountCodeExists(string accountCode)
+        {
+            if (!string.IsNullOrWhiteSpace(accountCode))
+            {
+                return BusinessLayer.Core.Accounts.AccountCodeExists(accountCode);
+            }
+
+            return false;
+        }
+
+        [WebMethod]
+        public bool CashRepositoryCodeExists(string cashRepositoryCode)
+        {
+            return BusinessLayer.Office.CashRepositories.CashRepositoryCodeExists(cashRepositoryCode);
+        }
+
+        [WebMethod]
+        public bool HasBalance(string cashRepositoryCode, decimal credit)
+        {
+            if (credit.Equals(0))
+            {
+                return true;
+            }
+
+            if (credit < 0)
+            {
+                throw new InvalidOperationException("Negetive value supplied.");
+            }
+
+            decimal balance = BusinessLayer.Office.CashRepositories.GetBalance(cashRepositoryCode);
+
+            if (balance > credit)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        [WebMethod]
         public Collection<ListItem> GetCashRepositories()
         {
             Collection<ListItem> values = new Collection<ListItem>();
@@ -123,6 +165,16 @@ namespace MixERP.Net.FrontEnd.Services
             return values;
         }
 
+        [WebMethod]
+        public bool IsCashAccount(string accountCode)
+        {
+            if (!string.IsNullOrWhiteSpace(accountCode))
+            {
+                return Accounts.IsCashAccount(accountCode);
+            }
+
+            return false;
+        }
 
         [WebMethod]
         public Collection<ListItem> GetCashRepositoriesByAccountCode(string accountCode)
@@ -131,7 +183,7 @@ namespace MixERP.Net.FrontEnd.Services
 
             if (Accounts.IsCashAccount(accountCode))
             {
-                using (DataTable table = FormHelper.GetTable("office", "cost_centers"))
+                using (DataTable table = FormHelper.GetTable("office", "cash_repositories"))
                 {
                     string displayField = ConfigurationHelper.GetDbParameter("CashRepositoryDisplayField");
                     table.Columns.Add("cash_repository", typeof(string), displayField);

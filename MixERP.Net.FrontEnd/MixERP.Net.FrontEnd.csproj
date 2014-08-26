@@ -1240,6 +1240,7 @@
     <Content Include="Scripts\colorbox\i18n\jquery.colorbox-zh-TW.js" />
     <Content Include="Scripts\colorbox\jquery.colorbox-min.js" />
     <Content Include="Scripts\colorbox\jquery.colorbox.js" />
+    <Content Include="Scripts\Finance\JournalVoucher.js" />
     <Content Include="Scripts\jqueryNumber\jquery.number.js" />
     <Content Include="Scripts\mixerp.js" />
     <Content Include="bundles\scripts\parties-popup.js">

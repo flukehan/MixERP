@@ -178,11 +178,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Alt +A.
+        /// </summary>
+        internal static string AltA {
+            get {
+                return ResourceManager.GetString("AltA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Press Alt +C.
         /// </summary>
         internal static string AltC {
             get {
                 return ResourceManager.GetString("AltC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alt +D.
+        /// </summary>
+        internal static string AltD {
+            get {
+                return ResourceManager.GetString("AltD", resourceCulture);
             }
         }
         
@@ -421,6 +439,51 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CTRL +ALT + A.
+        /// </summary>
+        internal static string CtrlAltA {
+            get {
+                return ResourceManager.GetString("CtrlAltA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CTRL +ALT + D.
+        /// </summary>
+        internal static string CtrlAltC {
+            get {
+                return ResourceManager.GetString("CtrlAltC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CTRL +ALT + D.
+        /// </summary>
+        internal static string CtrlAltD {
+            get {
+                return ResourceManager.GetString("CtrlAltD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CTRL +ALT + S.
+        /// </summary>
+        internal static string CtrlAltS {
+            get {
+                return ResourceManager.GetString("CtrlAltS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CTRL +ALT + T.
+        /// </summary>
+        internal static string CtrlAltT {
+            get {
+                return ResourceManager.GetString("CtrlAltT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Press Ctrl + D.
         /// </summary>
         internal static string CtrlD {
@@ -453,6 +516,15 @@ namespace Resources {
         internal static string CtrlReturn {
             get {
                 return ResourceManager.GetString("CtrlReturn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ctrl + S.
+        /// </summary>
+        internal static string CtrlS {
+            get {
+                return ResourceManager.GetString("CtrlS", resourceCulture);
             }
         }
         

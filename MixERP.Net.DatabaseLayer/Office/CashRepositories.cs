@@ -124,5 +124,27 @@ namespace MixERP.Net.DatabaseLayer.Office
             }
         }
 
+        public static decimal GetBalance(string cashRepositoryCode)
+        {
+            const string sql = "SELECT transactions.get_cash_repository_balance(office.get_cash_repository_id_by_cash_repository_code(@CashRepositoryCode));";
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                command.Parameters.AddWithValue("@CashRepositoryCode", cashRepositoryCode);
+                return Conversion.TryCastDecimal(DbOperations.GetScalarValue(command));
+            }
+        }
+
+        public static bool CashRepositoryCodeExists(string cashRepositoryCode)
+        {
+            const string sql = "SELECT 1 FROM office.cash_repositories WHERE cash_repository_code=@CashRepositoryCode;";
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                command.Parameters.AddWithValue("@CashRepositoryCode", cashRepositoryCode);
+
+                return DbOperations.GetDataTable(command).Rows.Count.Equals(1);
+            }
+        }
+
+
     }
 }

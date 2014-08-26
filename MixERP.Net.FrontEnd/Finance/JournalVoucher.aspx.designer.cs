@@ -13,15 +13,6 @@ namespace MixERP.Net.FrontEnd.Finance {
     public partial class JournalVoucher {
         
         /// <summary>
-        /// ScrudPlaceholder control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder ScrudPlaceholder;
-        
-        /// <summary>
         /// TitleLabel control.
         /// </summary>
         /// <remarks>
@@ -29,24 +20,6 @@ namespace MixERP.Net.FrontEnd.Finance {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label TitleLabel;
-        
-        /// <summary>
-        /// UpdateProgress1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdateProgress UpdateProgress1;
-        
-        /// <summary>
-        /// UpdatePanel1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
         
         /// <summary>
         /// ValueDateLiteral control.
@@ -58,15 +31,6 @@ namespace MixERP.Net.FrontEnd.Finance {
         protected global::System.Web.UI.WebControls.Literal ValueDateLiteral;
         
         /// <summary>
-        /// ReferenceNumberLiteral control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ReferenceNumberLiteral;
-        
-        /// <summary>
         /// ValueDateTextBox control.
         /// </summary>
         /// <remarks>
@@ -74,6 +38,15 @@ namespace MixERP.Net.FrontEnd.Finance {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::MixERP.Net.WebControls.Common.DateTextBox ValueDateTextBox;
+        
+        /// <summary>
+        /// ReferenceNumberLiteral control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ReferenceNumberLiteral;
         
         /// <summary>
         /// ReferenceNumberTextBox control.
@@ -91,70 +64,25 @@ namespace MixERP.Net.FrontEnd.Finance {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView TransactionGridView;
+        protected global::System.Web.UI.HtmlControls.HtmlTable TransactionGridView;
         
         /// <summary>
-        /// AccountCodeTextBox control.
+        /// AttachmentLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox AccountCodeTextBox;
+        protected global::System.Web.UI.WebControls.Label AttachmentLabel;
         
         /// <summary>
-        /// AccountDropDownList control.
+        /// Attachment1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList AccountDropDownList;
-        
-        /// <summary>
-        /// CashRepositoryDropDownList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList CashRepositoryDropDownList;
-        
-        /// <summary>
-        /// StatementReferenceTextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox StatementReferenceTextBox;
-        
-        /// <summary>
-        /// DebitTextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox DebitTextBox;
-        
-        /// <summary>
-        /// CreditTextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox CreditTextBox;
-        
-        /// <summary>
-        /// AddButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button AddButton;
+        protected global::MixERP.Net.FrontEnd.UserControls.AttachmentUserControl Attachment1;
         
         /// <summary>
         /// CostCenterLiteral control.
@@ -166,15 +94,6 @@ namespace MixERP.Net.FrontEnd.Finance {
         protected global::System.Web.UI.WebControls.Literal CostCenterLiteral;
         
         /// <summary>
-        /// CostCenterDropDownList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList CostCenterDropDownList;
-        
-        /// <summary>
         /// DebitTotalLiteral control.
         /// </summary>
         /// <remarks>
@@ -184,15 +103,6 @@ namespace MixERP.Net.FrontEnd.Finance {
         protected global::System.Web.UI.WebControls.Literal DebitTotalLiteral;
         
         /// <summary>
-        /// DebitTotalTextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox DebitTotalTextBox;
-        
-        /// <summary>
         /// CreditTotalLiteral control.
         /// </summary>
         /// <remarks>
@@ -200,23 +110,5 @@ namespace MixERP.Net.FrontEnd.Finance {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal CreditTotalLiteral;
-        
-        /// <summary>
-        /// CreditTotalTextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox CreditTotalTextBox;
-        
-        /// <summary>
-        /// PostTransactionButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button PostTransactionButton;
     }
 }

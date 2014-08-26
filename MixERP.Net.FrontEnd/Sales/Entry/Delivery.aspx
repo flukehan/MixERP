@@ -79,15 +79,11 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
             d = appendParameter(d, "transactionIds", transactionIds);
             d = appendParameter(d, "attachmentsJSON", attachments);
 
-            d = "{" + d + "}";
+            d = getData(d);
 
-            return $.ajax({
-                type: "POST",
-                url: "/Services/Sales/Delivery.asmx/Save",
-                data: d,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json"
-            });
+            url = "/Services/Sales/Delivery.asmx/Save";
+
+            return getAjax(url, d);
         };
 
     </script>

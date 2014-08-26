@@ -16,216 +16,158 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 --%>
+
 <%@ Page Title="" Language="C#" MasterPageFile="~/ContentMaster.Master" AutoEventWireup="true" CodeBehind="JournalVoucher.aspx.cs" Inherits="MixERP.Net.FrontEnd.Finance.JournalVoucher" %>
-<%@ Import Namespace="Resources" %>
-<%-- ReSharper disable once AspUnusedRegisterDirectiveHighlighting --%>
-<%@ Register TagPrefix="asp" Assembly="System.Web.Extensions" Namespace="System.Web.UI" %> <%--Added for Xamarin Studio Compatibility on Mac OSX Mavericks.--%>
+
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceholder" runat="server">
+    <script type="text/javascript">
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceholder" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceholder" runat="server">
-    <asp:PlaceHolder ID="ScrudPlaceholder" runat="server" />
+    <h2>
+        <asp:Label ID="TitleLabel" runat="server" Text="<%$Resources:Titles, JournalVoucherEntry %>" />
+    </h2>
 
-    <asp:Label ID="TitleLabel" runat="server" Text="<%$Resources:Titles, JournalVoucherEntry %>" />
+
+    <div class="form form-inline grey" style="padding: 24px; max-width: 600px;" role="form">
+        <div class="form-group">
+            <label for="ValueDateTextBox">
+                <asp:Literal ID="ValueDateLiteral" runat="server" Text="<%$Resources:Titles, ValueDate %>" />
+            </label>
+            <mixerp:DateTextBox ID="ValueDateTextBox" runat="server" Width="100" CssClass="date form-control input-sm" />
+
+        </div>
+        <div class="form-group">
+            <label for="ReferenceNumberTextBox">
+                <asp:Literal ID="ReferenceNumberLiteral" runat="server" Text="<%$Resources:Titles, ReferenceNumber %>" />
+            </label>
+            <asp:TextBox ID="ReferenceNumberTextBox" runat="server" CssClass="form-control input-sm" />
+        </div>
+    </div>
 
 
+    <table id="TransactionGridView" class="table table-hover" runat="server">
+        <tbody>
+            <tr>
+                <th style="width: 400px;">
+                    <asp:Literal runat="server" Text="<%$ Resources:Titles,StatementReference%>" />
+                </th>
+                <th scope="col" style="width: 100px;">
+                    <asp:Literal runat="server" Text="<%$ Resources:Titles,AccountCode %>" />
+                </th>
+                <th style="width: 250px;">
+                    <asp:Literal runat="server" Text="<%$ Resources:Titles,Account %>" />
+                </th>
+                <th style="width: 200px;">
+                    <asp:Literal runat="server" Text="<%$ Resources:Titles,CashRepository%>" />
+                </th>
+                <th class="text-right" style="width: 100px;">
+                    <asp:Literal runat="server" Text="<%$ Resources:Titles,Debit%>" />
+                </th>
+                <th class="text-right" style="width: 100px;">
+                    <asp:Literal runat="server" Text="<%$ Resources:Titles,Credit%>" />
+                </th>
+                <th>
+                    <asp:Literal runat="server" Text="<%$ Resources:Titles,Action %>" />
+                </th>
+            </tr>
+            <tr class="footer-row">
+                <td>
+                    <input type="text"
+                        id="StatementReferenceTextBox"
+                        class="form-control input-sm"
+                        title='<asp:Literal runat="server" Text="<%$Resources:Titles,CtrlAltS%>" />' />
+                </td>
+                <td>
+                    <input type="text"
+                        id="AccountCodeTextBox"
+                        title='<asp:Literal runat="server" Text="<%$Resources:Titles,CtrlAltT%>" />'
+                        class="form-control input-sm" />
+                </td>
+                <td>
+                    <select name="AccountDropDownList"
+                        id="AccountDropDownList"
+                        class="form-control  input-sm"
+                        title='<asp:Literal runat="server" Text="<%$Resources:Titles,CtrlAltA%>" />'>
+                    </select>
+                </td>
+                <td>
+                    <select name="CashRepositoryDropDownList"
+                        id="CashRepositoryDropDownList"
+                        class="form-control  input-sm">
+                    </select>
+                </td>
+                <td>
+                    <input type="text"
+                        id="DebitTextBox"
+                        class="text-right number form-control input-sm"
+                        title='<asp:Literal runat="server" Text="<%$Resources:Titles,CtrlAltD%>" />' />
+                </td>
+                <td>
+                    <input type="text"
+                        id="CreditTextBox"
+                        class="text-right number form-control input-sm"
+                        title='<asp:Literal runat="server" Text="<%$Resources:Titles,CtrlAltC%>" />' />
+                </td>
+                <td>
+                    <input type="button"
+                        id="AddButton"
+                        class="btn btn-sm btn-default"
+                        value='<asp:Literal runat="server" Text="<%$Resources:Titles,Add%>" />'
+                        title='<asp:Literal runat="server" Text="<%$Resources:Titles,CtrlReturn%>" />' />
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
-    <asp:UpdateProgress ID="UpdateProgress1" runat="server">
-        <progresstemplate>
-            <div class="ajax-container">
-                <img runat="server" alt="progress" src="~/spinner.gif" class="ajax-loader" />
-            </div>
-        </progresstemplate>
-    </asp:UpdateProgress>
+    <h4>
+        <asp:Label ID="AttachmentLabel" runat="server" Text="<%$ Resources:Titles, AttachmentsPlus %>" />
+    </h4>
+    <div id="AttachmentDiv" class="grey" style="display: none; padding-left: 24px;">
+        <mixerp:Attachment ID="Attachment1" runat="server" />
+    </div>
 
-    <asp:UpdatePanel ID="UpdatePanel1" runat="server" ChildrenAsTriggers="true" UpdateMode="Always">
-        <triggers>
-            <asp:AsyncPostBackTrigger ControlID="AddButton" />
-        </triggers>
-        <contenttemplate>
 
-            <div class="vpad8">
-                <div class="form" style="width: 272px;">
-                    <table>
-                        <tr>
-                            <td>
-                                <asp:Literal ID="ValueDateLiteral" runat="server" />
-                            </td>
-                            <td>
-                                <asp:Literal ID="ReferenceNumberLiteral" runat="server" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <mixerp:DateTextBox ID="ValueDateTextBox" runat="server" Width="100" CssClass="date" />
-                            </td>
-                            <td>
-                                <asp:TextBox ID="ReferenceNumberTextBox" runat="server" Width="100" />
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
+    <div class="grey" role="form" style="max-width: 600px; padding: 24px;">
+        <div class="form-group">
+            <label for="CostCenterDropDownList">
+                <asp:Literal ID="CostCenterLiteral" runat="server" Text="<%$Resources:Titles, CostCenter %>" />
+            </label>
+            <select name="CostCenterDropDownList"
+                id="CostCenterDropDownList"
+                class="form-control  input-sm">
+            </select>
 
-            <asp:GridView ID="TransactionGridView" runat="server" EnableTheming="False"
-                CssClass="grid2" ShowHeaderWhenEmpty="true" AutoGenerateColumns="false"
-                OnRowDataBound="TransactionGridView_RowDataBound"
-                OnRowCommand="TransactionGridView_RowCommand"
-                Width="1000">
-                <Columns>
-                    <asp:BoundField DataField="AccountCode" HeaderText="<%$ Resources:Titles, AccountCode %>" HeaderStyle-Width="110" />
-                    <asp:BoundField DataField="Account" HeaderText="<%$ Resources:Titles, Account %>" HeaderStyle-Width="250" />
-                    <asp:BoundField DataField="CashRepository" HeaderText="<%$ Resources:Titles, CashRepository %>" HeaderStyle-Width="100" />
-                    <asp:BoundField DataField="StatementReference" HeaderText="<%$ Resources:Titles, StatementReference %>" HeaderStyle-Width="320" />
-                    <asp:BoundField DataField="Debit" HeaderText="<%$ Resources:Titles, Debit %>" HeaderStyle-Width="70" />
-                    <asp:BoundField DataField="Credit" HeaderText="<%$ Resources:Titles, Credit %>" HeaderStyle-Width="70" />
+        </div>
+        <div class="form-group">
+            <label for="DebitTotalTextBox">
+                <asp:Literal ID="DebitTotalLiteral" runat="server" Text="<%$Resources:Titles, DebitTotal %>" />
+            </label>
+            <input type="text"
+                id="DebitTotalTextBox"
+                readonly="readonly"
+                class="text-right number form-control input-sm" />
+        </div>
+        <div class="form-group">
+            <label for="CreditTotalLiteral">
+                <asp:Literal ID="CreditTotalLiteral" runat="server" Text="<%$Resources:Titles, CreditTotal %>" />
+            </label>
+            <input type="text"
+                id="CreditTotalTextBox"
+                readonly="readonly"
+                class="text-right number form-control input-sm" />
 
-                    <asp:TemplateField ShowHeader="False" HeaderText="<%$ Resources:Titles, Action %>">
-                        <ItemTemplate>
-                            <asp:ImageButton ID="DeleteImageButton" ClientIDMode="Predictable" runat="server"
-                                CausesValidation="false"
-                                OnClientClick="return(confirmAction());"
-                                ImageUrl="~/Resource/Icons/delete-16.png" />
-                        </ItemTemplate>
-                    </asp:TemplateField>
+        </div>
+        <button id="PostButton" type="button" class="btn btn-primary btn-sm">
+            <asp:Literal runat="server" Text="<%$Resources:Titles, PostTransaction %>"></asp:Literal>
+        </button>
+    </div>
 
-                </Columns>
-                <AlternatingRowStyle CssClass="grid2-row-alt" />
-                <HeaderStyle CssClass="grid2-header" />
-                <RowStyle CssClass="grid2-row" />
-            </asp:GridView>
-
-            <div class="grid3">
-                <table class="valignmiddle">
-                    <tr>
-                        <td>
-                            <asp:TextBox ID="AccountCodeTextBox" runat="server" Width="100"
-                                onblur="selectDropDownListByValue(this.id, 'AccountDropDownList');" ToolTip="Alt + C" />
-                        </td>
-                        <td>
-                            <asp:DropDownList ID="AccountDropDownList" runat="server" Width="250"
-                                onchange="document.getElementById('AccountCodeTextBox').value = this.options[this.selectedIndex].value;if(this.selectedIndex == 0) { return false };"
-                                ToolTip="Ctrl + A" />
-                        </td>
-                        <td>
-                            <asp:DropDownList ID="CashRepositoryDropDownList" runat="server" Width="100" />
-                        </td>
-                        <td>
-                            <asp:TextBox ID="StatementReferenceTextBox" runat="server" Width="315"
-                                ToolTip="Ctrl + S" />
-                        </td>
-                        <td>
-                            <asp:TextBox ID="DebitTextBox" runat="server" Width="62"
-                                ToolTip="Ctrl + D" onfocus="getDebit();" />
-                        </td>
-                        <td>
-                            <asp:TextBox ID="CreditTextBox" runat="server" Width="62"
-                                ToolTip="Ctrl + R" onfocus="getCredit();" />
-                        </td>
-                        <td>
-                            <asp:Button ID="AddButton" runat="server" Text="<%$Resources:Titles, Add %>" Width="60" Height="24" OnClick="AddButton_Click" />
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <div class="vpad8">
-                <div class="form" style="width: 400px;">
-                    <table>
-                        <tr>
-                            <td>
-                                <asp:Literal ID="CostCenterLiteral" runat="server" />
-                            </td>
-                            <td>
-                                <asp:DropDownList ID="CostCenterDropDownList" runat="server" Width="250" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <asp:Literal ID="DebitTotalLiteral" runat="server" />
-                            </td>
-                            <td>
-                                <asp:TextBox ID="DebitTotalTextBox" runat="server" ReadOnly="true" Width="140" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <asp:Literal ID="CreditTotalLiteral" runat="server" />
-                            </td>
-                            <td>
-                                <asp:TextBox ID="CreditTotalTextBox" runat="server" ReadOnly="true" Width="140" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>
-                                <asp:Button ID="PostTransactionButton" runat="server" Text="<%$Resources:Titles, PostTransaction %>" CssClass="button" Height="30" Width="120" OnClick="PostTransactionButton_Click" />
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </contenttemplate>
-    </asp:UpdatePanel>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceholder" runat="server">
-    <script type="text/javascript">
-        localizedAreYouSure = '<%= Questions.AreYouSure %>';
-
-        $(document).ready(function () {
-            shortcut.add("ALT+C", function () {
-                $('#AccountCodeTextBox').focus();
-            });
-
-            shortcut.add("CTRL+A", function () {
-                $('#AccountDropDownList').focus();
-            });
-
-            shortcut.add("CTRL+S", function () {
-                $('#StatementReferenceTextBox').focus();
-            });
-
-            shortcut.add("CTRL+D", function () {
-                $('#DebitTextBox').focus();
-            });
-
-            shortcut.add("CTRL+R", function () {
-                $('#CreditTextBox').focus();
-            });
-
-            shortcut.add("CTRL+ENTER", function () {
-                $('#AddButton').click();
-            });
-        });
-
-        var getDebit = function() {
-            var drTotal = parseFloat2($("#DebitTotalTextBox").val());
-            var crTotal = parseFloat2($("#CreditTotalTextBox").val());
-            var debitTextBox = $("#DebitTextBox");
-            var creditTextBox = $("#CreditTextBox");
-
-            if (crTotal > drTotal) {
-                if (debitTextBox.val() == '' && creditTextBox.val() == '') {
-                    debitTextBox.val(crTotal - drTotal);
-                }
-            }
-        };
-
-        var getCredit = function() {
-            var drTotal = parseFloat2($("#DebitTotalTextBox").val());
-            var crTotal = parseFloat2($("#CreditTotalTextBox").val());
-            var debitTextBox = $("#DebitTextBox");
-            var creditTextBox = $("#CreditTextBox");
-
-            if (drTotal > crTotal) {
-                if (debitTextBox.val() == '' && creditTextBox.val() == '') {
-                    creditTextBox.val(drTotal - crTotal);
-                }
-            }
-        };
-
-    </script>
+    <script src="/Scripts/Finance/JournalVoucher.js"></script>
 </asp:Content>

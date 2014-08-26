@@ -21,10 +21,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
     <asp:Literal ID="TitleLiteral" runat="server" />
 </h1>
 
-<script type="text/javascript">
-    var nothingSelectedLocalized = "<%= Resources.Labels.NothingSelected %>";
-</script>
-
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
 

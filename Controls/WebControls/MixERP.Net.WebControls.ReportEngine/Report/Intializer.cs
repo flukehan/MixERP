@@ -208,8 +208,8 @@ namespace MixERP.Net.WebControls.ReportEngine
         private void SetTitle()
         {
             string title = XmlHelper.GetNodeText(this.reportPath, "/MixERPReport/Title");
-            this.reportTitleLiteral.Text = ReportParser.ParseExpression(title);
-            this.reportTitleHidden.Value = this.reportTitleLiteral.Text;
+            this.reportTitleLiteral.Text = @"<h2>" + ReportParser.ParseExpression(title) + @"</h2>";
+            this.reportTitleHidden.Value = ReportParser.ParseExpression(title);
 
             if (!string.IsNullOrWhiteSpace(this.reportTitleLiteral.Text))
             {

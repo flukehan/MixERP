@@ -7,8 +7,42 @@
     <title>MixERP Report</title>
     <asp:PlaceHolder runat="server">
         <script src="/Scripts/jquery-1.9.1.js"></script>
-        <link href="/Themes/purple/stylesheets/default.css" rel="stylesheet" type="text/css" />
     </asp:PlaceHolder>
+
+    <style type="text/css">
+        html, body, div, table {
+            background-color: #FFFFFF;
+        }
+
+        .table, .report {
+            border-collapse: collapse;
+        }
+
+            .table th, .table td, .report th, .report td {
+                padding: 6px;
+            }
+
+
+            .table td, .report td {
+                border: 1px solid black;
+            }
+
+        .report-command {
+            float: right;
+            padding: 6px;
+            background-color: #f1e0fb;
+            border: 1px solid #e2c2f5;
+            border-radius: 5px;
+        }
+
+            .report-command:hover {
+                background-color: #edd8fa;
+            }
+
+            .report-command input {
+                padding: 2px;
+            }
+    </style>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>

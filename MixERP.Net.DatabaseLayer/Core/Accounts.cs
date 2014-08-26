@@ -45,5 +45,16 @@ namespace MixERP.Net.DatabaseLayer.Core
                 return DbOperations.GetDataTable(command).Rows.Count.Equals(1);
             }
         }
+
+        public static bool AccountCodeExists(string accountCode)
+        {
+            const string sql = "SELECT 1 FROM core.accounts WHERE account_code=@AccountCode;";
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                command.Parameters.AddWithValue("@AccountCode", accountCode);
+
+                return DbOperations.GetDataTable(command).Rows.Count.Equals(1);
+            }
+        }
     }
 }

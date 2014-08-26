@@ -176,6 +176,7 @@
                 };
             };
 
+
             var today = "<%= DateTime.Now.ToShortDateString() %>";
             var shortDateFormat = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetShortDateFormat() %>";
             var thousandSeparator = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetThousandSeparator() %>";
@@ -183,6 +184,31 @@
             var decimalPlaces = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetDecimalPlaces() %>";
             var localizedAreYouSure = "<%= Resources.Questions.AreYouSure %>";
             var localizedUpdateTax = "<%= Resources.Questions.UpdateTax %>";
+            var selectLocalized = "<%=Resources.Titles.Select %>";
+            var noneLocalized = "<%=Resources.Titles.None %>";
+            var invalidDateWarningLocalized = "<%= Resources.Warnings.InvalidDate %>";
+            var areYouSureLocalized = "<%=Resources.Questions.AreYouSure %>";
+            var nothingSelectedLocalized = "<%= Resources.Labels.NothingSelected %>";
+
+            var gridViewEmptyWarningLocalized = "<%=Resources.Warnings.GridViewEmpty%>";
+
+            var insufficientStockWarningLocalized = "<%= Resources.Warnings.InsufficientStockWarning %>";
+            var invalidPartyWarningLocalized = "<%= Resources.Warnings.InvalidParty %>";
+            var invalidPriceTypeWarningLocalized = "<%= Resources.Warnings.InvalidPriceType %>";
+            var invalidStoreWarningLocalized = "<%=Resources.Warnings.InvalidStore%>";
+
+            var invalidShippingCompanyWarningLocalized = "<%=Resources.Warnings.InvalidShippingCompany%>";
+            var invalidCashRepositoryWarningLocalized = "<%=Resources.Warnings.InvalidCashRepository%>";
+            var invalidCostCenterWarningLocalized = "<%=Resources.Warnings.InvalidCostCenter%>";
+            var invalidSalesPersonWarningLocalized = "<%=Resources.Warnings.InvalidSalesPerson%>";
+
+            var salesNotAllowedHereWarningLocalized = "<%=Resources.Warnings.SalesNotAllowedHere%>";
+            var invalidFileLocalized = "<%= Resources.Warnings.InvalidFile %>";
+            var areYouSureLocalized = "<%= Resources.Questions.AreYouSure %>";
+            var uploadedFilesDeletedLocalized = "<%= Resources.Labels.UploadedFilesDeleted %>";
+            var duplicateFileLocalized = "<% = Resources.Errors.DuplicateFiles %>";
+
+
         </script>
 
         <asp:ContentPlaceHolder ID="BottomScriptContentPlaceholder" runat="server">

@@ -185,12 +185,15 @@ h6 {
   border: 1px solid transparent;
   -ms-border-radius: 8px;
   border-radius: 8px;
+  cursor: pointer;
 }
 .grey:hover {
   background-color: #f6f6fb;
   border-color: #ececf3;
 }
-/*placeholder*/
+.date {
+  cursor: pointer;
+}
 #ProductGridView .footer-row {
   padding: 0 !important;
   margin: 0 !important;

@@ -27244,10 +27244,15 @@ var appendParameter = function (data, parameter, value) {
     return data;
 };
 
+var getData = function(data)
+{
+    if (data) {
+        return "{" + data + "}";
+    };
+};
 
 
 var initializeItemSelector = function () {
-    console.log("Initializing item selector");
     var itemSelector = $("[role=item-selector]");
     var modalTemplatePath = "/Static/Templates/ModalTemplate.html";//Todo
 
@@ -27344,6 +27349,78 @@ var focusNextElement = function () {
     }
 
 
+};
+
+
+
+var toggleDanger = function (cell) {
+    var row = cell.closest("tr");
+    row.removeClass("alert-success");
+    row.toggleClass("alert alert-danger");
+};
+
+var addDanger = function (row) {
+    row.removeClass("alert-success");
+    row.addClass("alert alert-danger");
+};
+
+var toggleSuccess = function (cell) {
+    var row = cell.closest("tr");
+    row.toggleClass("alert alert-success");
+};
+
+
+jQuery.fn.bindAjaxData = function (ajaxData) {
+    "use strict";
+    var targetControl = $(this);
+    targetControl.empty();
+
+
+    if (ajaxData.length == 0) {
+        appendItem(targetControl, "", noneLocalized);
+        return;
+    };
+
+
+    appendItem(targetControl, "", selectLocalized);
+
+    $.each(ajaxData, function () {
+        appendItem(targetControl, this["Value"], this["Text"]);
+    });
+};
+
+function appendItem(dropDownList, value, text) {
+    dropDownList.append($("<option></option>").val(value).html(text));
+};
+
+
+var getAjax = function (url, data) {
+    return $.ajax({
+        type: "POST",
+        url: url,
+        data: data,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json"
+    });
+};
+
+var getAjaxErrorMessage = function (xhr) {
+    var err = $.parseJSON(xhr.responseText).Message;
+    return err;
+};
+
+var repaint = function () {
+    setTimeout(function () {
+        $(document).trigger('resize');
+    }, 1000);
+};
+
+var removeRow = function (cell) {
+    var result = confirm(areYouSureLocalized);
+
+    if (result) {
+        cell.closest("tr").remove();
+    }
 };
 
 ///#source 1 1 /Scripts/notify-combined.min.js

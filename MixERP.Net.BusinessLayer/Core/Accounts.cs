@@ -30,5 +30,10 @@ namespace MixERP.Net.BusinessLayer.Core
             return DatabaseLayer.Core.Accounts.IsCashAccount(accountCode);
         }
 
+        public static bool AccountCodeExists(string accountCode)
+        {
+            return DatabaseLayer.Core.Accounts.AccountCodeExists(accountCode);
+        }
+
     }
 }

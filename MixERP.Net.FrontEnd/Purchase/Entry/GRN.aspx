@@ -49,15 +49,10 @@
             d = appendParameter(d, "transactionIds", transactionIds);
             d = appendParameter(d, "attachmentsJSON", attachments);
 
-            d = "{" + d + "}";
+            d = getData(d);
+            url = "/Services/Purchase/GRN.asmx/Save";
 
-            return $.ajax({
-                type: "POST",
-                url: "/Services/Purchase/GRN.asmx/Save",
-                data: d,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json"
-            });
+            return getAjax(url, d);
         };
 
     </script>

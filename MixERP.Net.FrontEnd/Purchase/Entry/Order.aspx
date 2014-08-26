@@ -44,15 +44,10 @@
             d = appendParameter(d, "statementReference", statementReference);
             d = appendParameter(d, "attachmentsJSON", attachments);
 
-            d = "{" + d + "}";
+            d = getData(d);
 
-            return $.ajax({
-                type: "POST",
-                url: "/Services/Purchase/Order.asmx/Save",
-                data: d,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json"
-            });
+            url = "/Services/Purchase/Order.asmx/Save";
+            return getAjax(url, d);
         };
 
     </script>

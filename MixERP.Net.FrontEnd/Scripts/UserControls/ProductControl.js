@@ -86,6 +86,8 @@ var storeId;
 var transactionIds;
 var transactionType;
 
+var url;
+
 var valueDate;
 
 
@@ -99,7 +101,7 @@ $(document).ready(function () {
         }
     });
 
-    addShortCuts();
+    addShortcuts();
     initializeAjaxData();
     fadeThis("#info-panel");
 });
@@ -169,20 +171,21 @@ function processCallBackActions() {
     var itemCode = "";
 
     if (itemId > 0) {
-        $.ajax({
-            type: "POST",
-            url: "/Services/ItemData.asmx/GetItemCodeByItemId",
-            data: "{itemId:'" + itemId + "'}",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (msg) {
-                itemCode = msg.d;
-                itemCodeHidden.val(itemCode);
-            },
-            error: function (xhr) {
-                var err = xhr.responseText;
-                logError(err, "error");
-            }
+
+        url = "/Services/ItemData.asmx/GetItemCodeByItemId";
+        data = appendParameter("", "itemId", itemId);
+        data = getData(data);
+
+        var itemCodeAjax = getAjax(url, data);
+
+        itemCodeAjax.success(function (msg) {
+            itemCode = msg.d;
+            itemCodeHidden.val(itemCode);
+        });
+
+        itemCodeAjax.error(function (xhr) {
+            var err = $.parseJSON(xhr.responseText);
+            logError(err, "error");
         });
     }
 
@@ -193,20 +196,20 @@ function processCallBackActions() {
     var partyCode = "";
 
     if (partyId > 0) {
-        $.ajax({
-            type: "POST",
-            url: "/Services/PartyData.asmx/GetPartyCodeByPartyId",
-            data: "{partyId:'" + partyId + "'}",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (msg) {
-                partyCode = msg.d;
-                partyCodeHidden.val(partyCode);
-            },
-            error: function (xhr) {
-                var err = xhr.responseText;
-                logError(err, "error");
-            }
+        url = "/Services/PartyData.asmx/GetPartyCodeByPartyId";
+        data = appendParameter("", "partyId", partyId);
+        data = getData(data);
+
+        var partyCodeAjax = getAjax(url, data);
+
+        partyCodeAjax.success(function (msg) {
+            partyCode = msg.d;
+            partyCodeHidden.val(partyCode);
+        });
+
+        partyCodeAjax.error(function (xhr) {
+            var err = $.parseJSON(xhr.responseText);
+            logError(err, "error");
         });
     }
 };
@@ -233,27 +236,24 @@ attachmentLabel.click(function () {
     });
 });
 
-var repaint = function () {
-    setTimeout(function () {
-        $(document).trigger('resize');
-    }, 1000);
-};
 
 cashRepositoryDropDownList.change(function () {
     if (cashRepositoryDropDownList.getSelectedValue()) {
-        $.ajax({
-            type: "POST",
-            url: "/Services/AccountData.asmx/GetCashRepositoryBalance",
-            data: "{cashRepositoryId:'" + cashRepositoryDropDownList.getSelectedValue() + "'}",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (msg) {
-                cashRepositoryBalanceTextBox.val(msg.d);
-            },
-            error: function (xhr) {
-                var err = xhr.responseText;
-                logError(err, "error");
-            }
+
+        url = "/Services/AccountData.asmx/GetCashRepositoryBalance";
+        data = appendParameter("", "cashRepositoryId", cashRepositoryDropDownList.getSelectedValue());
+        data = getData(data);
+
+        var repoBalanceAjax = getAjax(url, data);
+
+        repoBalanceAjax.success(function (msg) {
+            cashRepositoryBalanceTextBox.val(msg.d);
+
+        });
+
+        repoBalanceAjax.error(function (xhr) {
+            var err = $.parseJSON(xhr.responseText);
+            logError(err, "error");
         });
     };
 });
@@ -382,7 +382,7 @@ var validateProductControl = function () {
 
 
 
-    updateData();
+    updateData(productGridViewDataHidden, productGridView);
 
     agentId = parseFloat2(salesPersonDropDownList.getSelectedValue());
     attachments = uploadedFilesHidden.val();
@@ -434,348 +434,215 @@ unitDropDownList.blur(function () {
     getPrice();
 });
 
-function appendItem(dropDownList, value, text) {
-    dropDownList.append($("<option></option>").val(value).html(text));
-};
 
 function bindAddresses(data) {
-    shippingAddressDropDownList.empty();
-
-    if (data.length == 0) {
-        appendItem(shippingAddressDropDownList, "", noneLocalized);
-        return;
-    }
-
-    appendItem(shippingAddressDropDownList, "", selectLocalized);
-
-    $.each(data, function () {
-        appendItem(shippingAddressDropDownList, this["Value"], this["Text"]);
-    });
-
+    shippingAddressDropDownList.bindAjaxData(data);
     shippingAddressDropDownList.val(shippingAddressCodeHidden.val());
 };
 
 function bindAgents(data) {
-    salesPersonDropDownList.empty();
-
-    if (data.length == 0) {
-        appendItem(salesPersonDropDownList, "", noneLocalized);
-        return;
-    }
-
-    appendItem(salesPersonDropDownList, "", selectLocalized);
-
-    $.each(data, function () {
-        appendItem(salesPersonDropDownList, this["Value"], this["Text"]);
-    });
+    salesPersonDropDownList.bindAjaxData(data);
 };
 
 function bindCashRepositories(data) {
-    cashRepositoryDropDownList.empty();
-
-    if (data.length == 0) {
-        appendItem(cashRepositoryDropDownList, "", noneLocalized);
-        return;
-    }
-
-    appendItem(cashRepositoryDropDownList, "", selectLocalized);
-
-    $.each(data, function () {
-        appendItem(cashRepositoryDropDownList, this["Value"], this["Text"]);
-    });
+    cashRepositoryDropDownList.bindAjaxData(data);
 };
 
 function bindCostCenters(data) {
-    costCenterDropDownList.empty();
-
-    if (data.length == 0) {
-        appendItem(costCenterDropDownList, "", noneLocalized);
-        return;
-    }
-
-    appendItem(costCenterDropDownList, "", selectLocalized);
-
-    $.each(data, function () {
-        appendItem(costCenterDropDownList, this["Value"], this["Text"]);
-    });
+    costCenterDropDownList.bindAjaxData(data);
 };
 
 function bindItems(data) {
-    itemDropDownList.empty();
-
-    if (data.length == 0) {
-        appendItem(itemDropDownList, "", noneLocalized);
-        return;
-    }
-
-    appendItem(itemDropDownList, "", selectLocalized);
-
-    $.each(data, function () {
-        appendItem(itemDropDownList, this["Value"], this["Text"]);
-    });
-
+    itemDropDownList.bindAjaxData(data);
     itemCodeTextBox.val(itemCodeHidden.val());
     itemDropDownList.val(itemCodeHidden.val());
 };
 
 function bindParties(data) {
-    partyDropDownList.empty();
-
-    if (data.length == 0) {
-        appendItem(partyDropDownList, "", noneLocalized);
-        return;
-    }
-
-    appendItem(partyDropDownList, "", selectLocalized);
-
-    $.each(data, function () {
-        appendItem(partyDropDownList, this["Value"], this["Text"]);
-    });
-
+    partyDropDownList.bindAjaxData(data);
     partyCodeTextBox.val(partyCodeHidden.val());
     partyDropDownList.val(partyCodeHidden.val());
 };
 
 function bindPriceTypes(data) {
-    priceTypeDropDownList.empty();
-
-    if (data.length == 0) {
-        appendItem(priceTypeDropDownList, "", noneLocalized);
-        return;
-    }
-
-    appendItem(priceTypeDropDownList, "", selectLocalized);
-
-    $.each(data, function () {
-        appendItem(priceTypeDropDownList, this["Value"], this["Text"]);
-    });
-
+    priceTypeDropDownList.bindAjaxData(data);
     priceTypeDropDownList.val(priceTypeIdHidden.val());
 };
 
 function bindShippers(data) {
-    shippingCompanyDropDownList.empty();
-
-    if (data.length == 0) {
-        appendItem(shippingCompanyDropDownList, "", noneLocalized);
-        return;
-    }
-
-    appendItem(shippingCompanyDropDownList, "", selectLocalized);
-
-    $.each(data, function () {
-        appendItem(shippingCompanyDropDownList, this["Value"], this["Text"]);
-    });
+    shippingCompanyDropDownList.bindAjaxData(data);
 };
 
 function bindStores(data) {
-    storeDropDownList.empty();
-
-    if (data.length == 0) {
-        appendItem(storeDropDownList, "", noneLocalized);
-        return;
-    }
-
-    appendItem(storeDropDownList, "", selectLocalized);
-
-    $.each(data, function () {
-        appendItem(storeDropDownList, this["Value"], this["Text"]);
-    });
+    storeDropDownList.bindAjaxData(data);
 };
 
 function bindUnits(data) {
-    unitDropDownList.empty();
-
-    if (data.length == 0) {
-        appendItem(unitDropDownList, "", noneLocalized);
-        return;
-    }
-
-    appendItem(unitDropDownList, "", selectLocalized);
-
-    $.each(data, function () {
-        appendItem(unitDropDownList, this["Value"], this["Text"]);
-    });
-
+    unitDropDownList.bindAjaxData(data);
     unitDropDownList.val(unitIdHidden.val());
 };
+
+
 
 function loadAddresses() {
     var partyCode = partyDropDownList.val();
 
-    $.ajax({
-        type: "POST",
-        url: "/Services/PartyData.asmx/GetAddressByPartyCode",
-        data: "{partyCode:'" + partyCode + "'}",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (msg) {
-            bindAddresses(msg.d);
-        },
-        error: function (xhr) {
-            var err = xhr.responseText;
-            appendItem(shippingAddressDropDownList, 0, err.Message);
-        }
+    url = "/Services/PartyData.asmx/GetAddressByPartyCode";
+    data = appendParameter("", "partyCode", partyCode);
+    data = getData(data);
+
+
+    var addressAjax = getAjax(url, data);
+
+    addressAjax.success(function (msg) {
+        bindAddresses(msg.d);
+    });
+
+    addressAjax.error(function (xhr) {
+        var err = $.parseJSON(xhr.responseText);
+        appendItem(shippingAddressDropDownList, 0, err.Message);
     });
 };
 
 function loadAgents() {
-    if (salesPersonDropDownList.length) {
-        $.ajax({
-            type: "POST",
-            url: "/Services/ItemData.asmx/GetAgents",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (msg) {
-                bindAgents(msg.d);
-            },
-            error: function (xhr) {
-                var err = xhr.responseText;
-                appendItem(salesPersonDropDownList, 0, err.Message);
-            }
-        });
-    }
+    url = "/Services/ItemData.asmx/GetAgents";
+    var agentAjax = getAjax(url);
+
+    agentAjax.success(function (msg) {
+        bindAgents(msg.d);
+    });
+
+    agentAjax.error(function (xhr) {
+        var err = $.parseJSON(xhr.responseText);
+        appendItem(salesPersonDropDownList, 0, err.Message);
+    });
 };
 
 function loadCashRepositories() {
-    if (cashRepositoryDropDownList.length) {
-        $.ajax({
-            type: "POST",
-            url: "/Services/AccountData.asmx/GetCashRepositories",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (msg) {
-                bindCashRepositories(msg.d);
-            },
-            error: function (xhr) {
-                var err = xhr.responseText;
-                appendItem(cashRepositoryDropDownList, 0, err.Message);
-            }
-        });
-    }
+    url = "/Services/AccountData.asmx/GetCashRepositories";
+    var cashRepositoryAjax = getAjax(url);
+
+    cashRepositoryAjax.success(function (msg) {
+        bindCashRepositories(msg.d);
+    });
+
+    cashRepositoryAjax.error(function (xhr) {
+        var err = $.parseJSON(xhr.responseText);
+        appendItem(cashRepositoryDropDownList, 0, err.Message);
+    });
 };
 
 function loadCostCenters() {
-    if (costCenterDropDownList.length) {
-        $.ajax({
-            type: "POST",
-            url: "/Services/AccountData.asmx/GetCostCenters",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (msg) {
-                bindCostCenters(msg.d);
-            },
-            error: function (xhr) {
-                var err = xhr.responseText;
-                appendItem(costCenterDropDownList, 0, err.Message);
-            }
-        });
-    }
+    url = "/Services/AccountData.asmx/GetCostCenters";
+    var costCenterAjax = getAjax(url);
+
+    costCenterAjax.success(function (msg) {
+        bindCostCenters(msg.d);
+    });
+
+    costCenterAjax.error(function (xhr) {
+        var err = $.parseJSON(xhr.responseText);
+        appendItem(costCenterDropDownList, 0, err.Message);
+    });
 };
 
 function loadItems() {
-    $.ajax({
-        type: "POST",
-        url: "/Services/ItemData.asmx/GetItems",
-        data: "{tranBook:'" + tranBook + "'}",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (msg) {
-            bindItems(msg.d);
-        },
-        error: function (xhr) {
-            var err = xhr.responseText;
-            appendItem(itemDropDownList, 0, err.Message);
-        }
+    url = "/Services/ItemData.asmx/GetItems";
+    data = appendParameter("", "tranBook", tranBook);
+    data = getData(data);
+
+    var itemAjax = getAjax(url, data);
+
+    itemAjax.success(function (msg) {
+        bindItems(msg.d);
+    });
+
+    itemAjax.error(function (xhr) {
+        var err = $.parseJSON(xhr.responseText);
+        appendItem(itemDropDownList, 0, err.Message);
     });
 };
 
 function loadParties() {
-    $.ajax({
-        type: "POST",
-        url: "/Services/PartyData.asmx/GetParties",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (msg) {
-            bindParties(msg.d);
-        },
-        error: function (xhr) {
-            var err = xhr.responseText;
-            appendItem(partyDropDownList, 0, err.Message);
-        }
+    url = "/Services/PartyData.asmx/GetParties";
+    var partyAjax = getAjax(url);
+
+    partyAjax.success(function (msg) {
+        bindParties(msg.d);
+    });
+
+    partyAjax.error(function () {
+        var err = $.parseJSON(xhr.responseText);
+        appendItem(partyDropDownList, 0, err.Message);
     });
 };
 
 function loadPriceTypes() {
     if (priceTypeDropDownList.length) {
-        $.ajax({
-            type: "POST",
-            url: "/Services/ItemData.asmx/GetPriceTypes",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (msg) {
-                bindPriceTypes(msg.d);
-            },
-            error: function (xhr) {
-                var err = xhr.responseText;
-                appendItem(priceTypeDropDownList, 0, err.Message);
-            }
+        url = "/Services/ItemData.asmx/GetPriceTypes";
+        var priceTypeAjax = getAjax(url);
+
+        priceTypeAjax.success(function (msg) {
+            bindPriceTypes(msg.d);
         });
-    }
+
+        priceTypeAjax.error(function (xhr) {
+            var err = $.parseJSON(xhr.responseText);
+            appendItem(priceTypeDropDownList, 0, err.Message);
+        });
+    };
 };
 
 function loadShippers() {
     if (shippingCompanyDropDownList.length) {
-        $.ajax({
-            type: "POST",
-            url: "/Services/ItemData.asmx/GetShippers",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (msg) {
-                bindShippers(msg.d);
-            },
-            error: function (xhr) {
-                var err = xhr.responseText;
-                appendItem(shippingCompanyDropDownList, 0, err.Message);
-            }
+        url = "/Services/ItemData.asmx/GetShippers";
+
+        var shipperAjax = getAjax(url);
+
+        shipperAjax.success(function (msg) {
+            bindShippers(msg.d);
         });
-    }
+
+        shipperAjax.error(function (xhr) {
+            var err = $.parseJSON(xhr.responseText);
+            appendItem(shippingCompanyDropDownList, 0, err.Message);
+        });
+
+    };
 };
 
 function loadStores() {
     if (storeDropDownList.length) {
-        $.ajax({
-            type: "POST",
-            url: "/Services/ItemData.asmx/GetStores",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (msg) {
-                bindStores(msg.d);
-            },
-            error: function (xhr) {
-                var err = xhr.responseText;
-                appendItem(storeDropDownList, 0, err.Message);
-            }
+        url = "/Services/ItemData.asmx/GetStores";
+        var storeAjax = getAjax(url);
+
+        storeAjax.success(function (msg) {
+            bindStores(msg.d);
         });
-    }
+
+        storeAjax.error(function (xhr) {
+            var err = $.parseJSON(xhr.responseText);
+            appendItem(storeDropDownList, 0, err.Message);
+        });
+    };
 };
 
 function loadUnits() {
     var itemCode = itemCodeHidden.val();
 
-    $.ajax({
-        type: "POST",
-        url: "/Services/ItemData.asmx/GetUnits",
-        data: "{itemCode:'" + itemCode + "'}",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (msg) {
-            bindUnits(msg.d);
-        },
-        error: function (xhr) {
-            var err = xhr.responseText;
-            appendItem(unitDropDownList, 0, err.Message);
-        }
+    url = "/Services/ItemData.asmx/GetUnits";
+    data = appendParameter("", "itemCode", itemCode);
+    data = getData(data);
+
+    var unitAjax = getAjax(url, data);
+
+    unitAjax.success(function (msg) {
+        bindUnits(msg.d);
+    });
+
+    unitAjax.error(function (xhr) {
+        var err = $.parseJSON(xhr.responseText);
+        appendItem(unitDropDownList, 0, err.Message);
     });
 };
 
@@ -813,12 +680,10 @@ var restoreData = function () {
     }
 };
 
-var updateData = function () {
-    var targetControl = productGridViewDataHidden;
+var updateData = function (targetControl, grid) {
     var colData = new Array;
     var rowData = new Array;
 
-    var grid = productGridView;
     var rows = grid.find("tr:not(:first-child):not(:last-child)");
 
     rows.each(function () {
@@ -1054,90 +919,6 @@ var addRowToTable = function (itemCode, itemName, quantity, unitName, price, dis
 };
 
 
-var removeRow = function (cell) {
-    var result = confirm(areYouSureLocalized);
-
-    if (result) {
-        cell.closest("tr").remove();
-    }
-};
-
-var toggleDanger = function(cell)
-{
-    var row = cell.closest("tr");
-    row.removeClass("alert-success");
-    row.toggleClass("alert alert-danger");
-};
-
-
-var addDanger = function (row) {
-    row.removeClass("alert-success");
-    row.addClass("alert alert-danger");
-};
-
-
-var toggleSuccess = function (cell) {
-    var row = cell.closest("tr");
-    row.toggleClass("alert alert-success");
-};
-
-
-//Boolean Validation
-var itemCodeExists = function (itemCode) {
-    return $.ajax({
-        type: "POST",
-        url: "/Services/ItemData.asmx/ItemCodeExists",
-        data: "{itemCode:'" + itemCode + "'}",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json"
-    });
-};
-
-var isStockItem = function (itemCode) {
-    return $.ajax({
-        type: "POST",
-        url: "/Services/ItemData.asmx/IsStockItem",
-        data: "{itemCode:'" + itemCode + "'}",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json"
-    });
-};
-
-var unitNameExists = function (unitName) {
-    return $.ajax({
-        type: "POST",
-        url: "/Services/ItemData.asmx/UnitNameExists",
-        data: "{unitName:'" + unitName + "'}",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json"
-    });
-};
-
-
-
-//Validation Helper Functions
-var countItemInStock = function (itemCode, unitId, storeId) {
-    return $.ajax({
-        type: "POST",
-        url: "/Services/ItemData.asmx/CountItemInStock",
-        data: "{itemCode:'" + itemCode + "', unitId:'" + unitId + "', storeId:'" + storeId + "'}",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json"
-    });
-};
-
-var countItemInStockByUnitName = function (itemCode, unitName, storeId) {
-    return $.ajax({
-        type: "POST",
-        url: "/Services/ItemData.asmx/CountItemInStockByUnitName",
-        data: "{itemCode:'" + itemCode + "', unitId:'" + unitId + "', storeId:'" + storeId + "'}",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json"
-    });
-};
-
-
-
 //Ajax Requests
 var getPrice = function () {
     var itemCode = itemCodeHidden.val();
@@ -1155,43 +936,97 @@ var getPrice = function () {
         };
     };
 
+    url = "/Services/ItemData.asmx/GetPrice";
+    data = appendParameter("", "tranBook", tranBook);
+    data = appendParameter(data, "itemCode", itemCode);
+    data = appendParameter(data, "partyCode", partyCode);
+    data = appendParameter(data, "priceTypeId", priceTypeId);
+    data = appendParameter(data, "unitId", unitId);
 
 
-    $.ajax({
-        type: "POST",
-        url: "/Services/ItemData.asmx/GetPrice",
-        data: "{tranBook:'" + tranBook + "', itemCode:'" + itemCode + "', partyCode:'" + partyCode + "', priceTypeId:'" + priceTypeId + "', unitId:'" + unitId + "'}",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (msg) {
-            priceTextBox.val(msg.d);
-            taxTextBox.val("");
-        },
-        error: function (xhr) {
-            var err = xhr.responseText;
-            logError(err, "error");
-        }
+    data = getData(data);
+
+    var priceAjax = getAjax(url, data);
+
+    priceAjax.success(function (msg) {
+        priceTextBox.val(msg.d);
+        taxTextBox.val("");
     });
 
-    $.ajax({
-        type: "POST",
-        url: "/Services/ItemData.asmx/GetTaxRate",
-        data: "{itemCode:'" + itemCode + "'}",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (msg) {
-            taxRateTextBox.val(msg.d);
-        },
-        error: function (xhr) {
-            var err = xhr.responseText;
-            logError(err, "error");
-        }
+    priceAjax.error(function (xhr) {
+        var err = $.parseJSON(xhr.responseText);
+        logError(err, "error");
     });
 
 
+    url = "/Services/ItemData.asmx/GetTaxRate";
+    data = appendParameter("", "itemCode", itemCode);
+    data = getData(data);
+
+    var taxRateAjax = getAjax(url, data);
+
+    taxRateAjax.success(function (msg) {
+        taxRateTextBox.val(msg.d);
+    });
+
+    taxRateAjax.error(function (xhr) {
+        var err = $.parseJSON(xhr.responseText);
+        logError(err, "error");
+    });
 
     calculateAmount();
 };
+
+
+//Boolean Validation
+var itemCodeExists = function (itemCode) {
+    url = "/Services/ItemData.asmx/ItemCodeExists";
+    data = appendParameter("", "itemCode", itemCode);
+    data = getData(data);
+
+    return getAjax(url, data);
+};
+
+var isStockItem = function (itemCode) {
+    url = "/Services/ItemData.asmx/IsStockItem";
+    data = appendParameter("", "itemCode", itemCode);
+    data = getData(data);
+
+    return getAjax(url, data);
+};
+
+var unitNameExists = function (unitName) {
+    url = "/Services/ItemData.asmx/UnitNameExists";
+    data = appendParameter("", "unitName", unitName);
+    data = getData(data);
+    return getAjax(url, data);
+};
+
+
+
+//Validation Helper Functions
+var countItemInStock = function (itemCode, unitId, storeId) {
+    url = "/Services/ItemData.asmx/CountItemInStock";
+    data = appendParameter("", "itemCode", itemCode);
+    data = appendParameter(data, "unitId", unitId);
+    data = appendParameter(data, "storeId", storeId);
+    data = getData(data);
+
+    return getAjax(url, data);
+};
+
+var countItemInStockByUnitName = function (itemCode, unitName, storeId) {
+    url = "/Services/ItemData.asmx/CountItemInStockByUnitName";
+    data = appendParameter("", "itemCode", itemCode);
+    data = appendParameter(data, "unitId", unitId);
+    data = appendParameter(data, "storeId", storeId);
+    data = getData(data);
+
+    return getAjax(url, data);
+};
+
+
+
 
 
 //Logic & Validation
@@ -1217,15 +1052,14 @@ var showShippingAddress = function () {
 
 
 //Utilities
-function addShortCuts() {
+function addShortcuts() {
     shortcut.add("F2", function () {
-        var url = "/Inventory/Setup/PartiesPopup.aspx?modal=1&CallBackFunctionName=initializeAjaxData&AssociatedControlId=PartyIdHidden";
+        url = "/Inventory/Setup/PartiesPopup.aspx?modal=1&CallBackFunctionName=initializeAjaxData&AssociatedControlId=PartyIdHidden";
         showWindow(url);
     });
 
     shortcut.add("F4", function () {
-        var url = "/Inventory/Setup/ItemsPopup.aspx?modal=1&CallBackFunctionName=initializeAjaxData&AssociatedControlId=ItemIdHidden";
-        //var url = "test.html";
+        url = "/Inventory/Setup/ItemsPopup.aspx?modal=1&CallBackFunctionName=initializeAjaxData&AssociatedControlId=ItemIdHidden";
         showWindow(url);
     });
 
@@ -1266,4 +1100,3 @@ function addShortCuts() {
     });
 
 };
-

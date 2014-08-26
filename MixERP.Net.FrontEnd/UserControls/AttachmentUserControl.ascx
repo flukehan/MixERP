@@ -123,11 +123,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 </div>
 <script type="text/javascript">
-    var invalidFileLocalized = "<%= Resources.Warnings.InvalidFile %>";
     var allowedExtensions = "<%= this.GetAllowedExtensions() %>".split(",");
-    var areYouSureLocalized = "<%= Resources.Questions.AreYouSure %>";
-    var uploadedFilesDeletedLocalized = "<%= Resources.Labels.UploadedFilesDeleted %>";
-    var duplicateFileLocalized = "<% = Resources.Errors.DuplicateFiles %>";
 </script>
 
 <script src="/Scripts/ajax-file-upload.js"></script>

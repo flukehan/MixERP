@@ -681,4 +681,28 @@
   <data name="MergeBatchToGRN" xml:space="preserve">
     <value>Merge Batch to GRN</value>
   </data>
+  <data name="AltA" xml:space="preserve">
+    <value>Alt +A</value>
+  </data>
+  <data name="CtrlS" xml:space="preserve">
+    <value>Ctrl + S</value>
+  </data>
+  <data name="AltD" xml:space="preserve">
+    <value>Alt +D</value>
+  </data>
+  <data name="CtrlAltA" xml:space="preserve">
+    <value>CTRL +ALT + A</value>
+  </data>
+  <data name="CtrlAltC" xml:space="preserve">
+    <value>CTRL +ALT + D</value>
+  </data>
+  <data name="CtrlAltD" xml:space="preserve">
+    <value>CTRL +ALT + D</value>
+  </data>
+  <data name="CtrlAltS" xml:space="preserve">
+    <value>CTRL +ALT + S</value>
+  </data>
+  <data name="CtrlAltT" xml:space="preserve">
+    <value>CTRL +ALT + T</value>
+  </data>
 </root>

@@ -61,24 +61,27 @@ undoButton.on("click", function () {
 
     if (uploadedFilesHidden.val() != "") {
         if (confirm(areYouSureLocalized)) {
-            $.ajax({
-                type: "POST",
-                url: "/Services/UploadHelper.asmx/UndoUpload",
-                data: "{'uploadedFilesJson': '" + uploadedFilesHidden.val() + "'}",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function () {
-                    progressBars.val(0);
-                    paragraphs.html("");
-                    comments.val("");
-                    $("#fileUploads table *").enable();
-                    uploadedFilesHidden.val("");
-                    $.notify(uploadedFilesDeletedLocalized, "success");
-                },
-                error: function (e) {
-                    $.notify(e.error, "error");
-                }
+
+            var url = "/Services/UploadHelper.asmx/UndoUpload";
+            var data = appendParameter("", "uploadedFilesJson", uploadedFilesHidden.val());
+            data = getData(data);
+
+            var undoUploadAjax = getAjax(url, data);
+
+            undoUploadAjax.success(function(msg) {
+                progressBars.val(0);
+                paragraphs.html("");
+                comments.val("");
+                $("#fileUploads table *").enable();
+                uploadedFilesHidden.val("");
+                $.notify(uploadedFilesDeletedLocalized, "success");
             });
+
+            undoUploadAjax.error(function (xhr) {
+                $.notify(xhr.error, "error");
+            });
+
+
         }
     }
 });

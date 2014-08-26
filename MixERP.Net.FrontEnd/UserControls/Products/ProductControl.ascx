@@ -417,29 +417,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
     var tranBook = "<%=this.GetTranBook() %>";
     var taxAfterDiscount = "<%=Switches.TaxAfterDiscount().ToString()%>";
     var verifyStock = ("<%= this.VerifyStock %>" == "True");
-
-
-    var areYouSureLocalized = "<%=Resources.Questions.AreYouSure %>";
-
-    var gridViewEmptyWarningLocalized = "<%=Resources.Warnings.GridViewEmpty%>";
-
-    var insufficientStockWarningLocalized = "<%= Resources.Warnings.InsufficientStockWarning %>";
-    var invalidDateWarningLocalized = "<%= Resources.Warnings.InvalidDate %>";
-    var invalidPartyWarningLocalized = "<%= Resources.Warnings.InvalidParty %>";
-    var invalidPriceTypeWarningLocalized = "<%= Resources.Warnings.InvalidPriceType %>";
-    var invalidStoreWarningLocalized = "<%=Resources.Warnings.InvalidStore%>";
-
-    var invalidShippingCompanyWarningLocalized = "<%=Resources.Warnings.InvalidShippingCompany%>";
-    var invalidCashRepositoryWarningLocalized = "<%=Resources.Warnings.InvalidCashRepository%>";
-    var invalidCostCenterWarningLocalized = "<%=Resources.Warnings.InvalidCostCenter%>";
-    var invalidSalesPersonWarningLocalized = "<%=Resources.Warnings.InvalidSalesPerson%>";
-
-    var salesNotAllowedHereWarningLocalized = "<%=Resources.Warnings.SalesNotAllowedHere%>";
-
-    var noneLocalized = "<%=Resources.Titles.None %>";
-    var selectLocalized = "<%=Resources.Titles.Select %>";
-
-
 </script>
 
 <script src="../../Scripts/UserControls/ProductControl.js"></script>
