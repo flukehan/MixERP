@@ -151,7 +151,7 @@ namespace MixERP.Net.WebControls.ReportEngine
             this.closeImageButton = new ImageButton();
             this.closeImageButton.CssClass = this.GetImageButtonCssClass();
             this.closeImageButton.ID = "CloseImageButton";
-            this.closeImageButton.OnClientClick = "window.close();";
+            this.closeImageButton.OnClientClick = "closeWindow();";
             this.closeImageButton.ImageUrl = this.Page.ResolveUrl(ConfigurationHelper.GetReportParameter("CloseIcon"));
 
             p.Controls.Add(this.closeImageButton);

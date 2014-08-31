@@ -89,7 +89,8 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                         }
 
                         #region TransactionDetails
-                        sql = "INSERT INTO transactions.transaction_details(transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, amount) SELECT @TransactionMasterId, @TranType, core.get_account_id_by_parameter(@ParameterName), @StatementReference, @CashRepositoryId, @Amount;";
+                        sql = "INSERT INTO transactions.transaction_details(transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, amount_in_local_currency) " +
+                              "SELECT @TransactionMasterId, @TranType, core.get_account_id_by_parameter(@ParameterName), @StatementReference, @CashRepositoryId, transactions.get_default_currency_code_by_office_id(@OfficeId), @Amount, transactions.get_default_currency_code_by_office_id(@OfficeId), @Amount;";
 
                         using(NpgsqlCommand purchaseRow = new NpgsqlCommand(sql, connection))
                         {
@@ -98,6 +99,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                             purchaseRow.Parameters.AddWithValue("@ParameterName", purchaseInvariantParameter);
                             purchaseRow.Parameters.AddWithValue("@StatementReference", statementReference);
                             purchaseRow.Parameters.AddWithValue("@CashRepositoryId", DBNull.Value);
+                            purchaseRow.Parameters.AddWithValue("@OfficeId", officeId); 
                             purchaseRow.Parameters.AddWithValue("@Amount", total);
 
                             purchaseRow.ExecuteNonQuery();
@@ -112,6 +114,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                                 taxRow.Parameters.AddWithValue("@ParameterName", purchaseTaxInvariantParamter);
                                 taxRow.Parameters.AddWithValue("@StatementReference", statementReference);
                                 taxRow.Parameters.AddWithValue("@CashRepositoryId", DBNull.Value);
+                                taxRow.Parameters.AddWithValue("@OfficeId", officeId);
                                 taxRow.Parameters.AddWithValue("@Amount", taxTotal);
                                 taxRow.ExecuteNonQuery();
                             }
@@ -126,6 +129,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                                 discountRow.Parameters.AddWithValue("@ParameterName", purchaseDiscountInvariantParameter);
                                 discountRow.Parameters.AddWithValue("@StatementReference", statementReference);
                                 discountRow.Parameters.AddWithValue("@CashRepositoryId", DBNull.Value);
+                                discountRow.Parameters.AddWithValue("@OfficeId", officeId);
                                 discountRow.Parameters.AddWithValue("@Amount", discountTotal);
                                 discountRow.ExecuteNonQuery();
                             }
@@ -140,13 +144,15 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                                 creditRow.Parameters.AddWithValue("@ParameterName", creditInvariantParameter);
                                 creditRow.Parameters.AddWithValue("@StatementReference", statementReference);
                                 creditRow.Parameters.AddWithValue("@CashRepositoryId", DBNull.Value);
+                                creditRow.Parameters.AddWithValue("@OfficeId", officeId);
                                 creditRow.Parameters.AddWithValue("@Amount", total - discountTotal + taxTotal);
                                 creditRow.ExecuteNonQuery();
                             }
                         }
                         else
                         {
-                            sql = "INSERT INTO transactions.transaction_details(transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, amount) SELECT @TransactionMasterId, @TranType, core.get_cash_account_id(), @StatementReference, @CashRepositoryId, @Amount;";
+                            sql = "INSERT INTO transactions.transaction_details(transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, amount_in_local_currency) " +
+                                  "SELECT @TransactionMasterId, @TranType, core.get_cash_account_id(), @StatementReference, @CashRepositoryId, transactions.get_default_currency_code_by_office_id(@OfficeId), @Amount, transactions.get_default_currency_code_by_office_id(@OfficeId), @Amount;";
 
                             using(NpgsqlCommand cashRow = new NpgsqlCommand(sql, connection))
                             {
@@ -154,6 +160,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                                 cashRow.Parameters.AddWithValue("@TranType", "Cr");
                                 cashRow.Parameters.AddWithValue("@StatementReference", statementReference);
                                 cashRow.Parameters.AddWithValue("@CashRepositoryId", stockMaster.CashRepositoryId);
+                                cashRow.Parameters.AddWithValue("@OfficeId", officeId);
                                 cashRow.Parameters.AddWithValue("@Amount", total - discountTotal + taxTotal);
                                 cashRow.ExecuteNonQuery();
                             }

@@ -28,7 +28,9 @@
             }
 
         .report-command {
-            float: right;
+            position: fixed;
+            right: 24px;
+            top: 24px;
             padding: 6px;
             background-color: #f1e0fb;
             border: 1px solid #e2c2f5;
@@ -50,6 +52,12 @@
     <form id="form1" runat="server">
         <asp:ContentPlaceHolder ID="BodyPlaceholder" runat="server">
         </asp:ContentPlaceHolder>
+        
+        <script type="text/javascript">
+            var closeWindow = function () {
+                parent.$.fn.colorbox.close();
+            };
+        </script>
     </form>
 </body>
 </html>

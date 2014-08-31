@@ -104,5 +104,23 @@ namespace Resources {
                 return ResourceManager.GetString("InvalidSubTranBookSalesPayment", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No transaction to post..
+        /// </summary>
+        internal static string NoTransactionToPost {
+            get {
+                return ResourceManager.GetString("NoTransactionToPost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Referencing sides are not equal..
+        /// </summary>
+        internal static string ReferencingSidesNotEqual {
+            get {
+                return ResourceManager.GetString("ReferencingSidesNotEqual", resourceCulture);
+            }
+        }
     }
 }

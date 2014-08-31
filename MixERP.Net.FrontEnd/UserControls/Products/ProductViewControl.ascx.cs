@@ -57,6 +57,21 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         public string AddNewUrl { get; set; }
 
+        public bool ShowMergeToDeliveryButton
+        {
+            set { MergeToDeliveryButton.Visible = value; }
+        }
+
+        public bool ShowMergeToOrderButton
+        {
+            set { MergeToOrderButton.Visible = value; }
+        }
+
+        public bool ShowMergeToGRNButton
+        {
+            set { MergeToGRNButton.Visible = value; }
+        }
+
         protected void Page_Init()
         {
             this.BindFlagTypeDropDownList();
@@ -71,32 +86,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         {
             this.LoadGridView();
             this.InitializePostBackUrls();
-            this.InitializeLinkButtons();
-        }
-
-        private void InitializeLinkButtons()
-        {
-            if (this.Book == TranBook.Sales)
-            {
-                if (this.SubBook == SubTranBook.Order)
-                {
-                    this.MergeToDeliveryButton.Visible = true;
-                }
-
-                if (this.SubBook == SubTranBook.Quotation)
-                {
-                    this.MergeToOrderButton.Visible = true;
-                    this.MergeToDeliveryButton.Visible = true;
-                }
-            }
-
-            if (this.Book == TranBook.Purchase)
-            {
-                if (this.SubBook == SubTranBook.Order)
-                {
-                    this.MergeToGRNButton.Visible = true;
-                }
-            }
         }
 
         private void InitializePostBackUrls()
@@ -477,6 +466,11 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
             Flags.CreateFlag(flagTypeId, resource, resourceKey, resourceIds);
             this.LoadGridView();
+        }
+
+        protected void CreateInvoiceButton_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

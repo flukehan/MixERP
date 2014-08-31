@@ -705,4 +705,25 @@
   <data name="CtrlAltT" xml:space="preserve">
     <value>CTRL +ALT + T</value>
   </data>
+  <data name="CreateInvoice" xml:space="preserve">
+    <value>Create Invoice</value>
+  </data>
+  <data name="Flag" xml:space="preserve">
+    <value>Flag</value>
+  </data>
+  <data name="SelectCurrency" xml:space="preserve">
+    <value>Select Currency</value>
+  </data>
+  <data name="Currency" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="ER" xml:space="preserve">
+    <value>ER</value>
+  </data>
+  <data name="LCCredit" xml:space="preserve">
+    <value>LC Credit</value>
+  </data>
+  <data name="LCDebit" xml:space="preserve">
+    <value>LC Debit</value>
+  </data>
 </root>

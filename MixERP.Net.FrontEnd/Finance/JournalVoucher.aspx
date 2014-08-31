@@ -22,8 +22,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceholder" runat="server">
-    <script type="text/javascript">
-    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceholder" runat="server">
 </asp:Content>
@@ -49,11 +47,11 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
         </div>
     </div>
 
-
+    <input type="hidden" id="TransactionGridViewHidden" />
     <table id="TransactionGridView" class="table table-hover" runat="server">
         <tbody>
             <tr>
-                <th style="width: 400px;">
+                <th style="width: 200px;">
                     <asp:Literal runat="server" Text="<%$ Resources:Titles,StatementReference%>" />
                 </th>
                 <th scope="col" style="width: 100px;">
@@ -62,8 +60,11 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
                 <th style="width: 250px;">
                     <asp:Literal runat="server" Text="<%$ Resources:Titles,Account %>" />
                 </th>
-                <th style="width: 200px;">
+                <th style="width: 160px;">
                     <asp:Literal runat="server" Text="<%$ Resources:Titles,CashRepository%>" />
+                </th>
+                <th style="width: 120px;">
+                    <asp:Literal runat="server" Text="<%$ Resources:Titles,Currency %>" />
                 </th>
                 <th class="text-right" style="width: 100px;">
                     <asp:Literal runat="server" Text="<%$ Resources:Titles,Debit%>" />
@@ -71,7 +72,16 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
                 <th class="text-right" style="width: 100px;">
                     <asp:Literal runat="server" Text="<%$ Resources:Titles,Credit%>" />
                 </th>
-                <th>
+                <th class="text-right" style="width: 80px;">
+                    <asp:Literal runat="server" Text="<%$ Resources:Titles,ER%>" />
+                </th>
+                <th class="text-right" style="width: 100px;">
+                    <asp:Literal runat="server" Text="<%$ Resources:Titles,LCDebit%>" />
+                </th>
+                <th class="text-right" style="width: 100px;">
+                    <asp:Literal runat="server" Text="<%$ Resources:Titles,LCCredit%>" />
+                </th>
+                <th style="width: 100px;">
                     <asp:Literal runat="server" Text="<%$ Resources:Titles,Action %>" />
                 </th>
             </tr>
@@ -102,15 +112,40 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
                     </select>
                 </td>
                 <td>
+                    <select name="CurrencyDropDownList"
+                        id="CurrencyDropDownList"
+                        class="form-control  input-sm">
+                    </select>
+                </td>
+                <td>
                     <input type="text"
                         id="DebitTextBox"
-                        class="text-right number form-control input-sm"
+                        class="text-right currency form-control input-sm"
                         title='<asp:Literal runat="server" Text="<%$Resources:Titles,CtrlAltD%>" />' />
                 </td>
                 <td>
                     <input type="text"
                         id="CreditTextBox"
-                        class="text-right number form-control input-sm"
+                        class="text-right currency form-control input-sm"
+                        title='<asp:Literal runat="server" Text="<%$Resources:Titles,CtrlAltC%>" />' />
+                </td>
+                <td>
+                    <input type="text"
+                        id="ERTextBox"
+                        class="text-right float form-control input-sm" />
+                </td>
+                <td>
+                    <input type="text"
+                        id="LCDebitTextBox"
+                        class="text-right currency form-control input-sm"
+                        disabled="disabled"
+                        title='<asp:Literal runat="server" Text="<%$Resources:Titles,CtrlAltD%>" />' />
+                </td>
+                <td>
+                    <input type="text"
+                        id="LCCreditTextBox"
+                        class="text-right currency form-control input-sm"
+                        disabled="disabled"
                         title='<asp:Literal runat="server" Text="<%$Resources:Titles,CtrlAltC%>" />' />
                 </td>
                 <td>
@@ -150,7 +185,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
             <input type="text"
                 id="DebitTotalTextBox"
                 readonly="readonly"
-                class="text-right number form-control input-sm" />
+                class="text-right currency form-control input-sm" />
         </div>
         <div class="form-group">
             <label for="CreditTotalLiteral">
@@ -159,13 +194,15 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
             <input type="text"
                 id="CreditTotalTextBox"
                 readonly="readonly"
-                class="text-right number form-control input-sm" />
+                class="text-right currency form-control input-sm" />
 
         </div>
         <button id="PostButton" type="button" class="btn btn-primary btn-sm">
             <asp:Literal runat="server" Text="<%$Resources:Titles, PostTransaction %>"></asp:Literal>
         </button>
+
     </div>
+    <asp:Label runat="server" ID="ErrorLabelBottom" CssClass="error"></asp:Label>
 
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceholder" runat="server">

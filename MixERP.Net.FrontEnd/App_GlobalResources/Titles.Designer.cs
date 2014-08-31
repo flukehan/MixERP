@@ -421,6 +421,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create Invoice.
+        /// </summary>
+        internal static string CreateInvoice {
+            get {
+                return ResourceManager.GetString("CreateInvoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Credit.
         /// </summary>
         internal static string Credit {
@@ -552,6 +561,15 @@ namespace Resources {
         internal static string Currencies {
             get {
                 return ResourceManager.GetString("Currencies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Currency.
+        /// </summary>
+        internal static string Currency {
+            get {
+                return ResourceManager.GetString("Currency", resourceCulture);
             }
         }
         
@@ -736,6 +754,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ER.
+        /// </summary>
+        internal static string ER {
+            get {
+                return ResourceManager.GetString("ER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Execute.
         /// </summary>
         internal static string Execute {
@@ -759,6 +786,15 @@ namespace Resources {
         internal static string FiscalYear {
             get {
                 return ResourceManager.GetString("FiscalYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Flag.
+        /// </summary>
+        internal static string Flag {
+            get {
+                return ResourceManager.GetString("Flag", resourceCulture);
             }
         }
         
@@ -912,6 +948,24 @@ namespace Resources {
         internal static string JournalVoucherEntry {
             get {
                 return ResourceManager.GetString("JournalVoucherEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LC Credit.
+        /// </summary>
+        internal static string LCCredit {
+            get {
+                return ResourceManager.GetString("LCCredit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LC Debit.
+        /// </summary>
+        internal static string LCDebit {
+            get {
+                return ResourceManager.GetString("LCDebit", resourceCulture);
             }
         }
         
@@ -1371,6 +1425,15 @@ namespace Resources {
         internal static string Select {
             get {
                 return ResourceManager.GetString("Select", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Currency.
+        /// </summary>
+        internal static string SelectCurrency {
+            get {
+                return ResourceManager.GetString("SelectCurrency", resourceCulture);
             }
         }
         

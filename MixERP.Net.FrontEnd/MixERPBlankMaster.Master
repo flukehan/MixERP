@@ -33,7 +33,7 @@
             var shortDateFormat = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetShortDateFormat() %>";
             var thousandSeparator = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetThousandSeparator() %>";
             var decimalSeparator = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetDecimalSeparator() %>";
-            var decimalPlaces = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetDecimalPlaces() %>";
+            var currencyDecimalPlaces = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetCurrencyDecimalPlaces() %>";
             var localizedAreYouSure = "<%= Resources.Questions.AreYouSure %>";
             var localizedUpdateTax = "<%= Resources.Questions.UpdateTax %>";
 

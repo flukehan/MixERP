@@ -223,6 +223,7 @@ var showWindow = function (url) {
 
 
 $(document).ready(function () {
+    setCurrencyFormat();
     setNumberFormat();
 
     if (!(typeof Sys === "undefined")) {
@@ -231,11 +232,16 @@ $(document).ready(function () {
 });
 
 function Page_EndRequest() {
+    setCurrencyFormat();
     setNumberFormat();
 }
 
+var setCurrencyFormat = function () {
+    $('input.currency').number(true, currencyDecimalPlaces, decimalSeparator, thousandSeparator);
+};
+
 var setNumberFormat = function () {
-    $('input.number').number(true, decimalPlaces, decimalSeparator, thousandSeparator);
+    $('input.float').number(true, 6, decimalSeparator, thousandSeparator);
 };
 
 
@@ -635,7 +641,7 @@ var toggleSuccess = function (cell) {
 };
 
 
-jQuery.fn.bindAjaxData = function (ajaxData) {
+jQuery.fn.bindAjaxData = function (ajaxData, skipSelect) {
     "use strict";
     var targetControl = $(this);
     targetControl.empty();
@@ -647,7 +653,9 @@ jQuery.fn.bindAjaxData = function (ajaxData) {
     };
 
 
-    appendItem(targetControl, "", selectLocalized);
+    if (!skipSelect) {
+        appendItem(targetControl, "", selectLocalized);
+    }
 
     $.each(ajaxData, function () {
         appendItem(targetControl, this["Value"], this["Text"]);
@@ -670,8 +678,12 @@ var getAjax = function (url, data) {
 };
 
 var getAjaxErrorMessage = function (xhr) {
-    var err = $.parseJSON(xhr.responseText).Message;
-    return err;
+    if (xhr) {
+        var err = $.parseJSON(xhr.responseText).Message;
+        return err;
+    }
+
+    return "";
 };
 
 var repaint = function () {
@@ -687,3 +699,33 @@ var removeRow = function (cell) {
         cell.closest("tr").remove();
     }
 };
+
+
+var tableToJSON = function (grid) {
+    var colData = new Array;
+    var rowData = new Array;
+
+    var rows = grid.find("tr:not(:first-child):not(:last-child)");
+
+    rows.each(function () {
+        var row = $(this);
+
+        colData = new Array();
+
+        row.find("td:not(:last-child)").each(function () {
+            colData.push($(this).html());
+        });
+
+        rowData.push(colData);
+    });
+
+    data = JSON.stringify(rowData);
+
+    return data;
+};
+
+
+function isDate(val) {
+    var d = new Date(val);
+    return !isNaN(d.valueOf());
+}

@@ -187,19 +187,19 @@ CHECK
 
 DROP DOMAIN IF EXISTS money_strict;
 CREATE DOMAIN money_strict
-AS money
+AS DECIMAL(24, 4)
 CHECK
 (
-	VALUE > '0'
+	VALUE > 0
 );
 
 
 DROP DOMAIN IF EXISTS money_strict2;
 CREATE DOMAIN money_strict2
-AS money
+AS DECIMAL(24, 4)
 CHECK
 (
-	VALUE >= '0'
+	VALUE >= 0
 );
 
 DROP DOMAIN IF EXISTS integer_strict;
@@ -465,9 +465,12 @@ CREATE TABLE core.currencies
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
 
+
 INSERT INTO core.currencies
-SELECT 'NPR', 'Rs.', 'Nepali Rupees', 'paisa' UNION ALL
+SELECT 'NPR', 'रू.', 'Nepali Rupees', 'paisa' UNION ALL
 SELECT 'USD', '$ ', 'United States Dollar', 'cents';
+
+
 
 CREATE FUNCTION office.is_parent_office(parent integer_strict, child integer_strict)
 RETURNS boolean
@@ -511,6 +514,7 @@ CREATE TABLE office.offices
 	currency_code 				national character varying(12) NOT NULL 
 						CONSTRAINT offices_currencies_fk REFERENCES core.currencies(currency_code)
 						CONSTRAINT offices_currency_code_df DEFAULT('NPR'),
+	po_box					national character varying(128) NULL,
 	address_line_1				national character varying(128) NULL,	
 	address_line_2				national character varying(128) NULL,
 	street 					national character varying(50) NULL,
@@ -610,6 +614,72 @@ BEGIN
 		SELECT office.offices.office_name FROM office.offices
 		WHERE office.offices.office_id=$1
 	);
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+CREATE TABLE core.exchange_rates
+(
+	exchange_rate_id			BIGSERIAL NOT NULL PRIMARY KEY,
+	updated_on				TIMESTAMP WITH TIME ZONE NOT NULL CONSTRAINT exchange_rates_updated_on_df DEFAULT(NOW()),
+	office_id				integer NOT NULL REFERENCES office.offices(office_id),
+	status					BOOLEAN NOT NULL CONSTRAINT exchange_rates_status_df DEFAULT(true)
+);
+
+CREATE TABLE core.exchange_rate_details
+(
+	exchange_rate_detail_id			BIGSERIAL NOT NULL PRIMARY KEY,
+	exchange_rate_id			bigint NOT NULL REFERENCES core.exchange_rates(exchange_rate_id),
+	local_currency_code			national character varying(12) NOT NULL REFERENCES core.currencies(currency_code),
+	foreign_currency_code			national character varying(12) NOT NULL REFERENCES core.currencies(currency_code),
+	unit					integer_strict NOT NULL,
+	exchange_rate				decimal_strict NOT NULL
+);
+
+INSERT INTO core.exchange_rates(office_id)
+SELECT 2;
+
+INSERT INTO core.exchange_rate_details(exchange_rate_id, local_currency_code, foreign_currency_code, unit, exchange_rate)
+SELECT 1, 'NPR', 'USD', 1, 100.00; 
+
+INSERT INTO core.exchange_rates(office_id)
+SELECT 3;
+
+INSERT INTO core.exchange_rate_details(exchange_rate_id, local_currency_code, foreign_currency_code, unit, exchange_rate)
+SELECT 2, 'NPR', 'USD', 1, 100.00; 
+
+CREATE FUNCTION transactions.get_exchange_rate(office_id integer, currency_code national character varying(12))
+RETURNS decimal_strict2
+AS
+$$
+	DECLARE _local_currency_code national character varying(12)= '';
+	DECLARE _unit integer_strict2 = 0;
+	DECLARE _exchange_rate decimal_strict2=0;
+BEGIN
+	SELECT office.offices.currency_code
+	INTO _local_currency_code
+	FROM office.offices
+	WHERE office.offices.office_id=$1;
+
+	IF(_local_currency_code = $2) THEN
+		RETURN 1;
+	END IF;
+
+	SELECT unit, exchange_rate
+	INTO _unit, _exchange_rate
+	FROM core.exchange_rate_details
+	INNER JOIN core.exchange_rates
+	ON core.exchange_rate_details.exchange_rate_id = core.exchange_rates.exchange_rate_id
+	WHERE core.exchange_rates.office_id=$1
+	AND foreign_currency_code=$2;
+
+	IF(_unit = 0) THEN
+		RETURN 0;
+	END IF;
+	
+	RETURN _exchange_rate/_unit;	
 END
 $$
 LANGUAGE plpgsql;
@@ -1160,7 +1230,6 @@ UNION ALL SELECT 'Direct Sales', '~/Sales/DirectSales.aspx', 'DRS', 2, core.get_
 UNION ALL SELECT 'Sales Quotation', '~/Sales/Quotation.aspx', 'SQ', 2, core.get_menu_id('SAQ')
 UNION ALL SELECT 'Sales Order', '~/Sales/Order.aspx', 'SO', 2, core.get_menu_id('SAQ')
 UNION ALL SELECT 'Sales Delivery', '~/Sales/Delivery.aspx', 'SD', 2, core.get_menu_id('SAQ')
-UNION ALL SELECT 'Invoice for Sales Delivery', '~/Sales/Invoice.aspx', 'ISD', 2, core.get_menu_id('SAQ')
 UNION ALL SELECT 'Receipt from Customer', '~/Sales/Receipt.aspx', 'RFC', 2, core.get_menu_id('SAQ')
 UNION ALL SELECT 'Sales Return', '~/Sales/Return.aspx', 'SR', 2, core.get_menu_id('SAQ')
 UNION ALL SELECT 'Setup & Maintenance', NULL, 'SSM', 1, core.get_menu_id('SA')
@@ -1295,6 +1364,7 @@ SELECT
 	logged_in_office.registration_date,
 	logged_in_office.registration_number,
 	logged_in_office.pan_number,
+	logged_in_office.po_box,
 	logged_in_office.address_line_1,
 	logged_in_office.address_line_2,
 	logged_in_office.street,
@@ -1746,6 +1816,7 @@ CREATE TABLE core.accounts
 	account_code      			national character varying(12) NOT NULL,
 	external_code     			national character varying(12) NULL CONSTRAINT accounts_external_code_df DEFAULT(''),
 	confidential      			boolean NOT NULL CONSTRAINT accounts_confidential_df DEFAULT(false),
+	currency_code				national character varying(12) NULL REFERENCES core.currencies(currency_code),
 	account_name      			national character varying(100) NOT NULL,
 	description	  			national character varying(200) NULL,
 	sys_type 	  			boolean NOT NULL CONSTRAINT accounts_sys_type_df DEFAULT(false),
@@ -2020,6 +2091,9 @@ INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type,
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '44000', 'Other Expenses', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Expenses');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '44100', 'Gain/Loss on Sale of Assets', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Expenses');
 INSERT INTO core.account_masters(account_master_code, account_master_name) SELECT 'OBS', 'Off Balance Sheet A/C';
+
+UPDATE core.accounts
+SET currency_code='NPR';
 
 CREATE FUNCTION core.disable_editing_sys_type()
 RETURNS TRIGGER
@@ -2383,6 +2457,7 @@ CREATE TABLE core.parties
 	last_name				national character varying(50) NOT NULL,
 	party_name				text NULL,
 	date_of_birth				date NULL,
+	po_box					national character varying(128) NULL,
 	address_line_1				national character varying(128) NULL,	
 	address_line_2				national character varying(128) NULL,
 	street 					national character varying(50) NULL,
@@ -2532,6 +2607,38 @@ END
 $$
 LANGUAGE plpgsql;
 
+
+CREATE FUNCTION core.get_account_id_by_party_id(party_id integer)
+RETURNS integer
+AS
+$$
+BEGIN
+	RETURN
+	(
+		SELECT account_id
+		FROM core.parties
+		WHERE core.parties.party_id=$1
+	);
+END
+$$
+LANGUAGE plpgsql;
+
+
+CREATE FUNCTION core.get_account_id_by_party_code(party_code text)
+RETURNS integer
+AS
+$$
+BEGIN
+	RETURN
+	(
+		SELECT account_id
+		FROM core.parties
+		WHERE core.parties.party_code=$1
+	);
+END
+$$
+LANGUAGE plpgsql;
+
 CREATE VIEW core.party_view
 AS
 SELECT
@@ -2544,6 +2651,7 @@ SELECT
 	core.parties.middle_name,
 	core.parties.last_name,
 	core.parties.party_name,
+	core.parties.po_box,
 	core.parties.address_line_1,
 	core.parties.address_line_2,
 	core.parties.street,
@@ -2568,6 +2676,37 @@ core.parties
 INNER JOIN
 core.party_types
 ON core.parties.party_type_id = core.party_types.party_type_id;
+
+
+CREATE VIEW core.party_user_control_view
+AS
+SELECT
+	core.party_types.party_type_code,
+	core.party_types.party_type_name,
+	core.parties.email,
+	core.parties.url,
+	core.parties.pan_number,
+	core.parties.sst_number,
+	core.parties.cst_number,
+	core.parties.allow_credit,
+	core.parties.maximum_credit_period,
+	core.parties.maximum_credit_amount,
+	core.parties.charge_interest,
+	core.parties.interest_rate,
+	core.accounts.account_code,
+	core.accounts.account_name,
+	core.parties.po_box,
+	core.parties.address_line_1,
+	core.parties.address_line_2,
+	core.parties.street,
+	core.parties.city,
+	core.parties.state,
+	core.parties.country
+FROM core.parties
+INNER JOIN core.party_types
+ON core.parties.party_type_id = core.party_types.party_type_id
+INNER JOIN core.accounts
+ON core.parties.account_id = core.accounts.account_id;
 
 CREATE FUNCTION core.is_supplier(int)
 RETURNS boolean
@@ -2601,6 +2740,7 @@ CREATE TABLE core.shipping_addresses
 	shipping_address_id			BIGSERIAL NOT NULL PRIMARY KEY,
 	shipping_address_code			national character varying(24) NOT NULL,
 	party_id				bigint NOT NULL REFERENCES core.parties(party_id),
+	po_box					national character varying(128) NULL,
 	address_line_1				national character varying(128) NULL,	
 	address_line_2				national character varying(128) NULL,
 	street					national character varying(128) NULL,
@@ -2690,6 +2830,7 @@ SELECT
 	core.shipping_addresses.shipping_address_code,
 	core.shipping_addresses.party_id,
 	core.parties.party_code || ' (' || core.parties.party_name || ')' AS party,
+	core.shipping_addresses.po_box,
 	core.shipping_addresses.address_line_1,
 	core.shipping_addresses.address_line_2,
 	core.shipping_addresses.street,
@@ -2723,6 +2864,7 @@ CREATE TABLE core.shippers
 	shipper_code				national character varying(12) NULL,
 	company_name				national character varying(128) NOT NULL,
 	shipper_name				national character varying(150) NULL,
+	po_box					national character varying(128) NULL,
 	address_line_1				national character varying(128) NULL,	
 	address_line_2				national character varying(128) NULL,
 	street					national character varying(50) NULL,
@@ -2735,6 +2877,7 @@ CREATE TABLE core.shippers
 	email 					national character varying(128) NULL,
 	url 					national character varying(50) NULL,
 	contact_person 				national character varying(50) NULL,
+	contact_po_box				national character varying(128) NULL,
 	contact_address_line_1			national character varying(128) NULL,	
 	contact_address_line_2			national character varying(128) NULL,
 	contact_street 				national character varying(50) NULL,
@@ -3160,15 +3303,15 @@ core.parties
 ON core.item_cost_prices.party_id = core.parties.party_id;
 
 CREATE FUNCTION core.get_item_cost_price(item_id_ integer, unit_id_ integer, party_id_ bigint)
-RETURNS money
+RETURNS money_strict2
 AS
 $$
-	DECLARE _price money;
+	DECLARE _price money_strict2;
 	DECLARE _unit_id integer;
 	DECLARE _factor decimal;
 	DECLARE _tax_rate decimal;
 	DECLARE _includes_tax boolean;
-	DECLARE _tax money;
+	DECLARE _tax money_strict2;
 BEGIN
 	--Fist pick the catalog price which matches all these fields:
 	--Item, Unit, and Supplier.
@@ -3612,10 +3755,29 @@ CREATE TABLE transactions.transaction_details
 	account_id 				integer NOT NULL REFERENCES core.accounts(account_id),
 	statement_reference 			text NULL,
 	cash_repository_id 			integer NULL REFERENCES office.cash_repositories(cash_repository_id),
-	amount 					money_strict NOT NULL,
+	currency_code				national character varying(12) NULL REFERENCES core.currencies(currency_code),
+	amount_in_currency			money_strict NOT NULL,
+	local_currency_code			national character varying(12) NULL REFERENCES core.currencies(currency_code),
+	er					decimal_strict NOT NULL,
+	amount_in_local_currency 		money_strict NOT NULL,	
 	audit_user_id				integer NULL REFERENCES office.users(user_id),
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
+
+CREATE TABLE transactions.customer_receipts
+(
+	receipt_id			BIGSERIAL NOT NULL PRIMARY KEY,
+	transaction_master_id		bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id),
+	party_id			bigint NOT NULL REFERENCES core.parties(party_id),
+	amount				money_strict NOT NULL,
+	cash_repository_id		integer NULL REFERENCES office.cash_repositories(cash_repository_id),
+	bank_account_id			integer NULL REFERENCES core.bank_accounts(account_id),
+	posted_date			date NULL,
+	bank_instrument_code		national character varying(128) NULL CONSTRAINT customer_receipt_bank_instrument_code_df DEFAULT(''),
+	bank_tran_code			national character varying(128) NULL CONSTRAINT customer_receipt_bank_tran_code_df DEFAULT(''),	
+	statement_reference		national character varying(128) NULL CONSTRAINT customer_receipt_statement_reference_df DEFAULT('')	
+);
+
 
 CREATE TABLE transactions.stock_master
 (
@@ -3627,7 +3789,7 @@ CREATE TABLE transactions.stock_master
 	is_credit 				boolean NOT NULL CONSTRAINT stock_master_is_credit_df DEFAULT(false),
 	shipper_id 				integer NULL REFERENCES core.shippers(shipper_id),
 	shipping_address_id 			integer NULL REFERENCES core.shipping_addresses(shipping_address_id),
-	shipping_charge 			money NOT NULL CONSTRAINT stock_master_shipping_charge_df DEFAULT(0),
+	shipping_charge 			money_strict2 NOT NULL CONSTRAINT stock_master_shipping_charge_df DEFAULT(0),
 	store_id 				integer NULL REFERENCES office.stores(store_id),
 	cash_repository_id 			integer NULL REFERENCES office.cash_repositories(cash_repository_id),
 	audit_user_id				integer NULL REFERENCES office.users(user_id),
@@ -3647,20 +3809,13 @@ CREATE TABLE transactions.stock_details
 	base_quantity 				decimal NOT NULL,
 	base_unit_id 				integer NOT NULL REFERENCES core.units(unit_id),
 	price 					money_strict NOT NULL,
-	discount money 				NOT NULL CONSTRAINT stock_details_discount_df DEFAULT(0),
+	discount 				money_strict2 NOT NULL CONSTRAINT stock_details_discount_df DEFAULT(0),
 	tax_rate 				decimal NOT NULL CONSTRAINT stock_details_tax_rate_df DEFAULT(0),
-	tax money 				NOT NULL CONSTRAINT stock_details_tax_df DEFAULT(0),
+	tax 					money_strict2 NOT NULL CONSTRAINT stock_details_tax_df DEFAULT(0),
 	audit_user_id				integer NULL REFERENCES office.users(user_id),
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
 
-CREATE MATERIALIZED VIEW transactions.trial_balance_view
-AS
-SELECT core.get_account_name(account_id), 
-	SUM(CASE transactions.transaction_details.tran_type WHEN 'Dr' THEN amount ELSE NULL END) AS debit,
-	SUM(CASE transactions.transaction_details.tran_type WHEN 'Cr' THEN amount ELSE NULL END) AS Credit
-FROM transactions.transaction_details
-GROUP BY account_id;
 
 
 --TODO
@@ -3692,9 +3847,9 @@ CREATE TABLE transactions.non_gl_stock_details
 	base_quantity 				decimal NOT NULL,
 	base_unit_id 				integer NOT NULL REFERENCES core.units(unit_id),
 	price 					money_strict NOT NULL,
-	discount 				money NOT NULL CONSTRAINT non_gl_stock_details_discount_df DEFAULT(0),
+	discount 				money_strict2 NOT NULL CONSTRAINT non_gl_stock_details_discount_df DEFAULT(0),
 	tax_rate 				decimal NOT NULL CONSTRAINT non_gl_stock_details_tax_rate_df DEFAULT(0),
-	tax 					money NOT NULL CONSTRAINT non_gl_stock_details_tax_df DEFAULT(0),
+	tax 					money_strict2 NOT NULL CONSTRAINT non_gl_stock_details_tax_df DEFAULT(0),
 	audit_user_id				integer NULL REFERENCES office.users(user_id),
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
@@ -3843,11 +3998,11 @@ SELECT 'CLW', 'Closed Won' UNION ALL
 SELECT 'CLL', 'Closed Lost';
 
 CREATE FUNCTION transactions.get_invoice_amount(transaction_master_id_ bigint)
-RETURNS money
+RETURNS money_strict2
 AS
 $$
-DECLARE _shipping_charge money;
-DECLARE _stock_total money;
+DECLARE _shipping_charge money_strict2;
+DECLARE _stock_total money_strict2;
 BEGIN
 	SELECT SUM((quantity * price) + tax - discount) INTO _stock_total
 	FROM transactions.stock_details
@@ -3861,7 +4016,7 @@ BEGIN
 	FROM transactions.stock_master
 	WHERE transactions.stock_master.transaction_master_id=$1;
 
-	RETURN COALESCE(_stock_total + _shipping_charge, 0::money);	
+	RETURN COALESCE(_stock_total + _shipping_charge, 0::money_strict2);	
 END
 $$
 LANGUAGE plpgsql;
@@ -4019,13 +4174,13 @@ CREATE TABLE policy.voucher_verification_policy
 (
 	user_id					integer NOT NULL PRIMARY KEY REFERENCES office.users(user_id),
 	can_verify_sales_transactions		boolean NOT NULL CONSTRAINT voucher_verification_policy_verify_sales_df DEFAULT(false),
-	sales_verification_limit		money NOT NULL CONSTRAINT voucher_verification_policy_sales_verification_limit_df DEFAULT(0),
+	sales_verification_limit		money_strict2 NOT NULL CONSTRAINT voucher_verification_policy_sales_verification_limit_df DEFAULT(0),
 	can_verify_purchase_transactions	boolean NOT NULL CONSTRAINT voucher_verification_policy_verify_purchase_df DEFAULT(false),
-	purchase_verification_limit		money NOT NULL CONSTRAINT voucher_verification_policy_purchase_verification_limit_df DEFAULT(0),
+	purchase_verification_limit		money_strict2 NOT NULL CONSTRAINT voucher_verification_policy_purchase_verification_limit_df DEFAULT(0),
 	can_verify_gl_transactions		boolean NOT NULL CONSTRAINT voucher_verification_policy_verify_gl_df DEFAULT(false),
-	gl_verification_limit			money NOT NULL CONSTRAINT voucher_verification_policy_gl_verification_limit_df DEFAULT(0),
+	gl_verification_limit			money_strict2 NOT NULL CONSTRAINT voucher_verification_policy_gl_verification_limit_df DEFAULT(0),
 	can_self_verify				boolean NOT NULL CONSTRAINT voucher_verification_policy_verify_self_df DEFAULT(false),
-	self_verification_limit			money NOT NULL CONSTRAINT voucher_verification_policy_self_verification_limit_df DEFAULT(0),
+	self_verification_limit			money_strict2 NOT NULL CONSTRAINT voucher_verification_policy_self_verification_limit_df DEFAULT(0),
 	effective_from				date NOT NULL,
 	ends_on					date NOT NULL,
 	is_active				boolean NOT NULL,
@@ -4057,17 +4212,21 @@ CREATE TABLE policy.auto_verification_policy
 (
 	user_id					integer NOT NULL PRIMARY KEY REFERENCES office.users(user_id),
 	verify_sales_transactions		boolean NOT NULL CONSTRAINT auto_verification_policy_verify_sales_df DEFAULT(false),
-	sales_verification_limit		money NOT NULL CONSTRAINT auto_verification_policy_sales_verification_limit_df DEFAULT(0),
+	sales_verification_limit		money_strict2 NOT NULL CONSTRAINT auto_verification_policy_sales_verification_limit_df DEFAULT(0),
 	verify_purchase_transactions		boolean NOT NULL CONSTRAINT auto_verification_policy_verify_purchase_df DEFAULT(false),
-	purchase_verification_limit		money NOT NULL CONSTRAINT auto_verification_policy_purchase_verification_limit_df DEFAULT(0),
+	purchase_verification_limit		money_strict2 NOT NULL CONSTRAINT auto_verification_policy_purchase_verification_limit_df DEFAULT(0),
 	verify_gl_transactions			boolean NOT NULL CONSTRAINT auto_verification_policy_verify_gl_df DEFAULT(false),
-	gl_verification_limit			money NOT NULL CONSTRAINT auto_verification_policy_gl_verification_limit_df DEFAULT(0),
+	gl_verification_limit			money_strict2 NOT NULL CONSTRAINT auto_verification_policy_gl_verification_limit_df DEFAULT(0),
 	effective_from				date NOT NULL,
 	ends_on					date NOT NULL,
 	is_active				boolean NOT NULL,
 	audit_user_id				integer NULL REFERENCES office.users(user_id),
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
+
+INSERT INTO policy.auto_verification_policy
+SELECT 2, true, 0, true, 0, true, 0, '1-1-2010', '1-1-2020', true;
+
 
 CREATE VIEW policy.auto_verification_policy_view
 AS

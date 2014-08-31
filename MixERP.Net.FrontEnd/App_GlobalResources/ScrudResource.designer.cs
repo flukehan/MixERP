@@ -763,6 +763,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Contact PO Box.
+        /// </summary>
+        internal static string contact_po_box {
+            get {
+                return ResourceManager.GetString("contact_po_box", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Contact State.
         /// </summary>
         internal static string contact_state {
@@ -1065,6 +1074,15 @@ namespace Resources {
         internal static string entry_ts {
             get {
                 return ResourceManager.GetString("entry_ts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ER.
+        /// </summary>
+        internal static string er {
+            get {
+                return ResourceManager.GetString("er", resourceCulture);
             }
         }
         
@@ -1551,6 +1569,24 @@ namespace Resources {
         internal static string last_vacuum {
             get {
                 return ResourceManager.GetString("last_vacuum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LC Credit.
+        /// </summary>
+        internal static string lc_credit {
+            get {
+                return ResourceManager.GetString("lc_credit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LC Debit.
+        /// </summary>
+        internal static string lc_debit {
+            get {
+                return ResourceManager.GetString("lc_debit", resourceCulture);
             }
         }
         
@@ -2118,6 +2154,15 @@ namespace Resources {
         internal static string phone {
             get {
                 return ResourceManager.GetString("phone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PO Box.
+        /// </summary>
+        internal static string po_box {
+            get {
+                return ResourceManager.GetString("po_box", resourceCulture);
             }
         }
         

@@ -39,9 +39,20 @@ namespace MixERP.Net.BusinessLayer.Office
             return DatabaseLayer.Office.CashRepositories.GetBalance(cashRepositoryId);
         }
 
+        public static decimal GetBalance(int cashRepositoryId, string currencyCode)
+        {
+            return DatabaseLayer.Office.CashRepositories.GetBalance(cashRepositoryId, currencyCode);
+        }
+
+
         public static decimal GetBalance(string cashRepositoryCode)
         {
             return DatabaseLayer.Office.CashRepositories.GetBalance(cashRepositoryCode);
+        }
+
+        public static decimal GetBalance(string cashRepositoryCode, string currencyCode)
+        {
+            return DatabaseLayer.Office.CashRepositories.GetBalance(cashRepositoryCode, currencyCode);
         }
 
         public static bool CashRepositoryCodeExists(string cashRepositoryCode)

@@ -11,10 +11,18 @@ var attachmentLabel = $("#AttachmentLabel");
 var cashRepositoryDropDownList = $("#CashRepositoryDropDownList");
 var costCenterDropDownList = $("#CostCenterDropDownList");
 var creditTextBox = $("#CreditTextBox");
-var creditTotalTextBox = $("#CreditTotalTextBox");
 
-var debitTotalTextBox = $("#DebitTotalTextBox");
+var creditTotalTextBox = $("#CreditTotalTextBox");
+var currencyDropDownList = $("#CurrencyDropDownList");
+
 var debitTextBox = $("#DebitTextBox");
+var debitTotalTextBox = $("#DebitTotalTextBox");
+
+var errorLabelBottom = $("#ErrorLabelBottom");
+var erTextBox = $("#ERTextBox");
+
+var lcCreditTextBox = $("#LCCreditTextBox");
+var lcDebitTextBox = $("#LCDebitTextBox");
 
 var postButton = $("#PostButton");
 
@@ -23,6 +31,7 @@ var referenceNumberTextBox = $("#ReferenceNumberTextBox");
 var statementReferenceTextBox = $("#StatementReferenceTextBox");
 
 var transactionGridView = $("#TransactionGridView");
+var transactionGridViewHidden = $("#TransactionGridViewHidden");
 
 var valueDateTextBox = $("#ValueDateTextBox");
 
@@ -30,12 +39,19 @@ var valueDateTextBox = $("#ValueDateTextBox");
 //Variables
 var accountCode = "";
 var account = "";
+var attachments;
+
 
 var cashRepositoryCode = "";
 
 var credit = 0;
+var currencyCode = '';
 
 var debit = 0;
+
+var lcCredit = 0;
+var lcDebit = 0;
+var er = 0.00;
 
 var url = "";
 var data = "";
@@ -78,7 +94,17 @@ function loadCashRepositories() {
     var repoAjax = getAjax(url, data);
 
     repoAjax.success(function (msg) {
-        cashRepositoryDropDownList.bindAjaxData(msg.d);
+        $.when(cashRepositoryDropDownList.bindAjaxData(msg.d)).done(function () {
+            if (cashRepositoryDropDownList.children('option').length == 1) {
+                loadCurrenciesByAccountCode(accountDropDownList.getSelectedValue());
+                return;
+            };
+
+            loadCurrencies();
+        });
+
+
+
     });
 
     repoAjax.error(function (xhr) {
@@ -101,6 +127,39 @@ function loadCostCenters() {
     });
 };
 
+function loadCurrencies() {
+    url = "/Services/AccountData.asmx/GetCurrencies";
+
+    var currencyAjax = getAjax(url);
+
+    currencyAjax.success(function (msg) {
+        currencyDropDownList.bindAjaxData(msg.d, true);
+    });
+
+    currencyAjax.error(function (xhr) {
+        var err = $.parseJSON(xhr.responseText);
+        appendItem(currencyDropDownList, 0, err.Message);
+    });
+};
+
+function loadCurrenciesByAccountCode(accountCode) {
+    url = "/Services/AccountData.asmx/GetCurrenciesByAccountCode";
+    data = appendParameter("", "accountCode", accountCode);
+    data = getData(data);
+
+    var currencyAjax = getAjax(url, data);
+
+    currencyAjax.success(function (msg) {
+        currencyDropDownList.bindAjaxData(msg.d, true);
+    });
+
+    currencyAjax.error(function (xhr) {
+        var err = $.parseJSON(xhr.responseText);
+        appendItem(currencyDropDownList, 0, err.Message);
+    });
+};
+
+
 
 //Control Events
 accountDropDownList.change(function () {
@@ -116,8 +175,16 @@ addButton.click(function () {
     accountCode = accountCodeTextBox.val();
     account = accountDropDownList.getSelectedText();
     cashRepositoryCode = cashRepositoryDropDownList.getSelectedValue();
+
+    currencyCode = currencyDropDownList.getSelectedValue();
+
     debit = parseFloat2(debitTextBox.val());
     credit = parseFloat2(creditTextBox.val());
+
+    er = parseFloat2(erTextBox.val());
+
+    lcDebit = parseFloat2(lcDebitTextBox.val());
+    lcCredit = parseFloat2(lcCreditTextBox.val());
 
     if (isNullOrWhiteSpace(statementReference)) {
         makeDirty(statementReferenceTextBox);
@@ -148,18 +215,28 @@ addButton.click(function () {
         return;
     };
 
-    if (debit < 0) {
-        makeDirty(debitTextBox);
+    if ((lcDebit > 0 && lcCredit > 0) || (lcDebit == 0 && lcCredit == 0)) {
+        makeDirty(lcDebitTextBox);
+        makeDirty(lcCreditTextBox);
         return;
     };
 
-    if (credit < 0) {
-        makeDirty(creditTextBox);
+    if (lcDebit < 0) {
+        makeDirty(lcDebitTextBox);
+        return;
+    };
+
+    if (lcCredit < 0) {
+        makeDirty(lcCreditTextBox);
         return;
     };
 
     removeDirty(debitTextBox);
     removeDirty(creditTextBox);
+    removeDirty(lcDebitTextBox);
+    removeDirty(lcCreditTextBox);
+    removeDirty(cashRepositoryDropDownList);
+
 
     if (cashRepositoryDropDownList.find("option").size() > 1 && isNullOrWhiteSpace(cashRepositoryDropDownList.getSelectedValue())) {
         $.notify("Invalid cash repository specified.");
@@ -173,10 +250,6 @@ addButton.click(function () {
 
     var ajaxHasBalance;
 
-    if (credit > 0) {
-        ajaxHasBalance = hasBalance(cashRepositoryCode, credit);
-    };
-
     ajaxAccountCodeExists.error(function (xhr) {
         logError(getAjaxErrorMessage(xhr));
     });
@@ -189,11 +262,6 @@ addButton.click(function () {
         logError(getAjaxErrorMessage(xhr));
     });
 
-    if (credit > 0) {
-        ajaxHasBalance.fail(function (xhr) {
-            logError(getAjaxErrorMessage(xhr));
-        });
-    };
 
 
     ajaxAccountCodeExists.success(function (ajaxAccountCodeExistsResult) {
@@ -205,8 +273,6 @@ addButton.click(function () {
             return;
         };
 
-
-
         ajaxIsCash.success(function (ajaxIsCashResult) {
             var isCash = ajaxIsCashResult.d;
 
@@ -217,7 +283,7 @@ addButton.click(function () {
             };
 
             if (!isCash) {
-                addRow(statementReference, accountCode, account, "", debit, credit);
+                addRow(statementReference, accountCode, account, "", debit, credit, er, lcDebit, lcCredit);
                 return;
             };
 
@@ -238,21 +304,29 @@ addButton.click(function () {
                 };
 
                 if (debit > 0) {
-                    addRow(statementReference, accountCode, account, cashRepositoryCode, debit, credit);
+                    addRow(statementReference, accountCode, account, cashRepositoryCode, debit, credit, er, lcDebit, lcCredit);
                     return;
                 };
 
-                ajaxHasBalance.success(function (hasBalanceResult) {
-                    var hasBalance = hasBalanceResult.d;
+                if (credit > 0 && isCash) {
+                    ajaxHasBalance = hasBalance(cashRepositoryCode, currencyCode, credit);
+                    ajaxHasBalance.fail(function (xhr) {
+                        logError(getAjaxErrorMessage(xhr));
+                    });
 
-                    if (!hasBalance) {
-                        $.notify(String.format("Not enough balance in the cash repository '{0}'.", cashRepositoryCode), "error");
-                        makeDirty(cashRepositoryDropDownList);
-                        return;
-                    };
+                    ajaxHasBalance.success(function (hasBalanceResult) {
+                        var hasBalance = hasBalanceResult.d;
 
-                    addRow(statementReference, accountCode, account, cashRepositoryCode, debit, credit);
-                });
+                        if (!hasBalance) {
+                            $.notify(String.format("Not enough balance in the cash repository '{0}'.", cashRepositoryCode), "error");
+                            makeDirty(cashRepositoryDropDownList);
+                            return;
+                        };
+
+                        addRow(statementReference, accountCode, account, cashRepositoryCode, debit, credit, er, lcDebit, lcCredit);
+                    });
+                };
+
 
 
             });
@@ -263,7 +337,7 @@ addButton.click(function () {
 });
 
 
-var addRow = function (statementReference, accountCode, account, cashRepository, debit, credit) {
+var addRow = function (statementReference, accountCode, account, cashRepository, debit, credit, er, lcDebit, lcCredit) {
     var grid = transactionGridView;
     var rows = grid.find("tr:not(:first-child):not(:last-child)");
 
@@ -278,23 +352,23 @@ var addRow = function (statementReference, accountCode, account, cashRepository,
     });
 
 
-    var html = "<tr class='grid2-row'><td>" + statementReference + "</td><td>" + accountCode + "</td><td>" + account + "</td><td>" + cashRepository + "</td><td class='text-right'>" + debit + "</td><td class='text-right'>" + credit + "</td>" 
+    var html = "<tr class='grid2-row'><td>" + statementReference + "</td><td>" + accountCode + "</td><td>" + account + "</td><td>" + cashRepository + "</td><td>" + currencyCode + "</td><td class='text-right'>" + debit + "</td><td class='text-right'>" + credit + "</td>"
+            + "<td class='text-right'>" + er + "</td><td class='text-right'>" + lcDebit + "</td><td class='text-right'>" + lcCredit + "</td>"
             + "<td><span class='glyphicon glyphicon-remove-circle pointer span-icon' onclick='removeRow($(this));'></span><span class='glyphicon glyphicon-ok-sign pointer span-icon' onclick='toggleDanger($(this));'></span><span class='glyphicon glyphicon glyphicon-thumbs-up pointer span-icon' onclick='toggleSuccess($(this));'></span></td></tr>";
     grid.find("tr:last").before(html);
 
 
     summate();
 
-    statementReferenceTextBox.val("");
-    accountCodeTextBox.val(1);
+    lcDebitTextBox.val("");
+    lcCreditTextBox.val("");
     debitTextBox.val("");
     creditTextBox.val("");
+
+    creditTextBox.prop("disabled", false);
+
     repaint();
     statementReferenceTextBox.focus();
-};
-
-function summate() {
-
 };
 
 attachmentLabel.on("click", function () {
@@ -302,41 +376,166 @@ attachmentLabel.on("click", function () {
     attachmentDiv.toggle(500);
 });
 
-debitTextBox.focus(function () {
-    "use strict";
-    getDebit();
+currencyDropDownList.blur(function () {
+    var ajaxGetExchangeRate = getExchangeRate(currencyDropDownList.getSelectedValue());
+
+    ajaxGetExchangeRate.done(function (msg) {
+        erTextBox.val(msg.d);
+    });
+
+    ajaxGetExchangeRate.fail(function (xhr) {
+        logError(getAjaxErrorMessage(xhr));
+    });
 });
 
-creditTextBox.focus(function () {
-    "use strict";
-    getCredit();
-});
+debitTextBox.blur(function () {
+    debit = parseFloat2(debitTextBox.val());
 
-
-
-var getDebit = function () {
-    "use strict";
-    var drTotal = parseFloat2(debitTotalTextBox.val());
-    var crTotal = parseFloat2(creditTotalTextBox.val());
-
-
-    if (crTotal > drTotal) {
-        if (debitTextBox.val() === '' && creditTextBox.val() === '') {
-            debitTextBox.val(crTotal - drTotal);
-        };
+    if (debit > 0) {
+        creditTextBox.prop("disabled", true);
+        erTextBox.focus();
+        return;
     };
+
+    creditTextBox.prop("disabled", false);
+});
+
+
+debitTextBox.keyup(function () {
+    er = parseFloat2(erTextBox.val());
+    if (er > 0) {
+        lcDebitTextBox.val(parseFloat2(debitTextBox.val() * er));
+    };
+});
+
+creditTextBox.keyup(function () {
+    er = parseFloat2(erTextBox.val());
+    if (er > 0) {
+        lcCreditTextBox.val(parseFloat2(creditTextBox.val() * er));
+    };
+});
+
+
+
+postButton.click(function () {
+    if (validate()) {
+        post();
+    };
+});
+
+
+
+var post = function () {
+    var ajaxPostJournalTransaction = postpostJournalTransaction(valueDate, referenceNumber, data, costCenterId, attachments);
+
+    ajaxPostJournalTransaction.done(function (response) {
+        var id = response.d;
+        window.location = "/Finance/Confirmation/JournalVoucher.aspx?TranId=" + id;
+    });
+
+    ajaxPostJournalTransaction.fail(function (jqXHR) {
+        var errorMessage = JSON.parse(jqXHR.responseText).Message;
+        errorLabelBottom.html(errorMessage);
+        logError(errorMessage);
+    });
 };
 
-var getCredit = function () {
-    "use strict";
-    var drTotal = parseFloat2(debitTotalTextBox.val());
-    var crTotal = parseFloat2(creditTotalTextBox.val());
+var postpostJournalTransaction = function (valueDate, referenceNumber, data, costCenterId, attachments) {
+    var d = "";
+    d = appendParameter(d, "valueDate", valueDate);
+    d = appendParameter(d, "referenceNumber", referenceNumber);
+    d = appendParameter(d, "data", data);
+    d = appendParameter(d, "costCenterId", costCenterId);
+    d = appendParameter(d, "attachmentsJSON", attachments);
+    d = getData(d);
 
-    if (drTotal > crTotal) {
-        if (debitTextBox.val() === '' && creditTextBox.val() === '') {
-            creditTextBox.val(drTotal - crTotal);
-        };
+    url = "/Services/Finance/JournalVoucher.asmx/Save";
+    return getAjax(url, d);
+
+
+};
+
+
+var validate = function () {
+    valueDate = valueDateTextBox.val();
+
+    errorLabelBottom.html("");
+
+    removeDirty(valueDateTextBox);
+    removeDirty(referenceNumberTextBox);
+    removeDirty(statementReferenceTextBox);
+    removeDirty(accountCodeTextBox);
+    removeDirty(accountDropDownList);
+    removeDirty(cashRepositoryDropDownList);
+    removeDirty(lcDebitTextBox);
+    removeDirty(lcCreditTextBox);
+    removeDirty(costCenterDropDownList);
+
+
+    if (!isDate(valueDate)) {
+        makeDirty(valueDateTextBox);
+        errorLabelBottom.html(invalidDateWarningLocalized);
+        return false;
     };
+
+    if (parseFloat2(costCenterDropDownList.getSelectedValue()) <= 0) {
+        makeDirty(costCenterDropDownList);
+        errorLabelBottom.html(invalidCostCenterWarningLocalized);
+        return false;
+    };
+
+    if (transactionGridView.find("tr").length == 2) {
+        errorLabelBottom.html(gridViewEmptyWarningLocalized);
+        return false;
+    };
+
+
+    var rows = transactionGridView.find("tr:not(:first-child):not(:last-child)");
+
+
+    if (rows.each(function () {
+        var row = $(this);
+
+        debit = parseFloat2(getColumnText(row, 8));
+        credit = parseFloat2(getColumnText(row, 9));
+
+        if (debit > 0 && credit > 0) {
+            addDanger(row);
+            return false;
+    };
+
+        if (debit < 0 || credit < 0) {
+            addDanger(row);
+            return false;
+    };
+
+        if (debit == 0 && credit == 0) {
+            addDanger(row);
+            return false;
+    };
+
+        return true;
+
+    }) == false) {
+        return false;
+    };
+
+    summate();
+
+    if (parseFloat2(debitTotalTextBox) != parseFloat2(creditTotalTextBox)) {
+        $.notify("Referencing sides are not equal.", "error");
+        return false;
+    };
+
+
+    referenceNumber = referenceNumberTextBox.getSelectedValue();
+    transactionGridViewHidden.val(tableToJSON(transactionGridView));
+    costCenterId = parseFloat2(costCenterDropDownList.getSelectedValue());
+
+    data = transactionGridViewHidden.val();
+    attachments = uploadedFilesHidden.val();
+
+    return true;
 };
 
 
@@ -374,9 +573,18 @@ function isCash(accountCode) {
     return getAjax(url, data);
 };
 
-function hasBalance(cashRepositoryCode, credit) {
+function getExchangeRate(currencyCode) {
+    url = "/Services/Finance/JournalVoucher.asmx/GetExchangeRate";
+    data = appendParameter("", "currencyCode", currencyCode);
+    data = getData(data);
+
+    return getAjax(url, data);
+};
+
+function hasBalance(cashRepositoryCode, currencyCode, credit) {
     url = "/Services/AccountData.asmx/HasBalance";
     data = appendParameter("", "cashRepositoryCode", cashRepositoryCode);
+    data = appendParameter(data, "currencyCode", currencyCode);
     data = appendParameter(data, "credit", credit);
     data = getData(data);
 
@@ -391,8 +599,8 @@ function hasBalance(cashRepositoryCode, credit) {
 
 //Logic & Validation
 var summate = function () {
-    var debitTotal = sumOfColumn("#" + transactionGridView.attr("id"), 4);
-    var creditTotal = sumOfColumn("#" + transactionGridView.attr("id"), 5);
+    var debitTotal = sumOfColumn("#" + transactionGridView.attr("id"), 8);
+    var creditTotal = sumOfColumn("#" + transactionGridView.attr("id"), 9);
 
     debitTotalTextBox.val(debitTotal);
     creditTotalTextBox.val(creditTotal);
@@ -416,11 +624,11 @@ var addShortcuts = function () {
     });
 
     shortcut.add("CTRL+ALT+D", function () {
-        $('#DebitTextBox').focus();
+        $('#lcDebitTextBox').focus();
     });
 
     shortcut.add("CTRL+ALT+C", function () {
-        $('#CreditTextBox').focus();
+        $('#lcCreditTextBox').focus();
     });
 
     shortcut.add("CTRL+ENTER", function () {

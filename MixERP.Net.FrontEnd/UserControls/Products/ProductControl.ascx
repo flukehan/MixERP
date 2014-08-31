@@ -204,26 +204,26 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
                 <td>
                     <input type="text"
                         id="PriceTextBox"
-                        class="text-right number form-control input-sm"
+                        class="text-right currency form-control input-sm"
                         title='<asp:Literal runat="server" Text="<%$Resources:Titles,AltP%>" />' />
                 </td>
                 <td>
                     <input type="text"
                         id="AmountTextBox"
                         readonly="readonly"
-                        class="text-right number form-control input-sm" />
+                        class="text-right currency form-control input-sm" />
                 </td>
                 <td>
                     <input type="text"
                         id="DiscountTextBox"
-                        class="text-right number form-control input-sm"
+                        class="text-right currency form-control input-sm"
                         title='<asp:Literal runat="server" Text="<%$Resources:Titles,CtrlD%>" />' />
                 </td>
                 <td>
                     <input type="text"
                         id="SubTotalTextBox"
                         readonly="readonly"
-                        class="text-right number form-control input-sm" />
+                        class="text-right currency form-control input-sm" />
                 </td>
                 <td>
                     <input type="text"
@@ -233,14 +233,14 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
                 <td>
                     <input type="text"
                         id="TaxTextBox"
-                        class="text-right number form-control input-sm"
+                        class="text-right currency form-control input-sm"
                         title='<asp:Literal runat="server" Text="<%$Resources:Titles,CtrlT%>" />' />
                 </td>
                 <td>
                     <input type="text"
                         id="TotalTextBox"
                         readonly="readonly"
-                        class="text-right number form-control input-sm" />
+                        class="text-right currency form-control input-sm" />
                 </td>
                 <td>
                     <input type="button"
@@ -301,7 +301,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
                 <asp:TableCell>
                     <asp:Literal ID="ShippingChargeTextBoxLabelLiteral" runat="server" />
                 </asp:TableCell><asp:TableCell>
-                    <asp:TextBox ID="ShippingChargeTextBox" runat="server" Width="140px" CssClass="number form-control input-sm">
+                    <asp:TextBox ID="ShippingChargeTextBox" runat="server" Width="140px" CssClass="currency form-control input-sm">
                     </asp:TextBox>
                 </asp:TableCell>
             </asp:TableRow>

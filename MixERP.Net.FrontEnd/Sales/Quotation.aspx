@@ -30,7 +30,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
         Text="<%$Resources:Titles, SalesQuotation %>"
         AddNewUrl="~/Sales/Entry/Quotation.aspx"
         PreviewUrl="~/Sales/Confirmation/ReportSalesQuotation.aspx"
-        ChecklistUrl="~/Sales/Confirmation/Quotation.aspx" />
+        ChecklistUrl="~/Sales/Confirmation/Quotation.aspx"
+        ShowMergeToOrderButton="True"
+        ShowMergeToDeliveryButton="True"
+         />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceholder" runat="server">
 </asp:Content>

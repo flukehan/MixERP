@@ -158,15 +158,15 @@ LANGUAGE plpgsql;
 
 DROP FUNCTION IF EXISTS core.get_item_cost_price(item_id_ integer, party_id_ integer, unit_id_ integer);
 CREATE FUNCTION core.get_item_cost_price(item_id_ integer, party_id_ integer, unit_id_ integer)
-RETURNS money
+RETURNS money_strict2
 AS
 $$
-	DECLARE _price money;
+	DECLARE _price money_strict2;
 	DECLARE _unit_id integer;
 	DECLARE _factor decimal;
 	DECLARE _tax_rate decimal;
 	DECLARE _includes_tax boolean;
-	DECLARE _tax money;
+	DECLARE _tax money_strict2;
 BEGIN
 
 	--Fist pick the catalog price which matches all these fields:
@@ -232,15 +232,15 @@ LANGUAGE plpgsql;
 
 DROP FUNCTION IF EXISTS core.get_item_selling_price(item_id_ integer, party_type_id_ integer, price_type_id_ integer, unit_id_ integer);
 CREATE FUNCTION core.get_item_selling_price(item_id_ integer, party_type_id_ integer, price_type_id_ integer, unit_id_ integer)
-RETURNS money
+RETURNS money_strict2
 AS
 $$
-	DECLARE _price money;
+	DECLARE _price money_strict2;
 	DECLARE _unit_id integer;
 	DECLARE _factor decimal;
 	DECLARE _tax_rate decimal;
 	DECLARE _includes_tax boolean;
-	DECLARE _tax money;
+	DECLARE _tax money_strict2;
 BEGIN
 
 	--Fist pick the catalog price which matches all these fields:
@@ -306,6 +306,42 @@ END
 $$
 LANGUAGE plpgsql;
 
+
+DROP FUNCTION IF EXISTS transactions.restrict_delete_trigger() CASCADE;
+CREATE FUNCTION transactions.restrict_delete_trigger()
+RETURNS TRIGGER
+AS
+$$
+BEGIN
+	IF TG_OP='DELETE' THEN
+		RAISE EXCEPTION 'Deleting a transaction is not allowed. Mark the transaction as rejected instead.';
+	END IF;
+END
+$$
+LANGUAGE 'plpgsql';
+
+
+CREATE TRIGGER restrict_delete_trigger
+BEFORE DELETE
+ON transactions.transaction_details
+FOR EACH ROW 
+EXECUTE PROCEDURE transactions.restrict_delete_trigger();
+
+
+CREATE TRIGGER restrict_delete_trigger
+BEFORE DELETE
+ON transactions.stock_master
+FOR EACH ROW 
+EXECUTE PROCEDURE transactions.restrict_delete_trigger();
+
+
+CREATE TRIGGER restrict_delete_trigger
+BEFORE DELETE
+ON transactions.stock_details
+FOR EACH ROW 
+EXECUTE PROCEDURE transactions.restrict_delete_trigger();
+
+
 DROP FUNCTION IF EXISTS transactions.verification_trigger() CASCADE;
 CREATE FUNCTION transactions.verification_trigger()
 RETURNS TRIGGER
@@ -329,14 +365,14 @@ $$
 	DECLARE _approved smallint=2;
 	DECLARE _book text;
 	DECLARE _can_verify_sales_transactions boolean;
-	DECLARE _sales_verification_limit money;
+	DECLARE _sales_verification_limit money_strict2;
 	DECLARE _can_verify_purchase_transactions boolean;
-	DECLARE _purchase_verification_limit money;
+	DECLARE _purchase_verification_limit money_strict2;
 	DECLARE _can_verify_gl_transactions boolean;
-	DECLARE _gl_verification_limit money;
+	DECLARE _gl_verification_limit money_strict2;
 	DECLARE _can_verify_self boolean;
-	DECLARE _self_verification_limit money;
-	DECLARE _posted_amount money;
+	DECLARE _self_verification_limit money_strict2;
+	DECLARE _posted_amount money_strict2;
 BEGIN
 	IF TG_OP='DELETE' THEN
 		RAISE EXCEPTION 'Deleting a transaction is not allowed. Mark the transaction as rejected instead.';
@@ -402,7 +438,7 @@ BEGIN
 
 
 		SELECT
-			SUM(amount)
+			SUM(amount_in_local_currency)
 		INTO
 			_posted_amount
 		FROM
@@ -468,7 +504,7 @@ BEGIN
 				RAISE EXCEPTION 'Please ask someone else to verify the transaction you posted.';
 			END IF;
 			IF(_can_verify_self = true) THEN
-				IF(_posted_amount > _self_verification_limit AND _self_verification_limit > 0::money) THEN
+				IF(_posted_amount > _self_verification_limit AND _self_verification_limit > 0::money_strict2) THEN
 					RAISE EXCEPTION 'Self verfication limit exceeded. The transaction was not verified.';
 				END IF;
 			END IF;
@@ -479,7 +515,7 @@ BEGIN
 				RAISE EXCEPTION 'Access is denied.';
 			END IF;
 			IF(_can_verify_sales_transactions = true) THEN
-				IF(_posted_amount > _sales_verification_limit AND _sales_verification_limit > 0::money) THEN
+				IF(_posted_amount > _sales_verification_limit AND _sales_verification_limit > 0::money_strict2) THEN
 					RAISE EXCEPTION 'Sales verfication limit exceeded. The transaction was not verified.';
 				END IF;
 			END IF;			
@@ -491,7 +527,7 @@ BEGIN
 				RAISE EXCEPTION 'Access is denied.';
 			END IF;
 			IF(_can_verify_purchase_transactions = true) THEN
-				IF(_posted_amount > _purchase_verification_limit AND _purchase_verification_limit > 0::money) THEN
+				IF(_posted_amount > _purchase_verification_limit AND _purchase_verification_limit > 0::money_strict2) THEN
 					RAISE EXCEPTION 'Purchase verfication limit exceeded. The transaction was not verified.';
 				END IF;
 			END IF;			
@@ -503,7 +539,7 @@ BEGIN
 				RAISE EXCEPTION 'Access is denied.';
 			END IF;
 			IF(_can_verify_gl_transactions = true) THEN
-				IF(_posted_amount > _gl_verification_limit AND _gl_verification_limit > 0::money) THEN
+				IF(_posted_amount > _gl_verification_limit AND _gl_verification_limit > 0::money_strict2) THEN
 					RAISE EXCEPTION 'GL verfication limit exceeded. The transaction was not verified.';
 				END IF;
 			END IF;			
@@ -550,12 +586,12 @@ $$
 	DECLARE _approved smallint=2;
 	DECLARE _book text;
 	DECLARE _auto_verify_sales boolean;
-	DECLARE _sales_verification_limit money;
+	DECLARE _sales_verification_limit money_strict2;
 	DECLARE _auto_verify_purchase boolean;
-	DECLARE _purchase_verification_limit money;
+	DECLARE _purchase_verification_limit money_strict2;
 	DECLARE _auto_verify_gl boolean;
-	DECLARE _gl_verification_limit money;
-	DECLARE _posted_amount money;
+	DECLARE _gl_verification_limit money_strict2;
+	DECLARE _posted_amount money_strict2;
 	DECLARE _auto_verification boolean=true;
 	DECLARE _has_policy boolean=false;
 BEGIN
@@ -577,7 +613,7 @@ BEGIN
 	_reason := 'Automatically verified by workflow.';
 
 	SELECT
-		SUM(amount)
+		SUM(amount_in_local_currency)
 	INTO
 		_posted_amount
 	FROM
@@ -616,7 +652,7 @@ BEGIN
 			_auto_verification := false;
 		END IF;
 		IF(_auto_verify_sales = true) THEN
-			IF(_posted_amount > _sales_verification_limit AND _sales_verification_limit > 0::money) THEN
+			IF(_posted_amount > _sales_verification_limit AND _sales_verification_limit > 0::money_strict2) THEN
 				_auto_verification := false;
 			END IF;
 		END IF;			
@@ -628,7 +664,7 @@ BEGIN
 			_auto_verification := false;
 		END IF;
 		IF(_auto_verify_purchase = true) THEN
-			IF(_posted_amount > _purchase_verification_limit AND _purchase_verification_limit > 0::money) THEN
+			IF(_posted_amount > _purchase_verification_limit AND _purchase_verification_limit > 0::money_strict2) THEN
 				_auto_verification := false;
 			END IF;
 		END IF;			
@@ -640,7 +676,7 @@ BEGIN
 			_auto_verification := false;
 		END IF;
 		IF(_auto_verify_gl = true) THEN
-			IF(_posted_amount > _gl_verification_limit AND _gl_verification_limit > 0::money) THEN
+			IF(_posted_amount > _gl_verification_limit AND _gl_verification_limit > 0::money_strict2) THEN
 				_auto_verification := false;
 			END IF;
 		END IF;			
@@ -665,7 +701,7 @@ END
 $$
 LANGUAGE plpgsql;
 
-DROP VIEW IF EXISTS transactions.verified_transactions_view;
+DROP VIEW IF EXISTS transactions.verified_transactions_view CASCADE;
 DROP VIEW IF EXISTS transactions.transaction_view;
 CREATE VIEW transactions.transaction_view
 AS
@@ -692,11 +728,15 @@ SELECT
 	transactions.transaction_details.account_id,
 	transactions.transaction_details.statement_reference,
 	transactions.transaction_details.cash_repository_id,
-	transactions.transaction_details.amount
+	transactions.transaction_details.currency_code,
+	transactions.transaction_details.amount_in_currency,
+	transactions.transaction_details.local_currency_code,
+	transactions.transaction_details.amount_in_local_currency
 FROM
 transactions.transaction_master
 INNER JOIN transactions.transaction_details
 ON transactions.transaction_master.transaction_master_id = transactions.transaction_details.transaction_master_id;
+
 
 CREATE VIEW transactions.verified_transactions_view
 AS
@@ -704,22 +744,101 @@ SELECT * FROM transactions.transaction_view
 WHERE verification_status_id > 0;
 
 
-DROP FUNCTION IF EXISTS transactions.get_cash_repository_balance(integer);
-CREATE FUNCTION transactions.get_cash_repository_balance(integer)
-RETURNS money
+DROP MATERIALIZED VIEW IF EXISTS transactions.trial_balance_view;
+CREATE MATERIALIZED VIEW transactions.trial_balance_view
+AS
+SELECT core.get_account_name(account_id), 
+	SUM(CASE transactions.verified_transactions_view.tran_type WHEN 'Dr' THEN amount_in_local_currency ELSE NULL END) AS debit,
+	SUM(CASE transactions.verified_transactions_view.tran_type WHEN 'Cr' THEN amount_in_local_currency ELSE NULL END) AS Credit
+FROM transactions.verified_transactions_view
+GROUP BY account_id;
+
+
+DROP FUNCTION IF EXISTS transactions.get_cash_repository_balance(integer, national character varying(12));
+CREATE FUNCTION transactions.get_cash_repository_balance(integer, national character varying(12))
+RETURNS money_strict2
 AS
 $$
-	DECLARE _debit money;
-	DECLARE _credit money;
+	DECLARE _debit money_strict2;
+	DECLARE _credit money_strict2;
 BEGIN
-	SELECT COALESCE(SUM(amount), 0::money) INTO _debit
+	SELECT COALESCE(SUM(amount_in_currency), 0::money_strict2) INTO _debit
 	FROM transactions.verified_transactions_view
 	WHERE cash_repository_id=$1
+	AND currency_code=$2
 	AND tran_type='Dr';
 
-	SELECT COALESCE(SUM(amount), 0::money) INTO _credit
+	SELECT COALESCE(SUM(amount_in_currency), 0::money_strict2) INTO _credit
 	FROM transactions.verified_transactions_view
 	WHERE cash_repository_id=$1
+	AND currency_code=$2
+	AND tran_type='Cr';
+
+	RETURN _debit - _credit;
+END
+$$
+LANGUAGE plpgsql;
+
+
+DROP FUNCTION IF EXISTS transactions.get_default_currency_code(cash_repository_id integer);
+
+CREATE FUNCTION transactions.get_default_currency_code(cash_repository_id integer)
+RETURNS national character varying(12)
+AS
+$$
+BEGIN
+	RETURN
+	(
+		SELECT office.offices.currency_code 
+		FROM office.cash_repositories
+		INNER JOIN office.offices
+		ON office.offices.office_id = office.cash_repositories.office_id
+		WHERE office.cash_repositories.cash_repository_id=$1
+		
+	);
+END
+$$
+LANGUAGE plpgsql;
+
+
+DROP FUNCTION IF EXISTS transactions.get_default_currency_code_by_office_id(office_id integer);
+
+CREATE FUNCTION transactions.get_default_currency_code_by_office_id(office_id integer)
+RETURNS national character varying(12)
+AS
+$$
+BEGIN
+	RETURN
+	(
+		SELECT office.offices.currency_code 
+		FROM office.offices
+		WHERE office.offices.office_id = $1
+		
+	);
+END
+$$
+LANGUAGE plpgsql;
+
+
+DROP FUNCTION IF EXISTS transactions.get_cash_repository_balance(integer);
+CREATE FUNCTION transactions.get_cash_repository_balance(integer)
+RETURNS money_strict2
+AS
+$$
+	DECLARE _local_currency_code national character varying(12) = transactions.get_default_currency_code($1);
+	DECLARE _debit money_strict2;
+	DECLARE _credit money_strict2;
+BEGIN
+	SELECT COALESCE(SUM(amount_in_currency), 0::money_strict2) INTO _debit
+	FROM transactions.verified_transactions_view
+	WHERE cash_repository_id=$1
+	AND currency_code=$2
+	AND tran_type='Dr';
+
+	SELECT COALESCE(SUM(amount_in_currency), 0::money_strict2) INTO _credit
+	FROM transactions.verified_transactions_view
+	WHERE cash_repository_id=$1
+	AND currency_code=$2
 	AND tran_type='Cr';
 
 	RETURN _debit - _credit;
@@ -777,7 +896,7 @@ RETURNS TABLE
 	office					national character varying(12),
 	party					text,
 	price_type				text,
-	amount					money_strict,
+	amount_in_local_currency		money_strict,
 	transaction_ts				TIMESTAMP WITH TIME ZONE,
 	"user"					national character varying(50),
 	reference_number			national character varying(24),
@@ -1015,7 +1134,7 @@ RETURNS TABLE
 	office					national character varying(12),
 	party					text,
 	price_type				text,
-	amount					money_strict,
+	amount_in_local_currency		money_strict,
 	transaction_ts				TIMESTAMP WITH TIME ZONE,
 	"user"					national character varying(50),
 	reference_number			national character varying(24),
@@ -1127,5 +1246,94 @@ $$
 LANGUAGE plpgsql;
 
 
-INSERT INTO policy.auto_verification_policy
-SELECT 2, true, 0, true, 0, true, 0, '1-1-2010', '1-1-2020', true;
+
+DROP FUNCTION IF EXISTS transactions.get_accrued_interest(party_id integer);
+
+CREATE FUNCTION transactions.get_accrued_interest(party_id integer)
+RETURNS money_strict2
+AS
+$$
+BEGIN
+	RETURN NULL;
+END
+$$
+LANGUAGE plpgsql;
+
+DROP FUNCTION IF EXISTS transactions.get_total_due(party_id integer);
+
+
+CREATE FUNCTION transactions.get_total_due(party_id integer)
+RETURNS money_strict2
+AS
+$$
+	DECLARE _accrued_interest money_strict2 = transactions.get_accrued_interest($1);
+	DECLARE _account_id integer = core.get_account_id_by_party_id($1);
+	DECLARE _debit money_strict2 = 0;
+	DECLARE _credit money_strict2 = 0;
+BEGIN
+
+	SELECT SUM(amount_in_local_currency)
+	INTO _debit
+	FROM transactions.verified_transactions_view
+	WHERE transactions.verified_transactions_view.account_id=_account_id
+	AND tran_type='Dr';
+
+	SELECT SUM(amount_in_local_currency)
+	INTO _credit
+	FROM transactions.verified_transactions_view
+	WHERE transactions.verified_transactions_view.account_id=_account_id
+	AND tran_type='Cr';
+
+	RETURN COALESCE(_credit, '0') - COALESCE(_debit, '0') - COALESCE(_accrued_interest, '0');
+END
+$$
+LANGUAGE plpgsql;
+
+DROP FUNCTION IF EXISTS transactions.get_last_receipt_date(party_id integer);
+CREATE FUNCTION transactions.get_last_receipt_date(party_id integer)
+RETURNS date
+AS
+$$
+BEGIN
+	RETURN
+	(
+		SELECT MAX(transactions.verified_transactions_view.value_date)
+		FROM transactions.verified_transactions_view
+		INNER JOIN transactions.customer_receipts
+		ON transactions.verified_transactions_view.transaction_master_id = transactions.customer_receipts.transaction_master_id
+		WHERE transactions.customer_receipts.party_id = $1
+	);
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+DROP FUNCTION IF EXISTS transactions.get_average_party_transaction(party_id integer);
+
+
+CREATE FUNCTION transactions.get_average_party_transaction(party_id integer)
+RETURNS money_strict2
+AS
+$$
+	DECLARE _account_id integer = core.get_account_id_by_party_id($1);
+	DECLARE _debit money_strict2 = 0;
+	DECLARE _credit money_strict2 = 0;
+BEGIN
+
+	SELECT SUM(amount_in_local_currency)
+	INTO _debit
+	FROM transactions.verified_transactions_view
+	WHERE transactions.verified_transactions_view.account_id=_account_id
+	AND tran_type='Dr';
+
+	SELECT SUM(amount_in_local_currency)
+	INTO _credit
+	FROM transactions.verified_transactions_view
+	WHERE transactions.verified_transactions_view.account_id=_account_id
+	AND tran_type='Cr';
+
+	RETURN FLOOR( (COALESCE(_credit, '0') + COALESCE(_debit, '0')) /2 );
+END
+$$
+LANGUAGE plpgsql;

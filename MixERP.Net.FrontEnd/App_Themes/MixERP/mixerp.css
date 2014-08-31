@@ -36,6 +36,9 @@ footer a:hover {
   -ms-border-radius: 0 12px 12px;
   border-radius: 0 12px 12px;
 }
+.vpad8 {
+  padding: 8px 0 8px 0;
+}
 .vpad16 {
   padding: 16px 0 16px 0;
 }
@@ -172,7 +175,8 @@ h6 {
   padding: 2px !important;
   margin: 2px !important;
 }
-.number {
+.number,
+.currency {
   text-align: right;
 }
 .table-form-pad tr td {

@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 --%>
+
 <%@ Page Title="" Language="C#" MasterPageFile="~/ContentMaster.Master" AutoEventWireup="true" CodeBehind="Order.aspx.cs" Inherits="MixERP.Net.FrontEnd.Sales.Order" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceholder" runat="server">
@@ -29,7 +30,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
         Text="<%$Resources:Titles, SalesOrder %>"
         AddNewUrl="~/Sales/Entry/Order.aspx"
         PreviewUrl="~/Sales/Confirmation/ReportSalesOrder.aspx"
-        ChecklistUrl="~/Sales/Confirmation/Order.aspx" />
+        ChecklistUrl="~/Sales/Confirmation/Order.aspx"
+        ShowMergeToDeliveryButton="True" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceholder" runat="server">
 </asp:Content>

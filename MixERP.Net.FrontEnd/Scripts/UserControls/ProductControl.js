@@ -283,13 +283,6 @@ quantityTextBox.blur(function () {
     calculateAmount();
 });
 
-//Todo:Need to support localized dates
-function isDate(val) {
-    var d = new Date(val);
-    return !isNaN(d.valueOf());
-}
-
-
 var validateProductControl = function () {
     valueDate = dateTextBox.val();
     errorLabelBottom.html("");
@@ -381,8 +374,7 @@ var validateProductControl = function () {
     };
 
 
-
-    updateData(productGridViewDataHidden, productGridView);
+    productGridViewDataHidden.val(tableToJSON(productGridView));
 
     agentId = parseFloat2(salesPersonDropDownList.getSelectedValue());
     attachments = uploadedFilesHidden.val();
@@ -680,7 +672,8 @@ var restoreData = function () {
     }
 };
 
-var updateData = function (targetControl, grid) {
+
+var tableToJSON = function(grid) {
     var colData = new Array;
     var rowData = new Array;
 
@@ -699,11 +692,9 @@ var updateData = function (targetControl, grid) {
     });
 
     data = JSON.stringify(rowData);
-    targetControl.val(data);
+
+    return data;
 };
-
-
-
 
 
 //New Row Helper Function

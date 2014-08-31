@@ -132,4 +132,10 @@
   <data name="InvalidSubTranBookSalesPayment" xml:space="preserve">
     <value>Invalid SubTranBook 'Sales Payment'.</value>
   </data>
+  <data name="NoTransactionToPost" xml:space="preserve">
+    <value>No transaction to post.</value>
+  </data>
+  <data name="ReferencingSidesNotEqual" xml:space="preserve">
+    <value>Referencing sides are not equal.</value>
+  </data>
 </root>

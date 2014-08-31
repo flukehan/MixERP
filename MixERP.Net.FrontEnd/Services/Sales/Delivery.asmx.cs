@@ -42,7 +42,7 @@ namespace MixERP.Net.FrontEnd.Services.Sales
         [WebMethod(EnableSession = true)]
         public long Save(DateTime valueDate, int storeId, string partyCode, int priceTypeId, string referenceNumber, string data, string statementReference, int agentId, int shipperId, string shippingAddressCode, decimal shippingCharge, int costCenterId, string transactionIds, string attachmentsJSON)
         {
-            Collection<StockMasterDetailModel> details = CollectionHelper.GetDetails(data, storeId);
+            Collection<StockMasterDetailModel> details = CollectionHelper.GetStockMasterDetailCollection(data, storeId);
             Collection<int> tranIds = new Collection<int>();
 
             JavaScriptSerializer js = new JavaScriptSerializer();

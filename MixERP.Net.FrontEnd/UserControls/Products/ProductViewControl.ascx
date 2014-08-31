@@ -49,13 +49,16 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
             <asp:Literal runat="server" Text="<%$Resources:Titles, MergeBatchToGRN %>"></asp:Literal>
         </button>
 
-
         <button type="button" id="flagButton" class="btn btn-default btn-sm">
-            <span class="glyphicon glyphicon-flag"></span>&nbsp;Flag
+            <span class="glyphicon glyphicon-flag"></span>&nbsp;           
+            <asp:Literal runat="server" Text="<%$Resources:Titles, Flag %>"></asp:Literal>
+
         </button>
 
         <button type="button" class="btn btn-default btn-sm">
-            <span class="glyphicon glyphicon-print"></span>&nbsp;Print
+            <span class="glyphicon glyphicon-print"></span>&nbsp;           
+            <asp:Literal runat="server" Text="<%$Resources:Titles, Print %>"></asp:Literal>
+
         </button>
     </div>
 </div>

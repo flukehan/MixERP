@@ -110,5 +110,14 @@ namespace MixERP.Net.FrontEnd.Finance {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal CreditTotalLiteral;
+        
+        /// <summary>
+        /// ErrorLabelBottom control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ErrorLabelBottom;
     }
 }

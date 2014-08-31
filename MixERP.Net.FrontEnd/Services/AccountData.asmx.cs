@@ -106,7 +106,7 @@ namespace MixERP.Net.FrontEnd.Services
         }
 
         [WebMethod]
-        public bool HasBalance(string cashRepositoryCode, decimal credit)
+        public bool HasBalance(string cashRepositoryCode, string currencyCode, decimal credit)
         {
             if (credit.Equals(0))
             {
@@ -118,7 +118,7 @@ namespace MixERP.Net.FrontEnd.Services
                 throw new InvalidOperationException("Negetive value supplied.");
             }
 
-            decimal balance = BusinessLayer.Office.CashRepositories.GetBalance(cashRepositoryCode);
+            decimal balance = BusinessLayer.Office.CashRepositories.GetBalance(cashRepositoryCode, currencyCode);
 
             if (balance > credit)
             {
@@ -166,6 +166,41 @@ namespace MixERP.Net.FrontEnd.Services
         }
 
         [WebMethod]
+        public Collection<ListItem> GetCurrenciesByAccountCode(string accountCode)
+        {
+            Collection<ListItem> values = new Collection<ListItem>();
+
+            if (string.IsNullOrWhiteSpace(accountCode))
+            {
+                return values;
+            }
+
+            using (DataTable table = FormHelper.GetTable("core", "accounts", "account_code", accountCode))
+            {
+                foreach (DataRow dr in table.Rows)
+                {
+                    values.Add(new ListItem(dr["currency_code"].ToString(), dr["currency_code"].ToString()));
+                }
+            }
+            return values;
+        }
+
+        [WebMethod]
+        public Collection<ListItem> GetCurrencies()
+        {
+            Collection<ListItem> values = new Collection<ListItem>();
+
+            using (DataTable table = FormHelper.GetTable("core", "currencies"))
+            {
+                foreach (DataRow dr in table.Rows)
+                {
+                    values.Add(new ListItem(dr["currency_code"].ToString(), dr["currency_code"].ToString()));
+                }
+            }
+            return values;
+        }
+
+        [WebMethod]
         public bool IsCashAccount(string accountCode)
         {
             if (!string.IsNullOrWhiteSpace(accountCode))
@@ -199,10 +234,16 @@ namespace MixERP.Net.FrontEnd.Services
         }
 
         [WebMethod]
-        public decimal GetCashRepositoryBalance(int cashRepositoryId)
+        public decimal GetCashRepositoryBalance(int cashRepositoryId, string currencyCode)
         {
-            return BusinessLayer.Office.CashRepositories.GetBalance(cashRepositoryId);
+            if (string.IsNullOrWhiteSpace(currencyCode))
+            {
+                return BusinessLayer.Office.CashRepositories.GetBalance(cashRepositoryId);
+            }
+
+            return BusinessLayer.Office.CashRepositories.GetBalance(cashRepositoryId, currencyCode);
         }
+
 
     }
 }

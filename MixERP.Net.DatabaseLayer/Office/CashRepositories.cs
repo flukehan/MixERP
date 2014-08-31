@@ -114,6 +114,17 @@ namespace MixERP.Net.DatabaseLayer.Office
         }
 
 
+        public static decimal GetBalance(int cashRepositoryId, string currencyCode)
+        {
+            const string sql = "SELECT transactions.get_cash_repository_balance(@CashRepositoryId, @CurrencyCode);";
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                command.Parameters.AddWithValue("@CashRepositoryId", cashRepositoryId);
+                command.Parameters.AddWithValue("@CurrencyCode", currencyCode);
+                return Conversion.TryCastDecimal(DbOperations.GetScalarValue(command));
+            }
+        }
+
         public static decimal GetBalance(int cashRepositoryId)
         {
             const string sql = "SELECT transactions.get_cash_repository_balance(@CashRepositoryId);";
@@ -130,6 +141,17 @@ namespace MixERP.Net.DatabaseLayer.Office
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@CashRepositoryCode", cashRepositoryCode);
+                return Conversion.TryCastDecimal(DbOperations.GetScalarValue(command));
+            }
+        }
+
+        public static decimal GetBalance(string cashRepositoryCode, string currencyCode)
+        {
+            const string sql = "SELECT transactions.get_cash_repository_balance(office.get_cash_repository_id_by_cash_repository_code(@CashRepositoryCode), @CurrencyCode);";
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                command.Parameters.AddWithValue("@CashRepositoryCode", cashRepositoryCode);
+                command.Parameters.AddWithValue("@CurrencyCode", currencyCode);
                 return Conversion.TryCastDecimal(DbOperations.GetScalarValue(command));
             }
         }

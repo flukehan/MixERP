@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Accounts.cs" />
+    <Compile Include="Core\Currency.cs" />
     <Compile Include="Core\Flags.cs" />
     <Compile Include="Core\Parties.cs" />
     <Compile Include="Core\Items.cs" />

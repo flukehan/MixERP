@@ -23,5 +23,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 <asp:Content ID="Content2" ContentPlaceHolderID="BodyPlaceholder" runat="server">
     <mixerp:Report ID="GLAdviceReport" runat="server"
         Path="~/Reports/Sources/Transactions.GLEntry.xml"
-        AutoInitialize="true" />
+        AutoInitialize="true"
+        RunningTotalText="<%$Resources:Titles, Total %>"
+         />
 </asp:Content>

@@ -24,7 +24,7 @@ namespace MixERP.Net.FrontEnd.Services.Purchase
         [WebMethod(EnableSession = true)]
         public long Save(DateTime valueDate, int storeId, string partyCode, string referenceNumber, string data, string statementReference, string transactionType, int cashRepositoryId, int costCenterId, string attachmentsJSON)
         {
-            Collection<StockMasterDetailModel> details = CollectionHelper.GetDetails(data, storeId);
+            Collection<StockMasterDetailModel> details = CollectionHelper.GetStockMasterDetailCollection(data, storeId);
 
             JavaScriptSerializer js = new JavaScriptSerializer();
             Collection<Attachment> attachments = js.Deserialize<Collection<Attachment>>(attachmentsJSON);

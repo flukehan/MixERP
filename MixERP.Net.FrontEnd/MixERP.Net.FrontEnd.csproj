@@ -793,13 +793,6 @@
     <Compile Include="Sales\Index.aspx.designer.cs">
       <DependentUpon>Index.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Sales\Invoice.aspx.cs">
-      <DependentUpon>Invoice.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Sales\Invoice.aspx.designer.cs">
-      <DependentUpon>Invoice.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Sales\Order.aspx.cs">
       <DependentUpon>Order.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -858,6 +851,10 @@
     </Compile>
     <Compile Include="Services\AccountData.asmx.cs">
       <DependentUpon>AccountData.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\Finance\JournalVoucher.asmx.cs">
+      <DependentUpon>JournalVoucher.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Services\ItemData.asmx.cs">
@@ -1075,6 +1072,13 @@
     <Compile Include="UserControls\CurrencyExtender.ascx.designer.cs">
       <DependentUpon>CurrencyExtender.ascx</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\PartyControl.ascx.cs">
+      <DependentUpon>PartyControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\PartyControl.ascx.designer.cs">
+      <DependentUpon>PartyControl.ascx</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Products\ProductControl.ascx.cs">
       <DependentUpon>ProductControl.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1259,6 +1263,7 @@
     <Content Include="Scripts\UserControls\AttachmentUserControl.js" />
     <Content Include="Scripts\UserControls\ProductControl.js" />
     <Content Include="Scripts\UserControls\ProductViewControl.js" />
+    <Content Include="Services\Finance\JournalVoucher.asmx" />
     <Content Include="Services\Purchase\DirectPurchase.asmx" />
     <Content Include="Services\Purchase\GRN.asmx" />
     <Content Include="Services\Purchase\Order.asmx" />
@@ -1415,7 +1420,6 @@
     <Content Include="Sales\Entry\Order.aspx" />
     <Content Include="Sales\Entry\Quotation.aspx" />
     <Content Include="Sales\Index.aspx" />
-    <Content Include="Sales\Invoice.aspx" />
     <Content Include="Sales\Order.aspx" />
     <Content Include="Sales\Quotation.aspx" />
     <Content Include="Sales\Receipt.aspx" />
@@ -1806,6 +1810,7 @@
     <Content Include="Scripts\CodeMirror\mode\xquery\LICENSE" />
     <Content Include="Scripts\CodeMirror\package.json" />
     <Content Include="Scripts\CodeMirror\README.md" />
+    <Content Include="UserControls\PartyControl.ascx" />
     <Content Include="UserControls\Products\ProductControl.ascx" />
     <Content Include="UserControls\Products\ProductViewControl.ascx" />
     <Content Include="UserControls\TransactionChecklistControl.ascx" />
@@ -1967,12 +1972,14 @@
     <Content Include="App_GlobalResources\Questions.fr.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Questions.fr.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\Setup.fr.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Setup.fr.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_GlobalResources\Titles.fr.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
@@ -1989,6 +1996,7 @@
     <Content Include="App_GlobalResources\Errors.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Errors.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <PropertyGroup>

@@ -1137,4 +1137,20 @@
   <data name="width_in_centimeters" xml:space="preserve">
     <value>Width in Centimeters</value>
   </data>
+  <data name="contact_po_box" xml:space="preserve">
+    <value>Contact PO Box</value>
+  </data>
+  <data name="po_box" xml:space="preserve">
+    <value>PO Box</value>
+  </data>
+  <data name="lc_credit" xml:space="preserve">
+    <value>LC Credit</value>
+  </data>
+  <data name="lc_debit" xml:space="preserve">
+    <value>LC Debit</value>
+  </data>
+  <data name="er" xml:space="preserve">
+    <value>ER</value>
+    <comment>Exchange Rate</comment>
+  </data>
 </root>

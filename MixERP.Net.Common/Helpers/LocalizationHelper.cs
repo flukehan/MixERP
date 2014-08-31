@@ -139,10 +139,16 @@ namespace MixERP.Net.Common.Helpers
             return culture.NumberFormat.CurrencyDecimalSeparator;
         }
 
-        public static int GetDecimalPlaces()
+        public static int GetCurrencyDecimalPlaces()
         {
             CultureInfo culture = GetCurrentCulture();
             return culture.NumberFormat.CurrencyDecimalDigits;
+        }
+
+        public static int GetNumberDecimalPlaces()
+        {
+            CultureInfo culture = GetCurrentCulture();
+            return culture.NumberFormat.NumberDecimalDigits;
         }
 
         public static string GetShortDateFormat()

@@ -1,15 +1,14 @@
 Hello there,
 
-MixERP is a feature rich, easy to use, open source ERP solution which is still in alpha stage.
+MixERP is a feature rich, easy to use, open source ERP solution which is in very alpha stage.
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
  Development Environment Setup
 -------------------------------------------------------------------------------------------------------------------------------------------------
-Before you run the solution in your IDE, go through the Readme.txt file on the following location:
+Before you run the solution in your IDE, go through this video tutorial on vimeo:
 
-/Dependencies/Mono/
+https://vimeo.com/102617800
 
-This explains on how to set up your development environment to target Mono Profile 3.2.3 instead of .NET Framework 4.5.
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
  Installing the database:
@@ -21,12 +20,9 @@ database server, which can be downloaded from:
 http://postgresql.org
 
 
-Please run the following database scripts under the directory "/MixERP.Net.FrontEnd/db/en-US/", in this order:
+Please run the bundled script found here:
 
-1. mixerp.sql
-2. mixerp-db-logic.sql
-3. party-sample.sql (optional)
-4. sample-data.sql  (optional)
+"/MixERP.Net.FrontEnd/bundles/sql/mixerp-db-sample.sql"
 
 
 **Please Note:**
@@ -47,15 +43,15 @@ Please find the following files:
 
 Titles.resx
 -Titles and only titles should be stored in this file, complying to the rules of capitalization.
--Resource keys: use ProperCasing.
+-Resource keys: ProperCase.
 
 Questions.resx
 -Questions are stored in this file.
--Resource keys: ProperCasing.
+-Resource keys: ProperCase.
 
 Labels.resx
 -Field labels are stored here. Must be a complete sentence or meaningful phrase.
--Resource keys: use ProperCasing.
+-Resource keys: ProperCase.
 
 Warnings.resx
 -Application warnings are stored here. Must be a complete sentence or meaningful phrase.
@@ -63,12 +59,12 @@ Warnings.resx
 
 Setup.resx
 -System resource.
--Resource keys: use ProperCasing.
+-Resource keys: ProperCase.
 
 
 ScrudResource.resx
 -PostgreSQL columns are stored as resource keys. These are used on dynamically generated forms and reports. 
--Resource keys: use lowercase_underscore_separator.
+-Resource keys: lowercase_with_underscore_separator.
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 
