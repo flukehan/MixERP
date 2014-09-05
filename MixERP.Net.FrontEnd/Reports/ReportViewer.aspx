@@ -23,7 +23,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 <asp:Content ID="Content2" ContentPlaceHolderID="BodyPlaceholder" runat="server">
     <asp:Panel runat="server" ID="ReportParameterPanel" class="report-parameter hide">
         <asp:Table ID="ReportParameterTable" runat="server" />
-        <a href="#" onclick="$('.report-parameter').toggle(500);" class="menu" style="float: right; padding: 4px;">Close This Form</a>
+        <a href="#" onclick="$('.report-parameter').toggle(500);" class="btn btn-danger btn-sm" style="float: right; padding: 4px;">Close This Form</a>
     </asp:Panel>
     <mixerp:Report ID="ReportViewer11" runat="server" />
 </asp:Content>

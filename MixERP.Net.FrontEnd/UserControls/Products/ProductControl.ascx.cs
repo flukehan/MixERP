@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
-using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.WebControls.StockTransactionView.Data.Models;
@@ -28,7 +27,6 @@ using System.Globalization;
 using System.Linq;
 using System.Web.Script.Serialization;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using SessionHelper = MixERP.Net.BusinessLayer.Helpers.SessionHelper;
 
 namespace MixERP.Net.FrontEnd.UserControls.Products

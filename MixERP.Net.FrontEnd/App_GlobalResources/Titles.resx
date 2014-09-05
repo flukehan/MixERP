@@ -726,4 +726,79 @@
   <data name="LCDebit" xml:space="preserve">
     <value>LC Debit</value>
   </data>
+  <data name="AccruedInterest" xml:space="preserve">
+    <value>Accrued Interest</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="AddressAndContactInfo" xml:space="preserve">
+    <value>Address &amp; Contact Info</value>
+  </data>
+  <data name="CreditAllowed" xml:space="preserve">
+    <value>Credit Allowed</value>
+  </data>
+  <data name="CSTNumber" xml:space="preserve">
+    <value>CST Number</value>
+  </data>
+  <data name="GLHead" xml:space="preserve">
+    <value>GL Head</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="InterestApplicable" xml:space="preserve">
+    <value>Interest Applicable</value>
+  </data>
+  <data name="LastPaymentDate" xml:space="preserve">
+    <value>Last Payment Date</value>
+  </data>
+  <data name="MaxCreditAmount" xml:space="preserve">
+    <value>Maximum Credit Amount</value>
+  </data>
+  <data name="MaxCreditPeriod" xml:space="preserve">
+    <value>Maximum Credit Period</value>
+  </data>
+  <data name="PartySummary" xml:space="preserve">
+    <value>Party Summary</value>
+  </data>
+  <data name="PartyType" xml:space="preserve">
+    <value>Party Type</value>
+  </data>
+  <data name="ShippingAddresses" xml:space="preserve">
+    <value>Shipping Addresses</value>
+  </data>
+  <data name="SSTNumber" xml:space="preserve">
+    <value>SST Number</value>
+  </data>
+  <data name="TotalDueAmount" xml:space="preserve">
+    <value>Total Due Amount</value>
+  </data>
+  <data name="TotalTransaction" xml:space="preserve">
+    <value>Total Transaction</value>
+  </data>
+  <data name="TransactionSummary" xml:space="preserve">
+    <value>Transaction Summary</value>
+  </data>
+  <data name="False" xml:space="preserve">
+    <value>False</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="True" xml:space="preserve">
+    <value>True</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="OfficeDueAmount" xml:space="preserve">
+    <value>Total Due (Currenct Office)</value>
+  </data>
+  <data name="TransactionValue" xml:space="preserve">
+    <value>Transaction Value</value>
+  </data>
+  <data name="DefaultCurrency" xml:space="preserve">
+    <value>Default Currency</value>
+  </data>
 </root>

@@ -84,7 +84,7 @@ var parseFloat2 = function (arg) {
 };
 
 var confirmAction = function () {
-    return confirm(localizedAreYouSure);
+    return confirm(areYouSureLocalized);
 };
 
 
@@ -493,10 +493,10 @@ jQuery.fn.getSelectedItem = function () {
     return listItem.find("option:selected");
 };
 
-
 jQuery.fn.getSelectedValue = function () {
     return $(this[0]).getSelectedItem().val();
 };
+
 
 jQuery.fn.getSelectedText = function () {
     return $(this[0]).getSelectedItem().text();
@@ -520,6 +520,8 @@ var getData = function(data)
     if (data) {
         return "{" + data + "}";
     };
+
+    return null;
 };
 
 
@@ -729,3 +731,7 @@ function isDate(val) {
     var d = new Date(val);
     return !isNaN(d.valueOf());
 }
+
+function convertToDebit(balanceInCredit) {
+    return balanceInCredit * -1;
+};

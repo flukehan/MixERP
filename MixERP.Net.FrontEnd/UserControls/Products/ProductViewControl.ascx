@@ -71,7 +71,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
             <h3 class="panel-title">Flag This Transaction</h3>
         </div>
         <div class="panel-body">
-            <div class="note">
+            <div>
                 You can mark this transaction with a flag, however you will not be able to see the flags created by other users.                
             </div>
             <br />

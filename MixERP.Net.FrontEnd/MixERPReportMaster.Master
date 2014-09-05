@@ -34,10 +34,11 @@
             padding: 6px;
             background-color: #f1e0fb;
             border: 1px solid #e2c2f5;
+            -ms-border-radius: 5px;
             border-radius: 5px;
         }
 
-            .report-command:hover {
+        .report-command:hover {
                 background-color: #edd8fa;
             }
 

@@ -16,6 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
+
+using System.Data;
 using MixERP.Net.Common;
 using MixERP.Net.DBFactory;
 using Npgsql;
@@ -43,6 +45,40 @@ namespace MixERP.Net.DatabaseLayer.Core
             {
                 command.Parameters.AddWithValue("@PartyId", partyId);
                 return Conversion.TryCastString(DbOperations.GetScalarValue((command)));
+            }
+        }
+
+        public static DataTable GetShippingAddresses(string partyCode)
+        {
+            const string sql = "SELECT * FROM core.shipping_addresses WHERE party_id=core.get_party_id_by_party_code(@PartyCode);";
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                command.Parameters.AddWithValue("@PartyCode", partyCode);
+
+                return DbOperations.GetDataTable(command);
+            }
+        }
+
+        public static DataTable GetShippingAddresses(int partyId)
+        {
+            const string sql = "SELECT * FROM core.shipping_addresses WHERE party_id=@PartyId;";
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                command.Parameters.AddWithValue("@PartyId", partyId);
+
+                return DbOperations.GetDataTable(command);
+            }
+        }
+
+        public static DataTable GetPartyDue(int officeId, string partyCode)
+        {
+            const string sql = "SELECT * FROM transactions.get_party_transaction_summary(@OfficeId, core.get_party_id_by_party_code(@PartyCode));";
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                command.Parameters.AddWithValue("@OfficeId", officeId);
+                command.Parameters.AddWithValue("@PartyCode", partyCode);
+
+                return DbOperations.GetDataTable(command);
             }
         }
     }

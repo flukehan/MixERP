@@ -117,8 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DuplicateEntry" xml:space="preserve">
+    <value>Duplicate entry.</value>
+  </data>
   <data name="DuplicateFiles" xml:space="preserve">
-    <value>Duplicate file(s)</value>
+    <value>Duplicate file(s).</value>
   </data>
   <data name="InvalidSubTranBookPurchaseDelivery" xml:space="preserve">
     <value>Invalid SubTranBook 'Purchase Delivery'.</value>

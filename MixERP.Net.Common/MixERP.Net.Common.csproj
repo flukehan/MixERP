@@ -69,7 +69,10 @@
     <Compile Include="Models\Core\Attachment.cs" />
     <Compile Include="Models\Core\Frequency.cs" />
     <Compile Include="Models\Core\Menu.cs" />
+    <Compile Include="Models\Core\Party.cs" />
+    <Compile Include="Models\Core\PartyDueModel.cs" />
     <Compile Include="Models\Core\ProductControlModel.cs" />
+    <Compile Include="Models\Core\ShippingAddress.cs" />
     <Compile Include="Models\Office\CashRepository.cs" />
     <Compile Include="Models\Office\Office.cs" />
     <Compile Include="Models\Office\Role.cs" />

@@ -304,7 +304,7 @@ addButton.click(function () {
                 };
 
                 if (debit > 0) {
-                    addRow(statementReference, accountCode, account, cashRepositoryCode, debit, credit, er, lcDebit, lcCredit);
+                    addRow(statementReference, accountCode, account, cashRepositoryCode, debit, credit, er, lcDebit, lcCredit, true);
                     return;
                 };
 
@@ -323,12 +323,9 @@ addButton.click(function () {
                             return;
                         };
 
-                        addRow(statementReference, accountCode, account, cashRepositoryCode, debit, credit, er, lcDebit, lcCredit);
+                        addRow(statementReference, accountCode, account, cashRepositoryCode, debit, credit, er, lcDebit, lcCredit, true);
                     });
                 };
-
-
-
             });
 
         });
@@ -337,18 +334,29 @@ addButton.click(function () {
 });
 
 
-var addRow = function (statementReference, accountCode, account, cashRepository, debit, credit, er, lcDebit, lcCredit) {
+var addRow = function (statementReference, accountCode, account, cashRepository, debit, credit, er, lcDebit, lcCredit, isCash) {
     var grid = transactionGridView;
     var rows = grid.find("tr:not(:first-child):not(:last-child)");
 
     rows.each(function () {
         var row = $(this);
 
-        if (getColumnText(row, 1) == accountCode) {
-            $.notify("Duplicate entry.");
+        if (!isCash) {
+            if (getColumnText(row, 1) == accountCode) {
+                $.notify(duplicateEntryLocalized);
+                makeDirty(itemCodeTextBox);
+                return;
+            }
+        };
+
+
+        if (getColumnText(row, 3) == cashRepository) {
+            $.notify(duplicateEntryLocalized);
             makeDirty(itemCodeTextBox);
             return;
         }
+
+
     });
 
 
@@ -441,6 +449,7 @@ var post = function () {
 };
 
 var postpostJournalTransaction = function (valueDate, referenceNumber, data, costCenterId, attachments) {
+    debugger;
     var d = "";
     d = appendParameter(d, "valueDate", valueDate);
     d = appendParameter(d, "referenceNumber", referenceNumber);

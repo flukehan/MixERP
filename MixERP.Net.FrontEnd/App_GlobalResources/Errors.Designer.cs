@@ -61,7 +61,16 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Duplicate file(s).
+        ///   Looks up a localized string similar to Duplicate entry..
+        /// </summary>
+        internal static string DuplicateEntry {
+            get {
+                return ResourceManager.GetString("DuplicateEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duplicate file(s)..
         /// </summary>
         internal static string DuplicateFiles {
             get {

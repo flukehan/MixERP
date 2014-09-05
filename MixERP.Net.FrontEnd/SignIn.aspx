@@ -16,14 +16,15 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 --%>
+
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SignIn.aspx.cs" Inherits="MixERP.Net.FrontEnd.SignIn" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    
-    <link href="/bundles/stylesheets/sign-in.min.css" rel="stylesheet" />    
-    <script src="//code.jquery.com/jquery-1.9.1.js" type="text/javascript"></script>    
+
+    <link href="/bundles/stylesheets/sign-in.min.css" rel="stylesheet" />
+    <script src="//code.jquery.com/jquery-1.9.1.js" type="text/javascript"></script>
     <link href="/Scripts/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/Scripts/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" />
     <script src="/Scripts/bootstrap/js/bootstrap.min.js"></script>
@@ -77,8 +78,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
                                 <asp:Literal ID="SelectBranchLiteral" runat="server" Text="<%$Resources:Titles, SelectYourBranch  %>" />
                             </label>
                             <div class="col-sm-8">
+                                <asp:HiddenField runat="server" ID="BranchIdHiddenField"></asp:HiddenField>
                                 <asp:DropDownList ID="BranchDropDownList" runat="server" CssClass="form-control input-sm"
-                                    DataTextField="OfficeName" DataValueField="OfficeId" placeholder="<%$Resources:Titles, SelectYourBranch  %>">
+                                    DataTextField="OfficeName" DataValueField="OfficeId"
+                                    placeholder="<%$Resources:Titles, SelectYourBranch  %>">
                                 </asp:DropDownList>
                             </div>
                         </div>
@@ -116,7 +119,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
                         <div class="form-group">
                             <label class="col-sm-4 control-label"></label>
                             <div class="col-sm-8">
-                                <asp:Button ID="SignInButton" runat="server" Text="<%$Resources:Titles, SignIn %>" OnClick="SignInButton_Click" CssClass="btn btn-default btn-sm" />
+                                <asp:Button ID="SignInButton" runat="server" Text="<%$Resources:Titles, SignIn %>" OnClick="SignInButton_Click" OnClientClick="$('#BranchIdHiddenField').val($('#BranchDropDownList').val());" CssClass="btn btn-default btn-sm" />
                             </div>
                         </div>
 

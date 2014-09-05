@@ -65,7 +65,6 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data
                     break;
                 case SubTranBook.Order:
                     return PurchaseOrder.GetPurchaseOrderViewCommand(ids);
-                    break;
                 case SubTranBook.Payment:
                     break;
                 case SubTranBook.Quotation:

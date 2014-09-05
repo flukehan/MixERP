@@ -105,7 +105,7 @@ namespace MixERP.Net.FrontEnd
 
         protected void SignInButton_Click(object sender, EventArgs e)
         {
-            int officeId = Conversion.TryCastInteger(this.BranchDropDownList.SelectedItem.Value);
+            int officeId = Conversion.TryCastInteger(this.BranchIdHiddenField.Value);
             bool results = BusinessLayer.Security.User.SignIn(officeId, this.UserIdTextBox.Text, this.PasswordTextBox.Text, this.LanguageDropDownList.SelectedItem.Value, this.RememberMe.Checked, this.Page);
 
             if (!results)

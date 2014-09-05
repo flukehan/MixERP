@@ -89,8 +89,8 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                         }
 
                         #region TransactionDetails
-                        sql = "INSERT INTO transactions.transaction_details(transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, amount_in_local_currency) " +
-                              "SELECT @TransactionMasterId, @TranType, core.get_account_id_by_parameter(@ParameterName), @StatementReference, @CashRepositoryId, transactions.get_default_currency_code_by_office_id(@OfficeId), @Amount, transactions.get_default_currency_code_by_office_id(@OfficeId), @Amount;";
+                        sql = "INSERT INTO transactions.transaction_details(transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency) " +
+                              "SELECT @TransactionMasterId, @TranType, core.get_account_id_by_parameter(@ParameterName), @StatementReference, @CashRepositoryId, transactions.get_default_currency_code_by_office_id(@OfficeId), @Amount, transactions.get_default_currency_code_by_office_id(@OfficeId), 1, @Amount;";
 
                         using(NpgsqlCommand purchaseRow = new NpgsqlCommand(sql, connection))
                         {
@@ -151,8 +151,8 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                         }
                         else
                         {
-                            sql = "INSERT INTO transactions.transaction_details(transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, amount_in_local_currency) " +
-                                  "SELECT @TransactionMasterId, @TranType, core.get_cash_account_id(), @StatementReference, @CashRepositoryId, transactions.get_default_currency_code_by_office_id(@OfficeId), @Amount, transactions.get_default_currency_code_by_office_id(@OfficeId), @Amount;";
+                            sql = "INSERT INTO transactions.transaction_details(transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency) " +
+                                  "SELECT @TransactionMasterId, @TranType, core.get_cash_account_id(), @StatementReference, @CashRepositoryId, transactions.get_default_currency_code_by_office_id(@OfficeId), @Amount, transactions.get_default_currency_code_by_office_id(@OfficeId), 1, @Amount;";
 
                             using(NpgsqlCommand cashRow = new NpgsqlCommand(sql, connection))
                             {

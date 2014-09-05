@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.Services;
-using MixERP.Net.Common;
 using MixERP.Net.Common.Models.Core;
 using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
@@ -19,7 +15,7 @@ namespace MixERP.Net.FrontEnd.Services.Purchase
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
     [System.Web.Script.Services.ScriptService]
-    public class DirectPurchase : System.Web.Services.WebService
+    public class DirectPurchase : WebService
     {
         [WebMethod(EnableSession = true)]
         public long Save(DateTime valueDate, int storeId, string partyCode, string referenceNumber, string data, string statementReference, string transactionType, int cashRepositoryId, int costCenterId, string attachmentsJSON)

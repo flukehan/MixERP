@@ -16,15 +16,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
-using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Security.Cryptography;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.DBFactory;
 using Npgsql;
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace MixERP.Net.DatabaseLayer.Transactions
 {
@@ -157,7 +156,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
 
         public static decimal GetExchangeRate(int officeId, string currencyCode)
         {
-            string sql = "SELECT transactions.get_exchange_rate(@OfficeId, @CurrencyCode);";
+            const string sql = "SELECT transactions.get_exchange_rate(@OfficeId, @CurrencyCode);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);

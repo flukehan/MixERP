@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 --%>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CurrentOfficeSalesByMonthWidget.ascx.cs" Inherits="MixERP.Net.FrontEnd.UserControls.Widgets.CurrentOfficeSalesByMonthWidget" %>
-<div class="panel panel-default double-panel widget">
+<div class="panel panel-default widget">
     <div class="panel-heading">
         <h3 class="panel-title">Sales By Month (In Thousands) (Todo: Admin Only)</h3>
     </div>

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.BusinessLayer", "MixERP.net.BusinessLayer\MixERP.Net.BusinessLayer.csproj", "{81DE04CF-7DE9-42FF-8339-D05E2586DCBA}"
 EndProject
@@ -60,6 +60,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.WebControls.TransactionChecklist.Data", "Controls\WebControls\MixERP.Net.WebControls.TransactionChecklist.Data\MixERP.Net.WebControls.TransactionChecklist.Data.csproj", "{3E6AA330-1D6A-450C-9917-3ABC2222EC74}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.WebControls.StockTransactionView.Data", "Controls\WebControls\MixERP.Net.WebControls.StockTransactionView.Data\MixERP.Net.WebControls.StockTransactionView.Data.csproj", "{F8499D93-CED5-4A3D-A22B-CF21171EDE6B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{02145AA0-9F04-4AB8-A626-2E9952EA99E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.Utility.SqlBundler", "Utilities\MixERP.Net.Utility.SqlBundler\MixERP.Net.Utility.SqlBundler.csproj", "{5A14E96A-3807-4109-B0C7-4B23D151FD14}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -461,6 +465,30 @@ Global
 		{F8499D93-CED5-4A3D-A22B-CF21171EDE6B}.Release-net40|Any CPU.Build.0 = Release|Any CPU
 		{F8499D93-CED5-4A3D-A22B-CF21171EDE6B}.Release-net45|Any CPU.ActiveCfg = Release|Any CPU
 		{F8499D93-CED5-4A3D-A22B-CF21171EDE6B}.Release-net45|Any CPU.Build.0 = Release|Any CPU
+		{5A14E96A-3807-4109-B0C7-4B23D151FD14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A14E96A-3807-4109-B0C7-4B23D151FD14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A14E96A-3807-4109-B0C7-4B23D151FD14}.Debug-net20|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A14E96A-3807-4109-B0C7-4B23D151FD14}.Debug-net20|Any CPU.Build.0 = Debug|Any CPU
+		{5A14E96A-3807-4109-B0C7-4B23D151FD14}.Debug-net35|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A14E96A-3807-4109-B0C7-4B23D151FD14}.Debug-net35|Any CPU.Build.0 = Debug|Any CPU
+		{5A14E96A-3807-4109-B0C7-4B23D151FD14}.Debug-net40|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A14E96A-3807-4109-B0C7-4B23D151FD14}.Debug-net40|Any CPU.Build.0 = Debug|Any CPU
+		{5A14E96A-3807-4109-B0C7-4B23D151FD14}.Debug-net45|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A14E96A-3807-4109-B0C7-4B23D151FD14}.Debug-net45|Any CPU.Build.0 = Debug|Any CPU
+		{5A14E96A-3807-4109-B0C7-4B23D151FD14}.Mono-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A14E96A-3807-4109-B0C7-4B23D151FD14}.Mono-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A14E96A-3807-4109-B0C7-4B23D151FD14}.Mono-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A14E96A-3807-4109-B0C7-4B23D151FD14}.Mono-Release|Any CPU.Build.0 = Release|Any CPU
+		{5A14E96A-3807-4109-B0C7-4B23D151FD14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A14E96A-3807-4109-B0C7-4B23D151FD14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A14E96A-3807-4109-B0C7-4B23D151FD14}.Release-net20|Any CPU.ActiveCfg = Release|Any CPU
+		{5A14E96A-3807-4109-B0C7-4B23D151FD14}.Release-net20|Any CPU.Build.0 = Release|Any CPU
+		{5A14E96A-3807-4109-B0C7-4B23D151FD14}.Release-net35|Any CPU.ActiveCfg = Release|Any CPU
+		{5A14E96A-3807-4109-B0C7-4B23D151FD14}.Release-net35|Any CPU.Build.0 = Release|Any CPU
+		{5A14E96A-3807-4109-B0C7-4B23D151FD14}.Release-net40|Any CPU.ActiveCfg = Release|Any CPU
+		{5A14E96A-3807-4109-B0C7-4B23D151FD14}.Release-net40|Any CPU.Build.0 = Release|Any CPU
+		{5A14E96A-3807-4109-B0C7-4B23D151FD14}.Release-net45|Any CPU.ActiveCfg = Release|Any CPU
+		{5A14E96A-3807-4109-B0C7-4B23D151FD14}.Release-net45|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -490,5 +518,7 @@ Global
 		{F1476541-9AAC-4049-ADC5-C522C29B258D} = {ABD09714-F452-4D9F-A209-06508B04A316}
 		{3E6AA330-1D6A-450C-9917-3ABC2222EC74} = {F882C837-D33A-43DE-8CEA-87D0CE635E9D}
 		{F8499D93-CED5-4A3D-A22B-CF21171EDE6B} = {F882C837-D33A-43DE-8CEA-87D0CE635E9D}
+		{02145AA0-9F04-4AB8-A626-2E9952EA99E6} = {C832E6A8-B906-4DFC-8458-72C965C0C957}
+		{5A14E96A-3807-4109-B0C7-4B23D151FD14} = {02145AA0-9F04-4AB8-A626-2E9952EA99E6}
 	EndGlobalSection
 EndGlobal

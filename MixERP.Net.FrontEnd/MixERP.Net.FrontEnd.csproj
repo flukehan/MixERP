@@ -42,10 +42,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AspNetPager, Version=7.4.3.0, Culture=neutral, PublicKeyToken=fb0a0fe055d40fd4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dependencies\AspNetPager.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Linq" />
@@ -1178,12 +1174,155 @@
     <Content Include="bundles\scripts\master-page.min.js">
       <DependentUpon>master-page.js</DependentUpon>
     </Content>
-    <Content Include="bundles\sql\mixerp-blank-db.sql">
-      <DependentUpon>mixerp-blank-db.sql.bundle</DependentUpon>
-    </Content>
-    <Content Include="bundles\sql\mixerp-db-sample.sql">
-      <DependentUpon>mixerp-db-sample.sql.bundle</DependentUpon>
-    </Content>
+    <Content Include="db\src\00. db core\0. mixerp.sql" />
+    <Content Include="db\src\00. db core\1. scrud.sql" />
+    <Content Include="db\src\00. db core\2. install-unit-test.sql" />
+    <Content Include="db\src\00. db core\2. mixerp-db-schema.sql" />
+    <Content Include="db\src\00. db core\3. roles-and-priviledge.sql" />
+    <Content Include="db\src\01. domains, tables, and constraints\domains.sql" />
+    <Content Include="db\src\01. domains, tables, and constraints\tables and constraints.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.convert_unit.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.count_item_in_stock.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.create_flag.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_account_id_by_account_code.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_account_id_by_parameter.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_account_id_by_party_code.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_account_id_by_party_id.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_account_id_by_shipper_id.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_account_name.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_agent_name_by_agent_id.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_associated_units.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_associated_units_from_item_code.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_associated_units_from_item_id.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_base_quantity_by_unit_name.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_base_unit_id_by_unit_name.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_cash_account_id.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_currency_code_by_office_id.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_currency_code_by_party_id.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_current_year.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_flag_background_color.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_flag_foreground_color.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_flag_type_id.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_frequency_code_by_frequency_id.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_item_cost_price.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_item_id_by_item_code.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_item_tax_rate.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_menu_id.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_party_code.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_party_id_by_party_code.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_party_type_id_by_party_code.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_price_type_name_by_price_type_id.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_root_parent_menu_id.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_root_unit_id.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_shipper_code.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_shipper_name_by_shipper_id.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_shipping_address_code_by_shipping_address_id.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_shipping_address_id_by_shipping_address_code.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_switch_category_id_by_name.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_unit_id_by_unit_code.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_unit_id_by_unit_name.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.has_child_accounts.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.is_leap_year.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.is_parent_unit.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.is_supplier.sql" />
+    <Content Include="db\src\02. functions and logic\logic\functions\core\core.calculate_interest.sql" />
+    <Content Include="db\src\02. functions and logic\logic\functions\core\core.get_item_cost_price.sql" />
+    <Content Include="db\src\02. functions and logic\logic\functions\core\core.get_item_selling_price.sql" />
+    <Content Include="db\src\02. functions and logic\logic\functions\core\office.can_login.sql" />
+    <Content Include="db\src\02. functions and logic\logic\functions\office\office.sign_in.sql" />
+    <Content Include="db\src\02. functions and logic\logic\functions\policy\policy.get_menu.sql" />
+    <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_party_transaction_summary.sql" />
+    <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.auto_verify.sql" />
+    <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_accrued_interest-todo.sql" />
+    <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_average_party_transaction.sql" />
+    <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_cash_repository_balance.sql" />
+    <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_last_receipt_date.sql" />
+    <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_non_gl_product_view.sql" />
+    <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_product_view.sql" />
+    <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_total_due.sql" />
+    <Content Include="db\src\02. functions and logic\logic\triggers\policy.check_menu_policy_trigger.sql" />
+    <Content Include="db\src\02. functions and logic\logic\triggers\transactions.verification_trigger.sql" />
+    <Content Include="db\src\02. functions and logic\office\office.create_user.sql" />
+    <Content Include="db\src\02. functions and logic\office\office.get_cash_repository_id_by_cash_repository_code.sql" />
+    <Content Include="db\src\02. functions and logic\office\office.get_cash_repository_id_by_cash_repository_name.sql" />
+    <Content Include="db\src\02. functions and logic\office\office.get_logged_in_culture.sql" />
+    <Content Include="db\src\02. functions and logic\office\office.get_logged_in_office_id.sql" />
+    <Content Include="db\src\02. functions and logic\office\office.get_login_id.sql" />
+    <Content Include="db\src\02. functions and logic\office\office.get_office_ids.sql" />
+    <Content Include="db\src\02. functions and logic\office\office.get_offices.sql" />
+    <Content Include="db\src\02. functions and logic\office\office.get_office_id_by_office_code.sql" />
+    <Content Include="db\src\02. functions and logic\office\office.get_office_id_by_user_id.sql" />
+    <Content Include="db\src\02. functions and logic\office\office.get_office_name_by_id.sql" />
+    <Content Include="db\src\02. functions and logic\office\office.get_role_code_by_user_name.sql" />
+    <Content Include="db\src\02. functions and logic\office\office.get_role_id_by_use_id.sql" />
+    <Content Include="db\src\02. functions and logic\office\office.get_store_name_by_store_id.sql" />
+    <Content Include="db\src\02. functions and logic\office\office.get_sys_user_id.sql" />
+    <Content Include="db\src\02. functions and logic\office\office.get_user_id_by_user_name.sql" />
+    <Content Include="db\src\02. functions and logic\office\office.get_user_name_by_user_id.sql" />
+    <Content Include="db\src\02. functions and logic\office\office.is_admin.sql" />
+    <Content Include="db\src\02. functions and logic\office\office.is_parent_office.sql" />
+    <Content Include="db\src\02. functions and logic\office\office.is_sys.sql" />
+    <Content Include="db\src\02. functions and logic\office\office.is_sys_user.sql" />
+    <Content Include="db\src\02. functions and logic\office\office.validate_login.sql" />
+    <Content Include="db\src\02. functions and logic\policy\policy.is_locked_out_till.sql" />
+    <Content Include="db\src\02. functions and logic\transactions\transactions.are_sales_orders_already_merged.sql" />
+    <Content Include="db\src\02. functions and logic\transactions\transactions.are_sales_quotations_already_merged.sql" />
+    <Content Include="db\src\02. functions and logic\transactions\transactions.get_default_currency_code.sql" />
+    <Content Include="db\src\02. functions and logic\transactions\transactions.get_default_currency_code_by_office_id.sql" />
+    <Content Include="db\src\02. functions and logic\transactions\transactions.get_exchange_rate.sql" />
+    <Content Include="db\src\02. functions and logic\transactions\transactions.get_invoice_amount.sql" />
+    <Content Include="db\src\02. functions and logic\transactions\transactions.get_new_transaction_counter.sql" />
+    <Content Include="db\src\02. functions and logic\transactions\transactions.get_transaction_code.sql" />
+    <Content Include="db\src\04. default values\00. currency, accounts, account-parameters.sql" />
+    <Content Include="db\src\04. default values\agents, ageing-slabs, party-types.sql" />
+    <Content Include="db\src\04. default values\brands, item-groups, tax, shipping.sql" />
+    <Content Include="db\src\04. default values\crm.lead-sources, lead-statuses, opportunity-stages.sql" />
+    <Content Include="db\src\04. default values\office, department, roles, users.sql" />
+    <Content Include="db\src\04. default values\stores-types,cost-centers.sql" />
+    <Content Include="db\src\04. default values\switches, policy.sql" />
+    <Content Include="db\src\04. default values\units.sql" />
+    <Content Include="db\src\04. default values\verification-statuses, flag-types, frequencies.sql" />
+    <Content Include="db\src\05. views\core\core.accounts_view.sql" />
+    <Content Include="db\src\05. views\core\core.account_view.sql" />
+    <Content Include="db\src\05. views\core\core.agent_bonus_setup_view.sql" />
+    <Content Include="db\src\05. views\core\core.agent_view.sql" />
+    <Content Include="db\src\05. views\core\core.bank_account_view.sql" />
+    <Content Include="db\src\05. views\core\core.bonus_slab_detail_view.sql" />
+    <Content Include="db\src\05. views\core\core.bonus_slab_view.sql" />
+    <Content Include="db\src\05. views\core\core.item_cost_price_view.sql" />
+    <Content Include="db\src\05. views\core\core.item_selling_price_view.sql" />
+    <Content Include="db\src\05. views\core\core.item_view.sql" />
+    <Content Include="db\src\05. views\core\core.party_user_control_view.sql" />
+    <Content Include="db\src\05. views\core\core.party_view.sql" />
+    <Content Include="db\src\05. views\core\core.shipping_address_view.sql" />
+    <Content Include="db\src\05. views\core\core.supplier_view.sql" />
+    <Content Include="db\src\05. views\core\core.tax_view.sql" />
+    <Content Include="db\src\05. views\core\core.unit_view.sql" />
+    <Content Include="db\src\05. views\office\office.cash_repository_view.sql" />
+    <Content Include="db\src\05. views\office\office.cost_center_view.sql" />
+    <Content Include="db\src\05. views\office\office.office_view.sql" />
+    <Content Include="db\src\05. views\office\office.role_view.sql" />
+    <Content Include="db\src\05. views\office\office.sign_in_view.sql" />
+    <Content Include="db\src\05. views\office\office.store_view.sql" />
+    <Content Include="db\src\05. views\office\office.user_view.sql" />
+    <Content Include="db\src\05. views\office\office.work_center_view.sql" />
+    <Content Include="db\src\05. views\policy\policy.auto_verification_policy_view.sql" />
+    <Content Include="db\src\05. views\policy\policy.voucher_verification_policy_view.sql" />
+    <Content Include="db\src\05. views\public.dbstat.sql" />
+    <Content Include="db\src\05. views\transactions\1. transactions.transaction_view.sql" />
+    <Content Include="db\src\05. views\transactions\2. transactions.verified_transactions_view.sql" />
+    <Content Include="db\src\05. views\transactions\3. transactions.trial_balance_view.sql" />
+    <Content Include="db\src\06. sample-data\exchange-rates.sql" />
+    <Content Include="db\src\06. sample-data\menus.sql" />
+    <Content Include="db\src\06. sample-data\party-sample.sql" />
+    <Content Include="db\src\06. sample-data\price-types.sql" />
+    <Content Include="db\src\06. sample-data\sample-data.sql" />
+    <Content Include="db\src\10. triggers\core\core.disable_editing_sys_type.sql" />
+    <Content Include="db\src\10. triggers\core\core.update_party_code.sql" />
+    <Content Include="db\src\10. triggers\core\core.update_shipper_code.sql" />
+    <Content Include="db\src\10. triggers\core\core.update_shipping_address_code_trigger.sql" />
+    <Content Include="db\src\10. triggers\policy\policy.perform_lock_out.sql" />
+    <Content Include="db\src\10. triggers\transactions\transactions.restrict_delete_trigger.sql" />
     <Content Include="Inventory\Setup\ItemsPopup.aspx" />
     <Content Include="Purchase\Confirmation\GRN.aspx" />
     <Content Include="Purchase\Confirmation\Order.aspx" />
@@ -1192,6 +1331,7 @@
     <Content Include="Purchase\Entry\Order.aspx" />
     <Content Include="Resource\Icons\checklist-16.png" />
     <Content Include="Resource\Icons\insert-16.png" />
+    <Content Include="robots.txt" />
     <Content Include="Sales\Confirmation\Delivery.aspx" />
     <Content Include="Sales\Confirmation\Order.aspx" />
     <Content Include="Sales\Confirmation\ReportSalesOrder.aspx" />
@@ -1261,6 +1401,7 @@
     </Content>
     <Content Include="Scripts\notify-combined.min.js" />
     <Content Include="Scripts\UserControls\AttachmentUserControl.js" />
+    <Content Include="Scripts\UserControls\PartyControl.js" />
     <Content Include="Scripts\UserControls\ProductControl.js" />
     <Content Include="Scripts\UserControls\ProductViewControl.js" />
     <Content Include="Services\Finance\JournalVoucher.asmx" />
@@ -1275,7 +1416,6 @@
     <Content Include="Static\AccessIsDenied.html" />
     <Content Include="Static\Attachments\index.html" />
     <Content Include="Static\Templates\ModalTemplate.html" />
-    <Content Include="Test\HtmlPage1.html" />
     <Content Include="Themes\purple\stylesheets\default.css" />
     <Content Include="CRM\ConvertLeadToOpportunity.aspx" />
     <Content Include="CRM\Index.aspx" />
@@ -1287,24 +1427,6 @@
     <Content Include="CRM\Setup\LeadStatuses.aspx" />
     <Content Include="CRM\Setup\OpportunityStages.aspx" />
     <Content Include="Dashboard\Index.aspx" />
-    <Content Include="db\en-US\scrud.sql" />
-    <Content Include="db\en-US\index.html" />
-    <Content Include="db\en-US\mixerp-db-logic.sql" />
-    <Content Include="db\en-US\mixerp.sql" />
-    <Content Include="db\en-US\samples %28optional%29\core.menu_locale.de.sql" />
-    <Content Include="db\en-US\samples %28optional%29\core.menu_locale.fr.sql" />
-    <Content Include="db\en-US\samples %28optional%29\party-sample.sql" />
-    <Content Include="db\en-US\samples %28optional%29\sample-data.sql" />
-    <Content Include="db\en-US\samples %28optional%29\index.html" />
-    <Content Include="db\fr-FR\index.html" />
-    <Content Include="db\fr-FR\mixerp-db-logic.sql" />
-    <Content Include="db\fr-FR\mixerp.sql" />
-    <Content Include="db\fr-FR\samples %28optional%29\0. core.menu_locale.de.sql" />
-    <Content Include="db\fr-FR\samples %28optional%29\0. core.menu_locale.en.sql" />
-    <Content Include="db\fr-FR\samples %28optional%29\0. party-sample.sql" />
-    <Content Include="db\fr-FR\samples %28optional%29\1. sample-data.sql" />
-    <Content Include="db\fr-FR\samples %28optional%29\index.html" />
-    <Content Include="db\fr-FR\scrud.sql" />
     <Content Include="db\index.html" />
     <Content Include="Dependencies\AspNetPager.dll" />
     <Content Include="Finance\BankReconciliation.aspx" />
@@ -1831,14 +1953,15 @@
     <Content Include="bundles\scripts\master-page.min.js.map">
       <DependentUpon>master-page.min.js</DependentUpon>
     </Content>
-    <Content Include="bundles\sql\mixerp-blank-db.sql.bundle" />
-    <Content Include="bundles\sql\mixerp-db-sample.sql.bundle" />
     <Content Include="MixERPBlankMaster.Master" />
     <Content Include="Handlers\FileUpload.ashx" />
     <Content Include="App_Themes\MixERP\mixerp.less" />
     <Content Include="App_Themes\MixERP\mixerp.css.map">
       <DependentUpon>mixerp.css</DependentUpon>
     </Content>
+    <Content Include="db\src\dictionary\de-DE.dict" />
+    <Content Include="db\src\dictionary\fr-FR.dict" />
+    <Content Include="db\mixerp.sqlbundle" />
     <None Include="Properties\PublishProfiles\MixERP.pubxml" />
     <Content Include="Reports\Assets\ReadMe.txt" />
     <Content Include="Resource\Configuration\Switches.xml" />
@@ -1876,12 +1999,15 @@
     <Content Include="xsp4.bat" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="db\src\000. mixerp\" />
+    <Folder Include="db\src\sample-data\" />
     <Folder Include="Media\Temp\" />
     <Folder Include="Resource\DatabaseBackups\" />
     <Folder Include="Resource\Frameworks\" />
     <Folder Include="Resource\Logo\" />
     <Folder Include="Scripts\CodeMirror\bin\" />
     <Folder Include="Setup\General\" />
+    <Folder Include="Test\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Controls\WebControls\MixERP.Net.WebControls.Common\MixERP.Net.WebControls.Common.csproj">
@@ -2030,8 +2156,7 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>"$(SolutionDir)Utilities\MixERP.Net.Utility.SqlBundler\bin\Debug\MixERP.Net.Utility.SqlBundler.exe" "$(SolutionDir)MixERP.net.FrontEnd" "db"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

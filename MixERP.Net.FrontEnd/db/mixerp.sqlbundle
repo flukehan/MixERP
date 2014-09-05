@@ -1,0 +1,5 @@
+- default-language : en-US
+- dictionary : [fr-FR, db/src/dictionary/fr-Fr.dict]
+- dictionary : [de-DE, db/src/dictionary/de-DE.dict]
+- script-directory : db/src
+- output-directory:db

@@ -16,20 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
-using System;
-using System.Collections.ObjectModel;
-using System.Threading;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using MixERP.Net.BusinessLayer;
-using MixERP.Net.BusinessLayer.Core;
-using MixERP.Net.BusinessLayer.Helpers;
-using MixERP.Net.BusinessLayer.Transactions;
-using MixERP.Net.Common;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Transactions;
-using Resources;
-using FormHelper = MixERP.Net.Common.Helpers.FormHelper;
 
 namespace MixERP.Net.FrontEnd.Finance
 {

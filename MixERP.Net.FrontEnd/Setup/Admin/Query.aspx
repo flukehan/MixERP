@@ -67,7 +67,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
     <div class="vpad16">
         <div style="width: 100%; max-height: 400px; overflow: auto">
-            <asp:GridView ID="SQLGridView" EnableTheming="false" CssClass="grid2" HeaderStyle-CssClass="grid2-header" RowStyle-CssClass="grid2-row" AlternatingRowStyle-CssClass="grid2-row-alt" runat="server" ShowHeaderWhenEmpty="true">
+            <asp:GridView ID="SQLGridView" EnableTheming="false" CssClass="table table-bordered" HeaderStyle-CssClass="grid2-header" RowStyle-CssClass="grid2-row" AlternatingRowStyle-CssClass="grid2-row-alt" runat="server" ShowHeaderWhenEmpty="true">
             </asp:GridView>
             <asp:Literal ID="MessageLiteral" runat="server" />
         </div>

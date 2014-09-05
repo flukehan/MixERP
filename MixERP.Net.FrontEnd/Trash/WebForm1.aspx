@@ -40,7 +40,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
         var shortDateFormat = "<%= LocalizationHelper.GetShortDateFormat() %>";
         var thousandSeparator = "<%= LocalizationHelper.GetThousandSeparator() %>";
         var decimalSeparator = "<%= LocalizationHelper.GetDecimalSeparator() %>";
-        var currencyDecimalPlaces = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetCurrencyDecimalPlaces() %>";
+        var currencyDecimalPlaces = "<%= LocalizationHelper.GetCurrencyDecimalPlaces() %>";
     </script>
 
     <script src="/Scripts/mixerp/mixerp.js"></script>

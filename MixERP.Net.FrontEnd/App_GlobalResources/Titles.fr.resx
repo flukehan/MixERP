@@ -621,9 +621,6 @@
   <data name="VoucherVerificationPolicy" xml:space="preserve">
     <value>vérification politique</value>
   </data>
-  <data name="WithdrawalReason" xml:space="preserve">
-    <value>retrait raison</value>
-  </data>
   <data name="WithdrawThisTransaction" xml:space="preserve">
     <value>retirer cette Transaction</value>
   </data>

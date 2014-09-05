@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.Services;
 using MixERP.Net.Common.Models.Core;
@@ -19,7 +16,7 @@ namespace MixERP.Net.FrontEnd.Services.Purchase
     [System.ComponentModel.ToolboxItem(false)]
     // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
     [System.Web.Script.Services.ScriptService]
-    public class Order : System.Web.Services.WebService
+    public class Order : WebService
     {
 
         [WebMethod(EnableSession = true)]

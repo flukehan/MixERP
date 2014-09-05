@@ -35,7 +35,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 <div id="info-panel">
     <asp:Literal runat="server" Text="<%$Resources:Titles,ShortCuts %>"></asp:Literal>
-    <hr class="hr" style="border-color: #97d300;" />
+    <hr style="border-color: #97d300;" />
     <table>
         <tr>
             <td>F2
@@ -245,7 +245,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
                 <td>
                     <input type="button"
                         id="AddButton"
-                        class="button"
+                        class="btn btn-primary btn-sm"
                         value='<asp:Literal runat="server" Text="<%$Resources:Titles,Add%>" />'
                         title='<asp:Literal runat="server" Text="<%$Resources:Titles,CtrlReturn%>" />' />
 

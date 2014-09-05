@@ -182,14 +182,19 @@
             var thousandSeparator = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetThousandSeparator() %>";
             var decimalSeparator = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetDecimalSeparator() %>";
             var currencyDecimalPlaces = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetCurrencyDecimalPlaces() %>";
-            var localizedAreYouSure = "<%= Resources.Questions.AreYouSure %>";
-            var localizedUpdateTax = "<%= Resources.Questions.UpdateTax %>";
+
+            var duplicateEntryLocalized = "<%= Resources.Errors.DuplicateEntry %>";
+            var updateTaxLocalized = "<%= Resources.Questions.UpdateTax %>";
             var selectLocalized = "<%=Resources.Titles.Select %>";
             var noneLocalized = "<%=Resources.Titles.None %>";
             var invalidDateWarningLocalized = "<%= Resources.Warnings.InvalidDate %>";
             var areYouSureLocalized = "<%=Resources.Questions.AreYouSure %>";
             var nothingSelectedLocalized = "<%= Resources.Labels.NothingSelected %>";
+            var yesLocalized = "<%=Resources.Titles.Yes %>";
+            var noLocalized = "<%=Resources.Titles.No %>";
 
+
+            var daysLowerCaseLocalized = "<%=Resources.Labels.DaysLowerCase %>";
             var gridViewEmptyWarningLocalized = "<%=Resources.Warnings.GridViewEmpty%>";
 
             var insufficientStockWarningLocalized = "<%= Resources.Warnings.InsufficientStockWarning %>";
@@ -204,7 +209,6 @@
 
             var salesNotAllowedHereWarningLocalized = "<%=Resources.Warnings.SalesNotAllowedHere%>";
             var invalidFileLocalized = "<%= Resources.Warnings.InvalidFile %>";
-            var areYouSureLocalized = "<%= Resources.Questions.AreYouSure %>";
             var uploadedFilesDeletedLocalized = "<%= Resources.Labels.UploadedFilesDeleted %>";
             var duplicateFileLocalized = "<% = Resources.Errors.DuplicateFiles %>";
 

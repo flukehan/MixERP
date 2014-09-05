@@ -61,6 +61,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to day(s).
+        /// </summary>
+        internal static string DaysLowerCase {
+            get {
+                return ResourceManager.GetString("DaysLowerCase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This field is required..
         /// </summary>
         internal static string FieldRequired {

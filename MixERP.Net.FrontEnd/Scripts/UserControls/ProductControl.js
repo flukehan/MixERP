@@ -239,9 +239,9 @@ attachmentLabel.click(function () {
 
 cashRepositoryDropDownList.change(function () {
     if (cashRepositoryDropDownList.getSelectedValue()) {
-
         url = "/Services/AccountData.asmx/GetCashRepositoryBalance";
         data = appendParameter("", "cashRepositoryId", cashRepositoryDropDownList.getSelectedValue());
+        data = appendParameter(data, "currencyCode", "");
         data = getData(data);
 
         var repoBalanceAjax = getAjax(url, data);
@@ -727,7 +727,7 @@ var updateTax = function () {
     }
 
     if (parseFloat2(tax).toFixed(2) != parseFloat2(parseFormattedNumber(taxTextBox.val())).toFixed(2)) {
-        var question = confirm(localizedUpdateTax);
+        var question = confirm(updateTaxLocalized);
 
         if (question) {
             if (tax.toFixed) {

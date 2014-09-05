@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 --%>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="TopSellingProductOfAllTimeWidget.ascx.cs" Inherits="MixERP.Net.FrontEnd.UserControls.Widgets.TopSellingProductOfAllTimeWidget" %>
-<div class="panel panel-default double-panel widget">
+<div class="panel panel-default widget">
     <div class="panel-heading">
         <h3 class="panel-title">Top 5 Selling Products of All Time(Todo: Same)</h3>
     </div>

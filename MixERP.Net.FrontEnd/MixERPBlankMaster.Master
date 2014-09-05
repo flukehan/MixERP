@@ -34,8 +34,8 @@
             var thousandSeparator = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetThousandSeparator() %>";
             var decimalSeparator = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetDecimalSeparator() %>";
             var currencyDecimalPlaces = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetCurrencyDecimalPlaces() %>";
-            var localizedAreYouSure = "<%= Resources.Questions.AreYouSure %>";
-            var localizedUpdateTax = "<%= Resources.Questions.UpdateTax %>";
+            var updateTaxLocalized = "<%= Resources.Questions.UpdateTax %>";
+            var daysLowerCaseLocalized = "<%=Resources.Labels.DaysLowerCase %>";
 
 
             Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {

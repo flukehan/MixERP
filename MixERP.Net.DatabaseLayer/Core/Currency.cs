@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MixERP.Net.DBFactory;
 using Npgsql;
+using System.Data;
 
 namespace MixERP.Net.DatabaseLayer.Core
 {
@@ -12,8 +8,8 @@ namespace MixERP.Net.DatabaseLayer.Core
     {
         public static DataTable GetCurrencies()
         {
-            string sql = "SELECT * FROM core.currencies;";
-            return MixERP.Net.DBFactory.DbOperations.GetDataTable(new NpgsqlCommand(sql));
+            const string sql = "SELECT * FROM core.currencies;";
+            return DbOperations.GetDataTable(new NpgsqlCommand(sql));
         }
     }
 }

@@ -10,13 +10,13 @@ var scrudConfirmAction = function() {
     var retVal = false;
     var selectedItemValue;
 
-    var confirmed = confirm(localizedAreYouSure);
+    var confirmed = confirm(scrudAreYouSureLocalized);
 
     if (confirmed) {
         selectedItemValue = scrudGetSelectedRadioValue();
 
         if (selectedItemValue == undefined) {
-            alert(localizedNothingSelected);
+            alert(scrudNothingSelectedLocalized);
             retVal = false;
         } else {
             retVal = true;
@@ -241,7 +241,7 @@ $(document).ready(function() {
             return;
         };
     
-        var result = confirm(localizedAreYouSure);
+        var result = confirm(scrudAreYouSureLocalized);
         if (result) {
             $('#' + cancelButtonId).click();
         }

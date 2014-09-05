@@ -93,7 +93,7 @@ namespace MixERP.Net.FrontEnd.Services
         {
             if (!string.IsNullOrWhiteSpace(accountCode))
             {
-                return BusinessLayer.Core.Accounts.AccountCodeExists(accountCode);
+                return Accounts.AccountCodeExists(accountCode);
             }
 
             return false;
@@ -243,7 +243,5 @@ namespace MixERP.Net.FrontEnd.Services
 
             return BusinessLayer.Office.CashRepositories.GetBalance(cashRepositoryId, currencyCode);
         }
-
-
     }
 }

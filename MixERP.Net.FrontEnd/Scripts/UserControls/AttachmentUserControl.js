@@ -68,7 +68,7 @@ undoButton.on("click", function () {
 
             var undoUploadAjax = getAjax(url, data);
 
-            undoUploadAjax.success(function(msg) {
+            undoUploadAjax.success(function() {
                 progressBars.val(0);
                 paragraphs.html("");
                 comments.val("");

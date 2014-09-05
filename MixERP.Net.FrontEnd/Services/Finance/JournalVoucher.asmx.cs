@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.Services;
 using MixERP.Net.BusinessLayer.Core;
 using MixERP.Net.BusinessLayer.Office;
 using MixERP.Net.BusinessLayer.Transactions;
-using MixERP.Net.Common;
-using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models.Core;
 using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
@@ -25,7 +21,7 @@ namespace MixERP.Net.FrontEnd.Services.Finance
     [System.ComponentModel.ToolboxItem(false)]
     // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
     [System.Web.Script.Services.ScriptService]
-    public class JournalVoucher : System.Web.Services.WebService
+    public class JournalVoucher : WebService
     {
 
         [WebMethod(EnableSession = true)]
@@ -70,7 +66,7 @@ namespace MixERP.Net.FrontEnd.Services.Finance
                             throw new InvalidOperationException("Invalid cash repository " + model.CashRepositoryCode);
                         }
 
-                        if (BusinessLayer.Office.CashRepositories.GetBalance(model.CashRepositoryCode) < model.Credit)
+                        if (CashRepositories.GetBalance(model.CashRepositoryCode, model.CurrencyCode) < model.Credit)
                         {
                             throw new InvalidOperationException("Insufficient balance in cash repository.");
                         }
