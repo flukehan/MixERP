@@ -1,0 +1,1 @@
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="GLAccess.ascx.cs" Inherits="MixERP.Net.Core.Modules.BackOffice.Policy.GLAccess" %>

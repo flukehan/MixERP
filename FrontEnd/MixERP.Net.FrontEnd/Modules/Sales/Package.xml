@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MixERPPackage>
+  <Package Name="MixERP Sales Module" Namespace="MixERP.Net.Core.Modules.Sales">
+    <Dependencies>
+      <Assembly File="MixERP.Net.Core.Modules.Sales.dll" />
+    </Dependencies>
+    <DBScripts>
+      <Script File="/Scripts/SQL/Menu.sql" />
+      <Script File="/Scripts/SQL/Module.sql" />
+    </DBScripts>
+  </Package>
+</MixERPPackage>

@@ -1,6 +1,6 @@
-﻿using System.Collections.ObjectModel;
-using MixERP.Net.Utility.SqlBundler.Helpers;
+﻿using MixERP.Net.Utility.SqlBundler.Helpers;
 using MixERP.Net.Utility.SqlBundler.Models;
+using System.Collections.ObjectModel;
 
 namespace MixERP.Net.Utility.SqlBundler
 {
@@ -16,17 +16,14 @@ namespace MixERP.Net.Utility.SqlBundler
                     return;
                 }
 
-
-                Collection<SQLBundle> bundles =  Processor.Process(root, model);
+                Collection<SQLBundle> bundles = Processor.Process(root, model);
 
                 if (bundles == null)
                 {
                     return;
                 }
 
-
                 IOHelper.WriteBundles(root, bundles);
-
             }
         }
     }

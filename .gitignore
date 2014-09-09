@@ -1,4 +1,4 @@
 bin
 obj
 *.pdb
-MixERP.Net.FrontEnd\Static\Attachments
+FrontEnd\MixERP.Net.FrontEnd\Resource\Static\Attachments

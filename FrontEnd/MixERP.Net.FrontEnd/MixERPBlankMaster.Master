@@ -1,0 +1,60 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MixERPBlankMaster.master.cs" Inherits="MixERP.Net.FrontEnd.MixERPBlankMaster" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+
+    <style type="text/css">
+        body {
+            background-color: white !important;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+
+    <link href="/Scripts/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/Scripts/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" />
+    <script src="/bundles/scripts/master-page.js"></script>
+    <script src="/Scripts/bootstrap/js/bootstrap.min.js"></script>
+
+    <asp:ContentPlaceHolder ID="ContentPlaceHolderHead" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <script type="text/javascript">
+            function pageLoad() {
+                $(".item-selector").colorbox({ iframe: true, innerWidth: 1024, innerHeight: 450, overlayClose: false });
+                $(".preview").colorbox({ iframe: true, innerWidth: 1024, innerHeight: 450, overlayClose: false });
+            };
+            var today = "<%= DateTime.Now.ToShortDateString() %>";
+            var shortDateFormat = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetShortDateFormat() %>";
+            var thousandSeparator = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetThousandSeparator() %>";
+            var decimalSeparator = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetDecimalSeparator() %>";
+            var currencyDecimalPlaces = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetCurrencyDecimalPlaces() %>";
+            var updateTaxLocalized = "<%= Resources.Questions.UpdateTax %>";
+            var daysLowerCaseLocalized = "<%=Resources.Labels.DaysLowerCase %>";
+
+            Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
+                //Fired on each ASP.net AJAX request.
+                initializeItemSelector();
+            });
+
+            $(document).on('ready', function () {
+                initializeItemSelector();
+            });
+        </script>
+
+        <asp:ScriptManager runat="server" ID="ScriptManager1" />
+
+        <div class="row left">
+            <div class="col-md-12">
+                <asp:ContentPlaceHolder ID="BodyContentPlaceholder" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

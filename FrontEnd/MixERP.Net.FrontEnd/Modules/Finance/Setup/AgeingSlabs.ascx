@@ -1,0 +1,2 @@
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="AgeingSlabs.ascx.cs" Inherits="MixERP.Net.Core.Modules.Finance.Setup.AgeingSlabs" %>
+<asp:PlaceHolder ID="ScrudPlaceholder" runat="server" />

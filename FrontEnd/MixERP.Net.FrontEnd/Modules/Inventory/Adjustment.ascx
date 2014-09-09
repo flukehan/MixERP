@@ -1,0 +1,1 @@
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Adjustment.ascx.cs" Inherits="MixERP.Net.Core.Modules.Inventory.Adjustment" %>

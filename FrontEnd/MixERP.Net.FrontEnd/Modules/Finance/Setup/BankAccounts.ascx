@@ -1,0 +1,2 @@
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BankAccounts.ascx.cs" Inherits="MixERP.Net.Core.Modules.Finance.Setup.BankAccounts" %>
+<asp:PlaceHolder ID="ScrudPlaceholder" runat="server" />

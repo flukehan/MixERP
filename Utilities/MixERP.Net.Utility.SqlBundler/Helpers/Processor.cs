@@ -1,10 +1,10 @@
-﻿using System;
+﻿using MixERP.Net.Utility.SqlBundler.Models;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
-using MixERP.Net.Utility.SqlBundler.Models;
 
 namespace MixERP.Net.Utility.SqlBundler.Helpers
 {
@@ -22,7 +22,6 @@ namespace MixERP.Net.Utility.SqlBundler.Helpers
 
             foreach (string fileName in model.Files)
             {
-
                 if (!string.IsNullOrWhiteSpace(script.ToString()))
                 {
                     script.Append(Environment.NewLine);
@@ -37,7 +36,6 @@ namespace MixERP.Net.Utility.SqlBundler.Helpers
                 script.Append(File.ReadAllText(fileName, Encoding.UTF8));
                 script.Append(Environment.NewLine);
             }
-
 
             if (string.IsNullOrWhiteSpace(script.ToString()))
             {
@@ -61,7 +59,6 @@ namespace MixERP.Net.Utility.SqlBundler.Helpers
                 bundle.FileName = GetBundleFileName(model.OutputDirectory, model.OriginalFileName, dictionary.Key);
                 bundle.Script = script.ToString();
 
-
                 List<string> lines = File.ReadAllText(filePath, Encoding.UTF8).Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
                 foreach (string line in lines)
                 {
@@ -75,15 +72,11 @@ namespace MixERP.Net.Utility.SqlBundler.Helpers
             }
 
             return bundles;
-
         }
-
 
         private static string GetBundleFileName(string outputDirectory, string fileName, string language)
         {
             return outputDirectory + "/" + fileName + "." + language + ".sql";
-
         }
-
     }
 }

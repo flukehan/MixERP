@@ -1,10 +1,10 @@
-﻿using System;
+﻿using MixERP.Net.Utility.SqlBundler.Models;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
-using MixERP.Net.Utility.SqlBundler.Models;
 
 namespace MixERP.Net.Utility.SqlBundler.Helpers
 {
@@ -25,7 +25,6 @@ namespace MixERP.Net.Utility.SqlBundler.Helpers
             string scriptDirectory = string.Empty;
 
             string[] lines = content.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-
 
             foreach (string line in lines)
             {
@@ -72,14 +71,12 @@ namespace MixERP.Net.Utility.SqlBundler.Helpers
             return model;
         }
 
-
         private static Collection<string> GetScripts(string directory)
         {
-            return new Collection<string>(GetFiles(directory).OrderBy(s=>s).ToList());
+            return new Collection<string>(GetFiles(directory).OrderBy(s => s).ToList());
         }
 
-
-        static IEnumerable<string> GetFiles(string path)
+        private static IEnumerable<string> GetFiles(string path)
         {
             Queue<string> queue = new Queue<string>();
             queue.Enqueue(path);
@@ -117,17 +114,6 @@ namespace MixERP.Net.Utility.SqlBundler.Helpers
                 }
             }
         }
-
-
-
-
-
-
-
-
-
-
-
 
         private static string GetDefaultLanguage(string key, string value)
         {
@@ -170,7 +156,5 @@ namespace MixERP.Net.Utility.SqlBundler.Helpers
 
             return String.Empty;
         }
-
-
     }
 }

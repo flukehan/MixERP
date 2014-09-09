@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Configuration;
-using MixERP.Net.Common;
+﻿using MixERP.Net.Common;
 using MixERP.Net.DBFactory;
 using Npgsql;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
-
 
 namespace MixERP.Net.Tests.PgUnitTest.Helpers
 {

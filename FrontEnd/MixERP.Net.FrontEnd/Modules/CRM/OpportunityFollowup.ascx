@@ -1,0 +1,1 @@
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="OpportunityFollowup.ascx.cs" Inherits="MixERP.Net.Core.Modules.CRM.OpportunityFollowup" %>

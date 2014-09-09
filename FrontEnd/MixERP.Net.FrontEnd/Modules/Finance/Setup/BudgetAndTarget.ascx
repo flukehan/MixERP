@@ -1,0 +1,1 @@
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BudgetAndTarget.ascx.cs" Inherits="MixERP.Net.Core.Modules.Finance.Setup.BudgetAndTarget" %>

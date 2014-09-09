@@ -1,0 +1,2 @@
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CashRepositories.ascx.cs" Inherits="MixERP.Net.Core.Modules.BackOffice.CashRepositories" %>
+<asp:PlaceHolder ID="ScrudPlaceholder" runat="server" />

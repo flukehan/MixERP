@@ -1,0 +1,1 @@
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="SalesOrderReport.ascx.cs" Inherits="MixERP.Net.Core.Modules.Sales.Reports.SalesOrderReport" MasterPageId="MixERPReportMaster.Master" %>

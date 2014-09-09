@@ -1,0 +1,1 @@
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BankReconciliation.ascx.cs" Inherits="MixERP.Net.Core.Modules.Finance.BankReconciliation" %>

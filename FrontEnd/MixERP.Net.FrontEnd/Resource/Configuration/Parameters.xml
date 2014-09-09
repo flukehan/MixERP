@@ -1,0 +1,41 @@
+﻿<?xml version="1.0"?>
+
+<!--
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This file is part of MixERP.
+
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses />.
+-->
+<configuration>
+  <appSettings>
+    <add key="DatePickerShowWeekNumber" value="true" />
+    <add key="DatePickerNumberOfMonths" value="[2, 3]" />
+
+    <add key="LogoPath" value="~/Resource/Static/images/mixerp-logo-light.png" />
+    <add key="PartyName" value="FirstName MiddleName LastName" />
+    <add key="SalesDeliveryAcronym" value="SD" />
+    <add key="SalesDirectAcronym" value="SDIR" />
+    <add key="SalesInvoiceAcronym" value="SI" />
+    <add key="SalesOrderAcronym" value="SO" />
+    <add key="SalesQuotationAcronym" value="SQ" />
+    <add key="SalesReceiptAcronym" value="SR" />
+    <add key="SaleReturnAcronym" value="SRET" />
+    <add key="PurchaseDirectAcronym" value="PDIR" />
+    <add key="PurchaseGRNAcronym" value="GRN" />
+    <add key="PurchaseOrderAcronym" value="PO" />
+    <add key="PurchasePaymentAcronym" value="PR" />
+    <add key="PurchaseReturnAcronym" value="PR" />
+  </appSettings>
+</configuration>

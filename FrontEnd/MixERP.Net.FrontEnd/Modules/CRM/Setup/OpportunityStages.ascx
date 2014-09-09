@@ -1,0 +1,2 @@
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="OpportunityStages.ascx.cs" Inherits="MixERP.Net.Core.Modules.CRM.Setup.OpportunityStages" %>
+<asp:PlaceHolder ID="ScrudPlaceholder" runat="server" />

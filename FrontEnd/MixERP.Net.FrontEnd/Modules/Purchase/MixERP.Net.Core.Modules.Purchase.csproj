@@ -1,0 +1,283 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1B957616-95F4-4911-957E-C12B21E7C5B9}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MixERP.Net.Core.Modules.Purchase</RootNamespace>
+    <AssemblyName>MixERP.Net.Core.Modules.Purchase</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <TargetFrameworkProfile>Mono</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <RegisterForComInterop>false</RegisterForComInterop>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Confirmation\DirectPurchase.ascx" />
+    <Content Include="Confirmation\GRN.ascx" />
+    <Content Include="Confirmation\Order.ascx" />
+    <Content Include="DirectPurchase.ascx" />
+    <Content Include="Entry\DirectPurchase.ascx" />
+    <Content Include="Entry\GRN.ascx" />
+    <Content Include="Entry\Order.ascx" />
+    <Content Include="GRN.ascx" />
+    <Content Include="Index.ascx" />
+    <Content Include="Invoice.ascx" />
+    <Content Include="Order.ascx" />
+    <Content Include="Package.xml" />
+    <Content Include="Payment.ascx" />
+    <Content Include="Reports\DirectPurchaseInvoiceReport.ascx" />
+    <Content Include="Reports\Source\Purchase.View.Purchase.Invoice.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Return.ascx" />
+    <Content Include="Scripts\Entry\DirectPurchase.js" />
+    <Content Include="Scripts\Entry\GRN.js" />
+    <Content Include="Scripts\Entry\Order.js" />
+    <Content Include="Scripts\SQL\Menu.sql" />
+    <Content Include="Scripts\SQL\Module.sql" />
+    <Content Include="Services\DirectPurchase.asmx" />
+    <Content Include="Services\GRN.asmx" />
+    <Content Include="Services\Order.asmx" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Confirmation\DirectPurchase.ascx.cs">
+      <DependentUpon>DirectPurchase.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Confirmation\DirectPurchase.ascx.designer.cs">
+      <DependentUpon>DirectPurchase.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Confirmation\GRN.ascx.cs">
+      <DependentUpon>GRN.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Confirmation\GRN.ascx.designer.cs">
+      <DependentUpon>GRN.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Confirmation\Order.ascx.cs">
+      <DependentUpon>Order.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Confirmation\Order.ascx.designer.cs">
+      <DependentUpon>Order.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="DirectPurchase.ascx.cs">
+      <DependentUpon>DirectPurchase.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DirectPurchase.ascx.designer.cs">
+      <DependentUpon>DirectPurchase.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Entry\DirectPurchase.ascx.cs">
+      <DependentUpon>DirectPurchase.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Entry\DirectPurchase.ascx.designer.cs">
+      <DependentUpon>DirectPurchase.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Entry\GRN.ascx.cs">
+      <DependentUpon>GRN.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Entry\GRN.ascx.designer.cs">
+      <DependentUpon>GRN.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Entry\Order.ascx.cs">
+      <DependentUpon>Order.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Entry\Order.ascx.designer.cs">
+      <DependentUpon>Order.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="GRN.ascx.cs">
+      <DependentUpon>GRN.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GRN.ascx.designer.cs">
+      <DependentUpon>GRN.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Index.ascx.cs">
+      <DependentUpon>Index.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Index.ascx.designer.cs">
+      <DependentUpon>Index.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Invoice.ascx.cs">
+      <DependentUpon>Invoice.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Invoice.ascx.designer.cs">
+      <DependentUpon>Invoice.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Order.ascx.cs">
+      <DependentUpon>Order.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Order.ascx.designer.cs">
+      <DependentUpon>Order.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Payment.ascx.cs">
+      <DependentUpon>Payment.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Payment.ascx.designer.cs">
+      <DependentUpon>Payment.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\DirectPurchaseInvoiceReport.ascx.cs">
+      <DependentUpon>DirectPurchaseInvoiceReport.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\DirectPurchaseInvoiceReport.ascx.designer.cs">
+      <DependentUpon>DirectPurchaseInvoiceReport.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Titles.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Titles.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Return.ascx.cs">
+      <DependentUpon>Return.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Return.ascx.designer.cs">
+      <DependentUpon>Return.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\DirectPurchase.asmx.cs">
+      <DependentUpon>DirectPurchase.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\GRN.asmx.cs">
+      <DependentUpon>GRN.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\Order.asmx.cs">
+      <DependentUpon>Order.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.ReportEngine\MixERP.Net.WebControls.ReportEngine.csproj">
+      <Project>{81f04b78-6194-4f86-a795-5f186c602eee}</Project>
+      <Name>MixERP.Net.WebControls.ReportEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\MixERP.Net.WebControls.StockTransactionFactory.csproj">
+      <Project>{1C84E528-87ED-4B69-BFC3-81D675CB153E}</Project>
+      <Name>MixERP.Net.WebControls.StockTransactionFactory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.net.BusinessLayer\MixERP.Net.BusinessLayer.csproj">
+      <Project>{81DE04CF-7DE9-42FF-8339-D05E2586DCBA}</Project>
+      <Name>MixERP.Net.BusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.net.Common\MixERP.Net.Common.csproj">
+      <Project>{d5a09c22-8f48-4fb2-a14d-c62c8c8fcec0}</Project>
+      <Name>MixERP.Net.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MixERP.Net.FrontEnd.csproj">
+      <Project>{ace1017d-71bc-4417-a906-72c4b9c55823}</Project>
+      <Name>MixERP.Net.FrontEnd</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Purchase.Data\MixERP.Net.Core.Modules.Purchase.Data.csproj">
+      <Project>{af16ea95-9b7e-44e0-8bba-7c2a3895afbf}</Project>
+      <Name>MixERP.Net.Core.Modules.Purchase.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Titles.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Titles.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>20503</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:20503/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:9000/</IISAppRootUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

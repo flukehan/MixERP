@@ -4,12 +4,12 @@ using System.IO;
 
 namespace MixERP.Net.Utility.SqlBundler
 {
-    class Program
+    internal class Program
     {
         private static string root = string.Empty;
         private static string bundlePath = string.Empty;
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             if (args[0] == null)
             {
@@ -73,6 +73,5 @@ namespace MixERP.Net.Utility.SqlBundler
                 bundlePath = Path.Combine(root, path);
             }
         }
-
     }
 }

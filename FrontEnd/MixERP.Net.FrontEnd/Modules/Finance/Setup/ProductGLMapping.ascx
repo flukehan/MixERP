@@ -1,0 +1,1 @@
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ProductGLMapping.ascx.cs" Inherits="MixERP.Net.Core.Modules.Finance.Setup.ProductGLMapping" %>

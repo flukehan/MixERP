@@ -1,0 +1,2 @@
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="VoucherVerification.ascx.cs" Inherits="MixERP.Net.Core.Modules.BackOffice.Policy.VoucherVerification" %>
+<asp:PlaceHolder ID="ScrudPlaceholder" runat="server" />

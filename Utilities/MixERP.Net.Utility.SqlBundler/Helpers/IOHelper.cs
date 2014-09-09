@@ -1,8 +1,8 @@
-﻿using System;
+﻿using MixERP.Net.Utility.SqlBundler.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using MixERP.Net.Utility.SqlBundler.Models;
 
 namespace MixERP.Net.Utility.SqlBundler.Helpers
 {

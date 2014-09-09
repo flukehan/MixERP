@@ -3,8 +3,7 @@
     public static class TestHelper
     {
         public static void InstallTests()
-        { 
-        
+        {
         }
     }
 }

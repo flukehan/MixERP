@@ -1,0 +1,67 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>MixERP® 2013</title>
+    <style type="text/css" media="all">
+        html, body {
+            padding: 4px;
+        }
+
+        html, body, div, table {
+            background-color: #FFFFFF !important;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        td {
+            padding: 4px;
+        }
+
+        @media print {
+            .hide {
+                display: none;
+            }
+        }
+
+        .report-command {
+            padding: 12px;
+            background-color: #e7ecf8;
+        }
+    </style>
+</head>
+<body>
+    {Header}
+    <div class="hide report-command" style="position: fixed;top:20px;right: 20px; ">
+        <a href="#">
+            <img src="/Resource/Icons/print-16.png" alt="Print" onclick="window.print();" />
+            <a href="#" onclick="top.close();"><img src="/Resource/Icons/close-16.png" alt="Close" /></a>
+        </a>
+    </div>
+    <h1>
+        {ReportHeading}
+    </h1>
+    <hr />
+    Printed On: {PrintDate}<br />
+    User: {UserName}<br />
+    Office Code: {OfficeCode}
+    <br />
+    <br />
+    {Table}
+    <div class="hide" style="padding-top: 18px;">
+        <a href="javascript:top.close();">
+            Close This Report
+        </a>
+    </div>
+
+    <script type="text/javascript">
+        document.onkeydown = function (evt) {
+            evt = evt || window.event;
+            if (evt.keyCode == 27) {//ESC
+                top.close();
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,327 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{06F14FA5-7B5B-4951-B59B-A8DA3C468C3D}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MixERP.Net.Core.Modules.Finance</RootNamespace>
+    <AssemblyName>MixERP.Net.Core.Modules.Finance</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <TargetFrameworkProfile>Mono</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BankReconciliation.ascx" />
+    <Content Include="Confirmation\JournalVoucher.ascx" />
+    <Content Include="Entry\JournalVoucher.ascx" />
+    <Content Include="Index.ascx" />
+    <Content Include="JournalVoucher.ascx" />
+    <Content Include="Package.xml" />
+    <Content Include="Reports\GLAdviceReport.ascx" />
+    <Content Include="Reports\Source\Transactions.GLEntry.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Scripts\Entry\JournalVoucher.js" />
+    <Content Include="Scripts\SQL\Menu.sql" />
+    <Content Include="Scripts\SQL\Module.sql" />
+    <Content Include="Services\AccountData.asmx" />
+    <Content Include="Services\JournalVoucher.asmx" />
+    <Content Include="Setup\AgeingSlabs.ascx" />
+    <Content Include="Setup\BankAccounts.ascx" />
+    <Content Include="Setup\BudgetAndTarget.ascx" />
+    <Content Include="Setup\COA.ascx" />
+    <Content Include="Setup\CostCenters.ascx" />
+    <Content Include="Setup\Currencies.ascx" />
+    <Content Include="Setup\ProductGLMapping.ascx" />
+    <Content Include="Setup\TaxSetup.ascx" />
+    <Content Include="Setup\TaxTypes.ascx" />
+    <Content Include="StandingInstructions.ascx" />
+    <Content Include="TemplateTransaction.ascx" />
+    <Content Include="TransactionDocumentManager.ascx" />
+    <Content Include="UpdateExchangeRates.ascx" />
+    <Content Include="VoucherVerification.ascx" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BankReconciliation.ascx.cs">
+      <DependentUpon>BankReconciliation.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BankReconciliation.ascx.designer.cs">
+      <DependentUpon>BankReconciliation.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Confirmation\JournalVoucher.ascx.cs">
+      <DependentUpon>JournalVoucher.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Confirmation\JournalVoucher.ascx.designer.cs">
+      <DependentUpon>JournalVoucher.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Entry\JournalVoucher.ascx.cs">
+      <DependentUpon>JournalVoucher.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Entry\JournalVoucher.ascx.designer.cs">
+      <DependentUpon>JournalVoucher.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Index.ascx.cs">
+      <DependentUpon>Index.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Index.ascx.designer.cs">
+      <DependentUpon>Index.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="JournalVoucher.ascx.cs">
+      <DependentUpon>JournalVoucher.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="JournalVoucher.ascx.designer.cs">
+      <DependentUpon>JournalVoucher.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\GLAdviceReport.ascx.cs">
+      <DependentUpon>GLAdviceReport.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GLAdviceReport.ascx.designer.cs">
+      <DependentUpon>GLAdviceReport.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Titles.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Titles.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\AccountData.asmx.cs">
+      <DependentUpon>AccountData.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\JournalVoucher.asmx.cs">
+      <DependentUpon>JournalVoucher.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Setup\AgeingSlabs.ascx.cs">
+      <DependentUpon>AgeingSlabs.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Setup\AgeingSlabs.ascx.designer.cs">
+      <DependentUpon>AgeingSlabs.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Setup\BankAccounts.ascx.cs">
+      <DependentUpon>BankAccounts.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Setup\BankAccounts.ascx.designer.cs">
+      <DependentUpon>BankAccounts.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Setup\BudgetAndTarget.ascx.cs">
+      <DependentUpon>BudgetAndTarget.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Setup\BudgetAndTarget.ascx.designer.cs">
+      <DependentUpon>BudgetAndTarget.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Setup\COA.ascx.cs">
+      <DependentUpon>COA.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Setup\COA.ascx.designer.cs">
+      <DependentUpon>COA.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Setup\CostCenters.ascx.cs">
+      <DependentUpon>CostCenters.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Setup\CostCenters.ascx.designer.cs">
+      <DependentUpon>CostCenters.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Setup\Currencies.ascx.cs">
+      <DependentUpon>Currencies.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Setup\Currencies.ascx.designer.cs">
+      <DependentUpon>Currencies.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Setup\ProductGLMapping.ascx.cs">
+      <DependentUpon>ProductGLMapping.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Setup\ProductGLMapping.ascx.designer.cs">
+      <DependentUpon>ProductGLMapping.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Setup\TaxSetup.ascx.cs">
+      <DependentUpon>TaxSetup.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Setup\TaxSetup.ascx.designer.cs">
+      <DependentUpon>TaxSetup.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Setup\TaxTypes.ascx.cs">
+      <DependentUpon>TaxTypes.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Setup\TaxTypes.ascx.designer.cs">
+      <DependentUpon>TaxTypes.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="StandingInstructions.ascx.cs">
+      <DependentUpon>StandingInstructions.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StandingInstructions.ascx.designer.cs">
+      <DependentUpon>StandingInstructions.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TemplateTransaction.ascx.cs">
+      <DependentUpon>TemplateTransaction.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TemplateTransaction.ascx.designer.cs">
+      <DependentUpon>TemplateTransaction.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TransactionDocumentManager.ascx.cs">
+      <DependentUpon>TransactionDocumentManager.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TransactionDocumentManager.ascx.designer.cs">
+      <DependentUpon>TransactionDocumentManager.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateExchangeRates.ascx.cs">
+      <DependentUpon>UpdateExchangeRates.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UpdateExchangeRates.ascx.designer.cs">
+      <DependentUpon>UpdateExchangeRates.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="VoucherVerification.ascx.cs">
+      <DependentUpon>VoucherVerification.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VoucherVerification.ascx.designer.cs">
+      <DependentUpon>VoucherVerification.ascx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.ReportEngine\MixERP.Net.WebControls.ReportEngine.csproj">
+      <Project>{81f04b78-6194-4f86-a795-5f186c602eee}</Project>
+      <Name>MixERP.Net.WebControls.ReportEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\MixERP.Net.WebControls.ScrudFactory.csproj">
+      <Project>{07DDCE95-A18F-4A35-B892-CE09EAD2AA65}</Project>
+      <Name>MixERP.Net.WebControls.ScrudFactory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\MixERP.Net.WebControls.StockTransactionFactory.csproj">
+      <Project>{1C84E528-87ED-4B69-BFC3-81D675CB153E}</Project>
+      <Name>MixERP.Net.WebControls.StockTransactionFactory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.net.BusinessLayer\MixERP.Net.BusinessLayer.csproj">
+      <Project>{81DE04CF-7DE9-42FF-8339-D05E2586DCBA}</Project>
+      <Name>MixERP.Net.BusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.net.Common\MixERP.Net.Common.csproj">
+      <Project>{D5A09C22-8F48-4FB2-A14D-C62C8C8FCEC0}</Project>
+      <Name>MixERP.Net.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MixERP.Net.FrontEnd.csproj">
+      <Project>{ace1017d-71bc-4417-a906-72c4b9c55823}</Project>
+      <Name>MixERP.Net.FrontEnd</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Finance.Data\MixERP.Net.Core.Modules.Finance.Data.csproj">
+      <Project>{8027734a-20b1-42e5-adde-5f51bf5bbc08}</Project>
+      <Name>MixERP.Net.Core.Modules.Finance.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Titles.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Titles.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>20796</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:20796/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:9000/</IISAppRootUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

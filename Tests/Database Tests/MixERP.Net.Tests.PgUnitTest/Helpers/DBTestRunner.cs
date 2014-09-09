@@ -1,7 +1,7 @@
-﻿using System.Data;
-using Npgsql;
+﻿using MixERP.Net.Common;
 using MixERP.Net.DBFactory;
-using MixERP.Net.Common;
+using Npgsql;
+using System.Data;
 
 namespace MixERP.Net.Tests.PgUnitTest.Helpers
 {
@@ -22,7 +22,6 @@ namespace MixERP.Net.Tests.PgUnitTest.Helpers
             return this.Run();
         }
 
-
         private bool Run()
         {
             const string sql = "BEGIN TRANSACTION; SELECT * FROM unit_tests.begin(); ROLLBACK TRANSACTION;";
@@ -37,7 +36,6 @@ namespace MixERP.Net.Tests.PgUnitTest.Helpers
                             this.Message = Conversion.TryCastString(table.Rows[0]["message"]);
                             return Conversion.TryCastString(table.Rows[0]["result"]).Equals("Y");
                         }
-                       
                     }
                 }
             }
