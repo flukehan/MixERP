@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS core.get_currency_code_by_party_id(integer);
+DROP FUNCTION IF EXISTS core.get_currency_code_by_party_id(bigint);
 
-CREATE FUNCTION core.get_currency_code_by_party_id(party_id integer)
+CREATE FUNCTION core.get_currency_code_by_party_id(party_id bigint)
 RETURNS text
 AS
 $$

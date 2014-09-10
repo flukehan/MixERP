@@ -1,4 +1,5 @@
 ﻿var accruedInterestSpan = $("#AccruedInterestSpan");
+var accruedInterestHidden = $("#AccruedInterestHidden");
 var addressDiv = $("#AddressDiv");
 
 var creditAllowedSpan = $("#CreditAllowedSpan");
@@ -19,6 +20,7 @@ var maxCreditAmountSpan = $("#MaxCreditAmountSpan");
 var maxCreditPeriodSpan = $("#MaxCreditPeriodSpan");
 
 var officeDueAmountSpan = $("#OfficeDueAmountSpan");
+var officeDueAmountHidden = $("#OfficeDueAmountHidden");
 
 var pANNumberSpan = $("#PANNumberSpan");
 var partyCodeTextBox = $("#PartyCodeTextBox");
@@ -29,13 +31,18 @@ var shippingAddressesDiv = $("#ShippingAddressesDiv");
 var sSTNumberSpan = $("#SSTNumberSpan");
 
 var totalDueAmountSpan = $("#TotalDueAmountSpan");
+var totalDueAmountHidden = $("#TotalDueAmountHidden");
 var transactionValueSpan = $("#TransactionValueSpan");
 
 var url = "";
 var data = "";
 
 //Variables
+var accruedInterest = 0;
+var baseCurrency = "";
+var officeDue = 0;
 var partyCode = "";
+var totalDue = 0;
 
 //Page Events
 $(document).ready(function () {
@@ -44,7 +51,14 @@ $(document).ready(function () {
 
 //Control Events
 goButton.click(function () {
+    totalDueAmountSpan.html("");
+    officeDueAmountSpan.html("");
+    accruedInterestSpan.html("");
+    lastPaymentDateSpan.html("");
+    transactionValueSpan.html("");
+
     partyCode = partyDropDownList.getSelectedValue();
+
     if (isNullOrWhiteSpace(partyCode)) {
         $.notify(nothingSelectedLocalized, "error");
         return;
@@ -54,16 +68,29 @@ goButton.click(function () {
 
     ajaxGetPartyDue.success(function (msg) {
         var model = msg.d;
-        var totalDue = convertToDebit(parseFloat2(model.TotalDueAmount));
-        var officeDue = convertToDebit(parseFloat2(model.OfficeDueAmount));
+        totalDue = convertToDebit(parseFloat2(model.TotalDueAmount));
+        officeDue = convertToDebit(parseFloat2(model.OfficeDueAmount));
+        accruedInterest = model.AccruedInterest;
 
-        defaultCurrencySpan.html(model.CurrencyCode);
+        baseCurrency = model.CurrencyCode;
+
+        defaultCurrencySpan.html(baseCurrency);
 
         totalDueAmountSpan.html(getFormattedCurrency(model.CurrencySymbol, totalDue));
+        totalDueAmountHidden.val(totalDue);
+
         officeDueAmountSpan.html(getFormattedCurrency(model.CurrencySymbol, officeDue));
-        accruedInterestSpan.html(getFormattedCurrency(model.CurrencySymbol, model.AccruedInterest));
+        officeDueAmountHidden.val(officeDue);
+
+        accruedInterestSpan.html(getFormattedCurrency(model.CurrencySymbol, accruedInterest));
+        accruedInterestHidden.val(accruedInterest);
+
         lastPaymentDateSpan.html(model.LastPaymentDate);
         transactionValueSpan.html(getFormattedCurrency(model.CurrencySymbol, model.TransactionValue));
+
+        if (typeof goButtonCallBack == "function") {
+            goButtonCallBack();
+        };
     });
 
     ajaxGetPartyDue.fail(function (xhr) {
@@ -194,6 +221,7 @@ function localizeBool(val) {
 };
 
 function getPartyView(partyCode) {
+    //Todo
     url = "/Modules/Inventory/Services/PartyData.asmx/GetPartyView";//Todo--Parametrize these.
     data = appendParameter("", "partyCode", partyCode);
     data = getData(data);
@@ -202,6 +230,7 @@ function getPartyView(partyCode) {
 };
 
 function getPartyDueModel(partyCode) {
+    //Todo
     url = "/Modules/Inventory/Services/PartyData.asmx/GetPartyDue";
     data = appendParameter("", "partyCode", partyCode);
     data = getData(data);

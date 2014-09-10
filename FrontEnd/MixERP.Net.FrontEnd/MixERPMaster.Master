@@ -76,12 +76,12 @@
 
                             <ul class="nav navbar-nav navbar-right">
                                 <li>
-                                    <a runat="server" href="~/Account/SignOut.aspx">
+                                    <a runat="server" href="~/Site/Account/SignOut.aspx">
                                         <img runat="server" src="~/Resource/Icons/signout-16.png" alt="Sign Out" />
                                     </a>
                                 </li>
                                 <li>
-                                    <a runat="server" href="~/Account/ChangePassword.aspx">
+                                    <a runat="server" href="~/Site/Account/ChangePassword.aspx">
                                         <img runat="server" src="~/Resource/Icons/password-16.png" alt="Change Password" />
                                     </a>
                                 </li>

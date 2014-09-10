@@ -29,13 +29,11 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 {
     public static class ScrudDateTextBox
     {
-        public static void AddDateTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isNullable, string cssClass)
+        public static void AddDateTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isNullable)
         {
             var label = LocalizationHelper.GetResourceString(resourceClassName, columnName);
 
             var textBox = GetDateTextBox(columnName + "_textbox", !isNullable);
-
-            textBox.CssClass = cssClass;
 
             if (!string.IsNullOrWhiteSpace(defaultValue))
             {

@@ -1184,7 +1184,7 @@ ON core.account_masters(UPPER(account_master_name));
 
 CREATE TABLE core.accounts
 (
-	account_id				SERIAL NOT NULL PRIMARY KEY,
+	account_id				BIGSERIAL NOT NULL PRIMARY KEY,
 	account_master_id 			integer NOT NULL REFERENCES core.account_masters(account_master_id),
 	account_code      			national character varying(12) NOT NULL,
 	external_code     			national character varying(12) NULL CONSTRAINT accounts_external_code_df DEFAULT(''),
@@ -1194,7 +1194,7 @@ CREATE TABLE core.accounts
 	description	  			national character varying(200) NULL,
 	sys_type 	  			boolean NOT NULL CONSTRAINT accounts_sys_type_df DEFAULT(false),
 	is_cash		  			boolean NOT NULL CONSTRAINT accounts_is_cash_df DEFAULT(false),
-	parent_account_id 			integer NULL REFERENCES core.accounts(account_id),
+	parent_account_id 			bigint NULL REFERENCES core.accounts(account_id),
 	audit_user_id				integer NULL REFERENCES office.users(user_id),
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
@@ -1211,7 +1211,7 @@ CREATE TABLE core.account_parameters
 (
 	account_parameter_id 			SERIAL NOT NULL CONSTRAINT account_parameters_pk PRIMARY KEY,
 	parameter_name 				national character varying(128) NOT NULL,
-	account_id 				integer NOT NULL REFERENCES core.accounts(account_id),
+	account_id 				bigint NOT NULL REFERENCES core.accounts(account_id),
 	audit_user_id				integer NULL REFERENCES office.users(user_id),
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
@@ -1221,7 +1221,7 @@ ON core.account_parameters(UPPER(parameter_name));
 
 CREATE TABLE core.bank_accounts
 (
-	account_id 				integer NOT NULL CONSTRAINT bank_accounts_pk PRIMARY KEY
+	account_id 				bigint NOT NULL CONSTRAINT bank_accounts_pk PRIMARY KEY
 								CONSTRAINT bank_accounts_accounts_fk REFERENCES core.accounts(account_id),
 	maintained_by_user_id 			integer NOT NULL CONSTRAINT bank_accounts_users_fk REFERENCES office.users(user_id),
 	bank_name 				national character varying(128) NOT NULL,
@@ -1246,7 +1246,7 @@ CREATE TABLE core.agents
 	address 				national character varying(100) NOT NULL,
 	contact_number 				national character varying(50) NOT NULL,
 	commission_rate 			decimal_strict2 NOT NULL DEFAULT(0),
-	account_id 				integer NOT NULL REFERENCES core.accounts(account_id),
+	account_id 				bigint NOT NULL REFERENCES core.accounts(account_id),
 	audit_user_id				integer NULL REFERENCES office.users(user_id),
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
@@ -1344,13 +1344,14 @@ CREATE TABLE core.parties
 	pan_number 				national character varying(50) NULL,
 	sst_number 				national character varying(50) NULL,
 	cst_number 				national character varying(50) NULL,
+	currency_code 				national character varying(12) NOT NULL REFERENCES core.currencies(currency_code),
 	allow_credit 				boolean NULL,
 	maximum_credit_period 			smallint NULL,
 	maximum_credit_amount 			money_strict2 NULL,
 	charge_interest 			boolean NULL,
 	interest_rate 				decimal NULL,
 	interest_compounding_frequency_id	smallint NULL REFERENCES core.frequencies(frequency_id),
-	account_id 				integer NOT NULL REFERENCES core.accounts(account_id),
+	account_id 				bigint NULL REFERENCES core.accounts(account_id),
 	audit_user_id				integer NULL REFERENCES office.users(user_id),
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
@@ -1428,7 +1429,7 @@ CREATE TABLE core.shippers
 	pan_number 				national character varying(50) NULL,
 	sst_number 				national character varying(50) NULL,
 	cst_number 				national character varying(50) NULL,
-	account_id 				integer NOT NULL REFERENCES core.accounts(account_id),
+	account_id 				bigint NOT NULL REFERENCES core.accounts(account_id),
 	audit_user_id				integer NULL REFERENCES office.users(user_id),
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
@@ -1461,7 +1462,7 @@ CREATE TABLE core.taxes
 	tax_code 				national character varying(12) NOT NULL,
 	tax_name 				national character varying(50) NOT NULL,
 	rate 					decimal NOT NULL,
-	account_id 				integer NOT NULL REFERENCES core.accounts(account_id),
+	account_id 				bigint NOT NULL REFERENCES core.accounts(account_id),
 	audit_user_id				integer NULL REFERENCES office.users(user_id),
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
@@ -1543,7 +1544,7 @@ CREATE TABLE core.items
 	item_name 				national character varying(150) NOT NULL,
 	item_group_id 				integer NOT NULL REFERENCES core.item_groups(item_group_id),
 	brand_id 				integer NOT NULL REFERENCES core.brands(brand_id),
-	preferred_supplier_id 			integer NOT NULL REFERENCES core.parties(party_id),
+	preferred_supplier_id 			bigint NOT NULL REFERENCES core.parties(party_id),
 	lead_time_in_days 			integer NOT NULL DEFAULT(0),
 	weight_in_grams				float NOT NULL DEFAULT(0),	
 	width_in_centimeters			float NOT NULL DEFAULT(0),
@@ -1844,7 +1845,7 @@ CREATE TABLE transactions.transaction_details
 	transaction_detail_id 			BIGSERIAL NOT NULL PRIMARY KEY,
 	transaction_master_id 			bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id),
 	tran_type 				transaction_type NOT NULL,
-	account_id 				integer NOT NULL REFERENCES core.accounts(account_id),
+	account_id 				bigint NOT NULL REFERENCES core.accounts(account_id),
 	statement_reference 			text NULL,
 	cash_repository_id 			integer NULL REFERENCES office.cash_repositories(cash_repository_id),
 	currency_code				national character varying(12) NULL REFERENCES core.currencies(currency_code),
@@ -1863,7 +1864,7 @@ CREATE TABLE transactions.customer_receipts
 	party_id			bigint NOT NULL REFERENCES core.parties(party_id),
 	amount				money_strict NOT NULL,
 	cash_repository_id		integer NULL REFERENCES office.cash_repositories(cash_repository_id),
-	bank_account_id			integer NULL REFERENCES core.bank_accounts(account_id),
+	bank_account_id			bigint NULL REFERENCES core.bank_accounts(account_id),
 	posted_date			date NULL,
 	bank_instrument_code		national character varying(128) NULL CONSTRAINT customer_receipt_bank_instrument_code_df DEFAULT(''),
 	bank_tran_code			national character varying(128) NULL CONSTRAINT customer_receipt_bank_tran_code_df DEFAULT(''),	
@@ -2240,7 +2241,7 @@ LANGUAGE plpgsql;
 
 -- core.get_account_id_by_account_code.sql
 CREATE FUNCTION core.get_account_id_by_account_code(text)
-RETURNS integer
+RETURNS bigint
 AS
 $$
 BEGIN
@@ -2257,7 +2258,7 @@ LANGUAGE plpgsql;
 
 -- core.get_account_id_by_parameter.sql
 CREATE FUNCTION core.get_account_id_by_parameter(text)
-RETURNS integer
+RETURNS bigint
 AS
 $$
 BEGIN
@@ -2277,7 +2278,7 @@ LANGUAGE plpgsql;
 
 -- core.get_account_id_by_party_code.sql
 CREATE FUNCTION core.get_account_id_by_party_code(party_code text)
-RETURNS integer
+RETURNS bigint
 AS
 $$
 BEGIN
@@ -2293,8 +2294,8 @@ LANGUAGE plpgsql;
 
 
 -- core.get_account_id_by_party_id.sql
-CREATE FUNCTION core.get_account_id_by_party_id(party_id integer)
-RETURNS integer
+CREATE FUNCTION core.get_account_id_by_party_id(party_id bigint)
+RETURNS bigint
 AS
 $$
 BEGIN
@@ -2311,7 +2312,7 @@ LANGUAGE plpgsql;
 
 -- core.get_account_id_by_shipper_id.sql
 CREATE FUNCTION core.get_account_id_by_shipper_id(integer)
-RETURNS integer
+RETURNS bigint
 AS
 $$
 BEGIN
@@ -2329,8 +2330,70 @@ $$
 LANGUAGE plpgsql;
 
 
+-- core.get_account_ids.sql
+DROP FUNCTION IF EXISTS core.get_account_ids(root_account_id bigint);
+
+CREATE FUNCTION core.get_account_ids(root_account_id bigint)
+RETURNS SETOF bigint
+AS
+$$
+BEGIN
+	RETURN QUERY 
+	(
+		WITH RECURSIVE account_cte(account_id, path) AS (
+		 SELECT
+			tn.account_id,  tn.account_id::TEXT AS path
+			FROM core.accounts AS tn WHERE tn.account_id =$1
+		UNION ALL
+		 SELECT
+			c.account_id, (p.path || '->' || c.account_id::TEXT)
+			FROM account_cte AS p, core.accounts AS c WHERE parent_account_id = p.account_id
+		)
+
+		SELECT account_id FROM account_cte
+	);
+END
+$$LANGUAGE plpgsql;
+
+-- core.get_account_master_id_by_account_id.sql
+CREATE FUNCTION core.get_account_master_id_by_account_id(bigint)
+RETURNS integer
+AS
+$$
+BEGIN
+	RETURN
+	(
+		SELECT core.accounts.account_master_id
+		FROM core.accounts
+		WHERE core.accounts.account_id= $1
+	);
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+
+-- core.get_account_master_id_by_account_master_code.sql
+CREATE FUNCTION core.get_account_master_id_by_account_master_code(text)
+RETURNS integer
+AS
+$$
+BEGIN
+	RETURN
+	(
+		SELECT core.account_masters.account_master_id
+		FROM core.account_masters
+		WHERE core.account_masters.account_master_code = $1
+	);
+END
+$$
+LANGUAGE plpgsql;
+
+
 -- core.get_account_name.sql
-CREATE FUNCTION core.get_account_name(integer)
+--Todo:Rename to core.get_account_name_by_account_id
+CREATE FUNCTION core.get_account_name(bigint)
 RETURNS text
 AS
 $$
@@ -2508,7 +2571,7 @@ LANGUAGE plpgsql;
 
 -- core.get_cash_account_id.sql
 CREATE FUNCTION core.get_cash_account_id()
-RETURNS integer
+RETURNS bigint
 AS
 $$
 BEGIN
@@ -2545,9 +2608,9 @@ LANGUAGE plpgsql;
 
 
 -- core.get_currency_code_by_party_id.sql
-DROP FUNCTION IF EXISTS core.get_currency_code_by_party_id(integer);
+DROP FUNCTION IF EXISTS core.get_currency_code_by_party_id(bigint);
 
-CREATE FUNCTION core.get_currency_code_by_party_id(party_id integer)
+CREATE FUNCTION core.get_currency_code_by_party_id(party_id bigint)
 RETURNS text
 AS
 $$
@@ -2886,7 +2949,7 @@ LANGUAGE 'plpgsql';
 
 -- core.get_party_id_by_party_code.sql
 CREATE FUNCTION core.get_party_id_by_party_code(text)
-RETURNS smallint
+RETURNS bigint
 AS
 $$
 BEGIN
@@ -3086,7 +3149,7 @@ LANGUAGE plpgsql;
 
 -- core.get_shipping_address_id_by_shipping_address_code.sql
 
-CREATE FUNCTION core.get_shipping_address_id_by_shipping_address_code(text, integer)
+CREATE FUNCTION core.get_shipping_address_id_by_shipping_address_code(text, bigint)
 RETURNS smallint
 AS
 $$
@@ -3167,7 +3230,7 @@ LANGUAGE plpgsql;
 
 
 -- core.has_child_accounts.sql
-CREATE FUNCTION core.has_child_accounts(integer)
+CREATE FUNCTION core.has_child_accounts(bigint)
 RETURNS boolean
 AS
 $$
@@ -3243,7 +3306,7 @@ LANGUAGE plpgsql;
 
 
 -- core.is_supplier.sql
-CREATE FUNCTION core.is_supplier(int)
+CREATE FUNCTION core.is_supplier(bigint)
 RETURNS boolean
 AS
 $$
@@ -3311,8 +3374,8 @@ IMMUTABLE STRICT;
 
 
 -- core.get_item_cost_price.sql
-DROP FUNCTION IF EXISTS core.get_item_cost_price(item_id_ integer, party_id_ integer, unit_id_ integer);
-CREATE FUNCTION core.get_item_cost_price(item_id_ integer, party_id_ integer, unit_id_ integer)
+DROP FUNCTION IF EXISTS core.get_item_cost_price(item_id_ integer, party_id_ bigint, unit_id_ integer);
+CREATE FUNCTION core.get_item_cost_price(item_id_ integer, party_id_ bigint, unit_id_ integer)
 RETURNS money_strict2
 AS
 $$
@@ -3728,9 +3791,9 @@ LANGUAGE plpgsql;
 
 
 -- transactions.get_accrued_interest-todo.sql
-DROP FUNCTION IF EXISTS transactions.get_accrued_interest(office_id integer, party_id integer);
+DROP FUNCTION IF EXISTS transactions.get_accrued_interest(office_id integer, party_id bigint);
 
-CREATE FUNCTION transactions.get_accrued_interest(office_id integer, party_id integer)
+CREATE FUNCTION transactions.get_accrued_interest(office_id integer, party_id bigint)
 RETURNS money_strict2
 AS
 $$
@@ -3743,14 +3806,14 @@ LANGUAGE plpgsql;
 
 
 -- transactions.get_average_party_transaction.sql
-DROP FUNCTION IF EXISTS transactions.get_average_party_transaction(party_id integer);
+DROP FUNCTION IF EXISTS transactions.get_average_party_transaction(party_id bigint);
 
 
-CREATE FUNCTION transactions.get_average_party_transaction(party_id integer)
+CREATE FUNCTION transactions.get_average_party_transaction(party_id bigint)
 RETURNS money_strict2
 AS
 $$
-	DECLARE _account_id integer = core.get_account_id_by_party_id($1);
+	DECLARE _account_id bigint= core.get_account_id_by_party_id($1);
 	DECLARE _debit money_strict2 = 0;
 	DECLARE _credit money_strict2 = 0;
 BEGIN
@@ -3773,14 +3836,14 @@ $$
 LANGUAGE plpgsql;
 
 
-DROP FUNCTION IF EXISTS transactions.get_average_party_transaction(party_id integer, office_id integer);
+DROP FUNCTION IF EXISTS transactions.get_average_party_transaction(party_id bigint, office_id integer);
 
 
-CREATE FUNCTION transactions.get_average_party_transaction(party_id integer, office_id integer)
+CREATE FUNCTION transactions.get_average_party_transaction(party_id bigint, office_id integer)
 RETURNS money_strict2
 AS
 $$
-	DECLARE _account_id integer = core.get_account_id_by_party_id($1);
+	DECLARE _account_id bigint = core.get_account_id_by_party_id($1);
 	DECLARE _debit money_strict2 = 0;
 	DECLARE _credit money_strict2 = 0;
 BEGIN
@@ -3862,8 +3925,8 @@ LANGUAGE plpgsql;
 
 
 -- transactions.get_last_receipt_date.sql
-DROP FUNCTION IF EXISTS transactions.get_last_receipt_date(office_id integer, party_id integer);
-CREATE FUNCTION transactions.get_last_receipt_date(office_id integer, party_id integer)
+DROP FUNCTION IF EXISTS transactions.get_last_receipt_date(office_id integer, party_id bigint);
+CREATE FUNCTION transactions.get_last_receipt_date(office_id integer, party_id bigint)
 RETURNS date
 AS
 $$
@@ -3920,7 +3983,7 @@ RETURNS TABLE
 	office					national character varying(12),
 	party					text,
 	price_type				text,
-	amount				money_strict,
+	amount				decimal(24, 4),
 	transaction_ts				TIMESTAMP WITH TIME ZONE,
 	"user"					national character varying(50),
 	reference_number			national character varying(24),
@@ -3951,7 +4014,7 @@ BEGIN
 		office.offices.office_code AS office,
 		core.parties.party_code || ' (' || core.parties.party_name || ')' AS party,
 		core.price_types.price_type_code || ' (' || core.price_types.price_type_name || ')' AS price_type,
-		SUM(transactions.non_gl_stock_details.price * transactions.non_gl_stock_details.quantity + tax - discount)::money_strict AS amount,
+		SUM(transactions.non_gl_stock_details.price * transactions.non_gl_stock_details.quantity + tax - discount)::decimal(24, 4) AS amount,
 		transactions.non_gl_stock_master.transaction_ts,
 		office.users.user_name AS user,
 		transactions.non_gl_stock_master.reference_number,
@@ -4023,13 +4086,13 @@ LANGUAGE plpgsql;
 DROP FUNCTION IF EXISTS transactions.get_party_transaction_summary
 (
 	office_id integer, 
-	party_id integer
+	party_id bigint
 );
 
 CREATE FUNCTION transactions.get_party_transaction_summary
 (
 	office_id integer, 
-	party_id integer, 
+	party_id bigint, 
 	OUT currency_code text, 
 	OUT currency_symbol text, 
 	OUT total_due_amount decimal(24, 4), 
@@ -4108,7 +4171,7 @@ RETURNS TABLE
 	office					national character varying(12),
 	party					text,
 	price_type				text,
-	amount					money_strict,
+	amount					decimal(24, 4),
 	transaction_ts				TIMESTAMP WITH TIME ZONE,
 	"user"					national character varying(50),
 	reference_number			national character varying(24),
@@ -4144,7 +4207,7 @@ BEGIN
 		office.offices.office_code AS office,
 		core.parties.party_code || ' (' || core.parties.party_name || ')' AS party,
 		core.price_types.price_type_code || ' (' || core.price_types.price_type_name || ')' AS price_type,
-		SUM(transactions.stock_details.price * transactions.stock_details.quantity + tax - discount)::money_strict AS amount,
+		SUM(transactions.stock_details.price * transactions.stock_details.quantity + tax - discount)::decimal(24, 4) AS amount,
 		transactions.transaction_master.transaction_ts,
 		office.users.user_name AS user,
 		transactions.transaction_master.reference_number,
@@ -4221,15 +4284,15 @@ LANGUAGE plpgsql;
 
 
 -- transactions.get_total_due.sql
-DROP FUNCTION IF EXISTS transactions.get_total_due(office_id integer, party_id integer);
+DROP FUNCTION IF EXISTS transactions.get_total_due(office_id integer, party_id bigint);
 
 
-CREATE FUNCTION transactions.get_total_due(office_id integer, party_id integer)
+CREATE FUNCTION transactions.get_total_due(office_id integer, party_id bigint)
 RETURNS DECIMAL(24, 4)
 AS
 $$
 	DECLARE _accrued_interest DECIMAL(24, 4)= transactions.get_accrued_interest($1, $2);
-	DECLARE _account_id integer = core.get_account_id_by_party_id($2);
+	DECLARE _account_id bigint= core.get_account_id_by_party_id($2);
 	DECLARE _debit DECIMAL(24, 4) = 0;
 	DECLARE _credit DECIMAL(24, 4) = 0;
 	DECLARE _local_currency_code national character varying(12) = core.get_currency_code_by_office_id($1); 
@@ -4242,14 +4305,14 @@ BEGIN
 	SELECT SUM(amount_in_local_currency)
 	INTO _debit
 	FROM transactions.verified_transactions_view
-	WHERE transactions.verified_transactions_view.account_id=_account_id
+	WHERE transactions.verified_transactions_view.account_id IN (SELECT * FROM core.get_account_ids(_account_id))
 	AND transactions.verified_transactions_view.office_id IN (SELECT * FROM office.get_office_ids($1))
 	AND tran_type='Dr';
 
 	SELECT SUM(amount_in_local_currency)
 	INTO _credit
 	FROM transactions.verified_transactions_view
-	WHERE transactions.verified_transactions_view.account_id=_account_id
+	WHERE transactions.verified_transactions_view.account_id IN (SELECT * FROM core.get_account_ids(_account_id))
 	AND transactions.verified_transactions_view.office_id IN (SELECT * FROM office.get_office_ids($1))
 	AND tran_type='Cr';
 
@@ -5486,7 +5549,9 @@ SELECT 'Purchase.Discount', core.get_account_id_by_account_code('40270') UNION A
 SELECT 'Purchase.Tax', core.get_account_id_by_account_code('20700') UNION ALL
 SELECT 'Inventory', core.get_account_id_by_account_code('10700') UNION ALL
 SELECT 'COGS', core.get_account_id_by_account_code('40200') UNION ALL
-SELECT 'Tax.Payable', core.get_account_id_by_account_code('20700');
+SELECT 'Tax.Payable', core.get_account_id_by_account_code('20700') UNION ALL
+SELECT 'Party.Parent.Account', core.get_account_id_by_account_code('20100');
+
 
 
 
@@ -6593,6 +6658,259 @@ SELECT core.get_menu_id('NEW'), 'fr', 'nouvelle entreprise';
 
 
 
+-- price-types.sql
+
+INSERT INTO core.price_types(price_type_code, price_type_name)
+SELECT 'RET', 'Retail' UNION ALL
+SELECT 'WHO', 'Wholesale';
+
+
+
+-- core.disable_editing_sys_type.sql
+CREATE FUNCTION core.disable_editing_sys_type()
+RETURNS TRIGGER
+AS
+$$
+BEGIN
+	IF TG_OP='UPDATE' OR TG_OP='DELETE' THEN
+		IF EXISTS
+		(
+			SELECT *
+			FROM core.accounts
+			WHERE (sys_type=true OR is_cash=true)
+			AND account_id=OLD.account_id
+		) THEN
+			RAISE EXCEPTION 'Sie sind nicht berechtigt, die Systemkonten ändern.';
+		END IF;
+	END IF;
+	
+	IF TG_OP='INSERT' THEN
+		IF (NEW.sys_type=true OR NEW.is_cash=true) THEN
+			RAISE EXCEPTION 'Sie sind nicht berechtigt, die Systemkonten hinzufügen.';
+		END IF;
+	END IF;
+
+	IF TG_OP='DELETE' THEN
+		RETURN OLD;
+	END IF;
+
+	RETURN NEW;	
+END
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER restrict_delete_sys_type_trigger
+BEFORE DELETE
+ON core.accounts
+FOR EACH ROW EXECUTE PROCEDURE core.disable_editing_sys_type();
+
+CREATE TRIGGER restrict_update_sys_type_trigger
+BEFORE UPDATE
+ON core.accounts
+FOR EACH ROW EXECUTE PROCEDURE core.disable_editing_sys_type();
+
+CREATE TRIGGER restrict_insert_sys_type_trigger
+BEFORE INSERT
+ON core.accounts
+FOR EACH ROW EXECUTE PROCEDURE core.disable_editing_sys_type();
+
+
+
+-- core.party_after_insert_trigger.sql
+CREATE FUNCTION core.party_after_insert_trigger()
+RETURNS TRIGGER
+AS
+$$
+	DECLARE _parent_account_id bigint= core.get_account_id_by_parameter('Party.Parent.Account');
+	DECLARE _party_code text;
+	DECLARE _account_id bigint;
+BEGIN
+	_party_code := core.get_party_code(NEW.first_name, NEW.middle_name, NEW.last_name);
+
+	IF(COALESCE(NEW.party_name, '') = '') THEN
+		NEW.party_name := REPLACE(TRIM(COALESCE(NEW.last_name, '') || ', ' || NEW.first_name || ' ' || COALESCE(NEW.middle_name, '')), ' ', '');
+	END IF;
+
+	UPDATE core.parties
+	SET 
+		party_code=_party_code
+	WHERE core.parties.party_id=NEW.party_id;
+
+
+	--Create a new account
+	IF(NEW.account_id IS NULL) THEN
+
+		INSERT INTO core.accounts(account_master_id, account_code, currency_code, account_name, parent_account_id)
+		SELECT core.get_account_master_id_by_account_id(_parent_account_id), _party_code, NEW.currency_code, _party_code || ' (' || NEW.party_name || ')', _parent_account_id
+		RETURNING account_id INTO _account_id;
+	
+		UPDATE core.parties
+		SET 
+			account_id=_account_id 
+		WHERE core.parties.party_id=NEW.party_id;
+	END IF;
+
+
+	RETURN NEW;
+END
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER party_after_insert_trigger
+AFTER INSERT
+ON core.parties
+FOR EACH ROW EXECUTE PROCEDURE core.party_after_insert_trigger();
+
+-- core.party_before_update_trigger.sql
+CREATE FUNCTION core.party_before_update_trigger()
+RETURNS TRIGGER
+AS
+$$
+	DECLARE _parent_currency_code text;
+BEGIN
+	
+	--Get currency code of associated GL head.
+	_parent_currency_code := core.get_currency_code_by_party_id(NEW.party_id);
+
+
+	IF(NEW.currency_code != _parent_currency_code) THEN
+		RAISE EXCEPTION 'You cannot have a different currency on the mapped GL account.';
+	END IF;
+
+	IF(NEW.account_id IS NULL) THEN
+		RAISE EXCEPTION 'The column account_id cannot be null.';
+	END IF;
+	
+	RETURN NEW;
+END
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER party_before_update_trigger
+BEFORE UPDATE
+ON core.parties
+FOR EACH ROW EXECUTE PROCEDURE core.party_before_update_trigger();
+
+
+
+-- core.shippers_after_insert_trigger.sql
+CREATE FUNCTION core.shippers_after_insert_trigger()
+RETURNS trigger
+AS
+$$
+BEGIN
+	UPDATE core.shippers
+	SET 
+		shipper_code=core.get_shipper_code(NEW.company_name)
+	WHERE core.shippers.shipper_id=NEW.shipper_id;
+	
+	RETURN NEW;
+END
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER shippers_after_insert_trigger
+AFTER INSERT
+ON core.shippers
+FOR EACH ROW EXECUTE PROCEDURE core.shippers_after_insert_trigger();
+
+
+-- core.update_shipping_address_code_trigger.sql
+CREATE FUNCTION core.update_shipping_address_code_trigger()
+RETURNS TRIGGER
+AS
+$$
+DECLARE _counter integer;
+BEGIN
+	IF TG_OP='INSERT' THEN
+
+		SELECT COALESCE(MAX(shipping_address_code::integer), 0) + 1
+		INTO _counter
+		FROM core.shipping_addresses
+		WHERE party_id=NEW.party_id;
+
+		NEW.shipping_address_code := trim(to_char(_counter, '000'));
+		
+		RETURN NEW;
+	END IF;
+END
+$$
+LANGUAGE plpgsql;
+
+
+CREATE TRIGGER update_shipping_address_code_trigger
+BEFORE INSERT
+ON core.shipping_addresses
+FOR EACH ROW EXECUTE PROCEDURE core.update_shipping_address_code_trigger();
+
+
+
+-- policy.perform_lock_out.sql
+--TODO: Create a lockout policy.
+CREATE FUNCTION policy.perform_lock_out()
+RETURNS TRIGGER
+AS
+$$
+BEGIN
+	IF(
+		SELECT COUNT(*) FROM audit.failed_logins
+		WHERE audit.failed_logins.user_id=NEW.user_id
+		AND audit.failed_logins.failed_date_time 
+		BETWEEN NOW()-'5minutes'::interval 
+		AND NOW()
+	)::integer>5 THEN
+
+	INSERT INTO policy.lock_outs(user_id)SELECT NEW.user_id;
+END IF;
+RETURN NEW;
+END
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER lockout_user
+AFTER INSERT
+ON audit.failed_logins
+FOR EACH ROW EXECUTE PROCEDURE policy.perform_lock_out();
+
+
+
+-- transactions.restrict_delete_trigger.sql
+DROP FUNCTION IF EXISTS transactions.restrict_delete_trigger() CASCADE;
+CREATE FUNCTION transactions.restrict_delete_trigger()
+RETURNS TRIGGER
+AS
+$$
+BEGIN
+	IF TG_OP='DELETE' THEN
+		RAISE EXCEPTION 'Löschen einer Transaktion ist nicht zulässig. Markieren Sie die Transaktion als stattdessen abgelehnt.';
+	END IF;
+END
+$$
+LANGUAGE 'plpgsql';
+
+
+CREATE TRIGGER restrict_delete_trigger
+BEFORE DELETE
+ON transactions.transaction_details
+FOR EACH ROW 
+EXECUTE PROCEDURE transactions.restrict_delete_trigger();
+
+
+CREATE TRIGGER restrict_delete_trigger
+BEFORE DELETE
+ON transactions.stock_master
+FOR EACH ROW 
+EXECUTE PROCEDURE transactions.restrict_delete_trigger();
+
+
+CREATE TRIGGER restrict_delete_trigger
+BEFORE DELETE
+ON transactions.stock_details
+FOR EACH ROW 
+EXECUTE PROCEDURE transactions.restrict_delete_trigger();
+
+
+
 -- party-sample.sql
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
@@ -6614,6 +6932,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 ALTER TABLE core.parties
 ADD 	shipping_address national character varying(250) NULL;
+
+ALTER TABLE core.parties
+ALTER column currency_code DROP NOT NULL;
 
 INSERT INTO core.parties(party_type_id, first_name, last_name, date_of_birth, city, state, country,shipping_address, phone, fax, cell, email, url, pan_number, sst_number, cst_number, allow_credit, maximum_credit_period, maximum_credit_amount, charge_interest, interest_rate, interest_compounding_frequency_id, account_id)
 SELECT  4, 'Jacob', 'Smith', '1970-01-01'::date, 'Yuma', ' Colorado', ' USA', 'Yuma  Colorado  USA', '1-5741510', '1-5478450', '9812345670', 'jacob_smith@gmail.com', 'www.jacob.com', '5412541', '12457841','4578420','t'::boolean,1,500000,'t'::boolean,5,3,67 UNION ALL
@@ -7707,12 +8028,11 @@ SET
 	party_code=core.get_party_code(first_name, middle_name, last_name)
 WHERE core.parties.party_id=party_id;
 
+UPDATE core.parties
+SET currency_code='NPR';
 
--- price-types.sql
-
-INSERT INTO core.price_types(price_type_code, price_type_name)
-SELECT 'RET', 'Retail' UNION ALL
-SELECT 'WHO', 'Wholesale';
+ALTER TABLE core.parties
+ALTER column currency_code SET NOT NULL;
 
 
 
@@ -7768,193 +8088,59 @@ SELECT 2, 'VLT', 'Vault', 'Vault';
 INSERT INTO core.shippers(company_name, account_id)
 SELECT 'Standard', core.get_account_id_by_account_code('20110');
 
--- core.disable_editing_sys_type.sql
-CREATE FUNCTION core.disable_editing_sys_type()
-RETURNS TRIGGER
+-- unit_tests.check_party_currency_code_mismatch.sql
+DROP FUNCTION IF EXISTS unit_tests.check_party_currency_code_mismatch();
+
+CREATE FUNCTION unit_tests.check_party_currency_code_mismatch()
+RETURNS test_result
 AS
 $$
+	DECLARE message test_result;
 BEGIN
-	IF TG_OP='UPDATE' OR TG_OP='DELETE' THEN
-		IF EXISTS
-		(
-			SELECT *
-			FROM core.accounts
-			WHERE (sys_type=true OR is_cash=true)
-			AND account_id=OLD.account_id
-		) THEN
-			RAISE EXCEPTION 'Sie sind nicht berechtigt, die Systemkonten ändern.';
-		END IF;
-	END IF;
-	
-	IF TG_OP='INSERT' THEN
-		IF (NEW.sys_type=true OR NEW.is_cash=true) THEN
-			RAISE EXCEPTION 'Sie sind nicht berechtigt, die Systemkonten hinzufügen.';
-		END IF;
+	IF EXISTS
+	(
+		SELECT party_code FROM core.parties
+		INNER JOIN core.accounts
+		ON core.parties.account_id = core.accounts.account_id
+		WHERE core.parties.currency_code != core.accounts.currency_code
+		LIMIT 1
+	) THEN
+		SELECT assert.fail('Some party accounts have different currency setup on their mapped GL heads.') INTO message;
+		RETURN message;
 	END IF;
 
-	IF TG_OP='DELETE' THEN
-		RETURN OLD;
-	END IF;
-
-	RETURN NEW;	
-END
-$$
-LANGUAGE plpgsql;
-
-CREATE TRIGGER restrict_delete_sys_type_trigger
-BEFORE DELETE
-ON core.accounts
-FOR EACH ROW EXECUTE PROCEDURE core.disable_editing_sys_type();
-
-CREATE TRIGGER restrict_update_sys_type_trigger
-BEFORE UPDATE
-ON core.accounts
-FOR EACH ROW EXECUTE PROCEDURE core.disable_editing_sys_type();
-
-CREATE TRIGGER restrict_insert_sys_type_trigger
-BEFORE INSERT
-ON core.accounts
-FOR EACH ROW EXECUTE PROCEDURE core.disable_editing_sys_type();
-
-
-
--- core.update_party_code.sql
-CREATE FUNCTION core.update_party_code()
-RETURNS TRIGGER
-AS
-$$
-BEGIN
-	UPDATE core.parties
-	SET 
-		party_code=core.get_party_code(NEW.first_name, NEW.middle_name, NEW.last_name)
-	WHERE core.parties.party_id=NEW.party_id;
-	
-	RETURN NEW;
-END
-$$
-LANGUAGE plpgsql;
-
-CREATE TRIGGER update_party_code
-AFTER INSERT
-ON core.parties
-FOR EACH ROW EXECUTE PROCEDURE core.update_party_code();
-
-
--- core.update_shipper_code.sql
-CREATE FUNCTION core.update_shipper_code()
-RETURNS trigger
-AS
-$$
-BEGIN
-	UPDATE core.shippers
-	SET 
-		shipper_code=core.get_shipper_code(NEW.company_name)
-	WHERE core.shippers.shipper_id=NEW.shipper_id;
-	
-	RETURN NEW;
-END
-$$
-LANGUAGE plpgsql;
-
-CREATE TRIGGER update_shipper_code
-AFTER INSERT
-ON core.shippers
-FOR EACH ROW EXECUTE PROCEDURE core.update_shipper_code();
-
-
--- core.update_shipping_address_code_trigger.sql
-CREATE FUNCTION core.update_shipping_address_code_trigger()
-RETURNS TRIGGER
-AS
-$$
-DECLARE _counter integer;
-BEGIN
-	IF TG_OP='INSERT' THEN
-
-		SELECT COALESCE(MAX(shipping_address_code::integer), 0) + 1
-		INTO _counter
-		FROM core.shipping_addresses
-		WHERE party_id=NEW.party_id;
-
-		NEW.shipping_address_code := trim(to_char(_counter, '000'));
-		
-		RETURN NEW;
-	END IF;
+	SELECT assert.ok('End of test.') INTO message;  
+	RETURN message;
 END
 $$
 LANGUAGE plpgsql;
 
 
-CREATE TRIGGER update_shipping_address_code_trigger
-BEFORE INSERT
-ON core.shipping_addresses
-FOR EACH ROW EXECUTE PROCEDURE core.update_shipping_address_code_trigger();
 
+-- unit_tests.check_party_null_account_id.sql
+DROP FUNCTION IF EXISTS unit_tests.check_party_null_account_id();
 
-
--- policy.perform_lock_out.sql
---TODO: Create a lockout policy.
-CREATE FUNCTION policy.perform_lock_out()
-RETURNS TRIGGER
+CREATE FUNCTION unit_tests.check_party_null_account_id()
+RETURNS test_result
 AS
 $$
+	DECLARE message test_result;
 BEGIN
-	IF(
-		SELECT COUNT(*) FROM audit.failed_logins
-		WHERE audit.failed_logins.user_id=NEW.user_id
-		AND audit.failed_logins.failed_date_time 
-		BETWEEN NOW()-'5minutes'::interval 
-		AND NOW()
-	)::integer>5 THEN
+	IF EXISTS
+	(
+		SELECT party_code FROM core.parties
+		WHERE core.parties.account_id IS NULL
+		LIMIT 1
+	) THEN
+		SELECT assert.fail('Some party accounts don''t have mapped GL heads.') INTO message;
+		RETURN message;
+	END IF;
 
-	INSERT INTO policy.lock_outs(user_id)SELECT NEW.user_id;
-END IF;
-RETURN NEW;
+	SELECT assert.ok('End of test.') INTO message;  
+	RETURN message;
 END
 $$
 LANGUAGE plpgsql;
-
-CREATE TRIGGER lockout_user
-AFTER INSERT
-ON audit.failed_logins
-FOR EACH ROW EXECUTE PROCEDURE policy.perform_lock_out();
-
-
-
--- transactions.restrict_delete_trigger.sql
-DROP FUNCTION IF EXISTS transactions.restrict_delete_trigger() CASCADE;
-CREATE FUNCTION transactions.restrict_delete_trigger()
-RETURNS TRIGGER
-AS
-$$
-BEGIN
-	IF TG_OP='DELETE' THEN
-		RAISE EXCEPTION 'Löschen einer Transaktion ist nicht zulässig. Markieren Sie die Transaktion als stattdessen abgelehnt.';
-	END IF;
-END
-$$
-LANGUAGE 'plpgsql';
-
-
-CREATE TRIGGER restrict_delete_trigger
-BEFORE DELETE
-ON transactions.transaction_details
-FOR EACH ROW 
-EXECUTE PROCEDURE transactions.restrict_delete_trigger();
-
-
-CREATE TRIGGER restrict_delete_trigger
-BEFORE DELETE
-ON transactions.stock_master
-FOR EACH ROW 
-EXECUTE PROCEDURE transactions.restrict_delete_trigger();
-
-
-CREATE TRIGGER restrict_delete_trigger
-BEFORE DELETE
-ON transactions.stock_details
-FOR EACH ROW 
-EXECUTE PROCEDURE transactions.restrict_delete_trigger();
 
 
 

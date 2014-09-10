@@ -73,11 +73,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <CodeAnalysisDictionary Include="..\..\..\Dictionary.xml">
-      <Link>Dictionary.xml</Link>
-    </CodeAnalysisDictionary>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Mix Open Foundation.snk" />
     <None Include="MixERP.Net.WebControls.ScrudFactory.Data.licenseheader" />
   </ItemGroup>

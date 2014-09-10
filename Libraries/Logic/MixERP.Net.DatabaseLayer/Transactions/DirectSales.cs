@@ -258,7 +258,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                                     attachmentCommand.Parameters.AddWithValue("@UserId", userId);
                                     attachmentCommand.Parameters.AddWithValue("@Resource", "transactions.transaction_master");
                                     attachmentCommand.Parameters.AddWithValue("@ResourceKey", "transaction_master_id");
-                                    attachmentCommand.Parameters.AddWithValue("@ResourceId", stockMasterId);
+                                    attachmentCommand.Parameters.AddWithValue("@ResourceId", transactionMasterId);
                                     attachmentCommand.Parameters.AddWithValue("@OriginalFileName", attachment.OriginalFileName);
                                     attachmentCommand.Parameters.AddWithValue("@FileExtension", Path.GetExtension(attachment.OriginalFileName));
                                     attachmentCommand.Parameters.AddWithValue("@FilePath", attachment.FilePath);

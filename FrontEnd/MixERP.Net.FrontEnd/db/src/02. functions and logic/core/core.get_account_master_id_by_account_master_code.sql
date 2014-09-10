@@ -1,0 +1,14 @@
+CREATE FUNCTION core.get_account_master_id_by_account_master_code(text)
+RETURNS integer
+AS
+$$
+BEGIN
+	RETURN
+	(
+		SELECT core.account_masters.account_master_id
+		FROM core.account_masters
+		WHERE core.account_masters.account_master_code = $1
+	);
+END
+$$
+LANGUAGE plpgsql;

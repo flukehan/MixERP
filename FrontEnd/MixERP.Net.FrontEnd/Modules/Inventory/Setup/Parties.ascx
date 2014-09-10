@@ -1,22 +1,7 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Parties.ascx.cs" Inherits="MixERP.Net.Core.Modules.Inventory.Setup.Parties" %>
-<style type="text/css">
-    #menu-table {
-        width: 100%;
-    }
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="PartiesPopup.ascx.designer.cs" Inherits="MixERP.Net.Core.Modules.Inventory.Setup.PartiesPopup" %>
 
-    .content, iframe {
-        height: 100%;
-        width: 100%;
-    }
-
-    iframe {
-        border: none;
-        width: 100%;
-    }
-
-    .container {
-        background-color: white;
-    }
-</style>
-
-<iframe src="PartiesPopup.html"></iframe>
+<asp:PlaceHolder ID="ScrudPlaceholder" runat="server" />
+<script type="text/javascript">
+    var p = "<%= GetPartyNameParameter() %>";
+</script>
+<script src="../Scripts/Setup/Parties.js"></script>

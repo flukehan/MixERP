@@ -68,8 +68,8 @@
     <Content Include="AssignCashier.ascx" />
     <Content Include="Index.ascx" />
     <Content Include="Package.xml" />
-    <Content Include="Scripts\SQL\Menu.sql" />
-    <Content Include="Scripts\SQL\Module.sql" />
+    <Content Include="SQL\Menu.sql" />
+    <Content Include="SQL\Module.sql" />
     <Content Include="Setup\Stores.ascx" />
     <Content Include="Setup\StoreTypes.ascx" />
     <Content Include="Web.config" />
@@ -112,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Reports\" />
+    <Folder Include="Scripts\" />
     <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>

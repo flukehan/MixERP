@@ -365,6 +365,8 @@
     <Content Include="db\src\00. db core\3. roles-and-priviledge.sql" />
     <Content Include="db\src\01. domains, tables, and constraints\domains.sql" />
     <Content Include="db\src\01. domains, tables, and constraints\tables and constraints.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_account_master_id_by_account_id.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_account_master_id_by_account_master_code.sql" />
     <Content Include="db\src\02. functions and logic\core\core.convert_unit.sql" />
     <Content Include="db\src\02. functions and logic\core\core.count_item_in_stock.sql" />
     <Content Include="db\src\02. functions and logic\core\core.create_flag.sql" />
@@ -409,6 +411,7 @@
     <Content Include="db\src\02. functions and logic\core\core.is_leap_year.sql" />
     <Content Include="db\src\02. functions and logic\core\core.is_parent_unit.sql" />
     <Content Include="db\src\02. functions and logic\core\core.is_supplier.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_account_ids.sql" />
     <Content Include="db\src\02. functions and logic\logic\functions\core\core.calculate_interest.sql" />
     <Content Include="db\src\02. functions and logic\logic\functions\core\core.get_item_cost_price.sql" />
     <Content Include="db\src\02. functions and logic\logic\functions\core\core.get_item_selling_price.sql" />
@@ -498,12 +501,13 @@
     <Content Include="db\src\05. views\transactions\3. transactions.trial_balance_view.sql" />
     <Content Include="db\src\06. sample-data\exchange-rates.sql" />
     <Content Include="db\src\06. sample-data\menus.sql" />
-    <Content Include="db\src\06. sample-data\party-sample.sql" />
+    <Content Include="db\src\10. triggers\core\core.party_before_update_trigger.sql" />
+    <Content Include="db\src\11. sample-data\party-sample.sql" />
     <Content Include="db\src\06. sample-data\price-types.sql" />
-    <Content Include="db\src\06. sample-data\sample-data.sql" />
+    <Content Include="db\src\11. sample-data\sample-data.sql" />
     <Content Include="db\src\10. triggers\core\core.disable_editing_sys_type.sql" />
-    <Content Include="db\src\10. triggers\core\core.update_party_code.sql" />
-    <Content Include="db\src\10. triggers\core\core.update_shipper_code.sql" />
+    <Content Include="db\src\10. triggers\core\core.party_after_insert_trigger.sql" />
+    <Content Include="db\src\10. triggers\core\core.shippers_after_insert_trigger.sql" />
     <Content Include="db\src\10. triggers\core\core.update_shipping_address_code_trigger.sql" />
     <Content Include="db\src\10. triggers\policy\policy.perform_lock_out.sql" />
     <Content Include="db\src\10. triggers\transactions\transactions.restrict_delete_trigger.sql" />
@@ -1037,7 +1041,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="db\src\000. mixerp\" />
-    <Folder Include="db\src\sample-data\" />
+    <Folder Include="db\src\12. plpgunit-test\" />
     <Folder Include="Resource\DatabaseBackups\" />
     <Folder Include="Resource\Frameworks\" />
     <Folder Include="Resource\Logo\" />
@@ -1198,7 +1202,7 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>"$(SolutionDir)Utilities\MixERP.Net.Utility.SqlBundler\bin\Debug\MixERP.Net.Utility.SqlBundler.exe" "$(SolutionDir)MixERP.net.FrontEnd" "db"</PostBuildEvent>
+    <PostBuildEvent>"$(SolutionDir)Utilities\MixERP.Net.Utility.SqlBundler\bin\Debug\MixERP.Net.Utility.SqlBundler.exe" "$(SolutionDir)FrontEnd\MixERP.net.FrontEnd" "db"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

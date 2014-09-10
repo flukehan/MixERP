@@ -1,11 +1,11 @@
-DROP FUNCTION IF EXISTS transactions.get_average_party_transaction(party_id integer);
+DROP FUNCTION IF EXISTS transactions.get_average_party_transaction(party_id bigint);
 
 
-CREATE FUNCTION transactions.get_average_party_transaction(party_id integer)
+CREATE FUNCTION transactions.get_average_party_transaction(party_id bigint)
 RETURNS money_strict2
 AS
 $$
-	DECLARE _account_id integer = core.get_account_id_by_party_id($1);
+	DECLARE _account_id bigint= core.get_account_id_by_party_id($1);
 	DECLARE _debit money_strict2 = 0;
 	DECLARE _credit money_strict2 = 0;
 BEGIN
@@ -28,14 +28,14 @@ $$
 LANGUAGE plpgsql;
 
 
-DROP FUNCTION IF EXISTS transactions.get_average_party_transaction(party_id integer, office_id integer);
+DROP FUNCTION IF EXISTS transactions.get_average_party_transaction(party_id bigint, office_id integer);
 
 
-CREATE FUNCTION transactions.get_average_party_transaction(party_id integer, office_id integer)
+CREATE FUNCTION transactions.get_average_party_transaction(party_id bigint, office_id integer)
 RETURNS money_strict2
 AS
 $$
-	DECLARE _account_id integer = core.get_account_id_by_party_id($1);
+	DECLARE _account_id bigint = core.get_account_id_by_party_id($1);
 	DECLARE _debit money_strict2 = 0;
 	DECLARE _credit money_strict2 = 0;
 BEGIN

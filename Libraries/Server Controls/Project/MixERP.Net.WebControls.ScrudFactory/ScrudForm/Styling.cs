@@ -95,18 +95,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
             return cssClass;
         }
 
-        private string GetDateControlCssClass()
-        {
-            var cssClass = this.DateControlCssClass;
-
-            if (string.IsNullOrWhiteSpace(cssClass))
-            {
-                cssClass = ConfigurationHelper.GetScrudParameter("DateControlCssClass");
-            }
-
-            return cssClass;
-        }
-
         private string GetDeleteButtonCssClass()
         {
             var cssClass = this.DeleteButtonCssClass;

@@ -5,6 +5,15 @@ namespace MixERP.Net.WebControls.PartyControl
 {
     public partial class PartyControl
     {
+        private void AddHiddenField(System.Web.UI.WebControls.Panel p, string id)
+        {
+            using (System.Web.UI.WebControls.HiddenField hidden = new System.Web.UI.WebControls.HiddenField())
+            {
+                hidden.ID = id;
+                p.Controls.Add(hidden);
+            }
+        }
+
         private Control GetTabBody()
         {
             using (HtmlGenericControl tabContentDiv = ControlHelper.GetGenericControl(@"div", @"tab-content"))

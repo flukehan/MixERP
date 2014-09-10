@@ -1,5 +1,5 @@
 CREATE FUNCTION core.get_account_id_by_parameter(text)
-RETURNS integer
+RETURNS bigint
 AS
 $$
 BEGIN

@@ -13,7 +13,7 @@ namespace MixERP.Net.WebControls.PartyControl
     public partial class PartyControl : CompositeControl
     {
         private bool disposed;
-        public Panel conatiner;
+        public Panel container;
 
         public override sealed void Dispose()
         {
@@ -29,11 +29,15 @@ namespace MixERP.Net.WebControls.PartyControl
         {
             //this.Validate();
 
-            this.conatiner = new Panel();
-            this.conatiner.Controls.Add(this.GetHeader());
-            this.conatiner.Controls.Add(this.GetTabs());
-            this.conatiner.Controls.Add(this.GetTabBody());
-            this.Controls.Add(this.conatiner);
+            this.container = new Panel();
+            this.container.Controls.Add(this.GetHeader());
+            this.container.Controls.Add(this.GetTabs());
+            this.container.Controls.Add(this.GetTabBody());
+            this.AddHiddenField(this.container, "TotalDueAmountHidden");
+            this.AddHiddenField(this.container, "OfficeDueAmountHidden");
+            this.AddHiddenField(this.container, "AccruedInterestHidden");
+
+            this.Controls.Add(this.container);
             this.AddScript();
         }
 
@@ -49,11 +53,11 @@ namespace MixERP.Net.WebControls.PartyControl
             {
                 if (disposing)
                 {
-                    //if (this.scrudContainer != null)
-                    //{
-                    //    this.scrudContainer.Dispose();
-                    //    this.scrudContainer = null;
-                    //}
+                    if (this.container != null)
+                    {
+                        this.container.Dispose();
+                        this.container = null;
+                    }
                 }
 
                 this.disposed = true;
@@ -67,7 +71,7 @@ namespace MixERP.Net.WebControls.PartyControl
 
         protected override void Render(HtmlTextWriter w)
         {
-            this.conatiner.RenderControl(w);
+            this.container.RenderControl(w);
         }
     }
 }

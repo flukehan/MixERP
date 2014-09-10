@@ -1,4 +1,4 @@
-CREATE FUNCTION core.is_supplier(int)
+CREATE FUNCTION core.is_supplier(bigint)
 RETURNS boolean
 AS
 $$

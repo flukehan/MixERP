@@ -76,8 +76,8 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Scripts\Entry\JournalVoucher.js" />
-    <Content Include="Scripts\SQL\Menu.sql" />
-    <Content Include="Scripts\SQL\Module.sql" />
+    <Content Include="SQL\Menu.sql" />
+    <Content Include="SQL\Module.sql" />
     <Content Include="Services\AccountData.asmx" />
     <Content Include="Services\JournalVoucher.asmx" />
     <Content Include="Setup\AgeingSlabs.ascx" />

@@ -1,5 +1,5 @@
-CREATE FUNCTION core.get_account_id_by_party_id(party_id integer)
-RETURNS integer
+CREATE FUNCTION core.get_account_id_by_party_id(party_id bigint)
+RETURNS bigint
 AS
 $$
 BEGIN

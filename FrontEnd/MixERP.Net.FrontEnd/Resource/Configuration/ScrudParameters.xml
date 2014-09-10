@@ -26,7 +26,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <add key="CommandPanelButtonCssClass" value="btn btn-default btn-sm scrud-command-panel-button" />
     <add key="CommandPanelCssClass" value="vpad16" />
     <add key="CompactButtonCssClass" value="glyphicon glyphicon-resize-small" />
-    <add key="DateControlCssClass" value="date" />
     <add key="DeleteButtonCssClass" value="glyphicon glyphicon-minus-sign" />
     <add key="DescriptionCssClass" value="lead" />
     <add key="EditButtonCssClass" value="glyphicon glyphicon-pencil" />

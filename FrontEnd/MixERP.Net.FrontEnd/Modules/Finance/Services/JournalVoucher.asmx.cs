@@ -76,7 +76,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
                 throw new InvalidOperationException("Referencing sides are not equal.");
             }
 
-            return Transaction.Add(valueDate, referenceNumber, costCenterId, details);
+            return Transaction.Add(valueDate, referenceNumber, costCenterId, details, attachments);
         }
 
         [WebMethod(EnableSession = true)]

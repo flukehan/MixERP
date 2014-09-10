@@ -68,8 +68,9 @@
     <Content Include="Adjustment.ascx" />
     <Content Include="Index.ascx" />
     <Content Include="Package.xml" />
-    <Content Include="Scripts\SQL\Menu.sql" />
-    <Content Include="Scripts\SQL\Module.sql" />
+    <Content Include="Scripts\Setup\Parties.js" />
+    <Content Include="SQL\Menu.sql" />
+    <Content Include="SQL\Module.sql" />
     <Content Include="Services\ItemData.asmx" />
     <Content Include="Services\PartyData.asmx" />
     <Content Include="Setup\Brands.ascx" />
@@ -150,26 +151,12 @@
     <Compile Include="Setup\ItemGroups.ascx.designer.cs">
       <DependentUpon>ItemGroups.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Setup\Items.ascx.cs">
-      <DependentUpon>Items.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Setup\Items.ascx.designer.cs">
-      <DependentUpon>Items.ascx</DependentUpon>
-    </Compile>
     <Compile Include="Setup\ItemsPopup.ascx.cs">
       <DependentUpon>ItemsPopup.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Setup\ItemsPopup.ascx.designer.cs">
       <DependentUpon>ItemsPopup.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Setup\Parties.ascx.cs">
-      <DependentUpon>Parties.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Setup\Parties.ascx.designer.cs">
-      <DependentUpon>Parties.ascx</DependentUpon>
     </Compile>
     <Compile Include="Setup\PartiesPopup.ascx.cs">
       <DependentUpon>PartiesPopup.ascx</DependentUpon>

@@ -1,5 +1,5 @@
 CREATE FUNCTION core.get_cash_account_id()
-RETURNS integer
+RETURNS bigint
 AS
 $$
 BEGIN

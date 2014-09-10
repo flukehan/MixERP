@@ -496,8 +496,7 @@ var appendParameter = function (data, parameter, value) {
     return data;
 };
 
-var getData = function(data)
-{
+var getData = function (data) {
     if (data) {
         return "{" + data + "}";
     };

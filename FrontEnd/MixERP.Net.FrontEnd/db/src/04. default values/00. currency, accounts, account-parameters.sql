@@ -229,5 +229,7 @@ SELECT 'Purchase.Discount', core.get_account_id_by_account_code('40270') UNION A
 SELECT 'Purchase.Tax', core.get_account_id_by_account_code('20700') UNION ALL
 SELECT 'Inventory', core.get_account_id_by_account_code('10700') UNION ALL
 SELECT 'COGS', core.get_account_id_by_account_code('40200') UNION ALL
-SELECT 'Tax.Payable', core.get_account_id_by_account_code('20700');
+SELECT 'Tax.Payable', core.get_account_id_by_account_code('20700') UNION ALL
+SELECT 'Party.Parent.Account', core.get_account_id_by_account_code('20100');
+
 

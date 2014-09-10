@@ -115,8 +115,10 @@
     <EmbeddedResource Include="Scripts\Entry\Order.js" />
     <EmbeddedResource Include="Scripts\Entry\Quotation.js" />
     <Content Include="Return.ascx" />
-    <Content Include="Scripts\SQL\Menu.sql" />
-    <Content Include="Scripts\SQL\Module.sql" />
+    <Content Include="Scripts\Receipt.js" />
+    <Content Include="Services\Currencies.asmx" />
+    <Content Include="SQL\Menu.sql" />
+    <Content Include="SQL\Module.sql" />
     <Content Include="Services\Delivery.asmx" />
     <Content Include="Services\DirectSales.asmx" />
     <Content Include="Services\Order.asmx" />
@@ -285,6 +287,10 @@
     </Compile>
     <Compile Include="Return.ascx.designer.cs">
       <DependentUpon>Return.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Currencies.asmx.cs">
+      <DependentUpon>Currencies.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Services\Delivery.asmx.cs">
       <DependentUpon>Delivery.asmx</DependentUpon>

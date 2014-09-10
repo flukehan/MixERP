@@ -1,13 +1,13 @@
 DROP FUNCTION IF EXISTS transactions.get_party_transaction_summary
 (
 	office_id integer, 
-	party_id integer
+	party_id bigint
 );
 
 CREATE FUNCTION transactions.get_party_transaction_summary
 (
 	office_id integer, 
-	party_id integer, 
+	party_id bigint, 
 	OUT currency_code text, 
 	OUT currency_symbol text, 
 	OUT total_due_amount decimal(24, 4), 

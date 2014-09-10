@@ -1,4 +1,4 @@
-CREATE FUNCTION core.has_child_accounts(integer)
+CREATE FUNCTION core.has_child_accounts(bigint)
 RETURNS boolean
 AS
 $$

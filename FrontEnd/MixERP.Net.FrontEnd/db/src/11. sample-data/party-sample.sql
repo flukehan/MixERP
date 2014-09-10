@@ -19,6 +19,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ALTER TABLE core.parties
 ADD 	shipping_address national character varying(250) NULL;
 
+ALTER TABLE core.parties
+ALTER column currency_code DROP NOT NULL;
+
 INSERT INTO core.parties(party_type_id, first_name, last_name, date_of_birth, city, state, country,shipping_address, phone, fax, cell, email, url, pan_number, sst_number, cst_number, allow_credit, maximum_credit_period, maximum_credit_amount, charge_interest, interest_rate, interest_compounding_frequency_id, account_id)
 SELECT  4, 'Jacob', 'Smith', '1970-01-01'::date, 'Yuma', ' Colorado', ' USA', 'Yuma  Colorado  USA', '1-5741510', '1-5478450', '9812345670', 'jacob_smith@gmail.com', 'www.jacob.com', '5412541', '12457841','4578420','t'::boolean,1,500000,'t'::boolean,5,3,67 UNION ALL
 SELECT  1, 'Michael', 'Johnson', '1970-01-02'::date, 'Yuma', ' Colorado', ' USA', 'Yuma  Colorado  USA', '1-5741511', '1-5478451', '9812345671', 'michael_johnson@gmail.com', 'www.michael.com', '5412542', '12457842','4578421','t'::boolean,1,500000,'t'::boolean,5,3,15 UNION ALL
@@ -1110,3 +1113,10 @@ UPDATE core.parties
 SET 
 	party_code=core.get_party_code(first_name, middle_name, last_name)
 WHERE core.parties.party_id=party_id;
+
+UPDATE core.parties
+SET currency_code='NPR';
+
+ALTER TABLE core.parties
+ALTER column currency_code SET NOT NULL;
+

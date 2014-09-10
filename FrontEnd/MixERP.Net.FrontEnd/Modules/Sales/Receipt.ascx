@@ -13,12 +13,12 @@
         </div>
         <div class="form-group form-group-sm">
             <label for="CurrencyTextBox">Base Currency</label>
-            <input type="text" id="CurrencyTextBox" readonly="readonly" class="currency form-control" />
+            <input type="text" id="CurrencyTextBox" readonly="readonly" class="form-control text-right" />
         </div>
 
         <div class="form-group form-group-sm">
             <label for="CurrencyDropDownList">Received Currency</label>
-            <select id="CurrencyDropDownList" class="form-control"></select>
+            <select id="CurrencyDropDownList" class="form-control  text-right"></select>
         </div>
 
         <div class="form-group form-group-sm">
@@ -27,27 +27,27 @@
         </div>
         <div class="form-group form-group-sm">
             <label for="ExchangeRateTextBox">Exchange Rate</label>
-            <input type="text" id="ExchangeRateTextBox" class="float form-control" />
+            <input type="text" id="ExchangeRateTextBox" class="float form-control text-right" />
         </div>
         <div class="form-group form-group-sm">
             <label for="BaseAmountTextBox">Converted to Base Currency</label>
-            <input type="text" id="BaseAmountTextBox" readonly="readonly" class="currency form-control" />
+            <input type="text" id="BaseAmountTextBox" readonly="readonly" class="currency form-control text-right" />
         </div>
 
         <div class="form-group form-group-sm">
             <label for="FinalDueAmountTextBox">Final Due Amount in Base Currency</label>
-            <input type="text" id="FinalDueAmountTextBox" readonly="readonly" class="currency form-control" />
+            <input type="text" id="FinalDueAmountTextBox" readonly="readonly" class="currency form-control text-right" />
         </div>
 
         <div class="form-group form-group-sm">
             <label>Receipt Type</label>
             <div class="vpad8" id="ReceiptType">
                 <div class="btn-group btn-group-sm" data-toggle="buttons">
-                    <label class="btn btn-success active" onclick="toggleTransactionType($(this));repaint();">
+                    <label class="btn btn-success active">
                         <input type="radio" name="options" id="CashRadio">
                         Cash
                     </label>
-                    <label class="btn btn-success" onclick="toggleTransactionType($(this));repaint();">
+                    <label class="btn btn-success">
                         <input type="radio" name="options" id="BankRadio">
                         Bank
                     </label>
@@ -92,30 +92,4 @@
     </div>
 </div>
 
-<script type="text/javascript">
-        $(document).ready(function () {
-            $("#receipt").appendTo("#home");
-        });
-
-        var toggleTransactionType = function (e) {
-
-            if (e.find("input").attr("id") == "BankRadio") {
-                if (!$("#BankFormGroup").is(":visible"));
-                {
-                    $("#BankFormGroup").show(500);
-                    $("#CashFormGroup").hide();
-                    return;
-                }
-            };
-
-            if (e.find("input").attr("id") == "CashRadio") {
-                if (!$("#CashFormGroup").is(":visible"));
-                {
-                    $("#CashFormGroup").show(500);
-                    $("#BankFormGroup").hide();
-                    return;
-                }
-            };
-
-        };
-</script>
+<script src="Scripts/Receipt.js"></script>

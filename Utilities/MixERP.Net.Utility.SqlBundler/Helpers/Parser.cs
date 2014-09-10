@@ -18,7 +18,7 @@ namespace MixERP.Net.Utility.SqlBundler.Helpers
             }
 
             BundlerModel model = new BundlerModel();
-            Collection<string> files = new Collection<string>();
+            //Collection<string> files = new Collection<string>();
             Collection<KeyValuePair<string, string>> dictionaries = new Collection<KeyValuePair<string, string>>();
 
             string content = File.ReadAllText(path, Encoding.UTF8);

@@ -17,12 +17,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit Tests", "Unit Tests", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web Performance Tests", "Web Performance Tests", "{62698506-0C89-463C-82E7-33521D1B055C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F12F3FD9-1C35-4C76-9733-8618DA796761}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{78A57AEA-1FB4-4965-A145-F3CD8A84A5E1}"
 	ProjectSection(SolutionItems) = preProject
 		LICENSE = LICENSE
 		Local.testsettings = Local.testsettings
 		README.md = README.md
 		Readme.txt = Readme.txt
+		WebEssentials-Settings.json = WebEssentials-Settings.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{C832E6A8-B906-4DFC-8458-72C965C0C957}"
@@ -85,7 +86,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.Core.Modules.Bac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.Core.Modules.POS", "FrontEnd\MixERP.Net.FrontEnd\Modules\POS\MixERP.Net.Core.Modules.POS.csproj", "{585CFF1D-806D-49B6-BBAA-865FF2976204}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{87C7000F-A7DC-42BA-A578-DD090513BB66}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend (Default Site)", "Frontend (Default Site)", "{87C7000F-A7DC-42BA-A578-DD090513BB66}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{C615459A-CAF8-4802-A187-C746853A5D82}"
 EndProject
@@ -106,6 +107,15 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.Core.Modules.Finance.Data", "FrontEnd\MixERP.Net.FrontEnd\Modules\Finance.Data\MixERP.Net.Core.Modules.Finance.Data.csproj", "{8027734A-20B1-42E5-ADDE-5F51BF5BBC08}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{EE97E3B1-0DD0-453B-A0AA-4AF12099B0CA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{78A57AEA-1FB4-4965-A145-F3CD8A84A5E1}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		Local.testsettings = Local.testsettings
+		README.md = README.md
+		Readme.txt = Readme.txt
+		WebEssentials-Settings.json = WebEssentials-Settings.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

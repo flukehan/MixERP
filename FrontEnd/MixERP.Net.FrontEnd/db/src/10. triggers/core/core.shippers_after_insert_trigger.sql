@@ -1,4 +1,4 @@
-CREATE FUNCTION core.update_shipper_code()
+CREATE FUNCTION core.shippers_after_insert_trigger()
 RETURNS trigger
 AS
 $$
@@ -13,7 +13,7 @@ END
 $$
 LANGUAGE plpgsql;
 
-CREATE TRIGGER update_shipper_code
+CREATE TRIGGER shippers_after_insert_trigger
 AFTER INSERT
 ON core.shippers
-FOR EACH ROW EXECUTE PROCEDURE core.update_shipper_code();
+FOR EACH ROW EXECUTE PROCEDURE core.shippers_after_insert_trigger();

@@ -72,8 +72,8 @@
     <Content Include="Opportunity.ascx" />
     <Content Include="OpportunityFollowup.ascx" />
     <Content Include="Package.xml" />
-    <Content Include="Scripts\SQL\Menu.sql" />
-    <Content Include="Scripts\SQL\Module.sql" />
+    <Content Include="SQL\Menu.sql" />
+    <Content Include="SQL\Module.sql" />
     <Content Include="Setup\LeadSources.ascx" />
     <Content Include="Setup\LeadStatuses.ascx" />
     <Content Include="Setup\OpportunityStages.ascx" />
@@ -152,6 +152,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Reports\" />
+    <Folder Include="Scripts\" />
     <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,5 @@
-DROP FUNCTION IF EXISTS transactions.get_last_receipt_date(office_id integer, party_id integer);
-CREATE FUNCTION transactions.get_last_receipt_date(office_id integer, party_id integer)
+DROP FUNCTION IF EXISTS transactions.get_last_receipt_date(office_id integer, party_id bigint);
+CREATE FUNCTION transactions.get_last_receipt_date(office_id integer, party_id bigint)
 RETURNS date
 AS
 $$

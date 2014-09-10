@@ -88,8 +88,8 @@
     <Content Include="Scripts\Entry\DirectPurchase.js" />
     <Content Include="Scripts\Entry\GRN.js" />
     <Content Include="Scripts\Entry\Order.js" />
-    <Content Include="Scripts\SQL\Menu.sql" />
-    <Content Include="Scripts\SQL\Module.sql" />
+    <Content Include="SQL\Menu.sql" />
+    <Content Include="SQL\Module.sql" />
     <Content Include="Services\DirectPurchase.asmx" />
     <Content Include="Services\GRN.asmx" />
     <Content Include="Services\Order.asmx" />

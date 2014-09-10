@@ -382,7 +382,7 @@ ON core.account_masters(UPPER(account_master_name));
 
 CREATE TABLE core.accounts
 (
-	account_id				SERIAL NOT NULL PRIMARY KEY,
+	account_id				BIGSERIAL NOT NULL PRIMARY KEY,
 	account_master_id 			integer NOT NULL REFERENCES core.account_masters(account_master_id),
 	account_code      			national character varying(12) NOT NULL,
 	external_code     			national character varying(12) NULL CONSTRAINT accounts_external_code_df DEFAULT(''),
@@ -392,7 +392,7 @@ CREATE TABLE core.accounts
 	description	  			national character varying(200) NULL,
 	sys_type 	  			boolean NOT NULL CONSTRAINT accounts_sys_type_df DEFAULT(false),
 	is_cash		  			boolean NOT NULL CONSTRAINT accounts_is_cash_df DEFAULT(false),
-	parent_account_id 			integer NULL REFERENCES core.accounts(account_id),
+	parent_account_id 			bigint NULL REFERENCES core.accounts(account_id),
 	audit_user_id				integer NULL REFERENCES office.users(user_id),
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
@@ -409,7 +409,7 @@ CREATE TABLE core.account_parameters
 (
 	account_parameter_id 			SERIAL NOT NULL CONSTRAINT account_parameters_pk PRIMARY KEY,
 	parameter_name 				national character varying(128) NOT NULL,
-	account_id 				integer NOT NULL REFERENCES core.accounts(account_id),
+	account_id 				bigint NOT NULL REFERENCES core.accounts(account_id),
 	audit_user_id				integer NULL REFERENCES office.users(user_id),
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
@@ -419,7 +419,7 @@ ON core.account_parameters(UPPER(parameter_name));
 
 CREATE TABLE core.bank_accounts
 (
-	account_id 				integer NOT NULL CONSTRAINT bank_accounts_pk PRIMARY KEY
+	account_id 				bigint NOT NULL CONSTRAINT bank_accounts_pk PRIMARY KEY
 								CONSTRAINT bank_accounts_accounts_fk REFERENCES core.accounts(account_id),
 	maintained_by_user_id 			integer NOT NULL CONSTRAINT bank_accounts_users_fk REFERENCES office.users(user_id),
 	bank_name 				national character varying(128) NOT NULL,
@@ -444,7 +444,7 @@ CREATE TABLE core.agents
 	address 				national character varying(100) NOT NULL,
 	contact_number 				national character varying(50) NOT NULL,
 	commission_rate 			decimal_strict2 NOT NULL DEFAULT(0),
-	account_id 				integer NOT NULL REFERENCES core.accounts(account_id),
+	account_id 				bigint NOT NULL REFERENCES core.accounts(account_id),
 	audit_user_id				integer NULL REFERENCES office.users(user_id),
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
@@ -542,13 +542,14 @@ CREATE TABLE core.parties
 	pan_number 				national character varying(50) NULL,
 	sst_number 				national character varying(50) NULL,
 	cst_number 				national character varying(50) NULL,
+	currency_code 				national character varying(12) NOT NULL REFERENCES core.currencies(currency_code),
 	allow_credit 				boolean NULL,
 	maximum_credit_period 			smallint NULL,
 	maximum_credit_amount 			money_strict2 NULL,
 	charge_interest 			boolean NULL,
 	interest_rate 				decimal NULL,
 	interest_compounding_frequency_id	smallint NULL REFERENCES core.frequencies(frequency_id),
-	account_id 				integer NOT NULL REFERENCES core.accounts(account_id),
+	account_id 				bigint NULL REFERENCES core.accounts(account_id),
 	audit_user_id				integer NULL REFERENCES office.users(user_id),
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
@@ -626,7 +627,7 @@ CREATE TABLE core.shippers
 	pan_number 				national character varying(50) NULL,
 	sst_number 				national character varying(50) NULL,
 	cst_number 				national character varying(50) NULL,
-	account_id 				integer NOT NULL REFERENCES core.accounts(account_id),
+	account_id 				bigint NOT NULL REFERENCES core.accounts(account_id),
 	audit_user_id				integer NULL REFERENCES office.users(user_id),
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
@@ -659,7 +660,7 @@ CREATE TABLE core.taxes
 	tax_code 				national character varying(12) NOT NULL,
 	tax_name 				national character varying(50) NOT NULL,
 	rate 					decimal NOT NULL,
-	account_id 				integer NOT NULL REFERENCES core.accounts(account_id),
+	account_id 				bigint NOT NULL REFERENCES core.accounts(account_id),
 	audit_user_id				integer NULL REFERENCES office.users(user_id),
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
@@ -741,7 +742,7 @@ CREATE TABLE core.items
 	item_name 				national character varying(150) NOT NULL,
 	item_group_id 				integer NOT NULL REFERENCES core.item_groups(item_group_id),
 	brand_id 				integer NOT NULL REFERENCES core.brands(brand_id),
-	preferred_supplier_id 			integer NOT NULL REFERENCES core.parties(party_id),
+	preferred_supplier_id 			bigint NOT NULL REFERENCES core.parties(party_id),
 	lead_time_in_days 			integer NOT NULL DEFAULT(0),
 	weight_in_grams				float NOT NULL DEFAULT(0),	
 	width_in_centimeters			float NOT NULL DEFAULT(0),
@@ -1042,7 +1043,7 @@ CREATE TABLE transactions.transaction_details
 	transaction_detail_id 			BIGSERIAL NOT NULL PRIMARY KEY,
 	transaction_master_id 			bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id),
 	tran_type 				transaction_type NOT NULL,
-	account_id 				integer NOT NULL REFERENCES core.accounts(account_id),
+	account_id 				bigint NOT NULL REFERENCES core.accounts(account_id),
 	statement_reference 			text NULL,
 	cash_repository_id 			integer NULL REFERENCES office.cash_repositories(cash_repository_id),
 	currency_code				national character varying(12) NULL REFERENCES core.currencies(currency_code),
@@ -1061,7 +1062,7 @@ CREATE TABLE transactions.customer_receipts
 	party_id			bigint NOT NULL REFERENCES core.parties(party_id),
 	amount				money_strict NOT NULL,
 	cash_repository_id		integer NULL REFERENCES office.cash_repositories(cash_repository_id),
-	bank_account_id			integer NULL REFERENCES core.bank_accounts(account_id),
+	bank_account_id			bigint NULL REFERENCES core.bank_accounts(account_id),
 	posted_date			date NULL,
 	bank_instrument_code		national character varying(128) NULL CONSTRAINT customer_receipt_bank_instrument_code_df DEFAULT(''),
 	bank_tran_code			national character varying(128) NULL CONSTRAINT customer_receipt_bank_tran_code_df DEFAULT(''),	

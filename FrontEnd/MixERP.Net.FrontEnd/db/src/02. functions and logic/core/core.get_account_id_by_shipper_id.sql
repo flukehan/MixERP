@@ -1,5 +1,5 @@
 CREATE FUNCTION core.get_account_id_by_shipper_id(integer)
-RETURNS integer
+RETURNS bigint
 AS
 $$
 BEGIN

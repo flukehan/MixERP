@@ -30,7 +30,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
 {
     public static class Transaction
     {
-        public static long Add(DateTime valueDate, int officeId, int userId, long logOnId, int costCenterId, string referenceNumber, Collection<JournalDetailsModel> details)
+        public static long Add(DateTime valueDate, int officeId, int userId, long logOnId, int costCenterId, string referenceNumber, Collection<JournalDetailsModel> details, Collection<Common.Models.Core.Attachment> attachments)
         {
             if (details == null)
             {
@@ -131,6 +131,31 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                             }
                         }
 
+                        #region Attachment
+
+                        if (attachments != null && attachments.Count > 0)
+                        {
+                            foreach (Common.Models.Core.Attachment attachment in attachments)
+                            {
+                                sql = "INSERT INTO transactions.attachments(user_id, resource, resource_key, resource_id, original_file_name, file_extension, file_path, comment) SELECT @UserId, @Resource, @ResourceKey, @ResourceId, @OriginalFileName, @FileExtension, @FilePath, @Comment;";
+                                using (NpgsqlCommand attachmentCommand = new NpgsqlCommand(sql, connection))
+                                {
+                                    attachmentCommand.Parameters.AddWithValue("@UserId", userId);
+                                    attachmentCommand.Parameters.AddWithValue("@Resource", "transactions.transaction_master");
+                                    attachmentCommand.Parameters.AddWithValue("@ResourceKey", "transaction_master_id");
+                                    attachmentCommand.Parameters.AddWithValue("@ResourceId", transactionMasterId);
+                                    attachmentCommand.Parameters.AddWithValue("@OriginalFileName", attachment.OriginalFileName);
+                                    attachmentCommand.Parameters.AddWithValue("@FileExtension", System.IO.Path.GetExtension(attachment.OriginalFileName));
+                                    attachmentCommand.Parameters.AddWithValue("@FilePath", attachment.FilePath);
+                                    attachmentCommand.Parameters.AddWithValue("@Comment", attachment.Comment);
+
+                                    attachmentCommand.ExecuteNonQuery();
+                                }
+                            }
+                        }
+
+                        #endregion Attachment
+
                         transaction.Commit();
                         return transactionMasterId;
                     }
@@ -155,6 +180,20 @@ namespace MixERP.Net.DatabaseLayer.Transactions
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
                 command.Parameters.AddWithValue("@CurrencyCode", currencyCode);
+
+                return Conversion.TryCastDecimal(DbOperations.GetScalarValue(command));
+            }
+        }
+
+        public static decimal GetExchangeRate(int officeId, string sourceCurrencyCode, string destinationCurrencyCode)
+        {
+            const string sql = "SELECT transactions.get_exchange_rate(@OfficeId, @SourceCurrencyCode, @DestinationCurrencyCode);";
+
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                command.Parameters.AddWithValue("@OfficeId", officeId);
+                command.Parameters.AddWithValue("@SourceCurrencyCode", sourceCurrencyCode);
+                command.Parameters.AddWithValue("@DestinationCurrencyCode", destinationCurrencyCode);
 
                 return Conversion.TryCastDecimal(DbOperations.GetScalarValue(command));
             }

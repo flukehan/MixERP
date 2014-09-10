@@ -154,7 +154,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
                         break;
 
                     case "date":
-                        ScrudDateTextBox.AddDateTextBox(htmlTable, resourceClassName, columnName, defaultValue, isNullable, errorCssClass);
+                        ScrudDateTextBox.AddDateTextBox(htmlTable, resourceClassName, columnName, defaultValue, isNullable);
                         break;
 
                     case "bytea":
