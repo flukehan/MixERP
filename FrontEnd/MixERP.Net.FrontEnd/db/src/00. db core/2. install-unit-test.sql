@@ -1,10 +1,10 @@
 ﻿DROP SCHEMA IF EXISTS assert CASCADE;
 DROP SCHEMA IF EXISTS unit_tests CASCADE;
-DROP DOMAIN IF EXISTS test_result CASCADE;
+DROP DOMAIN IF EXISTS public.test_result CASCADE;
 
 CREATE SCHEMA assert AUTHORIZATION postgres;
 CREATE SCHEMA unit_tests AUTHORIZATION postgres;
-CREATE DOMAIN test_result AS text;
+CREATE DOMAIN public.test_result AS text;
 
 CREATE TABLE unit_tests.tests
 (

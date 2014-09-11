@@ -23,6 +23,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <add key="AccountMasterDisplayField" value="account_master_code + ' (' + account_master_name + ')'" />
     <add key="AccountDisplayField" value="account_code + ' (' + account_name + ')'" />
     <add key="AgentDisplayField" value="agent_code + ' (' + agent_name + ')'" />
+    <add key="BankAccountDisplayField" value="bank_name + ' (' + bank_branch + ')'" />
     <add key="BonusSlabDisplayField" value="bonus_slab_name" />
     <add key="BrandDisplayField" value="brand_code + ' (' + brand_name + ')'" />
     <add key="CashRepositoryDisplayField" value="cash_repository_code + ' (' + cash_repository_name + ')'" />

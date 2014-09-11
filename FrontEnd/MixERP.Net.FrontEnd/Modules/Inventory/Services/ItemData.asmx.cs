@@ -40,7 +40,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = BusinessLayer.Helpers.FormHelper.GetTable("office", "stores"))
+            using (DataTable table = Stores.GetStoreDataTable())
             {
                 string displayField = ConfigurationHelper.GetDbParameter("StoreDisplayField");
                 table.Columns.Add("store", typeof(string), displayField);
@@ -59,7 +59,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = BusinessLayer.Helpers.FormHelper.GetTable("core", "agents"))
+            using (DataTable table = Agents.GetAgentDataTable())
             {
                 string displayField = ConfigurationHelper.GetDbParameter("AgentDisplayField");
                 table.Columns.Add("agent", typeof(string), displayField);
@@ -78,7 +78,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = BusinessLayer.Helpers.FormHelper.GetTable("core", "shippers"))
+            using (DataTable table = Shippers.GetShipperDataTable())
             {
                 string displayField = ConfigurationHelper.GetDbParameter("ShipperDisplayField");
                 table.Columns.Add("shipper", typeof(string), displayField);
@@ -102,7 +102,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = BusinessLayer.Helpers.FormHelper.GetTable("core", "items"))
+            using (DataTable table = Items.GetItemDataTable())
             {
                 foreach (DataRow dr in table.Rows)
                 {
@@ -117,7 +117,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = BusinessLayer.Helpers.FormHelper.GetTable("core", "items", "maintain_stock", "true"))
+            using (DataTable table = Items.GetStockItemDataTable())
             {
                 foreach (DataRow dr in table.Rows)
                 {
@@ -155,7 +155,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = BusinessLayer.Helpers.FormHelper.GetTable("core", "price_types"))
+            using (DataTable table = PriceTypes.GetPriceTypeDataTable())
             {
                 string displayField = ConfigurationHelper.GetDbParameter("PriceTypeDisplayField");
                 table.Columns.Add("price_type", typeof(string), displayField);

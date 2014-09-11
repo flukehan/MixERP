@@ -1,5 +1,6 @@
-﻿using MixERP.Net.BusinessLayer;
+﻿
 using MixERP.Net.Core.Modules.Finance.Resources;
+using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.ScrudFactory;
 using System;
 

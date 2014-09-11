@@ -1,9 +1,9 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Delivery.ascx.cs" Inherits="MixERP.Net.Core.Modules.Sales.Delivery" %>
 
-<mixerp:productview
+<mixerp:ProductView
     ID="ProductView1"
     runat="server"
-    book="Sales" subbook="Delivery"
-    addnewurl="~/Modules/Sales/Entry/Delivery.html"
-    previewurl="~/Modules/Sales/Reports/SalesDeliveryReport.html"
-    checklisturl="~/Modules/Sales/Confirmation/Delivery.html" />
+    Book="Sales" SubBook="Delivery"
+    AddNewUrl="~/Modules/Sales/Entry/Delivery.mix"
+    PreviewUrl="~/Modules/Sales/Reports/SalesDeliveryReport.mix"
+    ChecklistUrl="~/Modules/Sales/Confirmation/Delivery.mix" />

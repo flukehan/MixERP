@@ -1,14 +1,14 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Quotation.ascx.cs" Inherits="MixERP.Net.Core.Modules.Sales.Confirmation.Quotation"
-    OverridePath="/Modules/Sales/Quotation.html" %>
+    OverridePath="/Modules/Sales/Quotation.mix" %>
 <mixerp:TransactionChecklist runat="server"
     DisplayWithdrawButton="false"
     DisplayViewInvoiceButton="true"
     DisplayEmailInvoiceButton="true"
     DisplayCustomerInvoiceButton="true"
     DisplayPrintReceiptButton="true"
-    DisplayPrintGLEntryButton="true"
+    DisplayPrintGlEntryButton="true"
     DisplayAttachmentButton="true"
-    IsNonGLTransaction="true"
-    InvoicePath="~/Modules/Sales/Reports/DirectSalesInvoiceReport.html"
-    CustomerInvoicePath="~/Modules/Sales/Reports/CustomerInvoiceReport.html"
-    GLAdvicePath="~/Finance/Confirmation/GLAdvice.aspx" />
+    IsNonGlTransaction="true"
+    InvoicePath="~/Modules/Sales/Reports/DirectSalesInvoiceReport.mix"
+    CustomerInvoicePath="~/Modules/Sales/Reports/CustomerInvoiceReport.mix"
+    GlAdvicePath="~/Modules/Finance/Reports/GLAdviceReport.mix" />

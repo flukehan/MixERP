@@ -271,13 +271,13 @@
       <Project>{07DDCE95-A18F-4A35-B892-CE09EAD2AA65}</Project>
       <Name>MixERP.Net.WebControls.ScrudFactory</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.net.BusinessLayer\MixERP.Net.BusinessLayer.csproj">
-      <Project>{81DE04CF-7DE9-42FF-8339-D05E2586DCBA}</Project>
-      <Name>MixERP.Net.BusinessLayer</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.net.Common\MixERP.Net.Common.csproj">
       <Project>{D5A09C22-8F48-4FB2-A14D-C62C8C8FCEC0}</Project>
       <Name>MixERP.Net.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MixERP.Net.FrontEnd.csproj">
+      <Project>{ACE1017D-71BC-4417-A906-72C4B9C55823}</Project>
+      <Name>MixERP.Net.FrontEnd</Name>
     </ProjectReference>
     <ProjectReference Include="..\BackOffice.Data\MixERP.Net.Core.Modules.BackOffice.Data.csproj">
       <Project>{19a6c0bb-7737-486c-b2bf-df1f9290dfe9}</Project>

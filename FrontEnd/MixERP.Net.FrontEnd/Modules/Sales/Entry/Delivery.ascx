@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Delivery.ascx.cs" Inherits="MixERP.Net.Core.Modules.Sales.Entry.Delivery"
-    OverridePath="/Modules/Sales/Delivery.html" %>
+    OverridePath="/Modules/Sales/Delivery.mix" %>
 <mixerp:Product runat="server"
     ID="ProductView1"
     Book="Sales"

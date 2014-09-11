@@ -1,4 +1,5 @@
-﻿using MixERP.Net.BusinessLayer;
+﻿
+using MixERP.Net.FrontEnd.Base;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

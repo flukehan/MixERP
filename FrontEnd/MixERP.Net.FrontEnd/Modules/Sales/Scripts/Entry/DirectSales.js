@@ -9,7 +9,7 @@ var save = function () {
 
     ajaxsaveDirectSales.done(function (response) {
         var id = response.d;
-        window.location = "/Modules/Sales/Confirmation/DirectSales.html?TranId=" + id;
+        window.location = "/Modules/Sales/Confirmation/DirectSales.mix?TranId=" + id;
     });
 
     ajaxsaveDirectSales.fail(function (jqXHR) {
@@ -40,6 +40,6 @@ var saveDirectSales = function (valueDate, storeId, partyCode, priceTypeId, refe
 
     d = getData(d);
 
-    url = "/Modules/Sales/Services/DirectSales.asmx/Save";
+    url = "/Modules/Sales/Services/Entry/DirectSales.asmx/Save";
     return getAjax(url, d);
 };

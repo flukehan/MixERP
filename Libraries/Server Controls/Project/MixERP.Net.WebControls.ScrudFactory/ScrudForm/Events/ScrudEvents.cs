@@ -25,6 +25,7 @@ using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Threading;
+using System.Web.UI.WebControls;
 using FormHelper = MixERP.Net.WebControls.ScrudFactory.Data.FormHelper;
 
 namespace MixERP.Net.WebControls.ScrudFactory
@@ -102,6 +103,16 @@ namespace MixERP.Net.WebControls.ScrudFactory
         protected void SaveButton_Click(object sender, EventArgs e)
         {
             this.Page.Validate();
+
+            foreach (BaseValidator validator in Page.Validators)
+            {
+                if (validator.Enabled && !validator.IsValid)
+                {
+                    // Put a breakpoint here
+                    string clientID = validator.ClientID;
+                }
+            }
+
             if (!this.Page.IsValid)
             {
                 return;
@@ -133,7 +144,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
             this.Save(true);
         }
 
-        [SuppressMessage("Microsoft.Globalization", "CA1306:SetLocaleForDataTypes")]
         // ReSharper disable once UnusedParameter.Local
         private void Save(bool closeForm)
         {

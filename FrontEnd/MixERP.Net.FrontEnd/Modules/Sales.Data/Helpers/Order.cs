@@ -15,7 +15,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
             stockMaster.PartyCode = partyCode;
             stockMaster.PriceTypeId = priceTypeId;
 
-            long nonGlStockMasterId = DatabaseLayer.Transactions.NonGlStockTransaction.Add("Sales.Order", valueDate, SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), referenceNumber, statementReference, stockMaster, details, transactionIdCollection, attachments);
+            long nonGlStockMasterId = NonGlStockTransaction.Add("Sales.Order", valueDate, SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), referenceNumber, statementReference, stockMaster, details, transactionIdCollection, attachments);
             return nonGlStockMasterId;
         }
     }

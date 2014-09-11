@@ -221,5 +221,14 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
                 return ResourceManager.GetString("VacuumFullDatabase", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voucher Verification Policy.
+        /// </summary>
+        internal static string VoucherVerificationPolicy {
+            get {
+                return ResourceManager.GetString("VoucherVerificationPolicy", resourceCulture);
+            }
+        }
     }
 }

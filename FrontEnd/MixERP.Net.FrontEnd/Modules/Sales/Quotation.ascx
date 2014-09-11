@@ -4,8 +4,8 @@
     runat="server"
     Book="Sales"
     SubBook="Quotation"
-    AddNewUrl="~/Modules/Sales/Entry/Quotation.html"
-    PreviewUrl="~/Modules/Sales/Reports/SalesQuotationReport.html"
-    ChecklistUrl="~/Modules/Sales/Confirmation/Quotation.html"
+    AddNewUrl="~/Modules/Sales/Entry/Quotation.mix"
+    PreviewUrl="~/Modules/Sales/Reports/SalesQuotationReport.mix"
+    ChecklistUrl="~/Modules/Sales/Confirmation/Quotation.mix"
     ShowMergeToOrderButton="True"
     ShowMergeToDeliveryButton="True" />

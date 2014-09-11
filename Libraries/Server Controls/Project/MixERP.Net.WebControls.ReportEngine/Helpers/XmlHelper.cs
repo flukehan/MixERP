@@ -45,7 +45,6 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
             return string.Empty;
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1059:MembersShouldNotExposeCertainConcreteTypes", MessageId = "System.Xml.XmlNode")]
         public static XmlNode GetNode(string path, string name)
         {
             XmlDocument doc = new XmlDocument();

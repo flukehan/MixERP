@@ -58,7 +58,6 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
             return DBFactory.FormHelper.GetTotalRecords(tableSchema, tableName);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times"), SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
         public static long InsertRecord(int userId, string tableSchema, string tableName, Collection<KeyValuePair<string, string>> data, string imageColumn)
         {
             if (data == null)
@@ -127,7 +126,6 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
             }
         }
 
-        [SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
         public static bool UpdateRecord(int userId, string tableSchema, string tableName, Collection<KeyValuePair<string, string>> data, string keyColumn, string keyColumnValue, string imageColumn)
         {
             if (data == null)

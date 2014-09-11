@@ -1,9 +1,9 @@
 ﻿using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models.Office;
-using MixERP.Net.DatabaseLayer.Helpers;
-using MixERP.Net.DatabaseLayer.Office;
 using MixERP.Net.DBFactory;
 using Npgsql;
+using System;
 using System.Collections.ObjectModel;
 using System.Data;
 
@@ -36,6 +36,11 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
             }
 
             return cashRepository;
+        }
+
+        public static DataTable GetCashRepositoryDataTable()
+        {
+            return FormHelper.GetTable("office", "cash_repositories");
         }
 
         public static Collection<CashRepository> GetCashRepositories()
@@ -83,16 +88,71 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
         {
             CashRepository cashRepository = new CashRepository();
 
-            cashRepository.CashRepositoryId = Conversion.TryCastInteger(ConversionHelper.GetColumnValue(row, "cash_repository_id"));
-            cashRepository.OfficeId = Conversion.TryCastInteger(ConversionHelper.GetColumnValue(row, "office_id"));
-            cashRepository.Office = Offices.GetOffice(cashRepository.OfficeId);
-            cashRepository.CashRepositoryCode = Conversion.TryCastString(ConversionHelper.GetColumnValue(row, "cash_repository_code"));
-            cashRepository.CashRepositoryName = Conversion.TryCastString(ConversionHelper.GetColumnValue(row, "cash_repository_name"));
-            cashRepository.ParentCashRepositoryId = Conversion.TryCastInteger(ConversionHelper.GetColumnValue(row, "parent_cash_repository_id"));
+            cashRepository.CashRepositoryId = Conversion.TryCastInteger(DataRowHelper.GetColumnValue(row, "cash_repository_id"));
+            cashRepository.OfficeId = Conversion.TryCastInteger(DataRowHelper.GetColumnValue(row, "office_id"));
+            cashRepository.Office = GetOffice(cashRepository.OfficeId);
+            cashRepository.CashRepositoryCode = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "cash_repository_code"));
+            cashRepository.CashRepositoryName = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "cash_repository_name"));
+            cashRepository.ParentCashRepositoryId = Conversion.TryCastInteger(DataRowHelper.GetColumnValue(row, "parent_cash_repository_id"));
             cashRepository.ParentCashRepository = GetCashRepository(cashRepository.ParentCashRepositoryId);
-            cashRepository.Description = Conversion.TryCastString(ConversionHelper.GetColumnValue(row, "description"));
+            cashRepository.Description = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "description"));
 
             return cashRepository;
+        }
+
+        private static Common.Models.Office.Office GetOffice(int? officeId)
+        {
+            Common.Models.Office.Office office = new Common.Models.Office.Office();
+
+            if (officeId != null && officeId != 0)
+            {
+                const string sql = "SELECT * FROM office.offices WHERE office_id=@OfficeId;";
+                using (NpgsqlCommand command = new NpgsqlCommand(sql))
+                {
+                    command.Parameters.AddWithValue("@OfficeId", officeId);
+                    using (DataTable table = DbOperations.GetDataTable(command))
+                    {
+                        if (table != null)
+                        {
+                            if (table.Rows.Count.Equals(1))
+                            {
+                                office = GetOffice(table.Rows[0]);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return office;
+        }
+
+        private static Common.Models.Office.Office GetOffice(DataRow row)
+        {
+            Common.Models.Office.Office office = new Common.Models.Office.Office();
+
+            office.OfficeId = Conversion.TryCastInteger(DataRowHelper.GetColumnValue(row, "office_id"));
+            office.OfficeCode = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "office_code"));
+            office.OfficeName = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "office_name"));
+            office.Nickname = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "nick_name"));
+            office.RegistrationDate = Conversion.TryCastDate(DataRowHelper.GetColumnValue(row, "registration_date"));
+            office.CurrencyCode = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "currency_code"));
+            office.AddressLine1 = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "address_line_1"));
+            office.AddressLine2 = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "address_line_2"));
+            office.Street = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "street"));
+            office.City = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "city"));
+            office.State = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "state"));
+            office.ZipCode = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "zip_code"));
+            office.Country = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "country"));
+            office.Phone = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "phone"));
+            office.Fax = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "fax"));
+            office.Email = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "email"));
+            office.Url = new Uri(Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "url")), UriKind.RelativeOrAbsolute);
+            office.RegistrationNumber = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "registration_number"));
+            office.PanNumber = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "pan_number"));
+            office.ParentOfficeId = Conversion.TryCastInteger(DataRowHelper.GetColumnValue(row, "parent_office_id"));
+            office.ParentOffice = GetOffice(office.ParentOfficeId);
+
+            return office;
         }
 
         public static decimal GetBalance(int cashRepositoryId, string currencyCode)

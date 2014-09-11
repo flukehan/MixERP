@@ -1,4 +1,5 @@
-﻿using MixERP.Net.BusinessLayer;
+﻿using MixERP.Net.Common.Models;
+using MixERP.Net.FrontEnd.Base;
 
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
@@ -30,7 +31,7 @@ using System.Web.UI.WebControls;
 
 namespace MixERP.Net.FrontEnd.Dashboard
 {
-    public partial class Index : Page
+    public partial class Index : MixERPWebpage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

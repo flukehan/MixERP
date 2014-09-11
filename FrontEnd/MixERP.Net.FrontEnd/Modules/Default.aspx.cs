@@ -1,4 +1,5 @@
-﻿using MixERP.Net.BusinessLayer;
+﻿using MixERP.Net.Common.Base;
+using MixERP.Net.FrontEnd.Base;
 using System;
 using System.IO;
 
@@ -6,20 +7,20 @@ namespace MixERP.Net.FrontEnd.Modules
 {
     public partial class Default : MixERPWebpage
     {
-        private MixERPUserControl plugin;
+        private MixERPUserControlBase plugin;
 
         private void InitializeControl()
         {
             if (plugin == null)
             {
-                string path = @"~/Modules/" + this.RouteData.Values["path"].ToString().Replace(".html", "") + ".ascx";
+                string path = @"~/Modules/" + this.RouteData.Values["path"].ToString().Replace(".mix", "") + ".ascx";
 
                 if (!File.Exists(Server.MapPath(path)))
                 {
                     throw new FileNotFoundException("Invalid path : " + path);
                 }
 
-                this.plugin = this.Page.LoadControl(path) as MixERPUserControl;
+                this.plugin = this.Page.LoadControl(path) as MixERPUserControlBase;
             }
         }
 

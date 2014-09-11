@@ -17,11 +17,13 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.WebControls.Common;
 using MixERP.Net.WebControls.ScrudFactory.Controls;
 using MixERP.Net.WebControls.ScrudFactory.Controls.ListControls;
 using MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes;
 using MixERP.Net.WebControls.ScrudFactory.Resources;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using System.Threading;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
@@ -31,7 +33,6 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 {
     public static class ScrudFactoryHelper
     {
-        [SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Web.UI.WebControls.Literal.set_Text(System.String)")]
         public static void AddDropDownList(HtmlTable htmlTable, string p, DropDownList dropDownList, HtmlAnchor itemSelectorAnchor, RequiredFieldValidator required)
         {
             if (htmlTable == null)
@@ -154,7 +155,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
                         break;
 
                     case "date":
-                        ScrudDateTextBox.AddDateTextBox(htmlTable, resourceClassName, columnName, defaultValue, isNullable);
+                        ScrudDateTextBox.AddDateTextBox(htmlTable, resourceClassName, columnName, defaultValue, isNullable, errorCssClass);
                         break;
 
                     case "bytea":
@@ -210,10 +211,14 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
                                 {
                                     using (WebControl c = control as WebControl)
                                     {
-                                        if (control is RadioButtonList)
+                                        if (c is RadioButtonList)
                                         {
                                             c.Attributes.Add("class", "input-sm");
                                         }
+                                        //else if (c is NewTextBox)
+                                        //{
+                                        //    c.CssClass = "form-control input-sm";
+                                        //}
                                         else
                                         {
                                             c.Attributes.Add("class", "form-control input-sm");

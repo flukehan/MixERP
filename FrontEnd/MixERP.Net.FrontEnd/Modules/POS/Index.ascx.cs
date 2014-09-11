@@ -1,6 +1,11 @@
-﻿using MixERP.Net.BusinessLayer;
-using MixERP.Net.BusinessLayer.Helpers;
+﻿
+
+using MixERP.Net.Common.Models.Core;
+using MixERP.Net.FrontEnd.Base;
 using System;
+using System.Collections.ObjectModel;
+using System.Threading;
+using System.Web.UI;
 
 namespace MixERP.Net.Core.Modules.POS
 {
@@ -8,7 +13,7 @@ namespace MixERP.Net.Core.Modules.POS
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            string menu = MenuHelper.GetPageMenu(this.Page);
+            string menu = GetPageMenu(this.Page);
             this.MenuLiteral.Text = menu;
 
             base.OnControlLoad(sender, e);

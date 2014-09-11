@@ -1,7 +1,7 @@
 ﻿DROP FUNCTION IF EXISTS unit_tests.check_party_null_account_id();
 
 CREATE FUNCTION unit_tests.check_party_null_account_id()
-RETURNS test_result
+RETURNS public.test_result
 AS
 $$
 	DECLARE message test_result;

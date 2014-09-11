@@ -1,13 +1,13 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Delivery.ascx.cs" Inherits="MixERP.Net.Core.Modules.Sales.Confirmation.Delivery"
-    OverridePath="/Modules/Sales/Delivery.html" %>
+    OverridePath="/Modules/Sales/Delivery.mix" %>
 <mixerp:TransactionChecklist runat="server"
     DisplayWithdrawButton="true"
     DisplayViewInvoiceButton="true"
     DisplayEmailInvoiceButton="true"
     DisplayCustomerInvoiceButton="true"
     DisplayPrintReceiptButton="true"
-    DisplayPrintGLEntryButton="true"
+    DisplayPrintGlEntryButton="true"
     DisplayAttachmentButton="true"
-    InvoicePath="~/Modules/Sales/Reports/DeliveryReport.html"
-    CustomerInvoicePath="~/Modules/Sales/Reports/DeliveryNoteReport.html"
-    GLAdvicePath="~/Finance/Confirmation/GLAdvice.aspx" />
+    InvoicePath="~/Modules/Sales/Reports/DeliveryReport.mix"
+    CustomerInvoicePath="~/Modules/Sales/Reports/DeliveryNoteReport.mix"
+    GlAdvicePath="~/Modules/Finance/Reports/GLAdviceReport.mix" />

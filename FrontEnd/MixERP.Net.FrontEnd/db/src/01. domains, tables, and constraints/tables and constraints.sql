@@ -387,7 +387,7 @@ CREATE TABLE core.accounts
 	account_code      			national character varying(12) NOT NULL,
 	external_code     			national character varying(12) NULL CONSTRAINT accounts_external_code_df DEFAULT(''),
 	confidential      			boolean NOT NULL CONSTRAINT accounts_confidential_df DEFAULT(false),
-	currency_code				national character varying(12) NULL REFERENCES core.currencies(currency_code),
+	currency_code				national character varying(12) NOT NULL REFERENCES core.currencies(currency_code),
 	account_name      			national character varying(100) NOT NULL,
 	description	  			national character varying(200) NULL,
 	sys_type 	  			boolean NOT NULL CONSTRAINT accounts_sys_type_df DEFAULT(false),

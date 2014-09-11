@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="GRN.ascx.cs" Inherits="MixERP.Net.Core.Modules.Purchase.Entry.GRN"
-    OverridePath="/Modules/Purchase/GRN.html" %>
+    OverridePath="/Modules/Purchase/GRN.mix" %>
 
 <mixerp:Product runat="server"
     ID="GoodReceiptNote"

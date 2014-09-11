@@ -7,7 +7,6 @@ using System.Data;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.Web.UI.WebControls;
-using FormHelper = MixERP.Net.BusinessLayer.Helpers.FormHelper;
 using SessionHelper = MixERP.Net.Common.Helpers.SessionHelper;
 
 namespace MixERP.Net.Core.Modules.Finance.Services
@@ -30,13 +29,13 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             {
                 if (SessionHelper.IsAdmin())
                 {
-                    using (DataTable table = FormHelper.GetTable("core", "accounts"))
+                    using (DataTable table = Accounts.GetAccounts())
                     {
                         return GetValues(table);
                     }
                 }
 
-                using (DataTable table = FormHelper.GetTable("core", "accounts", "confidential", "0"))
+                using (DataTable table = Accounts.GetNonConfidentialAccounts())
                 {
                     return GetValues(table);
                 }
@@ -44,13 +43,13 @@ namespace MixERP.Net.Core.Modules.Finance.Services
 
             if (SessionHelper.IsAdmin())
             {
-                using (DataTable table = FormHelper.GetTable("core", "account_view", "has_child", "0"))
+                using (DataTable table = Accounts.GetChildAccounts())
                 {
                     return GetValues(table);
                 }
             }
 
-            using (DataTable table = FormHelper.GetTable("core", "account_view", "has_child, confidential", "0, 0"))
+            using (DataTable table = Accounts.GetNonConfidentialChildAccounts())
             {
                 return GetValues(table);
             }
@@ -113,7 +112,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = FormHelper.GetTable("office", "cash_repositories"))
+            using (DataTable table = CashRepositories.GetCashRepositoryDataTable())
             {
                 string displayField = ConfigurationHelper.GetDbParameter("CashRepositoryDisplayField");
                 table.Columns.Add("cash_repository", typeof(string), displayField);
@@ -131,7 +130,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = FormHelper.GetTable("office", "cost_centers"))
+            using (DataTable table = CostCenters.GetCostCenterDataTable())
             {
                 string displayField = ConfigurationHelper.GetDbParameter("CostCenterDisplayField");
                 table.Columns.Add("cost_center", typeof(string), displayField);
@@ -155,13 +154,14 @@ namespace MixERP.Net.Core.Modules.Finance.Services
                 return values;
             }
 
-            using (DataTable table = FormHelper.GetTable("core", "accounts", "account_code", accountCode))
+            using (DataTable table = Currencies.GetCurrencyDataTable(accountCode))
             {
                 foreach (DataRow dr in table.Rows)
                 {
                     values.Add(new ListItem(dr["currency_code"].ToString(), dr["currency_code"].ToString()));
                 }
             }
+
             return values;
         }
 
@@ -170,7 +170,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = FormHelper.GetTable("core", "currencies"))
+            using (DataTable table = Currencies.GetCurrencyDataTable())
             {
                 foreach (DataRow dr in table.Rows)
                 {
@@ -198,7 +198,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
 
             if (Accounts.IsCashAccount(accountCode))
             {
-                using (DataTable table = FormHelper.GetTable("office", "cash_repositories"))
+                using (DataTable table = CashRepositories.GetCashRepositoryDataTable())
                 {
                     string displayField = ConfigurationHelper.GetDbParameter("CashRepositoryDisplayField");
                     table.Columns.Add("cash_repository", typeof(string), displayField);

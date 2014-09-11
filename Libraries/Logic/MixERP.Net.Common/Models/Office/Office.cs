@@ -22,7 +22,6 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace MixERP.Net.Common.Models.Office
 {
-    [SuppressMessage("Microsoft.Naming", "CA1724:TypeNamesShouldNotMatchNamespaces")]
     public class Office
     {
         public int OfficeId { get; set; }

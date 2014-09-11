@@ -31,8 +31,6 @@ namespace MixERP.Net.Common.Models.Core
         HalfStartDate,
         HalfEndDate,
         FiscalYearStartDate,
-
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "YearEnd")]
         FiscalYearEndDate
     }
 }

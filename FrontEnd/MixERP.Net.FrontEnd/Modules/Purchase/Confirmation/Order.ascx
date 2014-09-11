@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Order.ascx.cs" Inherits="MixERP.Net.Core.Modules.Purchase.Confirmation.Order"
-    OverridePath="/Modules/Purchase/Order.html" %>
+    OverridePath="/Modules/Purchase/Order.mix" %>
 
 <mixerp:TransactionChecklist runat="server"
     DisplayWithdrawButton="true"
@@ -7,7 +7,7 @@
     DisplayEmailInvoiceButton="true"
     DisplayCustomerInvoiceButton="false"
     DisplayPrintReceiptButton="false"
-    DisplayPrintGLEntryButton="true"
+    DisplayPrintGlEntryButton="true"
     DisplayAttachmentButton="true"
-    InvoicePath="~/Modules/Purchase/Confirmation/DirectPurchaseInvoice.html"
-    GLAdvicePath="~/Finance/Confirmation/GLAdvice.aspx" />
+    InvoicePath="~/Modules/Purchase/Confirmation/DirectPurchaseInvoice.mix"
+    GlAdvicePath="~/Modules/Finance/Confirmation/GLAdvice.mix" />

@@ -68,7 +68,21 @@ namespace MixERP.Net.WebControls.Common
             }
         }
 
-        public bool EnableValidation { get; set; }
+        private bool enableValidation;
+
+        public bool EnableValidation
+        {
+            get
+            {
+                this.EnsureChildControls();
+                return enableValidation;
+            }
+            set
+            {
+                this.EnsureChildControls();
+                enableValidation = value;
+            }
+        }
 
         public override string ID { get; set; }
 
@@ -100,13 +114,14 @@ namespace MixERP.Net.WebControls.Common
         {
             get
             {
+                this.EnsureChildControls();
                 return this.mode;
             }
             set
             {
-                this.mode = value;
                 this.EnsureChildControls();
-                this.InitializeDate(this.mode);
+                this.mode = value;
+                //this.InitializeDate(this.mode);
             }
         }
     }

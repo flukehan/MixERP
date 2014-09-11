@@ -1,4 +1,5 @@
-﻿using MixERP.Net.BusinessLayer;
+﻿
+using MixERP.Net.FrontEnd.Base;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Policy
 {

@@ -1,4 +1,5 @@
-﻿using MixERP.Net.BusinessLayer;
+﻿
+using MixERP.Net.FrontEnd.Base;
 using System;
 
 namespace MixERP.Net.Core.Modules.Sales.Reports

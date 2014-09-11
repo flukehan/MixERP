@@ -1,7 +1,6 @@
-﻿using MixERP.Net.BusinessLayer;
-using MixERP.Net.BusinessLayer.Helpers;
-using MixERP.Net.Common.Helpers;
+﻿using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.BackOffice.Resources;
+using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.ScrudFactory;
 using System;
 using System.Collections.Generic;
@@ -21,9 +20,9 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
                 scrud.KeyColumn = "user_id";
 
                 scrud.TableSchema = "policy";
-                scrud.Table = "auto_verification_policy";
+                scrud.Table = "voucher_verification_policy";
                 scrud.ViewSchema = "policy";
-                scrud.View = "auto_verification_policy_view";
+                scrud.View = "voucher_verification_policy_view";
 
                 scrud.PageSize = 100;
                 scrud.Width = 2000;
@@ -31,7 +30,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
 
-                scrud.Text = Titles.AutoVerificationPolicy;
+                scrud.Text = Titles.VoucherVerificationPolicy;
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }

@@ -36,7 +36,7 @@ namespace MixERP.Net.FrontEnd
         {
             string menu = string.Empty;
 
-            Collection<Menu> collection = BusinessLayer.Core.Menu.GetMenuCollection(0, 0);
+            Collection<Menu> collection = Data.Core.Menu.GetMenuCollection(0, 0);
 
             if (collection == null)
             {

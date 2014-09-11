@@ -1,8 +1,12 @@
-﻿using MixERP.Net.Common.Helpers;
+﻿using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models.Core;
 using MixERP.Net.Common.Models.Transactions;
+using MixERP.Net.DBFactory;
+using Npgsql;
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
 
 namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
 {
@@ -15,7 +19,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
             stockMaster.PartyCode = partyCode;
             stockMaster.PriceTypeId = priceTypeId;
 
-            long nonGlStockMasterId = DatabaseLayer.Transactions.NonGlStockTransaction.Add("Sales.Quotation", valueDate, SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), referenceNumber, statementReference, stockMaster, details, transactionIdCollection, attachments);
+            long nonGlStockMasterId = NonGlStockTransaction.Add("Sales.Quotation", valueDate, SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), referenceNumber, statementReference, stockMaster, details, transactionIdCollection, attachments);
             return nonGlStockMasterId;
         }
     }

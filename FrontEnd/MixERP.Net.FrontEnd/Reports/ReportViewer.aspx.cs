@@ -17,8 +17,9 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.BusinessLayer;
+
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.ReportEngine.Helpers;
 using Resources;
 using System;

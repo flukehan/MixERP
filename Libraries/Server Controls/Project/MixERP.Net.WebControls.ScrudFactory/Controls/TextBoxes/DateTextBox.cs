@@ -22,42 +22,74 @@ using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.Common;
 using MixERP.Net.WebControls.ScrudFactory.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Resources;
+using System;
+using System.Net.Mime;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 {
     public static class ScrudDateTextBox
     {
-        public static void AddDateTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isNullable)
+        public static void AddDateTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isNullable, string validatorCssClass)
         {
-            var label = LocalizationHelper.GetResourceString(resourceClassName, columnName);
-
-            var textBox = GetDateTextBox(columnName + "_textbox", !isNullable);
-
-            if (!string.IsNullOrWhiteSpace(defaultValue))
+            if (htmlTable == null)
             {
-                textBox.Text = Conversion.TryCastDate(defaultValue).ToShortDateString();
-            }
-
-            if (!isNullable)
-            {
-                ScrudFactoryHelper.AddRow(htmlTable, label + ScrudResource.RequiredFieldIndicator, textBox);
                 return;
             }
 
-            ScrudFactoryHelper.AddRow(htmlTable, label, textBox);
+            if (string.IsNullOrWhiteSpace(columnName))
+            {
+                return;
+            }
+
+            string id = columnName + "_textbox";
+
+            using (var textBox = ScrudTextBox.GetTextBox(id, 100))
+            {
+                Net.Common.jQueryHelper.jQueryUI.AddjQueryUIDatePicker(null, id, null, null);
+
+                var label = LocalizationHelper.GetResourceString(resourceClassName, columnName);
+
+                textBox.Text = defaultValue;
+
+                using (CompareValidator dateValidator = GetDateValidator(textBox, validatorCssClass))
+                {
+                    if (!isNullable)
+                    {
+                        using (RequiredFieldValidator required = ScrudFactoryHelper.GetRequiredFieldValidator(textBox, validatorCssClass))
+                        {
+                            ScrudFactoryHelper.AddRow(htmlTable, label + ScrudResource.RequiredFieldIndicator, textBox, dateValidator, required);
+                            return;
+                        }
+                    }
+
+                    ScrudFactoryHelper.AddRow(htmlTable, label, textBox, dateValidator);
+                }
+            }
         }
 
-        public static DateTextBox GetDateTextBox(string id, bool required)
+        public static CompareValidator GetDateValidator(Control controlToValidate, string cssClass)
         {
-            using (var textBox = new DateTextBox())
+            if (controlToValidate == null)
             {
-                textBox.ID = id;
-                textBox.Required = required;
-                textBox.ClientIDMode = ClientIDMode.Static;
-                textBox.Width = 100;
-                return textBox;
+                return null;
+            }
+
+            using (var validator = new CompareValidator())
+            {
+                validator.ID = controlToValidate.ID + "CompareValidator";
+                validator.ErrorMessage = @"<br/>" + ScrudResource.InvalidDate;
+                validator.CssClass = cssClass;
+                validator.ControlToValidate = controlToValidate.ID;
+                validator.EnableClientScript = true;
+                validator.SetFocusOnError = true;
+                validator.Display = ValidatorDisplay.Dynamic;
+                validator.ValueToCompare = new DateTime(1900, 1, 1).ToShortDateString();
+                validator.Operator = ValidationCompareOperator.GreaterThan;
+
+                return validator;
             }
         }
     }

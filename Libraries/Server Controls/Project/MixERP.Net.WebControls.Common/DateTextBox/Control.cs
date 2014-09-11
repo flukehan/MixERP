@@ -27,13 +27,11 @@ using System.Web.UI.WebControls;
 namespace MixERP.Net.WebControls.Common
 {
     [ToolboxData("<{0}:DateTextBox runat=server></{0}:DateTextBox>")]
-    public partial class DateTextBox //: CompositeControl
+    public partial class DateTextBox
     {
-        //Todo: Display localized calendar.
-        private TextBox textBox;
-
-        private CompareValidator compareValidator;
-        private RequiredFieldValidator requiredValidator;
+        public TextBox textBox;
+        public CompareValidator compareValidator;
+        public RequiredFieldValidator requiredValidator;
 
         protected override void Render(HtmlTextWriter w)
         {
@@ -41,6 +39,7 @@ namespace MixERP.Net.WebControls.Common
 
             if (this.EnableValidation)
             {
+                this.requiredValidator.RenderControl(w);
                 this.compareValidator.RenderControl(w);
             }
         }
@@ -48,6 +47,7 @@ namespace MixERP.Net.WebControls.Common
         protected override void RecreateChildControls()
         {
             this.EnsureChildControls();
+            base.RecreateChildControls();
         }
 
         private void InitializeDate(Frequency frequency)
@@ -79,39 +79,43 @@ namespace MixERP.Net.WebControls.Common
             this.textBox.ID = this.ID;
 
             this.compareValidator = new CompareValidator();
-            this.compareValidator.Display = ValidatorDisplay.Dynamic;
+            this.compareValidator.Display = ValidatorDisplay.Static;
 
             this.compareValidator.ID = this.ID + "CompareValidator";
             this.compareValidator.ControlToValidate = this.ID;
             this.compareValidator.ValueToCompare = "1/1/1900";
             this.compareValidator.Type = ValidationDataType.Date;
+            this.compareValidator.Operator = ValidationCompareOperator.GreaterThan;
 
             this.compareValidator.ErrorMessage = CommonResource.InvalidDate;
             this.compareValidator.EnableClientScript = true;
             this.compareValidator.CssClass = this.ValidatorCssClass;
+            this.compareValidator.SetFocusOnError = true;
 
             this.requiredValidator = new RequiredFieldValidator();
-            this.requiredValidator.Display = ValidatorDisplay.Dynamic;
+            this.requiredValidator.Display = ValidatorDisplay.Static;
 
             this.requiredValidator.ID = this.ID + "RequiredFieldValidator";
             this.requiredValidator.ControlToValidate = this.ID;
             this.requiredValidator.ErrorMessage = CommonResource.RequiredField;
             this.requiredValidator.EnableClientScript = true;
             this.requiredValidator.CssClass = this.ValidatorCssClass;
+            this.requiredValidator.SetFocusOnError = true;
 
             this.Controls.Add(this.textBox);
-
-            if (this.EnableValidation)
-            {
-                this.Controls.Add(this.compareValidator);
-            }
 
             if (this.Required)
             {
                 this.Controls.Add(this.requiredValidator);
             }
 
-            this.AddjQueryUiDatePicker();
+            if (this.EnableValidation)
+            {
+                this.Controls.Add(this.compareValidator);
+            }
+
+            Net.Common.jQueryHelper.jQueryUI.AddjQueryUIDatePicker(this.Page, textBox.ID, this.MinDate, this.MaxDate);
+            base.CreateChildControls();
         }
     }
 }

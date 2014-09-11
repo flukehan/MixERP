@@ -104,14 +104,14 @@
       <DependentUpon>Setup.fr.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\Titles.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Titles.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="App_GlobalResources\Titles.fr.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Titles.fr.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="App_GlobalResources\Warnings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -122,6 +122,18 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Warnings.fr.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Base\MixERPUserControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Base\MixERPWebpage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Base\MixERPWebReportPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Base\MixERPWidget.cs">
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ContentMaster.Master.cs">
       <DependentUpon>ContentMaster.Master</DependentUpon>
@@ -346,6 +358,16 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_GlobalResources\Titles.fr.resx">
+      <SubType>Designer</SubType>
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Titles.fr.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Titles.resx">
+      <SubType>Designer</SubType>
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Titles.Designer.cs</LastGenOutput>
+    </Content>
     <Content Include="App_Themes\MixERP\mixerp.css">
       <DependentUpon>mixerp.less</DependentUpon>
     </Content>
@@ -410,6 +432,7 @@
     <Content Include="db\src\02. functions and logic\core\core.has_child_accounts.sql" />
     <Content Include="db\src\02. functions and logic\core\core.is_leap_year.sql" />
     <Content Include="db\src\02. functions and logic\core\core.is_parent_unit.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.is_stock_item.sql" />
     <Content Include="db\src\02. functions and logic\core\core.is_supplier.sql" />
     <Content Include="db\src\02. functions and logic\core\core.get_account_ids.sql" />
     <Content Include="db\src\02. functions and logic\logic\functions\core\core.calculate_interest.sql" />
@@ -511,6 +534,8 @@
     <Content Include="db\src\10. triggers\core\core.update_shipping_address_code_trigger.sql" />
     <Content Include="db\src\10. triggers\policy\policy.perform_lock_out.sql" />
     <Content Include="db\src\10. triggers\transactions\transactions.restrict_delete_trigger.sql" />
+    <Content Include="db\src\12. plpgunit-test\core\parties\unit_tests.check_party_currency_code_mismatch.sql" />
+    <Content Include="db\src\12. plpgunit-test\core\parties\unit_tests.check_party_null_account_id.sql" />
     <Content Include="Modules\Default.aspx" />
     <Content Include="Resource\Configuration\PartyControlParameters.xml" />
     <Content Include="Resource\Icons\checklist-16.png" />
@@ -1041,7 +1066,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="db\src\000. mixerp\" />
-    <Folder Include="db\src\12. plpgunit-test\" />
     <Folder Include="Resource\DatabaseBackups\" />
     <Folder Include="Resource\Frameworks\" />
     <Folder Include="Resource\Logo\" />
@@ -1068,10 +1092,6 @@
       <Project>{f8499d93-ced5-4a3d-a22b-cf21171ede6b}</Project>
       <Name>MixERP.Net.WebControls.StockTransactionView.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Logic\MixERP.net.BusinessLayer\MixERP.Net.BusinessLayer.csproj">
-      <Project>{81de04cf-7de9-42ff-8339-d05e2586dcba}</Project>
-      <Name>MixERP.Net.BusinessLayer</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Logic\MixERP.net.Common\MixERP.Net.Common.csproj">
       <Project>{d5a09c22-8f48-4fb2-a14d-c62c8c8fcec0}</Project>
       <Name>MixERP.Net.Common</Name>
@@ -1080,9 +1100,13 @@
       <Project>{e566553c-218f-460d-b1a9-c441f01f8fde}</Project>
       <Name>MixERP.Net.WebControls.PartyControl</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Logic\MixERP.net.DatabaseLayer\MixERP.Net.DatabaseLayer.csproj">
-      <Project>{F1F6FB95-5D7E-4E4C-9CC4-AC58DBD8F09F}</Project>
-      <Name>MixERP.Net.DatabaseLayer</Name>
+    <ProjectReference Include="..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\MixERP.Net.WebControls.TransactionChecklist.csproj">
+      <Project>{64490b89-b228-4188-8235-71744a94c9ae}</Project>
+      <Name>MixERP.Net.WebControls.TransactionChecklist</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MixERP.Net.FrontEnd.Data\MixERP.Net.FrontEnd.Data.csproj">
+      <Project>{a84ed536-8e44-4d32-a22d-26d9924a9481}</Project>
+      <Name>MixERP.Net.FrontEnd.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -1103,13 +1127,6 @@
     <Content Include="App_GlobalResources\Questions.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Questions.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_GlobalResources\Titles.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Titles.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
@@ -1151,11 +1168,6 @@
     <Content Include="App_GlobalResources\Setup.fr.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Setup.fr.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_GlobalResources\Titles.fr.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Titles.fr.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
     <Content Include="App_GlobalResources\Warnings.fr.resx">

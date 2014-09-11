@@ -18,6 +18,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.DBFactory;
+using Npgsql;
 using System;
 using System.Data;
 
@@ -27,7 +29,29 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data.Helpers
     {
         public static DataTable GetView(string book, DateTime dateFrom, DateTime dateTo, string office, string party, string priceType, string user, string referenceNumber, string statementReference)
         {
-            return DatabaseLayer.Transactions.GLStockTransaction.GetView(SessionHelper.GetUserId(), book, SessionHelper.GetOfficeId(), dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference);
+            return GetView(SessionHelper.GetUserId(), book, SessionHelper.GetOfficeId(), dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference);
+        }
+
+        private static DataTable GetView(int userId, string book, int officeId, DateTime dateFrom, DateTime dateTo, string office, string party, string priceType, string user, string referenceNumber, string statementReference)
+        {
+            const string sql = "SELECT * FROM transactions.get_product_view(@UserId, @Book, @OfficeId, @DateFrom, @DateTo, @Office, @Party, @PriceType, @User, @ReferenceNumber, @StatementReference);";
+
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                command.Parameters.AddWithValue("@UserId", userId);
+                command.Parameters.AddWithValue("@Book", book);
+                command.Parameters.AddWithValue("@OfficeId", officeId);
+                command.Parameters.AddWithValue("@DateFrom", dateFrom);
+                command.Parameters.AddWithValue("@DateTo", dateTo);
+                command.Parameters.AddWithValue("@Office", office);
+                command.Parameters.AddWithValue("@Party", party);
+                command.Parameters.AddWithValue("@PriceType", priceType);
+                command.Parameters.AddWithValue("@User", user);
+                command.Parameters.AddWithValue("@ReferenceNumber", referenceNumber);
+                command.Parameters.AddWithValue("@StatementReference", statementReference);
+
+                return DbOperations.GetDataTable(command);
+            }
         }
     }
 }

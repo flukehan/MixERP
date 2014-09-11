@@ -1,9 +1,9 @@
 MixERP is an ASP.net open source ERP Solution.
 
 **Please Note**
-* MixERP uses GNU-GPL Version 3.
+* MixERP comes with GNU-GPL Version 3 license.
 * MixERP is not an MVC application.
-* MixERP is an ASP.net 4.0 Webforms application written in C#.
+* MixERP is an ASP.net (Mono 3.2.3) Webforms application written in C#.
 * MixERP only supports PostgreSQL Server database and we do not have any plans to support other DBMS.
 * MixERP is currently under development.
 * Some icons used in this project were downloaded from [FindIcons](http://findicons.com/search/page). While downloading, we had chosen the license type **"Both Above Two"** which means (or meant at that time) **"Commercial Use"** and **"No Link Required"**.

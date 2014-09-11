@@ -3,6 +3,6 @@
     ID="ProductView1"
     runat="server"
     Book="Sales" SubBook="Direct"
-    AddNewUrl="~/Modules/Sales/Entry/DirectSales.html"
-    PreviewUrl="~/Modules/Sales/Reports/DirectSalesReport.html"
-    ChecklistUrl="~/Modules/Sales/Confirmation/DirectSales.html" />
+    AddNewUrl="~/Modules/Sales/Entry/DirectSales.mix"
+    PreviewUrl="~/Modules/Sales/Reports/DirectSalesReport.mix"
+    ChecklistUrl="~/Modules/Sales/Confirmation/DirectSales.mix" />

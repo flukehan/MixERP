@@ -3,6 +3,6 @@
     ID="ProductView1"
     runat="server"
     Book="Purchase" SubBook="Order"
-    AddNewUrl="~/Modules/Purchase/Entry/Order.html"
-    PreviewUrl="~/Modules/Purchase/Reports/PurchaseOrderReport.html"
-    ChecklistUrl="~/Modules/Purchase/Confirmation/PurchaseOrder.html" />
+    AddNewUrl="~/Modules/Purchase/Entry/Order.mix"
+    PreviewUrl="~/Modules/Purchase/Reports/PurchaseOrderReport.mix"
+    ChecklistUrl="~/Modules/Purchase/Confirmation/PurchaseOrder.mix" />

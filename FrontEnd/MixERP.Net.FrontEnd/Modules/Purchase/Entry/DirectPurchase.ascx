@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DirectPurchase.ascx.cs" Inherits="MixERP.Net.Core.Modules.Purchase.Entry.DirectPurchase"
-    OverridePath="/Modules/Purchase/DirectPurchase.html" %>
+    OverridePath="/Modules/Purchase/DirectPurchase.mix" %>
 
 <mixerp:Product runat="server" ID="DirectPurchaseControl"
     Book="Purchase"

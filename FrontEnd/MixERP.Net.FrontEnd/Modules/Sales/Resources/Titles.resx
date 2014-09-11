@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AgentBonusSlabAssignment" xml:space="preserve">
+    <value>Bonus Slab Assignment</value>
+  </data>
+  <data name="AgentBonusSlabs" xml:space="preserve">
+    <value>Bonus Slab for Agents</value>
+  </data>
+  <data name="BonusSlabDetails" xml:space="preserve">
+    <value>Bonus Slab Details for Agents</value>
+  </data>
   <data name="DirectSales" xml:space="preserve">
-    <value>DirectSales</value>
+    <value>Direct Sales</value>
   </data>
   <data name="SalesDelivery" xml:space="preserve">
     <value>Sales Delivery</value>

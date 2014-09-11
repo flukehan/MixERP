@@ -3,7 +3,7 @@
     ID="ProductView1"
     runat="server"
     Book="Sales" SubBook="Order"
-    AddNewUrl="~/Modules/Sales/Entry/Order.html"
-    PreviewUrl="~/Modules/Sales/Reports/SalesOrderReport.html"
-    ChecklistUrl="~/Modules/Sales/Confirmation/Order.html"
+    AddNewUrl="~/Modules/Sales/Entry/Order.mix"
+    PreviewUrl="~/Modules/Sales/Reports/SalesOrderReport.mix"
+    ChecklistUrl="~/Modules/Sales/Confirmation/Order.mix"
     ShowMergeToDeliveryButton="True" />

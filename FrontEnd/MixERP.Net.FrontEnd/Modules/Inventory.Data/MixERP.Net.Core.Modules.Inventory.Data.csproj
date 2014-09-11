@@ -51,8 +51,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\Agents.cs" />
     <Compile Include="Helpers\Items.cs" />
     <Compile Include="Helpers\Parties.cs" />
+    <Compile Include="Helpers\PriceTypes.cs" />
+    <Compile Include="Helpers\Shippers.cs" />
+    <Compile Include="Helpers\Stores.cs" />
     <Compile Include="Helpers\Units.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\ShippingAddresses.cs" />
@@ -64,10 +68,6 @@
     <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.net.Common\MixERP.Net.Common.csproj">
       <Project>{D5A09C22-8F48-4FB2-A14D-C62C8C8FCEC0}</Project>
       <Name>MixERP.Net.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.net.DatabaseLayer\MixERP.Net.DatabaseLayer.csproj">
-      <Project>{f1f6fb95-5d7e-4e4c-9cc4-ac58dbd8f09f}</Project>
-      <Name>MixERP.Net.DatabaseLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.Net.DbFactory\MixERP.Net.DBFactory.csproj">
       <Project>{8fd9661c-2473-4581-8722-18b08d4db252}</Project>

@@ -9,7 +9,7 @@ var save = function () {
 
     ajaxSaveQuotation.done(function (response) {
         var id = response.d;
-        window.location = "/Modules/Sales/Quotation.html?TranId=" + id;
+        window.location = "/Modules/Sales/Quotation.mix?TranId=" + id;
     });
 
     ajaxSaveQuotation.fail(function (jqXHR) {
@@ -33,6 +33,6 @@ var saveQuotation = function (valueDate, storeId, partyCode, priceTypeId, refere
 
     d = getData(d);
 
-    url = "/Modules/Sales/Services/Quotation.asmx/Save";
+    url = "/Modules/Sales/Services/Entry/Quotation.asmx/Save";
     return getAjax(url, d);
 };

@@ -1,6 +1,5 @@
-﻿using MixERP.Net.BusinessLayer;
-using MixERP.Net.BusinessLayer.Helpers;
-using MixERP.Net.Common.Helpers;
+﻿using MixERP.Net.Common.Helpers;
+using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.ScrudFactory;
 using System;
 using System.Collections.Generic;
@@ -31,7 +30,7 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
 
                 scrud.Text = LocalizationHelper.GetResourceString("Titles", "AgentSetup");
 
-                this.Controls.Add(scrud);
+                ScrudPlaceholder.Controls.Add(scrud);
             }
         }
 

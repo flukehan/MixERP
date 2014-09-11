@@ -1,1 +1,2 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BonusSlabAssignment.ascx.cs" Inherits="MixERP.Net.Core.Modules.Sales.Setup.BonusSlabAssignment" %>
+<asp:PlaceHolder ID="ScrudPlaceholder" runat="server" />

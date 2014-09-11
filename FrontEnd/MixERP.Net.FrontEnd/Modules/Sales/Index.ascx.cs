@@ -1,6 +1,7 @@
-﻿using MixERP.Net.BusinessLayer;
-using MixERP.Net.BusinessLayer.Helpers;
+﻿
+
 using MixERP.Net.Common;
+using MixERP.Net.FrontEnd.Base;
 using System;
 using System.Web.UI.WebControls;
 
@@ -16,7 +17,7 @@ namespace MixERP.Net.Core.Modules.Sales
 
         public void LoadMenu()
         {
-            string menu = MenuHelper.GetPageMenu(this.Page);
+            string menu = this.GetPageMenu(this.Page);
 
             using (PlaceHolder menuPlaceHolder = PageUtility.FindControlIterative(this.Page, "MenuPlaceholder") as PlaceHolder)
             {

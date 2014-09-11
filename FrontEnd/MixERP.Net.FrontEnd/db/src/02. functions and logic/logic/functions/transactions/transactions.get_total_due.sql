@@ -1,6 +1,3 @@
-DROP FUNCTION IF EXISTS transactions.get_total_due(office_id integer, party_id bigint);
-
-
 CREATE FUNCTION transactions.get_total_due(office_id integer, party_id bigint)
 RETURNS DECIMAL(24, 4)
 AS
@@ -30,10 +27,16 @@ BEGIN
 	AND transactions.verified_transactions_view.office_id IN (SELECT * FROM office.get_office_ids($1))
 	AND tran_type='Cr';
 
+	_er := COALESCE(transactions.get_exchange_rate($1, _local_currency_code, _base_currency_code), 0);
 
-	_er := transactions.get_exchange_rate($1, _local_currency_code, _base_currency_code);
+	IF(_er = 0) THEN
+		RAISE EXCEPTION 'Exchange rate between % and % was not found.', _local_currency_code, _base_currency_code;
+	END IF;
+
 
 	_amount_in_local_currency = COALESCE(_credit, 0) - COALESCE(_debit, 0) - COALESCE(_accrued_interest, 0);
+
+
 	_amount_in_base_currency = _amount_in_local_currency * _er;	
 
 	RETURN _amount_in_base_currency;

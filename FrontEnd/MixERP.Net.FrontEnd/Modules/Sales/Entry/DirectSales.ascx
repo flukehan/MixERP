@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DirectSales.ascx.cs" Inherits="MixERP.Net.Core.Modules.Sales.Entry.DirectSales"
-    OverridePath="/Modules/Sales/DirectSales.html" %>
+    OverridePath="/Modules/Sales/DirectSales.mix" %>
 <mixerp:Product runat="server"
     ID="DirectSalesControl"
     Book="Sales"

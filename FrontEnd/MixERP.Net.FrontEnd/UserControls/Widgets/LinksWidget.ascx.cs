@@ -1,4 +1,5 @@
-﻿using MixERP.Net.BusinessLayer;
+﻿
+using MixERP.Net.FrontEnd.Base;
 
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).

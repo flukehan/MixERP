@@ -116,13 +116,14 @@
     <EmbeddedResource Include="Scripts\Entry\Quotation.js" />
     <Content Include="Return.ascx" />
     <Content Include="Scripts\Receipt.js" />
-    <Content Include="Services\Currencies.asmx" />
+    <Content Include="Services\Entry\Delivery.asmx" />
+    <Content Include="Services\Entry\DirectSales.asmx" />
+    <Content Include="Services\Entry\Order.asmx" />
+    <Content Include="Services\Entry\Quotation.asmx" />
+    <Content Include="Services\Receipt\Accounts.asmx" />
+    <Content Include="Services\Receipt\Currencies.asmx" />
     <Content Include="SQL\Menu.sql" />
     <Content Include="SQL\Module.sql" />
-    <Content Include="Services\Delivery.asmx" />
-    <Content Include="Services\DirectSales.asmx" />
-    <Content Include="Services\Order.asmx" />
-    <Content Include="Services\Quotation.asmx" />
     <Content Include="Setup\AgentBonusSlabDetails.ascx" />
     <Content Include="Setup\AgentBonusSlabs.ascx" />
     <Content Include="Setup\Agents.ascx" />
@@ -288,24 +289,28 @@
     <Compile Include="Return.ascx.designer.cs">
       <DependentUpon>Return.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Services\Currencies.asmx.cs">
-      <DependentUpon>Currencies.asmx</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Services\Delivery.asmx.cs">
+    <Compile Include="Services\Entry\Delivery.asmx.cs">
       <DependentUpon>Delivery.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Services\DirectSales.asmx.cs">
+    <Compile Include="Services\Entry\DirectSales.asmx.cs">
       <DependentUpon>DirectSales.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Services\Order.asmx.cs">
+    <Compile Include="Services\Entry\Order.asmx.cs">
       <DependentUpon>Order.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Services\Quotation.asmx.cs">
+    <Compile Include="Services\Entry\Quotation.asmx.cs">
       <DependentUpon>Quotation.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\Receipt\Accounts.asmx.cs">
+      <DependentUpon>Accounts.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\Receipt\Currencies.asmx.cs">
+      <DependentUpon>Currencies.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Setup\AgentBonusSlabDetails.ascx.cs">
@@ -339,6 +344,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.Common\MixERP.Net.WebControls.Common.csproj">
+      <Project>{2d961540-6597-4e7b-969c-974d71d820dd}</Project>
+      <Name>MixERP.Net.WebControls.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.PartyControl\MixERP.Net.WebControls.PartyControl.csproj">
       <Project>{e566553c-218f-460d-b1a9-c441f01f8fde}</Project>
       <Name>MixERP.Net.WebControls.PartyControl</Name>
@@ -354,10 +363,6 @@
     <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\MixERP.Net.WebControls.StockTransactionFactory.csproj">
       <Project>{1C84E528-87ED-4B69-BFC3-81D675CB153E}</Project>
       <Name>MixERP.Net.WebControls.StockTransactionFactory</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.net.BusinessLayer\MixERP.Net.BusinessLayer.csproj">
-      <Project>{81DE04CF-7DE9-42FF-8339-D05E2586DCBA}</Project>
-      <Name>MixERP.Net.BusinessLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.net.Common\MixERP.Net.Common.csproj">
       <Project>{D5A09C22-8F48-4FB2-A14D-C62C8C8FCEC0}</Project>

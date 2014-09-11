@@ -52,7 +52,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <add key="ResourceClassName" value="ScrudResource" />
     <add key="SelectButtonCssClass" value="glyphicon glyphicon-ok" />
     <add key="SaveButtonCssClass" value="btn btn-sm scrud-command-panel-button scrud-command-panel-button btn-primary" />
-    <add key="SuccessCssClass" value="success" />
+    <add key="SuccessCssClass" value="lead text-success" />
     <add key="TemplatePath" value="~/Reports/Print.html" />
     <add key="TempMediaPath" value="~/Media/Temp" />
     <add key="UpdateProgressSpinnerImageCssClass" value="ajax-loader" />

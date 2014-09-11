@@ -58,6 +58,8 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
                     using (var controlCell = new HtmlTableCell())
                     {
+                        controlCell.Attributes.Add("class", "control-cell");
+
                         if (this.IsModal())
                         {
                             this.useButton = new Button();

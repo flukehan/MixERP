@@ -9,7 +9,7 @@
         <label for="ValueDateTextBox">
             <asp:Literal ID="ValueDateLiteral" runat="server" />
         </label>
-        <asp:TextBox ID="ValueDateTextBox" runat="server" Width="100" CssClass="date form-control input-sm" />
+        <mixerp:DateTextBox ID="ValueDateTextBox" runat="server" Mode="Today" CssClass="date form-control input-sm" />
     </div>
     <div class="form-group">
         <label for="ReferenceNumberTextBox">

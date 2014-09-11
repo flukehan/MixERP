@@ -1,6 +1,7 @@
-﻿using MixERP.Net.BusinessLayer;
-using MixERP.Net.BusinessLayer.Helpers;
+﻿
+
 using MixERP.Net.Core.Modules.BackOffice.Resources;
+using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.ScrudFactory;
 using System;
 
@@ -55,19 +56,19 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
 
         protected void VacuumButton_Click(object sender, EventArgs e)
         {
-            Maintenance.Vacuum();
+            Data.Admin.DatabaseStatistics.Vacuum();
             this.DisplaySuccess();
         }
 
         protected void FullVacuumButton_Click(object sender, EventArgs e)
         {
-            Maintenance.VacuumFull();
+            Data.Admin.DatabaseStatistics.VacuumFull();
             this.DisplaySuccess();
         }
 
         protected void AnalyzeButton_Click(object sender, EventArgs e)
         {
-            Maintenance.Analyze();
+            Data.Admin.DatabaseStatistics.Analyze();
             this.DisplaySuccess();
         }
 

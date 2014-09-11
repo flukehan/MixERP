@@ -7,7 +7,6 @@ using System.Data;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.Web.UI.WebControls;
-using FormHelper = MixERP.Net.BusinessLayer.Helpers.FormHelper;
 
 namespace MixERP.Net.Core.Modules.Inventory.Services
 {
@@ -21,7 +20,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = FormHelper.GetTable("core", "parties"))
+            using (DataTable table = Data.Helpers.Parties.GetPartyDataTable())
             {
                 string displayField = ConfigurationHelper.GetDbParameter("PartyDisplayField");
                 table.Columns.Add("party", typeof(string), displayField);
@@ -57,7 +56,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         public Party GetPartyView(string partyCode)
         {
             Party party = new Party();
-            using (DataTable table = FormHelper.GetTable("core", "party_view", "party_code", partyCode))
+            using (DataTable table = Parties.GetPartyViewDataTable(partyCode))
             {
                 party.PartyId = Conversion.TryCastInteger(table.Rows[0]["party_id"]);
                 party.PartyTypeId = Conversion.TryCastInteger(table.Rows[0]["party_type_id"]);

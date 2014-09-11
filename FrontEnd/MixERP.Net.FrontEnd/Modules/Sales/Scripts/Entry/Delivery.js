@@ -9,7 +9,7 @@ var save = function () {
 
     ajaxSalesDelivery.done(function (response) {
         var id = response.d;
-        window.location = "/Modules/Sales/Confirmation/Delivery.html?TranId=" + id;
+        window.location = "/Modules/Sales/Confirmation/Delivery.mix?TranId=" + id;
     });
 
     ajaxSalesDelivery.fail(function (jqXHR) {
@@ -40,7 +40,7 @@ var saveSalesDelivery = function (valueDate, storeId, partyCode, priceTypeId, re
 
     d = getData(d);
 
-    url = "/Modules/Sales/Services/Delivery.asmx/Save";
+    url = "/Modules/Sales/Services/Entry/Delivery.asmx/Save";
 
     return getAjax(url, d);
 };

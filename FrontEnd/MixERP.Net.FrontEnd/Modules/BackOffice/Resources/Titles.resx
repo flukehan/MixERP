@@ -171,4 +171,7 @@
   <data name="VacuumFullDatabase" xml:space="preserve">
     <value>Vacuum Database (Full)</value>
   </data>
+  <data name="VoucherVerificationPolicy" xml:space="preserve">
+    <value>Voucher Verification Policy</value>
+  </data>
 </root>

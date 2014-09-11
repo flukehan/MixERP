@@ -12,12 +12,6 @@ BEGIN
 		NEW.party_name := REPLACE(TRIM(COALESCE(NEW.last_name, '') || ', ' || NEW.first_name || ' ' || COALESCE(NEW.middle_name, '')), ' ', '');
 	END IF;
 
-	UPDATE core.parties
-	SET 
-		party_code=_party_code
-	WHERE core.parties.party_id=NEW.party_id;
-
-
 	--Create a new account
 	IF(NEW.account_id IS NULL) THEN
 
@@ -27,10 +21,17 @@ BEGIN
 	
 		UPDATE core.parties
 		SET 
-			account_id=_account_id 
+			account_id=_account_id, 
+			party_code=_party_code
 		WHERE core.parties.party_id=NEW.party_id;
+
+		RETURN NEW;
 	END IF;
 
+	UPDATE core.parties
+	SET 
+		party_code=_party_code
+	WHERE core.parties.party_id=NEW.party_id;
 
 	RETURN NEW;
 END

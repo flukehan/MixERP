@@ -60,7 +60,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
                 validator.Type = ValidationDataType.Double;
 
                 //MixERP strict data type
-                if (domain.Contains("strict"))
+                if (domain.Contains("strict") && !domain.Contains("strict2"))
                 {
                     validator.Operator = ValidationCompareOperator.GreaterThan;
                 }

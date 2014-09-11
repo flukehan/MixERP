@@ -20,7 +20,6 @@ namespace MixERP.Net.Tests.PgUnitTest.Helpers
             return true;
         }
 
-        [SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
         private static void RunInstallScript()
         {
             bool run = Conversion.TryCastBoolean(ConfigurationManager.AppSettings["RunInstallScript"]);
@@ -38,7 +37,6 @@ namespace MixERP.Net.Tests.PgUnitTest.Helpers
             }
         }
 
-        [SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
         private static void InstallUnitTests()
         {
             string sql = GetScript();

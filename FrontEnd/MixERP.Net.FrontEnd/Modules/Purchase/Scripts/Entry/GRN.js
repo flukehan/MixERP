@@ -9,7 +9,7 @@ var save = function () {
 
     ajaxSaveGRN.done(function (response) {
         var id = response.d;
-        window.location = "/Modules/Purchase/Confirmation/GRN.html?TranId=" + id;
+        window.location = "/Modules/Purchase/Confirmation/GRN.mix?TranId=" + id;
     });
 
     ajaxSaveGRN.fail(function (jqXHR) {

@@ -60,7 +60,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
             this.Controls.Add(this.scrudContainer);
         }
 
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)

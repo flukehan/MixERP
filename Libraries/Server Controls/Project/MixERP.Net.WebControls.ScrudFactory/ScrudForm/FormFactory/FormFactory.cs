@@ -18,6 +18,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.Common;
+using MixERP.Net.WebControls.Common;
 using MixERP.Net.WebControls.ScrudFactory.Controls;
 using MixERP.Net.WebControls.ScrudFactory.Data;
 using MixERP.Net.WebControls.ScrudFactory.Helpers;
@@ -81,7 +82,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
                                 case "varchar":
                                 case "nvarchar":
                                 case "text":
-                                case "date":
                                 case "smallint":
                                 case "integer":
                                 case "bigint":
@@ -92,6 +92,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                                 case "float":
                                 case "real":
                                 case "currency":
+                                case "date":
                                     //TextBox
                                     var t = (TextBox)this.formContainer.FindControl(columnName + "_textbox");
                                     if (t != null)

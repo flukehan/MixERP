@@ -8,7 +8,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.Admin
     {
         public static DataTable GetDataTable(NpgsqlCommand command)
         {
-            throw new NotImplementedException("GetDataTable is not implemented yet.");
+            return DBFactory.DbOperations.GetDataTable(command);
         }
     }
 }

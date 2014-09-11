@@ -1,4 +1,4 @@
-﻿using MixERP.Net.BusinessLayer.Helpers;
+﻿
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models.Transactions;
@@ -83,7 +83,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         private void BindFlagTypeDropDownList()
         {
-            DropDownListHelper.BindDropDownList(this.FlagDropDownList, "core", "flag_types", "flag_type_id", "flag_type_name");
+            Data.Helpers.DropDownListHelper.BindDropDownList(this.FlagDropDownList, "core", "flag_types", "flag_type_id", "flag_type_name");
         }
 
         protected void Page_Load(object sender, EventArgs e)

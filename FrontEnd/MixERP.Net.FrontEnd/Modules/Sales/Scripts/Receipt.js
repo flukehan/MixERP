@@ -36,6 +36,8 @@ var goButtonCallBack = function () {
 $(document).ready(function () {
     $("#receipt").appendTo("#home");
     loadCurrencies();
+    loadCashRepositories();
+    loadBankAccounts();
 });
 
 //Control Events
@@ -72,7 +74,14 @@ function updateTotal() {
     var remainingDue = due - toBase;
 
     baseAmountTextBox.val(toBase);
+
     finalDueAmountTextBox.val(remainingDue);
+
+    finalDueAmountTextBox.removeClass("alert-danger");
+
+    if (remainingDue < 0) {
+        finalDueAmountTextBox.addClass("alert-danger");
+    };
 };
 
 var toggleTransactionType = function (e) {
@@ -96,7 +105,7 @@ var toggleTransactionType = function (e) {
 };
 
 function loadCurrencies() {
-    url = "/Modules/Sales/Services/Currencies.asmx/GetCurrencies";
+    url = "/Modules/Sales/Services/Receipt/Currencies.asmx/GetCurrencies";
 
     var currencyAjax = getAjax(url);
 
@@ -110,9 +119,39 @@ function loadCurrencies() {
     });
 };
 
+function loadCashRepositories() {
+    url = "/Modules/Sales/Services/Receipt/Accounts.asmx/GetCashRepositories";
+
+    var cashRepositoryAjax = getAjax(url);
+
+    cashRepositoryAjax.success(function (msg) {
+        cashRepositoryDropDownList.bindAjaxData(msg.d, true);
+    });
+
+    cashRepositoryAjax.error(function (xhr) {
+        var err = $.parseJSON(xhr.responseText);
+        appendItem(cashRepositoryDropDownList, 0, err.Message);
+    });
+};
+
+function loadBankAccounts() {
+    url = "/Modules/Sales/Services/Receipt/Accounts.asmx/GetBankAccounts";
+
+    var bankAccountAjax = getAjax(url);
+
+    bankAccountAjax.success(function (msg) {
+        bankDropDownList.bindAjaxData(msg.d, true);
+    });
+
+    bankAccountAjax.error(function (xhr) {
+        var err = $.parseJSON(xhr.responseText);
+        appendItem(bankDropDownList, 0, err.Message);
+    });
+};
+
 //Ajax Requests
 function getExchangeRate(sourceCurrencyCode, destinationCurrencyCode) {
-    url = "/Modules/Sales/Services/Currencies.asmx/GetExchangeRate";
+    url = "/Modules/Sales/Services/Receipt/Currencies.asmx/GetExchangeRate";
     data = appendParameter("", "sourceCurrencyCode", sourceCurrencyCode);
     data = appendParameter(data, "destinationCurrencyCode", destinationCurrencyCode);
     data = getData(data);

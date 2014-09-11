@@ -1,4 +1,8 @@
-﻿INSERT INTO core.currencies
+﻿ALTER TABLE core.accounts
+ALTER column currency_code DROP NOT NULL;
+
+
+INSERT INTO core.currencies
 SELECT 'NPR', 'रू.', 'Nepali Rupees', 'paisa' UNION ALL
 SELECT 'USD', '$ ', 'United States Dollar', 'cents';
 
@@ -233,3 +237,5 @@ SELECT 'Tax.Payable', core.get_account_id_by_account_code('20700') UNION ALL
 SELECT 'Party.Parent.Account', core.get_account_id_by_account_code('20100');
 
 
+ALTER TABLE core.accounts
+ALTER column currency_code SET NOT NULL;

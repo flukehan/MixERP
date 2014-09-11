@@ -1,7 +1,7 @@
 ﻿DROP FUNCTION IF EXISTS unit_tests.check_party_currency_code_mismatch();
 
 CREATE FUNCTION unit_tests.check_party_currency_code_mismatch()
-RETURNS test_result
+RETURNS public.test_result
 AS
 $$
 	DECLARE message test_result;

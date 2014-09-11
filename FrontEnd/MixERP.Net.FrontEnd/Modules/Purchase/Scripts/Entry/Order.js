@@ -9,7 +9,7 @@ var save = function () {
 
     ajaxSavePurchaseOrder.done(function (response) {
         var id = response.d;
-        window.location = "/Modules/Purchase/Confirmation/Order.html?TranId=" + id;
+        window.location = "/Modules/Purchase/Confirmation/Order.mix?TranId=" + id;
     });
 
     ajaxSavePurchaseOrder.fail(function (jqXHR) {

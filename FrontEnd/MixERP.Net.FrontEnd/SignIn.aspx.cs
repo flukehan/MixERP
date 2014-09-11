@@ -1,7 +1,8 @@
-﻿using MixERP.Net.BusinessLayer.DBFactory;
-using MixERP.Net.BusinessLayer.Office;
-using MixERP.Net.Common;
+﻿using MixERP.Net.Common;
 using MixERP.Net.Common.Models.Office;
+using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Data.Helpers;
+using MixERP.Net.FrontEnd.Data.Office;
 using Resources;
 
 /********************************************************************************
@@ -26,6 +27,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 
 namespace MixERP.Net.FrontEnd
@@ -52,7 +55,6 @@ namespace MixERP.Net.FrontEnd
             this.BranchDropDownList.DataBind();
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         protected void Page_Load(object sender, EventArgs e)
         {
             this.CheckDbConnectivity();
@@ -84,7 +86,7 @@ namespace MixERP.Net.FrontEnd
 
                         if (string.IsNullOrWhiteSpace(sessionUser))
                         {
-                            if (BusinessLayer.Security.User.SetSession(this.Page, user))
+                            if (MixERPWebpage.SetSession(this.Page, user))
                             {
                                 this.RedirectToDashboard();
                             }
@@ -106,12 +108,25 @@ namespace MixERP.Net.FrontEnd
         protected void SignInButton_Click(object sender, EventArgs e)
         {
             int officeId = Conversion.TryCastInteger(this.BranchIdHiddenField.Value);
-            bool results = BusinessLayer.Security.User.SignIn(officeId, this.UserIdTextBox.Text, this.PasswordTextBox.Text, this.LanguageDropDownList.SelectedItem.Value, this.RememberMe.Checked, this.Page);
+            bool results = Login(officeId, this.UserIdTextBox.Text, this.PasswordTextBox.Text, this.LanguageDropDownList.SelectedItem.Value, this.RememberMe.Checked, this.Page);
 
             if (!results)
             {
                 this.MessageLiteral.Text = @"<span class='error-message'>" + Warnings.UserIdOrPasswordIncorrect + @"</span>";
             }
+        }
+
+        private static bool Login(int officeId, string userName, string password, string culture, bool rememberMe, Page page)
+        {
+            bool results = Data.Office.User.SignIn(officeId, userName, password, culture, rememberMe, page);
+
+            if (results)
+            {
+                MixERPWebpage.SetAuthenticationTicket(page, userName, rememberMe);
+                MixERPWebpage.SetSession(page, userName);
+            }
+
+            return results;
         }
     }
 }

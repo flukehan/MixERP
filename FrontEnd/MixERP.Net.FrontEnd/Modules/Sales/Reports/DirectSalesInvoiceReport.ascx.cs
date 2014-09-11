@@ -1,4 +1,5 @@
-﻿using MixERP.Net.BusinessLayer;
+﻿
+using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.ReportEngine;
 using System;
 using System.Collections.Generic;

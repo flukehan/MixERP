@@ -9,7 +9,7 @@ var save = function () {
 
     ajaxSaveOder.done(function (response) {
         var id = response.d;
-        window.location = "/Modules/Sales/Order.html?TranId=" + id;
+        window.location = "/Modules/Sales/Order.mix?TranId=" + id;
     });
 
     ajaxSaveOder.fail(function (jqXHR) {
@@ -32,7 +32,7 @@ var saveOrder = function (valueDate, storeId, partyCode, priceTypeId, referenceN
     d = appendParameter(d, "attachmentsJSON", attachments);
 
     d = getData(d);
-    url = "/Modules/Sales/Services/Order.asmx/Save";
+    url = "/Modules/Sales/Services/Entry/Order.asmx/Save";
 
     return getAjax(url, d);
 };

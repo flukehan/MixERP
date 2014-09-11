@@ -1,6 +1,8 @@
 ﻿using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models.Core;
+using MixERP.Net.DBFactory;
+using Npgsql;
 using System.Collections.ObjectModel;
 using System.Data;
 
@@ -12,20 +14,25 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
         {
             Collection<PartyShippingAddress> addresses = new Collection<PartyShippingAddress>();
 
-            using (DataTable table = DatabaseLayer.Core.Parties.GetShippingAddresses(partyCode))
+            const string sql = "SELECT * FROM core.shipping_addresses WHERE party_id=core.get_party_id_by_party_code(@PartyCode);";
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                for (int i = 0; i < table.Rows.Count; i++)
+                command.Parameters.AddWithValue("@PartyCode", partyCode);
+                using (DataTable table = DbOperations.GetDataTable(command))
                 {
-                    PartyShippingAddress address = new PartyShippingAddress();
-                    address.POBox = Conversion.TryCastString(table.Rows[i]["po_box"]);
-                    address.AddressLine1 = Conversion.TryCastString(table.Rows[i]["address_line_1"]);
-                    address.AddressLine2 = Conversion.TryCastString(table.Rows[i]["address_line_2"]);
-                    address.Street = Conversion.TryCastString(table.Rows[i]["street"]);
-                    address.City = Conversion.TryCastString(table.Rows[i]["city"]);
-                    address.State = Conversion.TryCastString(table.Rows[i]["state"]);
-                    address.Country = Conversion.TryCastString(table.Rows[i]["country"]);
+                    for (int i = 0; i < table.Rows.Count; i++)
+                    {
+                        PartyShippingAddress address = new PartyShippingAddress();
+                        address.POBox = Conversion.TryCastString(table.Rows[i]["po_box"]);
+                        address.AddressLine1 = Conversion.TryCastString(table.Rows[i]["address_line_1"]);
+                        address.AddressLine2 = Conversion.TryCastString(table.Rows[i]["address_line_2"]);
+                        address.Street = Conversion.TryCastString(table.Rows[i]["street"]);
+                        address.City = Conversion.TryCastString(table.Rows[i]["city"]);
+                        address.State = Conversion.TryCastString(table.Rows[i]["state"]);
+                        address.Country = Conversion.TryCastString(table.Rows[i]["country"]);
 
-                    addresses.Add(address);
+                        addresses.Add(address);
+                    }
                 }
             }
 
@@ -34,7 +41,13 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
 
         public static string GetPartyCodeByPartyId(int partyId)
         {
-            return DatabaseLayer.Core.Parties.GetPartyCodeByPartyId(partyId);
+            const string sql = "SELECT party_code FROM core.parties WHERE party_id=@PartyId;";
+
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                command.Parameters.AddWithValue("@PartyId", partyId);
+                return Conversion.TryCastString(DbOperations.GetScalarValue((command)));
+            }
         }
 
         public static PartyDueModel GetPartyDue(string partyCode)
@@ -43,7 +56,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
 
             int officeId = SessionHelper.GetOfficeId();
 
-            using (DataTable table = DatabaseLayer.Core.Parties.GetPartyDue(officeId, partyCode))
+            using (DataTable table = GetPartyDue(officeId, partyCode))
             {
                 if (table.Rows.Count.Equals(1))
                 {
@@ -58,6 +71,28 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
             }
 
             return model;
+        }
+
+        private static DataTable GetPartyDue(int officeId, string partyCode)
+        {
+            const string sql = "SELECT * FROM transactions.get_party_transaction_summary(@OfficeId, core.get_party_id_by_party_code(@PartyCode));";
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                command.Parameters.AddWithValue("@OfficeId", officeId);
+                command.Parameters.AddWithValue("@PartyCode", partyCode);
+
+                return DbOperations.GetDataTable(command);
+            }
+        }
+
+        public static DataTable GetPartyDataTable()
+        {
+            return FormHelper.GetTable("core", "parties");
+        }
+
+        public static DataTable GetPartyViewDataTable(string partyCode)
+        {
+            return FormHelper.GetTable("core", "party_view", "party_code", partyCode);
         }
     }
 }

@@ -61,7 +61,34 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DirectSales.
+        ///   Looks up a localized string similar to Bonus Slab Assignment.
+        /// </summary>
+        internal static string AgentBonusSlabAssignment {
+            get {
+                return ResourceManager.GetString("AgentBonusSlabAssignment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bonus Slab for Agents.
+        /// </summary>
+        internal static string AgentBonusSlabs {
+            get {
+                return ResourceManager.GetString("AgentBonusSlabs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bonus Slab Details for Agents.
+        /// </summary>
+        internal static string BonusSlabDetails {
+            get {
+                return ResourceManager.GetString("BonusSlabDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Direct Sales.
         /// </summary>
         internal static string DirectSales {
             get {
