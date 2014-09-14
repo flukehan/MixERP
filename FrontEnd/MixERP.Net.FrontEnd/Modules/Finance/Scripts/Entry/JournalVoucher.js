@@ -69,16 +69,7 @@ function initializeAjaxData() {
 
 function loadAccounts() {
     url = "/Modules/Finance/Services/AccountData.asmx/GetAccounts";
-    var accountAjax = getAjax(url);
-
-    accountAjax.success(function (msg) {
-        accountDropDownList.bindAjaxData(msg.d);
-    });
-
-    accountAjax.error(function (xhr) {
-        var err = $.parseJSON(xhr.responseText);
-        appendItem(accountDropDownList, 0, err.Message);
-    });
+    ajaxDataBind(url, accountDropDownList);
 };
 
 function loadCashRepositories() {
@@ -109,31 +100,12 @@ function loadCashRepositories() {
 
 function loadCostCenters() {
     url = "/Modules/Finance/Services/AccountData.asmx/GetCostCenters";
-    var costCenterAjax = getAjax(url);
-
-    costCenterAjax.success(function (msg) {
-        costCenterDropDownList.bindAjaxData(msg.d);
-    });
-
-    costCenterAjax.error(function (xhr) {
-        var err = $.parseJSON(xhr.responseText);
-        appendItem(costCenterDropDownList, 0, err.Message);
-    });
+    ajaxDataBind(url, costCenterDropDownList);
 };
 
 function loadCurrencies() {
     url = "/Modules/Finance/Services/AccountData.asmx/GetCurrencies";
-
-    var currencyAjax = getAjax(url);
-
-    currencyAjax.success(function (msg) {
-        currencyDropDownList.bindAjaxData(msg.d, true);
-    });
-
-    currencyAjax.error(function (xhr) {
-        var err = $.parseJSON(xhr.responseText);
-        appendItem(currencyDropDownList, 0, err.Message);
-    });
+    ajaxDataBind(url, currencyDropDownList);
 };
 
 function loadCurrenciesByAccountCode(accountCode) {
@@ -141,16 +113,7 @@ function loadCurrenciesByAccountCode(accountCode) {
     data = appendParameter("", "accountCode", accountCode);
     data = getData(data);
 
-    var currencyAjax = getAjax(url, data);
-
-    currencyAjax.success(function (msg) {
-        currencyDropDownList.bindAjaxData(msg.d, true);
-    });
-
-    currencyAjax.error(function (xhr) {
-        var err = $.parseJSON(xhr.responseText);
-        appendItem(currencyDropDownList, 0, err.Message);
-    });
+    ajaxDataBind(url, currencyDropDownList, data);
 };
 
 //Control Events

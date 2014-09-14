@@ -214,4 +214,7 @@ h6 {
 .span-icon {
   padding: 4px;
 }
+.input-group-addon {
+  cursor: pointer;
+}
 /*# sourceMappingURL=mixerp.css.map */

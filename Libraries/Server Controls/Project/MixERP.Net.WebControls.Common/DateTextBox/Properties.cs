@@ -121,7 +121,7 @@ namespace MixERP.Net.WebControls.Common
             {
                 this.EnsureChildControls();
                 this.mode = value;
-                //this.InitializeDate(this.mode);
+                this.InitializeDate(this.mode);
             }
         }
     }

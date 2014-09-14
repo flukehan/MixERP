@@ -22,7 +22,7 @@ http://postgresql.org
 
 Please run the bundled script found here:
 
-"/MixERP.Net.FrontEnd/bundles/sql/mixerp-db-sample.sql"
+"/FrontEnd/MixERP.Net.FrontEnd/db/"
 
 
 **Please Note:**

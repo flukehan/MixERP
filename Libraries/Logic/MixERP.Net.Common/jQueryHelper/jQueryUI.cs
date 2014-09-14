@@ -99,6 +99,11 @@ namespace MixERP.Net.Common.jQueryHelper
 
         public static void AddjQueryUIDatePicker(Page p, string controlId, DateTime? minDate, DateTime? maxDate)
         {
+            if (string.IsNullOrWhiteSpace(controlId))
+            {
+                return;
+            }
+
             if (p == null)
             {
                 p = HttpContext.Current.Handler as Page;
@@ -121,6 +126,7 @@ namespace MixERP.Net.Common.jQueryHelper
             string locale = GetDatePickerLocale();
 
             string script = "$(function() {" + selector + ".datepicker({";
+
             script += GetParameters(minDate, maxDate);
             script += "}";
 

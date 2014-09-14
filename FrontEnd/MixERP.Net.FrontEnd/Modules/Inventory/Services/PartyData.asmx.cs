@@ -100,6 +100,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
             return Parties.GetShippingAddresses(partyCode);
         }
 
+        [WebMethod]
         public string GetPartyCodeByPartyId(int partyId)
         {
             return Parties.GetPartyCodeByPartyId(partyId);

@@ -15,6 +15,11 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
             return FormHelper.GetTable("office", "cash_repositories");
         }
 
+        public static DataTable GetCostCenters()
+        {
+            return FormHelper.GetTable("office", "cost_centers");
+        }
+
         public static DataTable GetBankAccounts()
         {
             return FormHelper.GetTable("core", "bank_accounts");

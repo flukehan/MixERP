@@ -1,4 +1,4 @@
-﻿DROP SCHEMA IF EXISTS assert CASCADE;
+DROP SCHEMA IF EXISTS assert CASCADE;
 DROP SCHEMA IF EXISTS unit_tests CASCADE;
 DROP DOMAIN IF EXISTS public.test_result CASCADE;
 
@@ -111,7 +111,7 @@ BEGIN
 	ORDER BY 1;
 
 	IF count <> 1 THEN
-		MESSAGE := E'ASSERT ARE_EQUAL FAILED.'; 	
+		MESSAGE := 'ASSERT ARE_EQUAL FAILED.'; 	
 		PERFORM assert.fail(MESSAGE);
 		RESULT := FALSE;
 		RETURN;
@@ -156,7 +156,7 @@ BEGIN
 	ORDER BY 1;
 
 	IF count <> array_upper($1,1) THEN
-		MESSAGE := E'ASSERT ARE_NOT_EQUAL FAILED.'; 	
+		MESSAGE := 'ASSERT ARE_NOT_EQUAL FAILED.'; 	
 		PERFORM assert.fail(MESSAGE);
 		RESULT := FALSE;
 		RETURN;
@@ -400,12 +400,12 @@ BEGIN
 	WHERE test_id = _test_id
 	AND status= false;
 
-	_ret_val := _ret_val ||  'Test completed on : ' || _completed_on || E' UTC. \nTotal test runtime: ' || _delta || E' ms.\n';
-	_ret_val := _ret_val || E'\nTotal tests run : ' || COALESCE(_total_tests, '0');
-	_ret_val := _ret_val || E'.\nPassed tests    : ' || COALESCE(_total_tests, '0') - COALESCE(_failed_tests, '0');
-	_ret_val := _ret_val || E'.\nFailed tests    : ' || COALESCE(_failed_tests, '0');
+	_ret_val := _ret_val ||  'Test completed on : ' || _completed_on::text || E' UTC. \nTotal test runtime: ' || _delta::text || E' ms.\n';
+	_ret_val := _ret_val || E'\nTotal tests run : ' || COALESCE(_total_tests, '0')::text;
+	_ret_val := _ret_val || E'.\nPassed tests    : ' || (COALESCE(_total_tests, '0') - COALESCE(_failed_tests, '0'))::text;
+	_ret_val := _ret_val || E'.\nFailed tests    : ' || COALESCE(_failed_tests, '0')::text;
 	_ret_val := _ret_val || E'.\n\nList of failed tests:\n' || '-----------------------------';
-	_ret_val := _ret_val || E'\n' || COALESCE(_list_of_failed_tests, '<NULL>');
+	_ret_val := _ret_val || E'\n' || COALESCE(_list_of_failed_tests, '<NULL>')::text;
 	_ret_val := _ret_val || E'\n\n';
 
 	IF _failed_tests > 0 THEN
@@ -413,7 +413,7 @@ BEGIN
 		RAISE WARNING '%', _ret_val;
 	ELSE
 		_result := 'Y';
-		RAISE NOTICE '%', _ret_val;	
+		RAISE NOTICE '%', _ret_val;
 	END IF;
 
 	RETURN QUERY SELECT _ret_val, _result;

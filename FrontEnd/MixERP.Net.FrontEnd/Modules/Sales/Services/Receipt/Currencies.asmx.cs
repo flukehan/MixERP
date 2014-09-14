@@ -32,8 +32,20 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
         }
 
         [WebMethod(EnableSession = true)]
+        public string GetHomeCurrency()
+        {
+            int officeId = Common.Helpers.SessionHelper.GetOfficeId();
+            return Data.Helpers.Currencies.GetHomeCurrency(officeId);
+        }
+
+        [WebMethod(EnableSession = true)]
         public decimal GetExchangeRate(string sourceCurrencyCode, string destinationCurrencyCode)
         {
+            if (sourceCurrencyCode.Equals(destinationCurrencyCode))
+            {
+                return 1;
+            }
+
             int officeId = Common.Helpers.SessionHelper.GetOfficeId();
 
             decimal exchangeRate = Data.Helpers.Transaction.GetExchangeRate(officeId, sourceCurrencyCode, destinationCurrencyCode);

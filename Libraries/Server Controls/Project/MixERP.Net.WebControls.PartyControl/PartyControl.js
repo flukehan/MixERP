@@ -260,14 +260,5 @@ partyCodeTextBox.blur(function () {
 //Ajax Data Binding
 function loadParties() {
     url = "/Modules/Inventory/Services/PartyData.asmx/GetParties";
-    var partyAjax = getAjax(url);
-
-    partyAjax.success(function (msg) {
-        partyDropDownList.bindAjaxData(msg.d);
-    });
-
-    partyAjax.error(function () {
-        var err = $.parseJSON(xhr.responseText);
-        appendItem(partyDropDownList, 0, err.Message);
-    });
+    ajaxDataBind(url, partyDropDownList);
 };

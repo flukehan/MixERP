@@ -129,6 +129,9 @@
   <data name="DirectSales" xml:space="preserve">
     <value>Direct Sales</value>
   </data>
+  <data name="ExchangeRate" xml:space="preserve">
+    <value>Exchange Rate</value>
+  </data>
   <data name="SalesDelivery" xml:space="preserve">
     <value>Sales Delivery</value>
   </data>

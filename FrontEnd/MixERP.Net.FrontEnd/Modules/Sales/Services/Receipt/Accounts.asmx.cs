@@ -37,6 +37,24 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
         }
 
         [WebMethod]
+        public Collection<ListItem> GetCostCenters()
+        {
+            Collection<ListItem> values = new Collection<ListItem>();
+
+            using (DataTable table = Data.Helpers.Accounts.GetCostCenters())
+            {
+                string displayField = ConfigurationHelper.GetDbParameter("CostCenterDisplayField");
+                table.Columns.Add("cost_center", typeof(string), displayField);
+
+                foreach (DataRow dr in table.Rows)
+                {
+                    values.Add(new ListItem(dr["cost_center"].ToString(), dr["cost_center_id"].ToString()));
+                }
+            }
+            return values;
+        }
+
+        [WebMethod]
         public Collection<ListItem> GetBankAccounts()
         {
             Collection<ListItem> values = new Collection<ListItem>();

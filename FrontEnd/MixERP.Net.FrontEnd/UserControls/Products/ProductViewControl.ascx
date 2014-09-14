@@ -95,12 +95,28 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 <div class="grey" style="margin: 8px 0 8px 0;">
     <div class="row" style="margin-left: 8px;">
 
-        <div class="col-md-1 pad4">
-            <mixerp:DateTextBox ID="DateFromDateTextBox" runat="server" CssClass="date form-control input-sm" Mode="MonthStartDate" Required="true" placeholder="Date From" />
+        <div class="col-md-1 pad4" style="width: 120px;">
+            <div class="input-group">
+                <mixerp:DateTextBox ID="DateFromDateTextBox" runat="server"
+                    CssClass="date form-control input-sm"
+                    Mode="MonthStartDate"
+                    Required="true"
+                    AssociatedControlId="Trigger1" />
+                <span class="input-group-addon" onclick="$('#DateFromDateTextBox').datepicker('show');">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
         </div>
 
-        <div class="col-md-1 pad4">
-            <mixerp:DateTextBox ID="DateToDateTextBox" runat="server" CssClass="date form-control input-sm" Mode="MonthEndDate" Required="true" placeholder="Date To" />
+        <div class="col-md-1 pad4" style="width: 120px;">
+            <div class="input-group">
+                <mixerp:DateTextBox ID="DateToDateTextBox" runat="server"
+                    CssClass="date form-control input-sm"
+                    Mode="MonthEndDate" Required="true" />
+                <span class="input-group-addon" onclick="$('#DateToDateTextBox').datepicker('show');">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
         </div>
 
         <div class="col-md-1 pad4">

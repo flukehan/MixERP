@@ -8,5 +8,10 @@ namespace MixERP.Net.Core.Modules.Sales
         protected void Page_Load(object sender, EventArgs e)
         {
         }
+
+        public string ExchangeRateLocalized()
+        {
+            return Resources.Titles.ExchangeRate;
+        }
     }
 }

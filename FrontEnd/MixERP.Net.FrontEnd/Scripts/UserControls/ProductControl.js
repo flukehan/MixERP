@@ -105,8 +105,8 @@ $(document).ready(function () {
 
 function initializeAjaxData() {
     processCallBackActions();
-    loadPriceTypes();
 
+    loadPriceTypes();
     loadParties();
 
     partyDropDownList.change(function () {
@@ -168,17 +168,7 @@ function processCallBackActions() {
         data = appendParameter("", "itemId", itemId);
         data = getData(data);
 
-        var itemCodeAjax = getAjax(url, data);
-
-        itemCodeAjax.success(function (msg) {
-            itemCode = msg.d;
-            itemCodeHidden.val(itemCode);
-        });
-
-        itemCodeAjax.error(function (xhr) {
-            var err = $.parseJSON(xhr.responseText);
-            logError(err, "error");
-        });
+        ajaxUpdateVal(url, itemCodeHidden, data);
     }
 
     var partyId = parseFloat2(partyIdHidden.val());
@@ -192,17 +182,7 @@ function processCallBackActions() {
         data = appendParameter("", "partyId", partyId);
         data = getData(data);
 
-        var partyCodeAjax = getAjax(url, data);
-
-        partyCodeAjax.success(function (msg) {
-            partyCode = msg.d;
-            partyCodeHidden.val(partyCode);
-        });
-
-        partyCodeAjax.error(function (xhr) {
-            var err = $.parseJSON(xhr.responseText);
-            logError(err, "error");
-        });
+        ajaxUpdateVal(url, partyCodeHidden, data);
     }
 };
 
@@ -232,16 +212,7 @@ cashRepositoryDropDownList.change(function () {
         data = appendParameter(data, "currencyCode", "");
         data = getData(data);
 
-        var repoBalanceAjax = getAjax(url, data);
-
-        repoBalanceAjax.success(function (msg) {
-            cashRepositoryBalanceTextBox.val(msg.d);
-        });
-
-        repoBalanceAjax.error(function (xhr) {
-            var err = $.parseJSON(xhr.responseText);
-            logError(err, "error");
-        });
+        ajaxUpdateVal(url, cashRepositoryBalanceTextBox, data);
     };
 });
 
@@ -408,53 +379,6 @@ unitDropDownList.blur(function () {
     getPrice();
 });
 
-function bindAddresses(data) {
-    shippingAddressDropDownList.bindAjaxData(data);
-    shippingAddressDropDownList.val(shippingAddressCodeHidden.val());
-};
-
-function bindAgents(data) {
-    salesPersonDropDownList.bindAjaxData(data);
-};
-
-function bindCashRepositories(data) {
-    cashRepositoryDropDownList.bindAjaxData(data);
-};
-
-function bindCostCenters(data) {
-    costCenterDropDownList.bindAjaxData(data);
-};
-
-function bindItems(data) {
-    itemDropDownList.bindAjaxData(data);
-    itemCodeTextBox.val(itemCodeHidden.val());
-    itemDropDownList.val(itemCodeHidden.val());
-};
-
-function bindParties(data) {
-    partyDropDownList.bindAjaxData(data);
-    partyCodeTextBox.val(partyCodeHidden.val());
-    partyDropDownList.val(partyCodeHidden.val());
-};
-
-function bindPriceTypes(data) {
-    priceTypeDropDownList.bindAjaxData(data);
-    priceTypeDropDownList.val(priceTypeIdHidden.val());
-};
-
-function bindShippers(data) {
-    shippingCompanyDropDownList.bindAjaxData(data);
-};
-
-function bindStores(data) {
-    storeDropDownList.bindAjaxData(data);
-};
-
-function bindUnits(data) {
-    unitDropDownList.bindAjaxData(data);
-    unitDropDownList.val(unitIdHidden.val());
-};
-
 function loadAddresses() {
     var partyCode = partyDropDownList.val();
 
@@ -462,58 +386,24 @@ function loadAddresses() {
     data = appendParameter("", "partyCode", partyCode);
     data = getData(data);
 
-    var addressAjax = getAjax(url, data);
+    var selectedValue = shippingAddressCodeHidden.val();
 
-    addressAjax.success(function (msg) {
-        bindAddresses(msg.d);
-    });
-
-    addressAjax.error(function (xhr) {
-        var err = $.parseJSON(xhr.responseText);
-        appendItem(shippingAddressDropDownList, 0, err.Message);
-    });
+    ajaxDataBind(url, shippingAddressDropDownList, data, selectedValue);
 };
 
 function loadAgents() {
     url = "/Modules/Inventory/Services/ItemData.asmx/GetAgents";
-    var agentAjax = getAjax(url);
-
-    agentAjax.success(function (msg) {
-        bindAgents(msg.d);
-    });
-
-    agentAjax.error(function (xhr) {
-        var err = $.parseJSON(xhr.responseText);
-        appendItem(salesPersonDropDownList, 0, err.Message);
-    });
+    ajaxDataBind(url, salesPersonDropDownList);
 };
 
 function loadCashRepositories() {
     url = "/Modules/Finance/Services/AccountData.asmx/GetCashRepositories";
-    var cashRepositoryAjax = getAjax(url);
-
-    cashRepositoryAjax.success(function (msg) {
-        bindCashRepositories(msg.d);
-    });
-
-    cashRepositoryAjax.error(function (xhr) {
-        var err = $.parseJSON(xhr.responseText);
-        appendItem(cashRepositoryDropDownList, 0, err.Message);
-    });
+    ajaxDataBind(url, cashRepositoryDropDownList);
 };
 
 function loadCostCenters() {
     url = "/Modules/Finance/Services/AccountData.asmx/GetCostCenters";
-    var costCenterAjax = getAjax(url);
-
-    costCenterAjax.success(function (msg) {
-        bindCostCenters(msg.d);
-    });
-
-    costCenterAjax.error(function (xhr) {
-        var err = $.parseJSON(xhr.responseText);
-        appendItem(costCenterDropDownList, 0, err.Message);
-    });
+    ajaxDataBind(url, costCenterDropDownList);
 };
 
 function loadItems() {
@@ -521,78 +411,38 @@ function loadItems() {
     data = appendParameter("", "tranBook", tranBook);
     data = getData(data);
 
-    var itemAjax = getAjax(url, data);
+    var selectedValue = itemCodeHidden.val();
 
-    itemAjax.success(function (msg) {
-        bindItems(msg.d);
-    });
-
-    itemAjax.error(function (xhr) {
-        var err = $.parseJSON(xhr.responseText);
-        appendItem(itemDropDownList, 0, err.Message);
-    });
+    ajaxDataBind(url, itemDropDownList, data, selectedValue, itemCodeTextBox);
 };
 
 function loadParties() {
     url = "/Modules/Inventory/Services/PartyData.asmx/GetParties";
-    var partyAjax = getAjax(url);
+    var selectedValue = partyCodeHidden.val();
 
-    partyAjax.success(function (msg) {
-        bindParties(msg.d);
-    });
-
-    partyAjax.error(function () {
-        var err = $.parseJSON(xhr.responseText);
-        appendItem(partyDropDownList, 0, err.Message);
-    });
+    ajaxDataBind(url, partyDropDownList, null, selectedValue, partyCodeTextBox);
 };
 
 function loadPriceTypes() {
     if (priceTypeDropDownList.length) {
         url = "/Modules/Inventory/Services/ItemData.asmx/GetPriceTypes";
-        var priceTypeAjax = getAjax(url);
+        var selectedValue = priceTypeIdHidden.val();
 
-        priceTypeAjax.success(function (msg) {
-            bindPriceTypes(msg.d);
-        });
-
-        priceTypeAjax.error(function (xhr) {
-            var err = $.parseJSON(xhr.responseText);
-            appendItem(priceTypeDropDownList, 0, err.Message);
-        });
+        ajaxDataBind(url, priceTypeDropDownList, null, selectedValue);
     };
 };
 
 function loadShippers() {
     if (shippingCompanyDropDownList.length) {
         url = "/Modules/Inventory/Services/ItemData.asmx/GetShippers";
-
-        var shipperAjax = getAjax(url);
-
-        shipperAjax.success(function (msg) {
-            bindShippers(msg.d);
-        });
-
-        shipperAjax.error(function (xhr) {
-            var err = $.parseJSON(xhr.responseText);
-            appendItem(shippingCompanyDropDownList, 0, err.Message);
-        });
+        ajaxDataBind(url, shippingCompanyDropDownList);
     };
 };
 
 function loadStores() {
     if (storeDropDownList.length) {
         url = "/Modules/Inventory/Services/ItemData.asmx/GetStores";
-        var storeAjax = getAjax(url);
-
-        storeAjax.success(function (msg) {
-            bindStores(msg.d);
-        });
-
-        storeAjax.error(function (xhr) {
-            var err = $.parseJSON(xhr.responseText);
-            appendItem(storeDropDownList, 0, err.Message);
-        });
+        ajaxDataBind(url, storeDropDownList);
     };
 };
 
@@ -603,16 +453,9 @@ function loadUnits() {
     data = appendParameter("", "itemCode", itemCode);
     data = getData(data);
 
-    var unitAjax = getAjax(url, data);
+    var selectedValue = unitIdHidden.val();
 
-    unitAjax.success(function (msg) {
-        bindUnits(msg.d);
-    });
-
-    unitAjax.error(function (xhr) {
-        var err = $.parseJSON(xhr.responseText);
-        appendItem(unitDropDownList, 0, err.Message);
-    });
+    ajaxDataBind(url, unitDropDownList, data, selectedValue);
 };
 
 //GridView Data Function
@@ -646,7 +489,7 @@ var restoreData = function () {
     }
 };
 
-var tableToJSON = function(grid) {
+var tableToJSON = function (grid) {
     var colData = new Array;
     var rowData = new Array;
 
@@ -913,16 +756,7 @@ var getPrice = function () {
     data = appendParameter("", "itemCode", itemCode);
     data = getData(data);
 
-    var taxRateAjax = getAjax(url, data);
-
-    taxRateAjax.success(function (msg) {
-        taxRateTextBox.val(msg.d);
-    });
-
-    taxRateAjax.error(function (xhr) {
-        var err = $.parseJSON(xhr.responseText);
-        logError(err, "error");
-    });
+    ajaxUpdateVal(url, taxRateTextBox, data);
 
     calculateAmount();
 };
@@ -992,12 +826,12 @@ var showShippingAddress = function () {
 //Utilities
 function addShortcuts() {
     shortcut.add("F2", function () {
-        url = "/Inventory/Setup/PartiesPopup.aspx?modal=1&CallBackFunctionName=initializeAjaxData&AssociatedControlId=PartyIdHidden";
+        url = "/Modules/Inventory/Setup/PartiesPopup.mix?modal=1&CallBackFunctionName=initializeAjaxData&AssociatedControlId=PartyIdHidden";
         showWindow(url);
     });
 
     shortcut.add("F4", function () {
-        url = "/Inventory/Setup/ItemsPopup.aspx?modal=1&CallBackFunctionName=initializeAjaxData&AssociatedControlId=ItemIdHidden";
+        url = "/Modules/Inventory/Setup/ItemsPopup.mix?modal=1&CallBackFunctionName=initializeAjaxData&AssociatedControlId=ItemIdHidden";
         showWindow(url);
     });
 

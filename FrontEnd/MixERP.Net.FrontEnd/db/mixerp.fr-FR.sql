@@ -278,7 +278,7 @@ BEGIN
 	ORDER BY 1;
 
 	IF count <> 1 THEN
-		MESSAGE := E'ASSERT ARE_EQUAL FAILED.'; 	
+		MESSAGE := 'ASSERT ARE_EQUAL FAILED.'; 	
 		PERFORM assert.fail(MESSAGE);
 		RESULT := FALSE;
 		RETURN;
@@ -323,7 +323,7 @@ BEGIN
 	ORDER BY 1;
 
 	IF count <> array_upper($1,1) THEN
-		MESSAGE := E'ASSERT ARE_NOT_EQUAL FAILED.'; 	
+		MESSAGE := 'ASSERT ARE_NOT_EQUAL FAILED.'; 	
 		PERFORM assert.fail(MESSAGE);
 		RESULT := FALSE;
 		RETURN;
@@ -567,12 +567,12 @@ BEGIN
 	WHERE test_id = _test_id
 	AND status= false;
 
-	_ret_val := _ret_val ||  'Test completed on : ' || _completed_on || E' UTC. \nTotal test runtime: ' || _delta || E' ms.\n';
-	_ret_val := _ret_val || E'\nTotal tests run : ' || COALESCE(_total_tests, '0');
-	_ret_val := _ret_val || E'.\nPassed tests    : ' || COALESCE(_total_tests, '0') - COALESCE(_failed_tests, '0');
-	_ret_val := _ret_val || E'.\nFailed tests    : ' || COALESCE(_failed_tests, '0');
+	_ret_val := _ret_val ||  'Test completed on : ' || _completed_on::text || E' UTC. \nTotal test runtime: ' || _delta::text || E' ms.\n';
+	_ret_val := _ret_val || E'\nTotal tests run : ' || COALESCE(_total_tests, '0')::text;
+	_ret_val := _ret_val || E'.\nPassed tests    : ' || (COALESCE(_total_tests, '0') - COALESCE(_failed_tests, '0'))::text;
+	_ret_val := _ret_val || E'.\nFailed tests    : ' || COALESCE(_failed_tests, '0')::text;
 	_ret_val := _ret_val || E'.\n\nList of failed tests:\n' || '-----------------------------';
-	_ret_val := _ret_val || E'\n' || COALESCE(_list_of_failed_tests, '<NULL>');
+	_ret_val := _ret_val || E'\n' || COALESCE(_list_of_failed_tests, '<NULL>')::text;
 	_ret_val := _ret_val || E'\n\n';
 
 	IF _failed_tests > 0 THEN
@@ -580,7 +580,7 @@ BEGIN
 		RAISE WARNING '%', _ret_val;
 	ELSE
 		_result := 'Y';
-		RAISE NOTICE '%', _ret_val;	
+		RAISE NOTICE '%', _ret_val;
 	END IF;
 
 	RETURN QUERY SELECT _ret_val, _result;
@@ -706,6 +706,73 @@ END
 $$
 LANGUAGE plpgsql;
 
+
+
+-- 4.casts.sql
+DROP FUNCTION IF EXISTS pg_catalog.text(unknown) CASCADE;
+CREATE FUNCTION pg_catalog.text(unknown) 
+RETURNS text 
+AS
+$$
+BEGIN
+	RETURN $1::text;
+END
+$$
+LANGUAGE plpgsql; 
+
+CREATE CAST (unknown AS text) WITH FUNCTION pg_catalog.text(unknown) AS IMPLICIT;
+
+DROP FUNCTION IF EXISTS pg_catalog.text(integer) CASCADE;
+CREATE FUNCTION pg_catalog.text(integer) RETURNS text STRICT IMMUTABLE LANGUAGE SQL AS 'SELECT textin(int4out($1));';
+CREATE CAST (integer AS text) WITH FUNCTION pg_catalog.text(integer) AS IMPLICIT;
+
+DROP FUNCTION IF EXISTS pg_catalog.text(smallint) CASCADE;
+CREATE FUNCTION pg_catalog.text(smallint) RETURNS text STRICT IMMUTABLE LANGUAGE SQL AS 'SELECT textin(int2out($1));';
+CREATE CAST (smallint AS text) WITH FUNCTION pg_catalog.text(smallint) AS IMPLICIT;
+
+DROP FUNCTION IF EXISTS pg_catalog.text(oid) CASCADE;
+CREATE FUNCTION pg_catalog.text(oid) RETURNS text STRICT IMMUTABLE LANGUAGE SQL AS 'SELECT textin(oidout($1));';
+CREATE CAST (oid AS text) WITH FUNCTION pg_catalog.text(oid) AS IMPLICIT;
+
+DROP FUNCTION IF EXISTS pg_catalog.text(date) CASCADE;
+CREATE FUNCTION pg_catalog.text(date) RETURNS text STRICT IMMUTABLE LANGUAGE SQL AS 'SELECT textin(date_out($1));';
+CREATE CAST (date AS text) WITH FUNCTION pg_catalog.text(date) AS IMPLICIT;
+
+DROP FUNCTION IF EXISTS pg_catalog.text(double precision) CASCADE;
+CREATE FUNCTION pg_catalog.text(double precision) RETURNS text STRICT IMMUTABLE LANGUAGE SQL AS 'SELECT textin(float8out($1));';
+CREATE CAST (double precision AS text) WITH FUNCTION pg_catalog.text(double precision) AS IMPLICIT;
+
+DROP FUNCTION IF EXISTS pg_catalog.text(real) CASCADE;
+CREATE FUNCTION pg_catalog.text(real) RETURNS text STRICT IMMUTABLE LANGUAGE SQL AS 'SELECT textin(float4out($1));';
+CREATE CAST (real AS text) WITH FUNCTION pg_catalog.text(real) AS IMPLICIT;
+
+DROP FUNCTION IF EXISTS pg_catalog.text(time with time zone) CASCADE;
+CREATE FUNCTION pg_catalog.text(time with time zone) RETURNS text STRICT IMMUTABLE LANGUAGE SQL AS 'SELECT textin(timetz_out($1));';
+CREATE CAST (time with time zone AS text) WITH FUNCTION pg_catalog.text(time with time zone) AS IMPLICIT;
+
+DROP FUNCTION IF EXISTS pg_catalog.text(time without time zone) CASCADE;
+CREATE FUNCTION pg_catalog.text(time without time zone) RETURNS text STRICT IMMUTABLE LANGUAGE SQL AS 'SELECT textin(time_out($1));';
+CREATE CAST (time without time zone AS text) WITH FUNCTION pg_catalog.text(time without time zone) AS IMPLICIT;
+
+DROP FUNCTION IF EXISTS pg_catalog.text(timestamp with time zone) CASCADE;
+CREATE FUNCTION pg_catalog.text(timestamp with time zone) RETURNS text STRICT IMMUTABLE LANGUAGE SQL AS 'SELECT textin(timestamptz_out($1));';
+CREATE CAST (timestamp with time zone AS text) WITH FUNCTION pg_catalog.text(timestamp with time zone) AS IMPLICIT;
+
+DROP FUNCTION IF EXISTS pg_catalog.text(timestamp without time zone) CASCADE;
+CREATE FUNCTION pg_catalog.text(timestamp without time zone) RETURNS text STRICT IMMUTABLE LANGUAGE SQL AS 'SELECT textin(timestamp_out($1));';
+CREATE CAST (timestamp without time zone AS text) WITH FUNCTION pg_catalog.text(timestamp without time zone) AS IMPLICIT;
+
+DROP FUNCTION IF EXISTS pg_catalog.text(interval) CASCADE;
+CREATE FUNCTION pg_catalog.text(interval) RETURNS text STRICT IMMUTABLE LANGUAGE SQL AS 'SELECT textin(interval_out($1));';
+CREATE CAST (interval AS text) WITH FUNCTION pg_catalog.text(interval) AS IMPLICIT;
+
+DROP FUNCTION IF EXISTS pg_catalog.text(bigint) CASCADE;
+CREATE FUNCTION pg_catalog.text(bigint) RETURNS text STRICT IMMUTABLE LANGUAGE SQL AS 'SELECT textin(int8out($1));';
+CREATE CAST (bigint AS text) WITH FUNCTION pg_catalog.text(bigint) AS IMPLICIT;
+
+DROP FUNCTION IF EXISTS pg_catalog.text(numeric) CASCADE;
+CREATE FUNCTION pg_catalog.text(numeric) RETURNS text STRICT IMMUTABLE LANGUAGE SQL AS 'SELECT textin(numeric_out($1));';
+CREATE CAST (numeric AS text) WITH FUNCTION pg_catalog.text(numeric) AS IMPLICIT;
 
 
 -- domains.sql
@@ -1862,10 +1929,13 @@ CREATE TABLE transactions.customer_receipts
 	receipt_id			BIGSERIAL NOT NULL PRIMARY KEY,
 	transaction_master_id		bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id),
 	party_id			bigint NOT NULL REFERENCES core.parties(party_id),
+        currency_code                   national character varying(12) NOT NULL REFERENCES core.currencies(currency_code),
 	amount				money_strict NOT NULL,
+        er_debit                        decimal_strict NOT NULL,
+        er_credit                       decimal_strict NOT NULL,
 	cash_repository_id		integer NULL REFERENCES office.cash_repositories(cash_repository_id),
-	bank_account_id			bigint NULL REFERENCES core.bank_accounts(account_id),
 	posted_date			date NULL,
+	bank_account_id			bigint NULL REFERENCES core.bank_accounts(account_id),
 	bank_instrument_code		national character varying(128) NULL CONSTRAINT customer_receipt_bank_instrument_code_df DEFAULT(''),
 	bank_tran_code			national character varying(128) NULL CONSTRAINT customer_receipt_bank_tran_code_df DEFAULT(''),	
 	statement_reference		national character varying(128) NULL CONSTRAINT customer_receipt_statement_reference_df DEFAULT('')	
@@ -2600,6 +2670,28 @@ BEGIN
 		SELECT office.offices.currency_code
 		FROM office.offices
 		WHERE office.offices.office_id=$1
+	);
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+-- core.get_currency_code_by_party_code.sql
+DROP FUNCTION IF EXISTS core.get_currency_code_by_party_code(national character varying(12));
+
+CREATE FUNCTION core.get_currency_code_by_party_code(_party_code national character varying(12))
+RETURNS text
+AS
+$$
+BEGIN
+	RETURN
+	(
+		SELECT core.accounts.currency_code
+		FROM core.accounts
+		INNER JOIN core.parties
+		ON core.accounts.account_id = core.parties.account_id
+		AND core.parties.party_code=$1
 	);
 END
 $$
@@ -4369,6 +4461,157 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+
+
+-- transactions.get_value_date.sql
+CREATE FUNCTION transactions.get_value_date()
+RETURNS date
+AS
+$$
+BEGIN
+        RETURN NOW()::date;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+
+-- transactions.post_receipt_function.sql
+DROP FUNCTION IF EXISTS transactions.post_receipt_function
+(
+	_user_id				integer, 
+	_office_id				integer, 
+	_login_id				bigint,
+	_party_code				national character varying(12), 
+	_currency_code				national character varying(12), 
+	_amount					money_strict, 
+	_exchange_rate_debit			decimal_strict, 
+	_exchange_rate_credit			decimal_strict,
+	_reference_number			national character varying(24), 
+	_statement_reference			national character varying(128), 
+	_cost_center_id				integer,
+	_cash_repository_id			integer,
+	_posted_date                            date,
+	_bank_account_id			integer,
+	_bank_instrument_code			national character varying(128),
+	_bank_tran_code				national character varying(128)
+);
+
+CREATE FUNCTION transactions.post_receipt_function
+(
+	_user_id				integer, 
+	_office_id				integer, 
+	_login_id				bigint,
+	_party_code				national character varying(12), 
+	_currency_code				national character varying(12), 
+	_amount					money_strict, 
+	_exchange_rate_debit			decimal_strict, 
+	_exchange_rate_credit			decimal_strict,
+	_reference_number			national character varying(24), 
+	_statement_reference			national character varying(128), 
+	_cost_center_id				integer,
+	_cash_repository_id			integer,
+	_posted_date                            date,
+	_bank_account_id			integer,
+	_bank_instrument_code			national character varying(128),
+	_bank_tran_code				national character varying(128)
+)
+RETURNS bigint
+AS
+$$
+	DECLARE _value_date 			date;
+	DECLARE _book				text;
+	DECLARE _transaction_master_id 		bigint;
+	DECLARE _base_currency_code             national character varying(12);
+	DECLARE _local_currency_code            national character varying(12);
+	DECLARE _party_id                       bigint;
+	DECLARE _party_account_id               bigint;
+	DECLARE _debit                          money_strict2;
+	DECLARE _credit                         money_strict2;
+	DECLARE _lc_debit                       money_strict2;
+	DECLARE _lc_credit                      money_strict2;
+	DECLARE _is_cash                        boolean;
+	DECLARE _cash_account_id                bigint;
+BEGIN
+        IF(_cash_repository_id > 0) THEN
+                IF(_posted_Date IS NOT NULL OR _bank_account_id IS NOT NULL OR _bank_instrument_code IS NOT NULL OR _bank_tran_code IS NOT NULL) THEN
+                        RAISE EXCEPTION 'Invalid bank transaction information provided.';
+                END IF;
+                _is_cash                        := true;
+        END IF;
+
+        _value_date                             := transactions.get_value_date();
+        _book                                   := 'Sales.Receipt';
+        
+        _party_id                               := core.get_party_id_by_party_code(_party_code);
+        _party_account_id                       := core.get_account_id_by_party_id(_party_id);
+        _cash_account_id                        := core.get_cash_account_id();
+        
+        _local_currency_code                    := core.get_currency_code_by_office_id(_office_id);
+        _base_currency_code                     := core.get_currency_code_by_party_id(_party_id);
+
+        _debit                                  := _amount;
+        _lc_debit                               := _amount * _exchange_rate_debit;
+
+        _credit                                 := _amount * (_exchange_rate_debit/ _exchange_rate_credit);
+        _lc_credit                              := _amount * _exchange_rate_debit;
+
+        
+
+	INSERT INTO transactions.transaction_master
+	(
+		transaction_master_id, 
+		transaction_counter, 
+		transaction_code, 
+		book, 
+		value_date, 
+		user_id, 
+		login_id, 
+		office_id, 
+		cost_center_id, 
+		reference_number, 
+		statement_reference
+	)
+	SELECT 
+		nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), 
+		transactions.get_new_transaction_counter(_value_date), 
+		transactions.get_transaction_code(_value_date, _office_id, _user_id, _login_id),
+		_book,
+		_value_date,
+		_user_id,
+		_login_id,
+		_office_id,
+		_cost_center_id,
+		_reference_number,
+		_statement_reference;
+
+
+	_transaction_master_id := currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
+
+        --Debit
+        IF(_is_cash) THEN
+                INSERT INTO transactions.transaction_details(transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id)
+                SELECT _transaction_master_id, 'Dr', _cash_account_id, _statement_reference, _cash_repository_id, _currency_code, _debit, _local_currency_code, _exchange_rate_debit, _lc_debit, _user_id;
+        ELSE
+                INSERT INTO transactions.transaction_details(transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id)
+                SELECT _transaction_master_id, 'Dr', _bank_account_id, _statement_reference, NULL, _currency_code, _debit, _local_currency_code, _exchange_rate_debit, _lc_debit, _user_id;        
+        END IF;
+
+        --Credit
+        INSERT INTO transactions.transaction_details(transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id)
+        SELECT _transaction_master_id, 'Cr', _party_account_id, _statement_reference, NULL, _base_currency_code, _credit, _local_currency_code, _exchange_rate_credit, _lc_credit, _user_id;        
+        
+        
+        INSERT INTO transactions.customer_receipts(transaction_master_id, party_id, currency_code, amount, er_debit, er_credit, cash_repository_id, posted_date, bank_account_id, bank_instrument_code, bank_tran_code, statement_reference)
+        SELECT _transaction_master_id, _party_id, _currency_code, _amount,  _exchange_rate_debit, _exchange_rate_credit, _cash_repository_id, _posted_date, _bank_account_id, _bank_instrument_code, _bank_tran_code, _statement_reference;
+
+       	------------TODO-----------------
+        RETURN _transaction_master_id;
+END
+$$
+LANGUAGE plpgsql;
+
 
 
 -- policy.check_menu_policy_trigger.sql
@@ -6417,17 +6660,31 @@ GROUP BY account_id;
 
 -- exchange-rates.sql
 INSERT INTO core.exchange_rates(office_id)
-SELECT 2;
+SELECT 1;
 
 INSERT INTO core.exchange_rate_details(exchange_rate_id, local_currency_code, foreign_currency_code, unit, exchange_rate)
 SELECT 1, 'NPR', 'USD', 1, 100.00; 
+
+INSERT INTO core.exchange_rate_details(exchange_rate_id, local_currency_code, foreign_currency_code, unit, exchange_rate)
+SELECT 1, 'NPR', 'INR', 1, 1.6; 
+
+INSERT INTO core.exchange_rates(office_id)
+SELECT 2;
+
+INSERT INTO core.exchange_rate_details(exchange_rate_id, local_currency_code, foreign_currency_code, unit, exchange_rate)
+SELECT 2, 'NPR', 'USD', 1, 100.00; 
+
+INSERT INTO core.exchange_rate_details(exchange_rate_id, local_currency_code, foreign_currency_code, unit, exchange_rate)
+SELECT 2, 'NPR', 'INR', 1, 1.6; 
 
 INSERT INTO core.exchange_rates(office_id)
 SELECT 3;
 
 INSERT INTO core.exchange_rate_details(exchange_rate_id, local_currency_code, foreign_currency_code, unit, exchange_rate)
-SELECT 2, 'NPR', 'USD', 1, 100.00; 
+SELECT 3, 'NPR', 'USD', 1, 100.00; 
 
+INSERT INTO core.exchange_rate_details(exchange_rate_id, local_currency_code, foreign_currency_code, unit, exchange_rate)
+SELECT 3, 'NPR', 'INR', 1, 1.6; 
 
 
 
@@ -6594,18 +6851,18 @@ SELECT core.get_menu_id('ITM'), 'fr', 'Produits et Articles' UNION ALL
 SELECT core.get_menu_id('FI'), 'fr', 'Finances' UNION ALL
 SELECT core.get_menu_id('MF'), 'fr', 'fabrication' UNION ALL
 SELECT core.get_menu_id('CRM'), 'fr', 'CRM' UNION ALL
-SELECT core.get_menu_id('BO'), 'fr', 'Param�tres de configuration' UNION ALL
+SELECT core.get_menu_id('BO'), 'fr', 'Paramètres de configuration' UNION ALL
 SELECT core.get_menu_id('POS'), 'fr', 'POS' UNION ALL
 SELECT core.get_menu_id('SAQ'), 'fr', 'Ventes & Devis' UNION ALL
 SELECT core.get_menu_id('DRS'), 'fr', 'vente directe' UNION ALL
 SELECT core.get_menu_id('SQ'), 'fr', 'Offre de vente' UNION ALL
 SELECT core.get_menu_id('SO'), 'fr', 'commande' UNION ALL
 SELECT core.get_menu_id('SD'), 'fr', 'Livraison Sans Commande' UNION ALL
-SELECT core.get_menu_id('RFC'), 'fr', 'R�ception de la client�le' UNION ALL
+SELECT core.get_menu_id('RFC'), 'fr', 'Réception de la clientèle' UNION ALL
 SELECT core.get_menu_id('SR'), 'fr', 'ventes Retour' UNION ALL
 SELECT core.get_menu_id('SSM'), 'fr', 'Configuration et Maintenance' UNION ALL
 SELECT core.get_menu_id('ABS'), 'fr', 'Bonus dalle pour les agents' UNION ALL
-SELECT core.get_menu_id('BSD'), 'fr', 'Bonus Slab D�tails' UNION ALL
+SELECT core.get_menu_id('BSD'), 'fr', 'Bonus Slab Détails' UNION ALL
 SELECT core.get_menu_id('SSA'), 'fr', 'Agents de vente' UNION ALL
 SELECT core.get_menu_id('BSA'), 'fr', 'Bonus dalle Affectation' UNION ALL
 SELECT core.get_menu_id('SAR'), 'fr', 'Rapports de vente' UNION ALL
@@ -6622,31 +6879,31 @@ SELECT core.get_menu_id('DRP'), 'fr', 'Achat direct' UNION ALL
 SELECT core.get_menu_id('PO'), 'fr', 'Bon de commande' UNION ALL
 SELECT core.get_menu_id('GRN'), 'fr', 'GRN contre PO' UNION ALL
 SELECT core.get_menu_id('PAY'), 'fr', 'Facture d''achat contre GRN' UNION ALL
-SELECT core.get_menu_id('PAS'), 'fr', 'Paiement � Fournisseur' UNION ALL
+SELECT core.get_menu_id('PAS'), 'fr', 'Paiement à Fournisseur' UNION ALL
 SELECT core.get_menu_id('PR'), 'fr', 'achat de retour' UNION ALL
 SELECT core.get_menu_id('PUR'), 'fr', 'Rapports d''achat' UNION ALL
 SELECT core.get_menu_id('IIM'), 'fr', 'Les mouvements des stocks' UNION ALL
 SELECT core.get_menu_id('STJ'), 'fr', 'Journal de transfert de stock' UNION ALL
 SELECT core.get_menu_id('STA'), 'fr', 'Ajustements de stock' UNION ALL
 SELECT core.get_menu_id('ISM'), 'fr', 'Configuration et Maintenance' UNION ALL
-SELECT core.get_menu_id('PT'), 'fr', 'Types de f�te' UNION ALL
+SELECT core.get_menu_id('PT'), 'fr', 'Types de fête' UNION ALL
 SELECT core.get_menu_id('PA'), 'fr', 'Les comptes des partis' UNION ALL
 SELECT core.get_menu_id('PSA'), 'fr', 'Adresse de livraison' UNION ALL
 SELECT core.get_menu_id('SSI'), 'fr', 'Point de maintenance' UNION ALL
-SELECT core.get_menu_id('ICP'), 'fr', 'co�t prix' UNION ALL
+SELECT core.get_menu_id('ICP'), 'fr', 'coût prix' UNION ALL
 SELECT core.get_menu_id('ISP'), 'fr', 'prix de vente' UNION ALL
 SELECT core.get_menu_id('SSG'), 'fr', 'Groupes des ouvrages' UNION ALL
 SELECT core.get_menu_id('SSB'), 'fr', 'marques' UNION ALL
-SELECT core.get_menu_id('UOM'), 'fr', 'Unit�s de mesure' UNION ALL
-SELECT core.get_menu_id('CUOM'), 'fr', 'Unit�s compos�es de mesure' UNION ALL
-SELECT core.get_menu_id('SHI'), 'fr', 'Renseignements sur l''exp�diteur' UNION ALL
-SELECT core.get_menu_id('FTT'), 'fr', 'Transactions et Mod�les' UNION ALL
-SELECT core.get_menu_id('JVN'), 'fr', 'Journal Ch�ques Entr�e' UNION ALL
-SELECT core.get_menu_id('TTR'), 'fr', 'Transaction mod�le' UNION ALL
+SELECT core.get_menu_id('UOM'), 'fr', 'Unités de mesure' UNION ALL
+SELECT core.get_menu_id('CUOM'), 'fr', 'Unités composées de mesure' UNION ALL
+SELECT core.get_menu_id('SHI'), 'fr', 'Renseignements sur l''expéditeur' UNION ALL
+SELECT core.get_menu_id('FTT'), 'fr', 'Transactions et Modèles' UNION ALL
+SELECT core.get_menu_id('JVN'), 'fr', 'Journal Chèques Entrée' UNION ALL
+SELECT core.get_menu_id('TTR'), 'fr', 'Transaction modèle' UNION ALL
 SELECT core.get_menu_id('STN'), 'fr', 'Instructions permanentes' UNION ALL
-SELECT core.get_menu_id('UER'), 'fr', 'Taux de change mise � jour' UNION ALL
+SELECT core.get_menu_id('UER'), 'fr', 'Taux de change mise à jour' UNION ALL
 SELECT core.get_menu_id('RBA'), 'fr', 'Concilier compte bancaire' UNION ALL
-SELECT core.get_menu_id('FVV'), 'fr', 'V�rification bon' UNION ALL
+SELECT core.get_menu_id('FVV'), 'fr', 'Vérification bon' UNION ALL
 SELECT core.get_menu_id('FTDM'), 'fr', 'Transaction Document Manager' UNION ALL
 SELECT core.get_menu_id('FSM'), 'fr', 'Configuration et Maintenance' UNION ALL
 SELECT core.get_menu_id('COA'), 'fr', 'Tableau des comptes' UNION ALL
@@ -6655,53 +6912,53 @@ SELECT core.get_menu_id('CBA'), 'fr', 'Comptes bancaires' UNION ALL
 SELECT core.get_menu_id('PGM'), 'fr', 'Cartographie de GL produit' UNION ALL
 SELECT core.get_menu_id('BT'), 'fr', 'Budgets et objectifs' UNION ALL
 SELECT core.get_menu_id('AGS'), 'fr', 'Vieillissement Dalles' UNION ALL
-SELECT core.get_menu_id('TTY'), 'fr', 'Types d''imp�t' UNION ALL
-SELECT core.get_menu_id('TS'), 'fr', 'Configuration de l''imp�t' UNION ALL
-SELECT core.get_menu_id('CC'), 'fr', 'Centres de co�ts' UNION ALL
+SELECT core.get_menu_id('TTY'), 'fr', 'Types d''impôt' UNION ALL
+SELECT core.get_menu_id('TS'), 'fr', 'Configuration de l''impôt' UNION ALL
+SELECT core.get_menu_id('CC'), 'fr', 'Centres de coûts' UNION ALL
 SELECT core.get_menu_id('MFW'), 'fr', 'Flux de travail de fabrication' UNION ALL
-SELECT core.get_menu_id('MFWSF'), 'fr', 'Pr�visions de ventes' UNION ALL
-SELECT core.get_menu_id('MFWMPS'), 'fr', 'Le calendrier de production de Ma�tre' UNION ALL
+SELECT core.get_menu_id('MFWSF'), 'fr', 'Prévisions de ventes' UNION ALL
+SELECT core.get_menu_id('MFWMPS'), 'fr', 'Le calendrier de production de Maître' UNION ALL
 SELECT core.get_menu_id('MFS'), 'fr', 'Configuration de fabrication' UNION ALL
 SELECT core.get_menu_id('MFSWC'), 'fr', 'Centres de travail' UNION ALL
 SELECT core.get_menu_id('MFSBOM'), 'fr', 'Nomenclatures' UNION ALL
 SELECT core.get_menu_id('MFR'), 'fr', 'Rapports de fabrication' UNION ALL
 SELECT core.get_menu_id('MFRGNR'), 'fr', 'Exigences bruts et nets' UNION ALL
-SELECT core.get_menu_id('MFRCVSL'), 'fr', 'Capacit� vs plomb' UNION ALL
+SELECT core.get_menu_id('MFRCVSL'), 'fr', 'Capacité vs plomb' UNION ALL
 SELECT core.get_menu_id('MFRSFP'), 'fr', 'Planification d''atelier' UNION ALL
 SELECT core.get_menu_id('MFRPOS'), 'fr', 'Suivi de commande de production' UNION ALL
 SELECT core.get_menu_id('CRMM'), 'fr', 'CRM principal' UNION ALL
 SELECT core.get_menu_id('CRML'), 'fr', 'Ajouter un nouveau chef' UNION ALL
-SELECT core.get_menu_id('CRMO'), 'fr', 'Ajouter une nouvelle opportunit�' UNION ALL
-SELECT core.get_menu_id('CRMC'), 'fr', 'Autre plomb � la relance' UNION ALL
+SELECT core.get_menu_id('CRMO'), 'fr', 'Ajouter une nouvelle opportunité' UNION ALL
+SELECT core.get_menu_id('CRMC'), 'fr', 'Autre plomb à la relance' UNION ALL
 SELECT core.get_menu_id('CRMFL'), 'fr', 'Suivi plomb' UNION ALL
-SELECT core.get_menu_id('CRMFO'), 'fr', 'possibilit� de Suivi' UNION ALL
+SELECT core.get_menu_id('CRMFO'), 'fr', 'possibilité de Suivi' UNION ALL
 SELECT core.get_menu_id('CSM'), 'fr', 'Configuration et Maintenance' UNION ALL
 SELECT core.get_menu_id('CRMLS'), 'fr', 'Sources plomb Configuration' UNION ALL
-SELECT core.get_menu_id('CRMLST'), 'fr', 'Configuration de l''�tat de plomb' UNION ALL
-SELECT core.get_menu_id('CRMOS'), 'fr', 'Possibilit� de configuration Etapes' UNION ALL
-SELECT core.get_menu_id('SMP'), 'fr', 'Param�tres divers' UNION ALL
+SELECT core.get_menu_id('CRMLST'), 'fr', 'Configuration de l''état de plomb' UNION ALL
+SELECT core.get_menu_id('CRMOS'), 'fr', 'Possibilité de configuration Etapes' UNION ALL
+SELECT core.get_menu_id('SMP'), 'fr', 'Paramètres divers' UNION ALL
 SELECT core.get_menu_id('TRF'), 'fr', 'drapeaux' UNION ALL
-SELECT core.get_menu_id('SEAR'), 'fr', 'Rapports de v�rification' UNION ALL
+SELECT core.get_menu_id('SEAR'), 'fr', 'Rapports de vérification' UNION ALL
 SELECT core.get_menu_id('SEAR-LV'), 'fr', 'Connectez-vous Voir' UNION ALL
 SELECT core.get_menu_id('SOS'), 'fr', 'Installation d''Office' UNION ALL
 SELECT core.get_menu_id('SOB'), 'fr', 'Bureau & Direction installation' UNION ALL
-SELECT core.get_menu_id('SDS'), 'fr', 'D�partement installation' UNION ALL
-SELECT core.get_menu_id('SRM'), 'fr', 'Gestion des r�les' UNION ALL
+SELECT core.get_menu_id('SDS'), 'fr', 'Département installation' UNION ALL
+SELECT core.get_menu_id('SRM'), 'fr', 'Gestion des rôles' UNION ALL
 SELECT core.get_menu_id('SUM'), 'fr', 'Gestion des utilisateurs' UNION ALL
 SELECT core.get_menu_id('SFY'), 'fr', 'Exercice information' UNION ALL
-SELECT core.get_menu_id('SFR'), 'fr', 'Fr�quence et gestion Exercice' UNION ALL
+SELECT core.get_menu_id('SFR'), 'fr', 'Fréquence et gestion Exercice' UNION ALL
 SELECT core.get_menu_id('SPM'), 'fr', 'Gestion des politiques' UNION ALL
-SELECT core.get_menu_id('SVV'), 'fr', 'Politique sur la v�rification Bon' UNION ALL
-SELECT core.get_menu_id('SAV'), 'fr', 'Politique sur la v�rification automatique' UNION ALL
-SELECT core.get_menu_id('SMA'), 'fr', 'Politique Acc�s au menu' UNION ALL
-SELECT core.get_menu_id('SAP'), 'fr', 'GL Politique d''acc�s' UNION ALL
+SELECT core.get_menu_id('SVV'), 'fr', 'Politique sur la vérification Bon' UNION ALL
+SELECT core.get_menu_id('SAV'), 'fr', 'Politique sur la vérification automatique' UNION ALL
+SELECT core.get_menu_id('SMA'), 'fr', 'Politique Accès au menu' UNION ALL
+SELECT core.get_menu_id('SAP'), 'fr', 'GL Politique d''accès' UNION ALL
 SELECT core.get_menu_id('SSP'), 'fr', 'Politique de magasin' UNION ALL
 SELECT core.get_menu_id('SWI'), 'fr', 'commutateurs' UNION ALL
 SELECT core.get_menu_id('SAT'), 'fr', 'Outils d''administration' UNION ALL
 SELECT core.get_menu_id('SQL'), 'fr', 'SQL Query Tool' UNION ALL
-SELECT core.get_menu_id('DBSTAT'), 'fr', 'Statistiques de base de donn�es' UNION ALL
-SELECT core.get_menu_id('BAK'), 'fr', 'Base de donn�es de sauvegarde' UNION ALL
-SELECT core.get_menu_id('RES'), 'fr', 'restaurer la base de donn�es' UNION ALL
+SELECT core.get_menu_id('DBSTAT'), 'fr', 'Statistiques de base de données' UNION ALL
+SELECT core.get_menu_id('BAK'), 'fr', 'Base de données de sauvegarde' UNION ALL
+SELECT core.get_menu_id('RES'), 'fr', 'restaurer la base de données' UNION ALL
 SELECT core.get_menu_id('PWD'), 'fr', 'Changer d''utilisateur Mot de passe' UNION ALL
 SELECT core.get_menu_id('NEW'), 'fr', 'nouvelle entreprise';
 
@@ -8181,6 +8438,87 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+
+
+
+-- unit_tests.test_transactions_post_receipt_function.sql
+DROP FUNCTION IF EXISTS unit_tests.test_transactions_post_receipt_function();
+
+CREATE FUNCTION unit_tests.test_transactions_post_receipt_function()
+RETURNS public.test_result
+AS
+$$
+	DECLARE message                                 test_result;
+	DECLARE _user_id				integer;
+	DECLARE _office_id				integer; 
+	DECLARE _login_id				bigint;
+	DECLARE _party_code				national character varying(12); 
+	DECLARE _currency_code				national character varying(12); 
+	DECLARE _amount					money_strict; 
+	DECLARE _exchange_rate_debit			decimal_strict; 
+	DECLARE _exchange_rate_credit			decimal_strict;
+	DECLARE _reference_number			national character varying(24); 
+	DECLARE _statement_reference			national character varying(128); 
+	DECLARE _cost_center_id				integer;
+	DECLARE _cash_repository_id			integer;
+	DECLARE _posted_date                            date;
+	DECLARE _bank_account_id			integer;
+	DECLARE _bank_instrument_code			national character varying(128);
+	DECLARE _bank_tran_code				national character varying(128);
+	DECLARE _result                                 bigint;
+BEGIN
+
+
+
+        _user_id                                        := (SELECT user_id FROM office.users WHERE user_name != 'sys' LIMIT 1);
+        _office_id                                      := (SELECT office_id FROM office.offices LIMIT 1);
+	_login_id				        := (SELECT login_id FROM audit.logins LIMIT 1);
+	_party_code				        := (SELECT party_code FROM core.parties LIMIT 1);
+	_currency_code				        := 'USD';
+	_amount					        := 1000.00;
+	_exchange_rate_debit			        := 100.00;
+	_exchange_rate_credit			        := 100.00;
+	_reference_number			        := 'PL-PG-UNIT-TEST';
+	_statement_reference			        := 'This transaction should have been rollbacked already.';
+	_cost_center_id				        := (SELECT cost_center_id FROM office.cost_centers LIMIT 1);
+	_cash_repository_id			        := (SELECT cash_repository_id FROM office.cash_repositories LIMIT 1);
+	_posted_date                                    := NULL;
+	_bank_account_id			        := NULL;
+	_bank_instrument_code			        := NULL;
+	_bank_tran_code				        := NULL;
+                                                        
+        _result                                         := transactions.post_receipt_function
+                                                                (
+                                                                        _user_id, 
+                                                                        _office_id, 
+                                                                        _login_id,
+                                                                        _party_code, 
+                                                                        _currency_code, 
+                                                                        _amount, 
+                                                                        _exchange_rate_debit, 
+                                                                        _exchange_rate_credit,
+                                                                        _reference_number, 
+                                                                        _statement_reference, 
+                                                                        _cost_center_id,
+                                                                        _cash_repository_id,
+                                                                        _posted_date,
+                                                                        _bank_account_id,
+                                                                        _bank_instrument_code,
+                                                                        _bank_tran_code	
+                                                                );
+
+        IF(_result <= 0) THEN
+		SELECT assert.fail('Cannot compile transactions.post_receipt_function.') INTO message;
+		RETURN message;
+        END IF;
+
+
+	SELECT assert.ok('End of test.') INTO message;  
+	RETURN message;
+END
+$$
+LANGUAGE plpgsql;
+
 
 
 

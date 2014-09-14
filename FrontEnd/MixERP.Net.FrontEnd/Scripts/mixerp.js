@@ -79,6 +79,16 @@ var parseFloat2 = function (arg) {
     return val;
 };
 
+var parseInt2 = function (arg) {
+    var val = parseInt(arg || 0);
+
+    if (isNaN(val)) {
+        val = 0;
+    }
+
+    return val;
+};
+
 var confirmAction = function () {
     return confirm(areYouSureLocalized);
 };
@@ -608,8 +618,9 @@ var toggleSuccess = function (cell) {
     row.toggleClass("alert alert-success");
 };
 
-jQuery.fn.bindAjaxData = function (ajaxData, skipSelect) {
+jQuery.fn.bindAjaxData = function (ajaxData, skipSelect, selectedValue) {
     "use strict";
+    var selected;
     var targetControl = $(this);
     targetControl.empty();
 
@@ -623,12 +634,28 @@ jQuery.fn.bindAjaxData = function (ajaxData, skipSelect) {
     }
 
     $.each(ajaxData, function () {
-        appendItem(targetControl, this["Value"], this["Text"]);
+        selected = false;
+
+        if (selectedValue) {
+            console.log("Selected value :" + selectedValue);
+            if (this["Value"] == selectedValue) {
+                selected = true;
+            };
+        };
+
+        appendItem(targetControl, this["Value"], this["Text"], selected);
     });
 };
 
-function appendItem(dropDownList, value, text) {
-    dropDownList.append($("<option></option>").val(value).html(text));
+var appendItem = function (dropDownList, value, text, selected) {
+    var option = $("<option></option>");
+    option.val(value).html(text);
+
+    if (selected) {
+        option.prop("selected", true);
+    };
+
+    dropDownList.append(option);
 };
 
 var getAjax = function (url, data) {
@@ -638,6 +665,46 @@ var getAjax = function (url, data) {
         data: data,
         contentType: "application/json; charset=utf-8",
         dataType: "json"
+    });
+};
+
+var ajaxUpdateVal = function (url, targetControl, data) {
+    var ajax;
+
+    if (data) {
+        ajax = getAjax(url, data);
+    } else {
+        ajax = getAjax(url);
+    };
+
+    ajax.success(function (msg) {
+        targetControl.val(msg.d);
+    });
+
+    ajax.error(function (xhr) {
+        logError(getAjaxErrorMessage(xhr));
+    });
+};
+
+var ajaxDataBind = function (url, targetControl, data, selectedValue, associatedControl) {
+    var ajax;
+
+    if (data) {
+        ajax = new getAjax(url, data);
+    } else {
+        ajax = new getAjax(url);
+    };
+
+    ajax.success(function (msg) {
+        targetControl.bindAjaxData(msg.d, true, selectedValue);
+        if (associatedControl && associatedControl.val) {
+            associatedControl.val(selectedValue);
+        };
+    });
+
+    ajax.error(function (xhr) {
+        var err = $.parseJSON(xhr.responseText);
+        appendItem(targetControl, 0, err.Message);
     });
 };
 

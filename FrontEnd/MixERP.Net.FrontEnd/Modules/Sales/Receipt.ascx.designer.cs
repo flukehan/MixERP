@@ -20,23 +20,5 @@ namespace MixERP.Net.Core.Modules.Sales {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::MixERP.Net.WebControls.Common.DateTextBox PostedDateTextBox;
-        
-        /// <summary>
-        /// TestButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button TestButton;
-        
-        /// <summary>
-        /// TestLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label TestLabel;
     }
 }

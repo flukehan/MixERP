@@ -122,6 +122,7 @@
     <Content Include="Services\Entry\Quotation.asmx" />
     <Content Include="Services\Receipt\Accounts.asmx" />
     <Content Include="Services\Receipt\Currencies.asmx" />
+    <Content Include="Services\Receipt\TransactionPosting.asmx" />
     <Content Include="SQL\Menu.sql" />
     <Content Include="SQL\Module.sql" />
     <Content Include="Setup\AgentBonusSlabDetails.ascx" />
@@ -313,6 +314,10 @@
       <DependentUpon>Currencies.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Services\Receipt\TransactionPosting.asmx.cs">
+      <DependentUpon>TransactionPosting.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Setup\AgentBonusSlabDetails.ascx.cs">
       <DependentUpon>AgentBonusSlabDetails.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -344,6 +349,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.Net.TransactionGovernor\MixERP.Net.TransactionGovernor.csproj">
+      <Project>{0aacf4db-8332-4c4b-96df-2bf6aea68473}</Project>
+      <Name>MixERP.Net.TransactionGovernor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.Common\MixERP.Net.WebControls.Common.csproj">
       <Project>{2d961540-6597-4e7b-969c-974d71d820dd}</Project>
       <Name>MixERP.Net.WebControls.Common</Name>
