@@ -17,9 +17,9 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 <%@ Control Language="C#" AutoEventWireup="True" CodeBehind="ProductViewControl.ascx.cs" Inherits="MixERP.Net.FrontEnd.UserControls.Products.ProductViewControl" %>
-<h1>
+<h2>
     <asp:Literal ID="TitleLiteral" runat="server" />
-</h1>
+</h2>
 
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
@@ -47,6 +47,12 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
             onclick="if(!getSelectedItems()){return;};" onserverclick="MergeToGRNButton_Click" visible="False">
             <span class="glyphicon glyphicon-tree-conifer"></span>
             <asp:Literal runat="server" Text="<%$Resources:Titles, MergeBatchToGRN %>"></asp:Literal>
+        </button>
+
+        <button type="button" id="ReturnButton" runat="server" class="btn btn-default btn-sm"
+            onclick="if(!getSelectedItems()){return;};" onserverclick="ReturnButton_Click" visible="False">
+            <span class="glyphicon glyphicon-tree-conifer"></span>
+            <asp:Literal runat="server" Text="<%$Resources:Titles, Return %>"></asp:Literal>
         </button>
 
         <button type="button" id="flagButton" class="btn btn-default btn-sm">
@@ -100,8 +106,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                 <mixerp:DateTextBox ID="DateFromDateTextBox" runat="server"
                     CssClass="date form-control input-sm"
                     Mode="MonthStartDate"
-                    Required="true"
-                    AssociatedControlId="Trigger1" />
+                    Required="true" />
                 <span class="input-group-addon" onclick="$('#DateFromDateTextBox').datepicker('show');">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -153,7 +158,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         <asp:GridView
             ID="ProductViewGridView"
             runat="server"
-            CssClass="table table-bordered table-condensed"
+            CssClass="table table-bordered table-condensed pointer"
             AutoGenerateColumns="false"
             OnRowDataBound="ProductViewGridView_RowDataBound">
             <Columns>
@@ -188,6 +193,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                 <asp:BoundField DataField="transaction_ts" HeaderText="transaction_ts" DataFormatString="{0:D}" />
                 <asp:BoundField DataField="user" HeaderText="user" />
                 <asp:BoundField DataField="statement_reference" HeaderText="statement_reference" />
+                <asp:BoundField DataField="book" HeaderText="book" />
                 <asp:BoundField DataField="flag_background_color" HeaderText="flag_background_color" />
                 <asp:BoundField DataField="flag_foreground_color" HeaderText="flag_foreground_color" />
             </Columns>

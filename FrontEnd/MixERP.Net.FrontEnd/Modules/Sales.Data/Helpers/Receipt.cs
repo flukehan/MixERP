@@ -2,6 +2,7 @@
 using Npgsql;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -58,6 +59,25 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
                 command.Parameters.AddWithValue("@BankTransactionCode", bankTransactionCode);
 
                 return Conversion.TryCastLong(DBFactory.DbOperations.GetScalarValue(command));
+            }
+        }
+
+        public static DataTable GetView(int userId, int officeId, DateTime dateFrom, DateTime dateTo, string office, string party, string user, string referenceNumber, string statementReference)
+        {
+            const string sql = "SELECT * FROM transactions.get_receipt_view(@UserId, @OfficeId, @DateFrom, @DateTo, @Office, @Party, @User, @ReferenceNumber, @StatementReference);";
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                command.Parameters.AddWithValue("@UserId", userId);
+                command.Parameters.AddWithValue("@OfficeId", officeId);
+                command.Parameters.AddWithValue("@DateFrom", dateFrom);
+                command.Parameters.AddWithValue("@DateTo", dateTo);
+                command.Parameters.AddWithValue("@Office", office);
+                command.Parameters.AddWithValue("@Party", party);
+                command.Parameters.AddWithValue("@User", user);
+                command.Parameters.AddWithValue("@ReferenceNumber", referenceNumber);
+                command.Parameters.AddWithValue("@StatementReference", statementReference);
+
+                return DBFactory.DbOperations.GetDataTable(command);
             }
         }
     }

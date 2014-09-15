@@ -57,6 +57,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Entry\Receipt.ascx" />
+    <Content Include="Entry\Return.ascx" />
     <Content Include="Package.xml" />
     <Content Include="Reports\CustomerInvoiceReport.ascx" />
     <Content Include="Confirmation\Delivery.ascx" />
@@ -102,6 +104,11 @@
     <Content Include="Reports\Source\Sales.View.Sales.Quotation.xml">
       <SubType>Designer</SubType>
     </Content>
+    <EmbeddedResource Include="Resources\DbResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DbResource.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Titles.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
@@ -115,11 +122,13 @@
     <EmbeddedResource Include="Scripts\Entry\Order.js" />
     <EmbeddedResource Include="Scripts\Entry\Quotation.js" />
     <Content Include="Return.ascx" />
-    <Content Include="Scripts\Receipt.js" />
+    <Content Include="Scripts\Entry\Receipt.js" />
+    <Content Include="Scripts\Entry\Return.js" />
     <Content Include="Services\Entry\Delivery.asmx" />
     <Content Include="Services\Entry\DirectSales.asmx" />
     <Content Include="Services\Entry\Order.asmx" />
     <Content Include="Services\Entry\Quotation.asmx" />
+    <Content Include="Services\Entry\Return.asmx" />
     <Content Include="Services\Receipt\Accounts.asmx" />
     <Content Include="Services\Receipt\Currencies.asmx" />
     <Content Include="Services\Receipt\TransactionPosting.asmx" />
@@ -132,6 +141,20 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entry\Receipt.ascx.cs">
+      <DependentUpon>Receipt.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Entry\Receipt.ascx.designer.cs">
+      <DependentUpon>Receipt.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Entry\Return.ascx.cs">
+      <DependentUpon>Return.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Entry\Return.ascx.designer.cs">
+      <DependentUpon>Return.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Reports\CustomerInvoiceReport.ascx.cs">
       <DependentUpon>CustomerInvoiceReport.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -273,6 +296,11 @@
     <Compile Include="Receipt.ascx.designer.cs">
       <DependentUpon>Receipt.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\DbResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DbResource.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Titles.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -304,6 +332,10 @@
     </Compile>
     <Compile Include="Services\Entry\Quotation.asmx.cs">
       <DependentUpon>Quotation.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\Entry\Return.asmx.cs">
+      <DependentUpon>Return.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Services\Receipt\Accounts.asmx.cs">

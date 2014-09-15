@@ -217,4 +217,8 @@ h6 {
 .input-group-addon {
   cursor: pointer;
 }
+.table2 th,
+.table2 td {
+  padding: 8px;
+}
 /*# sourceMappingURL=mixerp.css.map */

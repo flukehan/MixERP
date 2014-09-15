@@ -1069,8 +1069,25 @@ CREATE TABLE transactions.customer_receipts
 	bank_account_id			bigint NULL REFERENCES core.bank_accounts(account_id),
 	bank_instrument_code		national character varying(128) NULL CONSTRAINT customer_receipt_bank_instrument_code_df DEFAULT(''),
 	bank_tran_code			national character varying(128) NULL CONSTRAINT customer_receipt_bank_tran_code_df DEFAULT(''),	
-	statement_reference		national character varying(128) NULL CONSTRAINT customer_receipt_statement_reference_df DEFAULT('')	
 );
+
+CREATE INDEX customer_receipts_transaction_master_id_inx
+ON transactions.customer_receipts(transaction_master_id);
+
+CREATE INDEX customer_receipts_party_id_inx
+ON transactions.customer_receipts(party_id);
+
+CREATE INDEX customer_receipts_currency_code_inx
+ON transactions.customer_receipts(currency_code);
+
+CREATE INDEX customer_receipts_cash_repository_id_inx
+ON transactions.customer_receipts(cash_repository_id);
+
+CREATE INDEX customer_receipts_posted_date_inx
+ON transactions.customer_receipts(posted_date);
+
+CREATE INDEX customer_receipts_bank_account_id_inx
+ON transactions.customer_receipts(bank_account_id);
 
 
 CREATE TABLE transactions.stock_master

@@ -43,7 +43,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 
             using (var textBox = GetTextBox(columnName + "_textbox", maxLength))
             {
-                var label = LocalizationHelper.GetResourceString(resourceClassName, columnName);
+                var label = LocalizationHelper.GetDefaultAssemblyResourceString(resourceClassName, columnName);
 
                 textBox.Text = defaultValue;
 

@@ -1,5 +1,4 @@
-﻿
-using MixERP.Net.Common;
+﻿using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.WebControls.StockTransactionView.Data;
@@ -76,6 +75,11 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             set { MergeToGRNButton.Visible = value; }
         }
 
+        public bool ShowReturnButton
+        {
+            set { ReturnButton.Visible = value; }
+        }
+
         protected void Page_Init()
         {
             this.BindFlagTypeDropDownList();
@@ -94,6 +98,12 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         private void InitializePostBackUrls()
         {
+            if (string.IsNullOrWhiteSpace(this.AddNewUrl))
+            {
+                this.AddNewButton.Visible = false;
+                return;
+            }
+
             this.AddNewButton.Attributes.Add("onclick", "window.location='" + ResolveUrl(this.AddNewUrl) + "'");
         }
 
@@ -244,6 +254,12 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             {
                 this.Merge(values, "~/Purchase/Entry/GRN.aspx");
             }
+        }
+
+        protected void ReturnButton_Click(object sender, EventArgs e)
+        {
+            Collection<int> values = this.GetSelectedValues();
+            Response.Redirect("~/Modules/Sales/Entry/Return.mix?TranId=" + values[0]);
         }
 
         protected void ShowButton_Click(object sender, EventArgs e)
@@ -424,7 +440,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
                     if (!string.IsNullOrWhiteSpace(cellText))
                     {
-                        cellText = LocalizationHelper.GetResourceString("ScrudResource", cellText);
+                        cellText = LocalizationHelper.GetDefaultAssemblyResourceString(ConfigurationHelper.GetScrudParameter("ResourceClassName"), cellText);
                         e.Row.Cells[i].Text = cellText;
                     }
                 }
@@ -479,7 +495,9 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             string resourceKey = this.GetTransactionTablePrimaryKeyName();
             Collection<int> resourceIds = this.GetSelectedValues();
 
-            Flags.CreateFlag(flagTypeId, resource, resourceKey, resourceIds);
+            int userId = SessionHelper.GetUserId();
+
+            WebControls.StockTransactionView.Helpers.Flags.CreateFlag(userId, flagTypeId, resource, resourceKey, resourceIds);
             this.LoadGridView();
         }
     }

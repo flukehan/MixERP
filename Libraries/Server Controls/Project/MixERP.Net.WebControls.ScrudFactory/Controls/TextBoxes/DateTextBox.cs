@@ -50,7 +50,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
             {
                 Net.Common.jQueryHelper.jQueryUI.AddjQueryUIDatePicker(null, id, null, null);
 
-                var label = LocalizationHelper.GetResourceString(resourceClassName, columnName);
+                var label = LocalizationHelper.GetDefaultAssemblyResourceString(resourceClassName, columnName);
 
                 textBox.Text = defaultValue;
 

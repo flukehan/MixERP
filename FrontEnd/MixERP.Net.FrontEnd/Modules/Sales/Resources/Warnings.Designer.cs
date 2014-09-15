@@ -61,11 +61,29 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Access is denied..
+        /// </summary>
+        internal static string AccessIsDenied {
+            get {
+                return ResourceManager.GetString("AccessIsDenied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Only {0} {1} of {2} left in stock..
         /// </summary>
         internal static string InsufficientStockWarning {
             get {
                 return ResourceManager.GetString("InsufficientStockWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid party. This party is not associated with this transaction..
+        /// </summary>
+        internal static string InvalidParty {
+            get {
+                return ResourceManager.GetString("InvalidParty", resourceCulture);
             }
         }
     }

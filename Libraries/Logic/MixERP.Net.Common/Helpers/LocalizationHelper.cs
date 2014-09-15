@@ -21,6 +21,7 @@ using System;
 using System.Collections;
 using System.ComponentModel.Design;
 using System.Globalization;
+using System.Reflection;
 using System.Resources;
 using System.Threading;
 using System.Web;
@@ -29,7 +30,7 @@ namespace MixERP.Net.Common.Helpers
 {
     public static class LocalizationHelper
     {
-        public static string GetResourceString(string className, string key)
+        public static string GetDefaultAssemblyResourceString(string className, string key)
         {
             if (string.IsNullOrWhiteSpace(key) || HttpContext.Current == null)
             {
@@ -53,7 +54,7 @@ namespace MixERP.Net.Common.Helpers
             }
         }
 
-        public static string GetResourceString(string className, string key, bool throwError)
+        private static string GetResourceString(string className, string key, bool throwError)
         {
             if (string.IsNullOrWhiteSpace(key) || HttpContext.Current == null)
             {
@@ -78,6 +79,19 @@ namespace MixERP.Net.Common.Helpers
             }
 
             return key;
+        }
+
+        public static string GetResourceString(string fqClassName, string key, Assembly assembly)
+        {
+            ResourceManager r = new ResourceManager(fqClassName, assembly);
+            string value = r.GetString(key, LocalizationHelper.GetCurrentCulture());
+
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                value = key;
+            }
+
+            return value;
         }
 
         public static void AddResourceString(string path, string key, string value)

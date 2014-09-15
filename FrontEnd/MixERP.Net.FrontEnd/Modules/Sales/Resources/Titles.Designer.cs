@@ -61,6 +61,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add New.
+        /// </summary>
+        internal static string AddNew {
+            get {
+                return ResourceManager.GetString("AddNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bonus Slab Assignment.
         /// </summary>
         internal static string AgentBonusSlabAssignment {
@@ -79,11 +88,29 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Agents.
+        /// </summary>
+        internal static string Agents {
+            get {
+                return ResourceManager.GetString("Agents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bonus Slab Details for Agents.
         /// </summary>
         internal static string BonusSlabDetails {
             get {
                 return ResourceManager.GetString("BonusSlabDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        internal static string Close {
+            get {
+                return ResourceManager.GetString("Close", resourceCulture);
             }
         }
         
@@ -102,6 +129,42 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         internal static string ExchangeRate {
             get {
                 return ResourceManager.GetString("ExchangeRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Flag.
+        /// </summary>
+        internal static string Flag {
+            get {
+                return ResourceManager.GetString("Flag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can mark this transaction with a flag, however you will not be able to see the flags created by other users..
+        /// </summary>
+        internal static string FlagDescription {
+            get {
+                return ResourceManager.GetString("FlagDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Flag This Transaction.
+        /// </summary>
+        internal static string FlagThisTransaction {
+            get {
+                return ResourceManager.GetString("FlagThisTransaction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Print.
+        /// </summary>
+        internal static string Print {
+            get {
+                return ResourceManager.GetString("Print", resourceCulture);
             }
         }
         
@@ -129,6 +192,33 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         internal static string SalesQuotation {
             get {
                 return ResourceManager.GetString("SalesQuotation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sales Receipt.
+        /// </summary>
+        internal static string SalesReceipt {
+            get {
+                return ResourceManager.GetString("SalesReceipt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a Flag.
+        /// </summary>
+        internal static string SelectFlag {
+            get {
+                return ResourceManager.GetString("SelectFlag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        internal static string Update {
+            get {
+                return ResourceManager.GetString("Update", resourceCulture);
             }
         }
     }

@@ -1,5 +1,4 @@
-﻿
-using MixERP.Net.Core.Modules.Purchase.Resources;
+﻿using MixERP.Net.Core.Modules.Purchase.Resources;
 using MixERP.Net.FrontEnd.Base;
 using System;
 

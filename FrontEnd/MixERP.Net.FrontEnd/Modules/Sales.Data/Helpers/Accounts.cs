@@ -24,5 +24,10 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
         {
             return FormHelper.GetTable("core", "bank_accounts");
         }
+
+        public static DataTable GetFlags()
+        {
+            return FormHelper.GetTable("core", "flag_types");
+        }
     }
 }

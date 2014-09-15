@@ -28,7 +28,7 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
                 scrud.DisplayViews = GetDisplayViews();
                 scrud.SelectedValues = GetSelectedValues();
 
-                scrud.Text = LocalizationHelper.GetResourceString("Titles", "AgentSetup");
+                scrud.Text = Resources.Titles.Agents;
 
                 ScrudPlaceholder.Controls.Add(scrud);
             }

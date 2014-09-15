@@ -39,7 +39,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
             using (
                 var radioButtonList = GetRadioButtonList(columnName + "_radiobuttonlist", keys, values, selectedValue))
             {
-                var label = LocalizationHelper.GetResourceString(resourceClassName, columnName);
+                var label = LocalizationHelper.GetDefaultAssemblyResourceString(resourceClassName, columnName);
 
                 if (!isNullable)
                 {

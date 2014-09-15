@@ -22,12 +22,12 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
         {
             if (details == null)
             {
-                throw new InvalidOperationException(LocalizationHelper.GetResourceString("Errors", "NoTransactionToPost"));
+                throw new InvalidOperationException(Resources.Errors.NoTransactionToPost);
             }
 
             if (details.Count.Equals(0))
             {
-                throw new InvalidOperationException(LocalizationHelper.GetResourceString("Errors", "NoTransactionToPost"));
+                throw new InvalidOperationException(Resources.Errors.NoTransactionToPost);
             }
 
             decimal debitTotal = (from detail in details select detail.LocalCurrencyDebit).Sum();
@@ -35,7 +35,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 
             if (debitTotal != creditTotal)
             {
-                throw new InvalidOperationException(LocalizationHelper.GetResourceString("Errors", "ReferencingSidesNotEqual"));
+                throw new InvalidOperationException(Resources.Errors.ReferencingSidesNotEqual);
             }
 
             var decimalPlaces = LocalizationHelper.GetCurrencyDecimalPlaces();
@@ -44,7 +44,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
                  where Decimal.Round(detail.Credit * detail.ExchangeRate, decimalPlaces) != Decimal.Round(detail.LocalCurrencyCredit, decimalPlaces) || Decimal.Round(detail.Debit * detail.ExchangeRate, decimalPlaces) != Decimal.Round(detail.LocalCurrencyDebit, decimalPlaces)
                  select detail).Any())
             {
-                throw new InvalidOperationException(LocalizationHelper.GetResourceString("Errors", "ReferencingSidesNotEqual"));
+                throw new InvalidOperationException(Resources.Errors.ReferencingSidesNotEqual);
             }
 
             using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString()))
@@ -77,12 +77,12 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 
                             if (model.Credit > 0 && model.Debit > 0)
                             {
-                                throw new InvalidOperationException(LocalizationHelper.GetResourceString("Warnings", "BothSidesHaveValue"));
+                                throw new InvalidOperationException(Resources.Errors.BothSidesCannotHaveValue);
                             }
 
                             if (model.LocalCurrencyCredit > 0 && model.LocalCurrencyDebit > 0)
                             {
-                                throw new InvalidOperationException(LocalizationHelper.GetResourceString("Warnings", "BothSidesHaveValue"));
+                                throw new InvalidOperationException(Resources.Errors.BothSidesCannotHaveValue);
                             }
 
                             decimal amountInCurrency;

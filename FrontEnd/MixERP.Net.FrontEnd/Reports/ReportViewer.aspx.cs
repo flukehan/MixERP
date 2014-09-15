@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.ReportEngine.Helpers;
@@ -82,7 +81,7 @@ namespace MixERP.Net.FrontEnd.Reports
                 {
                     textBox.ID = parameter.Key.Replace("@", "") + "_text_box";
 
-                    string label = "<label for='" + textBox.ID + "'>" + LocalizationHelper.GetResourceString("ScrudResource", parameter.Key.Replace("@", "")) + "</label>";
+                    string label = "<label for='" + textBox.ID + "'>" + LocalizationHelper.GetDefaultAssemblyResourceString(ConfigurationHelper.GetReportParameter("ResourceClassName"), parameter.Key.Replace("@", "")) + "</label>";
 
                     if (parameter.Value.Equals("Date"))
                     {

@@ -20,6 +20,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 -->
 <configuration>
   <appSettings>
+    <add key="ResourceClassName" value="ScrudResource" />
     <add key="LogoPath" value="~/Resource/Static/images/mixerp-logo-light.png" />
     <add key="HeaderPath" value="~/Reports/Assets/Header.html" />
     <add key="DbLoginName" value="report_user" />

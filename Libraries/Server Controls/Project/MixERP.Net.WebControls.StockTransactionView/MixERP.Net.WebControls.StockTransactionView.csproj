@@ -50,11 +50,18 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\Flags.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Mix Open Foundation.snk" />
     <None Include="MixERP.Net.WebControls.StockTransactionView.licenseheader" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Logic\MixERP.Net.TransactionGovernor\MixERP.Net.TransactionGovernor.csproj">
+      <Project>{0aacf4db-8332-4c4b-96df-2bf6aea68473}</Project>
+      <Name>MixERP.Net.TransactionGovernor</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

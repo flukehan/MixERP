@@ -26,7 +26,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceholder" runat="server">
 
     <div style="max-width: 1092px; margin: auto;">
-        <h1 style="margin: 12px;">Binod, Welcome to MixERP Dashboard (Todo Page)</h1>
+        <h2 style="margin: 12px;">
+            <asp:Literal runat="server" ID="TitleLiteral"></asp:Literal>
+        </h2>
 
         <div id="sortable-container">
             <asp:PlaceHolder ID="WidgetPlaceholder" runat="server" />

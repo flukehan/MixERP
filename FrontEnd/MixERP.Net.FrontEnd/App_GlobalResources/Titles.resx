@@ -801,4 +801,7 @@
   <data name="DefaultCurrency" xml:space="preserve">
     <value>Default Currency</value>
   </data>
+  <data name="Return" xml:space="preserve">
+    <value>Return</value>
+  </data>
 </root>

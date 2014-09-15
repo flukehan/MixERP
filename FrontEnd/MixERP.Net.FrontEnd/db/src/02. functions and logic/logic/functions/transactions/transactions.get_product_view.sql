@@ -40,6 +40,7 @@ RETURNS TABLE
 	"user"					national character varying(50),
 	reference_number			national character varying(24),
 	statement_reference			text,
+	book                                    text,
 	agent					text,
 	is_credit				boolean,
 	shipper					text,
@@ -51,6 +52,21 @@ RETURNS TABLE
 AS
 $$
 BEGIN
+        CREATE TEMPORARY TABLE IF NOT EXISTS temp_book(book text);
+        TRUNCATE TABLE temp_book;
+
+        INSERT INTO temp_book
+        SELECT book_;
+
+        IF(book_ = 'Sales.Return') THEN
+                TRUNCATE TABLE temp_book;
+
+                INSERT INTO temp_book
+                SELECT 'Sales.Direct' UNION SELECT 'Sales.Delivery';                
+        END IF;
+
+
+
 	RETURN QUERY 
 	WITH RECURSIVE office_cte(office_id) AS 
 	(
@@ -76,6 +92,7 @@ BEGIN
 		office.users.user_name AS user,
 		transactions.transaction_master.reference_number,
 		transactions.transaction_master.statement_reference,
+                transactions.transaction_master.book::text,
 		core.get_agent_name_by_agent_id(transactions.stock_master.agent_id),
 		transactions.stock_master.is_credit,
 		core.get_shipper_name_by_shipper_id(transactions.stock_master.shipper_id),
@@ -96,7 +113,7 @@ BEGIN
 	ON transactions.transaction_master.office_id = office.offices.office_id
 	LEFT OUTER JOIN core.price_types
 	ON transactions.stock_master.price_type_id = core.price_types.price_type_id
-	WHERE transactions.transaction_master.book = book_
+	WHERE transactions.transaction_master.book IN (SELECT * FROM temp_book)
 	AND transactions.transaction_master.verification_status_id > 0
 	AND transactions.transaction_master.value_date BETWEEN date_from_ AND date_to_
 	AND 
@@ -140,7 +157,8 @@ BEGIN
 		transactions.transaction_master.transaction_ts,
 		office.users.user_name,
 		transactions.transaction_master.reference_number,
-		transactions.transaction_master.statement_reference		
+		transactions.transaction_master.statement_reference,
+		transactions.transaction_master.book	
 	LIMIT 100;
 END
 $$

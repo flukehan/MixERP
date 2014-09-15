@@ -32,7 +32,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
             bool isNullable, string keys, string values, string selectedValues, string errorCssClass)
         {
             var checkBoxList = GetCheckBoxList(columnName + "_radiobuttonlist", keys, values, selectedValues);
-            var label = LocalizationHelper.GetResourceString(resourceClassName, columnName);
+            var label = LocalizationHelper.GetDefaultAssemblyResourceString(resourceClassName, columnName);
 
             if (!isNullable)
             {

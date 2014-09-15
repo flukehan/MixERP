@@ -122,8 +122,8 @@ namespace MixERP.Net.FrontEnd
 
             if (results)
             {
-                MixERPWebpage.SetAuthenticationTicket(page, userName, rememberMe);
                 MixERPWebpage.SetSession(page, userName);
+                MixERPWebpage.SetAuthenticationTicket(page, userName, rememberMe);
             }
 
             return results;

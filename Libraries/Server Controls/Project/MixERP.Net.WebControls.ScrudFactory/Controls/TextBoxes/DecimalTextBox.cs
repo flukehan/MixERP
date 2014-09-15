@@ -31,7 +31,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
         public static void AddDecimalTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isNullable, int maxLength, string domain, string errorCssClass)
         {
             var textBox = ScrudTextBox.GetTextBox(columnName + "_textbox", maxLength);
-            var label = LocalizationHelper.GetResourceString(resourceClassName, columnName);
+            var label = LocalizationHelper.GetDefaultAssemblyResourceString(resourceClassName, columnName);
 
             var validator = GetDecimalValidator(textBox, domain, errorCssClass);
             textBox.Text = defaultValue;

@@ -1938,8 +1938,25 @@ CREATE TABLE transactions.customer_receipts
 	bank_account_id			bigint NULL REFERENCES core.bank_accounts(account_id),
 	bank_instrument_code		national character varying(128) NULL CONSTRAINT customer_receipt_bank_instrument_code_df DEFAULT(''),
 	bank_tran_code			national character varying(128) NULL CONSTRAINT customer_receipt_bank_tran_code_df DEFAULT(''),	
-	statement_reference		national character varying(128) NULL CONSTRAINT customer_receipt_statement_reference_df DEFAULT('')	
 );
+
+CREATE INDEX customer_receipts_transaction_master_id_inx
+ON transactions.customer_receipts(transaction_master_id);
+
+CREATE INDEX customer_receipts_party_id_inx
+ON transactions.customer_receipts(party_id);
+
+CREATE INDEX customer_receipts_currency_code_inx
+ON transactions.customer_receipts(currency_code);
+
+CREATE INDEX customer_receipts_cash_repository_id_inx
+ON transactions.customer_receipts(cash_repository_id);
+
+CREATE INDEX customer_receipts_posted_date_inx
+ON transactions.customer_receipts(posted_date);
+
+CREATE INDEX customer_receipts_bank_account_id_inx
+ON transactions.customer_receipts(bank_account_id);
 
 
 CREATE TABLE transactions.stock_master
@@ -4308,6 +4325,7 @@ RETURNS TABLE
 	"user"					national character varying(50),
 	reference_number			national character varying(24),
 	statement_reference			text,
+	book                                    text,
 	agent					text,
 	is_credit				boolean,
 	shipper					text,
@@ -4319,6 +4337,21 @@ RETURNS TABLE
 AS
 $$
 BEGIN
+        CREATE TEMPORARY TABLE IF NOT EXISTS temp_book(book text);
+        TRUNCATE TABLE temp_book;
+
+        INSERT INTO temp_book
+        SELECT book_;
+
+        IF(book_ = 'Sales.Return') THEN
+                TRUNCATE TABLE temp_book;
+
+                INSERT INTO temp_book
+                SELECT 'Sales.Direct' UNION SELECT 'Sales.Delivery';                
+        END IF;
+
+
+
 	RETURN QUERY 
 	WITH RECURSIVE office_cte(office_id) AS 
 	(
@@ -4344,6 +4377,7 @@ BEGIN
 		office.users.user_name AS user,
 		transactions.transaction_master.reference_number,
 		transactions.transaction_master.statement_reference,
+                transactions.transaction_master.book::text,
 		core.get_agent_name_by_agent_id(transactions.stock_master.agent_id),
 		transactions.stock_master.is_credit,
 		core.get_shipper_name_by_shipper_id(transactions.stock_master.shipper_id),
@@ -4364,7 +4398,7 @@ BEGIN
 	ON transactions.transaction_master.office_id = office.offices.office_id
 	LEFT OUTER JOIN core.price_types
 	ON transactions.stock_master.price_type_id = core.price_types.price_type_id
-	WHERE transactions.transaction_master.book = book_
+	WHERE transactions.transaction_master.book IN (SELECT * FROM temp_book)
 	AND transactions.transaction_master.verification_status_id > 0
 	AND transactions.transaction_master.value_date BETWEEN date_from_ AND date_to_
 	AND 
@@ -4408,11 +4442,116 @@ BEGIN
 		transactions.transaction_master.transaction_ts,
 		office.users.user_name,
 		transactions.transaction_master.reference_number,
-		transactions.transaction_master.statement_reference		
+		transactions.transaction_master.statement_reference,
+		transactions.transaction_master.book	
 	LIMIT 100;
 END
 $$
 LANGUAGE plpgsql;
+
+
+-- transactions.get_receipt_view.sql
+DROP FUNCTION IF EXISTS transactions.get_receipt_view
+(
+	_user_id				integer,
+	_office_id				integer,
+	_date_from				date, 
+	_date_to				date, 
+	_office					national character varying(12),
+	_party  				text,	
+	_user					national character varying(50),
+	_reference_number			national character varying(24),
+	_statement_reference			text
+);
+
+CREATE FUNCTION transactions.get_receipt_view
+(
+	_user_id				integer,
+	_office_id				integer,
+	_date_from				date, 
+	_date_to				date, 
+	_office					national character varying(12),
+	_party  				text,	
+	_user					national character varying(50),
+	_reference_number			national character varying(24),
+	_statement_reference			text
+)
+RETURNS TABLE
+(
+        transaction_master_id                   bigint,
+        value_date                              date,
+        reference_number                        text,
+        statement_reference                     text,
+        office                                  text,
+        party                                   text,
+        user_name                               text,
+        currency_code                           text,
+        amount                                  money_strict,
+	transaction_ts				TIMESTAMP WITH TIME ZONE,
+	flag_background_color			text,
+	flag_foreground_color			text
+)
+AS
+$$
+BEGIN
+	RETURN QUERY 
+        SELECT
+                transactions.transaction_master.transaction_master_id,
+                transactions.transaction_master.value_date,
+                transactions.transaction_master.reference_number::text,
+                transactions.transaction_master.statement_reference::text,
+                office.offices.office_code || ' (' || office.offices.office_name || ')' as office,
+                core.parties.party_code || ' (' || core.parties.party_name || ')' as party,
+                office.users.user_name::text,
+                transactions.customer_receipts.currency_code::text,
+                transactions.customer_receipts.amount,
+		transactions.transaction_master.transaction_ts,
+		core.get_flag_background_color(core.get_flag_type_id(_user_id, 'transactions.transaction_master', 'transaction_master_id', transactions.transaction_master.transaction_master_id)) AS flag_bg,
+		core.get_flag_foreground_color(core.get_flag_type_id(_user_id, 'transactions.transaction_master', 'transaction_master_id', transactions.transaction_master.transaction_master_id)) AS flag_fg                
+        FROM transactions.customer_receipts
+        INNER JOIN core.parties
+        ON transactions.customer_receipts.party_id = core.parties.party_id
+        INNER JOIN transactions.transaction_master
+        ON transactions.customer_receipts.transaction_master_id = transactions.transaction_master.transaction_master_id
+        INNER JOIN office.offices
+        ON transactions.transaction_master.office_id = office.offices.office_id
+        INNER JOIN office.users
+        ON transactions.transaction_master.user_id = office.users.user_id
+        WHERE transactions.transaction_master.office_id IN (SELECT * FROM office.get_office_ids(_office_id))
+	AND transactions.transaction_master.value_date BETWEEN _date_from AND _date_to
+        AND
+	lower
+	(
+		core.parties.party_code || ' (' || core.parties.party_name || ')'
+	) LIKE '%' || lower(_party) || '%'
+	AND 
+	lower
+	(
+		office.users.user_name
+	)  LIKE '%' || lower(_user) || '%'
+	AND 
+	lower
+	(
+		transactions.transaction_master.reference_number
+	) LIKE '%' || lower(_reference_number) || '%'
+	AND 
+	lower
+	(
+		transactions.transaction_master.statement_reference
+	) LIKE '%' || lower(_statement_reference) || '%'	
+	AND lower
+	(
+		office.offices.office_code
+	) LIKE '%' || lower(_office) || '%'
+	LIMIT 100;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+
+--SELECT * FROM transactions.get_receipt_view(1, 1,'1-1-2000','1-1-2020','','','','','');
 
 
 -- transactions.get_total_due.sql
@@ -4603,8 +4742,8 @@ BEGIN
         SELECT _transaction_master_id, 'Cr', _party_account_id, _statement_reference, NULL, _base_currency_code, _credit, _local_currency_code, _exchange_rate_credit, _lc_credit, _user_id;        
         
         
-        INSERT INTO transactions.customer_receipts(transaction_master_id, party_id, currency_code, amount, er_debit, er_credit, cash_repository_id, posted_date, bank_account_id, bank_instrument_code, bank_tran_code, statement_reference)
-        SELECT _transaction_master_id, _party_id, _currency_code, _amount,  _exchange_rate_debit, _exchange_rate_credit, _cash_repository_id, _posted_date, _bank_account_id, _bank_instrument_code, _bank_tran_code, _statement_reference;
+        INSERT INTO transactions.customer_receipts(transaction_master_id, party_id, currency_code, amount, er_debit, er_credit, cash_repository_id, posted_date, bank_account_id, bank_instrument_code, bank_tran_code)
+        SELECT _transaction_master_id, _party_id, _currency_code, _amount,  _exchange_rate_debit, _exchange_rate_credit, _cash_repository_id, _posted_date, _bank_account_id, _bank_instrument_code, _bank_tran_code;
 
        	------------TODO-----------------
         RETURN _transaction_master_id;

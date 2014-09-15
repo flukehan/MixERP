@@ -268,8 +268,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         private void LoadLabels()
         {
-            //Todo: Remove the inconsistency of this usage.
-
             this.DateLiteral.Text = HtmlControlHelper.GetLabel(this.DateTextBox.ClientID, Titles.ValueDate);
             this.StoreLiteral.Text = HtmlControlHelper.GetLabel(this.StoreDropDownList.ClientID, Titles.SelectStore);
 

@@ -49,7 +49,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data
                         return SalesOrder.GetSalesOrderViewCommand(ids);
 
                     case SubTranBook.Payment:
-                        throw new InvalidOperationException(Common.Helpers.LocalizationHelper.GetResourceString("Errors", "InvalidSubTranBookSalesPayment"));
+                        throw new InvalidOperationException(Resources.Errors.InvalidSubTranBookSalesPayment);
                     case SubTranBook.Quotation:
                         return SalesQuotation.GetSalesQuotationViewCommand(ids);
 
@@ -64,7 +64,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data
             switch (subTranBook)
             {
                 case SubTranBook.Delivery:
-                    throw new InvalidOperationException(Common.Helpers.LocalizationHelper.GetResourceString("Errors", "InvalidSubTranBookPurchaseDelivery"));
+                    throw new InvalidOperationException(Resources.Errors.InvalidSubTranBookPurchaseDelivery);
                 case SubTranBook.Direct:
                     break;
 
@@ -78,9 +78,9 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data
                     break;
 
                 case SubTranBook.Quotation:
-                    throw new InvalidOperationException(Common.Helpers.LocalizationHelper.GetResourceString("Errors", "InvalidSubTranBookPurchaseQuotation"));
+                    throw new InvalidOperationException(Resources.Errors.InvalidSubTranBookPurchaseQuotation);
                 case SubTranBook.Receipt:
-                    throw new InvalidOperationException(Common.Helpers.LocalizationHelper.GetResourceString("Errors", "InvalidSubTranBookPurchaseReceipt"));
+                    throw new InvalidOperationException(Resources.Errors.InvalidSubTranBookPurchaseReceipt);
             }
 
             return null;

@@ -38,7 +38,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
             string defaultValue, string displayFields, string displayViews, bool useDisplayViewsAsParent,
             string selectedValues, string errorCssClass)
         {
-            var label = LocalizationHelper.GetResourceString(resourceClassName, columnName);
+            var label = LocalizationHelper.GetDefaultAssemblyResourceString(resourceClassName, columnName);
 
             var dropDownList = GetDropDownList(columnName + "_dropdownlist");
 

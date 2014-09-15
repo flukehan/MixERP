@@ -9,54 +9,16 @@ $(document).ready(function () {
     var width = contentWidth - menuWidth - margin;
 
     $("#GridPanel").css("width", width + "px");
+    updateFlagColor();
 });
 
 var updateFlagColor = function () {
     //Get an instance of the form grid.
-
     var grid = $("#ProductViewGridView");
-
-    //Set position of the column which contains color value.
-    var bgColorColumnPos = "13";
-    var fgColorColumnPos = "14";
-
-    //Iterate through all the rows of the grid.
-    grid.find("tr").each(function () {
-        //Get the current row instance from the loop.
-        var row = $(this);
-
-        //Read the color value from the associated column.
-        var background = row.find("td:nth-child(" + bgColorColumnPos + ")").html();
-        var foreground = row.find("td:nth-child(" + fgColorColumnPos + ")").html();
-
-        if (background) {
-            if (background != '&nbsp;') {
-                row.css("background", background);
-
-                //Iterate through all the columns of the current row.
-                row.find("td").each(function () {
-                    //Prevent border display by unsetting the border information for each cell.
-                    $(this).css("border", "none");
-                });
-            }
-        }
-
-        if (foreground) {
-            if (foreground != '&nbsp;') {
-                row.find("td").css("color", foreground);
-            }
-        }
-
-        row.find(":nth-child(" + bgColorColumnPos + ")").hide();
-        row.find(":nth-child(" + fgColorColumnPos + ")").hide();
-    });
+    createFlaggedRows(grid);
 };
 
-updateFlagColor();
-
 var getSelectedItems = function () {
-    var selection = [];
-
     //Get the grid instance.
     var grid = $("#ProductViewGridView");
 
@@ -66,28 +28,7 @@ var getSelectedItems = function () {
     //Set the position of the column which contains id.
     var idColumnPosition = "3";
 
-    //Iterate through each row to investigate the selection.
-    grid.find("tr").each(function () {
-        //Get an instance of the current row in this loop.
-        var row = $(this);
-
-        //Get the instance of the cell which contains the checkbox.
-        var checkBoxContainer = row.select("td:nth-child(" + checkBoxColumnPosition + ")");
-
-        //Get the instance of the checkbox from the container.
-        var checkBox = checkBoxContainer.find("input");
-
-        if (checkBox) {
-            //Check if the checkbox was selected or checked.
-            if (checkBox.prop("checked")) {
-                //Get ID from the associated cell.
-                var id = row.find("td:nth-child(" + idColumnPosition + ")").html();
-
-                //Add the ID to the array.
-                selection.push(id);
-            }
-        }
-    });
+    var selection = getSelectedCheckBoxItemIds(checkBoxColumnPosition, idColumnPosition, grid);
 
     if (selection.length > 0) {
         $("#SelectedValuesHidden").val(selection.join(','));
@@ -99,16 +40,7 @@ var getSelectedItems = function () {
 };
 
 flagButton.click(function () {
-    flagPopunder.position({
-        my: "left top",
-        at: "left bottom",
-        of: flagButton, // or $("#otherdiv)
-        collision: "fit"
-    });
-
-    flagPopunder.css("position", "fixed");
-
-    flagPopunder.show(500);
+    popUnder(flagPopunder, flagButton);
 });
 
 $('#ProductViewGridView tr').click(function () {
@@ -117,20 +49,6 @@ $('#ProductViewGridView tr').click(function () {
     //console.log('The check box was found.');
     toogleSelection(checkBox.attr("id"));
 });
-
-var toogleSelection = function (id) {
-    var property = $("#" + id).prop("checked");
-
-    if (property) {
-        $("#" + id).prop("checked", false);
-    } else {
-        $("#" + id).prop("checked", true);
-    }
-
-    logToConsole(JSON.stringify($("#" + id).attr("checked")));
-
-    logToConsole('Radio button selection was "' + id + '" toggled.');
-};
 
 $(document).ready(function () {
     shortcut.add("ALT+O", function () {

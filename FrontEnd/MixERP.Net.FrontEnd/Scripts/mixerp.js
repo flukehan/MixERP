@@ -762,3 +762,131 @@ function isDate(val) {
 function convertToDebit(balanceInCredit) {
     return balanceInCredit * -1;
 };
+
+function popUnder(div, button) {
+    div.position({
+        my: "left top",
+        at: "left bottom",
+        of: button,
+        collision: "fit"
+    });
+
+    div.css("position", "fixed");
+
+    div.show(500);
+};
+
+function getSelectedCheckBoxItemIds(checkBoxColumnPosition, itemIdColumnPosition, grid) {
+    var selection = [];
+
+    //Iterate through each row to investigate the selection.
+    grid.find("tr").each(function () {
+        //Get an instance of the current row in this loop.
+        var row = $(this);
+
+        //Get the instance of the cell which contains the checkbox.
+        var checkBoxContainer = row.select("td:nth-child(" + checkBoxColumnPosition + ")");
+
+        //Get the instance of the checkbox from the container.
+        var checkBox = checkBoxContainer.find("input");
+
+        if (checkBox) {
+            //Check if the checkbox was selected or checked.
+            if (checkBox.prop("checked")) {
+                //Get ID from the associated cell.
+                var id = row.find("td:nth-child(" + itemIdColumnPosition + ")").html();
+
+                //Add the ID to the array.
+                selection.push(id);
+            }
+        }
+    });
+
+    return selection;
+};
+
+var toogleSelection = function (id) {
+    var element = $("#" + id);
+
+    var property = element.prop("checked");
+
+    if (property) {
+        element.prop("checked", false);
+    } else {
+        element.prop("checked", true);
+    }
+};
+
+jQuery.fn.getTotalColumns = function () {
+    var grid = $($(this).selector);
+    var row = grid.find("tr").eq(1);
+
+    var colCount = 0;
+
+    row.find("td").each(function () {
+        if ($(this).attr('colspan')) {
+            colCount += +$(this).attr('colspan');
+        } else {
+            colCount++;
+        }
+    });
+
+    return colCount;
+};
+
+function createFlaggedRows(grid, bgColorColumnPos, fgColorColumnPos) {
+    if (!bgColorColumnPos) {
+        bgColorColumnPos = grid.getTotalColumns() - 1;
+    };
+
+    if (!fgColorColumnPos) {
+        fgColorColumnPos = grid.getTotalColumns();
+    };
+
+    //Iterate through all the rows of the grid.
+    grid.find("tr").each(function () {
+        //Get the current row instance from the loop.
+        var row = $(this);
+
+        //Read the color value from the associated column.
+        var background = row.find("td:nth-child(" + bgColorColumnPos + ")").html();
+        var foreground = row.find("td:nth-child(" + fgColorColumnPos + ")").html();
+
+        if (background) {
+            if (background != '&nbsp;') {
+                row.css("background", background);
+
+                //Iterate through all the columns of the current row.
+                row.find("td").each(function () {
+                    //Prevent border display by unsetting the border information for each cell.
+                    $(this).css("border", "none");
+                });
+            }
+        }
+
+        if (foreground) {
+            if (foreground != '&nbsp;') {
+                row.find("td").css("color", foreground);
+            }
+        }
+
+        row.find(":nth-child(" + bgColorColumnPos + ")").hide();
+        row.find(":nth-child(" + fgColorColumnPos + ")").hide();
+    });
+};
+
+jQuery.fn.updateHiddenFieldOnBlur = function (associatedControl) {
+    var element = $(this[0]);
+    associatedControl.val(element.getSelectedValue());
+
+    element.blur(function () {
+        associatedControl.val(element.getSelectedValue());
+    });
+};
+
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+};

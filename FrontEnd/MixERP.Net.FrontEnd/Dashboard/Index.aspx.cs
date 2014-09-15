@@ -1,4 +1,5 @@
-﻿using MixERP.Net.Common.Models;
+﻿using MixERP.Net.Common.Helpers;
+using MixERP.Net.Common.Models;
 using MixERP.Net.FrontEnd.Base;
 
 /********************************************************************************
@@ -35,6 +36,8 @@ namespace MixERP.Net.FrontEnd.Dashboard
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            TitleLiteral.Text = string.Format("Welcome to {0}, {1}!", SessionHelper.GetOfficeName(), SessionHelper.GetUserName());
+
             //Todo:Store this in database.
             Collection<WidgetModel> models = new Collection<WidgetModel>
             {

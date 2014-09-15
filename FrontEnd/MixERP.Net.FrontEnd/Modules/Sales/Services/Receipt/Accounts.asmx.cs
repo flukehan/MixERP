@@ -37,6 +37,21 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
         }
 
         [WebMethod]
+        public Collection<ListItem> GetFlags()
+        {
+            Collection<ListItem> values = new Collection<ListItem>();
+
+            using (DataTable table = Data.Helpers.Accounts.GetFlags())
+            {
+                foreach (DataRow dr in table.Rows)
+                {
+                    values.Add(new ListItem(dr["flag_type_name"].ToString(), dr["flag_type_id"].ToString()));
+                }
+
+                return values;
+            }
+        }
+
         public Collection<ListItem> GetCostCenters()
         {
             Collection<ListItem> values = new Collection<ListItem>();

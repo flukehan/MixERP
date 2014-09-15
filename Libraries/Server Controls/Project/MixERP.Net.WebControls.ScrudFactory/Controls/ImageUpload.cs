@@ -34,7 +34,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
         public static void AddFileUpload(HtmlTable htmlTable, string resourceClassName, string columnName,
             bool isNullable, string errorCssClass)
         {
-            var label = LocalizationHelper.GetResourceString(resourceClassName, columnName);
+            var label = LocalizationHelper.GetDefaultAssemblyResourceString(resourceClassName, columnName);
             var fileUpload = GetFileUpload(columnName + "_fileupload");
             var validator = GetImageValidator(fileUpload, errorCssClass);
 

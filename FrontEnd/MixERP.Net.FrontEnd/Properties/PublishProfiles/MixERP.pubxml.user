@@ -70,16 +70,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/13/2013 22:12:59</publishTime>
     </File>
     <File Include="App_Themes/MixERP/mixerp.css">
-      <publishTime>09/09/2014 19:16:51</publishTime>
+      <publishTime>09/12/2014 21:19:14</publishTime>
     </File>
     <File Include="App_Themes/MixERP/mixerp.css.map">
-      <publishTime>09/09/2014 19:16:51</publishTime>
+      <publishTime>09/12/2014 21:19:14</publishTime>
     </File>
     <File Include="App_Themes/MixERP/mixerp.less">
-      <publishTime>09/09/2014 19:16:51</publishTime>
+      <publishTime>09/12/2014 21:19:13</publishTime>
     </File>
     <File Include="App_Themes/MixERP/mixerp.min.css">
-      <publishTime>09/09/2014 19:16:50</publishTime>
+      <publishTime>09/12/2014 21:19:14</publishTime>
     </File>
     <File Include="App_Themes/MixERP/Skin1.skin">
       <publishTime>07/31/2014 02:02:12</publishTime>
@@ -118,10 +118,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/10/2013 00:00:50</publishTime>
     </File>
     <File Include="bin/fr/MixERP.Net.WebControls.Common.resources.dll">
-      <publishTime>09/09/2014 19:32:27</publishTime>
+      <publishTime>09/15/2014 02:20:49</publishTime>
     </File>
     <File Include="bin/fr/MixERP.Net.WebControls.ScrudFactory.resources.dll">
-      <publishTime>09/09/2014 19:32:28</publishTime>
+      <publishTime>09/15/2014 02:20:50</publishTime>
     </File>
     <File Include="bin/fr/Npgsql.resources.dll">
       <publishTime>07/31/2014 02:02:12</publishTime>
@@ -157,40 +157,52 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/09/2014 19:32:28</publishTime>
     </File>
     <File Include="bin/MixERP.net.Common.dll">
-      <publishTime>09/09/2014 19:32:27</publishTime>
+      <publishTime>09/15/2014 02:20:49</publishTime>
     </File>
     <File Include="bin/MixERP.net.DatabaseLayer.dll">
       <publishTime>09/09/2014 19:32:28</publishTime>
     </File>
     <File Include="bin/MixERP.Net.DbFactory.dll">
-      <publishTime>09/09/2014 19:32:27</publishTime>
+      <publishTime>09/15/2014 02:20:49</publishTime>
+    </File>
+    <File Include="bin/MixERP.Net.FrontEnd.Data.dll">
+      <publishTime>09/15/2014 02:20:50</publishTime>
     </File>
     <File Include="bin/MixERP.net.FrontEnd.dll">
-      <publishTime>09/09/2014 19:32:29</publishTime>
+      <publishTime>09/15/2014 02:20:51</publishTime>
+    </File>
+    <File Include="bin/MixERP.Net.TransactionGovernor.Data.dll">
+      <publishTime>09/15/2014 02:20:50</publishTime>
+    </File>
+    <File Include="bin/MixERP.Net.TransactionGovernor.dll">
+      <publishTime>09/15/2014 02:20:50</publishTime>
     </File>
     <File Include="bin/MixERP.Net.WebControls.Common.dll">
-      <publishTime>09/09/2014 19:32:27</publishTime>
+      <publishTime>09/15/2014 02:20:49</publishTime>
     </File>
     <File Include="bin/MixERP.Net.WebControls.PartyControl.dll">
-      <publishTime>09/09/2014 19:32:27</publishTime>
+      <publishTime>09/15/2014 02:20:49</publishTime>
     </File>
     <File Include="bin/MixERP.Net.WebControls.ReportEngine.Data.dll">
-      <publishTime>09/09/2014 19:32:27</publishTime>
+      <publishTime>09/15/2014 02:20:50</publishTime>
     </File>
     <File Include="bin/MixERP.Net.WebControls.ReportEngine.dll">
-      <publishTime>09/09/2014 19:32:28</publishTime>
+      <publishTime>09/15/2014 02:20:50</publishTime>
     </File>
     <File Include="bin/MixERP.Net.WebControls.ScrudFactory.Data.dll">
-      <publishTime>09/09/2014 19:32:28</publishTime>
+      <publishTime>09/15/2014 02:20:49</publishTime>
     </File>
     <File Include="bin/MixERP.Net.WebControls.ScrudFactory.dll">
-      <publishTime>09/09/2014 19:32:28</publishTime>
+      <publishTime>09/15/2014 02:20:50</publishTime>
     </File>
     <File Include="bin/MixERP.Net.WebControls.StockTransactionFactory.dll">
-      <publishTime>09/09/2014 19:32:27</publishTime>
+      <publishTime>09/15/2014 02:20:49</publishTime>
     </File>
     <File Include="bin/MixERP.Net.WebControls.StockTransactionView.Data.dll">
-      <publishTime>09/09/2014 19:32:28</publishTime>
+      <publishTime>09/15/2014 02:20:50</publishTime>
+    </File>
+    <File Include="bin/MixERP.Net.WebControls.TransactionChecklist.dll">
+      <publishTime>09/15/2014 02:20:50</publishTime>
     </File>
     <File Include="bin/Mono.Security.dll">
       <publishTime>07/31/2014 02:02:12</publishTime>
@@ -226,13 +238,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/31/2014 02:02:12</publishTime>
     </File>
     <File Include="bundles/scripts/master-page.js">
-      <publishTime>09/09/2014 19:13:39</publishTime>
+      <publishTime>09/14/2014 22:40:46</publishTime>
     </File>
     <File Include="bundles/scripts/master-page.min.js">
-      <publishTime>09/09/2014 17:56:15</publishTime>
+      <publishTime>09/14/2014 22:40:51</publishTime>
     </File>
     <File Include="bundles/scripts/master-page.min.js.map">
-      <publishTime>09/09/2014 19:13:47</publishTime>
+      <publishTime>09/14/2014 22:40:51</publishTime>
     </File>
     <File Include="bundles/scripts/parties-popup.js">
       <publishTime>09/09/2014 19:13:38</publishTime>
@@ -460,13 +472,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/31/2013 18:11:58</publishTime>
     </File>
     <File Include="db/src/00. db core/0. mixerp.sql">
-      <publishTime>09/04/2014 00:29:22</publishTime>
+      <publishTime>09/12/2014 07:58:24</publishTime>
     </File>
     <File Include="db/src/00. db core/1. scrud.sql">
-      <publishTime>09/03/2014 21:31:27</publishTime>
+      <publishTime>09/12/2014 07:58:28</publishTime>
     </File>
     <File Include="db/src/00. db core/2. install-unit-test.sql">
-      <publishTime>09/03/2014 21:31:34</publishTime>
+      <publishTime>09/13/2014 15:02:13</publishTime>
     </File>
     <File Include="db/src/00. db core/2. mixerp-db-schema.sql">
       <publishTime>09/03/2014 20:42:54</publishTime>
@@ -478,7 +490,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/03/2014 20:46:00</publishTime>
     </File>
     <File Include="db/src/01. domains, tables, and constraints/tables and constraints.sql">
-      <publishTime>09/03/2014 22:03:40</publishTime>
+      <publishTime>09/13/2014 14:27:48</publishTime>
     </File>
     <File Include="db/src/02. functions and logic/core/core.convert_unit.sql">
       <publishTime>09/03/2014 23:52:18</publishTime>
@@ -489,23 +501,32 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="db/src/02. functions and logic/core/core.create_flag.sql">
       <publishTime>09/03/2014 23:44:35</publishTime>
     </File>
+    <File Include="db/src/02. functions and logic/core/core.get_account_ids.sql">
+      <publishTime>09/11/2014 02:08:19</publishTime>
+    </File>
     <File Include="db/src/02. functions and logic/core/core.get_account_id_by_account_code.sql">
-      <publishTime>09/03/2014 23:53:59</publishTime>
+      <publishTime>09/11/2014 01:29:42</publishTime>
     </File>
     <File Include="db/src/02. functions and logic/core/core.get_account_id_by_parameter.sql">
-      <publishTime>09/03/2014 23:54:11</publishTime>
+      <publishTime>09/11/2014 01:29:54</publishTime>
     </File>
     <File Include="db/src/02. functions and logic/core/core.get_account_id_by_party_code.sql">
-      <publishTime>09/03/2014 23:55:44</publishTime>
+      <publishTime>09/11/2014 01:29:59</publishTime>
     </File>
     <File Include="db/src/02. functions and logic/core/core.get_account_id_by_party_id.sql">
-      <publishTime>09/03/2014 23:55:34</publishTime>
+      <publishTime>09/11/2014 01:30:07</publishTime>
     </File>
     <File Include="db/src/02. functions and logic/core/core.get_account_id_by_shipper_id.sql">
-      <publishTime>09/03/2014 23:59:21</publishTime>
+      <publishTime>09/11/2014 01:30:15</publishTime>
+    </File>
+    <File Include="db/src/02. functions and logic/core/core.get_account_master_id_by_account_id.sql">
+      <publishTime>09/11/2014 01:30:33</publishTime>
+    </File>
+    <File Include="db/src/02. functions and logic/core/core.get_account_master_id_by_account_master_code.sql">
+      <publishTime>09/10/2014 22:53:54</publishTime>
     </File>
     <File Include="db/src/02. functions and logic/core/core.get_account_name.sql">
-      <publishTime>09/03/2014 23:54:21</publishTime>
+      <publishTime>09/11/2014 01:31:08</publishTime>
     </File>
     <File Include="db/src/02. functions and logic/core/core.get_agent_name_by_agent_id.sql">
       <publishTime>09/03/2014 23:54:35</publishTime>
@@ -526,13 +547,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/03/2014 23:53:03</publishTime>
     </File>
     <File Include="db/src/02. functions and logic/core/core.get_cash_account_id.sql">
-      <publishTime>09/03/2014 23:53:41</publishTime>
+      <publishTime>09/11/2014 01:31:16</publishTime>
     </File>
     <File Include="db/src/02. functions and logic/core/core.get_currency_code_by_office_id.sql">
       <publishTime>09/04/2014 13:35:32</publishTime>
     </File>
     <File Include="db/src/02. functions and logic/core/core.get_currency_code_by_party_id.sql">
-      <publishTime>09/04/2014 13:09:05</publishTime>
+      <publishTime>09/11/2014 00:04:13</publishTime>
     </File>
     <File Include="db/src/02. functions and logic/core/core.get_current_year.sql">
       <publishTime>09/04/2014 00:16:20</publishTime>
@@ -565,7 +586,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/03/2014 23:55:00</publishTime>
     </File>
     <File Include="db/src/02. functions and logic/core/core.get_party_id_by_party_code.sql">
-      <publishTime>09/03/2014 23:55:23</publishTime>
+      <publishTime>09/11/2014 01:58:14</publishTime>
     </File>
     <File Include="db/src/02. functions and logic/core/core.get_party_type_id_by_party_code.sql">
       <publishTime>09/03/2014 23:55:11</publishTime>
@@ -589,7 +610,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/03/2014 23:58:42</publishTime>
     </File>
     <File Include="db/src/02. functions and logic/core/core.get_shipping_address_id_by_shipping_address_code.sql">
-      <publishTime>09/03/2014 23:58:29</publishTime>
+      <publishTime>09/11/2014 01:58:28</publishTime>
     </File>
     <File Include="db/src/02. functions and logic/core/core.get_switch_category_id_by_name.sql">
       <publishTime>09/03/2014 23:56:41</publishTime>
@@ -601,7 +622,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/03/2014 23:51:39</publishTime>
     </File>
     <File Include="db/src/02. functions and logic/core/core.has_child_accounts.sql">
-      <publishTime>09/03/2014 23:53:29</publishTime>
+      <publishTime>09/11/2014 01:31:36</publishTime>
     </File>
     <File Include="db/src/02. functions and logic/core/core.is_leap_year.sql">
       <publishTime>09/04/2014 00:16:29</publishTime>
@@ -609,14 +630,17 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="db/src/02. functions and logic/core/core.is_parent_unit.sql">
       <publishTime>09/03/2014 23:52:01</publishTime>
     </File>
+    <File Include="db/src/02. functions and logic/core/core.is_stock_item.sql">
+      <publishTime>09/11/2014 21:15:26</publishTime>
+    </File>
     <File Include="db/src/02. functions and logic/core/core.is_supplier.sql">
-      <publishTime>09/03/2014 23:58:17</publishTime>
+      <publishTime>09/11/2014 01:58:37</publishTime>
     </File>
     <File Include="db/src/02. functions and logic/logic/functions/core/core.calculate_interest.sql">
       <publishTime>09/04/2014 00:17:16</publishTime>
     </File>
     <File Include="db/src/02. functions and logic/logic/functions/core/core.get_item_cost_price.sql">
-      <publishTime>09/04/2014 00:18:01</publishTime>
+      <publishTime>09/11/2014 01:59:00</publishTime>
     </File>
     <File Include="db/src/02. functions and logic/logic/functions/core/core.get_item_selling_price.sql">
       <publishTime>09/04/2014 00:18:17</publishTime>
@@ -634,28 +658,28 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/04/2014 00:20:11</publishTime>
     </File>
     <File Include="db/src/02. functions and logic/logic/functions/transactions/transactions.get_accrued_interest-todo.sql">
-      <publishTime>09/04/2014 13:31:44</publishTime>
+      <publishTime>09/11/2014 01:59:22</publishTime>
     </File>
     <File Include="db/src/02. functions and logic/logic/functions/transactions/transactions.get_average_party_transaction.sql">
-      <publishTime>09/05/2014 22:25:00</publishTime>
+      <publishTime>09/11/2014 01:59:43</publishTime>
     </File>
     <File Include="db/src/02. functions and logic/logic/functions/transactions/transactions.get_cash_repository_balance.sql">
       <publishTime>09/05/2014 21:27:30</publishTime>
     </File>
     <File Include="db/src/02. functions and logic/logic/functions/transactions/transactions.get_last_receipt_date.sql">
-      <publishTime>09/04/2014 13:50:32</publishTime>
+      <publishTime>09/11/2014 01:59:54</publishTime>
     </File>
     <File Include="db/src/02. functions and logic/logic/functions/transactions/transactions.get_non_gl_product_view.sql">
-      <publishTime>09/04/2014 15:02:12</publishTime>
+      <publishTime>09/11/2014 01:11:23</publishTime>
     </File>
     <File Include="db/src/02. functions and logic/logic/functions/transactions/transactions.get_party_transaction_summary.sql">
-      <publishTime>09/05/2014 22:26:11</publishTime>
+      <publishTime>09/11/2014 02:00:11</publishTime>
     </File>
     <File Include="db/src/02. functions and logic/logic/functions/transactions/transactions.get_product_view.sql">
-      <publishTime>09/04/2014 15:02:32</publishTime>
+      <publishTime>09/11/2014 01:11:32</publishTime>
     </File>
     <File Include="db/src/02. functions and logic/logic/functions/transactions/transactions.get_total_due.sql">
-      <publishTime>09/05/2014 21:46:46</publishTime>
+      <publishTime>09/11/2014 14:49:45</publishTime>
     </File>
     <File Include="db/src/02. functions and logic/logic/triggers/policy.check_menu_policy_trigger.sql">
       <publishTime>09/05/2014 20:29:32</publishTime>
@@ -730,7 +754,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/03/2014 23:49:28</publishTime>
     </File>
     <File Include="db/src/02. functions and logic/policy/policy.is_locked_out_till.sql">
-      <publishTime>09/03/2014 23:50:23</publishTime>
+      <publishTime>09/12/2014 08:00:48</publishTime>
     </File>
     <File Include="db/src/02. functions and logic/transactions/transactions.are_sales_orders_already_merged.sql">
       <publishTime>09/03/2014 23:57:34</publishTime>
@@ -754,10 +778,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/04/2014 00:01:03</publishTime>
     </File>
     <File Include="db/src/02. functions and logic/transactions/transactions.get_transaction_code.sql">
-      <publishTime>09/04/2014 00:01:14</publishTime>
+      <publishTime>09/12/2014 08:00:55</publishTime>
     </File>
     <File Include="db/src/04. default values/00. currency, accounts, account-parameters.sql">
-      <publishTime>09/03/2014 23:38:04</publishTime>
+      <publishTime>09/11/2014 14:54:06</publishTime>
     </File>
     <File Include="db/src/04. default values/agents, ageing-slabs, party-types.sql">
       <publishTime>09/03/2014 23:16:10</publishTime>
@@ -769,7 +793,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/03/2014 23:18:38</publishTime>
     </File>
     <File Include="db/src/04. default values/office, department, roles, users.sql">
-      <publishTime>09/03/2014 23:37:48</publishTime>
+      <publishTime>09/12/2014 08:01:18</publishTime>
     </File>
     <File Include="db/src/04. default values/stores-types,cost-centers.sql">
       <publishTime>09/03/2014 23:18:08</publishTime>
@@ -778,10 +802,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/03/2014 23:18:54</publishTime>
     </File>
     <File Include="db/src/04. default values/units.sql">
-      <publishTime>09/03/2014 23:14:11</publishTime>
+      <publishTime>09/12/2014 08:01:13</publishTime>
     </File>
     <File Include="db/src/04. default values/verification-statuses, flag-types, frequencies.sql">
-      <publishTime>09/03/2014 23:14:02</publishTime>
+      <publishTime>09/12/2014 08:01:11</publishTime>
     </File>
     <File Include="db/src/05. views/core/core.accounts_view.sql">
       <publishTime>09/03/2014 23:32:26</publishTime>
@@ -820,16 +844,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/03/2014 23:26:37</publishTime>
     </File>
     <File Include="db/src/05. views/core/core.shipping_address_view.sql">
-      <publishTime>09/03/2014 23:29:49</publishTime>
+      <publishTime>09/12/2014 08:01:38</publishTime>
     </File>
     <File Include="db/src/05. views/core/core.supplier_view.sql">
       <publishTime>09/03/2014 23:29:35</publishTime>
     </File>
     <File Include="db/src/05. views/core/core.tax_view.sql">
-      <publishTime>09/03/2014 23:30:01</publishTime>
+      <publishTime>09/12/2014 08:01:35</publishTime>
     </File>
     <File Include="db/src/05. views/core/core.unit_view.sql">
-      <publishTime>09/03/2014 23:23:43</publishTime>
+      <publishTime>09/12/2014 08:01:33</publishTime>
     </File>
     <File Include="db/src/05. views/office/office.cash_repository_view.sql">
       <publishTime>09/03/2014 23:31:16</publishTime>
@@ -853,7 +877,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/03/2014 23:21:56</publishTime>
     </File>
     <File Include="db/src/05. views/office/office.work_center_view.sql">
-      <publishTime>09/03/2014 23:31:45</publishTime>
+      <publishTime>09/12/2014 08:01:56</publishTime>
     </File>
     <File Include="db/src/05. views/policy/policy.auto_verification_policy_view.sql">
       <publishTime>09/03/2014 23:32:12</publishTime>
@@ -874,22 +898,31 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/04/2014 00:22:00</publishTime>
     </File>
     <File Include="db/src/06. sample-data/exchange-rates.sql">
-      <publishTime>09/03/2014 20:56:18</publishTime>
+      <publishTime>09/14/2014 15:25:57</publishTime>
     </File>
     <File Include="db/src/06. sample-data/menus.sql">
-      <publishTime>09/09/2014 15:06:37</publishTime>
+      <publishTime>09/12/2014 08:27:19</publishTime>
     </File>
     <File Include="db/src/06. sample-data/party-sample.sql">
       <publishTime>09/04/2014 00:35:07</publishTime>
     </File>
     <File Include="db/src/06. sample-data/price-types.sql">
-      <publishTime>09/03/2014 21:00:37</publishTime>
+      <publishTime>09/12/2014 08:02:19</publishTime>
     </File>
     <File Include="db/src/06. sample-data/sample-data.sql">
       <publishTime>08/23/2014 22:11:03</publishTime>
     </File>
     <File Include="db/src/10. triggers/core/core.disable_editing_sys_type.sql">
       <publishTime>09/03/2014 23:42:52</publishTime>
+    </File>
+    <File Include="db/src/10. triggers/core/core.party_after_insert_trigger.sql">
+      <publishTime>09/11/2014 14:35:47</publishTime>
+    </File>
+    <File Include="db/src/10. triggers/core/core.party_before_update_trigger.sql">
+      <publishTime>09/11/2014 14:36:02</publishTime>
+    </File>
+    <File Include="db/src/10. triggers/core/core.shippers_after_insert_trigger.sql">
+      <publishTime>09/10/2014 23:51:53</publishTime>
     </File>
     <File Include="db/src/10. triggers/core/core.update_party_code.sql">
       <publishTime>09/03/2014 23:43:06</publishTime>
@@ -898,13 +931,25 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/03/2014 23:43:37</publishTime>
     </File>
     <File Include="db/src/10. triggers/core/core.update_shipping_address_code_trigger.sql">
-      <publishTime>09/03/2014 23:43:23</publishTime>
+      <publishTime>09/12/2014 08:02:29</publishTime>
     </File>
     <File Include="db/src/10. triggers/policy/policy.perform_lock_out.sql">
-      <publishTime>09/03/2014 23:42:02</publishTime>
+      <publishTime>09/12/2014 08:02:37</publishTime>
     </File>
     <File Include="db/src/10. triggers/transactions/transactions.restrict_delete_trigger.sql">
-      <publishTime>09/04/2014 00:18:58</publishTime>
+      <publishTime>09/12/2014 08:02:41</publishTime>
+    </File>
+    <File Include="db/src/11. sample-data/party-sample.sql">
+      <publishTime>09/12/2014 08:02:48</publishTime>
+    </File>
+    <File Include="db/src/11. sample-data/sample-data.sql">
+      <publishTime>09/12/2014 08:02:46</publishTime>
+    </File>
+    <File Include="db/src/12. plpgunit-test/core/parties/unit_tests.check_party_currency_code_mismatch.sql">
+      <publishTime>09/12/2014 08:20:10</publishTime>
+    </File>
+    <File Include="db/src/12. plpgunit-test/core/parties/unit_tests.check_party_null_account_id.sql">
+      <publishTime>09/12/2014 08:20:18</publishTime>
     </File>
     <File Include="db/src/dictionary/de-DE.dict">
       <publishTime>09/05/2014 21:04:18</publishTime>
@@ -1114,7 +1159,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/09/2014 19:11:27</publishTime>
     </File>
     <File Include="MixERPMaster.Master">
-      <publishTime>09/09/2014 19:11:30</publishTime>
+      <publishTime>09/12/2014 21:16:35</publishTime>
     </File>
     <File Include="MixERPReportMaster.Master">
       <publishTime>09/09/2014 19:11:31</publishTime>
@@ -1207,7 +1252,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/09/2014 19:11:35</publishTime>
     </File>
     <File Include="Reports/ReportViewer.aspx">
-      <publishTime>08/23/2014 22:20:36</publishTime>
+      <publishTime>09/09/2014 19:11:36</publishTime>
     </File>
     <File Include="Reports/Sources/en-US/Office.Login.xml">
       <publishTime>09/13/2013 19:55:22</publishTime>
@@ -1285,7 +1330,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/26/2013 20:03:40</publishTime>
     </File>
     <File Include="Resource/Configuration/DbParameters.xml">
-      <publishTime>09/09/2014 19:11:38</publishTime>
+      <publishTime>09/11/2014 22:01:42</publishTime>
     </File>
     <File Include="Resource/Configuration/index.html">
       <publishTime>08/20/2014 21:15:10</publishTime>
@@ -1318,7 +1363,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/09/2014 19:11:39</publishTime>
     </File>
     <File Include="Resource/Configuration/ScrudParameters.xml">
-      <publishTime>09/09/2014 19:11:39</publishTime>
+      <publishTime>09/12/2014 00:57:52</publishTime>
     </File>
     <File Include="Resource/Configuration/Switches.config">
       <publishTime>08/27/2013 21:33:26</publishTime>
@@ -2410,13 +2455,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/09/2014 19:12:29</publishTime>
     </File>
     <File Include="Scripts/CodeMirror/mode/less/index.html">
-      <publishTime>08/20/2014 21:15:30</publishTime>
+      <publishTime>09/09/2014 19:12:30</publishTime>
     </File>
     <File Include="Scripts/CodeMirror/mode/less/less.js">
-      <publishTime>08/20/2014 21:15:30</publishTime>
+      <publishTime>09/09/2014 19:12:30</publishTime>
     </File>
     <File Include="Scripts/CodeMirror/mode/livescript/index.html">
-      <publishTime>08/20/2014 21:15:30</publishTime>
+      <publishTime>09/09/2014 19:12:30</publishTime>
     </File>
     <File Include="Scripts/CodeMirror/mode/livescript/LICENSE">
       <publishTime>07/31/2014 02:02:12</publishTime>
@@ -2428,10 +2473,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/31/2014 02:02:12</publishTime>
     </File>
     <File Include="Scripts/CodeMirror/mode/lua/index.html">
-      <publishTime>08/20/2014 21:15:31</publishTime>
+      <publishTime>09/09/2014 19:12:31</publishTime>
     </File>
     <File Include="Scripts/CodeMirror/mode/lua/lua.js">
-      <publishTime>08/20/2014 21:15:31</publishTime>
+      <publishTime>09/09/2014 19:12:31</publishTime>
     </File>
     <File Include="Scripts/CodeMirror/mode/markdown/index.html">
       <publishTime>09/09/2014 19:12:32</publishTime>
@@ -4936,7 +4981,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/13/2013 22:13:01</publishTime>
     </File>
     <File Include="Scripts/mixerp.js">
-      <publishTime>09/09/2014 19:13:37</publishTime>
+      <publishTime>09/14/2014 22:40:47</publishTime>
     </File>
     <File Include="Scripts/mixerp/mixerp.js">
       <publishTime>02/21/2014 01:24:18</publishTime>
@@ -4960,7 +5005,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/09/2014 19:13:39</publishTime>
     </File>
     <File Include="Scripts/UserControls/ProductControl.js">
-      <publishTime>09/09/2014 19:13:42</publishTime>
+      <publishTime>09/14/2014 22:05:38</publishTime>
     </File>
     <File Include="Scripts/UserControls/ProductViewControl.js">
       <publishTime>09/09/2014 19:13:43</publishTime>
@@ -5074,7 +5119,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/09/2014 19:13:45</publishTime>
     </File>
     <File Include="Site/Account/ChangePassword.aspx">
-      <publishTime>09/09/2014 19:13:47</publishTime>
+      <publishTime>09/12/2014 01:28:28</publishTime>
     </File>
     <File Include="Site/Account/SignOut.aspx">
       <publishTime>09/09/2014 19:13:48</publishTime>
@@ -5176,7 +5221,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/09/2014 19:13:55</publishTime>
     </File>
     <File Include="UserControls/Products/ProductViewControl.ascx">
-      <publishTime>08/29/2014 14:54:58</publishTime>
+      <publishTime>09/12/2014 21:15:48</publishTime>
     </File>
     <File Include="UserControls/ReportControl.ascx">
       <publishTime>09/13/2013 11:33:06</publishTime>
@@ -5215,7 +5260,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/09/2014 19:14:15</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/09/2014 19:32:30</publishTime>
+      <publishTime>09/15/2014 02:20:54</publishTime>
     </File>
     <File Include="WebForm1.aspx">
       <publishTime>09/09/2014 19:14:21</publishTime>

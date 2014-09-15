@@ -20,6 +20,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using System.Reflection;
 
 namespace MixERP.Net.Common.Models.Transactions
 {
@@ -31,7 +32,7 @@ namespace MixERP.Net.Common.Models.Transactions
                 return "Dr";
             if (type == TransactionType.Credit)
                 return "Cr";
-            throw new InvalidOperationException(LocalizationHelper.GetResourceString("Warnings", "UnknownTransactionType"));
+            throw new InvalidOperationException(LocalizationHelper.GetResourceString("MixERP.Net.Common.Resources.Warnings", "UnknownTransactionType", Assembly.GetExecutingAssembly()));
         }
     }
 }

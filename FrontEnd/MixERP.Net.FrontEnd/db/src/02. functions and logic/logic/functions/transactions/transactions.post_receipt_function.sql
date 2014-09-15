@@ -123,8 +123,8 @@ BEGIN
         SELECT _transaction_master_id, 'Cr', _party_account_id, _statement_reference, NULL, _base_currency_code, _credit, _local_currency_code, _exchange_rate_credit, _lc_credit, _user_id;        
         
         
-        INSERT INTO transactions.customer_receipts(transaction_master_id, party_id, currency_code, amount, er_debit, er_credit, cash_repository_id, posted_date, bank_account_id, bank_instrument_code, bank_tran_code, statement_reference)
-        SELECT _transaction_master_id, _party_id, _currency_code, _amount,  _exchange_rate_debit, _exchange_rate_credit, _cash_repository_id, _posted_date, _bank_account_id, _bank_instrument_code, _bank_tran_code, _statement_reference;
+        INSERT INTO transactions.customer_receipts(transaction_master_id, party_id, currency_code, amount, er_debit, er_credit, cash_repository_id, posted_date, bank_account_id, bank_instrument_code, bank_tran_code)
+        SELECT _transaction_master_id, _party_id, _currency_code, _amount,  _exchange_rate_debit, _exchange_rate_credit, _cash_repository_id, _posted_date, _bank_account_id, _bank_instrument_code, _bank_tran_code;
 
        	------------TODO-----------------
         RETURN _transaction_master_id;

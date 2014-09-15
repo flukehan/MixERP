@@ -58,7 +58,7 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
                     string res = RemoveBraces(word);
                     string[] resource = res.Split('.');
 
-                    expression = expression.Replace(word, LocalizationHelper.GetResourceString(resource[1], resource[2]));
+                    expression = expression.Replace(word, LocalizationHelper.GetDefaultAssemblyResourceString(resource[1], resource[2]));
                 }
             }
 

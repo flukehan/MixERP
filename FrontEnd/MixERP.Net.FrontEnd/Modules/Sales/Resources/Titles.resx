@@ -117,20 +117,41 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddNew" xml:space="preserve">
+    <value>Add New</value>
+  </data>
   <data name="AgentBonusSlabAssignment" xml:space="preserve">
     <value>Bonus Slab Assignment</value>
   </data>
   <data name="AgentBonusSlabs" xml:space="preserve">
     <value>Bonus Slab for Agents</value>
   </data>
+  <data name="Agents" xml:space="preserve">
+    <value>Agents</value>
+  </data>
   <data name="BonusSlabDetails" xml:space="preserve">
     <value>Bonus Slab Details for Agents</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
   </data>
   <data name="DirectSales" xml:space="preserve">
     <value>Direct Sales</value>
   </data>
   <data name="ExchangeRate" xml:space="preserve">
     <value>Exchange Rate</value>
+  </data>
+  <data name="Flag" xml:space="preserve">
+    <value>Flag</value>
+  </data>
+  <data name="FlagDescription" xml:space="preserve">
+    <value>You can mark this transaction with a flag, however you will not be able to see the flags created by other users.</value>
+  </data>
+  <data name="FlagThisTransaction" xml:space="preserve">
+    <value>Flag This Transaction</value>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>Print</value>
   </data>
   <data name="SalesDelivery" xml:space="preserve">
     <value>Sales Delivery</value>
@@ -140,5 +161,14 @@
   </data>
   <data name="SalesQuotation" xml:space="preserve">
     <value>Sales Quotation</value>
+  </data>
+  <data name="SalesReceipt" xml:space="preserve">
+    <value>Sales Receipt</value>
+  </data>
+  <data name="SelectFlag" xml:space="preserve">
+    <value>Select a Flag</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
   </data>
 </root>

@@ -1,4 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DirectPurchase.ascx.cs" Inherits="MixERP.Net.Core.Modules.Purchase.DirectPurchase" %>
+
 <mixerp:ProductView
     ID="ProductView1"
     runat="server"

@@ -44,7 +44,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 
             var textBox = GetNumberTextBox(columnName + "_textbox", maxLength);
             var numberValidator = GetNumberValidator(textBox, domain, errorCssClass);
-            var label = LocalizationHelper.GetResourceString(resourceClassName, columnName);
+            var label = LocalizationHelper.GetDefaultAssemblyResourceString(resourceClassName, columnName);
 
             if (!string.IsNullOrWhiteSpace(defaultValue))
             {
