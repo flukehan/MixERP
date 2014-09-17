@@ -378,8 +378,9 @@
     <Content Include="db\src\00. db core\2. install-unit-test.sql" />
     <Content Include="db\src\00. db core\2. mixerp-db-schema.sql" />
     <Content Include="db\src\00. db core\3. roles-and-priviledge.sql" />
-    <Content Include="db\src\01. domains, tables, and constraints\domains.sql" />
-    <Content Include="db\src\01. domains, tables, and constraints\tables and constraints.sql" />
+    <Content Include="db\src\01. types, domains, tables, and constraints\types.sql" />
+    <Content Include="db\src\01. types, domains, tables, and constraints\domains.sql" />
+    <Content Include="db\src\01. types, domains, tables, and constraints\tables and constraints.sql" />
     <Content Include="db\src\02. functions and logic\core\core.get_account_master_id_by_account_id.sql" />
     <Content Include="db\src\02. functions and logic\core\core.get_account_master_id_by_account_master_code.sql" />
     <Content Include="db\src\02. functions and logic\core\core.convert_unit.sql" />

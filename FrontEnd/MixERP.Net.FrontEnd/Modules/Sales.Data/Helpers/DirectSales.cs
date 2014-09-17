@@ -214,7 +214,15 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
                             stockMasterRow.Parameters.AddWithValue("@ShippingAddressCode", stockMaster.ShippingAddressCode);
                             stockMasterRow.Parameters.AddWithValue("@ShippingCharge", stockMaster.ShippingCharge);
                             stockMasterRow.Parameters.AddWithValue("@StoreId", stockMaster.StoreId);
-                            stockMasterRow.Parameters.AddWithValue("@CashRepositoryId", stockMaster.CashRepositoryId);
+
+                            if (stockMaster.IsCredit)
+                            {
+                                stockMasterRow.Parameters.AddWithValue("@CashRepositoryId", DBNull.Value);
+                            }
+                            else
+                            {
+                                stockMasterRow.Parameters.AddWithValue("@CashRepositoryId", stockMaster.CashRepositoryId);
+                            }
 
                             stockMasterId = Conversion.TryCastLong(stockMasterRow.ExecuteScalar());
                         }

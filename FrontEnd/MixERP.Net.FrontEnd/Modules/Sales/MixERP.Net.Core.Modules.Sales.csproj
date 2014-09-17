@@ -57,6 +57,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Confirmation\Return.ascx" />
     <Content Include="Entry\Receipt.ascx" />
     <Content Include="Entry\Return.ascx" />
     <Content Include="Package.xml" />
@@ -141,6 +142,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Confirmation\Return.ascx.cs">
+      <DependentUpon>Return.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Confirmation\Return.ascx.designer.cs">
+      <DependentUpon>Return.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Entry\Receipt.ascx.cs">
       <DependentUpon>Receipt.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

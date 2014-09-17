@@ -1,3 +1,5 @@
+--Todo: Indexing has not been properly thought of, as of now.
+
 CREATE TABLE core.verification_statuses
 (
 	verification_status_id			smallint NOT NULL PRIMARY KEY,
@@ -1068,7 +1070,7 @@ CREATE TABLE transactions.customer_receipts
 	posted_date			date NULL,
 	bank_account_id			bigint NULL REFERENCES core.bank_accounts(account_id),
 	bank_instrument_code		national character varying(128) NULL CONSTRAINT customer_receipt_bank_instrument_code_df DEFAULT(''),
-	bank_tran_code			national character varying(128) NULL CONSTRAINT customer_receipt_bank_tran_code_df DEFAULT(''),	
+	bank_tran_code			national character varying(128) NULL CONSTRAINT customer_receipt_bank_tran_code_df DEFAULT('')
 );
 
 CREATE INDEX customer_receipts_transaction_master_id_inx
@@ -1106,6 +1108,9 @@ CREATE TABLE transactions.stock_master
 	audit_user_id				integer NULL REFERENCES office.users(user_id),
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
+
+CREATE UNIQUE INDEX stock_master_transaction_master_id_uix
+ON transactions.stock_master(transaction_master_id);
 
 
 CREATE TABLE transactions.stock_details
@@ -1185,6 +1190,12 @@ CREATE TABLE transactions.stock_master_non_gl_relations
 	non_gl_stock_master_id			bigint NOT NULL REFERENCES transactions.non_gl_stock_master(non_gl_stock_master_id)
 );
 
+CREATE TABLE transactions.sales_return
+(
+	sales_return_id		                BIGSERIAL NOT NULL PRIMARY KEY,	
+	transaction_master_id			bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id),
+	sales_return_transaction_master_id	bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id)
+);
 
 CREATE TABLE crm.lead_sources
 (

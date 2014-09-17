@@ -1,29 +1,32 @@
-﻿using System;
+﻿using MixERP.Net.Common.Models.Core;
+using MixERP.Net.Common.Models.Transactions;
+using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
+using System.Web.Script.Services;
 using System.Web.Services;
 
 namespace MixERP.Net.Core.Modules.Sales.Services.Entry
 {
-    /// <summary>
-    /// Summary description for Quotation
-    /// </summary>
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
-    [System.ComponentModel.ToolboxItem(false)]
-    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line.
-    // [System.Web.Script.Services.ScriptService]
+    [ToolboxItem(false)]
+    [ScriptService]
     public class Quotation : WebService
     {
         [WebMethod(EnableSession = true)]
         public long Save(DateTime valueDate, int storeId, string partyCode, int priceTypeId, string referenceNumber, string data, string statementReference, string transactionIds, string attachmentsJSON)
         {
-            System.Collections.ObjectModel.Collection<Common.Models.Transactions.StockMasterDetailModel> details = WebControls.StockTransactionFactory.Helpers.CollectionHelper.GetStockMasterDetailCollection(data, storeId);
-            System.Collections.ObjectModel.Collection<int> tranIds = new System.Collections.ObjectModel.Collection<int>();
+            Collection<StockMasterDetailModel> details = CollectionHelper.GetStockMasterDetailCollection(data, storeId);
+            Collection<int> tranIds = new Collection<int>();
 
-            System.Web.Script.Serialization.JavaScriptSerializer js = new System.Web.Script.Serialization.JavaScriptSerializer();
-            System.Collections.ObjectModel.Collection<Common.Models.Core.Attachment> attachments = js.Deserialize<System.Collections.ObjectModel.Collection<Common.Models.Core.Attachment>>(attachmentsJSON);
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            Collection<Attachment> attachments = js.Deserialize<Collection<Attachment>>(attachmentsJSON);
 
             if (!string.IsNullOrWhiteSpace(transactionIds))
             {

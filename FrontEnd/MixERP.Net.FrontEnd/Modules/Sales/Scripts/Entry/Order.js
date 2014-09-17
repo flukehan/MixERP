@@ -13,7 +13,7 @@ var save = function () {
     });
 
     ajaxSaveOder.fail(function (jqXHR) {
-        var errorMessage = JSON.parse(jqXHR.responseText).Message;
+        var errorMessage = getAjaxErrorMessage(jqXHR);
         errorLabelBottom.html(errorMessage);
         logError(errorMessage);
     });

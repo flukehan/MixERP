@@ -35,11 +35,12 @@ RETURNS TABLE
 	office					national character varying(12),
 	party					text,
 	price_type				text,
-	amount				decimal(24, 4),
+	amount				        decimal(24, 4),
 	transaction_ts				TIMESTAMP WITH TIME ZONE,
 	"user"					national character varying(50),
 	reference_number			national character varying(24),
 	statement_reference			text,
+	book			                text,
 	flag_background_color			text,
 	flag_foreground_color			text
 )
@@ -71,6 +72,7 @@ BEGIN
 		office.users.user_name AS user,
 		transactions.non_gl_stock_master.reference_number,
 		transactions.non_gl_stock_master.statement_reference,
+		transactions.non_gl_stock_master.book::text,
 		core.get_flag_background_color(core.get_flag_type_id(user_id_, 'transactions.non_gl_stock_master', 'non_gl_stock_master_id', transactions.non_gl_stock_master.non_gl_stock_master_id)) AS flag_bg,
 		core.get_flag_foreground_color(core.get_flag_type_id(user_id_, 'transactions.non_gl_stock_master', 'non_gl_stock_master_id', transactions.non_gl_stock_master.non_gl_stock_master_id)) AS flag_fg
 	FROM transactions.non_gl_stock_master
@@ -127,8 +129,12 @@ BEGIN
 		transactions.non_gl_stock_master.transaction_ts,
 		office.users.user_name,
 		transactions.non_gl_stock_master.reference_number,
-		transactions.non_gl_stock_master.statement_reference		
+		transactions.non_gl_stock_master.statement_reference,
+		transactions.non_gl_stock_master.book
 	LIMIT 100;
 END
 $$
 LANGUAGE plpgsql;
+
+
+SELECT * FROM transactions.get_non_gl_product_view(1,'Sales.Order',1, '1-1-2000', '1-1-2050', '', '', '', '', '', '');

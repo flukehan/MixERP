@@ -10,12 +10,11 @@ var save = function () {
 
     ajaxSaveOder.done(function (response) {
         var id = response.d;
-        alert(id);
-        //window.location = "/Modules/Sales/Order.mix?TranId=" + id;
+        window.location = "/Modules/Sales/Confirmation/Return.mix?TranId=" + id;
     });
 
     ajaxSaveOder.fail(function (jqXHR) {
-        var errorMessage = JSON.parse(jqXHR.responseText).Message;
+        var errorMessage = getAjaxErrorMessage(jqXHR);
         errorLabelBottom.html(errorMessage);
         logError(errorMessage);
     });

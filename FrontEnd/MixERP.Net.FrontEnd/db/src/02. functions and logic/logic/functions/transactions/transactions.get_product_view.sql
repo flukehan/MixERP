@@ -67,7 +67,7 @@ BEGIN
 
 
 
-	RETURN QUERY 
+	RETURN QUERY
 	WITH RECURSIVE office_cte(office_id) AS 
 	(
 		SELECT office_id_
@@ -82,7 +82,7 @@ BEGIN
 	)
 
 	SELECT
-		transactions.stock_master.stock_master_id AS id,
+		transactions.stock_master.transaction_master_id AS id,
 		transactions.transaction_master.value_date,
 		office.offices.office_code AS office,
 		core.parties.party_code || ' (' || core.parties.party_name || ')' AS party,
@@ -114,6 +114,12 @@ BEGIN
 	LEFT OUTER JOIN core.price_types
 	ON transactions.stock_master.price_type_id = core.price_types.price_type_id
 	WHERE transactions.transaction_master.book IN (SELECT * FROM temp_book)
+	AND NOT
+	(
+                book_ = 'Sales.Return'
+                AND
+                transactions.transaction_master.transaction_master_id IN (SELECT transaction_master_id FROM transactions.sales_return)                
+	)
 	AND transactions.transaction_master.verification_status_id > 0
 	AND transactions.transaction_master.value_date BETWEEN date_from_ AND date_to_
 	AND 
@@ -163,3 +169,5 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+
+--select * from transactions.get_product_view(1, 'Sales.Return', 1, '1-1-2000',  '1-1-2020', '', '', '', '', '', '');

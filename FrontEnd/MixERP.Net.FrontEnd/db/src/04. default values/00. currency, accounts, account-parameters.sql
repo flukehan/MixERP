@@ -84,6 +84,7 @@ INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type,
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '20500', 'Health Insurance Payable', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Current Liabilities');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '20600', 'Superannutation Payable', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Current Liabilities');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '20700', 'Tax Payables', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Current Liabilities');
+INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '20701', 'Sales Return (Payables)', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Current Liabilities');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '20710', 'Sales Tax Payable', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Tax Payables');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '20720', 'Federal Payroll Taxes Payable', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Tax Payables');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '20730', 'FUTA Tax Payable', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Tax Payables');
@@ -229,6 +230,7 @@ SELECT 'Sales', core.get_account_id_by_account_code('30100') UNION ALL
 SELECT 'Sales.Receivables', core.get_account_id_by_account_code('10400') UNION ALL
 SELECT 'Sales.Discount', core.get_account_id_by_account_code('30700') UNION ALL
 SELECT 'Sales.Tax', core.get_account_id_by_account_code('20700') UNION ALL
+SELECT 'Sales.Return', core.get_account_id_by_account_code('20701') UNION ALL
 SELECT 'Purchase', core.get_account_id_by_account_code('40100') UNION ALL
 SELECT 'Purchase.Payables', core.get_account_id_by_account_code('20100') UNION ALL
 SELECT 'Purchase.Discount', core.get_account_id_by_account_code('40270') UNION ALL

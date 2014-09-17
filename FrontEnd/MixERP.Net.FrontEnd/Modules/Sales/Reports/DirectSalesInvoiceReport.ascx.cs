@@ -1,5 +1,4 @@
-﻿
-using MixERP.Net.FrontEnd.Base;
+﻿using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.ReportEngine;
 using System;
 using System.Collections.Generic;
@@ -12,6 +11,7 @@ namespace MixERP.Net.Core.Modules.Sales.Reports
         public override void OnControlLoad(object sender, EventArgs e)
         {
             Collection<KeyValuePair<string, string>> list = new Collection<KeyValuePair<string, string>>();
+            list.Add(new KeyValuePair<string, string>("@transaction_master_id", this.Page.Request["TranId"]));
             list.Add(new KeyValuePair<string, string>("@transaction_master_id", this.Page.Request["TranId"]));
 
             using (Report report = new Report())

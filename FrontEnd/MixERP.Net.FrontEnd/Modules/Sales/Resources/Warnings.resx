@@ -127,4 +127,7 @@
   <data name="InvalidParty" xml:space="preserve">
     <value>Invalid party. This party is not associated with this transaction.</value>
   </data>
+  <data name="InvalidStockTransaction" xml:space="preserve">
+    <value>Invalid stock transaction Id.</value>
+  </data>
 </root>

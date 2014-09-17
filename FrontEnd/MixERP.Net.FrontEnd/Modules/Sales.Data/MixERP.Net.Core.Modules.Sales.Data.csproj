@@ -60,6 +60,7 @@
     <Compile Include="Helpers\Order.cs" />
     <Compile Include="Helpers\Quotation.cs" />
     <Compile Include="Helpers\Receipt.cs" />
+    <Compile Include="Helpers\Return.cs" />
     <Compile Include="Helpers\Transaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\Stores.cs" />

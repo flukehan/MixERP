@@ -776,7 +776,7 @@ CREATE CAST (numeric AS text) WITH FUNCTION pg_catalog.text(numeric) AS IMPLICIT
 
 
 -- domains.sql
-DROP DOMAIN IF EXISTS transaction_type;
+DROP DOMAIN IF EXISTS transaction_type CASCADE;
 CREATE DOMAIN transaction_type
 AS char(2)
 CHECK
@@ -792,7 +792,7 @@ CHECK
 	MIXERP STRICT Data Types: NEGATIVES ARE NOT ALLOWED
 *******************************************************************/
 
-DROP DOMAIN IF EXISTS money_strict;
+DROP DOMAIN IF EXISTS money_strict CASCADE;
 CREATE DOMAIN money_strict
 AS DECIMAL(24, 4)
 CHECK
@@ -801,7 +801,7 @@ CHECK
 );
 
 
-DROP DOMAIN IF EXISTS money_strict2;
+DROP DOMAIN IF EXISTS money_strict2 CASCADE;
 CREATE DOMAIN money_strict2
 AS DECIMAL(24, 4)
 CHECK
@@ -809,7 +809,7 @@ CHECK
 	VALUE >= 0
 );
 
-DROP DOMAIN IF EXISTS integer_strict;
+DROP DOMAIN IF EXISTS integer_strict CASCADE;
 CREATE DOMAIN integer_strict
 AS integer
 CHECK
@@ -817,7 +817,7 @@ CHECK
 	VALUE > 0
 );
 
-DROP DOMAIN IF EXISTS integer_strict2;
+DROP DOMAIN IF EXISTS integer_strict2 CASCADE;
 CREATE DOMAIN integer_strict2
 AS integer
 CHECK
@@ -825,7 +825,7 @@ CHECK
 	VALUE >= 0
 );
 
-DROP DOMAIN IF EXISTS smallint_strict;
+DROP DOMAIN IF EXISTS smallint_strict CASCADE;
 CREATE DOMAIN smallint_strict
 AS smallint
 CHECK
@@ -833,7 +833,7 @@ CHECK
 	VALUE > 0
 );
 
-DROP DOMAIN IF EXISTS smallint_strict2;
+DROP DOMAIN IF EXISTS smallint_strict2 CASCADE;
 CREATE DOMAIN smallint_strict2
 AS smallint
 CHECK
@@ -841,7 +841,7 @@ CHECK
 	VALUE >= 0
 );
 
-DROP DOMAIN IF EXISTS decimal_strict;
+DROP DOMAIN IF EXISTS decimal_strict CASCADE;
 CREATE DOMAIN decimal_strict
 AS decimal
 CHECK
@@ -849,7 +849,7 @@ CHECK
 	VALUE > 0
 );
 
-DROP DOMAIN IF EXISTS decimal_strict2;
+DROP DOMAIN IF EXISTS decimal_strict2 CASCADE;
 CREATE DOMAIN decimal_strict2
 AS decimal
 CHECK
@@ -857,16 +857,18 @@ CHECK
 	VALUE >= 0
 );
 
-DROP DOMAIN IF EXISTS image_path;
+DROP DOMAIN IF EXISTS image_path CASCADE;
 CREATE DOMAIN image_path
 AS text;
 
-DROP DOMAIN IF EXISTS color;
+DROP DOMAIN IF EXISTS color CASCADE;
 CREATE DOMAIN color
 AS text;
 
 
 -- tables and constraints.sql
+--Todo: Indexing has not been properly thought of, as of now.
+
 CREATE TABLE core.verification_statuses
 (
 	verification_status_id			smallint NOT NULL PRIMARY KEY,
@@ -1937,7 +1939,7 @@ CREATE TABLE transactions.customer_receipts
 	posted_date			date NULL,
 	bank_account_id			bigint NULL REFERENCES core.bank_accounts(account_id),
 	bank_instrument_code		national character varying(128) NULL CONSTRAINT customer_receipt_bank_instrument_code_df DEFAULT(''),
-	bank_tran_code			national character varying(128) NULL CONSTRAINT customer_receipt_bank_tran_code_df DEFAULT(''),	
+	bank_tran_code			national character varying(128) NULL CONSTRAINT customer_receipt_bank_tran_code_df DEFAULT('')
 );
 
 CREATE INDEX customer_receipts_transaction_master_id_inx
@@ -1975,6 +1977,9 @@ CREATE TABLE transactions.stock_master
 	audit_user_id				integer NULL REFERENCES office.users(user_id),
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
+
+CREATE UNIQUE INDEX stock_master_transaction_master_id_uix
+ON transactions.stock_master(transaction_master_id);
 
 
 CREATE TABLE transactions.stock_details
@@ -2054,6 +2059,12 @@ CREATE TABLE transactions.stock_master_non_gl_relations
 	non_gl_stock_master_id			bigint NOT NULL REFERENCES transactions.non_gl_stock_master(non_gl_stock_master_id)
 );
 
+CREATE TABLE transactions.sales_return
+(
+	sales_return_id		                BIGSERIAL NOT NULL PRIMARY KEY,	
+	transaction_master_id			bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id),
+	sales_return_transaction_master_id	bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id)
+);
 
 CREATE TABLE crm.lead_sources
 (
@@ -2175,6 +2186,28 @@ CREATE TABLE policy.auto_verification_policy
 );
 
 
+
+-- types.sql
+DROP TYPE IF EXISTS stock_detail_type CASCADE;
+CREATE TYPE stock_detail_type AS
+(
+        store_id        integer,
+        item_code       national character varying(12),
+        quantity        integer_strict,
+        unit_name       national character varying(50),
+        price           money_strict,
+        discount        money_strict2,
+        tax_rate        decimal_strict2,
+        tax             money_strict2
+);
+
+DROP TYPE IF EXISTS attachment_type CASCADE;
+CREATE TYPE attachment_type AS
+(
+	comment					national character varying(96),
+	file_path				text,
+	original_file_name			text
+);
 
 -- core.convert_unit.sql
 CREATE FUNCTION core.convert_unit(integer, integer)
@@ -4132,11 +4165,12 @@ RETURNS TABLE
 	office					national character varying(12),
 	party					text,
 	price_type				text,
-	amount				decimal(24, 4),
+	amount				        decimal(24, 4),
 	transaction_ts				TIMESTAMP WITH TIME ZONE,
 	"user"					national character varying(50),
 	reference_number			national character varying(24),
 	statement_reference			text,
+	book			                text,
 	flag_background_color			text,
 	flag_foreground_color			text
 )
@@ -4168,6 +4202,7 @@ BEGIN
 		office.users.user_name AS user,
 		transactions.non_gl_stock_master.reference_number,
 		transactions.non_gl_stock_master.statement_reference,
+		transactions.non_gl_stock_master.book::text,
 		core.get_flag_background_color(core.get_flag_type_id(user_id_, 'transactions.non_gl_stock_master', 'non_gl_stock_master_id', transactions.non_gl_stock_master.non_gl_stock_master_id)) AS flag_bg,
 		core.get_flag_foreground_color(core.get_flag_type_id(user_id_, 'transactions.non_gl_stock_master', 'non_gl_stock_master_id', transactions.non_gl_stock_master.non_gl_stock_master_id)) AS flag_fg
 	FROM transactions.non_gl_stock_master
@@ -4224,11 +4259,15 @@ BEGIN
 		transactions.non_gl_stock_master.transaction_ts,
 		office.users.user_name,
 		transactions.non_gl_stock_master.reference_number,
-		transactions.non_gl_stock_master.statement_reference		
+		transactions.non_gl_stock_master.statement_reference,
+		transactions.non_gl_stock_master.book
 	LIMIT 100;
 END
 $$
 LANGUAGE plpgsql;
+
+
+SELECT * FROM transactions.get_non_gl_product_view(1,'Sales.Order',1, '1-1-2000', '1-1-2050', '', '', '', '', '', '');
 
 
 -- transactions.get_party_transaction_summary.sql
@@ -4352,7 +4391,7 @@ BEGIN
 
 
 
-	RETURN QUERY 
+	RETURN QUERY
 	WITH RECURSIVE office_cte(office_id) AS 
 	(
 		SELECT office_id_
@@ -4367,7 +4406,7 @@ BEGIN
 	)
 
 	SELECT
-		transactions.stock_master.stock_master_id AS id,
+		transactions.stock_master.transaction_master_id AS id,
 		transactions.transaction_master.value_date,
 		office.offices.office_code AS office,
 		core.parties.party_code || ' (' || core.parties.party_name || ')' AS party,
@@ -4399,6 +4438,12 @@ BEGIN
 	LEFT OUTER JOIN core.price_types
 	ON transactions.stock_master.price_type_id = core.price_types.price_type_id
 	WHERE transactions.transaction_master.book IN (SELECT * FROM temp_book)
+	AND NOT
+	(
+                book_ = 'Sales.Return'
+                AND
+                transactions.transaction_master.transaction_master_id IN (SELECT transaction_master_id FROM transactions.sales_return)                
+	)
 	AND transactions.transaction_master.verification_status_id > 0
 	AND transactions.transaction_master.value_date BETWEEN date_from_ AND date_to_
 	AND 
@@ -4448,6 +4493,8 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+
+--select * from transactions.get_product_view(1, 'Sales.Return', 1, '1-1-2000',  '1-1-2020', '', '', '', '', '', '');
 
 
 -- transactions.get_receipt_view.sql
@@ -4751,6 +4798,410 @@ END
 $$
 LANGUAGE plpgsql;
 
+
+
+-- transactions.post_sales_return.sql
+DROP FUNCTION IF EXISTS transactions.post_sales_return
+(
+        _transaction_master_id                  bigint,
+        _office_id                              integer,
+        _user_id                                integer,
+        _login_id                               bigint,
+        _value_date                             date,
+        _store_id                               integer,
+        _party_code                             national character varying(12),
+        _price_type_id                          integer,
+        _reference_number 			national character varying(24),
+        _statement_reference                    text,
+        _details                                stock_detail_type[],
+        _attachments                            attachment_type[]
+);
+
+CREATE FUNCTION transactions.post_sales_return
+(
+        _transaction_master_id                  bigint,
+        _office_id                              integer,
+        _user_id                                integer,
+        _login_id                               bigint,
+        _value_date                             date,
+        _store_id                               integer,
+        _party_code                             national character varying(12),
+        _price_type_id                          integer,
+        _reference_number 			national character varying(24),
+        _statement_reference                    text,
+        _details                                stock_detail_type[],
+        _attachments                            attachment_type[]
+)
+RETURNS bigint
+AS
+$$
+        DECLARE _party_id                       bigint;
+        DECLARE _cost_center_id                 bigint;
+        DECLARE _tran_master_id                 bigint;
+        DECLARE _stock_master_id                bigint;
+        DECLARE _grand_total                    money_strict;
+        DECLARE _discount_total                 money_strict2;
+        DECLARE _tax_total                      money_strict2;
+        DECLARE _is_credit                      boolean;
+        DECLARE _credit_account_id              bigint;
+BEGIN
+        
+        _party_id                               := core.get_party_id_by_party_code(_party_code);
+        
+        SELECT 
+                cost_center_id 
+        INTO 
+                _cost_center_id
+        FROM 
+                transactions.transaction_master
+        WHERE 
+                transactions.transaction_master.transaction_master_id = _transaction_master_id;
+
+
+        SELECT
+               is_credit
+        INTO
+                _is_credit
+        FROM transactions.stock_master
+        WHERE transaction_master_id = _transaction_master_id;
+
+        IF(_is_credit) THEN
+                _credit_account_id = core.get_account_id_by_party_code(_party_code); 
+        ELSE
+                _credit_account_id = core.get_account_id_by_parameter('Sales.Return');         
+        END IF;
+
+
+
+        INSERT INTO transactions.transaction_master
+        (
+                transaction_master_id, 
+                transaction_counter, 
+                transaction_code, 
+                book, 
+                value_date, 
+                user_id, 
+                login_id, 
+                office_id, 
+                cost_center_id, 
+                reference_number, 
+                statement_reference
+        )
+        SELECT 
+                nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), 
+                transactions.get_new_transaction_counter(_value_date), 
+                transactions.get_transaction_code(_value_date, _office_id, _user_id, _login_id),
+                'Sales.Return',
+                _value_date,
+                _user_id,
+                _login_id,
+                _office_id,
+                _cost_center_id,
+                _reference_number,
+                _statement_reference;
+                
+
+
+        _tran_master_id                         := currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
+
+
+        SELECT
+                SUM(price * quantity),
+                SUM(discount),
+                SUM(tax)
+        INTO
+                _grand_total,
+                _discount_total,
+                _tax_total                
+        FROM 
+        explode_array(_details);
+
+
+
+        INSERT INTO transactions.transaction_details
+        (
+                transaction_master_id, 
+                tran_type, 
+                account_id, 
+                statement_reference, 
+                currency_code, 
+                amount_in_currency, 
+                local_currency_code, 
+                er, 
+                amount_in_local_currency
+        ) 
+        SELECT
+                _tran_master_id,
+                'Dr',
+                core.get_account_id_by_parameter('Ventes'),
+                _statement_reference,
+                transactions.get_default_currency_code_by_office_id(_office_id),
+                _grand_total,
+                transactions.get_default_currency_code_by_office_id(_office_id),
+                1,
+                _grand_total;
+
+        IF(_tax_total IS NOT NULL AND _tax_total > 0) THEN
+                INSERT INTO transactions.transaction_details
+                (
+                        transaction_master_id, 
+                        tran_type, 
+                        account_id, 
+                        statement_reference, 
+                        currency_code, 
+                        amount_in_currency, 
+                        local_currency_code, 
+                        er, 
+                        amount_in_local_currency
+                ) 
+                SELECT
+                        _tran_master_id,
+                        'Dr',
+                        core.get_account_id_by_parameter('Sales.Tax'),
+                        _statement_reference,
+                        transactions.get_default_currency_code_by_office_id(_office_id),
+                        _tax_total,
+                        transactions.get_default_currency_code_by_office_id(_office_id),
+                        1,
+                        _tax_total;
+        END IF;
+
+        IF(_discount_total IS NOT NULL AND _discount_total > 0) THEN
+                INSERT INTO transactions.transaction_details
+                (
+                        transaction_master_id, 
+                        tran_type, 
+                        account_id, 
+                        statement_reference, 
+                        currency_code, 
+                        amount_in_currency, 
+                        local_currency_code, 
+                        er, 
+                        amount_in_local_currency
+                ) 
+                SELECT
+                        _tran_master_id,
+                        'Cr',
+                        core.get_account_id_by_parameter('Sales.Discount'),
+                        _statement_reference,
+                        transactions.get_default_currency_code_by_office_id(_office_id),
+                        _discount_total,
+                        transactions.get_default_currency_code_by_office_id(_office_id),
+                        1,
+                        _discount_total;
+        END IF;
+
+        INSERT INTO transactions.transaction_details
+        (
+                transaction_master_id, 
+                tran_type, 
+                account_id, 
+                statement_reference, 
+                currency_code, 
+                amount_in_currency, 
+                local_currency_code, 
+                er, 
+                amount_in_local_currency
+        ) 
+        SELECT
+                _tran_master_id,
+                'Cr',
+                _credit_account_id,
+                _statement_reference,
+                transactions.get_default_currency_code_by_office_id(_office_id),
+                _grand_total + _tax_total - _discount_total,
+                transactions.get_default_currency_code_by_office_id(_office_id),
+                1,
+                _grand_total + _tax_total - _discount_total;
+
+
+        INSERT INTO transactions.stock_master
+        (
+                stock_master_id, 
+                transaction_master_id, 
+                party_id, 
+                price_type_id, 
+                is_credit, 
+                store_id
+        ) 
+        SELECT 
+                nextval(pg_get_serial_sequence('transactions.stock_master', 'stock_master_id')), 
+                _tran_master_id,
+                _party_id,
+                _price_type_id,
+                false,
+                _store_id;
+       
+
+        _stock_master_id                        := currval(pg_get_serial_sequence('transactions.stock_master', 'stock_master_id'));
+
+
+        INSERT INTO transactions.stock_details
+        (
+                stock_master_id, 
+                tran_type, 
+                store_id, 
+                item_id, 
+                quantity, 
+                unit_id, 
+                base_quantity, 
+                base_unit_id, 
+                price, 
+                discount, 
+                tax_rate, 
+                tax
+        )
+        SELECT 
+                _stock_master_id, 
+                'Dr', 
+                _store_id, 
+                core.get_item_id_by_item_code(item_code), 
+                quantity, 
+                core.get_unit_id_by_unit_name(unit_name), 
+                core.get_base_quantity_by_unit_name(unit_name, quantity), 
+                core.get_base_unit_id_by_unit_name(unit_name),
+                price,
+                discount,
+                tax_rate,
+                tax
+        FROM 
+        explode_array(_details);
+
+        INSERT INTO transactions.sales_return(transaction_master_id, sales_return_transaction_master_id)
+        SELECT _transaction_master_id, _tran_master_id;
+
+        RETURN _tran_master_id;
+END
+$$
+LANGUAGE plpgsql;
+
+-- 
+-- 
+-- SELECT * FROM transactions.post_sales_return(1, 1, 1, 1, '1-1-2000', 1, 'JASMI-0001', 1, '1234-AD', 'Test', 
+-- ARRAY[
+-- ROW(1, 'ITP', 1, 'Pièce', 1000, 0, 13, 130)::stock_detail_type,
+-- ROW(1, 'ITP', 1, 'Pièce', 1000, 0, 13, 130)::stock_detail_type
+-- ],
+-- ARRAY[
+-- NULL::attachment_type
+-- ]);
+
+
+-- transactions.validate_item_for_return.sql
+DROP FUNCTION IF EXISTS transactions.validate_item_for_return(_transaction_master_id bigint, _store_id integer, _item_code national character varying(12), _unit_name national character varying(50), _quantity integer, _price money_strict);
+
+CREATE FUNCTION transactions.validate_item_for_return(_transaction_master_id bigint, _store_id integer, _item_code national character varying(12), _unit_name national character varying(50), _quantity integer, _price money_strict)
+RETURNS boolean
+AS
+$$
+        DECLARE _stock_master_id bigint = 0;
+        DECLARE _is_purchase boolean = false;
+        DECLARE _item_id integer = 0;
+        DECLARE _unit_id integer = 0;
+        DECLARE _actual_quantity decimal_strict2 = 0;
+        DECLARE _actual_price_in_root_unit money_strict2 = 0;
+        DECLARE _price_in_root_unit money_strict2 = 0;
+        DECLARE _item_in_stock decimal_strict2 = 0;
+        
+BEGIN        
+        IF(_store_id IS NULL OR _store_id <= 0) THEN
+                RAISE EXCEPTION 'Invalid store.';
+        END IF;
+
+
+        IF(_item_code IS NULL OR trim(_item_code) = '') THEN
+                RAISE EXCEPTION 'Invalid item.';
+        END IF;
+
+        IF(_unit_name IS NULL OR trim(_unit_name) = '') THEN
+                RAISE EXCEPTION 'Invalid unit.';
+        END IF;
+
+        IF(_quantity IS NULL OR _quantity <= 0) THEN
+                RAISE EXCEPTION 'Invalid quantity.';
+        END IF;
+        
+        _stock_master_id                := transactions.get_stock_master_id_by_transaction_master_id(_transaction_master_id);
+        IF(_stock_master_id  IS NULL OR _stock_master_id  <= 0) THEN
+                RAISE EXCEPTION 'Invalid transaction id.';
+        END IF;
+
+        _item_id                        := core.get_item_id_by_item_code(_item_code);
+        IF(_item_id IS NULL OR _item_id <= 0) THEN
+                RAISE EXCEPTION 'Invalid item.';
+        END IF;
+
+        IF NOT EXISTS
+        (
+                SELECT * FROM transactions.stock_details
+                WHERE stock_master_id = _stock_master_id
+                AND item_id = _item_id
+                LIMIT 1
+        ) THEN
+                RAISE EXCEPTION '%', format('The item %1$s is not associated with this transaction.', _item_code);
+        END IF;
+
+        _unit_id                        := core.get_unit_id_by_unit_name(_unit_name);
+        IF(_unit_id IS NULL OR _unit_id <= 0) THEN
+                RAISE EXCEPTION 'Invalid unit.';
+        END IF;
+
+
+        _is_purchase                    := transactions.is_purchase(_transaction_master_id);
+
+        IF NOT EXISTS
+        (
+                SELECT * FROM transactions.stock_details
+                WHERE stock_master_id = _stock_master_id
+                AND item_id = _item_id
+                AND core.get_root_unit_id(_unit_id) = core.get_root_unit_id(unit_id)
+                LIMIT 1
+        ) THEN
+                RAISE EXCEPTION 'Invalid or incompatible unit specified';
+        END IF;
+
+        IF(_is_purchase = true) THEN
+                _item_in_stock = core.count_item_in_stock(_item_id, _unit_id, _store_id);
+
+                IF(_item_in_stock < _quantity) THEN
+                        RAISE EXCEPTION '%', format('Only %1$s %2$s of %3$s left in stock.',_item_in_stock, _unit_name, _item_code);
+                END IF;
+        END IF;
+
+        SELECT 
+                core.convert_unit(base_unit_id, _unit_id) * base_quantity
+                INTO _actual_quantity
+        FROM transactions.stock_details
+        WHERE stock_master_id = _stock_master_id
+        AND item_id = _item_id;
+
+        IF(_quantity > _actual_quantity) THEN
+                RAISE EXCEPTION 'The returned quantity cannot be greater than actual quantity.';
+        END IF;
+
+        _price_in_root_unit := core.convert_unit(core.get_root_unit_id(_unit_id), _unit_id) * _price;
+
+
+
+        SELECT 
+                (core.convert_unit(core.get_root_unit_id(transactions.stock_details.unit_id), transactions.stock_details.base_unit_id) * price) / (base_quantity/quantity)
+                INTO _actual_price_in_root_unit
+        FROM transactions.stock_details
+        WHERE stock_master_id = _stock_master_id
+        AND item_id = _item_id;
+
+
+        IF(_price_in_root_unit > _actual_price_in_root_unit) THEN
+                RAISE EXCEPTION 'The returned amount cannot be greater than actual amount.';
+                RETURN FALSE;
+        END IF;
+
+        RETURN TRUE;
+END
+$$
+LANGUAGE plpgsql;
+
+--SELECT * FROM transactions.validate_item_for_return(25, 1, 'CAS', 'Pièce', 1, 40000);
 
 
 -- policy.check_menu_policy_trigger.sql
@@ -5508,6 +5959,19 @@ LANGUAGE plpgsql;
 
 
 
+-- explode_array.sql
+DROP FUNCTION IF EXISTS explode_array(in_array anyarray);
+
+CREATE FUNCTION explode_array(in_array anyarray) 
+RETURNS SETOF anyelement as
+$$
+    SELECT ($1)[s] FROM generate_series(1,array_upper($1, 1)) AS s;
+$$
+LANGUAGE sql 
+IMMUTABLE;
+
+--select * from explode_array(ARRAY[ROW(1, 1)::FOO_TYPE,ROW(1, 1)::FOO_TYPE])
+
 -- transactions.are_sales_orders_already_merged.sql
 CREATE FUNCTION transactions.are_sales_orders_already_merged(VARIADIC arr bigint[])
 RETURNS boolean
@@ -5725,6 +6189,24 @@ $$
 LANGUAGE plpgsql;
 
 
+-- transactions.get_stock_master_id_by_transaction_master_id.sql
+DROP FUNCTION IF EXISTS transactions.get_stock_master_id_by_transaction_master_id(_stock_master_id bigint);
+
+CREATE FUNCTION transactions.get_stock_master_id_by_transaction_master_id(_stock_master_id bigint)
+RETURNS bigint
+AS
+$$
+BEGIN
+        RETURN
+        (
+                SELECT transactions.stock_master.stock_master_id
+                FROM transactions.stock_master
+                WHERE transactions.stock_master.transaction_master_id=$1
+        );
+END
+$$
+LANGUAGE plpgsql;
+
 -- transactions.get_transaction_code.sql
 CREATE FUNCTION transactions.get_transaction_code(value_date date, office_id integer, user_id integer, login_id bigint)
 RETURNS text
@@ -5742,6 +6224,120 @@ $$
 LANGUAGE plpgsql;
 
 
+-- transactions.get_transaction_master_id_by_stock_master_id.sql
+DROP FUNCTION IF EXISTS transactions.get_transaction_master_id_by_stock_master_id(_stock_master_id bigint);
+
+CREATE FUNCTION transactions.get_transaction_master_id_by_stock_master_id(_stock_master_id bigint)
+RETURNS bigint
+AS
+$$
+BEGIN
+        RETURN
+        (
+                SELECT transactions.stock_master.transaction_master_id
+                FROM transactions.stock_master
+                WHERE transactions.stock_master.stock_master_id=$1
+        );
+END
+$$
+LANGUAGE plpgsql;
+
+-- transactions.is_purchase.sql
+DROP FUNCTION IF EXISTS transactions.is_purchase(_transaction_master_id bigint);
+
+CREATE FUNCTION transactions.is_purchase(_transaction_master_id bigint)
+RETURNS boolean
+AS
+$$
+BEGIN
+        IF EXISTS
+        (
+                SELECT * FROM transactions.transaction_master
+                WHERE transactions.transaction_master.transaction_master_id = $1
+                AND book IN ('Purchase.Direct', 'Purchase.Receipt')
+        ) THEN
+                RETURN true;
+        END IF;
+
+        RETURN false;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+-- transactions.is_valid_party_by_stock_master_id.sql
+DROP FUNCTION IF EXISTS transactions.is_valid_party_by_stock_master_id(_stock_master_id bigint, _party_id bigint);
+
+CREATE FUNCTION transactions.is_valid_party_by_stock_master_id(_stock_master_id bigint, _party_id bigint)
+RETURNS boolean
+AS
+$$
+BEGIN
+        IF EXISTS(SELECT * FROM transactions.stock_master WHERE stock_master_id=$1 AND party_id=$2) THEN
+                RETURN true;
+        END IF;
+
+        RETURN false;
+END
+$$
+LANGUAGE plpgsql;
+
+
+-- transactions.is_valid_party_by_transaction_master_id.sql
+DROP FUNCTION IF EXISTS transactions.is_valid_party_by_transaction_master_id(_transaction_master_id bigint, _party_id bigint);
+
+CREATE FUNCTION transactions.is_valid_party_by_transaction_master_id(_transaction_master_id bigint, _party_id bigint)
+RETURNS boolean
+AS
+$$
+BEGIN
+        IF EXISTS(SELECT * FROM transactions.stock_master WHERE transaction_master_id=$1 AND party_id=$2) THEN
+                RETURN true;
+        END IF;
+
+        RETURN false;
+END
+$$
+LANGUAGE plpgsql;
+
+
+-- transactions.is_valid_stock_transaction_by_stock_master_id.sql
+DROP FUNCTION IF EXISTS transactions.is_valid_stock_transaction_by_stock_master_id(_stock_master_id bigint);
+
+CREATE FUNCTION transactions.is_valid_stock_transaction_by_stock_master_id(_stock_master_id bigint)
+RETURNS boolean
+AS
+$$
+BEGIN
+        IF EXISTS(SELECT * FROM transactions.stock_master WHERE stock_master_id=$1) THEN
+                RETURN true;
+        END IF;
+
+        RETURN false;
+END
+$$
+LANGUAGE plpgsql;
+
+
+-- transactions.is_valid_stock_transaction_by_transaction_master_id.sql
+DROP FUNCTION IF EXISTS transactions.is_valid_stock_transaction_by_transaction_master_id(_transaction_master_id bigint);
+
+CREATE FUNCTION transactions.is_valid_stock_transaction_by_transaction_master_id(_transaction_master_id bigint)
+RETURNS boolean
+AS
+$$
+BEGIN
+        IF EXISTS(SELECT * FROM transactions.stock_master WHERE transaction_master_id=$1) THEN
+                RETURN true;
+        END IF;
+
+        RETURN false;
+END
+$$
+LANGUAGE plpgsql;
+
+
 -- 00. currency, accounts, account-parameters.sql
 ALTER TABLE core.accounts
 ALTER column currency_code DROP NOT NULL;
@@ -5749,8 +6345,10 @@ ALTER column currency_code DROP NOT NULL;
 
 INSERT INTO core.currencies
 SELECT 'NPR', 'रू.', 'Nepali Rupees', 'paisa' UNION ALL
-SELECT 'USD', '$ ', 'United States Dollar', 'cents';
-
+SELECT 'USD', '$', 'United States Dollar', 'cents' UNION ALL
+SELECT 'GBP', '£', 'Pound Sterling', 'penny' UNION ALL
+SELECT 'EUR', '€', 'Euro', 'cents' UNION ALL
+SELECT 'INR', '₹', 'Indian Currency', 'paise';
 
 INSERT INTO core.account_masters(account_master_code, account_master_name) SELECT 'BSA', 'Balance Sheet A/C';
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '10000', 'Assets', TRUE, (SELECT account_id FROM core.accounts WHERE account_name='Balance Sheet A/C');
@@ -5827,6 +6425,7 @@ INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type,
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '20500', 'Health Insurance Payable', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Current Liabilities');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '20600', 'Superannutation Payable', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Current Liabilities');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '20700', 'Tax Payables', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Current Liabilities');
+INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '20701', 'Sales Return (Payables)', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Current Liabilities');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '20710', 'Sales Tax Payable', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Tax Payables');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '20720', 'Federal Payroll Taxes Payable', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Tax Payables');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '20730', 'FUTA Tax Payable', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Tax Payables');
@@ -5972,6 +6571,7 @@ SELECT 'Ventes', core.get_account_id_by_account_code('30100') UNION ALL
 SELECT 'Sales.Receivables', core.get_account_id_by_account_code('10400') UNION ALL
 SELECT 'Sales.Discount', core.get_account_id_by_account_code('30700') UNION ALL
 SELECT 'Sales.Tax', core.get_account_id_by_account_code('20700') UNION ALL
+SELECT 'Sales.Return', core.get_account_id_by_account_code('20701') UNION ALL
 SELECT 'Purchase', core.get_account_id_by_account_code('40100') UNION ALL
 SELECT 'Purchase.Payables', core.get_account_id_by_account_code('20100') UNION ALL
 SELECT 'Purchase.Discount', core.get_account_id_by_account_code('40270') UNION ALL

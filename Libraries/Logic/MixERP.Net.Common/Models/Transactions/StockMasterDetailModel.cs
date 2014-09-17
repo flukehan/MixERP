@@ -21,12 +21,6 @@ namespace MixERP.Net.Common.Models.Transactions
 {
     public class StockMasterDetailModel
     {
-        public long StockMasterDetailId { get; set; }
-
-        public long StockMasterId { get; set; }
-
-        public TransactionType TransactionType { get; set; }
-
         public int StoreId { get; set; }
 
         public string ItemCode { get; set; }

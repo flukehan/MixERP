@@ -86,5 +86,14 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
                 return ResourceManager.GetString("InvalidParty", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid stock transaction Id..
+        /// </summary>
+        internal static string InvalidStockTransaction {
+            get {
+                return ResourceManager.GetString("InvalidStockTransaction", resourceCulture);
+            }
+        }
     }
 }

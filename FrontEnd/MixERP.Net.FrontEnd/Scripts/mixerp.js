@@ -696,7 +696,8 @@ var ajaxDataBind = function (url, targetControl, data, selectedValue, associated
     };
 
     ajax.success(function (msg) {
-        targetControl.bindAjaxData(msg.d, true, selectedValue);
+        targetControl.bindAjaxData(msg.d, false, selectedValue);
+
         if (associatedControl && associatedControl.val) {
             associatedControl.val(selectedValue);
         };

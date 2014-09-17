@@ -18,6 +18,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using Npgsql;
+using NpgsqlTypes;
 using System;
 using System.Collections.ObjectModel;
 using System.Data;
