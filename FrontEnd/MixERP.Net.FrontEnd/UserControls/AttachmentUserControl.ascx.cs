@@ -28,6 +28,12 @@ namespace MixERP.Net.FrontEnd.UserControls
 {
     public partial class AttachmentUserControl : UserControl
     {
+        public bool ShowSaveButton
+        {
+            get { return SaveButton.Visible; }
+            set { SaveButton.Visible = value; }
+        }
+
         public string GetAllowedExtensions()
         {
             return ConfigurationManager.AppSettings["AllowedExtensions"];

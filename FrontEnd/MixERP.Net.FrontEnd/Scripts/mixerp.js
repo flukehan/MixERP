@@ -1,4 +1,7 @@
-﻿function getDocHeight() {
+﻿/*jshint -W032, -W107, -W098 */
+/*global areYouSureLocalized, Chart, currencyDecimalPlaces, decimalSeparator, legend, noneLocalized, Page_ClientValidate, selectLocalized, shortDateFormat, Sys, thousandSeparator, today*/
+
+function getDocHeight() {
     var D = document;
     return Math.max(
                 Math.max(D.body.scrollHeight, D.documentElement.scrollHeight),
@@ -15,7 +18,7 @@ var selectDropDownListByValue = function (textBoxId, dropDownListId) {
 
     if (listControl.length) {
         listControl.find('option').each(function () {
-            if (this.value == selectedValue) {
+            if (this.value === selectedValue) {
                 exists = true;
             }
         });
@@ -107,62 +110,62 @@ var validateByControlId = function (controlId) {
 
 $(document).ready(function () {
     $(".date").blur(function () {
-        if (today == "") return;
+        if (today === "") return;
         var control = $(this);
         var value = control.val().trim().toLowerCase();
         var result;
         var number;
 
-        if (value == "d") {
+        if (value === "d") {
             result = dateAdd(today, "d", 0);
             control.val(result);
             validateByControlId(control.attr("id"));
             return;
         }
 
-        if (value == "m" || value == "+m") {
+        if (value === "m" || value === "+m") {
             control.val(dateAdd(today, "m", 1));
             validateByControlId(control.attr("id"));
             return;
         }
 
-        if (value == "w" || value == "+w") {
+        if (value === "w" || value === "+w") {
             control.val(dateAdd(today, "d", 7));
             validateByControlId(control.attr("id"));
             return;
         }
 
-        if (value == "y" || value == "+y") {
+        if (value === "y" || value === "+y") {
             control.val(dateAdd(today, "y", 1));
             validateByControlId(control.attr("id"));
             return;
         }
 
-        if (value == "-d") {
+        if (value === "-d") {
             control.val(dateAdd(today, "d", -1));
             validateByControlId(control.attr("id"));
             return;
         }
 
-        if (value == "+d") {
+        if (value === "+d") {
             control.val(dateAdd(today, "d", 1));
             validateByControlId(control.attr("id"));
             return;
         }
 
-        if (value == "-w") {
+        if (value === "-w") {
             control.val(dateAdd(today, "d", -7));
             validateByControlId(control.attr("id"));
             return;
         }
 
-        if (value == "-m") {
+        if (value === "-m") {
             control.val(dateAdd(today, "m", -1));
             validateByControlId(control.attr("id"));
             return;
         }
 
-        if (value == "-y") {
+        if (value === "-y") {
             control.val(dateAdd(today, "y", -1));
             validateByControlId(control.attr("id"));
             return;
@@ -202,15 +205,15 @@ function dateAdd(dt, expression, number) {
     var d = Date.parseExact(dt, shortDateFormat);
     var ret = new Date();
 
-    if (expression == "d") {
+    if (expression === "d") {
         ret = new Date(d.getFullYear(), d.getMonth(), d.getDate() + parseInt(number));
     }
 
-    if (expression == "m") {
+    if (expression === "m") {
         ret = new Date(d.getFullYear(), d.getMonth() + parseInt(number), d.getDate());
     }
 
-    if (expression == "y") {
+    if (expression === "y") {
         ret = new Date(d.getFullYear() + parseInt(number), d.getMonth(), d.getDate());
     }
 
@@ -229,7 +232,7 @@ $(document).ready(function () {
     setCurrencyFormat();
     setNumberFormat();
 
-    if (!(typeof Sys === "undefined")) {
+    if (typeof Sys !== "undefined") {
         Sys.WebForms.PageRequestManager.getInstance().add_endRequest(Page_EndRequest);
     }
 });
@@ -356,7 +359,7 @@ function preparePieChart(datasourceId, canvasId, legendId, type) {
     var data = [];
 
     //Reset the counter.
-    index = 0;
+    var index = 0;
 
     //Loop through each row of the table body.
     table.find("tbody tr").each(function () {
@@ -364,7 +367,7 @@ function preparePieChart(datasourceId, canvasId, legendId, type) {
         var row = $(this);
 
         //The first column of each row is the legend.
-        title = row.find(">:first-child").html();
+        var title = row.find(">:first-child").html();
 
         //The first column of each row is the legend.
         value = parseInt(row.find("td").html());
@@ -430,7 +433,7 @@ if (!String.prototype.format) {
     String.prototype.format = function () {
         var args = arguments;
         return this.replace(/{(\d+)}/g, function (match, number) {
-            return typeof args[number] != 'undefined'
+            return typeof args[number] !== 'undefined'
               ? args[number]
               : match
             ;
@@ -445,6 +448,10 @@ function displayMessage(a, b) {
 var logError = function (a, b) {
     //Todo
     $.notify(a, b);
+};
+
+function logAjaxErrorMessage(xhr) {
+    logError(getAjaxErrorMessage(xhr));
 };
 
 function logToConsole(message) {
@@ -498,11 +505,12 @@ var appendParameter = function (data, parameter, value) {
         data += ",";
     };
 
-    if (value == undefined) {
+    if (value === undefined) {
         value = "";
     };
 
-    data += parameter + ":'" + value + "'";
+    data += JSON.stringify(parameter) + ':' + JSON.stringify(value);
+
     return data;
 };
 
@@ -575,7 +583,7 @@ var focusNextElement = function () {
 
         // store the rest of the elements in order
         for (i = 0, il = els.length; i < il; i++) {
-            if (els[i].tabIndex == 0 &&
+            if (els[i].tabIndex === 0 &&
                 !els[i].disabled &&
                 !els[i].hidden &&
                 !els[i].readOnly &&
@@ -624,7 +632,7 @@ jQuery.fn.bindAjaxData = function (ajaxData, skipSelect, selectedValue) {
     var targetControl = $(this);
     targetControl.empty();
 
-    if (ajaxData.length == 0) {
+    if (ajaxData.length === 0) {
         appendItem(targetControl, "", noneLocalized);
         return;
     };
@@ -638,12 +646,12 @@ jQuery.fn.bindAjaxData = function (ajaxData, skipSelect, selectedValue) {
 
         if (selectedValue) {
             console.log("Selected value :" + selectedValue);
-            if (this["Value"] == selectedValue) {
+            if (this.Value === selectedValue) {
                 selected = true;
             };
         };
 
-        appendItem(targetControl, this["Value"], this["Text"], selected);
+        appendItem(targetControl, this.Value, this.Text, selected);
     });
 };
 
@@ -682,7 +690,7 @@ var ajaxUpdateVal = function (url, targetControl, data) {
     });
 
     ajax.error(function (xhr) {
-        logError(getAjaxErrorMessage(xhr));
+        logAjaxErrorMessage(xhr);
     });
 };
 
@@ -733,15 +741,15 @@ var removeRow = function (cell) {
 };
 
 var tableToJSON = function (grid) {
-    var colData = new Array;
-    var rowData = new Array;
+    var colData = [];
+    var rowData = [];
 
     var rows = grid.find("tr:not(:first-child):not(:last-child)");
 
     rows.each(function () {
         var row = $(this);
 
-        colData = new Array();
+        colData = [];
 
         row.find("td:not(:last-child)").each(function () {
             colData.push($(this).html());
@@ -750,7 +758,7 @@ var tableToJSON = function (grid) {
         rowData.push(colData);
     });
 
-    data = JSON.stringify(rowData);
+    var data = JSON.stringify(rowData);
 
     return data;
 };
@@ -854,7 +862,7 @@ function createFlaggedRows(grid, bgColorColumnPos, fgColorColumnPos) {
         var foreground = row.find("td:nth-child(" + fgColorColumnPos + ")").html();
 
         if (background) {
-            if (background != '&nbsp;') {
+            if (background !== '&nbsp;') {
                 row.css("background", background);
 
                 //Iterate through all the columns of the current row.
@@ -866,7 +874,7 @@ function createFlaggedRows(grid, bgColorColumnPos, fgColorColumnPos) {
         }
 
         if (foreground) {
-            if (foreground != '&nbsp;') {
+            if (foreground !== '&nbsp;') {
                 row.find("td").css("color", foreground);
             }
         }
@@ -889,5 +897,9 @@ function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
         results = regex.exec(location.search);
-    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+};
+
+function displaySucess() {
+    $.notify(taskCompletedSuccessfullyLocalized, "success");
 };

@@ -8,7 +8,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
     {
         public static DataTable GetAccounts()
         {
-            return FormHelper.GetTable("core", "accounts");
+            return FormHelper.GetTable("core", "accounts", "account_id");
         }
 
         public static bool AccountCodeExists(string accountCode)
@@ -47,17 +47,17 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 
         public static DataTable GetNonConfidentialAccounts()
         {
-            return FormHelper.GetTable("core", "accounts", "confidential", "0");
+            return FormHelper.GetTable("core", "accounts", "confidential", "0", "account_id");
         }
 
         public static DataTable GetChildAccounts()
         {
-            return FormHelper.GetTable("core", "account_view", "has_child", "0");
+            return FormHelper.GetTable("core", "account_view", "has_child", "0", "account_id");
         }
 
         public static DataTable GetNonConfidentialChildAccounts()
         {
-            return FormHelper.GetTable("core", "account_view", "has_child, confidential", "0, 0");
+            return FormHelper.GetTable("core", "account_view", "has_child, confidential", "0, 0", "account_id");
         }
     }
 }

@@ -13,7 +13,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
     {
         public static System.Data.DataTable GetCurrencyDataTable()
         {
-            return FormHelper.GetTable("core", "currencies");
+            return FormHelper.GetTable("core", "currencies", "currency_code");
         }
 
         public static string GetHomeCurrency(int officeId)

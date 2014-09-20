@@ -24,7 +24,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Services
             Collection<StockMasterDetailModel> details = CollectionHelper.GetStockMasterDetailCollection(data, 0);
 
             JavaScriptSerializer js = new JavaScriptSerializer();
-            Collection<Attachment> attachments = js.Deserialize<Collection<Attachment>>(attachmentsJSON);
+            Collection<AttachmentModel> attachments = js.Deserialize<Collection<AttachmentModel>>(attachmentsJSON);
 
             return Data.Helpers.Order.Add("Purchase.Order", valueDate, partyCode, 0, details, referenceNumber, statementReference, null, attachments);
         }

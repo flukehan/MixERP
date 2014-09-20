@@ -1,4 +1,7 @@
-﻿saveButton.click(function () {
+﻿/*jshint -W032*/
+/*global getAjax, getAjaxErrorMessage, logError, saveButton, url:true, validateProductControl, errorLabelBottom, appendParameter, getData, valueDate, storeId, partyCode, referenceNumber, data, statementReference, costCenterId, attachments, transactionIds*/
+
+saveButton.click(function () {
     if (validateProductControl()) {
         save();
     };

@@ -1,6 +1,8 @@
-﻿var undoButton = $("#undoButton");
+﻿/*global allowedExtensions, appendParameter, areYouSureLocalized, duplicateFileLocalized, getAjax, getData, invalidFileLocalized, uploadedFilesDeletedLocalized */
+
+var undoButton = $("#UndoButton");
 var uploadedFilesHidden = $("#UploadedFilesHidden");
-var uploadButton = $("#uploadButton");
+var uploadButton = $("#UploadButton");
 var warningLabel = $("#WarningLabel");
 
 $(window).load(function () {
@@ -42,23 +44,20 @@ var validate = function (fileName) {
 
 $.fn.disable = function () {
     return this.each(function () {
-        if (typeof this.disabled != "undefined") this.disabled = true;
+        if (typeof this.disabled !== "undefined") this.disabled = true;
     });
 };
 
 $.fn.enable = function () {
     return this.each(function () {
-        if (typeof this.disabled != "undefined") this.disabled = false;
+        if (typeof this.disabled !== "undefined") this.disabled = false;
     });
 };
 
 undoButton.on("click", function () {
     $(".browse").prop('disabled', false);
-    var paragraphs = $(".path");
-    var progressBars = $("progress");
-    var comments = $(".comment");
 
-    if (uploadedFilesHidden.val() != "") {
+    if (uploadedFilesHidden.val() !== "") {
         if (confirm(areYouSureLocalized)) {
             var url = "/Services/UploadHelper.asmx/UndoUpload";
             var data = appendParameter("", "uploadedFilesJson", uploadedFilesHidden.val());
@@ -66,12 +65,8 @@ undoButton.on("click", function () {
 
             var undoUploadAjax = getAjax(url, data);
 
-            undoUploadAjax.success(function() {
-                progressBars.val(0);
-                paragraphs.html("");
-                comments.val("");
-                $("#fileUploads table *").enable();
-                uploadedFilesHidden.val("");
+            undoUploadAjax.success(function () {
+                resetAttachmentForm();
                 $.notify(uploadedFilesDeletedLocalized, "success");
             });
 
@@ -82,6 +77,19 @@ undoButton.on("click", function () {
     }
 });
 
+function resetAttachmentForm() {
+    var paragraphs = $(".path");
+    var progressBars = $("progress");
+    var comments = $(".comment");
+
+    progressBars.val(0);
+    paragraphs.html("");
+    comments.val("");
+
+    $("#fileUploads table *").enable();
+    uploadedFilesHidden.val("");
+};
+
 function Upload(comment, filePath, originalFileName) {
     this.Comment = comment;
     this.FilePath = filePath;
@@ -89,10 +97,10 @@ function Upload(comment, filePath, originalFileName) {
 }
 
 uploadButton.on("click", function () {
-    if (haveFile()) {
+    if (hasFile()) {
         if (validateDuplicates()) {
             if (confirm(areYouSureLocalized)) {
-                var uploads = new Array();
+                var uploads = [];
 
                 $(".upload").each(function () {
                     var fileUploadButtonId = $(this).attr("id");
@@ -113,7 +121,11 @@ uploadButton.on("click", function () {
                     }, function (progress, value) {
                         $(progressBarSelector).val(value);
                     });
-                });
+                }).promise().done(function () {
+                    if (typeof uploadButtonCallback == "function") {
+                        uploadButtonCallback();
+                    };
+                });;
 
                 $("#fileUploads table *").disable();
             }
@@ -121,8 +133,8 @@ uploadButton.on("click", function () {
     }
 });
 
-var haveFile = function () {
-    var files = new Array();
+var hasFile = function () {
+    var files = [];
     var filePath;
 
     $(".upload").each(function () {
@@ -136,7 +148,7 @@ var haveFile = function () {
 };
 
 var validateDuplicates = function () {
-    var files = new Array();
+    var files = [];
     var filePath;
 
     $(".upload").each(function () {
@@ -147,10 +159,10 @@ var validateDuplicates = function () {
     });
 
     var sortedFiles = files.sort();
-    var duplicates = new Array;
+    var duplicates = [];
 
     for (var i = 0; i < files.length - 1; i++) {
-        if (sortedFiles[i + 1] == sortedFiles[i]) {
+        if (sortedFiles[i + 1] === sortedFiles[i]) {
             duplicates.push(sortedFiles[i]);
         }
     }

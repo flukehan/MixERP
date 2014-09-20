@@ -11,14 +11,14 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 {
     public static class Transaction
     {
-        public static long Add(DateTime valueDate, string referenceNumber, int costCenterId, Collection<JournalDetailsModel> details, Collection<Common.Models.Core.Attachment> attachments)
+        public static long Add(DateTime valueDate, string referenceNumber, int costCenterId, Collection<JournalDetailsModel> details, Collection<Common.Models.Core.AttachmentModel> attachments)
         {
             long transactionMasterId = Add(valueDate, SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), costCenterId, referenceNumber, details, attachments);
             MixERP.Net.TransactionGovernor.Autoverification.Autoverify.Pass(transactionMasterId);
             return transactionMasterId;
         }
 
-        private static long Add(DateTime valueDate, int officeId, int userId, long logOnId, int costCenterId, string referenceNumber, Collection<JournalDetailsModel> details, Collection<Common.Models.Core.Attachment> attachments)
+        private static long Add(DateTime valueDate, int officeId, int userId, long logOnId, int costCenterId, string referenceNumber, Collection<JournalDetailsModel> details, Collection<Common.Models.Core.AttachmentModel> attachments)
         {
             if (details == null)
             {
@@ -123,9 +123,9 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 
                         if (attachments != null && attachments.Count > 0)
                         {
-                            foreach (Common.Models.Core.Attachment attachment in attachments)
+                            foreach (Common.Models.Core.AttachmentModel attachment in attachments)
                             {
-                                sql = "INSERT INTO transactions.attachments(user_id, resource, resource_key, resource_id, original_file_name, file_extension, file_path, comment) SELECT @UserId, @Resource, @ResourceKey, @ResourceId, @OriginalFileName, @FileExtension, @FilePath, @Comment;";
+                                sql = "INSERT INTO core.attachments(user_id, resource, resource_key, resource_id, original_file_name, file_extension, file_path, comment) SELECT @UserId, @Resource, @ResourceKey, @ResourceId, @OriginalFileName, @FileExtension, @FilePath, @Comment;";
                                 using (NpgsqlCommand attachmentCommand = new NpgsqlCommand(sql, connection))
                                 {
                                     attachmentCommand.Parameters.AddWithValue("@UserId", userId);

@@ -1,22 +1,5 @@
-﻿<%--
-Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="AttachmentUserControl.ascx.cs" Inherits="MixERP.Net.FrontEnd.UserControls.AttachmentUserControl" %>
 
-This file is part of MixERP.
-
-MixERP is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-MixERP is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with MixERP.  If not, see <http://www.gnu.org/licenses />.
---%>
-<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="AttachmentUserControl.ascx.cs" Inherits="MixERP.Net.FrontEnd.UserControls.AttachmentUserControl" %>
 <style type="text/css">
     .comment {
     }
@@ -113,8 +96,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         </table>
     </div>
 
-    <input type="button" id="uploadButton" value="Upload" class="btn btn-default btn-sm" />
-    <input type="button" id="undoButton" value="Undo" class="btn btn-default btn-sm" />
+    <input type="button" id="UploadButton" value="Upload" class="btn btn-default btn-sm" />
+    <input type="button" id="SaveButton" runat="server" value="Save" visible="False" class="btn btn-default btn-sm" />
+    <input type="button" id="UndoButton" value="Undo" class="btn btn-default btn-sm" />
     <p>
         <asp:Label ID="WarningLabel" runat="server" CssClass="error" />
     </p>

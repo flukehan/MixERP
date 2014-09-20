@@ -30,6 +30,12 @@ namespace MixERP.Net.FrontEnd.UserControls
     /// This class is subject to be moved to a standalone server control class library.
     public partial class TransactionChecklistControl : UserControl
     {
+        public TranBook Book { get; set; }
+
+        public SubTranBook SubBook { get; set; }
+
+        public string OverridePath { get; set; }
+
         public bool DisplayWithdrawButton { get; set; }
 
         public bool DisplayViewInvoiceButton { get; set; }
@@ -85,6 +91,8 @@ namespace MixERP.Net.FrontEnd.UserControls
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            long transactionMasterId = Conversion.TryCastLong(this.Request["TranId"]);
+
             this.WithdrawButton.Visible = this.DisplayWithdrawButton;
             this.ViewInvoiceButton.Visible = this.DisplayViewInvoiceButton;
             this.EmailInvoiceButton.Visible = this.DisplayEmailInvoiceButton;
@@ -98,8 +106,10 @@ namespace MixERP.Net.FrontEnd.UserControls
             string glAdviceUrl = this.ResolveUrl(this.GlAdvicePath + "?TranId=" + this.Request["TranId"]);
 
             this.ViewInvoiceButton.Attributes.Add("onclick", "showWindow('" + invoiceUrl + "');return false;");
+            this.EmailInvoiceButton.Attributes.Add("onclick", "return false;");
             this.CustomerInvoiceButton.Attributes.Add("onclick", "showWindow('" + customerInvoiceUrl + "');return false;");
             this.PrintGLButton.Attributes.Add("onclick", "showWindow('" + glAdviceUrl + "');return false;");
+            this.AttachmentButton.PostBackUrl = string.Format("~/Modules/BackOffice/AttachmentManager.mix?OverridePath={0}&Book=transaction&Id={1}", this.OverridePath, transactionMasterId);
 
             this.ShowVerificationStatus();
         }

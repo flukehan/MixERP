@@ -1,5 +1,5 @@
 ﻿/*jshint -W032 */
-/*global shortcut, parseFloat2*/
+/*global addDanger, ajaxDataBind, appendItem, appendParameter, duplicateEntryLocalized, getAjax, getAjaxErrorMessage, getColumnText, getData, gridViewEmptyWarningLocalized, invalidCostCenterWarningLocalized, invalidDateWarningLocalized, isDate, isNullOrWhiteSpace, logError, makeDirty, removeDirty, repaint, sumOfColumn, tableToJSON, uploadedFilesHidden, shortcut, parseFloat2 */
 
 //Controls
 var addButton = $("#AddButton");
@@ -41,7 +41,7 @@ var account = "";
 var attachments;
 
 var cashRepositoryCode = "";
-
+var costCenterId = 0;
 var credit = 0;
 var currencyCode = '';
 
@@ -51,8 +51,11 @@ var lcCredit = 0;
 var lcDebit = 0;
 var er = 0.00;
 
+var valueDate = "";
+
 var url = "";
 var data = "";
+var referenceNumber = "";
 var statementReference = "";
 
 //Page Load Event
@@ -83,7 +86,7 @@ function loadCashRepositories() {
 
     repoAjax.success(function (msg) {
         $.when(cashRepositoryDropDownList.bindAjaxData(msg.d)).done(function () {
-            if (cashRepositoryDropDownList.children('option').length == 1) {
+            if (cashRepositoryDropDownList.children('option').length === 1) {
                 loadCurrenciesByAccountCode(accountDropDownList.getSelectedValue());
                 return;
             };
@@ -162,13 +165,13 @@ addButton.click(function () {
 
     removeDirty(accountDropDownList);
 
-    if ((debit > 0 && credit > 0) || (debit == 0 && credit == 0)) {
+    if ((debit > 0 && credit > 0) || (debit === 0 && credit === 0)) {
         makeDirty(debitTextBox);
         makeDirty(creditTextBox);
         return;
     };
 
-    if ((lcDebit > 0 && lcCredit > 0) || (lcDebit == 0 && lcCredit == 0)) {
+    if ((lcDebit > 0 && lcCredit > 0) || (lcDebit === 0 && lcCredit === 0)) {
         makeDirty(lcDebitTextBox);
         makeDirty(lcCreditTextBox);
         return;
@@ -202,15 +205,15 @@ addButton.click(function () {
     var ajaxHasBalance;
 
     ajaxAccountCodeExists.error(function (xhr) {
-        logError(getAjaxErrorMessage(xhr));
+        logAjaxErrorMessage(xhr);
     });
 
     ajaxCashRepositoryCodeExists.fail(function (xhr) {
-        logError(getAjaxErrorMessage(xhr));
+        logAjaxErrorMessage(xhr);
     });
 
     ajaxIsCash.fail(function (xhr) {
-        logError(getAjaxErrorMessage(xhr));
+        logAjaxErrorMessage(xhr);
     });
 
     ajaxAccountCodeExists.success(function (ajaxAccountCodeExistsResult) {
@@ -259,7 +262,7 @@ addButton.click(function () {
                 if (credit > 0 && isCash) {
                     ajaxHasBalance = hasBalance(cashRepositoryCode, currencyCode, credit);
                     ajaxHasBalance.fail(function (xhr) {
-                        logError(getAjaxErrorMessage(xhr));
+                        logAjaxErrorMessage(xhr);
                     });
 
                     ajaxHasBalance.success(function (hasBalanceResult) {
@@ -287,16 +290,16 @@ var addRow = function (statementReference, accountCode, account, cashRepository,
         var row = $(this);
 
         if (!isCash) {
-            if (getColumnText(row, 1) == accountCode) {
+            if (getColumnText(row, 1) === accountCode) {
                 $.notify(duplicateEntryLocalized);
-                makeDirty(itemCodeTextBox);
+                makeDirty(accountCodeTextBox);
                 return;
             }
         };
 
-        if (getColumnText(row, 3) == cashRepository) {
+        if (getColumnText(row, 3) === cashRepository) {
             $.notify(duplicateEntryLocalized);
-            makeDirty(itemCodeTextBox);
+            makeDirty(accountCodeTextBox);
             return;
         }
     });
@@ -332,7 +335,7 @@ currencyDropDownList.blur(function () {
     });
 
     ajaxGetExchangeRate.fail(function (xhr) {
-        logError(getAjaxErrorMessage(xhr));
+        logAjaxErrorMessage(xhr);
     });
 });
 
@@ -424,7 +427,7 @@ var validate = function () {
         return false;
     };
 
-    if (transactionGridView.find("tr").length == 2) {
+    if (transactionGridView.find("tr").length === 2) {
         errorLabelBottom.html(gridViewEmptyWarningLocalized);
         return false;
     };
@@ -447,19 +450,19 @@ var validate = function () {
             return false;
     };
 
-        if (debit == 0 && credit == 0) {
+        if (debit === 0 && credit === 0) {
             addDanger(row);
             return false;
     };
 
         return true;
-    }) == false) {
+    }) === false) {
         return false;
     };
 
     summate();
 
-    if (parseFloat2(debitTotalTextBox) != parseFloat2(creditTotalTextBox)) {
+    if (parseFloat2(debitTotalTextBox) !== parseFloat2(creditTotalTextBox)) {
         $.notify("Referencing sides are not equal.", "error");
         return false;
     };

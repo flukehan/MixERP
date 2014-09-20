@@ -8,7 +8,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
     {
         public static DataTable GetUnitViewByItemCode(string itemCode)
         {
-            const string sql = "SELECT * FROM core.get_associated_units_from_item_code(@ItemCode);";
+            const string sql = "SELECT * FROM core.get_associated_units_from_item_code(@ItemCode) ORDER BY unit_id;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@ItemCode", itemCode);

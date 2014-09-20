@@ -58,10 +58,22 @@ CREATE TABLE core.flags
 CREATE UNIQUE INDEX flags_user_id_resource_resource_id_uix
 ON core.flags(user_id, UPPER(resource), UPPER(resource_key), resource_id);
 
+CREATE TABLE core.attachment_lookup
+(
+        attachment_lookup_id            SERIAL NOT NULL PRIMARY KEY,
+        book                            national character varying(50) NOT NULL,
+        resource                        text NOT NULL,
+        resource_key                    text NOT NULL        
+);
+
+CREATE UNIQUE INDEX attachment_lookup_book_uix
+ON core.attachment_lookup(lower(book));
+
+CREATE UNIQUE INDEX attachment_lookup_resource_resource_key_uix
+ON core.attachment_lookup(lower(book), lower(resource_key));
 
 
-
-CREATE TABLE transactions.attachments
+CREATE TABLE core.attachments
 (
 	attachment_id				BIGSERIAL NOT NULL PRIMARY KEY,
 	user_id					integer NOT NULL CONSTRAINT attachments_users_fk REFERENCES office.users(user_id),
@@ -76,7 +88,7 @@ CREATE TABLE transactions.attachments
 );
 
 CREATE UNIQUE INDEX attachments_file_path_uix
-ON transactions.attachments(UPPER(file_path));
+ON core.attachments(UPPER(file_path));
 
 
 CREATE TABLE core.currencies

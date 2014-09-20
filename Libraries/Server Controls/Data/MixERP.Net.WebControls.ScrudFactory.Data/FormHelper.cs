@@ -38,19 +38,19 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
             return DBFactory.FormHelper.GetView(tableSchema, tableName, orderBy, limit, offset);
         }
 
-        public static DataTable GetTable(string tableSchema, string tableName)
+        public static DataTable GetTable(string tableSchema, string tableName, string orderBy)
         {
-            return DBFactory.FormHelper.GetTable(tableSchema, tableName);
+            return DBFactory.FormHelper.GetTable(tableSchema, tableName, orderBy);
         }
 
-        public static DataTable GetTable(string tableSchema, string tableName, string columnNames, string columnValues)
+        public static DataTable GetTable(string tableSchema, string tableName, string columnNames, string columnValues, string orderBy)
         {
-            return DBFactory.FormHelper.GetTable(tableSchema, tableName, columnNames, columnValues);
+            return DBFactory.FormHelper.GetTable(tableSchema, tableName, columnNames, columnValues, orderBy);
         }
 
-        public static DataTable GetTable(string tableSchema, string tableName, string columnNames, string columnValuesLike, int limit)
+        public static DataTable GetTable(string tableSchema, string tableName, string columnNames, string columnValuesLike, int limit, string orderBy)
         {
-            return DBFactory.FormHelper.GetTable(tableSchema, tableName, columnNames, columnValuesLike, limit);
+            return DBFactory.FormHelper.GetTable(tableSchema, tableName, columnNames, columnValuesLike, limit, orderBy);
         }
 
         public static int GetTotalRecords(string tableSchema, string tableName)

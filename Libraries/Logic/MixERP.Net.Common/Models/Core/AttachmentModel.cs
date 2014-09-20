@@ -17,14 +17,20 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System;
+
 namespace MixERP.Net.Common.Models.Core
 {
-    public class Attachment
+    public class AttachmentModel
     {
+        public long Id { get; set; }
+
         public string Comment { get; set; }
 
         public string FilePath { get; set; }
 
         public string OriginalFileName { get; set; }
+
+        public DateTime? AddedOn { get; set; }
     }
 }

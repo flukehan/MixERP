@@ -37,7 +37,7 @@ namespace MixERP.Net.FrontEnd.Services
         public bool UndoUpload(string uploadedFilesJson)
         {
             JavaScriptSerializer js = new JavaScriptSerializer();
-            Attachment[] uploads = js.Deserialize<Attachment[]>(uploadedFilesJson);
+            AttachmentModel[] uploads = js.Deserialize<AttachmentModel[]>(uploadedFilesJson);
 
             string attachmentsDirectory = ConfigurationManager.AppSettings["AttachmentsDirectory"];
 

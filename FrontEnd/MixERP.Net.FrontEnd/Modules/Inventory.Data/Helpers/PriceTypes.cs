@@ -12,7 +12,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
     {
         public static DataTable GetPriceTypeDataTable()
         {
-            return FormHelper.GetTable("core", "price_types");
+            return FormHelper.GetTable("core", "price_types", "price_type_id");
         }
     }
 }

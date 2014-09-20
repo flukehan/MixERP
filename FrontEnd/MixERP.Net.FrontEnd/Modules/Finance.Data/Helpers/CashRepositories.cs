@@ -40,7 +40,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 
         public static DataTable GetCashRepositoryDataTable()
         {
-            return FormHelper.GetTable("office", "cash_repositories");
+            return FormHelper.GetTable("office", "cash_repositories", "cash_repository_id");
         }
 
         public static Collection<CashRepository> GetCashRepositories()

@@ -12,7 +12,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
     {
         public static DataTable GetCostCenterDataTable()
         {
-            return FormHelper.GetTable("office", "cost_centers");
+            return FormHelper.GetTable("office", "cost_centers", "cost_center_id");
         }
     }
 }

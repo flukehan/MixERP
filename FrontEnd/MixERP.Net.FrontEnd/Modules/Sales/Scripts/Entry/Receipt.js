@@ -1,4 +1,7 @@
-﻿var dueAmountTextBox = $("#DueAmountTextBox");
+﻿/*jshint -W032, -W098*/
+/*global getAjax, getAjaxErrorMessage, logError, ajaxDataBind, ajaxUpdateVal, appendParameter, exchangeRateLocalized, getData, parseFloat2, parseInt2, partyDropDownList, repaint*/
+
+var dueAmountTextBox = $("#DueAmountTextBox");
 var costCenterDropDownList = $("#CostCenterDropDownList");
 var currencyTextBox = $("#CurrencyTextBox");
 var currencyDropDownList = $("#CurrencyDropDownList");
@@ -57,7 +60,7 @@ var goButtonCallBack = function () {
     });
 
     ajaxGetHomeCurrency.fail(function (xhr) {
-        logError(getAjaxErrorMessage(xhr));
+        logAjaxErrorMessage(xhr);
     });
 };
 
@@ -93,7 +96,7 @@ saveButton.click(function () {
     });
 
     ajaxSaveReceipt.fail(function (xhr) {
-        logError(getAjaxErrorMessage(xhr));
+        logAjaxErrorMessage(xhr);
     });
 });
 
@@ -173,7 +176,7 @@ function updateTotal() {
 };
 
 var toggleTransactionType = function (e) {
-    if (e.find("input").attr("id") == "BankRadio") {
+    if (e.find("input").attr("id") === "BankRadio") {
         if (!$("#BankFormGroup").is(":visible"));
         {
             $("#BankFormGroup").show(500);
@@ -182,7 +185,7 @@ var toggleTransactionType = function (e) {
         }
     };
 
-    if (e.find("input").attr("id") == "CashRadio") {
+    if (e.find("input").attr("id") === "CashRadio") {
         if (!$("#CashFormGroup").is(":visible"));
         {
             $("#CashFormGroup").show(500);

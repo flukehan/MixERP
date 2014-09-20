@@ -8,12 +8,12 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
     {
         public static System.Data.DataTable GetItemDataTable()
         {
-            return FormHelper.GetTable("core", "items");
+            return FormHelper.GetTable("core", "items", "item_id");
         }
 
         public static System.Data.DataTable GetStockItemDataTable()
         {
-            return FormHelper.GetTable("core", "items", "maintain_stock", "true");
+            return FormHelper.GetTable("core", "items", "maintain_stock", "true", "item_id");
         }
 
         public static bool ItemExistsByCode(string itemCode)

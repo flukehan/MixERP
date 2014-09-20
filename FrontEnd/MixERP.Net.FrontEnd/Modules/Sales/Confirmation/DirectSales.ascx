@@ -1,6 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DirectSales.ascx.cs" Inherits="MixERP.Net.Core.Modules.Sales.Confirmation.DirectSales"
     OverridePath="/Modules/Sales/DirectSales.mix" %>
 <mixerp:TransactionChecklist runat="server"
+    OverridePath="/Modules/Sales/DirectSales.mix"
     DisplayWithdrawButton="true"
     DisplayViewInvoiceButton="true"
     DisplayEmailInvoiceButton="true"

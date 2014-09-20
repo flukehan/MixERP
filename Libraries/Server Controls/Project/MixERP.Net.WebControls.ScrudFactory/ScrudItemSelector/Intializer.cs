@@ -34,7 +34,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             if (string.IsNullOrWhiteSpace(this.GetSchema())) return;
             if (string.IsNullOrWhiteSpace(this.GetView())) return;
 
-            using (var table = FormHelper.GetTable(this.GetSchema(), this.GetView(), "", "", 10))
+            using (var table = FormHelper.GetTable(this.GetSchema(), this.GetView(), "", "", 10, "1"))//Todo :Verfy orderBy parameter.
             {
                 this.searchGridView.DataSource = table;
                 this.searchGridView.DataBind();

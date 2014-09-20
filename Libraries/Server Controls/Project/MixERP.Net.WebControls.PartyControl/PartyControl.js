@@ -94,7 +94,7 @@ goButton.click(function () {
     });
 
     ajaxGetPartyDue.fail(function (xhr) {
-        alert(getAjaxErrorMessage(xhr));
+        logAjaxErrorMessage(xhr);
     });
 
     var ajaxGetPartyView = getPartyView(partyCode);
@@ -132,7 +132,7 @@ goButton.click(function () {
     });
 
     ajaxGetPartyView.fail(function (xhr) {
-        alert(getAjaxErrorMessage(xhr));
+        logAjaxErrorMessage(xhr);
     });
 
     var ajaxGetShippingAddresses = getShippingAddresses(partyCode);
@@ -149,7 +149,7 @@ goButton.click(function () {
     });
 
     ajaxGetShippingAddresses.fail(function (xhr) {
-        alert(getAjaxErrorMessage(xhr));
+        logAjaxErrorMessage(xhr);
     });
 });
 

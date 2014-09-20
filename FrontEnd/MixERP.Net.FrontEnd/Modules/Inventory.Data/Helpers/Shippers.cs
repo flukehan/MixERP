@@ -12,7 +12,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
     {
         public static DataTable GetShipperDataTable()
         {
-            return FormHelper.GetTable("core", "shippers");
+            return FormHelper.GetTable("core", "shippers", "shipper_id");
         }
     }
 }

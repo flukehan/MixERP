@@ -43,12 +43,12 @@ namespace MixERP.Net.FrontEnd.Modules
             {
                 this.DefaultContentPlaceholder.Controls.Add(plugin);
 
+                plugin.OnControlLoad(sender, e);
+
                 if (!string.IsNullOrWhiteSpace(plugin.OverridePath))
                 {
                     this.OverridePath = plugin.OverridePath;
                 }
-
-                plugin.OnControlLoad(sender, e);
             }
         }
     }

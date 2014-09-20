@@ -12,12 +12,12 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
     {
         public static DataTable GetCurrencyDataTable(string accountCode)
         {
-            return FormHelper.GetTable("core", "accounts", "account_code", accountCode);
+            return FormHelper.GetTable("core", "accounts", "account_code", accountCode, "account_id");
         }
 
         public static DataTable GetCurrencyDataTable()
         {
-            return FormHelper.GetTable("core", "currencies");
+            return FormHelper.GetTable("core", "currencies", "currency_code");
         }
     }
 }

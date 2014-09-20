@@ -126,8 +126,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     </div>
 </div>
 
-<asp:Label ID="ErrorLabelTop" runat="server" CssClass="error" />
-
 <div>
     <table id="ProductGridView" class="table table-hover" runat="server">
         <tbody>

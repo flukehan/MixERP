@@ -26,7 +26,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
             Collection<int> tranIds = new Collection<int>();
 
             JavaScriptSerializer js = new JavaScriptSerializer();
-            Collection<Attachment> attachments = js.Deserialize<Collection<Attachment>>(attachmentsJSON);
+            Collection<AttachmentModel> attachments = js.Deserialize<Collection<AttachmentModel>>(attachmentsJSON);
 
             if (!string.IsNullOrWhiteSpace(transactionIds))
             {

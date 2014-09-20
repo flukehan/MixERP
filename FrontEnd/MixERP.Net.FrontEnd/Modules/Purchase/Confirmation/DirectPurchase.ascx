@@ -1,6 +1,9 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DirectPurchase.ascx.cs" Inherits="MixERP.Net.Core.Modules.Purchase.Confirmation.DirectPurchase"
     OverridePath="/Modules/Purchase/DirectPurchase.mix" %>
 <mixerp:TransactionChecklist runat="server"
+    Book="Purchase"
+    SubTranBook="Direct"
+    OverridePath="/Modules/Purchase/DirectPurchase.mix"
     DisplayWithdrawButton="true"
     DisplayViewInvoiceButton="true"
     DisplayEmailInvoiceButton="true"
@@ -8,5 +11,5 @@
     DisplayPrintReceiptButton="false"
     DisplayPrintGlEntryButton="true"
     DisplayAttachmentButton="true"
-    InvoicePath="~/Modules/Purchase/Confirmation/DirectPurchaseInvoice.mix"
+    InvoicePath="~/Modules/Purchase/Reports/DirectPurchaseInvoiceReport.mix"
     GlAdvicePath="~/Modules/Finance/Reports/GLAdviceReport.mix" />

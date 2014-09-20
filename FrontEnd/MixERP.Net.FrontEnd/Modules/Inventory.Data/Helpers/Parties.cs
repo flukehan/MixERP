@@ -87,12 +87,12 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
 
         public static DataTable GetPartyDataTable()
         {
-            return FormHelper.GetTable("core", "parties");
+            return FormHelper.GetTable("core", "parties", "party_id");
         }
 
         public static DataTable GetPartyViewDataTable(string partyCode)
         {
-            return FormHelper.GetTable("core", "party_view", "party_code", partyCode);
+            return FormHelper.GetTable("core", "party_view", "party_code", partyCode, "party_id");
         }
     }
 }

@@ -4,7 +4,9 @@ using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
 using System;
 using System.Collections.ObjectModel;
 using System.Web.Script.Serialization;
+using System.Web.Script.Services;
 using System.Web.Services;
+using System.Web.SessionState;
 
 namespace MixERP.Net.Core.Modules.Purchase.Services
 {
@@ -23,7 +25,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Services
             Collection<StockMasterDetailModel> details = CollectionHelper.GetStockMasterDetailCollection(data, storeId);
 
             JavaScriptSerializer js = new JavaScriptSerializer();
-            Collection<Attachment> attachments = js.Deserialize<Collection<Attachment>>(attachmentsJSON);
+            Collection<AttachmentModel> attachments = js.Deserialize<Collection<AttachmentModel>>(attachmentsJSON);
 
             bool isCredit = !transactionType.ToLower().Equals("cash");
 

@@ -62,6 +62,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Handlers\ImageHandler.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -76,6 +77,7 @@
     <Content Include="Admin\NewCompany.ascx" />
     <Content Include="Admin\QueryTool.ascx" />
     <Content Include="Admin\Restore.ascx" />
+    <Content Include="AttachmentManager.ascx" />
     <Content Include="CashRepositories.ascx" />
     <Content Include="Counters.ascx" />
     <Content Include="Departments.ascx" />
@@ -91,6 +93,7 @@
     <Content Include="Policy\StoreAccess.ascx" />
     <Content Include="Policy\VoucherVerification.ascx" />
     <Content Include="Roles.ascx" />
+    <Content Include="Services\Attachments.asmx" />
     <Content Include="SQL\Module.sql" />
     <Content Include="SQL\Menu.sql" />
     <Content Include="Users.ascx" />
@@ -139,6 +142,13 @@
     <Compile Include="Admin\Restore.ascx.designer.cs">
       <DependentUpon>Restore.ascx</DependentUpon>
     </Compile>
+    <Compile Include="AttachmentManager.ascx.cs">
+      <DependentUpon>AttachmentManager.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AttachmentManager.ascx.designer.cs">
+      <DependentUpon>AttachmentManager.ascx</DependentUpon>
+    </Compile>
     <Compile Include="CashRepositories.ascx.cs">
       <DependentUpon>CashRepositories.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -180,6 +190,9 @@
     </Compile>
     <Compile Include="Frequency.ascx.designer.cs">
       <DependentUpon>Frequency.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\ImageHandler.ashx.cs">
+      <DependentUpon>ImageHandler.ashx</DependentUpon>
     </Compile>
     <Compile Include="Index.ascx.cs">
       <DependentUpon>Index.ascx</DependentUpon>
@@ -253,6 +266,10 @@
     <Compile Include="Roles.ascx.designer.cs">
       <DependentUpon>Roles.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Services\Attachments.asmx.cs">
+      <DependentUpon>Attachments.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Users.ascx.cs">
       <DependentUpon>Users.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -264,7 +281,6 @@
   <ItemGroup>
     <Folder Include="Reports\" />
     <Folder Include="Scripts\" />
-    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\MixERP.Net.WebControls.ScrudFactory.csproj">

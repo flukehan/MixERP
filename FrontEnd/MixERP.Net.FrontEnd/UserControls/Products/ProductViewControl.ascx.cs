@@ -87,7 +87,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         private void BindFlagTypeDropDownList()
         {
-            Data.Helpers.DropDownListHelper.BindDropDownList(this.FlagDropDownList, "core", "flag_types", "flag_type_id", "flag_type_name");
+            Data.Helpers.DropDownListHelper.BindDropDownList(this.FlagDropDownList, "core", "flag_types", "flag_type_id", "flag_type_name", "flag_type_id");
         }
 
         protected void Page_Load(object sender, EventArgs e)

@@ -48,7 +48,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             if (string.IsNullOrWhiteSpace(this.GetSchema())) return;
             if (string.IsNullOrWhiteSpace(this.GetView())) return;
 
-            using (var table = FormHelper.GetTable(this.GetSchema(), this.GetView(), this.filterDropDownList.SelectedItem.Value, this.filterTextBox.Text, 10))
+            using (var table = FormHelper.GetTable(this.GetSchema(), this.GetView(), this.filterDropDownList.SelectedItem.Value, this.filterTextBox.Text, 10, "1"))
             {
                 this.searchGridView.DataSource = table;
                 this.searchGridView.DataBind();

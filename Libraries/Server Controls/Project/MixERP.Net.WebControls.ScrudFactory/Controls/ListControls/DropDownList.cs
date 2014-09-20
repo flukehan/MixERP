@@ -159,8 +159,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
             }
         }
 
-        private static DataTable GetTable(string tableSchema, string tableName, string tableColumn, string displayViews,
-            bool useDisplayViewsAsParent)
+        private static DataTable GetTable(string tableSchema, string tableName, string tableColumn, string displayViews, bool useDisplayViewsAsParent)
         {
             if (useDisplayViewsAsParent)
             {
@@ -177,13 +176,13 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 
                 if (string.IsNullOrWhiteSpace(schema) || string.IsNullOrWhiteSpace(view))
                 {
-                    return FormHelper.GetTable(tableSchema, tableName);
+                    return FormHelper.GetTable(tableSchema, tableName, "1");
                 }
 
-                return FormHelper.GetTable(schema, view);
+                return FormHelper.GetTable(schema, view, "1");
             }
 
-            return FormHelper.GetTable(tableSchema, tableName);
+            return FormHelper.GetTable(tableSchema, tableName, "1");
         }
 
         private static void SetDisplayFields(DropDownList dropDownList, DataTable table, string tableSchema,

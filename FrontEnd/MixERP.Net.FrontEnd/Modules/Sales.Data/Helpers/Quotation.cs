@@ -12,7 +12,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
 {
     public static class Quotation
     {
-        public static long Add(DateTime valueDate, string partyCode, int priceTypeId, Collection<StockMasterDetailModel> details, string referenceNumber, string statementReference, Collection<int> transactionIdCollection, Collection<Attachment> attachments)
+        public static long Add(DateTime valueDate, string partyCode, int priceTypeId, Collection<StockMasterDetailModel> details, string referenceNumber, string statementReference, Collection<int> transactionIdCollection, Collection<AttachmentModel> attachments)
         {
             StockMasterModel stockMaster = new StockMasterModel();
 

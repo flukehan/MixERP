@@ -204,6 +204,8 @@
             var invalidFileLocalized = "<%= Resources.Warnings.InvalidFile %>";
             var uploadedFilesDeletedLocalized = "<%= Resources.Labels.UploadedFilesDeleted %>";
             var duplicateFileLocalized = "<% = Resources.Errors.DuplicateFiles %>";
+
+            var taskCompletedSuccessfullyLocalized = "<%= Resources.Labels.TaskCompletedSuccessfully %>";
         </script>
 
         <asp:ContentPlaceHolder ID="BottomScriptContentPlaceholder" runat="server">

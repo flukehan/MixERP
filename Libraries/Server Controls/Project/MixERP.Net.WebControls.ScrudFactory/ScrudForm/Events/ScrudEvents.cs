@@ -84,7 +84,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 return;
             }
 
-            using (var table = FormHelper.GetTable(this.TableSchema, this.Table, this.KeyColumn, id))
+            using (var table = FormHelper.GetTable(this.TableSchema, this.Table, this.KeyColumn, id, this.KeyColumn))
             {
                 if (table.Rows.Count.Equals(1))
                 {

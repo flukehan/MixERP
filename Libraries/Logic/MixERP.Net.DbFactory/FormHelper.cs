@@ -46,20 +46,21 @@ namespace MixERP.Net.DBFactory
             }
         }
 
-        public static DataTable GetTable(string tableSchema, string tableName)
+        public static DataTable GetTable(string tableSchema, string tableName, string orderBy)
         {
-            var sql = "SELECT * FROM @TableSchema.@TableName;";
+            var sql = "SELECT * FROM @TableSchema.@TableName ORDER BY @OrderBy;";
             using (var command = new NpgsqlCommand())
             {
                 sql = sql.Replace("@TableSchema", Sanitizer.SanitizeIdentifierName(tableSchema));
                 sql = sql.Replace("@TableName", Sanitizer.SanitizeIdentifierName(tableName));
+                sql = sql.Replace("@OrderBy", Sanitizer.SanitizeIdentifierName(orderBy));
                 command.CommandText = sql;
 
                 return DbOperations.GetDataTable(command);
             }
         }
 
-        public static DataTable GetTable(string tableSchema, string tableName, string columnNames, string columnValues)
+        public static DataTable GetTable(string tableSchema, string tableName, string columnNames, string columnValues, string orderBy)
         {
             if (string.IsNullOrWhiteSpace(columnNames))
             {
@@ -94,12 +95,13 @@ namespace MixERP.Net.DBFactory
                 counter++;
             }
 
-            sql += ";";
+            sql += " ORDER BY @OrderBy;";
 
             using (var command = new NpgsqlCommand())
             {
                 sql = sql.Replace("@TableSchema", Sanitizer.SanitizeIdentifierName(tableSchema));
                 sql = sql.Replace("@TableName", Sanitizer.SanitizeIdentifierName(tableName));
+                sql = sql.Replace("@OrderBy", Sanitizer.SanitizeIdentifierName(orderBy));
 
                 command.CommandText = sql;
 
@@ -114,7 +116,7 @@ namespace MixERP.Net.DBFactory
             }
         }
 
-        public static DataTable GetTable(string tableSchema, string tableName, string columnNames, string columnValuesLike, int limit)
+        public static DataTable GetTable(string tableSchema, string tableName, string columnNames, string columnValuesLike, int limit, string orderBy)
         {
             if (columnNames == null)
             {
@@ -155,12 +157,13 @@ namespace MixERP.Net.DBFactory
                 }
             }
 
-            sql += " LIMIT @Limit;";
+            sql += " ORDER BY @OrderBy LIMIT @Limit;";
 
             using (var command = new NpgsqlCommand())
             {
                 sql = sql.Replace("@TableSchema", Sanitizer.SanitizeIdentifierName(tableSchema));
                 sql = sql.Replace("@TableName", Sanitizer.SanitizeIdentifierName(tableName));
+                sql = sql.Replace("@OrderBy", Sanitizer.SanitizeIdentifierName(orderBy));
 
                 command.CommandText = sql;
 

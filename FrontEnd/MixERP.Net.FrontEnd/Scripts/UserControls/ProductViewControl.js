@@ -1,4 +1,7 @@
-﻿var flagPopunder = $("#flag-popunder");
+﻿/*jshint -W098*/
+/*global createFlaggedRows, getSelectedCheckBoxItemIds, nothingSelectedLocalized, popUnder, shortcut, toogleSelection*/
+
+var flagPopunder = $("#flag-popunder");
 var flagButton = $("#flagButton");
 
 $(document).ready(function () {

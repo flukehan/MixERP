@@ -534,6 +534,7 @@
     <Content Include="Resource\Configuration\PartyControlParameters.xml" />
     <Content Include="Resource\Icons\checklist-16.png" />
     <Content Include="Resource\Icons\insert-16.png" />
+    <Content Include="Resource\Static\images\not-image-file.png" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\ajax-file-upload.js" />
     <Content Include="Scripts\bootstrap\css\bootstrap-theme.css" />

@@ -11,7 +11,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
     {
         public static System.Data.DataTable GetStoreDataTable()
         {
-            return FormHelper.GetTable("office", "stores");
+            return FormHelper.GetTable("office", "stores", "store_id");
         }
     }
 }

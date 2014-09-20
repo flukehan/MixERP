@@ -2,6 +2,6 @@
 
 <asp:PlaceHolder ID="ScrudPlaceholder" runat="server" />
 <script type="text/javascript">
-    var p = "<%= GetPartyNameParameter() %>";
+    var partyNameParameter = "<%= GetPartyNameParameter() %>";
 </script>
 <script src="../Scripts/Setup/Parties.js"></script>

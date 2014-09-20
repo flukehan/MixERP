@@ -927,10 +927,22 @@ CREATE TABLE core.flags
 CREATE UNIQUE INDEX flags_user_id_resource_resource_id_uix
 ON core.flags(user_id, UPPER(resource), UPPER(resource_key), resource_id);
 
+CREATE TABLE core.attachment_lookup
+(
+        attachment_lookup_id            SERIAL NOT NULL PRIMARY KEY,
+        book                            national character varying(50) NOT NULL,
+        resource                        text NOT NULL,
+        resource_key                    text NOT NULL        
+);
+
+CREATE UNIQUE INDEX attachment_lookup_book_uix
+ON core.attachment_lookup(lower(book));
+
+CREATE UNIQUE INDEX attachment_lookup_resource_resource_key_uix
+ON core.attachment_lookup(lower(book), lower(resource_key));
 
 
-
-CREATE TABLE transactions.attachments
+CREATE TABLE core.attachments
 (
 	attachment_id				BIGSERIAL NOT NULL PRIMARY KEY,
 	user_id					integer NOT NULL CONSTRAINT attachments_users_fk REFERENCES office.users(user_id),
@@ -945,7 +957,7 @@ CREATE TABLE transactions.attachments
 );
 
 CREATE UNIQUE INDEX attachments_file_path_uix
-ON transactions.attachments(UPPER(file_path));
+ON core.attachments(UPPER(file_path));
 
 
 CREATE TABLE core.currencies
@@ -2650,6 +2662,27 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+
+
+-- core.get_attachment_lookup_info.sql
+DROP FUNCTION IF EXISTS core.get_attachment_lookup_info(national character varying(50));
+
+CREATE FUNCTION core.get_attachment_lookup_info(national character varying(50))
+RETURNS text
+AS
+$$
+BEGIN
+        RETURN
+        (
+                SELECT resource || resource_key
+                FROM core.attachment_lookup
+                WHERE book=$1
+        );
+END
+$$
+LANGUAGE plpgsql;
+
+
 
 
 -- core.get_base_quantity_by_unit_name.sql
@@ -6350,6 +6383,9 @@ SELECT 'GBP', '£', 'Pound Sterling', 'penny' UNION ALL
 SELECT 'EUR', '€', 'Euro', 'cents' UNION ALL
 SELECT 'INR', '₹', 'Indian Currency', 'paise';
 
+INSERT INTO core.attachment_lookup(book, resource, resource_key)
+SELECT 'transaction', 'transactions.transaction_master', 'transaction_master_id';
+
 INSERT INTO core.account_masters(account_master_code, account_master_name) SELECT 'BSA', 'Balance Sheet A/C';
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '10000', 'Assets', TRUE, (SELECT account_id FROM core.accounts WHERE account_name='Balance Sheet A/C');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '10001', 'Current Assets', TRUE, (SELECT account_id FROM core.accounts WHERE account_name='Assets');
@@ -9093,6 +9129,33 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
+SELECT 'RMBP', 'Macbook Pro 15'''' Retina', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 180000, 225000;
+
+INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
+SELECT '13MBA', 'Macbook Air 13''''', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 130000, 155000;
+
+INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
+SELECT '11MBA', 'Macbook Air 11''''', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 110000, 135000;
+
+INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
+SELECT 'IPA', 'iPad Air', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 53000, 70000;
+
+INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
+SELECT 'IPR', 'iPad Air Retina', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 63000, 80000;
+
+INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
+SELECT 'IPM', 'iPad Mini', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 33000, 50000;
+
+INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
+SELECT 'IPMR', 'iPad Mini Retina', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 53000, 70000;
+
+INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
+SELECT 'IPH6', 'iPhone 6', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 93000, 105000;
+
+INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
+SELECT 'IPH6P', 'iPhone 6 Plus', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 103000, 115000;
+
+INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
 SELECT 'ITP', 'IBM Thinkpadd II Laptop', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 80000, 125000;
 
 INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
@@ -9105,10 +9168,13 @@ INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_
 SELECT 'MSO', 'Microsoft Office Premium Edition', 1, 1, 1, 1, 'Yes', 1, 10, 'Yes', 30000, 35000;
 
 INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
-SELECT 'LBS', 'Lotus Banking Solution', 1, 1, 1, 1, 'Yes', 1, 10, 'No', 150000, 150000;
+SELECT 'MNP', 'MixNP Classifieds', 1, 1, 1, 1, 'Yes', 1, 10, 'No', 150000, 150000;
 
 INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
-SELECT 'CAS', 'CAS Banking Solution', 1, 1, 1, 1, 'Yes', 1, 10, 'No', 40000, 40000;
+SELECT 'MIX', 'MixERP Community Edition', 1, 1, 1, 1, 'Yes', 1, 10, 'No', 40000, 40000;
+
+INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
+SELECT 'SFIX', 'SFIX Financial Edition', 1, 1, 1, 1, 'Yes', 1, 10, 'No', 40000, 40000;
 
 INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
 SELECT 'SGT', 'Samsung Galaxy Tab 10.1', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 30000, 45000;
@@ -9281,29 +9347,17 @@ SET search_path = audit, pg_catalog;
 
 INSERT INTO logins (login_id, user_id, office_id, browser, ip_address, login_date_time, remote_user, culture) VALUES (1, 2, 2, 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:32.0) Gecko/20100101 Firefox/32.0', '::1', '2014-09-05 15:22:04.51+00', '', 'en-US');
 INSERT INTO logins (login_id, user_id, office_id, browser, ip_address, login_date_time, remote_user, culture) VALUES (2, 2, 2, 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:32.0) Gecko/20100101 Firefox/32.0', '::1', '2014-09-05 15:37:19.661+00', '', 'en-US');
+INSERT INTO logins (login_id, user_id, office_id, browser, ip_address, login_date_time, remote_user, culture) VALUES (3, 2, 2, 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:32.0) Gecko/20100101 Firefox/32.0', '::1', '2014-09-20 12:43:26.808+00', '', 'en-US');
 
 
 --
 -- Name: logins_login_id_seq; Type: SEQUENCE SET; Schema: audit; Owner: postgres
 --
 
-SELECT pg_catalog.setval('logins_login_id_seq', 2, true);
+SELECT pg_catalog.setval('logins_login_id_seq', 3, true);
 
 
 SET search_path = transactions, pg_catalog;
-
---
--- Data for Name: attachments; Type: TABLE DATA; Schema: transactions; Owner: postgres
---
-
-
-
---
--- Name: attachments_attachment_id_seq; Type: SEQUENCE SET; Schema: transactions; Owner: postgres
---
-
-SELECT pg_catalog.setval('attachments_attachment_id_seq', 1, false);
-
 
 --
 -- Data for Name: transaction_master; Type: TABLE DATA; Schema: transactions; Owner: postgres
@@ -9311,6 +9365,7 @@ SELECT pg_catalog.setval('attachments_attachment_id_seq', 1, false);
 
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (1, 1, '1-2014-09-05-2-2-1-15-23-24', 'Journal', '2014-09-05', '2014-09-05 15:23:24.577+00', 1, 2, NULL, 2, 1, '', NULL, '2014-09-05 15:23:24.601+00', 1, 2, 'Vérifié automatiquement par le flux de travail.', NULL, '2014-09-05 15:23:24.577+00');
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (2, 2, '2-2014-09-05-2-2-2-15-37-22', 'Journal', '2014-09-05', '2014-09-05 15:37:22.802+00', 2, 2, NULL, 2, 1, '', NULL, '2014-09-05 15:37:22.819+00', 1, 2, 'Vérifié automatiquement par le flux de travail.', NULL, '2014-09-05 15:37:22.802+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (3, 1, '1-2014-09-20-2-2-3-12-45-25', 'Purchase.Direct', '2014-09-20', '2014-09-20 12:45:25.485+00', 3, 2, NULL, 2, 7, '', 'Being various items purchased from Mr. Martin for Store 1.', '2014-09-20 12:45:25.532+00', 1, 2, 'Vérifié automatiquement par le flux de travail.', NULL, '2014-09-20 12:45:25.485+00');
 
 
 --
@@ -9366,22 +9421,50 @@ SELECT pg_catalog.setval('non_gl_stock_master_relations_non_gl_stock_master_rela
 
 
 --
+-- Data for Name: sales_return; Type: TABLE DATA; Schema: transactions; Owner: postgres
+--
+
+
+
+--
+-- Name: sales_return_sales_return_id_seq; Type: SEQUENCE SET; Schema: transactions; Owner: postgres
+--
+
+SELECT pg_catalog.setval('sales_return_sales_return_id_seq', 1, false);
+
+
+--
 -- Data for Name: stock_master; Type: TABLE DATA; Schema: transactions; Owner: postgres
 --
 
+INSERT INTO stock_master (stock_master_id, transaction_master_id, party_id, agent_id, price_type_id, is_credit, shipper_id, shipping_address_id, shipping_charge, store_id, cash_repository_id, audit_user_id, audit_ts) VALUES (1, 3, 16, NULL, NULL, false, NULL, NULL, 0.0000, 1, 1, NULL, '2014-09-20 12:45:25.485+00');
 
 
 --
 -- Data for Name: stock_details; Type: TABLE DATA; Schema: transactions; Owner: postgres
 --
 
+INSERT INTO stock_details (stock_master_detail_id, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (1, 1, 'Dr', 1, 1, 50, 1, 50.00, 1, 180000.0000, 0.0000, 13, 1170000.0000, NULL, '2014-09-20 12:45:25.485+00');
+INSERT INTO stock_details (stock_master_detail_id, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (2, 1, 'Dr', 1, 2, 50, 1, 50.00, 1, 130000.0000, 0.0000, 13, 845000.0000, NULL, '2014-09-20 12:45:25.485+00');
+INSERT INTO stock_details (stock_master_detail_id, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (3, 1, 'Dr', 1, 3, 30, 1, 30.00, 1, 110000.0000, 0.0000, 13, 429000.0000, NULL, '2014-09-20 12:45:25.485+00');
+INSERT INTO stock_details (stock_master_detail_id, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (4, 1, 'Dr', 1, 4, 50, 1, 50.00, 1, 53000.0000, 0.0000, 13, 344500.0000, NULL, '2014-09-20 12:45:25.485+00');
+INSERT INTO stock_details (stock_master_detail_id, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (5, 1, 'Dr', 1, 5, 50, 1, 50.00, 1, 63000.0000, 0.0000, 13, 409500.0000, NULL, '2014-09-20 12:45:25.485+00');
+INSERT INTO stock_details (stock_master_detail_id, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (6, 1, 'Dr', 1, 6, 30, 1, 30.00, 1, 33000.0000, 0.0000, 13, 128700.0000, NULL, '2014-09-20 12:45:25.485+00');
+INSERT INTO stock_details (stock_master_detail_id, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (7, 1, 'Dr', 1, 7, 30, 1, 30.00, 1, 53000.0000, 0.0000, 13, 206700.0000, NULL, '2014-09-20 12:45:25.485+00');
+INSERT INTO stock_details (stock_master_detail_id, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (8, 1, 'Dr', 1, 8, 100, 1, 100.00, 1, 93000.0000, 0.0000, 13, 1209000.0000, NULL, '2014-09-20 12:45:25.485+00');
+INSERT INTO stock_details (stock_master_detail_id, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (9, 1, 'Dr', 1, 9, 100, 1, 100.00, 1, 103000.0000, 0.0000, 13, 1339000.0000, NULL, '2014-09-20 12:45:25.485+00');
+INSERT INTO stock_details (stock_master_detail_id, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (10, 1, 'Dr', 1, 10, 25, 1, 25.00, 1, 80000.0000, 0.0000, 13, 260000.0000, NULL, '2014-09-20 12:45:25.485+00');
+INSERT INTO stock_details (stock_master_detail_id, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (11, 1, 'Dr', 1, 11, 10, 1, 10.00, 1, 40000.0000, 0.0000, 13, 52000.0000, NULL, '2014-09-20 12:45:25.485+00');
+INSERT INTO stock_details (stock_master_detail_id, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (12, 1, 'Dr', 1, 12, 100, 8, 120000, 1, 240000.0000, 0.0000, 13, 3120000.0000, NULL, '2014-09-20 12:45:25.485+00');
+INSERT INTO stock_details (stock_master_detail_id, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (13, 1, 'Dr', 1, 13, 100, 1, 100.00, 1, 30000.0000, 0.0000, 13, 390000.0000, NULL, '2014-09-20 12:45:25.485+00');
+INSERT INTO stock_details (stock_master_detail_id, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (14, 1, 'Dr', 1, 17, 5, 1, 5.00, 1, 30000.0000, 0.0000, 13, 19500.0000, NULL, '2014-09-20 12:45:25.485+00');
 
 
 --
 -- Name: stock_details_stock_master_detail_id_seq; Type: SEQUENCE SET; Schema: transactions; Owner: postgres
 --
 
-SELECT pg_catalog.setval('stock_details_stock_master_detail_id_seq', 1, false);
+SELECT pg_catalog.setval('stock_details_stock_master_detail_id_seq', 14, true);
 
 
 --
@@ -9401,31 +9484,34 @@ SELECT pg_catalog.setval('stock_master_non_gl_relations_stock_master_non_gl_rela
 -- Name: stock_master_stock_master_id_seq; Type: SEQUENCE SET; Schema: transactions; Owner: postgres
 --
 
-SELECT pg_catalog.setval('stock_master_stock_master_id_seq', 1, false);
+SELECT pg_catalog.setval('stock_master_stock_master_id_seq', 1, true);
 
 
 --
 -- Data for Name: transaction_details; Type: TABLE DATA; Schema: transactions; Owner: postgres
 --
 
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (1, 1, 'Cr', 113, 'Cash Invested by nirvan.', NULL, 'NPR', 5000000.0000, 'NPR', 1, 5000000.0000, NULL, '2014-09-05 15:23:24.577+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (2, 1, 'Dr', 8, 'Cash Invested by nirvan.', 1, 'NPR', 5000000.0000, 'NPR', 1, 5000000.0000, NULL, '2014-09-05 15:23:24.577+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (3, 2, 'Dr', 8, 'Cash transfer', 2, 'NPR', 100.0000, 'NPR', 1, 100.0000, NULL, '2014-09-05 15:37:22.802+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (4, 2, 'Cr', 8, 'Cash transfer', 1, 'NPR', 100.0000, 'NPR', 1, 100.0000, NULL, '2014-09-05 15:37:22.802+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (5, 3, 'Dr', 140, 'Being various items purchased from Mr. Martin for Store 1.', NULL, 'NPR', 76330000.0000, 'NPR', 1, 76330000.0000, NULL, '2014-09-20 12:45:25.485+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (6, 3, 'Dr', 74, 'Being various items purchased from Mr. Martin for Store 1.', NULL, 'NPR', 9922900.0000, 'NPR', 1, 9922900.0000, NULL, '2014-09-20 12:45:25.485+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (7, 3, 'Cr', 8, 'Being various items purchased from Mr. Martin for Store 1.', 1, 'NPR', 86252900.0000, 'NPR', 1, 86252900.0000, NULL, '2014-09-20 12:45:25.485+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (1, 1, 'Cr', 113, 'Cash Invested by nirvan.', NULL, 'NPR', 500000000.0000, 'NPR', 1, 500000000.0000, NULL, '2014-09-05 15:23:24.577+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (2, 1, 'Dr', 8, 'Cash Invested by nirvan.', 1, 'NPR', 500000000.0000, 'NPR', 1, 500000000.0000, NULL, '2014-09-05 15:23:24.577+00');
 
 
 --
 -- Name: transaction_details_transaction_detail_id_seq; Type: SEQUENCE SET; Schema: transactions; Owner: postgres
 --
 
-SELECT pg_catalog.setval('transaction_details_transaction_detail_id_seq', 4, true);
+SELECT pg_catalog.setval('transaction_details_transaction_detail_id_seq', 7, true);
 
 
 --
 -- Name: transaction_master_transaction_master_id_seq; Type: SEQUENCE SET; Schema: transactions; Owner: postgres
 --
 
-SELECT pg_catalog.setval('transaction_master_transaction_master_id_seq', 2, true);
+SELECT pg_catalog.setval('transaction_master_transaction_master_id_seq', 3, true);
 
 
 --

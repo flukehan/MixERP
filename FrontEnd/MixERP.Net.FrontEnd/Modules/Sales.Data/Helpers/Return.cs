@@ -15,7 +15,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
 {
     public static class Return
     {
-        public static long PostTransaction(long transactionMasterId, DateTime valueDate, int officeId, int userId, long loginId, int storeId, string partyCode, int priceTypeId, string referenceNumber, string statementReference, Collection<StockMasterDetailModel> details, Collection<Attachment> attachments)
+        public static long PostTransaction(long transactionMasterId, DateTime valueDate, int officeId, int userId, long loginId, int storeId, string partyCode, int priceTypeId, string referenceNumber, string statementReference, Collection<StockMasterDetailModel> details, Collection<AttachmentModel> attachments)
         {
             string detail = CreateStockMasterDetailParameter(details);
             string attachment = CreateAttachmentModelParameter(attachments);
@@ -66,7 +66,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
             return collection;
         }
 
-        private static IEnumerable<NpgsqlParameter> AddAttachmentParameter(Collection<Attachment> attachments)
+        private static IEnumerable<NpgsqlParameter> AddAttachmentParameter(Collection<AttachmentModel> attachments)
         {
             Collection<NpgsqlParameter> collection = new Collection<NpgsqlParameter>();
 
@@ -99,7 +99,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
             return string.Join(",", detailCollection);
         }
 
-        private static string CreateAttachmentModelParameter(Collection<Attachment> attachments)
+        private static string CreateAttachmentModelParameter(Collection<AttachmentModel> attachments)
         {
             if (attachments == null)
             {

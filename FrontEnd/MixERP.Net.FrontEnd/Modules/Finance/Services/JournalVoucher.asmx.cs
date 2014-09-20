@@ -27,7 +27,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             Collection<JournalDetailsModel> details = CollectionHelper.GetJournalDetailCollection(data);
 
             JavaScriptSerializer js = new JavaScriptSerializer();
-            Collection<Attachment> attachments = js.Deserialize<Collection<Attachment>>(attachmentsJSON);
+            Collection<AttachmentModel> attachments = js.Deserialize<Collection<AttachmentModel>>(attachmentsJSON);
 
             foreach (JournalDetailsModel model in details)
             {

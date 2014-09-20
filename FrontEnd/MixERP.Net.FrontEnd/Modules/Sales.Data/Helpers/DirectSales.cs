@@ -13,7 +13,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
 {
     public static class DirectSales
     {
-        public static long Add(DateTime valueDate, int storeId, bool isCredit, string partyCode, int agentId, int priceTypeId, Collection<StockMasterDetailModel> details, int shipperId, string shippingAddressCode, decimal shippingCharge, int cashRepositoryId, int costCenterId, string referenceNumber, string statementReference, Collection<Attachment> attachments)
+        public static long Add(DateTime valueDate, int storeId, bool isCredit, string partyCode, int agentId, int priceTypeId, Collection<StockMasterDetailModel> details, int shipperId, string shippingAddressCode, decimal shippingCharge, int cashRepositoryId, int costCenterId, string referenceNumber, string statementReference, Collection<AttachmentModel> attachments)
         {
             StockMasterModel stockMaster = new StockMasterModel();
 
@@ -34,7 +34,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
             return transactionMasterId;
         }
 
-        public static long Add(DateTime valueDate, int officeId, int userId, long logOnId, int costCenterId, string referenceNumber, string statementReference, StockMasterModel stockMaster, Collection<StockMasterDetailModel> details, Collection<Attachment> attachments)
+        public static long Add(DateTime valueDate, int officeId, int userId, long logOnId, int costCenterId, string referenceNumber, string statementReference, StockMasterModel stockMaster, Collection<StockMasterDetailModel> details, Collection<AttachmentModel> attachments)
         {
             if (stockMaster == null)
             {
@@ -260,9 +260,9 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
 
                         if (attachments != null && attachments.Count > 0)
                         {
-                            foreach (Attachment attachment in attachments)
+                            foreach (AttachmentModel attachment in attachments)
                             {
-                                sql = "INSERT INTO transactions.attachments(user_id, resource, resource_key, resource_id, original_file_name, file_extension, file_path, comment) SELECT @UserId, @Resource, @ResourceKey, @ResourceId, @OriginalFileName, @FileExtension, @FilePath, @Comment;";
+                                sql = "INSERT INTO core.attachments(user_id, resource, resource_key, resource_id, original_file_name, file_extension, file_path, comment) SELECT @UserId, @Resource, @ResourceKey, @ResourceId, @OriginalFileName, @FileExtension, @FilePath, @Comment;";
                                 using (NpgsqlCommand attachmentCommand = new NpgsqlCommand(sql, connection))
                                 {
                                     attachmentCommand.Parameters.AddWithValue("@UserId", userId);

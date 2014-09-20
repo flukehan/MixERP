@@ -9,6 +9,9 @@ SELECT 'GBP', '£', 'Pound Sterling', 'penny' UNION ALL
 SELECT 'EUR', '€', 'Euro', 'cents' UNION ALL
 SELECT 'INR', '₹', 'Indian Currency', 'paise';
 
+INSERT INTO core.attachment_lookup(book, resource, resource_key)
+SELECT 'transaction', 'transactions.transaction_master', 'transaction_master_id';
+
 INSERT INTO core.account_masters(account_master_code, account_master_name) SELECT 'BSA', 'Balance Sheet A/C';
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '10000', 'Assets', TRUE, (SELECT account_id FROM core.accounts WHERE account_name='Balance Sheet A/C');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '10001', 'Current Assets', TRUE, (SELECT account_id FROM core.accounts WHERE account_name='Assets');

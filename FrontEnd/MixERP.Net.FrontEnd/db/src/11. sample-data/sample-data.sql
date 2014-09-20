@@ -1,4 +1,4 @@
-﻿/********************************************************************************
+/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
 This file is part of MixERP.
@@ -18,6 +18,33 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
+SELECT 'RMBP', 'Macbook Pro 15'''' Retina', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 180000, 225000;
+
+INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
+SELECT '13MBA', 'Macbook Air 13''''', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 130000, 155000;
+
+INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
+SELECT '11MBA', 'Macbook Air 11''''', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 110000, 135000;
+
+INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
+SELECT 'IPA', 'iPad Air', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 53000, 70000;
+
+INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
+SELECT 'IPR', 'iPad Air Retina', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 63000, 80000;
+
+INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
+SELECT 'IPM', 'iPad Mini', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 33000, 50000;
+
+INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
+SELECT 'IPMR', 'iPad Mini Retina', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 53000, 70000;
+
+INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
+SELECT 'IPH6', 'iPhone 6', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 93000, 105000;
+
+INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
+SELECT 'IPH6P', 'iPhone 6 Plus', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 103000, 115000;
+
+INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
 SELECT 'ITP', 'IBM Thinkpadd II Laptop', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 80000, 125000;
 
 INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
@@ -30,10 +57,13 @@ INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_
 SELECT 'MSO', 'Microsoft Office Premium Edition', 1, 1, 1, 1, 'Yes', 1, 10, 'Yes', 30000, 35000;
 
 INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
-SELECT 'LBS', 'Lotus Banking Solution', 1, 1, 1, 1, 'Yes', 1, 10, 'No', 150000, 150000;
+SELECT 'MNP', 'MixNP Classifieds', 1, 1, 1, 1, 'Yes', 1, 10, 'No', 150000, 150000;
 
 INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
-SELECT 'CAS', 'CAS Banking Solution', 1, 1, 1, 1, 'Yes', 1, 10, 'No', 40000, 40000;
+SELECT 'MIX', 'MixERP Community Edition', 1, 1, 1, 1, 'Yes', 1, 10, 'No', 40000, 40000;
+
+INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
+SELECT 'SFIX', 'SFIX Financial Edition', 1, 1, 1, 1, 'Yes', 1, 10, 'No', 40000, 40000;
 
 INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
 SELECT 'SGT', 'Samsung Galaxy Tab 10.1', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 30000, 45000;

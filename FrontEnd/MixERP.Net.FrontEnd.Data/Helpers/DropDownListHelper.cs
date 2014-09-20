@@ -11,14 +11,14 @@ namespace MixERP.Net.FrontEnd.Data.Helpers
 {
     public static class DropDownListHelper
     {
-        public static void BindDropDownList(ListControl list, string schemaName, string tableName, string valueField, string displayField)
+        public static void BindDropDownList(ListControl list, string schemaName, string tableName, string valueField, string displayField, string orderBy)
         {
             if (list == null)
             {
                 return;
             }
 
-            using (DataTable table = FormHelper.GetTable(schemaName, tableName))
+            using (DataTable table = FormHelper.GetTable(schemaName, tableName, orderBy))
             {
                 table.Columns.Add("text_field", typeof(string), displayField);
 

@@ -1,4 +1,7 @@
-﻿//Controls
+﻿/*jshint -W032, -W098 */
+/*global addDanger, ajaxDataBind, ajaxUpdateVal, appendParameter, fadeThis, focusNextElement, getAjax, getColumnText, getData, getFormattedNumber, gridViewEmptyWarningLocalized, insufficientStockWarningLocalized, invalidCashRepositoryWarningLocalized, invalidCostCenterWarningLocalized, invalidDateWarningLocalized, invalidPartyWarningLocalized,invalidPriceTypeWarningLocalized, invalidSalesPersonWarningLocalized, invalidShippingCompanyWarningLocalized, invalidStoreWarningLocalized, isDate, isNullOrWhiteSpace, isSales, logError, makeDirty, parseFloat2, parseFormattedNumber, removeDirty, repaint, rowData, selectDropDownListByValue, setColumnText, shortcut, showWindow, sumOfColumn, tableToJSON, taxAfterDiscount, tranBook, unitId, updateTaxLocalized, uploadedFilesHidden, verifyStock */
+
+//Controls
 var addButton = $("#AddButton");
 var amountTextBox = $("#AmountTextBox");
 var attachmentLabel = $("#AttachmentLabel");
@@ -11,7 +14,6 @@ var discountTextBox = $("#DiscountTextBox");
 
 var errorLabel = $("#ErrorLabel");
 var errorLabelBottom = $("#ErrorLabelBottom");
-var errorLabelTop = $("#ErrorLabelTop");
 
 var grandTotalTextBox = $("#GrandTotalTextBox");
 
@@ -137,7 +139,7 @@ function initializeAjaxData() {
 
 itemDropDownList.keydown(function (event) {
     if (event.ctrlKey) {
-        if (event.key == "Enter") {
+        if (event.key === "Enter") {
             itemDropDownList_OnBlur();
             focusNextElement();
 
@@ -161,8 +163,6 @@ function processCallBackActions() {
 
     itemIdHidden.val("");
 
-    var itemCode = "";
-
     if (itemId > 0) {
         url = "/Modules/Inventory/Services/ItemData.asmx/GetItemCodeByItemId";
         data = appendParameter("", "itemId", itemId);
@@ -174,8 +174,6 @@ function processCallBackActions() {
     var partyId = parseFloat2(partyIdHidden.val());
 
     partyIdHidden.val("");
-
-    var partyCode = "";
 
     if (partyId > 0) {
         url = "/Modules/Inventory/Services/PartyData.asmx/GetPartyCodeByPartyId";
@@ -256,7 +254,7 @@ var validateProductControl = function () {
     transactionType = transactionTypeRadioButtonList.find("input:checked").val();
 
     if (transactionType) {
-        isCredit = (transactionType.toLowerCase() == "credit");
+        isCredit = (transactionType.toLowerCase() === "credit");
     };
 
     if (!isDate(valueDate)) {
@@ -288,7 +286,7 @@ var validateProductControl = function () {
         };
     }
 
-    if (productGridView.find("tr").length == 2) {
+    if (productGridView.find("tr").length === 2) {
         errorLabelBottom.html(gridViewEmptyWarningLocalized);
         return false;
     };
@@ -328,7 +326,6 @@ var validateProductControl = function () {
     };
 
     productGridViewDataHidden.val(tableToJSON(productGridView));
-
     agentId = parseFloat2(salesPersonDropDownList.getSelectedValue());
     attachments = uploadedFilesHidden.val();
 
@@ -460,11 +457,11 @@ function loadUnits() {
 
 //GridView Data Function
 
-var clearData = function () {
-    var grid = productGridView;
-    var rows = grid.find("tr:not(:first-child):not(:last-child)");
-    rows.remove();
-};
+//var clearData = function () {
+//    var grid = productGridView;
+//    var rows = grid.find("tr:not(:first-child):not(:last-child)");
+//    rows.remove();
+//};
 
 var restoreData = function () {
     var sourceControl = productGridViewDataHidden;
@@ -473,7 +470,7 @@ var restoreData = function () {
         return;
     }
 
-    rowData = JSON.parse(sourceControl.val());
+    var rowData = JSON.parse(sourceControl.val());
 
     for (var i = 0; i < rowData.length; i++) {
         var itemCode = rowData[i][0];
@@ -489,29 +486,6 @@ var restoreData = function () {
     }
 };
 
-var tableToJSON = function (grid) {
-    var colData = new Array;
-    var rowData = new Array;
-
-    var rows = grid.find("tr:not(:first-child):not(:last-child)");
-
-    rows.each(function () {
-        var row = $(this);
-
-        colData = new Array();
-
-        row.find("td:not(:last-child)").each(function () {
-            colData.push($(this).html());
-        });
-
-        rowData.push(colData);
-    });
-
-    data = JSON.stringify(rowData);
-
-    return data;
-};
-
 //New Row Helper Function
 var calculateAmount = function () {
     amountTextBox.val(parseFloat2(quantityTextBox.val()) * parseFloat2(priceTextBox.val()));
@@ -525,13 +499,13 @@ var updateTax = function () {
     var subTotal = total - parseFloat2(discountTextBox.val());
     var taxableAmount = total;
 
-    if (taxAfterDiscount.toLowerCase() == "true") {
+    if (taxAfterDiscount.toLowerCase() === "true") {
         taxableAmount = subTotal;
     }
 
     var tax = (taxableAmount * parseFloat2(parseFormattedNumber(taxRateTextBox.val()))) / 100;
 
-    if (parseFloat2(taxTextBox.val()) == 0) {
+    if (parseFloat2(taxTextBox.val()) === 0) {
         if (tax.toFixed) {
             taxTextBox.val(getFormattedNumber(tax.toFixed(2)));
         } else {
@@ -539,7 +513,7 @@ var updateTax = function () {
         }
     }
 
-    if (parseFloat2(tax).toFixed(2) != parseFloat2(parseFormattedNumber(taxTextBox.val())).toFixed(2)) {
+    if (parseFloat2(tax).toFixed(2) !== parseFloat2(parseFormattedNumber(taxTextBox.val())).toFixed(2)) {
         var question = confirm(updateTaxLocalized);
 
         if (question) {
@@ -676,12 +650,12 @@ var addRowToTable = function (itemCode, itemName, quantity, unitName, price, dis
 
     rows.each(function () {
         var row = $(this);
-        if (getColumnText(row, 0) == itemCode &&
-            getColumnText(row, 1) == itemName &&
-            getColumnText(row, 3) == unitName &&
-            getColumnText(row, 4) == price &&
-            getColumnText(row, 8) == taxRate &&
-            parseFloat(getColumnText(row, 5)) / parseFloat(getColumnText(row, 6)) == amount / discount) {
+        if (getColumnText(row, 0) === itemCode &&
+            getColumnText(row, 1) === itemName &&
+            getColumnText(row, 3) === unitName &&
+            parseFloat2(getColumnText(row, 4)) === price &&
+            parseFloat2(getColumnText(row, 8)) === taxRate &&
+            parseFloat(getColumnText(row, 5)) / parseFloat(getColumnText(row, 6)) === amount / discount) {
             setColumnText(row, 2, parseFloat2(getColumnText(row, 2)) + quantity);
             setColumnText(row, 5, parseFloat2(getColumnText(row, 5)) + amount);
             setColumnText(row, 6, parseFloat2(getColumnText(row, 6)) + discount);
@@ -723,7 +697,7 @@ var getPrice = function () {
 
     if (!unitId) return;
 
-    if (tranBook.toLowerCase() == "sales") {
+    if (tranBook.toLowerCase() === "sales") {
         if (priceTypeId <= 0) {
             $.notify(invalidPriceTypeWarningLocalized, "error");
             priceTypeDropDownList.focus();
