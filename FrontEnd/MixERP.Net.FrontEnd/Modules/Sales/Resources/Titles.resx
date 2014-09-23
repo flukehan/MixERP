@@ -138,6 +138,21 @@
   <data name="DirectSales" xml:space="preserve">
     <value>Direct Sales</value>
   </data>
+  <data name="EmailThisDelivery" xml:space="preserve">
+    <value>Email This Delivery</value>
+  </data>
+  <data name="EmailThisInvoice" xml:space="preserve">
+    <value>Email This Invoice</value>
+  </data>
+  <data name="EmailThisOrder" xml:space="preserve">
+    <value>Email This Order</value>
+  </data>
+  <data name="EmailThisQuotation" xml:space="preserve">
+    <value>Email This Quotation</value>
+  </data>
+  <data name="EmailThisReturn" xml:space="preserve">
+    <value>Email This Return</value>
+  </data>
   <data name="ExchangeRate" xml:space="preserve">
     <value>Exchange Rate</value>
   </data>
@@ -170,5 +185,23 @@
   </data>
   <data name="Update" xml:space="preserve">
     <value>Update</value>
+  </data>
+  <data name="ViewCustomerCopy" xml:space="preserve">
+    <value>View Customer Copy</value>
+  </data>
+  <data name="ViewThisDelivery" xml:space="preserve">
+    <value>View This Delivery</value>
+  </data>
+  <data name="ViewThisInvoice" xml:space="preserve">
+    <value>View This Invoice</value>
+  </data>
+  <data name="ViewThisOrder" xml:space="preserve">
+    <value>View This Order</value>
+  </data>
+  <data name="ViewThisQuotation" xml:space="preserve">
+    <value>View This Quotation</value>
+  </data>
+  <data name="ViewThisReturn" xml:space="preserve">
+    <value>View This Return</value>
   </data>
 </root>

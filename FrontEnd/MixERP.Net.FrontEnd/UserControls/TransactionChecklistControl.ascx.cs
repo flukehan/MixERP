@@ -30,19 +30,21 @@ namespace MixERP.Net.FrontEnd.UserControls
     /// This class is subject to be moved to a standalone server control class library.
     public partial class TransactionChecklistControl : UserControl
     {
-        public TranBook Book { get; set; }
-
-        public SubTranBook SubBook { get; set; }
-
         public string OverridePath { get; set; }
 
         public bool DisplayWithdrawButton { get; set; }
 
-        public bool DisplayViewInvoiceButton { get; set; }
+        public bool DisplayViewReportButton { get; set; }
 
-        public bool DisplayEmailInvoiceButton { get; set; }
+        public string ViewReportButtonText { get; set; }
 
-        public bool DisplayCustomerInvoiceButton { get; set; }
+        public bool DisplayEmailReportButton { get; set; }
+
+        public string EmailReportButtonText { get; set; }
+
+        public bool DisplayCustomerReportButton { get; set; }
+
+        public string CustomerReportButtonText { get; set; }
 
         public bool DisplayPrintReceiptButton { get; set; }
 
@@ -50,13 +52,17 @@ namespace MixERP.Net.FrontEnd.UserControls
 
         public bool DisplayAttachmentButton { get; set; }
 
+        public string AttachmentBookName { get; set; }
+
         public bool IsNonGlTransaction { get; set; }
 
-        public string InvoicePath { get; set; }
+        public string ReportPath { get; set; }
 
-        public string CustomerInvoicePath { get; set; }
+        public string CustomerReportPath { get; set; }
 
         public string GlAdvicePath { get; set; }
+
+        public string ReceiptAdvicePath { get; set; }
 
         protected void OkButton_Click(object sender, EventArgs e)
         {
@@ -93,23 +99,29 @@ namespace MixERP.Net.FrontEnd.UserControls
         {
             long transactionMasterId = Conversion.TryCastLong(this.Request["TranId"]);
 
+            this.ViewReportButton.Text = this.ViewReportButtonText;
+            this.EmailReportButton.Text = this.EmailReportButtonText;
+            this.CustomerReportButton.Text = this.CustomerReportButtonText;
+
             this.WithdrawButton.Visible = this.DisplayWithdrawButton;
-            this.ViewInvoiceButton.Visible = this.DisplayViewInvoiceButton;
-            this.EmailInvoiceButton.Visible = this.DisplayEmailInvoiceButton;
-            this.CustomerInvoiceButton.Visible = this.DisplayCustomerInvoiceButton;
+            this.ViewReportButton.Visible = this.DisplayViewReportButton;
+            this.EmailReportButton.Visible = this.DisplayEmailReportButton;
+            this.CustomerReportButton.Visible = this.DisplayCustomerReportButton;
             this.PrintReceiptButton.Visible = this.DisplayPrintReceiptButton;
             this.PrintGLButton.Visible = this.DisplayPrintGlEntryButton;
             this.AttachmentButton.Visible = this.DisplayAttachmentButton;
 
-            string invoiceUrl = this.ResolveUrl(this.InvoicePath + "?TranId=" + this.Request["TranId"]);
-            string customerInvoiceUrl = this.ResolveUrl(this.CustomerInvoicePath + "?TranId=" + this.Request["TranId"]);
+            string reportUrl = this.ResolveUrl(this.ReportPath + "?TranId=" + this.Request["TranId"]);
+            string customerReportUrl = this.ResolveUrl(this.CustomerReportPath + "?TranId=" + this.Request["TranId"]);
             string glAdviceUrl = this.ResolveUrl(this.GlAdvicePath + "?TranId=" + this.Request["TranId"]);
+            string receiptUrl = this.ResolveUrl(this.ReceiptAdvicePath + "?TranId=" + this.Request["TranId"]);
 
-            this.ViewInvoiceButton.Attributes.Add("onclick", "showWindow('" + invoiceUrl + "');return false;");
-            this.EmailInvoiceButton.Attributes.Add("onclick", "return false;");
-            this.CustomerInvoiceButton.Attributes.Add("onclick", "showWindow('" + customerInvoiceUrl + "');return false;");
+            this.ViewReportButton.Attributes.Add("onclick", "showWindow('" + reportUrl + "');return false;");
+            this.EmailReportButton.Attributes.Add("onclick", "return false;");
+            this.CustomerReportButton.Attributes.Add("onclick", "showWindow('" + customerReportUrl + "');return false;");
             this.PrintGLButton.Attributes.Add("onclick", "showWindow('" + glAdviceUrl + "');return false;");
-            this.AttachmentButton.PostBackUrl = string.Format("~/Modules/BackOffice/AttachmentManager.mix?OverridePath={0}&Book=transaction&Id={1}", this.OverridePath, transactionMasterId);
+            this.PrintReceiptButton.Attributes.Add("onclick", "showWindow('" + receiptUrl + "');return false;");
+            this.AttachmentButton.PostBackUrl = string.Format("~/Modules/BackOffice/AttachmentManager.mix?OverridePath={0}&Book={1}&Id={2}", this.OverridePath, this.AttachmentBookName, transactionMasterId);
 
             this.ShowVerificationStatus();
         }

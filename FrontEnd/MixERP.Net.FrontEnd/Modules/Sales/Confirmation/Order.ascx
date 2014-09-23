@@ -1,2 +1,16 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Order.ascx.cs" Inherits="MixERP.Net.Core.Modules.Sales.Confirmation.Order"
     OverridePath="/Modules/Sales/Order.mix" %>
+<mixerp:TransactionChecklist runat="server"
+    ID="TransactionChecklist1"
+    AttachmentBookName="non-gl-transaction"
+    OverridePath="/Modules/Sales/Order.mix"
+    TransactionName="Quotation"
+    DisplayWithdrawButton="false"
+    DisplayViewReportButton="true"
+    DisplayEmailReportButton="true"
+    DisplayCustomerReportButton="false"
+    DisplayPrintReceiptButton="false"
+    DisplayPrintGlEntryButton="false"
+    DisplayAttachmentButton="true"
+    IsNonGlTransaction="true"
+    ReportPath="~/Modules/Sales/Reports/SalesOrderReport.mix" />

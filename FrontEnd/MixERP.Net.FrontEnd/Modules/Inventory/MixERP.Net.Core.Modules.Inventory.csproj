@@ -69,6 +69,8 @@
     <Content Include="Index.ascx" />
     <Content Include="Package.xml" />
     <Content Include="Scripts\Setup\Parties.js" />
+    <Content Include="Setup\CompoundItemDetails.ascx" />
+    <Content Include="Setup\CompoundItems.ascx" />
     <Content Include="SQL\Menu.sql" />
     <Content Include="SQL\Module.sql" />
     <Content Include="Services\ItemData.asmx" />
@@ -129,6 +131,20 @@
     </Compile>
     <Compile Include="Setup\Brands.ascx.designer.cs">
       <DependentUpon>Brands.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Setup\CompoundItemDetails.ascx.cs">
+      <DependentUpon>CompoundItemDetails.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Setup\CompoundItemDetails.ascx.designer.cs">
+      <DependentUpon>CompoundItemDetails.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Setup\CompoundItems.ascx.cs">
+      <DependentUpon>CompoundItems.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Setup\CompoundItems.ascx.designer.cs">
+      <DependentUpon>CompoundItems.ascx</DependentUpon>
     </Compile>
     <Compile Include="Setup\CostPrices.ascx.cs">
       <DependentUpon>CostPrices.ascx</DependentUpon>
@@ -228,6 +244,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Reports\" />
+    <Folder Include="Widgets\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Labels.resx">

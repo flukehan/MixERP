@@ -27,6 +27,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <add key="BonusSlabDisplayField" value="bonus_slab_name" />
     <add key="BrandDisplayField" value="brand_code + ' (' + brand_name + ')'" />
     <add key="CashRepositoryDisplayField" value="cash_repository_code + ' (' + cash_repository_name + ')'" />
+    <add key="CompoundItemDisplayField" value="compound_item_code + ' (' + compound_item_name + ')'" />
     <add key="CostCenterDisplayField" value="cost_center_code + ' (' + cost_center_name + ')'" />
     <add key="CurrencyDisplayField" value="currency_symbol + ' (' + currency_code + '/' + currency_name + ')'" />
     <add key="CustomerDisplayField" value="last_name + ', ' + fist_name + ' ' + middle_name" />

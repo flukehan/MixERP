@@ -145,7 +145,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
             if (this.IsValid())
             {
-                this.Merge(values, "~/Sales/Entry/Order.aspx");
+                this.Merge(values, "~/Modules/Sales/Entry/Order.mix");
             }
         }
 
@@ -242,7 +242,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
             if (this.IsValid())
             {
-                this.Merge(values, "~/Sales/Entry/Delivery.aspx");
+                this.Merge(values, "~/Modules/Sales/Entry/Delivery.mix");
             }
         }
 
@@ -252,7 +252,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
             if (this.IsValid())
             {
-                this.Merge(values, "~/Purchase/Entry/GRN.aspx");
+                this.Merge(values, "~/Modules/Purchase/Entry/GRN.mix");
             }
         }
 

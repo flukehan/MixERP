@@ -31,7 +31,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
     <title>Sign In</title>
 </head>
-<body>
+<body id="SignInBody">
     <form id="form1" runat="server">
         <div id="signin-form" style="">
 

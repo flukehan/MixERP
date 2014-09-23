@@ -1,0 +1,2 @@
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CompoundItemDetails.ascx.cs" Inherits="MixERP.Net.Core.Modules.Inventory.Setup.CompoundItemDetails" %>
+<asp:PlaceHolder ID="ScrudPlaceholder" runat="server" />

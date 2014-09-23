@@ -1652,7 +1652,30 @@ CREATE TABLE core.items
 CREATE UNIQUE INDEX items_item_name_uix
 ON core.items(UPPER(item_name));
 
+CREATE TABLE core.compound_items
+(
+        compound_item_id                        SERIAL NOT NULL PRIMARY KEY,
+        compound_item_code                      national character varying(12) NOT NULL,
+        compound_item_name                      national character varying(150) NOT NULL,
+	audit_user_id				integer NULL REFERENCES office.users(user_id),
+	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())        
+);
 
+CREATE UNIQUE INDEX compound_items_compound_item_code_uix
+ON core.compound_items(LOWER(compound_item_code));
+
+
+CREATE UNIQUE INDEX compound_items_compound_item_name_uix
+ON core.compound_items(LOWER(compound_item_name));
+
+CREATE TABLE core.compound_item_details
+(
+        compound_item_detail_id                 SERIAL NOT NULL PRIMARY KEY,
+        compound_item_id                        integer NOT NULL REFERENCES core.compound_items(compound_item_id),
+        item_id                                 integer NOT NULL REFERENCES core.items(item_id),
+        unit_id                                 integer NOT NULL REFERENCES core.units(unit_id),
+        quantity                                integer_strict NOT NULL
+);
 
 /*******************************************************************
 	PLEASE NOTE :
@@ -6381,10 +6404,12 @@ SELECT 'NPR', 'रू.', 'Nepali Rupees', 'paisa' UNION ALL
 SELECT 'USD', '$', 'United States Dollar', 'cents' UNION ALL
 SELECT 'GBP', '£', 'Pound Sterling', 'penny' UNION ALL
 SELECT 'EUR', '€', 'Euro', 'cents' UNION ALL
-SELECT 'INR', '₹', 'Indian Currency', 'paise';
+SELECT 'INR', '₹', 'Indian Rupees', 'paise';
 
 INSERT INTO core.attachment_lookup(book, resource, resource_key)
-SELECT 'transaction', 'transactions.transaction_master', 'transaction_master_id';
+SELECT 'transaction', 'transactions.transaction_master', 'transaction_master_id' UNION ALL
+SELECT 'non-gl-transaction', 'transactions.non_gl_stock_master', 'non_gl_stock_master_id';
+
 
 INSERT INTO core.account_masters(account_master_code, account_master_name) SELECT 'BSA', 'Balance Sheet A/C';
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '10000', 'Assets', TRUE, (SELECT account_id FROM core.accounts WHERE account_name='Balance Sheet A/C');
@@ -7514,6 +7539,8 @@ UNION ALL SELECT 'Party Types', '~/Modules/Inventory/Setup/PartyTypes.mix', 'PT'
 UNION ALL SELECT 'Party Accounts', '~/Modules/Inventory/Setup/Parties.mix', 'PA', 2, core.get_menu_id('ISM')
 UNION ALL SELECT 'Shipping Addresses', '~/Modules/Inventory/Setup/ShippingAddresses.mix', 'PSA', 2, core.get_menu_id('ISM')
 UNION ALL SELECT 'Item Maintenance', '~/Modules/Inventory/Setup/Items.mix', 'SSI', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Compound Items', '~/Modules/Inventory/Setup/CompoundItems.mix', 'SSC', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Compound Item Details', '~/Modules/Inventory/Setup/CompoundItemDetails.mix', 'SSCD', 2, core.get_menu_id('ISM')
 UNION ALL SELECT 'Cost Prices', '~/Modules/Inventory/Setup/CostPrices.mix', 'ICP', 2, core.get_menu_id('ISM')
 UNION ALL SELECT 'Selling Prices', '~/Modules/Inventory/Setup/SellingPrices.mix', 'ISP', 2, core.get_menu_id('ISM')
 UNION ALL SELECT 'Item Groups', '~/Modules/Inventory/Setup/ItemGroups.mix', 'SSG', 2, core.get_menu_id('ISM')

@@ -154,6 +154,7 @@
     <Folder Include="Reports\" />
     <Folder Include="Scripts\" />
     <Folder Include="Services\" />
+    <Folder Include="Widgets\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.net.Common\MixERP.Net.Common.csproj">

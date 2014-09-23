@@ -783,7 +783,30 @@ CREATE TABLE core.items
 CREATE UNIQUE INDEX items_item_name_uix
 ON core.items(UPPER(item_name));
 
+CREATE TABLE core.compound_items
+(
+        compound_item_id                        SERIAL NOT NULL PRIMARY KEY,
+        compound_item_code                      national character varying(12) NOT NULL,
+        compound_item_name                      national character varying(150) NOT NULL,
+	audit_user_id				integer NULL REFERENCES office.users(user_id),
+	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())        
+);
 
+CREATE UNIQUE INDEX compound_items_compound_item_code_uix
+ON core.compound_items(LOWER(compound_item_code));
+
+
+CREATE UNIQUE INDEX compound_items_compound_item_name_uix
+ON core.compound_items(LOWER(compound_item_name));
+
+CREATE TABLE core.compound_item_details
+(
+        compound_item_detail_id                 SERIAL NOT NULL PRIMARY KEY,
+        compound_item_id                        integer NOT NULL REFERENCES core.compound_items(compound_item_id),
+        item_id                                 integer NOT NULL REFERENCES core.items(item_id),
+        unit_id                                 integer NOT NULL REFERENCES core.units(unit_id),
+        quantity                                integer_strict NOT NULL
+);
 
 /*******************************************************************
 	PLEASE NOTE :

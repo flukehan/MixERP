@@ -142,6 +142,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Thank you for your business..
+        /// </summary>
+        internal static string ThankYouForYourBusiness {
+            get {
+                return ResourceManager.GetString("ThankYouForYourBusiness", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The selected transaction(s) contains item(s) which have already been merged. Please try again..
         /// </summary>
         internal static string TransactionAlreadyMerged {
@@ -174,6 +183,15 @@ namespace Resources {
         internal static string UploadedFilesDeleted {
             get {
                 return ResourceManager.GetString("UploadedFilesDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hi {0}!.
+        /// </summary>
+        internal static string UserGreeting {
+            get {
+                return ResourceManager.GetString("UserGreeting", resourceCulture);
             }
         }
         

@@ -1153,4 +1153,13 @@
     <value>ER</value>
     <comment>Exchange Rate</comment>
   </data>
+  <data name="compound_item_code" xml:space="preserve">
+    <value>Compound Item Code</value>
+  </data>
+  <data name="compound_item_id" xml:space="preserve">
+    <value>Compound Item ID</value>
+  </data>
+  <data name="compound_item_name" xml:space="preserve">
+    <value>Compound Item Name</value>
+  </data>
 </root>

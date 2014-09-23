@@ -13,12 +13,12 @@ namespace MixERP.Net.Core.Modules.Sales {
     public partial class Index {
         
         /// <summary>
-        /// MenuPlaceholder control.
+        /// WidgetPlaceholder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder MenuPlaceholder;
+        protected global::System.Web.UI.WebControls.PlaceHolder WidgetPlaceholder;
     }
 }

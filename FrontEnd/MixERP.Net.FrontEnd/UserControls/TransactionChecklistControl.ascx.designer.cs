@@ -49,31 +49,31 @@ namespace MixERP.Net.FrontEnd.UserControls {
         protected global::System.Web.UI.WebControls.LinkButton WithdrawButton;
         
         /// <summary>
-        /// ViewInvoiceButton control.
+        /// ViewReportButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton ViewInvoiceButton;
+        protected global::System.Web.UI.WebControls.LinkButton ViewReportButton;
         
         /// <summary>
-        /// EmailInvoiceButton control.
+        /// EmailReportButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton EmailInvoiceButton;
+        protected global::System.Web.UI.WebControls.LinkButton EmailReportButton;
         
         /// <summary>
-        /// CustomerInvoiceButton control.
+        /// CustomerReportButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton CustomerInvoiceButton;
+        protected global::System.Web.UI.WebControls.LinkButton CustomerReportButton;
         
         /// <summary>
         /// PrintReceiptButton control.

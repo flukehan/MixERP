@@ -1,4 +1,6 @@
 ﻿using MixERP.Net.WebControls.ReportEngine.Helpers;
+using System.Collections.ObjectModel;
+using System.Data;
 
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
@@ -65,7 +67,7 @@ namespace MixERP.Net.WebControls.ReportEngine
         private void PrepareReportHeader()
         {
             string header = File.ReadAllText(this.Page.Server.MapPath(this.GetPath()));
-            this.html = ReportParser.ParseExpression(header);
+            this.html = ReportParser.ParseExpression(header, null);
         }
 
         protected override void RecreateChildControls()

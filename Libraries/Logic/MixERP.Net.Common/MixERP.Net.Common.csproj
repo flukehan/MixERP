@@ -79,6 +79,7 @@
     <Compile Include="Helpers\ScrudHelper.cs" />
     <Compile Include="Helpers\SessionHelper.cs" />
     <Compile Include="Helpers\Switches.cs" />
+    <Compile Include="Helpers\WidgetHelper.cs" />
     <Compile Include="jQueryHelper\jQueryUI.cs" />
     <Compile Include="Models\Core\AttachmentModel.cs" />
     <Compile Include="Models\Core\Frequency.cs" />

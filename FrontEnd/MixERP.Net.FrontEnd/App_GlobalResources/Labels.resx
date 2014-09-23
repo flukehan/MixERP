@@ -144,6 +144,9 @@
   <data name="TaskCompletedSuccessfully" xml:space="preserve">
     <value>The task was completed successfully.</value>
   </data>
+  <data name="ThankYouForYourBusiness" xml:space="preserve">
+    <value>Thank you for your business.</value>
+  </data>
   <data name="TransactionAlreadyMerged" xml:space="preserve">
     <value>The selected transaction(s) contains item(s) which have already been merged. Please try again.</value>
   </data>
@@ -156,6 +159,10 @@
   </data>
   <data name="UploadedFilesDeleted" xml:space="preserve">
     <value>The uploaded files were successfully deleted.</value>
+  </data>
+  <data name="UserGreeting" xml:space="preserve">
+    <value>Hi {0}!</value>
+    <comment>Hi binod!</comment>
   </data>
   <data name="VerificationApprovedMessage" xml:space="preserve">
     <value>This transaction was approved by {0} on {1}.</value>

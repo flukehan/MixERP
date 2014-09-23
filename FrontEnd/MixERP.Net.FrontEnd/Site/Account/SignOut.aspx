@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/ContentMaster.Master" AutoEventWireup="true" CodeBehind="SignOut.aspx.cs" Inherits="MixERP.Net.FrontEnd.Site.Account.SignOut" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MixERPMaster.Master" AutoEventWireup="true" CodeBehind="SignOut.aspx.cs" Inherits="MixERP.Net.FrontEnd.Site.Account.SignOut" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceholder" runat="server">
 </asp:Content>

@@ -12,7 +12,7 @@ var save = function () {
 
     ajaxSaveQuotation.done(function (response) {
         var id = response.d;
-        window.location = "/Modules/Sales/Quotation.mix?TranId=" + id;
+        window.location = "/Modules/Sales/Confirmation/Quotation.mix?TranId=" + id;
     });
 
     ajaxSaveQuotation.fail(function (jqXHR) {

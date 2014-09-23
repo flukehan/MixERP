@@ -5,13 +5,13 @@ var flagPopunder = $("#flag-popunder");
 var flagButton = $("#flagButton");
 
 $(document).ready(function () {
-    var contentWidth = $("#content").width();
-    var menuWidth = $("#menu2").width();
+    //var filterDiv = $("#FilterDiv").width();
 
-    var margin = 20;
-    var width = contentWidth - menuWidth - margin;
+    //var margin = 0;
+    //var width = filterDiv - margin;
 
-    $("#GridPanel").css("width", width + "px");
+    //$("#GridPanel").css("width", width + "px");
+    //$("#GridPanel").css("background-color", "red");
     updateFlagColor();
 });
 

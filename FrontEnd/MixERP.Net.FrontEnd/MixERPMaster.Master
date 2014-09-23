@@ -1,10 +1,6 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MixERPMaster.Master.cs"
     Inherits="MixERP.Net.FrontEnd.MixERPMaster" %>
 
-<%-- ReSharper disable once AspUnusedRegisterDirectiveHighlighting --%>
-<%@ Register TagPrefix="asp" Assembly="System.Web.Extensions" Namespace="System.Web.UI" %>
-<%--Added for Xamarin Studio Compatibility on Mac OSX Mavericks.--%>
-
 <!DOCTYPE html>
 <html lang="en">
 <head runat="server">
@@ -42,135 +38,99 @@
     <meta name="description" content="MixERP" />
 </head>
 <body>
-    <form id="form1" runat="server" enctype="multipart/form-data" method="post" submitdisabledcontrols="true">
+    <form id="form1" runat="server" enctype="multipart/form-data" method="post" submitdisabledcontrols="true" defaultbutton="SwallowSubmit">
+        <asp:Button runat="server" ID="SwallowSubmit" OnClientClick="return false;" CssClass="hidden" />
+
         <asp:ScriptManager runat="server" ID="ScriptManager1" />
 
-        <div class="body">
+        <div id="logo">
+            <a href="/Dashboard/Index.aspx">
+                <img src="/Resource/Static/images/mixerp-logo.png" />
+            </a>
+        </div>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <a href="/">
-                        <img alt="MixERP" src="/Resource/Static/images/mixerp-logo.png">
+        <div id="user-panel">
+            <div class="user-panel-float-other lpad16">
+                <a class="icon">
+                    <span class="glyphicon glyphicon-heart"></span>
+                    <asp:Literal runat="server" ID="BranchNameLiteral" />
+                </a>
+            </div>
+
+            <div class="dropdown icon user-panel-float">
+                <a id="dropdownMenu2" data-toggle="dropdown" href="#">
+                    <span class="glyphicon glyphicon-user"></span>
+                    <asp:Literal runat="server" ID="UserGreetingLiteral"></asp:Literal>
+                    <span class="caret"></span>
+                </a>
+                <div class="dropdown-menu pull-right " role="menu" aria-labelledby="dropdownMenu2">
+                    <a class="icon btn btn-sm" href="/Site/Account/ChangePassword.aspx">
+                        <span class="glyphicon glyphicon-log-out"></span>
+                        <asp:Literal runat="server" ID="ChangePasswordLiteral"></asp:Literal>
+                    </a>
+                    <a class="icon btn btn-sm" href="/Site/Account/UserProfile.aspx">
+                        <span class="glyphicon glyphicon-certificate"></span>
+                        <asp:Literal runat="server" ID="ManageProfileLiteral"></asp:Literal>
                     </a>
                 </div>
             </div>
 
-            <div style="background-color: #fff">
-
-                <nav class="navbar navbar-default" role="navigation">
-                    <div class="container-fluid">
-                        <!-- Brand and toggle get grouped for better mobile display -->
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#top-menu">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                        </div>
-                        <div class="collapse navbar-collapse" id="top-menu">
-
-                            <ul class="nav navbar-nav">
-                                <asp:Literal ID="MenuLiteral" runat="server" />
-                            </ul>
-
-                            <ul class="nav navbar-nav navbar-right">
-                                <li>
-                                    <a runat="server" href="~/Site/Account/SignOut.aspx">
-                                        <img runat="server" src="~/Resource/Icons/signout-16.png" alt="Sign Out" />
-                                    </a>
-                                </li>
-                                <li>
-                                    <a runat="server" href="~/Site/Account/ChangePassword.aspx">
-                                        <img runat="server" src="~/Resource/Icons/password-16.png" alt="Change Password" />
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- /.navbar-collapse -->
+            <div class="icon-set user-panel-float">
+                <a class="icon" href="https://github.com/mixerp/mixerp/wiki/documentation" target="_blank">
+                    <span class="glyphicon glyphicon glyphicon-asterisk"></span>
+                    <asp:Literal runat="server" ID="MixERPDocumentationLiteral"></asp:Literal>
+                </a>
+                <a class="icon" href="/Site/Account/SignOut.aspx">
+                    <span class="glyphicon glyphicon-log-out"></span>
+                    <asp:Literal runat="server" ID="SignOutLiteral"></asp:Literal>
+                </a>
+            </div>
+            <div class="icon dropdown user-panel-float">
+                <a id="NotificationAnchor" data-toggle="dropdown" href="#">
+                    <span class="glyphicon glyphicon-user"></span>
+                    <asp:Literal runat="server" ID="NotificationLiteral"></asp:Literal>
+                    <span class="caret"></span>
+                </a>
+                <div class="dropdown-menu pull-right" role="menu" aria-labelledby="NotificationAnchor">
+                    <div style="padding: 8px;">
+                        Placeholder
                     </div>
-                    <!-- /.container-fluid -->
-                </nav>
+                </div>
+            </div>
 
-                <asp:ContentPlaceHolder ID="BodyContentPlaceholder" runat="server">
-                </asp:ContentPlaceHolder>
+            <div style="clear: both;"></div>
+        </div>
+
+        <div id="sidebar">
+            <div id="Search">
+                <div class="form-group has-success has-feedback">
+                    <label class="control-label" for="SearchInput">&nbsp;</label>
+                    <input type="text" class="form-control" id="SearchInput" autocomplete="off" />
+                    <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                </div>
+            </div>
+            <asp:Literal runat="server" ID="MenuLiteral"></asp:Literal>
+            <asp:Literal runat="server" ID="ContentMenuLiteral"></asp:Literal>
+        </div>
+
+        <div id="body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <asp:ContentPlaceHolder ID="BodyContentPlaceholder" runat="server">
+                        </asp:ContentPlaceHolder>
+                    </div>
+                </div>
             </div>
         </div>
-        <footer>
-            <p class="text-center">
-                Powered by <a href="http://mixof.org">Mix Open Foundation</a>
+
+        <div class="bottom">
+            <p>
+                Copyright (c) 2014, Mix Open Foundation. All rights reserved (r). Powered by <a href="http://mixerp.org/" target="_blank">MixERP Community Edition</a>
             </p>
-        </footer>
+        </div>
 
         <script type="text/javascript">
-
-            function keypressHandler(e) {
-                if (e.which == 13) {
-                    $(this).blur();
-                    //return false;
-                }
-            };
-
-            $('form').keypress(keypressHandler);
-
-            Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
-                //Fired on each ASP.net AJAX request.
-                initializeItemSelector();
-            });
-
-            //Todo:Document this
-            jQuery(document).bind("keyup keydown", function (e) {
-                if (e.ctrlKey && e.keyCode == 80) {
-                    event.preventDefault();
-                    return false;
-                }
-
-                return true;
-            });
-
-            function pageLoad() {
-                $(".item-selector").colorbox({ iframe: true, innerWidth: 1024, innerHeight: 450, overlayClose: false });
-                $(".preview").colorbox({ iframe: true, innerWidth: 1024, innerHeight: 450, overlayClose: false });
-            };
-
-            $(document).on('ready', function () {
-                initializeViewPort();
-                initializeItemSelector();
-            });
-
-            $(window).on('resize', function () {
-                initializeViewPort();
-            });
-
-            var initializeViewPort = function () {
-                var menu = $("#menu");
-                var content = $("#content");
-
-                if (content.position() && menu.position()) {
-                    if (content.position().left > menu.position().left) {
-                        //Two column layout.
-
-                        var margin = 124;
-                        var menuHeight = menu.height();
-                        var contentHeight = content.height();
-                        var height = (menuHeight > contentHeight ? menuHeight : contentHeight);
-                        var minHeight = $(document).height() - margin;
-
-                        if (height < minHeight) {
-                            height = minHeight;
-                        };
-
-                        margin = 12;
-
-                        height += margin;
-
-                        $("#menu").css("height", height + "px");
-                        $("#content").css("height", height + "px");
-                        $("#menu").css("max-width", "324px");
-                    };
-                };
-            };
-
             var today = "<%= DateTime.Now.ToShortDateString() %>";
             var shortDateFormat = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetShortDateFormat() %>";
             var thousandSeparator = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetThousandSeparator() %>";
@@ -206,6 +166,99 @@
             var duplicateFileLocalized = "<% = Resources.Errors.DuplicateFiles %>";
 
             var taskCompletedSuccessfullyLocalized = "<%= Resources.Labels.TaskCompletedSuccessfully %>";
+
+            function keypressHandler(e) {
+                if (e.which == 13) {
+                    $(this).blur();
+                    //return false;
+                }
+            };
+
+            $('form').keypress(keypressHandler);
+
+            Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
+                //Fired on each ASP.net AJAX request.
+                initializeItemSelector();
+            });
+
+            //Todo:Document this
+            jQuery(document).bind("keyup keydown", function (e) {
+                if (e.ctrlKey && e.keyCode == 80) {
+                    event.preventDefault();
+                    return false;
+                }
+
+                return true;
+            });
+
+            function pageLoad() {
+                $(".item-selector").colorbox({ iframe: true, innerWidth: 1024, innerHeight: 450, overlayClose: false });
+                $(".preview").colorbox({ iframe: true, innerWidth: 1024, innerHeight: 450, overlayClose: false });
+            };
+
+            $(document).on('ready', function () {
+                initializeItemSelector();
+            });
+
+            $(document).ready(function () {
+                shortcut.add("CTRL+M", function () {
+                    $('#SearchInput').focus();
+                });
+
+                $('#SearchInput').focus();
+            });
+
+            var anchors = $("a.sub-menu-anchor");
+
+            //Changes the search text box on menu anchor hover.
+            var anchors = $("ul.menu").find("a");
+            anchors.hover(function () {
+                $("#SearchInput").val(($(this).attr("data-menucode")));
+            });
+
+            //Selects menu item from the typed query.
+            $("#SearchInput").keyup(function (e) {
+                var code = e.which;
+                var query = $(this).val();
+
+                anchors.each(function () {
+                    $(this).removeClass("menu-selected");
+
+                    if ($(this).attr("data-menucode") == query) {
+                        $(this).addClass("menu-selected");
+
+                        //Return Key
+                        if (code == 13) {
+                            window.location = $(this).attr("href");
+                        }
+                    }
+                });
+            });
+
+            //Widget Support
+            $('#sortable-container').sortable({ placeholder: "ui-state-highlight", helper: 'clone', handle: 'h3' });
+
+            $(document).ready(function () {
+                var height = 0;
+                $('#sortable-container').each(function () {
+
+                    var items = $(this).find(".sortable-item");
+
+                    items.each(function () {
+                        if ($(this).height() > height) {
+                            height = $(this).height();
+                        }
+                    });
+
+                    var margin = 0;
+
+                    items.each(function () {
+                        margin = $(this).find(".panel-heading").height();
+                        $(this).find(".panel-body").css("height", height - margin + "px");
+                    });
+                });
+
+            });
         </script>
 
         <asp:ContentPlaceHolder ID="BottomScriptContentPlaceholder" runat="server">

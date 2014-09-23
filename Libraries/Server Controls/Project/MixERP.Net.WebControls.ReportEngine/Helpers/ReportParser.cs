@@ -21,8 +21,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -31,7 +33,7 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
 {
     public static class ReportParser
     {
-        public static string ParseExpression(string expression)
+        public static string ParseExpression(string expression, Collection<DataTable> dataTableCollection)
         {
             if (string.IsNullOrWhiteSpace(expression))
             {
@@ -60,9 +62,36 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
 
                     expression = expression.Replace(word, LocalizationHelper.GetDefaultAssemblyResourceString(resource[1], resource[2]));
                 }
+                else if (word.StartsWith("{DataSource", StringComparison.OrdinalIgnoreCase) && word.ToLower().Contains("runningtotalfieldvalue"))
+                {
+                    string res = RemoveBraces(word);
+                    string[] resource = res.Split('.');
+
+                    int dataSourceIndex = Conversion.TryCastInteger(resource[0].ToLower().Replace("datasource", "").Replace("[", "").Replace("]", ""));
+                    int index = Conversion.TryCastInteger(resource[1].ToLower().Replace("runningtotalfieldvalue", "").Replace("[", "").Replace("]", ""));
+
+                    if (dataSourceIndex >= 0 && index >= 0)
+                    {
+                        if (dataTableCollection != null && dataTableCollection[dataSourceIndex] != null)
+                        {
+                            expression = expression.Replace(word, GetSum(dataTableCollection[dataSourceIndex], index).ToString(CultureInfo.InvariantCulture));
+                        }
+                    }
+                }
             }
 
             return expression;
+        }
+
+        private static decimal GetSum(DataTable table, int index)
+        {
+            if (table != null && table.Rows.Count > 0)
+            {
+                string expression = "SUM(" + table.Columns[index].ColumnName + ")"; ;
+                return Conversion.TryCastDecimal(table.Compute(expression, ""));
+            }
+
+            return 0;
         }
 
         public static string ParseDataSource(string expression, Collection<DataTable> table)

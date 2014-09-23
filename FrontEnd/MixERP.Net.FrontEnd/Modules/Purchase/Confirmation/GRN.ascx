@@ -2,12 +2,16 @@
     OverridePath="/Modules/Purchase/GRN.mix" %>
 
 <mixerp:TransactionChecklist runat="server"
+    AttachmentBookName="transaction"
+    OverridePath="/Modules/Purchase/GRN.mix"
     DisplayWithdrawButton="true"
-    DisplayViewInvoiceButton="true"
-    DisplayEmailInvoiceButton="true"
-    DisplayCustomerInvoiceButton="false"
+    DisplayViewReportButton="true"
+    DisplayEmailReportButton="true"
+    DisplayCustomerReportButton="false"
     DisplayPrintReceiptButton="false"
     DisplayPrintGlEntryButton="true"
     DisplayAttachmentButton="true"
-    InvoicePath="~/Modules/Purchase/Confirmation/DirectPurchaseInvoice.mix"
-    GlAdvicePath="~/Modules/Finance/Reports/GLAdviceReport.mix" />
+    ReportPath="~/Modules/Purchase/Confirmation/DirectPurchaseInvoice.mix"
+    GlAdvicePath="~/Modules/Finance/Reports/GLAdviceReport.mix"
+    ViewReportButtonText="View This Note"
+    EmailReportButtonText="Email This Note" />

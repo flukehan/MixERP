@@ -41,12 +41,12 @@ namespace MixERP.Net.FrontEnd.Base
                 this.OverridePath = this.Page.Request.Url.AbsolutePath;
             }
 
-            Literal menuLiteral = ((Literal)PageUtility.FindControlIterative(this.Master, "ContentMenuLiteral"));
+            Literal contentMenuLiteral = ((Literal)PageUtility.FindControlIterative(this.Master, "ContentMenuLiteral"));
 
-            if (menuLiteral != null)
+            if (contentMenuLiteral != null)
             {
                 string menu = GetContentPageMenu(this.Page, this.OverridePath);
-                menuLiteral.Text = menu;
+                contentMenuLiteral.Text = menu;
             }
 
             base.OnLoad(e);
@@ -58,7 +58,7 @@ namespace MixERP.Net.FrontEnd.Base
             {
                 string menu = string.Empty;
                 string relativePath = Conversion.GetRelativePath(path);
-                Collection<Common.Models.Core.Menu> rootMenus = Data.Core.Menu.GetRootMenuCollection(relativePath);
+                Collection<Menu> rootMenus = Data.Core.Menu.GetRootMenuCollection(relativePath);
 
                 if (rootMenus == null)
                 {
@@ -67,22 +67,24 @@ namespace MixERP.Net.FrontEnd.Base
 
                 if (rootMenus.Count > 0)
                 {
-                    foreach (Common.Models.Core.Menu rootMenu in rootMenus)
-                    {
-                        menu += string.Format(Thread.CurrentThread.CurrentCulture, "<div class='panel panel-default'><div class='panel-heading'><h3 class='panel-title'>{0}</h3></div>", rootMenu.MenuText);
+                    menu = "<ul class=\"menu\">";
 
-                        Collection<Common.Models.Core.Menu> childMenus = Data.Core.Menu.GetMenuCollection(rootMenu.MenuId, 2);
+                    foreach (Menu rootMenu in rootMenus)
+                    {
+                        menu += string.Format(Thread.CurrentThread.CurrentCulture, "<li class=\"menu-title\"><a href=\"javascript:void(0);\">{0}</a></li>", rootMenu.MenuText);
+
+                        Collection<Menu> childMenus = Data.Core.Menu.GetMenuCollection(rootMenu.MenuId, 2);
 
                         if (childMenus.Count > 0)
                         {
                             foreach (Menu childMenu in childMenus)
                             {
-                                menu += string.Format(Thread.CurrentThread.CurrentCulture, "<a href='{0}' title='{1}' data-menucode='{2}' class='list-group-item'>{1}</a>", page.ResolveUrl(childMenu.Url), childMenu.MenuText, childMenu.MenuCode);
+                                menu += string.Format(Thread.CurrentThread.CurrentCulture, "<li><a href='{0}' title='{1}' data-menucode='{2}'>{1}</a></li>", page.ResolveUrl(childMenu.Url), childMenu.MenuText, childMenu.MenuCode);
                             }
                         }
-
-                        menu += "</div>";
                     }
+
+                    menu += "</ul>";
                 }
 
                 return menu;

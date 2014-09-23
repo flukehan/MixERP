@@ -32,7 +32,7 @@
     <CodeAnalysisRuleSet>..\MixERP.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
     <PublishDatabases>false</PublishDatabases>
-    <FilesToIncludeForPublish>AllFilesInTheProject</FilesToIncludeForPublish>
+    <FilesToIncludeForPublish>AllFilesInProjectFolder</FilesToIncludeForPublish>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -138,13 +138,6 @@
     <Compile Include="Base\MixERPWidget.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ContentMaster.Master.cs">
-      <DependentUpon>ContentMaster.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ContentMaster.Master.designer.cs">
-      <DependentUpon>ContentMaster.Master</DependentUpon>
-    </Compile>
     <Compile Include="Dashboard\Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -164,13 +157,6 @@
     </Compile>
     <Compile Include="Handlers\FileUpload.ashx.cs">
       <DependentUpon>FileUpload.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="MenuMaster.Master.cs">
-      <DependentUpon>MenuMaster.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="MenuMaster.Master.designer.cs">
-      <DependentUpon>MenuMaster.Master</DependentUpon>
     </Compile>
     <Compile Include="MixERPBlankMaster.Master.cs">
       <DependentUpon>MixERPBlankMaster.Master</DependentUpon>
@@ -221,6 +207,13 @@
     </Compile>
     <Compile Include="Reports\ReportViewer.aspx.designer.cs">
       <DependentUpon>ReportViewer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Site\Account\UserProfile.aspx.cs">
+      <DependentUpon>UserProfile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Site\Account\UserProfile.aspx.designer.cs">
+      <DependentUpon>UserProfile.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site\RuntimeError.aspx.cs">
       <DependentUpon>RuntimeError.aspx</DependentUpon>
@@ -303,13 +296,6 @@
     <Compile Include="UserControls\Widgets\AlertsWidget.ascx.designer.cs">
       <DependentUpon>AlertsWidget.ascx</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Widgets\CurrentOfficeSalesByMonthWidget.ascx.cs">
-      <DependentUpon>CurrentOfficeSalesByMonthWidget.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserControls\Widgets\CurrentOfficeSalesByMonthWidget.ascx.designer.cs">
-      <DependentUpon>CurrentOfficeSalesByMonthWidget.ascx</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\Widgets\LinksWidget.ascx.cs">
       <DependentUpon>LinksWidget.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -324,40 +310,12 @@
     <Compile Include="UserControls\Widgets\OfficeInformationWidget.ascx.designer.cs">
       <DependentUpon>OfficeInformationWidget.ascx</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Widgets\SalesByOfficeWidget.ascx.cs">
-      <DependentUpon>SalesByOfficeWidget.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserControls\Widgets\SalesByOfficeWidget.ascx.designer.cs">
-      <DependentUpon>SalesByOfficeWidget.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Widgets\TopSellingProductOfAllTimeCurrentWidget.ascx.cs">
-      <DependentUpon>TopSellingProductOfAllTimeCurrentWidget.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserControls\Widgets\TopSellingProductOfAllTimeCurrentWidget.ascx.designer.cs">
-      <DependentUpon>TopSellingProductOfAllTimeCurrentWidget.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Widgets\TopSellingProductOfAllTimeWidget.ascx.cs">
-      <DependentUpon>TopSellingProductOfAllTimeWidget.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserControls\Widgets\TopSellingProductOfAllTimeWidget.ascx.designer.cs">
-      <DependentUpon>TopSellingProductOfAllTimeWidget.ascx</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\Widgets\WorkflowWidget.ascx.cs">
       <DependentUpon>WorkflowWidget.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="UserControls\Widgets\WorkflowWidget.ascx.designer.cs">
       <DependentUpon>WorkflowWidget.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="WebForm1.aspx.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="WebForm1.aspx.designer.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -610,6 +568,7 @@
     <Content Include="General\ItemSelector.aspx" />
     <Content Include="Global.asax" />
     <Content Include="index.html" />
+    <Content Include="Site\Account\UserProfile.aspx" />
     <Content Include="Site\offline.html" />
     <Content Include="Reports\Assets\Header.aspx" />
     <Content Include="Reports\Assets\Header.html" />
@@ -975,8 +934,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Themes\MixERP\Skin1.skin" />
-    <Content Include="ContentMaster.Master" />
-    <Content Include="MenuMaster.Master" />
     <Content Include="MixERPMaster.Master" />
     <Content Include="Scripts\CodeMirror\.travis.yml" />
     <Content Include="Scripts\CodeMirror\bower.json" />
@@ -998,12 +955,8 @@
     <Content Include="UserControls\Products\ProductViewControl.ascx" />
     <Content Include="UserControls\TransactionChecklistControl.ascx" />
     <Content Include="UserControls\Widgets\AlertsWidget.ascx" />
-    <Content Include="UserControls\Widgets\CurrentOfficeSalesByMonthWidget.ascx" />
     <Content Include="UserControls\Widgets\LinksWidget.ascx" />
     <Content Include="UserControls\Widgets\OfficeInformationWidget.ascx" />
-    <Content Include="UserControls\Widgets\SalesByOfficeWidget.ascx" />
-    <Content Include="UserControls\Widgets\TopSellingProductOfAllTimeCurrentWidget.ascx" />
-    <Content Include="UserControls\Widgets\TopSellingProductOfAllTimeWidget.ascx" />
     <Content Include="UserControls\Widgets\WorkflowWidget.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -1023,7 +976,6 @@
     <Content Include="db\src\dictionary\de-DE.dict" />
     <Content Include="db\src\dictionary\fr-FR.dict" />
     <Content Include="db\mixerp.sqlbundle" />
-    <None Include="Properties\PublishProfiles\MixERP.pubxml" />
     <Content Include="Reports\Assets\ReadMe.txt" />
     <Content Include="Resource\Configuration\Switches.xml" />
     <Content Include="Resource\Configuration\Parameters.xml">
@@ -1050,13 +1002,13 @@
     <Content Include="Scripts\bootstrap\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Scripts\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Scripts\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <None Include="Properties\PublishProfiles\MixERPPublish.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-    <Content Include="WebForm1.aspx" />
     <Content Include="xsp4.bat" />
   </ItemGroup>
   <ItemGroup>

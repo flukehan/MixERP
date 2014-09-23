@@ -12,7 +12,7 @@ var save = function () {
 
     ajaxSaveOder.done(function (response) {
         var id = response.d;
-        window.location = "/Modules/Sales/Order.mix?TranId=" + id;
+        window.location = "/Modules/Sales/Confirmation/Order.mix?TranId=" + id;
     });
 
     ajaxSaveOder.fail(function (jqXHR) {

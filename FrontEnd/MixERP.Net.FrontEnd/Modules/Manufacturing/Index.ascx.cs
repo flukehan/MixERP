@@ -1,6 +1,4 @@
-﻿
-
-using MixERP.Net.FrontEnd.Base;
+﻿using MixERP.Net.FrontEnd.Base;
 using System;
 
 namespace MixERP.Net.Core.Modules.Manufacturing
@@ -9,9 +7,6 @@ namespace MixERP.Net.Core.Modules.Manufacturing
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            string menu = this.GetPageMenu(this.Page);
-            this.MenuLiteral.Text = menu;
-
             base.OnControlLoad(sender, e);
         }
     }

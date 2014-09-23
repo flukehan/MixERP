@@ -1,15 +1,16 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DirectPurchase.ascx.cs" Inherits="MixERP.Net.Core.Modules.Purchase.Confirmation.DirectPurchase"
     OverridePath="/Modules/Purchase/DirectPurchase.mix" %>
 <mixerp:TransactionChecklist runat="server"
-    Book="Purchase"
-    SubTranBook="Direct"
+    AttachmentBookName="transaction"
     OverridePath="/Modules/Purchase/DirectPurchase.mix"
     DisplayWithdrawButton="true"
-    DisplayViewInvoiceButton="true"
-    DisplayEmailInvoiceButton="true"
-    DisplayCustomerInvoiceButton="false"
+    DisplayViewReportButton="true"
+    DisplayEmailReportButton="true"
+    DisplayCustomerReportButton="false"
     DisplayPrintReceiptButton="false"
     DisplayPrintGlEntryButton="true"
     DisplayAttachmentButton="true"
-    InvoicePath="~/Modules/Purchase/Reports/DirectPurchaseInvoiceReport.mix"
-    GlAdvicePath="~/Modules/Finance/Reports/GLAdviceReport.mix" />
+    ReportPath="~/Modules/Purchase/Reports/DirectPurchaseInvoiceReport.mix"
+    GlAdvicePath="~/Modules/Finance/Reports/GLAdviceReport.mix"
+    ViewReportButtonText="View This Invoice"
+    EmailReportButtonText="Email This Invoice" />

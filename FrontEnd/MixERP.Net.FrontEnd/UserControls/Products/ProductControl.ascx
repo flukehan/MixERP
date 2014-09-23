@@ -65,7 +65,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <asp:Label ID="TitleLabel" runat="server" />
 </h2>
 
-<div class="grey">
+<div class="shade">
     <div class="row" style="margin-left: 8px;">
         <div class="col-md-1 pad4">
             <div class="form-group">
@@ -255,11 +255,11 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         <asp:Label ID="AttachmentLabel" runat="server" Text="<%$ Resources:Titles, AttachmentsPlus %>" CssClass="" />
     </h4>
 
-    <div id="attachment" class="grey" style="display: none; padding-left: 24px;">
+    <div id="attachment" class="shade" style="display: none; padding-left: 24px;">
         <mixerp:Attachment ID="Attachment1" runat="server" />
     </div>
 
-    <asp:Panel ID="BottomPanel" CssClass="table-form-pad grey" runat="server" Style="margin: 4px; width: 780px;">
+    <asp:Panel ID="BottomPanel" CssClass="table-form-pad shade" runat="server" Style="margin: 4px; width: 780px;">
         <asp:Table runat="server">
             <asp:TableRow ID="ShippingAddressRow" runat="server">
                 <asp:TableCell Style="vertical-align: top!important;" Width="190px">

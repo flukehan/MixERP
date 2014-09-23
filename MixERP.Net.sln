@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.Common", "Libraries\Logic\MixERP.net.Common\MixERP.Net.Common.csproj", "{D5A09C22-8F48-4FB2-A14D-C62C8C8FCEC0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.FrontEnd", "FrontEnd\MixERP.net.FrontEnd\MixERP.Net.FrontEnd.csproj", "{ACE1017D-71BC-4417-A906-72C4B9C55823}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5A14E96A-3807-4109-B0C7-4B23D151FD14} = {5A14E96A-3807-4109-B0C7-4B23D151FD14}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B331910C-E400-4F2D-AAD1-14D73811E81C}"
 EndProject

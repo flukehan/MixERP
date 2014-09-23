@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading;
@@ -29,12 +31,27 @@ namespace MixERP.Net.FrontEnd
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            BranchNameLiteral.Text = SessionHelper.GetOfficeName();
+            SignOutLiteral.Text = Resources.Titles.SignOut;
+            UserGreetingLiteral.Text = String.Format(Resources.Labels.UserGreeting, SessionHelper.GetUserName());
+            ChangePasswordLiteral.Text = Resources.Titles.ChangePassword;
+            ManageProfileLiteral.Text = Resources.Titles.ManageProfile;
+            MixERPDocumentationLiteral.Text = Resources.Titles.MixERPDocumentation;
+            NotificationLiteral.Text = Resources.Titles.Notifications;
             this.LoadMenu();
         }
 
         private void LoadMenu()
         {
-            string menu = string.Empty;
+            //Do not load the root menu items if the ContentMenu was already set on the base page.
+            string contentMenu = ContentMenuLiteral.Text;
+
+            if (!string.IsNullOrWhiteSpace(contentMenu))
+            {
+                return;
+            }
+
+            string menu = "<ul class=\"menu\">";
 
             Collection<Menu> collection = Data.Core.Menu.GetMenuCollection(0, 0);
 
@@ -48,10 +65,13 @@ namespace MixERP.Net.FrontEnd
                 foreach (Menu model in collection)
                 {
                     string menuText = model.MenuText;
+                    string menuCode = model.MenuCode;
                     string url = model.Url;
-                    menu += string.Format(Thread.CurrentThread.CurrentCulture, "<li><a href='{0}' title='{1}'>{1}</a></li>", this.ResolveUrl(url), menuText);
+                    menu += string.Format(Thread.CurrentThread.CurrentCulture, "<li><a href='{0}' title='{1}' data-menucode='{2}'>{1}</a></li>", this.ResolveUrl(url), menuText, menuCode);
                 }
             }
+
+            menu += "</ul>";
 
             this.MenuLiteral.Text = menu;
         }

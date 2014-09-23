@@ -69,6 +69,7 @@
     <Content Include="Reports\DirectSalesInvoiceReport.ascx" />
     <Content Include="Confirmation\Order.ascx" />
     <Content Include="Confirmation\Quotation.ascx" />
+    <Content Include="Reports\ReceiptReport.ascx" />
     <Content Include="Reports\SalesOrderReport.ascx" />
     <Content Include="Reports\SalesQuotationReport.ascx" />
     <Content Include="DirectSales.ascx" />
@@ -76,6 +77,10 @@
     <Content Include="Entry\Order.ascx" />
     <Content Include="Entry\Quotation.ascx" />
     <Content Include="Mix Open Foundation.snk" />
+    <Content Include="Widgets\CurrentOfficeSalesByMonthWidget.ascx" />
+    <Content Include="Widgets\SalesByOfficeWidget.ascx" />
+    <Content Include="Widgets\TopSellingProductOfAllTimeCurrentWidget.ascx" />
+    <Content Include="Widgets\TopSellingProductOfAllTimeWidget.ascx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -99,7 +104,13 @@
     <Content Include="Reports\Source\Sales.View.Sales.Delivery.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Reports\Source\Sales.Receipt.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Reports\Source\Sales.View.Sales.Invoice.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Reports\Source\Sales.View.Sales.Order.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Reports\Source\Sales.View.Sales.Quotation.xml">
@@ -218,6 +229,13 @@
     </Compile>
     <Compile Include="Confirmation\Quotation.ascx.designer.cs">
       <DependentUpon>Quotation.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ReceiptReport.ascx.cs">
+      <DependentUpon>ReceiptReport.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\ReceiptReport.ascx.designer.cs">
+      <DependentUpon>ReceiptReport.ascx</DependentUpon>
     </Compile>
     <Compile Include="Reports\SalesOrderReport.ascx.cs">
       <DependentUpon>SalesOrderReport.ascx</DependentUpon>
@@ -385,6 +403,34 @@
     </Compile>
     <Compile Include="Setup\BonusSlabAssignment.ascx.designer.cs">
       <DependentUpon>BonusSlabAssignment.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Widgets\CurrentOfficeSalesByMonthWidget.ascx.cs">
+      <DependentUpon>CurrentOfficeSalesByMonthWidget.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Widgets\CurrentOfficeSalesByMonthWidget.ascx.designer.cs">
+      <DependentUpon>CurrentOfficeSalesByMonthWidget.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Widgets\SalesByOfficeWidget.ascx.cs">
+      <DependentUpon>SalesByOfficeWidget.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Widgets\SalesByOfficeWidget.ascx.designer.cs">
+      <DependentUpon>SalesByOfficeWidget.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Widgets\TopSellingProductOfAllTimeCurrentWidget.ascx.cs">
+      <DependentUpon>TopSellingProductOfAllTimeCurrentWidget.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Widgets\TopSellingProductOfAllTimeCurrentWidget.ascx.designer.cs">
+      <DependentUpon>TopSellingProductOfAllTimeCurrentWidget.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Widgets\TopSellingProductOfAllTimeWidget.ascx.cs">
+      <DependentUpon>TopSellingProductOfAllTimeWidget.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Widgets\TopSellingProductOfAllTimeWidget.ascx.designer.cs">
+      <DependentUpon>TopSellingProductOfAllTimeWidget.ascx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup />

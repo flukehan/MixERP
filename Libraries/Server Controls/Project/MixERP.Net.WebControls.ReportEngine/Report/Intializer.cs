@@ -212,19 +212,21 @@ namespace MixERP.Net.WebControls.ReportEngine
         private void SetTitle()
         {
             string title = XmlHelper.GetNodeText(this.reportPath, "/MixERPReport/Title");
-            this.reportTitleLiteral.Text = @"<h2>" + ReportParser.ParseExpression(title) + @"</h2>";
-            this.reportTitleHidden.Value = ReportParser.ParseExpression(title);
+            string reportTitle = ReportParser.ParseExpression(title, this.dataTableCollection);
 
-            if (!string.IsNullOrWhiteSpace(this.reportTitleLiteral.Text))
+            this.reportTitleLiteral.Text = @"<h2>" + reportTitle + @"</h2>";
+            this.reportTitleHidden.Value = reportTitle;
+
+            if (!string.IsNullOrWhiteSpace(reportTitle))
             {
-                this.Page.Title = this.reportTitleLiteral.Text;
+                this.Page.Title = reportTitle;
             }
         }
 
         private void SetTopSection()
         {
             string topSection = XmlHelper.GetNodeText(this.reportPath, "/MixERPReport/TopSection");
-            topSection = ReportParser.ParseExpression(topSection);
+            topSection = ReportParser.ParseExpression(topSection, this.dataTableCollection);
             topSection = ReportParser.ParseDataSource(topSection, this.dataTableCollection);
             this.topSectionLiteral.Text = topSection;
         }
@@ -232,7 +234,7 @@ namespace MixERP.Net.WebControls.ReportEngine
         private void SetBodySection()
         {
             string bodySection = XmlHelper.GetNodeText(this.reportPath, "/MixERPReport/Body/Content");
-            bodySection = ReportParser.ParseExpression(bodySection);
+            bodySection = ReportParser.ParseExpression(bodySection, this.dataTableCollection);
             bodySection = ReportParser.ParseDataSource(bodySection, this.dataTableCollection);
             this.bodyContentsLiteral.Text = bodySection;
         }
@@ -287,7 +289,7 @@ namespace MixERP.Net.WebControls.ReportEngine
         private void SetBottomSection()
         {
             string bottomSection = XmlHelper.GetNodeText(this.reportPath, "/MixERPReport/BottomSection");
-            bottomSection = ReportParser.ParseExpression(bottomSection);
+            bottomSection = ReportParser.ParseExpression(bottomSection, this.dataTableCollection);
             bottomSection = ReportParser.ParseDataSource(bottomSection, this.dataTableCollection);
             this.bottomSectionLiteral.Text = bottomSection;
         }
@@ -308,7 +310,7 @@ namespace MixERP.Net.WebControls.ReportEngine
                     string menuCode = reportNode.Attributes["MenuCode"].Value;
                     string parentMenuCode = reportNode.Attributes["ParentMenuCode"].Value;
                     int level = Conversion.TryCastInteger(reportNode.Attributes["Level"].Value);
-                    string menuText = ReportParser.ParseExpression(reportNode.Attributes["MenuText"].Value);
+                    string menuText = ReportParser.ParseExpression(reportNode.Attributes["MenuText"].Value, this.dataTableCollection);
 
                     string path = reportNode.Attributes["Path"].Value;
 

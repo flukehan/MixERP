@@ -150,4 +150,10 @@
   <data name="ShippingAddressMaintenance" xml:space="preserve">
     <value>Shipping Address Maintenance</value>
   </data>
+  <data name="CompoundItemDetails" xml:space="preserve">
+    <value>Compound Item Details</value>
+  </data>
+  <data name="CompoundItems" xml:space="preserve">
+    <value>Compound Items</value>
+  </data>
 </root>

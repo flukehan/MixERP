@@ -36,8 +36,6 @@ namespace MixERP.Net.FrontEnd.Dashboard
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            TitleLiteral.Text = string.Format("Welcome to {0}, {1}!", SessionHelper.GetOfficeName(), SessionHelper.GetUserName());
-
             //Todo:Store this in database.
             Collection<WidgetModel> models = new Collection<WidgetModel>
             {
@@ -46,14 +44,14 @@ namespace MixERP.Net.FrontEnd.Dashboard
                     RowNumber = 1,
                     ColumnNumber = 1,
                     ColSpan = 2,
-                    WidgetSource = "~/UserControls/Widgets/SalesByOfficeWidget.ascx"
+                    WidgetSource = "~/Modules/Sales/Widgets/SalesByOfficeWidget.ascx"
                 },
                 new WidgetModel
                 {
                     RowNumber = 1,
                     ColumnNumber = 2,
                     ColSpan = 2,
-                    WidgetSource = "~/UserControls/Widgets/CurrentOfficeSalesByMonthWidget.ascx"
+                    WidgetSource = "~/Modules/Sales/Widgets/CurrentOfficeSalesByMonthWidget.ascx"
                 },
                 new WidgetModel
                 {
@@ -84,56 +82,18 @@ namespace MixERP.Net.FrontEnd.Dashboard
                     RowNumber = 3,
                     ColumnNumber = 1,
                     ColSpan = 2,
-                    WidgetSource = "~/UserControls/Widgets/TopSellingProductOfAllTimeWidget.ascx"
+                    WidgetSource = "~/Modules/Sales/Widgets/TopSellingProductOfAllTimeWidget.ascx"
                 },
                 new WidgetModel
                 {
                     RowNumber = 3,
                     ColumnNumber = 2,
                     ColSpan = 2,
-                    WidgetSource = "~/UserControls/Widgets/TopSellingProductOfAllTimeCurrentWidget.ascx"
+                    WidgetSource = "~/Modules/Sales/Widgets/TopSellingProductOfAllTimeCurrentWidget.ascx"
                 }
             };
 
-            this.LoadWidgets(models, this.WidgetPlaceholder);
-        }
-
-        private void LoadWidgets(IEnumerable<WidgetModel> widgetModels, PlaceHolder placeholder)
-        {
-            if (placeholder == null)
-            {
-                return;
-            }
-
-            //
-            var groups = widgetModels.OrderBy(x => x.RowNumber).ThenBy(x => x.ColumnNumber).GroupBy(x => new { x.RowNumber });
-
-            foreach (var group in groups)
-            {
-                foreach (var item in group)
-                {
-                    using (HtmlGenericControl div = new HtmlGenericControl())
-                    {
-                        div.TagName = "div";
-                        div.Attributes.Add("class", "sortable-item col-md-" + 12 / group.Count());
-
-                        if (item.ColSpan > 1)
-                        {
-                            div.Attributes.Add("data-ss-colspan", item.ColSpan.ToString(CultureInfo.CurrentUICulture));
-                        }
-
-                        using (MixERPWidget widget = this.LoadControl(item.WidgetSource) as MixERPWidget)
-                        {
-                            if (widget != null)
-                            {
-                                div.Controls.Add(widget);
-                            }
-                        }
-
-                        placeholder.Controls.Add(div);
-                    }
-                }
-            }
+            WidgetHelper.LoadWidgets(models, this.WidgetPlaceholder, this.Page);
         }
     }
 }

@@ -281,6 +281,7 @@
   <ItemGroup>
     <Folder Include="Reports\" />
     <Folder Include="Scripts\" />
+    <Folder Include="Widgets\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\MixERP.Net.WebControls.ScrudFactory.csproj">

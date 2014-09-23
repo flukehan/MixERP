@@ -124,6 +124,51 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email This Delivery.
+        /// </summary>
+        internal static string EmailThisDelivery {
+            get {
+                return ResourceManager.GetString("EmailThisDelivery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email This Invoice.
+        /// </summary>
+        internal static string EmailThisInvoice {
+            get {
+                return ResourceManager.GetString("EmailThisInvoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email This Order.
+        /// </summary>
+        internal static string EmailThisOrder {
+            get {
+                return ResourceManager.GetString("EmailThisOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email This Quotation.
+        /// </summary>
+        internal static string EmailThisQuotation {
+            get {
+                return ResourceManager.GetString("EmailThisQuotation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email This Return.
+        /// </summary>
+        internal static string EmailThisReturn {
+            get {
+                return ResourceManager.GetString("EmailThisReturn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exchange Rate.
         /// </summary>
         internal static string ExchangeRate {
@@ -219,6 +264,60 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         internal static string Update {
             get {
                 return ResourceManager.GetString("Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View Customer Copy.
+        /// </summary>
+        internal static string ViewCustomerCopy {
+            get {
+                return ResourceManager.GetString("ViewCustomerCopy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View This Delivery.
+        /// </summary>
+        internal static string ViewThisDelivery {
+            get {
+                return ResourceManager.GetString("ViewThisDelivery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View This Invoice.
+        /// </summary>
+        internal static string ViewThisInvoice {
+            get {
+                return ResourceManager.GetString("ViewThisInvoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View This Order.
+        /// </summary>
+        internal static string ViewThisOrder {
+            get {
+                return ResourceManager.GetString("ViewThisOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View This Quotation.
+        /// </summary>
+        internal static string ViewThisQuotation {
+            get {
+                return ResourceManager.GetString("ViewThisQuotation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View This Return.
+        /// </summary>
+        internal static string ViewThisReturn {
+            get {
+                return ResourceManager.GetString("ViewThisReturn", resourceCulture);
             }
         }
     }

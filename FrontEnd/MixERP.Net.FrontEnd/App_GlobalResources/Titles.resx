@@ -804,4 +804,22 @@
   <data name="Return" xml:space="preserve">
     <value>Return</value>
   </data>
+  <data name="Receipt" xml:space="preserve">
+    <value>Receipt</value>
+  </data>
+  <data name="SignOut" xml:space="preserve">
+    <value>Sign Out</value>
+  </data>
+  <data name="MixERPDocumentation" xml:space="preserve">
+    <value>MixERP Documentation</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Change Password</value>
+  </data>
+  <data name="ManageProfile" xml:space="preserve">
+    <value>Manage Profile</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>Notifications</value>
+  </data>
 </root>

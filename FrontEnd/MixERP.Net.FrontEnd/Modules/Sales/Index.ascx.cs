@@ -1,8 +1,9 @@
-﻿
-
-using MixERP.Net.Common;
+﻿using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Common.Models;
 using MixERP.Net.FrontEnd.Base;
 using System;
+using System.Collections.ObjectModel;
 using System.Web.UI.WebControls;
 
 namespace MixERP.Net.Core.Modules.Sales
@@ -11,35 +12,46 @@ namespace MixERP.Net.Core.Modules.Sales
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            this.LoadMenu();
+            this.LoadWidget();
             base.OnControlLoad(sender, e);
         }
 
-        public void LoadMenu()
+        public void LoadWidget()
         {
-            string menu = this.GetPageMenu(this.Page);
-
-            using (PlaceHolder menuPlaceHolder = PageUtility.FindControlIterative(this.Page, "MenuPlaceholder") as PlaceHolder)
+            //Todo:Store this in database.
+            Collection<WidgetModel> models = new Collection<WidgetModel>
             {
-                if (menuPlaceHolder != null)
+                new WidgetModel
                 {
-                    using (Literal menuLiteral = new Literal())
-                    {
-                        menuLiteral.Text = menu;
-                        menuPlaceHolder.Controls.Add(menuLiteral);
-                    }
+                    RowNumber = 1,
+                    ColumnNumber = 1,
+                    ColSpan = 2,
+                    WidgetSource = "~/Modules/Sales/Widgets/SalesByOfficeWidget.ascx"
+                },
+                new WidgetModel
+                {
+                    RowNumber = 1,
+                    ColumnNumber = 2,
+                    ColSpan = 2,
+                    WidgetSource = "~/Modules/Sales/Widgets/CurrentOfficeSalesByMonthWidget.ascx"
+                },
+                new WidgetModel
+                {
+                    RowNumber = 3,
+                    ColumnNumber = 1,
+                    ColSpan = 2,
+                    WidgetSource = "~/Modules/Sales/Widgets/TopSellingProductOfAllTimeWidget.ascx"
+                },
+                new WidgetModel
+                {
+                    RowNumber = 3,
+                    ColumnNumber = 2,
+                    ColSpan = 2,
+                    WidgetSource = "~/Modules/Sales/Widgets/TopSellingProductOfAllTimeCurrentWidget.ascx"
                 }
-            }
-        }
+            };
 
-        protected void SaveButton_Click(object sedner, EventArgs e)
-        {
-            this.Page.Response.Redirect("~/");
-        }
-
-        public int Divide(int a, int b)
-        {
-            return a / b;
+            WidgetHelper.LoadWidgets(models, this.WidgetPlaceholder, this.Page);
         }
     }
 }

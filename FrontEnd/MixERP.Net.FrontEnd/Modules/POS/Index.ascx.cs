@@ -1,6 +1,4 @@
-﻿
-
-using MixERP.Net.Common.Models.Core;
+﻿using MixERP.Net.Common.Models.Core;
 using MixERP.Net.FrontEnd.Base;
 using System;
 using System.Collections.ObjectModel;
@@ -13,9 +11,6 @@ namespace MixERP.Net.Core.Modules.POS
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            string menu = GetPageMenu(this.Page);
-            this.MenuLiteral.Text = menu;
-
             base.OnControlLoad(sender, e);
         }
     }

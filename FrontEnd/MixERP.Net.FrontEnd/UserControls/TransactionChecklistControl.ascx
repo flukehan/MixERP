@@ -36,9 +36,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <div class="panel-body">
         <div class="list-group">
             <asp:LinkButton ID="WithdrawButton" runat="server" Text="<%$Resources:Titles, WithdrawThisTransaction %>" OnClientClick="$('#WithdrawDiv').toggle(200);return(false);" CssClass="list-group-item" CausesValidation="false" />
-            <asp:LinkButton ID="ViewInvoiceButton" runat="server" Text="<%$Resources:Titles, ViewThisInvoice %>" CssClass="list-group-item" CausesValidation="false" />
-            <asp:LinkButton ID="EmailInvoiceButton" runat="server" Text="<%$Resources:Titles, EmailThisInvoice %>" CssClass="list-group-item" CausesValidation="false" />
-            <asp:LinkButton ID="CustomerInvoiceButton" runat="server" Text="<%$Resources:Titles, PrintThisInvoice %>" CssClass="list-group-item" CausesValidation="false" />
+            <asp:LinkButton ID="ViewReportButton" runat="server" CssClass="list-group-item" CausesValidation="false" />
+            <asp:LinkButton ID="EmailReportButton" runat="server" CssClass="list-group-item" CausesValidation="false" />
+            <asp:LinkButton ID="CustomerReportButton" runat="server" CssClass="list-group-item" CausesValidation="false" />
             <asp:LinkButton ID="PrintReceiptButton" runat="server" Text="<%$Resources:Titles, PrintReceipt %>" CssClass="list-group-item" CausesValidation="false" />
             <asp:LinkButton ID="PrintGLButton" runat="server" Text="<%$Resources:Titles, PrintGLEntry %>" CssClass="list-group-item" CausesValidation="false" />
             <asp:LinkButton ID="AttachmentButton" runat="server" Text="<%$Resources:Titles, UploadAttachmentForThisTransaction %>" CssClass="list-group-item" CausesValidation="false" />
@@ -77,14 +77,16 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     var widthdrawButton = $("#WithdrawButton");
 
     $(document).ready(function () {
-
-        withdrawDiv.position({
-            my: "left top",
-            at: "right top",
-            of: "#WithdrawButton",
-            collision: "fit"
-        });
-
         withdrawDiv.hide();
+
+        if (widthdrawButton.length) {
+            withdrawDiv.position({
+                my: "left top",
+                at: "right top",
+                of: "#WithdrawButton",
+                collision: "fit"
+            });
+        };
+
     });
 </script>

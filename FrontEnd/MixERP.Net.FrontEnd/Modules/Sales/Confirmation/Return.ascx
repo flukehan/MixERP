@@ -2,10 +2,13 @@
     OverridePath="~/Modules/Sales/Return.mix" %>
 
 <mixerp:TransactionChecklist runat="server"
+    ID="TransactionChecklist1"
+    AttachmentBookName="transaction"
+    OverridePath="~/Modules/Sales/Return.mix"
     DisplayWithdrawButton="true"
-    DisplayViewInvoiceButton="false"
-    DisplayEmailInvoiceButton="false"
-    DisplayCustomerInvoiceButton="false"
+    DisplayViewReportButton="false"
+    DisplayEmailReportButton="false"
+    DisplayCustomerReportButton="false"
     DisplayPrintReceiptButton="false"
     DisplayPrintGlEntryButton="true"
     DisplayAttachmentButton="true"

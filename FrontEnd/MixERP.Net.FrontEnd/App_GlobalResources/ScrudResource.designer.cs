@@ -664,6 +664,33 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Compound Item Code.
+        /// </summary>
+        internal static string compound_item_code {
+            get {
+                return ResourceManager.GetString("compound_item_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compound Item ID.
+        /// </summary>
+        internal static string compound_item_id {
+            get {
+                return ResourceManager.GetString("compound_item_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compound Item Name.
+        /// </summary>
+        internal static string compound_item_name {
+            get {
+                return ResourceManager.GetString("compound_item_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Compound Unit Id.
         /// </summary>
         internal static string compound_unit_id {

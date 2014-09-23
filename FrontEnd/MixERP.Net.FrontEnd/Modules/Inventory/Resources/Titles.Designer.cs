@@ -70,6 +70,24 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Compound Item Details.
+        /// </summary>
+        internal static string CompoundItemDetails {
+            get {
+                return ResourceManager.GetString("CompoundItemDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compound Items.
+        /// </summary>
+        internal static string CompoundItems {
+            get {
+                return ResourceManager.GetString("CompoundItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Compound Units of Measure.
         /// </summary>
         internal static string CompoundUnitsOfMeasure {

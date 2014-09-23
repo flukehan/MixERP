@@ -57,12 +57,12 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
         <button type="button" id="flagButton" class="btn btn-default btn-sm">
             <span class="glyphicon glyphicon-flag"></span>&nbsp;
-            <asp:Literal runat="server" Text="<%$Resources:Titles, Flag %>"></asp:Literal>
+                <asp:Literal runat="server" Text="<%$Resources:Titles, Flag %>"></asp:Literal>
         </button>
 
         <button type="button" class="btn btn-default btn-sm">
             <span class="glyphicon glyphicon-print"></span>&nbsp;
-            <asp:Literal runat="server" Text="<%$Resources:Titles, Print %>"></asp:Literal>
+                <asp:Literal runat="server" Text="<%$Resources:Titles, Print %>"></asp:Literal>
         </button>
     </div>
 </div>
@@ -98,7 +98,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
 <asp:Label ID="ErrorLabel" runat="server" CssClass="error" />
 
-<div class="grey" style="margin: 8px 0 8px 0;">
+<div id="FilterDiv" class="shade" style="margin: 8px 0 8px 0;">
     <div class="row" style="margin-left: 8px;">
 
         <div class="col-md-1 pad4" style="width: 120px;">
@@ -153,53 +153,51 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     </div>
 </div>
 
-<div class="table-responsive">
-    <asp:Panel ID="GridPanel" runat="server" Width="100px" ScrollBars="Auto">
-        <asp:GridView
-            ID="ProductViewGridView"
-            runat="server"
-            CssClass="table table-bordered table-condensed pointer"
-            AutoGenerateColumns="false"
-            OnRowDataBound="ProductViewGridView_RowDataBound">
-            <Columns>
-                <asp:TemplateField HeaderStyle-Width="92px" HeaderText="actions">
-                    <ItemTemplate>
-                        <a href="#" id="ChecklistAnchor" runat="server" title="Go to Checklist">
-                            <img runat="server" src="~/Resource/Icons/checklist-16.png" alt="Go to Checklist" />
-                        </a>
-                        <a href="#" id="PreviewAnchor" runat="server" title="Quick Preview" class="preview">
-                            <img runat="server" src="~/Resource/Icons/search-16.png" alt="Search" />
-                        </a>
-                        <a href="#" id="PrintAnchor" runat="server" title="Print">
-                            <img runat="server" src="~/Resource/Icons/print-16.png" alt="Print" />
-                        </a>
-                        <a href="#" title="Go To Top" onclick="window.scroll(0);">
-                            <img runat="server" src="~/Resource/Icons/top-16.png" alt="Go to Top" />
-                        </a>
-                    </ItemTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField>
-                    <ItemTemplate>
-                        <asp:CheckBox ID="SelectCheckBox" runat="server" ClientIDMode="Predictable" />
-                    </ItemTemplate>
-                </asp:TemplateField>
-                <asp:BoundField DataField="id" HeaderText="id" />
-                <asp:BoundField DataField="value_date" HeaderText="value_date" DataFormatString="{0:d}" />
-                <asp:BoundField DataField="office" HeaderText="office" />
-                <asp:BoundField DataField="reference_number" HeaderText="reference_number" />
-                <asp:BoundField DataField="party" HeaderText="party" />
-                <asp:BoundField DataField="price_type" HeaderText="price_type" />
-                <asp:BoundField DataField="amount" HeaderText="amount" />
-                <asp:BoundField DataField="transaction_ts" HeaderText="transaction_ts" DataFormatString="{0:D}" />
-                <asp:BoundField DataField="user" HeaderText="user" />
-                <asp:BoundField DataField="statement_reference" HeaderText="statement_reference" />
-                <asp:BoundField DataField="book" HeaderText="book" />
-                <asp:BoundField DataField="flag_background_color" HeaderText="flag_background_color" />
-                <asp:BoundField DataField="flag_foreground_color" HeaderText="flag_foreground_color" />
-            </Columns>
-        </asp:GridView>
-    </asp:Panel>
-</div>
+<asp:Panel ID="GridPanel" runat="server" Width="100%" ScrollBars="Auto">
+    <asp:GridView
+        ID="ProductViewGridView"
+        runat="server"
+        CssClass="table table-bordered table-condensed pointer"
+        AutoGenerateColumns="false"
+        OnRowDataBound="ProductViewGridView_RowDataBound">
+        <Columns>
+            <asp:TemplateField HeaderStyle-Width="92px" HeaderText="actions">
+                <ItemTemplate>
+                    <a href="#" id="ChecklistAnchor" runat="server" title="Go to Checklist">
+                        <img runat="server" src="~/Resource/Icons/checklist-16.png" alt="Go to Checklist" />
+                    </a>
+                    <a href="#" id="PreviewAnchor" runat="server" title="Quick Preview" class="preview">
+                        <img runat="server" src="~/Resource/Icons/search-16.png" alt="Search" />
+                    </a>
+                    <a href="#" id="PrintAnchor" runat="server" title="Print">
+                        <img runat="server" src="~/Resource/Icons/print-16.png" alt="Print" />
+                    </a>
+                    <a href="#" title="Go To Top" onclick="window.scroll(0);">
+                        <img runat="server" src="~/Resource/Icons/top-16.png" alt="Go to Top" />
+                    </a>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField>
+                <ItemTemplate>
+                    <asp:CheckBox ID="SelectCheckBox" runat="server" ClientIDMode="Predictable" />
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:BoundField DataField="id" HeaderText="id" />
+            <asp:BoundField DataField="value_date" HeaderText="value_date" DataFormatString="{0:d}" />
+            <asp:BoundField DataField="office" HeaderText="office" />
+            <asp:BoundField DataField="reference_number" HeaderText="reference_number" />
+            <asp:BoundField DataField="party" HeaderText="party" />
+            <asp:BoundField DataField="price_type" HeaderText="price_type" />
+            <asp:BoundField DataField="amount" HeaderText="amount" />
+            <asp:BoundField DataField="transaction_ts" HeaderText="transaction_ts" DataFormatString="{0:D}" />
+            <asp:BoundField DataField="user" HeaderText="user" />
+            <asp:BoundField DataField="statement_reference" HeaderText="statement_reference" />
+            <asp:BoundField DataField="book" HeaderText="book" />
+            <asp:BoundField DataField="flag_background_color" HeaderText="flag_background_color" />
+            <asp:BoundField DataField="flag_foreground_color" HeaderText="flag_foreground_color" />
+        </Columns>
+    </asp:GridView>
+</asp:Panel>
 
 <asp:HiddenField ID="SelectedValuesHidden" runat="server" />
 <script src="/Scripts/UserControls/ProductViewControl.js"></script>
