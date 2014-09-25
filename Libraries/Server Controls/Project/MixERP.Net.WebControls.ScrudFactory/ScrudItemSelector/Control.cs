@@ -18,11 +18,14 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using System.Security.Permissions;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
+    [ToolboxData("<{0}:ScrudItemSelector runat=server></{0}:ScrudItemSelector>")]
     public partial class ScrudItemSelector : CompositeControl
     {
         public Panel container;

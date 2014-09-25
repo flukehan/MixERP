@@ -50,6 +50,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 </head>
 <body>
     <form id="form1" runat="server">
+        <asp:ScriptManager runat="server" ID="ScriptManager1" />
+
         <mixerp:ScrudItemSelector runat="server"
             TopPanelCssClass="vpad16"
             TopPanelTableCssClass="valignmiddle"

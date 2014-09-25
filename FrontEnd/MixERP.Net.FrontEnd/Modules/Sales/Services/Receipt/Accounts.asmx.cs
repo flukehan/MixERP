@@ -52,6 +52,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
             }
         }
 
+        [WebMethod]
         public Collection<ListItem> GetCostCenters()
         {
             Collection<ListItem> values = new Collection<ListItem>();

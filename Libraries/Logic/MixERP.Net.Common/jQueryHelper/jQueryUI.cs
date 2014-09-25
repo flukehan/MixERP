@@ -111,7 +111,7 @@ namespace MixERP.Net.Common.jQueryHelper
 
             string script = GetDatePickerScript(controlId, minDate, maxDate);
 
-            PageUtility.RegisterJavascript("datePicker_" + controlId + RandomNumber().ToString(CultureInfo.InvariantCulture), script, p);
+            PageUtility.RegisterJavascript("datePicker_" + controlId + RandomNumber().ToString(CultureInfo.InvariantCulture), script, p, true);
         }
 
         private static int RandomNumber()

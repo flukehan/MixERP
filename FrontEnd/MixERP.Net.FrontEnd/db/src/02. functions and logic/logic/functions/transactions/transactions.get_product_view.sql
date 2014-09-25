@@ -52,8 +52,7 @@ RETURNS TABLE
 AS
 $$
 BEGIN
-        CREATE TEMPORARY TABLE IF NOT EXISTS temp_book(book text);
-        TRUNCATE TABLE temp_book;
+        CREATE TEMPORARY TABLE IF NOT EXISTS temp_book(book text) ON COMMIT DROP;
 
         INSERT INTO temp_book
         SELECT book_;

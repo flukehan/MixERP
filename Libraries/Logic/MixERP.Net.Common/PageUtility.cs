@@ -58,7 +58,7 @@ namespace MixERP.Net.Common
             return string.Empty;
         }
 
-        public static void RegisterJavascript(string key, string javaScript, Page page)
+        public static void RegisterJavascript(string key, string javaScript, Page page, bool addScriptTags)
         {
             if (page == null)
             {
@@ -70,7 +70,7 @@ namespace MixERP.Net.Common
                 throw new InvalidOperationException("Could not register javascript on this page because the page instance was invalid or empty.");
             }
 
-            ScriptManager.RegisterStartupScript(page, typeof(Page), key, javaScript, true);
+            ScriptManager.RegisterStartupScript(page, typeof(Page), key, javaScript, addScriptTags);
         }
 
         public static string ResolveUrl(string relativeUrl)

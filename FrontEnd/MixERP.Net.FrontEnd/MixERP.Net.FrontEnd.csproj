@@ -335,6 +335,7 @@
     <Content Include="db\src\00. db core\1. scrud.sql" />
     <Content Include="db\src\00. db core\2. install-unit-test.sql" />
     <Content Include="db\src\00. db core\2. mixerp-db-schema.sql" />
+    <Content Include="db\src\00. db core\2nd-quadrant-audit-trigger.sql" />
     <Content Include="db\src\00. db core\3. roles-and-priviledge.sql" />
     <Content Include="db\src\01. types, domains, tables, and constraints\types.sql" />
     <Content Include="db\src\01. types, domains, tables, and constraints\domains.sql" />
@@ -476,6 +477,7 @@
     <Content Include="db\src\05. views\transactions\3. transactions.trial_balance_view.sql" />
     <Content Include="db\src\06. sample-data\exchange-rates.sql" />
     <Content Include="db\src\06. sample-data\menus.sql" />
+    <Content Include="db\src\13. triggers\audit-all-tables.sql" />
     <Content Include="db\src\10. triggers\core\core.party_before_update_trigger.sql" />
     <Content Include="db\src\11. sample-data\party-sample.sql" />
     <Content Include="db\src\06. sample-data\price-types.sql" />

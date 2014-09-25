@@ -17,11 +17,13 @@
 @shade-hover: #fbf5fe;
 @shade-hover-border: #f3e3fc;
 @color-error: #d4610e;
-@sidebar-width: 272px;
-@top-element-height: 46px;
+@top-element-height: 54px;
 @sidebar-float: left;
 @top-panel-float: right;
 @top-panel-float-other: left;
+@sidebar-width: 274px;
+@menu-color: #ccb4d6;
+@menu-color-hover: #F5d3ed;
 
 html, body, form {
     height: 100%;
@@ -43,16 +45,28 @@ body#SignInBody {
 }
 
 /*Page Layout Start */
+#dashboard {
+    width: 100%;
+    height: 100%;
+}
+
+#dashboard tr td {
+    vertical-align: top;
+}
+
+.left {
+    width: @sidebar-width !important;
+}
+
 #logo {
-    padding: 4px;
+    padding-left: 16px;
     background-color: @menu-color-primary-dark;
-    float: @sidebar-float;
-    width: @sidebar-width;
     height: @top-element-height;
+    width: @sidebar-width;
 }
 
 #user-panel {
-    padding: 16px;
+    vertical-align: middle !important;
     background-color: @background-color-secondary;
     height: @top-element-height;
 }
@@ -74,16 +88,25 @@ body#SignInBody {
 #sidebar {
     background-color: @menu-color-primary;
     color: @background-color-secondary;
-    height: 100%;
-    float: @sidebar-float;
     width: @sidebar-width;
+    height: 100%;
+    padding-bottom: 50px;
+    margin-bottom: -50px;
 }
 
 #body {
     background-color: @background-color;
     border-top: 1px solid @background-color-secondary-border;
     height: 100%;
-    padding-left: @sidebar-width + 12px;
+    padding-bottom: 50px;
+    margin-bottom: -50px;
+}
+
+footer {
+    background-color: @background-color-secondary;
+    border-top: 1px solid @background-color-secondary-border;
+    height: 36px;
+    padding: 12px;
 }
 
 #Search {
@@ -107,16 +130,15 @@ body#SignInBody {
 .menu {
     list-style: none outside none;
     margin: 0;
-    padding: 0;
-    position: absolute;
+    padding: 2px;
 }
 
 .menu li a, .menu li.menu-title a {
+    width: 100%;
     text-decoration: none;
-    color: #93989F;
+    color: @menu-color;
     background-color: @menu-color-primary-light;
     display: block;
-    width: @sidebar-width;
     padding: 8px;
     padding-left: 32px;
 }
@@ -129,7 +151,7 @@ body#SignInBody {
 
 .menu li a:hover, .menu li a:focus {
     background-color: @menu-color-primary-hover-dark;
-    color: #D9E0E7;
+    color: @menu-color-hover;
     outline: none;
 }
 
@@ -246,15 +268,15 @@ table[role=scrud] .form-control {
 }
 
 .scrud-grid th {
-    background-color: #edecec;
+    background-color: @shade-hover-border;
 }
 
 .scrud-grid tr:hover {
-    background-color: #f3f1f1;
+    background-color: @shade-hover-border;
 }
 
 .gridview-row-alt {
-    background-color: #F5F5F5;
+    background-color: @shade-hover;
 }
 
 table .form-control label {
@@ -282,19 +304,6 @@ h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover {
 
 .pointer {
     cursor: pointer;
-}
-
-.bottom {
-    padding: 8px;
-    height: 32px;
-    color: @secondary-text-color;
-    background-color: @background-color-secondary;
-    border-top: 1px solid @background-color-secondary-border;
-    position: fixed;
-    left: @sidebar-width;
-    bottom: 0;
-    width: 100%;
-    display: block;
 }
 
 .dropdown li a {
@@ -453,3 +462,7 @@ a:hover, a:active, a:focus {
 }
 
 /*Bootstrap Override End*/
+
+.widget canvas -.panel-body {
+    text-align: center;
+}

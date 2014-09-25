@@ -6,6 +6,14 @@ BEGIN
 	END IF;
 
 
+	REVOKE ALL ON SCHEMA audit FROM public;
+	REVOKE ALL ON SCHEMA core FROM public;
+	REVOKE ALL ON SCHEMA office FROM public;
+	REVOKE ALL ON SCHEMA policy FROM public;
+	REVOKE ALL ON SCHEMA transactions FROM public;
+	REVOKE ALL ON SCHEMA crm FROM public;
+	REVOKE ALL ON SCHEMA mrp FROM public;
+	
 	GRANT USAGE ON SCHEMA public TO mix_erp;
 	GRANT USAGE ON SCHEMA information_schema TO mix_erp;
 	GRANT USAGE ON SCHEMA audit TO mix_erp;

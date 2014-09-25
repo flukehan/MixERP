@@ -29,7 +29,7 @@ namespace MixERP.Net.DBFactory
     {
         public static DataTable GetView(string tableSchema, string tableName, string orderBy, int limit, int offset)
         {
-            var sql = "SELECT * FROM @TableSchema.@TableName ORDER BY @OrderBy LIMIT @Limit OFFSET @Offset;";
+            var sql = "SELECT * FROM @TableSchema.@TableName ORDER BY @OrderBy ASC LIMIT @Limit OFFSET @Offset;";
 
             using (var command = new NpgsqlCommand())
             {
@@ -48,7 +48,7 @@ namespace MixERP.Net.DBFactory
 
         public static DataTable GetTable(string tableSchema, string tableName, string orderBy)
         {
-            var sql = "SELECT * FROM @TableSchema.@TableName ORDER BY @OrderBy;";
+            var sql = "SELECT * FROM @TableSchema.@TableName ORDER BY @OrderBy ASC;";
             using (var command = new NpgsqlCommand())
             {
                 sql = sql.Replace("@TableSchema", Sanitizer.SanitizeIdentifierName(tableSchema));
@@ -95,7 +95,7 @@ namespace MixERP.Net.DBFactory
                 counter++;
             }
 
-            sql += " ORDER BY @OrderBy;";
+            sql += " ORDER BY @OrderBy ASC;";
 
             using (var command = new NpgsqlCommand())
             {
@@ -157,7 +157,7 @@ namespace MixERP.Net.DBFactory
                 }
             }
 
-            sql += " ORDER BY @OrderBy LIMIT @Limit;";
+            sql += " ORDER BY @OrderBy ASC LIMIT @Limit;";
 
             using (var command = new NpgsqlCommand())
             {

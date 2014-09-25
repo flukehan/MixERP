@@ -37,7 +37,7 @@ namespace MixERP.Net.DBFactory
                 var paramNames = exclusions.Select((s, i) => "@Paramter" + i.ToString(Thread.CurrentThread.CurrentCulture).Trim()).ToArray();
                 var inClause = string.Join(",", paramNames);
 
-                sql = string.Format(Thread.CurrentThread.CurrentCulture, @"select * from scrud.mixerp_table_view where table_schema=@Schema AND table_name=@TableName AND column_name NOT IN({0});", inClause);
+                sql = string.Format(Thread.CurrentThread.CurrentCulture, @"select * from scrud.mixerp_table_view where table_schema=@Schema AND table_name=@TableName AND column_name NOT IN({0}) ORDER BY ordinal_position ASC;", inClause);
 
                 using (var command = new NpgsqlCommand(sql))
                 {
@@ -53,7 +53,7 @@ namespace MixERP.Net.DBFactory
                 }
             }
 
-            sql = "select * from scrud.mixerp_table_view where table_schema=@Schema AND table_name=@TableName;";
+            sql = "select * from scrud.mixerp_table_view where table_schema=@Schema AND table_name=@TableName ORDER BY ordinal_position ASC;";
 
             using (var command = new NpgsqlCommand(sql))
             {

@@ -22,9 +22,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         <h3 class="panel-title">Office Information (Todo)</h3>
     </div>
     <div class="panel-body">
-        Your Office : PES-NY-MEM (Memphis Branch)
+        Your Office : MoF-NY-MEM (Memphis Branch)
                     <br />
-        Logged in to : PES-NY-BK (Brooklyn Branch)
+        Logged in to : MoF-NY-BK (Brooklyn Branch)
                     <br />
         Last Login IP : 192.168.0.200
                 <br />

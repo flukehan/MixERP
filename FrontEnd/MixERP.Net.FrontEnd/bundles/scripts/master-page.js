@@ -26145,13 +26145,19 @@ function legend(parent, data) {
 /*jshint -W032, -W107, -W098 */
 /*global areYouSureLocalized, Chart, currencyDecimalPlaces, decimalSeparator, legend, noneLocalized, Page_ClientValidate, selectLocalized, shortDateFormat, Sys, thousandSeparator, today*/
 
-function getDocHeight() {
+function getDocHeight(margin) {
     var D = document;
-    return Math.max(
+    var height = Math.max(
                 Math.max(D.body.scrollHeight, D.documentElement.scrollHeight),
                 Math.max(D.body.offsetHeight, D.documentElement.offsetHeight),
                 Math.max(D.body.clientHeight, D.documentElement.clientHeight)
             );
+
+    if (margin) {
+        height += parseInt2(margin);
+    };
+
+    return height;
 };
 
 var selectDropDownListByValue = function (textBoxId, dropDownListId) {
@@ -26460,19 +26466,21 @@ function prepareChart(datasourceId, canvasId, legendId, type) {
 
         //Create a new dataset representing this row.
         var dataset =
-            {
-                fillColor: getFillColor(index),
-                strokeColor: chartColors[index],
-                pointColor: chartColors[index],
-                data: data,
-                title: title
-            };
+        {
+            fillColor: getFillColor(index),
+            strokeColor: chartColors[index],
+            pointColor: chartColors[index],
+            data: data,
+            title: title
+        };
 
         //Add the dataset object to the array object.
         datasets.push(dataset);
 
         index++;
     });
+
+    table.remove();
 
     var reportData = {
         labels: labels,

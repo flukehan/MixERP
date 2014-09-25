@@ -56,6 +56,7 @@ namespace MixERP.Net.WebControls.ReportEngine
             this.SetGridViews();
             this.SetBottomSection();
             this.InstallReport();
+            this.AddJavascript();
             this.CleanUp();
         }
 

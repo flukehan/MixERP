@@ -56,7 +56,6 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\ItemSelectorJavaScriptHelper.cs" />
     <Compile Include="Helpers\ScrudFactoryHelper.cs" />
     <Compile Include="Helpers\ScrudItemSelectorSelectTemplate.cs" />
     <Compile Include="Helpers\ScrudJavaScriptHelper.cs" />

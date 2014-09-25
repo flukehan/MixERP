@@ -27,7 +27,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <th>PES-NY-MEM</th>
+                    <th>MoF-NY-MEM</th>
                     <td>20</td>
                     <td>10</td>
                     <td>85</td>
@@ -42,7 +42,7 @@
                     <td>100</td>
                 </tr>
                 <tr>
-                    <th>PES-NY-BK</th>
+                    <th>MoF-NY-BK</th>
                     <td>50</td>
                     <td>30</td>
                     <td>45</td>

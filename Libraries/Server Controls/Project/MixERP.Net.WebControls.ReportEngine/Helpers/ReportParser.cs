@@ -24,6 +24,7 @@ using System;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -77,6 +78,52 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
                             expression = expression.Replace(word, GetSum(dataTableCollection[dataSourceIndex], index).ToString(CultureInfo.InvariantCulture));
                         }
                     }
+                }
+                else if (word.StartsWith("{Barcode", StringComparison.OrdinalIgnoreCase))
+                {
+                    string res = RemoveBraces(word).Replace("Barcode(", "").Replace(")", "");
+                    string barCodeValue = res;
+
+                    if (res.StartsWith("DataSource"))
+                    {
+                        barCodeValue = ParseDataSource("{" + res + "}", dataTableCollection);
+                    }
+
+                    string barCodeFormat = ConfigurationHelper.GetReportParameter("BarCodeFormat");
+                    string barCodeDisplayValue = ConfigurationHelper.GetReportParameter("BarCodeDisplayValue");
+                    string barCodeFontSize = ConfigurationHelper.GetReportParameter("BarCodeFontSize");
+                    string barCodeWidth = ConfigurationHelper.GetReportParameter("BarCodeWidth");
+                    string barCodeHeight = ConfigurationHelper.GetReportParameter("BarCodeHeight");
+                    string barCodeQuite = ConfigurationHelper.GetReportParameter("BarCodeQuite");
+                    string barCodeFont = ConfigurationHelper.GetReportParameter("BarCodeFont");
+                    string barCodeTextAlign = ConfigurationHelper.GetReportParameter("BarCodeTextAlign");
+                    string barCodeBackgroundColor = ConfigurationHelper.GetReportParameter("BarCodeBackgroundColor");
+                    string barCodeLineColor = ConfigurationHelper.GetReportParameter("BarCodeLineColor");
+
+                    string imageSource = "<img class='reportEngineBarCode' data-barcodevalue='{0}' alt='{0}' value='{0}' data-barcodeformat='{1}' data-barcodedisplayvalue='{2}' data-barcodefontsize='{3}' data-barcodewidth='{4}' data-barcodeheight='{5}' data-barcodefont='{6}' data-barcodetextalign='{7}' data-barcodebackgroundcolor='{8}' data-barcodelinecolor='{9}' data-barcodequite={10} />";
+                    imageSource = string.Format(imageSource, barCodeValue, barCodeFormat, barCodeDisplayValue, barCodeFontSize, barCodeWidth, barCodeHeight, barCodeFont, barCodeTextAlign, barCodeBackgroundColor, barCodeLineColor, barCodeQuite);
+                    expression = expression.Replace(word, imageSource).ToString(CultureInfo.InvariantCulture);
+                }
+                else if (word.StartsWith("{QRCode", StringComparison.OrdinalIgnoreCase))
+                {
+                    string res = RemoveBraces(word).Replace("QRCode(", "").Replace(")", "");
+                    string qrCodeValue = res;
+
+                    if (res.StartsWith("DataSource"))
+                    {
+                        qrCodeValue = ParseDataSource("{" + res + "}", dataTableCollection);
+                    }
+
+                    string qrCodeRender = ConfigurationHelper.GetReportParameter("QRCodeRender");
+                    string qrCodeBackgroundColor = ConfigurationHelper.GetReportParameter("QRCodeBackgroundColor");
+                    string qrCodeForegroundColor = ConfigurationHelper.GetReportParameter("QRCodeForegroundColor");
+                    string qrCodeWidth = ConfigurationHelper.GetReportParameter("QRCodeWidth");
+                    string qrCodeHeight = ConfigurationHelper.GetReportParameter("QRCodeHeight");
+                    string qrCodeTypeNumber = ConfigurationHelper.GetReportParameter("QRCodeTypeNumber");
+
+                    string qrCodeDiv = "<div class='reportEngineQRCode' data-qrcodevalue={0} data-qrcoderender='{1}' data-qrcodebackgroundcolor='{2}' data-qrcodeforegroundcolor='{3}' data-qrcodewidth='{4}' data-qrcodeheight='{5}' data-qrcodetypenumber='{6}'></div>";
+                    qrCodeDiv = string.Format(qrCodeDiv, qrCodeValue, qrCodeRender, qrCodeBackgroundColor, qrCodeForegroundColor, qrCodeWidth, qrCodeHeight, qrCodeTypeNumber);
+                    expression = expression.Replace(word, qrCodeDiv).ToString(CultureInfo.InvariantCulture);
                 }
             }
 

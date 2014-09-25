@@ -3,6 +3,8 @@
 
 <h3>Receipt from Customer</h3>
 
+<asp:ScriptManagerProxy runat="server"></asp:ScriptManagerProxy>
+
 <mixerp:PartyControl runat="server" />
 
 <div id="receipt" class="panel-body table-bordered">

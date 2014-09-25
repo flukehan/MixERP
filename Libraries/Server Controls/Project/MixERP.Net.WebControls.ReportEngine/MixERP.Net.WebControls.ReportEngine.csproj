@@ -67,6 +67,7 @@
     <Compile Include="Report\Events.cs" />
     <Compile Include="Report\HiddenControls.cs" />
     <Compile Include="Report\Intializer.cs" />
+    <Compile Include="Report\Javascript.cs" />
     <Compile Include="Report\Properties.cs" />
     <Compile Include="Report\RaisedEvents.cs" />
   </ItemGroup>
@@ -83,6 +84,19 @@
       <Project>{daaad018-fcd1-4231-bb11-ef765f41463d}</Project>
       <Name>MixERP.Net.WebControls.ReportEngine.Data</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\ReportEngine.QRCode.js" />
+    <EmbeddedResource Include="Scripts\JQueryQRcode\jquery.qrcode.js" />
+    <EmbeddedResource Include="Scripts\JQueryQRcode\qrcode.js" />
+    <EmbeddedResource Include="Scripts\ReportEngine.Barcode.js" />
+    <EmbeddedResource Include="Scripts\JsBarcode\CODE128.js" />
+    <EmbeddedResource Include="Scripts\JsBarcode\CODE39.js" />
+    <EmbeddedResource Include="Scripts\JsBarcode\EAN_UPC.js" />
+    <EmbeddedResource Include="Scripts\JsBarcode\ITF.js" />
+    <EmbeddedResource Include="Scripts\JsBarcode\ITF14.js" />
+    <EmbeddedResource Include="Scripts\JsBarcode\JsBarcode.js" />
+    <Content Include="Scripts\JsBarcode\MIT-LICENSE.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -7,7 +7,14 @@ SELECT 'NPR', 'रू.', 'Nepali Rupees', 'paisa' UNION ALL
 SELECT 'USD', '$', 'United States Dollar', 'cents' UNION ALL
 SELECT 'GBP', '£', 'Pound Sterling', 'penny' UNION ALL
 SELECT 'EUR', '€', 'Euro', 'cents' UNION ALL
-SELECT 'INR', '₹', 'Indian Rupees', 'paise';
+SELECT 'JPY', '¥', 'Japanese Yen', 'sen' UNION ALL
+SELECT 'CHF', 'CHF', 'Swiss Franc', 'centime' UNION ALL
+SELECT 'CAD', '¢', 'Canadian Dollar', 'cent' UNION ALL
+SELECT 'AUD', 'AU$', 'Australian Dollar', 'cent' UNION ALL
+SELECT 'HKD', 'HK$', 'Hong Kong Dollar', 'cent' UNION ALL
+SELECT 'INR', '₹', 'Indian Rupees', 'paise' UNION ALL
+SELECT 'SEK', 'kr', 'Swedish Krona', 'öre' UNION ALL
+SELECT 'NZD', 'NZ$', 'New Zealand Dollar', 'cent';
 
 INSERT INTO core.attachment_lookup(book, resource, resource_key)
 SELECT 'transaction', 'transactions.transaction_master', 'transaction_master_id' UNION ALL

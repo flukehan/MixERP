@@ -21,6 +21,22 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 <configuration>
   <appSettings>
     <add key="ResourceClassName" value="ScrudResource" />
+    <add key="BarcodeFormat" value="CODE128" />
+    <add key="BarcodeDisplayValue" value="false" />
+    <add key="BarcodeFontSize" value="16" />
+    <add key="BarcodeWidth" value="1.5" />
+    <add key="BarcodeHeight" value="50" />
+    <add key="BarcodeQuite" value="0" />
+    <add key="BarcodeFont" value="Arial" />
+    <add key="BarcodeTextAlign" value="center" />
+    <add key="BarcodeBackgroundColor" value="#FFFFFF" />
+    <add key="BarcodeLineColor" value="#000000" />
+    <add key="QRCodeRender" value ="canvas" />
+    <add key="QRCodeBackgroundColor" value ="#FFFFFF" />
+    <add key="QRCodeForegroundColor" value ="#000000" />
+    <add key="QRCodeWidth" value ="200" />
+    <add key="QRCodeHeight" value ="200" />
+    <add key="QRCodeTypeNumber" value ="-1" />
     <add key="LogoPath" value="~/Resource/Static/images/mixerp-logo-light.png" />
     <add key="HeaderPath" value="~/Reports/Assets/Header.html" />
     <add key="DbLoginName" value="report_user" />

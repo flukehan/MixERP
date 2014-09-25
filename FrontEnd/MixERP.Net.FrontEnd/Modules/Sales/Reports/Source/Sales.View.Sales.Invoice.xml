@@ -23,12 +23,22 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
   <TopSection>
     <table class="table horizontal">
       <tr>
+        <td>{Resources.Titles.TranCode}</td>
+        <td>
+          {DataSource[0].transaction_code}
+          <br />
+          {Barcode(DataSource[0].transaction_code)}
+        </td>
+      </tr>
+      <tr>
         <td>{Resources.Titles.TransactionDate}</td>
         <td>{DataSource[0].transaction_ts}</td>
       </tr>
       <tr>
         <td>{Resources.Titles.ValueDate}</td>
-        <td>{DataSource[0].value_date}</td>
+        <td>
+          {DataSource[0].value_date}
+        </td>
       </tr>
       <tr>
         <td>{Resources.Titles.EnteredBy}</td>
@@ -47,10 +57,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         <td> {DataSource[0].verification_reason}</td>
       </tr>
       <tr>
-        <td>{Resources.Titles.TranCode}</td>
-        <td>{DataSource[0].transaction_code}</td>
-      </tr>
-      <tr>
         <td>{Resources.Titles.Office}</td>
         <td>{DataSource[0].office_name}</td>
       </tr>
@@ -63,6 +69,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         <td>{DataSource[0].party_name}</td>
       </tr>
     </table>
+
     <br />
   </TopSection>
   <Body>

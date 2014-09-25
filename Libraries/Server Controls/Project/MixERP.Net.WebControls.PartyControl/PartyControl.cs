@@ -3,13 +3,18 @@ using MixERP.Net.Common.Helpers;
 using System;
 using System.ComponentModel;
 using System.Reflection;
+using System.Security.Permissions;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+
+[assembly: WebResource("MixERP.Net.WebControls.PartyControl.PartyControl.js", "application/x-javascript")]
 
 namespace MixERP.Net.WebControls.PartyControl
 {
     [DefaultProperty("Text")]
     [ToolboxData("<{0}:PartyControl runat=server></{0}:PartyControl>")]
+    [AspNetHostingPermission(SecurityAction.Demand, Level = AspNetHostingPermissionLevel.Minimal)]
     public partial class PartyControl : CompositeControl
     {
         private bool disposed;
@@ -43,8 +48,9 @@ namespace MixERP.Net.WebControls.PartyControl
 
         private void AddScript()
         {
-            string script = JavaScriptHelper.GetEmbeddedScript("MixERP.Net.WebControls.PartyControl.PartyControl.js", Assembly.GetExecutingAssembly());
-            PageUtility.RegisterJavascript("partyControl", script, this.Page);
+            JavaScriptHelper.AddJSReference(this.Page, "MixERP.Net.WebControls.PartyControl.PartyControl.js", "party_control", typeof(PartyControl));
+            //string script = JavaScriptHelper.GetEmbeddedScript("MixERP.Net.WebControls.PartyControl.PartyControl.js", Assembly.GetExecutingAssembly());
+            //PageUtility.RegisterJavascript("partyControl", script, this.Page);
         }
 
         protected virtual void Dispose(bool disposing)

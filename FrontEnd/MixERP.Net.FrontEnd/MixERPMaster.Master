@@ -43,92 +43,101 @@
 
         <asp:ScriptManager runat="server" ID="ScriptManager1" />
 
-        <div id="logo">
-            <a href="/Dashboard/Index.aspx">
-                <img src="/Resource/Static/images/mixerp-logo.png" />
-            </a>
-        </div>
-
-        <div id="user-panel">
-            <div class="user-panel-float-other lpad16">
-                <a class="icon">
-                    <span class="glyphicon glyphicon-heart"></span>
-                    <asp:Literal runat="server" ID="BranchNameLiteral" />
-                </a>
-            </div>
-
-            <div class="dropdown icon user-panel-float">
-                <a id="dropdownMenu2" data-toggle="dropdown" href="#">
-                    <span class="glyphicon glyphicon-user"></span>
-                    <asp:Literal runat="server" ID="UserGreetingLiteral"></asp:Literal>
-                    <span class="caret"></span>
-                </a>
-                <div class="dropdown-menu pull-right " role="menu" aria-labelledby="dropdownMenu2">
-                    <a class="icon btn btn-sm" href="/Site/Account/ChangePassword.aspx">
-                        <span class="glyphicon glyphicon-log-out"></span>
-                        <asp:Literal runat="server" ID="ChangePasswordLiteral"></asp:Literal>
+        <table id="dashboard">
+            <tr>
+                <td id="logo" class="left">
+                    <a href="/Dashboard/Index.aspx">
+                        <img src="/Resource/Static/images/mixerp-logo.png" />
                     </a>
-                    <a class="icon btn btn-sm" href="/Site/Account/UserProfile.aspx">
-                        <span class="glyphicon glyphicon-certificate"></span>
-                        <asp:Literal runat="server" ID="ManageProfileLiteral"></asp:Literal>
-                    </a>
-                </div>
-            </div>
+                </td>
+                <td id="user-panel">
 
-            <div class="icon-set user-panel-float">
-                <a class="icon" href="https://github.com/mixerp/mixerp/wiki/documentation" target="_blank">
-                    <span class="glyphicon glyphicon glyphicon-asterisk"></span>
-                    <asp:Literal runat="server" ID="MixERPDocumentationLiteral"></asp:Literal>
-                </a>
-                <a class="icon" href="/Site/Account/SignOut.aspx">
-                    <span class="glyphicon glyphicon-log-out"></span>
-                    <asp:Literal runat="server" ID="SignOutLiteral"></asp:Literal>
-                </a>
-            </div>
-            <div class="icon dropdown user-panel-float">
-                <a id="NotificationAnchor" data-toggle="dropdown" href="#">
-                    <span class="glyphicon glyphicon-user"></span>
-                    <asp:Literal runat="server" ID="NotificationLiteral"></asp:Literal>
-                    <span class="caret"></span>
-                </a>
-                <div class="dropdown-menu pull-right" role="menu" aria-labelledby="NotificationAnchor">
-                    <div style="padding: 8px;">
-                        Placeholder
+                    <div class="user-panel-float-other lpad16">
+                        <a class="icon">
+                            <span class="glyphicon glyphicon-heart"></span>
+                            <asp:Literal runat="server" ID="BranchNameLiteral" />
+                        </a>
                     </div>
-                </div>
-            </div>
 
-            <div style="clear: both;"></div>
-        </div>
-
-        <div id="sidebar">
-            <div id="Search">
-                <div class="form-group has-success has-feedback">
-                    <label class="control-label" for="SearchInput">&nbsp;</label>
-                    <input type="text" class="form-control" id="SearchInput" autocomplete="off" />
-                    <span class="glyphicon glyphicon-search form-control-feedback"></span>
-                </div>
-            </div>
-            <asp:Literal runat="server" ID="MenuLiteral"></asp:Literal>
-            <asp:Literal runat="server" ID="ContentMenuLiteral"></asp:Literal>
-        </div>
-
-        <div id="body">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
-                        <asp:ContentPlaceHolder ID="BodyContentPlaceholder" runat="server">
-                        </asp:ContentPlaceHolder>
+                    <div class="dropdown icon user-panel-float">
+                        <a id="dropdownMenu2" data-toggle="dropdown" href="#">
+                            <span class="glyphicon glyphicon-user"></span>
+                            <asp:Literal runat="server" ID="UserGreetingLiteral"></asp:Literal>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="dropdown-menu pull-right " role="menu" aria-labelledby="dropdownMenu2">
+                            <a class="icon btn btn-sm" href="/Site/Account/ChangePassword.aspx">
+                                <span class="glyphicon glyphicon-log-out"></span>
+                                <asp:Literal runat="server" ID="ChangePasswordLiteral"></asp:Literal>
+                            </a>
+                            <a class="icon btn btn-sm" href="/Site/Account/UserProfile.aspx">
+                                <span class="glyphicon glyphicon-certificate"></span>
+                                <asp:Literal runat="server" ID="ManageProfileLiteral"></asp:Literal>
+                            </a>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="bottom">
-            <p>
-                Copyright (c) 2014, Mix Open Foundation. All rights reserved (r). Powered by <a href="http://mixerp.org/" target="_blank">MixERP Community Edition</a>
-            </p>
-        </div>
+                    <div class="icon-set user-panel-float">
+                        <a class="icon" href="https://github.com/mixerp/mixerp/wiki/documentation" target="_blank">
+                            <span class="glyphicon glyphicon glyphicon-asterisk"></span>
+                            <asp:Literal runat="server" ID="MixERPDocumentationLiteral"></asp:Literal>
+                        </a>
+                        <a class="icon" href="/Site/Account/SignOut.aspx">
+                            <span class="glyphicon glyphicon-log-out"></span>
+                            <asp:Literal runat="server" ID="SignOutLiteral"></asp:Literal>
+                        </a>
+                    </div>
+                    <div class="icon dropdown user-panel-float">
+                        <a id="NotificationAnchor" data-toggle="dropdown" href="#">
+                            <span class="glyphicon glyphicon-user"></span>
+                            <asp:Literal runat="server" ID="NotificationLiteral"></asp:Literal>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="dropdown-menu pull-right" role="menu" aria-labelledby="NotificationAnchor">
+                            <div style="padding: 8px;">
+                                Placeholder
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td id="sidebar" class="left">
+
+                    <div id="Search">
+                        <div class="form-group has-success has-feedback">
+                            <label class="control-label" for="SearchInput">&nbsp;</label>
+                            <input type="text" class="form-control" id="SearchInput" autocomplete="off" />
+                            <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                        </div>
+                    </div>
+                    <div>
+                        <asp:Literal runat="server" ID="MenuLiteral"></asp:Literal>
+                        <asp:Literal runat="server" ID="ContentMenuLiteral"></asp:Literal>
+                    </div>
+                </td>
+                <td id="body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <asp:ContentPlaceHolder ID="BodyContentPlaceholder" runat="server">
+                                </asp:ContentPlaceHolder>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <footer>
+                        <p>
+                            Copyright (c) 2014, Mix Open Foundation. All rights reserved (r). Powered by <a href="http://mixerp.org/" target="_blank">MixERP Community Edition</a>
+                        </p>
+                    </footer>
+                </td>
+            </tr>
+        </table>
 
         <script type="text/javascript">
             var today = "<%= DateTime.Now.ToShortDateString() %>";
@@ -176,11 +185,6 @@
 
             $('form').keypress(keypressHandler);
 
-            Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
-                //Fired on each ASP.net AJAX request.
-                initializeItemSelector();
-            });
-
             //Todo:Document this
             jQuery(document).bind("keyup keydown", function (e) {
                 if (e.ctrlKey && e.keyCode == 80) {
@@ -222,14 +226,18 @@
                 var query = $(this).val();
 
                 anchors.each(function () {
+                    var dataMenuCode = $(this).attr("data-menucode");
+
                     $(this).removeClass("menu-selected");
 
-                    if ($(this).attr("data-menucode") == query) {
-                        $(this).addClass("menu-selected");
+                    if (dataMenuCode) {
+                        if (dataMenuCode.toLowerCase() == query.toLowerCase()) {
+                            $(this).addClass("menu-selected");
 
-                        //Return Key
-                        if (code == 13) {
-                            window.location = $(this).attr("href");
+                            //Return Key
+                            if (code == 13) {
+                                window.location = $(this).attr("href");
+                            }
                         }
                     }
                 });
@@ -259,6 +267,13 @@
                 });
 
             });
+
+            if (typeof Sys !== "undefined") {
+                Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
+                    //Fired on each ASP.net AJAX request.
+                    initializeItemSelector();
+                });
+            };
         </script>
 
         <asp:ContentPlaceHolder ID="BottomScriptContentPlaceholder" runat="server">

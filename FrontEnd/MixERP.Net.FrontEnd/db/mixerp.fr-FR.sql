@@ -607,6 +607,262 @@ CREATE SCHEMA transactions;
 CREATE SCHEMA crm;
 CREATE SCHEMA mrp;
 
+-- 2nd-quadrant-audit-trigger.sql
+-- An audit history is important on most tables. Provide an audit trigger that logs to
+-- a dedicated audit table for the major relations.
+--
+-- This file should be generic and not depend on application roles or structures,
+-- as it's being listed here:
+--
+--    https://wiki.postgresql.org/wiki/Audit_trigger_91plus    
+--
+-- This trigger was originally based on
+--   http://wiki.postgresql.org/wiki/Audit_trigger
+-- but has been completely rewritten.
+--
+-- Should really be converted into a relocatable EXTENSION, with control and upgrade files.
+
+CREATE EXTENSION IF NOT EXISTS hstore;
+
+-- CREATE SCHEMA audit; --Removed
+-- REVOKE ALL ON SCHEMA audit FROM public; --Removed
+
+COMMENT ON SCHEMA audit IS 'Out-of-table audit/history logging tables and trigger functions';
+
+--
+-- Audited data. Lots of information is available, it's just a matter of how much
+-- you really want to record. See:
+--
+--   http://www.postgresql.org/docs/9.1/static/functions-info.html
+--
+-- Remember, every column you add takes up more audit table space and slows audit
+-- inserts.
+--
+-- Every index you add has a big impact too, so avoid adding indexes to the
+-- audit table unless you REALLY need them. The hstore GIST indexes are
+-- particularly expensive.
+--
+-- It is sometimes worth copying the audit table, or a coarse subset of it that
+-- you're interested in, into a temporary table where you CREATE any useful
+-- indexes and do your analysis.
+--
+DROP TABLE IF EXISTS audit.logged_actions; --Added
+
+CREATE TABLE audit.logged_actions (
+    event_id bigserial primary key,
+    schema_name text not null,
+    table_name text not null,
+    relid oid not null,
+    session_user_name text,
+    application_user_name text, --Added
+    action_tstamp_tx TIMESTAMP WITH TIME ZONE NOT NULL,
+    action_tstamp_stm TIMESTAMP WITH TIME ZONE NOT NULL,
+    action_tstamp_clk TIMESTAMP WITH TIME ZONE NOT NULL,
+    transaction_id bigint,
+    application_name text,
+    client_addr inet,
+    client_port integer,
+    client_query text,
+    action TEXT NOT NULL CHECK (action IN ('I','D','U', 'T')),
+    row_data hstore,
+    changed_fields hstore,
+    statement_only boolean not null
+);
+
+REVOKE ALL ON audit.logged_actions FROM public;
+
+COMMENT ON TABLE audit.logged_actions IS 'History of auditable actions on audited tables, from audit.if_modified_func()';
+COMMENT ON COLUMN audit.logged_actions.event_id IS 'Unique identifier for each auditable event';
+COMMENT ON COLUMN audit.logged_actions.schema_name IS 'Database schema audited table for this event is in';
+COMMENT ON COLUMN audit.logged_actions.table_name IS 'Non-schema-qualified table name of table event occured in';
+COMMENT ON COLUMN audit.logged_actions.relid IS 'Table OID. Changes with drop/create. Get with ''tablename''::regclass';
+COMMENT ON COLUMN audit.logged_actions.session_user_name IS 'Login / session user whose statement caused the audited event';
+COMMENT ON COLUMN audit.logged_actions.action_tstamp_tx IS 'Transaction start timestamp for tx in which audited event occurred';
+COMMENT ON COLUMN audit.logged_actions.action_tstamp_stm IS 'Statement start timestamp for tx in which audited event occurred';
+COMMENT ON COLUMN audit.logged_actions.action_tstamp_clk IS 'Wall clock time at which audited event''s trigger call occurred';
+COMMENT ON COLUMN audit.logged_actions.transaction_id IS 'Identifier of transaction that made the change. May wrap, but unique paired with action_tstamp_tx.';
+COMMENT ON COLUMN audit.logged_actions.client_addr IS 'IP address of client that issued query. Null for unix domain socket.';
+COMMENT ON COLUMN audit.logged_actions.client_port IS 'Remote peer IP port address of client that issued query. Undefined for unix socket.';
+COMMENT ON COLUMN audit.logged_actions.client_query IS 'Top-level query that caused this auditable event. May be more than one statement.';
+COMMENT ON COLUMN audit.logged_actions.application_name IS 'Application name set when this audit event occurred. Can be changed in-session by client.';
+COMMENT ON COLUMN audit.logged_actions.action IS 'Action type; I = insert, D = delete, U = update, T = truncate';
+COMMENT ON COLUMN audit.logged_actions.row_data IS 'Record value. Null for statement-level trigger. For INSERT this is the new tuple. For DELETE and UPDATE it is the old tuple.';
+COMMENT ON COLUMN audit.logged_actions.changed_fields IS 'New values of fields changed by UPDATE. Null except for row-level UPDATE events.';
+COMMENT ON COLUMN audit.logged_actions.statement_only IS '''t'' if audit event is from an FOR EACH STATEMENT trigger, ''f'' for FOR EACH ROW';
+
+CREATE INDEX logged_actions_relid_idx ON audit.logged_actions(relid);
+CREATE INDEX logged_actions_action_tstamp_tx_stm_idx ON audit.logged_actions(action_tstamp_stm);
+CREATE INDEX logged_actions_action_idx ON audit.logged_actions(action);
+
+
+CREATE OR REPLACE FUNCTION audit.if_modified_func() RETURNS TRIGGER AS $body$
+DECLARE
+    application_user_name text = 'N/A'; --Added
+    audit_row audit.logged_actions;
+    include_values boolean;
+    log_diffs boolean;
+    h_old hstore;
+    h_new hstore;
+    excluded_cols text[] = ARRAY[]::text[];
+BEGIN
+    IF TG_WHEN <> 'AFTER' THEN
+        RAISE EXCEPTION 'audit.if_modified_func() may only run as an AFTER trigger';
+    END IF;
+	
+
+	IF(hstore(NEW) ? 'audit_user_id' = true) THEN --Added
+		application_user_name:= office.get_user_name_by_user_id((hstore(NEW.*) -> 'audit_user_id')::int); --Added
+	END IF; --Added
+
+    audit_row = ROW(
+        nextval('audit.logged_actions_event_id_seq'), -- event_id
+        TG_TABLE_SCHEMA::text,                        -- schema_name
+        TG_TABLE_NAME::text,                          -- table_name
+        TG_RELID,                                     -- relation OID for much quicker searches
+        session_user::text,                           -- session_user_name
+        application_user_name::text,                  -- application_user_name  --Added
+        current_timestamp,                            -- action_tstamp_tx
+        statement_timestamp(),                        -- action_tstamp_stm
+        clock_timestamp(),                            -- action_tstamp_clk
+        txid_current(),                               -- transaction ID
+        current_setting('application_name'),          -- client application
+        inet_client_addr(),                           -- client_addr
+        inet_client_port(),                           -- client_port
+        current_query(),                              -- top-level query or queries (if multistatement) from client
+        substring(TG_OP,1,1),                         -- action
+        NULL, NULL,                                   -- row_data, changed_fields
+        'f'                                           -- statement_only
+        );
+
+    IF NOT TG_ARGV[0]::boolean IS DISTINCT FROM 'f'::boolean THEN
+        audit_row.client_query = NULL;
+    END IF;
+
+    IF TG_ARGV[1] IS NOT NULL THEN
+        excluded_cols = TG_ARGV[1]::text[];
+    END IF;
+    
+    IF (TG_OP = 'UPDATE' AND TG_LEVEL = 'ROW') THEN
+        audit_row.row_data = hstore(OLD.*);
+        audit_row.changed_fields =  (hstore(NEW.*) - audit_row.row_data) - excluded_cols;
+        IF audit_row.changed_fields = hstore('') THEN
+            -- All changed fields are ignored. Skip this update.
+            RETURN NULL;
+        END IF;
+    ELSIF (TG_OP = 'DELETE' AND TG_LEVEL = 'ROW') THEN
+        audit_row.row_data = hstore(OLD.*) - excluded_cols;
+    ELSIF (TG_OP = 'INSERT' AND TG_LEVEL = 'ROW') THEN
+        audit_row.row_data = hstore(NEW.*) - excluded_cols;
+    ELSIF (TG_LEVEL = 'STATEMENT' AND TG_OP IN ('INSERT','UPDATE','DELETE','TRUNCATE')) THEN
+        audit_row.statement_only = 't';
+    ELSE
+        RAISE EXCEPTION '[audit.if_modified_func] - Trigger func added as trigger for unhandled case: %, %',TG_OP, TG_LEVEL;
+        RETURN NULL;
+    END IF;
+    INSERT INTO audit.logged_actions VALUES (audit_row.*);
+    RETURN NULL;
+END;
+$body$
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = pg_catalog, public;
+
+
+
+COMMENT ON FUNCTION audit.if_modified_func() IS $body$
+Track changes to a table at the statement and/or row level.
+
+Optional parameters to trigger in CREATE TRIGGER call:
+
+param 0: boolean, whether to log the query text. Default 't'.
+
+param 1: text[], columns to ignore in updates. Default [].
+
+         Updates to ignored cols are omitted from changed_fields.
+
+         Updates with only ignored cols changed are not inserted
+         into the audit log.
+
+         Almost all the processing work is still done for updates
+         that ignored. If you need to save the load, you need to use
+         WHEN clause on the trigger instead.
+
+         No warning or error is issued if ignored_cols contains columns
+         that do not exist in the target table. This lets you specify
+         a standard set of ignored columns.
+
+There is no parameter to disable logging of values. Add this trigger as
+a 'FOR EACH STATEMENT' rather than 'FOR EACH ROW' trigger if you do not
+want to log row values.
+
+Note that the user name logged is the login role for the session. The audit trigger
+cannot obtain the active role because it is reset by the SECURITY DEFINER invocation
+of the audit trigger its self.
+$body$;
+
+
+
+CREATE OR REPLACE FUNCTION audit.audit_table(target_table regclass, audit_rows boolean, audit_query_text boolean, ignored_cols text[]) RETURNS void AS $body$
+DECLARE
+  stm_targets text = 'INSERT OR UPDATE OR DELETE OR TRUNCATE';
+  _q_txt text;
+  _ignored_cols_snip text = '';
+BEGIN
+    EXECUTE 'DROP TRIGGER IF EXISTS audit_trigger_row ON ' || target_table;
+    EXECUTE 'DROP TRIGGER IF EXISTS audit_trigger_stm ON ' || target_table;
+
+    IF audit_rows THEN
+        IF array_length(ignored_cols,1) > 0 THEN
+            _ignored_cols_snip = ', ' || quote_literal(ignored_cols);
+        END IF;
+        _q_txt = 'CREATE TRIGGER audit_trigger_row AFTER INSERT OR UPDATE OR DELETE ON ' || 
+                 target_table || 
+                 ' FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func(' ||
+                 quote_literal(audit_query_text) || _ignored_cols_snip || ');';
+        RAISE NOTICE '%',_q_txt;
+        EXECUTE _q_txt;
+        stm_targets = 'TRUNCATE';
+    ELSE
+    END IF;
+
+    _q_txt = 'CREATE TRIGGER audit_trigger_stm AFTER ' || stm_targets || ' ON ' ||
+             target_table ||
+             ' FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('||
+             quote_literal(audit_query_text) || ');';
+    RAISE NOTICE '%',_q_txt;
+    EXECUTE _q_txt;
+
+END;
+$body$
+language 'plpgsql';
+
+COMMENT ON FUNCTION audit.audit_table(regclass, boolean, boolean, text[]) IS $body$
+Add auditing support to a table.
+
+Arguments:
+   target_table:     Table name, schema qualified if not on search_path
+   audit_rows:       Record each row change, or only audit at a statement level
+   audit_query_text: Record the text of the client query that triggered the audit event?
+   ignored_cols:     Columns to exclude from update diffs, ignore updates that change only ignored cols.
+$body$;
+
+-- Pg doesn't allow variadic calls with 0 params, so provide a wrapper
+CREATE OR REPLACE FUNCTION audit.audit_table(target_table regclass, audit_rows boolean, audit_query_text boolean) RETURNS void AS $body$
+SELECT audit.audit_table($1, $2, $3, ARRAY[]::text[]);
+$body$ LANGUAGE SQL;
+
+-- And provide a convenience call wrapper for the simplest case
+-- of row-level logging with no excluded cols and query logging enabled.
+--
+CREATE OR REPLACE FUNCTION audit.audit_table(target_table regclass) RETURNS void AS $$
+SELECT audit.audit_table($1, BOOLEAN 't', BOOLEAN 't');
+$$ LANGUAGE 'sql';
+
+COMMENT ON FUNCTION audit.audit_table(regclass) IS $body$
+Add auditing support to the given table. Row-level changes will be logged with full client query text. No cols are ignored.
+$body$;
+
+
 -- 3. roles-and-priviledge.sql
 DO
 $$
@@ -616,6 +872,14 @@ BEGIN
 	END IF;
 
 
+	REVOKE ALL ON SCHEMA audit FROM public;
+	REVOKE ALL ON SCHEMA core FROM public;
+	REVOKE ALL ON SCHEMA office FROM public;
+	REVOKE ALL ON SCHEMA policy FROM public;
+	REVOKE ALL ON SCHEMA transactions FROM public;
+	REVOKE ALL ON SCHEMA crm FROM public;
+	REVOKE ALL ON SCHEMA mrp FROM public;
+	
 	GRANT USAGE ON SCHEMA public TO mix_erp;
 	GRANT USAGE ON SCHEMA information_schema TO mix_erp;
 	GRANT USAGE ON SCHEMA audit TO mix_erp;
@@ -4432,8 +4696,7 @@ RETURNS TABLE
 AS
 $$
 BEGIN
-        CREATE TEMPORARY TABLE IF NOT EXISTS temp_book(book text);
-        TRUNCATE TABLE temp_book;
+        CREATE TEMPORARY TABLE IF NOT EXISTS temp_book(book text) ON COMMIT DROP;
 
         INSERT INTO temp_book
         SELECT book_;
@@ -4655,6 +4918,80 @@ LANGUAGE plpgsql;
 
 
 --SELECT * FROM transactions.get_receipt_view(1, 1,'1-1-2000','1-1-2020','','','','','');
+
+
+-- transactions.get_top_selling_products_of_all_time.sql
+DROP FUNCTION IF EXISTS transactions.get_top_selling_products_of_all_time(top int);
+
+CREATE FUNCTION transactions.get_top_selling_products_of_all_time(top int)
+RETURNS TABLE
+(
+        id              integer,
+        item_id         integer,
+        item_code       text,
+        item_name       text,
+        total_sales     numeric
+)
+AS
+$$
+BEGIN
+        CREATE TEMPORARY TABLE IF NOT EXISTS top_selling_products_of_all_time
+        (
+                id              integer,
+                item_id         integer,
+                item_code       text,
+                item_name       text,
+                total_sales     numeric
+        ) ON COMMIT DROP;
+
+        INSERT INTO top_selling_products_of_all_time(id, item_id, total_sales)
+        SELECT ROW_NUMBER() OVER(), *
+        FROM
+        (
+                SELECT         
+                        transactions.verified_stock_transaction_view.item_id, 
+                        SUM(transactions.verified_stock_transaction_view.base_quantity) AS quantity
+                FROM transactions.verified_stock_transaction_view
+                GROUP BY transactions.verified_stock_transaction_view.item_id
+                ORDER BY 2 DESC
+                LIMIT $1
+        ) t;
+
+        UPDATE top_selling_products_of_all_time AS t
+        SET 
+                item_code = core.items.item_code,
+                item_name = core.items.item_name
+        FROM core.items
+        WHERE t.item_id = core.items.item_id;
+        
+
+        RETURN QUERY
+        SELECT * FROM top_selling_products_of_all_time;
+END
+$$
+LANGUAGE plpgsql;
+
+DROP FUNCTION IF EXISTS transactions.get_top_selling_products_of_all_time();
+
+CREATE FUNCTION transactions.get_top_selling_products_of_all_time()
+RETURNS TABLE
+(
+        id              integer,
+        item_id         integer,
+        item_code       text,
+        item_name       text,
+        total_sales     numeric
+)
+AS
+$$
+BEGIN
+        RETURN QUERY
+        SELECT * FROM transactions.get_top_selling_products_of_all_time(5);
+END
+$$
+LANGUAGE plpgsql;
+
+
 
 
 -- transactions.get_total_due.sql
@@ -6404,7 +6741,14 @@ SELECT 'NPR', 'रू.', 'Nepali Rupees', 'paisa' UNION ALL
 SELECT 'USD', '$', 'United States Dollar', 'cents' UNION ALL
 SELECT 'GBP', '£', 'Pound Sterling', 'penny' UNION ALL
 SELECT 'EUR', '€', 'Euro', 'cents' UNION ALL
-SELECT 'INR', '₹', 'Indian Rupees', 'paise';
+SELECT 'JPY', '¥', 'Japanese Yen', 'sen' UNION ALL
+SELECT 'CHF', 'CHF', 'Swiss Franc', 'centime' UNION ALL
+SELECT 'CAD', '¢', 'Canadian Dollar', 'cent' UNION ALL
+SELECT 'AUD', 'AU$', 'Australian Dollar', 'cent' UNION ALL
+SELECT 'HKD', 'HK$', 'Hong Kong Dollar', 'cent' UNION ALL
+SELECT 'INR', '₹', 'Indian Rupees', 'paise' UNION ALL
+SELECT 'SEK', 'kr', 'Swedish Krona', 'öre' UNION ALL
+SELECT 'NZD', 'NZ$', 'New Zealand Dollar', 'cent';
 
 INSERT INTO core.attachment_lookup(book, resource, resource_key)
 SELECT 'transaction', 'transactions.transaction_master', 'transaction_master_id' UNION ALL
@@ -6739,14 +7083,14 @@ SELECT 'CLL', 'Clos perdus';
 *******************************************************************/
 
 INSERT INTO office.offices(office_code,office_name,nick_name,registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number,currency_code)
-SELECT 'PES','Planet Earth Solutions', 'PES Technologies', '06/06/1989', 'Brooklyn','NY','','US','','','','info@mixof.org','http://mixof.org','0','0','NPR';
+SELECT 'MoF','Mix Open Foundation', 'MoF', '06/06/1989', 'Brooklyn','NY','','US','','','','info@mixof.org','http://mixof.org','0','0','NPR';
 
 
 INSERT INTO office.offices(office_code,office_name,nick_name, registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number,currency_code,parent_office_id)
-SELECT 'PES-NY-BK','Brooklyn Branch', 'PES Brooklyn', '06/06/1989', 'Brooklyn','NY','12345555','','','','','info@mixof.org','http://mixof.org','0','0','NPR',(SELECT office_id FROM office.offices WHERE office_code='PES');
+SELECT 'MoF-NY-BK','Brooklyn Branch', 'MoF Brooklyn', '06/06/1989', 'Brooklyn','NY','12345555','','','','','info@mixof.org','http://mixof.org','0','0','NPR',(SELECT office_id FROM office.offices WHERE office_code='MoF');
 
 INSERT INTO office.offices(office_code,office_name,nick_name, registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number,currency_code,parent_office_id)
-SELECT 'PES-NY-MEM','Memphis Branch', 'PES Memphis', '06/06/1989', 'Memphis', 'NY','','','','64464554','','info@mixof.org','http://mixof.org','0','0','NPR',(SELECT office_id FROM office.offices WHERE office_code='PES');
+SELECT 'MoF-NY-MEM','Memphis Branch', 'MoF Memphis', '06/06/1989', 'Memphis', 'NY','','','','64464554','','info@mixof.org','http://mixof.org','0','0','NPR',(SELECT office_id FROM office.offices WHERE office_code='MoF');
 
 
 INSERT INTO office.departments(department_code, department_name)
@@ -6774,12 +7118,12 @@ SELECT 'INFO', 'Technologies de l''information' UNION ALL
 SELECT 'CUST', 'Service à la clientèle';
 
 
-SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='SYST'),(SELECT office_id FROM office.offices WHERE office_code='PES'),'sys','','Système');
+SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='SYST'),(SELECT office_id FROM office.offices WHERE office_code='MoF'),'sys','','Système');
 
 /*******************************************************************
 	TODO: REMOVE THIS USER ON DEPLOYMENT
 *******************************************************************/
-SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='ADMN'),(SELECT office_id FROM office.offices WHERE office_code='PES'),'binod','+qJ9AMyGgrX/AOF4GmwmBa4SrA3+InlErVkJYmAopVZh+WFJD7k2ZO9dxox6XiqT38dSoM72jLoXNzwvY7JAQA==','Binod Nepal');
+SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='ADMN'),(SELECT office_id FROM office.offices WHERE office_code='MoF'),'binod','+qJ9AMyGgrX/AOF4GmwmBa4SrA3+InlErVkJYmAopVZh+WFJD7k2ZO9dxox6XiqT38dSoM72jLoXNzwvY7JAQA==','Binod Nepal');
 
 
 
@@ -7458,6 +7802,68 @@ FROM transactions.verified_transactions_view
 GROUP BY account_id;
 
 
+-- 4. transactions.stock_transaction_view.sql
+DROP VIEW IF EXISTS transactions.stock_transaction_view;
+
+CREATE VIEW transactions.stock_transaction_view
+AS
+SELECT
+        transactions.transaction_master.transaction_master_id,
+        transactions.stock_master.stock_master_id,
+        transactions.stock_details.stock_master_detail_id,
+        transactions.transaction_master.book,
+        transactions.transaction_master.transaction_counter,
+        transactions.transaction_master.transaction_code,
+        transactions.transaction_master.value_date,
+        transactions.transaction_master.transaction_ts,
+        transactions.transaction_master.login_id,
+        transactions.transaction_master.user_id,
+        transactions.transaction_master.sys_user_id,
+        transactions.transaction_master.office_id,
+        transactions.transaction_master.cost_center_id,
+        transactions.transaction_master.reference_number,
+        transactions.transaction_master.statement_reference,
+        transactions.transaction_master.last_verified_on,
+        transactions.transaction_master.verified_by_user_id,
+        transactions.transaction_master.verification_status_id,
+        transactions.transaction_master.verification_reason,
+        transactions.stock_master.party_id,
+        transactions.stock_master.agent_id,
+        transactions.stock_master.price_type_id,
+        transactions.stock_master.is_credit,
+        transactions.stock_master.shipper_id,
+        transactions.stock_master.shipping_address_id,
+        transactions.stock_master.shipping_charge,
+        transactions.stock_master.store_id AS stock_master_store_id,
+        transactions.stock_master.cash_repository_id,
+        transactions.stock_details.tran_type,
+        transactions.stock_details.store_id,
+        transactions.stock_details.item_id,
+        transactions.stock_details.quantity,
+        transactions.stock_details.unit_id,
+        transactions.stock_details.base_quantity,
+        transactions.stock_details.base_unit_id,
+        transactions.stock_details.price,
+        transactions.stock_details.discount,
+        transactions.stock_details.tax_rate,
+        transactions.stock_details.tax
+FROM transactions.stock_details
+INNER JOIN transactions.stock_master
+ON transactions.stock_master.stock_master_id = transactions.stock_details.stock_master_id
+INNER JOIN transactions.transaction_master
+ON transactions.transaction_master.transaction_master_id = transactions.stock_master.transaction_master_id;
+
+
+
+-- 5. transactions.verified_stock_transaction_view.sql
+DROP MATERIALIZED VIEW IF EXISTS transactions.verified_stock_transaction_view;
+
+CREATE MATERIALIZED VIEW transactions.verified_stock_transaction_view
+AS
+SELECT * FROM transactions.stock_transaction_view
+WHERE verification_status_id > 0;
+
+
 -- exchange-rates.sql
 INSERT INTO core.exchange_rates(office_id)
 SELECT 1;
@@ -7616,11 +8022,11 @@ UNION ALL SELECT 'New Company', '~/Modules/BackOffice/Admin/NewCompany.mix', 'NE
 
 
 INSERT INTO policy.menu_access(office_id, menu_id, user_id)
-SELECT office.get_office_id_by_office_code('PES-NY-BK'), core.menus.menu_id, office.get_user_id_by_user_name('binod')
+SELECT office.get_office_id_by_office_code('MoF-NY-BK'), core.menus.menu_id, office.get_user_id_by_user_name('binod')
 FROM core.menus
 
 UNION ALL
-SELECT office.get_office_id_by_office_code('PES-NY-MEM'), core.menus.menu_id, office.get_user_id_by_user_name('binod')
+SELECT office.get_office_id_by_office_code('MoF-NY-MEM'), core.menus.menu_id, office.get_user_id_by_user_name('binod')
 FROM core.menus;
 
 
@@ -9353,6 +9759,28 @@ LANGUAGE plpgsql;
 
 
 
+
+-- audit-all-tables.sql
+DO
+$$
+        DECLARE sql text;
+BEGIN
+        SELECT array_to_string(
+        ARRAY(
+        SELECT 
+        'SELECT audit.audit_table(''' || table_schema || '.' || table_name || '''::regclass, true, true, null);'
+        FROM information_schema.tables
+        WHERE table_schema NOT IN('pg_catalog', 'information_schema', 'unit_tests')
+        AND table_name NOT IN('logged_actions')
+        AND table_type='BASE TABLE'
+        ORDER BY table_schema), '')
+        INTO sql;
+
+        EXECUTE sql;
+        
+END
+$$
+LANGUAGE plpgsql;
 
 -- dump.sql
 --

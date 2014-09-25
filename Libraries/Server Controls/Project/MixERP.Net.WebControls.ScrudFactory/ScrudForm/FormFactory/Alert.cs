@@ -32,7 +32,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             this.gridPanel.Attributes["style"] = "display:block;";
             this.formPanel.Attributes["style"] = "display:none;";
-            PageUtility.RegisterJavascript("resetForm", "$('#form1').each(function(){this.reset();});", this.Page);
+            PageUtility.RegisterJavascript("resetForm", "$('#form1').each(function(){this.reset();});", this.Page, true);
         }
     }
 }

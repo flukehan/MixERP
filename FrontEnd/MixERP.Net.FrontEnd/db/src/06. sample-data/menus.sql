@@ -125,11 +125,11 @@ UNION ALL SELECT 'New Company', '~/Modules/BackOffice/Admin/NewCompany.mix', 'NE
 
 
 INSERT INTO policy.menu_access(office_id, menu_id, user_id)
-SELECT office.get_office_id_by_office_code('PES-NY-BK'), core.menus.menu_id, office.get_user_id_by_user_name('binod')
+SELECT office.get_office_id_by_office_code('MoF-NY-BK'), core.menus.menu_id, office.get_user_id_by_user_name('binod')
 FROM core.menus
 
 UNION ALL
-SELECT office.get_office_id_by_office_code('PES-NY-MEM'), core.menus.menu_id, office.get_user_id_by_user_name('binod')
+SELECT office.get_office_id_by_office_code('MoF-NY-MEM'), core.menus.menu_id, office.get_user_id_by_user_name('binod')
 FROM core.menus;
 
 
