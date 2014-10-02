@@ -120,23 +120,59 @@
   <data name="AddNew" xml:space="preserve">
     <value>Add New</value>
   </data>
+  <data name="Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
   <data name="AgentBonusSlabAssignment" xml:space="preserve">
     <value>Bonus Slab Assignment</value>
   </data>
   <data name="AgentBonusSlabs" xml:space="preserve">
-    <value>Bonus Slab for Agents</value>
+    <value>Bonus Slab for Salespersons</value>
   </data>
-  <data name="Agents" xml:space="preserve">
-    <value>Agents</value>
+  <data name="AmountInBaseCurrency" xml:space="preserve">
+    <value>Amount (In Base Currency)</value>
+  </data>
+  <data name="AmountInHomeCurrency" xml:space="preserve">
+    <value>Amount (In Home Currency)</value>
+  </data>
+  <data name="BaseCurrency" xml:space="preserve">
+    <value>Base Currency</value>
   </data>
   <data name="BonusSlabDetails" xml:space="preserve">
-    <value>Bonus Slab Details for Agents</value>
+    <value>Bonus Slab Details for Salespersons</value>
+  </data>
+  <data name="CashRepository" xml:space="preserve">
+    <value>Cash Repository</value>
   </data>
   <data name="Close" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="CostCenter" xml:space="preserve">
+    <value>Cost Center</value>
+  </data>
+  <data name="CSTNumber" xml:space="preserve">
+    <value>CST Number</value>
+  </data>
+  <data name="CustomerCode" xml:space="preserve">
+    <value>Customer Code</value>
+  </data>
+  <data name="CustomerName" xml:space="preserve">
+    <value>Customer Name</value>
+  </data>
+  <data name="CustomerPanNumber" xml:space="preserve">
+    <value>Customer PAN #</value>
+  </data>
+  <data name="DeliverTo" xml:space="preserve">
+    <value>Deliver To</value>
+  </data>
   <data name="DirectSales" xml:space="preserve">
     <value>Direct Sales</value>
+  </data>
+  <data name="DueDate" xml:space="preserve">
+    <value>Due Date</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
   </data>
   <data name="EmailThisDelivery" xml:space="preserve">
     <value>Email This Delivery</value>
@@ -153,6 +189,15 @@
   <data name="EmailThisReturn" xml:space="preserve">
     <value>Email This Return</value>
   </data>
+  <data name="EnteredBy" xml:space="preserve">
+    <value>Entered By</value>
+  </data>
+  <data name="ERToBaseCurrency" xml:space="preserve">
+    <value>Exchange Rate (To Base Currency)</value>
+  </data>
+  <data name="ERToHomeCurrency" xml:space="preserve">
+    <value>Exchange Rate (To Home Currency)</value>
+  </data>
   <data name="ExchangeRate" xml:space="preserve">
     <value>Exchange Rate</value>
   </data>
@@ -165,14 +210,68 @@
   <data name="FlagThisTransaction" xml:space="preserve">
     <value>Flag This Transaction</value>
   </data>
+  <data name="HomeCurrency" xml:space="preserve">
+    <value>Home Currency</value>
+  </data>
+  <data name="InvoiceAmount" xml:space="preserve">
+    <value>Invoice Amount</value>
+  </data>
+  <data name="InvoiceDetails" xml:space="preserve">
+    <value>Invoice Details</value>
+  </data>
+  <data name="Office" xml:space="preserve">
+    <value>Office</value>
+  </data>
+  <data name="OfficeCode" xml:space="preserve">
+    <value>Office Code</value>
+  </data>
+  <data name="OtherDetails" xml:space="preserve">
+    <value>Other Details</value>
+  </data>
+  <data name="PANNumber" xml:space="preserve">
+    <value>PAN Number</value>
+  </data>
+  <data name="PartyCode" xml:space="preserve">
+    <value>Party Code</value>
+  </data>
+  <data name="PartyName" xml:space="preserve">
+    <value>Party Name</value>
+  </data>
+  <data name="PriceType" xml:space="preserve">
+    <value>Price Type</value>
+  </data>
   <data name="Print" xml:space="preserve">
     <value>Print</value>
+  </data>
+  <data name="Receipt" xml:space="preserve">
+    <value>Receipt</value>
+  </data>
+  <data name="ReceiptAmount" xml:space="preserve">
+    <value>Receipt Amount</value>
+  </data>
+  <data name="ReceiptCurrency" xml:space="preserve">
+    <value>Receipt Currency</value>
+  </data>
+  <data name="ReferenceNumber" xml:space="preserve">
+    <value>Reference #</value>
+  </data>
+  <data name="SalesByMonthInThousands" xml:space="preserve">
+    <value>Sales By Month (In Thousands)</value>
   </data>
   <data name="SalesDelivery" xml:space="preserve">
     <value>Sales Delivery</value>
   </data>
+  <data name="SalesDeliveryNote" xml:space="preserve">
+    <value>Delivery Note</value>
+  </data>
+  <data name="SalesInvoice" xml:space="preserve">
+    <value>Sales Invoice</value>
+  </data>
   <data name="SalesOrder" xml:space="preserve">
     <value>Sales Order</value>
+  </data>
+  <data name="SalesPersons" xml:space="preserve">
+    <value>Salespersons</value>
   </data>
   <data name="SalesQuotation" xml:space="preserve">
     <value>Sales Quotation</value>
@@ -180,11 +279,53 @@
   <data name="SalesReceipt" xml:space="preserve">
     <value>Sales Receipt</value>
   </data>
+  <data name="SalesReturn" xml:space="preserve">
+    <value>Sales Return</value>
+  </data>
+  <data name="SalesTeams" xml:space="preserve">
+    <value>Sales Teams</value>
+  </data>
+  <data name="SalesType" xml:space="preserve">
+    <value>Sales Type</value>
+  </data>
   <data name="SelectFlag" xml:space="preserve">
     <value>Select a Flag</value>
   </data>
+  <data name="Shipper" xml:space="preserve">
+    <value>Shipper</value>
+  </data>
+  <data name="ShippingCharge" xml:space="preserve">
+    <value>Shipping Charge</value>
+  </data>
+  <data name="SSTNumber" xml:space="preserve">
+    <value>SST Number</value>
+  </data>
+  <data name="StatementReference" xml:space="preserve">
+    <value>Statement Reference</value>
+  </data>
+  <data name="TopSellingProductsOfAllTime" xml:space="preserve">
+    <value>Top Selling Products of All Time</value>
+  </data>
+  <data name="TranCode" xml:space="preserve">
+    <value>Transaction Code</value>
+  </data>
+  <data name="TransactionDate" xml:space="preserve">
+    <value>Transaction Date</value>
+  </data>
+  <data name="TransactionStatus" xml:space="preserve">
+    <value>Transaction Status</value>
+  </data>
   <data name="Update" xml:space="preserve">
     <value>Update</value>
+  </data>
+  <data name="ValueDate" xml:space="preserve">
+    <value>Value Date</value>
+  </data>
+  <data name="VerificationReason" xml:space="preserve">
+    <value>Verification Reason</value>
+  </data>
+  <data name="VerifiedBy" xml:space="preserve">
+    <value>Verified By</value>
   </data>
   <data name="ViewCustomerCopy" xml:space="preserve">
     <value>View Customer Copy</value>
@@ -203,5 +344,32 @@
   </data>
   <data name="ViewThisReturn" xml:space="preserve">
     <value>View This Return</value>
+  </data>
+  <data name="PrintReceipt" xml:space="preserve">
+    <value>Print Receipt</value>
+  </data>
+  <data name="EmailThisReceipt" xml:space="preserve">
+    <value>Email This Receipt</value>
+  </data>
+  <data name="ViewSalesInovice" xml:space="preserve">
+    <value>View Sales Invoice</value>
+  </data>
+  <data name="Fax" xml:space="preserve">
+    <value>Fax</value>
+  </data>
+  <data name="PreparedOn" xml:space="preserve">
+    <value>Prepared On</value>
+  </data>
+  <data name="Tel" xml:space="preserve">
+    <value>Tel</value>
+  </data>
+  <data name="Url" xml:space="preserve">
+    <value>Url</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="SalesByOfficeInThousands" xml:space="preserve">
+    <value>Sales By Office (In Thousands)</value>
   </data>
 </root>

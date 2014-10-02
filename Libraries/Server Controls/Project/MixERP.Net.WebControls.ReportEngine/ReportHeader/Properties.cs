@@ -17,23 +17,12 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System.Reflection;
+
 namespace MixERP.Net.WebControls.ReportEngine
 {
     public partial class ReportHeader //: CompositeControl
     {
-        private string path;
-
-        public string Path
-        {
-            get
-            {
-                return this.path;
-            }
-            set
-            {
-                this.path = value;
-                this.EnsureChildControls();
-            }
-        }
+        public string Path { get; set; }
     }
 }

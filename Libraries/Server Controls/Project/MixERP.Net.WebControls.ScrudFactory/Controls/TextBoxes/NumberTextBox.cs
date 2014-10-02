@@ -21,16 +21,17 @@ using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Resources;
 using System;
+using System.Reflection;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using LocalizationHelper = MixERP.Net.Common.Helpers.LocalizationHelper;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 {
     public static class ScrudNumberTextBox
     {
-        public static void AddNumberTextBox(HtmlTable htmlTable, string resourceClassName, string columnName,
-            string defaultValue, bool isSerial, bool isNullable, int maxLength, string domain, string errorCssClass)
+        public static void AddNumberTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isSerial, bool isNullable, int maxLength, string domain, string errorCssClass, Assembly assembly)
         {
             if (htmlTable == null)
             {
@@ -44,7 +45,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 
             var textBox = GetNumberTextBox(columnName + "_textbox", maxLength);
             var numberValidator = GetNumberValidator(textBox, domain, errorCssClass);
-            var label = LocalizationHelper.GetDefaultAssemblyResourceString(resourceClassName, columnName);
+            var label = ScrudLocalizationHelper.GetResourceString(assembly, resourceClassName, columnName);
 
             if (!string.IsNullOrWhiteSpace(defaultValue))
             {
@@ -65,7 +66,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
                 if (!isNullable)
                 {
                     var required = ScrudFactoryHelper.GetRequiredFieldValidator(textBox, errorCssClass);
-                    ScrudFactoryHelper.AddRow(htmlTable, label + ScrudResource.RequiredFieldIndicator, textBox,
+                    ScrudFactoryHelper.AddRow(htmlTable, label + Titles.RequiredFieldIndicator, textBox,
                         numberValidator, required);
                     return;
                 }
@@ -86,7 +87,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
             using (var validator = new CompareValidator())
             {
                 validator.ID = controlToValidate.ID + "NumberValidator";
-                validator.ErrorMessage = @"<br/>" + ScrudResource.OnlyNumbersAllowed;
+                validator.ErrorMessage = @"<br/>" + Titles.OnlyNumbersAllowed;
                 validator.CssClass = cssClass;
                 validator.ControlToValidate = controlToValidate.ID;
                 validator.EnableClientScript = true;

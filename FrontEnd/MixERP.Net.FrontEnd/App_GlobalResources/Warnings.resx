@@ -117,75 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AccessDenied" xml:space="preserve">
-    <value>Access is denied.</value>
+  <data name="DuplicateEntry" xml:space="preserve">
+    <value>Duplicate entry.</value>
   </data>
-  <data name="BothSidesHaveValue" xml:space="preserve">
-    <value>Both debit and credit side have values.</value>
-  </data>
-  <data name="CannotMergeTransactionsOfDifferentParties" xml:space="preserve">
-    <value>Cannot merge transactions of different parties into a single batch. Please try again.</value>
-  </data>
-  <data name="CannotWithdrawElsesTransaction" xml:space="preserve">
-    <value>You may not withdraw else's transaction.</value>
-  </data>
-  <data name="CannotWithdrawTransaction" xml:space="preserve">
-    <value>You cannot withdraw this transaction at this stage. Consult an administrator if this transaction could be rejected.</value>
-  </data>
-  <data name="CreditNotAllowed" xml:space="preserve">
-    <value>Credit is not allowed to this customer.</value>
+  <data name="DuplicateFiles" xml:space="preserve">
+    <value>Duplicate files.</value>
   </data>
   <data name="GridViewEmpty" xml:space="preserve">
-    <value>The gridview is empty.</value>
-  </data>
-  <data name="InsufficientStockWarning" xml:space="preserve">
-    <value>Only {0} {1} of {2} left in stock.</value>
-    <comment>Only {Qty} {Unit} of {ItemName} left in stock.</comment>
-  </data>
-  <data name="InvalidCashRepository" xml:space="preserve">
-    <value>Invalid cash repository.</value>
-  </data>
-  <data name="InvalidCostCenter" xml:space="preserve">
-    <value>Invalid cost center.</value>
+    <value>Gridview is empty.</value>
   </data>
   <data name="InvalidDate" xml:space="preserve">
     <value>Invalid date.</value>
   </data>
-  <data name="InvalidFile" xml:space="preserve">
-    <value>Invalid file.</value>
-  </data>
-  <data name="InvalidLocation" xml:space="preserve">
-    <value>"{0}" is not a valid path or location.</value>
-  </data>
-  <data name="InvalidParty" xml:space="preserve">
-    <value>Invalid party.</value>
-  </data>
-  <data name="InvalidPriceType" xml:space="preserve">
-    <value>Invalid price type.</value>
-  </data>
-  <data name="InvalidSalesPerson" xml:space="preserve">
-    <value>Invalid sales person</value>
-  </data>
-  <data name="InvalidShippingCompany" xml:space="preserve">
-    <value>Invalid shipping company.</value>
-  </data>
-  <data name="InvalidStore" xml:space="preserve">
-    <value>Invalid store.</value>
-  </data>
-  <data name="NoItemFound" xml:space="preserve">
-    <value>No item found.</value>
-  </data>
-  <data name="NotEnoughCash" xml:space="preserve">
-    <value>Not enough cash in the repository.</value>
-  </data>
-  <data name="NothingSelectedPleaseTryAgain" xml:space="preserve">
-    <value>Nothing was selected. Please try again.</value>
-  </data>
-  <data name="SalesNotAllowedHere" xml:space="preserve">
-    <value>Sales is not allowed here.</value>
-  </data>
-  <data name="UnknownTransactionType" xml:space="preserve">
-    <value>Unknown transaction type.</value>
+  <data name="NothingSelected" xml:space="preserve">
+    <value>Nothing selected.</value>
   </data>
   <data name="UserIdOrPasswordIncorrect" xml:space="preserve">
     <value>User id or password incorrect.</value>

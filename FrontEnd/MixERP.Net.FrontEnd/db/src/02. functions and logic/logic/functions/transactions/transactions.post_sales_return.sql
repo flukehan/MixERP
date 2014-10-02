@@ -264,7 +264,7 @@ BEGIN
         FROM 
         explode_array(_details);
 
-        INSERT INTO transactions.sales_return(transaction_master_id, sales_return_transaction_master_id)
+        INSERT INTO transactions.stock_return(transaction_master_id, return_transaction_master_id)
         SELECT _transaction_master_id, _tran_master_id;
 
         RETURN _tran_master_id;

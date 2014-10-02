@@ -126,6 +126,12 @@
   <data name="currency" xml:space="preserve">
     <value>Currency</value>
   </data>
+  <data name="flag_background_color" xml:space="preserve">
+    <value>Flag Background Color</value>
+  </data>
+  <data name="flag_foreground_color" xml:space="preserve">
+    <value>Flag Foreground Color</value>
+  </data>
   <data name="id" xml:space="preserve">
     <value>ID</value>
   </data>

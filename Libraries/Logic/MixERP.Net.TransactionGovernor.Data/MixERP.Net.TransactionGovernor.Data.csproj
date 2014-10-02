@@ -59,6 +59,9 @@
     <Compile Include="Verification\Withdrawal.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\mixerp.licenseheader">
+      <Link>mixerp.licenseheader</Link>
+    </None>
     <None Include="Mix Open Foundation.snk" />
   </ItemGroup>
   <ItemGroup>

@@ -55,7 +55,7 @@ $$
 	DECLARE _cash_account_id                bigint;
 BEGIN
         IF(_cash_repository_id > 0) THEN
-                IF(_posted_Date IS NOT NULL OR _bank_account_id IS NOT NULL OR _bank_instrument_code IS NOT NULL OR _bank_tran_code IS NOT NULL) THEN
+                IF(_posted_Date IS NOT NULL OR _bank_account_id IS NOT NULL OR COALESCE(_bank_instrument_code, '') != '' OR COALESCE(_bank_tran_code, '') != '') THEN
                         RAISE EXCEPTION 'Invalid bank transaction information provided.';
                 END IF;
                 _is_cash                        := true;

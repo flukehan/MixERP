@@ -51,17 +51,44 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\Flags.cs" />
+    <Compile Include="Helpers\GridViewColumnHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Labels.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Labels.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Titles.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Titles.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\..\mixerp.licenseheader">
+      <Link>mixerp.licenseheader</Link>
+    </None>
     <None Include="Mix Open Foundation.snk" />
-    <None Include="MixERP.Net.WebControls.StockTransactionView.licenseheader" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Logic\MixERP.net.Common\MixERP.Net.Common.csproj">
+      <Project>{d5a09c22-8f48-4fb2-a14d-c62c8c8fcec0}</Project>
+      <Name>MixERP.Net.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Logic\MixERP.Net.TransactionGovernor\MixERP.Net.TransactionGovernor.csproj">
       <Project>{0aacf4db-8332-4c4b-96df-2bf6aea68473}</Project>
       <Name>MixERP.Net.TransactionGovernor</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Labels.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Labels.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Titles.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Titles.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

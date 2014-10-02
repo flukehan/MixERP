@@ -20,6 +20,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using MixERP.Net.WebControls.ScrudFactory.Resources;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -226,27 +227,27 @@ namespace MixERP.Net.WebControls.ScrudFactory
         {
             if (string.IsNullOrWhiteSpace(this.TableSchema))
             {
-                throw new InvalidOperationException(ScrudResource.TableSchemaEmptyExceptionMessage);
+                throw new InvalidOperationException(Titles.TableSchemaEmptyExceptionMessage);
             }
 
             if (string.IsNullOrWhiteSpace(this.Table))
             {
-                throw new InvalidOperationException(ScrudResource.TableEmptyExceptionMessage);
+                throw new InvalidOperationException(Titles.TableEmptyExceptionMessage);
             }
 
             if (string.IsNullOrWhiteSpace(this.ViewSchema))
             {
-                throw new InvalidOperationException(ScrudResource.ViewSchemaEmptyExceptionMessage);
+                throw new InvalidOperationException(Titles.ViewSchemaEmptyExceptionMessage);
             }
 
             if (string.IsNullOrWhiteSpace(this.View))
             {
-                throw new InvalidOperationException(ScrudResource.ViewEmptyExceptionMessage);
+                throw new InvalidOperationException(Titles.ViewEmptyExceptionMessage);
             }
 
             if (string.IsNullOrWhiteSpace(this.KeyColumn))
             {
-                throw new InvalidOperationException(ScrudResource.KeyColumnEmptyExceptionMessage);
+                throw new InvalidOperationException(Titles.KeyColumnEmptyExceptionMessage);
             }
         }
     }

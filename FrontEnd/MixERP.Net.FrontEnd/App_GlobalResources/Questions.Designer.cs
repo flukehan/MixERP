@@ -70,56 +70,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Can&apos;t access your account?.
+        ///   Looks up a localized string similar to Cannot access your account?.
         /// </summary>
         internal static string CannotAccessAccount {
             get {
                 return ResourceManager.GetString("CannotAccessAccount", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This will lock client database access during execution. Are you sure you want to execute this action right now?.
-        /// </summary>
-        internal static string ConfirmAnalyze {
-            get {
-                return ResourceManager.GetString("ConfirmAnalyze", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This will lock client database access during execution. Are you sure you want to execute this action right now?.
-        /// </summary>
-        internal static string ConfirmVacuum {
-            get {
-                return ResourceManager.GetString("ConfirmVacuum", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This will lock client database access during execution. Are you sure you want to execute this action right now?.
-        /// </summary>
-        internal static string ConfirmVacuumFull {
-            get {
-                return ResourceManager.GetString("ConfirmVacuumFull", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Update tax?.
-        /// </summary>
-        internal static string UpdateTax {
-            get {
-                return ResourceManager.GetString("UpdateTax", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Why do you want to withdraw this transaction?.
-        /// </summary>
-        internal static string WithdrawalReason {
-            get {
-                return ResourceManager.GetString("WithdrawalReason", resourceCulture);
             }
         }
     }

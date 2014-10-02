@@ -1,4 +1,23 @@
-﻿using MixERP.Net.Common;
+﻿/********************************************************************************
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This file is part of MixERP.
+
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
+***********************************************************************************/
+
+using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models.Core;
 using MixERP.Net.Common.Models.Transactions;
@@ -13,7 +32,10 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
 {
     public static class DirectSales
     {
-        public static long Add(DateTime valueDate, int storeId, bool isCredit, string partyCode, int agentId, int priceTypeId, Collection<StockMasterDetailModel> details, int shipperId, string shippingAddressCode, decimal shippingCharge, int cashRepositoryId, int costCenterId, string referenceNumber, string statementReference, Collection<AttachmentModel> attachments)
+        public static long Add(DateTime valueDate, int storeId, bool isCredit, string partyCode, int agentId,
+            int priceTypeId, Collection<StockMasterDetailModel> details, int shipperId, string shippingAddressCode,
+            decimal shippingCharge, int cashRepositoryId, int costCenterId, string referenceNumber,
+            string statementReference, Collection<AttachmentModel> attachments)
         {
             StockMasterModel stockMaster = new StockMasterModel();
 
@@ -23,18 +45,22 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
             stockMaster.ShipperId = shipperId;
             stockMaster.ShippingAddressCode = shippingAddressCode;
             stockMaster.ShippingCharge = shippingCharge;
-            stockMaster.AgentId = agentId;
+            stockMaster.SalespersonId = agentId;
             stockMaster.CashRepositoryId = cashRepositoryId;
             stockMaster.StoreId = storeId;
 
-            long transactionMasterId = Add(valueDate, SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), costCenterId, referenceNumber, statementReference, stockMaster, details, attachments);
+            long transactionMasterId = Add(valueDate, SessionHelper.GetOfficeId(), SessionHelper.GetUserId(),
+                SessionHelper.GetLogOnId(), costCenterId, referenceNumber, statementReference, stockMaster, details,
+                attachments);
 
-            MixERP.Net.TransactionGovernor.Autoverification.Autoverify.Pass(transactionMasterId);
+            MixERP.Net.TransactionGovernor.Autoverification.Autoverify.PassTransactionMasterId(transactionMasterId);
 
             return transactionMasterId;
         }
 
-        public static long Add(DateTime valueDate, int officeId, int userId, long logOnId, int costCenterId, string referenceNumber, string statementReference, StockMasterModel stockMaster, Collection<StockMasterDetailModel> details, Collection<AttachmentModel> attachments)
+        public static long Add(DateTime valueDate, int officeId, int userId, long logOnId, int costCenterId,
+            string referenceNumber, string statementReference, StockMasterModel stockMaster,
+            Collection<StockMasterDetailModel> details, Collection<AttachmentModel> attachments)
         {
             if (stockMaster == null)
             {
@@ -69,7 +95,8 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
                     {
                         #region TransactionMaster
 
-                        string sql = "INSERT INTO transactions.transaction_master(transaction_master_id, transaction_counter, transaction_code, book, value_date, user_id, login_id, office_id, cost_center_id, reference_number, statement_reference) SELECT nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), transactions.get_new_transaction_counter(@ValueDate), transactions.get_transaction_code(@ValueDate, @OfficeId, @UserId, @LogOnId), @Book, @ValueDate, @UserId, @LogOnId, @OfficeId, @CostCenterId, @ReferenceNumber, @StatementReference;SELECT currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));";
+                        string sql =
+                            "INSERT INTO transactions.transaction_master(transaction_master_id, transaction_counter, transaction_code, book, value_date, user_id, login_id, office_id, cost_center_id, reference_number, statement_reference) SELECT nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), transactions.get_new_transaction_counter(@ValueDate), transactions.get_transaction_code(@ValueDate, @OfficeId, @UserId, @LogOnId), @Book, @ValueDate, @UserId, @LogOnId, @OfficeId, @CostCenterId, @ReferenceNumber, @StatementReference;SELECT currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));";
                         long transactionMasterId;
                         using (NpgsqlCommand tm = new NpgsqlCommand(sql, connection))
                         {
@@ -87,8 +114,9 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
 
                         #region TransactionDetails
 
-                        sql = "INSERT INTO transactions.transaction_details(transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency) " +
-                              "SELECT @TransactionMasterId, @TranType, core.get_account_id_by_parameter(@ParameterName), @StatementReference, @CashRepositoryId, transactions.get_default_currency_code_by_office_id(@OfficeId), @Amount, transactions.get_default_currency_code_by_office_id(@OfficeId), 1, @Amount;";
+                        sql =
+                            "INSERT INTO transactions.transaction_details(transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency) " +
+                            "SELECT @TransactionMasterId, @TranType, core.get_account_id_by_parameter(@ParameterName), @StatementReference, @CashRepositoryId, transactions.get_default_currency_code_by_office_id(@OfficeId), @Amount, transactions.get_default_currency_code_by_office_id(@OfficeId), 1, @Amount;";
 
                         using (NpgsqlCommand salesRow = new NpgsqlCommand(sql, connection))
                         {
@@ -135,8 +163,9 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
 
                         if (stockMaster.IsCredit)
                         {
-                            sql = "INSERT INTO transactions.transaction_details(transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency) " +
-                                  "SELECT @TransactionMasterId, @TranType, core.get_account_id_by_party_code(@PartyCode), @StatementReference, @CashRepositoryId, transactions.get_default_currency_code_by_office_id(@OfficeId), @Amount, transactions.get_default_currency_code_by_office_id(@OfficeId), 1, @Amount;";
+                            sql =
+                                "INSERT INTO transactions.transaction_details(transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency) " +
+                                "SELECT @TransactionMasterId, @TranType, core.get_account_id_by_party_code(@PartyCode), @StatementReference, @CashRepositoryId, transactions.get_default_currency_code_by_office_id(@OfficeId), @Amount, transactions.get_default_currency_code_by_office_id(@OfficeId), 1, @Amount;";
                             using (NpgsqlCommand creditRow = new NpgsqlCommand(sql, connection))
                             {
                                 creditRow.Parameters.AddWithValue("@TransactionMasterId", transactionMasterId);
@@ -145,14 +174,16 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
                                 creditRow.Parameters.AddWithValue("@StatementReference", statementReference);
                                 creditRow.Parameters.AddWithValue("@CashRepositoryId", DBNull.Value);
                                 creditRow.Parameters.AddWithValue("@OfficeId", officeId);
-                                creditRow.Parameters.AddWithValue("@Amount", total - discountTotal + taxTotal + stockMaster.ShippingCharge);
+                                creditRow.Parameters.AddWithValue("@Amount",
+                                    total - discountTotal + taxTotal + stockMaster.ShippingCharge);
                                 creditRow.ExecuteNonQuery();
                             }
                         }
                         else
                         {
-                            sql = "INSERT INTO transactions.transaction_details(transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency) " +
-                                  "SELECT @TransactionMasterId, @TranType, core.get_cash_account_id(), @StatementReference, @CashRepositoryId, transactions.get_default_currency_code_by_office_id(@OfficeId), @Amount, transactions.get_default_currency_code_by_office_id(@OfficeId), 1, @Amount;";
+                            sql =
+                                "INSERT INTO transactions.transaction_details(transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency) " +
+                                "SELECT @TransactionMasterId, @TranType, core.get_cash_account_id(), @StatementReference, @CashRepositoryId, transactions.get_default_currency_code_by_office_id(@OfficeId), @Amount, transactions.get_default_currency_code_by_office_id(@OfficeId), 1, @Amount;";
                             using (NpgsqlCommand cashRow = new NpgsqlCommand(sql, connection))
                             {
                                 cashRow.Parameters.AddWithValue("@TransactionMasterId", transactionMasterId);
@@ -160,15 +191,17 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
                                 cashRow.Parameters.AddWithValue("@StatementReference", statementReference);
                                 cashRow.Parameters.AddWithValue("@CashRepositoryId", stockMaster.CashRepositoryId);
                                 cashRow.Parameters.AddWithValue("@OfficeId", officeId);
-                                cashRow.Parameters.AddWithValue("@Amount", total - discountTotal + taxTotal + stockMaster.ShippingCharge);
+                                cashRow.Parameters.AddWithValue("@Amount",
+                                    total - discountTotal + taxTotal + stockMaster.ShippingCharge);
                                 cashRow.ExecuteNonQuery();
                             }
                         }
 
                         if (stockMaster.ShippingCharge > 0)
                         {
-                            sql = "INSERT INTO transactions.transaction_details(transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency) " +
-                                  "SELECT @TransactionMasterId, @TranType, core.get_account_id_by_shipper_id(@ShipperId), @StatementReference, @CashRepositoryId, transactions.get_default_currency_code_by_office_id(@OfficeId), @Amount, transactions.get_default_currency_code_by_office_id(@OfficeId), 1, @Amount;";
+                            sql =
+                                "INSERT INTO transactions.transaction_details(transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency) " +
+                                "SELECT @TransactionMasterId, @TranType, core.get_account_id_by_shipper_id(@ShipperId), @StatementReference, @CashRepositoryId, transactions.get_default_currency_code_by_office_id(@OfficeId), @Amount, transactions.get_default_currency_code_by_office_id(@OfficeId), 1, @Amount;";
 
                             using (NpgsqlCommand shippingChargeRow = new NpgsqlCommand(sql, connection))
                             {
@@ -190,14 +223,15 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
 
                         #region StockMaster
 
-                        sql = "INSERT INTO transactions.stock_master(stock_master_id, transaction_master_id, party_id, agent_id, price_type_id, is_credit, shipper_id, shipping_address_id, shipping_charge, store_id, cash_repository_id) SELECT nextval(pg_get_serial_sequence('transactions.stock_master', 'stock_master_id')), @TransactionMasterId, core.get_party_id_by_party_code(@PartyCode), @AgentId, @PriceTypeId, @IsCredit, @ShipperId, core.get_shipping_address_id_by_shipping_address_code(@ShippingAddressCode, core.get_party_id_by_party_code(@PartyCode)), @ShippingCharge, @StoreId, @CashRepositoryId; SELECT currval(pg_get_serial_sequence('transactions.stock_master', 'stock_master_id'));";
+                        sql =
+                            "INSERT INTO transactions.stock_master(stock_master_id, transaction_master_id, party_id, salesperson_id, price_type_id, is_credit, shipper_id, shipping_address_id, shipping_charge, store_id, cash_repository_id) SELECT nextval(pg_get_serial_sequence('transactions.stock_master', 'stock_master_id')), @TransactionMasterId, core.get_party_id_by_party_code(@PartyCode), @SalespersonId, @PriceTypeId, @IsCredit, @ShipperId, core.get_shipping_address_id_by_shipping_address_code(@ShippingAddressCode, core.get_party_id_by_party_code(@PartyCode)), @ShippingCharge, @StoreId, @CashRepositoryId; SELECT currval(pg_get_serial_sequence('transactions.stock_master', 'stock_master_id'));";
 
                         long stockMasterId;
                         using (NpgsqlCommand stockMasterRow = new NpgsqlCommand(sql, connection))
                         {
                             stockMasterRow.Parameters.AddWithValue("@TransactionMasterId", transactionMasterId);
                             stockMasterRow.Parameters.AddWithValue("@PartyCode", stockMaster.PartyCode);
-                            stockMasterRow.Parameters.AddWithValue("@AgentId", stockMaster.AgentId);
+                            stockMasterRow.Parameters.AddWithValue("@SalespersonId", stockMaster.SalespersonId);
 
                             stockMasterRow.Parameters.AddWithValue("@PriceTypeId", stockMaster.PriceTypeId);
                             stockMasterRow.Parameters.AddWithValue("@IsCredit", stockMaster.IsCredit);
@@ -211,7 +245,8 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
                                 stockMasterRow.Parameters.AddWithValue("@ShipperId", stockMaster.ShipperId);
                             }
 
-                            stockMasterRow.Parameters.AddWithValue("@ShippingAddressCode", stockMaster.ShippingAddressCode);
+                            stockMasterRow.Parameters.AddWithValue("@ShippingAddressCode",
+                                stockMaster.ShippingAddressCode);
                             stockMasterRow.Parameters.AddWithValue("@ShippingCharge", stockMaster.ShippingCharge);
                             stockMasterRow.Parameters.AddWithValue("@StoreId", stockMaster.StoreId);
 
@@ -262,15 +297,19 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
                         {
                             foreach (AttachmentModel attachment in attachments)
                             {
-                                sql = "INSERT INTO core.attachments(user_id, resource, resource_key, resource_id, original_file_name, file_extension, file_path, comment) SELECT @UserId, @Resource, @ResourceKey, @ResourceId, @OriginalFileName, @FileExtension, @FilePath, @Comment;";
+                                sql =
+                                    "INSERT INTO core.attachments(user_id, resource, resource_key, resource_id, original_file_name, file_extension, file_path, comment) SELECT @UserId, @Resource, @ResourceKey, @ResourceId, @OriginalFileName, @FileExtension, @FilePath, @Comment;";
                                 using (NpgsqlCommand attachmentCommand = new NpgsqlCommand(sql, connection))
                                 {
                                     attachmentCommand.Parameters.AddWithValue("@UserId", userId);
-                                    attachmentCommand.Parameters.AddWithValue("@Resource", "transactions.transaction_master");
+                                    attachmentCommand.Parameters.AddWithValue("@Resource",
+                                        "transactions.transaction_master");
                                     attachmentCommand.Parameters.AddWithValue("@ResourceKey", "transaction_master_id");
                                     attachmentCommand.Parameters.AddWithValue("@ResourceId", transactionMasterId);
-                                    attachmentCommand.Parameters.AddWithValue("@OriginalFileName", attachment.OriginalFileName);
-                                    attachmentCommand.Parameters.AddWithValue("@FileExtension", Path.GetExtension(attachment.OriginalFileName));
+                                    attachmentCommand.Parameters.AddWithValue("@OriginalFileName",
+                                        attachment.OriginalFileName);
+                                    attachmentCommand.Parameters.AddWithValue("@FileExtension",
+                                        Path.GetExtension(attachment.OriginalFileName));
                                     attachmentCommand.Parameters.AddWithValue("@FilePath", attachment.FilePath);
                                     attachmentCommand.Parameters.AddWithValue("@Comment", attachment.Comment);
 

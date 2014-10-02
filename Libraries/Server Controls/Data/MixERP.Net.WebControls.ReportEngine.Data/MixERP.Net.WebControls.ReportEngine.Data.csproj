@@ -64,8 +64,10 @@
     <Compile Include="TableHelper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\..\mixerp.licenseheader">
+      <Link>mixerp.licenseheader</Link>
+    </None>
     <None Include="Mix Open Foundation.snk" />
-    <None Include="MixERP.Net.WebControls.ReportEngine.Data.licenseheader" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Logic\MixERP.net.Common\MixERP.Net.Common.csproj">

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <!--
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
@@ -18,35 +18,28 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 -->
+
 <MixERPReport>
-    <Title>{Resources.Titles.LoginView}</Title>
-    <TopSection>
-    </TopSection>
-    <Body>
-        <Content>
-        </Content>
-        <GridViews>
-            <GridView>
-                <GridViewDataSource Index="0">
-                </GridViewDataSource>
-            </GridView>
-        </GridViews>
-    </Body>
-    <BottomSection>
-    </BottomSection>
-    <DataSources>
-        <DataSource>
-            <Query>
-              SELECT * FROM office.sign_in_view;
-            </Query>
-        </DataSource>
-    </DataSources>
-    <Install>
-        <Report
-            MenuCode="SEAR-LV"
-            ParentMenuCode="SEAR"
-            MenuText="{Resources.Titles.LoginView}"
-            Level="2"
-            Path="/Reports/Office.Login.xml" />
-    </Install>
+  <Title>{Resources.Titles.LoginView}</Title>
+  <TopSection>
+  </TopSection>
+  <Body>
+    <Content>
+    </Content>
+    <GridViews>
+      <GridView>
+        <GridViewDataSource Index="0">
+        </GridViewDataSource>
+      </GridView>
+    </GridViews>
+  </Body>
+  <BottomSection>
+  </BottomSection>
+  <DataSources>
+    <DataSource>
+      <Query>
+        SELECT * FROM office.sign_in_view;
+      </Query>
+    </DataSource>
+  </DataSources>
 </MixERPReport>

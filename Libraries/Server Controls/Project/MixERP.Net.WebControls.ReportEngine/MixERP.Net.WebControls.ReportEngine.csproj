@@ -72,8 +72,10 @@
     <Compile Include="Report\RaisedEvents.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\..\mixerp.licenseheader">
+      <Link>mixerp.licenseheader</Link>
+    </None>
     <None Include="Mix Open Foundation.snk" />
-    <None Include="MixERP.Net.WebControls.ReportEngine.licenseheader" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Logic\MixERP.net.Common\MixERP.Net.Common.csproj">

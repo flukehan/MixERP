@@ -79,6 +79,7 @@
     <Compile Include="Helpers\ScrudHelper.cs" />
     <Compile Include="Helpers\SessionHelper.cs" />
     <Compile Include="Helpers\Switches.cs" />
+    <Compile Include="Helpers\TransactionBookHelper.cs" />
     <Compile Include="Helpers\WidgetHelper.cs" />
     <Compile Include="jQueryHelper\jQueryUI.cs" />
     <Compile Include="Models\Core\AttachmentModel.cs" />
@@ -123,8 +124,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\mixerp.licenseheader">
+      <Link>mixerp.licenseheader</Link>
+    </None>
     <None Include="Mix Open Foundation.snk" />
-    <None Include="MixERP.net.Common.licenseheader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

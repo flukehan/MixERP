@@ -20,6 +20,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Resources;
+using System.Reflection;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -28,8 +29,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 {
     public static class ScrudTextBox
     {
-        public static void AddTextBox(HtmlTable htmlTable, string resourceClassName, string columnName,
-            string defaultValue, bool isNullable, int maxLength, string errorCssClass)
+        public static void AddTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isNullable, int maxLength, string errorCssClass, Assembly assembly)
         {
             if (htmlTable == null)
             {
@@ -43,14 +43,14 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 
             using (var textBox = GetTextBox(columnName + "_textbox", maxLength))
             {
-                var label = LocalizationHelper.GetDefaultAssemblyResourceString(resourceClassName, columnName);
+                var label = ScrudLocalizationHelper.GetResourceString(assembly, resourceClassName, columnName);
 
                 textBox.Text = defaultValue;
 
                 if (!isNullable)
                 {
                     var required = ScrudFactoryHelper.GetRequiredFieldValidator(textBox, errorCssClass);
-                    ScrudFactoryHelper.AddRow(htmlTable, label + ScrudResource.RequiredFieldIndicator, textBox, required);
+                    ScrudFactoryHelper.AddRow(htmlTable, label + Titles.RequiredFieldIndicator, textBox, required);
                     return;
                 }
 

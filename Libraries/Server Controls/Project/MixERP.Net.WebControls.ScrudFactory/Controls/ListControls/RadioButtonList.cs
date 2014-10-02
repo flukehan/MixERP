@@ -20,32 +20,32 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Resources;
+using System.Reflection;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using LocalizationHelper = MixERP.Net.Common.Helpers.LocalizationHelper;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 {
     public static class ScrudRadioButtonList
     {
-        public static void AddRadioButtonList(HtmlTable htmlTable, string resourceClassName, string columnName,
-            bool isNullable, string keys, string values, string selectedValue, string errorCssClass)
+        public static void AddRadioButtonList(HtmlTable htmlTable, string resourceClassName, string columnName, bool isNullable, string keys, string values, string selectedValue, string errorCssClass, Assembly assembly)
         {
             if (htmlTable == null)
             {
                 return;
             }
 
-            using (
-                var radioButtonList = GetRadioButtonList(columnName + "_radiobuttonlist", keys, values, selectedValue))
+            using (var radioButtonList = GetRadioButtonList(columnName + "_radiobuttonlist", keys, values, selectedValue))
             {
-                var label = LocalizationHelper.GetDefaultAssemblyResourceString(resourceClassName, columnName);
+                var label = ScrudLocalizationHelper.GetResourceString(assembly, resourceClassName, columnName);
 
                 if (!isNullable)
                 {
                     using (var required = ScrudFactoryHelper.GetRequiredFieldValidator(radioButtonList, errorCssClass))
                     {
-                        ScrudFactoryHelper.AddRow(htmlTable, label + ScrudResource.RequiredFieldIndicator,
+                        ScrudFactoryHelper.AddRow(htmlTable, label + Titles.RequiredFieldIndicator,
                             radioButtonList, required);
                         return;
                     }

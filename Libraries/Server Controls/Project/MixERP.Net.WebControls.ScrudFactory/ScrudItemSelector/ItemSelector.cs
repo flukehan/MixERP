@@ -29,7 +29,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
         private static TemplateField GetSelectColumnTemplateField()
         {
             var selectTemplate = new TemplateField();
-            selectTemplate.HeaderText = ScrudResource.Select;
+            selectTemplate.HeaderText = Titles.Select;
 
             using (var itemTemplate = new ScrudItemSelectorSelectTemplate())
             {
@@ -130,7 +130,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         }
 
                         this.goButton.Click += this.GoButton_Click;
-                        this.goButton.Text = ScrudResource.Go;
+                        this.goButton.Text = Titles.Go;
                         buttonCell.Controls.Add(this.goButton);
                         row.Cells.Add(buttonCell);
                     }

@@ -59,6 +59,9 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\..\..\..\mixerp.licenseheader">
+      <Link>mixerp.licenseheader</Link>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -70,24 +73,39 @@
     <Content Include="Confirmation\DirectPurchase.ascx" />
     <Content Include="Confirmation\GRN.ascx" />
     <Content Include="Confirmation\Order.ascx" />
+    <Content Include="Confirmation\Return.ascx" />
     <Content Include="DirectPurchase.ascx" />
     <Content Include="Entry\DirectPurchase.ascx" />
     <Content Include="Entry\GRN.ascx" />
     <Content Include="Entry\Order.ascx" />
+    <Content Include="Entry\Return.ascx" />
     <Content Include="GRN.ascx" />
     <Content Include="Index.ascx" />
-    <Content Include="Invoice.ascx" />
     <Content Include="Order.ascx" />
     <Content Include="Package.xml" />
     <Content Include="Payment.ascx" />
     <Content Include="Reports\DirectPurchaseInvoiceReport.ascx" />
-    <Content Include="Reports\Source\Purchase.View.Purchase.Invoice.xml">
+    <Content Include="Reports\GRNReport.ascx" />
+    <Content Include="Reports\PurchaseOrderReport.ascx" />
+    <Content Include="Reports\PurchaseReturnReport.ascx" />
+    <Content Include="Reports\Source\Purchase.GRN.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Reports\Source\Purchase.Invoice.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Reports\Source\Purchase.Order.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Reports\Source\Purchase.Return.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Return.ascx" />
     <Content Include="Scripts\Entry\DirectPurchase.js" />
     <Content Include="Scripts\Entry\GRN.js" />
     <Content Include="Scripts\Entry\Order.js" />
+    <Content Include="Scripts\Entry\Return.js" />
+    <Content Include="Services\Entry\Return.asmx" />
     <Content Include="SQL\Menu.sql" />
     <Content Include="SQL\Module.sql" />
     <Content Include="Services\DirectPurchase.asmx" />
@@ -117,6 +135,13 @@
     <Compile Include="Confirmation\Order.ascx.designer.cs">
       <DependentUpon>Order.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Confirmation\Return.ascx.cs">
+      <DependentUpon>Return.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Confirmation\Return.ascx.designer.cs">
+      <DependentUpon>Return.ascx</DependentUpon>
+    </Compile>
     <Compile Include="DirectPurchase.ascx.cs">
       <DependentUpon>DirectPurchase.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -145,6 +170,13 @@
     <Compile Include="Entry\Order.ascx.designer.cs">
       <DependentUpon>Order.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Entry\Return.ascx.cs">
+      <DependentUpon>Return.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Entry\Return.ascx.designer.cs">
+      <DependentUpon>Return.ascx</DependentUpon>
+    </Compile>
     <Compile Include="GRN.ascx.cs">
       <DependentUpon>GRN.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -158,13 +190,6 @@
     </Compile>
     <Compile Include="Index.ascx.designer.cs">
       <DependentUpon>Index.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Invoice.ascx.cs">
-      <DependentUpon>Invoice.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Invoice.ascx.designer.cs">
-      <DependentUpon>Invoice.ascx</DependentUpon>
     </Compile>
     <Compile Include="Order.ascx.cs">
       <DependentUpon>Order.ascx</DependentUpon>
@@ -188,10 +213,41 @@
     <Compile Include="Reports\DirectPurchaseInvoiceReport.ascx.designer.cs">
       <DependentUpon>DirectPurchaseInvoiceReport.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Reports\GRNReport.ascx.cs">
+      <DependentUpon>GRNReport.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GRNReport.ascx.designer.cs">
+      <DependentUpon>GRNReport.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\PurchaseOrderReport.ascx.cs">
+      <DependentUpon>PurchaseOrderReport.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\PurchaseOrderReport.ascx.designer.cs">
+      <DependentUpon>PurchaseOrderReport.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\PurchaseReturnReport.ascx.cs">
+      <DependentUpon>PurchaseReturnReport.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\PurchaseReturnReport.ascx.designer.cs">
+      <DependentUpon>PurchaseReturnReport.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\ScrudResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ScrudResource.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Titles.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Titles.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Warnings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Warnings.resx</DependentUpon>
     </Compile>
     <Compile Include="Return.ascx.cs">
       <DependentUpon>Return.ascx</DependentUpon>
@@ -202,6 +258,10 @@
     </Compile>
     <Compile Include="Services\DirectPurchase.asmx.cs">
       <DependentUpon>DirectPurchase.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\Entry\Return.asmx.cs">
+      <DependentUpon>Return.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Services\GRN.asmx.cs">
@@ -217,6 +277,10 @@
     <Folder Include="Widgets\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.Net.TransactionGovernor\MixERP.Net.TransactionGovernor.csproj">
+      <Project>{0AACF4DB-8332-4C4B-96DF-2BF6AEA68473}</Project>
+      <Name>MixERP.Net.TransactionGovernor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.ReportEngine\MixERP.Net.WebControls.ReportEngine.csproj">
       <Project>{81f04b78-6194-4f86-a795-5f186c602eee}</Project>
       <Name>MixERP.Net.WebControls.ReportEngine</Name>
@@ -239,9 +303,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\ScrudResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ScrudResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Titles.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Warnings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Warnings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

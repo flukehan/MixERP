@@ -55,9 +55,15 @@
     <Compile Include="Helpers\GRN.cs" />
     <Compile Include="Helpers\NonGlStockTransaction.cs" />
     <Compile Include="Helpers\Order.cs" />
+    <Compile Include="Helpers\ParameterHelper.cs" />
+    <Compile Include="Helpers\Parties.cs" />
+    <Compile Include="Helpers\Return.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\..\mixerp.licenseheader">
+      <Link>mixerp.licenseheader</Link>
+    </None>
     <None Include="Mix Open Foundation.snk" />
   </ItemGroup>
   <ItemGroup>

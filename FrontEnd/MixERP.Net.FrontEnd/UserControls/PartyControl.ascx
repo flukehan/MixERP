@@ -1,4 +1,23 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="PartyControl.ascx.cs" Inherits="MixERP.Net.FrontEnd.UserControls.PartyControl" %>
+﻿<%--
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This file is part of MixERP.
+
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses />.
+--%>
+
+<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="PartyControl.ascx.cs" Inherits="MixERP.Net.FrontEnd.UserControls.PartyControl" %>
 <div class="grey form-inline" role="form">
     <div class="form-group form-group-sm">
         <label for="PartyDropDownList">Select Customer</label>
@@ -18,17 +37,17 @@
 
 <ul class="nav nav-tabs" role="tablist">
     <li class="active"><a href="#home" role="tab" data-toggle="tab">
-        <asp:Literal runat="server" Text="<%$Resources:Titles, Home %>"></asp:Literal>
+        <asp:Literal runat="server" Text="Home" />
     </a></li>
     <li><a href="#party-summary" role="tab" data-toggle="tab">
 
-        <asp:Literal runat="server" Text="<%$Resources:Titles, PartySummary %>"></asp:Literal>
+        <asp:Literal runat="server" Text="Party Summary" />
     </a></li>
     <li><a href="#transaction-summary" role="tab" data-toggle="tab">
-        <asp:Literal runat="server" Text="<%$Resources:Titles, TransactionSummary %>"></asp:Literal>
+        <asp:Literal runat="server" Text="Transaction Summary" />
     </a></li>
     <li><a href="#addresses-and-contact-info" role="tab" data-toggle="tab">
-        <asp:Literal runat="server" Text="<%$Resources:Titles, AddressAndContactInfo %>"></asp:Literal>
+        <asp:Literal runat="server" Text="Address & Contact Information" />
     </a></li>
 </ul>
 
@@ -41,7 +60,7 @@
             <tr>
                 <td style="width: 300px;">
                     <strong>
-                        <asp:Literal runat="server" Text="<%$Resources:TItles, PartyType %>"></asp:Literal>
+                        <asp:Literal runat="server" Text="Party Type" />
                     </strong>
                 </td>
                 <td>
@@ -51,7 +70,7 @@
             <tr>
                 <td>
                     <strong>
-                        <asp:Literal runat="server" Text="<%$Resources:Titles, Email %>"></asp:Literal>
+                        <asp:Literal runat="server" Text="Email" />
                     </strong>
                 </td>
                 <td>
@@ -61,7 +80,7 @@
             <tr>
                 <td>
                     <strong>
-                        <asp:Literal runat="server" Text="<%$Resources:Titles, PanNumber %>"></asp:Literal>
+                        <asp:Literal runat="server" Text="PAN Number" />
                     </strong>
                 </td>
                 <td>
@@ -71,7 +90,7 @@
             <tr>
                 <td>
                     <strong>
-                        <asp:Literal runat="server" Text="<%$Resources:Titles, SSTNumber %>"></asp:Literal>
+                        <asp:Literal runat="server" Text="SST Number" />
                     </strong>
                 </td>
                 <td>
@@ -81,7 +100,7 @@
             <tr>
                 <td>
                     <strong>
-                        <asp:Literal runat="server" Text="<%$Resources:Titles, CSTNumber %>"></asp:Literal>
+                        <asp:Literal runat="server" Text="CST Number" />
                     </strong>
                 </td>
                 <td>
@@ -91,7 +110,7 @@
             <tr class="info">
                 <td>
                     <strong>
-                        <asp:Literal runat="server" Text="<%$Resources:Titles, CreditAllowed %>"></asp:Literal>
+                        <asp:Literal runat="server" Text="Credit Allowed" />
                     </strong>
                 </td>
                 <td>
@@ -101,7 +120,7 @@
             <tr>
                 <td>
                     <strong>
-                        <asp:Literal runat="server" Text="<%$Resources:Titles, MaxCreditPeriod %>"></asp:Literal>
+                        <asp:Literal runat="server" Text="Maximum Credit Period" />
                     </strong>
                 </td>
                 <td>
@@ -110,7 +129,7 @@
             </tr>
             <tr class="info">
                 <td><strong>
-                    <asp:Literal runat="server" Text="<%$Resources:Titles, MaxCreditAmount %>"></asp:Literal>
+                    <asp:Literal runat="server" Text="Maximum Credit Amount" />
                 </strong>
                 </td>
                 <td>
@@ -119,7 +138,7 @@
             </tr>
             <tr class="warning">
                 <td><strong>
-                    <asp:Literal runat="server" Text="<%$Resources:Titles, InterestApplicable %>"></asp:Literal>
+                    <asp:Literal runat="server" Text="Interest Applicable" />
                 </strong>
                 </td>
                 <td>
@@ -128,7 +147,7 @@
             </tr>
             <tr>
                 <td><strong>
-                    <asp:Literal runat="server" Text="<%$Resources:Titles, GLHead %>"></asp:Literal>
+                    <asp:Literal runat="server" Text="GL Head" />
                 </strong>
                 </td>
                 <td>
@@ -137,7 +156,7 @@
             </tr>
             <tr>
                 <td><strong>
-                    <asp:Literal runat="server" Text="<%$Resources:Titles, DefaultCurrency %>"></asp:Literal>
+                    <asp:Literal runat="server" Text="Default Currency" />
                 </strong>
                 </td>
                 <td>
@@ -151,7 +170,7 @@
             <tr>
                 <td style="width: 300px;">
                     <strong>
-                        <asp:Literal runat="server" Text="<%$Resources:Titles, TotalDueAmount %>"></asp:Literal>
+                        <asp:Literal runat="server" Text="Total Due Amount" />
                     </strong>
                 </td>
                 <td>
@@ -161,7 +180,7 @@
             <tr>
                 <td style="width: 300px;">
                     <strong>
-                        <asp:Literal runat="server" Text="<%$Resources:Titles, OfficeDueAmount %>"></asp:Literal>
+                        <asp:Literal runat="server" Text="Due Amount (Currenct Office)" />
                     </strong>
                 </td>
                 <td>
@@ -170,7 +189,7 @@
             </tr>
             <tr>
                 <td><strong>
-                    <asp:Literal runat="server" Text="<%$Resources:Titles, AccruedInterest %>"></asp:Literal>
+                    <asp:Literal runat="server" Text="Accrued Interest" />
                 </strong>
                 </td>
                 <td>
@@ -180,7 +199,7 @@
             <tr>
                 <td>
                     <strong>
-                        <asp:Literal runat="server" Text="<%$Resources:Titles, LastPaymentDate %>"></asp:Literal>
+                        <asp:Literal runat="server" Text="Last Payment Date" />
                     </strong>
                 </td>
                 <td>
@@ -189,7 +208,7 @@
             </tr>
             <tr>
                 <td><strong>
-                    <asp:Literal runat="server" Text="<%$Resources:Titles, TransactionValue %>"></asp:Literal>
+                    <asp:Literal runat="server" Text="Transaction Value" />
                 </strong>
                 </td>
                 <td>
@@ -205,7 +224,7 @@
             <tr>
                 <td style="width: 300px;">
                     <strong>
-                        <asp:Literal runat="server" Text="<%$Resources:Titles, Address %>"></asp:Literal>
+                        <asp:Literal runat="server" Text="Address" />
                     </strong>
                 </td>
                 <td>
@@ -215,7 +234,7 @@
             </tr>
             <tr>
                 <td><strong>
-                    <asp:Literal runat="server" Text="<%$Resources:Titles, ShippingAddresses %>"></asp:Literal>
+                    <asp:Literal runat="server" Text="Shipping Addresses" />
                 </strong>
                 </td>
 

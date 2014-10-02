@@ -57,6 +57,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Confirmation\Receipt.ascx" />
     <Content Include="Confirmation\Return.ascx" />
     <Content Include="Entry\Receipt.ascx" />
     <Content Include="Entry\Return.ascx" />
@@ -77,10 +78,27 @@
     <Content Include="Entry\Order.ascx" />
     <Content Include="Entry\Quotation.ascx" />
     <Content Include="Mix Open Foundation.snk" />
+    <Content Include="Reports\CustomerReceiptReport.ascx" />
+    <Content Include="Reports\SalesReturnReport.ascx" />
+    <Content Include="Reports\Source\Customer.Receipt.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Reports\Source\Sales.Return.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Reports\Source\TopSellingProductsOfAllTime.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Reports\TopSellingItems.ascx" />
+    <Content Include="Reports\TopSellingItemsFrame.ascx" />
+    <Content Include="Setup\Teams.ascx" />
     <Content Include="Widgets\CurrentOfficeSalesByMonthWidget.ascx" />
     <Content Include="Widgets\SalesByOfficeWidget.ascx" />
     <Content Include="Widgets\TopSellingProductOfAllTimeCurrentWidget.ascx" />
     <Content Include="Widgets\TopSellingProductOfAllTimeWidget.ascx" />
+    <Content Include="..\..\..\..\mixerp.licenseheader">
+      <Link>mixerp.licenseheader</Link>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -95,31 +113,39 @@
     <Content Include="Order.ascx" />
     <Content Include="Quotation.ascx" />
     <Content Include="Receipt.ascx" />
-    <Content Include="Reports\Source\Sales.View.Sales.CustomerDeliveryNote.xml">
+    <Content Include="Reports\Source\Sales.CustomerDeliveryNote.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Reports\Source\Sales.View.Sales.CustomerInvoice.xml">
+    <Content Include="Reports\Source\Sales.CustomerInvoice.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Reports\Source\Sales.View.Sales.Delivery.xml">
+    <Content Include="Reports\Source\Sales.Delivery.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Reports\Source\Sales.Receipt.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Reports\Source\Sales.View.Sales.Invoice.xml">
+    <Content Include="Reports\Source\Sales.Invoice.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Reports\Source\Sales.View.Sales.Order.xml">
+    <Content Include="Reports\Source\Sales.Order.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Reports\Source\Sales.View.Sales.Quotation.xml">
+    <Content Include="Reports\Source\Sales.Quotation.xml">
       <SubType>Designer</SubType>
     </Content>
     <EmbeddedResource Include="Resources\DbResource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>DbResource.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Labels.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Labels.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ScrudResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ScrudResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Titles.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -146,13 +172,20 @@
     <Content Include="Services\Receipt\TransactionPosting.asmx" />
     <Content Include="SQL\Menu.sql" />
     <Content Include="SQL\Module.sql" />
-    <Content Include="Setup\AgentBonusSlabDetails.ascx" />
-    <Content Include="Setup\AgentBonusSlabs.ascx" />
-    <Content Include="Setup\Agents.ascx" />
+    <Content Include="Setup\BonusSlabDetails.ascx" />
+    <Content Include="Setup\BonusSlabs.ascx" />
+    <Content Include="Setup\Salespersons.ascx" />
     <Content Include="Setup\BonusSlabAssignment.ascx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Confirmation\Receipt.ascx.cs">
+      <DependentUpon>Receipt.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Confirmation\Receipt.ascx.designer.cs">
+      <DependentUpon>Receipt.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Confirmation\Return.ascx.cs">
       <DependentUpon>Return.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -322,10 +355,48 @@
     <Compile Include="Receipt.ascx.designer.cs">
       <DependentUpon>Receipt.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Reports\CustomerReceiptReport.ascx.cs">
+      <DependentUpon>CustomerReceiptReport.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\CustomerReceiptReport.ascx.designer.cs">
+      <DependentUpon>CustomerReceiptReport.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\SalesReturnReport.ascx.cs">
+      <DependentUpon>SalesReturnReport.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\SalesReturnReport.ascx.designer.cs">
+      <DependentUpon>SalesReturnReport.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\TopSellingItems.ascx.cs">
+      <DependentUpon>TopSellingItems.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\TopSellingItems.ascx.designer.cs">
+      <DependentUpon>TopSellingItems.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\TopSellingItemsFrame.ascx.cs">
+      <DependentUpon>TopSellingItemsFrame.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\TopSellingItemsFrame.ascx.designer.cs">
+      <DependentUpon>TopSellingItemsFrame.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\DbResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DbResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Labels.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Labels.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\ScrudResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ScrudResource.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\Titles.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -376,26 +447,26 @@
       <DependentUpon>TransactionPosting.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Setup\AgentBonusSlabDetails.ascx.cs">
-      <DependentUpon>AgentBonusSlabDetails.ascx</DependentUpon>
+    <Compile Include="Setup\BonusSlabDetails.ascx.cs">
+      <DependentUpon>BonusSlabDetails.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Setup\AgentBonusSlabDetails.ascx.designer.cs">
-      <DependentUpon>AgentBonusSlabDetails.ascx</DependentUpon>
+    <Compile Include="Setup\BonusSlabDetails.ascx.designer.cs">
+      <DependentUpon>BonusSlabDetails.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Setup\AgentBonusSlabs.ascx.cs">
-      <DependentUpon>AgentBonusSlabs.ascx</DependentUpon>
+    <Compile Include="Setup\BonusSlabs.ascx.cs">
+      <DependentUpon>BonusSlabs.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Setup\AgentBonusSlabs.ascx.designer.cs">
-      <DependentUpon>AgentBonusSlabs.ascx</DependentUpon>
+    <Compile Include="Setup\BonusSlabs.ascx.designer.cs">
+      <DependentUpon>BonusSlabs.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Setup\Agents.ascx.cs">
-      <DependentUpon>Agents.ascx</DependentUpon>
+    <Compile Include="Setup\Salespersons.ascx.cs">
+      <DependentUpon>Salespersons.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Setup\Agents.ascx.designer.cs">
-      <DependentUpon>Agents.ascx</DependentUpon>
+    <Compile Include="Setup\Salespersons.ascx.designer.cs">
+      <DependentUpon>Salespersons.ascx</DependentUpon>
     </Compile>
     <Compile Include="Setup\BonusSlabAssignment.ascx.cs">
       <DependentUpon>BonusSlabAssignment.ascx</DependentUpon>
@@ -403,6 +474,13 @@
     </Compile>
     <Compile Include="Setup\BonusSlabAssignment.ascx.designer.cs">
       <DependentUpon>BonusSlabAssignment.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Setup\Teams.ascx.cs">
+      <DependentUpon>Teams.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Setup\Teams.ascx.designer.cs">
+      <DependentUpon>Teams.ascx</DependentUpon>
     </Compile>
     <Compile Include="Widgets\CurrentOfficeSalesByMonthWidget.ascx.cs">
       <DependentUpon>CurrentOfficeSalesByMonthWidget.ascx</DependentUpon>

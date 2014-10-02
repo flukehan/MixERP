@@ -1,4 +1,24 @@
-﻿using MixERP.Net.Common;
+﻿/********************************************************************************
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This file is part of MixERP.
+
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
+***********************************************************************************/
+
+using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.ReportEngine.Data;
 using MixERP.Net.WebControls.ReportEngine.Helpers;
 
@@ -24,7 +44,12 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Xml;
 
@@ -50,12 +75,12 @@ namespace MixERP.Net.WebControls.ReportEngine
             this.SetDecimalFields();
             this.SetRunningTotalFields();
             this.SetDataSources();
-            this.SetTitle();
-            this.SetTopSection();
-            this.SetBodySection();
+            this.SetTitle(this.ResourceAssembly);
+            this.SetTopSection(this.ResourceAssembly);
+            this.SetBodySection(this.ResourceAssembly);
             this.SetGridViews();
-            this.SetBottomSection();
-            this.InstallReport();
+            this.SetBottomSection(this.ResourceAssembly);
+            this.InstallReport(this.ResourceAssembly);
             this.AddJavascript();
             this.CleanUp();
         }
@@ -123,7 +148,7 @@ namespace MixERP.Net.WebControls.ReportEngine
             //Get the list of datasources for this report.
             XmlNodeList dataSourceList = XmlHelper.GetNodes(this.reportPath, "//DataSource");
 
-            //Initializing running total text column index collection.
+            //Initializing running total text column gridViewIndex collection.
             this.runningTotalTextColumnIndexCollection = new Collection<int>();
 
             //Initializing running total field indices collection.
@@ -210,10 +235,10 @@ namespace MixERP.Net.WebControls.ReportEngine
             }
         }
 
-        private void SetTitle()
+        private void SetTitle(Assembly callingAssembly)
         {
             string title = XmlHelper.GetNodeText(this.reportPath, "/MixERPReport/Title");
-            string reportTitle = ReportParser.ParseExpression(title, this.dataTableCollection);
+            string reportTitle = ReportParser.ParseExpression(title, this.dataTableCollection, callingAssembly);
 
             this.reportTitleLiteral.Text = @"<h2>" + reportTitle + @"</h2>";
             this.reportTitleHidden.Value = reportTitle;
@@ -224,18 +249,76 @@ namespace MixERP.Net.WebControls.ReportEngine
             }
         }
 
-        private void SetTopSection()
+        private void SetTopSection(Assembly callingAssembly)
         {
             string topSection = XmlHelper.GetNodeText(this.reportPath, "/MixERPReport/TopSection");
-            topSection = ReportParser.ParseExpression(topSection, this.dataTableCollection);
+            topSection = ReportParser.ParseExpression(topSection, this.dataTableCollection, callingAssembly);
             topSection = ReportParser.ParseDataSource(topSection, this.dataTableCollection);
+            topSection = this.SetPieCharts(topSection);
             this.topSectionLiteral.Text = topSection;
         }
 
-        private void SetBodySection()
+        private string GetAttributeValue(XmlNode node, string key)
+        {
+            if (node.Attributes != null && node.Attributes[key] != null)
+            {
+                return node.Attributes[key].Value;
+            }
+
+            return string.Empty;
+        }
+
+        private string SetPieCharts(string xml)
+        {
+            XmlNodeList pieCharts = XmlHelper.GetNodesFromText(xml, "//PieChart");
+            if (pieCharts == null)
+            {
+                return xml;
+            }
+
+            foreach (XmlNode node in pieCharts)
+            {
+                string id = GetAttributeValue(node, "ID");
+                int gridViewIndex = Conversion.TryCastInteger(GetAttributeValue(node, "GridViewIndex"));
+
+                string pieType = GetAttributeValue(node, "Type").ToLower();
+
+                int width = Conversion.TryCastInteger(GetAttributeValue(node, "Width"));
+                int height = Conversion.TryCastInteger(GetAttributeValue(node, "Height"));
+                int titleColumnIndex = Conversion.TryCastInteger(GetAttributeValue(node, "TitleColumnIndex"));
+                int valueColumnIndex = Conversion.TryCastInteger(GetAttributeValue(node, "ValueColumnIndex"));
+
+                bool hideGridView = Conversion.TryCastBoolean(GetAttributeValue(node, "HideGridView"));
+
+                Color backgroundColor = ColorTranslator.FromHtml(GetAttributeValue(node, "BackgroundColor"));
+                Color borderColor = ColorTranslator.FromHtml(GetAttributeValue(node, "BorderColor"));
+
+                xml = this.LoadPieCharts(xml, node, id, gridViewIndex, hideGridView, pieType, width, height, titleColumnIndex, valueColumnIndex, backgroundColor, borderColor);
+            }
+
+            return xml.Replace("<Charts>", "").Replace("</Charts>", "");
+        }
+
+        private string LoadPieCharts(string xml, XmlNode node, string id, int gridViewIndex, bool hideGridView, string type, int width, int height, int titleColumnIndex, int valueColumnIndex, Color backgroundColor, Color borderColor)
+        {
+            string pieChart = string.Format("<div style='background-color:{0};padding:24px;maring:0 auto;border:1px solid {1};'>" +
+                                            "<canvas id='{2}' width='{3}px' height='{4}px'></canvas>" +
+                                            "<br />" +
+                                            "<div id='{2}-legend'></div></div>", ColorTranslator.ToHtml(backgroundColor), ColorTranslator.ToHtml(borderColor), id, width, height);
+
+            string script = string.Format("$(document).ready(function () {{" +
+                                          "preparePieChart('GridView{0}', '{1}', '{1}-legend', '{2}', {3}, {4}, {5});" +
+                                          " }});", gridViewIndex, id, type, hideGridView.ToString().ToLower(), titleColumnIndex, valueColumnIndex);
+
+            PageUtility.RegisterJavascript(id, script, this.Page, true);
+
+            return xml.Replace(node.OuterXml, pieChart);
+        }
+
+        private void SetBodySection(Assembly callingAssembly)
         {
             string bodySection = XmlHelper.GetNodeText(this.reportPath, "/MixERPReport/Body/Content");
-            bodySection = ReportParser.ParseExpression(bodySection, this.dataTableCollection);
+            bodySection = ReportParser.ParseExpression(bodySection, this.dataTableCollection, callingAssembly);
             bodySection = ReportParser.ParseDataSource(bodySection, this.dataTableCollection);
             this.bodyContentsLiteral.Text = bodySection;
         }
@@ -253,8 +336,7 @@ namespace MixERP.Net.WebControls.ReportEngine
                 }
             }
 
-            // ReSharper disable once PossiblyMistakenUseOfParamsMethod
-            this.LoadGrid(string.Concat(indices));
+            this.LoadGrid(indices);
         }
 
         private void LoadGrid(string indices)
@@ -287,15 +369,17 @@ namespace MixERP.Net.WebControls.ReportEngine
             }
         }
 
-        private void SetBottomSection()
+        private void SetBottomSection(Assembly callingAssembly)
         {
             string bottomSection = XmlHelper.GetNodeText(this.reportPath, "/MixERPReport/BottomSection");
-            bottomSection = ReportParser.ParseExpression(bottomSection, this.dataTableCollection);
+            bottomSection = ReportParser.ParseExpression(bottomSection, this.dataTableCollection, callingAssembly);
             bottomSection = ReportParser.ParseDataSource(bottomSection, this.dataTableCollection);
+            bottomSection = this.SetPieCharts(bottomSection);
+
             this.bottomSectionLiteral.Text = bottomSection;
         }
 
-        private void InstallReport()
+        private void InstallReport(Assembly callingAssembly)
         {
             if (this.IsValid())
             {
@@ -311,7 +395,7 @@ namespace MixERP.Net.WebControls.ReportEngine
                     string menuCode = reportNode.Attributes["MenuCode"].Value;
                     string parentMenuCode = reportNode.Attributes["ParentMenuCode"].Value;
                     int level = Conversion.TryCastInteger(reportNode.Attributes["Level"].Value);
-                    string menuText = ReportParser.ParseExpression(reportNode.Attributes["MenuText"].Value, this.dataTableCollection);
+                    string menuText = ReportParser.ParseExpression(reportNode.Attributes["MenuText"].Value, this.dataTableCollection, callingAssembly);
 
                     string path = reportNode.Attributes["Path"].Value;
 

@@ -22,6 +22,15 @@ namespace MixERP.Net.FrontEnd.UserControls {
         protected global::System.Web.UI.WebControls.Literal TitleLiteral;
         
         /// <summary>
+        /// Title2Literal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal Title2Literal;
+        
+        /// <summary>
         /// VerificationLabel control.
         /// </summary>
         /// <remarks>
@@ -164,6 +173,15 @@ namespace MixERP.Net.FrontEnd.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button CancelButton;
+        
+        /// <summary>
+        /// EmailHidden control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField EmailHidden;
         
         /// <summary>
         /// MessageLabel control.

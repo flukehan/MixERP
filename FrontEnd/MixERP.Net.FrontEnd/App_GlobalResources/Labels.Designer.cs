@@ -61,7 +61,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to day(s).
+        ///   Looks up a localized string similar to days.
         /// </summary>
         internal static string DaysLowerCase {
             get {
@@ -70,119 +70,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This field is required..
-        /// </summary>
-        internal static string FieldRequired {
-            get {
-                return ResourceManager.GetString("FieldRequired", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Loading ....
-        /// </summary>
-        internal static string Loading {
-            get {
-                return ResourceManager.GetString("Loading", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Nothing selected..
-        /// </summary>
-        internal static string NothingSelected {
-            get {
-                return ResourceManager.GetString("NothingSelected", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Parties collectively refer to suppliers, customers, agents, and dealers..
-        /// </summary>
-        internal static string PartyDescription {
-            get {
-                return ResourceManager.GetString("PartyDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Fields marked with asterisk (*) are required..
-        /// </summary>
-        internal static string RequiredFieldDetails {
-            get {
-                return ResourceManager.GetString("RequiredFieldDetails", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SO ID#.
-        /// </summary>
-        internal static string SOID {
-            get {
-                return ResourceManager.GetString("SOID", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SQ ID#.
-        /// </summary>
-        internal static string SQID {
-            get {
-                return ResourceManager.GetString("SQID", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The task was completed successfully..
+        ///   Looks up a localized string similar to Task completed successfully..
         /// </summary>
         internal static string TaskCompletedSuccessfully {
             get {
                 return ResourceManager.GetString("TaskCompletedSuccessfully", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Thank you for your business..
-        /// </summary>
-        internal static string ThankYouForYourBusiness {
-            get {
-                return ResourceManager.GetString("ThankYouForYourBusiness", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The selected transaction(s) contains item(s) which have already been merged. Please try again..
-        /// </summary>
-        internal static string TransactionAlreadyMerged {
-            get {
-                return ResourceManager.GetString("TransactionAlreadyMerged", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The transaction was withdrawn successfully. Moreover, this action will affect the all the reports produced on and after &quot;{0}&quot;..
-        /// </summary>
-        internal static string TransactionWithdrawnMessage {
-            get {
-                return ResourceManager.GetString("TransactionWithdrawnMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unknown error occurred..
-        /// </summary>
-        internal static string UnknownError {
-            get {
-                return ResourceManager.GetString("UnknownError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The uploaded files were successfully deleted..
-        /// </summary>
-        internal static string UploadedFilesDeleted {
-            get {
-                return ResourceManager.GetString("UploadedFilesDeleted", resourceCulture);
             }
         }
         
@@ -192,51 +84,6 @@ namespace Resources {
         internal static string UserGreeting {
             get {
                 return ResourceManager.GetString("UserGreeting", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This transaction was approved by {0} on {1}..
-        /// </summary>
-        internal static string VerificationApprovedMessage {
-            get {
-                return ResourceManager.GetString("VerificationApprovedMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This transaction is awaiting verification from an administrator..
-        /// </summary>
-        internal static string VerificationAwaitingMessage {
-            get {
-                return ResourceManager.GetString("VerificationAwaitingMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This transaction was closed by {0} on {1}. Reason: &quot;{2}&quot;..
-        /// </summary>
-        internal static string VerificationClosedMessage {
-            get {
-                return ResourceManager.GetString("VerificationClosedMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This transaction was rejected by {0} on {1}. Reason: &quot;{2}&quot;..
-        /// </summary>
-        internal static string VerificationRejectedMessage {
-            get {
-                return ResourceManager.GetString("VerificationRejectedMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This transaction was withdrawn by {0} on {1}. Reason: &quot;{2}&quot;..
-        /// </summary>
-        internal static string VerificationWithdrawnMessage {
-            get {
-                return ResourceManager.GetString("VerificationWithdrawnMessage", resourceCulture);
             }
         }
     }

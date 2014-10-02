@@ -104,6 +104,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.TransactionGover
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.TransactionGovernor.Data", "Libraries\Logic\MixERP.Net.TransactionGovernor.Data\MixERP.Net.TransactionGovernor.Data.csproj", "{4FB50AA0-EEFB-497C-A5F8-E79249EE3895}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.Messaging", "Libraries\Logic\MixERP.Net.Messaging\MixERP.Net.Messaging.csproj", "{D29B7B60-76B2-4A00-A8FA-7654519AFCD4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -960,6 +962,30 @@ Global
 		{4FB50AA0-EEFB-497C-A5F8-E79249EE3895}.Release-net40|Any CPU.Build.0 = Release|Any CPU
 		{4FB50AA0-EEFB-497C-A5F8-E79249EE3895}.Release-net45|Any CPU.ActiveCfg = Release|Any CPU
 		{4FB50AA0-EEFB-497C-A5F8-E79249EE3895}.Release-net45|Any CPU.Build.0 = Release|Any CPU
+		{D29B7B60-76B2-4A00-A8FA-7654519AFCD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D29B7B60-76B2-4A00-A8FA-7654519AFCD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D29B7B60-76B2-4A00-A8FA-7654519AFCD4}.Debug-net20|Any CPU.ActiveCfg = Debug|Any CPU
+		{D29B7B60-76B2-4A00-A8FA-7654519AFCD4}.Debug-net20|Any CPU.Build.0 = Debug|Any CPU
+		{D29B7B60-76B2-4A00-A8FA-7654519AFCD4}.Debug-net35|Any CPU.ActiveCfg = Debug|Any CPU
+		{D29B7B60-76B2-4A00-A8FA-7654519AFCD4}.Debug-net35|Any CPU.Build.0 = Debug|Any CPU
+		{D29B7B60-76B2-4A00-A8FA-7654519AFCD4}.Debug-net40|Any CPU.ActiveCfg = Debug|Any CPU
+		{D29B7B60-76B2-4A00-A8FA-7654519AFCD4}.Debug-net40|Any CPU.Build.0 = Debug|Any CPU
+		{D29B7B60-76B2-4A00-A8FA-7654519AFCD4}.Debug-net45|Any CPU.ActiveCfg = Debug|Any CPU
+		{D29B7B60-76B2-4A00-A8FA-7654519AFCD4}.Debug-net45|Any CPU.Build.0 = Debug|Any CPU
+		{D29B7B60-76B2-4A00-A8FA-7654519AFCD4}.Mono-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D29B7B60-76B2-4A00-A8FA-7654519AFCD4}.Mono-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D29B7B60-76B2-4A00-A8FA-7654519AFCD4}.Mono-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D29B7B60-76B2-4A00-A8FA-7654519AFCD4}.Mono-Release|Any CPU.Build.0 = Release|Any CPU
+		{D29B7B60-76B2-4A00-A8FA-7654519AFCD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D29B7B60-76B2-4A00-A8FA-7654519AFCD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D29B7B60-76B2-4A00-A8FA-7654519AFCD4}.Release-net20|Any CPU.ActiveCfg = Release|Any CPU
+		{D29B7B60-76B2-4A00-A8FA-7654519AFCD4}.Release-net20|Any CPU.Build.0 = Release|Any CPU
+		{D29B7B60-76B2-4A00-A8FA-7654519AFCD4}.Release-net35|Any CPU.ActiveCfg = Release|Any CPU
+		{D29B7B60-76B2-4A00-A8FA-7654519AFCD4}.Release-net35|Any CPU.Build.0 = Release|Any CPU
+		{D29B7B60-76B2-4A00-A8FA-7654519AFCD4}.Release-net40|Any CPU.ActiveCfg = Release|Any CPU
+		{D29B7B60-76B2-4A00-A8FA-7654519AFCD4}.Release-net40|Any CPU.Build.0 = Release|Any CPU
+		{D29B7B60-76B2-4A00-A8FA-7654519AFCD4}.Release-net45|Any CPU.ActiveCfg = Release|Any CPU
+		{D29B7B60-76B2-4A00-A8FA-7654519AFCD4}.Release-net45|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1009,5 +1035,6 @@ Global
 		{A84ED536-8E44-4D32-A22D-26D9924A9481} = {87C7000F-A7DC-42BA-A578-DD090513BB66}
 		{0AACF4DB-8332-4C4B-96DF-2BF6AEA68473} = {ADD35728-15DC-4939-98B8-2823E6F22E8A}
 		{4FB50AA0-EEFB-497C-A5F8-E79249EE3895} = {ADD35728-15DC-4939-98B8-2823E6F22E8A}
+		{D29B7B60-76B2-4A00-A8FA-7654519AFCD4} = {ADD35728-15DC-4939-98B8-2823E6F22E8A}
 	EndGlobalSection
 EndGlobal

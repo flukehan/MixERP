@@ -20,24 +20,25 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Resources;
+using System.Reflection;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using LocalizationHelper = MixERP.Net.Common.Helpers.LocalizationHelper;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 {
     public static class ScrudCheckBoxList
     {
-        public static void AddCheckBoxList(HtmlTable htmlTable, string resourceClassName, string columnName,
-            bool isNullable, string keys, string values, string selectedValues, string errorCssClass)
+        public static void AddCheckBoxList(HtmlTable htmlTable, string resourceClassName, string columnName, bool isNullable, string keys, string values, string selectedValues, string errorCssClass, Assembly assembly)
         {
             var checkBoxList = GetCheckBoxList(columnName + "_radiobuttonlist", keys, values, selectedValues);
-            var label = LocalizationHelper.GetDefaultAssemblyResourceString(resourceClassName, columnName);
+            var label = ScrudLocalizationHelper.GetResourceString(assembly, resourceClassName, columnName);
 
             if (!isNullable)
             {
                 var required = ScrudFactoryHelper.GetRequiredFieldValidator(checkBoxList, errorCssClass);
-                ScrudFactoryHelper.AddRow(htmlTable, label + ScrudResource.RequiredFieldIndicator, checkBoxList,
+                ScrudFactoryHelper.AddRow(htmlTable, label + Titles.RequiredFieldIndicator, checkBoxList,
                     required);
                 return;
             }

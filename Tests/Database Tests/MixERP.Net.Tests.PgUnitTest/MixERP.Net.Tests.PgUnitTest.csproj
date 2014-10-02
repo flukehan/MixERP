@@ -59,8 +59,10 @@
     <Compile Include="Helpers\TestHelper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\mixerp.licenseheader">
+      <Link>mixerp.licenseheader</Link>
+    </None>
     <None Include="App.config" />
-    <None Include="MixERP.Net.Tests.PgUnitTest.licenseheader" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Libraries\Logic\MixERP.net.Common\MixERP.Net.Common.csproj">

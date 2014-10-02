@@ -19,6 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Configuration;
 using System.Web;
+using System.Web.Hosting;
 
 namespace MixERP.Net.Common.Helpers
 {
@@ -26,31 +27,37 @@ namespace MixERP.Net.Common.Helpers
     {
         public static string GetDbParameter(string keyName)
         {
-            string path = HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["DBParameterConfigFileLocation"]);
+            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["DBParameterConfigFileLocation"]);
+            return GetConfigurationValues(path, keyName);
+        }
+
+        public static string GetMessagingParameter(string keyName)
+        {
+            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["MessagingParameterConfigFileLocation"]);
             return GetConfigurationValues(path, keyName);
         }
 
         public static string GetParameter(string keyName)
         {
-            string path = HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["ParamterConfigFileLocation"]);
+            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["ParamterConfigFileLocation"]);
             return GetConfigurationValues(path, keyName);
         }
 
         public static string GetSwitch(string keyName)
         {
-            string path = HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["SwitchConfigFileLocation"]);
+            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["SwitchConfigFileLocation"]);
             return GetConfigurationValues(path, keyName);
         }
 
         public static string GetReportParameter(string keyName)
         {
-            string path = HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["ReportConfigFileLocation"]);
+            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["ReportConfigFileLocation"]);
             return GetConfigurationValues(path, keyName);
         }
 
         public static string GetScrudParameter(string keyName)
         {
-            string path = HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["ScrudConfigFileLocation"]);
+            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["ScrudConfigFileLocation"]);
             return GetConfigurationValues(path, keyName);
         }
 

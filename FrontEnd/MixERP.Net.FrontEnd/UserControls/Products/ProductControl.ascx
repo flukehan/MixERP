@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
+
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ProductControl.ascx.cs" Inherits="MixERP.Net.FrontEnd.UserControls.Products.ProductControl" %>
 <%@ Import Namespace="MixERP.Net.Common.Helpers" %>
 
@@ -34,28 +35,28 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 </style>
 
 <div id="info-panel">
-    <asp:Literal runat="server" Text="<%$Resources:Titles,ShortCuts %>"></asp:Literal>
+    <asp:Literal runat="server" Text="Shortcuts" />
     <hr style="border-color: #97d300;" />
     <table>
         <tr>
             <td>F2
             </td>
             <td>
-                <asp:Literal runat="server" Text="<%$Resources:Titles,AddNewParty %>"></asp:Literal>
+                <asp:Literal runat="server" Text="Add a New Party" />
             </td>
         </tr>
         <tr>
             <td>F4
             </td>
             <td>
-                <asp:Literal runat="server" Text="<%$Resources:Titles,AddNewItem %>"></asp:Literal>
+                <asp:Literal runat="server" Text="Add a new item" />
             </td>
         </tr>
         <tr>
             <td>CTRL + RET
             </td>
             <td>
-                <asp:Literal runat="server" Text="<%$Resources:Titles,AddNewRow%>"></asp:Literal>
+                <asp:Literal runat="server" Text="Add a New Row" />
             </td>
         </tr>
     </table>
@@ -116,8 +117,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
             <div class="form-group">
                 <asp:Literal ID="TransactionTypeLiteral" runat="server" />
                 <asp:RadioButtonList ID="TransactionTypeRadioButtonList" runat="server" CssClass="input-sm" RepeatDirection="Horizontal">
-                    <asp:ListItem Text="<%$ Resources:Titles, Cash %>" Value="<%$ Resources:Titles, Cash %>" Selected="True" />
-                    <asp:ListItem Text="<%$ Resources:Titles, Credit %>" Value="<%$ Resources:Titles, Credit %>" />
+                    <asp:ListItem Text=" Cash" Value="Cash" Selected="True" />
+                    <asp:ListItem Text=" Credit" Value="Credit" />
                 </asp:RadioButtonList>
             </div>
         </div>
@@ -131,75 +132,75 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         <tbody>
             <tr>
                 <th scope="col" style="width: 90px;">
-                    <asp:Literal runat="server" Text="<%$ Resources:Titles,Code %>" />
+                    <asp:Literal runat="server" Text="Code" />
                 </th>
                 <th style="width: 300px;">
-                    <asp:Literal runat="server" Text="<%$ Resources:Titles,ItemName %>" />
+                    <asp:Literal runat="server" Text="ItemName" />
                 </th>
                 <th class="text-right" style="width: 50px;">
-                    <asp:Literal runat="server" Text="<%$ Resources:Titles,QuantityAbbreviated %>" />
+                    <asp:Literal runat="server" Text="Qty" />
                 </th>
                 <th style="width: 120px;">
-                    <asp:Literal runat="server" Text="<%$ Resources:Titles,Unit%>" />
+                    <asp:Literal runat="server" Text="Unit" />
                 </th>
                 <th class="text-right" style="width: 100px;">
-                    <asp:Literal runat="server" Text="<%$ Resources:Titles,Price %>" />
+                    <asp:Literal runat="server" Text="Price" />
                 </th>
                 <th class="text-right" style="width: 100px;">
-                    <asp:Literal runat="server" Text="<%$ Resources:Titles,Amount %>" />
+                    <asp:Literal runat="server" Text="Amount" />
                 </th>
                 <th class="text-right" style="width: 50px;">
-                    <asp:Literal runat="server" Text="<%$ Resources:Titles,Discount %>" />
+                    <asp:Literal runat="server" Text="Discount" />
                 </th>
                 <th class="text-right" style="width: 100px;">
-                    <asp:Literal runat="server" Text="<%$ Resources:Titles,SubTotal %>" />
+                    <asp:Literal runat="server" Text="SubTotal" />
                 </th>
                 <th class="text-right" style="width: 60px;">
-                    <asp:Literal runat="server" Text="<%$ Resources:Titles,Rate %>" />
+                    <asp:Literal runat="server" Text="Rate" />
                 </th>
                 <th class="text-right" style="width: 100px;">
-                    <asp:Literal runat="server" Text="<%$ Resources:Titles,Tax %>" />
+                    <asp:Literal runat="server" Text="Tax" />
                 </th>
                 <th class="text-right" style="width: 110px;">
-                    <asp:Literal runat="server" Text="<%$ Resources:Titles,Total %>" />
+                    <asp:Literal runat="server" Text="Total" />
                 </th>
                 <th>
-                    <asp:Literal runat="server" Text="<%$ Resources:Titles,Action %>" />
+                    <asp:Literal runat="server" Text="Action" />
                 </th>
             </tr>
             <tr class="footer-row">
                 <td>
                     <input type="text"
                         id="ItemCodeTextBox"
-                        title='<asp:Literal runat="server" Text="<%$Resources:Titles,AltC%>" />'
+                        title='<asp:Literal runat="server" Text="Alt + C" />'
                         class="form-control input-sm" />
                 </td>
                 <td>
                     <select name="ItemDropDownList"
                         id="ItemDropDownList"
                         class="form-control  input-sm"
-                        title='<asp:Literal runat="server" Text="<%$Resources:Titles,CtrlI%>" />'>
+                        title='<asp:Literal runat="server" Text="Ctrl + I" />'>
                     </select>
                 </td>
                 <td>
                     <input type="text"
                         id="QuantityTextBox"
                         class="form-control text-right input-sm"
-                        title='<asp:Literal runat="server" Text="<%$Resources:Titles,CtrlQ%>" />'
+                        title='<asp:Literal runat="server" Text="Ctrl + Q" />'
                         value="1" />
                 </td>
                 <td>
                     <select name="UnitDropDownList"
                         id="UnitDropDownList"
                         class="form-control input-sm"
-                        title='<asp:Literal runat="server" Text="<%$Resources:Titles,CtrlU%>" />'>
+                        title='<asp:Literal runat="server" Text="Ctrl + U" />'>
                     </select>
                 </td>
                 <td>
                     <input type="text"
                         id="PriceTextBox"
                         class="text-right currency form-control input-sm"
-                        title='<asp:Literal runat="server" Text="<%$Resources:Titles,AltP%>" />' />
+                        title='<asp:Literal runat="server" Text="Alt + P" />' />
                 </td>
                 <td>
                     <input type="text"
@@ -211,7 +212,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                     <input type="text"
                         id="DiscountTextBox"
                         class="text-right currency form-control input-sm"
-                        title='<asp:Literal runat="server" Text="<%$Resources:Titles,CtrlD%>" />' />
+                        title='<asp:Literal runat="server" Text="Ctrl + D" />' />
                 </td>
                 <td>
                     <input type="text"
@@ -228,7 +229,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                     <input type="text"
                         id="TaxTextBox"
                         class="text-right currency form-control input-sm"
-                        title='<asp:Literal runat="server" Text="<%$Resources:Titles,CtrlT%>" />' />
+                        title='<asp:Literal runat="server" Text="Ctrl + T" />' />
                 </td>
                 <td>
                     <input type="text"
@@ -240,8 +241,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                     <input type="button"
                         id="AddButton"
                         class="btn btn-primary btn-sm"
-                        value='<asp:Literal runat="server" Text="<%$Resources:Titles,Add%>" />'
-                        title='<asp:Literal runat="server" Text="<%$Resources:Titles,CtrlReturn%>" />' />
+                        value='<asp:Literal runat="server" Text="Add" />'
+                        title='<asp:Literal runat="server" Text="Ctrl + Return" />' />
                 </td>
             </tr>
         </tbody>
@@ -252,7 +253,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     </asp:Panel>
 
     <h4>
-        <asp:Label ID="AttachmentLabel" runat="server" Text="<%$ Resources:Titles, AttachmentsPlus %>" CssClass="" />
+        <asp:Label ID="AttachmentLabel" runat="server" Text=" Attachments (+)" CssClass="" />
     </h4>
 
     <div id="attachment" class="shade" style="display: none; padding-left: 24px;">
@@ -297,7 +298,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
             <asp:TableRow>
                 <asp:TableCell>
                     <label>
-                        <asp:Literal ID="TotalsLiteral" runat="server" Text="<%$Resources:Titles, Totals %>">
+                        <asp:Literal ID="TotalsLiteral" runat="server" Text=" Totals">
                         </asp:Literal>
                     </label>
                 </asp:TableCell><asp:TableCell>
@@ -341,7 +342,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                     <asp:Literal ID="CashRepositoryBalanceTextBoxLabelLiteral" runat="server" />
                 </asp:TableCell><asp:TableCell>
                     <asp:TextBox ID="CashRepositoryBalanceTextBox" runat="server" Width="140" CssClass="form-control input-sm" ReadOnly="true" />
-                    <asp:Literal ID="DrLiteral" runat="server" Text="<%$Resources:Titles, Dr %>" />
+                    <asp:Literal ID="DrLiteral" runat="server" Text=" Dr" />
                 </asp:TableCell>
             </asp:TableRow>
             <asp:TableRow ID="CostCenterRow" runat="server">
@@ -374,7 +375,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                 </asp:TableCell>
                 <asp:TableCell>
                         <button type="button" id="SaveButton" class="btn btn-default btn-sm">
-                            <asp:Literal runat="server" Text="<%$Resources:Titles, Save%>" />
+                            <asp:Literal runat="server" Text=" Save" />
                         </button>
                 </asp:TableCell>
             </asp:TableRow>
@@ -400,7 +401,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 <script type="text/javascript">
     var isSales = ("<%= this.Book %>" == "Sales");
     var tranBook = "<%=this.GetTranBook() %>";
-    var taxAfterDiscount = "<%=Switches.TaxAfterDiscount().ToString()%>";
+    var taxAfterDiscount = "<%=Switches.TaxAfterDiscount().ToString() %>";
     var verifyStock = ("<%= this.VerifyStock %>" == "True");
 </script>
 

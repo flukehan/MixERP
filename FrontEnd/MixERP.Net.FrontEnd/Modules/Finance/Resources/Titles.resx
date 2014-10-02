@@ -138,6 +138,9 @@
   <data name="BankAccounts" xml:space="preserve">
     <value>Bank Accounts</value>
   </data>
+  <data name="Book" xml:space="preserve">
+    <value>Book</value>
+  </data>
   <data name="CashRepository" xml:space="preserve">
     <value>Cash Repository</value>
   </data>
@@ -192,8 +195,17 @@
   <data name="DebitTotal" xml:space="preserve">
     <value>Debit Total</value>
   </data>
+  <data name="EnteredBy" xml:space="preserve">
+    <value>Entered By</value>
+  </data>
   <data name="ER" xml:space="preserve">
     <value>ER</value>
+  </data>
+  <data name="GLAdvice" xml:space="preserve">
+    <value>GL Advice</value>
+  </data>
+  <data name="GLDetails" xml:space="preserve">
+    <value>GL Details</value>
   </data>
   <data name="JournalVoucherEntry" xml:space="preserve">
     <value>Journal Voucher Entry</value>
@@ -203,6 +215,9 @@
   </data>
   <data name="LCDebit" xml:space="preserve">
     <value>LC Debit</value>
+  </data>
+  <data name="OfficeCode" xml:space="preserve">
+    <value>Office Code</value>
   </data>
   <data name="PostTransaction" xml:space="preserve">
     <value>Post Transaction</value>
@@ -222,7 +237,43 @@
   <data name="TaxTypes" xml:space="preserve">
     <value>Tax Types</value>
   </data>
+  <data name="TranCode" xml:space="preserve">
+    <value>Tran Code</value>
+  </data>
+  <data name="TransactionDate" xml:space="preserve">
+    <value>Transaction Date</value>
+  </data>
+  <data name="TransactionDetails" xml:space="preserve">
+    <value>Transaction Details</value>
+  </data>
+  <data name="TransactionStatus" xml:space="preserve">
+    <value>Transaction Status</value>
+  </data>
   <data name="ValueDate" xml:space="preserve">
     <value>Value Date</value>
+  </data>
+  <data name="VerificationReason" xml:space="preserve">
+    <value>Verification Reason</value>
+  </data>
+  <data name="VerifiedBy" xml:space="preserve">
+    <value>Verified By</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Fax" xml:space="preserve">
+    <value>Fax</value>
+  </data>
+  <data name="PreparedOn" xml:space="preserve">
+    <value>Prepared On</value>
+  </data>
+  <data name="Tel" xml:space="preserve">
+    <value>Tel</value>
+  </data>
+  <data name="Url" xml:space="preserve">
+    <value>Url</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>User</value>
   </data>
 </root>

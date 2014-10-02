@@ -1,6 +1,9 @@
 ﻿DROP SCHEMA IF EXISTS scrud CASCADE;
 CREATE SCHEMA scrud;
 
+COMMENT ON SCHEMA scrud IS 'Contains objects related to MixERP''s ScrudFactory project.';
+
+
 CREATE VIEW scrud.constraint_column_usage AS
     SELECT CAST(current_database() AS text) AS table_catalog,
            CAST(tblschema AS text) AS table_schema,
@@ -43,6 +46,9 @@ CREATE VIEW scrud.constraint_column_usage AS
 
       ) AS x (tblschema, tblname, tblowner, colname, cstrschema, cstrname);
 
+COMMENT ON VIEW scrud.constraint_column_usage IS 'Lists all columns having constraints.';
+
+	
 
 CREATE VIEW scrud.relationship_view
 AS
@@ -73,6 +79,8 @@ LEFT JOIN
 WHERE
 	lower(tc.constraint_type) in ('foreign key');
 
+COMMENT ON VIEW scrud.relationship_view IS 'Lists all foreign key columns and their relation with the parent tables.';
+
 CREATE FUNCTION scrud.parse_default(text)
 RETURNS text
 AS
@@ -90,6 +98,8 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+
+COMMENT ON FUNCTION scrud.parse_default(text) IS 'Parses default constraint column values.';
 
 
 CREATE VIEW scrud.mixerp_table_view
@@ -131,4 +141,5 @@ NOT IN
 		'audit_user_id', 'audit_ts'
 	)
 ;
-	
+
+COMMENT ON VIEW scrud.mixerp_table_view IS 'Lists all schema, table, and columns with associated types, domains, references, and constraints.';

@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
+SET search_path = public;
 
 DO 
 $$
@@ -24,3 +25,6 @@ BEGIN
 END;
 $$
 LANGUAGE plpgsql;
+
+
+CREATE EXTENSION IF NOT EXISTS tablefunc;

@@ -25,13 +25,13 @@ CREATE FUNCTION transactions.get_receipt_view
 )
 RETURNS TABLE
 (
-        transaction_master_id                   bigint,
+        id                                      bigint,
         value_date                              date,
         reference_number                        text,
         statement_reference                     text,
         office                                  text,
         party                                   text,
-        user_name                               text,
+        "user"                                    text,
         currency_code                           text,
         amount                                  money_strict,
 	transaction_ts				TIMESTAMP WITH TIME ZONE,
@@ -64,7 +64,8 @@ BEGIN
         ON transactions.transaction_master.office_id = office.offices.office_id
         INNER JOIN office.users
         ON transactions.transaction_master.user_id = office.users.user_id
-        WHERE transactions.transaction_master.office_id IN (SELECT * FROM office.get_office_ids(_office_id))
+        WHERE transactions.transaction_master.verification_status_id > 0
+        AND transactions.transaction_master.office_id IN (SELECT * FROM office.get_office_ids(_office_id))
 	AND transactions.transaction_master.value_date BETWEEN _date_from AND _date_to
         AND
 	lower

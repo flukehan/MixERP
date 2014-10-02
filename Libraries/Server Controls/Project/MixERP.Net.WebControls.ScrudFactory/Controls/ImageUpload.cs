@@ -22,19 +22,20 @@ using MixERP.Net.WebControls.ScrudFactory.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Resources;
 using System;
 using System.IO;
+using System.Reflection;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using LocalizationHelper = MixERP.Net.Common.Helpers.LocalizationHelper;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls
 {
     public static class ScrudFileUpload
     {
-        public static void AddFileUpload(HtmlTable htmlTable, string resourceClassName, string columnName,
-            bool isNullable, string errorCssClass)
+        public static void AddFileUpload(HtmlTable htmlTable, string resourceClassName, string columnName, bool isNullable, string errorCssClass, Assembly assembly)
         {
-            var label = LocalizationHelper.GetDefaultAssemblyResourceString(resourceClassName, columnName);
+            var label = ScrudLocalizationHelper.GetResourceString(assembly, resourceClassName, columnName);
             var fileUpload = GetFileUpload(columnName + "_fileupload");
             var validator = GetImageValidator(fileUpload, errorCssClass);
 
@@ -45,7 +46,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
             if (!isNullable)
             {
                 var required = ScrudFactoryHelper.GetRequiredFieldValidator(fileUpload, errorCssClass);
-                ScrudFactoryHelper.AddRow(htmlTable, label + ScrudResource.RequiredFieldIndicator, fileUpload, required,
+                ScrudFactoryHelper.AddRow(htmlTable, label + Titles.RequiredFieldIndicator, fileUpload, required,
                     validator);
                 return;
             }
@@ -96,7 +97,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
             using (var validator = new RegularExpressionValidator())
             {
                 validator.ID = controlToValidate.ID + "RegexValidator";
-                validator.ErrorMessage = @"<br/>" + ScrudResource.InvalidImage;
+                validator.ErrorMessage = @"<br/>" + Titles.InvalidImage;
                 validator.CssClass = cssClass;
                 validator.ControlToValidate = controlToValidate.ID;
                 validator.EnableClientScript = true;

@@ -54,77 +54,32 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_GlobalResources\Errors.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Errors.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\ScrudResource.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ScrudResource.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\ScrudResource.fr.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ScrudResource.fr.resx</DependentUpon>
-    </Compile>
     <Compile Include="App_GlobalResources\Labels.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Labels.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Labels.fr.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Labels.fr.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\Questions.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Questions.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\Questions.fr.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Questions.fr.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Setup.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Setup.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Setup.fr.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Setup.fr.resx</DependentUpon>
-    </Compile>
     <Compile Include="App_GlobalResources\Titles.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Titles.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\Titles.fr.designer.cs" />
-    <Compile Include="App_GlobalResources\Titles.fr1.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Titles.fr.resx</DependentUpon>
-    </Compile>
     <Compile Include="App_GlobalResources\Warnings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Warnings.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Warnings.fr.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Warnings.fr.resx</DependentUpon>
     </Compile>
     <Compile Include="Base\MixERPUserControl.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -331,12 +286,16 @@
     <Content Include="bundles\scripts\master-page.min.js">
       <DependentUpon>master-page.js</DependentUpon>
     </Content>
+    <Content Include="db\mixerp.de-DE.sql" />
+    <Content Include="db\mixerp.en-US.sql" />
+    <Content Include="db\mixerp.fr-FR.sql" />
     <Content Include="db\src\00. db core\0. mixerp.sql" />
     <Content Include="db\src\00. db core\1. scrud.sql" />
     <Content Include="db\src\00. db core\2. install-unit-test.sql" />
     <Content Include="db\src\00. db core\2. mixerp-db-schema.sql" />
     <Content Include="db\src\00. db core\2nd-quadrant-audit-trigger.sql" />
     <Content Include="db\src\00. db core\3. roles-and-priviledge.sql" />
+    <Content Include="db\src\00. db core\4.casts.sql" />
     <Content Include="db\src\01. types, domains, tables, and constraints\types.sql" />
     <Content Include="db\src\01. types, domains, tables, and constraints\domains.sql" />
     <Content Include="db\src\01. types, domains, tables, and constraints\tables and constraints.sql" />
@@ -351,10 +310,11 @@
     <Content Include="db\src\02. functions and logic\core\core.get_account_id_by_party_id.sql" />
     <Content Include="db\src\02. functions and logic\core\core.get_account_id_by_shipper_id.sql" />
     <Content Include="db\src\02. functions and logic\core\core.get_account_name.sql" />
-    <Content Include="db\src\02. functions and logic\core\core.get_agent_name_by_agent_id.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_salesperson_name_by_salesperson_id.sql" />
     <Content Include="db\src\02. functions and logic\core\core.get_associated_units.sql" />
     <Content Include="db\src\02. functions and logic\core\core.get_associated_units_from_item_code.sql" />
     <Content Include="db\src\02. functions and logic\core\core.get_associated_units_from_item_id.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_attachment_lookup_info.sql" />
     <Content Include="db\src\02. functions and logic\core\core.get_base_quantity_by_unit_name.sql" />
     <Content Include="db\src\02. functions and logic\core\core.get_base_unit_id_by_unit_name.sql" />
     <Content Include="db\src\02. functions and logic\core\core.get_cash_account_id.sql" />
@@ -402,7 +362,13 @@
     <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_last_receipt_date.sql" />
     <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_non_gl_product_view.sql" />
     <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_product_view.sql" />
+    <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_receipt_view.sql" />
+    <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_top_selling_products_of_all_time.sql" />
     <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_total_due.sql" />
+    <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_value_date.sql" />
+    <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.post_receipt_function.sql" />
+    <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.post_sales_return.sql" />
+    <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.validate_item_for_return.sql" />
     <Content Include="db\src\02. functions and logic\logic\triggers\policy.check_menu_policy_trigger.sql" />
     <Content Include="db\src\02. functions and logic\logic\triggers\transactions.verification_trigger.sql" />
     <Content Include="db\src\02. functions and logic\office\office.create_user.sql" />
@@ -428,6 +394,7 @@
     <Content Include="db\src\02. functions and logic\office\office.is_sys_user.sql" />
     <Content Include="db\src\02. functions and logic\office\office.validate_login.sql" />
     <Content Include="db\src\02. functions and logic\policy\policy.is_locked_out_till.sql" />
+    <Content Include="db\src\02. functions and logic\public\explode_array.sql" />
     <Content Include="db\src\02. functions and logic\transactions\transactions.are_sales_orders_already_merged.sql" />
     <Content Include="db\src\02. functions and logic\transactions\transactions.are_sales_quotations_already_merged.sql" />
     <Content Include="db\src\02. functions and logic\transactions\transactions.get_default_currency_code.sql" />
@@ -435,9 +402,16 @@
     <Content Include="db\src\02. functions and logic\transactions\transactions.get_exchange_rate.sql" />
     <Content Include="db\src\02. functions and logic\transactions\transactions.get_invoice_amount.sql" />
     <Content Include="db\src\02. functions and logic\transactions\transactions.get_new_transaction_counter.sql" />
+    <Content Include="db\src\02. functions and logic\transactions\transactions.get_stock_master_id_by_transaction_master_id.sql" />
     <Content Include="db\src\02. functions and logic\transactions\transactions.get_transaction_code.sql" />
+    <Content Include="db\src\02. functions and logic\transactions\transactions.get_transaction_master_id_by_stock_master_id.sql" />
+    <Content Include="db\src\02. functions and logic\transactions\transactions.is_purchase.sql" />
+    <Content Include="db\src\02. functions and logic\transactions\transactions.is_valid_party_by_stock_master_id.sql" />
+    <Content Include="db\src\02. functions and logic\transactions\transactions.is_valid_party_by_transaction_master_id.sql" />
+    <Content Include="db\src\02. functions and logic\transactions\transactions.is_valid_stock_transaction_by_stock_master_id.sql" />
+    <Content Include="db\src\02. functions and logic\transactions\transactions.is_valid_stock_transaction_by_transaction_master_id.sql" />
     <Content Include="db\src\04. default values\00. currency, accounts, account-parameters.sql" />
-    <Content Include="db\src\04. default values\agents, ageing-slabs, party-types.sql" />
+    <Content Include="db\src\04. default values\salespersons, ageing-slabs, party-types.sql" />
     <Content Include="db\src\04. default values\brands, item-groups, tax, shipping.sql" />
     <Content Include="db\src\04. default values\crm.lead-sources, lead-statuses, opportunity-stages.sql" />
     <Content Include="db\src\04. default values\office, department, roles, users.sql" />
@@ -447,8 +421,10 @@
     <Content Include="db\src\04. default values\verification-statuses, flag-types, frequencies.sql" />
     <Content Include="db\src\05. views\core\core.accounts_view.sql" />
     <Content Include="db\src\05. views\core\core.account_view.sql" />
-    <Content Include="db\src\05. views\core\core.agent_bonus_setup_view.sql" />
-    <Content Include="db\src\05. views\core\core.agent_view.sql" />
+    <Content Include="db\src\05. views\core\core.compound_item_detail_view.sql" />
+    <Content Include="db\src\05. views\core\core.frequency_setup_view.sql" />
+    <Content Include="db\src\05. views\core\core.salesperson_bonus_setup_view.sql" />
+    <Content Include="db\src\05. views\core\core.salesperson_view.sql" />
     <Content Include="db\src\05. views\core\core.bank_account_view.sql" />
     <Content Include="db\src\05. views\core\core.bonus_slab_detail_view.sql" />
     <Content Include="db\src\05. views\core\core.bonus_slab_view.sql" />
@@ -490,11 +466,17 @@
     <Content Include="db\src\10. triggers\transactions\transactions.restrict_delete_trigger.sql" />
     <Content Include="db\src\12. plpgunit-test\core\parties\unit_tests.check_party_currency_code_mismatch.sql" />
     <Content Include="db\src\12. plpgunit-test\core\parties\unit_tests.check_party_null_account_id.sql" />
+    <Content Include="db\src\dump.sql" />
+    <Content Include="db\src\refresh-materialized-views.sql" />
     <Content Include="Modules\Default.aspx" />
+    <Content Include="Resource\Configuration\MessagingParameters.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Resource\Configuration\PartyControlParameters.xml" />
     <Content Include="Resource\Icons\checklist-16.png" />
     <Content Include="Resource\Icons\insert-16.png" />
     <Content Include="Resource\Static\images\not-image-file.png" />
+    <Content Include="Resource\Static\Templates\EmailTemplate.html" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\ajax-file-upload.js" />
     <Content Include="Scripts\bootstrap\css\bootstrap-theme.css" />
@@ -603,7 +585,7 @@
     <Content Include="Resource\Icons\signout-16.png" />
     <Content Include="Resource\Icons\top-16.png" />
     <Content Include="Resource\Icons\word-16.png" />
-    <Content Include="Resource\TempImages\index.html" />
+    <Content Include="Resource\Temp\index.html" />
     <Content Include="Site\RuntimeError.aspx" />
     <Content Include="Scripts\chartjs\Chart.min.js" />
     <Content Include="Scripts\chartjs\legend.js" />
@@ -963,7 +945,6 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="MixERP.Net.FrontEnd.licenseheader" />
     <Content Include="Mix Open Foundation.snk" />
     <Content Include="MixERPReportMaster.Master" />
     <Content Include="bundles\scripts\master-page.min.js.map">
@@ -987,6 +968,9 @@
     <Content Include="Scripts\colorbox\bower.json" />
     <Content Include="Scripts\colorbox\colorbox.ai" />
     <Content Include="Scripts\colorbox\colorbox.jquery.json" />
+    <Content Include="..\..\mixerp.licenseheader">
+      <Link>mixerp.licenseheader</Link>
+    </Content>
     <None Include="bundles\scripts\master-page.js.bundle" />
     <None Include="bundles\stylesheets\master-page.css.bundle" />
     <None Include="bundles\scripts\parties-popup.js.bundle" />
@@ -1018,9 +1002,15 @@
     <Folder Include="Resource\DatabaseBackups\" />
     <Folder Include="Resource\Frameworks\" />
     <Folder Include="Resource\Logo\" />
+    <Folder Include="Resource\Static\Emails\" />
+    <Folder Include="Resource\Temp\Images\" />
     <Folder Include="Scripts\CodeMirror\bin\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Logic\MixERP.Net.Messaging\MixERP.Net.Messaging.csproj">
+      <Project>{d29b7b60-76b2-4a00-a8fa-7654519afcd4}</Project>
+      <Name>MixERP.Net.Messaging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.Common\MixERP.Net.WebControls.Common.csproj">
       <Project>{2d961540-6597-4e7b-969c-974d71d820dd}</Project>
       <Name>MixERP.Net.WebControls.Common</Name>
@@ -1063,89 +1053,27 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_GlobalResources\ScrudResource.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>ScrudResource.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_GlobalResources\Labels.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Labels.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_GlobalResources\Questions.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Questions.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_GlobalResources\Warnings.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Warnings.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_GlobalResources\Setup.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Setup.Designer.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_GlobalResources\ScrudResource.fr.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>ScrudResource.fr.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_GlobalResources\Labels.fr.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Labels.fr.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_GlobalResources\Questions.fr.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Questions.fr.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_GlobalResources\Setup.fr.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Setup.fr.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_GlobalResources\Warnings.fr.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Warnings.fr.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_GlobalResources\Errors.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Errors.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="App_GlobalResources\Titles.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_GlobalResources\Titles.fr.resx">
+    <Content Include="App_GlobalResources\Warnings.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Titles.fr1.designer.cs</LastGenOutput>
+      <LastGenOutput>Warnings.Designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\Labels.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Labels.Designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\Questions.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Questions.Designer.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <PropertyGroup>

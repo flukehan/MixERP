@@ -24,10 +24,12 @@ using MixERP.Net.WebControls.ScrudFactory.Resources;
 using System;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using FormHelper = MixERP.Net.WebControls.ScrudFactory.Data.FormHelper;
+using LocalizationHelper = MixERP.Net.Common.Helpers.LocalizationHelper;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 {
@@ -36,9 +38,9 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
         public static void AddDropDownList(HtmlTable htmlTable, string resourceClassName, string itemSelectorPath,
             string columnName, bool isNullable, string tableSchema, string tableName, string tableColumn,
             string defaultValue, string displayFields, string displayViews, bool useDisplayViewsAsParent,
-            string selectedValues, string errorCssClass)
+            string selectedValues, string errorCssClass, Assembly assembly)
         {
-            var label = LocalizationHelper.GetDefaultAssemblyResourceString(resourceClassName, columnName);
+            var label = ScrudLocalizationHelper.GetResourceString(assembly, resourceClassName, columnName);
 
             var dropDownList = GetDropDownList(columnName + "_dropdownlist");
 
@@ -61,7 +63,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
             else
             {
                 var required = ScrudFactoryHelper.GetRequiredFieldValidator(dropDownList, errorCssClass);
-                ScrudFactoryHelper.AddDropDownList(htmlTable, label + ScrudResource.RequiredFieldIndicator, dropDownList,
+                ScrudFactoryHelper.AddDropDownList(htmlTable, label + Titles.RequiredFieldIndicator, dropDownList,
                     itemSelectorAnchor, required);
             }
         }

@@ -124,6 +124,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Book.
+        /// </summary>
+        internal static string Book {
+            get {
+                return ResourceManager.GetString("Book", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cash Repository.
         /// </summary>
         internal static string CashRepository {
@@ -286,11 +295,56 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        internal static string Email {
+            get {
+                return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Entered By.
+        /// </summary>
+        internal static string EnteredBy {
+            get {
+                return ResourceManager.GetString("EnteredBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ER.
         /// </summary>
         internal static string ER {
             get {
                 return ResourceManager.GetString("ER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fax.
+        /// </summary>
+        internal static string Fax {
+            get {
+                return ResourceManager.GetString("Fax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GL Advice.
+        /// </summary>
+        internal static string GLAdvice {
+            get {
+                return ResourceManager.GetString("GLAdvice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GL Details.
+        /// </summary>
+        internal static string GLDetails {
+            get {
+                return ResourceManager.GetString("GLDetails", resourceCulture);
             }
         }
         
@@ -322,11 +376,29 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Office Code.
+        /// </summary>
+        internal static string OfficeCode {
+            get {
+                return ResourceManager.GetString("OfficeCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Post Transaction.
         /// </summary>
         internal static string PostTransaction {
             get {
                 return ResourceManager.GetString("PostTransaction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prepared On.
+        /// </summary>
+        internal static string PreparedOn {
+            get {
+                return ResourceManager.GetString("PreparedOn", resourceCulture);
             }
         }
         
@@ -376,11 +448,92 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tel.
+        /// </summary>
+        internal static string Tel {
+            get {
+                return ResourceManager.GetString("Tel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tran Code.
+        /// </summary>
+        internal static string TranCode {
+            get {
+                return ResourceManager.GetString("TranCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transaction Date.
+        /// </summary>
+        internal static string TransactionDate {
+            get {
+                return ResourceManager.GetString("TransactionDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transaction Details.
+        /// </summary>
+        internal static string TransactionDetails {
+            get {
+                return ResourceManager.GetString("TransactionDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transaction Status.
+        /// </summary>
+        internal static string TransactionStatus {
+            get {
+                return ResourceManager.GetString("TransactionStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Url.
+        /// </summary>
+        internal static string Url {
+            get {
+                return ResourceManager.GetString("Url", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User.
+        /// </summary>
+        internal static string User {
+            get {
+                return ResourceManager.GetString("User", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Value Date.
         /// </summary>
         internal static string ValueDate {
             get {
                 return ResourceManager.GetString("ValueDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verification Reason.
+        /// </summary>
+        internal static string VerificationReason {
+            get {
+                return ResourceManager.GetString("VerificationReason", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verified By.
+        /// </summary>
+        internal static string VerifiedBy {
+            get {
+                return ResourceManager.GetString("VerifiedBy", resourceCulture);
             }
         }
     }

@@ -1,4 +1,23 @@
-﻿/*jshint -W032, -W107, -W098 */
+﻿/********************************************************************************
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This file is part of MixERP.
+
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
+***********************************************************************************/
+
+/*jshint -W032, -W107, -W098 */
 /*global areYouSureLocalized, Chart, currencyDecimalPlaces, decimalSeparator, legend, noneLocalized, Page_ClientValidate, selectLocalized, shortDateFormat, Sys, thousandSeparator, today*/
 
 function getDocHeight(margin) {
@@ -249,10 +268,18 @@ function Page_EndRequest() {
 }
 
 var setCurrencyFormat = function () {
+    if (typeof currencyDecimalPlaces === "undefined" || typeof decimalSeparator === "undefined" || typeof thousandSeparator === "undefined") {
+        return;
+    };
+
     $('input.currency').number(true, currencyDecimalPlaces, decimalSeparator, thousandSeparator);
 };
 
 var setNumberFormat = function () {
+    if (typeof decimalSeparator === "undefined" || typeof thousandSeparator === "undefined") {
+        return;
+    };
+
     $('input.float').number(true, 6, decimalSeparator, thousandSeparator);
 };
 
@@ -282,7 +309,7 @@ function hexToRgb(hex) {
     } : null;
 };
 
-function prepareChart(datasourceId, canvasId, legendId, type) {
+function prepareChart(datasourceId, canvasId, legendId, type, log) {
     var table = $("#" + datasourceId);
     var labels = [];
     var data = [];
@@ -291,21 +318,13 @@ function prepareChart(datasourceId, canvasId, legendId, type) {
     var index = 0;
 
     //Loop through the table header for labels.
-    table.find("thead th").each(function () {
-        //Ignore the first column of the header
-        if (index > 0) {
-            //Create labels from header row columns.
-            labels.push($(this).html());
-        }
-
-        index++;
+    table.find("tr:first-child th:not(:first-child)").each(function () {
+        //Create labels from header row columns.
+        labels.push($(this).html());
     });
 
-    //Reset the counter.
-    index = 0;
-
     //Loop through each row of the table body.
-    table.find("tbody tr").each(function () {
+    table.find("tr").not(":first").each(function () {
         //Get an instance of the current row
         var row = $(this);
 
@@ -315,9 +334,9 @@ function prepareChart(datasourceId, canvasId, legendId, type) {
         //Reset the data object's value from the previous iteration.
         data = [];
         //Loop through the row columns.
-        row.find("td").each(function () {
+        row.find(">:not(:first-child)").each(function () {
             //Get data from this row.
-            data.push($(this).html());
+            data.push(parseFloat2($(this).html()));
         });
 
         //Create a new dataset representing this row.
@@ -332,6 +351,10 @@ function prepareChart(datasourceId, canvasId, legendId, type) {
 
         //Add the dataset object to the array object.
         datasets.push(dataset);
+
+        if (log) {
+            console.log(JSON.stringify(datasets));
+        }
 
         index++;
     });
@@ -361,34 +384,42 @@ function prepareChart(datasourceId, canvasId, legendId, type) {
     table.hide();
 }
 
-function preparePieChart(datasourceId, canvasId, legendId, type) {
+function preparePieChart(datasourceId, canvasId, legendId, type, hide, titleColumnIndex, valueColumnIndex) {
     var table = $("#" + datasourceId);
     var value;
     var data = [];
 
+    if (typeof titleColumnIndex === "undefined") {
+        titleColumnIndex = 0;
+    };
+
+    if (typeof valueColumnIndex === "undefined") {
+        valueColumnIndex = 1;
+    };
+
     //Reset the counter.
-    var index = 0;
+    var counter = 0;
 
     //Loop through each row of the table body.
-    table.find("tbody tr").each(function () {
+    table.find("tr").not(":first").each(function () {
         //Get an instance of the current row
         var row = $(this);
 
         //The first column of each row is the legend.
-        var title = row.find(">:first-child").html();
+        var title = row.find("td:eq(" + parseInt2(titleColumnIndex) + ")").html();
 
         //The first column of each row is the legend.
-        value = parseInt(row.find("td").html());
+        value = parseInt(row.find("td:eq(" + parseInt2(valueColumnIndex) + ")").html());
 
         var dataset = {
             value: value,
-            color: chartColors[index],
+            color: chartColors[counter],
             title: title
         };
 
         //Add the dataset object to the array object.
         data.push(dataset);
-        index++;
+        counter++;
     });
 
     var ctx = document.getElementById(canvasId).getContext("2d");
@@ -406,7 +437,9 @@ function preparePieChart(datasourceId, canvasId, legendId, type) {
     }
 
     legend(document.getElementById(legendId), data);
-    table.hide();
+    if (hide) {
+        table.hide();
+    };
 };
 
 /******************************************************************************************************

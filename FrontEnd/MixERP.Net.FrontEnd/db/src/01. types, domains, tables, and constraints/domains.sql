@@ -10,6 +10,8 @@ CHECK
 	)
 );
 
+COMMENT ON DOMAIN transaction_type IS 'This domain should not be localized.';
+
 /*******************************************************************
 	MIXERP STRICT Data Types: NEGATIVES ARE NOT ALLOWED
 *******************************************************************/
@@ -78,10 +80,6 @@ CHECK
 (
 	VALUE >= 0
 );
-
-DROP DOMAIN IF EXISTS image_path CASCADE;
-CREATE DOMAIN image_path
-AS text;
 
 DROP DOMAIN IF EXISTS color CASCADE;
 CREATE DOMAIN color

@@ -127,7 +127,7 @@ BEGIN
 	ELSE
 		RAISE NOTICE 'No auto verification policy found for this user.';
 	END IF;
-RETURN;
+	RETURN;
 END
 $$
 LANGUAGE plpgsql;

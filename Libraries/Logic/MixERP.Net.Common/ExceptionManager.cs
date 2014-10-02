@@ -41,7 +41,7 @@ namespace MixERP.Net.Common
             if (HttpContext.Current.Session != null)
             {
                 HttpContext.Current.Session["ex"] = exception;
-                HttpContext.Current.Server.Transfer("~/Site/RuntimeError.aspx", true);
+                HttpContext.Current.Server.TransferRequest("~/Site/RuntimeError.aspx", true);
             }
         }
     }

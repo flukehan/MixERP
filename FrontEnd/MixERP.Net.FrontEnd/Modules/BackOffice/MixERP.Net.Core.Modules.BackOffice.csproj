@@ -63,6 +63,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Handlers\ImageHandler.ashx" />
+    <Content Include="..\..\..\..\mixerp.licenseheader">
+      <Link>mixerp.licenseheader</Link>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -254,6 +257,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Questions.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\ScrudResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ScrudResource.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Titles.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -309,6 +317,10 @@
     <EmbeddedResource Include="Resources\Questions.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Questions.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ScrudResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ScrudResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Titles.resx">
       <Generator>ResXFileCodeGenerator</Generator>

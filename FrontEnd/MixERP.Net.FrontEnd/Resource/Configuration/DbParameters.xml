@@ -18,11 +18,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 -->
+
 <configuration>
   <appSettings>
     <add key="AccountMasterDisplayField" value="account_master_code + ' (' + account_master_name + ')'" />
     <add key="AccountDisplayField" value="account_code + ' (' + account_name + ')'" />
-    <add key="AgentDisplayField" value="agent_code + ' (' + agent_name + ')'" />
+    <add key="SalespersonDisplayField" value="salesperson_code + ' (' + salesperson_name + ')'" />
+    <add key="SalesTeamDisplayField" value="sales_team_code + ' (' + sales_team_name + ')'" />
     <add key="BankAccountDisplayField" value="bank_name + ' (' + bank_branch + ')'" />
     <add key="BonusSlabDisplayField" value="bonus_slab_name" />
     <add key="BrandDisplayField" value="brand_code + ' (' + brand_name + ')'" />

@@ -39,7 +39,7 @@ namespace MixERP.Net.FrontEnd.Reports
             this.AddParameters();
         }
 
-        public sealed override void Dispose()
+        public override sealed void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
@@ -81,7 +81,10 @@ namespace MixERP.Net.FrontEnd.Reports
                 {
                     textBox.ID = parameter.Key.Replace("@", "") + "_text_box";
 
-                    string label = "<label for='" + textBox.ID + "'>" + LocalizationHelper.GetDefaultAssemblyResourceString(ConfigurationHelper.GetReportParameter("ResourceClassName"), parameter.Key.Replace("@", "")) + "</label>";
+                    string label = "<label for='" + textBox.ID + "'>" +
+                                   LocalizationHelper.GetDefaultAssemblyResourceString(
+                                       ConfigurationHelper.GetReportParameter("ResourceClassName"),
+                                       parameter.Key.Replace("@", "")) + "</label>";
 
                     if (parameter.Value.Equals("Date"))
                     {
@@ -92,7 +95,7 @@ namespace MixERP.Net.FrontEnd.Reports
             }
 
             this.updateButton.ID = "UpdateButton";
-            this.updateButton.Text = Titles.Update;
+            this.updateButton.Text = "Update";
             this.updateButton.CssClass = "myButton report-button";
             this.updateButton.Click += this.UpdateButton_Click;
 

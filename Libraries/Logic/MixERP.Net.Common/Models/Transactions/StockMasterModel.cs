@@ -27,7 +27,7 @@ namespace MixERP.Net.Common.Models.Transactions
 
         public string PartyCode { get; set; }
 
-        public int AgentId { get; set; }
+        public int SalespersonId { get; set; }
 
         public int PriceTypeId { get; set; }
 

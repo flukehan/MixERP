@@ -48,7 +48,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             using (var table = new DataTable())
             {
                 table.Locale = Thread.CurrentThread.CurrentCulture;
-                this.LoadForm(this.formContainer, table);
+                this.LoadForm(this.formContainer, table, this.ResourceAssembly);
             }
         }
 
@@ -63,7 +63,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             if (this.DenyDelete)
             {
                 this.messageLabel.CssClass = this.GetFailureCssClass();
-                this.messageLabel.Text = ScrudResource.AccessDenied;
+                this.messageLabel.Text = Titles.AccessDenied;
                 return;
             }
 
@@ -93,7 +93,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
                     //Load the form again in the container with values
                     //retrieved from database.
-                    this.LoadForm(this.formContainer, table);
+                    this.LoadForm(this.formContainer, table, this.ResourceAssembly);
                     this.gridPanel.Attributes["style"] = "display:none;";
                     this.formPanel.Attributes["style"] = "display:block;";
                 }
@@ -165,7 +165,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 if (this.DenyAdd)
                 {
                     this.messageLabel.CssClass = this.GetFailureCssClass();
-                    this.messageLabel.Text = ScrudResource.AccessDenied;
+                    this.messageLabel.Text = Titles.AccessDenied;
                 }
                 else
                 {
@@ -180,7 +180,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         using (var table = new DataTable())
                         {
                             //Load the form again.
-                            this.LoadForm(this.formContainer, table);
+                            this.LoadForm(this.formContainer, table, this.ResourceAssembly);
                         }
 
                         //Refresh the grid.
@@ -194,7 +194,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 if (this.DenyEdit)
                 {
                     this.messageLabel.CssClass = this.GetFailureCssClass();
-                    this.messageLabel.Text = ScrudResource.AccessDenied;
+                    this.messageLabel.Text = Titles.AccessDenied;
                 }
                 else
                 {
@@ -208,7 +208,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         {
                             table.Locale = Thread.CurrentThread.CurrentCulture;
 
-                            this.LoadForm(this.formContainer, table);
+                            this.LoadForm(this.formContainer, table, this.ResourceAssembly);
                         }
 
                         //Refresh the grid.
@@ -219,7 +219,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                     else
                     {
                         this.messageLabel.CssClass = this.GetFailureCssClass();
-                        this.messageLabel.Text = ScrudResource.UnknownError;
+                        this.messageLabel.Text = Titles.UnknownError;
                     }
                 }
             }

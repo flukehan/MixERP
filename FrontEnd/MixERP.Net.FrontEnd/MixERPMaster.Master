@@ -62,17 +62,17 @@
                     <div class="dropdown icon user-panel-float">
                         <a id="dropdownMenu2" data-toggle="dropdown" href="#">
                             <span class="glyphicon glyphicon-user"></span>
-                            <asp:Literal runat="server" ID="UserGreetingLiteral"></asp:Literal>
+                            <asp:Literal runat="server" ID="UserGreetingLiteral" />
                             <span class="caret"></span>
                         </a>
                         <div class="dropdown-menu pull-right " role="menu" aria-labelledby="dropdownMenu2">
                             <a class="icon btn btn-sm" href="/Site/Account/ChangePassword.aspx">
                                 <span class="glyphicon glyphicon-log-out"></span>
-                                <asp:Literal runat="server" ID="ChangePasswordLiteral"></asp:Literal>
+                                <asp:Literal runat="server" ID="ChangePasswordLiteral" />
                             </a>
                             <a class="icon btn btn-sm" href="/Site/Account/UserProfile.aspx">
                                 <span class="glyphicon glyphicon-certificate"></span>
-                                <asp:Literal runat="server" ID="ManageProfileLiteral"></asp:Literal>
+                                <asp:Literal runat="server" ID="ManageProfileLiteral" />
                             </a>
                         </div>
                     </div>
@@ -80,17 +80,17 @@
                     <div class="icon-set user-panel-float">
                         <a class="icon" href="https://github.com/mixerp/mixerp/wiki/documentation" target="_blank">
                             <span class="glyphicon glyphicon glyphicon-asterisk"></span>
-                            <asp:Literal runat="server" ID="MixERPDocumentationLiteral"></asp:Literal>
+                            <asp:Literal runat="server" ID="MixERPDocumentationLiteral" />
                         </a>
                         <a class="icon" href="/Site/Account/SignOut.aspx">
                             <span class="glyphicon glyphicon-log-out"></span>
-                            <asp:Literal runat="server" ID="SignOutLiteral"></asp:Literal>
+                            <asp:Literal runat="server" ID="SignOutLiteral" />
                         </a>
                     </div>
                     <div class="icon dropdown user-panel-float">
                         <a id="NotificationAnchor" data-toggle="dropdown" href="#">
                             <span class="glyphicon glyphicon-user"></span>
-                            <asp:Literal runat="server" ID="NotificationLiteral"></asp:Literal>
+                            <asp:Literal runat="server" ID="NotificationLiteral" />
                             <span class="caret"></span>
                         </a>
                         <div class="dropdown-menu pull-right" role="menu" aria-labelledby="NotificationAnchor">
@@ -112,8 +112,8 @@
                         </div>
                     </div>
                     <div>
-                        <asp:Literal runat="server" ID="MenuLiteral"></asp:Literal>
-                        <asp:Literal runat="server" ID="ContentMenuLiteral"></asp:Literal>
+                        <asp:Literal runat="server" ID="MenuLiteral" />
+                        <asp:Literal runat="server" ID="ContentMenuLiteral" />
                     </div>
                 </td>
                 <td id="body">
@@ -146,33 +146,19 @@
             var decimalSeparator = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetDecimalSeparator() %>";
             var currencyDecimalPlaces = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetCurrencyDecimalPlaces() %>";
 
-            var duplicateEntryLocalized = "<%= Resources.Errors.DuplicateEntry %>";
-            var updateTaxLocalized = "<%= Resources.Questions.UpdateTax %>";
+            var duplicateEntryLocalized = "<%= Resources.Warnings.DuplicateEntry %>";
             var selectLocalized = "<%=Resources.Titles.Select %>";
             var noneLocalized = "<%=Resources.Titles.None %>";
             var invalidDateWarningLocalized = "<%= Resources.Warnings.InvalidDate %>";
             var areYouSureLocalized = "<%=Resources.Questions.AreYouSure %>";
-            var nothingSelectedLocalized = "<%= Resources.Labels.NothingSelected %>";
+            var nothingSelectedLocalized = "<%= Resources.Warnings.NothingSelected %>";
             var yesLocalized = "<%=Resources.Titles.Yes %>";
             var noLocalized = "<%=Resources.Titles.No %>";
 
             var daysLowerCaseLocalized = "<%=Resources.Labels.DaysLowerCase %>";
             var gridViewEmptyWarningLocalized = "<%=Resources.Warnings.GridViewEmpty%>";
 
-            var insufficientStockWarningLocalized = "<%= Resources.Warnings.InsufficientStockWarning %>";
-            var invalidPartyWarningLocalized = "<%= Resources.Warnings.InvalidParty %>";
-            var invalidPriceTypeWarningLocalized = "<%= Resources.Warnings.InvalidPriceType %>";
-            var invalidStoreWarningLocalized = "<%=Resources.Warnings.InvalidStore%>";
-
-            var invalidShippingCompanyWarningLocalized = "<%=Resources.Warnings.InvalidShippingCompany%>";
-            var invalidCashRepositoryWarningLocalized = "<%=Resources.Warnings.InvalidCashRepository%>";
-            var invalidCostCenterWarningLocalized = "<%=Resources.Warnings.InvalidCostCenter%>";
-            var invalidSalesPersonWarningLocalized = "<%=Resources.Warnings.InvalidSalesPerson%>";
-
-            var salesNotAllowedHereWarningLocalized = "<%=Resources.Warnings.SalesNotAllowedHere%>";
-            var invalidFileLocalized = "<%= Resources.Warnings.InvalidFile %>";
-            var uploadedFilesDeletedLocalized = "<%= Resources.Labels.UploadedFilesDeleted %>";
-            var duplicateFileLocalized = "<% = Resources.Errors.DuplicateFiles %>";
+            var duplicateFileLocalized = "<% = Resources.Warnings.DuplicateFiles %>";
 
             var taskCompletedSuccessfullyLocalized = "<%= Resources.Labels.TaskCompletedSuccessfully %>";
 

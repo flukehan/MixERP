@@ -27,7 +27,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
         private void DisplaySuccess()
         {
             this.messageLabel.CssClass = this.GetSuccessCssClass();
-            this.messageLabel.Text = ScrudResource.TaskCompletedSuccessfully;
+            this.messageLabel.Text = Titles.TaskCompletedSuccessfully;
             this.messageLabel.Style.Add("display", "block");
 
             this.gridPanel.Attributes["style"] = "display:block;";

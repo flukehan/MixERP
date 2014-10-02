@@ -17,6 +17,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
+SET search_path = public;
 
 DO 
 $$
@@ -27,9 +28,14 @@ $$
 LANGUAGE plpgsql;
 
 
+CREATE EXTENSION IF NOT EXISTS tablefunc;
+
 -- 1. scrud.sql
 DROP SCHEMA IF EXISTS scrud CASCADE;
 CREATE SCHEMA scrud;
+
+COMMENT ON SCHEMA scrud IS 'Contains objects related to MixERP''s ScrudFactory project.';
+
 
 CREATE VIEW scrud.constraint_column_usage AS
     SELECT CAST(current_database() AS text) AS table_catalog,
@@ -73,6 +79,9 @@ CREATE VIEW scrud.constraint_column_usage AS
 
       ) AS x (tblschema, tblname, tblowner, colname, cstrschema, cstrname);
 
+COMMENT ON VIEW scrud.constraint_column_usage IS 'Lists all columns having constraints.';
+
+	
 
 CREATE VIEW scrud.relationship_view
 AS
@@ -103,6 +112,8 @@ LEFT JOIN
 WHERE
 	lower(tc.constraint_type) in ('foreign key');
 
+COMMENT ON VIEW scrud.relationship_view IS 'Lists all foreign key columns and their relation with the parent tables.';
+
 CREATE FUNCTION scrud.parse_default(text)
 RETURNS text
 AS
@@ -120,6 +131,8 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+
+COMMENT ON FUNCTION scrud.parse_default(text) IS 'Parses default constraint column values.';
 
 
 CREATE VIEW scrud.mixerp_table_view
@@ -161,8 +174,8 @@ NOT IN
 		'audit_user_id', 'audit_ts'
 	)
 ;
-	
 
+COMMENT ON VIEW scrud.mixerp_table_view IS 'Lists all schema, table, and columns with associated types, domains, references, and constraints.';
 
 -- 2. install-unit-test.sql
 DROP SCHEMA IF EXISTS assert CASCADE;
@@ -600,12 +613,26 @@ DROP SCHEMA IF EXISTS mrp CASCADE;
 
 
 CREATE SCHEMA audit;
+COMMENT ON SCHEMA audit IS 'Contains audit related objects';
+
 CREATE SCHEMA core;
+COMMENT ON SCHEMA core IS 'Contains objects related to the core module. The core module is the default MixERP schema.';
+
 CREATE SCHEMA office;
+COMMENT ON SCHEMA office IS 'Contains objects related to office.';
+
 CREATE SCHEMA policy;
+COMMENT ON SCHEMA office IS 'Contains objects related to MixERP''s policy engine and workflow.';
+
 CREATE SCHEMA transactions;
+COMMENT ON SCHEMA office IS 'Contains objects related to transaction posting.';
+
 CREATE SCHEMA crm;
+COMMENT ON SCHEMA office IS 'Contains objects related to customer relationship management.';
+
 CREATE SCHEMA mrp;
+COMMENT ON SCHEMA office IS 'Contains objects related to material resource planning.';
+
 
 -- 2nd-quadrant-audit-trigger.sql
 -- An audit history is important on most tables. Provide an audit trigger that logs to
@@ -871,6 +898,7 @@ BEGIN
 		CREATE ROLE mix_erp WITH LOGIN PASSWORD 'change-on-deloyment';
 	END IF;
 
+	COMMENT ON ROLE mix_erp IS 'The default user for MixERP databases.';
 
 	REVOKE ALL ON SCHEMA audit FROM public;
 	REVOKE ALL ON SCHEMA core FROM public;
@@ -935,6 +963,9 @@ BEGIN
 	IF NOT EXISTS (SELECT * FROM pg_catalog.pg_user WHERE  usename = 'report_user') THEN
 		CREATE ROLE report_user WITH LOGIN PASSWORD 'change-on-deloyment';
 	END IF;
+
+	COMMENT ON ROLE report_user IS 'This user account should be used by the Reporting Engine to run ad-hoc queries.
+	It is strictly advised for this user to have a read-only access to the database.';
 
 	GRANT USAGE ON SCHEMA public TO report_user;
 	GRANT USAGE ON SCHEMA information_schema TO report_user;
@@ -1052,6 +1083,8 @@ CHECK
 	)
 );
 
+COMMENT ON DOMAIN transaction_type IS 'This domain should not be localized.';
+
 /*******************************************************************
 	MIXERP STRICT Data Types: NEGATIVES ARE NOT ALLOWED
 *******************************************************************/
@@ -1121,10 +1154,6 @@ CHECK
 	VALUE >= 0
 );
 
-DROP DOMAIN IF EXISTS image_path CASCADE;
-CREATE DOMAIN image_path
-AS text;
-
 DROP DOMAIN IF EXISTS color CASCADE;
 CREATE DOMAIN color
 AS text;
@@ -1138,6 +1167,24 @@ CREATE TABLE core.verification_statuses
 	verification_status_id			smallint NOT NULL PRIMARY KEY,
 	verification_status_name		national character varying(128) NOT NULL
 );
+
+COMMENT ON TABLE core.verification_statuses IS 
+'Verification statuses are integer values used to represent the state of a transaction.
+For example, a verification status of value "0" would mean that the transaction has not yet been verified.
+A negative value indicates that the transaction was rejected, whereas a positive value means approved.
+
+Remember:
+1. Only approved transactions appear on ledgers and final reports.
+2. Cash repository balance is maintained on the basis of LIFO principle. 
+
+   This means that cash balance is affected (reduced) on your repository as soon as a credit transaction is posted,
+   without the transaction being approved on the first place. If you reject the transaction, the cash balance then increases.
+   This also means that the cash balance is not affected (increased) on your repository as soon as a debit transaction is posted.
+   You will need to approve the transaction.
+
+   It should however be noted that the cash repository balance might be less than the total cash shown on your balance sheet,
+   if you have pending transactions to verify. You cannot perform EOD operation if you have pending verifications.
+';
 
 CREATE UNIQUE INDEX verification_statuses_verification_status_name_uix
 ON core.verification_statuses(UPPER(verification_status_name));
@@ -1155,6 +1202,12 @@ CREATE TABLE office.users
 	audit_user_id				integer NULL REFERENCES office.users(user_id),
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
+
+COMMENT ON TABLE office.users IS
+'
+The users table contains users accounts and their login information. It also contains a sys user account which does not have a password.
+The sys user account is a special account used by the MixERP workflow to perform routine tasks. The sys user cannot have a valid password
+or cannot be allowed to log in interactively.';
 
 CREATE TABLE office.departments
 (
@@ -1176,6 +1229,7 @@ CREATE TABLE core.flag_types
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
 
+COMMENT ON TABLE core.flag_types IS 'Flags are used by users to mark transactions. The flags created by a user is not visible to others.';
 
 CREATE TABLE core.flags
 (
@@ -1581,13 +1635,27 @@ CREATE TABLE core.bank_accounts
 );
 
 
-
-
-CREATE TABLE core.agents
+CREATE TABLE core.sales_teams
 (
-	agent_id				SERIAL NOT NULL PRIMARY KEY,
-	agent_code				national character varying(12) NOT NULL,
-	agent_name 				national character varying(100) NOT NULL,
+	sales_team_id				SERIAL NOT NULL PRIMARY KEY,
+	sales_team_code				national character varying(12),
+	sales_team_name				national character varying(50),
+	audit_user_id				integer NULL REFERENCES office.users(user_id),
+	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+);
+
+CREATE UNIQUE INDEX sales_teams_sales_team_code_uix
+ON core.sales_teams(UPPER(sales_team_code));
+
+CREATE UNIQUE INDEX sales_teams_sales_team_name_uix
+ON core.sales_teams(UPPER(sales_team_name));
+
+CREATE TABLE core.salespersons
+(
+	salesperson_id				SERIAL NOT NULL PRIMARY KEY,
+	sales_team_id				integer NOT NULL REFERENCES core.sales_teams(sales_team_id),
+	salesperson_code				national character varying(12) NOT NULL,
+	salesperson_name 				national character varying(100) NOT NULL,
 	address 				national character varying(100) NOT NULL,
 	contact_number 				national character varying(50) NOT NULL,
 	commission_rate 			decimal_strict2 NOT NULL DEFAULT(0),
@@ -1596,8 +1664,8 @@ CREATE TABLE core.agents
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
 
-CREATE UNIQUE INDEX agents_agent_name_uix
-ON core.agents(UPPER(agent_name));
+CREATE UNIQUE INDEX salespersons_salesperson_name_uix
+ON core.salespersons(UPPER(salesperson_name));
 
 CREATE TABLE core.bonus_slabs
 (
@@ -1631,15 +1699,17 @@ CREATE TABLE core.bonus_slab_details
 );
 
 
-CREATE TABLE core.agent_bonus_setups
+CREATE TABLE core.salesperson_bonus_setups
 (
-	agent_bonus_setup_id SERIAL NOT NULL PRIMARY KEY,
-	agent_id integer NOT NULL REFERENCES core.agents(agent_id),
-	bonus_slab_id integer NOT NULL REFERENCES core.bonus_slabs(bonus_slab_id)
+	salesperson_bonus_setup_id SERIAL NOT NULL PRIMARY KEY,
+	salesperson_id integer NOT NULL REFERENCES core.salespersons(salesperson_id),
+	bonus_slab_id integer NOT NULL REFERENCES core.bonus_slabs(bonus_slab_id),
+	audit_user_id				integer NULL REFERENCES office.users(user_id),
+	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
 
-CREATE UNIQUE INDEX agent_bonus_setups_uix
-ON core.agent_bonus_setups(agent_id, bonus_slab_id);
+CREATE UNIQUE INDEX salesperson_bonus_setups_uix
+ON core.salesperson_bonus_setups(salesperson_id, bonus_slab_id);
 
 CREATE TABLE core.ageing_slabs
 (
@@ -1907,7 +1977,6 @@ CREATE TABLE core.items
 	selling_price_includes_tax 		boolean NOT NULL CONSTRAINT items_selling_price_includes_tax_df DEFAULT('No'),
 	tax_id 					integer NOT NULL REFERENCES core.taxes(tax_id),
 	reorder_level 				integer NOT NULL,
-	item_image 				image_path NULL,
 	maintain_stock 				boolean NOT NULL DEFAULT(true),
 	audit_user_id				integer NULL REFERENCES office.users(user_id),
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
@@ -2265,7 +2334,7 @@ CREATE TABLE transactions.stock_master
 	stock_master_id 			BIGSERIAL NOT NULL PRIMARY KEY,
 	transaction_master_id 			bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id),
 	party_id 				bigint NULL REFERENCES core.parties(party_id),
-	agent_id 				integer NULL REFERENCES core.agents(agent_id),
+	salesperson_id 				integer NULL REFERENCES core.salespersons(salesperson_id),
 	price_type_id 				integer NULL REFERENCES core.price_types(price_type_id),
 	is_credit 				boolean NOT NULL CONSTRAINT stock_master_is_credit_df DEFAULT(false),
 	shipper_id 				integer NULL REFERENCES core.shippers(shipper_id),
@@ -2298,6 +2367,14 @@ CREATE TABLE transactions.stock_details
 	tax 					money_strict2 NOT NULL CONSTRAINT stock_details_tax_df DEFAULT(0),
 	audit_user_id				integer NULL REFERENCES office.users(user_id),
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+);
+
+
+CREATE TABLE transactions.stock_return
+(
+	sales_return_id		                BIGSERIAL NOT NULL PRIMARY KEY,	
+	transaction_master_id			bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id),
+	return_transaction_master_id	        bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id)
 );
 
 
@@ -2358,12 +2435,6 @@ CREATE TABLE transactions.stock_master_non_gl_relations
 	non_gl_stock_master_id			bigint NOT NULL REFERENCES transactions.non_gl_stock_master(non_gl_stock_master_id)
 );
 
-CREATE TABLE transactions.sales_return
-(
-	sales_return_id		                BIGSERIAL NOT NULL PRIMARY KEY,	
-	transaction_master_id			bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id),
-	sales_return_transaction_master_id	bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id)
-);
 
 CREATE TABLE crm.lead_sources
 (
@@ -2507,6 +2578,24 @@ CREATE TYPE attachment_type AS
 	file_path				text,
 	original_file_name			text
 );
+
+-- core.append_if_not_null.sql
+CREATE FUNCTION core.append_if_not_null(text, text)
+RETURNS text
+AS
+$$
+BEGIN
+        IF($1 IS NULL) THEN
+                RETURN '';
+        END IF;
+
+        RETURN $1 || $2;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
 
 -- core.convert_unit.sql
 CREATE FUNCTION core.convert_unit(integer, integer)
@@ -2831,23 +2920,6 @@ $$
 LANGUAGE plpgsql;
 
 
--- core.get_agent_name_by_agent_id.sql
-CREATE FUNCTION core.get_agent_name_by_agent_id(integer)
-RETURNS text
-AS
-$$
-BEGIN
-	RETURN
-	(
-		SELECT agent_name
-		FROM core.agents
-		WHERE agent_id=$1
-	);
-END
-$$
-LANGUAGE plpgsql;
-
-
 -- core.get_associated_units.sql
 CREATE FUNCTION core.get_associated_units(integer)
 RETURNS TABLE(unit_id integer, unit_code text, unit_name text)
@@ -3105,6 +3177,22 @@ LANGUAGE plpgsql;
 
 
 
+-- core.get_email_address_by_party_id.sql
+DROP FUNCTION IF EXISTS core.get_email_address_by_party_id(bigint);
+
+CREATE FUNCTION core.get_email_address_by_party_id(bigint)
+RETURNS TEXT
+AS
+$$
+BEGIN
+        RETURN
+        email 
+        FROM core.parties
+        WHERE party_id=$1;
+END
+$$
+LANGUAGE plpgsql;
+
 -- core.get_flag_background_color.sql
 CREATE FUNCTION core.get_flag_background_color(flag_type_id_ integer)
 RETURNS text
@@ -3212,6 +3300,25 @@ $$
 LANGUAGE plpgsql;
 
 
+-- core.get_item_code_by_item_id.sql
+DROP FUNCTION IF EXISTS core.get_item_code_by_item_id(integer);
+
+CREATE FUNCTION core.get_item_code_by_item_id(integer)
+RETURNS text
+AS
+$$
+BEGIN
+        RETURN
+                item_code
+        FROM
+                core.items
+        WHERE item_id=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+--SELECT core.get_item_code_by_item_id(1);
+
 -- core.get_item_cost_price.sql
 CREATE FUNCTION core.get_item_cost_price(item_id_ integer, unit_id_ integer, party_id_ bigint)
 RETURNS money_strict2
@@ -3305,6 +3412,25 @@ END
 $$
 LANGUAGE plpgsql;
 
+
+-- core.get_item_name_by_item_id.sql
+DROP FUNCTION IF EXISTS core.get_item_name_by_item_id(integer);
+
+CREATE FUNCTION core.get_item_name_by_item_id(integer)
+RETURNS text
+AS
+$$
+BEGIN
+        RETURN
+                item_name
+        FROM
+                core.items
+        WHERE item_id=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+--SELECT core.get_item_name_by_item_id(1);
 
 -- core.get_item_tax_rate.sql
 CREATE FUNCTION core.get_item_tax_rate(integer)
@@ -3521,6 +3647,23 @@ $$
 LANGUAGE plpgsql;
 
 
+-- core.get_salesperson_name_by_salesperson_id.sql
+CREATE FUNCTION core.get_salesperson_name_by_salesperson_id(integer)
+RETURNS text
+AS
+$$
+BEGIN
+	RETURN
+	(
+		SELECT salesperson_name
+		FROM core.salespersons
+		WHERE salesperson_id=$1
+	);
+END
+$$
+LANGUAGE plpgsql;
+
+
 -- core.get_shipper_code.sql
 
 /*******************************************************************
@@ -3589,6 +3732,38 @@ $$
 LANGUAGE plpgsql;
 
 
+-- core.get_shipping_address_by_shipping_address_id.sql
+DROP FUNCTION IF EXISTS core.get_shipping_address_by_shipping_address_id(integer);
+
+CREATE FUNCTION core.get_shipping_address_by_shipping_address_id(integer)
+RETURNS text
+AS
+$$
+BEGIN
+        IF($1 IS NULL OR $1 <=0) THEN
+                RETURN '';
+        END IF;
+
+
+        RETURN
+                core.append_if_not_null(po_box, '&lt;br /&gt;') || 
+                core.append_if_not_null(address_line_1, '&lt;br /&gt;') || 
+                core.append_if_not_null(address_line_2, '&lt;br /&gt;') || 
+                core.append_if_not_null(street, '&lt;br /&gt;') ||
+                city  || '&lt;br /&gt;' ||
+                state  || '&lt;br /&gt;' ||
+                country 
+        FROM core.shipping_addresses
+        WHERE shipping_address_id=$1;
+        
+END
+$$
+LANGUAGE plpgsql;
+
+--SELECT core.get_shipping_address_by_shipping_address_id(1);
+
+
+
 -- core.get_shipping_address_code_by_shipping_address_id.sql
 CREATE FUNCTION core.get_shipping_address_code_by_shipping_address_id(integer)
 RETURNS text
@@ -3650,6 +3825,25 @@ LANGUAGE plpgsql;
 
 
 
+-- core.get_unit_code_by_unit_id.sql
+DROP FUNCTION IF EXISTS core.get_unit_code_by_unit_id(integer);
+
+CREATE FUNCTION core.get_unit_code_by_unit_id(integer)
+RETURNS text
+AS
+$$
+BEGIN
+        RETURN
+                unit_code
+        FROM
+                core.units
+        WHERE unit_id=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+--SELECT core.get_unit_code_by_unit_id(1);
+
 -- core.get_unit_id_by_unit_code.sql
 CREATE FUNCTION core.get_unit_id_by_unit_code(text)
 RETURNS smallint
@@ -3690,6 +3884,25 @@ END
 $$
 LANGUAGE plpgsql;
 
+
+-- core.get_unit_name_by_unit_id.sql
+DROP FUNCTION IF EXISTS core.get_unit_name_by_unit_id(integer);
+
+CREATE FUNCTION core.get_unit_name_by_unit_id(integer)
+RETURNS text
+AS
+$$
+BEGIN
+        RETURN
+                unit_name
+        FROM
+                core.units
+        WHERE unit_id=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+--SELECT core.get_unit_name_by_unit_id(1);
 
 -- core.has_child_accounts.sql
 CREATE FUNCTION core.has_child_accounts(bigint)
@@ -4286,7 +4499,7 @@ BEGIN
 	ELSE
 		RAISE NOTICE 'Aucune politique de vérification auto trouvé pour cet utilisateur.';
 	END IF;
-RETURN;
+	RETURN;
 END
 $$
 LANGUAGE plpgsql;
@@ -4685,7 +4898,7 @@ RETURNS TABLE
 	reference_number			national character varying(24),
 	statement_reference			text,
 	book                                    text,
-	agent					text,
+	salesperson					text,
 	is_credit				boolean,
 	shipper					text,
 	shipping_address_code			text,
@@ -4697,18 +4910,6 @@ AS
 $$
 BEGIN
         CREATE TEMPORARY TABLE IF NOT EXISTS temp_book(book text) ON COMMIT DROP;
-
-        INSERT INTO temp_book
-        SELECT book_;
-
-        IF(book_ = 'Sales.Return') THEN
-                TRUNCATE TABLE temp_book;
-
-                INSERT INTO temp_book
-                SELECT 'Sales.Direct' UNION SELECT 'Sales.Delivery';                
-        END IF;
-
-
 
 	RETURN QUERY
 	WITH RECURSIVE office_cte(office_id) AS 
@@ -4736,13 +4937,13 @@ BEGIN
 		transactions.transaction_master.reference_number,
 		transactions.transaction_master.statement_reference,
                 transactions.transaction_master.book::text,
-		core.get_agent_name_by_agent_id(transactions.stock_master.agent_id),
+		core.get_salesperson_name_by_salesperson_id(transactions.stock_master.salesperson_id),
 		transactions.stock_master.is_credit,
 		core.get_shipper_name_by_shipper_id(transactions.stock_master.shipper_id),
 		core.get_shipping_address_code_by_shipping_address_id(transactions.stock_master.shipping_address_id),
 		office.get_store_name_by_store_id(transactions.stock_master.store_id),
-		core.get_flag_background_color(core.get_flag_type_id(user_id_, 'transactions.stock_master', 'stock_master_id', transactions.stock_master.stock_master_id)) AS flag_bg,
-		core.get_flag_foreground_color(core.get_flag_type_id(user_id_, 'transactions.stock_master', 'stock_master_id', transactions.stock_master.stock_master_id)) AS flag_fg
+		core.get_flag_background_color(core.get_flag_type_id(user_id_, 'transactions.stock_master', 'stock_master_id', transactions.stock_master.transaction_master_id)) AS flag_bg,
+		core.get_flag_foreground_color(core.get_flag_type_id(user_id_, 'transactions.stock_master', 'stock_master_id', transactions.stock_master.transaction_master_id)) AS flag_fg
 	FROM transactions.stock_master
 	INNER JOIN transactions.stock_details
 	ON transactions.stock_master.stock_master_id = transactions.stock_details.stock_master_id
@@ -4756,13 +4957,7 @@ BEGIN
 	ON transactions.transaction_master.office_id = office.offices.office_id
 	LEFT OUTER JOIN core.price_types
 	ON transactions.stock_master.price_type_id = core.price_types.price_type_id
-	WHERE transactions.transaction_master.book IN (SELECT * FROM temp_book)
-	AND NOT
-	(
-                book_ = 'Sales.Return'
-                AND
-                transactions.transaction_master.transaction_master_id IN (SELECT transaction_master_id FROM transactions.sales_return)                
-	)
+	WHERE transactions.transaction_master.book = book_
 	AND transactions.transaction_master.verification_status_id > 0
 	AND transactions.transaction_master.value_date BETWEEN date_from_ AND date_to_
 	AND 
@@ -4844,13 +5039,13 @@ CREATE FUNCTION transactions.get_receipt_view
 )
 RETURNS TABLE
 (
-        transaction_master_id                   bigint,
+        id                                      bigint,
         value_date                              date,
         reference_number                        text,
         statement_reference                     text,
         office                                  text,
         party                                   text,
-        user_name                               text,
+        "user"                                    text,
         currency_code                           text,
         amount                                  money_strict,
 	transaction_ts				TIMESTAMP WITH TIME ZONE,
@@ -4883,7 +5078,8 @@ BEGIN
         ON transactions.transaction_master.office_id = office.offices.office_id
         INNER JOIN office.users
         ON transactions.transaction_master.user_id = office.users.user_id
-        WHERE transactions.transaction_master.office_id IN (SELECT * FROM office.get_office_ids(_office_id))
+        WHERE transactions.transaction_master.verification_status_id > 0
+        AND transactions.transaction_master.office_id IN (SELECT * FROM office.get_office_ids(_office_id))
 	AND transactions.transaction_master.value_date BETWEEN _date_from AND _date_to
         AND
 	lower
@@ -4920,7 +5116,113 @@ LANGUAGE plpgsql;
 --SELECT * FROM transactions.get_receipt_view(1, 1,'1-1-2000','1-1-2020','','','','','');
 
 
+-- transactions.get_sales_by_offices.sql
+DROP FUNCTION IF EXISTS transactions.get_sales_by_offices(office_id integer, divide_by integer);
+
+CREATE FUNCTION transactions.get_sales_by_offices(office_id integer, divide_by integer)
+RETURNS TABLE
+(
+  office text,
+  jan numeric,
+  feb numeric,
+  mar numeric,
+  apr numeric,
+  may numeric,
+  jun numeric,
+  jul numeric,
+  aug numeric,
+  sep numeric,
+  oct numeric,
+  nov numeric,
+  "dec" numeric
+)
+AS
+$$
+BEGIN
+        IF divide_by <= 0 THEN
+                divide_by := 1;
+        END IF;
+        
+        RETURN QUERY
+        SELECT * FROM crosstab
+        (
+                '
+                SELECT 
+                office.get_office_code_by_id(office_id) AS office,
+                date_part(''month'', value_date) AS month_id,
+                SUM((price * quantity) - discount + tax)/' || divide_by::text || '::integer AS total
+                FROM transactions.verified_stock_transaction_view
+                WHERE book IN (''Sales.Direct'', ''Sales.Delivery'')
+                AND office_id IN (SELECT * FROM office.get_office_ids(' || quote_literal($1::text) || '))
+                GROUP BY office_id,
+                date_part(''month'', value_date),
+                date_trunc(''month'',value_date)
+                ',
+                'select m from generate_series(1,12) m'
+        )as (
+          office text,
+          "Jan" numeric,
+          "Feb" numeric,
+          "Mar" numeric,
+          "Apr" numeric,
+          "May" numeric,
+          "Jun" numeric,
+          "Jul" numeric,
+          "Aug" numeric,
+          "Sep" numeric,
+          "Oct" numeric,
+          "Nov" numeric,
+          "Dec" numeric
+        ) ;
+
+END
+$$
+LANGUAGE plpgsql;
+
+DROP FUNCTION IF EXISTS transactions.get_sales_by_offices(divide_by integer);
+
+CREATE FUNCTION transactions.get_sales_by_offices(divide_by integer)
+RETURNS TABLE
+(
+  office text,
+  jan numeric,
+  feb numeric,
+  mar numeric,
+  apr numeric,
+  may numeric,
+  jun numeric,
+  jul numeric,
+  aug numeric,
+  sep numeric,
+  oct numeric,
+  nov numeric,
+  "dec" numeric
+)
+AS
+$$
+	DECLARE root_office_id integer = 0;
+BEGIN
+	SELECT office.offices.office_id INTO root_office_id
+	FROM office.offices
+	WHERE parent_office_id IS NULL
+	LIMIT 1;
+
+        IF divide_by <= 0 THEN
+                divide_by := 1;
+        END IF;
+        
+        RETURN QUERY
+        SELECT * FROM transactions.get_sales_by_offices(root_office_id, divide_by);
+END
+$$
+LANGUAGE plpgsql;
+
+
+--SELECT * FROM transactions.get_sales_by_offices(1, 1);
+--SELECT * FROM transactions.get_sales_by_offices(1000);
+
 -- transactions.get_top_selling_products_of_all_time.sql
+
 DROP FUNCTION IF EXISTS transactions.get_top_selling_products_of_all_time(top int);
 
 CREATE FUNCTION transactions.get_top_selling_products_of_all_time(top int)
@@ -4950,7 +5252,7 @@ BEGIN
         (
                 SELECT         
                         transactions.verified_stock_transaction_view.item_id, 
-                        SUM(transactions.verified_stock_transaction_view.base_quantity) AS quantity
+                        SUM((price * quantity) - discount + tax) AS sales_amount
                 FROM transactions.verified_stock_transaction_view
                 GROUP BY transactions.verified_stock_transaction_view.item_id
                 ORDER BY 2 DESC
@@ -4992,6 +5294,7 @@ $$
 LANGUAGE plpgsql;
 
 
+--SELECT * FROM transactions.get_top_selling_products_of_all_time();
 
 
 -- transactions.get_total_due.sql
@@ -5056,6 +5359,293 @@ LANGUAGE plpgsql;
 
 
 
+-- transactions.post_purchase_return.sql
+DROP FUNCTION IF EXISTS transactions.post_purchase_return
+(
+        _transaction_master_id                  bigint,
+        _office_id                              integer,
+        _user_id                                integer,
+        _login_id                               bigint,
+        _value_date                             date,
+        _store_id                               integer,
+        _party_code                             national character varying(12),
+        _price_type_id                          integer,
+        _reference_number 			national character varying(24),
+        _statement_reference                    text,
+        _details                                stock_detail_type[],
+        _attachments                            attachment_type[]
+);
+
+CREATE FUNCTION transactions.post_purchase_return
+(
+        _transaction_master_id                  bigint,
+        _office_id                              integer,
+        _user_id                                integer,
+        _login_id                               bigint,
+        _value_date                             date,
+        _store_id                               integer,
+        _party_code                             national character varying(12),
+        _price_type_id                          integer,
+        _reference_number 			national character varying(24),
+        _statement_reference                    text,
+        _details                                stock_detail_type[],
+        _attachments                            attachment_type[]
+)
+RETURNS bigint
+AS
+$$
+        DECLARE _party_id                       bigint;
+        DECLARE _cost_center_id                 bigint;
+        DECLARE _tran_master_id                 bigint;
+        DECLARE _stock_master_id                bigint;
+        DECLARE _grand_total                    money_strict;
+        DECLARE _discount_total                 money_strict2;
+        DECLARE _tax_total                      money_strict2;
+        DECLARE _is_credit                      boolean;
+        DECLARE _debit_account_id              bigint;
+BEGIN
+        
+        _party_id                               := core.get_party_id_by_party_code(_party_code);
+        
+        SELECT 
+                cost_center_id 
+        INTO 
+                _cost_center_id
+        FROM 
+                transactions.transaction_master
+        WHERE 
+                transactions.transaction_master.transaction_master_id = _transaction_master_id;
+
+
+        SELECT
+               is_credit
+        INTO
+                _is_credit
+        FROM transactions.stock_master
+        WHERE transaction_master_id = _transaction_master_id;
+
+        IF(_is_credit) THEN
+                _debit_account_id = core.get_account_id_by_party_code(_party_code); 
+        ELSE
+                _debit_account_id = core.get_account_id_by_parameter('Purchase.Return');         
+        END IF;
+
+
+
+        INSERT INTO transactions.transaction_master
+        (
+                transaction_master_id, 
+                transaction_counter, 
+                transaction_code, 
+                book, 
+                value_date, 
+                user_id, 
+                login_id, 
+                office_id, 
+                cost_center_id, 
+                reference_number, 
+                statement_reference
+        )
+        SELECT 
+                nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), 
+                transactions.get_new_transaction_counter(_value_date), 
+                transactions.get_transaction_code(_value_date, _office_id, _user_id, _login_id),
+                'Purchase.Return',
+                _value_date,
+                _user_id,
+                _login_id,
+                _office_id,
+                _cost_center_id,
+                _reference_number,
+                _statement_reference;
+                
+
+
+        _tran_master_id                         := currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
+
+
+        SELECT
+                SUM(price * quantity),
+                SUM(discount),
+                SUM(tax)
+        INTO
+                _grand_total,
+                _discount_total,
+                _tax_total                
+        FROM 
+        explode_array(_details);
+
+
+
+        INSERT INTO transactions.transaction_details
+        (
+                transaction_master_id, 
+                tran_type, 
+                account_id, 
+                statement_reference, 
+                currency_code, 
+                amount_in_currency, 
+                local_currency_code, 
+                er, 
+                amount_in_local_currency
+        ) 
+        SELECT
+                _tran_master_id,
+                'Cr',
+                core.get_account_id_by_parameter('Purchase'),
+                _statement_reference,
+                transactions.get_default_currency_code_by_office_id(_office_id),
+                _grand_total,
+                transactions.get_default_currency_code_by_office_id(_office_id),
+                1,
+                _grand_total;
+
+        IF(_tax_total IS NOT NULL AND _tax_total > 0) THEN
+                INSERT INTO transactions.transaction_details
+                (
+                        transaction_master_id, 
+                        tran_type, 
+                        account_id, 
+                        statement_reference, 
+                        currency_code, 
+                        amount_in_currency, 
+                        local_currency_code, 
+                        er, 
+                        amount_in_local_currency
+                ) 
+                SELECT
+                        _tran_master_id,
+                        'Cr',
+                        core.get_account_id_by_parameter('Purchase.Tax'),
+                        _statement_reference,
+                        transactions.get_default_currency_code_by_office_id(_office_id),
+                        _tax_total,
+                        transactions.get_default_currency_code_by_office_id(_office_id),
+                        1,
+                        _tax_total;
+        END IF;
+
+        IF(_discount_total IS NOT NULL AND _discount_total > 0) THEN
+                INSERT INTO transactions.transaction_details
+                (
+                        transaction_master_id, 
+                        tran_type, 
+                        account_id, 
+                        statement_reference, 
+                        currency_code, 
+                        amount_in_currency, 
+                        local_currency_code, 
+                        er, 
+                        amount_in_local_currency
+                ) 
+                SELECT
+                        _tran_master_id,
+                        'Dr',
+                        core.get_account_id_by_parameter('Purchase.Discount'),
+                        _statement_reference,
+                        transactions.get_default_currency_code_by_office_id(_office_id),
+                        _discount_total,
+                        transactions.get_default_currency_code_by_office_id(_office_id),
+                        1,
+                        _discount_total;
+        END IF;
+
+        INSERT INTO transactions.transaction_details
+        (
+                transaction_master_id, 
+                tran_type, 
+                account_id, 
+                statement_reference, 
+                currency_code, 
+                amount_in_currency, 
+                local_currency_code, 
+                er, 
+                amount_in_local_currency
+        ) 
+        SELECT
+                _tran_master_id,
+                'Dr',
+                _debit_account_id,
+                _statement_reference,
+                transactions.get_default_currency_code_by_office_id(_office_id),
+                _grand_total + _tax_total - _discount_total,
+                transactions.get_default_currency_code_by_office_id(_office_id),
+                1,
+                _grand_total + _tax_total - _discount_total;
+
+
+        INSERT INTO transactions.stock_master
+        (
+                stock_master_id, 
+                transaction_master_id, 
+                party_id, 
+                price_type_id, 
+                is_credit, 
+                store_id
+        ) 
+        SELECT 
+                nextval(pg_get_serial_sequence('transactions.stock_master', 'stock_master_id')), 
+                _tran_master_id,
+                _party_id,
+                _price_type_id,
+                false,
+                _store_id;
+       
+
+        _stock_master_id                        := currval(pg_get_serial_sequence('transactions.stock_master', 'stock_master_id'));
+
+
+        INSERT INTO transactions.stock_details
+        (
+                stock_master_id, 
+                tran_type, 
+                store_id, 
+                item_id, 
+                quantity, 
+                unit_id, 
+                base_quantity, 
+                base_unit_id, 
+                price, 
+                discount, 
+                tax_rate, 
+                tax
+        )
+        SELECT 
+                _stock_master_id, 
+                'Cr', 
+                _store_id, 
+                core.get_item_id_by_item_code(item_code), 
+                quantity, 
+                core.get_unit_id_by_unit_name(unit_name), 
+                core.get_base_quantity_by_unit_name(unit_name, quantity), 
+                core.get_base_unit_id_by_unit_name(unit_name),
+                price,
+                discount,
+                tax_rate,
+                tax
+        FROM 
+        explode_array(_details);
+
+        INSERT INTO transactions.stock_return(transaction_master_id, return_transaction_master_id)
+        SELECT _transaction_master_id, _tran_master_id;
+
+        RETURN _tran_master_id;
+END
+$$
+LANGUAGE plpgsql;
+
+-- 
+-- 
+-- SELECT * FROM transactions.post_purchase_return(1, 1, 1, 1, '1-1-2000', 1, 'JASMI-0001', 1, '1234-AD', 'Test', 
+-- ARRAY[
+-- ROW(1, 'ITP', 1, 'Pièce', 1000, 0, 13, 130)::stock_detail_type,
+-- ROW(1, 'ITP', 1, 'Pièce', 1000, 0, 13, 130)::stock_detail_type
+-- ],
+-- ARRAY[
+-- NULL::attachment_type
+-- ]);
+
+
 -- transactions.post_receipt_function.sql
 DROP FUNCTION IF EXISTS transactions.post_receipt_function
 (
@@ -5114,7 +5704,7 @@ $$
 	DECLARE _cash_account_id                bigint;
 BEGIN
         IF(_cash_repository_id > 0) THEN
-                IF(_posted_Date IS NOT NULL OR _bank_account_id IS NOT NULL OR _bank_instrument_code IS NOT NULL OR _bank_tran_code IS NOT NULL) THEN
+                IF(_posted_Date IS NOT NULL OR _bank_account_id IS NOT NULL OR COALESCE(_bank_instrument_code, '') != '' OR COALESCE(_bank_tran_code, '') != '') THEN
                         RAISE EXCEPTION 'Invalid bank transaction information provided.';
                 END IF;
                 _is_cash                        := true;
@@ -5460,7 +6050,7 @@ BEGIN
         FROM 
         explode_array(_details);
 
-        INSERT INTO transactions.sales_return(transaction_master_id, sales_return_transaction_master_id)
+        INSERT INTO transactions.stock_return(transaction_master_id, return_transaction_master_id)
         SELECT _transaction_master_id, _tran_master_id;
 
         RETURN _tran_master_id;
@@ -5478,6 +6068,131 @@ LANGUAGE plpgsql;
 -- ARRAY[
 -- NULL::attachment_type
 -- ]);
+
+
+-- transactions.refresh_materialized_views.sql
+DROP FUNCTION IF EXISTS transactions.refresh_materialized_views();
+
+CREATE FUNCTION transactions.refresh_materialized_views()
+RETURNS void
+AS
+$$
+BEGIN
+        REFRESH MATERIALIZED VIEW transactions.verified_stock_transaction_view;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+-- transactions.top_selling_products_by_office.sql
+DROP FUNCTION IF EXISTS transactions.top_selling_products_by_office(_office_id integer, top integer);
+
+CREATE FUNCTION transactions.top_selling_products_by_office(_office_id integer, top integer)
+RETURNS TABLE
+(
+        id              integer,
+        office_id       integer,
+        office_code     text,
+        office_name     text,
+        item_id         integer,
+        item_code       text,
+        item_name       text,
+        total_sales     numeric
+)
+AS
+$$
+BEGIN
+        CREATE TEMPORARY TABLE top_selling_products
+        (
+                item_id integer
+        ) ON COMMIT DROP;
+
+        INSERT INTO top_selling_products
+        SELECT t.item_id FROM transactions.get_top_selling_products_of_all_time(top) AS t;
+
+
+        CREATE TEMPORARY TABLE top_selling_products_by_office
+        (
+                id              SERIAL,
+                office_id       integer,
+                office_code     text,
+                office_name     text,
+                item_id         integer,
+                item_code       text,
+                item_name       text,
+                total_sales     numeric
+        ) ON COMMIT DROP;
+
+
+        INSERT INTO top_selling_products_by_office(office_id, item_id, total_sales)
+        SELECT
+                transactions.verified_stock_transaction_view.office_id,
+                transactions.verified_stock_transaction_view.item_id, 
+                SUM((price * quantity) - discount + tax) AS sales_amount
+        FROM transactions.verified_stock_transaction_view
+        WHERE transactions.verified_stock_transaction_view.item_id IN (SELECT top_selling_products.item_id FROM top_selling_products)
+        AND transactions.verified_stock_transaction_view.office_id IN (SELECT * FROM office.get_office_ids(_office_id))
+        GROUP BY 
+                transactions.verified_stock_transaction_view.office_id, 
+                transactions.verified_stock_transaction_view.item_id
+        ORDER BY sales_amount DESC, item_id ASC;
+
+
+        UPDATE top_selling_products_by_office AS t
+        SET 
+                item_code = core.items.item_code,
+                item_name = core.items.item_name
+        FROM core.items
+        WHERE t.item_id = core.items.item_id;
+
+
+        UPDATE top_selling_products_by_office AS t
+        SET 
+                office_code = office.offices.office_code,
+                office_name= office.offices.office_name
+        FROM office.offices
+        WHERE t.office_id = office.offices.office_id;
+
+
+        RETURN QUERY 
+        SELECT * FROM top_selling_products_by_office;
+END
+$$
+LANGUAGE plpgsql;
+
+DROP FUNCTION IF EXISTS transactions.top_selling_products_by_office();
+
+CREATE FUNCTION transactions.top_selling_products_by_office()
+RETURNS TABLE
+(
+        id              integer,
+        office_id       integer,
+        office_code     text,
+        office_name     text,
+        item_id         integer,
+        item_code       text,
+        item_name       text,
+        total_sales     numeric
+)
+AS
+$$
+	DECLARE root_office_id integer = 0;
+BEGIN
+	SELECT office.offices.office_id INTO root_office_id
+	FROM office.offices
+	WHERE parent_office_id IS NULL
+	LIMIT 1;
+
+        RETURN QUERY 
+        SELECT * FROM transactions.top_selling_products_by_office(root_office_id, 5);
+END
+$$
+LANGUAGE plpgsql;
+
+
+--SELECT  id, office_code, item_name, total_sales FROM transactions.top_selling_products_by_office()
+
 
 
 -- transactions.validate_item_for_return.sql
@@ -5979,6 +6694,22 @@ BEGIN
 			FROM audit.logins
 			WHERE user_id=$1
 		)
+	);
+END
+$$
+LANGUAGE plpgsql;
+
+
+-- office.get_office_code_by_id.sql
+CREATE FUNCTION office.get_office_code_by_id(office_id integer_strict)
+RETURNS text
+AS
+$$
+BEGIN
+	RETURN
+	(
+		SELECT office.offices.office_code FROM office.offices
+		WHERE office.offices.office_id=$1
 	);
 END
 $$
@@ -6772,6 +7503,7 @@ INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type,
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '10323', 'Investments-Certificates of Deposit', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Other Investments');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '10400', 'Accounts Receivable', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Current Assets');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '10500', 'Other Receivables', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Current Assets');
+INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '10501', 'Purchase Return (Receivables)', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Other Receivables');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '10600', 'Allowance for Doubtful Accounts', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Current Assets');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '10700', 'Inventory', TRUE, (SELECT account_id FROM core.accounts WHERE account_name='Current Assets');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '10720', 'Raw Materials Inventory', TRUE, (SELECT account_id FROM core.accounts WHERE account_name='Inventory');
@@ -6819,7 +7551,7 @@ INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type,
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '14300', 'Other Assets-Accumulated Amortization-Organization Costs', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Other Assets');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '14400', 'Notes Receivable-Non-current', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Other Assets');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '14500', 'Other Non-current Assets', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Other Assets');
-INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '14600', 'Nonfinancial Assets', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Other Assets');
+INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '14600', 'Non-financial Assets', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Other Assets');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '20000', 'Liabilities', TRUE, (SELECT account_id FROM core.accounts WHERE account_name='Balance Sheet A/C');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '20001', 'Current Liabilities', TRUE, (SELECT account_id FROM core.accounts WHERE account_name='Liabilities');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '20100', 'Accounts Payable', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Current Liabilities');
@@ -6828,7 +7560,7 @@ INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type,
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '20300', 'Wages Payable', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Current Liabilities');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '20400', 'Deductions Payable', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Current Liabilities');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '20500', 'Health Insurance Payable', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Current Liabilities');
-INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '20600', 'Superannutation Payable', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Current Liabilities');
+INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '20600', 'Superannuation Payable', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Current Liabilities');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '20700', 'Tax Payables', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Current Liabilities');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '20701', 'Sales Return (Payables)', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Current Liabilities');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '20710', 'Sales Tax Payable', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Tax Payables');
@@ -6851,7 +7583,7 @@ INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type,
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '21100', 'Deposits from Customers', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Current Liabilities');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '21200', 'Other Current Liabilities', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Current Liabilities');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '21210', 'Short Term Loan Payables', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Other Current Liabilities');
-INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '21220', 'Short Term Hirepurchase Payables', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Other Current Liabilities');
+INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '21220', 'Short Term Hire-purchase Payables', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Other Current Liabilities');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '21230', 'Short Term Lease Liability', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Other Current Liabilities');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '21240', 'Grants Repayable', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Other Current Liabilities');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '24001', 'Noncurrent Liabilities', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Liabilities');
@@ -6861,7 +7593,7 @@ INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type,
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '24400', 'Vehicles Payable', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Noncurrent Liabilities');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '24500', 'Lease Liability', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Noncurrent Liabilities');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '24600', 'Loan Payable', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Noncurrent Liabilities');
-INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '24700', 'Hirepurchase Payable', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Noncurrent Liabilities');
+INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '24700', 'Hire-purchase Payable', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Noncurrent Liabilities');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '24800', 'Bank Loans Payable', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Noncurrent Liabilities');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '24900', 'Deferred Revenue', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Noncurrent Liabilities');
 INSERT INTO core.accounts(account_master_id,account_code,account_name, sys_type, parent_account_id) SELECT (SELECT account_master_id FROM core.account_masters WHERE account_master_code='BSA'), '25000', 'Other Long-term Liabilities', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Noncurrent Liabilities');
@@ -6981,6 +7713,7 @@ SELECT 'Purchase', core.get_account_id_by_account_code('40100') UNION ALL
 SELECT 'Purchase.Payables', core.get_account_id_by_account_code('20100') UNION ALL
 SELECT 'Purchase.Discount', core.get_account_id_by_account_code('40270') UNION ALL
 SELECT 'Purchase.Tax', core.get_account_id_by_account_code('20700') UNION ALL
+SELECT 'Purchase.Return', core.get_account_id_by_account_code('10501') UNION ALL
 SELECT 'Inventory', core.get_account_id_by_account_code('10700') UNION ALL
 SELECT 'COGS', core.get_account_id_by_account_code('40200') UNION ALL
 SELECT 'Tax.Payable', core.get_account_id_by_account_code('20700') UNION ALL
@@ -6989,29 +7722,6 @@ SELECT 'Party.Parent.Account', core.get_account_id_by_account_code('20100');
 
 ALTER TABLE core.accounts
 ALTER column currency_code SET NOT NULL;
-
-
--- agents, ageing-slabs, party-types.sql
-INSERT INTO core.agents(agent_code, agent_name, address, contact_number, commission_rate, account_id)
-SELECT 'OFF', 'Office', 'Office', '', 0, (SELECT account_id FROM core.accounts WHERE account_code='20100');
-
-
-
-INSERT INTO core.ageing_slabs(ageing_slab_name,from_days,to_days)
-SELECT 'SLAB 1',0, 30 UNION ALL
-SELECT 'SLAB 2',31, 60 UNION ALL
-SELECT 'SLAB 3',61, 90 UNION ALL
-SELECT 'SLAB 4',91, 365 UNION ALL
-SELECT 'SLAB 5',366, 999999;
-
-
-
-INSERT INTO core.party_types(party_type_code, party_type_name) SELECT 'A', 'Agent';
-INSERT INTO core.party_types(party_type_code, party_type_name) SELECT 'C', 'Client';
-INSERT INTO core.party_types(party_type_code, party_type_name) SELECT 'D', 'Concessionnaire';
-INSERT INTO core.party_types(party_type_code, party_type_name, is_supplier) SELECT 'S', 'Fournisseur', true;
-
-
 
 
 -- brands, item-groups, tax, shipping.sql
@@ -7124,6 +7834,39 @@ SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='SYS
 	TODO: REMOVE THIS USER ON DEPLOYMENT
 *******************************************************************/
 SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='ADMN'),(SELECT office_id FROM office.offices WHERE office_code='MoF'),'binod','+qJ9AMyGgrX/AOF4GmwmBa4SrA3+InlErVkJYmAopVZh+WFJD7k2ZO9dxox6XiqT38dSoM72jLoXNzwvY7JAQA==','Binod Nepal');
+
+
+
+
+-- salespersons, ageing-slabs, party-types.sql
+INSERT INTO core.sales_teams(sales_team_code, sales_team_name)
+SELECT 'DEF', 'Par défaut' UNION ALL
+SELECT 'CST', 'Corporate Sales Team' UNION ALL
+SELECT 'RST', 'Retail Sales Team';
+
+INSERT INTO core.salespersons(sales_team_id, salesperson_code, salesperson_name, address, contact_number, commission_rate, account_id)
+SELECT 1, 'OFF', 'Office', 'Office', '', 0, (SELECT account_id FROM core.accounts WHERE account_code='20100') UNION ALL
+SELECT 2, 'ROS', 'Robert Schintowski', 'Russia', '', 0, (SELECT account_id FROM core.accounts WHERE account_code='20100') UNION ALL
+SELECT 2, 'PHJ', 'Phillipe Jones', 'France', '', 0, (SELECT account_id FROM core.accounts WHERE account_code='20100') UNION ALL
+SELECT 3, 'AWB', 'Alexander Walter Bishop', 'Texas', '', 0, (SELECT account_id FROM core.accounts WHERE account_code='20100') UNION ALL
+SELECT 3, 'LMA', 'Lisa Mary Ann', 'Austin', '', 0, (SELECT account_id FROM core.accounts WHERE account_code='20100');
+
+
+
+
+INSERT INTO core.ageing_slabs(ageing_slab_name,from_days,to_days)
+SELECT 'SLAB 1',0, 30 UNION ALL
+SELECT 'SLAB 2',31, 60 UNION ALL
+SELECT 'SLAB 3',61, 90 UNION ALL
+SELECT 'SLAB 4',91, 365 UNION ALL
+SELECT 'SLAB 5',366, 999999;
+
+
+
+INSERT INTO core.party_types(party_type_code, party_type_name) SELECT 'A', 'Agent';
+INSERT INTO core.party_types(party_type_code, party_type_name) SELECT 'C', 'Client';
+INSERT INTO core.party_types(party_type_code, party_type_name) SELECT 'D', 'Concessionnaire';
+INSERT INTO core.party_types(party_type_code, party_type_name, is_supplier) SELECT 'S', 'Fournisseur', true;
 
 
 
@@ -7255,41 +7998,6 @@ FROM
 
 
 
--- core.agent_bonus_setup_view.sql
-CREATE VIEW core.agent_bonus_setup_view
-AS
-SELECT
-	agent_bonus_setup_id,
-	agent_name,
-	bonus_slab_name
-FROM
-	core.agent_bonus_setups,
-	core.agents,
-	core.bonus_slabs
-WHERE
-	core.agent_bonus_setups.agent_id = core.agents.agent_id
-AND
-	core.agent_bonus_setups.bonus_slab_id = core.bonus_slabs.bonus_slab_id;
-
-
--- core.agent_view.sql
-CREATE VIEW core.agent_view
-AS
-SELECT
-	agent_id,
-	agent_code,
-	agent_name,
-	address,
-	contact_number,
-	commission_rate,
-	account_name
-FROM
-	core.agents,
-	core.accounts
-WHERE
-	core.agents.account_id = core.accounts.account_id;
-
-
 -- core.bank_account_view.sql
 CREATE VIEW core.bank_account_view
 AS
@@ -7343,6 +8051,33 @@ core.bonus_slabs, core.frequencies
 WHERE
 core.bonus_slabs.checking_frequency_id = core.frequencies.frequency_id;
 
+
+-- core.compound_item_detail_view.sql
+CREATE VIEW core.compound_item_detail_view
+AS
+SELECT
+        compound_item_detail_id,
+        core.compound_item_details.compound_item_id,
+        core.compound_items.compound_item_code,
+        core.compound_items.compound_item_name,
+        item_id,
+        core.get_item_name_by_item_id(item_id) AS item,
+        core.get_unit_name_by_unit_id(unit_id) AS unit,
+        quantity
+FROM core.compound_item_details
+INNER JOIN core.compound_items
+ON core.compound_item_details.compound_item_id = core.compound_items.compound_item_id;
+
+
+-- core.frequency_setup_view.sql
+CREATE VIEW core.frequency_setup_view
+AS
+SELECT 
+        frequency_setup_id,
+        fiscal_year_code,
+        value_date,
+        core.get_frequency_code_by_frequency_id(frequency_id) AS frequency_code
+FROM core.frequency_setups;
 
 -- core.item_cost_price_view.sql
 CREATE VIEW core.item_cost_price_view
@@ -7472,6 +8207,41 @@ core.party_types
 ON core.parties.party_type_id = core.party_types.party_type_id
 INNER JOIN core.accounts
 ON core.parties.account_id=core.accounts.account_id;
+
+
+-- core.salesperson_bonus_setup_view.sql
+CREATE VIEW core.salesperson_bonus_setup_view
+AS
+SELECT
+	salesperson_bonus_setup_id,
+	salesperson_name,
+	bonus_slab_name
+FROM
+	core.salesperson_bonus_setups,
+	core.salespersons,
+	core.bonus_slabs
+WHERE
+	core.salesperson_bonus_setups.salesperson_id = core.salespersons.salesperson_id
+AND
+	core.salesperson_bonus_setups.bonus_slab_id = core.bonus_slabs.bonus_slab_id;
+
+
+-- core.salesperson_view.sql
+CREATE VIEW core.salesperson_view
+AS
+SELECT
+	salesperson_id,
+	salesperson_code,
+	salesperson_name,
+	address,
+	contact_number,
+	commission_rate,
+	account_name
+FROM
+	core.salespersons,
+	core.accounts
+WHERE
+	core.salespersons.account_id = core.accounts.account_id;
 
 
 -- core.shipping_address_view.sql
@@ -7828,7 +8598,7 @@ SELECT
         transactions.transaction_master.verification_status_id,
         transactions.transaction_master.verification_reason,
         transactions.stock_master.party_id,
-        transactions.stock_master.agent_id,
+        transactions.stock_master.salesperson_id,
         transactions.stock_master.price_type_id,
         transactions.stock_master.is_credit,
         transactions.stock_master.shipper_id,
@@ -7917,12 +8687,13 @@ UNION ALL SELECT 'Sales Delivery', '~/Modules/Sales/Delivery.mix', 'SD', 2, core
 UNION ALL SELECT 'Receipt from Customer', '~/Modules/Sales/Receipt.mix', 'RFC', 2, core.get_menu_id('SAQ')
 UNION ALL SELECT 'Sales Return', '~/Modules/Sales/Return.mix', 'SR', 2, core.get_menu_id('SAQ')
 UNION ALL SELECT 'Setup & Maintenance', NULL, 'SSM', 1, core.get_menu_id('SA')
-UNION ALL SELECT 'Bonus Slab for Agents', '~/Modules/Sales/Setup/AgentBonusSlabs.mix', 'ABS', 2, core.get_menu_id('SSM')
-UNION ALL SELECT 'Bonus Slab Details', '~/Modules/Sales/Setup/AgentBonusSlabDetails.mix', 'BSD', 2, core.get_menu_id('SSM')
-UNION ALL SELECT 'Sales Agents', '~/Modules/Sales/Setup/Agents.mix', 'SSA', 2, core.get_menu_id('SSM')
+UNION ALL SELECT 'Bonus Slab for Salespersons', '~/Modules/Sales/Setup/BonusSlabs.mix', 'ABS', 2, core.get_menu_id('SSM')
+UNION ALL SELECT 'Bonus Slab Details', '~/Modules/Sales/Setup/BonusSlabDetails.mix', 'BSD', 2, core.get_menu_id('SSM')
+UNION ALL SELECT 'Sales Teams', '~/Modules/Sales/Setup/Teams.mix', 'SST', 2, core.get_menu_id('SSM')
+UNION ALL SELECT 'Salespersons', '~/Modules/Sales/Setup/Salespersons.mix', 'SSA', 2, core.get_menu_id('SSM')
 UNION ALL SELECT 'Bonus Slab Assignment', '~/Modules/Sales/Setup/BonusSlabAssignment.mix', 'BSA', 2, core.get_menu_id('SSM')
 UNION ALL SELECT 'Sales Reports', NULL, 'SAR', 1, core.get_menu_id('SA')
-UNION ALL SELECT 'View Sales Inovice', '~/Reports/Modules/Sales/Report/Source/Sales.View.Sales.Invoice.xml', 'SAR-SVSI', 2, core.get_menu_id('SAR')
+UNION ALL SELECT 'Top Selling Items', '~/Modules/Sales/Reports/TopSellingItems.mix', 'SAR-TSI', 2, core.get_menu_id('SAR')
 UNION ALL SELECT 'Cashier Management', NULL, 'CM', 1, core.get_menu_id('POS')
 UNION ALL SELECT 'Assign Cashier', '~/Modules/POS/AssignCashier.mix', 'ASC', 2, core.get_menu_id('CM')
 UNION ALL SELECT 'POS Setup', NULL, 'POSS', 1, core.get_menu_id('POS')
@@ -7933,7 +8704,6 @@ UNION ALL SELECT 'Purchase & Quotation', NULL, 'PUQ', 1, core.get_menu_id('PU')
 UNION ALL SELECT 'Direct Purchase', '~/Modules/Purchase/DirectPurchase.mix', 'DRP', 2, core.get_menu_id('PUQ')
 UNION ALL SELECT 'Purchase Order', '~/Modules/Purchase/Order.mix', 'PO', 2, core.get_menu_id('PUQ')
 UNION ALL SELECT 'GRN Entry', '~/Modules/Purchase/GRN.mix', 'GRN', 2, core.get_menu_id('PUQ')
-UNION ALL SELECT 'Purchase Invoice Against GRN', '~/Modules/Purchase/Invoice.mix', 'PAY', 2, core.get_menu_id('PUQ')
 UNION ALL SELECT 'Payment to Supplier', '~/Modules/Purchase/Payment.mix', 'PAS', 2, core.get_menu_id('PUQ')
 UNION ALL SELECT 'Purchase Return', '~/Modules/Purchase/Return.mix', 'PR', 2, core.get_menu_id('PUQ')
 UNION ALL SELECT 'Purchase Reports', NULL, 'PUR', 1, core.get_menu_id('PU')
@@ -7953,7 +8723,7 @@ UNION ALL SELECT 'Item Groups', '~/Modules/Inventory/Setup/ItemGroups.mix', 'SSG
 UNION ALL SELECT 'Brands', '~/Modules/Inventory/Setup/Brands.mix', 'SSB', 2, core.get_menu_id('ISM')
 UNION ALL SELECT 'Units of Measure', '~/Modules/Inventory/Setup/UOM.mix', 'UOM', 2, core.get_menu_id('ISM')
 UNION ALL SELECT 'Compound Units of Measure', '~/Modules/Inventory/Setup/CUOM.mix', 'CUOM', 2, core.get_menu_id('ISM')
-UNION ALL SELECT 'Shipper Information', '~/Modules/Inventory/Setup/Shipper.mix', 'SHI', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Shipper Information', '~/Modules/Inventory/Setup/Shippers.mix', 'SHI', 2, core.get_menu_id('ISM')
 UNION ALL SELECT 'Transactions & Templates', NULL, 'FTT', 1, core.get_menu_id('FI')
 UNION ALL SELECT 'Journal Voucher Entry', '~/Modules/Finance/JournalVoucher.mix', 'JVN', 2, core.get_menu_id('FTT')
 UNION ALL SELECT 'Template Transaction', '~/Modules/Finance/TemplateTransaction.mix', 'TTR', 2, core.get_menu_id('FTT')
@@ -8074,7 +8844,6 @@ SELECT core.get_menu_id('BSD'), 'fr', 'Bonus Slab Détails' UNION ALL
 SELECT core.get_menu_id('SSA'), 'fr', 'Agents de vente' UNION ALL
 SELECT core.get_menu_id('BSA'), 'fr', 'Bonus dalle Affectation' UNION ALL
 SELECT core.get_menu_id('SAR'), 'fr', 'Rapports de vente' UNION ALL
-SELECT core.get_menu_id('SAR-SVSI'), 'fr', 'Voir la facture de vente' UNION ALL
 SELECT core.get_menu_id('CM'), 'fr', 'Gestion de la Caisse' UNION ALL
 SELECT core.get_menu_id('ASC'), 'fr', 'attribuer Caissier' UNION ALL
 SELECT core.get_menu_id('POSS'), 'fr', 'Configuration de POS' UNION ALL
@@ -8086,7 +8855,6 @@ SELECT core.get_menu_id('PUQ'), 'fr', 'Achat & Devis' UNION ALL
 SELECT core.get_menu_id('DRP'), 'fr', 'Achat direct' UNION ALL
 SELECT core.get_menu_id('PO'), 'fr', 'Bon de commande' UNION ALL
 SELECT core.get_menu_id('GRN'), 'fr', 'GRN contre PO' UNION ALL
-SELECT core.get_menu_id('PAY'), 'fr', 'Facture d''achat contre GRN' UNION ALL
 SELECT core.get_menu_id('PAS'), 'fr', 'Paiement à Fournisseur' UNION ALL
 SELECT core.get_menu_id('PR'), 'fr', 'achat de retour' UNION ALL
 SELECT core.get_menu_id('PUR'), 'fr', 'Rapports d''achat' UNION ALL
@@ -9803,13 +10571,64 @@ SET search_path = audit, pg_catalog;
 INSERT INTO logins (login_id, user_id, office_id, browser, ip_address, login_date_time, remote_user, culture) VALUES (1, 2, 2, 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:32.0) Gecko/20100101 Firefox/32.0', '::1', '2014-09-05 15:22:04.51+00', '', 'en-US');
 INSERT INTO logins (login_id, user_id, office_id, browser, ip_address, login_date_time, remote_user, culture) VALUES (2, 2, 2, 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:32.0) Gecko/20100101 Firefox/32.0', '::1', '2014-09-05 15:37:19.661+00', '', 'en-US');
 INSERT INTO logins (login_id, user_id, office_id, browser, ip_address, login_date_time, remote_user, culture) VALUES (3, 2, 2, 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:32.0) Gecko/20100101 Firefox/32.0', '::1', '2014-09-20 12:43:26.808+00', '', 'en-US');
+INSERT INTO logins (login_id, user_id, office_id, browser, ip_address, login_date_time, remote_user, culture) VALUES (4, 2, 2, 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:32.0) Gecko/20100101 Firefox/32.0', '::1', '2014-09-28 15:43:36.907+00', '', 'en-US');
 
 
 --
 -- Name: logins_login_id_seq; Type: SEQUENCE SET; Schema: audit; Owner: postgres
 --
 
-SELECT pg_catalog.setval('logins_login_id_seq', 3, true);
+SELECT pg_catalog.setval('logins_login_id_seq', 4, true);
+
+
+SET search_path = core, pg_catalog;
+
+--
+-- Data for Name: fiscal_year; Type: TABLE DATA; Schema: core; Owner: postgres
+--
+
+INSERT INTO fiscal_year (fiscal_year_code, fiscal_year_name, starts_from, ends_on, audit_user_id, audit_ts) VALUES ('FY1415', 'FY 2014/2015', '2014-10-01', '2015-09-30', 2, '2014-10-01 09:18:17.722+00');
+
+
+--
+-- Data for Name: flags; Type: TABLE DATA; Schema: core; Owner: postgres
+--
+
+INSERT INTO flags (flag_id, user_id, flag_type_id, resource, resource_key, resource_id, flagged_on) VALUES (1, 2, 3, 'transactions.stock_master', 'stock_master_id', 7, '2014-09-28 17:50:51.967+00');
+INSERT INTO flags (flag_id, user_id, flag_type_id, resource, resource_key, resource_id, flagged_on) VALUES (2, 2, 4, 'transactions.stock_master', 'stock_master_id', 5, '2014-09-28 17:51:32.284+00');
+INSERT INTO flags (flag_id, user_id, flag_type_id, resource, resource_key, resource_id, flagged_on) VALUES (3, 2, 5, 'transactions.non_gl_stock_master', 'non_gl_stock_master_id', 1, '2014-09-28 17:51:40.242+00');
+
+
+--
+-- Name: flags_flag_id_seq; Type: SEQUENCE SET; Schema: core; Owner: postgres
+--
+
+SELECT pg_catalog.setval('flags_flag_id_seq', 3, true);
+
+
+--
+-- Data for Name: frequency_setups; Type: TABLE DATA; Schema: core; Owner: postgres
+--
+
+INSERT INTO frequency_setups (frequency_setup_id, fiscal_year_code, value_date, frequency_id, audit_user_id, audit_ts) VALUES (1, 'FY1415', '2014-10-31', 2, 2, '2014-10-01 09:19:22.178+00');
+INSERT INTO frequency_setups (frequency_setup_id, fiscal_year_code, value_date, frequency_id, audit_user_id, audit_ts) VALUES (2, 'FY1415', '2014-11-30', 2, 2, '2014-10-01 09:19:34.598+00');
+INSERT INTO frequency_setups (frequency_setup_id, fiscal_year_code, value_date, frequency_id, audit_user_id, audit_ts) VALUES (3, 'FY1415', '2014-12-31', 3, 2, '2014-10-01 09:19:45.302+00');
+INSERT INTO frequency_setups (frequency_setup_id, fiscal_year_code, value_date, frequency_id, audit_user_id, audit_ts) VALUES (4, 'FY1415', '2015-01-31', 2, 2, '2014-10-01 09:19:59.272+00');
+INSERT INTO frequency_setups (frequency_setup_id, fiscal_year_code, value_date, frequency_id, audit_user_id, audit_ts) VALUES (5, 'FY1415', '2015-02-28', 2, 2, '2014-10-01 09:20:07.57+00');
+INSERT INTO frequency_setups (frequency_setup_id, fiscal_year_code, value_date, frequency_id, audit_user_id, audit_ts) VALUES (6, 'FY1415', '2015-03-31', 4, 2, '2014-10-01 09:20:25.697+00');
+INSERT INTO frequency_setups (frequency_setup_id, fiscal_year_code, value_date, frequency_id, audit_user_id, audit_ts) VALUES (7, 'FY1415', '2015-04-30', 2, 2, '2014-10-01 09:20:43.197+00');
+INSERT INTO frequency_setups (frequency_setup_id, fiscal_year_code, value_date, frequency_id, audit_user_id, audit_ts) VALUES (8, 'FY1415', '2015-05-31', 2, 2, '2014-10-01 09:20:54.711+00');
+INSERT INTO frequency_setups (frequency_setup_id, fiscal_year_code, value_date, frequency_id, audit_user_id, audit_ts) VALUES (9, 'FY1415', '2015-06-30', 3, 2, '2014-10-01 09:21:07.837+00');
+INSERT INTO frequency_setups (frequency_setup_id, fiscal_year_code, value_date, frequency_id, audit_user_id, audit_ts) VALUES (10, 'FY1415', '2015-07-31', 2, 2, '2014-10-01 09:21:25.103+00');
+INSERT INTO frequency_setups (frequency_setup_id, fiscal_year_code, value_date, frequency_id, audit_user_id, audit_ts) VALUES (11, 'FY1415', '2015-08-31', 2, 2, '2014-10-01 09:21:37.995+00');
+INSERT INTO frequency_setups (frequency_setup_id, fiscal_year_code, value_date, frequency_id, audit_user_id, audit_ts) VALUES (12, 'FY1415', '2015-09-30', 5, 2, '2014-10-01 09:21:52.293+00');
+
+
+--
+-- Name: frequency_setups_frequency_setup_id_seq; Type: SEQUENCE SET; Schema: core; Owner: postgres
+--
+
+SELECT pg_catalog.setval('frequency_setups_frequency_setup_id_seq', 12, true);
 
 
 SET search_path = transactions, pg_catalog;
@@ -9818,9 +10637,14 @@ SET search_path = transactions, pg_catalog;
 -- Data for Name: transaction_master; Type: TABLE DATA; Schema: transactions; Owner: postgres
 --
 
-INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (1, 1, '1-2014-09-05-2-2-1-15-23-24', 'Journal', '2014-09-05', '2014-09-05 15:23:24.577+00', 1, 2, NULL, 2, 1, '', NULL, '2014-09-05 15:23:24.601+00', 1, 2, 'Vérifié automatiquement par le flux de travail.', NULL, '2014-09-05 15:23:24.577+00');
-INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (2, 2, '2-2014-09-05-2-2-2-15-37-22', 'Journal', '2014-09-05', '2014-09-05 15:37:22.802+00', 2, 2, NULL, 2, 1, '', NULL, '2014-09-05 15:37:22.819+00', 1, 2, 'Vérifié automatiquement par le flux de travail.', NULL, '2014-09-05 15:37:22.802+00');
-INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (3, 1, '1-2014-09-20-2-2-3-12-45-25', 'Purchase.Direct', '2014-09-20', '2014-09-20 12:45:25.485+00', 3, 2, NULL, 2, 7, '', 'Being various items purchased from Mr. Martin for Store 1.', '2014-09-20 12:45:25.532+00', 1, 2, 'Vérifié automatiquement par le flux de travail.', NULL, '2014-09-20 12:45:25.485+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (1, 1, '1-2014-09-05-2-2-1-15-23-24', 'Journal', '2014-01-05', '2014-09-05 15:23:24.577+00', 1, 2, NULL, 2, 1, '', NULL, '2014-09-05 15:23:24.601+00', 1, 2, 'Vérifié automatiquement par le flux de travail.', NULL, '2014-09-05 15:23:24.577+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (2, 2, '2-2014-09-05-2-2-2-15-37-22', 'Journal', '2014-02-05', '2014-09-05 15:37:22.802+00', 2, 2, NULL, 2, 1, '', NULL, '2014-09-05 15:37:22.819+00', 1, 2, 'Vérifié automatiquement par le flux de travail.', NULL, '2014-09-05 15:37:22.802+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (3, 1, '1-2014-09-20-2-2-3-12-45-25', 'Purchase.Direct', '2014-03-20', '2014-09-20 12:45:25.485+00', 3, 2, NULL, 2, 7, '', 'Being various items purchased from Mr. Martin for Store 1.', '2014-09-20 12:45:25.532+00', 1, 2, 'Vérifié automatiquement par le flux de travail.', NULL, '2014-09-20 12:45:25.485+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (4, 1, '1-2014-09-28-2-2-4-15-44-28', 'Sales.Direct', '2014-04-28', '2014-09-28 15:44:28.992+00', 4, 2, NULL, 2, 1, '', 'Apple products sold to Mr. James.', '2014-09-28 15:44:29.097+00', 1, 2, 'Vérifié automatiquement par le flux de travail.', NULL, '2014-09-28 15:44:28.992+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (5, 2, '2-2014-09-28-2-2-4-15-45-44', 'Sales.Direct', '2014-05-28', '2014-09-28 15:45:44.307+00', 4, 2, NULL, 2, 1, '', 'Macbook Pro Late 2013 model, sold to Mr. Jones.', '2014-09-28 15:45:44.361+00', 1, 2, 'Vérifié automatiquement par le flux de travail.', NULL, '2014-09-28 15:45:44.307+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (6, 3, '3-2014-09-28-2-2-4-15-57-47', 'Sales.Direct', '2014-06-28', '2014-09-28 15:57:47.832+00', 4, 2, NULL, 2, 4, '', 'Being MixNP Classifieds purchased by Alexander Thomas.', '2014-09-28 15:57:47.874+00', 1, 2, 'Vérifié automatiquement par le flux de travail.', NULL, '2014-09-28 15:57:47.832+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (7, 4, '4-2014-09-28-2-2-4-15-58-44', 'Sales.Direct', '2014-07-28', '2014-09-28 15:58:44.155+00', 4, 2, NULL, 2, 7, '', 'Being IPhone 6 Plus purchased by Mr. Jacob.', '2014-09-28 15:58:44.201+00', 1, 2, 'Vérifié automatiquement par le flux de travail.', NULL, '2014-09-28 15:58:44.155+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (8, 5, '5-2014-09-28-2-2-4-15-59-43', 'Sales.Direct', '2014-09-28', '2014-09-28 15:59:43.838+00', 4, 2, NULL, 2, 3, '', 'Being ITP sold to Mr. Walker.', '2014-09-28 15:59:43.889+00', 1, 2, 'Vérifié automatiquement par le flux de travail.', NULL, '2014-09-28 15:59:43.838+00');
 
 
 --
@@ -9840,26 +10664,40 @@ SELECT pg_catalog.setval('customer_receipts_receipt_id_seq', 1, false);
 -- Data for Name: non_gl_stock_master; Type: TABLE DATA; Schema: transactions; Owner: postgres
 --
 
+INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, audit_user_id, audit_ts) VALUES (1, '2014-09-28', 'Sales.Quotation', 3, 1, '2014-09-28 16:00:26.805+00', 4, 2, 2, '', 'Quotation sent to Mr. Williams. #follow-up', NULL, '2014-09-28 16:00:26.805+00');
+INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, audit_user_id, audit_ts) VALUES (2, '2014-09-28', 'Sales.Quotation', 46, 1, '2014-09-28 16:14:42.477+00', 4, 2, 2, '', 'Quotation for 100 piece Iphone 6 Plus sent to Jordan. #follow-up', NULL, '2014-09-28 16:14:42.477+00');
+INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, audit_user_id, audit_ts) VALUES (3, '2014-09-28', 'Sales.Quotation', 3, 1, '2014-09-28 16:15:42.16+00', 4, 2, 2, '', 'Quotation of AIT sent to Mr. Williams.', NULL, '2014-09-28 16:15:42.16+00');
+INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, audit_user_id, audit_ts) VALUES (4, '2014-09-28', 'Sales.Order', 38, 1, '2014-09-28 16:17:14.178+00', 4, 2, 2, '', 'PO for 13MBA sent by Gonzalez Evan. #new-client, #important, #contact', NULL, '2014-09-28 16:17:14.178+00');
 
 
 --
 -- Data for Name: non_gl_stock_details; Type: TABLE DATA; Schema: transactions; Owner: postgres
 --
 
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (1, 1, 1, 2, 1, 2.00, 1, 225000.0000, 0.0000, 13, 58500.0000, NULL, '2014-09-28 16:00:26.805+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (2, 1, 2, 1, 1, 1.00, 1, 155000.0000, 0.0000, 13, 20150.0000, NULL, '2014-09-28 16:00:26.805+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (3, 1, 3, 1, 1, 1.00, 1, 135000.0000, 0.0000, 13, 17550.0000, NULL, '2014-09-28 16:00:26.805+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (4, 1, 4, 1, 1, 1.00, 1, 70000.0000, 0.0000, 13, 9100.0000, NULL, '2014-09-28 16:00:26.805+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (5, 1, 5, 1, 1, 1.00, 1, 80000.0000, 0.0000, 13, 10400.0000, NULL, '2014-09-28 16:00:26.805+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (6, 1, 6, 1, 1, 1.00, 1, 50000.0000, 0.0000, 13, 6500.0000, NULL, '2014-09-28 16:00:26.805+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (7, 1, 7, 1, 1, 1.00, 1, 70000.0000, 0.0000, 13, 9100.0000, NULL, '2014-09-28 16:00:26.805+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (8, 2, 9, 100, 1, 100.00, 1, 110000.0000, 0.0000, 13, 1430000.0000, NULL, '2014-09-28 16:14:42.477+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (9, 3, 11, 10, 1, 10.00, 1, 65000.0000, 0.0000, 13, 84500.0000, NULL, '2014-09-28 16:15:42.16+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (10, 4, 2, 10, 1, 10.00, 1, 155000.0000, 0.0000, 13, 201500.0000, NULL, '2014-09-28 16:17:14.178+00');
 
 
 --
 -- Name: non_gl_stock_details_non_gl_stock_detail_id_seq; Type: SEQUENCE SET; Schema: transactions; Owner: postgres
 --
 
-SELECT pg_catalog.setval('non_gl_stock_details_non_gl_stock_detail_id_seq', 1, false);
+SELECT pg_catalog.setval('non_gl_stock_details_non_gl_stock_detail_id_seq', 10, true);
 
 
 --
 -- Name: non_gl_stock_master_non_gl_stock_master_id_seq; Type: SEQUENCE SET; Schema: transactions; Owner: postgres
 --
 
-SELECT pg_catalog.setval('non_gl_stock_master_non_gl_stock_master_id_seq', 1, false);
+SELECT pg_catalog.setval('non_gl_stock_master_non_gl_stock_master_id_seq', 4, true);
 
 
 --
@@ -9875,24 +10713,17 @@ SELECT pg_catalog.setval('non_gl_stock_master_non_gl_stock_master_id_seq', 1, fa
 SELECT pg_catalog.setval('non_gl_stock_master_relations_non_gl_stock_master_relation__seq', 1, false);
 
 
---
--- Data for Name: sales_return; Type: TABLE DATA; Schema: transactions; Owner: postgres
---
-
-
-
---
--- Name: sales_return_sales_return_id_seq; Type: SEQUENCE SET; Schema: transactions; Owner: postgres
---
-
-SELECT pg_catalog.setval('sales_return_sales_return_id_seq', 1, false);
-
 
 --
 -- Data for Name: stock_master; Type: TABLE DATA; Schema: transactions; Owner: postgres
 --
 
-INSERT INTO stock_master (stock_master_id, transaction_master_id, party_id, agent_id, price_type_id, is_credit, shipper_id, shipping_address_id, shipping_charge, store_id, cash_repository_id, audit_user_id, audit_ts) VALUES (1, 3, 16, NULL, NULL, false, NULL, NULL, 0.0000, 1, 1, NULL, '2014-09-20 12:45:25.485+00');
+INSERT INTO stock_master (stock_master_id, transaction_master_id, party_id, salesperson_id, price_type_id, is_credit, shipper_id, shipping_address_id, shipping_charge, store_id, cash_repository_id, audit_user_id, audit_ts) VALUES (1, 3, 16, NULL, NULL, false, NULL, NULL, 0.0000, 1, 1, NULL, '2014-09-20 12:45:25.485+00');
+INSERT INTO stock_master (stock_master_id, transaction_master_id, party_id, salesperson_id, price_type_id, is_credit, shipper_id, shipping_address_id, shipping_charge, store_id, cash_repository_id, audit_user_id, audit_ts) VALUES (2, 4, 17, 1, 1, false, 1, NULL, 0.0000, 1, 1, NULL, '2014-09-28 15:44:28.992+00');
+INSERT INTO stock_master (stock_master_id, transaction_master_id, party_id, salesperson_id, price_type_id, is_credit, shipper_id, shipping_address_id, shipping_charge, store_id, cash_repository_id, audit_user_id, audit_ts) VALUES (3, 5, 4, 2, 2, false, 1, NULL, 0.0000, 1, 1, NULL, '2014-09-28 15:45:44.307+00');
+INSERT INTO stock_master (stock_master_id, transaction_master_id, party_id, salesperson_id, price_type_id, is_credit, shipper_id, shipping_address_id, shipping_charge, store_id, cash_repository_id, audit_user_id, audit_ts) VALUES (4, 6, 12, 3, 1, false, 1, NULL, 0.0000, 1, 1, NULL, '2014-09-28 15:57:47.832+00');
+INSERT INTO stock_master (stock_master_id, transaction_master_id, party_id, salesperson_id, price_type_id, is_credit, shipper_id, shipping_address_id, shipping_charge, store_id, cash_repository_id, audit_user_id, audit_ts) VALUES (5, 7, 1, 4, 1, false, 1, NULL, 0.0000, 1, 1, NULL, '2014-09-28 15:58:44.155+00');
+INSERT INTO stock_master (stock_master_id, transaction_master_id, party_id, salesperson_id, price_type_id, is_credit, shipper_id, shipping_address_id, shipping_charge, store_id, cash_repository_id, audit_user_id, audit_ts) VALUES (6, 8, 25, 5, 1, false, 1, NULL, 0.0000, 1, 2, NULL, '2014-09-28 15:59:43.838+00');
 
 
 --
@@ -9913,13 +10744,26 @@ INSERT INTO stock_details (stock_master_detail_id, stock_master_id, tran_type, s
 INSERT INTO stock_details (stock_master_detail_id, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (12, 1, 'Dr', 1, 12, 100, 8, 120000, 1, 240000.0000, 0.0000, 13, 3120000.0000, NULL, '2014-09-20 12:45:25.485+00');
 INSERT INTO stock_details (stock_master_detail_id, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (13, 1, 'Dr', 1, 13, 100, 1, 100.00, 1, 30000.0000, 0.0000, 13, 390000.0000, NULL, '2014-09-20 12:45:25.485+00');
 INSERT INTO stock_details (stock_master_detail_id, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (14, 1, 'Dr', 1, 17, 5, 1, 5.00, 1, 30000.0000, 0.0000, 13, 19500.0000, NULL, '2014-09-20 12:45:25.485+00');
+INSERT INTO stock_details (stock_master_detail_id, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (15, 2, 'Cr', 1, 1, 1, 1, 1.00, 1, 225000.0000, 0.0000, 13, 29250.0000, NULL, '2014-09-28 15:44:28.992+00');
+INSERT INTO stock_details (stock_master_detail_id, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (16, 2, 'Cr', 1, 2, 1, 1, 1.00, 1, 155000.0000, 0.0000, 13, 20150.0000, NULL, '2014-09-28 15:44:28.992+00');
+INSERT INTO stock_details (stock_master_detail_id, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (17, 2, 'Cr', 1, 3, 1, 1, 1.00, 1, 135000.0000, 0.0000, 13, 17550.0000, NULL, '2014-09-28 15:44:28.992+00');
+INSERT INTO stock_details (stock_master_detail_id, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (18, 2, 'Cr', 1, 4, 1, 1, 1.00, 1, 70000.0000, 0.0000, 13, 9100.0000, NULL, '2014-09-28 15:44:28.992+00');
+INSERT INTO stock_details (stock_master_detail_id, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (19, 2, 'Cr', 1, 5, 1, 1, 1.00, 1, 80000.0000, 0.0000, 13, 10400.0000, NULL, '2014-09-28 15:44:28.992+00');
+INSERT INTO stock_details (stock_master_detail_id, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (20, 2, 'Cr', 1, 6, 1, 1, 1.00, 1, 50000.0000, 0.0000, 13, 6500.0000, NULL, '2014-09-28 15:44:28.992+00');
+INSERT INTO stock_details (stock_master_detail_id, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (21, 2, 'Cr', 1, 7, 1, 1, 1.00, 1, 70000.0000, 0.0000, 13, 9100.0000, NULL, '2014-09-28 15:44:28.992+00');
+INSERT INTO stock_details (stock_master_detail_id, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (22, 2, 'Cr', 1, 8, 1, 1, 1.00, 1, 105000.0000, 0.0000, 13, 13650.0000, NULL, '2014-09-28 15:44:28.992+00');
+INSERT INTO stock_details (stock_master_detail_id, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (23, 2, 'Cr', 1, 9, 1, 1, 1.00, 1, 115000.0000, 0.0000, 13, 14950.0000, NULL, '2014-09-28 15:44:28.992+00');
+INSERT INTO stock_details (stock_master_detail_id, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (24, 3, 'Cr', 1, 1, 1, 1, 1.00, 1, 225000.0000, 0.0000, 13, 29250.0000, NULL, '2014-09-28 15:45:44.307+00');
+INSERT INTO stock_details (stock_master_detail_id, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (25, 4, 'Cr', 1, 14, 1, 1, 1.00, 1, 150000.0000, 0.0000, 13, 19500.0000, NULL, '2014-09-28 15:57:47.832+00');
+INSERT INTO stock_details (stock_master_detail_id, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (26, 5, 'Cr', 1, 9, 10, 1, 10.00, 1, 115000.0000, 0.0000, 13, 149500.0000, NULL, '2014-09-28 15:58:44.155+00');
+INSERT INTO stock_details (stock_master_detail_id, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id, audit_ts) VALUES (27, 6, 'Cr', 1, 10, 10, 1, 10.00, 1, 125000.0000, 0.0000, 13, 162500.0000, NULL, '2014-09-28 15:59:43.838+00');
 
 
 --
 -- Name: stock_details_stock_master_detail_id_seq; Type: SEQUENCE SET; Schema: transactions; Owner: postgres
 --
 
-SELECT pg_catalog.setval('stock_details_stock_master_detail_id_seq', 14, true);
+SELECT pg_catalog.setval('stock_details_stock_master_detail_id_seq', 27, true);
 
 
 --
@@ -9939,7 +10783,7 @@ SELECT pg_catalog.setval('stock_master_non_gl_relations_stock_master_non_gl_rela
 -- Name: stock_master_stock_master_id_seq; Type: SEQUENCE SET; Schema: transactions; Owner: postgres
 --
 
-SELECT pg_catalog.setval('stock_master_stock_master_id_seq', 1, true);
+SELECT pg_catalog.setval('stock_master_stock_master_id_seq', 6, true);
 
 
 --
@@ -9953,20 +10797,35 @@ INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, t
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (7, 3, 'Cr', 8, 'Being various items purchased from Mr. Martin for Store 1.', 1, 'NPR', 86252900.0000, 'NPR', 1, 86252900.0000, NULL, '2014-09-20 12:45:25.485+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (1, 1, 'Cr', 113, 'Cash Invested by nirvan.', NULL, 'NPR', 500000000.0000, 'NPR', 1, 500000000.0000, NULL, '2014-09-05 15:23:24.577+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (2, 1, 'Dr', 8, 'Cash Invested by nirvan.', 1, 'NPR', 500000000.0000, 'NPR', 1, 500000000.0000, NULL, '2014-09-05 15:23:24.577+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (8, 4, 'Cr', 132, 'Apple products sold to Mr. James.', NULL, 'NPR', 1005000.0000, 'NPR', 1, 1005000.0000, NULL, '2014-09-28 15:44:28.992+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (9, 4, 'Cr', 74, 'Apple products sold to Mr. James.', NULL, 'NPR', 130650.0000, 'NPR', 1, 130650.0000, NULL, '2014-09-28 15:44:28.992+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (10, 4, 'Dr', 8, 'Apple products sold to Mr. James.', 1, 'NPR', 1135650.0000, 'NPR', 1, 1135650.0000, NULL, '2014-09-28 15:44:28.992+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (11, 5, 'Cr', 132, 'Macbook Pro Late 2013 model, sold to Mr. Jones.', NULL, 'NPR', 225000.0000, 'NPR', 1, 225000.0000, NULL, '2014-09-28 15:45:44.307+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (12, 5, 'Cr', 74, 'Macbook Pro Late 2013 model, sold to Mr. Jones.', NULL, 'NPR', 29250.0000, 'NPR', 1, 29250.0000, NULL, '2014-09-28 15:45:44.307+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (13, 5, 'Dr', 8, 'Macbook Pro Late 2013 model, sold to Mr. Jones.', 1, 'NPR', 254250.0000, 'NPR', 1, 254250.0000, NULL, '2014-09-28 15:45:44.307+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (14, 6, 'Cr', 132, 'Being MixNP Classifieds purchased by Alexander Thomas.', NULL, 'NPR', 150000.0000, 'NPR', 1, 150000.0000, NULL, '2014-09-28 15:57:47.832+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (15, 6, 'Cr', 74, 'Being MixNP Classifieds purchased by Alexander Thomas.', NULL, 'NPR', 19500.0000, 'NPR', 1, 19500.0000, NULL, '2014-09-28 15:57:47.832+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (16, 6, 'Dr', 8, 'Being MixNP Classifieds purchased by Alexander Thomas.', 1, 'NPR', 169500.0000, 'NPR', 1, 169500.0000, NULL, '2014-09-28 15:57:47.832+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (17, 7, 'Cr', 132, 'Being IPhone 6 Plus purchased by Mr. Jacob.', NULL, 'NPR', 1150000.0000, 'NPR', 1, 1150000.0000, NULL, '2014-09-28 15:58:44.155+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (18, 7, 'Cr', 74, 'Being IPhone 6 Plus purchased by Mr. Jacob.', NULL, 'NPR', 149500.0000, 'NPR', 1, 149500.0000, NULL, '2014-09-28 15:58:44.155+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (19, 7, 'Dr', 8, 'Being IPhone 6 Plus purchased by Mr. Jacob.', 1, 'NPR', 1299500.0000, 'NPR', 1, 1299500.0000, NULL, '2014-09-28 15:58:44.155+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (20, 8, 'Cr', 132, 'Being ITP sold to Mr. Walker.', NULL, 'NPR', 1250000.0000, 'NPR', 1, 1250000.0000, NULL, '2014-09-28 15:59:43.838+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (21, 8, 'Cr', 74, 'Being ITP sold to Mr. Walker.', NULL, 'NPR', 162500.0000, 'NPR', 1, 162500.0000, NULL, '2014-09-28 15:59:43.838+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (22, 8, 'Dr', 8, 'Being ITP sold to Mr. Walker.', 2, 'NPR', 1412500.0000, 'NPR', 1, 1412500.0000, NULL, '2014-09-28 15:59:43.838+00');
 
 
 --
 -- Name: transaction_details_transaction_detail_id_seq; Type: SEQUENCE SET; Schema: transactions; Owner: postgres
 --
 
-SELECT pg_catalog.setval('transaction_details_transaction_detail_id_seq', 7, true);
+SELECT pg_catalog.setval('transaction_details_transaction_detail_id_seq', 22, true);
 
 
 --
 -- Name: transaction_master_transaction_master_id_seq; Type: SEQUENCE SET; Schema: transactions; Owner: postgres
 --
 
-SELECT pg_catalog.setval('transaction_master_transaction_master_id_seq', 3, true);
+SELECT pg_catalog.setval('transaction_master_transaction_master_id_seq', 8, true);
 
 
 --
@@ -9974,3 +10833,6 @@ SELECT pg_catalog.setval('transaction_master_transaction_master_id_seq', 3, true
 --
 
 
+
+-- refresh-materialized-views.sql
+SELECT * FROM transactions.refresh_materialized_views();

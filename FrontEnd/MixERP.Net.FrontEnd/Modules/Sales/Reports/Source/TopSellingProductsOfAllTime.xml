@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This file is part of MixERP.
+
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses />.
+-->
+
+<MixERPReport>
+  <Title>{Resources.Titles.TopSellingProductsOfAllTime}</Title>
+  <TopSection>
+    <Charts>
+      <PieChart ID="Chart1" GridViewIndex="0" HideGridView="false" Type="Doughnut" BorderColor="#FFF" Width="300" Height="300"
+                TitleColumnIndex="3" ValueColumnIndex="4">
+      </PieChart>
+    </Charts>
+  </TopSection>
+  <Body>
+    <GridViews>
+      <GridView>
+        <GridViewDataSource Index="0">
+        </GridViewDataSource>
+      </GridView>
+    </GridViews>
+  </Body>
+  <DataSources>
+    <DataSource>
+      <Query>
+        SELECT * FROM transactions.get_top_selling_products_of_all_time();
+      </Query>
+    </DataSource>
+  </DataSources>
+</MixERPReport>

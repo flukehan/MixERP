@@ -19,12 +19,17 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Reflection;
 
 namespace MixERP.Net.WebControls.ReportEngine
 {
-    public partial class Report //: CompositeControl
+    public partial class Report
     {
+        public Assembly ResourceAssembly { get; set; }
+
         public string Path { get; set; }
+
+        public bool NoHeader { get; set; }
 
         public bool AutoInitialize { get; set; }
 

@@ -18,10 +18,19 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 -->
+
 <MixERPReport>
   <Title>{Resources.Titles.Receipt}</Title>
   <TopSection>
     <table class="table horizontal">
+      <tr>
+        <td>{Resources.Titles.TranCode}</td>
+        <td>
+          {DataSource[0].transaction_code}
+          <br />
+          {Barcode(DataSource[0].transaction_code)}
+        </td>
+      </tr>
       <tr>
         <td>{Resources.Titles.TransactionDate}</td>
         <td>{DataSource[0].transaction_ts}</td>
@@ -134,6 +143,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <DataSource>
       <Query>
         SELECT
+        transactions.transaction_master.transaction_code,
         transactions.transaction_master.transaction_ts,
         transactions.transaction_master.value_date,
         office.users.user_name AS entered_by,
@@ -209,12 +219,4 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
       <DecimalFieldIndices>4,5,6,7,8,9</DecimalFieldIndices>
     </DataSource>
   </DataSources>
-  <Install>
-    <Report
-        MenuCode=""
-        ParentMenuCode=""
-        MenuText="{Resources.Titles.}"
-        Level="2"
-        Path="" />
-  </Install>
 </MixERPReport>

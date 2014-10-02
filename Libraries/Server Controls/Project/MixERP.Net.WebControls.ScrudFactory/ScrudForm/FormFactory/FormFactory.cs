@@ -26,6 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Reflection;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
@@ -129,7 +130,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             return list;
         }
 
-        private void LoadForm(Panel container, DataTable values)
+        private void LoadForm(Panel container, DataTable values, Assembly assembly)
         {
             using (var htmlTable = new HtmlTable())
             {
@@ -163,7 +164,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                                 this.GetItemSelectorPath(), columnName, defaultValue, isSerial, isNullable, dataType,
                                 domain, maxLength, parentTableSchema, parentTable, parentTableColumn, this.DisplayFields,
                                 this.DisplayViews, this.UseDisplayViewsAsParents, this.SelectedValues,
-                                this.GetErrorCssClass());
+                                this.GetErrorCssClass(), assembly);
                         }
                     }
                 }

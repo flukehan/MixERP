@@ -2,14 +2,9 @@
 using MixERP.Net.Common.Models.Core;
 using MixERP.Net.DBFactory;
 using Npgsql;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Data
 {
@@ -19,7 +14,8 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data
         {
             Collection<AttachmentModel> collection = new Collection<AttachmentModel>();
 
-            const string sql = "SELECT attachment_id, comment, @AttachmentDirectory || file_path as file_path, original_file_name, added_on FROM core.attachments WHERE resource || resource_key=core.get_attachment_lookup_info(@Book) AND resource_id=@ResourceId;";
+            const string sql =
+                "SELECT attachment_id, comment, @AttachmentDirectory || file_path as file_path, original_file_name, added_on FROM core.attachments WHERE resource || resource_key=core.get_attachment_lookup_info(@Book) AND resource_id=@ResourceId;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@AttachmentDirectory", attachmentDirectory);
@@ -77,9 +73,10 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data
                         {
                             foreach (AttachmentModel attachment in attachments)
                             {
-                                const string sql = "INSERT INTO core.attachments(user_id, resource, resource_key, resource_id, original_file_name, file_extension, file_path, comment) " +
-                                                   "SELECT @UserId, core.attachment_lookup.resource, core.attachment_lookup.resource_key, @ResourceId, @OriginalFileName, @FileExtension, @FilePath, @Comment" +
-                                                   " FROM core.attachment_lookup WHERE book=@Book;";
+                                const string sql =
+                                    "INSERT INTO core.attachments(user_id, resource, resource_key, resource_id, original_file_name, file_extension, file_path, comment) " +
+                                    "SELECT @UserId, core.attachment_lookup.resource, core.attachment_lookup.resource_key, @ResourceId, @OriginalFileName, @FileExtension, @FilePath, @Comment" +
+                                    " FROM core.attachment_lookup WHERE book=@Book;";
                                 using (NpgsqlCommand attachmentCommand = new NpgsqlCommand(sql, connection))
                                 {
                                     attachmentCommand.Parameters.AddWithValue("@UserId", userId);

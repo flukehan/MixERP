@@ -117,13 +117,115 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CashRepository" xml:space="preserve">
+    <value>Cash Repository</value>
+  </data>
+  <data name="CostCenter" xml:space="preserve">
+    <value>Cost Center</value>
+  </data>
   <data name="DirectPurchase" xml:space="preserve">
     <value>Direct Purchase</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="EmailThisInvoice" xml:space="preserve">
+    <value>Email This Invoice</value>
+  </data>
+  <data name="EmailThisNote" xml:space="preserve">
+    <value>Email This Note</value>
+  </data>
+  <data name="EmailThisOrder" xml:space="preserve">
+    <value>Email This Order</value>
+  </data>
+  <data name="EmailThisReturn" xml:space="preserve">
+    <value>Email This Return</value>
+  </data>
+  <data name="EnteredBy" xml:space="preserve">
+    <value>Entered By</value>
+  </data>
+  <data name="Fax" xml:space="preserve">
+    <value>Fax</value>
   </data>
   <data name="GoodsReceiptNote" xml:space="preserve">
     <value>Goods Receipt Note</value>
   </data>
+  <data name="InvoiceDetails" xml:space="preserve">
+    <value>Invoice Details</value>
+  </data>
+  <data name="Office" xml:space="preserve">
+    <value>Office</value>
+  </data>
+  <data name="OfficeCode" xml:space="preserve">
+    <value>OfficeCode</value>
+  </data>
+  <data name="OtherDetails" xml:space="preserve">
+    <value>Other Details</value>
+  </data>
+  <data name="PreparedOn" xml:space="preserve">
+    <value>Prepared On</value>
+  </data>
+  <data name="PriceType" xml:space="preserve">
+    <value>Price Type</value>
+  </data>
+  <data name="PurchaseInvoice" xml:space="preserve">
+    <value>Purchase Invoice</value>
+  </data>
   <data name="PurchaseOrder" xml:space="preserve">
     <value>Purchase Order</value>
+  </data>
+  <data name="PurchaseReturn" xml:space="preserve">
+    <value>Purchase Return</value>
+  </data>
+  <data name="PurchaseType" xml:space="preserve">
+    <value>Purchase Type</value>
+  </data>
+  <data name="ReferenceNumber" xml:space="preserve">
+    <value>Reference Number</value>
+  </data>
+  <data name="StatementReference" xml:space="preserve">
+    <value>Statement Reference</value>
+  </data>
+  <data name="SupplierName" xml:space="preserve">
+    <value>Supplier Name</value>
+  </data>
+  <data name="Tel" xml:space="preserve">
+    <value>Tel</value>
+  </data>
+  <data name="TranCode" xml:space="preserve">
+    <value>Tran Code</value>
+  </data>
+  <data name="TransactionDate" xml:space="preserve">
+    <value>Transaction Date</value>
+  </data>
+  <data name="TransactionStatus" xml:space="preserve">
+    <value>Transaction Status</value>
+  </data>
+  <data name="Url" xml:space="preserve">
+    <value>Url</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="ValueDate" xml:space="preserve">
+    <value>Value Date</value>
+  </data>
+  <data name="VerificationReason" xml:space="preserve">
+    <value>Verification Reason</value>
+  </data>
+  <data name="VerifiedBy" xml:space="preserve">
+    <value>Verified By</value>
+  </data>
+  <data name="ViewThisInvoice" xml:space="preserve">
+    <value>View This Invoice</value>
+  </data>
+  <data name="ViewThisNote" xml:space="preserve">
+    <value>View This Note</value>
+  </data>
+  <data name="ViewThisOrder" xml:space="preserve">
+    <value>View This Order</value>
+  </data>
+  <data name="ViewThisReturn" xml:space="preserve">
+    <value>View This Return</value>
   </data>
 </root>

@@ -42,7 +42,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             this.formGridView.RowDataBound += this.FormGridView_RowDataBound;
 
             var selectField = new TemplateField();
-            selectField.HeaderText = ScrudResource.Select;
+            selectField.HeaderText = Titles.Select;
             selectField.ItemStyle.Width = 20;
             this.formGridView.Columns.Add(selectField);
 

@@ -44,8 +44,8 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
             script.Append(CreateVariable("formPanelId", formPanelId));
             script.Append(CreateVariable("cancelButtonId ", cancelButtonId));
 
-            script.Append(CreateVariable("scrudAreYouSureLocalized", ScrudResource.AreYouSure));
-            script.Append(CreateVariable("scrudNothingSelectedLocalized", ScrudResource.NothingSelected));
+            script.Append(CreateVariable("scrudAreYouSureLocalized", Titles.AreYouSure));
+            script.Append(CreateVariable("scrudNothingSelectedLocalized", Titles.NothingSelected));
             script.Append(CreateVariable("reportTemplatePath", PageUtility.ResolveUrl(ConfigurationHelper.GetScrudParameter("TemplatePath"))));
             script.Append(CreateVariable("reportHeaderPath", PageUtility.ResolveUrl(ConfigurationHelper.GetScrudParameter("HeaderPath"))));
             script.Append(CreateVariable("date", DateTime.Now.ToString(CultureInfo.InvariantCulture)));

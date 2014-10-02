@@ -1,3 +1,4 @@
+
 DROP FUNCTION IF EXISTS transactions.get_top_selling_products_of_all_time(top int);
 
 CREATE FUNCTION transactions.get_top_selling_products_of_all_time(top int)
@@ -27,7 +28,7 @@ BEGIN
         (
                 SELECT         
                         transactions.verified_stock_transaction_view.item_id, 
-                        SUM(transactions.verified_stock_transaction_view.base_quantity) AS quantity
+                        SUM((price * quantity) - discount + tax) AS sales_amount
                 FROM transactions.verified_stock_transaction_view
                 GROUP BY transactions.verified_stock_transaction_view.item_id
                 ORDER BY 2 DESC
@@ -69,3 +70,4 @@ $$
 LANGUAGE plpgsql;
 
 
+--SELECT * FROM transactions.get_top_selling_products_of_all_time();

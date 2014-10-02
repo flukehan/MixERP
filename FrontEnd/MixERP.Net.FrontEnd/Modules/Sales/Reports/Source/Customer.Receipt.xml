@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This file is part of MixERP.
+
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses />.
+-->
+
+<MixERPReport>
+  <Title>{Resources.Titles.Receipt}</Title>
+  <TopSection>
+    <table class="table horizontal">
+      <tr>
+        <td>{Resources.Titles.TranCode}</td>
+        <td>
+          {DataSource[0].transaction_code}
+          <br />
+          {Barcode(DataSource[0].transaction_code)}
+        </td>
+      </tr>
+      <tr>
+        <td>{Resources.Titles.OfficeCode}</td>
+        <td> {DataSource[0].office_code}</td>
+      </tr>
+      <tr>
+        <td>{Resources.Titles.TransactionDate}</td>
+        <td>{DataSource[0].transaction_ts}</td>
+      </tr>
+      <tr>
+        <td>{Resources.Titles.ValueDate}</td>
+        <td>{DataSource[0].value_date}</td>
+      </tr>
+      <tr>
+        <td>{Resources.Titles.EnteredBy}</td>
+        <td> {DataSource[0].entered_by}</td>
+      </tr>
+      <tr>
+        <td>{Resources.Titles.VerifiedBy}</td>
+        <td> {DataSource[0].verified_by}</td>
+      </tr>
+      <tr>
+        <td>{Resources.Titles.TransactionStatus}</td>
+        <td> {DataSource[0].status}</td>
+      </tr>
+      <tr>
+        <td>{Resources.Titles.VerificationReason}</td>
+        <td> {DataSource[0].verification_reason}</td>
+      </tr>
+      <tr>
+        <td>
+          {Resources.Titles.ReferenceNumber}
+        </td>
+        <td>
+          {DataSource[0].reference_number}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {Resources.Titles.StatementReference}
+        </td>
+        <td>
+          {DataSource[0].statement_reference}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {Resources.Titles.PartyCode}
+        </td>
+        <td>
+          {DataSource[0].party_code}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {Resources.Titles.PartyName}
+        </td>
+        <td>
+          {DataSource[0].party_name}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {Resources.Titles.Address}
+        </td>
+        <td>
+          {DataSource[0].address}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {Resources.Titles.PANNumber}
+        </td>
+        <td>
+          {DataSource[0].pan_number}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {Resources.Titles.CSTNumber}
+        </td>
+        <td>
+          {DataSource[0].cst_number}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {Resources.Titles.SSTNumber}
+        </td>
+        <td>
+          {DataSource[0].sst_number}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {Resources.Titles.Email}
+        </td>
+        <td>
+          {DataSource[0].email}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {Resources.Titles.ReceiptCurrency}
+        </td>
+        <td>
+          {DataSource[0].currency_code}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {Resources.Titles.ReceiptAmount}
+        </td>
+        <td>
+          {DataSource[0].amount}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {Resources.Titles.ERToHomeCurrency}
+        </td>
+        <td>
+          {DataSource[0].er_debit}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {Resources.Titles.HomeCurrency}
+        </td>
+        <td>
+          {DataSource[0].home_currency_code}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {Resources.Titles.AmountInHomeCurrency}
+        </td>
+        <td>
+          {DataSource[0].amount_in_home_currency}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {Resources.Titles.ERToBaseCurrency}
+        </td>
+        <td>
+          {DataSource[0].er_credit}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {Resources.Titles.BaseCurrency}
+        </td>
+        <td>
+          {DataSource[0].base_currency_code}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {Resources.Titles.AmountInBaseCurrency}
+        </td>
+        <td>
+          {DataSource[0].amount_in_base_currency}
+        </td>
+      </tr>
+    </table>
+
+    <br />
+  </TopSection>
+  <Body>
+  </Body>
+  <BottomSection>
+    <strong>{Resources.Labels.ThankYouForYourBusiness}</strong>
+  </BottomSection>
+  <DataSources>
+    <DataSource>
+      <Query>
+        SELECT
+        transactions.transaction_master.office_id,
+        office.offices.office_code,
+        transactions.transaction_master.transaction_master_id,
+        transactions.transaction_master.transaction_code,
+        transactions.transaction_master.transaction_ts,
+        transactions.transaction_master.value_date,
+        office.users.user_name AS entered_by,
+        transactions.transaction_master.reference_number,
+        transactions.transaction_master.statement_reference,
+        core.verification_statuses.verification_status_name AS status,
+        transactions.transaction_master.verification_reason,
+        verified_by_user.user_name AS verified_by,
+        transactions.customer_receipts.party_id,
+        core.parties.party_code,
+        core.parties.party_name,
+        core.append_if_not_null(core.parties.address_line_1, '&lt;br /&gt;') || core.append_if_not_null(core.parties.address_line_2, '&lt;br /&gt;') || core.append_if_not_null(core.parties.street, '&lt;br /&gt;') || core.append_if_not_null(core.parties.city, '') || '&lt;br /&gt;' || core.parties.state || '&lt;br /&gt;' || core.parties.country AS address,
+        core.parties.pan_number,
+        core.parties.sst_number,
+        core.parties.cst_number,
+        core.parties.email,
+        transactions.customer_receipts.currency_code,
+        transactions.customer_receipts.amount,
+        transactions.customer_receipts.er_debit,
+        office.offices.currency_code AS home_currency_code,
+        transactions.customer_receipts.amount * transactions.customer_receipts.er_debit AS amount_in_home_currency,
+        transactions.customer_receipts.er_credit,
+        core.parties.currency_code AS base_currency_code,
+        transactions.customer_receipts.amount * transactions.customer_receipts.er_debit * transactions.customer_receipts.er_credit AS amount_in_base_currency
+        FROM transactions.customer_receipts
+        INNER JOIN transactions.transaction_master
+        ON transactions.transaction_master.transaction_master_id = transactions.customer_receipts.transaction_master_id
+        INNER JOIN core.parties
+        ON core.parties.party_id = transactions.customer_receipts.party_id
+        INNER JOIN core.verification_statuses
+        ON transactions.transaction_master.verification_status_id = core.verification_statuses.verification_status_id
+        INNER JOIN office.users
+        ON transactions.transaction_master.user_id = office.users.user_id
+        INNER JOIN office.offices
+        ON transactions.transaction_master.office_id = office.offices.office_id
+        LEFT JOIN office.users AS verified_by_user
+        ON transactions.transaction_master.verified_by_user_id = verified_by_user.user_id
+        WHERE transactions.transaction_master.transaction_master_id=@transaction_master_id;
+      </Query>
+      <Parameters>
+        <Parameter Name="@transaction_master_id" Type="Number" />
+      </Parameters>
+    </DataSource>
+  </DataSources>
+</MixERPReport>

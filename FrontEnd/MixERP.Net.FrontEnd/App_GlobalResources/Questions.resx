@@ -121,21 +121,6 @@
     <value>Are you sure?</value>
   </data>
   <data name="CannotAccessAccount" xml:space="preserve">
-    <value>Can't access your account?</value>
-  </data>
-  <data name="ConfirmAnalyze" xml:space="preserve">
-    <value>This will lock client database access during execution. Are you sure you want to execute this action right now?</value>
-  </data>
-  <data name="ConfirmVacuum" xml:space="preserve">
-    <value>This will lock client database access during execution. Are you sure you want to execute this action right now?</value>
-  </data>
-  <data name="ConfirmVacuumFull" xml:space="preserve">
-    <value>This will lock client database access during execution. Are you sure you want to execute this action right now?</value>
-  </data>
-  <data name="UpdateTax" xml:space="preserve">
-    <value>Update tax?</value>
-  </data>
-  <data name="WithdrawalReason" xml:space="preserve">
-    <value>Why do you want to withdraw this transaction?</value>
+    <value>Cannot access your account?</value>
   </data>
 </root>

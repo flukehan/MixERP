@@ -24,15 +24,17 @@ using MixERP.Net.WebControls.ScrudFactory.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Resources;
 using System;
 using System.Net.Mime;
+using System.Reflection;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using LocalizationHelper = MixERP.Net.Common.Helpers.LocalizationHelper;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 {
     public static class ScrudDateTextBox
     {
-        public static void AddDateTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isNullable, string validatorCssClass)
+        public static void AddDateTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isNullable, string validatorCssClass, Assembly assembly)
         {
             if (htmlTable == null)
             {
@@ -50,7 +52,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
             {
                 Net.Common.jQueryHelper.jQueryUI.AddjQueryUIDatePicker(null, id, null, null);
 
-                var label = LocalizationHelper.GetDefaultAssemblyResourceString(resourceClassName, columnName);
+                var label = ScrudLocalizationHelper.GetResourceString(assembly, resourceClassName, columnName);
 
                 textBox.Text = defaultValue;
 
@@ -60,7 +62,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
                     {
                         using (RequiredFieldValidator required = ScrudFactoryHelper.GetRequiredFieldValidator(textBox, validatorCssClass))
                         {
-                            ScrudFactoryHelper.AddRow(htmlTable, label + ScrudResource.RequiredFieldIndicator, textBox, dateValidator, required);
+                            ScrudFactoryHelper.AddRow(htmlTable, label + Titles.RequiredFieldIndicator, textBox, dateValidator, required);
                             return;
                         }
                     }
@@ -80,7 +82,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
             using (var validator = new CompareValidator())
             {
                 validator.ID = controlToValidate.ID + "CompareValidator";
-                validator.ErrorMessage = @"<br/>" + ScrudResource.InvalidDate;
+                validator.ErrorMessage = @"<br/>" + Titles.InvalidDate;
                 validator.CssClass = cssClass;
                 validator.ControlToValidate = controlToValidate.ID;
                 validator.EnableClientScript = true;

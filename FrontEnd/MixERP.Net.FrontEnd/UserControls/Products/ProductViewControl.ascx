@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
+
 <%@ Control Language="C#" AutoEventWireup="True" CodeBehind="ProductViewControl.ascx.cs" Inherits="MixERP.Net.FrontEnd.UserControls.Products.ProductViewControl" %>
 <h2>
     <asp:Literal ID="TitleLiteral" runat="server" />
@@ -26,13 +27,13 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
         <button type="button" id="AddNewButton" runat="server" class="btn btn-default btn-sm">
             <span class="glyphicon glyphicon-plus"></span>
-            <asp:Literal runat="server" Text="<%$Resources:Titles, AddNew %>">></asp:Literal>
+            <asp:Literal runat="server" Text="Add New" />
         </button>
 
         <button type="button" id="MergeToOrderButton" runat="server" class="btn btn-default btn-sm"
             onclick="if(!getSelectedItems()){return;};" onserverclick="MergeToOrderButton_Click" visible="False">
             <span class="glyphicon glyphicon-tree-conifer"></span>
-            <asp:Literal runat="server" Text="<%$Resources:Titles, MergeBatchToSalesOrder %>"></asp:Literal>
+            <asp:Literal runat="server" Text="Merge Batch To Sales Order" />
         </button>
 
         <button type="button" id="MergeToDeliveryButton" runat="server"
@@ -40,29 +41,29 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
             onclick="if(!getSelectedItems()){return;};"
             onserverclick="MergeToDeliveryButton_Click" visible="false">
             <span class="glyphicon glyphicon-tree-deciduous"></span>
-            <asp:Literal runat="server" Text="<%$Resources:Titles, MergeBatchToSalesDelivery %>"></asp:Literal>
+            <asp:Literal runat="server" Text="Merge Batch To Sales Delivery" />
         </button>
 
         <button type="button" id="MergeToGRNButton" runat="server" class="btn btn-default btn-sm"
             onclick="if(!getSelectedItems()){return;};" onserverclick="MergeToGRNButton_Click" visible="False">
             <span class="glyphicon glyphicon-tree-conifer"></span>
-            <asp:Literal runat="server" Text="<%$Resources:Titles, MergeBatchToGRN %>"></asp:Literal>
+            <asp:Literal runat="server" Text="Merge Batch To GRN" />
         </button>
 
         <button type="button" id="ReturnButton" runat="server" class="btn btn-default btn-sm"
             onclick="if(!getSelectedItems()){return;};" onserverclick="ReturnButton_Click" visible="False">
             <span class="glyphicon glyphicon-tree-conifer"></span>
-            <asp:Literal runat="server" Text="<%$Resources:Titles, Return %>"></asp:Literal>
+            <asp:Literal runat="server" Text="Return" />
         </button>
 
         <button type="button" id="flagButton" class="btn btn-default btn-sm">
             <span class="glyphicon glyphicon-flag"></span>&nbsp;
-                <asp:Literal runat="server" Text="<%$Resources:Titles, Flag %>"></asp:Literal>
+                <asp:Literal runat="server" Text="Flag" />
         </button>
 
         <button type="button" class="btn btn-default btn-sm">
             <span class="glyphicon glyphicon-print"></span>&nbsp;
-                <asp:Literal runat="server" Text="<%$Resources:Titles, Print %>"></asp:Literal>
+                <asp:Literal runat="server" Text="Print" />
         </button>
     </div>
 </div>
@@ -105,7 +106,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
             <div class="input-group">
                 <mixerp:DateTextBox ID="DateFromDateTextBox" runat="server"
                     CssClass="date form-control input-sm"
-                    Mode="MonthStartDate"
+                    Mode="FiscalYearStartDate"
                     Required="true" />
                 <span class="input-group-addon" onclick="$('#DateFromDateTextBox').datepicker('show');">
                     <span class="glyphicon glyphicon-calendar"></span>
@@ -132,10 +133,11 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
             <asp:TextBox ID="PartyTextBox" runat="server" CssClass="form-control input-sm" placeholder="Party" />
         </div>
 
-        <div class="col-md-1 pad4">
-            <asp:TextBox ID="PriceTypeTextBox" runat="server" CssClass="form-control input-sm" placeholder="Price Type" />
+        <div id="PriceTypeDiv" runat="server">
+            <div class="col-md-1 pad4">
+                <asp:TextBox ID="PriceTypeTextBox" runat="server" CssClass="form-control input-sm" placeholder="Price Type" />
+            </div>
         </div>
-
         <div class="col-md-1 pad4">
             <asp:TextBox ID="UserTextBox" runat="server" CssClass="form-control input-sm" placeholder="User" />
         </div>
@@ -160,42 +162,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         CssClass="table table-bordered table-condensed pointer"
         AutoGenerateColumns="false"
         OnRowDataBound="ProductViewGridView_RowDataBound">
-        <Columns>
-            <asp:TemplateField HeaderStyle-Width="92px" HeaderText="actions">
-                <ItemTemplate>
-                    <a href="#" id="ChecklistAnchor" runat="server" title="Go to Checklist">
-                        <img runat="server" src="~/Resource/Icons/checklist-16.png" alt="Go to Checklist" />
-                    </a>
-                    <a href="#" id="PreviewAnchor" runat="server" title="Quick Preview" class="preview">
-                        <img runat="server" src="~/Resource/Icons/search-16.png" alt="Search" />
-                    </a>
-                    <a href="#" id="PrintAnchor" runat="server" title="Print">
-                        <img runat="server" src="~/Resource/Icons/print-16.png" alt="Print" />
-                    </a>
-                    <a href="#" title="Go To Top" onclick="window.scroll(0);">
-                        <img runat="server" src="~/Resource/Icons/top-16.png" alt="Go to Top" />
-                    </a>
-                </ItemTemplate>
-            </asp:TemplateField>
-            <asp:TemplateField>
-                <ItemTemplate>
-                    <asp:CheckBox ID="SelectCheckBox" runat="server" ClientIDMode="Predictable" />
-                </ItemTemplate>
-            </asp:TemplateField>
-            <asp:BoundField DataField="id" HeaderText="id" />
-            <asp:BoundField DataField="value_date" HeaderText="value_date" DataFormatString="{0:d}" />
-            <asp:BoundField DataField="office" HeaderText="office" />
-            <asp:BoundField DataField="reference_number" HeaderText="reference_number" />
-            <asp:BoundField DataField="party" HeaderText="party" />
-            <asp:BoundField DataField="price_type" HeaderText="price_type" />
-            <asp:BoundField DataField="amount" HeaderText="amount" />
-            <asp:BoundField DataField="transaction_ts" HeaderText="transaction_ts" DataFormatString="{0:D}" />
-            <asp:BoundField DataField="user" HeaderText="user" />
-            <asp:BoundField DataField="statement_reference" HeaderText="statement_reference" />
-            <asp:BoundField DataField="book" HeaderText="book" />
-            <asp:BoundField DataField="flag_background_color" HeaderText="flag_background_color" />
-            <asp:BoundField DataField="flag_foreground_color" HeaderText="flag_foreground_color" />
-        </Columns>
     </asp:GridView>
 </asp:Panel>
 

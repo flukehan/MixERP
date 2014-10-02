@@ -118,69 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="DaysLowerCase" xml:space="preserve">
-    <value>day(s)</value>
-  </data>
-  <data name="FieldRequired" xml:space="preserve">
-    <value>This field is required.</value>
-  </data>
-  <data name="Loading" xml:space="preserve">
-    <value>Loading ...</value>
-  </data>
-  <data name="NothingSelected" xml:space="preserve">
-    <value>Nothing selected.</value>
-  </data>
-  <data name="PartyDescription" xml:space="preserve">
-    <value>Parties collectively refer to suppliers, customers, agents, and dealers.</value>
-  </data>
-  <data name="RequiredFieldDetails" xml:space="preserve">
-    <value>Fields marked with asterisk (*) are required.</value>
-  </data>
-  <data name="SOID" xml:space="preserve">
-    <value>SO ID#</value>
-  </data>
-  <data name="SQID" xml:space="preserve">
-    <value>SQ ID#</value>
+    <value>days</value>
   </data>
   <data name="TaskCompletedSuccessfully" xml:space="preserve">
-    <value>The task was completed successfully.</value>
-  </data>
-  <data name="ThankYouForYourBusiness" xml:space="preserve">
-    <value>Thank you for your business.</value>
-  </data>
-  <data name="TransactionAlreadyMerged" xml:space="preserve">
-    <value>The selected transaction(s) contains item(s) which have already been merged. Please try again.</value>
-  </data>
-  <data name="TransactionWithdrawnMessage" xml:space="preserve">
-    <value>The transaction was withdrawn successfully. Moreover, this action will affect the all the reports produced on and after "{0}".</value>
-    <comment>The transaction was withdrawn successfully. Moreover, this action will affect the all the reports produced on and after "1/1/2013".</comment>
-  </data>
-  <data name="UnknownError" xml:space="preserve">
-    <value>Unknown error occurred.</value>
-  </data>
-  <data name="UploadedFilesDeleted" xml:space="preserve">
-    <value>The uploaded files were successfully deleted.</value>
+    <value>Task completed successfully.</value>
   </data>
   <data name="UserGreeting" xml:space="preserve">
     <value>Hi {0}!</value>
     <comment>Hi binod!</comment>
-  </data>
-  <data name="VerificationApprovedMessage" xml:space="preserve">
-    <value>This transaction was approved by {0} on {1}.</value>
-    <comment>This transaction was approved by administrator on 1/1/2013.</comment>
-  </data>
-  <data name="VerificationAwaitingMessage" xml:space="preserve">
-    <value>This transaction is awaiting verification from an administrator.</value>
-  </data>
-  <data name="VerificationClosedMessage" xml:space="preserve">
-    <value>This transaction was closed by {0} on {1}. Reason: "{2}".</value>
-    <comment>This transaction was closed by administrator on 1/1/2013. Reason: "Mistake entry.".</comment>
-  </data>
-  <data name="VerificationRejectedMessage" xml:space="preserve">
-    <value>This transaction was rejected by {0} on {1}. Reason: "{2}".</value>
-    <comment>This transaction was rejected by administrator on 1/1/2013. Reason: "Mistake entry.".</comment>
-  </data>
-  <data name="VerificationWithdrawnMessage" xml:space="preserve">
-    <value>This transaction was withdrawn by {0} on {1}. Reason: "{2}".</value>
-    <comment>This transaction was withdrawn by administrator on 1/1/2013. Reason: "Mistake entry.".</comment>
   </data>
 </root>

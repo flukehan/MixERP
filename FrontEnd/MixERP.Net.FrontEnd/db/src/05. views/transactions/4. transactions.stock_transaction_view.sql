@@ -23,7 +23,7 @@ SELECT
         transactions.transaction_master.verification_status_id,
         transactions.transaction_master.verification_reason,
         transactions.stock_master.party_id,
-        transactions.stock_master.agent_id,
+        transactions.stock_master.salesperson_id,
         transactions.stock_master.price_type_id,
         transactions.stock_master.is_credit,
         transactions.stock_master.shipper_id,

@@ -73,6 +73,15 @@ namespace MixERP.Net.Common
             ScriptManager.RegisterStartupScript(page, typeof(Page), key, javaScript, addScriptTags);
         }
 
+        public static string ResolveAbsoluteUrl(Page page, string relativeUrl)
+        {
+            if (page != null)
+            {
+                return page.Request.Url.GetLeftPart(UriPartial.Authority) + page.ResolveUrl(relativeUrl);
+            }
+            return relativeUrl;
+        }
+
         public static string ResolveUrl(string relativeUrl)
         {
             if (HttpContext.Current != null)

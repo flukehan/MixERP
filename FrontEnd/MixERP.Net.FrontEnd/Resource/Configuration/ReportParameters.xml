@@ -18,6 +18,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 -->
+
 <configuration>
   <appSettings>
     <add key="ResourceClassName" value="ScrudResource" />
@@ -34,8 +35,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <add key="QRCodeRender" value ="canvas" />
     <add key="QRCodeBackgroundColor" value ="#FFFFFF" />
     <add key="QRCodeForegroundColor" value ="#000000" />
-    <add key="QRCodeWidth" value ="200" />
-    <add key="QRCodeHeight" value ="200" />
+    <add key="QRCodeWidth" value ="100" />
+    <add key="QRCodeHeight" value ="100" />
     <add key="QRCodeTypeNumber" value ="-1" />
     <add key="LogoPath" value="~/Resource/Static/images/mixerp-logo-light.png" />
     <add key="HeaderPath" value="~/Reports/Assets/Header.html" />

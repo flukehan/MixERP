@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
+
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="AlertsWidget.ascx.cs" Inherits="MixERP.Net.FrontEnd.UserControls.Widgets.AlertsWidget" %>
 <div class="panel panel-default widget">
 

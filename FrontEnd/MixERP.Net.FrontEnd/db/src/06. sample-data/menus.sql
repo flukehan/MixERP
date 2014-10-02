@@ -20,12 +20,13 @@ UNION ALL SELECT 'Sales Delivery', '~/Modules/Sales/Delivery.mix', 'SD', 2, core
 UNION ALL SELECT 'Receipt from Customer', '~/Modules/Sales/Receipt.mix', 'RFC', 2, core.get_menu_id('SAQ')
 UNION ALL SELECT 'Sales Return', '~/Modules/Sales/Return.mix', 'SR', 2, core.get_menu_id('SAQ')
 UNION ALL SELECT 'Setup & Maintenance', NULL, 'SSM', 1, core.get_menu_id('SA')
-UNION ALL SELECT 'Bonus Slab for Agents', '~/Modules/Sales/Setup/AgentBonusSlabs.mix', 'ABS', 2, core.get_menu_id('SSM')
-UNION ALL SELECT 'Bonus Slab Details', '~/Modules/Sales/Setup/AgentBonusSlabDetails.mix', 'BSD', 2, core.get_menu_id('SSM')
-UNION ALL SELECT 'Sales Agents', '~/Modules/Sales/Setup/Agents.mix', 'SSA', 2, core.get_menu_id('SSM')
+UNION ALL SELECT 'Bonus Slab for Salespersons', '~/Modules/Sales/Setup/BonusSlabs.mix', 'ABS', 2, core.get_menu_id('SSM')
+UNION ALL SELECT 'Bonus Slab Details', '~/Modules/Sales/Setup/BonusSlabDetails.mix', 'BSD', 2, core.get_menu_id('SSM')
+UNION ALL SELECT 'Sales Teams', '~/Modules/Sales/Setup/Teams.mix', 'SST', 2, core.get_menu_id('SSM')
+UNION ALL SELECT 'Salespersons', '~/Modules/Sales/Setup/Salespersons.mix', 'SSA', 2, core.get_menu_id('SSM')
 UNION ALL SELECT 'Bonus Slab Assignment', '~/Modules/Sales/Setup/BonusSlabAssignment.mix', 'BSA', 2, core.get_menu_id('SSM')
 UNION ALL SELECT 'Sales Reports', NULL, 'SAR', 1, core.get_menu_id('SA')
-UNION ALL SELECT 'View Sales Inovice', '~/Reports/Modules/Sales/Report/Source/Sales.View.Sales.Invoice.xml', 'SAR-SVSI', 2, core.get_menu_id('SAR')
+UNION ALL SELECT 'Top Selling Items', '~/Modules/Sales/Reports/TopSellingItems.mix', 'SAR-TSI', 2, core.get_menu_id('SAR')
 UNION ALL SELECT 'Cashier Management', NULL, 'CM', 1, core.get_menu_id('POS')
 UNION ALL SELECT 'Assign Cashier', '~/Modules/POS/AssignCashier.mix', 'ASC', 2, core.get_menu_id('CM')
 UNION ALL SELECT 'POS Setup', NULL, 'POSS', 1, core.get_menu_id('POS')
@@ -36,7 +37,6 @@ UNION ALL SELECT 'Purchase & Quotation', NULL, 'PUQ', 1, core.get_menu_id('PU')
 UNION ALL SELECT 'Direct Purchase', '~/Modules/Purchase/DirectPurchase.mix', 'DRP', 2, core.get_menu_id('PUQ')
 UNION ALL SELECT 'Purchase Order', '~/Modules/Purchase/Order.mix', 'PO', 2, core.get_menu_id('PUQ')
 UNION ALL SELECT 'GRN Entry', '~/Modules/Purchase/GRN.mix', 'GRN', 2, core.get_menu_id('PUQ')
-UNION ALL SELECT 'Purchase Invoice Against GRN', '~/Modules/Purchase/Invoice.mix', 'PAY', 2, core.get_menu_id('PUQ')
 UNION ALL SELECT 'Payment to Supplier', '~/Modules/Purchase/Payment.mix', 'PAS', 2, core.get_menu_id('PUQ')
 UNION ALL SELECT 'Purchase Return', '~/Modules/Purchase/Return.mix', 'PR', 2, core.get_menu_id('PUQ')
 UNION ALL SELECT 'Purchase Reports', NULL, 'PUR', 1, core.get_menu_id('PU')
@@ -56,7 +56,7 @@ UNION ALL SELECT 'Item Groups', '~/Modules/Inventory/Setup/ItemGroups.mix', 'SSG
 UNION ALL SELECT 'Brands', '~/Modules/Inventory/Setup/Brands.mix', 'SSB', 2, core.get_menu_id('ISM')
 UNION ALL SELECT 'Units of Measure', '~/Modules/Inventory/Setup/UOM.mix', 'UOM', 2, core.get_menu_id('ISM')
 UNION ALL SELECT 'Compound Units of Measure', '~/Modules/Inventory/Setup/CUOM.mix', 'CUOM', 2, core.get_menu_id('ISM')
-UNION ALL SELECT 'Shipper Information', '~/Modules/Inventory/Setup/Shipper.mix', 'SHI', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Shipper Information', '~/Modules/Inventory/Setup/Shippers.mix', 'SHI', 2, core.get_menu_id('ISM')
 UNION ALL SELECT 'Transactions & Templates', NULL, 'FTT', 1, core.get_menu_id('FI')
 UNION ALL SELECT 'Journal Voucher Entry', '~/Modules/Finance/JournalVoucher.mix', 'JVN', 2, core.get_menu_id('FTT')
 UNION ALL SELECT 'Template Transaction', '~/Modules/Finance/TemplateTransaction.mix', 'TTR', 2, core.get_menu_id('FTT')
@@ -177,7 +177,6 @@ SELECT core.get_menu_id('BSD'), 'fr', 'Bonus Slab Détails' UNION ALL
 SELECT core.get_menu_id('SSA'), 'fr', 'Agents de vente' UNION ALL
 SELECT core.get_menu_id('BSA'), 'fr', 'Bonus dalle Affectation' UNION ALL
 SELECT core.get_menu_id('SAR'), 'fr', 'Rapports de vente' UNION ALL
-SELECT core.get_menu_id('SAR-SVSI'), 'fr', 'Voir la facture de vente' UNION ALL
 SELECT core.get_menu_id('CM'), 'fr', 'Gestion de la Caisse' UNION ALL
 SELECT core.get_menu_id('ASC'), 'fr', 'attribuer Caissier' UNION ALL
 SELECT core.get_menu_id('POSS'), 'fr', 'Configuration de POS' UNION ALL
@@ -189,7 +188,6 @@ SELECT core.get_menu_id('PUQ'), 'fr', 'Achat & Devis' UNION ALL
 SELECT core.get_menu_id('DRP'), 'fr', 'Achat direct' UNION ALL
 SELECT core.get_menu_id('PO'), 'fr', 'Bon de commande' UNION ALL
 SELECT core.get_menu_id('GRN'), 'fr', 'GRN contre PO' UNION ALL
-SELECT core.get_menu_id('PAY'), 'fr', 'Facture d''achat contre GRN' UNION ALL
 SELECT core.get_menu_id('PAS'), 'fr', 'Paiement à Fournisseur' UNION ALL
 SELECT core.get_menu_id('PR'), 'fr', 'achat de retour' UNION ALL
 SELECT core.get_menu_id('PUR'), 'fr', 'Rapports d''achat' UNION ALL

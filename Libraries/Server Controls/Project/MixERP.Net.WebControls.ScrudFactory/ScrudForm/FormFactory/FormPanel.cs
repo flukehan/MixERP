@@ -64,7 +64,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         {
                             this.useButton = new Button();
                             this.useButton.ID = "UseButton";
-                            this.useButton.Text = ScrudResource.Use;
+                            this.useButton.Text = Titles.Use;
                             this.useButton.OnClientClick = "scrudAdjustSpinnerSize();";
 
                             this.useButton.Click += this.UseButton_Click;
@@ -76,7 +76,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
                         this.saveButton = new Button();
                         this.saveButton.ID = "SaveButton";
-                        this.saveButton.Text = ScrudResource.Save;
+                        this.saveButton.Text = Titles.Save;
                         this.saveButton.OnClientClick = "scrudAdjustSpinnerSize();";
 
                         this.saveButton.Click += this.SaveButton_Click;
@@ -87,7 +87,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
                         this.cancelButton = new Button();
                         this.cancelButton.ID = "CancelButton";
-                        this.cancelButton.Text = ScrudResource.Cancel;
+                        this.cancelButton.Text = Titles.Cancel;
                         this.cancelButton.CausesValidation = false;
                         this.cancelButton.OnClientClick = "$('#FormPanel').hide(500); $('#GridPanel').show(500);";
                         this.cancelButton.Click += this.CancelButton_Click;
@@ -97,7 +97,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
                         using (var resetButton = new HtmlInputReset())
                         {
-                            resetButton.Value = ScrudResource.Reset;
+                            resetButton.Value = Titles.Reset;
                             resetButton.Attributes.Add("class", this.GetButtonCssClass());
 
                             controlCell.Controls.Add(resetButton);
@@ -115,7 +115,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
         private void AddFormHeader(Panel p)
         {
             this.requiredFieldDetailsLiteral = new Literal();
-            this.requiredFieldDetailsLiteral.Text = @"<div class='form-description'>" + ScrudResource.RequiredFieldDetails + @"</div>";
+            this.requiredFieldDetailsLiteral.Text = @"<div class='form-description'>" + Titles.RequiredFieldDetails + @"</div>";
 
             p.Controls.Add(this.requiredFieldDetailsLiteral);
         }
@@ -143,7 +143,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             using (var table = new DataTable())
             {
                 table.Locale = Thread.CurrentThread.CurrentCulture;
-                this.LoadForm(this.formContainer, table);
+                this.LoadForm(this.formContainer, table, this.ResourceAssembly);
             }
         }
 

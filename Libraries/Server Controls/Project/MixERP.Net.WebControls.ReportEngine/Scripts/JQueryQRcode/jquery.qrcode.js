@@ -55,11 +55,11 @@
 
             // create table element
             var $table = $('<table></table>')
-				.css("width", options.width + "px")
-				.css("height", options.height + "px")
-				.css("border", "0px")
-				.css("border-collapse", "collapse")
-				.css('background-color', options.background);
+                .css("width", options.width + "px")
+                .css("height", options.height + "px")
+                .css("border", "0px")
+                .css("border-collapse", "collapse")
+                .css('background-color', options.background);
 
             // compute tileS percentage
             var tileW = options.width / qrcode.getModuleCount();
@@ -71,9 +71,9 @@
 
                 for (var col = 0; col < qrcode.getModuleCount() ; col++) {
                     $('<td></td>')
-						.css('width', tileW + "px")
-						.css('background-color', qrcode.isDark(row, col) ? options.foreground : options.background)
-						.appendTo($row);
+                        .css('width', tileW + "px")
+                        .css('background-color', qrcode.isDark(row, col) ? options.foreground : options.background)
+                        .appendTo($row);
                 }
             }
             // return just built canvas

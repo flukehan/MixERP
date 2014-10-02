@@ -59,5 +59,32 @@ namespace MixERP.Net.Common.Resources {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid SubTranBook &quot;Purchase Delivery&quot;.
+        /// </summary>
+        internal static string InvalidSubTranBookPurchaseDelivery {
+            get {
+                return ResourceManager.GetString("InvalidSubTranBookPurchaseDelivery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid SubTranBook &quot;Purchase Quotation&quot;.
+        /// </summary>
+        internal static string InvalidSubTranBookPurchaseQuotation {
+            get {
+                return ResourceManager.GetString("InvalidSubTranBookPurchaseQuotation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid SubTranBook &quot;Sales Payment&quot;.
+        /// </summary>
+        internal static string InvalidSubTranBookSalesPayment {
+            get {
+                return ResourceManager.GetString("InvalidSubTranBookSalesPayment", resourceCulture);
+            }
+        }
     }
 }

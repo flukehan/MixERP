@@ -50,45 +50,36 @@ namespace MixERP.Net.Common.Helpers
             }
             catch
             {
-                throw new InvalidOperationException("Resource could not be found for the key " + key + " on class " + className + " .");
+                throw new InvalidOperationException("Resource could not be found for the key " + key + " on class " +
+                                                    className + " .");
             }
         }
 
-        private static string GetResourceString(string className, string key, bool throwError)
+        public static string GetResourceString(Assembly assembly, string fullyQualifiedClassName, string key)
         {
-            if (string.IsNullOrWhiteSpace(key) || HttpContext.Current == null)
+            if (assembly == null)
             {
-                return string.Empty;
+                throw new ArgumentNullException("assembly");
             }
+
+            ResourceManager r = new ResourceManager(fullyQualifiedClassName, assembly);
+            string value = string.Empty;
+
             try
             {
-                var globalResourceObject = HttpContext.GetGlobalResourceObject(className, key, GetCurrentCulture());
-                if (globalResourceObject != null)
-                {
-                    return globalResourceObject.ToString();
-                }
+                value = r.GetString(key, GetCurrentCulture());
 
-                return string.Empty;
-            }
-            catch
-            {
-                if (throwError)
+                if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new InvalidOperationException("Resource could not be found for the key " + key + " on class " + className + " .");
+                    throw new InvalidOperationException("Resource could not be found for the key " + key + " on Class " +
+                                                        fullyQualifiedClassName + " on Assembly " +
+                                                        assembly.GetName().Name);
                 }
             }
-
-            return key;
-        }
-
-        public static string GetResourceString(string fqClassName, string key, Assembly assembly)
-        {
-            ResourceManager r = new ResourceManager(fqClassName, assembly);
-            string value = r.GetString(key, LocalizationHelper.GetCurrentCulture());
-
-            if (string.IsNullOrWhiteSpace(value))
+            catch (MissingManifestResourceException)
             {
-                value = key;
+                throw new InvalidOperationException("Resource could not be found for the key " + key + " on Class " +
+                                                    fullyQualifiedClassName + " on Assembly " + assembly.GetName().Name);
             }
 
             return value;
@@ -115,12 +106,16 @@ namespace MixERP.Net.Common.Helpers
                         else
                         {
                             // ReSharper disable once ExpressionIsAlwaysNull
-                            resources.Add(entry.Key.ToString(), ((ResXDataNode)entry.Value).GetValue(iResoulution).ToString());
+                            resources.Add(entry.Key.ToString(),
+                                ((ResXDataNode) entry.Value).GetValue(iResoulution).ToString());
                         }
 
-                        ResXDataNode dataNode = (ResXDataNode)entry.Value;
+                        ResXDataNode dataNode = (ResXDataNode) entry.Value;
 
-                        if (dataNode != null) writer.AddResource(dataNode);
+                        if (dataNode != null)
+                        {
+                            writer.AddResource(dataNode);
+                        }
                     }
 
                     if (!resources.ContainsKey(key))

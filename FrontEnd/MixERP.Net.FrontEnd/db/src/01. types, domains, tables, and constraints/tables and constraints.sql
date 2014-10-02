@@ -6,6 +6,24 @@ CREATE TABLE core.verification_statuses
 	verification_status_name		national character varying(128) NOT NULL
 );
 
+COMMENT ON TABLE core.verification_statuses IS 
+'Verification statuses are integer values used to represent the state of a transaction.
+For example, a verification status of value "0" would mean that the transaction has not yet been verified.
+A negative value indicates that the transaction was rejected, whereas a positive value means approved.
+
+Remember:
+1. Only approved transactions appear on ledgers and final reports.
+2. Cash repository balance is maintained on the basis of LIFO principle. 
+
+   This means that cash balance is affected (reduced) on your repository as soon as a credit transaction is posted,
+   without the transaction being approved on the first place. If you reject the transaction, the cash balance then increases.
+   This also means that the cash balance is not affected (increased) on your repository as soon as a debit transaction is posted.
+   You will need to approve the transaction.
+
+   It should however be noted that the cash repository balance might be less than the total cash shown on your balance sheet,
+   if you have pending transactions to verify. You cannot perform EOD operation if you have pending verifications.
+';
+
 CREATE UNIQUE INDEX verification_statuses_verification_status_name_uix
 ON core.verification_statuses(UPPER(verification_status_name));
 
@@ -22,6 +40,12 @@ CREATE TABLE office.users
 	audit_user_id				integer NULL REFERENCES office.users(user_id),
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
+
+COMMENT ON TABLE office.users IS
+'
+The users table contains users accounts and their login information. It also contains a sys user account which does not have a password.
+The sys user account is a special account used by the MixERP workflow to perform routine tasks. The sys user cannot have a valid password
+or cannot be allowed to log in interactively.';
 
 CREATE TABLE office.departments
 (
@@ -43,6 +67,7 @@ CREATE TABLE core.flag_types
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
 
+COMMENT ON TABLE core.flag_types IS 'Flags are used by users to mark transactions. The flags created by a user is not visible to others.';
 
 CREATE TABLE core.flags
 (
@@ -448,13 +473,27 @@ CREATE TABLE core.bank_accounts
 );
 
 
-
-
-CREATE TABLE core.agents
+CREATE TABLE core.sales_teams
 (
-	agent_id				SERIAL NOT NULL PRIMARY KEY,
-	agent_code				national character varying(12) NOT NULL,
-	agent_name 				national character varying(100) NOT NULL,
+	sales_team_id				SERIAL NOT NULL PRIMARY KEY,
+	sales_team_code				national character varying(12),
+	sales_team_name				national character varying(50),
+	audit_user_id				integer NULL REFERENCES office.users(user_id),
+	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+);
+
+CREATE UNIQUE INDEX sales_teams_sales_team_code_uix
+ON core.sales_teams(UPPER(sales_team_code));
+
+CREATE UNIQUE INDEX sales_teams_sales_team_name_uix
+ON core.sales_teams(UPPER(sales_team_name));
+
+CREATE TABLE core.salespersons
+(
+	salesperson_id				SERIAL NOT NULL PRIMARY KEY,
+	sales_team_id				integer NOT NULL REFERENCES core.sales_teams(sales_team_id),
+	salesperson_code				national character varying(12) NOT NULL,
+	salesperson_name 				national character varying(100) NOT NULL,
 	address 				national character varying(100) NOT NULL,
 	contact_number 				national character varying(50) NOT NULL,
 	commission_rate 			decimal_strict2 NOT NULL DEFAULT(0),
@@ -463,8 +502,8 @@ CREATE TABLE core.agents
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
 
-CREATE UNIQUE INDEX agents_agent_name_uix
-ON core.agents(UPPER(agent_name));
+CREATE UNIQUE INDEX salespersons_salesperson_name_uix
+ON core.salespersons(UPPER(salesperson_name));
 
 CREATE TABLE core.bonus_slabs
 (
@@ -498,15 +537,17 @@ CREATE TABLE core.bonus_slab_details
 );
 
 
-CREATE TABLE core.agent_bonus_setups
+CREATE TABLE core.salesperson_bonus_setups
 (
-	agent_bonus_setup_id SERIAL NOT NULL PRIMARY KEY,
-	agent_id integer NOT NULL REFERENCES core.agents(agent_id),
-	bonus_slab_id integer NOT NULL REFERENCES core.bonus_slabs(bonus_slab_id)
+	salesperson_bonus_setup_id SERIAL NOT NULL PRIMARY KEY,
+	salesperson_id integer NOT NULL REFERENCES core.salespersons(salesperson_id),
+	bonus_slab_id integer NOT NULL REFERENCES core.bonus_slabs(bonus_slab_id),
+	audit_user_id				integer NULL REFERENCES office.users(user_id),
+	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
 
-CREATE UNIQUE INDEX agent_bonus_setups_uix
-ON core.agent_bonus_setups(agent_id, bonus_slab_id);
+CREATE UNIQUE INDEX salesperson_bonus_setups_uix
+ON core.salesperson_bonus_setups(salesperson_id, bonus_slab_id);
 
 CREATE TABLE core.ageing_slabs
 (
@@ -774,7 +815,6 @@ CREATE TABLE core.items
 	selling_price_includes_tax 		boolean NOT NULL CONSTRAINT items_selling_price_includes_tax_df DEFAULT('No'),
 	tax_id 					integer NOT NULL REFERENCES core.taxes(tax_id),
 	reorder_level 				integer NOT NULL,
-	item_image 				image_path NULL,
 	maintain_stock 				boolean NOT NULL DEFAULT(true),
 	audit_user_id				integer NULL REFERENCES office.users(user_id),
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
@@ -1132,7 +1172,7 @@ CREATE TABLE transactions.stock_master
 	stock_master_id 			BIGSERIAL NOT NULL PRIMARY KEY,
 	transaction_master_id 			bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id),
 	party_id 				bigint NULL REFERENCES core.parties(party_id),
-	agent_id 				integer NULL REFERENCES core.agents(agent_id),
+	salesperson_id 				integer NULL REFERENCES core.salespersons(salesperson_id),
 	price_type_id 				integer NULL REFERENCES core.price_types(price_type_id),
 	is_credit 				boolean NOT NULL CONSTRAINT stock_master_is_credit_df DEFAULT(false),
 	shipper_id 				integer NULL REFERENCES core.shippers(shipper_id),
@@ -1165,6 +1205,14 @@ CREATE TABLE transactions.stock_details
 	tax 					money_strict2 NOT NULL CONSTRAINT stock_details_tax_df DEFAULT(0),
 	audit_user_id				integer NULL REFERENCES office.users(user_id),
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+);
+
+
+CREATE TABLE transactions.stock_return
+(
+	sales_return_id		                BIGSERIAL NOT NULL PRIMARY KEY,	
+	transaction_master_id			bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id),
+	return_transaction_master_id	        bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id)
 );
 
 
@@ -1225,12 +1273,6 @@ CREATE TABLE transactions.stock_master_non_gl_relations
 	non_gl_stock_master_id			bigint NOT NULL REFERENCES transactions.non_gl_stock_master(non_gl_stock_master_id)
 );
 
-CREATE TABLE transactions.sales_return
-(
-	sales_return_id		                BIGSERIAL NOT NULL PRIMARY KEY,	
-	transaction_master_id			bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id),
-	sales_return_transaction_master_id	bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id)
-);
 
 CREATE TABLE crm.lead_sources
 (

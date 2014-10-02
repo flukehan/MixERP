@@ -1,4 +1,23 @@
-﻿using MixERP.Net.Common;
+﻿/********************************************************************************
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This file is part of MixERP.
+
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
+***********************************************************************************/
+
+using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.WebControls.StockTransactionView.Data;
@@ -28,6 +47,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System.Data;
+using System.Reflection;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
@@ -92,8 +112,17 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            this.SetVisibleStates();
             this.LoadGridView();
             this.InitializePostBackUrls();
+        }
+
+        private void SetVisibleStates()
+        {
+            if (this.SubBook == SubTranBook.Receipt)
+            {
+                this.PriceTypeDiv.Visible = false;
+            }
         }
 
         private void InitializePostBackUrls()
@@ -157,7 +186,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
             if (values.Count.Equals(0))
             {
-                this.ErrorLabel.Text = Warnings.NothingSelectedPleaseTryAgain;
+                this.ErrorLabel.Text = "Nothing selected.";
                 return false;
             }
 
@@ -173,7 +202,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
             if (!belongToSameParty)
             {
-                this.ErrorLabel.Text = Warnings.CannotMergeTransactionsOfDifferentParties;
+                this.ErrorLabel.Text = "Cannot merge transactions of different parties into a single batch. Please try again.";
                 return false;
             }
 
@@ -194,7 +223,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             {
                 if (NonGlStockTransaction.AreSalesQuotationsAlreadyMerged(values))
                 {
-                    this.ErrorLabel.Text = Labels.TransactionAlreadyMerged;
+                    this.ErrorLabel.Text = "The selected transaction(s) contains item(s) which have already been merged. Please try again.";
                     return true;
                 }
             }
@@ -208,7 +237,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             {
                 if (NonGlStockTransaction.AreSalesOrdersAlreadyMerged(values))
                 {
-                    this.ErrorLabel.Text = Labels.TransactionAlreadyMerged;
+                    this.ErrorLabel.Text = "The selected transaction(s) contains item(s) which have already been merged. Please try again.";
                     return true;
                 }
             }
@@ -259,7 +288,14 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         protected void ReturnButton_Click(object sender, EventArgs e)
         {
             Collection<int> values = this.GetSelectedValues();
-            Response.Redirect("~/Modules/Sales/Entry/Return.mix?TranId=" + values[0]);
+
+            if (this.Book == TranBook.Sales)
+            {
+                Response.Redirect("~/Modules/Sales/Entry/Return.mix?TranId=" + values[0]);
+                return;
+            }
+
+            Response.Redirect("~/Modules/Purchase/Entry/Return.mix?TranId=" + values[0]);
         }
 
         protected void ShowButton_Click(object sender, EventArgs e)
@@ -277,10 +313,24 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             string user = this.UserTextBox.Text;
             string referenceNumber = this.ReferenceNumberTextBox.Text;
             string statementReference = this.StatementReferenceTextBox.Text;
-            string bookName = this.GetTransactionBookName();
+            string bookName = TransactionBookHelper.GetTransactionBookName(this.Book, this.SubBook);
+
+            int userId = SessionHelper.GetUserId();
+            int officeId = SessionHelper.GetOfficeId();
+
+            WebControls.StockTransactionView.Helpers.GridViewColumnHelper.AddColumns(this.ProductViewGridView, this.SubBook);
 
             if (this.IsNonGlTransaction())
             {
+                if (this.SubBook == SubTranBook.Receipt)
+                {
+                    using (DataTable table = CustomerReceipts.GetView(userId, officeId, dateFrom, dateTo, office, party, user, referenceNumber, statementReference))
+                    {
+                        this.ProductViewGridView.DataSource = table;
+                        this.ProductViewGridView.DataBind();
+                        return;
+                    }
+                }
                 using (DataTable table = NonGlStockTransaction.GetView(bookName, dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference))
                 {
                     this.ProductViewGridView.DataSource = table;
@@ -296,99 +346,20 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             }
         }
 
-        private string GetTransactionBookName()
-        {
-            string bookName = string.Empty;
-
-            if (this.Book == TranBook.Sales)
-            {
-                switch (this.SubBook)
-                {
-                    case SubTranBook.Delivery:
-                        bookName = "Sales.Delivery";
-                        break;
-
-                    case SubTranBook.Direct:
-                        bookName = "Sales.Direct";
-                        break;
-
-                    case SubTranBook.Invoice:
-                        bookName = "Sales.Invoice";
-                        break;
-
-                    case SubTranBook.Order:
-                        bookName = "Sales.Order";
-                        break;
-
-                    case SubTranBook.Payment:
-                        throw new InvalidOperationException(Errors.InvalidSubTranBookSalesPayment);
-                    case SubTranBook.Quotation:
-                        bookName = "Sales.Quotation";
-                        break;
-
-                    case SubTranBook.Receipt:
-                        bookName = "Sales.Receipt";
-                        break;
-
-                    case SubTranBook.Return:
-                        bookName = "Sales.Return";
-                        break;
-                }
-            }
-
-            if (this.Book == TranBook.Purchase)
-            {
-                switch (this.SubBook)
-                {
-                    case SubTranBook.Delivery:
-                        throw new InvalidOperationException(Errors.InvalidSubTranBookPurchaseDelivery);
-                    case SubTranBook.Direct:
-                        bookName = "Purchase.Direct";
-                        break;
-
-                    case SubTranBook.Invoice:
-                        bookName = "Purchase.Invoice";
-                        break;
-
-                    case SubTranBook.Order:
-                        bookName = "Purchase.Order";
-                        break;
-
-                    case SubTranBook.Payment:
-                        bookName = "Purchase.Payment";
-                        break;
-
-                    case SubTranBook.Quotation:
-                        throw new InvalidOperationException(Errors.InvalidSubTranBookPurchaseQuotation);
-                    case SubTranBook.Receipt:
-                        bookName = "Purchase.Receipt"; //Also known as GRN
-                        break;
-
-                    case SubTranBook.Return:
-                        bookName = "Purchase.Return";
-                        break;
-                }
-            }
-
-            return bookName;
-        }
-
         private bool IsNonGlTransaction()
         {
-            //Todo
-            bool isNonGlTransaction = false;
-
             if (this.Book == TranBook.Sales)
             {
                 switch (this.SubBook)
                 {
+                    case SubTranBook.Receipt:
+                        return true;
+
                     case SubTranBook.Order:
-                        isNonGlTransaction = true;
-                        break;
+                        return true;
 
                     case SubTranBook.Quotation:
-                        isNonGlTransaction = true;
-                        break;
+                        return true;
                 }
             }
 
@@ -396,11 +367,11 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             {
                 if (this.SubBook == SubTranBook.Order)
                 {
-                    isNonGlTransaction = true;
+                    return true;
                 }
             }
 
-            return isNonGlTransaction;
+            return false;
         }
 
         private string GetTransactionTableName()
@@ -431,21 +402,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             {
                 return;
             }
-
-            if (e.Row.RowType == DataControlRowType.Header)
-            {
-                for (int i = 0; i < e.Row.Cells.Count; i++)
-                {
-                    string cellText = e.Row.Cells[i].Text.Replace("&nbsp;", " ").Trim();
-
-                    if (!string.IsNullOrWhiteSpace(cellText))
-                    {
-                        cellText = LocalizationHelper.GetDefaultAssemblyResourceString(ConfigurationHelper.GetScrudParameter("ResourceClassName"), cellText);
-                        e.Row.Cells[i].Text = cellText;
-                    }
-                }
-            }
-
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 string id = e.Row.Cells[2].Text;
@@ -455,14 +411,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                     if (!string.IsNullOrWhiteSpace(this.PreviewUrl))
                     {
                         string popUpQuotationPreviewUrl = this.Page.ResolveUrl(this.PreviewUrl + "?TranId=" + id);
-
-                        using (HtmlAnchor previewAnchor = (HtmlAnchor)e.Row.Cells[0].FindControl("PreviewAnchor"))
-                        {
-                            if (previewAnchor != null)
-                            {
-                                previewAnchor.HRef = popUpQuotationPreviewUrl;
-                            }
-                        }
 
                         using (HtmlAnchor printAnchor = (HtmlAnchor)e.Row.Cells[0].FindControl("PrintAnchor"))
                         {
@@ -493,6 +441,13 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             int flagTypeId = Conversion.TryCastInteger(this.FlagDropDownList.SelectedValue);
             string resource = this.GetTransactionTableName();
             string resourceKey = this.GetTransactionTablePrimaryKeyName();
+
+            if (this.SubBook == SubTranBook.Receipt)
+            {
+                resource = "transactions.transaction_master";
+                resourceKey = "transaction_master_id";
+            }
+
             Collection<int> resourceIds = this.GetSelectedValues();
 
             int userId = SessionHelper.GetUserId();

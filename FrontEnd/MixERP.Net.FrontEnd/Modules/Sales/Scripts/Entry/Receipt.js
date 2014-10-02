@@ -1,4 +1,23 @@
-﻿/*jshint -W032, -W098*/
+﻿/********************************************************************************
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This file is part of MixERP.
+
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
+***********************************************************************************/
+
+/*jshint -W032, -W098*/
 /*global getAjax, getAjaxErrorMessage, logError, ajaxDataBind, ajaxUpdateVal, appendParameter, exchangeRateLocalized, getData, parseFloat2, parseInt2, partyDropDownList, repaint*/
 
 var dueAmountTextBox = $("#DueAmountTextBox");
@@ -92,7 +111,8 @@ saveButton.click(function () {
     var ajaxSaveReceipt = saveReceipt(partyCode, currencyCode, amount, debitExchangeRate, creditExchangeRate, referenceNumber, statementReference, costCenterId, cashRepositoryId, postedDate, bankAccountId, bankInstrumentCode, bankTransactionCode);
 
     ajaxSaveReceipt.success(function (msg) {
-        alert(msg.d);
+        var id = msg.d;
+        window.location = "/Modules/Sales/Confirmation/Receipt.mix?TranId=" + id;
     });
 
     ajaxSaveReceipt.fail(function (xhr) {

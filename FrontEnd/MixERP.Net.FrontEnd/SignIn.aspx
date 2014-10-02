@@ -101,7 +101,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                                 <div class="checkbox">
                                     <label>
                                         <asp:CheckBox ID="RememberMe" runat="server" />
-                                        <asp:Literal runat="server" Text="<%$Resources:Titles, RememberMe %>"></asp:Literal>
+                                        <asp:Literal runat="server" Text="<%$Resources:Titles, RememberMe %>" />
                                     </label>
                                 </div>
                             </div>

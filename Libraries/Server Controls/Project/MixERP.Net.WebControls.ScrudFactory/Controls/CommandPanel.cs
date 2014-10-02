@@ -115,13 +115,13 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
 
         private void AddAddButton(Panel p)
         {
-            var addButton = this.GetInputButton("ALT + A", "return(scrudAddNew());", ScrudResource.AddNew, this.AddButtonCssClass);
+            var addButton = this.GetInputButton("ALT + A", "return(scrudAddNew());", Titles.AddNew, this.AddButtonCssClass);
             p.Controls.Add(addButton);
         }
 
         private void AddDeleteButtonHidden(Panel p, string controlSuffix)
         {
-            this.DeleteButton = this.GetButton("CTRL + D", "return(scrudConfirmAction());", ScrudResource.DeleteSelected);
+            this.DeleteButton = this.GetButton("CTRL + D", "return(scrudConfirmAction());", Titles.DeleteSelected);
             this.DeleteButton.ID = "DeleteButton" + controlSuffix;
             this.DeleteButton.CssClass = "hidden";
             this.DeleteButton.Click += this.OnDeleteButtonClick;
@@ -130,13 +130,13 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
 
         private void AddDeleteButtonVisible(Panel p, string controlSuffix)
         {
-            var deleteButton = this.GetInputButton("CTRL + E", "$('#DeleteButton" + controlSuffix + "').click();return false;", ScrudResource.DeleteSelected, this.DeleteButtonCssClass);
+            var deleteButton = this.GetInputButton("CTRL + E", "$('#DeleteButton" + controlSuffix + "').click();return false;", Titles.DeleteSelected, this.DeleteButtonCssClass);
             p.Controls.Add(deleteButton);
         }
 
         private void AddEditButtonHidden(Panel p, string controlSuffix)
         {
-            this.EditButton = this.GetButton("CTRL + E", "return(scrudConfirmAction());", ScrudResource.EditSelected);
+            this.EditButton = this.GetButton("CTRL + E", "return(scrudConfirmAction());", Titles.EditSelected);
             this.EditButton.Attributes.Add("role", "edit");
             this.EditButton.ID = "EditButton" + controlSuffix;
             this.EditButton.CssClass = "hidden";
@@ -146,13 +146,13 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
 
         private void AddEditButtonVisible(Panel p, string controlSuffix)
         {
-            var editButton = this.GetInputButton("CTRL + E", "$('#EditButton" + controlSuffix + "').click();return false;", ScrudResource.EditSelected, this.EditButtonCssClass);
+            var editButton = this.GetInputButton("CTRL + E", "$('#EditButton" + controlSuffix + "').click();return false;", Titles.EditSelected, this.EditButtonCssClass);
             p.Controls.Add(editButton);
         }
 
         private void AddPrintButton(Panel p)
         {
-            var printButton = this.GetInputButton("CTRL + P", "scrudPrintGridView();", ScrudResource.Print, this.PrintButtonCssClass);
+            var printButton = this.GetInputButton("CTRL + P", "scrudPrintGridView();", Titles.Print, this.PrintButtonCssClass);
             p.Controls.Add(printButton);
         }
 
@@ -160,20 +160,20 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
         {
             if (this.IsModal())
             {
-                var addSelectButton = this.GetInputButton("RETURN", "scrudSelectAndClose();", ScrudResource.Select, this.SelectButtonCssClass);
+                var addSelectButton = this.GetInputButton("RETURN", "scrudSelectAndClose();", Titles.Select, this.SelectButtonCssClass);
                 p.Controls.Add(addSelectButton);
             }
         }
 
         private void AddShowAllButton(Panel p)
         {
-            var showAllButton = this.GetInputButton("CTRL + S", "scrudShowAll();", ScrudResource.ShowAll, this.AllButtonCssClass);
+            var showAllButton = this.GetInputButton("CTRL + S", "scrudShowAll();", Titles.ShowAll, this.AllButtonCssClass);
             p.Controls.Add(showAllButton);
         }
 
         private void AddShowCompactButton(Panel p)
         {
-            var showCompactButton = this.GetInputButton("ALT + C", "scrudShowCompact();", ScrudResource.ShowCompact, this.CompactButtonCssClass);
+            var showCompactButton = this.GetInputButton("ALT + C", "scrudShowCompact();", Titles.ShowCompact, this.CompactButtonCssClass);
             p.Controls.Add(showCompactButton);
         }
 

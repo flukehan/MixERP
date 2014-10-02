@@ -20,6 +20,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Controls;
 using System;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -45,12 +46,12 @@ namespace MixERP.Net.WebControls.ScrudFactory
             var scriptManager = ScriptManager.GetCurrent(this.Page);
             if (scriptManager != null)
             {
-                scriptManager.RegisterAsyncPostBackControl(this.saveButton);
-                scriptManager.RegisterAsyncPostBackControl(this.cancelButton);
-                scriptManager.RegisterAsyncPostBackControl(this.topCommandPanel.EditButton);
-                scriptManager.RegisterAsyncPostBackControl(this.bottomCommandPanel.EditButton);
-                scriptManager.RegisterAsyncPostBackControl(this.topCommandPanel.DeleteButton);
-                scriptManager.RegisterAsyncPostBackControl(this.bottomCommandPanel.DeleteButton);
+                scriptManager.RegisterPostBackControl(this.saveButton);
+                scriptManager.RegisterPostBackControl(this.saveButton);
+                scriptManager.RegisterPostBackControl(this.topCommandPanel.EditButton);
+                scriptManager.RegisterPostBackControl(this.bottomCommandPanel.EditButton);
+                scriptManager.RegisterPostBackControl(this.topCommandPanel.DeleteButton);
+                scriptManager.RegisterPostBackControl(this.bottomCommandPanel.DeleteButton);
             }
         }
 

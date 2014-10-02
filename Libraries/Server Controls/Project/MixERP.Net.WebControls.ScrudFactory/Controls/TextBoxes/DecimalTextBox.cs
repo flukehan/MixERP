@@ -20,6 +20,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Resources;
+using System.Reflection;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -28,10 +29,10 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 {
     public static class ScrudDecimalTextBox
     {
-        public static void AddDecimalTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isNullable, int maxLength, string domain, string errorCssClass)
+        public static void AddDecimalTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isNullable, int maxLength, string domain, string errorCssClass, Assembly assembly)
         {
             var textBox = ScrudTextBox.GetTextBox(columnName + "_textbox", maxLength);
-            var label = LocalizationHelper.GetDefaultAssemblyResourceString(resourceClassName, columnName);
+            var label = ScrudLocalizationHelper.GetResourceString(assembly, resourceClassName, columnName);
 
             var validator = GetDecimalValidator(textBox, domain, errorCssClass);
             textBox.Text = defaultValue;
@@ -39,7 +40,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
             if (!isNullable)
             {
                 var required = ScrudFactoryHelper.GetRequiredFieldValidator(textBox, errorCssClass);
-                ScrudFactoryHelper.AddRow(htmlTable, label + ScrudResource.RequiredFieldIndicator, textBox, validator, required);
+                ScrudFactoryHelper.AddRow(htmlTable, label + Titles.RequiredFieldIndicator, textBox, validator, required);
                 return;
             }
 
@@ -51,7 +52,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
             using (var validator = new CompareValidator())
             {
                 validator.ID = controlToValidate.ID + "DecimalValidator";
-                validator.ErrorMessage = @"<br/>" + ScrudResource.OnlyNumbersAllowed;
+                validator.ErrorMessage = @"<br/>" + Titles.OnlyNumbersAllowed;
                 validator.CssClass = cssClass;
                 validator.ControlToValidate = controlToValidate.ID;
                 validator.EnableClientScript = true;

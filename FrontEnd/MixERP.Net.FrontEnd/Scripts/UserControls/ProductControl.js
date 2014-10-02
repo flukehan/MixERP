@@ -1,5 +1,60 @@
-﻿/*jshint -W032, -W098 */
+﻿/********************************************************************************
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This file is part of MixERP.
+
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
+***********************************************************************************/
+
+/*jshint -W032, -W098 */
 /*global addDanger, ajaxDataBind, ajaxUpdateVal, appendParameter, fadeThis, focusNextElement, getAjax, getColumnText, getData, getFormattedNumber, gridViewEmptyWarningLocalized, insufficientStockWarningLocalized, invalidCashRepositoryWarningLocalized, invalidCostCenterWarningLocalized, invalidDateWarningLocalized, invalidPartyWarningLocalized,invalidPriceTypeWarningLocalized, invalidSalesPersonWarningLocalized, invalidShippingCompanyWarningLocalized, invalidStoreWarningLocalized, isDate, isNullOrWhiteSpace, isSales, logError, makeDirty, parseFloat2, parseFormattedNumber, removeDirty, repaint, rowData, selectDropDownListByValue, setColumnText, shortcut, showWindow, sumOfColumn, tableToJSON, taxAfterDiscount, tranBook, unitId, updateTaxLocalized, uploadedFilesHidden, verifyStock */
+
+if (typeof updateTaxLocalized == "undefined") {
+    updateTaxLocalized = "Update tax?";
+};
+
+if (typeof insufficientStockWarningLocalized == "undefined") {
+    insufficientStockWarningLocalized = "Only {0} {1} of {2} left in stock.";
+};
+
+if (typeof invalidPartyWarningLocalized == "undefined") {
+    invalidPartyWarningLocalized = "Invalid party.";
+};
+
+if (typeof invalidPriceTypeWarningLocalized == "undefined") {
+    invalidPriceTypeWarningLocalized = "Invalid price type.";
+};
+
+if (typeof invalidStoreWarningLocalized == "undefined") {
+    invalidStoreWarningLocalized = "Invalid store.";
+};
+
+if (typeof invalidShippingCompanyWarningLocalized == "undefined") {
+    invalidShippingCompanyWarningLocalized = "Invalid shipping company.";
+};
+
+if (typeof invalidCashRepositoryWarningLocalized == "undefined") {
+    invalidCashRepositoryWarningLocalized = "Invalid cash repository.";
+};
+
+if (typeof invalidCostCenterWarningLocalized == "undefined") {
+    invalidCostCenterWarningLocalized = "Invalid cost center.";
+};
+
+if (typeof invalidSalesPersonWarningLocalized == "undefined") {
+    invalidSalesPersonWarningLocalized = "Invalid salesperson.";
+};
 
 //Controls
 var addButton = $("#AddButton");
@@ -238,6 +293,7 @@ quantityTextBox.blur(function () {
 });
 
 var validateProductControl = function () {
+    debugger;
     valueDate = dateTextBox.val();
     errorLabelBottom.html("");
 

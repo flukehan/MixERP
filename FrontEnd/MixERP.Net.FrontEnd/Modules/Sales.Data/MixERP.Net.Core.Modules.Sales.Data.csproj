@@ -58,12 +58,16 @@
     <Compile Include="Helpers\Items.cs" />
     <Compile Include="Helpers\NonGlStockTransaction.cs" />
     <Compile Include="Helpers\Order.cs" />
+    <Compile Include="Helpers\ParameterHelper.cs" />
+    <Compile Include="Helpers\Parties.cs" />
     <Compile Include="Helpers\Quotation.cs" />
     <Compile Include="Helpers\Receipt.cs" />
     <Compile Include="Helpers\Return.cs" />
     <Compile Include="Helpers\Transaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\Stores.cs" />
+    <Compile Include="Reports\SalesByMonth.cs" />
+    <Compile Include="Reports\TopSellingProducts.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.net.Common\MixERP.Net.Common.csproj">
@@ -80,6 +84,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\..\mixerp.licenseheader">
+      <Link>mixerp.licenseheader</Link>
+    </None>
     <None Include="Mix Open Foundation.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

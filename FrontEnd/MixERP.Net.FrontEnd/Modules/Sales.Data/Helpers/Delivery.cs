@@ -1,4 +1,23 @@
-﻿using MixERP.Net.Common;
+﻿/********************************************************************************
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This file is part of MixERP.
+
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
+***********************************************************************************/
+
+using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models.Core;
 using MixERP.Net.Common.Models.Transactions;
@@ -23,10 +42,10 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
             stockMaster.ShipperId = shipperId;
             stockMaster.ShippingAddressCode = shippingAddressCode;
             stockMaster.ShippingCharge = shippingCharge;
-            stockMaster.AgentId = agentId;
+            stockMaster.SalespersonId = agentId;
 
             long transactionMasterId = Add(valueDate, SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), costCenterId, referenceNumber, statementReference, stockMaster, details, transactionIdCollection, attachments);
-            MixERP.Net.TransactionGovernor.Autoverification.Autoverify.Pass(transactionMasterId);
+            MixERP.Net.TransactionGovernor.Autoverification.Autoverify.PassTransactionMasterId(transactionMasterId);
             return transactionMasterId;
         }
 
@@ -47,7 +66,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
                 return 0;
             }
 
-            if (stockMaster.AgentId.Equals(0))
+            if (stockMaster.SalespersonId.Equals(0))
             {
                 return 0;
             }
@@ -169,14 +188,14 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
 
                         #region StockMaster
 
-                        sql = "INSERT INTO transactions.stock_master(stock_master_id, transaction_master_id, party_id, agent_id, price_type_id, is_credit, shipper_id, shipping_address_id, shipping_charge, store_id) SELECT nextval(pg_get_serial_sequence('transactions.stock_master', 'stock_master_id')), @TransactionMasterId, core.get_party_id_by_party_code(@PartyCode), @AgentId, @PriceTypeId, @IsCredit, @ShipperId, core.get_shipping_address_id_by_shipping_address_code(@ShippingAddressCode, core.get_party_id_by_party_code(@PartyCode)), @ShippingCharge, @StoreId; SELECT currval(pg_get_serial_sequence('transactions.stock_master', 'stock_master_id'));";
+                        sql = "INSERT INTO transactions.stock_master(stock_master_id, transaction_master_id, party_id, salesperson_id, price_type_id, is_credit, shipper_id, shipping_address_id, shipping_charge, store_id) SELECT nextval(pg_get_serial_sequence('transactions.stock_master', 'stock_master_id')), @TransactionMasterId, core.get_party_id_by_party_code(@PartyCode), @SalespersonId, @PriceTypeId, @IsCredit, @ShipperId, core.get_shipping_address_id_by_shipping_address_code(@ShippingAddressCode, core.get_party_id_by_party_code(@PartyCode)), @ShippingCharge, @StoreId; SELECT currval(pg_get_serial_sequence('transactions.stock_master', 'stock_master_id'));";
 
                         long stockMasterId;
                         using (NpgsqlCommand stockMasterRow = new NpgsqlCommand(sql, connection))
                         {
                             stockMasterRow.Parameters.AddWithValue("@TransactionMasterId", transactionMasterId);
                             stockMasterRow.Parameters.AddWithValue("@PartyCode", stockMaster.PartyCode);
-                            stockMasterRow.Parameters.AddWithValue("@AgentId", stockMaster.AgentId);
+                            stockMasterRow.Parameters.AddWithValue("@SalespersonId", stockMaster.SalespersonId);
                             stockMasterRow.Parameters.AddWithValue("@PriceTypeId", stockMaster.PriceTypeId);
                             stockMasterRow.Parameters.AddWithValue("@IsCredit", true);
 
@@ -235,7 +254,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
                                     sql = "INSERT INTO transactions.stock_master_non_gl_relations(stock_master_id, non_gl_stock_master_id) SELECT @Id, @RelationId;";
                                     using (NpgsqlCommand relation = new NpgsqlCommand(sql, connection))
                                     {
-                                        relation.Parameters.AddWithValue("@Id", transactionMasterId);
+                                        relation.Parameters.AddWithValue("@Id", stockMasterId);
                                         relation.Parameters.AddWithValue("@RelationId", tranId);
                                         relation.ExecuteNonQuery();
                                     }

@@ -88,6 +88,24 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Flag Background Color.
+        /// </summary>
+        internal static string flag_background_color {
+            get {
+                return ResourceManager.GetString("flag_background_color", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Flag Foreground Color.
+        /// </summary>
+        internal static string flag_foreground_color {
+            get {
+                return ResourceManager.GetString("flag_foreground_color", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ID.
         /// </summary>
         internal static string id {

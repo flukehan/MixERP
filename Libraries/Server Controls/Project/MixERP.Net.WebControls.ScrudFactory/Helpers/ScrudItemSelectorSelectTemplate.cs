@@ -57,7 +57,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
             this.selectAnchor.HRef = "#";
             this.selectAnchor.Attributes.Add("class", ConfigurationHelper.GetScrudParameter("ItemSelectorSelectAnchorCssClass"));
             this.selectAnchor.DataBinding += this.BindData;
-            this.selectAnchor.InnerText = ScrudResource.Select;
+            this.selectAnchor.InnerText = Titles.Select;
             container.Controls.Add(this.selectAnchor);
         }
 

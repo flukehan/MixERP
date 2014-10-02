@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System.Reflection;
 using System.Web.UI.WebControls;
 
 namespace MixERP.Net.WebControls.ScrudFactory
@@ -158,6 +159,11 @@ namespace MixERP.Net.WebControls.ScrudFactory
         /// ResourceClassName contains localized resource strings of database table column names.
         /// </summary>
         public string ResourceClassName { get; set; }
+
+        /// <summary>
+        /// Assembly containing resource files.
+        /// </summary>
+        public Assembly ResourceAssembly { get; set; }
 
         public string SaveButtonCssClass { get; set; }
 

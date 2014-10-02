@@ -18,6 +18,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.WebControls.ScrudFactory.Helpers;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -53,7 +54,8 @@ namespace MixERP.Net.WebControls.ScrudFactory
                     {
                         var cellText = e.Row.Cells[i].Text;
 
-                        cellText = LocalizationHelper.GetDefaultAssemblyResourceString(this.GetResourceClassName(), cellText);
+                        cellText = ScrudLocalizationHelper.GetResourceString(this.ResourceAssembly, this.GetResourceClassName(), cellText);
+
                         e.Row.Cells[i].Text = cellText;
                     }
                     break;

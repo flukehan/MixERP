@@ -5,6 +5,7 @@ BEGIN
 		CREATE ROLE mix_erp WITH LOGIN PASSWORD 'change-on-deloyment';
 	END IF;
 
+	COMMENT ON ROLE mix_erp IS 'The default user for MixERP databases.';
 
 	REVOKE ALL ON SCHEMA audit FROM public;
 	REVOKE ALL ON SCHEMA core FROM public;
@@ -69,6 +70,9 @@ BEGIN
 	IF NOT EXISTS (SELECT * FROM pg_catalog.pg_user WHERE  usename = 'report_user') THEN
 		CREATE ROLE report_user WITH LOGIN PASSWORD 'change-on-deloyment';
 	END IF;
+
+	COMMENT ON ROLE report_user IS 'This user account should be used by the Reporting Engine to run ad-hoc queries.
+	It is strictly advised for this user to have a read-only access to the database.';
 
 	GRANT USAGE ON SCHEMA public TO report_user;
 	GRANT USAGE ON SCHEMA information_schema TO report_user;

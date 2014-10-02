@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\CustomerReceipts.cs" />
     <Compile Include="Helpers\GLStockTransaction.cs" />
     <Compile Include="Helpers\NonGlStockTransaction.cs" />
     <Compile Include="Models\MergeModel.cs" />
@@ -82,8 +83,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\..\mixerp.licenseheader">
+      <Link>mixerp.licenseheader</Link>
+    </None>
     <None Include="Mix Open Foundation.snk" />
-    <None Include="MixERP.Net.WebControls.StockTransactionView.Data.licenseheader" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Errors.resx">
