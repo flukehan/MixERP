@@ -4,15 +4,15 @@ RETURNS TRIGGER
 AS
 $$
 BEGIN
-	IF(
-		SELECT COUNT(*) FROM audit.failed_logins
-		WHERE audit.failed_logins.user_id=NEW.user_id
-		AND audit.failed_logins.failed_date_time 
-		BETWEEN NOW()-'5minutes'::interval 
-		AND NOW()
-	)::integer>5 THEN
+    IF(
+        SELECT COUNT(*) FROM audit.failed_logins
+        WHERE audit.failed_logins.user_id=NEW.user_id
+        AND audit.failed_logins.failed_date_time 
+        BETWEEN NOW()-'5minutes'::interval 
+        AND NOW()
+    )::integer>5 THEN
 
-	INSERT INTO policy.lock_outs(user_id)SELECT NEW.user_id;
+    INSERT INTO policy.lock_outs(user_id)SELECT NEW.user_id;
 END IF;
 RETURN NEW;
 END

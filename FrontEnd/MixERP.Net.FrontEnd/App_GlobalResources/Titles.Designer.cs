@@ -79,7 +79,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mix E R P Documentation.
+        ///   Looks up a localized string similar to MixERP Documentation.
         /// </summary>
         internal static string MixERPDocumentation {
             get {

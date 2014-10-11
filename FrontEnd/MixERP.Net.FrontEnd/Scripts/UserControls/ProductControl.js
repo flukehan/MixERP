@@ -72,14 +72,12 @@ var errorLabelBottom = $("#ErrorLabelBottom");
 
 var grandTotalTextBox = $("#GrandTotalTextBox");
 
-var itemCodeHidden = $("#ItemCodeHidden");
 var itemCodeTextBox = $("#ItemCodeTextBox");
 var itemIdHidden = $("#ItemIdHidden");
 var itemDropDownList = $("#ItemDropDownList");
 
 var partyIdHidden = $("#PartyIdHidden");
 var partyDropDownList = $("#PartyDropDownList");
-var partyCodeHidden = $("#PartyCodeHidden");
 var partyCodeTextBox = $("#PartyCodeTextBox");
 var productGridView = $("#ProductGridView");
 var productGridViewDataHidden = $("#ProductGridViewDataHidden");
@@ -168,7 +166,6 @@ function initializeAjaxData() {
 
     partyDropDownList.change(function () {
         partyCodeTextBox.val(partyDropDownList.getSelectedValue());
-        partyCodeHidden.val(partyDropDownList.getSelectedValue());
         showShippingAddress();
         loadAddresses();
     });
@@ -178,6 +175,10 @@ function initializeAjaxData() {
     loadItems();
 
     itemDropDownList.blur(function () {
+        itemDropDownList_OnBlur();
+    });
+
+    itemDropDownList.change(function () {
         itemDropDownList_OnBlur();
     });
 
@@ -197,8 +198,6 @@ itemDropDownList.keydown(function (event) {
         if (event.key === "Enter") {
             itemDropDownList_OnBlur();
             focusNextElement();
-
-            //Swallow the key combination on the document level.
             return false;
         };
     };
@@ -208,7 +207,6 @@ itemDropDownList.keydown(function (event) {
 
 function itemDropDownList_OnBlur() {
     itemCodeTextBox.val(itemDropDownList.getSelectedValue());
-    itemCodeHidden.val(itemDropDownList.getSelectedValue());
     loadUnits();
     getPrice();
 };
@@ -223,7 +221,7 @@ function processCallBackActions() {
         data = appendParameter("", "itemId", itemId);
         data = getData(data);
 
-        ajaxUpdateVal(url, itemCodeHidden, data);
+        ajaxUpdateVal(url, data, itemCodeTextBox);
     }
 
     var partyId = parseFloat2(partyIdHidden.val());
@@ -235,8 +233,23 @@ function processCallBackActions() {
         data = appendParameter("", "partyId", partyId);
         data = getData(data);
 
-        ajaxUpdateVal(url, partyCodeHidden, data);
+        ajaxUpdateVal(url, data, partyCodeTextBox);
     }
+};
+
+function ajaxUpdateValCallback(targetControls) {
+    if (targetControls.is(itemCodeTextBox)) {
+        setTimeout(function () {
+            itemDropDownList.val(itemCodeTextBox.val()).trigger('change');
+            quantityTextBox.focus();
+        }, 500);
+    };
+    if (targetControls.is(partyCodeTextBox)) {
+        setTimeout(function () {
+            partyDropDownList.val(partyCodeTextBox.val()).trigger('change');
+            priceTypeDropDownList.focus();
+        }, 500);
+    };
 };
 
 //Control Events
@@ -265,7 +278,7 @@ cashRepositoryDropDownList.change(function () {
         data = appendParameter(data, "currencyCode", "");
         data = getData(data);
 
-        ajaxUpdateVal(url, cashRepositoryBalanceTextBox, data);
+        ajaxUpdateVal(url, data, cashRepositoryBalanceTextBox);
     };
 });
 
@@ -464,16 +477,12 @@ function loadItems() {
     data = appendParameter("", "tranBook", tranBook);
     data = getData(data);
 
-    var selectedValue = itemCodeHidden.val();
-
-    ajaxDataBind(url, itemDropDownList, data, selectedValue, itemCodeTextBox);
+    ajaxDataBind(url, itemDropDownList, data);
 };
 
 function loadParties() {
     url = "/Modules/Inventory/Services/PartyData.asmx/GetParties";
-    var selectedValue = partyCodeHidden.val();
-
-    ajaxDataBind(url, partyDropDownList, null, selectedValue, partyCodeTextBox);
+    ajaxDataBind(url, partyDropDownList, null);
 };
 
 function loadPriceTypes() {
@@ -500,7 +509,7 @@ function loadStores() {
 };
 
 function loadUnits() {
-    var itemCode = itemCodeHidden.val();
+    var itemCode = itemCodeTextBox.val();
 
     url = "/Modules/Inventory/Services/ItemData.asmx/GetUnits";
     data = appendParameter("", "itemCode", itemCode);
@@ -585,8 +594,6 @@ var updateTax = function () {
 //GridView Manipulation
 var addRow = function () {
     itemCodeTextBox.val(itemDropDownList.getSelectedValue());
-    itemCodeHidden.val(itemDropDownList.getSelectedValue());
-
     var itemCode = itemCodeTextBox.val();
     var itemName = itemDropDownList.getSelectedText();
     var quantity = parseFloat2(quantityTextBox.val());
@@ -746,8 +753,8 @@ var addRowToTable = function (itemCode, itemName, quantity, unitName, price, dis
 
 //Ajax Requests
 var getPrice = function () {
-    var itemCode = itemCodeHidden.val();
-    var partyCode = partyCodeHidden.val();
+    var itemCode = itemCodeTextBox.val();
+    var partyCode = partyCodeTextBox.val();
     var priceTypeId = parseFloat2(priceTypeDropDownList.val());
     var unitId = unitIdHidden.val();
 
@@ -786,7 +793,7 @@ var getPrice = function () {
     data = appendParameter("", "itemCode", itemCode);
     data = getData(data);
 
-    ajaxUpdateVal(url, taxRateTextBox, data);
+    ajaxUpdateVal(url, data, taxRateTextBox);
 
     calculateAmount();
 };

@@ -3,15 +3,15 @@ RETURNS bigint
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT
-			party_id
-		FROM
-			core.parties
-		WHERE 
-			core.parties.party_code=$1
-	);
+    RETURN
+    (
+        SELECT
+            party_id
+        FROM
+            core.parties
+        WHERE 
+            core.parties.party_code=$1
+    );
 END
 $$
 LANGUAGE plpgsql;

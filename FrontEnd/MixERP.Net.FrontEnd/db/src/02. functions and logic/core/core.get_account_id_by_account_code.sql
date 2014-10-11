@@ -3,12 +3,12 @@ RETURNS bigint
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT account_id
-		FROM core.accounts
-		WHERE account_code=$1
-	);
+    RETURN
+    (
+        SELECT account_id
+        FROM core.accounts
+        WHERE account_code=$1
+    );
 END
 $$
 LANGUAGE plpgsql;

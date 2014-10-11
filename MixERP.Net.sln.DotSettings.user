@@ -15,6 +15,16 @@
 	<s:Boolean x:Key="/Default/CodeInspection/JavaScriptResolve/FullResolveForDynamicReferences/@EntryValue">True</s:Boolean>
 	
 	
+	
+	
+	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/WRAP_ARGUMENTS_STYLE/@EntryValue">CHOP_IF_LONG</s:String>
+	
+	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/WRAP_EXTENDS_LIST_STYLE/@EntryValue">CHOP_IF_LONG</s:String>
+	<s:Int64 x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/WRAP_LIMIT/@EntryValue">500</s:Int64>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/WRAP_LINES/@EntryValue">False</s:Boolean>
+	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/WRAP_PARAMETERS_STYLE/@EntryValue">CHOP_IF_LONG</s:String>
+	
+	
 	<s:String x:Key="/Default/CodeStyle/FileHeader/FileHeaderText/@EntryValue">Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).&#xD;
 &#xD;
 This file is part of MixERP.&#xD;
@@ -31,5 +41,9 @@ GNU General Public License for more details.&#xD;
 &#xD;
 You should have received a copy of the GNU General Public License&#xD;
 along with MixERP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</s:String>
+	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EPsi_002ECSharp_002ECodeStyle_002ESettingsUpgrade_002EMigrateBlankLinesAroundFieldToBlankLinesAroundProperty/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/Environment/TextControl/HighlightCurrentLine/@EntryValue">True</s:Boolean>
-	<s:Boolean x:Key="/Default/Environment/UpdatesManger/IsDownloadUpdateDataAllowed/@EntryValue">False</s:Boolean></wpf:ResourceDictionary>
+	<s:Boolean x:Key="/Default/Environment/UpdatesManger/IsDownloadUpdateDataAllowed/@EntryValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestSessionPersistentData/=85288258A58E42DEABADEE644470A1A8/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestSessionPersistentData/=85288258A58E42DEABADEE644470A1A8/Name/@EntryValue">All Tests in MixERP.Net</s:String>
+	<s:String x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestSessionPersistentData/=85288258A58E42DEABADEE644470A1A8/XmlSerializedElements/@EntryValue">&lt;Session&gt;&lt;Elements&gt;&lt;UnitTestElement Provider="QUnit" Id="QUnit::core_defaults" type="QUnitTestElement" FileName="C:\Users\nirvan\Desktop\mixerp\0. GitHub\FrontEnd\MixERP.net.FrontEnd\Scripts\CodeMirror\test\test.js" TestName="core_defaults" RangeStart="5593" RangeEnd="6268" Project="ACE1017D-71BC-4417-A906-72C4B9C55823" /&gt;&lt;UnitTestElement Provider="QUnit" Id="QUnit::core_fromTextArea" type="QUnitTestElement" FileName="C:\Users\nirvan\Desktop\mixerp\0. GitHub\FrontEnd\MixERP.net.FrontEnd\Scripts\CodeMirror\test\test.js" TestName="core_fromTextArea" RangeStart="1187" RangeEnd="1604" Project="ACE1017D-71BC-4417-A906-72C4B9C55823" /&gt;&lt;UnitTestElement Provider="nUnit" Id="MixERP.Net.Tests.PgUnitTest.DatabaseTest" type="NUnitTestFixtureElement" Project="F1476541-9AAC-4049-ADC5-C522C29B258D" /&gt;&lt;UnitTestElement Provider="nUnit" Id="MixERP.Net.Tests.PgUnitTest.DatabaseTest.RunDbTests" ParentId="MixERP.Net.Tests.PgUnitTest.DatabaseTest" type="NUnitTestElement" TypeName="MixERP.Net.Tests.PgUnitTest.DatabaseTest" MethodName="RunDbTests" Project="F1476541-9AAC-4049-ADC5-C522C29B258D" /&gt;&lt;/Elements&gt;&lt;/Session&gt;</s:String></wpf:ResourceDictionary>

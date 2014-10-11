@@ -37,7 +37,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
                 scrud.TableSchema = "core";
                 scrud.Table = "shippers";
                 scrud.ViewSchema = "core";
-                scrud.View = "shippers";
+                scrud.View = "shippers_scrud_view";
                 scrud.Width = 5000;
 
                 //The following fields will be automatically generated on the database server.
@@ -67,7 +67,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.account_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.account_selector_view");
             return string.Join(",", displayViews);
         }
 

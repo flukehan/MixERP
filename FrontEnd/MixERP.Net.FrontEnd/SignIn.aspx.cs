@@ -127,15 +127,18 @@ namespace MixERP.Net.FrontEnd
         protected void SignInButton_Click(object sender, EventArgs e)
         {
             int officeId = Conversion.TryCastInteger(this.BranchIdHiddenField.Value);
-            bool results = Login(officeId, this.UserIdTextBox.Text, this.PasswordTextBox.Text, this.LanguageDropDownList.SelectedItem.Value, this.RememberMe.Checked, this.Page);
+            bool results = Login(officeId, this.UserIdTextBox.Text, this.PasswordTextBox.Text,
+                this.LanguageDropDownList.SelectedItem.Value, this.RememberMe.Checked, this.Page);
 
             if (!results)
             {
-                this.MessageLiteral.Text = @"<span class='error-message'>" + Warnings.UserIdOrPasswordIncorrect + @"</span>";
+                this.MessageLiteral.Text = @"<span class='error-message'>" + Warnings.UserIdOrPasswordIncorrect +
+                                           @"</span>";
             }
         }
 
-        private static bool Login(int officeId, string userName, string password, string culture, bool rememberMe, Page page)
+        private static bool Login(int officeId, string userName, string password, string culture, bool rememberMe,
+            Page page)
         {
             bool results = Data.Office.User.SignIn(officeId, userName, password, culture, rememberMe, page);
 

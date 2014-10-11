@@ -23,11 +23,7 @@ using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.ScrudFactory;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace MixERP.Net.Core.Modules.Inventory.Setup
 {
@@ -37,18 +33,18 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
         {
             using (ScrudForm scrud = new ScrudForm())
             {
-                scrud.KeyColumn = "compound_item_id";
+                scrud.KeyColumn = "compound_item_detail_id";
 
                 scrud.TableSchema = "core";
                 scrud.Table = "compound_item_details";
                 scrud.ViewSchema = "core";
-                scrud.View = "compound_item_detail_view";
+                scrud.View = "compound_item_detail_scrud_view";
 
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
-
+                scrud.Width = 1400;
                 scrud.Text = Titles.CompoundItemDetails;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(CompoundItemDetails));
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (CompoundItemDetails));
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
@@ -59,18 +55,21 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.compound_items.compound_item_id", ConfigurationHelper.GetDbParameter("CompoundItemDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.items.item_id", ConfigurationHelper.GetDbParameter("ItemDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.units.unit_id", ConfigurationHelper.GetDbParameter("UnitDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.compound_items.compound_item_id",
+                ConfigurationHelper.GetDbParameter("CompoundItemDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.items.item_id",
+                ConfigurationHelper.GetDbParameter("ItemDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.units.unit_id",
+                ConfigurationHelper.GetDbParameter("UnitDisplayField"));
             return string.Join(",", displayFields);
         }
 
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "core.compound_items.compound_item_id", "core.compound_items");
-            ScrudHelper.AddDisplayView(displayViews, "core.items.item_id", "core.item_view");
-            ScrudHelper.AddDisplayView(displayViews, "core.units.unit_id", "core.unit_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.compound_items.compound_item_id", "core.compound_item_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.items.item_id", "core.item_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.units.unit_id", "core.unit_selector_view");
             return string.Join(",", displayViews);
         }
     }

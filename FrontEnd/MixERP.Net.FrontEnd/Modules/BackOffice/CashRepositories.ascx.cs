@@ -38,7 +38,7 @@ namespace MixERP.Net.Core.Modules.BackOffice
                 scrud.TableSchema = "office";
                 scrud.Table = "cash_repositories";
                 scrud.ViewSchema = "office";
-                scrud.View = "cash_repository_view";
+                scrud.View = "cash_repository_scrud_view";
 
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
@@ -55,16 +55,18 @@ namespace MixERP.Net.Core.Modules.BackOffice
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "office.cash_repositories.cash_repository_id", ConfigurationHelper.GetDbParameter("CashRepositoryDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "office.offices.office_id", ConfigurationHelper.GetDbParameter("OfficeDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "office.cash_repositories.cash_repository_id",
+                ConfigurationHelper.GetDbParameter("CashRepositoryDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "office.offices.office_id",
+                ConfigurationHelper.GetDbParameter("OfficeDisplayField"));
             return string.Join(",", displayFields);
         }
 
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "office.cash_repositories.cash_repository_id", "office.cash_repository_view");
-            ScrudHelper.AddDisplayView(displayViews, "office.offices.office_id", "office.office_view");
+            ScrudHelper.AddDisplayView(displayViews, "office.cash_repositories.cash_repository_id", "office.cash_repository_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "office.offices.office_id", "office.office_selector_view");
             return string.Join(",", displayViews);
         }
     }

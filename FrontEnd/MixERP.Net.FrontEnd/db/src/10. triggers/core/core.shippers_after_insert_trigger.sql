@@ -3,12 +3,12 @@ RETURNS trigger
 AS
 $$
 BEGIN
-	UPDATE core.shippers
-	SET 
-		shipper_code=core.get_shipper_code(NEW.company_name)
-	WHERE core.shippers.shipper_id=NEW.shipper_id;
-	
-	RETURN NEW;
+    UPDATE core.shippers
+    SET 
+        shipper_code=core.get_shipper_code(NEW.company_name)
+    WHERE core.shippers.shipper_id=NEW.shipper_id;
+    
+    RETURN NEW;
 END
 $$
 LANGUAGE plpgsql;

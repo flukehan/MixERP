@@ -37,8 +37,8 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
                 scrud.TableSchema = "core";
                 scrud.Table = "item_groups";
                 scrud.ViewSchema = "core";
-                scrud.View = "item_groups";
-
+                scrud.View = "item_group_scrud_view";
+                scrud.Width = 1400;
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
 
@@ -53,14 +53,17 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.taxes.tax_id", ConfigurationHelper.GetDbParameter("TaxDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.item_groups.item_group_id",
+                ConfigurationHelper.GetDbParameter("ItemGroupDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.taxes.tax_id",
+                ConfigurationHelper.GetDbParameter("TaxDisplayField"));
             return string.Join(",", displayFields);
         }
 
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "core.taxes.tax_id", "core.tax_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.taxes.tax_id", "core.tax_selector_view");
             return string.Join(",", displayViews);
         }
     }

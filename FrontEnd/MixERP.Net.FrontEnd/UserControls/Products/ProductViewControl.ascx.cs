@@ -23,31 +23,9 @@ using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.WebControls.StockTransactionView.Data;
 using MixERP.Net.WebControls.StockTransactionView.Data.Helpers;
 using MixERP.Net.WebControls.StockTransactionView.Data.Models;
-using Resources;
 using System;
 using System.Collections.ObjectModel;
-
-/********************************************************************************
-Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
-
-This file is part of MixERP.
-
-MixERP is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-MixERP is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
-***********************************************************************************/
-
 using System.Data;
-using System.Reflection;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
@@ -64,14 +42,8 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         public string Text
         {
-            get
-            {
-                return this.TitleLiteral.Text;
-            }
-            set
-            {
-                this.TitleLiteral.Text = value;
-            }
+            get { return this.TitleLiteral.Text; }
+            set { this.TitleLiteral.Text = value; }
         }
 
         public string ChecklistUrl { get; set; }
@@ -177,75 +149,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 this.Merge(values, "~/Modules/Sales/Entry/Order.mix");
             }
         }
-
-        #region Validation
-
-        private bool IsValid()
-        {
-            Collection<int> values = this.GetSelectedValues();
-
-            if (values.Count.Equals(0))
-            {
-                this.ErrorLabel.Text = "Nothing selected.";
-                return false;
-            }
-
-            if (!this.BelongToSameParty(values)) return false;
-            if (this.AreAlreadyMerged(values)) return false;
-
-            return true;
-        }
-
-        private bool BelongToSameParty(Collection<int> values)
-        {
-            bool belongToSameParty = NonGlStockTransaction.TransactionIdsBelongToSameParty(values);
-
-            if (!belongToSameParty)
-            {
-                this.ErrorLabel.Text = "Cannot merge transactions of different parties into a single batch. Please try again.";
-                return false;
-            }
-
-            return true;
-        }
-
-        private bool AreAlreadyMerged(Collection<int> values)
-        {
-            if (this.AreSalesQuotationsAlreadyMerged(values)) return true;
-            if (this.AreSalesOrdersAlreadyMerged(values)) return true;
-
-            return false;
-        }
-
-        private bool AreSalesQuotationsAlreadyMerged(Collection<int> values)
-        {
-            if (this.Book == TranBook.Sales && this.SubBook == SubTranBook.Quotation)
-            {
-                if (NonGlStockTransaction.AreSalesQuotationsAlreadyMerged(values))
-                {
-                    this.ErrorLabel.Text = "The selected transaction(s) contains item(s) which have already been merged. Please try again.";
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private bool AreSalesOrdersAlreadyMerged(Collection<int> values)
-        {
-            if (this.Book == TranBook.Sales && this.SubBook == SubTranBook.Order)
-            {
-                if (NonGlStockTransaction.AreSalesOrdersAlreadyMerged(values))
-                {
-                    this.ErrorLabel.Text = "The selected transaction(s) contains item(s) which have already been merged. Please try again.";
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        #endregion Validation
 
         private void Merge(Collection<int> ids, string link)
         {
@@ -412,7 +315,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                     {
                         string popUpQuotationPreviewUrl = this.Page.ResolveUrl(this.PreviewUrl + "?TranId=" + id);
 
-                        using (HtmlAnchor printAnchor = (HtmlAnchor)e.Row.Cells[0].FindControl("PrintAnchor"))
+                        using (HtmlAnchor printAnchor = (HtmlAnchor) e.Row.Cells[0].FindControl("PrintAnchor"))
                         {
                             if (printAnchor != null)
                             {
@@ -421,7 +324,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                         }
                     }
 
-                    using (HtmlAnchor checklistAnchor = (HtmlAnchor)e.Row.Cells[0].FindControl("ChecklistAnchor"))
+                    using (HtmlAnchor checklistAnchor = (HtmlAnchor) e.Row.Cells[0].FindControl("ChecklistAnchor"))
                     {
                         if (!string.IsNullOrWhiteSpace(this.ChecklistUrl))
                         {
@@ -455,5 +358,86 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             WebControls.StockTransactionView.Helpers.Flags.CreateFlag(userId, flagTypeId, resource, resourceKey, resourceIds);
             this.LoadGridView();
         }
+
+        #region Validation
+
+        private bool IsValid()
+        {
+            Collection<int> values = this.GetSelectedValues();
+
+            if (values.Count.Equals(0))
+            {
+                this.ErrorLabel.Text = "Nothing selected.";
+                return false;
+            }
+
+            if (!this.BelongToSameParty(values))
+            {
+                return false;
+            }
+            if (this.AreAlreadyMerged(values))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool BelongToSameParty(Collection<int> values)
+        {
+            bool belongToSameParty = NonGlStockTransaction.TransactionIdsBelongToSameParty(values);
+
+            if (!belongToSameParty)
+            {
+                this.ErrorLabel.Text = "Cannot merge transactions of different parties into a single batch. Please try again.";
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool AreAlreadyMerged(Collection<int> values)
+        {
+            if (this.AreSalesQuotationsAlreadyMerged(values))
+            {
+                return true;
+            }
+            if (this.AreSalesOrdersAlreadyMerged(values))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool AreSalesQuotationsAlreadyMerged(Collection<int> values)
+        {
+            if (this.Book == TranBook.Sales && this.SubBook == SubTranBook.Quotation)
+            {
+                if (NonGlStockTransaction.AreSalesQuotationsAlreadyMerged(values))
+                {
+                    this.ErrorLabel.Text = "The selected transaction(s) contains item(s) which have already been merged. Please try again.";
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool AreSalesOrdersAlreadyMerged(Collection<int> values)
+        {
+            if (this.Book == TranBook.Sales && this.SubBook == SubTranBook.Order)
+            {
+                if (NonGlStockTransaction.AreSalesOrdersAlreadyMerged(values))
+                {
+                    this.ErrorLabel.Text = "The selected transaction(s) contains item(s) which have already been merged. Please try again.";
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        #endregion Validation
     }
 }

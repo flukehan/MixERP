@@ -57,7 +57,9 @@
     <Compile Include="Helpers\Order.cs" />
     <Compile Include="Helpers\ParameterHelper.cs" />
     <Compile Include="Helpers\Parties.cs" />
+    <Compile Include="Helpers\Reorder.cs" />
     <Compile Include="Helpers\Return.cs" />
+    <Compile Include="Models\Reorder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

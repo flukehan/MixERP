@@ -1,4 +1,4 @@
-﻿-- 0. mixerp.sql
+﻿-->-->-- /db/src/00. db core/0. mixerp.sql --<--<--
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
@@ -30,7 +30,7 @@ LANGUAGE plpgsql;
 
 CREATE EXTENSION IF NOT EXISTS tablefunc;
 
--- 1. scrud.sql
+-->-->-- /db/src/00. db core/1. scrud.sql --<--<--
 DROP SCHEMA IF EXISTS scrud CASCADE;
 CREATE SCHEMA scrud;
 
@@ -81,36 +81,36 @@ CREATE VIEW scrud.constraint_column_usage AS
 
 COMMENT ON VIEW scrud.constraint_column_usage IS 'Lists all columns having constraints.';
 
-	
+    
 
 CREATE VIEW scrud.relationship_view
 AS
 SELECT
-	tc.table_schema,
-	tc.table_name,
-	kcu.column_name,
-	ccu.table_schema AS references_schema,
-	ccu.table_name AS references_table,
-	ccu.column_name AS references_field  
+    tc.table_schema,
+    tc.table_name,
+    kcu.column_name,
+    ccu.table_schema AS references_schema,
+    ccu.table_name AS references_table,
+    ccu.column_name AS references_field  
 FROM
-	information_schema.table_constraints tc  
+    information_schema.table_constraints tc  
 LEFT JOIN
-	information_schema.key_column_usage kcu  
-		ON tc.constraint_catalog = kcu.constraint_catalog  
-		AND tc.constraint_schema = kcu.constraint_schema  
-		AND tc.constraint_name = kcu.constraint_name  
+    information_schema.key_column_usage kcu  
+        ON tc.constraint_catalog = kcu.constraint_catalog  
+        AND tc.constraint_schema = kcu.constraint_schema  
+        AND tc.constraint_name = kcu.constraint_name  
 LEFT JOIN
-	information_schema.referential_constraints rc  
-		ON tc.constraint_catalog = rc.constraint_catalog  
-		AND tc.constraint_schema = rc.constraint_schema  
-		AND tc.constraint_name = rc.constraint_name	
+    information_schema.referential_constraints rc  
+        ON tc.constraint_catalog = rc.constraint_catalog  
+        AND tc.constraint_schema = rc.constraint_schema  
+        AND tc.constraint_name = rc.constraint_name 
 LEFT JOIN
-	scrud.constraint_column_usage ccu  
-		ON rc.unique_constraint_catalog = ccu.constraint_catalog  
-		AND rc.unique_constraint_schema = ccu.constraint_schema  
-		AND rc.unique_constraint_name = ccu.constraint_name  
+    scrud.constraint_column_usage ccu  
+        ON rc.unique_constraint_catalog = ccu.constraint_catalog  
+        AND rc.unique_constraint_schema = ccu.constraint_schema  
+        AND rc.unique_constraint_name = ccu.constraint_name  
 WHERE
-	lower(tc.constraint_type) in ('foreign key');
+    lower(tc.constraint_type) in ('foreign key');
 
 COMMENT ON VIEW scrud.relationship_view IS 'Lists all foreign key columns and their relation with the parent tables.';
 
@@ -121,13 +121,13 @@ $$
 DECLARE _sql text;
 DECLARE _val text;
 BEGIN
-	IF($1 LIKE '%::%' AND $1 NOT LIKE 'nextval%') THEN
-		_sql := 'SELECT ' || $1;
-		EXECUTE _sql INTO _val;
-		RETURN _val;
-	END IF;
+    IF($1 LIKE '%::%' AND $1 NOT LIKE 'nextval%') THEN
+        _sql := 'SELECT ' || $1;
+        EXECUTE _sql INTO _val;
+        RETURN _val;
+    END IF;
 
-	RETURN $1;
+    RETURN $1;
 END
 $$
 LANGUAGE plpgsql;
@@ -138,46 +138,46 @@ COMMENT ON FUNCTION scrud.parse_default(text) IS 'Parses default constraint colu
 CREATE VIEW scrud.mixerp_table_view
 AS
 SELECT information_schema.columns.table_schema, 
-	   information_schema.columns.table_name, 
-	   information_schema.columns.column_name, 
-	   references_schema, 
-	   references_table, 
-	   references_field, 
-	   ordinal_position,
-	   is_nullable,
-	   scrud.parse_default(column_default) AS column_default, 
-	   data_type, 
-	   domain_name,
-	   character_maximum_length, 
-	   character_octet_length, 
-	   numeric_precision, 
-	   numeric_precision_radix, 
-	   numeric_scale, 
-	   datetime_precision, 
-	   udt_name 
+       information_schema.columns.table_name, 
+       information_schema.columns.column_name, 
+       references_schema, 
+       references_table, 
+       references_field, 
+       ordinal_position,
+       is_nullable,
+       scrud.parse_default(column_default) AS column_default, 
+       data_type, 
+       domain_name,
+       character_maximum_length, 
+       character_octet_length, 
+       numeric_precision, 
+       numeric_precision_radix, 
+       numeric_scale, 
+       datetime_precision, 
+       udt_name 
 FROM   information_schema.columns 
-	   LEFT JOIN scrud.relationship_view 
-			  ON information_schema.columns.table_schema = 
-				 scrud.relationship_view.table_schema 
-				 AND information_schema.columns.table_name = 
-					 scrud.relationship_view.table_name 
-				 AND information_schema.columns.column_name = 
-					 scrud.relationship_view.column_name 
+       LEFT JOIN scrud.relationship_view 
+              ON information_schema.columns.table_schema = 
+                 scrud.relationship_view.table_schema 
+                 AND information_schema.columns.table_name = 
+                     scrud.relationship_view.table_name 
+                 AND information_schema.columns.column_name = 
+                     scrud.relationship_view.column_name 
 WHERE  information_schema.columns.table_schema 
 NOT IN 
-	( 
-		'pg_catalog', 'information_schema'
-	)
-AND 	   information_schema.columns.column_name 
+    ( 
+        'pg_catalog', 'information_schema'
+    )
+AND        information_schema.columns.column_name 
 NOT IN
-	(
-		'audit_user_id', 'audit_ts'
-	)
+    (
+        'audit_user_id', 'audit_ts'
+    )
 ;
 
 COMMENT ON VIEW scrud.mixerp_table_view IS 'Lists all schema, table, and columns with associated types, domains, references, and constraints.';
 
--- 2. install-unit-test.sql
+-->-->-- /db/src/00. db core/2. install-unit-test.sql --<--<--
 DROP SCHEMA IF EXISTS assert CASCADE;
 DROP SCHEMA IF EXISTS unit_tests CASCADE;
 DROP DOMAIN IF EXISTS public.test_result CASCADE;
@@ -188,11 +188,11 @@ CREATE DOMAIN public.test_result AS text;
 
 CREATE TABLE unit_tests.tests
 (
-	test_id					SERIAL NOT NULL PRIMARY KEY,
-	started_on				TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT(CURRENT_TIMESTAMP AT TIME ZONE 'UTC'),
-	completed_on				TIMESTAMP WITHOUT TIME ZONE NULL,
-	total_tests				integer NULL DEFAULT(0),
-	failed_tests				integer NULL DEFAULT(0)
+    test_id                                 SERIAL NOT NULL PRIMARY KEY,
+    started_on                              TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT(CURRENT_TIMESTAMP AT TIME ZONE 'UTC'),
+    completed_on                            TIMESTAMP WITHOUT TIME ZONE NULL,
+    total_tests                             integer NULL DEFAULT(0),
+    failed_tests                            integer NULL DEFAULT(0)
 );
 
 CREATE INDEX unit_tests_tests_started_on_inx
@@ -206,12 +206,12 @@ ON unit_tests.tests(failed_tests);
 
 CREATE TABLE unit_tests.test_details
 (
-	id					BIGSERIAL NOT NULL PRIMARY KEY,
-	test_id					integer NOT NULL REFERENCES unit_tests.tests(test_id),
-	function_name				text NOT NULL,
-	message					text NOT NULL,
-	ts					TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT(CURRENT_TIMESTAMP AT TIME ZONE 'UTC'),
-	status					boolean NOT NULL
+    id                                      BIGSERIAL NOT NULL PRIMARY KEY,
+    test_id                                 integer NOT NULL REFERENCES unit_tests.tests(test_id),
+    function_name                           text NOT NULL,
+    message                                 text NOT NULL,
+    ts                                      TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT(CURRENT_TIMESTAMP AT TIME ZONE 'UTC'),
+    status                                  boolean NOT NULL
 );
 
 CREATE INDEX unit_tests_test_details_test_id_inx
@@ -225,12 +225,12 @@ RETURNS text
 AS
 $$
 BEGIN
-	IF $1 IS NULL OR trim($1) = '' THEN
-		message := 'NO REASON SPECIFIED';
-	END IF;
-	
-	RAISE WARNING 'ASSERT FAILED : %', message;
-	RETURN message;
+    IF $1 IS NULL OR trim($1) = '' THEN
+        message := 'NO REASON SPECIFIED';
+    END IF;
+    
+    RAISE WARNING 'ASSERT FAILED : %', message;
+    RETURN message;
 END
 $$
 LANGUAGE plpgsql
@@ -241,8 +241,8 @@ RETURNS text
 AS
 $$
 BEGIN
-	RAISE NOTICE 'ASSERT PASSED : %', message;
-	RETURN '';
+    RAISE NOTICE 'ASSERT PASSED : %', message;
+    RETURN '';
 END
 $$
 LANGUAGE plpgsql
@@ -253,8 +253,8 @@ RETURNS text
 AS
 $$
 BEGIN
-	RAISE NOTICE 'OK : %', message;
-	RETURN '';
+    RAISE NOTICE 'OK : %', message;
+    RETURN '';
 END
 $$
 LANGUAGE plpgsql
@@ -264,17 +264,17 @@ CREATE FUNCTION assert.is_equal(IN have anyelement, IN want anyelement, OUT mess
 AS
 $$
 BEGIN
-	IF($1 = $2) THEN
-		message := 'Assert is equal.';
-		PERFORM assert.ok(message);
-		result := true;
-		RETURN;
-	END IF;
+    IF($1 = $2) THEN
+        message := 'Assert is equal.';
+        PERFORM assert.ok(message);
+        result := true;
+        RETURN;
+    END IF;
 
-	message := E'ASSERT IS_EQUAL FAILED.\n\nHave -> ' || $1::text || E'\nWant -> ' || $2::text || E'\n'; 	
-	PERFORM assert.fail(message);
-	result := false;
-	RETURN;
+    message := E'ASSERT IS_EQUAL FAILED.\n\nHave -> ' || $1::text || E'\nWant -> ' || $2::text || E'\n';    
+    PERFORM assert.fail(message);
+    result := false;
+    RETURN;
 END
 $$
 LANGUAGE plpgsql
@@ -284,23 +284,23 @@ IMMUTABLE STRICT;
 CREATE FUNCTION assert.are_equal(VARIADIC anyarray, OUT message text, OUT result boolean)
 AS
 $$
-	DECLARE count integer=0;
+    DECLARE count integer=0;
 BEGIN
-	SELECT COUNT(DISTINCT $1[s.i]) INTO count
-	FROM generate_series(array_lower($1,1), array_upper($1,1)) AS s(i)
-	ORDER BY 1;
+    SELECT COUNT(DISTINCT $1[s.i]) INTO count
+    FROM generate_series(array_lower($1,1), array_upper($1,1)) AS s(i)
+    ORDER BY 1;
 
-	IF count <> 1 THEN
-		MESSAGE := 'ASSERT ARE_EQUAL FAILED.'; 	
-		PERFORM assert.fail(MESSAGE);
-		RESULT := FALSE;
-		RETURN;
-	END IF;
+    IF count <> 1 THEN
+        MESSAGE := 'ASSERT ARE_EQUAL FAILED.';  
+        PERFORM assert.fail(MESSAGE);
+        RESULT := FALSE;
+        RETURN;
+    END IF;
 
-	message := 'Asserts are equal.';
-	PERFORM assert.ok(message);
-	result := true;
-	RETURN;
+    message := 'Asserts are equal.';
+    PERFORM assert.ok(message);
+    result := true;
+    RETURN;
 END
 $$
 LANGUAGE plpgsql
@@ -310,17 +310,17 @@ CREATE FUNCTION assert.is_not_equal(IN already_have anyelement, IN dont_want any
 AS
 $$
 BEGIN
-	IF($1 != $2) THEN
-		message := 'Assert is not equal.';
-		PERFORM assert.ok(message);
-		result := true;
-		RETURN;
-	END IF;
-	
-	message := E'ASSERT IS_NOT_EQUAL FAILED.\n\nAlready Have -> ' || $1::text || E'\nDon''t Want   -> ' || $2::text || E'\n'; 	
-	PERFORM assert.fail(message);
-	result := false;
-	RETURN;
+    IF($1 != $2) THEN
+        message := 'Assert is not equal.';
+        PERFORM assert.ok(message);
+        result := true;
+        RETURN;
+    END IF;
+    
+    message := E'ASSERT IS_NOT_EQUAL FAILED.\n\nAlready Have -> ' || $1::text || E'\nDon''t Want   -> ' || $2::text || E'\n';   
+    PERFORM assert.fail(message);
+    result := false;
+    RETURN;
 END
 $$
 LANGUAGE plpgsql
@@ -329,23 +329,23 @@ IMMUTABLE STRICT;
 CREATE FUNCTION assert.are_not_equal(VARIADIC anyarray, OUT message text, OUT result boolean)
 AS
 $$
-	DECLARE count integer=0;
+    DECLARE count integer=0;
 BEGIN
-	SELECT COUNT(DISTINCT $1[s.i]) INTO count
-	FROM generate_series(array_lower($1,1), array_upper($1,1)) AS s(i)
-	ORDER BY 1;
+    SELECT COUNT(DISTINCT $1[s.i]) INTO count
+    FROM generate_series(array_lower($1,1), array_upper($1,1)) AS s(i)
+    ORDER BY 1;
 
-	IF count <> array_upper($1,1) THEN
-		MESSAGE := 'ASSERT ARE_NOT_EQUAL FAILED.'; 	
-		PERFORM assert.fail(MESSAGE);
-		RESULT := FALSE;
-		RETURN;
-	END IF;
+    IF count <> array_upper($1,1) THEN
+        MESSAGE := 'ASSERT ARE_NOT_EQUAL FAILED.';  
+        PERFORM assert.fail(MESSAGE);
+        RESULT := FALSE;
+        RETURN;
+    END IF;
 
-	message := 'Asserts are not equal.';
-	PERFORM assert.ok(message);
-	result := true;
-	RETURN;
+    message := 'Asserts are not equal.';
+    PERFORM assert.ok(message);
+    result := true;
+    RETURN;
 END
 $$
 LANGUAGE plpgsql
@@ -356,17 +356,17 @@ CREATE FUNCTION assert.is_null(IN anyelement, OUT message text, OUT result boole
 AS
 $$
 BEGIN
-	IF($1 == NULL) THEN
-		message := 'Assert is NULL.';
-		PERFORM assert.ok(message);
-		result := true;
-		RETURN;
-	END IF;
-	
-	message := E'ASSERT IS_NULL FAILED. NULL value was expected.\n\n\n'; 	
-	PERFORM assert.fail(message);
-	result := false;
-	RETURN;
+    IF($1 == NULL) THEN
+        message := 'Assert is NULL.';
+        PERFORM assert.ok(message);
+        result := true;
+        RETURN;
+    END IF;
+    
+    message := E'ASSERT IS_NULL FAILED. NULL value was expected.\n\n\n';    
+    PERFORM assert.fail(message);
+    result := false;
+    RETURN;
 END
 $$
 LANGUAGE plpgsql
@@ -377,17 +377,17 @@ CREATE FUNCTION assert.is_not_null(IN anyelement, OUT message text, OUT result b
 AS
 $$
 BEGIN
-	IF($1 != NULL) THEN
-		message := 'Assert is not NULL.';
-		PERFORM assert.ok(message);
-		result := true;
-		RETURN;
-	END IF;
-	
-	message := E'ASSERT IS_NOT_NULL FAILED. The value is NULL.\n\n\n'; 	
-	PERFORM assert.fail(message);
-	result := false;
-	RETURN;
+    IF($1 != NULL) THEN
+        message := 'Assert is not NULL.';
+        PERFORM assert.ok(message);
+        result := true;
+        RETURN;
+    END IF;
+    
+    message := E'ASSERT IS_NOT_NULL FAILED. The value is NULL.\n\n\n';  
+    PERFORM assert.fail(message);
+    result := false;
+    RETURN;
 END
 $$
 LANGUAGE plpgsql
@@ -398,17 +398,17 @@ CREATE FUNCTION assert.is_true(IN boolean, OUT message text, OUT result boolean)
 AS
 $$
 BEGIN
-	IF($1 == true) THEN
-		message := 'Assert is true.';
-		PERFORM assert.ok(message);
-		result := true;
-		RETURN;
-	END IF;
-	
-	message := E'ASSERT IS_TRUE FAILED. A true condition was expected.\n\n\n'; 	
-	PERFORM assert.fail(message);
-	result := false;
-	RETURN;
+    IF($1 == true) THEN
+        message := 'Assert is true.';
+        PERFORM assert.ok(message);
+        result := true;
+        RETURN;
+    END IF;
+    
+    message := E'ASSERT IS_TRUE FAILED. A true condition was expected.\n\n\n';  
+    PERFORM assert.fail(message);
+    result := false;
+    RETURN;
 END
 $$
 LANGUAGE plpgsql
@@ -419,17 +419,17 @@ CREATE FUNCTION assert.is_false(IN boolean, OUT message text, OUT result boolean
 AS
 $$
 BEGIN
-	IF($1 == true) THEN
-		message := 'Assert is false.';
-		PERFORM assert.ok(message);
-		result := true;
-		RETURN;
-	END IF;
-	
-	message := E'ASSERT IS_FALSE FAILED. A false condition was expected.\n\n\n'; 	
-	PERFORM assert.fail(message);
-	result := false;
-	RETURN;
+    IF($1 == true) THEN
+        message := 'Assert is false.';
+        PERFORM assert.ok(message);
+        result := true;
+        RETURN;
+    END IF;
+    
+    message := E'ASSERT IS_FALSE FAILED. A false condition was expected.\n\n\n';    
+    PERFORM assert.fail(message);
+    result := false;
+    RETURN;
 END
 $$
 LANGUAGE plpgsql
@@ -440,17 +440,17 @@ CREATE FUNCTION assert.is_greater_than(IN x anyelement, IN y anyelement, OUT mes
 AS
 $$
 BEGIN
-	IF($1 > $2) THEN
-		message := 'Assert greater than condition is satisfied.';
-		PERFORM assert.ok(message);
-		result := true;
-		RETURN;
-	END IF;
-	
-	message := E'ASSERT IS_GREATER_THAN FAILED.\n\n X : -> ' || $1::text || E'\n is not greater than Y:   -> ' || $2::text || E'\n'; 	
-	PERFORM assert.fail(message);
-	result := false;
-	RETURN;
+    IF($1 > $2) THEN
+        message := 'Assert greater than condition is satisfied.';
+        PERFORM assert.ok(message);
+        result := true;
+        RETURN;
+    END IF;
+    
+    message := E'ASSERT IS_GREATER_THAN FAILED.\n\n X : -> ' || $1::text || E'\n is not greater than Y:   -> ' || $2::text || E'\n';    
+    PERFORM assert.fail(message);
+    result := false;
+    RETURN;
 END
 $$
 LANGUAGE plpgsql
@@ -461,17 +461,17 @@ CREATE FUNCTION assert.is_less_than(IN x anyelement, IN y anyelement, OUT messag
 AS
 $$
 BEGIN
-	IF($1 < $2) THEN
-		message := 'Assert less than condition is satisfied.';
-		PERFORM assert.ok(message);
-		result := true;
-		RETURN;
-	END IF;
-	
-	message := E'ASSERT IS_LESS_THAN FAILED.\n\n X : -> ' || $1::text || E'\n is not  than Y:   -> ' || $2::text || E'\n'; 	
-	PERFORM assert.fail(message);
-	result := false;
-	RETURN;
+    IF($1 < $2) THEN
+        message := 'Assert less than condition is satisfied.';
+        PERFORM assert.ok(message);
+        result := true;
+        RETURN;
+    END IF;
+    
+    message := E'ASSERT IS_LESS_THAN FAILED.\n\n X : -> ' || $1::text || E'\n is not  than Y:   -> ' || $2::text || E'\n';  
+    PERFORM assert.fail(message);
+    result := false;
+    RETURN;
 END
 $$
 LANGUAGE plpgsql
@@ -482,25 +482,25 @@ CREATE FUNCTION assert.function_exists(function_name text, OUT message text, OUT
 AS
 $$
 BEGIN
-	IF NOT EXISTS
-	(
-		SELECT  1
-		FROM    pg_catalog.pg_namespace n
-		JOIN    pg_catalog.pg_proc p
-		ON      pronamespace = n.oid
-		WHERE replace(nspname || '.' || proname || '(' || oidvectortypes(proargtypes) || ')', ' ' , '')::text=$1
-	) THEN
-		message := 'The function % does not exist.', $1;
-		PERFORM assert.fail(message);
+    IF NOT EXISTS
+    (
+        SELECT  1
+        FROM    pg_catalog.pg_namespace n
+        JOIN    pg_catalog.pg_proc p
+        ON      pronamespace = n.oid
+        WHERE replace(nspname || '.' || proname || '(' || oidvectortypes(proargtypes) || ')', ' ' , '')::text=$1
+    ) THEN
+        message := 'The function % does not exist.', $1;
+        PERFORM assert.fail(message);
 
-		result := false;
-		RETURN;
-	END IF;
+        result := false;
+        RETURN;
+    END IF;
 
-	message := 'OK. The function ' || $1 || ' exists.';
-	PERFORM assert.ok(message);
-	result := true;
-	RETURN;
+    message := 'OK. The function ' || $1 || ' exists.';
+    PERFORM assert.ok(message);
+    result := true;
+    RETURN;
 END
 $$
 LANGUAGE plpgsql;
@@ -511,98 +511,98 @@ CREATE FUNCTION unit_tests.begin()
 RETURNS TABLE(message text, result character(1))
 AS
 $$
-	DECLARE this record;
-	DECLARE _function_name text;
-	DECLARE _sql text;
-	DECLARE _message text;
-	DECLARE _result character(1);
-	DECLARE _test_id integer;
-	DECLARE _status boolean;
-	DECLARE _total_tests integer = 0;
-	DECLARE _failed_tests integer = 0;
-	DECLARE _list_of_failed_tests text;
-	DECLARE _started_from TIMESTAMP WITHOUT TIME ZONE;
-	DECLARE _completed_on TIMESTAMP WITHOUT TIME ZONE;
-	DECLARE _delta integer;
-	DECLARE _ret_val text = '';
+    DECLARE this record;
+    DECLARE _function_name text;
+    DECLARE _sql text;
+    DECLARE _message text;
+    DECLARE _result character(1);
+    DECLARE _test_id integer;
+    DECLARE _status boolean;
+    DECLARE _total_tests integer = 0;
+    DECLARE _failed_tests integer = 0;
+    DECLARE _list_of_failed_tests text;
+    DECLARE _started_from TIMESTAMP WITHOUT TIME ZONE;
+    DECLARE _completed_on TIMESTAMP WITHOUT TIME ZONE;
+    DECLARE _delta integer;
+    DECLARE _ret_val text = '';
 BEGIN
-	_started_from := clock_timestamp() AT TIME ZONE 'UTC';
+    _started_from := clock_timestamp() AT TIME ZONE 'UTC';
 
-	SELECT nextval('unit_tests.tests_test_id_seq') INTO _test_id;
+    SELECT nextval('unit_tests.tests_test_id_seq') INTO _test_id;
 
-	INSERT INTO unit_tests.tests(test_id)
-	SELECT _test_id;
+    INSERT INTO unit_tests.tests(test_id)
+    SELECT _test_id;
 
-	FOR this IN
-		SELECT proname as function_name
-		FROM    pg_catalog.pg_namespace n
-		JOIN    pg_catalog.pg_proc p
-		ON      pronamespace = n.oid
-		WHERE   nspname = 'unit_tests'
-		AND prorettype='test_result'::regtype::oid
-	LOOP
-		_status := false;
-		_total_tests := _total_tests + 1;
-		
-		_function_name = 'unit_tests.' || this.function_name || '()';
-		_sql := 'SELECT ' || _function_name || ';';
-		
-		RAISE NOTICE 'RUNNING TEST : %.', _function_name;
+    FOR this IN
+        SELECT proname as function_name
+        FROM    pg_catalog.pg_namespace n
+        JOIN    pg_catalog.pg_proc p
+        ON      pronamespace = n.oid
+        WHERE   nspname = 'unit_tests'
+        AND prorettype='test_result'::regtype::oid
+    LOOP
+        _status := false;
+        _total_tests := _total_tests + 1;
+        
+        _function_name = 'unit_tests.' || this.function_name || '()';
+        _sql := 'SELECT ' || _function_name || ';';
+        
+        RAISE NOTICE 'RUNNING TEST : %.', _function_name;
 
-		EXECUTE _sql INTO _message;
+        EXECUTE _sql INTO _message;
 
-		IF _message = '' THEN
-			_status := true;
-		END IF;
+        IF _message = '' THEN
+            _status := true;
+        END IF;
 
-		
-		INSERT INTO unit_tests.test_details(test_id, function_name, message, status)
-		SELECT _test_id, _function_name, _message, _status;
+        
+        INSERT INTO unit_tests.test_details(test_id, function_name, message, status)
+        SELECT _test_id, _function_name, _message, _status;
 
-		IF NOT _status THEN
-			_failed_tests := _failed_tests + 1;			
-			RAISE WARNING 'TEST % FAILED.', _function_name;
-			RAISE WARNING 'REASON: %', _message;
-		ELSE
-			RAISE NOTICE 'TEST % COMPLETED WITHOUT ERRORS.', _function_name;
-		END IF;
-	END LOOP;
+        IF NOT _status THEN
+            _failed_tests := _failed_tests + 1;         
+            RAISE WARNING 'TEST % FAILED.', _function_name;
+            RAISE WARNING 'REASON: %', _message;
+        ELSE
+            RAISE NOTICE 'TEST % COMPLETED WITHOUT ERRORS.', _function_name;
+        END IF;
+    END LOOP;
 
-	_completed_on := clock_timestamp() AT TIME ZONE 'UTC';
-	_delta := extract(millisecond from _completed_on - _started_from)::integer;
-	
-	UPDATE unit_tests.tests
-	SET total_tests = _total_tests, failed_tests = _failed_tests, completed_on = _completed_on
-	WHERE test_id = _test_id;
+    _completed_on := clock_timestamp() AT TIME ZONE 'UTC';
+    _delta := extract(millisecond from _completed_on - _started_from)::integer;
+    
+    UPDATE unit_tests.tests
+    SET total_tests = _total_tests, failed_tests = _failed_tests, completed_on = _completed_on
+    WHERE test_id = _test_id;
 
-	SELECT array_to_string(array_agg(unit_tests.test_details.function_name || ' --> ' || unit_tests.test_details.message), E'\n') INTO _list_of_failed_tests 
-	FROM unit_tests.test_details 
-	WHERE test_id = _test_id
-	AND status= false;
+    SELECT array_to_string(array_agg(unit_tests.test_details.function_name || ' --> ' || unit_tests.test_details.message), E'\n') INTO _list_of_failed_tests 
+    FROM unit_tests.test_details 
+    WHERE test_id = _test_id
+    AND status= false;
 
-	_ret_val := _ret_val ||  'Test completed on : ' || _completed_on::text || E' UTC. \nTotal test runtime: ' || _delta::text || E' ms.\n';
-	_ret_val := _ret_val || E'\nTotal tests run : ' || COALESCE(_total_tests, '0')::text;
-	_ret_val := _ret_val || E'.\nPassed tests    : ' || (COALESCE(_total_tests, '0') - COALESCE(_failed_tests, '0'))::text;
-	_ret_val := _ret_val || E'.\nFailed tests    : ' || COALESCE(_failed_tests, '0')::text;
-	_ret_val := _ret_val || E'.\n\nList of failed tests:\n' || '-----------------------------';
-	_ret_val := _ret_val || E'\n' || COALESCE(_list_of_failed_tests, '<NULL>')::text;
-	_ret_val := _ret_val || E'\n\n';
+    _ret_val := _ret_val ||  'Test completed on : ' || _completed_on::text || E' UTC. \nTotal test runtime: ' || _delta::text || E' ms.\n';
+    _ret_val := _ret_val || E'\nTotal tests run : ' || COALESCE(_total_tests, '0')::text;
+    _ret_val := _ret_val || E'.\nPassed tests    : ' || (COALESCE(_total_tests, '0') - COALESCE(_failed_tests, '0'))::text;
+    _ret_val := _ret_val || E'.\nFailed tests    : ' || COALESCE(_failed_tests, '0')::text;
+    _ret_val := _ret_val || E'.\n\nList of failed tests:\n' || '-----------------------------';
+    _ret_val := _ret_val || E'\n' || COALESCE(_list_of_failed_tests, '<NULL>')::text;
+    _ret_val := _ret_val || E'\n\n';
 
-	IF _failed_tests > 0 THEN
-		_result := 'N';
-		RAISE WARNING '%', _ret_val;
-	ELSE
-		_result := 'Y';
-		RAISE NOTICE '%', _ret_val;
-	END IF;
+    IF _failed_tests > 0 THEN
+        _result := 'N';
+        RAISE WARNING '%', _ret_val;
+    ELSE
+        _result := 'Y';
+        RAISE NOTICE '%', _ret_val;
+    END IF;
 
-	RETURN QUERY SELECT _ret_val, _result;
+    RETURN QUERY SELECT _ret_val, _result;
 END
 $$
 LANGUAGE plpgsql;
 
 
--- 2. mixerp-db-schema.sql
+-->-->-- /db/src/00. db core/2. mixerp-db-schema.sql --<--<--
 DROP SCHEMA IF EXISTS audit CASCADE;
 DROP SCHEMA IF EXISTS core CASCADE;
 DROP SCHEMA IF EXISTS office CASCADE;
@@ -634,7 +634,7 @@ CREATE SCHEMA mrp;
 COMMENT ON SCHEMA office IS 'Contains objects related to material resource planning.';
 
 
--- 2nd-quadrant-audit-trigger.sql
+-->-->-- /db/src/00. db core/2nd-quadrant-audit-trigger.sql --<--<--
 -- An audit history is important on most tables. Provide an audit trigger that logs to
 -- a dedicated audit table for the major relations.
 --
@@ -735,11 +735,13 @@ BEGIN
     IF TG_WHEN <> 'AFTER' THEN
         RAISE EXCEPTION 'audit.if_modified_func() may only run as an AFTER trigger';
     END IF;
-	
+    
 
-	IF(hstore(NEW) ? 'audit_user_id' = true) THEN --Added
-		application_user_name:= office.get_user_name_by_user_id((hstore(NEW.*) -> 'audit_user_id')::int); --Added
-	END IF; --Added
+        IF (TG_OP != 'DELETE') THEN --Added
+                IF(hstore(NEW) ? 'audit_user_id' = true) THEN --Added
+                        application_user_name:= office.get_user_name_by_user_id((hstore(NEW.*) -> 'audit_user_id')::int); --Added
+                END IF; --Added
+        END IF; --Added
 
     audit_row = ROW(
         nextval('audit.logged_actions_event_id_seq'), -- event_id
@@ -890,65 +892,65 @@ Add auditing support to the given table. Row-level changes will be logged with f
 $body$;
 
 
--- 3. roles-and-priviledge.sql
+-->-->-- /db/src/00. db core/3. roles-and-priviledge.sql --<--<--
 DO
 $$
 BEGIN
-	IF NOT EXISTS (SELECT * FROM pg_catalog.pg_user WHERE  usename = 'mix_erp') THEN
-		CREATE ROLE mix_erp WITH LOGIN PASSWORD 'change-on-deloyment';
-	END IF;
+    IF NOT EXISTS (SELECT * FROM pg_catalog.pg_user WHERE  usename = 'mix_erp') THEN
+        CREATE ROLE mix_erp WITH LOGIN PASSWORD 'change-on-deloyment';
+    END IF;
 
-	COMMENT ON ROLE mix_erp IS 'The default user for MixERP databases.';
+    COMMENT ON ROLE mix_erp IS 'The default user for MixERP databases.';
 
-	REVOKE ALL ON SCHEMA audit FROM public;
-	REVOKE ALL ON SCHEMA core FROM public;
-	REVOKE ALL ON SCHEMA office FROM public;
-	REVOKE ALL ON SCHEMA policy FROM public;
-	REVOKE ALL ON SCHEMA transactions FROM public;
-	REVOKE ALL ON SCHEMA crm FROM public;
-	REVOKE ALL ON SCHEMA mrp FROM public;
-	
-	GRANT USAGE ON SCHEMA public TO mix_erp;
-	GRANT USAGE ON SCHEMA information_schema TO mix_erp;
-	GRANT USAGE ON SCHEMA audit TO mix_erp;
-	GRANT USAGE ON SCHEMA core TO mix_erp;
-	GRANT USAGE ON SCHEMA office TO mix_erp;
-	GRANT USAGE ON SCHEMA policy TO mix_erp;
-	GRANT USAGE ON SCHEMA transactions TO mix_erp;
-	GRANT USAGE ON SCHEMA crm TO mix_erp;
-	GRANT USAGE ON SCHEMA mrp TO mix_erp;
+    REVOKE ALL ON SCHEMA audit FROM public;
+    REVOKE ALL ON SCHEMA core FROM public;
+    REVOKE ALL ON SCHEMA office FROM public;
+    REVOKE ALL ON SCHEMA policy FROM public;
+    REVOKE ALL ON SCHEMA transactions FROM public;
+    REVOKE ALL ON SCHEMA crm FROM public;
+    REVOKE ALL ON SCHEMA mrp FROM public;
+    
+    GRANT USAGE ON SCHEMA public TO mix_erp;
+    GRANT USAGE ON SCHEMA information_schema TO mix_erp;
+    GRANT USAGE ON SCHEMA audit TO mix_erp;
+    GRANT USAGE ON SCHEMA core TO mix_erp;
+    GRANT USAGE ON SCHEMA office TO mix_erp;
+    GRANT USAGE ON SCHEMA policy TO mix_erp;
+    GRANT USAGE ON SCHEMA transactions TO mix_erp;
+    GRANT USAGE ON SCHEMA crm TO mix_erp;
+    GRANT USAGE ON SCHEMA mrp TO mix_erp;
 
-	ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA information_schema GRANT SELECT ON TABLES TO mix_erp;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA audit GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA core GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA office GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA policy GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA transactions GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA crm GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA mrp GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA information_schema GRANT SELECT ON TABLES TO mix_erp;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA audit GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA core GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA office GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA policy GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA transactions GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA crm GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA mrp GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
 
-	ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO mix_erp;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA audit GRANT ALL ON SEQUENCES TO mix_erp;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA core GRANT ALL ON SEQUENCES TO mix_erp;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA office GRANT ALL ON SEQUENCES TO mix_erp;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA policy GRANT ALL ON SEQUENCES TO mix_erp;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA transactions GRANT ALL ON SEQUENCES TO mix_erp;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA crm GRANT ALL ON SEQUENCES TO mix_erp;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA mrp GRANT ALL ON SEQUENCES TO mix_erp;
-
-
+    ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO mix_erp;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA audit GRANT ALL ON SEQUENCES TO mix_erp;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA core GRANT ALL ON SEQUENCES TO mix_erp;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA office GRANT ALL ON SEQUENCES TO mix_erp;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA policy GRANT ALL ON SEQUENCES TO mix_erp;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA transactions GRANT ALL ON SEQUENCES TO mix_erp;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA crm GRANT ALL ON SEQUENCES TO mix_erp;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA mrp GRANT ALL ON SEQUENCES TO mix_erp;
 
 
-	ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT EXECUTE ON FUNCTIONS TO mix_erp;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA information_schema GRANT EXECUTE ON FUNCTIONS TO mix_erp;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA audit GRANT EXECUTE ON FUNCTIONS TO mix_erp;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA core GRANT EXECUTE ON FUNCTIONS TO mix_erp;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA office GRANT EXECUTE ON FUNCTIONS TO mix_erp;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA policy GRANT EXECUTE ON FUNCTIONS TO mix_erp;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA transactions GRANT EXECUTE ON FUNCTIONS TO mix_erp;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA crm GRANT EXECUTE ON FUNCTIONS TO mix_erp;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA mrp GRANT EXECUTE ON FUNCTIONS TO mix_erp;
+
+
+    ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT EXECUTE ON FUNCTIONS TO mix_erp;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA information_schema GRANT EXECUTE ON FUNCTIONS TO mix_erp;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA audit GRANT EXECUTE ON FUNCTIONS TO mix_erp;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA core GRANT EXECUTE ON FUNCTIONS TO mix_erp;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA office GRANT EXECUTE ON FUNCTIONS TO mix_erp;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA policy GRANT EXECUTE ON FUNCTIONS TO mix_erp;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA transactions GRANT EXECUTE ON FUNCTIONS TO mix_erp;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA crm GRANT EXECUTE ON FUNCTIONS TO mix_erp;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA mrp GRANT EXECUTE ON FUNCTIONS TO mix_erp;
    
 END
 $$
@@ -960,57 +962,57 @@ LANGUAGE plpgsql;
 DO
 $$
 BEGIN
-	IF NOT EXISTS (SELECT * FROM pg_catalog.pg_user WHERE  usename = 'report_user') THEN
-		CREATE ROLE report_user WITH LOGIN PASSWORD 'change-on-deloyment';
-	END IF;
+    IF NOT EXISTS (SELECT * FROM pg_catalog.pg_user WHERE  usename = 'report_user') THEN
+        CREATE ROLE report_user WITH LOGIN PASSWORD 'change-on-deloyment';
+    END IF;
 
-	COMMENT ON ROLE report_user IS 'This user account should be used by the Reporting Engine to run ad-hoc queries.
-	It is strictly advised for this user to have a read-only access to the database.';
+    COMMENT ON ROLE report_user IS 'This user account should be used by the Reporting Engine to run ad-hoc queries.
+    It is strictly advised for this user to have a read-only access to the database.';
 
-	GRANT USAGE ON SCHEMA public TO report_user;
-	GRANT USAGE ON SCHEMA information_schema TO report_user;
-	GRANT USAGE ON SCHEMA audit TO report_user;
-	GRANT USAGE ON SCHEMA core TO report_user;
-	GRANT USAGE ON SCHEMA office TO report_user;
-	GRANT USAGE ON SCHEMA policy TO report_user;
-	GRANT USAGE ON SCHEMA transactions TO report_user;
-	GRANT USAGE ON SCHEMA crm TO report_user;
-	GRANT USAGE ON SCHEMA mrp TO report_user;
+    GRANT USAGE ON SCHEMA public TO report_user;
+    GRANT USAGE ON SCHEMA information_schema TO report_user;
+    GRANT USAGE ON SCHEMA audit TO report_user;
+    GRANT USAGE ON SCHEMA core TO report_user;
+    GRANT USAGE ON SCHEMA office TO report_user;
+    GRANT USAGE ON SCHEMA policy TO report_user;
+    GRANT USAGE ON SCHEMA transactions TO report_user;
+    GRANT USAGE ON SCHEMA crm TO report_user;
+    GRANT USAGE ON SCHEMA mrp TO report_user;
 
-	ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO report_user;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA information_schema GRANT SELECT ON TABLES TO report_user;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA audit GRANT SELECT ON TABLES TO report_user;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA core GRANT SELECT ON TABLES TO report_user;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA office GRANT SELECT ON TABLES TO report_user;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA policy GRANT SELECT ON TABLES TO report_user;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA transactions GRANT SELECT ON TABLES TO report_user;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA crm GRANT SELECT ON TABLES TO report_user;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA mrp GRANT SELECT ON TABLES TO report_user;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO report_user;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA information_schema GRANT SELECT ON TABLES TO report_user;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA audit GRANT SELECT ON TABLES TO report_user;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA core GRANT SELECT ON TABLES TO report_user;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA office GRANT SELECT ON TABLES TO report_user;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA policy GRANT SELECT ON TABLES TO report_user;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA transactions GRANT SELECT ON TABLES TO report_user;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA crm GRANT SELECT ON TABLES TO report_user;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA mrp GRANT SELECT ON TABLES TO report_user;
 
 
-	ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT EXECUTE ON FUNCTIONS TO report_user;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA information_schema GRANT EXECUTE ON FUNCTIONS TO report_user;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA audit GRANT EXECUTE ON FUNCTIONS TO report_user;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA core GRANT EXECUTE ON FUNCTIONS TO report_user;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA office GRANT EXECUTE ON FUNCTIONS TO report_user;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA policy GRANT EXECUTE ON FUNCTIONS TO report_user;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA transactions GRANT EXECUTE ON FUNCTIONS TO report_user;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA crm GRANT EXECUTE ON FUNCTIONS TO report_user;
-	ALTER DEFAULT PRIVILEGES IN SCHEMA mrp GRANT EXECUTE ON FUNCTIONS TO report_user;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT EXECUTE ON FUNCTIONS TO report_user;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA information_schema GRANT EXECUTE ON FUNCTIONS TO report_user;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA audit GRANT EXECUTE ON FUNCTIONS TO report_user;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA core GRANT EXECUTE ON FUNCTIONS TO report_user;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA office GRANT EXECUTE ON FUNCTIONS TO report_user;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA policy GRANT EXECUTE ON FUNCTIONS TO report_user;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA transactions GRANT EXECUTE ON FUNCTIONS TO report_user;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA crm GRANT EXECUTE ON FUNCTIONS TO report_user;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA mrp GRANT EXECUTE ON FUNCTIONS TO report_user;
 END
 $$
 LANGUAGE plpgsql;
 
 
 
--- 4.casts.sql
+-->-->-- /db/src/00. db core/4.casts.sql --<--<--
 DROP FUNCTION IF EXISTS pg_catalog.text(unknown) CASCADE;
 CREATE FUNCTION pg_catalog.text(unknown) 
 RETURNS text 
 AS
 $$
 BEGIN
-	RETURN $1::text;
+    RETURN $1::text;
 END
 $$
 LANGUAGE plpgsql; 
@@ -1070,23 +1072,23 @@ CREATE FUNCTION pg_catalog.text(numeric) RETURNS text STRICT IMMUTABLE LANGUAGE 
 CREATE CAST (numeric AS text) WITH FUNCTION pg_catalog.text(numeric) AS IMPLICIT;
 
 
--- domains.sql
+-->-->-- /db/src/01. types, domains, tables, and constraints/domains.sql --<--<--
 DROP DOMAIN IF EXISTS transaction_type CASCADE;
 CREATE DOMAIN transaction_type
 AS char(2)
 CHECK
 (
-	VALUE IN
-	(
-		'Dr', --Debit
-		'Cr' --Credit
-	)
+    VALUE IN
+    (
+        'Dr', --Debit
+        'Cr' --Credit
+    )
 );
 
 COMMENT ON DOMAIN transaction_type IS 'This domain should not be localized.';
 
 /*******************************************************************
-	MIXERP STRICT Data Types: NEGATIVES ARE NOT ALLOWED
+    MIXERP STRICT Data Types: NEGATIVES ARE NOT ALLOWED
 *******************************************************************/
 
 DROP DOMAIN IF EXISTS money_strict CASCADE;
@@ -1094,7 +1096,7 @@ CREATE DOMAIN money_strict
 AS DECIMAL(24, 4)
 CHECK
 (
-	VALUE > 0
+    VALUE > 0
 );
 
 
@@ -1103,7 +1105,7 @@ CREATE DOMAIN money_strict2
 AS DECIMAL(24, 4)
 CHECK
 (
-	VALUE >= 0
+    VALUE >= 0
 );
 
 DROP DOMAIN IF EXISTS integer_strict CASCADE;
@@ -1111,7 +1113,7 @@ CREATE DOMAIN integer_strict
 AS integer
 CHECK
 (
-	VALUE > 0
+    VALUE > 0
 );
 
 DROP DOMAIN IF EXISTS integer_strict2 CASCADE;
@@ -1119,7 +1121,7 @@ CREATE DOMAIN integer_strict2
 AS integer
 CHECK
 (
-	VALUE >= 0
+    VALUE >= 0
 );
 
 DROP DOMAIN IF EXISTS smallint_strict CASCADE;
@@ -1127,7 +1129,7 @@ CREATE DOMAIN smallint_strict
 AS smallint
 CHECK
 (
-	VALUE > 0
+    VALUE > 0
 );
 
 DROP DOMAIN IF EXISTS smallint_strict2 CASCADE;
@@ -1135,7 +1137,7 @@ CREATE DOMAIN smallint_strict2
 AS smallint
 CHECK
 (
-	VALUE >= 0
+    VALUE >= 0
 );
 
 DROP DOMAIN IF EXISTS decimal_strict CASCADE;
@@ -1143,7 +1145,7 @@ CREATE DOMAIN decimal_strict
 AS decimal
 CHECK
 (
-	VALUE > 0
+    VALUE > 0
 );
 
 DROP DOMAIN IF EXISTS decimal_strict2 CASCADE;
@@ -1151,7 +1153,7 @@ CREATE DOMAIN decimal_strict2
 AS decimal
 CHECK
 (
-	VALUE >= 0
+    VALUE >= 0
 );
 
 DROP DOMAIN IF EXISTS color CASCADE;
@@ -1159,13 +1161,13 @@ CREATE DOMAIN color
 AS text;
 
 
--- tables and constraints.sql
+-->-->-- /db/src/01. types, domains, tables, and constraints/tables and constraints.sql --<--<--
 --Todo: Indexing has not been properly thought of, as of now.
 
 CREATE TABLE core.verification_statuses
 (
-	verification_status_id			smallint NOT NULL PRIMARY KEY,
-	verification_status_name		national character varying(128) NOT NULL
+    verification_status_id                  smallint NOT NULL PRIMARY KEY,
+    verification_status_name                national character varying(128) NOT NULL
 );
 
 COMMENT ON TABLE core.verification_statuses IS 
@@ -1193,14 +1195,15 @@ ON core.verification_statuses(UPPER(verification_status_name));
 
 CREATE TABLE office.users
 (
-	user_id 				SERIAL NOT NULL PRIMARY KEY,
-	role_id 				smallint NOT NULL,
-	office_id 				integer NOT NULL,
-	user_name 				national character varying(50) NOT NULL,
-	full_name 				national character varying(100) NOT NULL,
-	password 				text NOT NULL,
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    user_id                                 SERIAL NOT NULL PRIMARY KEY,
+    role_id                                 smallint NOT NULL,
+    office_id                               integer NOT NULL,
+    user_name                               national character varying(50) NOT NULL,
+    full_name                               national character varying(100) NOT NULL,
+    password                                text NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL 
+                                            DEFAULT(NOW())
 );
 
 COMMENT ON TABLE office.users IS
@@ -1211,35 +1214,38 @@ or cannot be allowed to log in interactively.';
 
 CREATE TABLE office.departments
 (
-	department_id SERIAL			NOT NULL PRIMARY KEY,
-	department_code				national character varying(12) NOT NULL,
-	department_name				national character varying(50) NOT NULL,
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    department_id SERIAL                    NOT NULL PRIMARY KEY,
+    department_code                         national character varying(12) NOT NULL,
+    department_name                         national character varying(50) NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL 
+                                            DEFAULT(NOW())
 );
 
 
 CREATE TABLE core.flag_types
 (
-	flag_type_id				SERIAL NOT NULL PRIMARY KEY,
-	flag_type_name				national character varying(24) NOT NULL,
-	background_color			color NOT NULL,
-	foreground_color			color NOT NULL,
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    flag_type_id                            SERIAL NOT NULL PRIMARY KEY,
+    flag_type_name                          national character varying(24) NOT NULL,
+    background_color                        color NOT NULL,
+    foreground_color                        color NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL
+                                            DEFAULT(NOW())
 );
 
 COMMENT ON TABLE core.flag_types IS 'Flags are used by users to mark transactions. The flags created by a user is not visible to others.';
 
 CREATE TABLE core.flags
 (
-	flag_id					BIGSERIAL NOT NULL PRIMARY KEY,
-	user_id					integer NOT NULL REFERENCES office.users(user_id),
-	flag_type_id				integer NOT NULL REFERENCES core.flag_types(flag_type_id),
-	resource				text, --Fully qualified resource name. Example: transactions.non_gl_stock_master.
-	resource_key				text, --The unique idenfier for lookup. Example: non_gl_stock_master_id,
-	resource_id				integer, --The value of the unique identifier to lookup for,
-	flagged_on				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    flag_id                                 BIGSERIAL NOT NULL PRIMARY KEY,
+    user_id                                 integer NOT NULL REFERENCES office.users(user_id),
+    flag_type_id                            integer NOT NULL REFERENCES core.flag_types(flag_type_id),
+    resource                                text, --Fully qualified resource name. Example: transactions.non_gl_stock_master.
+    resource_key                            text, --The unique idenfier for lookup. Example: non_gl_stock_master_id,
+    resource_id                             integer, --The value of the unique identifier to lookup for,
+    flagged_on                              TIMESTAMP WITH TIME ZONE NULL 
+                                            DEFAULT(NOW())
 );
 
 CREATE UNIQUE INDEX flags_user_id_resource_resource_id_uix
@@ -1247,10 +1253,10 @@ ON core.flags(user_id, UPPER(resource), UPPER(resource_key), resource_id);
 
 CREATE TABLE core.attachment_lookup
 (
-        attachment_lookup_id            SERIAL NOT NULL PRIMARY KEY,
-        book                            national character varying(50) NOT NULL,
-        resource                        text NOT NULL,
-        resource_key                    text NOT NULL        
+        attachment_lookup_id                SERIAL NOT NULL PRIMARY KEY,
+        book                                national character varying(50) NOT NULL,
+        resource                            text NOT NULL,
+        resource_key                        text NOT NULL        
 );
 
 CREATE UNIQUE INDEX attachment_lookup_book_uix
@@ -1262,16 +1268,21 @@ ON core.attachment_lookup(lower(book), lower(resource_key));
 
 CREATE TABLE core.attachments
 (
-	attachment_id				BIGSERIAL NOT NULL PRIMARY KEY,
-	user_id					integer NOT NULL CONSTRAINT attachments_users_fk REFERENCES office.users(user_id),
-	resource				text, --Fully qualified resource name. Example: transactions.non_gl_stock_master.
-	resource_key				text, --The unique idenfier for lookup. Example: non_gl_stock_master_id,
-	resource_id				integer, --The value of the unique identifier to lookup for,
-	original_file_name			text NOT NULL,
-	file_extension				national character varying(12) NOT NULL,
-	file_path				text NOT NULL,
-	comment					national character varying(96) NOT NULL CONSTRAINT attachments_comment_df DEFAULT(''),
-	added_on				TIMESTAMP WITH TIME ZONE NOT NULL CONSTRAINT attachments_added_on_df DEFAULT(NOW())
+    attachment_id                           BIGSERIAL NOT NULL PRIMARY KEY,
+    user_id                                 integer NOT NULL 
+                                            REFERENCES office.users(user_id),
+    resource                                text, --Fully qualified resource name. Example: transactions.non_gl_stock_master.
+    resource_key                            text, --The unique idenfier for lookup. Example: non_gl_stock_master_id,
+    resource_id                             integer, --The value of the unique identifier to lookup for,
+    original_file_name                      text NOT NULL,
+    file_extension                          national character varying(12) NOT NULL,
+    file_path                               text NOT NULL,
+    comment                                 national character varying(96) NOT NULL  
+                                            CONSTRAINT attachments_comment_df 
+                                            DEFAULT(''),
+    added_on                                TIMESTAMP WITH TIME ZONE NOT NULL  
+                                            CONSTRAINT attachments_added_on_df 
+                                            DEFAULT(NOW())
 );
 
 CREATE UNIQUE INDEX attachments_file_path_uix
@@ -1280,42 +1291,43 @@ ON core.attachments(UPPER(file_path));
 
 CREATE TABLE core.currencies
 (
-	currency_code				national character varying(12) NOT NULL PRIMARY KEY,
-	currency_symbol				national character varying(12) NOT NULL,
-	currency_name				national character varying(48) NOT NULL UNIQUE,
-	hundredth_name				national character varying(48) NOT NULL,
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    currency_code                           national character varying(12) NOT NULL PRIMARY KEY,
+    currency_symbol                         national character varying(12) NOT NULL,
+    currency_name                           national character varying(48) NOT NULL UNIQUE,
+    hundredth_name                          national character varying(48) NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL 
+                                            DEFAULT(NOW())
 );
 
 
 
 CREATE TABLE office.offices
 (
-	office_id				SERIAL NOT NULL PRIMARY KEY,
-	office_code 				national character varying(12) NOT NULL,
-	office_name 				national character varying(150) NOT NULL,
-	nick_name 				national character varying(50) NULL,
-	registration_date 			date NOT NULL,
-	currency_code 				national character varying(12) NOT NULL 
-						CONSTRAINT offices_currencies_fk REFERENCES core.currencies(currency_code),
-	po_box					national character varying(128) NULL,
-	address_line_1				national character varying(128) NULL,	
-	address_line_2				national character varying(128) NULL,
-	street 					national character varying(50) NULL,
-	city 					national character varying(50) NULL,
-	state 					national character varying(50) NULL,
-	zip_code				national character varying(24) NULL,
-	country 				national character varying(50) NULL,
-	phone 					national character varying(24) NULL,
-	fax 					national character varying(24) NULL,
-	email 					national character varying(128) NULL,
-	url 					national character varying(50) NULL,
-	registration_number 			national character varying(24) NULL,
-	pan_number 				national character varying(24) NULL,
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW()),
-	parent_office_id 			integer NULL REFERENCES office.offices(office_id)
+    office_id                               SERIAL NOT NULL PRIMARY KEY,
+    office_code                             national character varying(12) NOT NULL,
+    office_name                             national character varying(150) NOT NULL,
+    nick_name                               national character varying(50) NULL,
+    registration_date                       date NOT NULL,
+    currency_code                           national character varying(12) NOT NULL REFERENCES core.currencies(currency_code),
+    po_box                                  national character varying(128) NULL,
+    address_line_1                          national character varying(128) NULL,   
+    address_line_2                          national character varying(128) NULL,
+    street                                  national character varying(50) NULL,
+    city                                    national character varying(50) NULL,
+    state                                   national character varying(50) NULL,
+    zip_code                                national character varying(24) NULL,
+    country                                 national character varying(50) NULL,
+    phone                                   national character varying(24) NULL,
+    fax                                     national character varying(24) NULL,
+    email                                   national character varying(128) NULL,
+    url                                     national character varying(50) NULL,
+    registration_number                     national character varying(24) NULL,
+    pan_number                              national character varying(24) NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL 
+                                            DEFAULT(NOW()),
+    parent_office_id                        integer NULL REFERENCES office.offices(office_id)
 );
 
 ALTER TABLE office.users
@@ -1337,20 +1349,24 @@ ON office.offices(UPPER(nick_name));
 
 CREATE TABLE core.exchange_rates
 (
-	exchange_rate_id			BIGSERIAL NOT NULL PRIMARY KEY,
-	updated_on				TIMESTAMP WITH TIME ZONE NOT NULL CONSTRAINT exchange_rates_updated_on_df DEFAULT(NOW()),
-	office_id				integer NOT NULL REFERENCES office.offices(office_id),
-	status					BOOLEAN NOT NULL CONSTRAINT exchange_rates_status_df DEFAULT(true)
+    exchange_rate_id                        BIGSERIAL NOT NULL PRIMARY KEY,
+    updated_on                              TIMESTAMP WITH TIME ZONE NOT NULL   
+                                            CONSTRAINT exchange_rates_updated_on_df 
+                                            DEFAULT(NOW()),
+    office_id                               integer NOT NULL REFERENCES office.offices(office_id),
+    status                                  BOOLEAN NOT NULL   
+                                            CONSTRAINT exchange_rates_status_df 
+                                            DEFAULT(true)
 );
 
 CREATE TABLE core.exchange_rate_details
 (
-	exchange_rate_detail_id			BIGSERIAL NOT NULL PRIMARY KEY,
-	exchange_rate_id			bigint NOT NULL REFERENCES core.exchange_rates(exchange_rate_id),
-	local_currency_code			national character varying(12) NOT NULL REFERENCES core.currencies(currency_code),
-	foreign_currency_code			national character varying(12) NOT NULL REFERENCES core.currencies(currency_code),
-	unit					integer_strict NOT NULL,
-	exchange_rate				decimal_strict NOT NULL
+    exchange_rate_detail_id                 BIGSERIAL NOT NULL PRIMARY KEY,
+    exchange_rate_id                        bigint NOT NULL REFERENCES core.exchange_rates(exchange_rate_id),
+    local_currency_code                     national character varying(12) NOT NULL REFERENCES core.currencies(currency_code),
+    foreign_currency_code                   national character varying(12) NOT NULL REFERENCES core.currencies(currency_code),
+    unit                                    integer_strict NOT NULL,
+    exchange_rate                           decimal_strict NOT NULL
 );
 
 
@@ -1363,13 +1379,18 @@ ON office.departments(UPPER(department_name));
 
 CREATE TABLE office.roles
 (
-	role_id SERIAL				NOT NULL PRIMARY KEY,
-	role_code				national character varying(12) NOT NULL,
-	role_name				national character varying(50) NOT NULL,
-	is_admin 				boolean NOT NULL CONSTRAINT roles_is_admin_df DEFAULT(false),
-	is_system 				boolean NOT NULL CONSTRAINT roles_is_system_df DEFAULT(false),
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    role_id SERIAL                          NOT NULL PRIMARY KEY,
+    role_code                               national character varying(12) NOT NULL,
+    role_name                               national character varying(50) NOT NULL,
+    is_admin                                boolean NOT NULL   
+                                            CONSTRAINT roles_is_admin_df 
+                                            DEFAULT(false),
+    is_system                               boolean NOT NULL   
+                                            CONSTRAINT roles_is_system_df 
+                                            DEFAULT(false),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL 
+                                            DEFAULT(NOW())
 );
 
 ALTER TABLE office.users
@@ -1389,47 +1410,52 @@ ON office.users(UPPER(user_name));
 
 CREATE TABLE audit.logins
 (
-	login_id 				BIGSERIAL NOT NULL PRIMARY KEY,
-	user_id 				integer NOT NULL REFERENCES office.users(user_id),
-	office_id 				integer NOT NULL REFERENCES office.offices(office_id),
-	browser 				national character varying(500) NOT NULL,
-	ip_address 				national character varying(50) NOT NULL,
-	login_date_time 			TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT(now()),
-	remote_user 				national character varying(50) NOT NULL,
-	culture					national character varying(12) NOT NULL
+    login_id                                BIGSERIAL NOT NULL PRIMARY KEY,
+    user_id                                 integer NOT NULL REFERENCES office.users(user_id),
+    office_id                               integer NOT NULL REFERENCES office.offices(office_id),
+    browser                                 national character varying(500) NOT NULL,
+    ip_address                              national character varying(50) NOT NULL,
+    login_date_time                         TIMESTAMP WITH TIME ZONE NOT NULL 
+                                            DEFAULT(NOW()),
+    remote_user                             national character varying(50) NOT NULL,
+    culture                                 national character varying(12) NOT NULL
 );
 
 
 CREATE TABLE audit.failed_logins
 (
-	failed_login_id 			BIGSERIAL NOT NULL PRIMARY KEY,
-	user_id 				integer NULL REFERENCES office.users(user_id),
-	user_name 				national character varying(50) NOT NULL,
-	office_id 				integer NULL REFERENCES office.offices(office_id),
-	browser 				national character varying(500) NOT NULL,
-	ip_address 				national character varying(50) NOT NULL,
-	failed_date_time 			TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT(now()),
-	remote_user 				national character varying(50) NOT NULL,
-	details 				national character varying(250) NULL
+    failed_login_id                         BIGSERIAL NOT NULL PRIMARY KEY,
+    user_id                                 integer NULL REFERENCES office.users(user_id),
+    user_name                               national character varying(50) NOT NULL,
+    office_id                               integer NULL REFERENCES office.offices(office_id),
+    browser                                 national character varying(500) NOT NULL,
+    ip_address                              national character varying(50) NOT NULL,
+    failed_date_time                        TIMESTAMP WITH TIME ZONE NOT NULL 
+                                            DEFAULT(NOW()),
+    remote_user                             national character varying(50) NOT NULL,
+    details                                 national character varying(250) NULL
 );
 
 
 CREATE TABLE policy.lock_outs
 (
-	lock_out_id 				BIGSERIAL NOT NULL PRIMARY KEY,
-	user_id 				integer NOT NULL REFERENCES office.users(user_id),
-	lock_out_time 				TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT(NOW()),
-	lock_out_till 				TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT(NOW() + '5 minutes'::interval)
+    lock_out_id                             BIGSERIAL NOT NULL PRIMARY KEY,
+    user_id                                 integer NOT NULL REFERENCES office.users(user_id),
+    lock_out_time                           TIMESTAMP WITH TIME ZONE NOT NULL 
+                                            DEFAULT(NOW()),
+    lock_out_till                           TIMESTAMP WITH TIME ZONE NOT NULL 
+                                            DEFAULT(NOW() + '5 minutes'::interval)
 );
 
 
 CREATE TABLE core.price_types
 (
-	price_type_id 				SERIAL  NOT NULL PRIMARY KEY,
-	price_type_code 			national character varying(12) NOT NULL,
-	price_type_name 			national character varying(50) NOT NULL,
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    price_type_id                           SERIAL  NOT NULL PRIMARY KEY,
+    price_type_code                         national character varying(12) NOT NULL,
+    price_type_name                         national character varying(50) NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL  
+                                            DEFAULT(NOW())
 );
 
 
@@ -1442,14 +1468,15 @@ ON core.price_types(UPPER(price_type_name));
 
 CREATE TABLE core.menus
 (
-	menu_id 				SERIAL NOT NULL PRIMARY KEY,
-	menu_text 				national character varying(250) NOT NULL,
-	url 					national character varying(250) NULL,
-	menu_code 				national character varying(12) NOT NULL,
-	level 					smallint NOT NULL,
-	parent_menu_id 				integer NULL REFERENCES core.menus(menu_id),
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    menu_id                                 SERIAL NOT NULL PRIMARY KEY,
+    menu_text                               national character varying(250) NOT NULL,
+    url                                     national character varying(250) NULL,
+    menu_code                               national character varying(12) NOT NULL,
+    level                                   smallint NOT NULL,
+    parent_menu_id                          integer NULL REFERENCES core.menus(menu_id),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL  
+                                            DEFAULT(NOW())
 );
 
 CREATE UNIQUE INDEX menus_menu_code_uix
@@ -1457,10 +1484,10 @@ ON core.menus(UPPER(menu_code));
 
 CREATE TABLE core.menu_locale
 (
-	menu_locale_id				SERIAL NOT NULL PRIMARY KEY,
-	menu_id 				integer NOT NULL REFERENCES core.menus(menu_id),
-	culture					national character varying(12) NOT NULL,
-	menu_text 				national character varying(250) NOT NULL
+    menu_locale_id                          SERIAL NOT NULL PRIMARY KEY,
+    menu_id                                 integer NOT NULL REFERENCES core.menus(menu_id),
+    culture                                 national character varying(12) NOT NULL,
+    menu_text                               national character varying(250) NOT NULL
 );
 
 CREATE UNIQUE INDEX menu_locale_menu_id_culture_uix
@@ -1468,32 +1495,33 @@ ON core.menu_locale(menu_id, LOWER(culture));
 
 CREATE TABLE policy.menu_policy
 (
-	policy_id				SERIAL NOT NULL PRIMARY KEY,
-	menu_id					integer NOT NULL REFERENCES core.menus(menu_id),
-	office_id				integer NULL REFERENCES office.offices(office_id),
-	inherit_in_child_offices		boolean NOT NULL DEFAULT(false),
-	role_id					integer NULL REFERENCES office.roles(role_id),
-	user_id					integer NULL REFERENCES office.users(user_id),
-	scope					national character varying(12) NOT NULL
-						CONSTRAINT menu_policy_scope_chk
-						CHECK(scope IN('Allow','Deny'))
-	
+    policy_id                               SERIAL NOT NULL PRIMARY KEY,
+    menu_id                                 integer NOT NULL REFERENCES core.menus(menu_id),
+    office_id                               integer NULL REFERENCES office.offices(office_id),
+    inherit_in_child_offices                boolean NOT NULL  
+                                            DEFAULT(false),
+    role_id                                 integer NULL REFERENCES office.roles(role_id),
+    user_id                                 integer NULL REFERENCES office.users(user_id),
+    scope                                   national character varying(12) NOT NULL
+                                            CONSTRAINT menu_policy_scope_chk
+                                            CHECK(scope IN('Allow','Deny'))
+    
 );
 
 CREATE TABLE policy.menu_access
 (
-	access_id				BIGSERIAL NOT NULL PRIMARY KEY,
-	office_id				integer NOT NULL REFERENCES office.offices(office_id),
-	menu_id					integer NOT NULL REFERENCES core.menus(menu_id),
-	user_id					integer NULL REFERENCES office.users(user_id)	
+    access_id                               BIGSERIAL NOT NULL PRIMARY KEY,
+    office_id                               integer NOT NULL REFERENCES office.offices(office_id),
+    menu_id                                 integer NOT NULL REFERENCES core.menus(menu_id),
+    user_id                                 integer NULL REFERENCES office.users(user_id)   
 );
 
-	
+    
 CREATE TABLE core.frequencies
 (
-	frequency_id 				SERIAL NOT NULL PRIMARY KEY,
-	frequency_code 				national character varying(12) NOT NULL,
-	frequency_name 				national character varying(50) NOT NULL
+    frequency_id                            SERIAL NOT NULL PRIMARY KEY,
+    frequency_code                          national character varying(12) NOT NULL,
+    frequency_name                          national character varying(50) NOT NULL
 );
 
 
@@ -1506,12 +1534,13 @@ ON core.frequencies(UPPER(frequency_name));
 
 CREATE TABLE core.fiscal_year
 (
-	fiscal_year_code 			national character varying(12) NOT NULL PRIMARY KEY,
-	fiscal_year_name 			national character varying(50) NOT NULL,
-	starts_from 				date NOT NULL,
-	ends_on 				date NOT NULL,
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    fiscal_year_code                        national character varying(12) NOT NULL PRIMARY KEY,
+    fiscal_year_name                        national character varying(50) NOT NULL,
+    starts_from                             date NOT NULL,
+    ends_on                                 date NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL  
+                                            DEFAULT(NOW())
 );
 
 CREATE UNIQUE INDEX fiscal_year_fiscal_year_name_uix
@@ -1526,41 +1555,45 @@ ON core.fiscal_year(ends_on);
 
 CREATE TABLE core.frequency_setups
 (
-	frequency_setup_id			SERIAL NOT NULL PRIMARY KEY,
-	fiscal_year_code 			national character varying(12) NOT NULL REFERENCES core.fiscal_year(fiscal_year_code),
-	value_date 				date NOT NULL UNIQUE,
-	frequency_id 				integer NOT NULL REFERENCES core.frequencies(frequency_id),
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    frequency_setup_id                      SERIAL NOT NULL PRIMARY KEY,
+    fiscal_year_code                        national character varying(12) NOT NULL REFERENCES core.fiscal_year(fiscal_year_code),
+    value_date                              date NOT NULL UNIQUE,
+    frequency_id                            integer NOT NULL REFERENCES core.frequencies(frequency_id),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL  
+                                            DEFAULT(NOW())
 );
 
 --TODO: Validation constraints for core.frequency_setups
 
 CREATE TABLE core.units
 (
-	unit_id 				SERIAL NOT NULL PRIMARY KEY,
-	unit_code 				national character varying(12) NOT NULL,
-	unit_name 				national character varying(50) NOT NULL,
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    unit_id                                 SERIAL NOT NULL PRIMARY KEY,
+    unit_code                               national character varying(12) NOT NULL,
+    unit_name                               national character varying(50) NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL  
+                                            DEFAULT(NOW())
 );
 
 CREATE UNIQUE INDEX units_unit_code_uix
 ON core.units(UPPER(unit_code));
 
-CREATE UNIQUE INDEX "units_unit_name_uix"
+CREATE UNIQUE INDEX units_unit_name_uix
 ON core.units(UPPER(unit_name));
 
 
 CREATE TABLE core.compound_units
 (
-	compound_unit_id 			SERIAL NOT NULL PRIMARY KEY,
-	base_unit_id 				integer NOT NULL REFERENCES core.units(unit_id),
-	value 					smallint NOT NULL,
-	compare_unit_id 			integer NOT NULL REFERENCES core.units(unit_id),
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW()),
-						CONSTRAINT compound_units_check CHECK(base_unit_id != compare_unit_id)
+    compound_unit_id                        SERIAL NOT NULL PRIMARY KEY,
+    base_unit_id                            integer NOT NULL REFERENCES core.units(unit_id),
+    value                                   smallint NOT NULL,
+    compare_unit_id                         integer NOT NULL REFERENCES core.units(unit_id),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL  
+                                            DEFAULT(NOW()),
+                                            CONSTRAINT compound_units_chk
+                                            CHECK(base_unit_id != compare_unit_id)
 );
 
 CREATE UNIQUE INDEX compound_units_info_uix
@@ -1568,9 +1601,9 @@ ON core.compound_units(base_unit_id, compare_unit_id);
 
 CREATE TABLE core.account_masters
 (
-	account_master_id 			SERIAL NOT NULL PRIMARY KEY,
-	account_master_code 			national character varying(3) NOT NULL,
-	account_master_name 			national character varying(40) NOT NULL	
+    account_master_id                       SERIAL NOT NULL PRIMARY KEY,
+    account_master_code                     national character varying(3) NOT NULL,
+    account_master_name                     national character varying(40) NOT NULL 
 );
 
 CREATE UNIQUE INDEX account_master_code_uix
@@ -1583,19 +1616,28 @@ ON core.account_masters(UPPER(account_master_name));
 
 CREATE TABLE core.accounts
 (
-	account_id				BIGSERIAL NOT NULL PRIMARY KEY,
-	account_master_id 			integer NOT NULL REFERENCES core.account_masters(account_master_id),
-	account_code      			national character varying(12) NOT NULL,
-	external_code     			national character varying(12) NULL CONSTRAINT accounts_external_code_df DEFAULT(''),
-	confidential      			boolean NOT NULL CONSTRAINT accounts_confidential_df DEFAULT(false),
-	currency_code				national character varying(12) NOT NULL REFERENCES core.currencies(currency_code),
-	account_name      			national character varying(100) NOT NULL,
-	description	  			national character varying(200) NULL,
-	sys_type 	  			boolean NOT NULL CONSTRAINT accounts_sys_type_df DEFAULT(false),
-	is_cash		  			boolean NOT NULL CONSTRAINT accounts_is_cash_df DEFAULT(false),
-	parent_account_id 			bigint NULL REFERENCES core.accounts(account_id),
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    account_id                              BIGSERIAL NOT NULL PRIMARY KEY,
+    account_master_id                       integer NOT NULL REFERENCES core.account_masters(account_master_id),
+    account_code                            national character varying(12) NOT NULL,
+    external_code                           national character varying(12) NULL   
+                                            CONSTRAINT accounts_external_code_df  
+                                            DEFAULT(''),
+    confidential                            boolean NOT NULL   
+                                            CONSTRAINT accounts_confidential_df  
+                                            DEFAULT(false),
+    currency_code                           national character varying(12) NOT NULL REFERENCES core.currencies(currency_code),
+    account_name                            national character varying(100) NOT NULL,
+    description                             national character varying(200) NULL,
+    sys_type                                boolean NOT NULL   
+                                            CONSTRAINT accounts_sys_type_df  
+                                            DEFAULT(false),
+    is_cash                                 boolean NOT NULL   
+                                            CONSTRAINT accounts_is_cash_df   
+                                            DEFAULT(false),
+    parent_account_id                       bigint NULL REFERENCES core.accounts(account_id),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL 
+                                            DEFAULT(NOW())
 );
 
 
@@ -1608,11 +1650,12 @@ ON core.accounts(UPPER(account_name));
 
 CREATE TABLE core.account_parameters
 (
-	account_parameter_id 			SERIAL NOT NULL CONSTRAINT account_parameters_pk PRIMARY KEY,
-	parameter_name 				national character varying(128) NOT NULL,
-	account_id 				bigint NOT NULL REFERENCES core.accounts(account_id),
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    account_parameter_id                    SERIAL NOT NULL PRIMARY KEY,
+    parameter_name                          national character varying(128) NOT NULL,
+    account_id                              bigint NOT NULL REFERENCES core.accounts(account_id),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 CREATE UNIQUE INDEX account_parameters_parameter_name_uix
@@ -1620,28 +1663,29 @@ ON core.account_parameters(UPPER(parameter_name));
 
 CREATE TABLE core.bank_accounts
 (
-	account_id 				bigint NOT NULL CONSTRAINT bank_accounts_pk PRIMARY KEY
-								CONSTRAINT bank_accounts_accounts_fk REFERENCES core.accounts(account_id),
-	maintained_by_user_id 			integer NOT NULL CONSTRAINT bank_accounts_users_fk REFERENCES office.users(user_id),
-	bank_name 				national character varying(128) NOT NULL,
-	bank_branch 				national character varying(128) NOT NULL,
-	bank_contact_number 			national character varying(128) NULL,
-	bank_address 				text NULL,
-	bank_account_code 			national character varying(128) NULL,
-	bank_account_type 			national character varying(128) NULL,
-	relationship_officer_name		national character varying(128) NULL,
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    account_id                              bigint NOT NULL PRIMARY KEY REFERENCES core.accounts(account_id),
+    maintained_by_user_id                   integer NOT NULL REFERENCES office.users(user_id),
+    bank_name                               national character varying(128) NOT NULL,
+    bank_branch                             national character varying(128) NOT NULL,
+    bank_contact_number                     national character varying(128) NULL,
+    bank_address                            text NULL,
+    bank_account_code                       national character varying(128) NULL,
+    bank_account_type                       national character varying(128) NULL,
+    relationship_officer_name               national character varying(128) NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 
 CREATE TABLE core.sales_teams
 (
-	sales_team_id				SERIAL NOT NULL PRIMARY KEY,
-	sales_team_code				national character varying(12),
-	sales_team_name				national character varying(50),
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    sales_team_id                           SERIAL NOT NULL PRIMARY KEY,
+    sales_team_code                         national character varying(12),
+    sales_team_name                         national character varying(50),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 CREATE UNIQUE INDEX sales_teams_sales_team_code_uix
@@ -1652,16 +1696,18 @@ ON core.sales_teams(UPPER(sales_team_name));
 
 CREATE TABLE core.salespersons
 (
-	salesperson_id				SERIAL NOT NULL PRIMARY KEY,
-	sales_team_id				integer NOT NULL REFERENCES core.sales_teams(sales_team_id),
-	salesperson_code				national character varying(12) NOT NULL,
-	salesperson_name 				national character varying(100) NOT NULL,
-	address 				national character varying(100) NOT NULL,
-	contact_number 				national character varying(50) NOT NULL,
-	commission_rate 			decimal_strict2 NOT NULL DEFAULT(0),
-	account_id 				bigint NOT NULL REFERENCES core.accounts(account_id),
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    salesperson_id                          SERIAL NOT NULL PRIMARY KEY,
+    sales_team_id                           integer NOT NULL REFERENCES core.sales_teams(sales_team_id),
+    salesperson_code                        national character varying(12) NOT NULL,
+    salesperson_name                        national character varying(100) NOT NULL,
+    address                                 national character varying(100) NOT NULL,
+    contact_number                          national character varying(50) NOT NULL,
+    commission_rate                         decimal_strict2 NOT NULL   
+                                            DEFAULT(0),
+    account_id                              bigint NOT NULL REFERENCES core.accounts(account_id),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 CREATE UNIQUE INDEX salespersons_salesperson_name_uix
@@ -1669,12 +1715,13 @@ ON core.salespersons(UPPER(salesperson_name));
 
 CREATE TABLE core.bonus_slabs
 (
-	bonus_slab_id 				SERIAL NOT NULL PRIMARY KEY,
-	bonus_slab_code 			national character varying(12) NOT NULL,
-	bonus_slab_name 			national character varying(50) NOT NULL,
-	checking_frequency_id 			integer NOT NULL REFERENCES core.frequencies(frequency_id),
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    bonus_slab_id                           SERIAL NOT NULL PRIMARY KEY,
+    bonus_slab_code                         national character varying(12) NOT NULL,
+    bonus_slab_name                         national character varying(50) NOT NULL,
+    checking_frequency_id                   integer NOT NULL REFERENCES core.frequencies(frequency_id),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 CREATE UNIQUE INDEX bonus_slabs_bonus_slab_code_uix
@@ -1688,24 +1735,27 @@ ON core.bonus_slabs(UPPER(bonus_slab_name));
 
 CREATE TABLE core.bonus_slab_details
 (
-	bonus_slab_detail_id 			SERIAL NOT NULL PRIMARY KEY,
-	bonus_slab_id 				integer NOT NULL REFERENCES core.bonus_slabs(bonus_slab_id),
-	amount_from 				money_strict NOT NULL,
-	amount_to 				money_strict NOT NULL,
-	bonus_rate 				decimal_strict NOT NULL,
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW()),
-						CONSTRAINT bonus_slab_details_amounts_chk CHECK(amount_to>amount_from)
+    bonus_slab_detail_id                    SERIAL NOT NULL PRIMARY KEY,
+    bonus_slab_id                           integer NOT NULL REFERENCES core.bonus_slabs(bonus_slab_id),
+    amount_from                             money_strict NOT NULL,
+    amount_to                               money_strict NOT NULL,
+    bonus_rate                              decimal_strict NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW()),
+                                            CONSTRAINT bonus_slab_details_amounts_chk 
+                                            CHECK(amount_to>amount_from)
 );
 
 
 CREATE TABLE core.salesperson_bonus_setups
 (
-	salesperson_bonus_setup_id SERIAL NOT NULL PRIMARY KEY,
-	salesperson_id integer NOT NULL REFERENCES core.salespersons(salesperson_id),
-	bonus_slab_id integer NOT NULL REFERENCES core.bonus_slabs(bonus_slab_id),
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    salesperson_bonus_setup_id SERIAL       NOT NULL PRIMARY KEY,
+    salesperson_id                          integer NOT NULL REFERENCES core.salespersons(salesperson_id),
+    bonus_slab_id                           integer NOT NULL REFERENCES core.bonus_slabs(bonus_slab_id),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 CREATE UNIQUE INDEX salesperson_bonus_setups_uix
@@ -1713,10 +1763,10 @@ ON core.salesperson_bonus_setups(salesperson_id, bonus_slab_id);
 
 CREATE TABLE core.ageing_slabs
 (
-	ageing_slab_id SERIAL NOT NULL PRIMARY KEY,
-	ageing_slab_name national character varying(24) NOT NULL,
-	from_days integer NOT NULL,
-	to_days integer NOT NULL CHECK(to_days > 0)
+    ageing_slab_id SERIAL NOT NULL PRIMARY KEY,
+    ageing_slab_name national character varying(24) NOT NULL,
+    from_days integer NOT NULL,
+    to_days integer NOT NULL CHECK(to_days > 0)
 );
 
 CREATE UNIQUE INDEX ageing_slabs_ageing_slab_name_uix
@@ -1725,50 +1775,61 @@ ON core.ageing_slabs(UPPER(ageing_slab_name));
 
 CREATE TABLE core.party_types
 (
-	party_type_id 				SERIAL NOT NULL PRIMARY KEY,
-	party_type_code 			national character varying(12) NOT NULL, 
-	party_type_name 			national character varying(50) NOT NULL,
-	is_supplier 				boolean NOT NULL CONSTRAINT party_types_is_supplier_df DEFAULT(false),
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    party_type_id                           SERIAL NOT NULL PRIMARY KEY,
+    party_type_code                         national character varying(12) NOT NULL, 
+    party_type_name                         national character varying(50) NOT NULL,
+    is_supplier                             boolean NOT NULL   
+                                            CONSTRAINT party_types_is_supplier_df   
+                                            DEFAULT(false),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL 
+                                              
+                                            DEFAULT(NOW())
 );
+
+CREATE UNIQUE INDEX party_types_party_type_code_uix
+ON core.party_types(UPPER(party_type_code));
+
+CREATE UNIQUE INDEX party_types_party_type_name_uix
+ON core.party_types(UPPER(party_type_name));
 
 
 CREATE TABLE core.parties
 (
-	party_id BIGSERIAL			NOT NULL PRIMARY KEY,
-	party_type_id				smallint NOT NULL REFERENCES core.party_types(party_type_id),
-	party_code				national character varying(12) NULL,
-	first_name				national character varying(50) NOT NULL,
-	middle_name				national character varying(50) NULL,
-	last_name				national character varying(50) NOT NULL,
-	party_name				text NULL,
-	date_of_birth				date NULL,
-	po_box					national character varying(128) NULL,
-	address_line_1				national character varying(128) NULL,	
-	address_line_2				national character varying(128) NULL,
-	street 					national character varying(50) NULL,
-	city 					national character varying(50) NULL,
-	state 					national character varying(50) NULL,
-	country 				national character varying(50) NULL,
-	phone 					national character varying(24) NULL,
-	fax 					national character varying(24) NULL,
-	cell 					national character varying(24) NULL,
-	email 					national character varying(128) NULL,
-	url 					national character varying(50) NULL,
-	pan_number 				national character varying(50) NULL,
-	sst_number 				national character varying(50) NULL,
-	cst_number 				national character varying(50) NULL,
-	currency_code 				national character varying(12) NOT NULL REFERENCES core.currencies(currency_code),
-	allow_credit 				boolean NULL,
-	maximum_credit_period 			smallint NULL,
-	maximum_credit_amount 			money_strict2 NULL,
-	charge_interest 			boolean NULL,
-	interest_rate 				decimal NULL,
-	interest_compounding_frequency_id	smallint NULL REFERENCES core.frequencies(frequency_id),
-	account_id 				bigint NULL REFERENCES core.accounts(account_id),
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    party_id BIGSERIAL                      NOT NULL PRIMARY KEY,
+    party_type_id                           smallint NOT NULL REFERENCES core.party_types(party_type_id),
+    party_code                              national character varying(12) NULL,
+    first_name                              national character varying(50) NOT NULL,
+    middle_name                             national character varying(50) NULL,
+    last_name                               national character varying(50) NOT NULL,
+    party_name                              text NULL,
+    date_of_birth                           date NULL,
+    po_box                                  national character varying(128) NULL,
+    address_line_1                          national character varying(128) NULL,   
+    address_line_2                          national character varying(128) NULL,
+    street                                  national character varying(50) NULL,
+    city                                    national character varying(50) NULL,
+    state                                   national character varying(50) NULL,
+    country                                 national character varying(50) NULL,
+    phone                                   national character varying(24) NULL,
+    fax                                     national character varying(24) NULL,
+    cell                                    national character varying(24) NULL,
+    email                                   national character varying(128) NULL,
+    url                                     national character varying(50) NULL,
+    pan_number                              national character varying(50) NULL,
+    sst_number                              national character varying(50) NULL,
+    cst_number                              national character varying(50) NULL,
+    currency_code                           national character varying(12) NOT NULL REFERENCES core.currencies(currency_code),
+    allow_credit                            boolean NULL,
+    maximum_credit_period                   smallint NULL,
+    maximum_credit_amount                   money_strict2 NULL,
+    charge_interest                         boolean NULL,
+    interest_rate                           decimal NULL,
+    interest_compounding_frequency_id       smallint NULL REFERENCES core.frequencies(frequency_id),
+    account_id                              bigint NULL REFERENCES core.accounts(account_id),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 
@@ -1777,18 +1838,19 @@ ON core.parties(UPPER(party_code));
 
 CREATE TABLE core.shipping_addresses
 (
-	shipping_address_id			BIGSERIAL NOT NULL PRIMARY KEY,
-	shipping_address_code			national character varying(24) NOT NULL,
-	party_id				bigint NOT NULL REFERENCES core.parties(party_id),
-	po_box					national character varying(128) NULL,
-	address_line_1				national character varying(128) NULL,	
-	address_line_2				national character varying(128) NULL,
-	street					national character varying(128) NULL,
-	city					national character varying(128) NOT NULL,
-	state					national character varying(128) NOT NULL,
-	country					national character varying(128) NOT NULL,
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    shipping_address_id                     BIGSERIAL NOT NULL PRIMARY KEY,
+    shipping_address_code                   national character varying(24) NOT NULL,
+    party_id                                bigint NOT NULL REFERENCES core.parties(party_id),
+    po_box                                  national character varying(128) NULL,
+    address_line_1                          national character varying(128) NULL,   
+    address_line_2                          national character varying(128) NULL,
+    street                                  national character varying(128) NULL,
+    city                                    national character varying(128) NOT NULL,
+    state                                   national character varying(128) NOT NULL,
+    country                                 national character varying(128) NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 CREATE UNIQUE INDEX shipping_addresses_shipping_address_code_uix
@@ -1798,9 +1860,12 @@ ON core.shipping_addresses(UPPER(shipping_address_code), party_id);
 
 CREATE TABLE core.brands
 (
-	brand_id SERIAL NOT NULL PRIMARY KEY,
-	brand_code national character varying(12) NOT NULL,
-	brand_name national character varying(150) NOT NULL
+    brand_id SERIAL                         NOT NULL PRIMARY KEY,
+    brand_code                              national character varying(12) NOT NULL,
+    brand_name                              national character varying(150) NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 CREATE UNIQUE INDEX brands_brand_code_uix
@@ -1813,40 +1878,42 @@ ON core.brands(UPPER(brand_name));
 
 CREATE TABLE core.shippers
 (
-	shipper_id				BIGSERIAL NOT NULL PRIMARY KEY,
-	shipper_code				national character varying(12) NULL,
-	company_name				national character varying(128) NOT NULL,
-	shipper_name				national character varying(150) NULL,
-	po_box					national character varying(128) NULL,
-	address_line_1				national character varying(128) NULL,	
-	address_line_2				national character varying(128) NULL,
-	street					national character varying(50) NULL,
-	city					national character varying(50) NULL,
-	state 					national character varying(50) NULL,
-	country 				national character varying(50) NULL,
-	phone 					national character varying(50) NULL,
-	fax 					national character varying(50) NULL,
-	cell 					national character varying(50) NULL,
-	email 					national character varying(128) NULL,
-	url 					national character varying(50) NULL,
-	contact_person 				national character varying(50) NULL,
-	contact_po_box				national character varying(128) NULL,
-	contact_address_line_1			national character varying(128) NULL,	
-	contact_address_line_2			national character varying(128) NULL,
-	contact_street 				national character varying(50) NULL,
-	contact_city 				national character varying(50) NULL,
-	contact_state 				national character varying(50) NULL,
-	contact_country 			national character varying(50) NULL,
-	contact_email 				national character varying(128) NULL,
-	contact_phone 				national character varying(50) NULL,
-	contact_cell 				national character varying(50) NULL,
-	factory_address 			national character varying(250) NULL,
-	pan_number 				national character varying(50) NULL,
-	sst_number 				national character varying(50) NULL,
-	cst_number 				national character varying(50) NULL,
-	account_id 				bigint NOT NULL REFERENCES core.accounts(account_id),
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    shipper_id                              BIGSERIAL NOT NULL PRIMARY KEY,
+    shipper_code                            national character varying(12) NULL,
+    company_name                            national character varying(128) NOT NULL,
+    shipper_name                            national character varying(150) NULL,
+    po_box                                  national character varying(128) NULL,
+    address_line_1                          national character varying(128) NULL,   
+    address_line_2                          national character varying(128) NULL,
+    street                                  national character varying(50) NULL,
+    city                                    national character varying(50) NULL,
+    state                                   national character varying(50) NULL,
+    country                                 national character varying(50) NULL,
+    phone                                   national character varying(50) NULL,
+    fax                                     national character varying(50) NULL,
+    cell                                    national character varying(50) NULL,
+    email                                   national character varying(128) NULL,
+    url                                     national character varying(50) NULL,
+    contact_person                          national character varying(50) NULL,
+    contact_po_box                          national character varying(128) NULL,
+    contact_address_line_1                  national character varying(128) NULL,   
+    contact_address_line_2                  national character varying(128) NULL,
+    contact_street                          national character varying(50) NULL,
+    contact_city                            national character varying(50) NULL,
+    contact_state                           national character varying(50) NULL,
+    contact_country                         national character varying(50) NULL,
+    contact_email                           national character varying(128) NULL,
+    contact_phone                           national character varying(50) NULL,
+    contact_cell                            national character varying(50) NULL,
+    factory_address                         national character varying(250) NULL,
+    pan_number                              national character varying(50) NULL,
+    sst_number                              national character varying(50) NULL,
+    cst_number                              national character varying(50) NULL,
+    account_id                              bigint NOT NULL REFERENCES core.accounts(account_id),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL 
+                                              
+                                            DEFAULT(NOW())
 );
 
 
@@ -1856,11 +1923,12 @@ ON core.shippers(UPPER(shipper_code));
 
 CREATE TABLE core.tax_types
 (
-	tax_type_id 				SERIAL  NOT NULL PRIMARY KEY,
-	tax_type_code 				national character varying(12) NOT NULL,
-	tax_type_name 				national character varying(50) NOT NULL,
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    tax_type_id                             SERIAL  NOT NULL PRIMARY KEY,
+    tax_type_code                           national character varying(12) NOT NULL,
+    tax_type_name                           national character varying(50) NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 CREATE UNIQUE INDEX tax_types_tax_type_code_uix
@@ -1872,14 +1940,15 @@ ON core.tax_types(UPPER(tax_type_name));
 
 CREATE TABLE core.taxes
 (
-	tax_id SERIAL  				NOT NULL PRIMARY KEY,
-	tax_type_id 				smallint NOT NULL REFERENCES core.tax_types(tax_type_id),
-	tax_code 				national character varying(12) NOT NULL,
-	tax_name 				national character varying(50) NOT NULL,
-	rate 					decimal NOT NULL,
-	account_id 				bigint NOT NULL REFERENCES core.accounts(account_id),
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    tax_id SERIAL                           NOT NULL PRIMARY KEY,
+    tax_type_id                             smallint NOT NULL REFERENCES core.tax_types(tax_type_id),
+    tax_code                                national character varying(12) NOT NULL,
+    tax_name                                national character varying(50) NOT NULL,
+    rate                                    decimal NOT NULL,
+    account_id                              bigint NOT NULL REFERENCES core.accounts(account_id),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 
@@ -1894,14 +1963,20 @@ ON core.taxes(UPPER(tax_name));
 
 CREATE TABLE core.item_groups
 (
-	item_group_id 				SERIAL NOT NULL PRIMARY KEY,
-	item_group_code 			national character varying(12) NOT NULL,
-	item_group_name 			national character varying(50) NOT NULL,
-	exclude_from_purchase 			boolean NOT NULL CONSTRAINT item_groups_exclude_from_purchase_df DEFAULT('No'),
-	exclude_from_sales 			boolean NOT NULL CONSTRAINT item_groups_exclude_from_sales_df DEFAULT('No'),
-	tax_id 					smallint NOT NULL REFERENCES core.taxes(tax_id),
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    item_group_id                           SERIAL NOT NULL PRIMARY KEY,
+    item_group_code                         national character varying(12) NOT NULL,
+    item_group_name                         national character varying(50) NOT NULL,
+    exclude_from_purchase                   boolean NOT NULL   
+                                            CONSTRAINT item_groups_exclude_from_purchase_df   
+                                            DEFAULT(false),
+    exclude_from_sales                      boolean NOT NULL   
+                                            CONSTRAINT item_groups_exclude_from_sales_df   
+                                            DEFAULT(false),
+    tax_id                                  smallint NOT NULL REFERENCES core.taxes(tax_id),
+    parent_item_group_id                    integer NULL REFERENCES core.item_groups(item_group_id),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 
@@ -1915,11 +1990,12 @@ ON core.item_groups(UPPER(item_group_name));
 
 CREATE TABLE core.shipping_mail_types
 (
-	shipping_mail_type_id			SERIAL NOT NULL PRIMARY KEY,
-	shipping_mail_type_code			national character varying(12) NOT NULL,
-	shipping_mail_type_name			national character varying(64) NOT NULL,
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    shipping_mail_type_id                   SERIAL NOT NULL PRIMARY KEY,
+    shipping_mail_type_code                 national character varying(12) NOT NULL,
+    shipping_mail_type_name                 national character varying(64) NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 CREATE UNIQUE INDEX shipping_mail_types_shipping_mail_type_code_uix
@@ -1935,12 +2011,14 @@ ON core.shipping_mail_types(UPPER(shipping_mail_type_name));
 
 CREATE TABLE core.shipping_package_shapes
 (
-	shipping_package_shape_id		SERIAL NOT NULL PRIMARY KEY,
-	shipping_package_shape_code		national character varying(12) NOT NULL,
-	shipping_package_shape_name		national character varying(64) NOT NULL,
-	is_rectangular				boolean NOT NULL DEFAULT(false),
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())	
+    shipping_package_shape_id               SERIAL NOT NULL PRIMARY KEY,
+    shipping_package_shape_code             national character varying(12) NOT NULL,
+    shipping_package_shape_name             national character varying(64) NOT NULL,
+    is_rectangular                          boolean NOT NULL   
+                                            DEFAULT(false),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())    
 );
 
 
@@ -1954,32 +2032,47 @@ ON core.shipping_package_shapes(UPPER(shipping_package_shape_name));
 
 CREATE TABLE core.items
 (
-	item_id 				SERIAL NOT NULL PRIMARY KEY,
-	item_code 				national character varying(12) NOT NULL,
-	item_name 				national character varying(150) NOT NULL,
-	item_group_id 				integer NOT NULL REFERENCES core.item_groups(item_group_id),
-	brand_id 				integer NOT NULL REFERENCES core.brands(brand_id),
-	preferred_supplier_id 			bigint NOT NULL REFERENCES core.parties(party_id),
-	lead_time_in_days 			integer NOT NULL DEFAULT(0),
-	weight_in_grams				float NOT NULL DEFAULT(0),	
-	width_in_centimeters			float NOT NULL DEFAULT(0),
-	height_in_centimeters			float NOT NULL DEFAULT(0),
-	length_in_centimeters			float NOT NULL DEFAULT(0),
-	machinable				boolean NOT NULL DEFAULT(false),
-	preferred_shipping_mail_type_id		integer NULL REFERENCES core.shipping_mail_types(shipping_mail_type_id),
-	shipping_package_shape_id		integer NULL REFERENCES core.shipping_package_shapes(shipping_package_shape_id),
-	
-	unit_id 				integer NOT NULL REFERENCES core.units(unit_id),
-	hot_item 				boolean NOT NULL,
-	cost_price 				money_strict NOT NULL,
-	cost_price_includes_tax 		boolean NOT NULL CONSTRAINT items_cost_price_includes_tax_df DEFAULT('No'),
-	selling_price 				money_strict NOT NULL,
-	selling_price_includes_tax 		boolean NOT NULL CONSTRAINT items_selling_price_includes_tax_df DEFAULT('No'),
-	tax_id 					integer NOT NULL REFERENCES core.taxes(tax_id),
-	reorder_level 				integer NOT NULL,
-	maintain_stock 				boolean NOT NULL DEFAULT(true),
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    item_id                                 SERIAL NOT NULL PRIMARY KEY,
+    item_code                               national character varying(12) NOT NULL,
+    item_name                               national character varying(150) NOT NULL,
+    item_group_id                           integer NOT NULL REFERENCES core.item_groups(item_group_id),
+    brand_id                                integer NOT NULL REFERENCES core.brands(brand_id),
+    preferred_supplier_id                   bigint NOT NULL REFERENCES core.parties(party_id),
+    lead_time_in_days                       integer NOT NULL   
+                                            DEFAULT(0),
+    weight_in_grams                         float NOT NULL   
+                                            DEFAULT(0),  
+    width_in_centimeters                    float NOT NULL   
+                                            DEFAULT(0),
+    height_in_centimeters                   float NOT NULL   
+                                            DEFAULT(0),
+    length_in_centimeters                   float NOT NULL   
+                                            DEFAULT(0),
+    machinable                              boolean NOT NULL   
+                                            DEFAULT(false),
+    preferred_shipping_mail_type_id         integer NULL REFERENCES core.shipping_mail_types(shipping_mail_type_id),
+    shipping_package_shape_id               integer NULL REFERENCES core.shipping_package_shapes(shipping_package_shape_id),    
+    unit_id                                 integer NOT NULL REFERENCES core.units(unit_id),
+    hot_item                                boolean NOT NULL,
+    cost_price                              money_strict NOT NULL,
+    cost_price_includes_tax                 boolean NOT NULL   
+                                            CONSTRAINT items_cost_price_includes_tax_df                                               
+                                            DEFAULT(false),
+    selling_price                           money_strict NOT NULL,
+    selling_price_includes_tax              boolean NOT NULL   
+                                            CONSTRAINT items_selling_price_includes_tax_df 
+                                            DEFAULT(false),
+    tax_id                                  integer NOT NULL REFERENCES core.taxes(tax_id),
+    reorder_unit_id                         integer NOT NULL REFERENCES core.units(unit_id),
+    reorder_level                           integer NOT NULL,
+    reorder_quantity                        integer NOT NULL
+                                            CONSTRAINT items_reorder_quantity_df
+                                            DEFAULT(0),
+    maintain_stock                          boolean NOT NULL   
+                                            DEFAULT(true),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL 
+                                            DEFAULT(NOW())
 );
 
 CREATE UNIQUE INDEX items_item_name_uix
@@ -1987,11 +2080,12 @@ ON core.items(UPPER(item_name));
 
 CREATE TABLE core.compound_items
 (
-        compound_item_id                        SERIAL NOT NULL PRIMARY KEY,
-        compound_item_code                      national character varying(12) NOT NULL,
-        compound_item_name                      national character varying(150) NOT NULL,
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())        
+    compound_item_id                        SERIAL NOT NULL PRIMARY KEY,
+    compound_item_code                      national character varying(12) NOT NULL,
+    compound_item_name                      national character varying(150) NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())        
 );
 
 CREATE UNIQUE INDEX compound_items_compound_item_code_uix
@@ -2003,69 +2097,85 @@ ON core.compound_items(LOWER(compound_item_name));
 
 CREATE TABLE core.compound_item_details
 (
-        compound_item_detail_id                 SERIAL NOT NULL PRIMARY KEY,
-        compound_item_id                        integer NOT NULL REFERENCES core.compound_items(compound_item_id),
-        item_id                                 integer NOT NULL REFERENCES core.items(item_id),
-        unit_id                                 integer NOT NULL REFERENCES core.units(unit_id),
-        quantity                                integer_strict NOT NULL
+    compound_item_detail_id                 SERIAL NOT NULL PRIMARY KEY,
+    compound_item_id                        integer NOT NULL REFERENCES core.compound_items(compound_item_id),
+    item_id                                 integer NOT NULL REFERENCES core.items(item_id),
+    unit_id                                 integer NOT NULL REFERENCES core.units(unit_id),
+    quantity                                integer_strict NOT NULL,
+    price                                   money_strict NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())        
 );
 
+CREATE UNIQUE INDEX compound_item_details_item_id_uix
+ON core.compound_item_details(compound_item_id, item_id);
+
 /*******************************************************************
-	PLEASE NOTE :
+    PLEASE NOTE :
 
-	THESE ARE THE MOST EFFECTIVE STOCK ITEM PRICES.
-	THE PRICE IN THIS CATALOG IS ACTUALLY
-	PICKED UP AT THE TIME OF PURCHASE AND SALES.
+    THESE ARE THE MOST EFFECTIVE STOCK ITEM PRICES.
+    THE PRICE IN THIS CATALOG IS ACTUALLY
+    PICKED UP AT THE TIME OF PURCHASE AND SALES.
 
-	A STOCK ITEM PRICE MAY BE DIFFERENT FOR DIFFERENT UNITS.
-	FURTHER, A STOCK ITEM WOULD BE SOLD AT A HIGHER PRICE
-	WHEN SOLD LOOSE THAN WHAT IT WOULD ACTUALLY COST IN A
-	COMPOUND UNIT.
+    A STOCK ITEM PRICE MAY BE DIFFERENT FOR DIFFERENT UNITS.
+    FURTHER, A STOCK ITEM WOULD BE SOLD AT A HIGHER PRICE
+    WHEN SOLD LOOSE THAN WHAT IT WOULD ACTUALLY COST IN A
+    COMPOUND UNIT.
 
-	EXAMPLE, ONE CARTOON (20 BOTTLES) OF BEER BOUGHT AS A UNIT
-	WOULD COST 25% LESS FROM THE SAME STORE.
+    EXAMPLE, ONE CARTOON (20 BOTTLES) OF BEER BOUGHT AS A UNIT
+    WOULD COST 25% LESS FROM THE SAME STORE.
 
 *******************************************************************/
 
 CREATE TABLE core.item_selling_prices
-(	
-	item_selling_price_id			BIGSERIAL NOT NULL PRIMARY KEY,
-	item_id 				integer NOT NULL REFERENCES core.items(item_id),
-	unit_id 				integer NOT NULL REFERENCES core.units(unit_id),
-	party_type_id 				smallint NULL REFERENCES core.party_types(party_type_id), 
-	price_type_id 				smallint NULL REFERENCES core.price_types(price_type_id),
-	includes_tax 				boolean NOT NULL CONSTRAINT item_selling_prices_includes_tax_df DEFAULT('No'),
-	price 					money_strict NOT NULL,
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+(   
+    item_selling_price_id                   BIGSERIAL NOT NULL PRIMARY KEY,
+    item_id                                 integer NOT NULL REFERENCES core.items(item_id),
+    unit_id                                 integer NOT NULL REFERENCES core.units(unit_id),
+    party_type_id                           smallint NULL REFERENCES core.party_types(party_type_id), 
+    price_type_id                           smallint NULL REFERENCES core.price_types(price_type_id),
+    includes_tax                            boolean NOT NULL   
+                                            CONSTRAINT item_selling_prices_includes_tax_df   
+                                            DEFAULT('No'),
+    price                                   money_strict NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 
 
 
 CREATE TABLE core.item_cost_prices
-(	
-	item_cost_price_id 			BIGSERIAL NOT NULL PRIMARY KEY,
-	item_id 				integer NOT NULL REFERENCES core.items(item_id),
-	entry_ts 				TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT(now()),
-	unit_id 				integer NOT NULL REFERENCES core.units(unit_id),
-	party_id 				bigint NULL REFERENCES core.parties(party_id),
-	lead_time_in_days 			integer NOT NULL DEFAULT(0),
-	includes_tax 				boolean NOT NULL CONSTRAINT item_cost_prices_includes_tax_df DEFAULT('No'),
-	price 					money_strict NOT NULL,
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+(   
+    item_cost_price_id                      BIGSERIAL NOT NULL PRIMARY KEY,
+    item_id                                 integer NOT NULL REFERENCES core.items(item_id),
+    entry_ts                                TIMESTAMP WITH TIME ZONE NOT NULL   
+                                            DEFAULT(NOW()),
+    unit_id                                 integer NOT NULL REFERENCES core.units(unit_id),
+    party_id                                bigint NULL REFERENCES core.parties(party_id),
+    lead_time_in_days                       integer NOT NULL   
+                                            DEFAULT(0),
+    includes_tax                            boolean NOT NULL   
+                                            CONSTRAINT item_cost_prices_includes_tax_df   
+                                            DEFAULT('No'),
+    price                                   money_strict NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 
 
 CREATE TABLE office.store_types
 (
-	store_type_id 				SERIAL NOT NULL PRIMARY KEY,
-	store_type_code 			national character varying(12) NOT NULL,
-	store_type_name 			national character varying(50) NOT NULL,
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    store_type_id                           SERIAL NOT NULL PRIMARY KEY,
+    store_type_code                         national character varying(12) NOT NULL,
+    store_type_name                         national character varying(50) NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 CREATE UNIQUE INDEX store_types_Code_uix
@@ -2080,15 +2190,17 @@ ON office.store_types(UPPER(store_type_name));
 
 CREATE TABLE office.stores
 (
-	store_id SERIAL 			NOT NULL PRIMARY KEY,
-	office_id 				integer NOT NULL REFERENCES office.offices(office_id),
-	store_code 				national character varying(12) NOT NULL,
-	store_name 				national character varying(50) NOT NULL,
-	address 				national character varying(50) NULL,
-	store_type_id 				integer NOT NULL REFERENCES office.store_types(store_type_id),
-	allow_sales 				boolean NOT NULL DEFAULT(true),
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    store_id SERIAL                         NOT NULL PRIMARY KEY,
+    office_id                               integer NOT NULL REFERENCES office.offices(office_id),
+    store_code                              national character varying(12) NOT NULL,
+    store_name                              national character varying(50) NOT NULL,
+    address                                 national character varying(50) NULL,
+    store_type_id                           integer NOT NULL REFERENCES office.store_types(store_type_id),
+    allow_sales                             boolean NOT NULL   
+                                            DEFAULT(true),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 
@@ -2102,14 +2214,15 @@ ON office.stores(UPPER(store_name));
 
 CREATE TABLE office.cash_repositories
 (
-	cash_repository_id 			BIGSERIAL NOT NULL PRIMARY KEY,
-	office_id 				integer NOT NULL REFERENCES office.offices(office_id),
-	cash_repository_code 			national character varying(12) NOT NULL,
-	cash_repository_name 			national character varying(50) NOT NULL,
-	parent_cash_repository_id 		integer NULL REFERENCES office.cash_repositories(cash_repository_id),
-	description 				national character varying(100) NULL,
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    cash_repository_id                      BIGSERIAL NOT NULL PRIMARY KEY,
+    office_id                               integer NOT NULL REFERENCES office.offices(office_id),
+    cash_repository_code                    national character varying(12) NOT NULL,
+    cash_repository_name                    national character varying(50) NOT NULL,
+    parent_cash_repository_id               integer NULL REFERENCES office.cash_repositories(cash_repository_id),
+    description                             national character varying(100) NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 
@@ -2123,13 +2236,14 @@ ON office.cash_repositories(UPPER(cash_repository_name));
  
 CREATE TABLE office.counters
 (
-	counter_id 				SERIAL NOT NULL PRIMARY KEY,
-	store_id 				smallint NOT NULL REFERENCES office.stores(store_id),
-	cash_repository_id 			integer NOT NULL REFERENCES office.cash_repositories(cash_repository_id),
-	counter_code 				national character varying(12) NOT NULL,
-	counter_name 				national character varying(50) NOT NULL,
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    counter_id                              SERIAL NOT NULL PRIMARY KEY,
+    store_id                                smallint NOT NULL REFERENCES office.stores(store_id),
+    cash_repository_id                      integer NOT NULL REFERENCES office.cash_repositories(cash_repository_id),
+    counter_code                            national character varying(12) NOT NULL,
+    counter_name                            national character varying(50) NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 
@@ -2142,11 +2256,12 @@ ON office.counters(UPPER(counter_name));
 
 CREATE TABLE office.cost_centers
 (
-	cost_center_id 				SERIAL NOT NULL PRIMARY KEY,
-	cost_center_code 			national character varying(24) NOT NULL,
-	cost_center_name 			national character varying(50) NOT NULL,
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    cost_center_id                          SERIAL NOT NULL PRIMARY KEY,
+    cost_center_code                        national character varying(24) NOT NULL,
+    cost_center_name                        national character varying(50) NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 CREATE UNIQUE INDEX cost_centers_cost_center_code_uix
@@ -2158,12 +2273,12 @@ ON office.cost_centers(UPPER(cost_center_name));
 
 CREATE TABLE office.cashiers
 (
-	cashier_id BIGSERIAL NOT NULL PRIMARY KEY,
-	counter_id integer NOT NULL REFERENCES office.counters(counter_id),
-	user_id integer NOT NULL REFERENCES office.users(user_id),
-	assigned_by_user_id integer NOT NULL REFERENCES office.users(user_id),
-	transaction_date date NOT NULL,
-	closed boolean NOT NULL
+    cashier_id                              BIGSERIAL NOT NULL PRIMARY KEY,
+    counter_id                              integer NOT NULL REFERENCES office.counters(counter_id),
+    user_id                                 integer NOT NULL REFERENCES office.users(user_id),
+    assigned_by_user_id                     integer NOT NULL REFERENCES office.users(user_id),
+    transaction_date                        date NOT NULL,
+    closed                                  boolean NOT NULL
 );
 
 CREATE UNIQUE INDEX Cashiers_user_id_TDate_uix
@@ -2171,105 +2286,91 @@ ON office.cashiers(user_id ASC, transaction_date DESC);
 
 
 /*******************************************************************
-	STORE POLICY DEFINES THE RIGHT OF USERS TO ACCESS A STORE.
-	AN ADMINISTRATOR CAN ACCESS ALL THE stores, BY DEFAULT.
+    STORE POLICY DEFINES THE RIGHT OF USERS TO ACCESS A STORE.
+    AN ADMINISTRATOR CAN ACCESS ALL THE stores, BY DEFAULT.
 *******************************************************************/
 
 CREATE TABLE policy.store_policies
 (
-	store_policy_id 			BIGSERIAL NOT NULL PRIMARY KEY,
-	written_by_user_id 			integer NOT NULL REFERENCES office.users(user_id),
-	status 					boolean NOT NULL,
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    store_policy_id                         BIGSERIAL NOT NULL PRIMARY KEY,
+    written_by_user_id                      integer NOT NULL REFERENCES office.users(user_id),
+    status                                  boolean NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 CREATE TABLE policy.store_policy_details
 (
-	store_policy_detail_id 			BIGSERIAL NOT NULL PRIMARY KEY,
-	store_policy_id 			integer NOT NULL REFERENCES policy.store_policies(store_policy_id),
-	user_id 				integer NOT NULL REFERENCES office.users(user_id),
-	store_id 				smallint NOT NULL REFERENCES office.stores(store_id),
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    store_policy_detail_id                  BIGSERIAL NOT NULL PRIMARY KEY,
+    store_policy_id                         integer NOT NULL REFERENCES policy.store_policies(store_policy_id),
+    user_id                                 integer NOT NULL REFERENCES office.users(user_id),
+    store_id                                smallint NOT NULL REFERENCES office.stores(store_id),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 
 CREATE TABLE core.item_opening_inventory
 (
-	item_opening_inventory_id 		BIGSERIAL NOT NULL PRIMARY KEY,
-	entry_ts 				TIMESTAMP WITH TIME ZONE NOT NULL,
-	item_id 				integer NOT NULL REFERENCES core.items(item_id),
-	store_id 				smallint NOT NULL REFERENCES office.stores(store_id),
-	unit_id 				integer NOT NULL REFERENCES core.units(unit_id),
-	quantity 				integer NOT NULL,
-	amount 					money_strict NOT NULL,
-	base_unit_id 				integer NOT NULL REFERENCES core.units(unit_id),
-	base_quantity 				decimal NOT NULL,
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    item_opening_inventory_id               BIGSERIAL NOT NULL PRIMARY KEY,
+    entry_ts                                TIMESTAMP WITH TIME ZONE NOT NULL,
+    item_id                                 integer NOT NULL REFERENCES core.items(item_id),
+    store_id                                smallint NOT NULL REFERENCES office.stores(store_id),
+    unit_id                                 integer NOT NULL REFERENCES core.units(unit_id),
+    quantity                                integer NOT NULL,
+    amount                                  money_strict NOT NULL,
+    base_unit_id                            integer NOT NULL REFERENCES core.units(unit_id),
+    base_quantity                           decimal NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
-
-CREATE TABLE audit.history
-(
-	activity_id				BIGSERIAL NOT NULL PRIMARY KEY,
-	event_ts 				TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT(NOW()),
-	principal_user 				national character varying(50) NOT NULL DEFAULT(current_user),
-	user_id 				integer /*NOT*/ NULL REFERENCES office.users(user_id),
-	type 					national character varying(50) NOT NULL,
-	table_schema 				national character varying(50) NOT NULL,
-	table_name 				national character varying(50) NOT NULL,
-	primary_key_id 				national character varying(50) NOT NULL,
-	column_name 				national character varying(50) NOT NULL,
-	old_val 				text NULL,
-	new_val 				text NULL,
-						CONSTRAINT audit_history_val_chk 
-							CHECK
-							(
-									(old_val IS NULL AND new_val IS NOT NULL) OR
-									(old_val IS NOT NULL AND new_val IS NULL) OR
-									(old_val IS NOT NULL AND new_val IS NOT NULL)
-							)
-);
 
 
 
 
 CREATE TABLE transactions.transaction_master
 (
-	transaction_master_id 			BIGSERIAL NOT NULL PRIMARY KEY,
-	transaction_counter 			integer NOT NULL, --Sequence of transactions of a date
-	transaction_code 			national character varying(50) NOT NULL,
-	book 					national character varying(50) NOT NULL, --Transaction book. Ex. Sales, Purchase, Journal
-	value_date 				date NOT NULL,
-	transaction_ts 				TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT(now()),
-	login_id 				bigint NOT NULL REFERENCES audit.logins(login_id),
-	user_id 				integer NOT NULL REFERENCES office.users(user_id),
-	sys_user_id 				integer NULL REFERENCES office.users(user_id),
-	office_id 				integer NOT NULL REFERENCES office.offices(office_id),
-	cost_center_id 				integer NULL REFERENCES office.cost_centers(cost_center_id),
-	reference_number 			national character varying(24) NULL,
-	statement_reference			text NULL,
-	last_verified_on 			TIMESTAMP WITH TIME ZONE NULL, 
-	verified_by_user_id 			integer NULL REFERENCES office.users(user_id),
-	verification_status_id 			smallint NOT NULL REFERENCES core.verification_statuses(verification_status_id) DEFAULT(0/*Awaiting verification*/),
-	verification_reason 			national character varying(128) NOT NULL CONSTRAINT transaction_master_verification_reason_df DEFAULT(''),
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW()),
-						CONSTRAINT transaction_master_login_id_sys_user_id_chk
-							CHECK
-							(
-								(
-									login_id IS NULL AND sys_user_id IS NOT NULL
-								)
+    transaction_master_id                   BIGSERIAL NOT NULL PRIMARY KEY,
+    transaction_counter                     integer NOT NULL, --Sequence of transactions of a date
+    transaction_code                        national character varying(50) NOT NULL,
+    book                                    national character varying(50) NOT NULL, --Transaction book. Ex. Sales, Purchase, Journal
+    value_date                              date NOT NULL,
+    transaction_ts                          TIMESTAMP WITH TIME ZONE NOT NULL   
+                                            DEFAULT(NOW()),
+    login_id                                bigint NOT NULL REFERENCES audit.logins(login_id),
+    user_id                                 integer NOT NULL REFERENCES office.users(user_id),
+    sys_user_id                             integer NULL REFERENCES office.users(user_id),
+    office_id                               integer NOT NULL REFERENCES office.offices(office_id),
+    cost_center_id                          integer NULL REFERENCES office.cost_centers(cost_center_id),
+    reference_number                        national character varying(24) NULL,
+    statement_reference                     text NULL,
+    last_verified_on                        TIMESTAMP WITH TIME ZONE NULL, 
+    verified_by_user_id                     integer NULL REFERENCES office.users(user_id),
+    verification_status_id                  smallint NOT NULL REFERENCES core.verification_statuses(verification_status_id)   
+                                            DEFAULT(0/*Awaiting verification*/),
+    verification_reason                     national character varying(128) NOT NULL   
+                                            CONSTRAINT transaction_master_verification_reason_df   
+                                            DEFAULT(''),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL                                               
+                                            DEFAULT(NOW()),
+                                            CONSTRAINT transaction_master_login_id_sys_user_id_chk
+                                                CHECK
+                                                (
+                                                    (
+                                                        login_id IS NULL AND sys_user_id IS NOT NULL
+                                                    )
 
-								OR
+                                                    OR
 
-								(
-									login_id IS NOT NULL AND sys_user_id IS NULL
-								)
-							)
+                                                    (
+                                                        login_id IS NOT NULL AND sys_user_id IS NULL
+                                                    )
+                                                )
 );
 
 CREATE UNIQUE INDEX transaction_master_transaction_code_uix
@@ -2279,35 +2380,40 @@ ON transactions.transaction_master(UPPER(transaction_code));
 
 CREATE TABLE transactions.transaction_details
 (
-	transaction_detail_id 			BIGSERIAL NOT NULL PRIMARY KEY,
-	transaction_master_id 			bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id),
-	tran_type 				transaction_type NOT NULL,
-	account_id 				bigint NOT NULL REFERENCES core.accounts(account_id),
-	statement_reference 			text NULL,
-	cash_repository_id 			integer NULL REFERENCES office.cash_repositories(cash_repository_id),
-	currency_code				national character varying(12) NULL REFERENCES core.currencies(currency_code),
-	amount_in_currency			money_strict NOT NULL,
-	local_currency_code			national character varying(12) NULL REFERENCES core.currencies(currency_code),
-	er					decimal_strict NOT NULL,
-	amount_in_local_currency 		money_strict NOT NULL,	
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    transaction_detail_id                   BIGSERIAL NOT NULL PRIMARY KEY,
+    transaction_master_id                   bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id),
+    tran_type                               transaction_type NOT NULL,
+    account_id                              bigint NOT NULL REFERENCES core.accounts(account_id),
+    statement_reference                     text NULL,
+    cash_repository_id                      integer NULL REFERENCES office.cash_repositories(cash_repository_id),
+    currency_code                           national character varying(12) NULL REFERENCES core.currencies(currency_code),
+    amount_in_currency                      money_strict NOT NULL,
+    local_currency_code                     national character varying(12) NULL REFERENCES core.currencies(currency_code),
+    er                                      decimal_strict NOT NULL,
+    amount_in_local_currency                money_strict NOT NULL,  
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 CREATE TABLE transactions.customer_receipts
 (
-	receipt_id			BIGSERIAL NOT NULL PRIMARY KEY,
-	transaction_master_id		bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id),
-	party_id			bigint NOT NULL REFERENCES core.parties(party_id),
-        currency_code                   national character varying(12) NOT NULL REFERENCES core.currencies(currency_code),
-	amount				money_strict NOT NULL,
-        er_debit                        decimal_strict NOT NULL,
-        er_credit                       decimal_strict NOT NULL,
-	cash_repository_id		integer NULL REFERENCES office.cash_repositories(cash_repository_id),
-	posted_date			date NULL,
-	bank_account_id			bigint NULL REFERENCES core.bank_accounts(account_id),
-	bank_instrument_code		national character varying(128) NULL CONSTRAINT customer_receipt_bank_instrument_code_df DEFAULT(''),
-	bank_tran_code			national character varying(128) NULL CONSTRAINT customer_receipt_bank_tran_code_df DEFAULT('')
+    receipt_id                              BIGSERIAL NOT NULL PRIMARY KEY,
+    transaction_master_id                   bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id),
+    party_id                                bigint NOT NULL REFERENCES core.parties(party_id),
+    currency_code                           national character varying(12) NOT NULL REFERENCES core.currencies(currency_code),
+    amount                                  money_strict NOT NULL,
+    er_debit                                decimal_strict NOT NULL,
+    er_credit                               decimal_strict NOT NULL,
+    cash_repository_id                      integer NULL REFERENCES office.cash_repositories(cash_repository_id),
+    posted_date                             date NULL,
+    bank_account_id                         bigint NULL REFERENCES core.bank_accounts(account_id),
+    bank_instrument_code                    national character varying(128) NULL   
+                                            CONSTRAINT customer_receipt_bank_instrument_code_df   
+                                            DEFAULT(''),
+    bank_tran_code                          national character varying(128) NULL   
+                                            CONSTRAINT customer_receipt_bank_tran_code_df   
+                                            DEFAULT('')
 );
 
 CREATE INDEX customer_receipts_transaction_master_id_inx
@@ -2331,19 +2437,24 @@ ON transactions.customer_receipts(bank_account_id);
 
 CREATE TABLE transactions.stock_master
 (
-	stock_master_id 			BIGSERIAL NOT NULL PRIMARY KEY,
-	transaction_master_id 			bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id),
-	party_id 				bigint NULL REFERENCES core.parties(party_id),
-	salesperson_id 				integer NULL REFERENCES core.salespersons(salesperson_id),
-	price_type_id 				integer NULL REFERENCES core.price_types(price_type_id),
-	is_credit 				boolean NOT NULL CONSTRAINT stock_master_is_credit_df DEFAULT(false),
-	shipper_id 				integer NULL REFERENCES core.shippers(shipper_id),
-	shipping_address_id 			integer NULL REFERENCES core.shipping_addresses(shipping_address_id),
-	shipping_charge 			money_strict2 NOT NULL CONSTRAINT stock_master_shipping_charge_df DEFAULT(0),
-	store_id 				integer NULL REFERENCES office.stores(store_id),
-	cash_repository_id 			integer NULL REFERENCES office.cash_repositories(cash_repository_id),
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    stock_master_id                         BIGSERIAL NOT NULL PRIMARY KEY,
+    transaction_master_id                   bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id),
+    party_id                                bigint NULL REFERENCES core.parties(party_id),
+    salesperson_id                          integer NULL REFERENCES core.salespersons(salesperson_id),
+    price_type_id                           integer NULL REFERENCES core.price_types(price_type_id),
+    is_credit                               boolean NOT NULL   
+                                            CONSTRAINT stock_master_is_credit_df   
+                                            DEFAULT(false),
+    shipper_id                              integer NULL REFERENCES core.shippers(shipper_id),
+    shipping_address_id                     integer NULL REFERENCES core.shipping_addresses(shipping_address_id),
+    shipping_charge                         money_strict2 NOT NULL   
+                                            CONSTRAINT stock_master_shipping_charge_df   
+                                            DEFAULT(0),
+    store_id                                integer NULL REFERENCES office.stores(store_id),
+    cash_repository_id                      integer NULL REFERENCES office.cash_repositories(cash_repository_id),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 CREATE UNIQUE INDEX stock_master_transaction_master_id_uix
@@ -2352,29 +2463,36 @@ ON transactions.stock_master(transaction_master_id);
 
 CREATE TABLE transactions.stock_details
 (
-	stock_master_detail_id 			BIGSERIAL NOT NULL PRIMARY KEY,
-	stock_master_id 			bigint NOT NULL REFERENCES transactions.stock_master(stock_master_id),
-	tran_type 				transaction_type NOT NULL,
-	store_id 				integer NULL REFERENCES office.stores(store_id),
-	item_id 				integer NOT NULL REFERENCES core.items(item_id),
-	quantity 				integer NOT NULL,
-	unit_id 				integer NOT NULL REFERENCES core.units(unit_id),
-	base_quantity 				decimal NOT NULL,
-	base_unit_id 				integer NOT NULL REFERENCES core.units(unit_id),
-	price 					money_strict NOT NULL,
-	discount 				money_strict2 NOT NULL CONSTRAINT stock_details_discount_df DEFAULT(0),
-	tax_rate 				decimal NOT NULL CONSTRAINT stock_details_tax_rate_df DEFAULT(0),
-	tax 					money_strict2 NOT NULL CONSTRAINT stock_details_tax_df DEFAULT(0),
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    stock_master_detail_id                  BIGSERIAL NOT NULL PRIMARY KEY,
+    stock_master_id                         bigint NOT NULL REFERENCES transactions.stock_master(stock_master_id),
+    tran_type                               transaction_type NOT NULL,
+    store_id                                integer NULL REFERENCES office.stores(store_id),
+    item_id                                 integer NOT NULL REFERENCES core.items(item_id),
+    quantity                                integer NOT NULL,
+    unit_id                                 integer NOT NULL REFERENCES core.units(unit_id),
+    base_quantity                           decimal NOT NULL,
+    base_unit_id                            integer NOT NULL REFERENCES core.units(unit_id),
+    price                                   money_strict NOT NULL,
+    discount                                money_strict2 NOT NULL   
+                                            CONSTRAINT stock_details_discount_df   
+                                            DEFAULT(0),
+    tax_rate                                decimal NOT NULL   
+                                            CONSTRAINT stock_details_tax_rate_df   
+                                            DEFAULT(0),
+    tax                                     money_strict2 NOT NULL   
+                                            CONSTRAINT stock_details_tax_df   
+                                            DEFAULT(0),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 
 CREATE TABLE transactions.stock_return
 (
-	sales_return_id		                BIGSERIAL NOT NULL PRIMARY KEY,	
-	transaction_master_id			bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id),
-	return_transaction_master_id	        bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id)
+    sales_return_id                         BIGSERIAL NOT NULL PRIMARY KEY, 
+    transaction_master_id                   bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id),
+    return_transaction_master_id            bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id)
 );
 
 
@@ -2382,37 +2500,46 @@ CREATE TABLE transactions.stock_return
 --TODO
 CREATE TABLE transactions.non_gl_stock_master
 (
-	non_gl_stock_master_id			BIGSERIAL NOT NULL PRIMARY KEY,
-	value_date 				date NOT NULL,
-	book					national character varying(48) NOT NULL,
-	party_id 				bigint NULL REFERENCES core.parties(party_id),
-	price_type_id 				integer NULL REFERENCES core.price_types(price_type_id),
-	transaction_ts 				TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT(now()),
-	login_id 				bigint NOT NULL REFERENCES audit.logins(login_id),
-	user_id 				integer NOT NULL REFERENCES office.users(user_id),
-	office_id 				integer NOT NULL REFERENCES office.offices(office_id),
-	reference_number			national character varying(24) NULL,
-	statement_reference 			text NULL,
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    non_gl_stock_master_id                  BIGSERIAL NOT NULL PRIMARY KEY,
+    value_date                              date NOT NULL,
+    book                                    national character varying(48) NOT NULL,
+    party_id                                bigint NULL REFERENCES core.parties(party_id),
+    price_type_id                           integer NULL REFERENCES core.price_types(price_type_id),
+    transaction_ts                          TIMESTAMP WITH TIME ZONE NOT NULL   
+                                            DEFAULT(NOW()),
+    login_id                                bigint NOT NULL REFERENCES audit.logins(login_id),
+    user_id                                 integer NOT NULL REFERENCES office.users(user_id),
+    office_id                               integer NOT NULL REFERENCES office.offices(office_id),
+    reference_number                        national character varying(24) NULL,
+    statement_reference                     text NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 
 CREATE TABLE transactions.non_gl_stock_details
 (
-	non_gl_stock_detail_id 			BIGSERIAL NOT NULL PRIMARY KEY,
-	non_gl_stock_master_id 			bigint NOT NULL REFERENCES transactions.non_gl_stock_master(non_gl_stock_master_id),
-	item_id 				integer NOT NULL REFERENCES core.items(item_id),
-	quantity 				integer NOT NULL,
-	unit_id 				integer NOT NULL REFERENCES core.units(unit_id),
-	base_quantity 				decimal NOT NULL,
-	base_unit_id 				integer NOT NULL REFERENCES core.units(unit_id),
-	price 					money_strict NOT NULL,
-	discount 				money_strict2 NOT NULL CONSTRAINT non_gl_stock_details_discount_df DEFAULT(0),
-	tax_rate 				decimal NOT NULL CONSTRAINT non_gl_stock_details_tax_rate_df DEFAULT(0),
-	tax 					money_strict2 NOT NULL CONSTRAINT non_gl_stock_details_tax_df DEFAULT(0),
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    non_gl_stock_detail_id                  BIGSERIAL NOT NULL PRIMARY KEY,
+    non_gl_stock_master_id                  bigint NOT NULL REFERENCES transactions.non_gl_stock_master(non_gl_stock_master_id),
+    item_id                                 integer NOT NULL REFERENCES core.items(item_id),
+    quantity                                integer NOT NULL,
+    unit_id                                 integer NOT NULL REFERENCES core.units(unit_id),
+    base_quantity                           decimal NOT NULL,
+    base_unit_id                            integer NOT NULL REFERENCES core.units(unit_id),
+    price                                   money_strict NOT NULL,
+    discount                                money_strict2 NOT NULL   
+                                            CONSTRAINT non_gl_stock_details_discount_df   
+                                            DEFAULT(0),
+    tax_rate                                decimal NOT NULL   
+                                            CONSTRAINT non_gl_stock_details_tax_rate_df   
+                                            DEFAULT(0),
+    tax                                     money_strict2 NOT NULL   
+                                            CONSTRAINT non_gl_stock_details_tax_df   
+                                            DEFAULT(0),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 
@@ -2420,9 +2547,9 @@ CREATE TABLE transactions.non_gl_stock_details
 --which were upgraded to order(s).
 CREATE TABLE transactions.non_gl_stock_master_relations
 (
-	non_gl_stock_master_relation_id		BIGSERIAL NOT NULL PRIMARY KEY,	
-	order_non_gl_stock_master_id		bigint NOT NULL REFERENCES transactions.non_gl_stock_master(non_gl_stock_master_id),
-	quotation_non_gl_stock_master_id	bigint NOT NULL REFERENCES transactions.non_gl_stock_master(non_gl_stock_master_id)
+    non_gl_stock_master_relation_id         BIGSERIAL NOT NULL PRIMARY KEY, 
+    order_non_gl_stock_master_id            bigint NOT NULL REFERENCES transactions.non_gl_stock_master(non_gl_stock_master_id),
+    quotation_non_gl_stock_master_id        bigint NOT NULL REFERENCES transactions.non_gl_stock_master(non_gl_stock_master_id)
 );
 
 
@@ -2430,19 +2557,20 @@ CREATE TABLE transactions.non_gl_stock_master_relations
 --which were upgraded to deliveries or invoices.
 CREATE TABLE transactions.stock_master_non_gl_relations
 (
-	stock_master_non_gl_relation_id		BIGSERIAL NOT NULL PRIMARY KEY,	
-	stock_master_id				bigint NOT NULL REFERENCES transactions.stock_master(stock_master_id),
-	non_gl_stock_master_id			bigint NOT NULL REFERENCES transactions.non_gl_stock_master(non_gl_stock_master_id)
+    stock_master_non_gl_relation_id         BIGSERIAL NOT NULL PRIMARY KEY, 
+    stock_master_id                         bigint NOT NULL REFERENCES transactions.stock_master(stock_master_id),
+    non_gl_stock_master_id                  bigint NOT NULL REFERENCES transactions.non_gl_stock_master(non_gl_stock_master_id)
 );
 
 
 CREATE TABLE crm.lead_sources
 (
-	lead_source_id				SERIAL NOT NULL PRIMARY KEY,
-	lead_source_code 			national character varying(12) NOT NULL,
-	lead_source_name 			national character varying(128) NOT NULL,
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    lead_source_id                          SERIAL NOT NULL PRIMARY KEY,
+    lead_source_code                        national character varying(12) NOT NULL,
+    lead_source_name                        national character varying(128) NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 CREATE UNIQUE INDEX lead_sources_lead_source_code_uix
@@ -2456,11 +2584,12 @@ ON crm.lead_sources(UPPER(lead_source_name));
 
 CREATE TABLE crm.lead_statuses
 (
-	lead_status_id				SERIAL NOT NULL PRIMARY KEY,
-	lead_status_code 			national character varying(12) NOT NULL,
-	lead_status_name 			national character varying(128) NOT NULL,
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    lead_status_id                          SERIAL NOT NULL PRIMARY KEY,
+    lead_status_code                        national character varying(12) NOT NULL,
+    lead_status_name                        national character varying(128) NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 CREATE UNIQUE INDEX lead_statuses_lead_status_code_uix
@@ -2474,11 +2603,12 @@ ON crm.lead_statuses(UPPER(lead_status_name));
 
 CREATE TABLE crm.opportunity_stages
 (
-	opportunity_stage_id 			SERIAL  NOT NULL PRIMARY KEY,
-	opportunity_stage_code 			national character varying(12) NOT NULL,
-	opportunity_stage_name 			national character varying(50) NOT NULL,
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    opportunity_stage_id                    SERIAL  NOT NULL PRIMARY KEY,
+    opportunity_stage_code                  national character varying(12) NOT NULL,
+    opportunity_stage_name                  national character varying(50) NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 
@@ -2494,10 +2624,11 @@ ON crm.opportunity_stages(UPPER(opportunity_stage_name));
 
 CREATE TABLE core.switch_categories
 (
-	switch_category_id 			SERIAL NOT NULL PRIMARY KEY,
-	switch_category_name			national character varying(128) NOT NULL,
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    switch_category_id                      SERIAL NOT NULL PRIMARY KEY,
+    switch_category_name                    national character varying(128) NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 CREATE UNIQUE INDEX switch_categories_switch_category_name_uix
@@ -2505,12 +2636,13 @@ ON core.switch_categories(UPPER(switch_category_name));
 
 CREATE TABLE office.work_centers
 (
-	work_center_id				SERIAL NOT NULL PRIMARY KEY,
-	office_id				integer NOT NULL REFERENCES office.offices(office_id),
-	work_center_code			national character varying(12) NOT NULL,
-	work_center_name			national character varying(128) NOT NULL,
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    work_center_id                          SERIAL NOT NULL PRIMARY KEY,
+    office_id                               integer NOT NULL REFERENCES office.offices(office_id),
+    work_center_code                        national character varying(12) NOT NULL,
+    work_center_name                        national character varying(128) NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 CREATE UNIQUE INDEX work_centers_work_center_code_uix
@@ -2522,44 +2654,74 @@ ON office.work_centers(UPPER(work_center_name));
 
 CREATE TABLE policy.voucher_verification_policy
 (
-	user_id					integer NOT NULL PRIMARY KEY REFERENCES office.users(user_id),
-	can_verify_sales_transactions		boolean NOT NULL CONSTRAINT voucher_verification_policy_verify_sales_df DEFAULT(false),
-	sales_verification_limit		money_strict2 NOT NULL CONSTRAINT voucher_verification_policy_sales_verification_limit_df DEFAULT(0),
-	can_verify_purchase_transactions	boolean NOT NULL CONSTRAINT voucher_verification_policy_verify_purchase_df DEFAULT(false),
-	purchase_verification_limit		money_strict2 NOT NULL CONSTRAINT voucher_verification_policy_purchase_verification_limit_df DEFAULT(0),
-	can_verify_gl_transactions		boolean NOT NULL CONSTRAINT voucher_verification_policy_verify_gl_df DEFAULT(false),
-	gl_verification_limit			money_strict2 NOT NULL CONSTRAINT voucher_verification_policy_gl_verification_limit_df DEFAULT(0),
-	can_self_verify				boolean NOT NULL CONSTRAINT voucher_verification_policy_verify_self_df DEFAULT(false),
-	self_verification_limit			money_strict2 NOT NULL CONSTRAINT voucher_verification_policy_self_verification_limit_df DEFAULT(0),
-	effective_from				date NOT NULL,
-	ends_on					date NOT NULL,
-	is_active				boolean NOT NULL,
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    user_id                                 integer NOT NULL PRIMARY KEY REFERENCES office.users(user_id),
+    can_verify_sales_transactions           boolean NOT NULL   
+                                            CONSTRAINT voucher_verification_policy_verify_sales_df 
+                                            DEFAULT(false),
+    sales_verification_limit                money_strict2 NOT NULL   
+                                            CONSTRAINT voucher_verification_policy_sales_verification_limit_df 
+                                            DEFAULT(0),
+    can_verify_purchase_transactions        boolean NOT NULL   
+                                            CONSTRAINT voucher_verification_policy_verify_purchase_df 
+                                            DEFAULT(false),
+    purchase_verification_limit             money_strict2 NOT NULL   
+                                            CONSTRAINT voucher_verification_policy_purchase_verification_limit_df 
+                                            DEFAULT(0),
+    can_verify_gl_transactions              boolean NOT NULL   
+                                            CONSTRAINT voucher_verification_policy_verify_gl_df 
+                                            DEFAULT(false),
+    gl_verification_limit                   money_strict2 NOT NULL   
+                                            CONSTRAINT voucher_verification_policy_gl_verification_limit_df 
+                                            DEFAULT(0),
+    can_self_verify                         boolean NOT NULL   
+                                            CONSTRAINT voucher_verification_policy_verify_self_df 
+                                            DEFAULT(false),
+    self_verification_limit                 money_strict2 NOT NULL   
+                                            CONSTRAINT voucher_verification_policy_self_verification_limit_df 
+                                            DEFAULT(0),
+    effective_from                          date NOT NULL,
+    ends_on                                 date NOT NULL,
+    is_active                               boolean NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL 
+                                            DEFAULT(NOW())
 );
 
 
 CREATE TABLE policy.auto_verification_policy
 (
-	user_id					integer NOT NULL PRIMARY KEY REFERENCES office.users(user_id),
-	verify_sales_transactions		boolean NOT NULL CONSTRAINT auto_verification_policy_verify_sales_df DEFAULT(false),
-	sales_verification_limit		money_strict2 NOT NULL CONSTRAINT auto_verification_policy_sales_verification_limit_df DEFAULT(0),
-	verify_purchase_transactions		boolean NOT NULL CONSTRAINT auto_verification_policy_verify_purchase_df DEFAULT(false),
-	purchase_verification_limit		money_strict2 NOT NULL CONSTRAINT auto_verification_policy_purchase_verification_limit_df DEFAULT(0),
-	verify_gl_transactions			boolean NOT NULL CONSTRAINT auto_verification_policy_verify_gl_df DEFAULT(false),
-	gl_verification_limit			money_strict2 NOT NULL CONSTRAINT auto_verification_policy_gl_verification_limit_df DEFAULT(0),
-	effective_from				date NOT NULL,
-	ends_on					date NOT NULL,
-	is_active				boolean NOT NULL,
-	audit_user_id				integer NULL REFERENCES office.users(user_id),
-	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+    user_id                                 integer NOT NULL PRIMARY KEY REFERENCES office.users(user_id),
+    verify_sales_transactions               boolean NOT NULL   
+                                            CONSTRAINT auto_verification_policy_verify_sales_df   
+                                            DEFAULT(false),
+    sales_verification_limit                money_strict2 NOT NULL   
+                                            CONSTRAINT auto_verification_policy_sales_verification_limit_df   
+                                            DEFAULT(0),
+    verify_purchase_transactions            boolean NOT NULL   
+                                            CONSTRAINT auto_verification_policy_verify_purchase_df   
+                                            DEFAULT(false),
+    purchase_verification_limit             money_strict2 NOT NULL   
+                                            CONSTRAINT auto_verification_policy_purchase_verification_limit_df   
+                                            DEFAULT(0),
+    verify_gl_transactions                  boolean NOT NULL   
+                                            CONSTRAINT auto_verification_policy_verify_gl_df   
+                                            DEFAULT(false),
+    gl_verification_limit                   money_strict2 NOT NULL   
+                                            CONSTRAINT auto_verification_policy_gl_verification_limit_df   
+                                            DEFAULT(0),
+    effective_from                          date NOT NULL,
+    ends_on                                 date NOT NULL,
+    is_active                               boolean NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 
 
--- types.sql
-DROP TYPE IF EXISTS stock_detail_type CASCADE;
-CREATE TYPE stock_detail_type AS
+-->-->-- /db/src/01. types, domains, tables, and constraints/types.sql --<--<--
+DROP TYPE IF EXISTS transactions.stock_detail_type CASCADE;
+CREATE TYPE transactions.stock_detail_type AS
 (
         store_id        integer,
         item_code       national character varying(12),
@@ -2571,15 +2733,48 @@ CREATE TYPE stock_detail_type AS
         tax             money_strict2
 );
 
-DROP TYPE IF EXISTS attachment_type CASCADE;
-CREATE TYPE attachment_type AS
+DROP TYPE IF EXISTS core.attachment_type CASCADE;
+CREATE TYPE core.attachment_type AS
 (
-	comment					national character varying(96),
-	file_path				text,
-	original_file_name			text
+    comment                 national character varying(96),
+    file_path               text,
+    original_file_name          text
 );
 
--- core.append_if_not_null.sql
+DROP TYPE IF EXISTS transactions.purchase_reorder_type CASCADE;
+
+CREATE TYPE transactions.purchase_reorder_type
+AS
+(
+        item_id                 integer,
+        supplier_code           national character varying(12),
+        unit_id                 integer,
+        price                   decimal_strict,
+        tax_rate                decimal_strict2,
+        order_quantity          integer_strict
+);
+
+
+
+-->-->-- /db/src/02. functions and logic/audit/audit.is_valid_login_id.sql --<--<--
+DROP FUNCTION IF EXISTS audit.is_valid_login_id(bigint);
+
+CREATE FUNCTION audit.is_valid_login_id(bigint)
+RETURNS boolean
+AS
+$$
+BEGIN
+        IF EXISTS(SELECT 1 FROM audit.logins WHERE login_id=$1) THEN
+                RETURN true;
+        END IF;
+
+        RETURN false;
+END
+$$
+LANGUAGE plpgsql;
+
+
+-->-->-- /db/src/02. functions and logic/core/core.append_if_not_null.sql --<--<--
 CREATE FUNCTION core.append_if_not_null(text, text)
 RETURNS text
 AS
@@ -2597,248 +2792,250 @@ LANGUAGE plpgsql;
 
 
 
--- core.convert_unit.sql
-CREATE FUNCTION core.convert_unit(integer, integer)
+-->-->-- /db/src/02. functions and logic/core/core.convert_unit.sql --<--<--
+DROP FUNCTION IF EXISTS core.convert_unit(from_unit integer, to_unit integer);
+
+CREATE FUNCTION core.convert_unit(from_unit integer, to_unit integer)
 RETURNS decimal
 AS
 $$
-	DECLARE _factor decimal;
+    DECLARE _factor decimal;
 BEGIN
-	IF(core.get_root_unit_id($1) != core.get_root_unit_id($2)) THEN
-		RETURN 0;
-	END IF;
+    IF(core.get_root_unit_id($1) != core.get_root_unit_id($2)) THEN
+        RETURN 0;
+    END IF;
 
-	IF($1 = $2) THEN
-		RETURN 1.00;
-	END IF;
-	
-	IF(core.is_parent_unit($1, $2)) THEN
-			WITH RECURSIVE unit_cte(unit_id, value) AS 
-			(
-				SELECT tn.compare_unit_id, tn.value
-				FROM core.compound_units AS tn WHERE tn.base_unit_id = $1
+    IF($1 = $2) THEN
+        RETURN 1.00;
+    END IF;
+    
+    IF(core.is_parent_unit($1, $2)) THEN
+            WITH RECURSIVE unit_cte(unit_id, value) AS 
+            (
+                SELECT tn.compare_unit_id, tn.value
+                FROM core.compound_units AS tn WHERE tn.base_unit_id = $1
 
-				UNION ALL
+                UNION ALL
 
-				SELECT 
-				c.compare_unit_id, c.value * p.value
-				FROM unit_cte AS p, 
-				core.compound_units AS c 
-				WHERE base_unit_id = p.unit_id
-			)
-		SELECT 1.00/value INTO _factor
-		FROM unit_cte
-		WHERE unit_id=$2;
-	ELSE
-			WITH RECURSIVE unit_cte(unit_id, value) AS 
-			(
-			 SELECT tn.compare_unit_id, tn.value
-				FROM core.compound_units AS tn WHERE tn.base_unit_id = $2
-			UNION ALL
-			 SELECT 
-				c.compare_unit_id, c.value * p.value
-				FROM unit_cte AS p, 
-			  core.compound_units AS c 
-				WHERE base_unit_id = p.unit_id
-			)
+                SELECT 
+                c.compare_unit_id, c.value * p.value
+                FROM unit_cte AS p, 
+                core.compound_units AS c 
+                WHERE base_unit_id = p.unit_id
+            )
+        SELECT 1.00/value INTO _factor
+        FROM unit_cte
+        WHERE unit_id=$2;
+    ELSE
+            WITH RECURSIVE unit_cte(unit_id, value) AS 
+            (
+             SELECT tn.compare_unit_id, tn.value
+                FROM core.compound_units AS tn WHERE tn.base_unit_id = $2
+            UNION ALL
+             SELECT 
+                c.compare_unit_id, c.value * p.value
+                FROM unit_cte AS p, 
+              core.compound_units AS c 
+                WHERE base_unit_id = p.unit_id
+            )
 
-		SELECT value INTO _factor
-		FROM unit_cte
-		WHERE unit_id=$1;
-	END IF;
+        SELECT value INTO _factor
+        FROM unit_cte
+        WHERE unit_id=$1;
+    END IF;
 
-	RETURN _factor;
+    RETURN _factor;
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.count_item_in_stock.sql
+-->-->-- /db/src/02. functions and logic/core/core.count_item_in_stock.sql --<--<--
 CREATE FUNCTION core.count_item_in_stock(item_id_ integer, unit_id_ integer, store_id_ integer)
 RETURNS decimal
 AS
 $$
-	DECLARE _base_unit_id integer;
-	DECLARE _debit decimal;
-	DECLARE _credit decimal;
-	DECLARE _balance decimal;
-	DECLARE _factor decimal;
+    DECLARE _base_unit_id integer;
+    DECLARE _debit decimal;
+    DECLARE _credit decimal;
+    DECLARE _balance decimal;
+    DECLARE _factor decimal;
 BEGIN
 
-	--Get the base item unit
-	SELECT 
-		core.get_root_unit_id(core.items.unit_id) 
-	INTO _base_unit_id
-	FROM core.items
-	WHERE core.items.item_id=$1;
+    --Get the base item unit
+    SELECT 
+        core.get_root_unit_id(core.items.unit_id) 
+    INTO _base_unit_id
+    FROM core.items
+    WHERE core.items.item_id=$1;
 
-	--Get the sum of debit stock quantity from approved transactions
-	SELECT 
-		COALESCE(SUM(base_quantity), 0)
-	INTO _debit
-	FROM transactions.stock_details
-	INNER JOIN transactions.stock_master
-	ON transactions.stock_master.stock_master_id = transactions.stock_details.stock_master_id
-	INNER JOIN transactions.transaction_master
-	ON transactions.stock_master.transaction_master_id = transactions.transaction_master.transaction_master_id
-	WHERE transactions.transaction_master.verification_status_id > 0
-	AND transactions.stock_details.item_id=$1
-	AND transactions.stock_details.store_id=$3
-	AND transactions.stock_details.tran_type='Dr';
-	
-	--Get the sum of credit stock quantity from approved transactions
-	SELECT 
-		COALESCE(SUM(base_quantity), 0)
-	INTO _credit
-	FROM transactions.stock_details
-	INNER JOIN transactions.stock_master
-	ON transactions.stock_master.stock_master_id = transactions.stock_details.stock_master_id
-	INNER JOIN transactions.transaction_master
-	ON transactions.stock_master.transaction_master_id = transactions.transaction_master.transaction_master_id
-	WHERE transactions.transaction_master.verification_status_id > 0
-	AND transactions.stock_details.item_id=$1
-	AND transactions.stock_details.store_id=$3
-	AND transactions.stock_details.tran_type='Cr';
-	
-	_balance:= _debit - _credit;
+    --Get the sum of debit stock quantity from approved transactions
+    SELECT 
+        COALESCE(SUM(base_quantity), 0)
+    INTO _debit
+    FROM transactions.stock_details
+    INNER JOIN transactions.stock_master
+    ON transactions.stock_master.stock_master_id = transactions.stock_details.stock_master_id
+    INNER JOIN transactions.transaction_master
+    ON transactions.stock_master.transaction_master_id = transactions.transaction_master.transaction_master_id
+    WHERE transactions.transaction_master.verification_status_id > 0
+    AND transactions.stock_details.item_id=$1
+    AND transactions.stock_details.store_id=$3
+    AND transactions.stock_details.tran_type='Dr';
+    
+    --Get the sum of credit stock quantity from approved transactions
+    SELECT 
+        COALESCE(SUM(base_quantity), 0)
+    INTO _credit
+    FROM transactions.stock_details
+    INNER JOIN transactions.stock_master
+    ON transactions.stock_master.stock_master_id = transactions.stock_details.stock_master_id
+    INNER JOIN transactions.transaction_master
+    ON transactions.stock_master.transaction_master_id = transactions.transaction_master.transaction_master_id
+    WHERE transactions.transaction_master.verification_status_id > 0
+    AND transactions.stock_details.item_id=$1
+    AND transactions.stock_details.store_id=$3
+    AND transactions.stock_details.tran_type='Cr';
+    
+    _balance:= _debit - _credit;
 
-	
-	_factor = core.convert_unit($2, _base_unit_id);
+    
+    _factor = core.convert_unit($2, _base_unit_id);
 
-	return _balance / _factor;	
+    return _balance / _factor;  
 END
 $$
 LANGUAGE plpgsql;
 
 
 
--- core.create_flag.sql
+-->-->-- /db/src/02. functions and logic/core/core.create_flag.sql --<--<--
 CREATE FUNCTION core.create_flag
 (
-	user_id_ 	integer,
-	flag_type_id_	integer,
-	resource_	text,
-	resource_key_	text,
-	resource_id_	integer
+    user_id_    integer,
+    flag_type_id_   integer,
+    resource_   text,
+    resource_key_   text,
+    resource_id_    integer
 )
 RETURNS void
 AS
 $$
 BEGIN
-	IF NOT EXISTS(SELECT * FROM core.flags WHERE user_id=user_id_ AND resource=resource_ AND resource_key=resource_key_ AND resource_id=resource_id_) THEN
-		INSERT INTO core.flags(user_id, flag_type_id, resource, resource_key, resource_id)
-		SELECT user_id_, flag_type_id_, resource_, resource_key_, resource_id_;
-	ELSE
-		UPDATE core.flags
-		SET
-			flag_type_id=flag_type_id_
-		WHERE 
-			user_id=user_id_ 
-		AND 
-			resource=resource_ 
-		AND 
-			resource_key=resource_key_ 
-		AND 
-			resource_id=resource_id_;
-	END IF;
+    IF NOT EXISTS(SELECT * FROM core.flags WHERE user_id=user_id_ AND resource=resource_ AND resource_key=resource_key_ AND resource_id=resource_id_) THEN
+        INSERT INTO core.flags(user_id, flag_type_id, resource, resource_key, resource_id)
+        SELECT user_id_, flag_type_id_, resource_, resource_key_, resource_id_;
+    ELSE
+        UPDATE core.flags
+        SET
+            flag_type_id=flag_type_id_
+        WHERE 
+            user_id=user_id_ 
+        AND 
+            resource=resource_ 
+        AND 
+            resource_key=resource_key_ 
+        AND 
+            resource_id=resource_id_;
+    END IF;
 END
 $$
 LANGUAGE plpgsql;
 
 
 
--- core.get_account_id_by_account_code.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_account_id_by_account_code.sql --<--<--
 CREATE FUNCTION core.get_account_id_by_account_code(text)
 RETURNS bigint
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT account_id
-		FROM core.accounts
-		WHERE account_code=$1
-	);
+    RETURN
+    (
+        SELECT account_id
+        FROM core.accounts
+        WHERE account_code=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_account_id_by_parameter.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_account_id_by_parameter.sql --<--<--
 CREATE FUNCTION core.get_account_id_by_parameter(text)
 RETURNS bigint
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT
-			account_id
-		FROM	
-			core.account_parameters
-		WHERE
-			parameter_name=$1
-	);
+    RETURN
+    (
+        SELECT
+            account_id
+        FROM    
+            core.account_parameters
+        WHERE
+            parameter_name=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_account_id_by_party_code.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_account_id_by_party_code.sql --<--<--
 CREATE FUNCTION core.get_account_id_by_party_code(party_code text)
 RETURNS bigint
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT account_id
-		FROM core.parties
-		WHERE core.parties.party_code=$1
-	);
+    RETURN
+    (
+        SELECT account_id
+        FROM core.parties
+        WHERE core.parties.party_code=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_account_id_by_party_id.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_account_id_by_party_id.sql --<--<--
 CREATE FUNCTION core.get_account_id_by_party_id(party_id bigint)
 RETURNS bigint
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT account_id
-		FROM core.parties
-		WHERE core.parties.party_id=$1
-	);
+    RETURN
+    (
+        SELECT account_id
+        FROM core.parties
+        WHERE core.parties.party_id=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_account_id_by_shipper_id.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_account_id_by_shipper_id.sql --<--<--
 CREATE FUNCTION core.get_account_id_by_shipper_id(integer)
 RETURNS bigint
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT
-			core.shippers.account_id
-		FROM
-			core.shippers
-		WHERE
-			core.shippers.shipper_id=$1
-	);
+    RETURN
+    (
+        SELECT
+            core.shippers.account_id
+        FROM
+            core.shippers
+        WHERE
+            core.shippers.shipper_id=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_account_ids.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_account_ids.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_account_ids(root_account_id bigint);
 
 CREATE FUNCTION core.get_account_ids(root_account_id bigint)
@@ -2846,35 +3043,35 @@ RETURNS SETOF bigint
 AS
 $$
 BEGIN
-	RETURN QUERY 
-	(
-		WITH RECURSIVE account_cte(account_id, path) AS (
-		 SELECT
-			tn.account_id,  tn.account_id::TEXT AS path
-			FROM core.accounts AS tn WHERE tn.account_id =$1
-		UNION ALL
-		 SELECT
-			c.account_id, (p.path || '->' || c.account_id::TEXT)
-			FROM account_cte AS p, core.accounts AS c WHERE parent_account_id = p.account_id
-		)
+    RETURN QUERY 
+    (
+        WITH RECURSIVE account_cte(account_id, path) AS (
+         SELECT
+            tn.account_id,  tn.account_id::TEXT AS path
+            FROM core.accounts AS tn WHERE tn.account_id =$1
+        UNION ALL
+         SELECT
+            c.account_id, (p.path || '->' || c.account_id::TEXT)
+            FROM account_cte AS p, core.accounts AS c WHERE parent_account_id = p.account_id
+        )
 
-		SELECT account_id FROM account_cte
-	);
+        SELECT account_id FROM account_cte
+    );
 END
 $$LANGUAGE plpgsql;
 
--- core.get_account_master_id_by_account_id.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_account_master_id_by_account_id.sql --<--<--
 CREATE FUNCTION core.get_account_master_id_by_account_id(bigint)
 RETURNS integer
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT core.accounts.account_master_id
-		FROM core.accounts
-		WHERE core.accounts.account_id= $1
-	);
+    RETURN
+    (
+        SELECT core.accounts.account_master_id
+        FROM core.accounts
+        WHERE core.accounts.account_id= $1
+    );
 END
 $$
 LANGUAGE plpgsql;
@@ -2882,148 +3079,168 @@ LANGUAGE plpgsql;
 
 
 
--- core.get_account_master_id_by_account_master_code.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_account_master_id_by_account_master_code.sql --<--<--
 CREATE FUNCTION core.get_account_master_id_by_account_master_code(text)
 RETURNS integer
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT core.account_masters.account_master_id
-		FROM core.account_masters
-		WHERE core.account_masters.account_master_code = $1
-	);
+    RETURN
+    (
+        SELECT core.account_masters.account_master_id
+        FROM core.account_masters
+        WHERE core.account_masters.account_master_code = $1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_account_name.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_account_name.sql --<--<--
 --Todo:Rename to core.get_account_name_by_account_id
 CREATE FUNCTION core.get_account_name(bigint)
 RETURNS text
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT
-			account_name
-		FROM	
-			core.accounts
-		WHERE
-			account_id=$1
-	);
+    RETURN
+    (
+        SELECT
+            account_name
+        FROM    
+            core.accounts
+        WHERE
+            account_id=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_associated_units.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_account_name_by_account_id.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_account_name_by_account_id(bigint);
+
+CREATE FUNCTION core.get_account_name_by_account_id(bigint)
+RETURNS text
+AS
+$$
+BEGIN
+    RETURN
+    (
+        SELECT account_name
+        FROM core.accounts
+        WHERE account_id=$1
+    );
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+-->-->-- /db/src/02. functions and logic/core/core.get_associated_units.sql --<--<--
 CREATE FUNCTION core.get_associated_units(integer)
 RETURNS TABLE(unit_id integer, unit_code text, unit_name text)
 AS
 $$
-	DECLARE root_unit_id integer;
+    DECLARE root_unit_id integer;
 BEGIN
-	CREATE TEMPORARY TABLE IF NOT EXISTS temp_unit(unit_id integer) ON COMMIT DROP;	
-	
-	SELECT core.get_root_unit_id($1) INTO root_unit_id;
-	
-	INSERT INTO temp_unit(unit_id) 
-	SELECT root_unit_id
-	WHERE NOT EXISTS
-	(
-		SELECT * FROM temp_unit
-		WHERE temp_unit.unit_id=root_unit_id
-	);
-	
-	WITH RECURSIVE cte(unit_id)
-	AS
-	(
-		 SELECT 
-			compare_unit_id
-		 FROM 
-			core.compound_units
-		 WHERE 
-			base_unit_id = root_unit_id
+    CREATE TEMPORARY TABLE IF NOT EXISTS temp_unit(unit_id integer) ON COMMIT DROP; 
+    
+    SELECT core.get_root_unit_id($1) INTO root_unit_id;
+    
+    INSERT INTO temp_unit(unit_id) 
+    SELECT root_unit_id
+    WHERE NOT EXISTS
+    (
+        SELECT * FROM temp_unit
+        WHERE temp_unit.unit_id=root_unit_id
+    );
+    
+    WITH RECURSIVE cte(unit_id)
+    AS
+    (
+         SELECT 
+            compare_unit_id
+         FROM 
+            core.compound_units
+         WHERE 
+            base_unit_id = root_unit_id
 
-		UNION ALL
+        UNION ALL
 
-		 SELECT
-			units.compare_unit_id
-		 FROM 
-			core.compound_units units
-		 INNER JOIN cte 
-		 ON cte.unit_id = units.base_unit_id
-	)
-	
-	INSERT INTO temp_unit(unit_id)
-	SELECT cte.unit_id FROM cte;
-	
-	DELETE FROM temp_unit
-	WHERE temp_unit.unit_id IS NULL;
-	
-	RETURN QUERY 
-	SELECT 
-		core.units.unit_id,
-		core.units.unit_code::text,
-		core.units.unit_name::text
-	FROM
-		core.units
-	WHERE
-		core.units.unit_id 
-	IN
-	(
-		SELECT temp_unit.unit_id FROM temp_unit
-	);
+         SELECT
+            units.compare_unit_id
+         FROM 
+            core.compound_units units
+         INNER JOIN cte 
+         ON cte.unit_id = units.base_unit_id
+    )
+    
+    INSERT INTO temp_unit(unit_id)
+    SELECT cte.unit_id FROM cte;
+    
+    DELETE FROM temp_unit
+    WHERE temp_unit.unit_id IS NULL;
+    
+    RETURN QUERY 
+    SELECT 
+        core.units.unit_id,
+        core.units.unit_code::text,
+        core.units.unit_name::text
+    FROM
+        core.units
+    WHERE
+        core.units.unit_id 
+    IN
+    (
+        SELECT temp_unit.unit_id FROM temp_unit
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_associated_units_from_item_code.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_associated_units_from_item_code.sql --<--<--
 CREATE FUNCTION core.get_associated_units_from_item_code(text)
 RETURNS TABLE(unit_id integer, unit_code text, unit_name text)
 AS
 $$
 DECLARE _unit_id integer;
 BEGIN
-	SELECT core.items.unit_id INTO _unit_id
-	FROM core.items
-	WHERE core.items.item_code=$1;
+    SELECT core.items.unit_id INTO _unit_id
+    FROM core.items
+    WHERE core.items.item_code=$1;
 
-	RETURN QUERY
-	SELECT ret.unit_id, ret.unit_code, ret.unit_name
-	FROM core.get_associated_units(_unit_id) AS ret;
+    RETURN QUERY
+    SELECT ret.unit_id, ret.unit_code, ret.unit_name
+    FROM core.get_associated_units(_unit_id) AS ret;
 
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_associated_units_from_item_id.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_associated_units_from_item_id.sql --<--<--
 CREATE FUNCTION core.get_associated_units_from_item_id(integer)
 RETURNS TABLE(unit_id integer, unit_code text, unit_name text)
 AS
 $$
 DECLARE _unit_id integer;
 BEGIN
-	SELECT core.items.unit_id INTO _unit_id
-	FROM core.items
-	WHERE core.items.item_id=$1;
+    SELECT core.items.unit_id INTO _unit_id
+    FROM core.items
+    WHERE core.items.item_id=$1;
 
-	RETURN QUERY
-	SELECT ret.unit_id, ret.unit_code, ret.unit_name
-	FROM core.get_associated_units(_unit_id) AS ret;
+    RETURN QUERY
+    SELECT ret.unit_id, ret.unit_code, ret.unit_name
+    FROM core.get_associated_units(_unit_id) AS ret;
 
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_attachment_lookup_info.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_attachment_lookup_info.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_attachment_lookup_info(national character varying(50));
 
 CREATE FUNCTION core.get_attachment_lookup_info(national character varying(50))
@@ -3044,7 +3261,7 @@ LANGUAGE plpgsql;
 
 
 
--- core.get_base_quantity_by_unit_name.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_base_quantity_by_unit_name.sql --<--<--
 CREATE FUNCTION core.get_base_quantity_by_unit_name(text, integer)
 RETURNS decimal
 AS
@@ -3053,53 +3270,121 @@ DECLARE _unit_id integer;
 DECLARE _root_unit_id integer;
 DECLARE _factor decimal;
 BEGIN
-	_unit_id := core.get_unit_id_by_unit_name($1);
-	_root_unit_id = core.get_root_unit_id(_unit_id);
-	_factor = core.convert_unit(_unit_id, _root_unit_id);
+    _unit_id := core.get_unit_id_by_unit_name($1);
+    _root_unit_id = core.get_root_unit_id(_unit_id);
+    _factor = core.convert_unit(_unit_id, _root_unit_id);
 
-	RETURN _factor * $2;
+    RETURN _factor * $2;
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_base_unit_id_by_unit_name.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_base_unit_id_by_unit_name.sql --<--<--
 CREATE FUNCTION core.get_base_unit_id_by_unit_name(text)
 RETURNS integer
 AS
 $$
 DECLARE _unit_id integer;
 BEGIN
-	_unit_id := core.get_unit_id_by_unit_name($1);
+    _unit_id := core.get_unit_id_by_unit_name($1);
 
-	RETURN
-	(
-		core.get_root_unit_id(_unit_id)
-	);
+    RETURN
+    (
+        core.get_root_unit_id(_unit_id)
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_cash_account_id.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_brand_code_by_brand_id.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_brand_code_by_brand_id(integer);
+
+CREATE FUNCTION core.get_brand_code_by_brand_id(integer)
+RETURNS text
+AS
+$$
+BEGIN
+        RETURN brand_code
+        FROM core.brands
+        WHERE brand_id=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+-->-->-- /db/src/02. functions and logic/core/core.get_brand_id_by_brand_code.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_brand_id_by_brand_code(text);
+
+CREATE FUNCTION core.get_brand_id_by_brand_code(text)
+RETURNS integer
+AS
+$$
+BEGIN
+        RETURN brand_id
+        FROM core.brands
+        WHERE brand_code=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+--SELECT * FROM core.get_brand_id_by_brand_code('DEF');
+
+-->-->-- /db/src/02. functions and logic/core/core.get_brand_id_by_brand_name.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_brand_id_by_brand_name(text);
+
+CREATE FUNCTION core.get_brand_id_by_brand_name(text)
+RETURNS integer
+AS
+$$
+BEGIN
+        RETURN brand_id
+        FROM core.brands
+        WHERE brand_name=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+--SELECT * FROM core.get_brand_id_by_brand_name('DEF');
+
+-->-->-- /db/src/02. functions and logic/core/core.get_brand_name_by_brand_id.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_brand_name_by_brand_id(integer);
+
+CREATE FUNCTION core.get_brand_name_by_brand_id(integer)
+RETURNS text
+AS
+$$
+BEGIN
+        RETURN brand_name
+        FROM core.brands
+        WHERE brand_id=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+-->-->-- /db/src/02. functions and logic/core/core.get_cash_account_id.sql --<--<--
 CREATE FUNCTION core.get_cash_account_id()
 RETURNS bigint
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT account_id
-		FROM core.accounts
-		WHERE is_cash=true
-		LIMIT 1
-	);
+    RETURN
+    (
+        SELECT account_id
+        FROM core.accounts
+        WHERE is_cash=true
+        LIMIT 1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_currency_code_by_office_id.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_currency_code_by_office_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_currency_code_by_office_id(integer);
 
 CREATE FUNCTION core.get_currency_code_by_office_id(office_id integer)
@@ -3107,19 +3392,19 @@ RETURNS text
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT office.offices.currency_code
-		FROM office.offices
-		WHERE office.offices.office_id=$1
-	);
+    RETURN
+    (
+        SELECT office.offices.currency_code
+        FROM office.offices
+        WHERE office.offices.office_id=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
 
--- core.get_currency_code_by_party_code.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_currency_code_by_party_code.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_currency_code_by_party_code(national character varying(12));
 
 CREATE FUNCTION core.get_currency_code_by_party_code(_party_code national character varying(12))
@@ -3127,21 +3412,21 @@ RETURNS text
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT core.accounts.currency_code
-		FROM core.accounts
-		INNER JOIN core.parties
-		ON core.accounts.account_id = core.parties.account_id
-		AND core.parties.party_code=$1
-	);
+    RETURN
+    (
+        SELECT core.accounts.currency_code
+        FROM core.accounts
+        INNER JOIN core.parties
+        ON core.accounts.account_id = core.parties.account_id
+        AND core.parties.party_code=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
 
--- core.get_currency_code_by_party_id.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_currency_code_by_party_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_currency_code_by_party_id(bigint);
 
 CREATE FUNCTION core.get_currency_code_by_party_id(party_id bigint)
@@ -3149,20 +3434,20 @@ RETURNS text
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT core.accounts.currency_code
-		FROM core.accounts
-		INNER JOIN core.parties
-		ON core.accounts.account_id = core.parties.account_id
-		AND core.parties.party_id=$1
-	);
+    RETURN
+    (
+        SELECT core.accounts.currency_code
+        FROM core.accounts
+        INNER JOIN core.parties
+        ON core.accounts.account_id = core.parties.account_id
+        AND core.parties.party_id=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_current_year.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_current_year.sql --<--<--
 
 DROP FUNCTION IF EXISTS core.get_current_year();
 CREATE FUNCTION core.get_current_year()
@@ -3170,14 +3455,14 @@ RETURNS integer
 AS
 $$
 BEGIN
-	RETURN(SELECT EXTRACT(year FROM current_date)::integer);
+    RETURN(SELECT EXTRACT(year FROM current_date)::integer);
 END
 $$
 LANGUAGE plpgsql;
 
 
 
--- core.get_email_address_by_party_id.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_email_address_by_party_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_email_address_by_party_id(bigint);
 
 CREATE FUNCTION core.get_email_address_by_party_id(bigint)
@@ -3193,114 +3478,114 @@ END
 $$
 LANGUAGE plpgsql;
 
--- core.get_flag_background_color.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_flag_background_color.sql --<--<--
 CREATE FUNCTION core.get_flag_background_color(flag_type_id_ integer)
 RETURNS text
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT background_color
-		FROM core.flag_types
-		WHERE core.flag_types.flag_type_id=$1
-	);
+    RETURN
+    (
+        SELECT background_color
+        FROM core.flag_types
+        WHERE core.flag_types.flag_type_id=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_flag_foreground_color.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_flag_foreground_color.sql --<--<--
 CREATE FUNCTION core.get_flag_foreground_color(flag_type_id_ integer)
 RETURNS text
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT foreground_color
-		FROM core.flag_types
-		WHERE core.flag_types.flag_type_id=$1
-	);
+    RETURN
+    (
+        SELECT foreground_color
+        FROM core.flag_types
+        WHERE core.flag_types.flag_type_id=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_flag_type_id.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_flag_type_id.sql --<--<--
 CREATE FUNCTION core.get_flag_type_id
 (
-	user_id_ integer,
-	resource_ text,
-	resource_key_ text,
-	resource_id_ bigint
+    user_id_ integer,
+    resource_ text,
+    resource_key_ text,
+    resource_id_ bigint
 )
 RETURNS integer
 AS
 $$
 BEGIN
-	RETURN 
-	(
-		SELECT flag_type_id
-		FROM core.flags
-		WHERE user_id=$1
-		AND resource=$2
-		AND resource_key=$3
-		AND resource_id=$4
-	);
-END
-$$
-LANGUAGE plpgsql;
-
-CREATE FUNCTION core.get_flag_type_id
-(
-	user_id_ integer,
-	resource_ text,
-	resource_id_ bigint
-)
-RETURNS integer
-AS
-$$
-BEGIN
-	RETURN core.get_flag_type_id($1, $2, $3::text);
+    RETURN 
+    (
+        SELECT flag_type_id
+        FROM core.flags
+        WHERE user_id=$1
+        AND resource=$2
+        AND resource_key=$3
+        AND resource_id=$4
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 CREATE FUNCTION core.get_flag_type_id
 (
-	user_id_ integer,
-	resource_ text,
-	resource_id_ integer
+    user_id_ integer,
+    resource_ text,
+    resource_id_ bigint
 )
 RETURNS integer
 AS
 $$
 BEGIN
-	RETURN core.get_flag_type_id($1, $2, $3::text);
+    RETURN core.get_flag_type_id($1, $2, $3::text);
+END
+$$
+LANGUAGE plpgsql;
+
+CREATE FUNCTION core.get_flag_type_id
+(
+    user_id_ integer,
+    resource_ text,
+    resource_id_ integer
+)
+RETURNS integer
+AS
+$$
+BEGIN
+    RETURN core.get_flag_type_id($1, $2, $3::text);
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_frequency_code_by_frequency_id.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_frequency_code_by_frequency_id.sql --<--<--
 CREATE FUNCTION core.get_frequency_code_by_frequency_id(integer)
 RETURNS text
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT frequency_code
-		FROM core.frequencies
-		WHERE core.frequencies.frequency_id=$1
-	);
+    RETURN
+    (
+        SELECT frequency_code
+        FROM core.frequencies
+        WHERE core.frequencies.frequency_id=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_item_code_by_item_id.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_item_code_by_item_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_item_code_by_item_id(integer);
 
 CREATE FUNCTION core.get_item_code_by_item_id(integer)
@@ -3319,101 +3604,169 @@ LANGUAGE plpgsql;
 
 --SELECT core.get_item_code_by_item_id(1);
 
--- core.get_item_cost_price.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_item_cost_price.sql --<--<--
 CREATE FUNCTION core.get_item_cost_price(item_id_ integer, unit_id_ integer, party_id_ bigint)
 RETURNS money_strict2
 AS
 $$
-	DECLARE _price money_strict2;
-	DECLARE _unit_id integer;
-	DECLARE _factor decimal;
-	DECLARE _tax_rate decimal;
-	DECLARE _includes_tax boolean;
-	DECLARE _tax money_strict2;
+    DECLARE _price money_strict2;
+    DECLARE _unit_id integer;
+    DECLARE _factor decimal;
+    DECLARE _tax_rate decimal;
+    DECLARE _includes_tax boolean;
+    DECLARE _tax money_strict2;
 BEGIN
-	--Fist pick the catalog price which matches all these fields:
-	--Item, Unit, and Supplier.
-	--This is the most effective price.
-	SELECT 
-		item_cost_prices.price, 
-		item_cost_prices.unit_id,
-		item_cost_prices.includes_tax
-	INTO 
-		_price, 
-		_unit_id,
-		_includes_tax		
-	FROM core.item_cost_prices
-	WHERE item_cost_prices.item_id = $1
-	AND item_cost_prices.unit_id = $2
-	AND item_cost_prices.party_id =$3;
+    --Fist pick the catalog price which matches all these fields:
+    --Item, Unit, and Supplier.
+    --This is the most effective price.
+    SELECT 
+        item_cost_prices.price, 
+        item_cost_prices.unit_id,
+        item_cost_prices.includes_tax
+    INTO 
+        _price, 
+        _unit_id,
+        _includes_tax       
+    FROM core.item_cost_prices
+    WHERE item_cost_prices.item_id = $1
+    AND item_cost_prices.unit_id = $2
+    AND item_cost_prices.party_id =$3;
 
-	IF(_unit_id IS NULL) THEN
-		--We do not have a cost price of this item for the unit supplied.
-		--Let's see if this item has a price for other units.
-		SELECT 
-			item_cost_prices.price, 
-			item_cost_prices.unit_id,
-			item_cost_prices.includes_tax
-		INTO 
-			_price, 
-			_unit_id,
-			_includes_tax
-		FROM core.item_cost_prices
-		WHERE item_cost_prices.item_id=$1
-		AND item_cost_prices.party_id =$3;
-	END IF;
+    IF(_unit_id IS NULL) THEN
+        --We do not have a cost price of this item for the unit supplied.
+        --Let's see if this item has a price for other units.
+        SELECT 
+            item_cost_prices.price, 
+            item_cost_prices.unit_id,
+            item_cost_prices.includes_tax
+        INTO 
+            _price, 
+            _unit_id,
+            _includes_tax
+        FROM core.item_cost_prices
+        WHERE item_cost_prices.item_id=$1
+        AND item_cost_prices.party_id =$3;
+    END IF;
 
-	
-	IF(_price IS NULL) THEN
-		--This item does not have cost price defined in the catalog.
-		--Therefore, getting the default cost price from the item definition.
-		SELECT 
-			cost_price, 
-			unit_id,
-			cost_price_includes_tax
-		INTO 
-			_price, 
-			_unit_id,
-			_includes_tax
-		FROM core.items
-		WHERE core.items.item_id = $1;
-	END IF;
+    
+    IF(_price IS NULL) THEN
+        --This item does not have cost price defined in the catalog.
+        --Therefore, getting the default cost price from the item definition.
+        SELECT 
+            cost_price, 
+            unit_id,
+            cost_price_includes_tax
+        INTO 
+            _price, 
+            _unit_id,
+            _includes_tax
+        FROM core.items
+        WHERE core.items.item_id = $1;
+    END IF;
 
-	IF(_includes_tax) THEN
-		_tax_rate := core.get_item_tax_rate($1);
-		_price := _price / ((100 + _tax_rate)/ 100);
-	END IF;
+    IF(_includes_tax) THEN
+        _tax_rate := core.get_item_tax_rate($1);
+        _price := _price / ((100 + _tax_rate)/ 100);
+    END IF;
 
-	--Get the unitary conversion factor if the requested unit does not match with the price defition.
-	_factor := core.convert_unit($2, _unit_id);
+    --Get the unitary conversion factor if the requested unit does not match with the price defition.
+    _factor := core.convert_unit($2, _unit_id);
 
-	RETURN _price * _factor;
+    RETURN _price * _factor;
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_item_id_by_item_code.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_item_group_code_by_item_group_id.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_item_group_code_by_item_group_id(integer);
+
+CREATE FUNCTION core.get_item_group_code_by_item_group_id(integer)
+RETURNS text
+AS
+$$
+BEGIN
+        RETURN item_group_code
+        FROM core.item_groups
+        WHERE item_group_id=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+-->-->-- /db/src/02. functions and logic/core/core.get_item_group_id_by_item_group_code.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_item_group_id_by_item_group_code(text);
+
+CREATE FUNCTION core.get_item_group_id_by_item_group_code(text)
+RETURNS integer
+AS
+$$
+BEGIN
+        RETURN item_group_id
+        FROM core.item_groups
+        WHERE item_group_code=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+-->-->-- /db/src/02. functions and logic/core/core.get_item_group_id_by_item_group_name.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_item_group_id_by_item_group_name(text);
+
+CREATE FUNCTION core.get_item_group_id_by_item_group_name(text)
+RETURNS integer
+AS
+$$
+BEGIN
+        RETURN item_group_id
+        FROM core.item_groups
+        WHERE item_group_name=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+-->-->-- /db/src/02. functions and logic/core/core.get_item_group_name_by_item_group_id.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_item_group_name_by_item_group_id(integer);
+
+CREATE FUNCTION core.get_item_group_name_by_item_group_id(integer)
+RETURNS text
+AS
+$$
+BEGIN
+        RETURN item_group_name
+        FROM core.item_groups
+        WHERE item_group_id=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+-->-->-- /db/src/02. functions and logic/core/core.get_item_id_by_item_code.sql --<--<--
 CREATE FUNCTION core.get_item_id_by_item_code(text)
 RETURNS integer
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT
-			item_id
-		FROM
-			core.items
-		WHERE 
-			core.items.item_code=$1
-	);
+    RETURN
+    (
+        SELECT
+            item_id
+        FROM
+            core.items
+        WHERE 
+            core.items.item_code=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_item_name_by_item_id.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_item_name_by_item_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_item_name_by_item_id(integer);
 
 CREATE FUNCTION core.get_item_name_by_item_id(integer)
@@ -3432,102 +3785,102 @@ LANGUAGE plpgsql;
 
 --SELECT core.get_item_name_by_item_id(1);
 
--- core.get_item_tax_rate.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_item_tax_rate.sql --<--<--
 CREATE FUNCTION core.get_item_tax_rate(integer)
 RETURNS decimal
 AS
 $$
 BEGIN
-	RETURN
-	COALESCE((
-		SELECT core.taxes.rate
-		FROM core.taxes
-		INNER JOIN core.items
-		ON core.taxes.tax_id = core.items.tax_id
-		WHERE core.items.item_id=$1
-	), 0);
+    RETURN
+    COALESCE((
+        SELECT core.taxes.rate
+        FROM core.taxes
+        INNER JOIN core.items
+        ON core.taxes.tax_id = core.items.tax_id
+        WHERE core.items.item_id=$1
+    ), 0);
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_menu_id.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_menu_id.sql --<--<--
 CREATE FUNCTION core.get_menu_id(menu_code text)
 RETURNS INTEGER
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT core.menus.menu_id
-		FROM core.menus
-		WHERE core.menus.menu_code=$1
-	);
+    RETURN
+    (
+        SELECT core.menus.menu_id
+        FROM core.menus
+        WHERE core.menus.menu_code=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_party_code.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_party_code.sql --<--<--
 
 
 /*******************************************************************
-	GET UNIQUE EIGHT-TO-TEN DIGIT CUSTOMER CODE
-	TO IDENTIFY A PARTY.
-	BASIC FORMULA:
-		1. FIRST TWO LETTERS OF FIRST NAME
-		2. FIRST LETTER OF MIDDLE NAME (IF AVAILABLE)
-		3. FIRST TWO LETTERS OF LAST NAME
-		4. CUSTOMER NUMBER
+    GET UNIQUE EIGHT-TO-TEN DIGIT CUSTOMER CODE
+    TO IDENTIFY A PARTY.
+    BASIC FORMULA:
+        1. FIRST TWO LETTERS OF FIRST NAME
+        2. FIRST LETTER OF MIDDLE NAME (IF AVAILABLE)
+        3. FIRST TWO LETTERS OF LAST NAME
+        4. CUSTOMER NUMBER
 *******************************************************************/
 
 CREATE OR REPLACE FUNCTION core.get_party_code
 (
-	text, --First Name
-	text, --Middle Name
-	text  --Last Name
+    text, --First Name
+    text, --Middle Name
+    text  --Last Name
 )
 RETURNS text AS
 $$
-	DECLARE _party_code TEXT;
+    DECLARE _party_code TEXT;
 BEGIN
-	SELECT INTO 
-		_party_code 
-			party_code
-	FROM
-		core.parties
-	WHERE
-		party_code LIKE 
-			UPPER(left($1,2) ||
-			CASE
-				WHEN $2 IS NULL or $2 = '' 
-				THEN left($3,3)
-			ELSE 
-				left($2,1) || left($3,2)
-			END 
-			|| '%')
-	ORDER BY party_code desc
-	LIMIT 1;
+    SELECT INTO 
+        _party_code 
+            party_code
+    FROM
+        core.parties
+    WHERE
+        party_code LIKE 
+            UPPER(left($1,2) ||
+            CASE
+                WHEN $2 IS NULL or $2 = '' 
+                THEN left($3,3)
+            ELSE 
+                left($2,1) || left($3,2)
+            END 
+            || '%')
+    ORDER BY party_code desc
+    LIMIT 1;
 
-	_party_code :=
-					UPPER
-					(
-						left($1,2)||
-						CASE
-							WHEN $2 IS NULL or $2 = '' 
-							THEN left($3,3)
-						ELSE 
-							left($2,1)||left($3,2)
-						END
-					) 
-					|| '-' ||
-					CASE
-						WHEN _party_code IS NULL 
-						THEN '0001'
-					ELSE 
-						to_char(CAST(right(_party_code,4) AS integer)+1,'FM0000')
-					END;
-	RETURN _party_code;
+    _party_code :=
+                    UPPER
+                    (
+                        left($1,2)||
+                        CASE
+                            WHEN $2 IS NULL or $2 = '' 
+                            THEN left($3,3)
+                        ELSE 
+                            left($2,1)||left($3,2)
+                        END
+                    ) 
+                    || '-' ||
+                    CASE
+                        WHEN _party_code IS NULL 
+                        THEN '0001'
+                    ELSE 
+                        to_char(CAST(right(_party_code,4) AS integer)+1,'FM0000')
+                    END;
+    RETURN _party_code;
 END;
 $$
 LANGUAGE 'plpgsql';
@@ -3535,179 +3888,179 @@ LANGUAGE 'plpgsql';
 
 
 
--- core.get_party_id_by_party_code.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_party_id_by_party_code.sql --<--<--
 CREATE FUNCTION core.get_party_id_by_party_code(text)
 RETURNS bigint
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT
-			party_id
-		FROM
-			core.parties
-		WHERE 
-			core.parties.party_code=$1
-	);
+    RETURN
+    (
+        SELECT
+            party_id
+        FROM
+            core.parties
+        WHERE 
+            core.parties.party_code=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_party_type_id_by_party_code.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_party_type_id_by_party_code.sql --<--<--
 CREATE FUNCTION core.get_party_type_id_by_party_code(text)
 RETURNS smallint
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT
-			party_type_id
-		FROM
-			core.parties
-		WHERE 
-			core.parties.party_code=$1
-	);
+    RETURN
+    (
+        SELECT
+            party_type_id
+        FROM
+            core.parties
+        WHERE 
+            core.parties.party_code=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_price_type_name_by_price_type_id.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_price_type_name_by_price_type_id.sql --<--<--
 CREATE FUNCTION core.get_price_type_name_by_price_type_id(integer)
 RETURNS text
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT price_type_name
-		FROM core.price_types
-		WHERE price_type_id=$1
-	);
+    RETURN
+    (
+        SELECT price_type_name
+        FROM core.price_types
+        WHERE price_type_id=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_root_parent_menu_id.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_root_parent_menu_id.sql --<--<--
 CREATE FUNCTION core.get_root_parent_menu_id(text)
 RETURNS integer
 AS
 $$
-	DECLARE retVal integer;
+    DECLARE retVal integer;
 BEGIN
-	WITH RECURSIVE find_parent(menu_id_group, parent, parent_menu_id, recentness) AS
-	(
-			SELECT menu_id, menu_id, parent_menu_id, 0
-			FROM core.menus
-			WHERE url=$1
-			UNION ALL
-			SELECT fp.menu_id_group, i.menu_id, i.parent_menu_id, fp.recentness + 1
-			FROM core.menus i
-			JOIN find_parent fp ON i.menu_id = fp.parent_menu_id
-	)
+    WITH RECURSIVE find_parent(menu_id_group, parent, parent_menu_id, recentness) AS
+    (
+            SELECT menu_id, menu_id, parent_menu_id, 0
+            FROM core.menus
+            WHERE url=$1
+            UNION ALL
+            SELECT fp.menu_id_group, i.menu_id, i.parent_menu_id, fp.recentness + 1
+            FROM core.menus i
+            JOIN find_parent fp ON i.menu_id = fp.parent_menu_id
+    )
 
-		SELECT parent INTO retVal
-		FROM find_parent q 
-		JOIN
-		(
-				SELECT menu_id_group, MAX(recentness) AS answer
-				FROM find_parent
-				GROUP BY menu_id_group 
-		) AS ans ON q.menu_id_group = ans.menu_id_group AND q.recentness = ans.answer 
-		ORDER BY q.menu_id_group;
+        SELECT parent INTO retVal
+        FROM find_parent q 
+        JOIN
+        (
+                SELECT menu_id_group, MAX(recentness) AS answer
+                FROM find_parent
+                GROUP BY menu_id_group 
+        ) AS ans ON q.menu_id_group = ans.menu_id_group AND q.recentness = ans.answer 
+        ORDER BY q.menu_id_group;
 
-	RETURN retVal;
+    RETURN retVal;
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_root_unit_id.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_root_unit_id.sql --<--<--
 CREATE FUNCTION core.get_root_unit_id(integer)
 RETURNS integer
 AS
 $$
-	DECLARE root_unit_id integer;
+    DECLARE root_unit_id integer;
 BEGIN
-	SELECT base_unit_id INTO root_unit_id
-	FROM core.compound_units
-	WHERE compare_unit_id=$1;
+    SELECT base_unit_id INTO root_unit_id
+    FROM core.compound_units
+    WHERE compare_unit_id=$1;
 
-	IF(root_unit_id IS NULL) THEN
-		RETURN $1;
-	ELSE
-		RETURN core.get_root_unit_id(root_unit_id);
-	END IF;	
+    IF(root_unit_id IS NULL) THEN
+        RETURN $1;
+    ELSE
+        RETURN core.get_root_unit_id(root_unit_id);
+    END IF; 
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_salesperson_name_by_salesperson_id.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_salesperson_name_by_salesperson_id.sql --<--<--
 CREATE FUNCTION core.get_salesperson_name_by_salesperson_id(integer)
 RETURNS text
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT salesperson_name
-		FROM core.salespersons
-		WHERE salesperson_id=$1
-	);
+    RETURN
+    (
+        SELECT salesperson_name
+        FROM core.salespersons
+        WHERE salesperson_id=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_shipper_code.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_shipper_code.sql --<--<--
 
 /*******************************************************************
-	GET UNIQUE EIGHT-TO-TEN DIGIT shipper CODE
-	TO IDENTIFY A shipper.
-	BASIC FORMULA:
-		1. FIRST TWO LETTERS OF FIRST NAME
-		2. FIRST LETTER OF MIDDLE NAME (IF AVAILABLE)
-		3. FIRST TWO LETTERS OF LAST NAME
-		4. shipper NUMBER
+    GET UNIQUE EIGHT-TO-TEN DIGIT shipper CODE
+    TO IDENTIFY A shipper.
+    BASIC FORMULA:
+        1. FIRST TWO LETTERS OF FIRST NAME
+        2. FIRST LETTER OF MIDDLE NAME (IF AVAILABLE)
+        3. FIRST TWO LETTERS OF LAST NAME
+        4. shipper NUMBER
 *******************************************************************/
 
 CREATE OR REPLACE FUNCTION core.get_shipper_code
 (
-	text --company name
+    text --company name
 )
 RETURNS text AS
 $$
-	DECLARE __shipper_code TEXT;
+    DECLARE __shipper_code TEXT;
 BEGIN
-	SELECT INTO 
-		__shipper_code 
-			shipper_code
-	FROM
-		core.shippers
-	WHERE
-		shipper_code LIKE 
-			UPPER(left($1, 3) || '%')
-	ORDER BY shipper_code desc
-	LIMIT 1;
+    SELECT INTO 
+        __shipper_code 
+            shipper_code
+    FROM
+        core.shippers
+    WHERE
+        shipper_code LIKE 
+            UPPER(left($1, 3) || '%')
+    ORDER BY shipper_code desc
+    LIMIT 1;
 
-	__shipper_code :=
-					UPPER
-					(
-						left($1,3)
-					) 
-					|| '-' ||
-					CASE
-						WHEN __shipper_code IS NULL 
-						THEN '0001'
-					ELSE 
-						to_char(CAST(right(__shipper_code, 4) AS integer)+1,'FM0000')
-					END;
-	RETURN __shipper_code;
+    __shipper_code :=
+                    UPPER
+                    (
+                        left($1,3)
+                    ) 
+                    || '-' ||
+                    CASE
+                        WHEN __shipper_code IS NULL 
+                        THEN '0001'
+                    ELSE 
+                        to_char(CAST(right(__shipper_code, 4) AS integer)+1,'FM0000')
+                    END;
+    RETURN __shipper_code;
 END;
 $$
 LANGUAGE 'plpgsql';
@@ -3715,24 +4068,24 @@ LANGUAGE 'plpgsql';
 
 
 
--- core.get_shipper_name_by_shipper_id.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_shipper_name_by_shipper_id.sql --<--<--
 CREATE FUNCTION core.get_shipper_name_by_shipper_id(integer)
 RETURNS text
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT company_name
-		FROM core.shippers
-		WHERE shipper_id=$1
-	);
+    RETURN
+    (
+        SELECT company_name
+        FROM core.shippers
+        WHERE shipper_id=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_shipping_address_by_shipping_address_id.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_shipping_address_by_shipping_address_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_shipping_address_by_shipping_address_id(integer);
 
 CREATE FUNCTION core.get_shipping_address_by_shipping_address_id(integer)
@@ -3764,68 +4117,68 @@ LANGUAGE plpgsql;
 
 
 
--- core.get_shipping_address_code_by_shipping_address_id.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_shipping_address_code_by_shipping_address_id.sql --<--<--
 CREATE FUNCTION core.get_shipping_address_code_by_shipping_address_id(integer)
 RETURNS text
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT
-			shipping_address_code
-		FROM
-			core.shipping_addresses
-		WHERE 
-			core.shipping_addresses.shipping_address_id=$1
-	);
+    RETURN
+    (
+        SELECT
+            shipping_address_code
+        FROM
+            core.shipping_addresses
+        WHERE 
+            core.shipping_addresses.shipping_address_id=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_shipping_address_id_by_shipping_address_code.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_shipping_address_id_by_shipping_address_code.sql --<--<--
 
 CREATE FUNCTION core.get_shipping_address_id_by_shipping_address_code(text, bigint)
 RETURNS smallint
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT
-			shipping_address_id
-		FROM
-			core.shipping_addresses
-		WHERE 
-			core.shipping_addresses.shipping_address_code=$1
-		AND
-			core.shipping_addresses.party_id=$2
-	);
+    RETURN
+    (
+        SELECT
+            shipping_address_id
+        FROM
+            core.shipping_addresses
+        WHERE 
+            core.shipping_addresses.shipping_address_code=$1
+        AND
+            core.shipping_addresses.party_id=$2
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_switch_category_id_by_name.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_switch_category_id_by_name.sql --<--<--
 CREATE FUNCTION core.get_switch_category_id_by_name(text)
 RETURNS integer
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT switch_category_id
-		FROM core.switch_categories
-		WHERE core.switch_categories.switch_category_name=$1
-	);
+    RETURN
+    (
+        SELECT switch_category_id
+        FROM core.switch_categories
+        WHERE core.switch_categories.switch_category_name=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
 
--- core.get_unit_code_by_unit_id.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_unit_code_by_unit_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_unit_code_by_unit_id(integer);
 
 CREATE FUNCTION core.get_unit_code_by_unit_id(integer)
@@ -3844,48 +4197,48 @@ LANGUAGE plpgsql;
 
 --SELECT core.get_unit_code_by_unit_id(1);
 
--- core.get_unit_id_by_unit_code.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_unit_id_by_unit_code.sql --<--<--
 CREATE FUNCTION core.get_unit_id_by_unit_code(text)
 RETURNS smallint
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT
-			core.units.unit_id
-		FROM
-			core.units
-		WHERE
-			core.units.unit_code=$1
-	);
+    RETURN
+    (
+        SELECT
+            core.units.unit_id
+        FROM
+            core.units
+        WHERE
+            core.units.unit_code=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
 
--- core.get_unit_id_by_unit_name.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_unit_id_by_unit_name.sql --<--<--
 CREATE FUNCTION core.get_unit_id_by_unit_name(text)
 RETURNS integer
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT
-			core.units.unit_id
-		FROM
-			core.units
-		WHERE
-			core.units.unit_name=$1
-	);
+    RETURN
+    (
+        SELECT
+            core.units.unit_id
+        FROM
+            core.units
+        WHERE
+            core.units.unit_name=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_unit_name_by_unit_id.sql
+-->-->-- /db/src/02. functions and logic/core/core.get_unit_name_by_unit_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_unit_name_by_unit_id(integer);
 
 CREATE FUNCTION core.get_unit_name_by_unit_id(integer)
@@ -3904,30 +4257,30 @@ LANGUAGE plpgsql;
 
 --SELECT core.get_unit_name_by_unit_id(1);
 
--- core.has_child_accounts.sql
+-->-->-- /db/src/02. functions and logic/core/core.has_child_accounts.sql --<--<--
 CREATE FUNCTION core.has_child_accounts(bigint)
 RETURNS boolean
 AS
 $$
 BEGIN
-	IF EXISTS(SELECT 0 FROM core.accounts WHERE parent_account_id=$1 LIMIT 1) THEN
-		RETURN true;
-	END IF;
+    IF EXISTS(SELECT 0 FROM core.accounts WHERE parent_account_id=$1 LIMIT 1) THEN
+        RETURN true;
+    END IF;
 
-	RETURN false;
+    RETURN false;
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.is_leap_year.sql
+-->-->-- /db/src/02. functions and logic/core/core.is_leap_year.sql --<--<--
 DROP FUNCTION IF EXISTS core.is_leap_year(integer);
 CREATE FUNCTION core.is_leap_year(integer)
 RETURNS boolean
 AS
 $$
 BEGIN
-	RETURN (SELECT date_part('day', (($1::text || '-02-01')::date + '1 month'::interval - '1 day'::interval)) = 29);
+    RETURN (SELECT date_part('day', (($1::text || '-02-01')::date + '1 month'::interval - '1 day'::interval)) = 29);
 END
 $$
 LANGUAGE plpgsql
@@ -3940,47 +4293,47 @@ RETURNS boolean
 AS
 $$
 BEGIN
-	RETURN core.is_leap_year(core.get_current_year());
+    RETURN core.is_leap_year(core.get_current_year());
 END
 $$
 LANGUAGE plpgsql
 IMMUTABLE STRICT;
 
 
--- core.is_parent_unit.sql
+-->-->-- /db/src/02. functions and logic/core/core.is_parent_unit.sql --<--<--
 CREATE FUNCTION core.is_parent_unit(parent integer, child integer)
 RETURNS boolean
 AS
-$$		
+$$      
 BEGIN
-	IF $1!=$2 THEN
-		IF EXISTS
-		(
-			WITH RECURSIVE unit_cte(unit_id) AS 
-			(
-			 SELECT tn.compare_unit_id
-				FROM core.compound_units AS tn WHERE tn.base_unit_id = $1
-			UNION ALL
-			 SELECT
-				c.compare_unit_id
-				FROM unit_cte AS p, 
-			  core.compound_units AS c 
-				WHERE base_unit_id = p.unit_id
-			)
+    IF $1!=$2 THEN
+        IF EXISTS
+        (
+            WITH RECURSIVE unit_cte(unit_id) AS 
+            (
+             SELECT tn.compare_unit_id
+                FROM core.compound_units AS tn WHERE tn.base_unit_id = $1
+            UNION ALL
+             SELECT
+                c.compare_unit_id
+                FROM unit_cte AS p, 
+              core.compound_units AS c 
+                WHERE base_unit_id = p.unit_id
+            )
 
-			SELECT * FROM unit_cte
-			WHERE unit_id=$2
-		) THEN
-			RETURN TRUE;
-		END IF;
-	END IF;
-	RETURN false;
+            SELECT * FROM unit_cte
+            WHERE unit_id=$2
+        ) THEN
+            RETURN TRUE;
+        END IF;
+    END IF;
+    RETURN false;
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.is_stock_item.sql
+-->-->-- /db/src/02. functions and logic/core/core.is_stock_item.sql --<--<--
 DROP FUNCTION IF EXISTS core.is_stock_item(item_id integer);
 
 CREATE FUNCTION core.is_stock_item(item_id integer)
@@ -3988,14 +4341,14 @@ RETURNS bool
 AS
 $$
 BEGIN
-	IF EXISTS
-	(
-		SELECT 1 FROM core.items WHERE core.items.item_id=$1 AND maintain_stock=true
-	) THEN
-		RETURN true;
-	END IF;
+    IF EXISTS
+    (
+        SELECT 1 FROM core.items WHERE core.items.item_id=$1 AND maintain_stock=true
+    ) THEN
+        RETURN true;
+    END IF;
 
-	RETURN false;
+    RETURN false;
 END
 $$
 LANGUAGE plpgsql;
@@ -4007,63 +4360,136 @@ RETURNS bool
 AS
 $$
 BEGIN
-	IF EXISTS
-	(
-		SELECT 1 FROM core.items WHERE core.items.item_code=$1 AND maintain_stock=true
-	) THEN
-		RETURN true;
-	END IF;
+    IF EXISTS
+    (
+        SELECT 1 FROM core.items WHERE core.items.item_code=$1 AND maintain_stock=true
+    ) THEN
+        RETURN true;
+    END IF;
 
-	RETURN false;
+    RETURN false;
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.is_supplier.sql
+-->-->-- /db/src/02. functions and logic/core/core.is_supplier.sql --<--<--
 CREATE FUNCTION core.is_supplier(bigint)
 RETURNS boolean
 AS
 $$
 BEGIN
-	IF EXISTS
-	(
-		SELECT 1 FROM core.parties 
-		INNER JOIN core.party_types 
-		ON core.parties.party_type_id=core.party_types.party_type_id
-		WHERE core.parties.party_id=$1
-		AND core.party_types.is_supplier=true
-	) THEN
-		RETURN true;
-	END IF;
-	
-	RETURN false;
+    IF EXISTS
+    (
+        SELECT 1 FROM core.parties 
+        INNER JOIN core.party_types 
+        ON core.parties.party_type_id=core.party_types.party_type_id
+        WHERE core.parties.party_id=$1
+        AND core.party_types.is_supplier=true
+    ) THEN
+        RETURN true;
+    END IF;
+    
+    RETURN false;
 END
 $$
 LANGUAGE plpgsql;
 
 
-ALTER TABLE core.items
-ADD CONSTRAINT items_preferred_supplier_id_chk CHECK(core.is_supplier(preferred_supplier_id) = true);
 
+-->-->-- /db/src/02. functions and logic/core/core.is_valid_item_id.sql --<--<--
+DROP FUNCTION IF EXISTS core.is_valid_item_id(integer);
 
+CREATE FUNCTION core.is_valid_item_id(integer)
+RETURNS boolean
+AS
+$$
+BEGIN
+        IF EXISTS(SELECT 1 FROM core.items WHERE item_id=$1) THEN
+                RETURN true;
+        END IF;
 
+        RETURN false;
+END
+$$
+LANGUAGE plpgsql;
 
--- core.calculate_interest.sql
+-->-->-- /db/src/02. functions and logic/core/core.is_valid_unit.sql --<--<--
+DROP FUNCTION IF EXISTS core.is_valid_unit(_item_id integer, _unit_id integer);
+
+CREATE FUNCTION core.is_valid_unit(_item_id integer, _unit_id integer)
+RETURNS boolean
+AS
+$$
+        DECLARE _item_unit_id integer;
+BEGIN
+        SELECT unit_id INTO _item_unit_id
+        FROM core.items
+        WHERE item_id=$1;
+
+        IF(core.get_root_unit_id(_item_unit_id) = core.get_root_unit_id(_unit_id)) THEN
+                RETURN true;
+        END IF;
+
+        RETURN false;        
+END
+$$
+LANGUAGE plpgsql;
+
+-->-->-- /db/src/02. functions and logic/core/core.is_valid_unit_id.sql --<--<--
+DROP FUNCTION IF EXISTS core.is_valid_unit_id(integer);
+
+CREATE FUNCTION core.is_valid_unit_id(integer)
+RETURNS boolean
+AS
+$$
+BEGIN
+        IF EXISTS(SELECT 1 FROM core.units WHERE unit_id=$1) THEN
+                RETURN true;
+        END IF;
+
+        RETURN false;
+END
+$$
+LANGUAGE plpgsql;
+
+DROP FUNCTION IF EXISTS core.is_valid_unit_id(_unit_id integer, _item_id integer);
+
+CREATE FUNCTION core.is_valid_unit_id(_unit_id integer, _item_id integer)
+RETURNS boolean
+AS
+$$
+BEGIN
+        IF EXISTS
+        (
+                SELECT 1
+                FROM core.items
+                WHERE item_id = $2
+                AND core.get_root_unit_id($1) = core.get_root_unit_id(unit_id)
+        ) THEN
+                RETURN true;
+        END IF;
+
+        RETURN false;
+END
+$$
+LANGUAGE plpgsql;
+
+-->-->-- /db/src/02. functions and logic/logic/functions/core/core.calculate_interest.sql --<--<--
 DROP FUNCTION IF EXISTS core.calculate_interest(principal numeric, rate numeric, days integer, num_of_days_in_year integer, round_up integer);
 CREATE FUNCTION core.calculate_interest(principal numeric, rate numeric, days integer, round_up integer, num_of_days_in_year integer)
 RETURNS numeric
 AS
 $$
-	DECLARE interest numeric;
+    DECLARE interest numeric;
 BEGIN
-	IF num_of_days_in_year = 0 OR num_of_days_in_year IS NULL THEN
-		RAISE EXCEPTION 'Cannot calculate interest. The number of days in a year was not provided.';
-	END IF;
-	
-	interest := ROUND(principal * rate * days / (num_of_days_in_year * 100), round_up);
+    IF num_of_days_in_year = 0 OR num_of_days_in_year IS NULL THEN
+        RAISE EXCEPTION 'Cannot calculate interest. The number of days in a year was not provided.';
+    END IF;
+    
+    interest := ROUND(principal * rate * days / (num_of_days_in_year * 100), round_up);
 
-	RETURN interest;
+    RETURN interest;
 END
 $$
 LANGUAGE plpgsql
@@ -4075,175 +4501,271 @@ CREATE FUNCTION core.calculate_interest(principal numeric, rate numeric, days in
 RETURNS numeric
 AS
 $$
-	DECLARE num_of_days_in_year integer = 365;
+    DECLARE num_of_days_in_year integer = 365;
 BEGIN
-	IF core.is_leap_year() THEN
-		num_of_days_in_year = 366;
-	END IF;
-	
-	RETURN core.calculate_interest(principal, rate, days, round_up, num_of_days_in_year);
+    IF core.is_leap_year() THEN
+        num_of_days_in_year = 366;
+    END IF;
+    
+    RETURN core.calculate_interest(principal, rate, days, round_up, num_of_days_in_year);
 END
 $$
 LANGUAGE plpgsql
 IMMUTABLE STRICT;
 
 
--- core.get_item_cost_price.sql
+
+/**************************************************************************************************************************
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+'########::'##:::::::'########:::'######:::'##::::'##:'##::: ##:'####:'########::::'########:'########::'######::'########:
+ ##.... ##: ##::::::: ##.... ##:'##... ##:: ##:::: ##: ###:: ##:. ##::... ##..:::::... ##..:: ##.....::'##... ##:... ##..::
+ ##:::: ##: ##::::::: ##:::: ##: ##:::..::: ##:::: ##: ####: ##:: ##::::: ##:::::::::: ##:::: ##::::::: ##:::..::::: ##::::
+ ########:: ##::::::: ########:: ##::'####: ##:::: ##: ## ## ##:: ##::::: ##:::::::::: ##:::: ######:::. ######::::: ##::::
+ ##.....::: ##::::::: ##.....::: ##::: ##:: ##:::: ##: ##. ####:: ##::::: ##:::::::::: ##:::: ##...:::::..... ##:::: ##::::
+ ##:::::::: ##::::::: ##:::::::: ##::: ##:: ##:::: ##: ##:. ###:: ##::::: ##:::::::::: ##:::: ##:::::::'##::: ##:::: ##::::
+ ##:::::::: ########: ##::::::::. ######:::. #######:: ##::. ##:'####:::: ##:::::::::: ##:::: ########:. ######::::: ##::::
+..:::::::::........::..::::::::::......:::::.......:::..::::..::....:::::..:::::::::::..:::::........:::......::::::..:::::
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+**************************************************************************************************************************/
+
+
+
+
+-->-->-- /db/src/02. functions and logic/logic/functions/core/core.get_item_cost_price.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_item_cost_price(item_id_ integer, party_id_ bigint, unit_id_ integer);
 CREATE FUNCTION core.get_item_cost_price(item_id_ integer, party_id_ bigint, unit_id_ integer)
 RETURNS money_strict2
 AS
 $$
-	DECLARE _price money_strict2;
-	DECLARE _unit_id integer;
-	DECLARE _factor decimal;
-	DECLARE _tax_rate decimal;
-	DECLARE _includes_tax boolean;
-	DECLARE _tax money_strict2;
+    DECLARE _price money_strict2;
+    DECLARE _unit_id integer;
+    DECLARE _factor decimal;
+    DECLARE _tax_rate decimal;
+    DECLARE _includes_tax boolean;
+    DECLARE _tax money_strict2;
 BEGIN
 
-	--Fist pick the catalog price which matches all these fields:
-	--Item, Customer Type, Price Type, and Unit.
-	--This is the most effective price.
-	SELECT 
-		item_cost_prices.price, 
-		item_cost_prices.unit_id,
-		item_cost_prices.includes_tax
-	INTO 
-		_price, 
-		_unit_id,
-		_includes_tax		
-	FROM core.item_cost_prices
-	WHERE item_cost_prices.item_id=$1
-	AND item_cost_prices.party_id=$2
-	AND item_cost_prices.unit_id = $3;
+    --Fist pick the catalog price which matches all these fields:
+    --Item, Customer Type, Price Type, and Unit.
+    --This is the most effective price.
+    SELECT 
+        item_cost_prices.price, 
+        item_cost_prices.unit_id,
+        item_cost_prices.includes_tax
+    INTO 
+        _price, 
+        _unit_id,
+        _includes_tax       
+    FROM core.item_cost_prices
+    WHERE item_cost_prices.item_id=$1
+    AND item_cost_prices.party_id=$2
+    AND item_cost_prices.unit_id = $3;
 
-	IF(_unit_id IS NULL) THEN
-		--We do not have a cost price of this item for the unit supplied.
-		--Let's see if this item has a price for other units.
-		SELECT 
-			item_cost_prices.price, 
-			item_cost_prices.unit_id,
-			item_cost_prices.includes_tax
-		INTO 
-			_price, 
-			_unit_id,
-			_includes_tax
-		FROM core.item_cost_prices
-		WHERE item_cost_prices.item_id=$1
-		AND item_cost_prices.party_id=$2;
-	END IF;
+    IF(_unit_id IS NULL) THEN
+        --We do not have a cost price of this item for the unit supplied.
+        --Let's see if this item has a price for other units.
+        SELECT 
+            item_cost_prices.price, 
+            item_cost_prices.unit_id,
+            item_cost_prices.includes_tax
+        INTO 
+            _price, 
+            _unit_id,
+            _includes_tax
+        FROM core.item_cost_prices
+        WHERE item_cost_prices.item_id=$1
+        AND item_cost_prices.party_id=$2;
+    END IF;
 
-	
-	IF(_price IS NULL) THEN
-		--This item does not have cost price defined in the catalog.
-		--Therefore, getting the default cost price from the item definition.
-		SELECT 
-			cost_price, 
-			unit_id,
-			cost_price_includes_tax
-		INTO 
-			_price, 
-			_unit_id,
-			_includes_tax
-		FROM core.items
-		WHERE core.items.item_id = $1;
-	END IF;
+    
+    IF(_price IS NULL) THEN
+        --This item does not have cost price defined in the catalog.
+        --Therefore, getting the default cost price from the item definition.
+        SELECT 
+            cost_price, 
+            unit_id,
+            cost_price_includes_tax
+        INTO 
+            _price, 
+            _unit_id,
+            _includes_tax
+        FROM core.items
+        WHERE core.items.item_id = $1;
+    END IF;
 
-	IF(_includes_tax) THEN
-		_tax_rate := core.get_item_tax_rate($1);
-		_price := _price / ((100 + _tax_rate)/ 100);
-	END IF;
+    IF(_includes_tax) THEN
+        _tax_rate := core.get_item_tax_rate($1);
+        _price := _price / ((100 + _tax_rate)/ 100);
+    END IF;
 
-	--Get the unitary conversion factor if the requested unit does not match with the price defition.
-	_factor := core.convert_unit($3, _unit_id);
+    --Get the unitary conversion factor if the requested unit does not match with the price defition.
+    _factor := core.convert_unit($3, _unit_id);
 
-	RETURN _price * _factor;
+    RETURN _price * _factor;
 END
 $$
 LANGUAGE plpgsql;
 
 
--- core.get_item_selling_price.sql
+/**************************************************************************************************************************
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+'########::'##:::::::'########:::'######:::'##::::'##:'##::: ##:'####:'########::::'########:'########::'######::'########:
+ ##.... ##: ##::::::: ##.... ##:'##... ##:: ##:::: ##: ###:: ##:. ##::... ##..:::::... ##..:: ##.....::'##... ##:... ##..::
+ ##:::: ##: ##::::::: ##:::: ##: ##:::..::: ##:::: ##: ####: ##:: ##::::: ##:::::::::: ##:::: ##::::::: ##:::..::::: ##::::
+ ########:: ##::::::: ########:: ##::'####: ##:::: ##: ## ## ##:: ##::::: ##:::::::::: ##:::: ######:::. ######::::: ##::::
+ ##.....::: ##::::::: ##.....::: ##::: ##:: ##:::: ##: ##. ####:: ##::::: ##:::::::::: ##:::: ##...:::::..... ##:::: ##::::
+ ##:::::::: ##::::::: ##:::::::: ##::: ##:: ##:::: ##: ##:. ###:: ##::::: ##:::::::::: ##:::: ##:::::::'##::: ##:::: ##::::
+ ##:::::::: ########: ##::::::::. ######:::. #######:: ##::. ##:'####:::: ##:::::::::: ##:::: ########:. ######::::: ##::::
+..:::::::::........::..::::::::::......:::::.......:::..::::..::....:::::..:::::::::::..:::::........:::......::::::..:::::
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+**************************************************************************************************************************/
+
+
+
+
+-->-->-- /db/src/02. functions and logic/logic/functions/core/core.get_item_selling_price.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_item_selling_price(item_id_ integer, party_type_id_ integer, price_type_id_ integer, unit_id_ integer);
 CREATE FUNCTION core.get_item_selling_price(item_id_ integer, party_type_id_ integer, price_type_id_ integer, unit_id_ integer)
 RETURNS money_strict2
 AS
 $$
-	DECLARE _price money_strict2;
-	DECLARE _unit_id integer;
-	DECLARE _factor decimal;
-	DECLARE _tax_rate decimal;
-	DECLARE _includes_tax boolean;
-	DECLARE _tax money_strict2;
+    DECLARE _price money_strict2;
+    DECLARE _unit_id integer;
+    DECLARE _factor decimal;
+    DECLARE _tax_rate decimal;
+    DECLARE _includes_tax boolean;
+    DECLARE _tax money_strict2;
 BEGIN
 
-	--Fist pick the catalog price which matches all these fields:
-	--Item, Customer Type, Price Type, and Unit.
-	--This is the most effective price.
-	SELECT 
-		item_selling_prices.price, 
-		item_selling_prices.unit_id,
-		item_selling_prices.includes_tax
-	INTO 
-		_price, 
-		_unit_id,
-		_includes_tax		
-	FROM core.item_selling_prices
-	WHERE item_selling_prices.item_id=$1
-	AND item_selling_prices.party_type_id=$2
-	AND item_selling_prices.price_type_id =$3
-	AND item_selling_prices.unit_id = $4;
+    --Fist pick the catalog price which matches all these fields:
+    --Item, Customer Type, Price Type, and Unit.
+    --This is the most effective price.
+    SELECT 
+        item_selling_prices.price, 
+        item_selling_prices.unit_id,
+        item_selling_prices.includes_tax
+    INTO 
+        _price, 
+        _unit_id,
+        _includes_tax       
+    FROM core.item_selling_prices
+    WHERE item_selling_prices.item_id=$1
+    AND item_selling_prices.party_type_id=$2
+    AND item_selling_prices.price_type_id =$3
+    AND item_selling_prices.unit_id = $4;
 
-	IF(_unit_id IS NULL) THEN
-		--We do not have a selling price of this item for the unit supplied.
-		--Let's see if this item has a price for other units.
-		SELECT 
-			item_selling_prices.price, 
-			item_selling_prices.unit_id,
-			item_selling_prices.includes_tax
-		INTO 
-			_price, 
-			_unit_id,
-			_includes_tax
-		FROM core.item_selling_prices
-		WHERE item_selling_prices.item_id=$1
-		AND item_selling_prices.party_type_id=$2
-		AND item_selling_prices.price_type_id =$3;
-	END IF;
+    IF(_unit_id IS NULL) THEN
+        --We do not have a selling price of this item for the unit supplied.
+        --Let's see if this item has a price for other units.
+        SELECT 
+            item_selling_prices.price, 
+            item_selling_prices.unit_id,
+            item_selling_prices.includes_tax
+        INTO 
+            _price, 
+            _unit_id,
+            _includes_tax
+        FROM core.item_selling_prices
+        WHERE item_selling_prices.item_id=$1
+        AND item_selling_prices.party_type_id=$2
+        AND item_selling_prices.price_type_id =$3;
+    END IF;
 
-	
-	IF(_price IS NULL) THEN
-		--This item does not have selling price defined in the catalog.
-		--Therefore, getting the default selling price from the item definition.
-		SELECT 
-			selling_price, 
-			unit_id,
-			selling_price_includes_tax
-		INTO 
-			_price, 
-			_unit_id,
-			_includes_tax
-		FROM core.items
-		WHERE core.items.item_id = $1;
-	END IF;
+    
+    IF(_price IS NULL) THEN
+        --This item does not have selling price defined in the catalog.
+        --Therefore, getting the default selling price from the item definition.
+        SELECT 
+            selling_price, 
+            unit_id,
+            selling_price_includes_tax
+        INTO 
+            _price, 
+            _unit_id,
+            _includes_tax
+        FROM core.items
+        WHERE core.items.item_id = $1;
+    END IF;
 
-	IF(_includes_tax) THEN
-		_tax_rate := core.get_item_tax_rate($1);
-		_price := _price / ((100 + _tax_rate)/ 100);
-	END IF;
+    IF(_includes_tax) THEN
+        _tax_rate := core.get_item_tax_rate($1);
+        _price := _price / ((100 + _tax_rate)/ 100);
+    END IF;
 
-	--Get the unitary conversion factor if the requested unit does not match with the price defition.
-	_factor := core.convert_unit($4, _unit_id);
+    --Get the unitary conversion factor if the requested unit does not match with the price defition.
+    _factor := core.convert_unit($4, _unit_id);
 
-	RETURN _price * _factor;
+    RETURN _price * _factor;
 END
 $$
 LANGUAGE plpgsql;
 
 
 
--- office.can_login.sql
+/**************************************************************************************************************************
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+'########::'##:::::::'########:::'######:::'##::::'##:'##::: ##:'####:'########::::'########:'########::'######::'########:
+ ##.... ##: ##::::::: ##.... ##:'##... ##:: ##:::: ##: ###:: ##:. ##::... ##..:::::... ##..:: ##.....::'##... ##:... ##..::
+ ##:::: ##: ##::::::: ##:::: ##: ##:::..::: ##:::: ##: ####: ##:: ##::::: ##:::::::::: ##:::: ##::::::: ##:::..::::: ##::::
+ ########:: ##::::::: ########:: ##::'####: ##:::: ##: ## ## ##:: ##::::: ##:::::::::: ##:::: ######:::. ######::::: ##::::
+ ##.....::: ##::::::: ##.....::: ##::: ##:: ##:::: ##: ##. ####:: ##::::: ##:::::::::: ##:::: ##...:::::..... ##:::: ##::::
+ ##:::::::: ##::::::: ##:::::::: ##::: ##:: ##:::: ##: ##:. ###:: ##::::: ##:::::::::: ##:::: ##:::::::'##::: ##:::: ##::::
+ ##:::::::: ########: ##::::::::. ######:::. #######:: ##::. ##:'####:::: ##:::::::::: ##:::: ########:. ######::::: ##::::
+..:::::::::........::..::::::::::......:::::.......:::..::::..::....:::::..:::::::::::..:::::........:::......::::::..:::::
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+**************************************************************************************************************************/
+
+
+
+
+-->-->-- /db/src/02. functions and logic/logic/functions/core/core.get_ordered_quantity.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_ordered_quantity(_item_id integer, _unit_id integer, _office_id integer);
+
+CREATE FUNCTION core.get_ordered_quantity(_item_id integer, _unit_id integer, _office_id integer)
+RETURNS numeric
+AS
+$$
+        DECLARE last_received_on date;
+        DECLARE factor decimal(24, 8);
+BEGIN
+        SELECT 
+        MAX(transactions.transaction_master.value_date) INTO last_received_on
+        FROM transactions.transaction_master
+        INNER JOIN transactions.stock_master
+        ON transactions.transaction_master.transaction_master_id = transactions.stock_master.transaction_master_id
+        INNER JOIN transactions.stock_details
+        ON transactions.stock_master.stock_master_id = transactions.stock_details.stock_master_id
+        WHERE transactions.stock_details.item_id = $1
+        AND transactions.transaction_master.office_id = $3        
+        AND transactions.transaction_master.book like 'Purchase%';
+
+        RAISE NOTICE '%', last_received_on;
+
+        RETURN COALESCE(SUM(quantity * core.convert_unit(unit_id, $2)), 0)
+        FROM transactions.non_gl_stock_details
+        INNER JOIN transactions.non_gl_stock_master
+        ON transactions.non_gl_stock_details.non_gl_stock_master_id = transactions.non_gl_stock_master.non_gl_stock_master_id
+        WHERE transactions.non_gl_stock_master.office_id = $3        
+        AND item_id = $1
+        AND value_date > last_received_on
+        AND transactions.non_gl_stock_master.book = 'Purchase.Order';
+        
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+--SELECT core.get_ordered_quantity(17, 1, 2);
+
+
+-->-->-- /db/src/02. functions and logic/logic/functions/office/office.can_login.sql --<--<--
 DROP FUNCTION IF EXISTS office.can_login(user_id integer_strict, office_id integer_strict);
 CREATE FUNCTION office.can_login(user_id integer_strict, office_id integer_strict)
 RETURNS boolean
@@ -4251,261 +4773,952 @@ AS
 $$
 DECLARE _office_id integer;
 BEGIN
-	_office_id:=office.get_office_id_by_user_id($1);
+    _office_id:=office.get_office_id_by_user_id($1);
 
-	IF $1 = office.get_sys_user_id() THEN
-		RETURN false;
-	END IF;
+    IF $1 = office.get_sys_user_id() THEN
+        RETURN false;
+    END IF;
 
-	IF $2=_office_id THEN
-		RETURN true;
-	ELSE
-		IF office.is_parent_office(_office_id,$2) THEN
-			RETURN true;
-		END IF;
-	END IF;
-	RETURN false;
+    IF $2=_office_id THEN
+        RETURN true;
+    ELSE
+        IF office.is_parent_office(_office_id,$2) THEN
+            RETURN true;
+        END IF;
+    END IF;
+    RETURN false;
 END;
 $$
 LANGUAGE plpgsql;
 
 
--- office.sign_in.sql
+
+
+/**************************************************************************************************************************
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+'########::'##:::::::'########:::'######:::'##::::'##:'##::: ##:'####:'########::::'########:'########::'######::'########:
+ ##.... ##: ##::::::: ##.... ##:'##... ##:: ##:::: ##: ###:: ##:. ##::... ##..:::::... ##..:: ##.....::'##... ##:... ##..::
+ ##:::: ##: ##::::::: ##:::: ##: ##:::..::: ##:::: ##: ####: ##:: ##::::: ##:::::::::: ##:::: ##::::::: ##:::..::::: ##::::
+ ########:: ##::::::: ########:: ##::'####: ##:::: ##: ## ## ##:: ##::::: ##:::::::::: ##:::: ######:::. ######::::: ##::::
+ ##.....::: ##::::::: ##.....::: ##::: ##:: ##:::: ##: ##. ####:: ##::::: ##:::::::::: ##:::: ##...:::::..... ##:::: ##::::
+ ##:::::::: ##::::::: ##:::::::: ##::: ##:: ##:::: ##: ##:. ###:: ##::::: ##:::::::::: ##:::: ##:::::::'##::: ##:::: ##::::
+ ##:::::::: ########: ##::::::::. ######:::. #######:: ##::. ##:'####:::: ##:::::::::: ##:::: ########:. ######::::: ##::::
+..:::::::::........::..::::::::::......:::::.......:::..::::..::....:::::..:::::::::::..:::::........:::......::::::..:::::
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+**************************************************************************************************************************/
+
+
+
+
+-->-->-- /db/src/02. functions and logic/logic/functions/office/office.sign_in.sql --<--<--
 DROP FUNCTION IF EXISTS office.sign_in(office_id integer_strict, user_name text, password text, browser text, ip_address text, remote_user text, culture text);
 CREATE FUNCTION office.sign_in(office_id integer_strict, user_name text, password text, browser text, ip_address text, remote_user text, culture text)
 RETURNS integer
 AS
 $$
-	DECLARE _user_id integer;
-	DECLARE _lock_out_till TIMESTAMP;
+    DECLARE _user_id integer;
+    DECLARE _lock_out_till TIMESTAMP;
 BEGIN
-	_user_id:=office.get_user_id_by_user_name($2);
+    _user_id:=office.get_user_id_by_user_name($2);
 
-	IF _user_id IS NULL THEN
-		INSERT INTO audit.failed_logins(user_name,browser,ip_address,remote_user,details)
-		SELECT $2, $4, $5, $6, 'Invalid user name.';
-	ELSE
-		_lock_out_till:=policy.is_locked_out_till(_user_id);
-		IF NOT ((_lock_out_till IS NOT NULL) AND (_lock_out_till>NOW())) THEN
-			IF office.validate_login($2,$3) THEN
-				IF office.can_login(_user_id,$1) THEN
-					INSERT INTO audit.logins(office_id,user_id,browser,ip_address,remote_user, culture)
-					SELECT $1, _user_id, $4, $5, $6, $7;
+    IF _user_id IS NULL THEN
+        INSERT INTO audit.failed_logins(user_name,browser,ip_address,remote_user,details)
+        SELECT $2, $4, $5, $6, 'Invalid user name.';
+    ELSE
+        _lock_out_till:=policy.is_locked_out_till(_user_id);
+        IF NOT ((_lock_out_till IS NOT NULL) AND (_lock_out_till>NOW())) THEN
+            IF office.validate_login($2,$3) THEN
+                IF office.can_login(_user_id,$1) THEN
+                    INSERT INTO audit.logins(office_id,user_id,browser,ip_address,remote_user, culture)
+                    SELECT $1, _user_id, $4, $5, $6, $7;
 
-					RETURN CAST(currval('audit.logins_login_id_seq') AS integer);
-				ELSE
-					INSERT INTO audit.failed_logins(office_id,user_id,user_name,browser,ip_address,remote_user,details)
-					SELECT $1, _user_id, $2, $4, $5, $6, FORMAT('A user from %1$s cannot login to %2$s.', office.get_office_name_by_id(office.get_office_id_by_user_id(_user_id)), office.get_office_name_by_id($1));
-				END IF;
-			ELSE
-				INSERT INTO audit.failed_logins(office_id,user_id,user_name,browser,ip_address,remote_user,details)
-				SELECT $1, _user_id, $2, $4, $5, $6, 'Invalid login attempt.';
-			END IF;
-		END IF;
-	END IF;
+                    RETURN CAST(currval('audit.logins_login_id_seq') AS integer);
+                ELSE
+                    INSERT INTO audit.failed_logins(office_id,user_id,user_name,browser,ip_address,remote_user,details)
+                    SELECT $1, _user_id, $2, $4, $5, $6, FORMAT('A user from %1$s cannot login to %2$s.', office.get_office_name_by_id(office.get_office_id_by_user_id(_user_id)), office.get_office_name_by_id($1));
+                END IF;
+            ELSE
+                INSERT INTO audit.failed_logins(office_id,user_id,user_name,browser,ip_address,remote_user,details)
+                SELECT $1, _user_id, $2, $4, $5, $6, 'Invalid login attempt.';
+            END IF;
+        END IF;
+    END IF;
 
-	RETURN 0;
+    RETURN 0;
 END
 $$
 LANGUAGE plpgsql;
 
 
 
--- policy.get_menu.sql
+/**************************************************************************************************************************
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+'########::'##:::::::'########:::'######:::'##::::'##:'##::: ##:'####:'########::::'########:'########::'######::'########:
+ ##.... ##: ##::::::: ##.... ##:'##... ##:: ##:::: ##: ###:: ##:. ##::... ##..:::::... ##..:: ##.....::'##... ##:... ##..::
+ ##:::: ##: ##::::::: ##:::: ##: ##:::..::: ##:::: ##: ####: ##:: ##::::: ##:::::::::: ##:::: ##::::::: ##:::..::::: ##::::
+ ########:: ##::::::: ########:: ##::'####: ##:::: ##: ## ## ##:: ##::::: ##:::::::::: ##:::: ######:::. ######::::: ##::::
+ ##.....::: ##::::::: ##.....::: ##::: ##:: ##:::: ##: ##. ####:: ##::::: ##:::::::::: ##:::: ##...:::::..... ##:::: ##::::
+ ##:::::::: ##::::::: ##:::::::: ##::: ##:: ##:::: ##: ##:. ###:: ##::::: ##:::::::::: ##:::: ##:::::::'##::: ##:::: ##::::
+ ##:::::::: ########: ##::::::::. ######:::. #######:: ##::. ##:'####:::: ##:::::::::: ##:::: ########:. ######::::: ##::::
+..:::::::::........::..::::::::::......:::::.......:::..::::..::....:::::..:::::::::::..:::::........:::......::::::..:::::
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+**************************************************************************************************************************/
+
+
+
+
+-->-->-- /db/src/02. functions and logic/logic/functions/policy/policy.can_post_transaction.sql --<--<--
+DROP FUNCTION IF EXISTS policy.can_post_transaction(_user_id integer, _office_id integer, transaction_book text);
+
+CREATE FUNCTION policy.can_post_transaction(_user_id integer, _office_id integer, transaction_book text) --TODO
+RETURNS bool
+AS
+$$
+BEGIN
+        IF EXISTS (
+                        SELECT *
+                        FROM office.users
+                        INNER JOIN office.roles
+                        ON office.users.role_id = office.roles.role_id
+                        WHERE is_system=false
+                        AND user_id = $1
+                  ) THEN
+                RETURN true;
+        END IF;
+
+        RETURN FALSE;
+END
+$$
+LANGUAGE plpgsql;
+
+
+/**************************************************************************************************************************
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+'########::'##:::::::'########:::'######:::'##::::'##:'##::: ##:'####:'########::::'########:'########::'######::'########:
+ ##.... ##: ##::::::: ##.... ##:'##... ##:: ##:::: ##: ###:: ##:. ##::... ##..:::::... ##..:: ##.....::'##... ##:... ##..::
+ ##:::: ##: ##::::::: ##:::: ##: ##:::..::: ##:::: ##: ####: ##:: ##::::: ##:::::::::: ##:::: ##::::::: ##:::..::::: ##::::
+ ########:: ##::::::: ########:: ##::'####: ##:::: ##: ## ## ##:: ##::::: ##:::::::::: ##:::: ######:::. ######::::: ##::::
+ ##.....::: ##::::::: ##.....::: ##::: ##:: ##:::: ##: ##. ####:: ##::::: ##:::::::::: ##:::: ##...:::::..... ##:::: ##::::
+ ##:::::::: ##::::::: ##:::::::: ##::: ##:: ##:::: ##: ##:. ###:: ##::::: ##:::::::::: ##:::: ##:::::::'##::: ##:::: ##::::
+ ##:::::::: ########: ##::::::::. ######:::. #######:: ##::. ##:'####:::: ##:::::::::: ##:::: ########:. ######::::: ##::::
+..:::::::::........::..::::::::::......:::::.......:::..::::..::....:::::..:::::::::::..:::::........:::......::::::..:::::
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+**************************************************************************************************************************/
+
+
+
+
+-->-->-- /db/src/02. functions and logic/logic/functions/policy/policy.get_menu.sql --<--<--
 DROP FUNCTION IF EXISTS policy.get_menu(user_id_ integer, office_id_ integer, culture_ text);
 CREATE FUNCTION policy.get_menu(user_id_ integer, office_id_ integer, culture_ text)
 RETURNS TABLE
 (
-	menu_id			integer,
-	menu_text		national character varying(250),
-	url			national character varying(250),
-	menu_code		character varying(12),
-	level			smallint,
-	parent_menu_id		integer
+    menu_id         integer,
+    menu_text       national character varying(250),
+    url         national character varying(250),
+    menu_code       character varying(12),
+    level           smallint,
+    parent_menu_id      integer
 )
 AS
 $$
 DECLARE culture_exists boolean = false;
 BEGIN
-	IF EXISTS(SELECT * FROM core.menu_locale WHERE culture=$3) THEN
-		culture_exists := true;
-	END IF;
+    IF EXISTS(SELECT * FROM core.menu_locale WHERE culture=$3) THEN
+        culture_exists := true;
+    END IF;
 
-	IF culture_exists THEN
-		RETURN QUERY 
-		SELECT
-			core.menus.menu_id,
-			core.menu_locale.menu_text,
-			core.menus.url,
-			core.menus.menu_code,
-			core.menus.level,
-			core.menus.parent_menu_id	
-		FROM core.menus
-		INNER JOIN policy.menu_access
-		ON core.menus.menu_id = policy.menu_access.menu_id
-		INNER JOIN core.menu_locale
-		ON core.menus.menu_id = core.menu_locale.menu_id
-		WHERE policy.menu_access.user_id=$1
-		AND policy.menu_access.office_id=$2
-		AND core.menu_locale.culture=$3;
-	ELSE
-		RETURN QUERY 
-		SELECT
-			core.menus.menu_id,
-			core.menus.menu_text,
-			core.menus.url,
-			core.menus.menu_code,
-			core.menus.level,
-			core.menus.parent_menu_id	
-		FROM core.menus
-		INNER JOIN policy.menu_access
-		ON core.menus.menu_id = policy.menu_access.menu_id
-		WHERE policy.menu_access.user_id=$1
-		AND policy.menu_access.office_id=$2;
-	END IF;
+    IF culture_exists THEN
+        RETURN QUERY 
+        SELECT
+            core.menus.menu_id,
+            core.menu_locale.menu_text,
+            core.menus.url,
+            core.menus.menu_code,
+            core.menus.level,
+            core.menus.parent_menu_id   
+        FROM core.menus
+        INNER JOIN policy.menu_access
+        ON core.menus.menu_id = policy.menu_access.menu_id
+        INNER JOIN core.menu_locale
+        ON core.menus.menu_id = core.menu_locale.menu_id
+        WHERE policy.menu_access.user_id=$1
+        AND policy.menu_access.office_id=$2
+        AND core.menu_locale.culture=$3;
+    ELSE
+        RETURN QUERY 
+        SELECT
+            core.menus.menu_id,
+            core.menus.menu_text,
+            core.menus.url,
+            core.menus.menu_code,
+            core.menus.level,
+            core.menus.parent_menu_id   
+        FROM core.menus
+        INNER JOIN policy.menu_access
+        ON core.menus.menu_id = policy.menu_access.menu_id
+        WHERE policy.menu_access.user_id=$1
+        AND policy.menu_access.office_id=$2;
+    END IF;
 
 END
 $$
 LANGUAGE plpgsql;
 
 
--- transactions.auto_verify.sql
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/core.get_base_quantity_by_unit_id.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_base_quantity_by_unit_id(integer, integer);
+
+CREATE FUNCTION core.get_base_quantity_by_unit_id(integer, integer)
+RETURNS decimal
+AS
+$$
+DECLARE _root_unit_id integer;
+DECLARE _factor decimal;
+BEGIN
+    _root_unit_id = core.get_root_unit_id($1);
+    _factor = core.convert_unit($1, _root_unit_id);
+
+    RETURN _factor * $2;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+/**************************************************************************************************************************
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+'########::'##:::::::'########:::'######:::'##::::'##:'##::: ##:'####:'########::::'########:'########::'######::'########:
+ ##.... ##: ##::::::: ##.... ##:'##... ##:: ##:::: ##: ###:: ##:. ##::... ##..:::::... ##..:: ##.....::'##... ##:... ##..::
+ ##:::: ##: ##::::::: ##:::: ##: ##:::..::: ##:::: ##: ####: ##:: ##::::: ##:::::::::: ##:::: ##::::::: ##:::..::::: ##::::
+ ########:: ##::::::: ########:: ##::'####: ##:::: ##: ## ## ##:: ##::::: ##:::::::::: ##:::: ######:::. ######::::: ##::::
+ ##.....::: ##::::::: ##.....::: ##::: ##:: ##:::: ##: ##. ####:: ##::::: ##:::::::::: ##:::: ##...:::::..... ##:::: ##::::
+ ##:::::::: ##::::::: ##:::::::: ##::: ##:: ##:::: ##: ##:. ###:: ##::::: ##:::::::::: ##:::: ##:::::::'##::: ##:::: ##::::
+ ##:::::::: ########: ##::::::::. ######:::. #######:: ##::. ##:'####:::: ##:::::::::: ##:::: ########:. ######::::: ##::::
+..:::::::::........::..::::::::::......:::::.......:::..::::..::....:::::..:::::::::::..:::::........:::......::::::..:::::
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+**************************************************************************************************************************/
+
+
+DROP FUNCTION IF EXISTS unit_tests.get_base_quantity_by_unit_id_test();
+
+CREATE FUNCTION unit_tests.get_base_quantity_by_unit_id_test()
+RETURNS public.test_result
+AS
+$$
+    DECLARE message test_result;
+    DECLARE result boolean;
+    DECLARE actual decimal;
+    DECLARE expected decimal=345;
+BEGIN
+
+        INSERT INTO core.units(unit_code, unit_name)
+        SELECT 'TUC-0000001', 'Test Unit 1' UNION ALL 
+        SELECT 'TUC-0000002', 'Test Unit 2';
+
+
+        INSERT INTO core.compound_units(base_unit_id, compare_unit_id, value)
+        SELECT core.get_unit_id_by_unit_code('TUC-0000001'), core.get_unit_id_by_unit_code('TUC-0000002'), 345;
+
+        SELECT core.get_base_quantity_by_unit_id(core.get_unit_id_by_unit_code('TUC-0000002'), 1) INTO actual;
+
+        DELETE FROM core.compound_units WHERE base_unit_id = core.get_unit_id_by_unit_code('TUC-0000001');
+        DELETE FROM core.units WHERE unit_code IN('TUC-0000001', 'TUC-0000002');
+
+        RAISE NOTICE '%', actual;
+
+        SELECT * FROM assert.is_equal(actual, expected) INTO message, result;        
+
+        IF(result = false) THEN
+                RETURN message;
+        END IF;
+
+        SELECT assert.ok('End of test.') INTO message;  
+        RETURN message;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+
+
+
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.auto_verify.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.auto_verify(bigint) CASCADE;
 
 CREATE FUNCTION transactions.auto_verify(bigint)
 RETURNS VOID
 AS
 $$
-	DECLARE _transaction_master_id bigint;
-	DECLARE _transaction_posted_by integer;
-	DECLARE _verifier integer;
-	DECLARE _status integer;
-	DECLARE _reason national character varying(128);
-	DECLARE _rejected smallint=-3;
-	DECLARE _closed smallint=-2;
-	DECLARE _withdrawn smallint=-1;
-	DECLARE _unapproved smallint = 0;
-	DECLARE _auto_approved smallint = 1;
-	DECLARE _approved smallint=2;
-	DECLARE _book text;
-	DECLARE _auto_verify_sales boolean;
-	DECLARE _sales_verification_limit money_strict2;
-	DECLARE _auto_verify_purchase boolean;
-	DECLARE _purchase_verification_limit money_strict2;
-	DECLARE _auto_verify_gl boolean;
-	DECLARE _gl_verification_limit money_strict2;
-	DECLARE _posted_amount money_strict2;
-	DECLARE _auto_verification boolean=true;
-	DECLARE _has_policy boolean=false;
+    DECLARE _transaction_master_id bigint;
+    DECLARE _transaction_posted_by integer;
+    DECLARE _verifier integer;
+    DECLARE _status integer;
+    DECLARE _reason national character varying(128);
+    DECLARE _rejected smallint=-3;
+    DECLARE _closed smallint=-2;
+    DECLARE _withdrawn smallint=-1;
+    DECLARE _unapproved smallint = 0;
+    DECLARE _auto_approved smallint = 1;
+    DECLARE _approved smallint=2;
+    DECLARE _book text;
+    DECLARE _auto_verify_sales boolean;
+    DECLARE _sales_verification_limit money_strict2;
+    DECLARE _auto_verify_purchase boolean;
+    DECLARE _purchase_verification_limit money_strict2;
+    DECLARE _auto_verify_gl boolean;
+    DECLARE _gl_verification_limit money_strict2;
+    DECLARE _posted_amount money_strict2;
+    DECLARE _auto_verification boolean=true;
+    DECLARE _has_policy boolean=false;
 BEGIN
-	_transaction_master_id := $1;
+    _transaction_master_id := $1;
 
-	SELECT
-		transactions.transaction_master.book,
-		transactions.transaction_master.user_id
-	INTO
-		_book,
-		_transaction_posted_by 	
-	FROM
-	transactions.transaction_master
-	WHERE transactions.transaction_master.transaction_master_id=_transaction_master_id;
-	
+    SELECT
+        transactions.transaction_master.book,
+        transactions.transaction_master.user_id
+    INTO
+        _book,
+        _transaction_posted_by  
+    FROM
+    transactions.transaction_master
+    WHERE transactions.transaction_master.transaction_master_id=_transaction_master_id;
+    
 
-	_verifier := office.get_sys_user_id();
-	_status := 2;
-	_reason := 'Automatically verified by workflow.';
+    _verifier := office.get_sys_user_id();
+    _status := 2;
+    _reason := 'Automatically verified by workflow.';
 
-	SELECT
-		SUM(amount_in_local_currency)
-	INTO
-		_posted_amount
-	FROM
-		transactions.transaction_details
-	WHERE transactions.transaction_details.transaction_master_id = _transaction_master_id
-	AND transactions.transaction_details.tran_type='Cr';
-
-
-	SELECT
-		true,
-		verify_sales_transactions,
-		sales_verification_limit,
-		verify_purchase_transactions,
-		purchase_verification_limit,
-		verify_gl_transactions,
-		gl_verification_limit
-	INTO
-		_has_policy,
-		_auto_verify_sales,
-		_sales_verification_limit,
-		_auto_verify_purchase,
-		_purchase_verification_limit,
-		_auto_verify_gl,
-		_gl_verification_limit
-	FROM
-	policy.auto_verification_policy
-	WHERE user_id=_transaction_posted_by
-	AND is_active=true
-	AND now() >= effective_from
-	AND now() <= ends_on;
+    SELECT
+        SUM(amount_in_local_currency)
+    INTO
+        _posted_amount
+    FROM
+        transactions.transaction_details
+    WHERE transactions.transaction_details.transaction_master_id = _transaction_master_id
+    AND transactions.transaction_details.tran_type='Cr';
 
 
+    SELECT
+        true,
+        verify_sales_transactions,
+        sales_verification_limit,
+        verify_purchase_transactions,
+        purchase_verification_limit,
+        verify_gl_transactions,
+        gl_verification_limit
+    INTO
+        _has_policy,
+        _auto_verify_sales,
+        _sales_verification_limit,
+        _auto_verify_purchase,
+        _purchase_verification_limit,
+        _auto_verify_gl,
+        _gl_verification_limit
+    FROM
+    policy.auto_verification_policy
+    WHERE user_id=_transaction_posted_by
+    AND is_active=true
+    AND now() >= effective_from
+    AND now() <= ends_on;
 
-	IF(lower(_book) LIKE 'sales%') THEN
-		IF(_auto_verify_sales = false) THEN
-			_auto_verification := false;
-		END IF;
-		IF(_auto_verify_sales = true) THEN
-			IF(_posted_amount > _sales_verification_limit AND _sales_verification_limit > 0::money_strict2) THEN
-				_auto_verification := false;
-			END IF;
-		END IF;			
-	END IF;
 
 
-	IF(lower(_book) LIKE 'purchase%') THEN
-		IF(_auto_verify_purchase = false) THEN
-			_auto_verification := false;
-		END IF;
-		IF(_auto_verify_purchase = true) THEN
-			IF(_posted_amount > _purchase_verification_limit AND _purchase_verification_limit > 0::money_strict2) THEN
-				_auto_verification := false;
-			END IF;
-		END IF;			
-	END IF;
+    IF(lower(_book) LIKE 'sales%') THEN
+        IF(_auto_verify_sales = false) THEN
+            _auto_verification := false;
+        END IF;
+        IF(_auto_verify_sales = true) THEN
+            IF(_posted_amount > _sales_verification_limit AND _sales_verification_limit > 0::money_strict2) THEN
+                _auto_verification := false;
+            END IF;
+        END IF;         
+    END IF;
 
 
-	IF(lower(_book) LIKE 'journal%') THEN
-		IF(_auto_verify_gl = false) THEN
-			_auto_verification := false;
-		END IF;
-		IF(_auto_verify_gl = true) THEN
-			IF(_posted_amount > _gl_verification_limit AND _gl_verification_limit > 0::money_strict2) THEN
-				_auto_verification := false;
-			END IF;
-		END IF;			
-	END IF;
+    IF(lower(_book) LIKE 'purchase%') THEN
+        IF(_auto_verify_purchase = false) THEN
+            _auto_verification := false;
+        END IF;
+        IF(_auto_verify_purchase = true) THEN
+            IF(_posted_amount > _purchase_verification_limit AND _purchase_verification_limit > 0::money_strict2) THEN
+                _auto_verification := false;
+            END IF;
+        END IF;         
+    END IF;
 
-	IF(_has_policy=true) THEN
-		IF(_auto_verification = true) THEN
-			UPDATE transactions.transaction_master
-			SET 
-				last_verified_on = now(),
-				verified_by_user_id=_verifier,
-				verification_status_id=_status,
-				verification_reason=_reason
-			WHERE
-				transactions.transaction_master.transaction_master_id=_transaction_master_id;
-		END IF;
-	ELSE
-		RAISE NOTICE 'No auto verification policy found for this user.';
-	END IF;
-	RETURN;
+
+    IF(lower(_book) LIKE 'journal%') THEN
+        IF(_auto_verify_gl = false) THEN
+            _auto_verification := false;
+        END IF;
+        IF(_auto_verify_gl = true) THEN
+            IF(_posted_amount > _gl_verification_limit AND _gl_verification_limit > 0::money_strict2) THEN
+                _auto_verification := false;
+            END IF;
+        END IF;         
+    END IF;
+
+    IF(_has_policy=true) THEN
+        IF(_auto_verification = true) THEN
+            UPDATE transactions.transaction_master
+            SET 
+                last_verified_on = now(),
+                verified_by_user_id=_verifier,
+                verification_status_id=_status,
+                verification_reason=_reason
+            WHERE
+                transactions.transaction_master.transaction_master_id=_transaction_master_id;
+        END IF;
+    ELSE
+        RAISE NOTICE 'No auto verification policy found for this user.';
+    END IF;
+    RETURN;
 END
 $$
 LANGUAGE plpgsql;
 
 
--- transactions.get_accrued_interest-todo.sql
+
+/**************************************************************************************************************************
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+'########::'##:::::::'########:::'######:::'##::::'##:'##::: ##:'####:'########::::'########:'########::'######::'########:
+ ##.... ##: ##::::::: ##.... ##:'##... ##:: ##:::: ##: ###:: ##:. ##::... ##..:::::... ##..:: ##.....::'##... ##:... ##..::
+ ##:::: ##: ##::::::: ##:::: ##: ##:::..::: ##:::: ##: ####: ##:: ##::::: ##:::::::::: ##:::: ##::::::: ##:::..::::: ##::::
+ ########:: ##::::::: ########:: ##::'####: ##:::: ##: ## ## ##:: ##::::: ##:::::::::: ##:::: ######:::. ######::::: ##::::
+ ##.....::: ##::::::: ##.....::: ##::: ##:: ##:::: ##: ##. ####:: ##::::: ##:::::::::: ##:::: ##...:::::..... ##:::: ##::::
+ ##:::::::: ##::::::: ##:::::::: ##::: ##:: ##:::: ##: ##:. ###:: ##::::: ##:::::::::: ##:::: ##:::::::'##::: ##:::: ##::::
+ ##:::::::: ########: ##::::::::. ######:::. #######:: ##::. ##:'####:::: ##:::::::::: ##:::: ########:. ######::::: ##::::
+..:::::::::........::..::::::::::......:::::.......:::..::::..::....:::::..:::::::::::..:::::........:::......::::::..:::::
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+**************************************************************************************************************************/
+
+
+DROP FUNCTION IF EXISTS unit_tests.auto_verify_sales_test1();
+
+CREATE FUNCTION unit_tests.auto_verify_sales_test1()
+RETURNS public.test_result
+AS
+$$
+        DECLARE _value_date date;
+        DECLARE _tran_id bigint;
+        DECLARE _verification_status_id smallint;
+        DECLARE message test_result;
+BEGIN
+        _value_date := NOW()::date;
+
+        PERFORM unit_tests.create_dummy_office();
+        PERFORM unit_tests.create_dummy_users();
+        PERFORM unit_tests.create_dummy_accounts();
+        PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), true, 0, true, 0, true, 0, '1-1-2000', '1-1-2020', true);
+
+        _tran_id := nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
+
+        INSERT INTO transactions.transaction_master
+        (
+                transaction_master_id, 
+                transaction_counter, 
+                transaction_code, 
+                book, 
+                value_date, 
+                user_id, 
+                login_id, 
+                office_id, 
+                reference_number, 
+                statement_reference
+        )
+        SELECT 
+        _tran_id, 
+        transactions.get_new_transaction_counter(_value_date), 
+        transactions.get_transaction_code(_value_date, office.get_office_id_by_office_code('dummy-off01'), office.get_user_id_by_user_name('plpgunit-test-user-000001'), 1),
+        'Sales.Direct',
+        _value_date,
+        office.get_user_id_by_user_name('plpgunit-test-user-000001'),
+        1,
+        office.get_office_id_by_office_code('dummy-off01'),
+        'REF# TEST',
+        'Thou art not able to see this.';
+
+
+
+        INSERT INTO transactions.transaction_details
+        (
+                transaction_master_id, 
+                tran_type, 
+                account_id, 
+                statement_reference, 
+                currency_code, 
+                amount_in_currency, 
+                local_currency_code,    
+                er, 
+                amount_in_local_currency
+        )
+
+        SELECT _tran_id, 'Cr', core.get_account_id_by_account_code('TEST-ACC-001'), '', 'NPR', 12000, 'NPR', 1, 12000 UNION ALL
+        SELECT _tran_id, 'Dr', core.get_account_id_by_account_code('TEST-ACC-002'), '', 'NPR', 3000, 'NPR', 1, 3000 UNION ALL
+        SELECT _tran_id, 'Dr', core.get_account_id_by_account_code('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
+
+
+        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')));
+
+        SELECT verification_status_id
+        INTO _verification_status_id
+        FROM transactions.transaction_master
+        WHERE transaction_master_id = _tran_id;
+
+        IF(_verification_status_id < 1) THEN
+                SELECT assert.fail('This transaction should have been verified.') INTO message;
+                RETURN message;
+        END IF;
+
+    SELECT assert.ok('End of test.') INTO message;  
+    RETURN message;
+END
+$$
+LANGUAGE plpgsql;
+
+
+DROP FUNCTION IF EXISTS unit_tests.auto_verify_sales_test2();
+
+CREATE FUNCTION unit_tests.auto_verify_sales_test2()
+RETURNS public.test_result
+AS
+$$
+        DECLARE _value_date date;
+        DECLARE _tran_id bigint;
+        DECLARE _verification_status_id smallint;
+        DECLARE message test_result;
+BEGIN
+        _value_date := NOW()::date;
+        
+        PERFORM unit_tests.create_dummy_office();
+        PERFORM unit_tests.create_dummy_users();
+        PERFORM unit_tests.create_dummy_accounts();
+        PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), true, 100, true, 0, true, 0, '1-1-2000', '1-1-2020', true);
+
+        _tran_id := nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
+
+        INSERT INTO transactions.transaction_master
+        (
+                transaction_master_id, 
+                transaction_counter, 
+                transaction_code, 
+                book, 
+                value_date, 
+                user_id, 
+                login_id, 
+                office_id, 
+                reference_number, 
+                statement_reference
+        )
+        SELECT 
+        _tran_id, 
+        transactions.get_new_transaction_counter(_value_date), 
+        transactions.get_transaction_code(_value_date, office.get_office_id_by_office_code('dummy-off01'), office.get_user_id_by_user_name('plpgunit-test-user-000001'), 1),
+        'Sales.Direct',
+        _value_date,
+        office.get_user_id_by_user_name('plpgunit-test-user-000001'),
+        1,
+        office.get_office_id_by_office_code('dummy-off01'),
+        'REF# TEST',
+        'Thou art not able to see this.';
+
+
+
+        INSERT INTO transactions.transaction_details
+        (
+                transaction_master_id, 
+                tran_type, 
+                account_id, 
+                statement_reference, 
+                currency_code, 
+                amount_in_currency, 
+                local_currency_code,    
+                er, 
+                amount_in_local_currency
+        )
+
+        SELECT _tran_id, 'Cr', core.get_account_id_by_account_code('TEST-ACC-001'), '', 'NPR', 12000, 'NPR', 1, 12000 UNION ALL
+        SELECT _tran_id, 'Dr', core.get_account_id_by_account_code('TEST-ACC-002'), '', 'NPR', 3000, 'NPR', 1, 3000 UNION ALL
+        SELECT _tran_id, 'Dr', core.get_account_id_by_account_code('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
+
+
+        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')));
+
+        SELECT verification_status_id
+        INTO _verification_status_id
+        FROM transactions.transaction_master
+        WHERE transaction_master_id = _tran_id;
+
+        IF(_verification_status_id > 0) THEN
+                SELECT assert.fail('This transaction should not have been verified.') INTO message;
+                RETURN message;
+        END IF;
+
+    SELECT assert.ok('End of test.') INTO message;  
+    RETURN message;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+
+
+
+DROP FUNCTION IF EXISTS unit_tests.auto_verify_purchase_test1();
+
+CREATE FUNCTION unit_tests.auto_verify_purchase_test1()
+RETURNS public.test_result
+AS
+$$
+        DECLARE _value_date date;
+        DECLARE _tran_id bigint;
+        DECLARE _verification_status_id smallint;
+        DECLARE message test_result;
+BEGIN
+        _value_date := NOW()::date;
+
+        PERFORM unit_tests.create_dummy_office();
+        PERFORM unit_tests.create_dummy_users();
+        PERFORM unit_tests.create_dummy_accounts();
+        PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), true, 0, true, 0, true, 0, '1-1-2000', '1-1-2020', true);
+
+        _tran_id := nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
+
+        INSERT INTO transactions.transaction_master
+        (
+                transaction_master_id, 
+                transaction_counter, 
+                transaction_code, 
+                book, 
+                value_date, 
+                user_id, 
+                login_id, 
+                office_id, 
+                reference_number, 
+                statement_reference
+        )
+        SELECT 
+        _tran_id, 
+        transactions.get_new_transaction_counter(_value_date), 
+        transactions.get_transaction_code(_value_date, office.get_office_id_by_office_code('dummy-off01'), office.get_user_id_by_user_name('plpgunit-test-user-000001'), 1),
+        'Purchase.Direct',
+        _value_date,
+        office.get_user_id_by_user_name('plpgunit-test-user-000001'),
+        1,
+        office.get_office_id_by_office_code('dummy-off01'),
+        'REF# TEST',
+        'Thou art not able to see this.';
+
+
+
+        INSERT INTO transactions.transaction_details
+        (
+                transaction_master_id, 
+                tran_type, 
+                account_id, 
+                statement_reference, 
+                currency_code, 
+                amount_in_currency, 
+                local_currency_code,    
+                er, 
+                amount_in_local_currency
+        )
+
+        SELECT _tran_id, 'Cr', core.get_account_id_by_account_code('TEST-ACC-001'), '', 'NPR', 12000, 'NPR', 1, 12000 UNION ALL
+        SELECT _tran_id, 'Dr', core.get_account_id_by_account_code('TEST-ACC-002'), '', 'NPR', 3000, 'NPR', 1, 3000 UNION ALL
+        SELECT _tran_id, 'Dr', core.get_account_id_by_account_code('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
+
+
+        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')));
+
+        SELECT verification_status_id
+        INTO _verification_status_id
+        FROM transactions.transaction_master
+        WHERE transaction_master_id = _tran_id;
+
+        IF(_verification_status_id < 1) THEN
+                SELECT assert.fail('This transaction should have been verified.') INTO message;
+                RETURN message;
+        END IF;
+
+    SELECT assert.ok('End of test.') INTO message;  
+    RETURN message;
+END
+$$
+LANGUAGE plpgsql;
+
+
+DROP FUNCTION IF EXISTS unit_tests.auto_verify_purchase_test2();
+
+CREATE FUNCTION unit_tests.auto_verify_purchase_test2()
+RETURNS public.test_result
+AS
+$$
+        DECLARE _value_date date;
+        DECLARE _tran_id bigint;
+        DECLARE _verification_status_id smallint;
+        DECLARE message test_result;
+BEGIN
+        _value_date := NOW()::date;
+        
+        PERFORM unit_tests.create_dummy_office();
+        PERFORM unit_tests.create_dummy_users();
+        PERFORM unit_tests.create_dummy_accounts();
+        PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), true, 0, true, 100, true, 0, '1-1-2000', '1-1-2020', true);
+
+        _tran_id := nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
+
+        INSERT INTO transactions.transaction_master
+        (
+                transaction_master_id, 
+                transaction_counter, 
+                transaction_code, 
+                book, 
+                value_date, 
+                user_id, 
+                login_id, 
+                office_id, 
+                reference_number, 
+                statement_reference
+        )
+        SELECT 
+        _tran_id, 
+        transactions.get_new_transaction_counter(_value_date), 
+        transactions.get_transaction_code(_value_date, office.get_office_id_by_office_code('dummy-off01'), office.get_user_id_by_user_name('plpgunit-test-user-000001'), 1),
+        'Purchase.Direct',
+        _value_date,
+        office.get_user_id_by_user_name('plpgunit-test-user-000001'),
+        1,
+        office.get_office_id_by_office_code('dummy-off01'),
+        'REF# TEST',
+        'Thou art not able to see this.';
+
+
+
+        INSERT INTO transactions.transaction_details
+        (
+                transaction_master_id, 
+                tran_type, 
+                account_id, 
+                statement_reference, 
+                currency_code, 
+                amount_in_currency, 
+                local_currency_code,    
+                er, 
+                amount_in_local_currency
+        )
+
+        SELECT _tran_id, 'Cr', core.get_account_id_by_account_code('TEST-ACC-001'), '', 'NPR', 12000, 'NPR', 1, 12000 UNION ALL
+        SELECT _tran_id, 'Dr', core.get_account_id_by_account_code('TEST-ACC-002'), '', 'NPR', 3000, 'NPR', 1, 3000 UNION ALL
+        SELECT _tran_id, 'Dr', core.get_account_id_by_account_code('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
+
+
+        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')));
+
+        SELECT verification_status_id
+        INTO _verification_status_id
+        FROM transactions.transaction_master
+        WHERE transaction_master_id = _tran_id;
+
+        IF(_verification_status_id > 0) THEN
+                SELECT assert.fail('This transaction should not have been verified.') INTO message;
+                RETURN message;
+        END IF;
+
+    SELECT assert.ok('End of test.') INTO message;  
+    RETURN message;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+
+
+
+DROP FUNCTION IF EXISTS unit_tests.auto_verify_journal_test1();
+
+CREATE FUNCTION unit_tests.auto_verify_journal_test1()
+RETURNS public.test_result
+AS
+$$
+        DECLARE _value_date date;
+        DECLARE _tran_id bigint;
+        DECLARE _verification_status_id smallint;
+        DECLARE message test_result;
+BEGIN
+        _value_date := NOW()::date;
+
+        PERFORM unit_tests.create_dummy_office();
+        PERFORM unit_tests.create_dummy_users();
+        PERFORM unit_tests.create_dummy_accounts();
+        PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), true, 0, true, 0, true, 0, '1-1-2000', '1-1-2020', true);
+
+        _tran_id := nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
+
+        INSERT INTO transactions.transaction_master
+        (
+                transaction_master_id, 
+                transaction_counter, 
+                transaction_code, 
+                book, 
+                value_date, 
+                user_id, 
+                login_id, 
+                office_id, 
+                reference_number, 
+                statement_reference
+        )
+        SELECT 
+        _tran_id, 
+        transactions.get_new_transaction_counter(_value_date), 
+        transactions.get_transaction_code(_value_date, office.get_office_id_by_office_code('dummy-off01'), office.get_user_id_by_user_name('plpgunit-test-user-000001'), 1),
+        'Journal',
+        _value_date,
+        office.get_user_id_by_user_name('plpgunit-test-user-000001'),
+        1,
+        office.get_office_id_by_office_code('dummy-off01'),
+        'REF# TEST',
+        'Thou art not able to see this.';
+
+
+
+        INSERT INTO transactions.transaction_details
+        (
+                transaction_master_id, 
+                tran_type, 
+                account_id, 
+                statement_reference, 
+                currency_code, 
+                amount_in_currency, 
+                local_currency_code,    
+                er, 
+                amount_in_local_currency
+        )
+
+        SELECT _tran_id, 'Cr', core.get_account_id_by_account_code('TEST-ACC-001'), '', 'NPR', 12000, 'NPR', 1, 12000 UNION ALL
+        SELECT _tran_id, 'Dr', core.get_account_id_by_account_code('TEST-ACC-002'), '', 'NPR', 3000, 'NPR', 1, 3000 UNION ALL
+        SELECT _tran_id, 'Dr', core.get_account_id_by_account_code('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
+
+
+        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')));
+
+        SELECT verification_status_id
+        INTO _verification_status_id
+        FROM transactions.transaction_master
+        WHERE transaction_master_id = _tran_id;
+
+        IF(_verification_status_id < 1) THEN
+                SELECT assert.fail('This transaction should have been verified.') INTO message;
+                RETURN message;
+        END IF;
+
+    SELECT assert.ok('End of test.') INTO message;  
+    RETURN message;
+END
+$$
+LANGUAGE plpgsql;
+
+
+DROP FUNCTION IF EXISTS unit_tests.auto_verify_journal_test2();
+
+CREATE FUNCTION unit_tests.auto_verify_journal_test2()
+RETURNS public.test_result
+AS
+$$
+        DECLARE _value_date date;
+        DECLARE _tran_id bigint;
+        DECLARE _verification_status_id smallint;
+        DECLARE message test_result;
+BEGIN
+        _value_date := NOW()::date;
+        
+        PERFORM unit_tests.create_dummy_office();
+        PERFORM unit_tests.create_dummy_users();
+        PERFORM unit_tests.create_dummy_accounts();
+        PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), true, 0, true, 0, true, 100, '1-1-2000', '1-1-2020', true);
+
+        _tran_id := nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
+
+        INSERT INTO transactions.transaction_master
+        (
+                transaction_master_id, 
+                transaction_counter, 
+                transaction_code, 
+                book, 
+                value_date, 
+                user_id, 
+                login_id, 
+                office_id, 
+                reference_number, 
+                statement_reference
+        )
+        SELECT 
+        _tran_id, 
+        transactions.get_new_transaction_counter(_value_date), 
+        transactions.get_transaction_code(_value_date, office.get_office_id_by_office_code('dummy-off01'), office.get_user_id_by_user_name('plpgunit-test-user-000001'), 1),
+        'Journal',
+        _value_date,
+        office.get_user_id_by_user_name('plpgunit-test-user-000001'),
+        1,
+        office.get_office_id_by_office_code('dummy-off01'),
+        'REF# TEST',
+        'Thou art not able to see this.';
+
+
+
+        INSERT INTO transactions.transaction_details
+        (
+                transaction_master_id, 
+                tran_type, 
+                account_id, 
+                statement_reference, 
+                currency_code, 
+                amount_in_currency, 
+                local_currency_code,    
+                er, 
+                amount_in_local_currency
+        )
+
+        SELECT _tran_id, 'Cr', core.get_account_id_by_account_code('TEST-ACC-001'), '', 'NPR', 12000, 'NPR', 1, 12000 UNION ALL
+        SELECT _tran_id, 'Dr', core.get_account_id_by_account_code('TEST-ACC-002'), '', 'NPR', 3000, 'NPR', 1, 3000 UNION ALL
+        SELECT _tran_id, 'Dr', core.get_account_id_by_account_code('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
+
+
+        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')));
+
+        SELECT verification_status_id
+        INTO _verification_status_id
+        FROM transactions.transaction_master
+        WHERE transaction_master_id = _tran_id;
+
+        IF(_verification_status_id > 0) THEN
+                SELECT assert.fail('This transaction should not have been verified.') INTO message;
+                RETURN message;
+        END IF;
+
+    SELECT assert.ok('End of test.') INTO message;  
+    RETURN message;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_accrued_interest-todo.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_accrued_interest(office_id integer, party_id bigint);
 
 CREATE FUNCTION transactions.get_accrued_interest(office_id integer, party_id bigint)
@@ -4513,14 +5726,13 @@ RETURNS money_strict2
 AS
 $$
 BEGIN
-	RETURN NULL;
+    RETURN NULL;
 END
 $$
 LANGUAGE plpgsql;
 
 
-
--- transactions.get_average_party_transaction.sql
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_average_party_transaction.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_average_party_transaction(party_id bigint);
 
 
@@ -4528,24 +5740,35 @@ CREATE FUNCTION transactions.get_average_party_transaction(party_id bigint)
 RETURNS money_strict2
 AS
 $$
-	DECLARE _account_id bigint= core.get_account_id_by_party_id($1);
-	DECLARE _debit money_strict2 = 0;
-	DECLARE _credit money_strict2 = 0;
+    DECLARE _account_id bigint= 0;
+    DECLARE _debit money_strict2 = 0;
+    DECLARE _credit money_strict2 = 0;
 BEGIN
 
-	SELECT SUM(amount_in_local_currency)
-	INTO _debit
-	FROM transactions.verified_transactions_view
-	WHERE transactions.verified_transactions_view.account_id=_account_id
-	AND tran_type='Dr';
+    IF(COALESCE($1, 0) <= 0) THEN
+        RAISE EXCEPTION 'Invalid party.';
+    END IF;
 
-	SELECT SUM(amount_in_local_currency)
-	INTO _credit
-	FROM transactions.verified_transactions_view
-	WHERE transactions.verified_transactions_view.account_id=_account_id
-	AND tran_type='Cr';
+    _account_id := core.get_account_id_by_party_id($1);
 
-	RETURN FLOOR( (COALESCE(_credit, '0') + COALESCE(_debit, '0')) /2 );
+    IF(COALESCE(_account_id, 0) <= 0) THEN
+        RAISE EXCEPTION 'Invalid party.';
+    END IF;
+
+    
+    SELECT SUM(amount_in_local_currency)
+    INTO _debit
+    FROM transactions.verified_transaction_view
+    WHERE transactions.verified_transaction_view.account_id=_account_id
+    AND tran_type='Dr';
+
+    SELECT SUM(amount_in_local_currency)
+    INTO _credit
+    FROM transactions.verified_transaction_view
+    WHERE transactions.verified_transaction_view.account_id=_account_id
+    AND tran_type='Cr';
+
+    RETURN FLOOR( (COALESCE(_credit, '0') + COALESCE(_debit, '0')) /2 );
 END
 $$
 LANGUAGE plpgsql;
@@ -4558,53 +5781,69 @@ CREATE FUNCTION transactions.get_average_party_transaction(party_id bigint, offi
 RETURNS money_strict2
 AS
 $$
-	DECLARE _account_id bigint = core.get_account_id_by_party_id($1);
-	DECLARE _debit money_strict2 = 0;
-	DECLARE _credit money_strict2 = 0;
+    DECLARE _account_id bigint = 0;
+    DECLARE _debit money_strict2 = 0;
+    DECLARE _credit money_strict2 = 0;
 BEGIN
+    IF(COALESCE($1, 0) <= 0) THEN
+        RAISE EXCEPTION 'Invalid party.';
+    END IF;
 
-	SELECT SUM(amount_in_local_currency)
-	INTO _debit
-	FROM transactions.verified_transactions_view
-	WHERE transactions.verified_transactions_view.account_id=_account_id
-	AND transactions.verified_transactions_view.office_id=$2
-	AND tran_type='Dr';
+    IF(COALESCE($2, 0) <= 0) THEN
+        RAISE EXCEPTION 'Invalid office.';
+    END IF;
 
-	SELECT SUM(amount_in_local_currency)
-	INTO _credit
-	FROM transactions.verified_transactions_view
-	WHERE transactions.verified_transactions_view.account_id=_account_id
-	AND transactions.verified_transactions_view.office_id=$2
-	AND tran_type='Cr';
+    _account_id := core.get_account_id_by_party_id($1);
 
-	RETURN FLOOR( (COALESCE(_credit, '0') + COALESCE(_debit, '0')) /2 );
+    IF(COALESCE(_account_id, 0) <= 0) THEN
+        RAISE EXCEPTION 'Invalid party.';
+    END IF;
+
+
+    SELECT SUM(amount_in_local_currency)
+    INTO _debit
+    FROM transactions.verified_transaction_view
+    WHERE transactions.verified_transaction_view.account_id=_account_id
+    AND transactions.verified_transaction_view.office_id=$2
+    AND tran_type='Dr';
+
+    SELECT SUM(amount_in_local_currency)
+    INTO _credit
+    FROM transactions.verified_transaction_view
+    WHERE transactions.verified_transaction_view.account_id=_account_id
+    AND transactions.verified_transaction_view.office_id=$2
+    AND tran_type='Cr';
+
+    RETURN FLOOR( (COALESCE(_credit, '0') + COALESCE(_debit, '0')) /2 );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- transactions.get_cash_repository_balance.sql
+
+
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_cash_repository_balance.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_cash_repository_balance(_cash_repository_id integer, _currency_code national character varying(12));
 CREATE FUNCTION transactions.get_cash_repository_balance(_cash_repository_id integer, _currency_code national character varying(12))
 RETURNS money_strict2
 AS
 $$
-	DECLARE _debit money_strict2;
-	DECLARE _credit money_strict2;
+    DECLARE _debit money_strict2;
+    DECLARE _credit money_strict2;
 BEGIN
-	SELECT COALESCE(SUM(amount_in_currency), 0::money_strict2) INTO _debit
-	FROM transactions.verified_transactions_view
-	WHERE cash_repository_id=$1
-	AND currency_code=$2
-	AND tran_type='Dr';
+    SELECT COALESCE(SUM(amount_in_currency), 0::money_strict2) INTO _debit
+    FROM transactions.verified_transaction_view
+    WHERE cash_repository_id=$1
+    AND currency_code=$2
+    AND tran_type='Dr';
 
-	SELECT COALESCE(SUM(amount_in_currency), 0::money_strict2) INTO _credit
-	FROM transactions.verified_transactions_view
-	WHERE cash_repository_id=$1
-	AND currency_code=$2
-	AND tran_type='Cr';
+    SELECT COALESCE(SUM(amount_in_currency), 0::money_strict2) INTO _credit
+    FROM transactions.verified_transaction_view
+    WHERE cash_repository_id=$1
+    AND currency_code=$2
+    AND tran_type='Cr';
 
-	RETURN _debit - _credit;
+    RETURN _debit - _credit;
 END
 $$
 LANGUAGE plpgsql;
@@ -4615,23 +5854,23 @@ CREATE FUNCTION transactions.get_cash_repository_balance(_cash_repository_id int
 RETURNS money_strict2
 AS
 $$
-	DECLARE _local_currency_code national character varying(12) = transactions.get_default_currency_code($1);
-	DECLARE _debit money_strict2;
-	DECLARE _credit money_strict2;
+    DECLARE _local_currency_code national character varying(12) = transactions.get_default_currency_code($1);
+    DECLARE _debit money_strict2;
+    DECLARE _credit money_strict2;
 BEGIN
-	SELECT COALESCE(SUM(amount_in_currency), 0::money_strict2) INTO _debit
-	FROM transactions.verified_transactions_view
-	WHERE cash_repository_id=$1
-	AND currency_code=_local_currency_code
-	AND tran_type='Dr';
+    SELECT COALESCE(SUM(amount_in_currency), 0::money_strict2) INTO _debit
+    FROM transactions.verified_transaction_view
+    WHERE cash_repository_id=$1
+    AND currency_code=_local_currency_code
+    AND tran_type='Dr';
 
-	SELECT COALESCE(SUM(amount_in_currency), 0::money_strict2) INTO _credit
-	FROM transactions.verified_transactions_view
-	WHERE cash_repository_id=$1
-	AND currency_code=_local_currency_code
-	AND tran_type='Cr';
+    SELECT COALESCE(SUM(amount_in_currency), 0::money_strict2) INTO _credit
+    FROM transactions.verified_transaction_view
+    WHERE cash_repository_id=$1
+    AND currency_code=_local_currency_code
+    AND tran_type='Cr';
 
-	RETURN _debit - _credit;
+    RETURN _debit - _credit;
 END
 $$
 LANGUAGE plpgsql;
@@ -4639,371 +5878,375 @@ LANGUAGE plpgsql;
 
 
 
--- transactions.get_last_receipt_date.sql
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_last_receipt_date.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_last_receipt_date(office_id integer, party_id bigint);
 CREATE FUNCTION transactions.get_last_receipt_date(office_id integer, party_id bigint)
 RETURNS date
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT MAX(transactions.verified_transactions_view.value_date)
-		FROM transactions.verified_transactions_view
-		INNER JOIN transactions.customer_receipts
-		ON transactions.verified_transactions_view.transaction_master_id = transactions.customer_receipts.transaction_master_id
-		WHERE transactions.verified_transactions_view.office_id=$1
-		AND transactions.customer_receipts.party_id = $2
-	);
+    RETURN
+    (
+        SELECT MAX(transactions.verified_transaction_view.value_date)
+        FROM transactions.verified_transaction_view
+        INNER JOIN transactions.customer_receipts
+        ON transactions.verified_transaction_view.transaction_master_id = transactions.customer_receipts.transaction_master_id
+        WHERE transactions.verified_transaction_view.office_id=$1
+        AND transactions.customer_receipts.party_id = $2
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- transactions.get_non_gl_product_view.sql
+
+
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_non_gl_product_view.sql --<--<--
 
 DROP FUNCTION IF EXISTS transactions.get_non_gl_product_view
-(	
-	user_id_				integer,
-	book_					text,
-	office_id_				integer,
-	date_from_				date, 
-	date_to_				date, 
-	office_					national character varying(12),
-	party_					text,	
-	price_type_				text,
-	user_					national character varying(50),
-	reference_number_			national character varying(24),
-	statement_reference_			text
+(   
+    user_id_                integer,
+    book_                   text,
+    office_id_              integer,
+    date_from_              date, 
+    date_to_                date, 
+    office_                 national character varying(12),
+    party_                  text,   
+    price_type_             text,
+    user_                   national character varying(50),
+    reference_number_           national character varying(24),
+    statement_reference_            text
  );
 
 CREATE FUNCTION transactions.get_non_gl_product_view
 (
-	user_id_				integer,
-	book_					text,
-	office_id_				integer,
-	date_from_				date, 
-	date_to_				date, 
-	office_					national character varying(12),
-	party_					text,	
-	price_type_				text,
-	user_					national character varying(50),
-	reference_number_			national character varying(24),
-	statement_reference_			text
+    user_id_                integer,
+    book_                   text,
+    office_id_              integer,
+    date_from_              date, 
+    date_to_                date, 
+    office_                 national character varying(12),
+    party_                  text,   
+    price_type_             text,
+    user_                   national character varying(50),
+    reference_number_           national character varying(24),
+    statement_reference_            text
  )
 RETURNS TABLE
 (
-	id					bigint,
-	value_date				date,
-	office					national character varying(12),
-	party					text,
-	price_type				text,
-	amount				        decimal(24, 4),
-	transaction_ts				TIMESTAMP WITH TIME ZONE,
-	"user"					national character varying(50),
-	reference_number			national character varying(24),
-	statement_reference			text,
-	book			                text,
-	flag_background_color			text,
-	flag_foreground_color			text
+    id                  bigint,
+    value_date              date,
+    office                  national character varying(12),
+    party                   text,
+    price_type              text,
+    amount                      decimal(24, 4),
+    transaction_ts              TIMESTAMP WITH TIME ZONE,
+    "user"                  national character varying(50),
+    reference_number            national character varying(24),
+    statement_reference         text,
+    book                            text,
+    flag_background_color           text,
+    flag_foreground_color           text
 )
 AS
 $$
 BEGIN
-	RETURN QUERY 
-	WITH RECURSIVE office_cte(office_id) AS 
-	(
-		SELECT office_id_
-		UNION ALL
-		SELECT
-			c.office_id
-		FROM 
-		office_cte AS p, 
-		office.offices AS c 
-	    WHERE 
-		parent_office_id = p.office_id
-	)
+    RETURN QUERY 
+    WITH RECURSIVE office_cte(office_id) AS 
+    (
+        SELECT office_id_
+        UNION ALL
+        SELECT
+            c.office_id
+        FROM 
+        office_cte AS p, 
+        office.offices AS c 
+        WHERE 
+        parent_office_id = p.office_id
+    )
 
-	SELECT
-		transactions.non_gl_stock_master.non_gl_stock_master_id AS id,
-		transactions.non_gl_stock_master.value_date,
-		office.offices.office_code AS office,
-		core.parties.party_code || ' (' || core.parties.party_name || ')' AS party,
-		core.price_types.price_type_code || ' (' || core.price_types.price_type_name || ')' AS price_type,
-		SUM(transactions.non_gl_stock_details.price * transactions.non_gl_stock_details.quantity + tax - discount)::decimal(24, 4) AS amount,
-		transactions.non_gl_stock_master.transaction_ts,
-		office.users.user_name AS user,
-		transactions.non_gl_stock_master.reference_number,
-		transactions.non_gl_stock_master.statement_reference,
-		transactions.non_gl_stock_master.book::text,
-		core.get_flag_background_color(core.get_flag_type_id(user_id_, 'transactions.non_gl_stock_master', 'non_gl_stock_master_id', transactions.non_gl_stock_master.non_gl_stock_master_id)) AS flag_bg,
-		core.get_flag_foreground_color(core.get_flag_type_id(user_id_, 'transactions.non_gl_stock_master', 'non_gl_stock_master_id', transactions.non_gl_stock_master.non_gl_stock_master_id)) AS flag_fg
-	FROM transactions.non_gl_stock_master
-	INNER JOIN transactions.non_gl_stock_details
-	ON transactions.non_gl_stock_master.non_gl_stock_master_id = transactions.non_gl_stock_details.non_gl_stock_master_id
-	INNER JOIN core.parties
-	ON transactions.non_gl_stock_master.party_id = core.parties.party_id
-	INNER JOIN office.users
-	ON transactions.non_gl_stock_master.user_id = office.users.user_id
-	INNER JOIN office.offices
-	ON transactions.non_gl_stock_master.office_id = office.offices.office_id
-	LEFT OUTER JOIN core.price_types
-	ON transactions.non_gl_stock_master.price_type_id = core.price_types.price_type_id
-	WHERE transactions.non_gl_stock_master.book = book_
-	AND transactions.non_gl_stock_master.value_date BETWEEN date_from_ AND date_to_
-	AND 
-	lower
-	(
-		core.parties.party_code || ' (' || core.parties.party_name || ')'
-	) LIKE '%' || lower(party_) || '%'
-	AND
-	lower
-	(
-		COALESCE(core.price_types.price_type_code, '') || ' (' || COALESCE(core.price_types.price_type_name, '') || ')'
-	) LIKE '%' || lower(price_type_) || '%'
-	AND 
-	lower
-	(
-		office.users.user_name
-	)  LIKE '%' || lower(user_) || '%'
-	AND 
-	lower
-	(
-		transactions.non_gl_stock_master.reference_number
-	) LIKE '%' || lower(reference_number_) || '%'
-	AND 
-	lower
-	(
-		transactions.non_gl_stock_master.statement_reference
-	) LIKE '%' || lower(statement_reference_) || '%'	
-	AND lower
-	(
-		office.offices.office_code
-	) LIKE '%' || lower(office_) || '%'	
-	AND office.offices.office_id IN (SELECT office_id FROM office_cte)
-	GROUP BY 
-		transactions.non_gl_stock_master.non_gl_stock_master_id,
-		transactions.non_gl_stock_master.value_date,
-		office.offices.office_code,
-		core.parties.party_code,
-		core.parties.party_name,
-		core.price_types.price_type_code,
-		core.price_types.price_type_name,
-		transactions.non_gl_stock_master.transaction_ts,
-		office.users.user_name,
-		transactions.non_gl_stock_master.reference_number,
-		transactions.non_gl_stock_master.statement_reference,
-		transactions.non_gl_stock_master.book
-	LIMIT 100;
+    SELECT
+        transactions.non_gl_stock_master.non_gl_stock_master_id AS id,
+        transactions.non_gl_stock_master.value_date,
+        office.offices.office_code AS office,
+        core.parties.party_code || ' (' || core.parties.party_name || ')' AS party,
+        core.price_types.price_type_code || ' (' || core.price_types.price_type_name || ')' AS price_type,
+        SUM(transactions.non_gl_stock_details.price * transactions.non_gl_stock_details.quantity + tax - discount)::decimal(24, 4) AS amount,
+        transactions.non_gl_stock_master.transaction_ts,
+        office.users.user_name AS user,
+        transactions.non_gl_stock_master.reference_number,
+        transactions.non_gl_stock_master.statement_reference,
+        transactions.non_gl_stock_master.book::text,
+        core.get_flag_background_color(core.get_flag_type_id(user_id_, 'transactions.non_gl_stock_master', 'non_gl_stock_master_id', transactions.non_gl_stock_master.non_gl_stock_master_id)) AS flag_bg,
+        core.get_flag_foreground_color(core.get_flag_type_id(user_id_, 'transactions.non_gl_stock_master', 'non_gl_stock_master_id', transactions.non_gl_stock_master.non_gl_stock_master_id)) AS flag_fg
+    FROM transactions.non_gl_stock_master
+    INNER JOIN transactions.non_gl_stock_details
+    ON transactions.non_gl_stock_master.non_gl_stock_master_id = transactions.non_gl_stock_details.non_gl_stock_master_id
+    INNER JOIN core.parties
+    ON transactions.non_gl_stock_master.party_id = core.parties.party_id
+    INNER JOIN office.users
+    ON transactions.non_gl_stock_master.user_id = office.users.user_id
+    INNER JOIN office.offices
+    ON transactions.non_gl_stock_master.office_id = office.offices.office_id
+    LEFT OUTER JOIN core.price_types
+    ON transactions.non_gl_stock_master.price_type_id = core.price_types.price_type_id
+    WHERE transactions.non_gl_stock_master.book = book_
+    AND transactions.non_gl_stock_master.value_date BETWEEN date_from_ AND date_to_
+    AND 
+    lower
+    (
+        core.parties.party_code || ' (' || core.parties.party_name || ')'
+    ) LIKE '%' || lower(party_) || '%'
+    AND
+    lower
+    (
+        COALESCE(core.price_types.price_type_code, '') || ' (' || COALESCE(core.price_types.price_type_name, '') || ')'
+    ) LIKE '%' || lower(price_type_) || '%'
+    AND 
+    lower
+    (
+        office.users.user_name
+    )  LIKE '%' || lower(user_) || '%'
+    AND 
+    lower
+    (
+        COALESCE(transactions.non_gl_stock_master.reference_number, '')
+    ) LIKE '%' || lower(reference_number_) || '%'
+    AND 
+    lower
+    (
+        COALESCE(transactions.non_gl_stock_master.statement_reference, '')
+    ) LIKE '%' || lower(statement_reference_) || '%'    
+    AND lower
+    (
+        office.offices.office_code
+    ) LIKE '%' || lower(office_) || '%' 
+    AND office.offices.office_id IN (SELECT office_id FROM office_cte)
+    GROUP BY 
+        transactions.non_gl_stock_master.non_gl_stock_master_id,
+        transactions.non_gl_stock_master.value_date,
+        office.offices.office_code,
+        core.parties.party_code,
+        core.parties.party_name,
+        core.price_types.price_type_code,
+        core.price_types.price_type_name,
+        transactions.non_gl_stock_master.transaction_ts,
+        office.users.user_name,
+        transactions.non_gl_stock_master.reference_number,
+        transactions.non_gl_stock_master.statement_reference,
+        transactions.non_gl_stock_master.book
+    LIMIT 100;
 END
 $$
 LANGUAGE plpgsql;
 
 
-SELECT * FROM transactions.get_non_gl_product_view(1,'Sales.Order',1, '1-1-2000', '1-1-2050', '', '', '', '', '', '');
+--SELECT * FROM transactions.get_non_gl_product_view(1,'Purchase.Order',1, '1-1-2000', '1-1-2050', '', '', '', '', '', '');
 
 
--- transactions.get_party_transaction_summary.sql
+
+
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_party_transaction_summary.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_party_transaction_summary
 (
-	office_id integer, 
-	party_id bigint
+    office_id integer, 
+    party_id bigint
 );
 
 CREATE FUNCTION transactions.get_party_transaction_summary
 (
-	office_id integer, 
-	party_id bigint, 
-	OUT currency_code text, 
-	OUT currency_symbol text, 
-	OUT total_due_amount decimal(24, 4), 
-	OUT office_due_amount decimal(24, 4), 
-	OUT accrued_interest decimal(24, 4), 
-	OUT last_receipt_date date, 
-	OUT transaction_value decimal(24, 4)
+    office_id integer, 
+    party_id bigint, 
+    OUT currency_code text, 
+    OUT currency_symbol text, 
+    OUT total_due_amount decimal(24, 4), 
+    OUT office_due_amount decimal(24, 4), 
+    OUT accrued_interest decimal(24, 4), 
+    OUT last_receipt_date date, 
+    OUT transaction_value decimal(24, 4)
 )
 AS
 $$
-	DECLARE root_office_id integer = 0;
+    DECLARE root_office_id integer = 0;
 BEGIN
-	currency_code := core.get_currency_code_by_party_id(party_id);
+    currency_code := core.get_currency_code_by_party_id(party_id);
 
-	SELECT core.currencies.currency_symbol into $4
-	FROM core.currencies
-	WHERE core.currencies.currency_code = $3;
+    SELECT core.currencies.currency_symbol into $4
+    FROM core.currencies
+    WHERE core.currencies.currency_code = $3;
 
-	SELECT office.offices.office_id INTO root_office_id
-	FROM office.offices
-	WHERE parent_office_id IS NULL;
+    SELECT office.offices.office_id INTO root_office_id
+    FROM office.offices
+    WHERE parent_office_id IS NULL;
 
-	total_due_amount := transactions.get_total_due(root_office_id, party_id);
+    total_due_amount := transactions.get_total_due(root_office_id, party_id);
 
-	office_due_amount := transactions.get_total_due(office_id, party_id);
-
-
-	accrued_interest := transactions.get_accrued_interest(office_id, party_id);
-
-	last_receipt_date := transactions.get_last_receipt_date(office_id, party_id);
-
-	transaction_value := transactions.get_average_party_transaction(party_id, office_id);
+    office_due_amount := transactions.get_total_due(office_id, party_id);
 
 
-	RETURN;
+    accrued_interest := transactions.get_accrued_interest(office_id, party_id);
+
+    last_receipt_date := transactions.get_last_receipt_date(office_id, party_id);
+
+    transaction_value := transactions.get_average_party_transaction(party_id, office_id);
+
+
+    RETURN;
 END
 $$
 LANGUAGE plpgsql;
 
 
--- transactions.get_product_view.sql
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_product_view.sql --<--<--
 
 DROP FUNCTION IF EXISTS transactions.get_product_view
-(	
-	user_id_				integer,
-	book_					text,
-	office_id_				integer,
-	date_from_				date, 
-	date_to_				date, 
-	office_					national character varying(12),
-	party_					text,	
-	price_type_				text,
-	user_					national character varying(50),
-	reference_number_			national character varying(24),
-	statement_reference_			text
+(   
+    user_id_                integer,
+    book_                   text,
+    office_id_              integer,
+    date_from_              date, 
+    date_to_                date, 
+    office_                 national character varying(12),
+    party_                  text,   
+    price_type_             text,
+    user_                   national character varying(50),
+    reference_number_           national character varying(24),
+    statement_reference_            text
  );
 
 CREATE FUNCTION transactions.get_product_view
 (
-	user_id_				integer,
-	book_					text,
-	office_id_				integer,
-	date_from_				date, 
-	date_to_				date, 
-	office_					national character varying(12),
-	party_					text,	
-	price_type_				text,
-	user_					national character varying(50),
-	reference_number_			national character varying(24),
-	statement_reference_			text
+    user_id_                integer,
+    book_                   text,
+    office_id_              integer,
+    date_from_              date, 
+    date_to_                date, 
+    office_                 national character varying(12),
+    party_                  text,   
+    price_type_             text,
+    user_                   national character varying(50),
+    reference_number_           national character varying(24),
+    statement_reference_            text
  )
 RETURNS TABLE
 (
-	id					bigint,
-	value_date				date,
-	office					national character varying(12),
-	party					text,
-	price_type				text,
-	amount					decimal(24, 4),
-	transaction_ts				TIMESTAMP WITH TIME ZONE,
-	"user"					national character varying(50),
-	reference_number			national character varying(24),
-	statement_reference			text,
-	book                                    text,
-	salesperson					text,
-	is_credit				boolean,
-	shipper					text,
-	shipping_address_code			text,
-	store					text,	
-	flag_background_color			text,
-	flag_foreground_color			text
+    id                  bigint,
+    value_date              date,
+    office                  national character varying(12),
+    party                   text,
+    price_type              text,
+    amount                  decimal(24, 4),
+    transaction_ts              TIMESTAMP WITH TIME ZONE,
+    "user"                  national character varying(50),
+    reference_number            national character varying(24),
+    statement_reference         text,
+    book                                    text,
+    salesperson                 text,
+    is_credit               boolean,
+    shipper                 text,
+    shipping_address_code           text,
+    store                   text,   
+    flag_background_color           text,
+    flag_foreground_color           text
 )
 AS
 $$
 BEGIN
         CREATE TEMPORARY TABLE IF NOT EXISTS temp_book(book text) ON COMMIT DROP;
 
-	RETURN QUERY
-	WITH RECURSIVE office_cte(office_id) AS 
-	(
-		SELECT office_id_
-		UNION ALL
-		SELECT
-			c.office_id
-		FROM 
-		office_cte AS p, 
-		office.offices AS c 
-	    WHERE 
-		parent_office_id = p.office_id
-	)
+    RETURN QUERY
+    WITH RECURSIVE office_cte(office_id) AS 
+    (
+        SELECT office_id_
+        UNION ALL
+        SELECT
+            c.office_id
+        FROM 
+        office_cte AS p, 
+        office.offices AS c 
+        WHERE 
+        parent_office_id = p.office_id
+    )
 
-	SELECT
-		transactions.stock_master.transaction_master_id AS id,
-		transactions.transaction_master.value_date,
-		office.offices.office_code AS office,
-		core.parties.party_code || ' (' || core.parties.party_name || ')' AS party,
-		core.price_types.price_type_code || ' (' || core.price_types.price_type_name || ')' AS price_type,
-		SUM(transactions.stock_details.price * transactions.stock_details.quantity + tax - discount)::decimal(24, 4) AS amount,
-		transactions.transaction_master.transaction_ts,
-		office.users.user_name AS user,
-		transactions.transaction_master.reference_number,
-		transactions.transaction_master.statement_reference,
+    SELECT
+        transactions.stock_master.transaction_master_id AS id,
+        transactions.transaction_master.value_date,
+        office.offices.office_code AS office,
+        core.parties.party_code || ' (' || core.parties.party_name || ')' AS party,
+        core.price_types.price_type_code || ' (' || core.price_types.price_type_name || ')' AS price_type,
+        SUM(transactions.stock_details.price * transactions.stock_details.quantity + tax - discount)::decimal(24, 4) AS amount,
+        transactions.transaction_master.transaction_ts,
+        office.users.user_name AS user,
+        transactions.transaction_master.reference_number,
+        transactions.transaction_master.statement_reference,
                 transactions.transaction_master.book::text,
-		core.get_salesperson_name_by_salesperson_id(transactions.stock_master.salesperson_id),
-		transactions.stock_master.is_credit,
-		core.get_shipper_name_by_shipper_id(transactions.stock_master.shipper_id),
-		core.get_shipping_address_code_by_shipping_address_id(transactions.stock_master.shipping_address_id),
-		office.get_store_name_by_store_id(transactions.stock_master.store_id),
-		core.get_flag_background_color(core.get_flag_type_id(user_id_, 'transactions.stock_master', 'stock_master_id', transactions.stock_master.transaction_master_id)) AS flag_bg,
-		core.get_flag_foreground_color(core.get_flag_type_id(user_id_, 'transactions.stock_master', 'stock_master_id', transactions.stock_master.transaction_master_id)) AS flag_fg
-	FROM transactions.stock_master
-	INNER JOIN transactions.stock_details
-	ON transactions.stock_master.stock_master_id = transactions.stock_details.stock_master_id
-	INNER JOIN core.parties
-	ON transactions.stock_master.party_id = core.parties.party_id
-	INNER JOIN transactions.transaction_master
-	ON transactions.transaction_master.transaction_master_id=transactions.stock_master.transaction_master_id
-	INNER JOIN office.users
-	ON transactions.transaction_master.user_id = office.users.user_id
-	INNER JOIN office.offices
-	ON transactions.transaction_master.office_id = office.offices.office_id
-	LEFT OUTER JOIN core.price_types
-	ON transactions.stock_master.price_type_id = core.price_types.price_type_id
-	WHERE transactions.transaction_master.book = book_
-	AND transactions.transaction_master.verification_status_id > 0
-	AND transactions.transaction_master.value_date BETWEEN date_from_ AND date_to_
-	AND 
-	lower
-	(
-		core.parties.party_code || ' (' || core.parties.party_name || ')'
-	) LIKE '%' || lower(party_) || '%'
-	AND
-	lower
-	(
-		COALESCE(core.price_types.price_type_code, '') || ' (' || COALESCE(core.price_types.price_type_name, '') || ')'
-	) LIKE '%' || lower(price_type_) || '%'
-	AND 
-	lower
-	(
-		office.users.user_name
-	)  LIKE '%' || lower(user_) || '%'
-	AND 
-	lower
-	(
-		transactions.transaction_master.reference_number
-	) LIKE '%' || lower(reference_number_) || '%'
-	AND 
-	lower
-	(
-		transactions.transaction_master.statement_reference
-	) LIKE '%' || lower(statement_reference_) || '%'	
-	AND lower
-	(
-		office.offices.office_code
-	) LIKE '%' || lower(office_) || '%'	
-	AND office.offices.office_id IN (SELECT office_id FROM office_cte)
-	GROUP BY 
-		transactions.stock_master.stock_master_id,
-		transactions.transaction_master.value_date,
-		office.offices.office_code,
-		core.parties.party_code,
-		core.parties.party_name,
-		core.price_types.price_type_code,
-		core.price_types.price_type_name,
-		transactions.transaction_master.transaction_ts,
-		office.users.user_name,
-		transactions.transaction_master.reference_number,
-		transactions.transaction_master.statement_reference,
-		transactions.transaction_master.book	
-	LIMIT 100;
+        core.get_salesperson_name_by_salesperson_id(transactions.stock_master.salesperson_id),
+        transactions.stock_master.is_credit,
+        core.get_shipper_name_by_shipper_id(transactions.stock_master.shipper_id),
+        core.get_shipping_address_code_by_shipping_address_id(transactions.stock_master.shipping_address_id),
+        office.get_store_name_by_store_id(transactions.stock_master.store_id),
+        core.get_flag_background_color(core.get_flag_type_id(user_id_, 'transactions.stock_master', 'stock_master_id', transactions.stock_master.transaction_master_id)) AS flag_bg,
+        core.get_flag_foreground_color(core.get_flag_type_id(user_id_, 'transactions.stock_master', 'stock_master_id', transactions.stock_master.transaction_master_id)) AS flag_fg
+    FROM transactions.stock_master
+    INNER JOIN transactions.stock_details
+    ON transactions.stock_master.stock_master_id = transactions.stock_details.stock_master_id
+    INNER JOIN core.parties
+    ON transactions.stock_master.party_id = core.parties.party_id
+    INNER JOIN transactions.transaction_master
+    ON transactions.transaction_master.transaction_master_id=transactions.stock_master.transaction_master_id
+    INNER JOIN office.users
+    ON transactions.transaction_master.user_id = office.users.user_id
+    INNER JOIN office.offices
+    ON transactions.transaction_master.office_id = office.offices.office_id
+    LEFT OUTER JOIN core.price_types
+    ON transactions.stock_master.price_type_id = core.price_types.price_type_id
+    WHERE transactions.transaction_master.book = book_
+    AND transactions.transaction_master.verification_status_id > 0
+    AND transactions.transaction_master.value_date BETWEEN date_from_ AND date_to_
+    AND 
+    lower
+    (
+        core.parties.party_code || ' (' || core.parties.party_name || ')'
+    ) LIKE '%' || lower(party_) || '%'
+    AND
+    lower
+    (
+        COALESCE(core.price_types.price_type_code, '') || ' (' || COALESCE(core.price_types.price_type_name, '') || ')'
+    ) LIKE '%' || lower(price_type_) || '%'
+    AND 
+    lower
+    (
+        office.users.user_name
+    )  LIKE '%' || lower(user_) || '%'
+    AND 
+    lower
+    (
+        transactions.transaction_master.reference_number
+    ) LIKE '%' || lower(reference_number_) || '%'
+    AND 
+    lower
+    (
+        transactions.transaction_master.statement_reference
+    ) LIKE '%' || lower(statement_reference_) || '%'    
+    AND lower
+    (
+        office.offices.office_code
+    ) LIKE '%' || lower(office_) || '%' 
+    AND office.offices.office_id IN (SELECT office_id FROM office_cte)
+    GROUP BY 
+        transactions.stock_master.stock_master_id,
+        transactions.transaction_master.value_date,
+        office.offices.office_code,
+        core.parties.party_code,
+        core.parties.party_name,
+        core.price_types.price_type_code,
+        core.price_types.price_type_name,
+        transactions.transaction_master.transaction_ts,
+        office.users.user_name,
+        transactions.transaction_master.reference_number,
+        transactions.transaction_master.statement_reference,
+        transactions.transaction_master.book    
+    LIMIT 100;
 END
 $$
 LANGUAGE plpgsql;
@@ -5011,31 +6254,32 @@ LANGUAGE plpgsql;
 --select * from transactions.get_product_view(1, 'Sales.Return', 1, '1-1-2000',  '1-1-2020', '', '', '', '', '', '');
 
 
--- transactions.get_receipt_view.sql
+
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_receipt_view.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_receipt_view
 (
-	_user_id				integer,
-	_office_id				integer,
-	_date_from				date, 
-	_date_to				date, 
-	_office					national character varying(12),
-	_party  				text,	
-	_user					national character varying(50),
-	_reference_number			national character varying(24),
-	_statement_reference			text
+    _user_id                integer,
+    _office_id              integer,
+    _date_from              date, 
+    _date_to                date, 
+    _office                 national character varying(12),
+    _party                  text,   
+    _user                   national character varying(50),
+    _reference_number           national character varying(24),
+    _statement_reference            text
 );
 
 CREATE FUNCTION transactions.get_receipt_view
 (
-	_user_id				integer,
-	_office_id				integer,
-	_date_from				date, 
-	_date_to				date, 
-	_office					national character varying(12),
-	_party  				text,	
-	_user					national character varying(50),
-	_reference_number			national character varying(24),
-	_statement_reference			text
+    _user_id                integer,
+    _office_id              integer,
+    _date_from              date, 
+    _date_to                date, 
+    _office                 national character varying(12),
+    _party                  text,   
+    _user                   national character varying(50),
+    _reference_number           national character varying(24),
+    _statement_reference            text
 )
 RETURNS TABLE
 (
@@ -5048,14 +6292,14 @@ RETURNS TABLE
         "user"                                    text,
         currency_code                           text,
         amount                                  money_strict,
-	transaction_ts				TIMESTAMP WITH TIME ZONE,
-	flag_background_color			text,
-	flag_foreground_color			text
+    transaction_ts              TIMESTAMP WITH TIME ZONE,
+    flag_background_color           text,
+    flag_foreground_color           text
 )
 AS
 $$
 BEGIN
-	RETURN QUERY 
+    RETURN QUERY 
         SELECT
                 transactions.transaction_master.transaction_master_id,
                 transactions.transaction_master.value_date,
@@ -5066,9 +6310,9 @@ BEGIN
                 office.users.user_name::text,
                 transactions.customer_receipts.currency_code::text,
                 transactions.customer_receipts.amount,
-		transactions.transaction_master.transaction_ts,
-		core.get_flag_background_color(core.get_flag_type_id(_user_id, 'transactions.transaction_master', 'transaction_master_id', transactions.transaction_master.transaction_master_id)) AS flag_bg,
-		core.get_flag_foreground_color(core.get_flag_type_id(_user_id, 'transactions.transaction_master', 'transaction_master_id', transactions.transaction_master.transaction_master_id)) AS flag_fg                
+        transactions.transaction_master.transaction_ts,
+        core.get_flag_background_color(core.get_flag_type_id(_user_id, 'transactions.transaction_master', 'transaction_master_id', transactions.transaction_master.transaction_master_id)) AS flag_bg,
+        core.get_flag_foreground_color(core.get_flag_type_id(_user_id, 'transactions.transaction_master', 'transaction_master_id', transactions.transaction_master.transaction_master_id)) AS flag_fg                
         FROM transactions.customer_receipts
         INNER JOIN core.parties
         ON transactions.customer_receipts.party_id = core.parties.party_id
@@ -5080,32 +6324,32 @@ BEGIN
         ON transactions.transaction_master.user_id = office.users.user_id
         WHERE transactions.transaction_master.verification_status_id > 0
         AND transactions.transaction_master.office_id IN (SELECT * FROM office.get_office_ids(_office_id))
-	AND transactions.transaction_master.value_date BETWEEN _date_from AND _date_to
+    AND transactions.transaction_master.value_date BETWEEN _date_from AND _date_to
         AND
-	lower
-	(
-		core.parties.party_code || ' (' || core.parties.party_name || ')'
-	) LIKE '%' || lower(_party) || '%'
-	AND 
-	lower
-	(
-		office.users.user_name
-	)  LIKE '%' || lower(_user) || '%'
-	AND 
-	lower
-	(
-		transactions.transaction_master.reference_number
-	) LIKE '%' || lower(_reference_number) || '%'
-	AND 
-	lower
-	(
-		transactions.transaction_master.statement_reference
-	) LIKE '%' || lower(_statement_reference) || '%'	
-	AND lower
-	(
-		office.offices.office_code
-	) LIKE '%' || lower(_office) || '%'
-	LIMIT 100;
+    lower
+    (
+        core.parties.party_code || ' (' || core.parties.party_name || ')'
+    ) LIKE '%' || lower(_party) || '%'
+    AND 
+    lower
+    (
+        office.users.user_name
+    )  LIKE '%' || lower(_user) || '%'
+    AND 
+    lower
+    (
+        transactions.transaction_master.reference_number
+    ) LIKE '%' || lower(_reference_number) || '%'
+    AND 
+    lower
+    (
+        transactions.transaction_master.statement_reference
+    ) LIKE '%' || lower(_statement_reference) || '%'    
+    AND lower
+    (
+        office.offices.office_code
+    ) LIKE '%' || lower(_office) || '%'
+    LIMIT 100;
 END
 $$
 LANGUAGE plpgsql;
@@ -5116,7 +6360,66 @@ LANGUAGE plpgsql;
 --SELECT * FROM transactions.get_receipt_view(1, 1,'1-1-2000','1-1-2020','','','','','');
 
 
--- transactions.get_sales_by_offices.sql
+
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_reorder_view_function.sql --<--<--
+DROP FUNCTION IF EXISTS transactions.get_reorder_view_function(office_id integer);
+
+CREATE FUNCTION transactions.get_reorder_view_function(office_id integer)
+RETURNS TABLE
+(
+        item_id                 integer,
+        item_code               national character varying(12),
+        item_name               national character varying(150),
+        unit_id                 integer,
+        unit                    text,
+        quantity_on_hand        numeric,
+        reorder_level           integer,
+        reorder_quantity        integer,
+        preferred_supplier_id   bigint,
+        preferred_supplier      text,
+        price                   money_strict2,
+        tax_rate                numeric
+)
+AS
+$$
+BEGIN
+        RETURN QUERY
+        SELECT 
+                core.items.item_id,
+                core.items.item_code,
+                core.items.item_name,
+                core.items.reorder_unit_id,
+                core.units.unit_name::text AS unit,
+                floor(office.count_item_in_stock(core.items.item_id, core.items.reorder_unit_id, $1)) AS quantity_on_hand,
+                core.items.reorder_level,
+                core.items.reorder_quantity,
+                core.items.preferred_supplier_id,
+                core.parties.party_code || ' (' || core.parties.party_name || ')'::text AS party,
+                core.get_item_cost_price(core.items.item_id, core.items.reorder_unit_id, core.items.preferred_supplier_id),
+                core.get_item_tax_rate(core.items.item_id)
+        FROM core.items
+        INNER JOIN core.parties
+        ON core.items.preferred_supplier_id = core.parties.party_id
+        INNER JOIN core.units
+        ON core.items.reorder_unit_id = core.units.unit_id
+        WHERE 
+        floor
+        (
+                office.count_item_in_stock(core.items.item_id, core.items.reorder_unit_id, $1)
+                +
+                core.get_ordered_quantity(core.items.item_id, core.items.reorder_unit_id, $1)
+        ) 
+
+        < core.items.reorder_level
+        AND core.items.reorder_quantity > 0;
+END
+$$
+LANGUAGE plpgsql;
+
+--SELECT * FROM transactions.get_reorder_view_function(2);
+
+
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_sales_by_offices.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_sales_by_offices(office_id integer, divide_by integer);
 
 CREATE FUNCTION transactions.get_sales_by_offices(office_id integer, divide_by integer)
@@ -5200,12 +6503,12 @@ RETURNS TABLE
 )
 AS
 $$
-	DECLARE root_office_id integer = 0;
+    DECLARE root_office_id integer = 0;
 BEGIN
-	SELECT office.offices.office_id INTO root_office_id
-	FROM office.offices
-	WHERE parent_office_id IS NULL
-	LIMIT 1;
+    SELECT office.offices.office_id INTO root_office_id
+    FROM office.offices
+    WHERE parent_office_id IS NULL
+    LIMIT 1;
 
         IF divide_by <= 0 THEN
                 divide_by := 1;
@@ -5221,7 +6524,118 @@ LANGUAGE plpgsql;
 --SELECT * FROM transactions.get_sales_by_offices(1, 1);
 --SELECT * FROM transactions.get_sales_by_offices(1000);
 
--- transactions.get_top_selling_products_of_all_time.sql
+
+
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_top_selling_products_by_office.sql --<--<--
+DROP FUNCTION IF EXISTS transactions.get_top_selling_products_by_office(_office_id integer, top integer);
+
+CREATE FUNCTION transactions.get_top_selling_products_by_office(_office_id integer, top integer)
+RETURNS TABLE
+(
+        id              integer,
+        office_id       integer,
+        office_code     text,
+        office_name     text,
+        item_id         integer,
+        item_code       text,
+        item_name       text,
+        total_sales     numeric
+)
+AS
+$$
+BEGIN
+        CREATE TEMPORARY TABLE top_selling_products
+        (
+                item_id integer
+        ) ON COMMIT DROP;
+
+        INSERT INTO top_selling_products
+        SELECT t.item_id FROM transactions.get_top_selling_products_of_all_time(top) AS t;
+
+
+        CREATE TEMPORARY TABLE top_selling_products_by_office
+        (
+                id              SERIAL,
+                office_id       integer,
+                office_code     text,
+                office_name     text,
+                item_id         integer,
+                item_code       text,
+                item_name       text,
+                total_sales     numeric
+        ) ON COMMIT DROP;
+
+
+        INSERT INTO top_selling_products_by_office(office_id, item_id, total_sales)
+        SELECT
+                transactions.verified_stock_transaction_view.office_id,
+                transactions.verified_stock_transaction_view.item_id, 
+                SUM((price * quantity) - discount + tax) AS sales_amount
+        FROM transactions.verified_stock_transaction_view
+        WHERE transactions.verified_stock_transaction_view.item_id IN (SELECT top_selling_products.item_id FROM top_selling_products)
+        AND transactions.verified_stock_transaction_view.office_id IN (SELECT * FROM office.get_office_ids(_office_id))
+        GROUP BY 
+                transactions.verified_stock_transaction_view.office_id, 
+                transactions.verified_stock_transaction_view.item_id
+        ORDER BY sales_amount DESC, item_id ASC;
+
+
+        UPDATE top_selling_products_by_office AS t
+        SET 
+                item_code = core.items.item_code,
+                item_name = core.items.item_name
+        FROM core.items
+        WHERE t.item_id = core.items.item_id;
+
+
+        UPDATE top_selling_products_by_office AS t
+        SET 
+                office_code = office.offices.office_code,
+                office_name= office.offices.office_name
+        FROM office.offices
+        WHERE t.office_id = office.offices.office_id;
+
+
+        RETURN QUERY 
+        SELECT * FROM top_selling_products_by_office;
+END
+$$
+LANGUAGE plpgsql;
+
+DROP FUNCTION IF EXISTS transactions.get_top_selling_products_by_office();
+
+CREATE FUNCTION transactions.get_top_selling_products_by_office()
+RETURNS TABLE
+(
+        id              integer,
+        office_id       integer,
+        office_code     text,
+        office_name     text,
+        item_id         integer,
+        item_code       text,
+        item_name       text,
+        total_sales     numeric
+)
+AS
+$$
+    DECLARE root_office_id integer = 0;
+BEGIN
+    SELECT office.offices.office_id INTO root_office_id
+    FROM office.offices
+    WHERE parent_office_id IS NULL
+    LIMIT 1;
+
+        RETURN QUERY 
+        SELECT * FROM transactions.get_top_selling_products_by_office(root_office_id, 5);
+END
+$$
+LANGUAGE plpgsql;
+
+
+--SELECT  id, office_code, item_name, total_sales FROM transactions.get_top_selling_products_by_office()
+
+
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_top_selling_products_of_all_time.sql --<--<--
 
 DROP FUNCTION IF EXISTS transactions.get_top_selling_products_of_all_time(top int);
 
@@ -5297,55 +6711,58 @@ LANGUAGE plpgsql;
 --SELECT * FROM transactions.get_top_selling_products_of_all_time();
 
 
--- transactions.get_total_due.sql
+
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_total_due.sql --<--<--
 CREATE FUNCTION transactions.get_total_due(office_id integer, party_id bigint)
 RETURNS DECIMAL(24, 4)
 AS
 $$
-	DECLARE _accrued_interest DECIMAL(24, 4)= transactions.get_accrued_interest($1, $2);
-	DECLARE _account_id bigint= core.get_account_id_by_party_id($2);
-	DECLARE _debit DECIMAL(24, 4) = 0;
-	DECLARE _credit DECIMAL(24, 4) = 0;
-	DECLARE _local_currency_code national character varying(12) = core.get_currency_code_by_office_id($1); 
-	DECLARE _base_currency_code  national character varying(12) = core.get_currency_code_by_party_id($2);
-	DECLARE _amount_in_local_currency DECIMAL(24, 4)= 0;
-	DECLARE _amount_in_base_currency DECIMAL(24, 4)= 0;
-	DECLARE _er decimal_strict2 = 0;
+    DECLARE _accrued_interest DECIMAL(24, 4)= transactions.get_accrued_interest($1, $2);
+    DECLARE _account_id bigint= core.get_account_id_by_party_id($2);
+    DECLARE _debit DECIMAL(24, 4) = 0;
+    DECLARE _credit DECIMAL(24, 4) = 0;
+    DECLARE _local_currency_code national character varying(12) = core.get_currency_code_by_office_id($1); 
+    DECLARE _base_currency_code  national character varying(12) = core.get_currency_code_by_party_id($2);
+    DECLARE _amount_in_local_currency DECIMAL(24, 4)= 0;
+    DECLARE _amount_in_base_currency DECIMAL(24, 4)= 0;
+    DECLARE _er decimal_strict2 = 0;
 BEGIN
 
-	SELECT SUM(amount_in_local_currency)
-	INTO _debit
-	FROM transactions.verified_transactions_view
-	WHERE transactions.verified_transactions_view.account_id IN (SELECT * FROM core.get_account_ids(_account_id))
-	AND transactions.verified_transactions_view.office_id IN (SELECT * FROM office.get_office_ids($1))
-	AND tran_type='Dr';
+    SELECT SUM(amount_in_local_currency)
+    INTO _debit
+    FROM transactions.verified_transaction_view
+    WHERE transactions.verified_transaction_view.account_id IN (SELECT * FROM core.get_account_ids(_account_id))
+    AND transactions.verified_transaction_view.office_id IN (SELECT * FROM office.get_office_ids($1))
+    AND tran_type='Dr';
 
-	SELECT SUM(amount_in_local_currency)
-	INTO _credit
-	FROM transactions.verified_transactions_view
-	WHERE transactions.verified_transactions_view.account_id IN (SELECT * FROM core.get_account_ids(_account_id))
-	AND transactions.verified_transactions_view.office_id IN (SELECT * FROM office.get_office_ids($1))
-	AND tran_type='Cr';
+    SELECT SUM(amount_in_local_currency)
+    INTO _credit
+    FROM transactions.verified_transaction_view
+    WHERE transactions.verified_transaction_view.account_id IN (SELECT * FROM core.get_account_ids(_account_id))
+    AND transactions.verified_transaction_view.office_id IN (SELECT * FROM office.get_office_ids($1))
+    AND tran_type='Cr';
 
-	_er := COALESCE(transactions.get_exchange_rate($1, _local_currency_code, _base_currency_code), 0);
+    _er := COALESCE(transactions.get_exchange_rate($1, _local_currency_code, _base_currency_code), 0);
 
-	IF(_er = 0) THEN
-		RAISE EXCEPTION 'Exchange rate between % and % was not found.', _local_currency_code, _base_currency_code;
-	END IF;
-
-
-	_amount_in_local_currency = COALESCE(_credit, 0) - COALESCE(_debit, 0) - COALESCE(_accrued_interest, 0);
+    IF(_er = 0) THEN
+        RAISE EXCEPTION 'Exchange rate between % and % was not found.', _local_currency_code, _base_currency_code;
+    END IF;
 
 
-	_amount_in_base_currency = _amount_in_local_currency * _er;	
+    _amount_in_local_currency = COALESCE(_credit, 0) - COALESCE(_debit, 0) - COALESCE(_accrued_interest, 0);
 
-	RETURN _amount_in_base_currency;
+
+    _amount_in_base_currency = _amount_in_local_currency * _er; 
+
+    RETURN _amount_in_base_currency;
 END
 $$
 LANGUAGE plpgsql;
 
 
--- transactions.get_value_date.sql
+
+
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_value_date.sql --<--<--
 CREATE FUNCTION transactions.get_value_date()
 RETURNS date
 AS
@@ -5359,7 +6776,7 @@ LANGUAGE plpgsql;
 
 
 
--- transactions.post_purchase_return.sql
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.post_purchase_return.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_purchase_return
 (
         _transaction_master_id                  bigint,
@@ -5370,9 +6787,9 @@ DROP FUNCTION IF EXISTS transactions.post_purchase_return
         _store_id                               integer,
         _party_code                             national character varying(12),
         _price_type_id                          integer,
-        _reference_number 			national character varying(24),
+        _reference_number                       national character varying(24),
         _statement_reference                    text,
-        _details                                stock_detail_type[],
+        _details                                transactions.stock_detail_type[],
         _attachments                            attachment_type[]
 );
 
@@ -5386,9 +6803,9 @@ CREATE FUNCTION transactions.post_purchase_return
         _store_id                               integer,
         _party_code                             national character varying(12),
         _price_type_id                          integer,
-        _reference_number 			national character varying(24),
+        _reference_number                       national character varying(24),
         _statement_reference                    text,
-        _details                                stock_detail_type[],
+        _details                                transactions.stock_detail_type[],
         _attachments                            attachment_type[]
 )
 RETURNS bigint
@@ -5402,7 +6819,7 @@ $$
         DECLARE _discount_total                 money_strict2;
         DECLARE _tax_total                      money_strict2;
         DECLARE _is_credit                      boolean;
-        DECLARE _debit_account_id              bigint;
+        DECLARE _debit_account_id               bigint;
 BEGIN
         
         _party_id                               := core.get_party_id_by_party_code(_party_code);
@@ -5638,70 +7055,229 @@ LANGUAGE plpgsql;
 -- 
 -- SELECT * FROM transactions.post_purchase_return(1, 1, 1, 1, '1-1-2000', 1, 'JASMI-0001', 1, '1234-AD', 'Test', 
 -- ARRAY[
--- ROW(1, 'ITP', 1, 'Piece', 1000, 0, 13, 130)::stock_detail_type,
--- ROW(1, 'ITP', 1, 'Piece', 1000, 0, 13, 130)::stock_detail_type
+-- ROW(1, 'ITP', 1, 'Piece', 1000, 0, 13, 130)::transactions.stock_detail_type,
+-- ROW(1, 'ITP', 1, 'Piece', 1000, 0, 13, 130)::transactions.stock_detail_type
 -- ],
 -- ARRAY[
 -- NULL::attachment_type
 -- ]);
 
 
--- transactions.post_receipt_function.sql
+
+
+/**************************************************************************************************************************
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+'########::'##:::::::'########:::'######:::'##::::'##:'##::: ##:'####:'########::::'########:'########::'######::'########:
+ ##.... ##: ##::::::: ##.... ##:'##... ##:: ##:::: ##: ###:: ##:. ##::... ##..:::::... ##..:: ##.....::'##... ##:... ##..::
+ ##:::: ##: ##::::::: ##:::: ##: ##:::..::: ##:::: ##: ####: ##:: ##::::: ##:::::::::: ##:::: ##::::::: ##:::..::::: ##::::
+ ########:: ##::::::: ########:: ##::'####: ##:::: ##: ## ## ##:: ##::::: ##:::::::::: ##:::: ######:::. ######::::: ##::::
+ ##.....::: ##::::::: ##.....::: ##::: ##:: ##:::: ##: ##. ####:: ##::::: ##:::::::::: ##:::: ##...:::::..... ##:::: ##::::
+ ##:::::::: ##::::::: ##:::::::: ##::: ##:: ##:::: ##: ##:. ###:: ##::::: ##:::::::::: ##:::: ##:::::::'##::: ##:::: ##::::
+ ##:::::::: ########: ##::::::::. ######:::. #######:: ##::. ##:'####:::: ##:::::::::: ##:::: ########:. ######::::: ##::::
+..:::::::::........::..::::::::::......:::::.......:::..::::..::....:::::..:::::::::::..:::::........:::......::::::..:::::
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+**************************************************************************************************************************/
+
+
+
+
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.post_purhcase_reorder.sql --<--<--
+DROP FUNCTION IF EXISTS transactions.post_purhcase_reorder
+(
+        _value_date                             date,
+        _login_id                               bigint,
+        _user_id                                integer,
+        _office_id                              integer,
+        _details                                transactions.purchase_reorder_type[]
+);
+
+CREATE FUNCTION transactions.post_purhcase_reorder
+(
+        _value_date                             date,
+        _login_id                               bigint,
+        _user_id                                integer,
+        _office_id                              integer,
+        _details                                transactions.purchase_reorder_type[]
+)
+RETURNS bool
+AS
+$$
+BEGIN
+        IF(audit.is_valid_login_id(_login_id) = false) THEN
+                RAISE EXCEPTION 'Invalid LoginId.';
+        END IF; 
+
+        IF(office.is_valid_office_id(_office_id) = false) THEN
+                RAISE EXCEPTION 'Invalid OfficeId.';
+        END IF; 
+
+        IF(policy.can_post_transaction(_user_id, _office_id, 'Purchase.Order') = false) THEN
+                RAISE EXCEPTION 'Access is denied. You are not authorized to post this transaction.';
+        END IF; 
+
+        
+        IF EXISTS
+        (
+                SELECT 1 FROM explode_array(_details) AS details
+                WHERE core.is_valid_item_id(details.item_id) = false
+                LIMIT 1
+        ) THEN
+                RAISE EXCEPTION 'Invalid item.';
+        END IF;
+
+        IF EXISTS
+        (
+                SELECT 1 FROM explode_array(_details) AS details
+                WHERE core.is_valid_unit_id(details.unit_id) = false
+                LIMIT 1
+        ) THEN
+                RAISE EXCEPTION 'Invalid unit.';
+        END IF;
+        
+        IF EXISTS
+        (
+                SELECT 1 FROM explode_array(_details) AS details
+                WHERE core.is_valid_unit_id(details.unit_id, details.item_id) = false
+                LIMIT 1
+        ) THEN
+                RAISE EXCEPTION 'Item/unit mismatch.';
+        END IF;
+
+        
+
+        
+
+        CREATE TEMPORARY TABLE _temp_transaction(supplier_code national character varying(12), supplier_id bigint UNIQUE, non_gl_stock_master_id bigint UNIQUE)  ON COMMIT DROP;
+
+        INSERT INTO _temp_transaction(supplier_code)
+        SELECT DISTINCT supplier_code FROM explode_array(_details);
+
+        UPDATE _temp_transaction
+        SET supplier_id = core.get_party_id_by_party_code(supplier_code); 
+        
+        WITH returned AS
+        (
+                INSERT INTO transactions.non_gl_stock_master(value_date, book, party_id, login_id, user_id, office_id, statement_reference)
+                SELECT _value_date, 'Purchase.Order', supplier_id, _login_id, _user_id, _office_id, 'Automatically generated order.'
+                FROM _temp_transaction
+                RETURNING party_id, non_gl_stock_master_id 
+        )
+
+        UPDATE _temp_transaction
+        SET 
+                non_gl_stock_master_id = returned.non_gl_stock_master_id
+        FROM returned
+        WHERE returned.party_id = _temp_transaction.supplier_id;
+
+
+        INSERT INTO transactions.non_gl_stock_details(non_gl_stock_master_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, tax_rate, tax, audit_user_id)
+        SELECT 
+                _temp_transaction.non_gl_stock_master_id, 
+                details.item_id, 
+                details.order_quantity, 
+                details.unit_id, 
+                core.get_base_quantity_by_unit_id(details.unit_id, details.order_quantity),
+                core.get_root_unit_id(details.unit_id), 
+                details.price, 
+                0 AS discount,
+                details.tax_rate,
+                details.price * details.order_quantity * details.tax_rate/100,
+                _user_id
+        FROM explode_array(_details) as details
+        INNER JOIN _temp_transaction ON
+        _temp_transaction.supplier_code = details.supplier_code;
+        
+        RETURN FALSE;
+END
+$$
+LANGUAGE plpgsql;
+
+
+-- SELECT * FROM transactions.post_purhcase_reorder('1-1-2000', 1, 2, 2,
+-- ARRAY[
+-- ROW(1, 'ETBRO-0002', 1, 40000, 13, 10)::transactions.purchase_reorder_type,
+-- ROW(1, 'ETBRO-0002', 1, 40000, 13, 10)::transactions.purchase_reorder_type
+-- ]);
+-- 
+
+
+
+/**************************************************************************************************************************
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+'########::'##:::::::'########:::'######:::'##::::'##:'##::: ##:'####:'########::::'########:'########::'######::'########:
+ ##.... ##: ##::::::: ##.... ##:'##... ##:: ##:::: ##: ###:: ##:. ##::... ##..:::::... ##..:: ##.....::'##... ##:... ##..::
+ ##:::: ##: ##::::::: ##:::: ##: ##:::..::: ##:::: ##: ####: ##:: ##::::: ##:::::::::: ##:::: ##::::::: ##:::..::::: ##::::
+ ########:: ##::::::: ########:: ##::'####: ##:::: ##: ## ## ##:: ##::::: ##:::::::::: ##:::: ######:::. ######::::: ##::::
+ ##.....::: ##::::::: ##.....::: ##::: ##:: ##:::: ##: ##. ####:: ##::::: ##:::::::::: ##:::: ##...:::::..... ##:::: ##::::
+ ##:::::::: ##::::::: ##:::::::: ##::: ##:: ##:::: ##: ##:. ###:: ##::::: ##:::::::::: ##:::: ##:::::::'##::: ##:::: ##::::
+ ##:::::::: ########: ##::::::::. ######:::. #######:: ##::. ##:'####:::: ##:::::::::: ##:::: ########:. ######::::: ##::::
+..:::::::::........::..::::::::::......:::::.......:::..::::..::....:::::..:::::::::::..:::::........:::......::::::..:::::
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+**************************************************************************************************************************/
+
+
+
+
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.post_receipt_function.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_receipt_function
 (
-	_user_id				integer, 
-	_office_id				integer, 
-	_login_id				bigint,
-	_party_code				national character varying(12), 
-	_currency_code				national character varying(12), 
-	_amount					money_strict, 
-	_exchange_rate_debit			decimal_strict, 
-	_exchange_rate_credit			decimal_strict,
-	_reference_number			national character varying(24), 
-	_statement_reference			national character varying(128), 
-	_cost_center_id				integer,
-	_cash_repository_id			integer,
-	_posted_date                            date,
-	_bank_account_id			integer,
-	_bank_instrument_code			national character varying(128),
-	_bank_tran_code				national character varying(128)
+    _user_id                integer, 
+    _office_id              integer, 
+    _login_id               bigint,
+    _party_code             national character varying(12), 
+    _currency_code              national character varying(12), 
+    _amount                 money_strict, 
+    _exchange_rate_debit            decimal_strict, 
+    _exchange_rate_credit           decimal_strict,
+    _reference_number           national character varying(24), 
+    _statement_reference            national character varying(128), 
+    _cost_center_id             integer,
+    _cash_repository_id         integer,
+    _posted_date                            date,
+    _bank_account_id            integer,
+    _bank_instrument_code           national character varying(128),
+    _bank_tran_code             national character varying(128)
 );
 
 CREATE FUNCTION transactions.post_receipt_function
 (
-	_user_id				integer, 
-	_office_id				integer, 
-	_login_id				bigint,
-	_party_code				national character varying(12), 
-	_currency_code				national character varying(12), 
-	_amount					money_strict, 
-	_exchange_rate_debit			decimal_strict, 
-	_exchange_rate_credit			decimal_strict,
-	_reference_number			national character varying(24), 
-	_statement_reference			national character varying(128), 
-	_cost_center_id				integer,
-	_cash_repository_id			integer,
-	_posted_date                            date,
-	_bank_account_id			integer,
-	_bank_instrument_code			national character varying(128),
-	_bank_tran_code				national character varying(128)
+    _user_id                integer, 
+    _office_id              integer, 
+    _login_id               bigint,
+    _party_code             national character varying(12), 
+    _currency_code              national character varying(12), 
+    _amount                 money_strict, 
+    _exchange_rate_debit            decimal_strict, 
+    _exchange_rate_credit           decimal_strict,
+    _reference_number           national character varying(24), 
+    _statement_reference            national character varying(128), 
+    _cost_center_id             integer,
+    _cash_repository_id         integer,
+    _posted_date                            date,
+    _bank_account_id            integer,
+    _bank_instrument_code           national character varying(128),
+    _bank_tran_code             national character varying(128)
 )
 RETURNS bigint
 AS
 $$
-	DECLARE _value_date 			date;
-	DECLARE _book				text;
-	DECLARE _transaction_master_id 		bigint;
-	DECLARE _base_currency_code             national character varying(12);
-	DECLARE _local_currency_code            national character varying(12);
-	DECLARE _party_id                       bigint;
-	DECLARE _party_account_id               bigint;
-	DECLARE _debit                          money_strict2;
-	DECLARE _credit                         money_strict2;
-	DECLARE _lc_debit                       money_strict2;
-	DECLARE _lc_credit                      money_strict2;
-	DECLARE _is_cash                        boolean;
-	DECLARE _cash_account_id                bigint;
+    DECLARE _value_date             date;
+    DECLARE _book               text;
+    DECLARE _transaction_master_id      bigint;
+    DECLARE _base_currency_code             national character varying(12);
+    DECLARE _local_currency_code            national character varying(12);
+    DECLARE _party_id                       bigint;
+    DECLARE _party_account_id               bigint;
+    DECLARE _debit                          money_strict2;
+    DECLARE _credit                         money_strict2;
+    DECLARE _lc_debit                       money_strict2;
+    DECLARE _lc_credit                      money_strict2;
+    DECLARE _is_cash                        boolean;
+    DECLARE _cash_account_id                bigint;
 BEGIN
         IF(_cash_repository_id > 0) THEN
                 IF(_posted_Date IS NOT NULL OR _bank_account_id IS NOT NULL OR COALESCE(_bank_instrument_code, '') != '' OR COALESCE(_bank_tran_code, '') != '') THEN
@@ -5728,35 +7304,35 @@ BEGIN
 
         
 
-	INSERT INTO transactions.transaction_master
-	(
-		transaction_master_id, 
-		transaction_counter, 
-		transaction_code, 
-		book, 
-		value_date, 
-		user_id, 
-		login_id, 
-		office_id, 
-		cost_center_id, 
-		reference_number, 
-		statement_reference
-	)
-	SELECT 
-		nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), 
-		transactions.get_new_transaction_counter(_value_date), 
-		transactions.get_transaction_code(_value_date, _office_id, _user_id, _login_id),
-		_book,
-		_value_date,
-		_user_id,
-		_login_id,
-		_office_id,
-		_cost_center_id,
-		_reference_number,
-		_statement_reference;
+    INSERT INTO transactions.transaction_master
+    (
+        transaction_master_id, 
+        transaction_counter, 
+        transaction_code, 
+        book, 
+        value_date, 
+        user_id, 
+        login_id, 
+        office_id, 
+        cost_center_id, 
+        reference_number, 
+        statement_reference
+    )
+    SELECT 
+        nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), 
+        transactions.get_new_transaction_counter(_value_date), 
+        transactions.get_transaction_code(_value_date, _office_id, _user_id, _login_id),
+        _book,
+        _value_date,
+        _user_id,
+        _login_id,
+        _office_id,
+        _cost_center_id,
+        _reference_number,
+        _statement_reference;
 
 
-	_transaction_master_id := currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
+    _transaction_master_id := currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
 
         --Debit
         IF(_is_cash) THEN
@@ -5775,7 +7351,7 @@ BEGIN
         INSERT INTO transactions.customer_receipts(transaction_master_id, party_id, currency_code, amount, er_debit, er_credit, cash_repository_id, posted_date, bank_account_id, bank_instrument_code, bank_tran_code)
         SELECT _transaction_master_id, _party_id, _currency_code, _amount,  _exchange_rate_debit, _exchange_rate_credit, _cash_repository_id, _posted_date, _bank_account_id, _bank_instrument_code, _bank_tran_code;
 
-       	------------TODO-----------------
+        ------------TODO-----------------
         RETURN _transaction_master_id;
 END
 $$
@@ -5783,7 +7359,25 @@ LANGUAGE plpgsql;
 
 
 
--- transactions.post_sales_return.sql
+/**************************************************************************************************************************
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+'########::'##:::::::'########:::'######:::'##::::'##:'##::: ##:'####:'########::::'########:'########::'######::'########:
+ ##.... ##: ##::::::: ##.... ##:'##... ##:: ##:::: ##: ###:: ##:. ##::... ##..:::::... ##..:: ##.....::'##... ##:... ##..::
+ ##:::: ##: ##::::::: ##:::: ##: ##:::..::: ##:::: ##: ####: ##:: ##::::: ##:::::::::: ##:::: ##::::::: ##:::..::::: ##::::
+ ########:: ##::::::: ########:: ##::'####: ##:::: ##: ## ## ##:: ##::::: ##:::::::::: ##:::: ######:::. ######::::: ##::::
+ ##.....::: ##::::::: ##.....::: ##::: ##:: ##:::: ##: ##. ####:: ##::::: ##:::::::::: ##:::: ##...:::::..... ##:::: ##::::
+ ##:::::::: ##::::::: ##:::::::: ##::: ##:: ##:::: ##: ##:. ###:: ##::::: ##:::::::::: ##:::: ##:::::::'##::: ##:::: ##::::
+ ##:::::::: ########: ##::::::::. ######:::. #######:: ##::. ##:'####:::: ##:::::::::: ##:::: ########:. ######::::: ##::::
+..:::::::::........::..::::::::::......:::::.......:::..::::..::....:::::..:::::::::::..:::::........:::......::::::..:::::
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+**************************************************************************************************************************/
+
+
+
+
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.post_sales_return.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_sales_return
 (
         _transaction_master_id                  bigint,
@@ -5794,9 +7388,9 @@ DROP FUNCTION IF EXISTS transactions.post_sales_return
         _store_id                               integer,
         _party_code                             national character varying(12),
         _price_type_id                          integer,
-        _reference_number 			national character varying(24),
+        _reference_number                       national character varying(24),
         _statement_reference                    text,
-        _details                                stock_detail_type[],
+        _details                                transactions.stock_detail_type[],
         _attachments                            attachment_type[]
 );
 
@@ -5810,9 +7404,9 @@ CREATE FUNCTION transactions.post_sales_return
         _store_id                               integer,
         _party_code                             national character varying(12),
         _price_type_id                          integer,
-        _reference_number 			national character varying(24),
+        _reference_number                       national character varying(24),
         _statement_reference                    text,
-        _details                                stock_detail_type[],
+        _details                                transactions.stock_detail_type[],
         _attachments                            attachment_type[]
 )
 RETURNS bigint
@@ -6062,15 +7656,33 @@ LANGUAGE plpgsql;
 -- 
 -- SELECT * FROM transactions.post_sales_return(1, 1, 1, 1, '1-1-2000', 1, 'JASMI-0001', 1, '1234-AD', 'Test', 
 -- ARRAY[
--- ROW(1, 'ITP', 1, 'Piece', 1000, 0, 13, 130)::stock_detail_type,
--- ROW(1, 'ITP', 1, 'Piece', 1000, 0, 13, 130)::stock_detail_type
+-- ROW(1, 'ITP', 1, 'Piece', 1000, 0, 13, 130)::transactions.stock_detail_type,
+-- ROW(1, 'ITP', 1, 'Piece', 1000, 0, 13, 130)::transactions.stock_detail_type
 -- ],
 -- ARRAY[
 -- NULL::attachment_type
 -- ]);
 
 
--- transactions.refresh_materialized_views.sql
+/**************************************************************************************************************************
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+'########::'##:::::::'########:::'######:::'##::::'##:'##::: ##:'####:'########::::'########:'########::'######::'########:
+ ##.... ##: ##::::::: ##.... ##:'##... ##:: ##:::: ##: ###:: ##:. ##::... ##..:::::... ##..:: ##.....::'##... ##:... ##..::
+ ##:::: ##: ##::::::: ##:::: ##: ##:::..::: ##:::: ##: ####: ##:: ##::::: ##:::::::::: ##:::: ##::::::: ##:::..::::: ##::::
+ ########:: ##::::::: ########:: ##::'####: ##:::: ##: ## ## ##:: ##::::: ##:::::::::: ##:::: ######:::. ######::::: ##::::
+ ##.....::: ##::::::: ##.....::: ##::: ##:: ##:::: ##: ##. ####:: ##::::: ##:::::::::: ##:::: ##...:::::..... ##:::: ##::::
+ ##:::::::: ##::::::: ##:::::::: ##::: ##:: ##:::: ##: ##:. ###:: ##::::: ##:::::::::: ##:::: ##:::::::'##::: ##:::: ##::::
+ ##:::::::: ########: ##::::::::. ######:::. #######:: ##::. ##:'####:::: ##:::::::::: ##:::: ########:. ######::::: ##::::
+..:::::::::........::..::::::::::......:::::.......:::..::::..::....:::::..:::::::::::..:::::........:::......::::::..:::::
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+**************************************************************************************************************************/
+
+
+
+
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.refresh_materialized_views.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.refresh_materialized_views();
 
 CREATE FUNCTION transactions.refresh_materialized_views()
@@ -6078,124 +7690,14 @@ RETURNS void
 AS
 $$
 BEGIN
+        REFRESH MATERIALIZED VIEW transactions.trial_balance_view;
         REFRESH MATERIALIZED VIEW transactions.verified_stock_transaction_view;
 END
 $$
 LANGUAGE plpgsql;
 
 
-
--- transactions.top_selling_products_by_office.sql
-DROP FUNCTION IF EXISTS transactions.top_selling_products_by_office(_office_id integer, top integer);
-
-CREATE FUNCTION transactions.top_selling_products_by_office(_office_id integer, top integer)
-RETURNS TABLE
-(
-        id              integer,
-        office_id       integer,
-        office_code     text,
-        office_name     text,
-        item_id         integer,
-        item_code       text,
-        item_name       text,
-        total_sales     numeric
-)
-AS
-$$
-BEGIN
-        CREATE TEMPORARY TABLE top_selling_products
-        (
-                item_id integer
-        ) ON COMMIT DROP;
-
-        INSERT INTO top_selling_products
-        SELECT t.item_id FROM transactions.get_top_selling_products_of_all_time(top) AS t;
-
-
-        CREATE TEMPORARY TABLE top_selling_products_by_office
-        (
-                id              SERIAL,
-                office_id       integer,
-                office_code     text,
-                office_name     text,
-                item_id         integer,
-                item_code       text,
-                item_name       text,
-                total_sales     numeric
-        ) ON COMMIT DROP;
-
-
-        INSERT INTO top_selling_products_by_office(office_id, item_id, total_sales)
-        SELECT
-                transactions.verified_stock_transaction_view.office_id,
-                transactions.verified_stock_transaction_view.item_id, 
-                SUM((price * quantity) - discount + tax) AS sales_amount
-        FROM transactions.verified_stock_transaction_view
-        WHERE transactions.verified_stock_transaction_view.item_id IN (SELECT top_selling_products.item_id FROM top_selling_products)
-        AND transactions.verified_stock_transaction_view.office_id IN (SELECT * FROM office.get_office_ids(_office_id))
-        GROUP BY 
-                transactions.verified_stock_transaction_view.office_id, 
-                transactions.verified_stock_transaction_view.item_id
-        ORDER BY sales_amount DESC, item_id ASC;
-
-
-        UPDATE top_selling_products_by_office AS t
-        SET 
-                item_code = core.items.item_code,
-                item_name = core.items.item_name
-        FROM core.items
-        WHERE t.item_id = core.items.item_id;
-
-
-        UPDATE top_selling_products_by_office AS t
-        SET 
-                office_code = office.offices.office_code,
-                office_name= office.offices.office_name
-        FROM office.offices
-        WHERE t.office_id = office.offices.office_id;
-
-
-        RETURN QUERY 
-        SELECT * FROM top_selling_products_by_office;
-END
-$$
-LANGUAGE plpgsql;
-
-DROP FUNCTION IF EXISTS transactions.top_selling_products_by_office();
-
-CREATE FUNCTION transactions.top_selling_products_by_office()
-RETURNS TABLE
-(
-        id              integer,
-        office_id       integer,
-        office_code     text,
-        office_name     text,
-        item_id         integer,
-        item_code       text,
-        item_name       text,
-        total_sales     numeric
-)
-AS
-$$
-	DECLARE root_office_id integer = 0;
-BEGIN
-	SELECT office.offices.office_id INTO root_office_id
-	FROM office.offices
-	WHERE parent_office_id IS NULL
-	LIMIT 1;
-
-        RETURN QUERY 
-        SELECT * FROM transactions.top_selling_products_by_office(root_office_id, 5);
-END
-$$
-LANGUAGE plpgsql;
-
-
---SELECT  id, office_code, item_name, total_sales FROM transactions.top_selling_products_by_office()
-
-
-
--- transactions.validate_item_for_return.sql
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.validate_item_for_return.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.validate_item_for_return(_transaction_master_id bigint, _store_id integer, _item_code national character varying(12), _unit_name national character varying(50), _quantity integer, _price money_strict);
 
 CREATE FUNCTION transactions.validate_item_for_return(_transaction_master_id bigint, _store_id integer, _item_code national character varying(12), _unit_name national character varying(50), _quantity integer, _price money_strict)
@@ -6207,6 +7709,7 @@ $$
         DECLARE _item_id integer = 0;
         DECLARE _unit_id integer = 0;
         DECLARE _actual_quantity decimal_strict2 = 0;
+        DECLARE _returned_in_previous_batch decimal_strict2 = 0;
         DECLARE _actual_price_in_root_unit money_strict2 = 0;
         DECLARE _price_in_root_unit money_strict2 = 0;
         DECLARE _item_in_stock decimal_strict2 = 0;
@@ -6228,6 +7731,17 @@ BEGIN
         IF(_quantity IS NULL OR _quantity <= 0) THEN
                 RAISE EXCEPTION 'Invalid quantity.';
         END IF;
+
+
+        IF NOT EXISTS
+        (
+                SELECT * FROM transactions.transaction_master
+                WHERE transaction_master_id = _transaction_master_id
+                AND verification_status_id > 0
+        ) THEN
+                RAISE EXCEPTION 'Invalid or rejected transaction.';
+        END IF;
+        
         
         _stock_master_id                := transactions.get_stock_master_id_by_transaction_master_id(_transaction_master_id);
         IF(_stock_master_id  IS NULL OR _stock_master_id  <= 0) THEN
@@ -6277,15 +7791,40 @@ BEGIN
         END IF;
 
         SELECT 
-                core.convert_unit(base_unit_id, _unit_id) * base_quantity
+                COALESCE(core.convert_unit(base_unit_id, _unit_id) * base_quantity, 0)
                 INTO _actual_quantity
         FROM transactions.stock_details
         WHERE stock_master_id = _stock_master_id
         AND item_id = _item_id;
 
-        IF(_quantity > _actual_quantity) THEN
+        SELECT 
+                COALESCE(SUM(core.convert_unit(base_unit_id, 1) * base_quantity), 0)
+                INTO _returned_in_previous_batch
+        FROM transactions.stock_details
+        WHERE stock_master_id IN
+        (
+                SELECT stock_master_id
+                FROM transactions.stock_master
+                INNER JOIN transactions.transaction_master
+                ON transactions.transaction_master.transaction_master_id = transactions.stock_master.transaction_master_id
+                WHERE transactions.transaction_master.verification_status_id > 0
+                AND transactions.stock_master.transaction_master_id IN (
+
+                        SELECT 
+                        return_transaction_master_id 
+                        FROM transactions.stock_return
+                        WHERE transaction_master_id = _transaction_master_id
+                )
+        )
+        AND item_id = _item_id;
+
+
+
+        IF(_quantity + _returned_in_previous_batch > _actual_quantity) THEN
                 RAISE EXCEPTION 'The returned quantity cannot be greater than actual quantity.';
         END IF;
+
+
 
         _price_in_root_unit := core.convert_unit(core.get_root_unit_id(_unit_id), _unit_id) * _price;
 
@@ -6309,10 +7848,10 @@ END
 $$
 LANGUAGE plpgsql;
 
---SELECT * FROM transactions.validate_item_for_return(25, 1, 'CAS', 'Piece', 1, 40000);
+--SELECT * FROM transactions.validate_item_for_return(9, 1, 'RMBP', 'Piece', 1, 180000);
 
 
--- policy.check_menu_policy_trigger.sql
+-->-->-- /db/src/02. functions and logic/logic/triggers/policy.check_menu_policy_trigger.sql --<--<--
 DROP FUNCTION IF EXISTS policy.check_menu_policy_trigger() CASCADE;
 
 
@@ -6320,25 +7859,25 @@ CREATE FUNCTION policy.check_menu_policy_trigger()
 RETURNS trigger
 AS
 $$
-	DECLARE count integer=0;
+    DECLARE count integer=0;
 BEGIN
-	IF NEW.office_id IS NOT NULL THEN
-		count := count + 1;
-	END IF;
+    IF NEW.office_id IS NOT NULL THEN
+        count := count + 1;
+    END IF;
 
-	IF NEW.role_id IS NOT NULL THEN
-		count := count + 1;
-	END IF;
-	
-	IF NEW.user_id IS NOT NULL THEN
-		count := count + 1;
-	END IF;
+    IF NEW.role_id IS NOT NULL THEN
+        count := count + 1;
+    END IF;
+    
+    IF NEW.user_id IS NOT NULL THEN
+        count := count + 1;
+    END IF;
 
-	IF count <> 1 THEN
-		RAISE EXCEPTION 'Only one of the following columns is required : %', 'office_id, role_id, user_id.';
-	END IF;
+    IF count <> 1 THEN
+        RAISE EXCEPTION 'Only one of the following columns is required : %', 'office_id, role_id, user_id.';
+    END IF;
 
-	RETURN NEW;
+    RETURN NEW;
 END
 $$
 LANGUAGE plpgsql;
@@ -6349,214 +7888,214 @@ ON policy.menu_policy
 FOR EACH ROW EXECUTE PROCEDURE policy.check_menu_policy_trigger();
 
 
--- transactions.verification_trigger.sql
+-->-->-- /db/src/02. functions and logic/logic/triggers/transactions.verification_trigger.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.verification_trigger() CASCADE;
 CREATE FUNCTION transactions.verification_trigger()
 RETURNS TRIGGER
 AS
 $$
-	DECLARE _transaction_master_id bigint;
-	DECLARE _transaction_posted_by integer;
-	DECLARE _old_verifier integer;
-	DECLARE _old_status integer;
-	DECLARE _old_reason national character varying(128);
-	DECLARE _verifier integer;
-	DECLARE _status integer;
-	DECLARE _reason national character varying(128);
-	DECLARE _has_policy boolean;
-	DECLARE _is_sys boolean;
-	DECLARE _rejected smallint=-3;
-	DECLARE _closed smallint=-2;
-	DECLARE _withdrawn smallint=-1;
-	DECLARE _unapproved smallint = 0;
-	DECLARE _auto_approved smallint = 1;
-	DECLARE _approved smallint=2;
-	DECLARE _book text;
-	DECLARE _can_verify_sales_transactions boolean;
-	DECLARE _sales_verification_limit money_strict2;
-	DECLARE _can_verify_purchase_transactions boolean;
-	DECLARE _purchase_verification_limit money_strict2;
-	DECLARE _can_verify_gl_transactions boolean;
-	DECLARE _gl_verification_limit money_strict2;
-	DECLARE _can_verify_self boolean;
-	DECLARE _self_verification_limit money_strict2;
-	DECLARE _posted_amount money_strict2;
+    DECLARE _transaction_master_id bigint;
+    DECLARE _transaction_posted_by integer;
+    DECLARE _old_verifier integer;
+    DECLARE _old_status integer;
+    DECLARE _old_reason national character varying(128);
+    DECLARE _verifier integer;
+    DECLARE _status integer;
+    DECLARE _reason national character varying(128);
+    DECLARE _has_policy boolean;
+    DECLARE _is_sys boolean;
+    DECLARE _rejected smallint=-3;
+    DECLARE _closed smallint=-2;
+    DECLARE _withdrawn smallint=-1;
+    DECLARE _unapproved smallint = 0;
+    DECLARE _auto_approved smallint = 1;
+    DECLARE _approved smallint=2;
+    DECLARE _book text;
+    DECLARE _can_verify_sales_transactions boolean;
+    DECLARE _sales_verification_limit money_strict2;
+    DECLARE _can_verify_purchase_transactions boolean;
+    DECLARE _purchase_verification_limit money_strict2;
+    DECLARE _can_verify_gl_transactions boolean;
+    DECLARE _gl_verification_limit money_strict2;
+    DECLARE _can_verify_self boolean;
+    DECLARE _self_verification_limit money_strict2;
+    DECLARE _posted_amount money_strict2;
 BEGIN
-	IF TG_OP='DELETE' THEN
-		RAISE EXCEPTION 'Deleting a transaction is not allowed. Mark the transaction as rejected instead.';
-	END IF;
+    IF TG_OP='DELETE' THEN
+        RAISE EXCEPTION 'Deleting a transaction is not allowed. Mark the transaction as rejected instead.';
+    END IF;
 
-	IF TG_OP='UPDATE' THEN
-		RAISE NOTICE 'Columns except the following will be ignored for this update: %', 'verified_by_user_id, verification_status_id, verification_reason.';
+    IF TG_OP='UPDATE' THEN
+        RAISE NOTICE 'Columns except the following will be ignored for this update: %', 'verified_by_user_id, verification_status_id, verification_reason.';
 
-		IF(OLD.transaction_master_id IS DISTINCT FROM NEW.transaction_master_id) THEN
-			RAISE EXCEPTION 'Cannot update the column %', '"transaction_master_id".';
-		END IF;
+        IF(OLD.transaction_master_id IS DISTINCT FROM NEW.transaction_master_id) THEN
+            RAISE EXCEPTION 'Cannot update the column %', '"transaction_master_id".';
+        END IF;
 
-		IF(OLD.transaction_counter IS DISTINCT FROM NEW.transaction_counter) THEN
-			RAISE EXCEPTION 'Cannot update the column %', '"transaction_counter".';
-		END IF;
+        IF(OLD.transaction_counter IS DISTINCT FROM NEW.transaction_counter) THEN
+            RAISE EXCEPTION 'Cannot update the column %', '"transaction_counter".';
+        END IF;
 
-		IF(OLD.transaction_code IS DISTINCT FROM NEW.transaction_code) THEN
-			RAISE EXCEPTION 'Cannot update the column %', '"transaction_code".';
-		END IF;
+        IF(OLD.transaction_code IS DISTINCT FROM NEW.transaction_code) THEN
+            RAISE EXCEPTION 'Cannot update the column %', '"transaction_code".';
+        END IF;
 
-		IF(OLD.book IS DISTINCT FROM NEW.book) THEN
-			RAISE EXCEPTION 'Cannot update the column %', '"book".';
-		END IF;
+        IF(OLD.book IS DISTINCT FROM NEW.book) THEN
+            RAISE EXCEPTION 'Cannot update the column %', '"book".';
+        END IF;
 
-		IF(OLD.value_date IS DISTINCT FROM NEW.value_date) THEN
-			RAISE EXCEPTION 'Cannot update the column %', '"value_date".';
-		END IF;
+        IF(OLD.value_date IS DISTINCT FROM NEW.value_date) THEN
+            RAISE EXCEPTION 'Cannot update the column %', '"value_date".';
+        END IF;
 
-		IF(OLD.transaction_ts IS DISTINCT FROM NEW.transaction_ts) THEN
-			RAISE EXCEPTION 'Cannot update the column %', '"transaction_ts".';
-		END IF;
+        IF(OLD.transaction_ts IS DISTINCT FROM NEW.transaction_ts) THEN
+            RAISE EXCEPTION 'Cannot update the column %', '"transaction_ts".';
+        END IF;
 
-		IF(OLD.login_id IS DISTINCT FROM NEW.login_id) THEN
-			RAISE EXCEPTION 'Cannot update the column %', '"login_id".';
-		END IF;
+        IF(OLD.login_id IS DISTINCT FROM NEW.login_id) THEN
+            RAISE EXCEPTION 'Cannot update the column %', '"login_id".';
+        END IF;
 
-		IF(OLD.user_id IS DISTINCT FROM NEW.user_id) THEN
-			RAISE EXCEPTION 'Cannot update the column %', '"user_id".';
-		END IF;
+        IF(OLD.user_id IS DISTINCT FROM NEW.user_id) THEN
+            RAISE EXCEPTION 'Cannot update the column %', '"user_id".';
+        END IF;
 
-		IF(OLD.sys_user_id IS DISTINCT FROM NEW.sys_user_id) THEN
-			RAISE EXCEPTION 'Cannot update the column %', '"sys_user_id".';
-		END IF;
+        IF(OLD.sys_user_id IS DISTINCT FROM NEW.sys_user_id) THEN
+            RAISE EXCEPTION 'Cannot update the column %', '"sys_user_id".';
+        END IF;
 
-		IF(OLD.office_id IS DISTINCT FROM NEW.office_id) THEN
-			RAISE EXCEPTION 'Cannot update the column %', '"office_id".';
-		END IF;
+        IF(OLD.office_id IS DISTINCT FROM NEW.office_id) THEN
+            RAISE EXCEPTION 'Cannot update the column %', '"office_id".';
+        END IF;
 
-		IF(OLD.cost_center_id IS DISTINCT FROM NEW.cost_center_id) THEN
-			RAISE EXCEPTION 'Cannot update the column %', '"cost_center_id".';
-		END IF;
+        IF(OLD.cost_center_id IS DISTINCT FROM NEW.cost_center_id) THEN
+            RAISE EXCEPTION 'Cannot update the column %', '"cost_center_id".';
+        END IF;
 
-		_transaction_master_id := OLD.transaction_master_id;
-		_book := OLD.book;
-		_old_verifier := OLD.verified_by_user_id;
-		_old_status := OLD.verification_status_id;
-		_old_reason := OLD.verification_reason;
-		_transaction_posted_by := OLD.user_id;		
-		_verifier := NEW.verified_by_user_id;
-		_status := NEW.verification_status_id;
-		_reason := NEW.verification_reason;
-		_is_sys := office.is_sys(_verifier);
-
-
-		SELECT
-			SUM(amount_in_local_currency)
-		INTO
-			_posted_amount
-		FROM
-			transactions.transaction_details
-		WHERE transactions.transaction_details.transaction_master_id = _transaction_master_id
-		AND transactions.transaction_details.tran_type='Cr';
+        _transaction_master_id := OLD.transaction_master_id;
+        _book := OLD.book;
+        _old_verifier := OLD.verified_by_user_id;
+        _old_status := OLD.verification_status_id;
+        _old_reason := OLD.verification_reason;
+        _transaction_posted_by := OLD.user_id;      
+        _verifier := NEW.verified_by_user_id;
+        _status := NEW.verification_status_id;
+        _reason := NEW.verification_reason;
+        _is_sys := office.is_sys(_verifier);
 
 
-		SELECT
-			true,
-			can_verify_sales_transactions,
-			sales_verification_limit,
-			can_verify_purchase_transactions,
-			purchase_verification_limit,
-			can_verify_gl_transactions,
-			gl_verification_limit,
-			can_self_verify,
-			self_verification_limit
-		INTO
-			_has_policy,
-			_can_verify_sales_transactions,
-			_sales_verification_limit,
-			_can_verify_purchase_transactions,
-			_purchase_verification_limit,
-			_can_verify_gl_transactions,
-			_gl_verification_limit,
-			_can_verify_self,
-			_self_verification_limit
-		FROM
-		policy.voucher_verification_policy
-		WHERE user_id=_verifier
-		AND is_active=true
-		AND now() >= effective_from
-		AND now() <= ends_on;
-
-		IF(_verifier IS NULL) THEN
-			RAISE EXCEPTION 'Access is denied.';
-		END IF;		
-		
-		IF(_status != _withdrawn AND _has_policy = false) THEN
-			RAISE EXCEPTION 'Access is denied. You don''t have the right to verify the transaction.';
-		END IF;
-
-		IF(_status = _withdrawn AND _has_policy = false) THEN
-			IF(_transaction_posted_by != _verifier) THEN
-				RAISE EXCEPTION 'Access is denied. You don''t have the right to withdraw the transaction.';
-			END IF;
-		END IF;
-
-		IF(_status = _auto_approved AND _is_sys = false) THEN
-			RAISE EXCEPTION 'Access is denied.';
-		END IF;
+        SELECT
+            SUM(amount_in_local_currency)
+        INTO
+            _posted_amount
+        FROM
+            transactions.transaction_details
+        WHERE transactions.transaction_details.transaction_master_id = _transaction_master_id
+        AND transactions.transaction_details.tran_type='Cr';
 
 
-		IF(_has_policy = false) THEN
-			RAISE EXCEPTION 'Access is denied.';
-		END IF;
+        SELECT
+            true,
+            can_verify_sales_transactions,
+            sales_verification_limit,
+            can_verify_purchase_transactions,
+            purchase_verification_limit,
+            can_verify_gl_transactions,
+            gl_verification_limit,
+            can_self_verify,
+            self_verification_limit
+        INTO
+            _has_policy,
+            _can_verify_sales_transactions,
+            _sales_verification_limit,
+            _can_verify_purchase_transactions,
+            _purchase_verification_limit,
+            _can_verify_gl_transactions,
+            _gl_verification_limit,
+            _can_verify_self,
+            _self_verification_limit
+        FROM
+        policy.voucher_verification_policy
+        WHERE user_id=_verifier
+        AND is_active=true
+        AND now() >= effective_from
+        AND now() <= ends_on;
+
+        IF(_verifier IS NULL) THEN
+            RAISE EXCEPTION 'Access is denied.';
+        END IF;     
+        
+        IF(_status != _withdrawn AND _has_policy = false) THEN
+            RAISE EXCEPTION 'Access is denied. You don''t have the right to verify the transaction.';
+        END IF;
+
+        IF(_status = _withdrawn AND _has_policy = false) THEN
+            IF(_transaction_posted_by != _verifier) THEN
+                RAISE EXCEPTION 'Access is denied. You don''t have the right to withdraw the transaction.';
+            END IF;
+        END IF;
+
+        IF(_status = _auto_approved AND _is_sys = false) THEN
+            RAISE EXCEPTION 'Access is denied.';
+        END IF;
 
 
-		--Is trying verify self transaction.
-		IF(NEW.verified_by_user_id = NEW.user_id) THEN
-			IF(_can_verify_self = false) THEN
-				RAISE EXCEPTION 'Please ask someone else to verify the transaction you posted.';
-			END IF;
-			IF(_can_verify_self = true) THEN
-				IF(_posted_amount > _self_verification_limit AND _self_verification_limit > 0::money_strict2) THEN
-					RAISE EXCEPTION 'Self verification limit exceeded. The transaction was not verified.';
-				END IF;
-			END IF;
-		END IF;
-
-		IF(lower(_book) LIKE '%sales%') THEN
-			IF(_can_verify_sales_transactions = false) THEN
-				RAISE EXCEPTION 'Access is denied.';
-			END IF;
-			IF(_can_verify_sales_transactions = true) THEN
-				IF(_posted_amount > _sales_verification_limit AND _sales_verification_limit > 0::money_strict2) THEN
-					RAISE EXCEPTION 'Sales verification limit exceeded. The transaction was not verified.';
-				END IF;
-			END IF;			
-		END IF;
+        IF(_has_policy = false) THEN
+            RAISE EXCEPTION 'Access is denied.';
+        END IF;
 
 
-		IF(lower(_book) LIKE '%purchase%') THEN
-			IF(_can_verify_purchase_transactions = false) THEN
-				RAISE EXCEPTION 'Access is denied.';
-			END IF;
-			IF(_can_verify_purchase_transactions = true) THEN
-				IF(_posted_amount > _purchase_verification_limit AND _purchase_verification_limit > 0::money_strict2) THEN
-					RAISE EXCEPTION 'Purchase verification limit exceeded. The transaction was not verified.';
-				END IF;
-			END IF;			
-		END IF;
+        --Is trying verify self transaction.
+        IF(NEW.verified_by_user_id = NEW.user_id) THEN
+            IF(_can_verify_self = false) THEN
+                RAISE EXCEPTION 'Please ask someone else to verify the transaction you posted.';
+            END IF;
+            IF(_can_verify_self = true) THEN
+                IF(_posted_amount > _self_verification_limit AND _self_verification_limit > 0::money_strict2) THEN
+                    RAISE EXCEPTION 'Self verification limit exceeded. The transaction was not verified.';
+                END IF;
+            END IF;
+        END IF;
+
+        IF(lower(_book) LIKE '%sales%') THEN
+            IF(_can_verify_sales_transactions = false) THEN
+                RAISE EXCEPTION 'Access is denied.';
+            END IF;
+            IF(_can_verify_sales_transactions = true) THEN
+                IF(_posted_amount > _sales_verification_limit AND _sales_verification_limit > 0::money_strict2) THEN
+                    RAISE EXCEPTION 'Sales verification limit exceeded. The transaction was not verified.';
+                END IF;
+            END IF;         
+        END IF;
 
 
-		IF(lower(_book) LIKE 'journal%') THEN
-			IF(_can_verify_gl_transactions = false) THEN
-				RAISE EXCEPTION 'Access is denied.';
-			END IF;
-			IF(_can_verify_gl_transactions = true) THEN
-				IF(_posted_amount > _gl_verification_limit AND _gl_verification_limit > 0::money_strict2) THEN
-					RAISE EXCEPTION 'GL verification limit exceeded. The transaction was not verified.';
-				END IF;
-			END IF;			
-		END IF;
+        IF(lower(_book) LIKE '%purchase%') THEN
+            IF(_can_verify_purchase_transactions = false) THEN
+                RAISE EXCEPTION 'Access is denied.';
+            END IF;
+            IF(_can_verify_purchase_transactions = true) THEN
+                IF(_posted_amount > _purchase_verification_limit AND _purchase_verification_limit > 0::money_strict2) THEN
+                    RAISE EXCEPTION 'Purchase verification limit exceeded. The transaction was not verified.';
+                END IF;
+            END IF;         
+        END IF;
 
-		NEW.last_verified_on := now();
 
-	END IF;	
-	RETURN NEW;
+        IF(lower(_book) LIKE 'journal%') THEN
+            IF(_can_verify_gl_transactions = false) THEN
+                RAISE EXCEPTION 'Access is denied.';
+            END IF;
+            IF(_can_verify_gl_transactions = true) THEN
+                IF(_posted_amount > _gl_verification_limit AND _gl_verification_limit > 0::money_strict2) THEN
+                    RAISE EXCEPTION 'GL verification limit exceeded. The transaction was not verified.';
+                END IF;
+            END IF;         
+        END IF;
+
+        NEW.last_verified_on := now();
+
+    END IF; 
+    RETURN NEW;
 END
 $$
 LANGUAGE plpgsql;
@@ -6575,180 +8114,276 @@ FOR EACH ROW
 EXECUTE PROCEDURE transactions.verification_trigger();
 
 
--- office.create_user.sql
+-->-->-- /db/src/02. functions and logic/office/office.count_item_in_stock.sql --<--<--
+CREATE FUNCTION office.count_item_in_stock(item_id_ integer, unit_id_ integer, office_id_ integer)
+RETURNS decimal
+AS
+$$
+    DECLARE _base_unit_id integer;
+    DECLARE _debit decimal;
+    DECLARE _credit decimal;
+    DECLARE _balance decimal;
+    DECLARE _factor decimal;
+BEGIN
+
+    --Get the base item unit
+    SELECT 
+        core.get_root_unit_id(core.items.unit_id) 
+    INTO _base_unit_id
+    FROM core.items
+    WHERE core.items.item_id=$1;
+
+    --Get the sum of debit stock quantity from approved transactions
+    SELECT 
+        COALESCE(SUM(base_quantity), 0)
+    INTO _debit
+    FROM transactions.stock_details
+    INNER JOIN transactions.stock_master
+    ON transactions.stock_master.stock_master_id = transactions.stock_details.stock_master_id
+    INNER JOIN transactions.transaction_master
+    ON transactions.stock_master.transaction_master_id = transactions.transaction_master.transaction_master_id
+    WHERE transactions.transaction_master.verification_status_id > 0
+    AND transactions.stock_details.item_id=$1
+    AND transactions.stock_details.store_id IN (SELECT store_id FROM office.stores WHERE office.stores.office_id = $3)
+    AND transactions.stock_details.tran_type='Dr';
+    
+    --Get the sum of credit stock quantity from approved transactions
+    SELECT 
+        COALESCE(SUM(base_quantity), 0)
+    INTO _credit
+    FROM transactions.stock_details
+    INNER JOIN transactions.stock_master
+    ON transactions.stock_master.stock_master_id = transactions.stock_details.stock_master_id
+    INNER JOIN transactions.transaction_master
+    ON transactions.stock_master.transaction_master_id = transactions.transaction_master.transaction_master_id
+    WHERE transactions.transaction_master.verification_status_id > 0
+    AND transactions.stock_details.item_id=$1
+    AND transactions.stock_details.store_id IN (SELECT store_id FROM office.stores WHERE office.stores.office_id = $3)
+    AND transactions.stock_details.tran_type='Cr';
+    
+    _balance:= _debit - _credit;
+
+    
+    _factor = core.convert_unit($2, _base_unit_id);
+
+    return _balance / _factor;  
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+-->-->-- /db/src/02. functions and logic/office/office.create_user.sql --<--<--
 CREATE FUNCTION office.create_user
 (
-	role_id integer_strict,
-	office_id integer_strict,
-	user_name text,
-	password text,
-	full_name text
+    role_id integer_strict,
+    office_id integer_strict,
+    user_name text,
+    password text,
+    full_name text
 )
 RETURNS VOID
 AS
 $$
 BEGIN
-	INSERT INTO office.users(role_id,office_id,user_name,password, full_name)
-	SELECT $1, $2, $3, $4,$5;
-	RETURN;
+    INSERT INTO office.users(role_id,office_id,user_name,password, full_name)
+    SELECT $1, $2, $3, $4,$5;
+    RETURN;
 END
 $$
 LANGUAGE plpgsql;
 
 
--- office.get_cash_repository_id_by_cash_repository_code.sql
+-->-->-- /db/src/02. functions and logic/office/office.get_cash_repository_id_by_cash_repository_code.sql --<--<--
 CREATE FUNCTION office.get_cash_repository_id_by_cash_repository_code(text)
 RETURNS integer
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT cash_repository_id
-		FROM office.cash_repositories
-		WHERE cash_repository_code=$1
-	);
+    RETURN
+    (
+        SELECT cash_repository_id
+        FROM office.cash_repositories
+        WHERE cash_repository_code=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- office.get_cash_repository_id_by_cash_repository_name.sql
+-->-->-- /db/src/02. functions and logic/office/office.get_cash_repository_id_by_cash_repository_name.sql --<--<--
 CREATE FUNCTION office.get_cash_repository_id_by_cash_repository_name(text)
 RETURNS integer
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT cash_repository_id
-		FROM office.cash_repositories
-		WHERE cash_repository_name=$1
-	);
+    RETURN
+    (
+        SELECT cash_repository_id
+        FROM office.cash_repositories
+        WHERE cash_repository_name=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
 
--- office.get_logged_in_culture.sql
+-->-->-- /db/src/02. functions and logic/office/office.get_logged_in_culture.sql --<--<--
 CREATE FUNCTION office.get_logged_in_culture(_user_id integer)
 RETURNS text
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT culture
-		FROM audit.logins
-		WHERE user_id=$1
-		AND login_date_time = 
-		(
-			SELECT MAX(login_date_time)
-			FROM audit.logins
-			WHERE user_id=$1
-		)
-	);
+    RETURN
+    (
+        SELECT culture
+        FROM audit.logins
+        WHERE user_id=$1
+        AND login_date_time = 
+        (
+            SELECT MAX(login_date_time)
+            FROM audit.logins
+            WHERE user_id=$1
+        )
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- office.get_logged_in_office_id.sql
+-->-->-- /db/src/02. functions and logic/office/office.get_logged_in_office_id.sql --<--<--
 CREATE FUNCTION office.get_logged_in_office_id(_user_id integer)
 RETURNS integer
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT office_id
-		FROM audit.logins
-		WHERE user_id=$1
-		AND login_date_time = 
-		(
-			SELECT MAX(login_date_time)
-			FROM audit.logins
-			WHERE user_id=$1
-		)
-	);
+    RETURN
+    (
+        SELECT office_id
+        FROM audit.logins
+        WHERE user_id=$1
+        AND login_date_time = 
+        (
+            SELECT MAX(login_date_time)
+            FROM audit.logins
+            WHERE user_id=$1
+        )
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- office.get_login_id.sql
+-->-->-- /db/src/02. functions and logic/office/office.get_login_id.sql --<--<--
 CREATE FUNCTION office.get_login_id(_user_id integer)
 RETURNS bigint
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT login_id
-		FROM audit.logins
-		WHERE user_id=$1
-		AND login_date_time = 
-		(
-			SELECT MAX(login_date_time)
-			FROM audit.logins
-			WHERE user_id=$1
-		)
-	);
+    RETURN
+    (
+        SELECT login_id
+        FROM audit.logins
+        WHERE user_id=$1
+        AND login_date_time = 
+        (
+            SELECT MAX(login_date_time)
+            FROM audit.logins
+            WHERE user_id=$1
+        )
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- office.get_office_code_by_id.sql
+-->-->-- /db/src/02. functions and logic/office/office.get_office_code_by_id.sql --<--<--
 CREATE FUNCTION office.get_office_code_by_id(office_id integer_strict)
 RETURNS text
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT office.offices.office_code FROM office.offices
-		WHERE office.offices.office_id=$1
-	);
+    RETURN
+    (
+        SELECT office.offices.office_code FROM office.offices
+        WHERE office.offices.office_id=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- office.get_office_id_by_office_code.sql
+-->-->-- /db/src/02. functions and logic/office/office.get_office_id_by_cash_repository_id.sql --<--<--
+DROP FUNCTION IF EXISTS office.get_office_id_by_cash_repository_id(integer);
+
+CREATE FUNCTION office.get_office_id_by_cash_repository_id(integer)
+RETURNS integer
+AS
+$$
+BEGIN
+        RETURN office_id
+        FROM office.cash_repositories
+        WHERE cash_repository_id=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+
+
+-->-->-- /db/src/02. functions and logic/office/office.get_office_id_by_office_code.sql --<--<--
 CREATE FUNCTION office.get_office_id_by_office_code(office_code text)
 RETURNS integer
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT office.offices.office_id FROM office.offices
-		WHERE office.offices.office_code=$1
-	);
+    RETURN
+    (
+        SELECT office.offices.office_id FROM office.offices
+        WHERE office.offices.office_code=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- office.get_office_id_by_user_id.sql
+-->-->-- /db/src/02. functions and logic/office/office.get_office_id_by_store_id.sql --<--<--
+DROP FUNCTION IF EXISTS office.get_office_id_by_store_id(integer);
+
+CREATE FUNCTION office.get_office_id_by_store_id(integer)
+RETURNS integer
+AS
+$$
+BEGIN
+        RETURN office_id
+        FROM office.stores
+        WHERE store_id=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+
+-->-->-- /db/src/02. functions and logic/office/office.get_office_id_by_user_id.sql --<--<--
 CREATE FUNCTION office.get_office_id_by_user_id(user_id integer_strict)
 RETURNS integer
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT office.users.office_id FROM office.users
-		WHERE office.users.user_id=$1
-	);
+    RETURN
+    (
+        SELECT office.users.office_id FROM office.users
+        WHERE office.users.user_id=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- office.get_office_ids.sql
+-->-->-- /db/src/02. functions and logic/office/office.get_office_ids.sql --<--<--
 DROP FUNCTION IF EXISTS office.get_office_ids(root_office_id integer);
 
 CREATE FUNCTION office.get_office_ids(root_office_id integer)
@@ -6756,46 +8391,46 @@ RETURNS SETOF integer
 AS
 $$
 BEGIN
-	RETURN QUERY 
-	(
-		WITH RECURSIVE office_cte(office_id, path) AS (
-		 SELECT
-			tn.office_id,  tn.office_id::TEXT AS path
-			FROM office.offices AS tn WHERE tn.office_id =$1
-		UNION ALL
-		 SELECT
-			c.office_id, (p.path || '->' || c.office_id::TEXT)
-			FROM office_cte AS p, office.offices AS c WHERE parent_office_id = p.office_id
-		)
+    RETURN QUERY 
+    (
+        WITH RECURSIVE office_cte(office_id, path) AS (
+         SELECT
+            tn.office_id,  tn.office_id::TEXT AS path
+            FROM office.offices AS tn WHERE tn.office_id =$1
+        UNION ALL
+         SELECT
+            c.office_id, (p.path || '->' || c.office_id::TEXT)
+            FROM office_cte AS p, office.offices AS c WHERE parent_office_id = p.office_id
+        )
 
-		SELECT office_id FROM office_cte
-	);
+        SELECT office_id FROM office_cte
+    );
 END
 $$LANGUAGE plpgsql;
 
--- office.get_office_name_by_id.sql
+-->-->-- /db/src/02. functions and logic/office/office.get_office_name_by_id.sql --<--<--
 CREATE FUNCTION office.get_office_name_by_id(office_id integer_strict)
 RETURNS text
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT office.offices.office_name FROM office.offices
-		WHERE office.offices.office_id=$1
-	);
+    RETURN
+    (
+        SELECT office.offices.office_name FROM office.offices
+        WHERE office.offices.office_id=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- office.get_offices.sql
+-->-->-- /db/src/02. functions and logic/office/office.get_offices.sql --<--<--
 CREATE TYPE office.office_type AS
 (
-	office_id				integer_strict,
-	office_code 				national character varying(12),
-	office_name 				national character varying(150),
-	address text
+    office_id               integer_strict,
+    office_code                 national character varying(12),
+    office_name                 national character varying(150),
+    address text
 );
 
 CREATE FUNCTION office.get_offices()
@@ -6804,173 +8439,207 @@ AS
 $$
 DECLARE "@record" office.office_type%rowtype;
 BEGIN
-	FOR "@record" IN SELECT office_id, office_code,office_name,street || ' ' || city AS Address FROM office.offices WHERE parent_office_id IS NOT NULL
-	LOOP
-		RETURN NEXT "@record";
-	END LOOP;
+    FOR "@record" IN SELECT office_id, office_code,office_name,street || ' ' || city AS Address FROM office.offices WHERE parent_office_id IS NOT NULL
+    LOOP
+        RETURN NEXT "@record";
+    END LOOP;
 
-	IF NOT FOUND THEN
-		FOR "@record" IN SELECT office_id, office_code,office_name,street || ' ' || city AS Address FROM office.offices WHERE parent_office_id IS NULL
-		LOOP
-			RETURN NEXT "@record";
-		END LOOP;
-	END IF;
+    IF NOT FOUND THEN
+        FOR "@record" IN SELECT office_id, office_code,office_name,street || ' ' || city AS Address FROM office.offices WHERE parent_office_id IS NULL
+        LOOP
+            RETURN NEXT "@record";
+        END LOOP;
+    END IF;
 
-	RETURN;
+    RETURN;
 END
 $$
 LANGUAGE plpgsql;
 
 
--- office.get_role_code_by_user_name.sql
+-->-->-- /db/src/02. functions and logic/office/office.get_role_code_by_user_name.sql --<--<--
 CREATE FUNCTION office.get_role_code_by_user_name(user_name text)
 RETURNS text
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT office.roles.role_code FROM office.roles, office.users
-		WHERE office.roles.role_id=office.users.role_id
-		AND office.users.user_name=$1
-	);
+    RETURN
+    (
+        SELECT office.roles.role_code FROM office.roles, office.users
+        WHERE office.roles.role_id=office.users.role_id
+        AND office.users.user_name=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- office.get_role_id_by_use_id.sql
+-->-->-- /db/src/02. functions and logic/office/office.get_role_id_by_role_code.sql --<--<--
+DROP FUNCTION IF EXISTS office.get_role_id_by_role_code(text);
+
+CREATE FUNCTION office.get_role_id_by_role_code(text)
+RETURNS integer
+AS
+$$
+BEGIN
+        RETURN
+        role_id
+        FROM office.roles
+        WHERE role_code=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+
+-->-->-- /db/src/02. functions and logic/office/office.get_role_id_by_role_name.sql --<--<--
+DROP FUNCTION IF EXISTS office.get_role_id_by_role_name(text);
+
+CREATE FUNCTION office.get_role_id_by_role_name(text)
+RETURNS integer
+AS
+$$
+BEGIN
+        RETURN
+        role_id
+        FROM office.roles
+        WHERE role_name=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+
+-->-->-- /db/src/02. functions and logic/office/office.get_role_id_by_use_id.sql --<--<--
 CREATE FUNCTION office.get_role_id_by_use_id(user_id integer_strict)
 RETURNS integer
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT office.users.role_id FROM office.users
-		WHERE office.users.user_id=$1
-	);
+    RETURN
+    (
+        SELECT office.users.role_id FROM office.users
+        WHERE office.users.user_id=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
 
--- office.get_store_name_by_store_id.sql
+-->-->-- /db/src/02. functions and logic/office/office.get_store_name_by_store_id.sql --<--<--
 CREATE FUNCTION office.get_store_name_by_store_id(integer)
 RETURNS text
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT store_name
-		FROM office.stores
-		WHERE store_id=$1
-	);
+    RETURN
+    (
+        SELECT store_name
+        FROM office.stores
+        WHERE store_id=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- office.get_sys_user_id.sql
+-->-->-- /db/src/02. functions and logic/office/office.get_sys_user_id.sql --<--<--
 CREATE FUNCTION office.get_sys_user_id()
 RETURNS integer
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT office.users.user_id 
-		FROM office.roles, office.users
-		WHERE office.roles.role_id = office.users.role_id
-		AND office.roles.is_system=true LIMIT 1
-	);
+    RETURN
+    (
+        SELECT office.users.user_id 
+        FROM office.roles, office.users
+        WHERE office.roles.role_id = office.users.role_id
+        AND office.roles.is_system=true LIMIT 1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- office.get_user_id_by_user_name.sql
+-->-->-- /db/src/02. functions and logic/office/office.get_user_id_by_user_name.sql --<--<--
 CREATE FUNCTION office.get_user_id_by_user_name(user_name text)
 RETURNS integer
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT office.users.user_id FROM office.users
-		WHERE office.users.user_name=$1
-	);
+    RETURN
+    (
+        SELECT office.users.user_id FROM office.users
+        WHERE office.users.user_name=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- office.get_user_name_by_user_id.sql
+-->-->-- /db/src/02. functions and logic/office/office.get_user_name_by_user_id.sql --<--<--
 CREATE FUNCTION office.get_user_name_by_user_id(user_id integer)
 RETURNS text
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT office.users.user_name FROM office.users
-		WHERE office.users.user_id=$1
-	);
+    RETURN
+    (
+        SELECT office.users.user_name FROM office.users
+        WHERE office.users.user_id=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- office.is_admin.sql
+-->-->-- /db/src/02. functions and logic/office/office.is_admin.sql --<--<--
 CREATE FUNCTION office.is_admin(integer)
 RETURNS boolean
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT office.roles.is_admin FROM office.users
-		INNER JOIN office.roles
-		ON office.users.role_id = office.roles.role_id
-		WHERE office.users.user_id=$1
-	);
+    RETURN
+    (
+        SELECT office.roles.is_admin FROM office.users
+        INNER JOIN office.roles
+        ON office.users.role_id = office.roles.role_id
+        WHERE office.users.user_id=$1
+    );
 END
 $$
 LANGUAGE PLPGSQL;
 
 
--- office.is_parent_office.sql
+-->-->-- /db/src/02. functions and logic/office/office.is_parent_office.sql --<--<--
 
 CREATE FUNCTION office.is_parent_office(parent integer_strict, child integer_strict)
 RETURNS boolean
 AS
-$$		
+$$      
 BEGIN
-	IF $1!=$2 THEN
-		IF EXISTS
-		(
-			WITH RECURSIVE office_cte(office_id, path) AS (
-			 SELECT
-				tn.office_id,  tn.office_id::TEXT AS path
-				FROM office.offices AS tn WHERE tn.parent_office_id IS NULL
-			UNION ALL
-			 SELECT
-				c.office_id, (p.path || '->' || c.office_id::TEXT)
-				FROM office_cte AS p, office.offices AS c WHERE parent_office_id = p.office_id
-			)
-			SELECT * FROM
-			(
-				SELECT regexp_split_to_table(path, '->')
-				FROM office_cte AS n WHERE n.office_id = $2
-			) AS items
-			WHERE regexp_split_to_table=$1::text
-		) THEN
-			RETURN TRUE;
-		END IF;
-	END IF;
-	RETURN false;
+    IF $1!=$2 THEN
+        IF EXISTS
+        (
+            WITH RECURSIVE office_cte(office_id, path) AS (
+             SELECT
+                tn.office_id,  tn.office_id::TEXT AS path
+                FROM office.offices AS tn WHERE tn.parent_office_id IS NULL
+            UNION ALL
+             SELECT
+                c.office_id, (p.path || '->' || c.office_id::TEXT)
+                FROM office_cte AS p, office.offices AS c WHERE parent_office_id = p.office_id
+            )
+            SELECT * FROM
+            (
+                SELECT regexp_split_to_table(path, '->')
+                FROM office_cte AS n WHERE n.office_id = $2
+            ) AS items
+            WHERE regexp_split_to_table=$1::text
+        ) THEN
+            RETURN TRUE;
+        END IF;
+    END IF;
+    RETURN false;
 END
 $$
 LANGUAGE plpgsql;
@@ -6978,27 +8647,27 @@ LANGUAGE plpgsql;
 
 ALTER TABLE office.offices
 ADD CONSTRAINT offices_check_if_parent_chk
-		CHECK
-		(
-			office.is_parent_office(office_id, parent_office_id) = FALSE
-			AND
-			parent_office_id != office_id
-		);
+        CHECK
+        (
+            office.is_parent_office(office_id, parent_office_id) = FALSE
+            AND
+            parent_office_id != office_id
+        );
 
 
--- office.is_sys.sql
+-->-->-- /db/src/02. functions and logic/office/office.is_sys.sql --<--<--
 CREATE FUNCTION office.is_sys(integer)
 RETURNS boolean
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT office.roles.is_system FROM office.users
-		INNER JOIN office.roles
-		ON office.users.role_id = office.roles.role_id
-		WHERE office.users.user_id=$1
-	);
+    RETURN
+    (
+        SELECT office.roles.is_system FROM office.users
+        INNER JOIN office.roles
+        ON office.users.role_id = office.roles.role_id
+        WHERE office.users.user_id=$1
+    );
 END
 $$
 LANGUAGE PLPGSQL;
@@ -7007,83 +8676,98 @@ LANGUAGE PLPGSQL;
 
 
 
--- office.is_sys_user.sql
+-->-->-- /db/src/02. functions and logic/office/office.is_sys_user.sql --<--<--
 CREATE FUNCTION office.is_sys_user(integer)
 RETURNS boolean
 AS
 $$
 BEGIN
-	IF EXISTS
-	(
-		SELECT * FROM office.users
-		WHERE user_id=$1
-		AND role_id IN
-		(
-			SELECT office.roles.role_id FROM office.roles WHERE office.roles.role_code='SYST'
-		)
-	) THEN
-		RETURN true;
-	END IF;
+    IF EXISTS
+    (
+        SELECT * FROM office.users
+        WHERE user_id=$1
+        AND role_id IN
+        (
+            SELECT office.roles.role_id FROM office.roles WHERE office.roles.role_code='SYST'
+        )
+    ) THEN
+        RETURN true;
+    END IF;
 
-	RETURN false;
+    RETURN false;
 END
 $$
 LANGUAGE plpgsql;
 
 
-ALTER TABLE transactions.transaction_master
-ADD CONSTRAINT transaction_master_sys_user_id_chk CHECK(sys_user_id IS NULL OR office.is_sys_user(sys_user_id)=true);
+
+-->-->-- /db/src/02. functions and logic/office/office.is_valid_office_id.sql --<--<--
+DROP FUNCTION IF EXISTS office.is_valid_office_id(integer);
+
+CREATE FUNCTION office.is_valid_office_id(integer)
+RETURNS boolean
+AS
+$$
+BEGIN
+        IF EXISTS(SELECT 1 FROM office.offices WHERE office_id=$1) THEN
+                RETURN true;
+        END IF;
+
+        RETURN false;
+END
+$$
+LANGUAGE plpgsql;
 
 
--- office.validate_login.sql
+-->-->-- /db/src/02. functions and logic/office/office.validate_login.sql --<--<--
 CREATE FUNCTION office.validate_login
 (
-	user_name text,
-	password text
+    user_name text,
+    password text
 )
 RETURNS boolean
 AS
 $$
 BEGIN
-	IF EXISTS
-	(
-		SELECT 1 FROM office.users 
-		WHERE office.users.user_name=$1 
-		AND office.users.password=$2 
-		--The system user should not be allowed to login.
-		AND office.users.role_id != 
-		(
-			SELECT office.roles.role_id 
-			FROM office.roles 
-			WHERE office.roles.role_code='SYST'
-		)
-	) THEN
-		RETURN true;
-	END IF;
-	RETURN false;
+    IF EXISTS
+    (
+        SELECT 1 FROM office.users 
+        WHERE office.users.user_name=$1 
+        AND office.users.password=$2 
+        --The system user should not be allowed to login.
+        AND office.users.role_id != 
+        (
+            SELECT office.roles.role_id 
+            FROM office.roles 
+            WHERE office.roles.role_code='SYST'
+        )
+    ) THEN
+        RETURN true;
+    END IF;
+    RETURN false;
 END
 $$
 LANGUAGE plpgsql;
 
 
--- policy.is_locked_out_till.sql
+-->-->-- /db/src/02. functions and logic/policy/policy.is_locked_out_till.sql --<--<--
 CREATE FUNCTION policy.is_locked_out_till(user_id integer_strict)
 RETURNS TIMESTAMP
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT MAX(policy.lock_outs.lock_out_till)::TIMESTAMP WITHOUT TIME ZONE FROM policy.lock_outs
-		WHERE policy.lock_outs.user_id=$1
-	);
+    RETURN
+    (
+        SELECT MAX(policy.lock_outs.lock_out_till)::TIMESTAMP WITHOUT TIME ZONE FROM policy.lock_outs
+        WHERE policy.lock_outs.user_id=$1
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
 
--- explode_array.sql
+-->-->-- /db/src/02. functions and logic/public/explode_array.sql --<--<--
 DROP FUNCTION IF EXISTS explode_array(in_array anyarray);
 
 CREATE FUNCTION explode_array(in_array anyarray) 
@@ -7096,63 +8780,63 @@ IMMUTABLE;
 
 --select * from explode_array(ARRAY[ROW(1, 1)::FOO_TYPE,ROW(1, 1)::FOO_TYPE])
 
--- transactions.are_sales_orders_already_merged.sql
+-->-->-- /db/src/02. functions and logic/transactions/transactions.are_sales_orders_already_merged.sql --<--<--
 CREATE FUNCTION transactions.are_sales_orders_already_merged(VARIADIC arr bigint[])
 RETURNS boolean
 AS
 $$
 BEGIN
-	IF
-	(
-		SELECT 
-		COUNT(*) 
-		FROM transactions.stock_master_non_gl_relations
-		WHERE non_gl_stock_master_id = any($1)
-	) > 0 THEN
-		RETURN true;
-	END IF;
+    IF
+    (
+        SELECT 
+        COUNT(*) 
+        FROM transactions.stock_master_non_gl_relations
+        WHERE non_gl_stock_master_id = any($1)
+    ) > 0 THEN
+        RETURN true;
+    END IF;
 
-	RETURN false;
+    RETURN false;
 END
 $$
-LANGUAGE plpgsql;	
+LANGUAGE plpgsql;   
 
 
 
--- transactions.are_sales_quotations_already_merged.sql
+-->-->-- /db/src/02. functions and logic/transactions/transactions.are_sales_quotations_already_merged.sql --<--<--
 CREATE FUNCTION transactions.are_sales_quotations_already_merged(VARIADIC arr bigint[])
 RETURNS boolean
 AS
 $$
 BEGIN
-	IF
-	(
-		SELECT 
-		COUNT(*) 
-		FROM transactions.non_gl_stock_master_relations 
-		WHERE quotation_non_gl_stock_master_id = any($1)
-	) > 0 THEN
-		RETURN true;
-	END IF;
+    IF
+    (
+        SELECT 
+        COUNT(*) 
+        FROM transactions.non_gl_stock_master_relations 
+        WHERE quotation_non_gl_stock_master_id = any($1)
+    ) > 0 THEN
+        RETURN true;
+    END IF;
 
-	IF
-	(
-		SELECT 
-		COUNT(*) 
-		FROM transactions.stock_master_non_gl_relations
-		WHERE non_gl_stock_master_id = any($1)
-	) > 0 THEN
-		RETURN true;
-	END IF;
+    IF
+    (
+        SELECT 
+        COUNT(*) 
+        FROM transactions.stock_master_non_gl_relations
+        WHERE non_gl_stock_master_id = any($1)
+    ) > 0 THEN
+        RETURN true;
+    END IF;
 
-	RETURN false;
+    RETURN false;
 END
 $$
-LANGUAGE plpgsql;	
+LANGUAGE plpgsql;   
 
 
 
--- transactions.get_default_currency_code.sql
+-->-->-- /db/src/02. functions and logic/transactions/transactions.get_default_currency_code.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_default_currency_code(cash_repository_id integer);
 
 CREATE FUNCTION transactions.get_default_currency_code(cash_repository_id integer)
@@ -7160,21 +8844,21 @@ RETURNS national character varying(12)
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT office.offices.currency_code 
-		FROM office.cash_repositories
-		INNER JOIN office.offices
-		ON office.offices.office_id = office.cash_repositories.office_id
-		WHERE office.cash_repositories.cash_repository_id=$1
-		
-	);
+    RETURN
+    (
+        SELECT office.offices.currency_code 
+        FROM office.cash_repositories
+        INNER JOIN office.offices
+        ON office.offices.office_id = office.cash_repositories.office_id
+        WHERE office.cash_repositories.cash_repository_id=$1
+        
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- transactions.get_default_currency_code_by_office_id.sql
+-->-->-- /db/src/02. functions and logic/transactions/transactions.get_default_currency_code_by_office_id.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_default_currency_code_by_office_id(office_id integer);
 
 CREATE FUNCTION transactions.get_default_currency_code_by_office_id(office_id integer)
@@ -7182,51 +8866,51 @@ RETURNS national character varying(12)
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT office.offices.currency_code 
-		FROM office.offices
-		WHERE office.offices.office_id = $1
-		
-	);
+    RETURN
+    (
+        SELECT office.offices.currency_code 
+        FROM office.offices
+        WHERE office.offices.office_id = $1
+        
+    );
 END
 $$
 LANGUAGE plpgsql;
 
 
--- transactions.get_exchange_rate.sql
+-->-->-- /db/src/02. functions and logic/transactions/transactions.get_exchange_rate.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_exchange_rate(office_id integer, currency_code national character varying(12));
 
 CREATE FUNCTION transactions.get_exchange_rate(office_id integer, currency_code national character varying(12))
 RETURNS decimal_strict2
 AS
 $$
-	DECLARE _local_currency_code national character varying(12)= '';
-	DECLARE _unit integer_strict2 = 0;
-	DECLARE _exchange_rate decimal_strict2=0;
+    DECLARE _local_currency_code national character varying(12)= '';
+    DECLARE _unit integer_strict2 = 0;
+    DECLARE _exchange_rate decimal_strict2=0;
 BEGIN
-	SELECT office.offices.currency_code
-	INTO _local_currency_code
-	FROM office.offices
-	WHERE office.offices.office_id=$1;
+    SELECT office.offices.currency_code
+    INTO _local_currency_code
+    FROM office.offices
+    WHERE office.offices.office_id=$1;
 
-	IF(_local_currency_code = $2) THEN
-		RETURN 1;
-	END IF;
+    IF(_local_currency_code = $2) THEN
+        RETURN 1;
+    END IF;
 
-	SELECT unit, exchange_rate
-	INTO _unit, _exchange_rate
-	FROM core.exchange_rate_details
-	INNER JOIN core.exchange_rates
-	ON core.exchange_rate_details.exchange_rate_id = core.exchange_rates.exchange_rate_id
-	WHERE core.exchange_rates.office_id=$1
-	AND foreign_currency_code=$2;
+    SELECT unit, exchange_rate
+    INTO _unit, _exchange_rate
+    FROM core.exchange_rate_details
+    INNER JOIN core.exchange_rates
+    ON core.exchange_rate_details.exchange_rate_id = core.exchange_rates.exchange_rate_id
+    WHERE core.exchange_rates.office_id=$1
+    AND foreign_currency_code=$2;
 
-	IF(_unit = 0) THEN
-		RETURN 0;
-	END IF;
-	
-	RETURN _exchange_rate/_unit;	
+    IF(_unit = 0) THEN
+        RETURN 0;
+    END IF;
+    
+    RETURN _exchange_rate/_unit;    
 END
 $$
 LANGUAGE plpgsql;
@@ -7237,26 +8921,26 @@ CREATE FUNCTION transactions.get_exchange_rate(office_id integer, source_currenc
 RETURNS decimal_strict2
 AS
 $$
-	DECLARE _unit integer_strict2 = 0;
-	DECLARE _exchange_rate decimal_strict2=0;
-	DECLARE _from_source_currency decimal_strict2=0;
-	DECLARE _from_destination_currency decimal_strict2=0;
+    DECLARE _unit integer_strict2 = 0;
+    DECLARE _exchange_rate decimal_strict2=0;
+    DECLARE _from_source_currency decimal_strict2=0;
+    DECLARE _from_destination_currency decimal_strict2=0;
 BEGIN
-	IF($2 = $3) THEN
-		RETURN 1;
-	END IF;
+    IF($2 = $3) THEN
+        RETURN 1;
+    END IF;
 
 
-	_from_source_currency := transactions.get_exchange_rate($1, $2);
-	_from_destination_currency := transactions.get_exchange_rate($1, $3);
-		
-	RETURN _from_source_currency / _from_destination_currency ;	
+    _from_source_currency := transactions.get_exchange_rate($1, $2);
+    _from_destination_currency := transactions.get_exchange_rate($1, $3);
+        
+    RETURN _from_source_currency / _from_destination_currency ; 
 END
 $$
 LANGUAGE plpgsql;
 
 
--- transactions.get_invoice_amount.sql
+-->-->-- /db/src/02. functions and logic/transactions/transactions.get_invoice_amount.sql --<--<--
 
 CREATE FUNCTION transactions.get_invoice_amount(transaction_master_id_ bigint)
 RETURNS money_strict2
@@ -7265,19 +8949,19 @@ $$
 DECLARE _shipping_charge money_strict2;
 DECLARE _stock_total money_strict2;
 BEGIN
-	SELECT SUM((quantity * price) + tax - discount) INTO _stock_total
-	FROM transactions.stock_details
-	WHERE transactions.stock_details.stock_master_id =
-	(
-		SELECT transactions.stock_master.stock_master_id
-		FROM transactions.stock_master WHERE transactions.stock_master.transaction_master_id= $1
-	);
+    SELECT SUM((quantity * price) + tax - discount) INTO _stock_total
+    FROM transactions.stock_details
+    WHERE transactions.stock_details.stock_master_id =
+    (
+        SELECT transactions.stock_master.stock_master_id
+        FROM transactions.stock_master WHERE transactions.stock_master.transaction_master_id= $1
+    );
 
-	SELECT shipping_charge INTO _shipping_charge
-	FROM transactions.stock_master
-	WHERE transactions.stock_master.transaction_master_id=$1;
+    SELECT shipping_charge INTO _shipping_charge
+    FROM transactions.stock_master
+    WHERE transactions.stock_master.transaction_master_id=$1;
 
-	RETURN COALESCE(_stock_total + _shipping_charge, 0::money_strict2);	
+    RETURN COALESCE(_stock_total + _shipping_charge, 0::money_strict2); 
 END
 $$
 LANGUAGE plpgsql;
@@ -7285,35 +8969,35 @@ LANGUAGE plpgsql;
 
 
 
--- transactions.get_new_transaction_counter.sql
+-->-->-- /db/src/02. functions and logic/transactions/transactions.get_new_transaction_counter.sql --<--<--
 
 /*******************************************************************
-	THIS FUNCTION RETURNS A NEW INCREMENTAL COUNTER SUBJECT 
-	TO BE USED TO GENERATE TRANSACTION CODES
+    THIS FUNCTION RETURNS A NEW INCREMENTAL COUNTER SUBJECT 
+    TO BE USED TO GENERATE TRANSACTION CODES
 *******************************************************************/
 
 CREATE FUNCTION transactions.get_new_transaction_counter(date)
 RETURNS integer
 AS
 $$
-	DECLARE _ret_val integer;
+    DECLARE _ret_val integer;
 BEGIN
-	SELECT INTO _ret_val
-		COALESCE(MAX(transaction_counter),0)
-	FROM transactions.transaction_master
-	WHERE value_date=$1;
+    SELECT INTO _ret_val
+        COALESCE(MAX(transaction_counter),0)
+    FROM transactions.transaction_master
+    WHERE value_date=$1;
 
-	IF _ret_val IS NULL THEN
-		RETURN 1::integer;
-	ELSE
-		RETURN (_ret_val + 1)::integer;
-	END IF;
+    IF _ret_val IS NULL THEN
+        RETURN 1::integer;
+    ELSE
+        RETURN (_ret_val + 1)::integer;
+    END IF;
 END;
 $$
 LANGUAGE plpgsql;
 
 
--- transactions.get_stock_master_id_by_transaction_master_id.sql
+-->-->-- /db/src/02. functions and logic/transactions/transactions.get_stock_master_id_by_transaction_master_id.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_stock_master_id_by_transaction_master_id(_stock_master_id bigint);
 
 CREATE FUNCTION transactions.get_stock_master_id_by_transaction_master_id(_stock_master_id bigint)
@@ -7331,24 +9015,24 @@ END
 $$
 LANGUAGE plpgsql;
 
--- transactions.get_transaction_code.sql
+-->-->-- /db/src/02. functions and logic/transactions/transactions.get_transaction_code.sql --<--<--
 CREATE FUNCTION transactions.get_transaction_code(value_date date, office_id integer, user_id integer, login_id bigint)
 RETURNS text
 AS
 $$
-	DECLARE _office_id bigint:=$2;
-	DECLARE _user_id integer:=$3;
-	DECLARE _login_id bigint:=$4;
-	DECLARE _ret_val text;	
+    DECLARE _office_id bigint:=$2;
+    DECLARE _user_id integer:=$3;
+    DECLARE _login_id bigint:=$4;
+    DECLARE _ret_val text;  
 BEGIN
-	_ret_val:= transactions.get_new_transaction_counter($1)::text || '-' || TO_CHAR($1, 'YYYY-MM-DD') || '-' || CAST(_office_id as text) || '-' || CAST(_user_id as text) || '-' || CAST(_login_id as text)   || '-' ||  TO_CHAR(now(), 'HH24-MI-SS');
-	RETURN _ret_val;
+    _ret_val:= transactions.get_new_transaction_counter($1)::text || '-' || TO_CHAR($1, 'YYYY-MM-DD') || '-' || CAST(_office_id as text) || '-' || CAST(_user_id as text) || '-' || CAST(_login_id as text)   || '-' ||  TO_CHAR(now(), 'HH24-MI-SS');
+    RETURN _ret_val;
 END
 $$
 LANGUAGE plpgsql;
 
 
--- transactions.get_transaction_master_id_by_stock_master_id.sql
+-->-->-- /db/src/02. functions and logic/transactions/transactions.get_transaction_master_id_by_stock_master_id.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_transaction_master_id_by_stock_master_id(_stock_master_id bigint);
 
 CREATE FUNCTION transactions.get_transaction_master_id_by_stock_master_id(_stock_master_id bigint)
@@ -7366,7 +9050,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--- transactions.is_purchase.sql
+-->-->-- /db/src/02. functions and logic/transactions/transactions.is_purchase.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.is_purchase(_transaction_master_id bigint);
 
 CREATE FUNCTION transactions.is_purchase(_transaction_master_id bigint)
@@ -7390,7 +9074,7 @@ LANGUAGE plpgsql;
 
 
 
--- transactions.is_valid_party_by_stock_master_id.sql
+-->-->-- /db/src/02. functions and logic/transactions/transactions.is_valid_party_by_stock_master_id.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.is_valid_party_by_stock_master_id(_stock_master_id bigint, _party_id bigint);
 
 CREATE FUNCTION transactions.is_valid_party_by_stock_master_id(_stock_master_id bigint, _party_id bigint)
@@ -7408,7 +9092,7 @@ $$
 LANGUAGE plpgsql;
 
 
--- transactions.is_valid_party_by_transaction_master_id.sql
+-->-->-- /db/src/02. functions and logic/transactions/transactions.is_valid_party_by_transaction_master_id.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.is_valid_party_by_transaction_master_id(_transaction_master_id bigint, _party_id bigint);
 
 CREATE FUNCTION transactions.is_valid_party_by_transaction_master_id(_transaction_master_id bigint, _party_id bigint)
@@ -7426,7 +9110,7 @@ $$
 LANGUAGE plpgsql;
 
 
--- transactions.is_valid_stock_transaction_by_stock_master_id.sql
+-->-->-- /db/src/02. functions and logic/transactions/transactions.is_valid_stock_transaction_by_stock_master_id.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.is_valid_stock_transaction_by_stock_master_id(_stock_master_id bigint);
 
 CREATE FUNCTION transactions.is_valid_stock_transaction_by_stock_master_id(_stock_master_id bigint)
@@ -7444,7 +9128,7 @@ $$
 LANGUAGE plpgsql;
 
 
--- transactions.is_valid_stock_transaction_by_transaction_master_id.sql
+-->-->-- /db/src/02. functions and logic/transactions/transactions.is_valid_stock_transaction_by_transaction_master_id.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.is_valid_stock_transaction_by_transaction_master_id(_transaction_master_id bigint);
 
 CREATE FUNCTION transactions.is_valid_stock_transaction_by_transaction_master_id(_transaction_master_id bigint)
@@ -7462,28 +9146,28 @@ $$
 LANGUAGE plpgsql;
 
 
--- 00. currency, accounts, account-parameters.sql
+-->-->-- /db/src/04. default values/00. currency, accounts, account-parameters.sql --<--<--
 ALTER TABLE core.accounts
 ALTER column currency_code DROP NOT NULL;
 
 
 INSERT INTO core.currencies
-SELECT 'NPR', 'रू.', 'Nepali Rupees', 'paisa' UNION ALL
-SELECT 'USD', '$', 'United States Dollar', 'cents' UNION ALL
-SELECT 'GBP', '£', 'Pound Sterling', 'penny' UNION ALL
-SELECT 'EUR', '€', 'Euro', 'cents' UNION ALL
-SELECT 'JPY', '¥', 'Japanese Yen', 'sen' UNION ALL
-SELECT 'CHF', 'CHF', 'Swiss Franc', 'centime' UNION ALL
-SELECT 'CAD', '¢', 'Canadian Dollar', 'cent' UNION ALL
-SELECT 'AUD', 'AU$', 'Australian Dollar', 'cent' UNION ALL
-SELECT 'HKD', 'HK$', 'Hong Kong Dollar', 'cent' UNION ALL
-SELECT 'INR', '₹', 'Indian Rupees', 'paise' UNION ALL
-SELECT 'SEK', 'kr', 'Swedish Krona', 'öre' UNION ALL
-SELECT 'NZD', 'NZ$', 'New Zealand Dollar', 'cent';
+SELECT 'NPR', 'रू.',       'Nepali Rupees',        'paisa'     UNION ALL
+SELECT 'USD', '$',      'United States Dollar', 'cents'     UNION ALL
+SELECT 'GBP', '£',      'Pound Sterling',       'penny'     UNION ALL
+SELECT 'EUR', '€',      'Euro',                 'cents'     UNION ALL
+SELECT 'JPY', '¥',      'Japanese Yen',         'sen'       UNION ALL
+SELECT 'CHF', 'CHF',    'Swiss Franc',          'centime'   UNION ALL
+SELECT 'CAD', '¢',      'Canadian Dollar',      'cent'      UNION ALL
+SELECT 'AUD', 'AU$',    'Australian Dollar',    'cent'      UNION ALL
+SELECT 'HKD', 'HK$',    'Hong Kong Dollar',     'cent'      UNION ALL
+SELECT 'INR', '₹',      'Indian Rupees',        'paise'     UNION ALL
+SELECT 'SEK', 'kr',     'Swedish Krona',        'öre'       UNION ALL
+SELECT 'NZD', 'NZ$',    'New Zealand Dollar',   'cent';
 
 INSERT INTO core.attachment_lookup(book, resource, resource_key)
-SELECT 'transaction', 'transactions.transaction_master', 'transaction_master_id' UNION ALL
-SELECT 'non-gl-transaction', 'transactions.non_gl_stock_master', 'non_gl_stock_master_id';
+SELECT 'transaction',           'transactions.transaction_master',  'transaction_master_id' UNION ALL
+SELECT 'non-gl-transaction',    'transactions.non_gl_stock_master', 'non_gl_stock_master_id';
 
 
 INSERT INTO core.account_masters(account_master_code, account_master_name) SELECT 'BSA', 'Balance Sheet A/C';
@@ -7704,92 +9388,89 @@ SET currency_code='NPR';
 
 
 INSERT INTO core.account_parameters(parameter_name, account_id)
-SELECT 'Sales', core.get_account_id_by_account_code('30100') UNION ALL
-SELECT 'Sales.Receivables', core.get_account_id_by_account_code('10400') UNION ALL
-SELECT 'Sales.Discount', core.get_account_id_by_account_code('30700') UNION ALL
-SELECT 'Sales.Tax', core.get_account_id_by_account_code('20700') UNION ALL
-SELECT 'Sales.Return', core.get_account_id_by_account_code('20701') UNION ALL
-SELECT 'Purchase', core.get_account_id_by_account_code('40100') UNION ALL
-SELECT 'Purchase.Payables', core.get_account_id_by_account_code('20100') UNION ALL
-SELECT 'Purchase.Discount', core.get_account_id_by_account_code('40270') UNION ALL
-SELECT 'Purchase.Tax', core.get_account_id_by_account_code('20700') UNION ALL
-SELECT 'Purchase.Return', core.get_account_id_by_account_code('10501') UNION ALL
-SELECT 'Inventory', core.get_account_id_by_account_code('10700') UNION ALL
-SELECT 'COGS', core.get_account_id_by_account_code('40200') UNION ALL
-SELECT 'Tax.Payable', core.get_account_id_by_account_code('20700') UNION ALL
-SELECT 'Party.Parent.Account', core.get_account_id_by_account_code('20100');
+SELECT 'Sales',                 core.get_account_id_by_account_code('30100')    UNION ALL
+SELECT 'Sales.Receivables',     core.get_account_id_by_account_code('10400')    UNION ALL
+SELECT 'Sales.Discount',        core.get_account_id_by_account_code('30700')    UNION ALL
+SELECT 'Sales.Tax',             core.get_account_id_by_account_code('20700')    UNION ALL
+SELECT 'Sales.Return',          core.get_account_id_by_account_code('20701')    UNION ALL
+SELECT 'Purchase',              core.get_account_id_by_account_code('40100')    UNION ALL
+SELECT 'Purchase.Payables',     core.get_account_id_by_account_code('20100')    UNION ALL
+SELECT 'Purchase.Discount',     core.get_account_id_by_account_code('40270')    UNION ALL
+SELECT 'Purchase.Tax',          core.get_account_id_by_account_code('20700')    UNION ALL
+SELECT 'Purchase.Return',       core.get_account_id_by_account_code('10501')    UNION ALL
+SELECT 'Inventory',             core.get_account_id_by_account_code('10700')    UNION ALL
+SELECT 'COGS',                  core.get_account_id_by_account_code('40200')    UNION ALL
+SELECT 'Tax.Payable',           core.get_account_id_by_account_code('20700')    UNION ALL
+SELECT 'Party.Parent.Account',  core.get_account_id_by_account_code('20100');
 
 
 ALTER TABLE core.accounts
 ALTER column currency_code SET NOT NULL;
 
 
--- brands, item-groups, tax, shipping.sql
-INSERT INTO core.brands(brand_code, brand_name)
-SELECT 'DEF', 'Default';
-
-
-
+-->-->-- /db/src/04. default values/brands, item-groups, tax, shipping.sql --<--<--
 INSERT INTO core.tax_types(tax_type_code, tax_type_name)
 SELECT 'DEF', 'Default';
 
-
 INSERT INTO core.taxes(tax_type_id, tax_code, tax_name, rate, account_id)
 SELECT 1, 'VAT', 'Value Added Tax', 13, (SELECT account_id FROM core.accounts WHERE account_name='Sales Tax Payable') UNION ALL
-SELECT 1, 'SAT', 'Sales Tax', 5, (SELECT account_id FROM core.accounts WHERE account_name='Sales Tax Payable');
+SELECT 1, 'SAT', 'Sales Tax', 5,        (SELECT account_id FROM core.accounts WHERE account_name='Sales Tax Payable');
+
+INSERT INTO core.brands(brand_code, brand_name)
+SELECT 'DEF', 'Default';
 
 INSERT INTO core.item_groups(item_group_code, item_group_name, tax_id)
 SELECT 'DEF', 'Default', 1;
 
 
 INSERT INTO core.shipping_mail_types(shipping_mail_type_code, shipping_mail_type_name)
-SELECT 'FCM', 	'First Class Mail'			UNION ALL
-SELECT 'PM', 	'Priority Mail'			UNION ALL
-SELECT 'PP', 	'Parcel Post'			UNION ALL
-SELECT 'EM', 	'Express Mail'			UNION ALL
-SELECT 'MM', 	'Media Mail';
+SELECT 'FCM',   'First Class Mail'      UNION ALL
+SELECT 'PM',    'Priority Mail'         UNION ALL
+SELECT 'PP',    'Parcel Post'           UNION ALL
+SELECT 'EM',    'Express Mail'          UNION ALL
+SELECT 'MM',    'Media Mail';
 
 INSERT INTO core.shipping_package_shapes(shipping_package_shape_code, is_rectangular, shipping_package_shape_name)
-SELECT 'REC',	true,	'Rectangular Box Packaging'			UNION ALL
-SELECT 'IRR',	false,	'Irregular Packaging';
+SELECT 'REC',   true,   'Rectangular Box Packaging'         UNION ALL
+SELECT 'IRR',   false,  'Irregular Packaging';
 
 
 
 
 
--- crm.lead-sources, lead-statuses, opportunity-stages.sql
+-->-->-- /db/src/04. default values/crm.lead-sources, lead-statuses, opportunity-stages.sql --<--<--
 INSERT INTO crm.lead_sources(lead_source_code, lead_source_name)
-SELECT 'AG', 'Agent' UNION ALL
-SELECT 'CC', 'Cold Call' UNION ALL
-SELECT 'CR', 'Customer Reference' UNION ALL
-SELECT 'DI', 'Direct Inquiry' UNION ALL
-SELECT 'EV', 'Events' UNION ALL
+SELECT 'AG', 'Agent'                UNION ALL
+SELECT 'CC', 'Cold Call'            UNION ALL
+SELECT 'CR', 'Customer Reference'   UNION ALL
+SELECT 'DI', 'Direct Inquiry'       UNION ALL
+SELECT 'EV', 'Events'               UNION ALL
 SELECT 'PR', 'Partner';
 
 
 INSERT INTO crm.lead_statuses(lead_status_code, lead_status_name)
-SELECT 'CL', 'Cool' UNION ALL
-SELECT 'CF', 'Contact in Future' UNION ALL
-SELECT 'LO', 'Lost' UNION ALL
-SELECT 'IP', 'In Prgress' UNION ALL
+SELECT 'CL', 'Cool'                 UNION ALL
+SELECT 'CF', 'Contact in Future'    UNION ALL
+SELECT 'LO', 'Lost'                 UNION ALL
+SELECT 'IP', 'In Prgress'           UNION ALL
 SELECT 'QF', 'Qualified';
 
 
 INSERT INTO crm.opportunity_stages(opportunity_stage_code, opportunity_stage_name)
-SELECT 'PRO', 'Prospecting' UNION ALL
-SELECT 'QUA', 'Qualification' UNION ALL
-SELECT 'NEG', 'Negotiating' UNION ALL
-SELECT 'VER', 'Verbal' UNION ALL
-SELECT 'CLW', 'Closed Won' UNION ALL
+SELECT 'PRO', 'Prospecting'         UNION ALL
+SELECT 'QUA', 'Qualification'       UNION ALL
+SELECT 'NEG', 'Negotiating'         UNION ALL
+SELECT 'VER', 'Verbal'              UNION ALL
+SELECT 'CLW', 'Closed Won'          UNION ALL
 SELECT 'CLL', 'Closed Lost';
 
 
--- office, department, roles, users.sql
+-->-->-- /db/src/04. default values/office, department, roles, users.sql --<--<--
 
 
 /*******************************************************************
-	SAMPLE DATA FEED
-	TODO: REMOVE THE BELOW BEFORE RELEASE
+    SAMPLE DATA FEED
+    TODO: REMOVE THE BELOW BEFORE RELEASE
 *******************************************************************/
 
 INSERT INTO office.offices(office_code,office_name,nick_name,registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number,currency_code)
@@ -7804,9 +9485,9 @@ SELECT 'MoF-NY-MEM','Memphis Branch', 'MoF Memphis', '06/06/1989', 'Memphis', 'N
 
 
 INSERT INTO office.departments(department_code, department_name)
-SELECT 'SAL', 'Sales & Billing' UNION ALL
-SELECT 'MKT', 'Marketing & Promotion' UNION ALL
-SELECT 'SUP', 'Support' UNION ALL
+SELECT 'SAL', 'Sales & Billing'         UNION ALL
+SELECT 'MKT', 'Marketing & Promotion'   UNION ALL
+SELECT 'SUP', 'Support'                 UNION ALL
 SELECT 'CC', 'Customer Care';
 
 INSERT INTO office.roles(role_code,role_name, is_system)
@@ -7816,14 +9497,14 @@ INSERT INTO office.roles(role_code,role_name, is_admin)
 SELECT 'ADMN', 'Administrators', true;
 
 INSERT INTO office.roles(role_code,role_name)
-SELECT 'USER', 'Users' UNION ALL
-SELECT 'EXEC', 'Executive' UNION ALL
-SELECT 'MNGR', 'Manager' UNION ALL
-SELECT 'SALE', 'Sales' UNION ALL
-SELECT 'MARK', 'Marketing' UNION ALL
-SELECT 'LEGL', 'Legal & Compliance' UNION ALL
-SELECT 'FINC', 'Finance' UNION ALL
-SELECT 'HUMR', 'Human Resources' UNION ALL
+SELECT 'USER', 'Users'                  UNION ALL
+SELECT 'EXEC', 'Executive'              UNION ALL
+SELECT 'MNGR', 'Manager'                UNION ALL
+SELECT 'SALE', 'Sales'                  UNION ALL
+SELECT 'MARK', 'Marketing'              UNION ALL
+SELECT 'LEGL', 'Legal & Compliance'     UNION ALL
+SELECT 'FINC', 'Finance'                UNION ALL
+SELECT 'HUMR', 'Human Resources'        UNION ALL
 SELECT 'INFO', 'Information Technology' UNION ALL
 SELECT 'CUST', 'Customer Service';
 
@@ -7831,33 +9512,33 @@ SELECT 'CUST', 'Customer Service';
 SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='SYST'),(SELECT office_id FROM office.offices WHERE office_code='MoF'),'sys','','System');
 
 /*******************************************************************
-	TODO: REMOVE THIS USER ON DEPLOYMENT
+    TODO: REMOVE THIS USER ON DEPLOYMENT
 *******************************************************************/
 SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='ADMN'),(SELECT office_id FROM office.offices WHERE office_code='MoF'),'binod','+qJ9AMyGgrX/AOF4GmwmBa4SrA3+InlErVkJYmAopVZh+WFJD7k2ZO9dxox6XiqT38dSoM72jLoXNzwvY7JAQA==','Binod Nepal');
 
 
 
 
--- salespersons, ageing-slabs, party-types.sql
+-->-->-- /db/src/04. default values/salespersons, ageing-slabs, party-types.sql --<--<--
 INSERT INTO core.sales_teams(sales_team_code, sales_team_name)
-SELECT 'DEF', 'Default' UNION ALL
-SELECT 'CST', 'Corporate Sales Team' UNION ALL
+SELECT 'DEF', 'Default'                 UNION ALL
+SELECT 'CST', 'Corporate Sales Team'    UNION ALL
 SELECT 'RST', 'Retail Sales Team';
 
 INSERT INTO core.salespersons(sales_team_id, salesperson_code, salesperson_name, address, contact_number, commission_rate, account_id)
-SELECT 1, 'OFF', 'Office', 'Office', '', 0, (SELECT account_id FROM core.accounts WHERE account_code='20100') UNION ALL
-SELECT 2, 'ROS', 'Robert Schintowski', 'Russia', '', 0, (SELECT account_id FROM core.accounts WHERE account_code='20100') UNION ALL
-SELECT 2, 'PHJ', 'Phillipe Jones', 'France', '', 0, (SELECT account_id FROM core.accounts WHERE account_code='20100') UNION ALL
-SELECT 3, 'AWB', 'Alexander Walter Bishop', 'Texas', '', 0, (SELECT account_id FROM core.accounts WHERE account_code='20100') UNION ALL
-SELECT 3, 'LMA', 'Lisa Mary Ann', 'Austin', '', 0, (SELECT account_id FROM core.accounts WHERE account_code='20100');
+SELECT 1, 'OFF', 'Office',                  'Office',   '', 0,  (SELECT account_id FROM core.accounts WHERE account_code='20100') UNION ALL
+SELECT 2, 'ROS', 'Robert Schintowski',      'Russia',   '', 0,  (SELECT account_id FROM core.accounts WHERE account_code='20100') UNION ALL
+SELECT 2, 'PHJ', 'Phillipe Jones',          'France',   '', 0,  (SELECT account_id FROM core.accounts WHERE account_code='20100') UNION ALL
+SELECT 3, 'AWB', 'Alexander Walter Bishop', 'Texas',    '', 0,  (SELECT account_id FROM core.accounts WHERE account_code='20100') UNION ALL
+SELECT 3, 'LMA', 'Lisa Mary Ann',           'Austin',   '', 0,  (SELECT account_id FROM core.accounts WHERE account_code='20100');
 
 
 
 
 INSERT INTO core.ageing_slabs(ageing_slab_name,from_days,to_days)
-SELECT 'SLAB 1',0, 30 UNION ALL
-SELECT 'SLAB 2',31, 60 UNION ALL
-SELECT 'SLAB 3',61, 90 UNION ALL
+SELECT 'SLAB 1',0, 30   UNION ALL
+SELECT 'SLAB 2',31, 60  UNION ALL
+SELECT 'SLAB 3',61, 90  UNION ALL
 SELECT 'SLAB 4',91, 365 UNION ALL
 SELECT 'SLAB 5',366, 999999;
 
@@ -7871,28 +9552,28 @@ INSERT INTO core.party_types(party_type_code, party_type_name, is_supplier) SELE
 
 
 
--- stores-types,cost-centers.sql
+-->-->-- /db/src/04. default values/stores-types,cost-centers.sql --<--<--
 INSERT INTO office.store_types(store_type_code,store_type_name)
-SELECT 'GOD', 'Godown' UNION ALL
-SELECT 'SAL', 'Sales Center' UNION ALL
-SELECT 'WAR', 'Warehouse' UNION ALL
+SELECT 'GOD', 'Godown'                              UNION ALL
+SELECT 'SAL', 'Sales Center'                        UNION ALL
+SELECT 'WAR', 'Warehouse'                           UNION ALL
 SELECT 'PRO', 'Production';
 
 
 
 INSERT INTO office.cost_centers(cost_center_code, cost_center_name)
-SELECT 'DEF', 'Default' UNION ALL
-SELECT 'GEN', 'General Administration' UNION ALL
-SELECT 'HUM', 'Human Resources' UNION ALL
-SELECT 'SCC', 'Support & Customer Care' UNION ALL
-SELECT 'GAE', 'Guest Accomodation & Entertainment' UNION ALL
-SELECT 'MKT', 'Marketing & Promotion' UNION ALL
-SELECT 'SAL', 'Sales & Billing' UNION ALL
+SELECT 'DEF', 'Default'                             UNION ALL
+SELECT 'GEN', 'General Administration'              UNION ALL
+SELECT 'HUM', 'Human Resources'                     UNION ALL
+SELECT 'SCC', 'Support & Customer Care'             UNION ALL
+SELECT 'GAE', 'Guest Accomodation & Entertainment'  UNION ALL
+SELECT 'MKT', 'Marketing & Promotion'               UNION ALL
+SELECT 'SAL', 'Sales & Billing'                     UNION ALL
 SELECT 'FIN', 'Finance & Accounting';
 
 
 
--- switches, policy.sql
+-->-->-- /db/src/04. default values/switches, policy.sql --<--<--
 INSERT INTO core.switch_categories(switch_category_name)
 SELECT 'General';
 
@@ -7903,70 +9584,70 @@ SELECT 2, true, 0, true, 0, true, 0, '1-1-2010', '1-1-2020', true;
 
 
 
--- units.sql
+-->-->-- /db/src/04. default values/units.sql --<--<--
 INSERT INTO core.units(unit_code, unit_name)
-SELECT 'PC', 'Piece' UNION ALL
-SELECT 'FT', 'Feet' UNION ALL
-SELECT 'MTR', 'Meter' UNION ALL
-SELECT 'LTR', 'Liter' UNION ALL
-SELECT 'GM', 'Gram' UNION ALL
-SELECT 'KG', 'Kilogram' UNION ALL
-SELECT 'DZ', 'Dozen' UNION ALL
+SELECT 'PC', 'Piece'        UNION ALL
+SELECT 'FT', 'Feet'         UNION ALL
+SELECT 'MTR', 'Meter'       UNION ALL
+SELECT 'LTR', 'Liter'       UNION ALL
+SELECT 'GM', 'Gram'         UNION ALL
+SELECT 'KG', 'Kilogram'     UNION ALL
+SELECT 'DZ', 'Dozen'        UNION ALL
 SELECT 'BX', 'Box';
 
 
 INSERT INTO core.compound_units(base_unit_id, compare_unit_id, value)
-SELECT core.get_unit_id_by_unit_code('PC'), core.get_unit_id_by_unit_code('DZ'), 12 UNION ALL
-SELECT core.get_unit_id_by_unit_code('DZ'), core.get_unit_id_by_unit_code('BX'), 100 UNION ALL
+SELECT core.get_unit_id_by_unit_code('PC'), core.get_unit_id_by_unit_code('DZ'), 12     UNION ALL
+SELECT core.get_unit_id_by_unit_code('DZ'), core.get_unit_id_by_unit_code('BX'), 100    UNION ALL
 SELECT core.get_unit_id_by_unit_code('GM'), core.get_unit_id_by_unit_code('KG'), 1000;
 
 
 
--- verification-statuses, flag-types, frequencies.sql
+-->-->-- /db/src/04. default values/verification-statuses, flag-types, frequencies.sql --<--<--
 --These are hardcoded values and therefore the meanings should always remain intact
 --regardless of the language.
 INSERT INTO core.verification_statuses
-SELECT -3, 'Rejected' UNION ALL
-SELECT -2, 'Closed' UNION ALL
-SELECT -1, 'Withdrawn' UNION ALL
-SELECT 0, 'Unverified' UNION ALL
-SELECT 1, 'Automatically Approved by Workflow' UNION ALL
+SELECT -3, 'Rejected'                           UNION ALL
+SELECT -2, 'Closed'                             UNION ALL
+SELECT -1, 'Withdrawn'                          UNION ALL
+SELECT 0, 'Unverified'                          UNION ALL
+SELECT 1, 'Automatically Approved by Workflow'  UNION ALL
 SELECT 2, 'Approved';
 
 
 INSERT INTO core.flag_types(flag_type_name, background_color, foreground_color)
-SELECT 'Critical', 		'#FA5882', '#FFFFFF' UNION ALL
-SELECT 'Important',		'#F6CEF5', '#000000' UNION ALL
-SELECT 'Review', 		'#CEECF5', '#000000' UNION ALL
-SELECT 'Todo', 			'#F7F8E0', '#000000' UNION ALL
-SELECT 'OK', 			'#D0F5A9', '#000000';
+SELECT 'Critical',      '#FA5882', '#FFFFFF'    UNION ALL
+SELECT 'Important',     '#F6CEF5', '#000000'    UNION ALL
+SELECT 'Review',        '#CEECF5', '#000000'    UNION ALL
+SELECT 'Todo',          '#F7F8E0', '#000000'    UNION ALL
+SELECT 'OK',            '#D0F5A9', '#000000';
 
 
 
 INSERT INTO core.frequencies
-SELECT 2, 'EOM', 'End of Month' UNION ALL
-SELECT 3, 'EOQ', 'End of Quarter' UNION ALL
-SELECT 4, 'EOH', 'End of Half' UNION ALL
+SELECT 2, 'EOM', 'End of Month'                 UNION ALL
+SELECT 3, 'EOQ', 'End of Quarter'               UNION ALL
+SELECT 4, 'EOH', 'End of Half'                  UNION ALL
 SELECT 5, 'EOY', 'End of Year';
 
 
 
 
--- core.account_view.sql
-CREATE VIEW core.account_view
+-->-->-- /db/src/05. scrud-views/core/core.account_scrud_view.sql --<--<--
+CREATE VIEW core.account_scrud_view
 AS
 SELECT
-	core.accounts.account_id,
-	core.account_masters.account_master_code,
-	core.accounts.account_code,
-	core.accounts.external_code,
-	core.accounts.account_name,
-	core.accounts.confidential,
-	core.accounts.description,
-	core.accounts.sys_type,
-	core.accounts.is_cash,
-	parent_account.account_code || ' (' || parent_account.account_name || ')' AS parent,
-	core.has_child_accounts(core.accounts.account_id) AS has_child
+    core.accounts.account_id,
+    core.account_masters.account_master_code,
+    core.accounts.account_code,
+    core.accounts.external_code,
+    core.accounts.account_name,
+    core.accounts.confidential,
+    core.accounts.description,
+    core.accounts.sys_type,
+    core.accounts.is_cash,
+    parent_account.account_code || ' (' || parent_account.account_name || ')' AS parent,
+    core.has_child_accounts(core.accounts.account_id) AS has_child
 FROM core.accounts
 INNER JOIN core.account_masters
 ON core.account_masters.account_master_id=core.accounts.account_master_id
@@ -7974,86 +9655,49 @@ LEFT JOIN core.accounts parent_account
 ON parent_account.account_id=core.accounts.parent_account_id;
 
 
--- core.accounts_view.sql
-CREATE VIEW core.accounts_view
+-->-->-- /db/src/05. scrud-views/core/core.bonus_slab_detail_scrud_view.sql --<--<--
+CREATE VIEW core.bonus_slab_detail_scrud_view
 AS
 SELECT
-	core.accounts.account_id,
-	core.accounts.account_code,
-	core.accounts.account_name,
-	core.accounts.description,
-	core.accounts.sys_type,
-	core.accounts.parent_account_id,
-	parent_accounts.account_code AS parent_account_code,
-	parent_accounts.account_name AS parent_account_name,
-	core.account_masters.account_master_id,
-	core.account_masters.account_master_code,
-	core.account_masters.account_master_name
+    bonus_slab_detail_id,
+    core.bonus_slab_details.bonus_slab_id,
+    core.bonus_slabs.bonus_slab_name AS slab_name,
+    amount_from,
+    amount_to,
+    bonus_rate
 FROM
-	core.account_masters
-	INNER JOIN core.accounts 
-	ON core.account_masters.account_master_id = core.accounts.account_master_id
-	LEFT OUTER JOIN core.accounts AS parent_accounts 
-	ON core.accounts.parent_account_id = parent_accounts.account_id;
-
-
-
--- core.bank_account_view.sql
-CREATE VIEW core.bank_account_view
-AS
-SELECT
-	core.accounts.account_id,
-	core.accounts.account_code,
-	core.accounts.account_name,
-	office.users.user_name AS maintained_by,
-	core.bank_accounts.bank_name,
-	core.bank_accounts.bank_branch,
-	core.bank_accounts.bank_contact_number,
-	core.bank_accounts.bank_address,
-	core.bank_accounts.bank_account_code,
-	core.bank_accounts.bank_account_type,
-	core.bank_accounts.relationship_officer_name AS relation_officer
-FROM
-	core.bank_accounts
-INNER JOIN core.accounts ON core.accounts.account_id = core.bank_accounts.account_id
-INNER JOIN office.users ON core.bank_accounts.maintained_by_user_id = office.users.user_id;
-
-
-
--- core.bonus_slab_detail_view.sql
-CREATE VIEW core.bonus_slab_detail_view
-AS
-SELECT
-	bonus_slab_detail_id,
-	core.bonus_slab_details.bonus_slab_id,
-	core.bonus_slabs.bonus_slab_name AS slab_name,
-	amount_from,
-	amount_to,
-	bonus_rate
-FROM
-	core.bonus_slab_details,
-	core.bonus_slabs
+    core.bonus_slab_details,
+    core.bonus_slabs
 WHERE
-	core.bonus_slab_details.bonus_slab_id = core.bonus_slabs.bonus_slab_id;
+    core.bonus_slab_details.bonus_slab_id = core.bonus_slabs.bonus_slab_id;
 
 
--- core.bonus_slab_view.sql
-CREATE VIEW core.bonus_slab_view
+-->-->-- /db/src/05. scrud-views/core/core.bonus_slab_scrud_view.sql --<--<--
+CREATE VIEW core.bonus_slab_scrud_view
 AS
 SELECT
-	bonus_slab_id,
-	bonus_slab_code,
-	bonus_slab_name,
-	checking_frequency_id,
-	frequency_name
+    bonus_slab_id,
+    bonus_slab_code,
+    bonus_slab_name,
+    checking_frequency_id,
+    frequency_name
 FROM
 core.bonus_slabs, core.frequencies
 WHERE
 core.bonus_slabs.checking_frequency_id = core.frequencies.frequency_id;
 
 
--- core.compound_item_detail_view.sql
-CREATE VIEW core.compound_item_detail_view
+-->-->-- /db/src/05. scrud-views/core/core.brands_scrud_view.sql --<--<--
+CREATE VIEW core.brands_scrud_view
+AS
+SELECT 
+        brand_id,
+        brand_code,
+        brand_name
+FROM core.brands;
+
+-->-->-- /db/src/05. scrud-views/core/core.compound_item_detail_scrud_view.sql --<--<--
+CREATE VIEW core.compound_item_detail_scrud_view
 AS
 SELECT
         compound_item_detail_id,
@@ -8069,8 +9713,36 @@ INNER JOIN core.compound_items
 ON core.compound_item_details.compound_item_id = core.compound_items.compound_item_id;
 
 
--- core.frequency_setup_view.sql
-CREATE VIEW core.frequency_setup_view
+-->-->-- /db/src/05. scrud-views/core/core.compound_items_scrud_view.sql --<--<--
+CREATE VIEW core.compound_items_scrud_view
+AS
+SELECT 
+        compound_item_id,
+        compound_item_code,
+        compound_item_name
+FROM core.compound_items;
+
+-->-->-- /db/src/05. scrud-views/core/core.compound_unit_scrud_view.sql --<--<--
+CREATE VIEW core.compound_unit_scrud_view
+AS
+SELECT
+    compound_unit_id,
+    base_unit.unit_name base_unit_name,
+    value,
+    compare_unit.unit_name compare_unit_name
+FROM
+    core.compound_units,
+    core.units base_unit,
+    core.units compare_unit
+WHERE
+    core.compound_units.base_unit_id = base_unit.unit_id
+AND
+    core.compound_units.compare_unit_id = compare_unit.unit_id;
+
+
+
+-->-->-- /db/src/05. scrud-views/core/core.frequency_setup_scrud_view.sql --<--<--
+CREATE VIEW core.frequency_setup_scrud_view
 AS
 SELECT 
         frequency_setup_id,
@@ -8079,127 +9751,159 @@ SELECT
         core.get_frequency_code_by_frequency_id(frequency_id) AS frequency_code
 FROM core.frequency_setups;
 
--- core.item_cost_price_view.sql
-CREATE VIEW core.item_cost_price_view
+-->-->-- /db/src/05. scrud-views/core/core.item_cost_price_scrud_view.sql --<--<--
+DROP VIEW IF EXISTS core.item_cost_price_scrud_view;
+
+CREATE VIEW core.item_cost_price_scrud_view
 AS
 SELECT
-	core.item_cost_prices.item_cost_price_id,
-	core.items.item_code,
-	core.items.item_name,
-	core.parties.party_code,
-	core.parties.party_name,
-	core.item_cost_prices.price
+    core.item_cost_prices.item_cost_price_id,
+    core.items.item_code,
+    core.items.item_name,
+    core.parties.party_code,
+    core.parties.party_name,
+    unit_code || ' (' || unit_name || ')' AS unit,
+    core.item_cost_prices.price
 FROM 
 core.item_cost_prices
-INNER JOIN
-core.items
+INNER JOIN core.items
 ON core.item_cost_prices.item_id = core.items.item_id
-LEFT JOIN
-core.parties
+INNER JOIN core.units
+ON core.item_cost_prices.unit_id = core.units.unit_id
+LEFT JOIN core.parties
 ON core.item_cost_prices.party_id = core.parties.party_id;
 
 
 
--- core.item_selling_price_view.sql
-CREATE VIEW core.item_selling_price_view
+-->-->-- /db/src/05. scrud-views/core/core.item_group_scrud_view.sql --<--<--
+CREATE VIEW core.item_group_scrud_view
+AS
+SELECT 
+        core.item_groups.item_group_id,
+        core.item_groups.item_group_code,
+        core.item_groups.item_group_name,
+        core.item_groups.exclude_from_purchase,
+        core.item_groups.exclude_from_sales,
+        tax_code || ' (' || tax_name || ')' AS tax,
+        parent_item_group.item_group_code || ' (' || parent_item_group.item_group_name || ')' AS parent        
+FROM core.item_groups
+INNER JOIN core.taxes
+ON core.item_groups.tax_id = taxes.tax_id
+LEFT JOIN core.item_groups AS parent_item_group
+ON core.item_groups.parent_item_group_id = parent_item_group.item_group_id;
+
+-->-->-- /db/src/05. scrud-views/core/core.item_selling_price_scrud_view.sql --<--<--
+DROP VIEW IF EXISTS core.item_selling_price_scrud_view;
+
+CREATE VIEW core.item_selling_price_scrud_view
 AS
 SELECT
-	core.item_selling_prices.item_selling_price_id,
-	core.items.item_code,
-	core.items.item_name,
-	core.party_types.party_type_code,
-	core.party_types.party_type_name,
-	price
+    core.item_selling_prices.item_selling_price_id,
+    core.items.item_code,
+    core.items.item_name,
+    core.party_types.party_type_code,
+    core.party_types.party_type_name,
+    unit_code || ' (' || unit_name || ')' AS unit,
+    price
 FROM
-	core.item_selling_prices
-INNER JOIN 	core.items
-ON 
-	core.item_selling_prices.item_id = core.items.item_id
-LEFT JOIN
-	core.price_types
-ON
-	core.item_selling_prices.price_type_id = core.price_types.price_type_id
-LEFT JOIN
-	core.party_types
-ON	core.item_selling_prices.party_type_id = core.party_types.party_type_id;
+    core.item_selling_prices
+INNER JOIN  core.items
+ON core.item_selling_prices.item_id = core.items.item_id
+INNER JOIN core.units
+ON core.item_selling_prices.unit_id = core.units.unit_id
+LEFT JOIN core.price_types
+ON core.item_selling_prices.price_type_id = core.price_types.price_type_id
+LEFT JOIN core.party_types
+ON  core.item_selling_prices.party_type_id = core.party_types.party_type_id;
 
 
--- core.item_view.sql
---TODO
-CREATE VIEW core.item_view
+
+-->-->-- /db/src/05. scrud-views/core/core.items_scrud_view.sql --<--<--
+DROP VIEW IF EXISTS core.items_scrud_view;
+
+CREATE VIEW core.items_scrud_view
 AS
-SELECT * FROM core.items;
+SELECT 
+        item_id,
+        item_code,
+        item_name,
+        item_group_code || ' (' || item_group_name || ')' AS item_group,
+        maintain_stock,
+        brand_code || ' (' || brand_name || ')' AS brand,
+        party_code || ' (' || party_name || ')' AS preferred_supplier,
+        lead_time_in_days,
+        weight_in_grams,
+        width_in_centimeters,
+        height_in_centimeters,
+        length_in_centimeters,
+        machinable,
+        shipping_mail_type_code || ' (' || shipping_mail_type_name || ')' AS preferred_shipping_mail_type,
+        shipping_package_shape_code || ' (' || shipping_package_shape_name || ')' AS preferred_shipping_package_shape,
+        core.units.unit_code || ' (' || core.units.unit_name || ')' AS unit,
+        hot_item,
+        cost_price,
+        cost_price_includes_tax,
+        selling_price,
+        selling_price_includes_tax,
+        tax_code || ' (' || tax_name || ')' AS tax,
+        reorder_unit.unit_code || ' (' || reorder_unit.unit_name || ')' AS reorder_unit,
+        reorder_level,
+        reorder_quantity
+FROM core.items
+INNER JOIN core.item_groups
+ON core.items.item_group_id = core.item_groups.item_group_id
+INNER JOIN core.brands
+ON core.items.brand_id = core.brands.brand_id
+INNER JOIN core.parties
+ON core.items.preferred_supplier_id = core.parties.party_id
+INNER JOIN core.units
+ON core.items.unit_id = core.units.unit_id
+INNER JOIN core.units AS reorder_unit
+ON core.items.reorder_unit_id = reorder_unit.unit_id
+INNER JOIN core.taxes
+ON core.items.tax_id = core.taxes.tax_id
+LEFT JOIN core.shipping_mail_types
+ON core.items.preferred_shipping_mail_type_id = core.shipping_mail_types.shipping_mail_type_id
+LEFT JOIN core.shipping_package_shapes
+ON core.items.shipping_package_shape_id = core.shipping_package_shapes.shipping_package_shape_id;
 
-
--- core.party_user_control_view.sql
-CREATE VIEW core.party_user_control_view
+-->-->-- /db/src/05. scrud-views/core/core.party_scrud_view.sql --<--<--
+CREATE VIEW core.party_scrud_view
 AS
 SELECT
-	core.party_types.party_type_code,
-	core.party_types.party_type_name,
-	core.parties.email,
-	core.parties.url,
-	core.parties.pan_number,
-	core.parties.sst_number,
-	core.parties.cst_number,
-	core.parties.allow_credit,
-	core.parties.maximum_credit_period,
-	core.parties.maximum_credit_amount,
-	core.parties.charge_interest,
-	core.parties.interest_rate,
-	core.accounts.account_code,
-	core.accounts.account_name,
-	core.parties.po_box,
-	core.parties.address_line_1,
-	core.parties.address_line_2,
-	core.parties.street,
-	core.parties.city,
-	core.parties.state,
-	core.parties.country
-FROM core.parties
-INNER JOIN core.party_types
-ON core.parties.party_type_id = core.party_types.party_type_id
-INNER JOIN core.accounts
-ON core.parties.account_id = core.accounts.account_id;
-
-
--- core.party_view.sql
-CREATE VIEW core.party_view
-AS
-SELECT
-	core.parties.party_id,
-	core.party_types.party_type_id,
-	core.party_types.is_supplier,
-	core.party_types.party_type_code || ' (' || core.party_types.party_type_name || ')' AS party_type,
-	core.parties.party_code,
-	core.parties.first_name,
-	core.parties.middle_name,
-	core.parties.last_name,
-	core.parties.party_name,
-	core.parties.po_box,
-	core.parties.address_line_1,
-	core.parties.address_line_2,
-	core.parties.street,
-	core.parties.city,
-	core.parties.state,
-	core.parties.country,
-	core.parties.allow_credit,
-	core.parties.maximum_credit_period,
-	core.parties.maximum_credit_amount,
-	core.parties.charge_interest,
-	core.parties.interest_rate,
-	core.get_frequency_code_by_frequency_id(interest_compounding_frequency_id) AS compounding_frequency,
-	core.parties.pan_number,
-	core.parties.sst_number,
-	core.parties.cst_number,
-	core.parties.phone,
-	core.parties.fax,
-	core.parties.cell,
-	core.parties.email,
-	core.parties.url,
-	core.accounts.account_id,
-	core.accounts.account_code,
-	core.accounts.account_code || ' (' || core.accounts.account_name || ')' AS gl_head
+    core.parties.party_id,
+    core.party_types.party_type_id,
+    core.party_types.is_supplier,
+    core.party_types.party_type_code || ' (' || core.party_types.party_type_name || ')' AS party_type,
+    core.parties.party_code,
+    core.parties.first_name,
+    core.parties.middle_name,
+    core.parties.last_name,
+    core.parties.party_name,
+    core.parties.po_box,
+    core.parties.address_line_1,
+    core.parties.address_line_2,
+    core.parties.street,
+    core.parties.city,
+    core.parties.state,
+    core.parties.country,
+    core.parties.allow_credit,
+    core.parties.maximum_credit_period,
+    core.parties.maximum_credit_amount,
+    core.parties.charge_interest,
+    core.parties.interest_rate,
+    core.get_frequency_code_by_frequency_id(interest_compounding_frequency_id) AS compounding_frequency,
+    core.parties.pan_number,
+    core.parties.sst_number,
+    core.parties.cst_number,
+    core.parties.phone,
+    core.parties.fax,
+    core.parties.cell,
+    core.parties.email,
+    core.parties.url,
+    core.accounts.account_id,
+    core.accounts.account_code,
+    core.accounts.account_code || ' (' || core.accounts.account_name || ')' AS gl_head
 FROM
 core.parties
 INNER JOIN
@@ -8209,91 +9913,653 @@ INNER JOIN core.accounts
 ON core.parties.account_id=core.accounts.account_id;
 
 
--- core.salesperson_bonus_setup_view.sql
-CREATE VIEW core.salesperson_bonus_setup_view
+-->-->-- /db/src/05. scrud-views/core/core.party_types_scrud_view.sql --<--<--
+CREATE VIEW core.party_types_scrud_view
+AS
+SELECT 
+        party_type_id,
+        party_type_code,
+        party_type_name,
+        is_supplier
+FROM core.party_types;
+
+-->-->-- /db/src/05. scrud-views/core/core.sales_teams_scrud_view.sql --<--<--
+CREATE VIEW core.sales_teams_scrud_view
+AS
+SELECT 
+        sales_team_id,
+        sales_team_code,
+        sales_team_name
+FROM core.sales_teams;
+
+-->-->-- /db/src/05. scrud-views/core/core.salesperson_bonus_setup_scrud_view.sql --<--<--
+CREATE VIEW core.salesperson_bonus_setup_scrud_view
 AS
 SELECT
-	salesperson_bonus_setup_id,
-	salesperson_name,
-	bonus_slab_name
+    salesperson_bonus_setup_id,
+    salesperson_name,
+    bonus_slab_name
 FROM
-	core.salesperson_bonus_setups,
-	core.salespersons,
-	core.bonus_slabs
+    core.salesperson_bonus_setups,
+    core.salespersons,
+    core.bonus_slabs
 WHERE
-	core.salesperson_bonus_setups.salesperson_id = core.salespersons.salesperson_id
+    core.salesperson_bonus_setups.salesperson_id = core.salespersons.salesperson_id
 AND
-	core.salesperson_bonus_setups.bonus_slab_id = core.bonus_slabs.bonus_slab_id;
+    core.salesperson_bonus_setups.bonus_slab_id = core.bonus_slabs.bonus_slab_id;
 
 
--- core.salesperson_view.sql
-CREATE VIEW core.salesperson_view
+-->-->-- /db/src/05. scrud-views/core/core.salesperson_scrud_view.sql --<--<--
+CREATE VIEW core.salesperson_scrud_view
 AS
 SELECT
-	salesperson_id,
-	salesperson_code,
-	salesperson_name,
-	address,
-	contact_number,
-	commission_rate,
-	account_name
+    salesperson_id,
+    salesperson_code,
+    salesperson_name,
+    address,
+    contact_number,
+    commission_rate,
+    account_name
 FROM
-	core.salespersons,
-	core.accounts
+    core.salespersons,
+    core.accounts
 WHERE
-	core.salespersons.account_id = core.accounts.account_id;
+    core.salespersons.account_id = core.accounts.account_id;
 
 
--- core.shipping_address_view.sql
-CREATE VIEW core.shipping_address_view
+-->-->-- /db/src/05. scrud-views/core/core.shippers_scrud_view.sql --<--<--
+CREATE VIEW core.shippers_scrud_view
 AS
 SELECT
-	core.shipping_addresses.shipping_address_id,
-	core.shipping_addresses.shipping_address_code,
-	core.shipping_addresses.party_id,
-	core.parties.party_code || ' (' || core.parties.party_name || ')' AS party,
-	core.shipping_addresses.po_box,
-	core.shipping_addresses.address_line_1,
-	core.shipping_addresses.address_line_2,
-	core.shipping_addresses.street,
-	core.shipping_addresses.city,
-	core.shipping_addresses.state,
-	core.shipping_addresses.country
+        shipper_id,
+        shipper_code,
+        company_name,
+        shipper_name,
+        po_box,
+        address_line_1,
+        address_line_2,
+        street,
+        city,
+        state,
+        country,
+        phone,
+        fax,
+        cell,
+        email,
+        url,
+        contact_person,
+        contact_po_box,
+        contact_address_line_1,
+        contact_address_line_2,
+        contact_street,
+        contact_city,
+        contact_state,
+        contact_country,
+        contact_email,
+        contact_phone,
+        contact_cell,
+        factory_address,
+        pan_number,
+        sst_number,
+        cst_number,
+        account_code || ' (' || account_name || ')' AS account
+FROM core.shippers
+INNER JOIN core.accounts
+ON core.shippers.account_id = core.accounts.account_id;
+
+
+
+-->-->-- /db/src/05. scrud-views/core/core.shipping_address_scrud_view.sql --<--<--
+CREATE VIEW core.shipping_address_scrud_view
+AS
+SELECT
+    core.shipping_addresses.shipping_address_id,
+    core.shipping_addresses.shipping_address_code,
+    core.shipping_addresses.party_id,
+    core.parties.party_code || ' (' || core.parties.party_name || ')' AS party,
+    core.shipping_addresses.po_box,
+    core.shipping_addresses.address_line_1,
+    core.shipping_addresses.address_line_2,
+    core.shipping_addresses.street,
+    core.shipping_addresses.city,
+    core.shipping_addresses.state,
+    core.shipping_addresses.country
 FROM core.shipping_addresses
 INNER JOIN core.parties
 ON core.shipping_addresses.party_id=core.parties.party_id;
 
 
--- core.supplier_view.sql
-CREATE VIEW core.supplier_view
-AS
-SELECT * FROM core.party_view
-WHERE is_supplier=true;
-
-
--- core.tax_view.sql
-CREATE VIEW core.tax_view
+-->-->-- /db/src/05. scrud-views/core/core.tax_scrud_view.sql --<--<--
+CREATE VIEW core.tax_scrud_view
 AS
 SELECT
-	tax_id,
-	tax_code,
-	tax_name,
-	rate,
-	tax_type_code,
-	tax_type_name,
-	account_code,
-	account_name
+    tax_id,
+    tax_code,
+    tax_name,
+    rate,
+    tax_type_code,
+    tax_type_name,
+    account_code,
+    account_name
 FROM
-	core.taxes,
-	core.accounts,
-	core.tax_types
+    core.taxes,
+    core.accounts,
+    core.tax_types
 WHERE
-	core.taxes.account_id = core.accounts.account_id
+    core.taxes.account_id = core.accounts.account_id
 AND
-	core.taxes.tax_type_id = core.tax_types.tax_type_id;
+    core.taxes.tax_type_id = core.tax_types.tax_type_id;
 
 
--- core.unit_view.sql
+-->-->-- /db/src/05. scrud-views/core/core.units_scrud_view.sql --<--<--
+CREATE VIEW core.units_scrud_view
+AS
+SELECT
+        unit_id,
+        unit_code,
+        unit_name
+FROM core.units;
+
+-->-->-- /db/src/05. scrud-views/office/office.cash_repository_scrud_view.sql --<--<--
+CREATE VIEW office.cash_repository_view
+AS
+SELECT
+    office.cash_repositories.cash_repository_id,
+    office.cash_repositories.cash_repository_code,
+    office.cash_repositories.cash_repository_name,
+    parent_cash_repositories.cash_repository_code parent_cr_code,
+    parent_cash_repositories.cash_repository_name parent_cr_name,
+    office.cash_repositories.description
+FROM
+    office.cash_repositories
+LEFT OUTER JOIN
+    office.cash_repositories AS parent_cash_repositories
+ON
+    office.cash_repositories.parent_cash_repository_id=parent_cash_repositories.cash_repository_id;
+
+
+-->-->-- /db/src/05. scrud-views/office/office.cost_center_scrud_view.sql --<--<--
+CREATE VIEW office.cost_center_scrud_view
+AS
+SELECT
+    office.cost_centers.cost_center_id,
+    office.cost_centers.cost_center_code,
+    office.cost_centers.cost_center_name
+FROM
+    office.cost_centers;
+
+
+-->-->-- /db/src/05. scrud-views/policy/policy.auto_verification_policy_scrud_view.sql --<--<--
+CREATE VIEW policy.auto_verification_policy_scrud_view
+AS
+SELECT
+    policy.auto_verification_policy.user_id,
+    office.users.user_name,
+    policy.auto_verification_policy.verify_sales_transactions,
+    policy.auto_verification_policy.sales_verification_limit,
+    policy.auto_verification_policy.verify_purchase_transactions,
+    policy.auto_verification_policy.purchase_verification_limit,
+    policy.auto_verification_policy.verify_gl_transactions,
+    policy.auto_verification_policy.gl_verification_limit,
+    policy.auto_verification_policy.effective_from,
+    policy.auto_verification_policy.ends_on,
+    policy.auto_verification_policy.is_active
+FROM policy.auto_verification_policy
+INNER JOIN office.users
+ON policy.auto_verification_policy.user_id=office.users.user_id;
+
+
+
+-->-->-- /db/src/05. scrud-views/policy/policy.voucher_verification_policy_scrud_view.sql --<--<--
+CREATE VIEW policy.voucher_verification_policy_scrud_view
+AS
+SELECT
+    policy.voucher_verification_policy.user_id,
+    office.users.user_name,
+    policy.voucher_verification_policy.can_verify_sales_transactions,
+    policy.voucher_verification_policy.sales_verification_limit,
+    policy.voucher_verification_policy.can_verify_purchase_transactions,
+    policy.voucher_verification_policy.purchase_verification_limit,
+    policy.voucher_verification_policy.can_verify_gl_transactions,
+    policy.voucher_verification_policy.gl_verification_limit,
+    policy.voucher_verification_policy.can_self_verify,
+    policy.voucher_verification_policy.self_verification_limit,
+    policy.voucher_verification_policy.effective_from,
+    policy.voucher_verification_policy.ends_on,
+    policy.voucher_verification_policy.is_active
+FROM policy.voucher_verification_policy
+INNER JOIN office.users
+ON policy.voucher_verification_policy.user_id=office.users.user_id;
+
+
+
+
+-->-->-- /db/src/05. selector-views/core/core.account_master_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.account_master_selector_view;
+
+CREATE VIEW core.account_master_selector_view
+AS
+SELECT * FROM core.account_masters;
+
+-->-->-- /db/src/05. selector-views/core/core.account_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.account_selector_view;
+
+CREATE VIEW core.account_selector_view
+AS
+SELECT
+    core.accounts.account_id,
+    core.accounts.account_code,
+    core.accounts.account_name,
+    core.accounts.description,
+    core.accounts.sys_type,
+    core.accounts.parent_account_id,
+    parent_accounts.account_code AS parent_account_code,
+    parent_accounts.account_name AS parent_account_name,
+    core.account_masters.account_master_id,
+    core.account_masters.account_master_code,
+    core.account_masters.account_master_name
+FROM
+    core.account_masters
+    INNER JOIN core.accounts 
+    ON core.account_masters.account_master_id = core.accounts.account_master_id
+    LEFT OUTER JOIN core.accounts AS parent_accounts 
+    ON core.accounts.parent_account_id = parent_accounts.account_id;
+
+
+-->-->-- /db/src/05. selector-views/core/core.bonus_slab_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.bonus_slab_selector_view;
+
+CREATE VIEW core.bonus_slab_selector_view
+AS
+SELECT * FROM core.bonus_slabs;
+
+-->-->-- /db/src/05. selector-views/core/core.brand_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.brand_selector_view;
+
+CREATE VIEW core.brand_selector_view
+AS
+SELECT * FROM core.brands;
+
+-->-->-- /db/src/05. selector-views/core/core.compound_item_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.compound_item_selector_view;
+
+CREATE VIEW core.compound_item_selector_view
+AS
+SELECT * FROM core.compound_items;
+
+-->-->-- /db/src/05. selector-views/core/core.currency_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.currency_selector_view;
+
+CREATE VIEW core.currency_selector_view
+AS
+SELECT * FROM core.currencies;
+
+-->-->-- /db/src/05. selector-views/core/core.fiscal_year_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.fiscal_year_selector_view;
+
+CREATE VIEW core.fiscal_year_selector_view
+AS
+SELECT * FROM core.fiscal_year;
+
+-->-->-- /db/src/05. selector-views/core/core.frequency_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.frequency_selector_view;
+
+CREATE VIEW core.frequency_selector_view
+AS
+SELECT * FROM core.frequencies;
+
+
+-->-->-- /db/src/05. selector-views/core/core.item_group_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.item_group_selector_view;
+
+CREATE VIEW core.item_group_selector_view
+AS
+SELECT * FROM core.item_groups;
+
+-->-->-- /db/src/05. selector-views/core/core.item_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.item_selector_view;
+
+CREATE VIEW core.item_selector_view
+AS
+SELECT * FROM core.items;
+
+-->-->-- /db/src/05. selector-views/core/core.party_selector_view.sql --<--<--
+CREATE VIEW core.party_selector_view
+AS
+SELECT
+    core.parties.party_id,
+    core.party_types.party_type_id,
+    core.party_types.is_supplier,
+    core.party_types.party_type_code || ' (' || core.party_types.party_type_name || ')' AS party_type,
+    core.parties.party_code,
+    core.parties.first_name,
+    core.parties.middle_name,
+    core.parties.last_name,
+    core.parties.party_name,
+    core.parties.po_box,
+    core.parties.address_line_1,
+    core.parties.address_line_2,
+    core.parties.street,
+    core.parties.city,
+    core.parties.state,
+    core.parties.country,
+    core.parties.allow_credit,
+    core.parties.maximum_credit_period,
+    core.parties.maximum_credit_amount,
+    core.parties.charge_interest,
+    core.parties.interest_rate,
+    core.get_frequency_code_by_frequency_id(interest_compounding_frequency_id) AS compounding_frequency,
+    core.parties.pan_number,
+    core.parties.sst_number,
+    core.parties.cst_number,
+    core.parties.phone,
+    core.parties.fax,
+    core.parties.cell,
+    core.parties.email,
+    core.parties.url,
+    core.accounts.account_id,
+    core.accounts.account_code,
+    core.accounts.account_code || ' (' || core.accounts.account_name || ')' AS gl_head
+FROM
+core.parties
+INNER JOIN
+core.party_types
+ON core.parties.party_type_id = core.party_types.party_type_id
+INNER JOIN core.accounts
+ON core.parties.account_id=core.accounts.account_id;
+
+
+-->-->-- /db/src/05. selector-views/core/core.party_type_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.party_type_selector_view;
+
+CREATE VIEW core.party_type_selector_view
+AS
+SELECT * FROM core.party_types;
+
+-->-->-- /db/src/05. selector-views/core/core.price_type_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.price_type_selector_view;
+
+CREATE VIEW core.price_type_selector_view
+AS
+SELECT * FROM core.price_types;
+
+-->-->-- /db/src/05. selector-views/core/core.sales_team_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.sales_team_selector_view;
+
+CREATE VIEW core.sales_team_selector_view
+AS
+SELECT * FROM core.sales_teams;
+
+
+-->-->-- /db/src/05. selector-views/core/core.salesperson_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.salesperson_selector_view;
+
+CREATE VIEW core.salesperson_selector_view
+AS
+SELECT
+    salesperson_id,
+    salesperson_code,
+    salesperson_name,
+    address,
+    contact_number,
+    commission_rate,
+    account_name
+FROM
+    core.salespersons,
+    core.accounts
+WHERE
+    core.salespersons.account_id = core.accounts.account_id;
+
+
+
+-->-->-- /db/src/05. selector-views/core/core.shipping_mail_type_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.shipping_mail_type_selector_view;
+
+CREATE VIEW core.shipping_mail_type_selector_view
+AS
+SELECT * FROM core.shipping_mail_types;
+
+-->-->-- /db/src/05. selector-views/core/core.shipping_package_shape_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.shipping_package_shape_selector_view;
+
+CREATE VIEW core.shipping_package_shape_selector_view
+AS
+SELECT * FROM core.shipping_package_shapes;
+
+-->-->-- /db/src/05. selector-views/core/core.supplier_selector_view.sql --<--<--
+CREATE VIEW core.supplier_selector_view
+AS
+SELECT * FROM core.parties
+WHERE party_type_id IN
+(
+        SELECT party_type_id FROM core.party_types
+        WHERE is_supplier=true
+);
+
+
+-->-->-- /db/src/05. selector-views/core/core.tax_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.tax_selector_view;
+
+CREATE VIEW core.tax_selector_view
+AS
+SELECT
+    tax_id,
+    tax_code,
+    tax_name,
+    rate,
+    tax_type_code,
+    tax_type_name,
+    account_code,
+    account_name
+FROM
+    core.taxes,
+    core.accounts,
+    core.tax_types
+WHERE
+    core.taxes.account_id = core.accounts.account_id
+AND
+    core.taxes.tax_type_id = core.tax_types.tax_type_id;
+
+
+-->-->-- /db/src/05. selector-views/core/core.tax_type_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.tax_type_selector_view;
+
+CREATE VIEW core.tax_type_selector_view
+AS
+SELECT * FROM core.tax_types;
+
+-->-->-- /db/src/05. selector-views/core/core.unit_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.unit_selector_view;
+
+CREATE VIEW core.unit_selector_view
+AS
+SELECT * FROM core.units;
+
+-->-->-- /db/src/05. selector-views/office/office.cash_repository_selector_view.sql --<--<--
+DROP VIEW IF EXISTS office.cash_repository_selector_view;
+
+CREATE VIEW office.cash_repository_selector_view
+AS
+SELECT
+    office.cash_repositories.cash_repository_id,
+    office.cash_repositories.cash_repository_code,
+    office.cash_repositories.cash_repository_name,
+    parent_cash_repositories.cash_repository_code parent_cr_code,
+    parent_cash_repositories.cash_repository_name parent_cr_name,
+    office.cash_repositories.description
+FROM
+    office.cash_repositories
+LEFT OUTER JOIN
+    office.cash_repositories AS parent_cash_repositories
+ON
+    office.cash_repositories.parent_cash_repository_id=parent_cash_repositories.cash_repository_id;
+
+
+
+-->-->-- /db/src/05. selector-views/office/office.office_selector_view.sql --<--<--
+DROP VIEW IF EXISTS office.office_selector_view;
+
+CREATE VIEW office.office_selector_view
+AS
+SELECT * FROM office.offices;
+
+
+-->-->-- /db/src/05. selector-views/office/office.store_selector_view.sql --<--<--
+DROP VIEW IF EXISTS office.store_selector_view;
+
+CREATE VIEW office.store_selector_view
+AS
+SELECT * FROM office.stores;
+
+
+
+-->-->-- /db/src/05. selector-views/office/office.store_type_selector_view.sql --<--<--
+DROP VIEW IF EXISTS office.store_type_selector_view;
+
+CREATE VIEW office.store_type_selector_view
+AS
+SELECT * FROM office.store_types;
+
+
+
+-->-->-- /db/src/05. selector-views/office/office.user_selector_view.sql --<--<--
+DROP VIEW IF EXISTS office.user_selector_view;
+
+CREATE VIEW office.user_selector_view
+AS
+SELECT
+    office.users.user_id,
+    office.users.user_name,
+    office.users.full_name,
+    office.roles.role_name,
+    office.offices.office_name
+FROM
+    office.users
+INNER JOIN office.roles
+ON office.users.role_id = office.roles.role_id
+INNER JOIN office.offices
+ON office.users.office_id = office.offices.office_id;
+
+
+-->-->-- /db/src/05. views/core/core.account_view.sql --<--<--
+CREATE VIEW core.account_view
+AS
+SELECT
+    core.accounts.account_id,
+    core.accounts.account_code,
+    core.accounts.account_name,
+    core.accounts.description,
+    core.accounts.sys_type,
+    core.accounts.parent_account_id,
+    parent_accounts.account_code AS parent_account_code,
+    parent_accounts.account_name AS parent_account_name,
+    core.account_masters.account_master_id,
+    core.account_masters.account_master_code,
+    core.account_masters.account_master_name
+FROM
+    core.account_masters
+    INNER JOIN core.accounts 
+    ON core.account_masters.account_master_id = core.accounts.account_master_id
+    LEFT OUTER JOIN core.accounts AS parent_accounts 
+    ON core.accounts.parent_account_id = parent_accounts.account_id;
+
+
+
+-->-->-- /db/src/05. views/core/core.bank_account_view.sql --<--<--
+CREATE VIEW core.bank_account_view
+AS
+SELECT
+    core.accounts.account_id,
+    core.accounts.account_code,
+    core.accounts.account_name,
+    office.users.user_name AS maintained_by,
+    core.bank_accounts.bank_name,
+    core.bank_accounts.bank_branch,
+    core.bank_accounts.bank_contact_number,
+    core.bank_accounts.bank_address,
+    core.bank_accounts.bank_account_code,
+    core.bank_accounts.bank_account_type,
+    core.bank_accounts.relationship_officer_name AS relation_officer
+FROM
+    core.bank_accounts
+INNER JOIN core.accounts ON core.accounts.account_id = core.bank_accounts.account_id
+INNER JOIN office.users ON core.bank_accounts.maintained_by_user_id = office.users.user_id;
+
+
+
+-->-->-- /db/src/05. views/core/core.item_view.sql --<--<--
+--TODO
+CREATE VIEW core.item_view
+AS
+SELECT * FROM core.items;
+
+
+-->-->-- /db/src/05. views/core/core.party_user_control_view.sql --<--<--
+CREATE VIEW core.party_user_control_view
+AS
+SELECT
+    core.party_types.party_type_code,
+    core.party_types.party_type_name,
+    core.parties.email,
+    core.parties.url,
+    core.parties.pan_number,
+    core.parties.sst_number,
+    core.parties.cst_number,
+    core.parties.allow_credit,
+    core.parties.maximum_credit_period,
+    core.parties.maximum_credit_amount,
+    core.parties.charge_interest,
+    core.parties.interest_rate,
+    core.accounts.account_code,
+    core.accounts.account_name,
+    core.parties.po_box,
+    core.parties.address_line_1,
+    core.parties.address_line_2,
+    core.parties.street,
+    core.parties.city,
+    core.parties.state,
+    core.parties.country
+FROM core.parties
+INNER JOIN core.party_types
+ON core.parties.party_type_id = core.party_types.party_type_id
+INNER JOIN core.accounts
+ON core.parties.account_id = core.accounts.account_id;
+
+
+-->-->-- /db/src/05. views/core/core.shipping_address_view.sql --<--<--
+DROP VIEW IF EXISTS core.shipping_address_view;
+
+CREATE VIEW core.shipping_address_view
+AS
+SELECT
+    core.shipping_addresses.shipping_address_id,
+    core.shipping_addresses.shipping_address_code,
+    core.shipping_addresses.party_id,
+    core.parties.party_code || ' (' || core.parties.party_name || ')' AS party,
+    core.shipping_addresses.po_box,
+    core.shipping_addresses.address_line_1,
+    core.shipping_addresses.address_line_2,
+    core.shipping_addresses.street,
+    core.shipping_addresses.city,
+    core.shipping_addresses.state,
+    core.shipping_addresses.country
+FROM core.shipping_addresses
+INNER JOIN core.parties
+ON core.shipping_addresses.party_id=core.parties.party_id;
+
+
+
+-->-->-- /db/src/05. views/core/core.supplier_view.sql --<--<--
+CREATE VIEW core.supplier_view
+AS
+SELECT * FROM core.parties
+WHERE party_type_id IN
+(
+        SELECT party_type_id FROM core.party_types
+        WHERE is_supplier=true
+);
+
+-->-->-- /db/src/05. views/core/core.unit_view.sql --<--<--
 --TODO
 CREATE VIEW core.unit_view
 AS
@@ -8301,43 +10567,14 @@ SELECT * FROM core.units;
 
 
 
--- office.cash_repository_view.sql
-CREATE VIEW office.cash_repository_view
-AS
-SELECT
-	office.cash_repositories.cash_repository_id,
-	office.cash_repositories.cash_repository_code,
-	office.cash_repositories.cash_repository_name,
-	parent_cash_repositories.cash_repository_code parent_cr_code,
-	parent_cash_repositories.cash_repository_name parent_cr_name,
-	office.cash_repositories.description
-FROM
-	office.cash_repositories
-LEFT OUTER JOIN
-	office.cash_repositories AS parent_cash_repositories
-ON
-	office.cash_repositories.parent_cash_repository_id=parent_cash_repositories.cash_repository_id;
-
-
--- office.cost_center_view.sql
-CREATE VIEW office.cost_center_view
-AS
-SELECT
-	office.cost_centers.cost_center_id,
-	office.cost_centers.cost_center_code,
-	office.cost_centers.cost_center_name
-FROM
-	office.cost_centers;
-
-
--- office.office_view.sql
+-->-->-- /db/src/05. views/office/office.office_view.sql --<--<--
 --TODO
 CREATE VIEW office.office_view
 AS
 SELECT * FROM office.offices;
 
 
--- office.role_view.sql
+-->-->-- /db/src/05. views/office/office.role_view.sql --<--<--
 CREATE OR REPLACE VIEW office.role_view
 AS
 SELECT 
@@ -8346,91 +10583,74 @@ SELECT
   roles.role_name
 FROM 
   office.roles;
-	
-CREATE VIEW core.compound_unit_view
-AS
-SELECT
-	compound_unit_id,
-	base_unit.unit_name base_unit_name,
-	value,
-	compare_unit.unit_name compare_unit_name
-FROM
-	core.compound_units,
-	core.units base_unit,
-	core.units compare_unit
-WHERE
-	core.compound_units.base_unit_id = base_unit.unit_id
-AND
-	core.compound_units.compare_unit_id = compare_unit.unit_id;
+   
 
-
-
--- office.sign_in_view.sql
+-->-->-- /db/src/05. views/office/office.sign_in_view.sql --<--<--
 CREATE VIEW office.sign_in_view
 AS
 SELECT
-	users.user_id, 
-	roles.role_code || ' (' || roles.role_name || ')' AS role, 
-	roles.is_admin,
-	roles.is_system,
-	users.user_name, 
-	users.full_name,
-	office.get_login_id(office.users.user_id) AS login_id,
-	office.get_logged_in_office_id(office.users.user_id) AS office_id,
-	office.get_logged_in_culture(office.users.user_id) AS culture,
-	logged_in_office.office_code || ' (' || logged_in_office.office_name || ')' AS office,
-	logged_in_office.office_code,
-	logged_in_office.office_name,
-	logged_in_office.nick_name,
-	logged_in_office.registration_date,
-	logged_in_office.registration_number,
-	logged_in_office.pan_number,
-	logged_in_office.po_box,
-	logged_in_office.address_line_1,
-	logged_in_office.address_line_2,
-	logged_in_office.street,
-	logged_in_office.city,
-	logged_in_office.state,
-	logged_in_office.country,
-	logged_in_office.zip_code,
-	logged_in_office.phone,
-	logged_in_office.fax,
-	logged_in_office.email,
-	logged_in_office.url
+    users.user_id, 
+    roles.role_code || ' (' || roles.role_name || ')' AS role, 
+    roles.is_admin,
+    roles.is_system,
+    users.user_name, 
+    users.full_name,
+    office.get_login_id(office.users.user_id) AS login_id,
+    office.get_logged_in_office_id(office.users.user_id) AS office_id,
+    office.get_logged_in_culture(office.users.user_id) AS culture,
+    logged_in_office.office_code || ' (' || logged_in_office.office_name || ')' AS office,
+    logged_in_office.office_code,
+    logged_in_office.office_name,
+    logged_in_office.nick_name,
+    logged_in_office.registration_date,
+    logged_in_office.registration_number,
+    logged_in_office.pan_number,
+    logged_in_office.po_box,
+    logged_in_office.address_line_1,
+    logged_in_office.address_line_2,
+    logged_in_office.street,
+    logged_in_office.city,
+    logged_in_office.state,
+    logged_in_office.country,
+    logged_in_office.zip_code,
+    logged_in_office.phone,
+    logged_in_office.fax,
+    logged_in_office.email,
+    logged_in_office.url
 FROM 
-	office.users
+    office.users
 INNER JOIN
-	office.roles
+    office.roles
 ON
-	users.role_id = roles.role_id 
+    users.role_id = roles.role_id 
 INNER JOIN
-	office.offices
+    office.offices
 ON
-	users.office_id = offices.office_id
+    users.office_id = offices.office_id
 LEFT JOIN
-	office.offices AS logged_in_office
+    office.offices AS logged_in_office
 ON
-	logged_in_office.office_id = office.get_logged_in_office_id(office.users.user_id);
+    logged_in_office.office_id = office.get_logged_in_office_id(office.users.user_id);
 
 
--- office.store_view.sql
+-->-->-- /db/src/05. views/office/office.store_view.sql --<--<--
 --TODO
 CREATE VIEW office.store_view
 AS
 SELECT * FROM office.stores;
 
 
--- office.user_view.sql
+-->-->-- /db/src/05. views/office/office.user_view.sql --<--<--
 CREATE VIEW office.user_view
 AS
 SELECT
-	office.users.user_id,
-	office.users.user_name,
-	office.users.full_name,
-	office.roles.role_name,
-	office.offices.office_name
+    office.users.user_id,
+    office.users.user_name,
+    office.users.full_name,
+    office.roles.role_name,
+    office.offices.office_name
 FROM
-	office.users
+    office.users
 INNER JOIN office.roles
 ON office.users.role_id = office.roles.role_id
 INNER JOIN office.offices
@@ -8438,141 +10658,97 @@ ON office.users.office_id = office.offices.office_id;
 
 
 
--- office.work_center_view.sql
+-->-->-- /db/src/05. views/office/office.work_center_view.sql --<--<--
 CREATE VIEW office.work_center_view
 AS
 SELECT
-	office.work_centers.work_center_id,
-	office.offices.office_code || ' (' || office.offices.office_name || ')' AS office,
-	office.work_centers.work_center_code,
-	office.work_centers.work_center_name
+    office.work_centers.work_center_id,
+    office.offices.office_code || ' (' || office.offices.office_name || ')' AS office,
+    office.work_centers.work_center_code,
+    office.work_centers.work_center_name
 FROM office.work_centers
 INNER JOIN office.offices
 ON office.work_centers.office_id = office.offices.office_id;
 
 
--- policy.auto_verification_policy_view.sql
-CREATE VIEW policy.auto_verification_policy_view
-AS
-SELECT
-	policy.auto_verification_policy.user_id,
-	office.users.user_name,
-	policy.auto_verification_policy.verify_sales_transactions,
-	policy.auto_verification_policy.sales_verification_limit,
-	policy.auto_verification_policy.verify_purchase_transactions,
-	policy.auto_verification_policy.purchase_verification_limit,
-	policy.auto_verification_policy.verify_gl_transactions,
-	policy.auto_verification_policy.gl_verification_limit,
-	policy.auto_verification_policy.effective_from,
-	policy.auto_verification_policy.ends_on,
-	policy.auto_verification_policy.is_active
-FROM policy.auto_verification_policy
-INNER JOIN office.users
-ON policy.auto_verification_policy.user_id=office.users.user_id;
-
-
-
--- policy.voucher_verification_policy_view.sql
-CREATE VIEW policy.voucher_verification_policy_view
-AS
-SELECT
-	policy.voucher_verification_policy.user_id,
-	office.users.user_name,
-	policy.voucher_verification_policy.can_verify_sales_transactions,
-	policy.voucher_verification_policy.sales_verification_limit,
-	policy.voucher_verification_policy.can_verify_purchase_transactions,
-	policy.voucher_verification_policy.purchase_verification_limit,
-	policy.voucher_verification_policy.can_verify_gl_transactions,
-	policy.voucher_verification_policy.gl_verification_limit,
-	policy.voucher_verification_policy.can_self_verify,
-	policy.voucher_verification_policy.self_verification_limit,
-	policy.voucher_verification_policy.effective_from,
-	policy.voucher_verification_policy.ends_on,
-	policy.voucher_verification_policy.is_active
-FROM policy.voucher_verification_policy
-INNER JOIN office.users
-ON policy.voucher_verification_policy.user_id=office.users.user_id;
-
-
-
-
--- public.dbstat.sql
+-->-->-- /db/src/05. views/public.dbstat.sql --<--<--
 DROP VIEW IF EXISTS db_stat;
 
 CREATE VIEW db_stat
 AS
 SELECT
-	relname,
-	last_vacuum,
-	last_autovacuum,
-	last_analyze,
-	last_autoanalyze,
-	vacuum_count,
-	autovacuum_count,
-	analyze_count,
-	autoanalyze_count
+    relname,
+    last_vacuum,
+    last_autovacuum,
+    last_analyze,
+    last_autoanalyze,
+    vacuum_count,
+    autovacuum_count,
+    analyze_count,
+    autoanalyze_count
 FROM
    pg_stat_user_tables;
 
 
--- 1. transactions.transaction_view.sql
+-->-->-- /db/src/05. views/transactions/1. transactions.transaction_view.sql --<--<--
 DROP VIEW IF EXISTS transactions.transaction_view;
 CREATE VIEW transactions.transaction_view
 AS
 SELECT
-	transactions.transaction_master.transaction_master_id,
-	transactions.transaction_master.transaction_counter,
-	transactions.transaction_master.transaction_code,
-	transactions.transaction_master.book,
-	transactions.transaction_master.value_date,
-	transactions.transaction_master.transaction_ts,
-	transactions.transaction_master.login_id,
-	transactions.transaction_master.user_id,
-	transactions.transaction_master.sys_user_id,
-	transactions.transaction_master.office_id,
-	transactions.transaction_master.cost_center_id,
-	transactions.transaction_master.reference_number,
-	transactions.transaction_master.statement_reference AS master_statement_reference,
-	transactions.transaction_master.last_verified_on,
-	transactions.transaction_master.verified_by_user_id,
-	transactions.transaction_master.verification_status_id,
-	transactions.transaction_master.verification_reason,
-	transactions.transaction_details.transaction_detail_id,
-	transactions.transaction_details.tran_type,
-	transactions.transaction_details.account_id,
-	transactions.transaction_details.statement_reference,
-	transactions.transaction_details.cash_repository_id,
-	transactions.transaction_details.currency_code,
-	transactions.transaction_details.amount_in_currency,
-	transactions.transaction_details.local_currency_code,
-	transactions.transaction_details.amount_in_local_currency
+    transactions.transaction_master.transaction_master_id,
+    transactions.transaction_master.transaction_counter,
+    transactions.transaction_master.transaction_code,
+    transactions.transaction_master.book,
+    transactions.transaction_master.value_date,
+    transactions.transaction_master.transaction_ts,
+    transactions.transaction_master.login_id,
+    transactions.transaction_master.user_id,
+    transactions.transaction_master.sys_user_id,
+    transactions.transaction_master.office_id,
+    transactions.transaction_master.cost_center_id,
+    transactions.transaction_master.reference_number,
+    transactions.transaction_master.statement_reference AS master_statement_reference,
+    transactions.transaction_master.last_verified_on,
+    transactions.transaction_master.verified_by_user_id,
+    transactions.transaction_master.verification_status_id,
+    transactions.transaction_master.verification_reason,
+    transactions.transaction_details.transaction_detail_id,
+    transactions.transaction_details.tran_type,
+    transactions.transaction_details.account_id,
+    transactions.transaction_details.statement_reference,
+    transactions.transaction_details.cash_repository_id,
+    transactions.transaction_details.currency_code,
+    transactions.transaction_details.amount_in_currency,
+    transactions.transaction_details.local_currency_code,
+    transactions.transaction_details.amount_in_local_currency
 FROM
 transactions.transaction_master
 INNER JOIN transactions.transaction_details
 ON transactions.transaction_master.transaction_master_id = transactions.transaction_details.transaction_master_id;
 
 
--- 2. transactions.verified_transactions_view.sql
-DROP VIEW IF EXISTS transactions.verified_transactions_view CASCADE;
+-->-->-- /db/src/05. views/transactions/2. transactions.verified_transaction_view.sql --<--<--
 
-CREATE VIEW transactions.verified_transactions_view
+DROP VIEW IF EXISTS transactions.verified_transaction_view CASCADE;
+
+CREATE VIEW transactions.verified_transaction_view
 AS
 SELECT * FROM transactions.transaction_view
 WHERE verification_status_id > 0;
 
 
--- 3. transactions.trial_balance_view.sql
+-->-->-- /db/src/05. views/transactions/3. transactions.trial_balance_view.sql --<--<--
 DROP MATERIALIZED VIEW IF EXISTS transactions.trial_balance_view;
 CREATE MATERIALIZED VIEW transactions.trial_balance_view
 AS
 SELECT core.get_account_name(account_id), 
-	SUM(CASE transactions.verified_transactions_view.tran_type WHEN 'Dr' THEN amount_in_local_currency ELSE NULL END) AS debit,
-	SUM(CASE transactions.verified_transactions_view.tran_type WHEN 'Cr' THEN amount_in_local_currency ELSE NULL END) AS Credit
-FROM transactions.verified_transactions_view
+    SUM(CASE transactions.verified_transaction_view.tran_type WHEN 'Dr' THEN amount_in_local_currency ELSE NULL END) AS debit,
+    SUM(CASE transactions.verified_transaction_view.tran_type WHEN 'Cr' THEN amount_in_local_currency ELSE NULL END) AS Credit
+FROM transactions.verified_transaction_view
 GROUP BY account_id;
 
 
--- 4. transactions.stock_transaction_view.sql
+-->-->-- /db/src/05. views/transactions/4. transactions.stock_transaction_view.sql --<--<--
 DROP VIEW IF EXISTS transactions.stock_transaction_view;
 
 CREATE VIEW transactions.stock_transaction_view
@@ -8625,7 +10801,7 @@ ON transactions.transaction_master.transaction_master_id = transactions.stock_ma
 
 
 
--- 5. transactions.verified_stock_transaction_view.sql
+-->-->-- /db/src/05. views/transactions/5. transactions.verified_stock_transaction_view.sql --<--<--
 DROP MATERIALIZED VIEW IF EXISTS transactions.verified_stock_transaction_view;
 
 CREATE MATERIALIZED VIEW transactions.verified_stock_transaction_view
@@ -8634,7 +10810,7 @@ SELECT * FROM transactions.stock_transaction_view
 WHERE verification_status_id > 0;
 
 
--- exchange-rates.sql
+-->-->-- /db/src/06. sample-data/exchange-rates.sql --<--<--
 INSERT INTO core.exchange_rates(office_id)
 SELECT 1;
 
@@ -8664,10 +10840,9 @@ SELECT 3, 'NPR', 'INR', 1, 1.6;
 
 
 
--- menus.sql
+-->-->-- /db/src/06. sample-data/menus.sql --<--<--
 
 INSERT INTO core.menus(menu_text, url, menu_code, level)
-SELECT 'Dashboard', '~/Dashboard/Index.aspx', 'DB', 0 UNION ALL
 SELECT 'Sales', '~/Modules/Sales/Index.mix', 'SA', 0 UNION ALL
 SELECT 'Purchase', '~/Modules/Purchase/Index.mix', 'PU', 0 UNION ALL
 SELECT 'Products & Items', '~/Modules/Inventory/Index.mix', 'ITM', 0 UNION ALL
@@ -8679,7 +10854,7 @@ SELECT 'POS', '~/Modules/POS/Index.mix', 'POS', 0;
 
 
 INSERT INTO core.menus(menu_text, url, menu_code, level, parent_menu_id)
-		  SELECT 'Sales & Quotation', NULL, 'SAQ', 1, core.get_menu_id('SA')
+          SELECT 'Sales & Quotation', NULL, 'SAQ', 1, core.get_menu_id('SA')
 UNION ALL SELECT 'Direct Sales', '~/Modules/Sales/DirectSales.mix', 'DRS', 2, core.get_menu_id('SAQ')
 UNION ALL SELECT 'Sales Quotation', '~/Modules/Sales/Quotation.mix', 'SQ', 2, core.get_menu_id('SAQ')
 UNION ALL SELECT 'Sales Order', '~/Modules/Sales/Order.mix', 'SO', 2, core.get_menu_id('SAQ')
@@ -8703,8 +10878,8 @@ UNION ALL SELECT 'Counter Setup', '~/Modules/BackOffice/Counters.mix', 'SCS', 2,
 UNION ALL SELECT 'Purchase & Quotation', NULL, 'PUQ', 1, core.get_menu_id('PU')
 UNION ALL SELECT 'Direct Purchase', '~/Modules/Purchase/DirectPurchase.mix', 'DRP', 2, core.get_menu_id('PUQ')
 UNION ALL SELECT 'Purchase Order', '~/Modules/Purchase/Order.mix', 'PO', 2, core.get_menu_id('PUQ')
+UNION ALL SELECT 'Purchase Reorder', '~/Modules/Purchase/Reorder.mix', 'PRO', 2, core.get_menu_id('PUQ')
 UNION ALL SELECT 'GRN Entry', '~/Modules/Purchase/GRN.mix', 'GRN', 2, core.get_menu_id('PUQ')
-UNION ALL SELECT 'Payment to Supplier', '~/Modules/Purchase/Payment.mix', 'PAS', 2, core.get_menu_id('PUQ')
 UNION ALL SELECT 'Purchase Return', '~/Modules/Purchase/Return.mix', 'PR', 2, core.get_menu_id('PUQ')
 UNION ALL SELECT 'Purchase Reports', NULL, 'PUR', 1, core.get_menu_id('PU')
 UNION ALL SELECT 'Inventory Movements', NULL, 'IIM', 1, core.get_menu_id('ITM')
@@ -8822,7 +10997,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 INSERT INTO core.menu_locale(menu_id, culture, menu_text)
-SELECT core.get_menu_id('DB'), 'fr', 'tableau de bord' UNION ALL
 SELECT core.get_menu_id('SA'), 'fr', 'ventes' UNION ALL
 SELECT core.get_menu_id('PU'), 'fr', 'acheter' UNION ALL
 SELECT core.get_menu_id('ITM'), 'fr', 'Produits et Articles' UNION ALL
@@ -8854,8 +11028,8 @@ SELECT core.get_menu_id('SCS'), 'fr', 'Configuration du compteur' UNION ALL
 SELECT core.get_menu_id('PUQ'), 'fr', 'Achat & Devis' UNION ALL
 SELECT core.get_menu_id('DRP'), 'fr', 'Achat direct' UNION ALL
 SELECT core.get_menu_id('PO'), 'fr', 'Bon de commande' UNION ALL
+SELECT core.get_menu_id('PRO'), 'fr', 'Achat Reorder' UNION ALL
 SELECT core.get_menu_id('GRN'), 'fr', 'GRN contre PO' UNION ALL
-SELECT core.get_menu_id('PAS'), 'fr', 'Paiement à Fournisseur' UNION ALL
 SELECT core.get_menu_id('PR'), 'fr', 'achat de retour' UNION ALL
 SELECT core.get_menu_id('PUR'), 'fr', 'Rapports d''achat' UNION ALL
 SELECT core.get_menu_id('IIM'), 'fr', 'Les mouvements des stocks' UNION ALL
@@ -8940,43 +11114,43 @@ SELECT core.get_menu_id('NEW'), 'fr', 'nouvelle entreprise';
 
 
 
--- price-types.sql
+-->-->-- /db/src/06. sample-data/price-types.sql --<--<--
 
 INSERT INTO core.price_types(price_type_code, price_type_name)
-SELECT 'RET', 'Retail' UNION ALL
+SELECT 'RET', 'Retail'      UNION ALL
 SELECT 'WHO', 'Wholesale';
 
 
 
--- core.disable_editing_sys_type.sql
+-->-->-- /db/src/10. triggers/core/core.disable_editing_sys_type.sql --<--<--
 CREATE FUNCTION core.disable_editing_sys_type()
 RETURNS TRIGGER
 AS
 $$
 BEGIN
-	IF TG_OP='UPDATE' OR TG_OP='DELETE' THEN
-		IF EXISTS
-		(
-			SELECT *
-			FROM core.accounts
-			WHERE (sys_type=true OR is_cash=true)
-			AND account_id=OLD.account_id
-		) THEN
-			RAISE EXCEPTION 'You are not allowed to change system accounts.';
-		END IF;
-	END IF;
-	
-	IF TG_OP='INSERT' THEN
-		IF (NEW.sys_type=true OR NEW.is_cash=true) THEN
-			RAISE EXCEPTION 'You are not allowed to add system accounts.';
-		END IF;
-	END IF;
+    IF TG_OP='UPDATE' OR TG_OP='DELETE' THEN
+        IF EXISTS
+        (
+            SELECT *
+            FROM core.accounts
+            WHERE (sys_type=true OR is_cash=true)
+            AND account_id=OLD.account_id
+        ) THEN
+            RAISE EXCEPTION 'You are not allowed to change system accounts.';
+        END IF;
+    END IF;
+    
+    IF TG_OP='INSERT' THEN
+        IF (NEW.sys_type=true OR NEW.is_cash=true) THEN
+            RAISE EXCEPTION 'You are not allowed to add system accounts.';
+        END IF;
+    END IF;
 
-	IF TG_OP='DELETE' THEN
-		RETURN OLD;
-	END IF;
+    IF TG_OP='DELETE' THEN
+        RETURN OLD;
+    END IF;
 
-	RETURN NEW;	
+    RETURN NEW; 
 END
 $$
 LANGUAGE plpgsql;
@@ -8998,43 +11172,64 @@ FOR EACH ROW EXECUTE PROCEDURE core.disable_editing_sys_type();
 
 
 
--- core.party_after_insert_trigger.sql
+-->-->-- /db/src/10. triggers/core/core.items_unit_check_trigger.sql --<--<--
+DROP FUNCTION IF EXISTS core.items_unit_check_trigger() CASCADE;
+
+CREATE FUNCTION core.items_unit_check_trigger()
+RETURNS TRIGGER
+AS
+$$        
+BEGIN
+        IF(core.get_root_unit_id(NEW.unit_id) != core.get_root_unit_id(NEW.reorder_unit_id)) THEN
+                RAISE EXCEPTION 'Acess is denied. The reorder unit is incompatible with the base unit.';
+        END IF;
+        RETURN NEW;
+END
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER items_unit_check_trigger
+AFTER INSERT OR UPDATE
+ON core.items
+FOR EACH ROW EXECUTE PROCEDURE core.items_unit_check_trigger();
+
+-->-->-- /db/src/10. triggers/core/core.party_after_insert_trigger.sql --<--<--
 CREATE FUNCTION core.party_after_insert_trigger()
 RETURNS TRIGGER
 AS
 $$
-	DECLARE _parent_account_id bigint= core.get_account_id_by_parameter('Party.Parent.Account');
-	DECLARE _party_code text;
-	DECLARE _account_id bigint;
+    DECLARE _parent_account_id bigint= core.get_account_id_by_parameter('Party.Parent.Account');
+    DECLARE _party_code text;
+    DECLARE _account_id bigint;
 BEGIN
-	_party_code := core.get_party_code(NEW.first_name, NEW.middle_name, NEW.last_name);
+    _party_code := core.get_party_code(NEW.first_name, NEW.middle_name, NEW.last_name);
 
-	IF(COALESCE(NEW.party_name, '') = '') THEN
-		NEW.party_name := REPLACE(TRIM(COALESCE(NEW.last_name, '') || ', ' || NEW.first_name || ' ' || COALESCE(NEW.middle_name, '')), ' ', '');
-	END IF;
+    IF(COALESCE(NEW.party_name, '') = '') THEN
+        NEW.party_name := REPLACE(TRIM(COALESCE(NEW.last_name, '') || ', ' || NEW.first_name || ' ' || COALESCE(NEW.middle_name, '')), ' ', '');
+    END IF;
 
-	--Create a new account
-	IF(NEW.account_id IS NULL) THEN
+    --Create a new account
+    IF(NEW.account_id IS NULL) THEN
 
-		INSERT INTO core.accounts(account_master_id, account_code, currency_code, account_name, parent_account_id)
-		SELECT core.get_account_master_id_by_account_id(_parent_account_id), _party_code, NEW.currency_code, _party_code || ' (' || NEW.party_name || ')', _parent_account_id
-		RETURNING account_id INTO _account_id;
-	
-		UPDATE core.parties
-		SET 
-			account_id=_account_id, 
-			party_code=_party_code
-		WHERE core.parties.party_id=NEW.party_id;
+        INSERT INTO core.accounts(account_master_id, account_code, currency_code, account_name, parent_account_id)
+        SELECT core.get_account_master_id_by_account_id(_parent_account_id), _party_code, NEW.currency_code, _party_code || ' (' || NEW.party_name || ')', _parent_account_id
+        RETURNING account_id INTO _account_id;
+    
+        UPDATE core.parties
+        SET 
+            account_id=_account_id, 
+            party_code=_party_code
+        WHERE core.parties.party_id=NEW.party_id;
 
-		RETURN NEW;
-	END IF;
+        RETURN NEW;
+    END IF;
 
-	UPDATE core.parties
-	SET 
-		party_code=_party_code
-	WHERE core.parties.party_id=NEW.party_id;
+    UPDATE core.parties
+    SET 
+        party_code=_party_code
+    WHERE core.parties.party_id=NEW.party_id;
 
-	RETURN NEW;
+    RETURN NEW;
 END
 $$
 LANGUAGE plpgsql;
@@ -9044,27 +11239,27 @@ AFTER INSERT
 ON core.parties
 FOR EACH ROW EXECUTE PROCEDURE core.party_after_insert_trigger();
 
--- core.party_before_update_trigger.sql
+-->-->-- /db/src/10. triggers/core/core.party_before_update_trigger.sql --<--<--
 CREATE FUNCTION core.party_before_update_trigger()
 RETURNS TRIGGER
 AS
 $$
-	DECLARE _parent_currency_code text;
+    DECLARE _parent_currency_code text;
 BEGIN
-	
-	--Get currency code of associated GL head.
-	_parent_currency_code := core.get_currency_code_by_party_id(NEW.party_id);
+    
+    --Get currency code of associated GL head.
+    _parent_currency_code := core.get_currency_code_by_party_id(NEW.party_id);
 
 
-	IF(NEW.currency_code != _parent_currency_code) THEN
-		RAISE EXCEPTION 'You cannot have a different currency on the mapped GL account.';
-	END IF;
+    IF(NEW.currency_code != _parent_currency_code) THEN
+        RAISE EXCEPTION 'You cannot have a different currency on the mapped GL account.';
+    END IF;
 
-	IF(NEW.account_id IS NULL) THEN
-		RAISE EXCEPTION 'The column account_id cannot be null.';
-	END IF;
-	
-	RETURN NEW;
+    IF(NEW.account_id IS NULL) THEN
+        RAISE EXCEPTION 'The column account_id cannot be null.';
+    END IF;
+    
+    RETURN NEW;
 END
 $$
 LANGUAGE plpgsql;
@@ -9076,18 +11271,18 @@ FOR EACH ROW EXECUTE PROCEDURE core.party_before_update_trigger();
 
 
 
--- core.shippers_after_insert_trigger.sql
+-->-->-- /db/src/10. triggers/core/core.shippers_after_insert_trigger.sql --<--<--
 CREATE FUNCTION core.shippers_after_insert_trigger()
 RETURNS trigger
 AS
 $$
 BEGIN
-	UPDATE core.shippers
-	SET 
-		shipper_code=core.get_shipper_code(NEW.company_name)
-	WHERE core.shippers.shipper_id=NEW.shipper_id;
-	
-	RETURN NEW;
+    UPDATE core.shippers
+    SET 
+        shipper_code=core.get_shipper_code(NEW.company_name)
+    WHERE core.shippers.shipper_id=NEW.shipper_id;
+    
+    RETURN NEW;
 END
 $$
 LANGUAGE plpgsql;
@@ -9098,24 +11293,24 @@ ON core.shippers
 FOR EACH ROW EXECUTE PROCEDURE core.shippers_after_insert_trigger();
 
 
--- core.update_shipping_address_code_trigger.sql
+-->-->-- /db/src/10. triggers/core/core.update_shipping_address_code_trigger.sql --<--<--
 CREATE FUNCTION core.update_shipping_address_code_trigger()
 RETURNS TRIGGER
 AS
 $$
 DECLARE _counter integer;
 BEGIN
-	IF TG_OP='INSERT' THEN
+    IF TG_OP='INSERT' THEN
 
-		SELECT COALESCE(MAX(shipping_address_code::integer), 0) + 1
-		INTO _counter
-		FROM core.shipping_addresses
-		WHERE party_id=NEW.party_id;
+        SELECT COALESCE(MAX(shipping_address_code::integer), 0) + 1
+        INTO _counter
+        FROM core.shipping_addresses
+        WHERE party_id=NEW.party_id;
 
-		NEW.shipping_address_code := trim(to_char(_counter, '000'));
-		
-		RETURN NEW;
-	END IF;
+        NEW.shipping_address_code := trim(to_char(_counter, '000'));
+        
+        RETURN NEW;
+    END IF;
 END
 $$
 LANGUAGE plpgsql;
@@ -9128,22 +11323,22 @@ FOR EACH ROW EXECUTE PROCEDURE core.update_shipping_address_code_trigger();
 
 
 
--- policy.perform_lock_out.sql
+-->-->-- /db/src/10. triggers/policy/policy.perform_lock_out.sql --<--<--
 --TODO: Create a lockout policy.
 CREATE FUNCTION policy.perform_lock_out()
 RETURNS TRIGGER
 AS
 $$
 BEGIN
-	IF(
-		SELECT COUNT(*) FROM audit.failed_logins
-		WHERE audit.failed_logins.user_id=NEW.user_id
-		AND audit.failed_logins.failed_date_time 
-		BETWEEN NOW()-'5minutes'::interval 
-		AND NOW()
-	)::integer>5 THEN
+    IF(
+        SELECT COUNT(*) FROM audit.failed_logins
+        WHERE audit.failed_logins.user_id=NEW.user_id
+        AND audit.failed_logins.failed_date_time 
+        BETWEEN NOW()-'5minutes'::interval 
+        AND NOW()
+    )::integer>5 THEN
 
-	INSERT INTO policy.lock_outs(user_id)SELECT NEW.user_id;
+    INSERT INTO policy.lock_outs(user_id)SELECT NEW.user_id;
 END IF;
 RETURN NEW;
 END
@@ -9157,16 +11352,16 @@ FOR EACH ROW EXECUTE PROCEDURE policy.perform_lock_out();
 
 
 
--- transactions.restrict_delete_trigger.sql
+-->-->-- /db/src/10. triggers/transactions/transactions.restrict_delete_trigger.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.restrict_delete_trigger() CASCADE;
 CREATE FUNCTION transactions.restrict_delete_trigger()
 RETURNS TRIGGER
 AS
 $$
 BEGIN
-	IF TG_OP='DELETE' THEN
-		RAISE EXCEPTION 'Deleting a transaction is not allowed. Mark the transaction as rejected instead.';
-	END IF;
+    IF TG_OP='DELETE' THEN
+        RAISE EXCEPTION 'Deleting a transaction is not allowed. Mark the transaction as rejected instead.';
+    END IF;
 END
 $$
 LANGUAGE 'plpgsql';
@@ -9194,7 +11389,52 @@ EXECUTE PROCEDURE transactions.restrict_delete_trigger();
 
 
 
--- party-sample.sql
+-->-->-- /db/src/10. triggers/transactions/transactions.verify_stock_master_integrity_trigger.sql --<--<--
+DROP FUNCTION IF EXISTS transactions.verify_stock_master_integrity_trigger() CASCADE;
+
+CREATE FUNCTION transactions.verify_stock_master_integrity_trigger()
+RETURNS TRIGGER
+AS
+$$
+        DECLARE _office_id integer=0;
+BEGIN
+        SELECT office_id INTO _office_id
+        FROM transactions.transaction_master
+        WHERE transactions.transaction_master.transaction_master_id = NEW.transaction_master_id;
+        
+        IF(office.get_office_id_by_store_id(NEW.store_id) != _office_id) THEN
+                RAISE EXCEPTION 'Invalid store.';
+        END IF;
+
+        IF(office.get_office_id_by_cash_repository_id(NEW.cash_repository_id)  != _office_id) THEN
+                RAISE EXCEPTION 'Invalid cash repository.';
+        END IF;
+                
+        RETURN NEW;
+END
+$$
+LANGUAGE plpgsql;
+
+
+CREATE TRIGGER verify_stock_master_integrity_trigger_after_insert
+AFTER INSERT
+ON transactions.stock_master
+FOR EACH ROW 
+EXECUTE PROCEDURE transactions.verify_stock_master_integrity_trigger();
+
+
+CREATE TRIGGER verify_stock_master_integrity_trigger_after_update
+AFTER UPDATE
+ON transactions.stock_master
+FOR EACH ROW 
+EXECUTE PROCEDURE transactions.verify_stock_master_integrity_trigger();
+
+
+
+
+
+
+-->-->-- /db/src/11. sample-data/party-sample.sql --<--<--
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
@@ -9214,7 +11454,7 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 ALTER TABLE core.parties
-ADD 	shipping_address national character varying(250) NULL;
+ADD     shipping_address national character varying(250) NULL;
 
 INSERT INTO core.parties(party_type_id, first_name, last_name, date_of_birth, city, state, country,shipping_address, phone, fax, cell, email, url, pan_number, sst_number, cst_number, allow_credit, maximum_credit_period, maximum_credit_amount, charge_interest, interest_rate, interest_compounding_frequency_id, currency_code)
 SELECT  4, 'Jacob', 'Smith', '1970-01-01'::date, 'Yuma', ' Colorado', ' USA', 'Yuma  Colorado  USA', '1-5741510', '1-5478450', '9812345670', 'jacob_smith@gmail.com', 'www.jacob.com', '5412541', '12457841','4578420','t'::boolean,1,500000,'t'::boolean,5,3 , 'NPR' UNION ALL
@@ -10305,11 +12545,11 @@ DROP column shipping_address;
 
 UPDATE core.parties
 SET 
-	party_code=core.get_party_code(first_name, middle_name, last_name)
+    party_code=core.get_party_code(first_name, middle_name, last_name)
 WHERE core.parties.party_id=party_id;
 
 
--- sample-data.sql
+-->-->-- /db/src/11. sample-data/sample-data.sql --<--<--
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
@@ -10329,169 +12569,170 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
-SELECT 'RMBP', 'Macbook Pro 15'''' Retina', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 180000, 225000;
+INSERT INTO core.brands(brand_code, brand_name)
+SELECT 'APP', 'Apple'       UNION ALL
+SELECT 'MS', 'Microsoft'    UNION ALL
+SELECT 'IBM', 'IBM'         UNION ALL
+SELECT 'ACR', 'Acer'        UNION ALL
+SELECT 'SNG', 'Samsung'     UNION ALL
+SELECT 'ITX', 'Index';
 
-INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
-SELECT '13MBA', 'Macbook Air 13''''', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 130000, 155000;
+INSERT INTO core.item_groups(item_group_code, item_group_name, tax_id, parent_item_group_id)
+SELECT 'ELE', 'Electronics & Computers',                1, NULL                                                 UNION ALL
+SELECT 'TVV', 'TV & Video',                             1, core.get_item_group_id_by_item_group_code('ELE')     UNION ALL
+SELECT 'HAT', 'Home Audio & Theater',                   1, core.get_item_group_id_by_item_group_code('ELE')     UNION ALL
+SELECT 'CPV', 'Camera, Photo & Video',                  1, core.get_item_group_id_by_item_group_code('ELE')     UNION ALL
+SELECT 'CPA', 'Cell Phones & Accessories',              1, core.get_item_group_id_by_item_group_code('ELE')     UNION ALL
+SELECT 'VGM', 'Video Games',                            1, core.get_item_group_id_by_item_group_code('ELE')     UNION ALL
+SELECT 'PAA', 'Portable Audio & Accessories',           1, core.get_item_group_id_by_item_group_code('ELE')     UNION ALL
+SELECT 'CEG', 'Car Electronics & GPS',                  1, core.get_item_group_id_by_item_group_code('ELE')     UNION ALL
+SELECT 'MUI', 'Musical Instruments',                    1, core.get_item_group_id_by_item_group_code('ELE')     UNION ALL
+SELECT 'ELA', 'Electronics Accessories',                1, core.get_item_group_id_by_item_group_code('ELE')     UNION ALL
+SELECT 'WRT', 'Wearable Technology',                    1, core.get_item_group_id_by_item_group_code('ELE')     UNION ALL
+SELECT 'LPT', 'Laptops & Tablets',                      1, core.get_item_group_id_by_item_group_code('ELE')     UNION ALL
+SELECT 'DEM', 'Desktops & Monitors',                    1, core.get_item_group_id_by_item_group_code('ELE')     UNION ALL
+SELECT 'CAP', 'Computer Accessories & Peripherals',     1, core.get_item_group_id_by_item_group_code('ELE')     UNION ALL
+SELECT 'CPC', 'Computer Parts & Components',            1, core.get_item_group_id_by_item_group_code('ELE')     UNION ALL
+SELECT 'SFT', 'Software',                               1, core.get_item_group_id_by_item_group_code('ELE')     UNION ALL
+SELECT 'PRI', 'Printers & Ink',                         1, core.get_item_group_id_by_item_group_code('ELE')     UNION ALL
+SELECT 'OSS', 'Office & School Supplies',               1, core.get_item_group_id_by_item_group_code('ELE');
 
-INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
-SELECT '11MBA', 'Macbook Air 11''''', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 110000, 135000;
 
-INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
-SELECT 'IPA', 'iPad Air', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 53000, 70000;
-
-INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
-SELECT 'IPR', 'iPad Air Retina', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 63000, 80000;
-
-INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
-SELECT 'IPM', 'iPad Mini', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 33000, 50000;
-
-INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
-SELECT 'IPMR', 'iPad Mini Retina', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 53000, 70000;
-
-INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
-SELECT 'IPH6', 'iPhone 6', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 93000, 105000;
-
-INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
-SELECT 'IPH6P', 'iPhone 6 Plus', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 103000, 115000;
-
-INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
-SELECT 'ITP', 'IBM Thinkpadd II Laptop', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 80000, 125000;
-
-INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
-SELECT 'AIT', 'Acer Iconia Tab', 1, 1, 1, 1, 'Yes', 1, 10, 'Yes', 40000, 65000;
-
-INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
-SELECT 'IXM', 'Intex Mouse', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 200, 350;
-
-INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
-SELECT 'MSO', 'Microsoft Office Premium Edition', 1, 1, 1, 1, 'Yes', 1, 10, 'Yes', 30000, 35000;
-
-INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
-SELECT 'MNP', 'MixNP Classifieds', 1, 1, 1, 1, 'Yes', 1, 10, 'No', 150000, 150000;
-
-INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
-SELECT 'MIX', 'MixERP Community Edition', 1, 1, 1, 1, 'Yes', 1, 10, 'No', 40000, 40000;
-
-INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
-SELECT 'SFIX', 'SFIX Financial Edition', 1, 1, 1, 1, 'Yes', 1, 10, 'No', 40000, 40000;
-
-INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price)
-SELECT 'SGT', 'Samsung Galaxy Tab 10.1', 1, 1, 1, 1, 'No', 1, 10, 'Yes', 30000, 45000;
+INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price, reorder_unit_id, reorder_quantity)
+SELECT 'RMBP',  'Macbook Pro 15'''' Retina',            core.get_item_group_id_by_item_group_code('LPT'), core.get_brand_id_by_brand_code('APP'),       1,  1, false,   1,  100,    true,    180000,    225000, 1, 200  UNION ALL
+SELECT '13MBA', 'Macbook Air 13''''',                   core.get_item_group_id_by_item_group_code('LPT'), core.get_brand_id_by_brand_code('APP'),       5,  1, false,   1,  100,    true,    130000,    155000, 1, 200  UNION ALL
+SELECT '11MBA', 'Macbook Air 11''''',                   core.get_item_group_id_by_item_group_code('LPT'), core.get_brand_id_by_brand_code('APP'),       6,  1, false,   1,  100,    true,    110000,    135000, 1, 200  UNION ALL
+SELECT 'IPA',   'iPad Air',                             core.get_item_group_id_by_item_group_code('LPT'), core.get_brand_id_by_brand_code('APP'),       54, 1, false,   1,  50,     true,    53000,     70000,  1, 100  UNION ALL
+SELECT 'IPR',   'iPad Air Retina',                      core.get_item_group_id_by_item_group_code('LPT'), core.get_brand_id_by_brand_code('APP'),       74, 1, false,   1,  100,    true,    63000,     80000,  1, 200  UNION ALL
+SELECT 'IPM',   'iPad Mini',                            core.get_item_group_id_by_item_group_code('LPT'), core.get_brand_id_by_brand_code('APP'),       76, 1, false,   1,  100,    true,    33000,     50000,  1, 200  UNION ALL
+SELECT 'IPMR',  'iPad Mini Retina',                     core.get_item_group_id_by_item_group_code('LPT'), core.get_brand_id_by_brand_code('APP'),       78, 1, false,   1,  100,    true,    53000,     70000,  1, 200  UNION ALL
+SELECT 'IPH6',  'iPhone 6',                             core.get_item_group_id_by_item_group_code('CPA'), core.get_brand_id_by_brand_code('APP'),       78, 1, false,   1,  100,    true,    93000,     105000, 1, 200  UNION ALL
+SELECT 'IPH6P', 'iPhone 6 Plus',                        core.get_item_group_id_by_item_group_code('CPA'), core.get_brand_id_by_brand_code('APP'),       5,  1, false,   1,  100,    true,    103000,    115000, 1, 200  UNION ALL
+SELECT 'ITP',   'IBM Thinkpadd II Laptop',              core.get_item_group_id_by_item_group_code('LPT'), core.get_brand_id_by_brand_code('IBM'),       5,  1, false,   1,  50,     true,    80000,     125000, 1, 100  UNION ALL
+SELECT 'AIT',   'Acer Iconia Tab',                      core.get_item_group_id_by_item_group_code('LPT'), core.get_brand_id_by_brand_code('ACR'),       6,  1, true,    1,  10,     true,    40000,     65000,  1, 20   UNION ALL
+SELECT 'IXM',   'Intex Mouse',                          core.get_item_group_id_by_item_group_code('CAP'), core.get_brand_id_by_brand_code('ITX'),       74, 1, false,   1,  1000,   true,    200,       350,    8, 200  UNION ALL
+SELECT 'MSO',   'Microsoft Office Premium Edition',     core.get_item_group_id_by_item_group_code('SFT'), core.get_brand_id_by_brand_code('MS'),        78, 1, true,    1,  100,    true,    30000,     35000,  1, 200  UNION ALL
+SELECT 'MNP',   'MixNP Classifieds',                    core.get_item_group_id_by_item_group_code('SFT'), 1,                                            78, 1, true,    1,  0,      false,   150000,    150000, 1, 0    UNION ALL
+SELECT 'MIX',   'MixERP Community Edition',             core.get_item_group_id_by_item_group_code('SFT'), 1,                                            76, 1, true,    1,  0,      false,   40000,     40000,  1, 0    UNION ALL
+SELECT 'SFIX',  'SFIX Financial Edition',               core.get_item_group_id_by_item_group_code('SFT'), 1,                                            1,  1, true,    1,  0,      false,   40000,     40000,  1, 0    UNION ALL
+SELECT 'SGT',   'Samsung Galaxy Tab 10.1',              core.get_item_group_id_by_item_group_code('LPT'), core.get_brand_id_by_brand_code('SNG'),       6,  1, false,   1,  10,     true,    30000,     45000,  1, 20;
 
 INSERT INTO office.stores(office_id, store_code, store_name, address, store_type_id, allow_sales)
-SELECT 1, 'STORE-1', 'Store 1', 'Office', 2, true UNION ALL
-SELECT 1, 'GODOW-1', 'Godown 1', 'Office', 2, false;
+SELECT 2, 'STORE-1', 'Store 1',     'Office', 2, true       UNION ALL
+SELECT 2, 'GODOW-1', 'Godown 1',    'Office', 1, false      UNION ALL
+SELECT 3, 'STORE-2', 'Store 2',     'Office', 2, true       UNION ALL
+SELECT 3, 'GODOW-2', 'Godown 2',    'Office', 1, false;
 
 INSERT INTO office.cash_repositories(office_id, cash_repository_code, cash_repository_name, description)
-SELECT 2, 'DRW1', 'Drawer 1', 'Drawer' UNION ALL
-SELECT 2, 'VLT', 'Vault', 'Vault';
+SELECT 2, 'DRW1',   'Drawer 1',     'Drawer'    UNION ALL
+SELECT 2, 'VLT',    'Vault',        'Vault'     UNION ALL
+SELECT 3, 'DRW2',   'Drawer 2',     'Drawer'    UNION ALL
+SELECT 3, 'VLT2',   'Vault 2',      'Vault';
 
 INSERT INTO core.shippers(company_name, account_id)
 SELECT 'Default', core.get_account_id_by_account_code('20110');
 
--- unit_tests.check_party_currency_code_mismatch.sql
+-->-->-- /db/src/12. plpgunit-tests/core/parties/unit_tests.check_party_currency_code_mismatch.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.check_party_currency_code_mismatch();
 
 CREATE FUNCTION unit_tests.check_party_currency_code_mismatch()
 RETURNS public.test_result
 AS
 $$
-	DECLARE message test_result;
+    DECLARE message test_result;
 BEGIN
-	IF EXISTS
-	(
-		SELECT party_code FROM core.parties
-		INNER JOIN core.accounts
-		ON core.parties.account_id = core.accounts.account_id
-		WHERE core.parties.currency_code != core.accounts.currency_code
-		LIMIT 1
-	) THEN
-		SELECT assert.fail('Some party accounts have different currency setup on their mapped GL heads.') INTO message;
-		RETURN message;
-	END IF;
+    IF EXISTS
+    (
+        SELECT party_code FROM core.parties
+        INNER JOIN core.accounts
+        ON core.parties.account_id = core.accounts.account_id
+        WHERE core.parties.currency_code != core.accounts.currency_code
+        LIMIT 1
+    ) THEN
+        SELECT assert.fail('Some party accounts have different currency setup on their mapped GL heads.') INTO message;
+        RETURN message;
+    END IF;
 
-	SELECT assert.ok('End of test.') INTO message;  
-	RETURN message;
+    SELECT assert.ok('End of test.') INTO message;  
+    RETURN message;
 END
 $$
 LANGUAGE plpgsql;
 
 
 
--- unit_tests.check_party_null_account_id.sql
+-->-->-- /db/src/12. plpgunit-tests/core/parties/unit_tests.check_party_null_account_id.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.check_party_null_account_id();
 
 CREATE FUNCTION unit_tests.check_party_null_account_id()
 RETURNS public.test_result
 AS
 $$
-	DECLARE message test_result;
+    DECLARE message test_result;
 BEGIN
-	IF EXISTS
-	(
-		SELECT party_code FROM core.parties
-		WHERE core.parties.account_id IS NULL
-		LIMIT 1
-	) THEN
-		SELECT assert.fail('Some party accounts don''t have mapped GL heads.') INTO message;
-		RETURN message;
-	END IF;
+    IF EXISTS
+    (
+        SELECT party_code FROM core.parties
+        WHERE core.parties.account_id IS NULL
+        LIMIT 1
+    ) THEN
+        SELECT assert.fail('Some party accounts don''t have mapped GL heads.') INTO message;
+        RETURN message;
+    END IF;
 
-	SELECT assert.ok('End of test.') INTO message;  
-	RETURN message;
+    SELECT assert.ok('End of test.') INTO message;  
+    RETURN message;
 END
 $$
 LANGUAGE plpgsql;
 
 
 
--- unit_tests.test_transactions_post_receipt_function.sql
+-->-->-- /db/src/12. plpgunit-tests/core/parties/unit_tests.test_transactions_post_receipt_function.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.test_transactions_post_receipt_function();
 
 CREATE FUNCTION unit_tests.test_transactions_post_receipt_function()
 RETURNS public.test_result
 AS
 $$
-	DECLARE message                                 test_result;
-	DECLARE _user_id				integer;
-	DECLARE _office_id				integer; 
-	DECLARE _login_id				bigint;
-	DECLARE _party_code				national character varying(12); 
-	DECLARE _currency_code				national character varying(12); 
-	DECLARE _amount					money_strict; 
-	DECLARE _exchange_rate_debit			decimal_strict; 
-	DECLARE _exchange_rate_credit			decimal_strict;
-	DECLARE _reference_number			national character varying(24); 
-	DECLARE _statement_reference			national character varying(128); 
-	DECLARE _cost_center_id				integer;
-	DECLARE _cash_repository_id			integer;
-	DECLARE _posted_date                            date;
-	DECLARE _bank_account_id			integer;
-	DECLARE _bank_instrument_code			national character varying(128);
-	DECLARE _bank_tran_code				national character varying(128);
-	DECLARE _result                                 bigint;
+    DECLARE message                                 test_result;
+    DECLARE _user_id                integer;
+    DECLARE _office_id              integer; 
+    DECLARE _login_id               bigint;
+    DECLARE _party_code             national character varying(12); 
+    DECLARE _currency_code              national character varying(12); 
+    DECLARE _amount                 money_strict; 
+    DECLARE _exchange_rate_debit            decimal_strict; 
+    DECLARE _exchange_rate_credit           decimal_strict;
+    DECLARE _reference_number           national character varying(24); 
+    DECLARE _statement_reference            national character varying(128); 
+    DECLARE _cost_center_id             integer;
+    DECLARE _cash_repository_id         integer;
+    DECLARE _posted_date                            date;
+    DECLARE _bank_account_id            integer;
+    DECLARE _bank_instrument_code           national character varying(128);
+    DECLARE _bank_tran_code             national character varying(128);
+    DECLARE _result                                 bigint;
 BEGIN
 
 
 
         _user_id                                        := (SELECT user_id FROM office.users WHERE user_name != 'sys' LIMIT 1);
         _office_id                                      := (SELECT office_id FROM office.offices LIMIT 1);
-	_login_id				        := (SELECT login_id FROM audit.logins LIMIT 1);
-	_party_code				        := (SELECT party_code FROM core.parties LIMIT 1);
-	_currency_code				        := 'USD';
-	_amount					        := 1000.00;
-	_exchange_rate_debit			        := 100.00;
-	_exchange_rate_credit			        := 100.00;
-	_reference_number			        := 'PL-PG-UNIT-TEST';
-	_statement_reference			        := 'This transaction should have been rollbacked already.';
-	_cost_center_id				        := (SELECT cost_center_id FROM office.cost_centers LIMIT 1);
-	_cash_repository_id			        := (SELECT cash_repository_id FROM office.cash_repositories LIMIT 1);
-	_posted_date                                    := NULL;
-	_bank_account_id			        := NULL;
-	_bank_instrument_code			        := NULL;
-	_bank_tran_code				        := NULL;
+    _login_id                       := (SELECT login_id FROM audit.logins LIMIT 1);
+    _party_code                     := (SELECT party_code FROM core.parties LIMIT 1);
+    _currency_code                      := 'USD';
+    _amount                         := 1000.00;
+    _exchange_rate_debit                    := 100.00;
+    _exchange_rate_credit                   := 100.00;
+    _reference_number                   := 'PL-PG-UNIT-TEST';
+    _statement_reference                    := 'This transaction should have been rollbacked already.';
+    _cost_center_id                     := (SELECT cost_center_id FROM office.cost_centers LIMIT 1);
+    _cash_repository_id                 := (SELECT cash_repository_id FROM office.cash_repositories LIMIT 1);
+    _posted_date                                    := NULL;
+    _bank_account_id                    := NULL;
+    _bank_instrument_code                   := NULL;
+    _bank_tran_code                     := NULL;
                                                         
         _result                                         := transactions.post_receipt_function
                                                                 (
@@ -10510,17 +12751,17 @@ BEGIN
                                                                         _posted_date,
                                                                         _bank_account_id,
                                                                         _bank_instrument_code,
-                                                                        _bank_tran_code	
+                                                                        _bank_tran_code 
                                                                 );
 
         IF(_result <= 0) THEN
-		SELECT assert.fail('Cannot compile transactions.post_receipt_function.') INTO message;
-		RETURN message;
+        SELECT assert.fail('Cannot compile transactions.post_receipt_function.') INTO message;
+        RETURN message;
         END IF;
 
 
-	SELECT assert.ok('End of test.') INTO message;  
-	RETURN message;
+    SELECT assert.ok('End of test.') INTO message;  
+    RETURN message;
 END
 $$
 LANGUAGE plpgsql;
@@ -10528,7 +12769,137 @@ LANGUAGE plpgsql;
 
 
 
--- audit-all-tables.sql
+-->-->-- /db/src/12. plpgunit-tests-mock/unit_tests.create_dummy_accounts.sql --<--<--
+DROP FUNCTION IF EXISTS unit_tests.create_dummy_accounts();
+
+CREATE FUNCTION unit_tests.create_dummy_accounts()
+RETURNS void 
+AS
+$$
+BEGIN
+        IF NOT EXISTS(SELECT 1 FROM core.accounts WHERE account_code = 'TEST-ACC-001') THEN
+                INSERT INTO core.accounts(account_master_id, account_code, currency_code, account_name)
+                SELECT core.get_account_master_id_by_account_master_code('BSA'), 'TEST-ACC-001', 'NPR', 'Test Mock Account 1';
+        END IF;
+
+        IF NOT EXISTS(SELECT 1 FROM core.accounts WHERE account_code = 'TEST-ACC-002') THEN
+                INSERT INTO core.accounts(account_master_id, account_code, currency_code, account_name)
+                SELECT core.get_account_master_id_by_account_master_code('BSA'), 'TEST-ACC-002', 'NPR', 'Test Mock Account 2';
+        END IF;
+
+        IF NOT EXISTS(SELECT 1 FROM core.accounts WHERE account_code = 'TEST-ACC-003') THEN
+                INSERT INTO core.accounts(account_master_id, account_code, currency_code, account_name)
+                SELECT core.get_account_master_id_by_account_master_code('BSA'), 'TEST-ACC-003', 'NPR', 'Test Mock Account 3';
+        END IF;
+
+        IF NOT EXISTS(SELECT 1 FROM core.accounts WHERE account_code = 'TEST-ACC-004') THEN
+                INSERT INTO core.accounts(account_master_id, account_code, currency_code, account_name)
+                SELECT core.get_account_master_id_by_account_master_code('BSA'), 'TEST-ACC-004', 'NPR', 'Test Mock Account 4';
+        END IF;
+
+        IF NOT EXISTS(SELECT 1 FROM core.accounts WHERE account_code = 'TEST-ACC-005') THEN
+                INSERT INTO core.accounts(account_master_id, account_code, currency_code, account_name)
+                SELECT core.get_account_master_id_by_account_master_code('BSA'), 'TEST-ACC-005', 'NPR', 'Test Mock Account 5';
+        END IF;
+
+END
+$$
+LANGUAGE plpgsql;
+
+
+-->-->-- /db/src/12. plpgunit-tests-mock/unit_tests.create_dummy_auto_verification_policy.sql --<--<--
+DROP FUNCTION IF EXISTS unit_tests.create_dummy_auto_verification_policy
+(
+        _user_id integer, 
+        _verify_sales_transactions boolean, 
+        _sales_verification_limit money_strict2, 
+        _verify_purchase_transactions boolean, 
+        _purchase_verification_limit money_strict2, 
+        _verify_gl_transactions boolean,
+        _gl_verification_limit money_strict2,
+        _effective_from date,
+        _ends_on date,
+        _is_active boolean
+);
+
+CREATE FUNCTION unit_tests.create_dummy_auto_verification_policy
+(
+        _user_id integer, 
+        _verify_sales_transactions boolean, 
+        _sales_verification_limit money_strict2, 
+        _verify_purchase_transactions boolean, 
+        _purchase_verification_limit money_strict2, 
+        _verify_gl_transactions boolean,
+        _gl_verification_limit money_strict2,
+        _effective_from date,
+        _ends_on date,
+        _is_active boolean
+)
+RETURNS void 
+AS
+$$
+BEGIN
+        IF NOT EXISTS(SELECT 1 FROM policy.auto_verification_policy WHERE user_id=_user_id) THEN
+                INSERT INTO policy.auto_verification_policy(user_id, verify_sales_transactions, sales_verification_limit, verify_purchase_transactions, purchase_verification_limit, verify_gl_transactions, gl_verification_limit, effective_from, ends_on, is_active)
+                SELECT _user_id, _verify_sales_transactions, _sales_verification_limit, _verify_purchase_transactions, _purchase_verification_limit, _verify_gl_transactions, _gl_verification_limit, _effective_from, _ends_on, _is_active;
+                RETURN;
+        END IF;
+
+        UPDATE policy.auto_verification_policy
+        SET 
+                verify_sales_transactions = _verify_sales_transactions,
+                sales_verification_limit = _sales_verification_limit,
+                verify_purchase_transactions = _verify_purchase_transactions,
+                purchase_verification_limit = _purchase_verification_limit,
+                verify_gl_transactions = _verify_gl_transactions, 
+                gl_verification_limit = _gl_verification_limit, 
+                effective_from = _effective_from, 
+                ends_on = _ends_on, 
+                is_active = _is_active                
+        WHERE user_id=_user_id;
+        
+END
+$$
+LANGUAGE plpgsql;
+
+-->-->-- /db/src/12. plpgunit-tests-mock/unit_tests.create_dummy_office.sql --<--<--
+DROP FUNCTION IF EXISTS unit_tests.create_dummy_office();
+
+CREATE FUNCTION unit_tests.create_dummy_office()
+RETURNS void
+AS
+$$
+BEGIN
+        IF NOT EXISTS(SELECT 1 FROM office.offices WHERE office_code='dummy-off01') THEN
+                INSERT INTO office.offices(office_code, office_name, nick_name, registration_date, currency_code)
+                SELECT 'dummy-off01', 'PLPGUnit Test Office', 'PTO-DUMMY-0001', NOW()::date, 'NPR';
+        END IF;
+
+        RETURN;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+-->-->-- /db/src/12. plpgunit-tests-mock/unit_tests.create_dummy_users.sql --<--<--
+DROP FUNCTION IF EXISTS unit_tests.create_dummy_users();
+
+CREATE FUNCTION unit_tests.create_dummy_users()
+RETURNS void 
+AS
+$$
+BEGIN
+        IF NOT EXISTS(SELECT 1 FROM office.users WHERE user_name='plpgunit-test-user-000001') THEN
+                INSERT INTO office.users(role_id, user_name, full_name, password, office_id)
+                SELECT office.get_role_id_by_role_code('USER'), 'plpgunit-test-user-000001', 'PLPGUnit Test User', 'thoushaltnotlogin', office.get_office_id_by_office_code('dummy-off01');
+        END IF;
+END
+$$
+LANGUAGE plpgsql;
+
+
+-->-->-- /db/src/13. triggers/audit-all-tables.sql --<--<--
 DO
 $$
         DECLARE sql text;
@@ -10550,7 +12921,82 @@ END
 $$
 LANGUAGE plpgsql;
 
--- dump.sql
+-->-->-- /db/src/14. constraints/core.sql --<--<--
+ALTER TABLE core.items
+DROP CONSTRAINT IF EXISTS items_preferred_supplier_id_chk;
+
+ALTER TABLE core.items
+ADD CONSTRAINT items_preferred_supplier_id_chk 
+CHECK(core.is_supplier(preferred_supplier_id) = true);
+
+
+ALTER TABLE core.compound_item_details
+DROP CONSTRAINT IF EXISTS compound_item_details_unit_chk;
+
+ALTER TABLE core.compound_item_details
+ADD CONSTRAINT compound_item_details_unit_chk
+CHECK(core.is_valid_unit(item_id, unit_id));
+
+ALTER TABLE core.item_cost_prices
+DROP CONSTRAINT IF EXISTS item_cost_prices_unit_chk;
+
+ALTER TABLE core.item_cost_prices
+ADD CONSTRAINT item_cost_prices_unit_chk
+CHECK(core.is_valid_unit(item_id, unit_id));
+
+
+ALTER TABLE core.item_selling_prices
+DROP CONSTRAINT IF EXISTS item_selling_prices_unit_chk;
+
+ALTER TABLE core.item_selling_prices
+ADD CONSTRAINT item_selling_prices_unit_chk
+CHECK(core.is_valid_unit(item_id, unit_id));
+
+
+ALTER TABLE core.item_opening_inventory
+DROP CONSTRAINT IF EXISTS item_opening_inventory_unit_chk;
+
+ALTER TABLE core.item_opening_inventory
+ADD CONSTRAINT item_opening_inventory_unit_chk
+CHECK(core.is_valid_unit(item_id, unit_id));
+
+ALTER TABLE core.items
+DROP CONSTRAINT IF EXISTS items_reorder_quantity_chk;
+
+ALTER TABLE core.items
+ADD CONSTRAINT items_reorder_quantity_chk
+CHECK
+(
+core.convert_unit(reorder_unit_id, unit_id) * reorder_quantity >= reorder_level
+);
+
+
+-->-->-- /db/src/14. constraints/transactions.sql --<--<--
+
+ALTER TABLE transactions.stock_details
+DROP CONSTRAINT IF EXISTS stock_details_unit_chk;
+
+ALTER TABLE transactions.stock_details
+ADD CONSTRAINT stock_details_unit_chk
+CHECK(core.is_valid_unit(item_id, unit_id));
+
+
+ALTER TABLE transactions.non_gl_stock_details
+DROP CONSTRAINT IF EXISTS non_gl_stock_details_unit_chk;
+
+ALTER TABLE transactions.non_gl_stock_details
+ADD CONSTRAINT non_gl_stock_details_unit_chk
+CHECK(core.is_valid_unit(item_id, unit_id));
+
+ALTER TABLE transactions.transaction_master
+DROP CONSTRAINT IF EXISTS transaction_master_sys_user_id_chk ;
+
+ALTER TABLE transactions.transaction_master
+ADD CONSTRAINT transaction_master_sys_user_id_chk 
+CHECK(sys_user_id IS NULL OR office.is_sys_user(sys_user_id)=true);
+
+
+-->-->-- /db/src/dump.sql --<--<--
 --
 -- PostgreSQL database dump
 --
@@ -10792,25 +13238,25 @@ SELECT pg_catalog.setval('stock_master_stock_master_id_seq', 6, true);
 
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (3, 2, 'Dr', 8, 'Cash transfer', 2, 'NPR', 100.0000, 'NPR', 1, 100.0000, NULL, '2014-09-05 15:37:22.802+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (4, 2, 'Cr', 8, 'Cash transfer', 1, 'NPR', 100.0000, 'NPR', 1, 100.0000, NULL, '2014-09-05 15:37:22.802+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (5, 3, 'Dr', 140, 'Being various items purchased from Mr. Martin for Store 1.', NULL, 'NPR', 76330000.0000, 'NPR', 1, 76330000.0000, NULL, '2014-09-20 12:45:25.485+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (6, 3, 'Dr', 74, 'Being various items purchased from Mr. Martin for Store 1.', NULL, 'NPR', 9922900.0000, 'NPR', 1, 9922900.0000, NULL, '2014-09-20 12:45:25.485+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (5, 3, 'Dr', 141, 'Being various items purchased from Mr. Martin for Store 1.', NULL, 'NPR', 76330000.0000, 'NPR', 1, 76330000.0000, NULL, '2014-09-20 12:45:25.485+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (6, 3, 'Dr', 75, 'Being various items purchased from Mr. Martin for Store 1.', NULL, 'NPR', 9922900.0000, 'NPR', 1, 9922900.0000, NULL, '2014-09-20 12:45:25.485+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (7, 3, 'Cr', 8, 'Being various items purchased from Mr. Martin for Store 1.', 1, 'NPR', 86252900.0000, 'NPR', 1, 86252900.0000, NULL, '2014-09-20 12:45:25.485+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (1, 1, 'Cr', 113, 'Cash Invested by nirvan.', NULL, 'NPR', 500000000.0000, 'NPR', 1, 500000000.0000, NULL, '2014-09-05 15:23:24.577+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (1, 1, 'Cr', 114, 'Cash Invested by nirvan.', NULL, 'NPR', 500000000.0000, 'NPR', 1, 500000000.0000, NULL, '2014-09-05 15:23:24.577+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (2, 1, 'Dr', 8, 'Cash Invested by nirvan.', 1, 'NPR', 500000000.0000, 'NPR', 1, 500000000.0000, NULL, '2014-09-05 15:23:24.577+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (8, 4, 'Cr', 132, 'Apple products sold to Mr. James.', NULL, 'NPR', 1005000.0000, 'NPR', 1, 1005000.0000, NULL, '2014-09-28 15:44:28.992+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (9, 4, 'Cr', 74, 'Apple products sold to Mr. James.', NULL, 'NPR', 130650.0000, 'NPR', 1, 130650.0000, NULL, '2014-09-28 15:44:28.992+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (8, 4, 'Cr', 133, 'Apple products sold to Mr. James.', NULL, 'NPR', 1005000.0000, 'NPR', 1, 1005000.0000, NULL, '2014-09-28 15:44:28.992+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (9, 4, 'Cr', 75, 'Apple products sold to Mr. James.', NULL, 'NPR', 130650.0000, 'NPR', 1, 130650.0000, NULL, '2014-09-28 15:44:28.992+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (10, 4, 'Dr', 8, 'Apple products sold to Mr. James.', 1, 'NPR', 1135650.0000, 'NPR', 1, 1135650.0000, NULL, '2014-09-28 15:44:28.992+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (11, 5, 'Cr', 132, 'Macbook Pro Late 2013 model, sold to Mr. Jones.', NULL, 'NPR', 225000.0000, 'NPR', 1, 225000.0000, NULL, '2014-09-28 15:45:44.307+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (12, 5, 'Cr', 74, 'Macbook Pro Late 2013 model, sold to Mr. Jones.', NULL, 'NPR', 29250.0000, 'NPR', 1, 29250.0000, NULL, '2014-09-28 15:45:44.307+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (11, 5, 'Cr', 133, 'Macbook Pro Late 2013 model, sold to Mr. Jones.', NULL, 'NPR', 225000.0000, 'NPR', 1, 225000.0000, NULL, '2014-09-28 15:45:44.307+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (12, 5, 'Cr', 75, 'Macbook Pro Late 2013 model, sold to Mr. Jones.', NULL, 'NPR', 29250.0000, 'NPR', 1, 29250.0000, NULL, '2014-09-28 15:45:44.307+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (13, 5, 'Dr', 8, 'Macbook Pro Late 2013 model, sold to Mr. Jones.', 1, 'NPR', 254250.0000, 'NPR', 1, 254250.0000, NULL, '2014-09-28 15:45:44.307+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (14, 6, 'Cr', 132, 'Being MixNP Classifieds purchased by Alexander Thomas.', NULL, 'NPR', 150000.0000, 'NPR', 1, 150000.0000, NULL, '2014-09-28 15:57:47.832+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (15, 6, 'Cr', 74, 'Being MixNP Classifieds purchased by Alexander Thomas.', NULL, 'NPR', 19500.0000, 'NPR', 1, 19500.0000, NULL, '2014-09-28 15:57:47.832+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (14, 6, 'Cr', 133, 'Being MixNP Classifieds purchased by Alexander Thomas.', NULL, 'NPR', 150000.0000, 'NPR', 1, 150000.0000, NULL, '2014-09-28 15:57:47.832+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (15, 6, 'Cr', 75, 'Being MixNP Classifieds purchased by Alexander Thomas.', NULL, 'NPR', 19500.0000, 'NPR', 1, 19500.0000, NULL, '2014-09-28 15:57:47.832+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (16, 6, 'Dr', 8, 'Being MixNP Classifieds purchased by Alexander Thomas.', 1, 'NPR', 169500.0000, 'NPR', 1, 169500.0000, NULL, '2014-09-28 15:57:47.832+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (17, 7, 'Cr', 132, 'Being IPhone 6 Plus purchased by Mr. Jacob.', NULL, 'NPR', 1150000.0000, 'NPR', 1, 1150000.0000, NULL, '2014-09-28 15:58:44.155+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (18, 7, 'Cr', 74, 'Being IPhone 6 Plus purchased by Mr. Jacob.', NULL, 'NPR', 149500.0000, 'NPR', 1, 149500.0000, NULL, '2014-09-28 15:58:44.155+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (17, 7, 'Cr', 133, 'Being IPhone 6 Plus purchased by Mr. Jacob.', NULL, 'NPR', 1150000.0000, 'NPR', 1, 1150000.0000, NULL, '2014-09-28 15:58:44.155+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (18, 7, 'Cr', 75, 'Being IPhone 6 Plus purchased by Mr. Jacob.', NULL, 'NPR', 149500.0000, 'NPR', 1, 149500.0000, NULL, '2014-09-28 15:58:44.155+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (19, 7, 'Dr', 8, 'Being IPhone 6 Plus purchased by Mr. Jacob.', 1, 'NPR', 1299500.0000, 'NPR', 1, 1299500.0000, NULL, '2014-09-28 15:58:44.155+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (20, 8, 'Cr', 132, 'Being ITP sold to Mr. Walker.', NULL, 'NPR', 1250000.0000, 'NPR', 1, 1250000.0000, NULL, '2014-09-28 15:59:43.838+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (21, 8, 'Cr', 74, 'Being ITP sold to Mr. Walker.', NULL, 'NPR', 162500.0000, 'NPR', 1, 162500.0000, NULL, '2014-09-28 15:59:43.838+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (20, 8, 'Cr', 133, 'Being ITP sold to Mr. Walker.', NULL, 'NPR', 1250000.0000, 'NPR', 1, 1250000.0000, NULL, '2014-09-28 15:59:43.838+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (21, 8, 'Cr', 75, 'Being ITP sold to Mr. Walker.', NULL, 'NPR', 162500.0000, 'NPR', 1, 162500.0000, NULL, '2014-09-28 15:59:43.838+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (22, 8, 'Dr', 8, 'Being ITP sold to Mr. Walker.', 2, 'NPR', 1412500.0000, 'NPR', 1, 1412500.0000, NULL, '2014-09-28 15:59:43.838+00');
 
 
@@ -10834,5 +13280,5 @@ SELECT pg_catalog.setval('transaction_master_transaction_master_id_seq', 8, true
 
 
 
--- refresh-materialized-views.sql
+-->-->-- /db/src/refresh-materialized-views.sql --<--<--
 SELECT * FROM transactions.refresh_materialized_views();

@@ -98,11 +98,13 @@ BEGIN
     IF TG_WHEN <> 'AFTER' THEN
         RAISE EXCEPTION 'audit.if_modified_func() may only run as an AFTER trigger';
     END IF;
-	
+    
 
-	IF(hstore(NEW) ? 'audit_user_id' = true) THEN --Added
-		application_user_name:= office.get_user_name_by_user_id((hstore(NEW.*) -> 'audit_user_id')::int); --Added
-	END IF; --Added
+        IF (TG_OP != 'DELETE') THEN --Added
+                IF(hstore(NEW) ? 'audit_user_id' = true) THEN --Added
+                        application_user_name:= office.get_user_name_by_user_id((hstore(NEW.*) -> 'audit_user_id')::int); --Added
+                END IF; --Added
+        END IF; --Added
 
     audit_row = ROW(
         nextval('audit.logged_actions_event_id_seq'), -- event_id

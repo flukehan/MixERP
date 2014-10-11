@@ -5,25 +5,25 @@ CREATE FUNCTION policy.check_menu_policy_trigger()
 RETURNS trigger
 AS
 $$
-	DECLARE count integer=0;
+    DECLARE count integer=0;
 BEGIN
-	IF NEW.office_id IS NOT NULL THEN
-		count := count + 1;
-	END IF;
+    IF NEW.office_id IS NOT NULL THEN
+        count := count + 1;
+    END IF;
 
-	IF NEW.role_id IS NOT NULL THEN
-		count := count + 1;
-	END IF;
-	
-	IF NEW.user_id IS NOT NULL THEN
-		count := count + 1;
-	END IF;
+    IF NEW.role_id IS NOT NULL THEN
+        count := count + 1;
+    END IF;
+    
+    IF NEW.user_id IS NOT NULL THEN
+        count := count + 1;
+    END IF;
 
-	IF count <> 1 THEN
-		RAISE EXCEPTION 'Only one of the following columns is required : %', 'office_id, role_id, user_id.';
-	END IF;
+    IF count <> 1 THEN
+        RAISE EXCEPTION 'Only one of the following columns is required : %', 'office_id, role_id, user_id.';
+    END IF;
 
-	RETURN NEW;
+    RETURN NEW;
 END
 $$
 LANGUAGE plpgsql;

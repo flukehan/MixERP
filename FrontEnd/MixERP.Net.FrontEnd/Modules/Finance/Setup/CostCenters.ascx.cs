@@ -35,10 +35,10 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
                 scrud.TableSchema = "office";
                 scrud.Table = "cost_centers";
                 scrud.ViewSchema = "office";
-                scrud.View = "cost_center_view";
+                scrud.View = "cost_center_scrud_view";
 
                 scrud.Text = Titles.CostCenters;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(CostCenters));
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (CostCenters));
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }

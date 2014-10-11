@@ -3,12 +3,12 @@ RETURNS integer
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT cash_repository_id
-		FROM office.cash_repositories
-		WHERE cash_repository_code=$1
-	);
+    RETURN
+    (
+        SELECT cash_repository_id
+        FROM office.cash_repositories
+        WHERE cash_repository_code=$1
+    );
 END
 $$
 LANGUAGE plpgsql;

@@ -56,14 +56,15 @@ var homeCurrency = "";
 var url = "";
 var data = "";
 
-receiptTypeDiv.find("label").click(function () {
-    toggleTransactionType($(this)); repaint();
+receiptTypeDiv.find("label").click(function() {
+    toggleTransactionType($(this));
+    repaint();
 });
 
 //Define a new callback function to subscribe to
 //GoButton's click event
 //in PartyControl.
-var goButtonCallBack = function () {
+var goButtonCallBack = function() {
     var totalDueAmountHidden = $("#TotalDueAmountHidden");
     var defaultCurrencySpan = $("#DefaultCurrencySpan");
 
@@ -72,18 +73,18 @@ var goButtonCallBack = function () {
 
     var ajaxGetHomeCurrency = getHomeCurrency();
 
-    ajaxGetHomeCurrency.done(function (msg) {
+    ajaxGetHomeCurrency.done(function(msg) {
         homeCurrency = msg.d;
         getExchangeRates();
         amountTextBox.focus();
     });
 
-    ajaxGetHomeCurrency.fail(function (xhr) {
+    ajaxGetHomeCurrency.fail(function(xhr) {
         logAjaxErrorMessage(xhr);
     });
 };
 
-$(document).ready(function () {
+$(document).ready(function() {
     $("#receipt").appendTo("#home");
     loadCurrencies();
     loadCashRepositories();
@@ -93,7 +94,7 @@ $(document).ready(function () {
 
 //Control Events
 
-saveButton.click(function () {
+saveButton.click(function() {
     var partyCode = partyDropDownList.getSelectedValue();
     var currencyCode = currencyDropDownList.getSelectedValue();
     var amount = parseFloat2(amountTextBox.val());
@@ -110,12 +111,12 @@ saveButton.click(function () {
 
     var ajaxSaveReceipt = saveReceipt(partyCode, currencyCode, amount, debitExchangeRate, creditExchangeRate, referenceNumber, statementReference, costCenterId, cashRepositoryId, postedDate, bankAccountId, bankInstrumentCode, bankTransactionCode);
 
-    ajaxSaveReceipt.success(function (msg) {
+    ajaxSaveReceipt.success(function(msg) {
         var id = msg.d;
         window.location = "/Modules/Sales/Confirmation/Receipt.mix?TranId=" + id;
     });
 
-    ajaxSaveReceipt.fail(function (xhr) {
+    ajaxSaveReceipt.fail(function(xhr) {
         logAjaxErrorMessage(xhr);
     });
 });
@@ -140,7 +141,7 @@ function saveReceipt(partyCode, currencyCode, amount, debitExchangeRate, creditE
     return getAjax(url, data);
 };
 
-currencyDropDownList.blur(function () {
+currencyDropDownList.blur(function() {
     getExchangeRates();
 });
 
@@ -160,14 +161,14 @@ function getER(associatedControl, sourceCurrencyCode, destinationCurrencyCode) {
     data = appendParameter(data, "destinationCurrencyCode", destinationCurrencyCode);
     data = getData(data);
 
-    ajaxUpdateVal(url, associatedControl, data);
+    ajaxUpdateVal(url, data, associatedControl);
 };
 
-amountTextBox.keyup(function () {
+amountTextBox.keyup(function() {
     updateTotal();
 });
 
-debitExchangeRateTextBox.keyup(function () {
+debitExchangeRateTextBox.keyup(function() {
     updateTotal();
 });
 
@@ -195,7 +196,7 @@ function updateTotal() {
     };
 };
 
-var toggleTransactionType = function (e) {
+var toggleTransactionType = function(e) {
     if (e.find("input").attr("id") === "BankRadio") {
         if (!$("#BankFormGroup").is(":visible"));
         {

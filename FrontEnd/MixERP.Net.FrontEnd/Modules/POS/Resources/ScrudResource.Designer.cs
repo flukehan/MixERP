@@ -142,6 +142,15 @@ namespace MixERP.Net.Core.Modules.POS.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select.
+        /// </summary>
+        internal static string Select {
+            get {
+                return ResourceManager.GetString("Select", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Store Code.
         /// </summary>
         internal static string store_code {

@@ -3,12 +3,12 @@ RETURNS text
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT foreground_color
-		FROM core.flag_types
-		WHERE core.flag_types.flag_type_id=$1
-	);
+    RETURN
+    (
+        SELECT foreground_color
+        FROM core.flag_types
+        WHERE core.flag_types.flag_type_id=$1
+    );
 END
 $$
 LANGUAGE plpgsql;

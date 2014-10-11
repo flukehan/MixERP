@@ -81,12 +81,12 @@ RETURNS TABLE
 )
 AS
 $$
-	DECLARE root_office_id integer = 0;
+    DECLARE root_office_id integer = 0;
 BEGIN
-	SELECT office.offices.office_id INTO root_office_id
-	FROM office.offices
-	WHERE parent_office_id IS NULL
-	LIMIT 1;
+    SELECT office.offices.office_id INTO root_office_id
+    FROM office.offices
+    WHERE parent_office_id IS NULL
+    LIMIT 1;
 
         IF divide_by <= 0 THEN
                 divide_by := 1;
@@ -101,3 +101,4 @@ LANGUAGE plpgsql;
 
 --SELECT * FROM transactions.get_sales_by_offices(1, 1);
 --SELECT * FROM transactions.get_sales_by_offices(1000);
+

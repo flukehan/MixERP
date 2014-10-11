@@ -174,4 +174,43 @@
   <data name="User" xml:space="preserve">
     <value>User</value>
   </data>
+  <data name="Action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="ItemCode" xml:space="preserve">
+    <value>Item Code</value>
+  </data>
+  <data name="ItemName" xml:space="preserve">
+    <value>Item Name</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>Quantity</value>
+  </data>
+  <data name="RefererenceNumberAbbreviated" xml:space="preserve">
+    <value>Ref#</value>
+  </data>
+  <data name="StatementReference" xml:space="preserve">
+    <value>Statement Reference</value>
+  </data>
+  <data name="StockTransferJournal" xml:space="preserve">
+    <value>Stock Transfer Journal</value>
+  </data>
+  <data name="Store" xml:space="preserve">
+    <value>Store</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="Unit" xml:space="preserve">
+    <value>Unit</value>
+  </data>
+  <data name="ValueDate" xml:space="preserve">
+    <value>ValueDate</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
 </root>

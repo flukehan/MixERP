@@ -37,7 +37,7 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
                 scrud.TableSchema = "core";
                 scrud.Table = "bonus_slabs";
                 scrud.ViewSchema = "core";
-                scrud.View = "bonus_slab_view";
+                scrud.View = "bonus_slab_scrud_view";
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
                 scrud.Text = Titles.AgentBonusSlabs;
@@ -51,14 +51,15 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.frequencies.frequency_id", ConfigurationHelper.GetDbParameter("FrequencyDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.frequencies.frequency_id",
+                ConfigurationHelper.GetDbParameter("FrequencyDisplayField"));
             return string.Join(",", displayFields);
         }
 
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "core.frequencies.frequency_id", "core.frequencies");
+            ScrudHelper.AddDisplayView(displayViews, "core.frequencies.frequency_id", "core.frequency_selector_view");
             return string.Join(",", displayViews);
         }
     }

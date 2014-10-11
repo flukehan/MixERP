@@ -48,36 +48,36 @@ CREATE VIEW scrud.constraint_column_usage AS
 
 COMMENT ON VIEW scrud.constraint_column_usage IS 'Lists all columns having constraints.';
 
-	
+    
 
 CREATE VIEW scrud.relationship_view
 AS
 SELECT
-	tc.table_schema,
-	tc.table_name,
-	kcu.column_name,
-	ccu.table_schema AS references_schema,
-	ccu.table_name AS references_table,
-	ccu.column_name AS references_field  
+    tc.table_schema,
+    tc.table_name,
+    kcu.column_name,
+    ccu.table_schema AS references_schema,
+    ccu.table_name AS references_table,
+    ccu.column_name AS references_field  
 FROM
-	information_schema.table_constraints tc  
+    information_schema.table_constraints tc  
 LEFT JOIN
-	information_schema.key_column_usage kcu  
-		ON tc.constraint_catalog = kcu.constraint_catalog  
-		AND tc.constraint_schema = kcu.constraint_schema  
-		AND tc.constraint_name = kcu.constraint_name  
+    information_schema.key_column_usage kcu  
+        ON tc.constraint_catalog = kcu.constraint_catalog  
+        AND tc.constraint_schema = kcu.constraint_schema  
+        AND tc.constraint_name = kcu.constraint_name  
 LEFT JOIN
-	information_schema.referential_constraints rc  
-		ON tc.constraint_catalog = rc.constraint_catalog  
-		AND tc.constraint_schema = rc.constraint_schema  
-		AND tc.constraint_name = rc.constraint_name	
+    information_schema.referential_constraints rc  
+        ON tc.constraint_catalog = rc.constraint_catalog  
+        AND tc.constraint_schema = rc.constraint_schema  
+        AND tc.constraint_name = rc.constraint_name 
 LEFT JOIN
-	scrud.constraint_column_usage ccu  
-		ON rc.unique_constraint_catalog = ccu.constraint_catalog  
-		AND rc.unique_constraint_schema = ccu.constraint_schema  
-		AND rc.unique_constraint_name = ccu.constraint_name  
+    scrud.constraint_column_usage ccu  
+        ON rc.unique_constraint_catalog = ccu.constraint_catalog  
+        AND rc.unique_constraint_schema = ccu.constraint_schema  
+        AND rc.unique_constraint_name = ccu.constraint_name  
 WHERE
-	lower(tc.constraint_type) in ('foreign key');
+    lower(tc.constraint_type) in ('foreign key');
 
 COMMENT ON VIEW scrud.relationship_view IS 'Lists all foreign key columns and their relation with the parent tables.';
 
@@ -88,13 +88,13 @@ $$
 DECLARE _sql text;
 DECLARE _val text;
 BEGIN
-	IF($1 LIKE '%::%' AND $1 NOT LIKE 'nextval%') THEN
-		_sql := 'SELECT ' || $1;
-		EXECUTE _sql INTO _val;
-		RETURN _val;
-	END IF;
+    IF($1 LIKE '%::%' AND $1 NOT LIKE 'nextval%') THEN
+        _sql := 'SELECT ' || $1;
+        EXECUTE _sql INTO _val;
+        RETURN _val;
+    END IF;
 
-	RETURN $1;
+    RETURN $1;
 END
 $$
 LANGUAGE plpgsql;
@@ -105,41 +105,41 @@ COMMENT ON FUNCTION scrud.parse_default(text) IS 'Parses default constraint colu
 CREATE VIEW scrud.mixerp_table_view
 AS
 SELECT information_schema.columns.table_schema, 
-	   information_schema.columns.table_name, 
-	   information_schema.columns.column_name, 
-	   references_schema, 
-	   references_table, 
-	   references_field, 
-	   ordinal_position,
-	   is_nullable,
-	   scrud.parse_default(column_default) AS column_default, 
-	   data_type, 
-	   domain_name,
-	   character_maximum_length, 
-	   character_octet_length, 
-	   numeric_precision, 
-	   numeric_precision_radix, 
-	   numeric_scale, 
-	   datetime_precision, 
-	   udt_name 
+       information_schema.columns.table_name, 
+       information_schema.columns.column_name, 
+       references_schema, 
+       references_table, 
+       references_field, 
+       ordinal_position,
+       is_nullable,
+       scrud.parse_default(column_default) AS column_default, 
+       data_type, 
+       domain_name,
+       character_maximum_length, 
+       character_octet_length, 
+       numeric_precision, 
+       numeric_precision_radix, 
+       numeric_scale, 
+       datetime_precision, 
+       udt_name 
 FROM   information_schema.columns 
-	   LEFT JOIN scrud.relationship_view 
-			  ON information_schema.columns.table_schema = 
-				 scrud.relationship_view.table_schema 
-				 AND information_schema.columns.table_name = 
-					 scrud.relationship_view.table_name 
-				 AND information_schema.columns.column_name = 
-					 scrud.relationship_view.column_name 
+       LEFT JOIN scrud.relationship_view 
+              ON information_schema.columns.table_schema = 
+                 scrud.relationship_view.table_schema 
+                 AND information_schema.columns.table_name = 
+                     scrud.relationship_view.table_name 
+                 AND information_schema.columns.column_name = 
+                     scrud.relationship_view.column_name 
 WHERE  information_schema.columns.table_schema 
 NOT IN 
-	( 
-		'pg_catalog', 'information_schema'
-	)
-AND 	   information_schema.columns.column_name 
+    ( 
+        'pg_catalog', 'information_schema'
+    )
+AND        information_schema.columns.column_name 
 NOT IN
-	(
-		'audit_user_id', 'audit_ts'
-	)
+    (
+        'audit_user_id', 'audit_ts'
+    )
 ;
 
 COMMENT ON VIEW scrud.mixerp_table_view IS 'Lists all schema, table, and columns with associated types, domains, references, and constraints.';

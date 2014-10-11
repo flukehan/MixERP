@@ -3,12 +3,12 @@ RETURNS text
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT frequency_code
-		FROM core.frequencies
-		WHERE core.frequencies.frequency_id=$1
-	);
+    RETURN
+    (
+        SELECT frequency_code
+        FROM core.frequencies
+        WHERE core.frequencies.frequency_id=$1
+    );
 END
 $$
 LANGUAGE plpgsql;

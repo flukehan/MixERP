@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.Common;
+using MixERP.Net.Core.Modules.Purchase.Resources;
 using MixERP.Net.FrontEnd.Base;
 using System;
 using System.Collections.Generic;
@@ -31,6 +33,13 @@ namespace MixERP.Net.Core.Modules.Purchase.Entry
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
+            long tranId = Conversion.TryCastLong(this.Request.QueryString["TranId"]);
+            PurchaseReturnControl.Text = Titles.PurchaseReturn;
+
+            if (tranId <= 0)
+            {
+                Response.Redirect("~/Modules/Sales/Return.mix");
+            }
             base.OnControlLoad(sender, e);
         }
     }

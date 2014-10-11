@@ -38,13 +38,13 @@ namespace MixERP.Net.Core.Modules.BackOffice
                 scrud.TableSchema = "core";
                 scrud.Table = "frequency_setups";
                 scrud.ViewSchema = "core";
-                scrud.View = "frequency_setup_view";
+                scrud.View = "frequency_setup_scrud_view";
 
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
 
                 scrud.Text = Titles.Frequencies;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(Frequency));
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (Frequency));
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
@@ -55,16 +55,18 @@ namespace MixERP.Net.Core.Modules.BackOffice
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.frequencies.frequency_id", ConfigurationHelper.GetDbParameter("FrequencyDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.fiscal_year.fiscal_year_code", ConfigurationHelper.GetDbParameter("FiscalYearDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.frequencies.frequency_id",
+                ConfigurationHelper.GetDbParameter("FrequencyDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.fiscal_year.fiscal_year_code",
+                ConfigurationHelper.GetDbParameter("FiscalYearDisplayField"));
             return string.Join(",", displayFields);
         }
 
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "core.frequencies.frequency_id", "core.frequencies");
-            ScrudHelper.AddDisplayView(displayViews, "core.fiscal_year.fiscal_year_code", "core.fiscal_year");
+            ScrudHelper.AddDisplayView(displayViews, "core.frequencies.frequency_id", "core.frequency_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.fiscal_year.fiscal_year_code", "core.fiscal_year_selector_view");
             return string.Join(",", displayViews);
         }
     }

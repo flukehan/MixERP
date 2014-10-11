@@ -51,17 +51,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 <body>
     <form id="form1" runat="server">
         <asp:ScriptManager runat="server" ID="ScriptManager1" />
-
-        <mixerp:ScrudItemSelector runat="server"
-            TopPanelCssClass="vpad16"
-            TopPanelTableCssClass="valignmiddle"
-            FilterDropDownListCssClass="form-control input-sm pad-right"
-            FilterTextBoxCssClass="form-control input-sm"
-            ButtonCssClass="btn btn-default btn-sm"
-            GridViewCssClass="table table-bordered table-hover"
-            GridViewPagerCssClass="gridpager"
-            GridViewRowCssClass=""
-            GridViewAlternateRowCssClass="alt" />
+        <asp:PlaceHolder runat="server" ID="SelectorPlaceholder"></asp:PlaceHolder>
     </form>
 </body>
 </html>

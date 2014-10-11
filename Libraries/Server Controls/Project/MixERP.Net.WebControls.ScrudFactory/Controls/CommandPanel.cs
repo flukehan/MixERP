@@ -115,7 +115,8 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
 
         private void AddAddButton(Panel p)
         {
-            var addButton = this.GetInputButton("ALT + A", "return(scrudAddNew());", Titles.AddNew, this.AddButtonCssClass);
+            var addButton = this.GetInputButton("ALT + A", "return(scrudAddNew());", Titles.AddNew,
+                this.AddButtonCssClass);
             p.Controls.Add(addButton);
         }
 
@@ -124,13 +125,16 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
             this.DeleteButton = this.GetButton("CTRL + D", "return(scrudConfirmAction());", Titles.DeleteSelected);
             this.DeleteButton.ID = "DeleteButton" + controlSuffix;
             this.DeleteButton.CssClass = "hidden";
+            this.DeleteButton.CausesValidation = false;
             this.DeleteButton.Click += this.OnDeleteButtonClick;
             p.Controls.Add(this.DeleteButton);
         }
 
         private void AddDeleteButtonVisible(Panel p, string controlSuffix)
         {
-            var deleteButton = this.GetInputButton("CTRL + E", "$('#DeleteButton" + controlSuffix + "').click();return false;", Titles.DeleteSelected, this.DeleteButtonCssClass);
+            var deleteButton = this.GetInputButton("CTRL + E",
+                "$('#DeleteButton" + controlSuffix + "').click();return false;", Titles.DeleteSelected,
+                this.DeleteButtonCssClass);
             p.Controls.Add(deleteButton);
         }
 
@@ -146,13 +150,16 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
 
         private void AddEditButtonVisible(Panel p, string controlSuffix)
         {
-            var editButton = this.GetInputButton("CTRL + E", "$('#EditButton" + controlSuffix + "').click();return false;", Titles.EditSelected, this.EditButtonCssClass);
+            var editButton = this.GetInputButton("CTRL + E",
+                "$('#EditButton" + controlSuffix + "').click();return false;", Titles.EditSelected,
+                this.EditButtonCssClass);
             p.Controls.Add(editButton);
         }
 
         private void AddPrintButton(Panel p)
         {
-            var printButton = this.GetInputButton("CTRL + P", "scrudPrintGridView();", Titles.Print, this.PrintButtonCssClass);
+            var printButton = this.GetInputButton("CTRL + P", "scrudPrintGridView();", Titles.Print,
+                this.PrintButtonCssClass);
             p.Controls.Add(printButton);
         }
 
@@ -160,20 +167,23 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
         {
             if (this.IsModal())
             {
-                var addSelectButton = this.GetInputButton("RETURN", "scrudSelectAndClose();", Titles.Select, this.SelectButtonCssClass);
+                var addSelectButton = this.GetInputButton("RETURN", "scrudSelectAndClose();", Titles.Select,
+                    this.SelectButtonCssClass);
                 p.Controls.Add(addSelectButton);
             }
         }
 
         private void AddShowAllButton(Panel p)
         {
-            var showAllButton = this.GetInputButton("CTRL + S", "scrudShowAll();", Titles.ShowAll, this.AllButtonCssClass);
+            var showAllButton = this.GetInputButton("CTRL + S", "scrudShowAll();", Titles.ShowAll,
+                this.AllButtonCssClass);
             p.Controls.Add(showAllButton);
         }
 
         private void AddShowCompactButton(Panel p)
         {
-            var showCompactButton = this.GetInputButton("ALT + C", "scrudShowCompact();", Titles.ShowCompact, this.CompactButtonCssClass);
+            var showCompactButton = this.GetInputButton("ALT + C", "scrudShowCompact();", Titles.ShowCompact,
+                this.CompactButtonCssClass);
             p.Controls.Add(showCompactButton);
         }
 

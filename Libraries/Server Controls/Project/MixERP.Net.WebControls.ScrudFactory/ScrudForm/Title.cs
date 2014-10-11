@@ -54,12 +54,15 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 return;
             }
 
-            using (var heading = new HtmlGenericControl("h1"))
+            using (HtmlGenericControl titleDiv = new HtmlGenericControl())
             {
+                titleDiv.TagName = "div";
                 this.titleLabel = new Label();
                 this.titleLabel.ID = "TitleLabel";
-                heading.Controls.Add(this.titleLabel);
-                p.Controls.Add(heading);
+                titleDiv.Attributes.Add("class", this.GetTitleLabelCssClass());
+
+                titleDiv.Controls.Add(titleLabel);
+                p.Controls.Add(titleDiv);
             }
         }
 

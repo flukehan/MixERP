@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System.Reflection;
 using System.Web.UI.WebControls;
 
 namespace MixERP.Net.WebControls.ScrudFactory
@@ -46,6 +47,10 @@ namespace MixERP.Net.WebControls.ScrudFactory
         public string GridViewPagerCssClass { get; set; }
 
         public string GridViewRowCssClass { get; set; }
+
+        public string ResourceClassName { get; set; }
+
+        public Assembly ResourceAssembly { get; set; }
 
         public string TopPanelCssClass { get; set; }
 

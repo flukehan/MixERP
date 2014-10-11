@@ -37,7 +37,8 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
                 scrud.TableSchema = "core";
                 scrud.Table = "shipping_addresses";
                 scrud.ViewSchema = "core";
-                scrud.View = "shipping_address_view";
+                scrud.View = "shipping_address_scrud_view";
+                scrud.Width = 1400;
 
                 //Shipping address code will be automatically generated on the database.
                 scrud.Exclude = "shipping_address_code";
@@ -46,7 +47,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
                 scrud.DisplayViews = GetDisplayViews();
 
                 scrud.Text = Titles.ShippingAddressMaintenance;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (ShippingAddresses));
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(ShippingAddresses));
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
@@ -57,15 +58,14 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.parties.party_id",
-                ConfigurationHelper.GetDbParameter("PartyDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.parties.party_id", ConfigurationHelper.GetDbParameter("PartyDisplayField"));
             return string.Join(",", displayFields);
         }
 
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "core.parties.party_id", "core.party_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.parties.party_id", "core.party_selector_view");
             return string.Join(",", displayViews);
         }
     }

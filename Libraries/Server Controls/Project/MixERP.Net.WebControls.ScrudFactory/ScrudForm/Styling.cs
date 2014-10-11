@@ -311,6 +311,18 @@ namespace MixERP.Net.WebControls.ScrudFactory
             return cssClass;
         }
 
+        private string GetTitleLabelCssClass()
+        {
+            var cssClass = this.TitleLabelCssClass;
+
+            if (string.IsNullOrWhiteSpace(cssClass))
+            {
+                cssClass = ConfigurationHelper.GetScrudParameter("TitleLabelCssClass");
+            }
+
+            return cssClass;
+        }
+
         private string GetUpdateProgressSpinnerImageCssClass()
         {
             var cssClass = this.UpdateProgressSpinnerImageCssClass;

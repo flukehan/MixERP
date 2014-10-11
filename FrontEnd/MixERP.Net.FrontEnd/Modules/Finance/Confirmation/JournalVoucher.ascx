@@ -18,6 +18,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="JournalVoucher.ascx.cs" Inherits="MixERP.Net.Core.Modules.Finance.Confirmation.JournalVoucher" OverridePath="/Modules/Finance/JournalVoucher.mix" %>
+
 <mixerp:TransactionChecklist runat="server"
     DisplayWithdrawButton="true"
     DisplayPrintGlEntryButton="true"

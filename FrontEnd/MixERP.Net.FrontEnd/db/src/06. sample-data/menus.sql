@@ -1,6 +1,5 @@
 
 INSERT INTO core.menus(menu_text, url, menu_code, level)
-SELECT 'Dashboard', '~/Dashboard/Index.aspx', 'DB', 0 UNION ALL
 SELECT 'Sales', '~/Modules/Sales/Index.mix', 'SA', 0 UNION ALL
 SELECT 'Purchase', '~/Modules/Purchase/Index.mix', 'PU', 0 UNION ALL
 SELECT 'Products & Items', '~/Modules/Inventory/Index.mix', 'ITM', 0 UNION ALL
@@ -12,7 +11,7 @@ SELECT 'POS', '~/Modules/POS/Index.mix', 'POS', 0;
 
 
 INSERT INTO core.menus(menu_text, url, menu_code, level, parent_menu_id)
-		  SELECT 'Sales & Quotation', NULL, 'SAQ', 1, core.get_menu_id('SA')
+          SELECT 'Sales & Quotation', NULL, 'SAQ', 1, core.get_menu_id('SA')
 UNION ALL SELECT 'Direct Sales', '~/Modules/Sales/DirectSales.mix', 'DRS', 2, core.get_menu_id('SAQ')
 UNION ALL SELECT 'Sales Quotation', '~/Modules/Sales/Quotation.mix', 'SQ', 2, core.get_menu_id('SAQ')
 UNION ALL SELECT 'Sales Order', '~/Modules/Sales/Order.mix', 'SO', 2, core.get_menu_id('SAQ')
@@ -36,8 +35,8 @@ UNION ALL SELECT 'Counter Setup', '~/Modules/BackOffice/Counters.mix', 'SCS', 2,
 UNION ALL SELECT 'Purchase & Quotation', NULL, 'PUQ', 1, core.get_menu_id('PU')
 UNION ALL SELECT 'Direct Purchase', '~/Modules/Purchase/DirectPurchase.mix', 'DRP', 2, core.get_menu_id('PUQ')
 UNION ALL SELECT 'Purchase Order', '~/Modules/Purchase/Order.mix', 'PO', 2, core.get_menu_id('PUQ')
+UNION ALL SELECT 'Purchase Reorder', '~/Modules/Purchase/Reorder.mix', 'PRO', 2, core.get_menu_id('PUQ')
 UNION ALL SELECT 'GRN Entry', '~/Modules/Purchase/GRN.mix', 'GRN', 2, core.get_menu_id('PUQ')
-UNION ALL SELECT 'Payment to Supplier', '~/Modules/Purchase/Payment.mix', 'PAS', 2, core.get_menu_id('PUQ')
 UNION ALL SELECT 'Purchase Return', '~/Modules/Purchase/Return.mix', 'PR', 2, core.get_menu_id('PUQ')
 UNION ALL SELECT 'Purchase Reports', NULL, 'PUR', 1, core.get_menu_id('PU')
 UNION ALL SELECT 'Inventory Movements', NULL, 'IIM', 1, core.get_menu_id('ITM')
@@ -155,7 +154,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 INSERT INTO core.menu_locale(menu_id, culture, menu_text)
-SELECT core.get_menu_id('DB'), 'fr', 'tableau de bord' UNION ALL
 SELECT core.get_menu_id('SA'), 'fr', 'ventes' UNION ALL
 SELECT core.get_menu_id('PU'), 'fr', 'acheter' UNION ALL
 SELECT core.get_menu_id('ITM'), 'fr', 'Produits et Articles' UNION ALL
@@ -187,8 +185,8 @@ SELECT core.get_menu_id('SCS'), 'fr', 'Configuration du compteur' UNION ALL
 SELECT core.get_menu_id('PUQ'), 'fr', 'Achat & Devis' UNION ALL
 SELECT core.get_menu_id('DRP'), 'fr', 'Achat direct' UNION ALL
 SELECT core.get_menu_id('PO'), 'fr', 'Bon de commande' UNION ALL
+SELECT core.get_menu_id('PRO'), 'fr', 'Achat Reorder' UNION ALL
 SELECT core.get_menu_id('GRN'), 'fr', 'GRN contre PO' UNION ALL
-SELECT core.get_menu_id('PAS'), 'fr', 'Paiement à Fournisseur' UNION ALL
 SELECT core.get_menu_id('PR'), 'fr', 'achat de retour' UNION ALL
 SELECT core.get_menu_id('PUR'), 'fr', 'Rapports d''achat' UNION ALL
 SELECT core.get_menu_id('IIM'), 'fr', 'Les mouvements des stocks' UNION ALL

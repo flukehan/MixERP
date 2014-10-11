@@ -4,7 +4,7 @@ RETURNS text
 AS
 $$
 BEGIN
-	RETURN $1::text;
+    RETURN $1::text;
 END
 $$
 LANGUAGE plpgsql; 

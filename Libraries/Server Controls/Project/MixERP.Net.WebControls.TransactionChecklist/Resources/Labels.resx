@@ -117,7 +117,50 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CannotWithdrawNotValidGLTransaction" xml:space="preserve">
+    <value>Cannot withdraw transaction. This is a not a valid GL transaction.</value>
+  </data>
+  <data name="CannotWithdrawTransaction" xml:space="preserve">
+    <value>Cannot withdraw transaction.</value>
+  </data>
   <data name="EmailBody" xml:space="preserve">
     <value>&lt;h2&gt;Hi,&lt;/h2&gt;&lt;p&gt;Please find the attached document.&lt;/p&gt;&lt;p&gt;Thank you.&lt;br /&gt;MixERP&lt;/p&gt;</value>
+  </data>
+  <data name="EmailSentConfirmation" xml:space="preserve">
+    <value>An email was sent to {0}.</value>
+    <comment>An email was sent to someone@example.com.</comment>
+  </data>
+  <data name="ThisFieldIsRequired" xml:space="preserve">
+    <value>This field is required.</value>
+  </data>
+  <data name="TransactionApprovedDetails" xml:space="preserve">
+    <value>This transaction was approved by {0} on {1}.</value>
+    <comment>This transaction was approved by binod on 2004-3-13 12:45 AM.</comment>
+  </data>
+  <data name="TransactionAutoApprovedDetails" xml:space="preserve">
+    <value>This transaction was automatically approved by {0} on {1}.</value>
+    <comment>This transaction was automatically approved by sys on 2004-3-13 12:45 AM.</comment>
+  </data>
+  <data name="TransactionAwaitingVerification" xml:space="preserve">
+    <value>This transaction is awaiting verification from an administrator.</value>
+  </data>
+  <data name="TransactionClosedDetails" xml:space="preserve">
+    <value>This transaction was closed by {0} on {1}. Reason: "{2}".</value>
+    <comment>This transaction was closed by nirvan on 2004.-3-13 12:45 AM. Reason: "Duplicate".</comment>
+  </data>
+  <data name="TransactionPostedSuccessfully" xml:space="preserve">
+    <value>The transaction was posted successfully.</value>
+  </data>
+  <data name="TransactionRejectedDetails" xml:space="preserve">
+    <value>This transaction was rejected by {0} on {1}. Reason: "{2}".</value>
+    <comment>This transaction was rejected by binod on 2004.-3-13 12:45 AM. Reason: "No reason specified".</comment>
+  </data>
+  <data name="TransactionWithdrawnDetails" xml:space="preserve">
+    <value>This transaction was withdrawn by {0} on {1}. Reason: "{2}".</value>
+    <comment>This transaction was closed by "nirvan" on 2004.-3-13 12:45 AM. Reason: "Mistake".</comment>
+  </data>
+  <data name="TransactionWithdrawnMessage" xml:space="preserve">
+    <value>The transaction was withdrawn successfully. Moreover, this action will affect the all the reports produced on and after "{0}".</value>
+    <comment>The transaction was withdrawn successfully. Moreover, this action will affect the all the reports produced on and after "2002-05-23".</comment>
   </data>
 </root>

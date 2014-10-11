@@ -18,7 +18,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.FrontEnd.Base;
-
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
@@ -37,7 +36,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
-
 using System;
 using System.Configuration;
 using System.Text;
@@ -75,11 +73,22 @@ namespace MixERP.Net.FrontEnd.Site
 
             if (ex != null)
             {
+                ex = this.GetInnerMostException(ex);
                 s.Append(string.Format(Thread.CurrentThread.CurrentCulture, "<hr class='hr' />"));
                 s.Append(string.Format(Thread.CurrentThread.CurrentCulture, "<h2>{0}</h2>", ex.Message));
 
                 this.ExceptionLiteral.Text = s.ToString();
             }
+        }
+
+        private Exception GetInnerMostException(Exception ex)
+        {
+            if (ex.InnerException == null)
+            {
+                return ex;
+            }
+
+            return this.GetInnerMostException(ex.InnerException);
         }
     }
 }

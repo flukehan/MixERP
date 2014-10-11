@@ -3,12 +3,12 @@ RETURNS text
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT price_type_name
-		FROM core.price_types
-		WHERE price_type_id=$1
-	);
+    RETURN
+    (
+        SELECT price_type_name
+        FROM core.price_types
+        WHERE price_type_id=$1
+    );
 END
 $$
 LANGUAGE plpgsql;

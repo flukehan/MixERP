@@ -60,18 +60,48 @@ namespace MixERP.Net.FrontEnd.Base
                 this.OverridePath = this.Page.Request.Url.AbsolutePath;
             }
 
-            Literal contentMenuLiteral = ((Literal)PageUtility.FindControlIterative(this.Master, "ContentMenuLiteral"));
+            Literal contentMenuLiteral = ((Literal) PageUtility.FindControlIterative(this.Master, "ContentMenuLiteral"));
+
+            string menu = "<div id=\"tree\"><ul id='treeData' style=\"display:none;\">";
+
+            Collection<Menu> collection = Data.Core.Menu.GetMenuCollection(0, 0);
+
+            if (collection == null)
+            {
+                return;
+            }
+
+            if (collection.Count > 0)
+            {
+                foreach (Menu model in collection)
+                {
+                    string menuText = model.MenuText;
+                    string url = model.Url;
+                    string id = Conversion.TryCastString(model.MenuId);
+
+                    string subMenu = GetContentPageMenu(this.Page, url, this.OverridePath);
+                    menu += string.Format(Thread.CurrentThread.CurrentCulture,
+                        "<li class='folder' id='item{0}'>" +
+                        "<a id='primaryAnchor{0}' class='primary' href='javascript:void(0);' title='{1}'>{1}</a>" +
+                        "{2}" +
+                        "</li>",
+                        id,
+                        menuText,
+                        subMenu);
+                }
+            }
+
+            menu += "</ul></div>";
 
             if (contentMenuLiteral != null)
             {
-                string menu = GetContentPageMenu(this.Page, this.OverridePath);
                 contentMenuLiteral.Text = menu;
             }
 
             base.OnLoad(e);
         }
 
-        public static string GetContentPageMenu(Control page, string path)
+        public static string GetContentPageMenu(Control page, string path, string currentPage)
         {
             if (page != null)
             {
@@ -86,24 +116,48 @@ namespace MixERP.Net.FrontEnd.Base
 
                 if (rootMenus.Count > 0)
                 {
-                    menu = "<ul class=\"menu\">";
+                    menu = "<ul>";
 
                     foreach (Menu rootMenu in rootMenus)
                     {
-                        menu += string.Format(Thread.CurrentThread.CurrentCulture, "<li class=\"menu-title\"><a href=\"javascript:void(0);\">{0}</a></li>", rootMenu.MenuText);
+                        string anchor = string.Format(Thread.CurrentThread.CurrentCulture,
+                            "<a href=\"javascript:void(0);\">{0}</a>", rootMenu.MenuText);
 
                         Collection<Menu> childMenus = Data.Core.Menu.GetMenuCollection(rootMenu.MenuId, 2);
 
                         if (childMenus.Count > 0)
                         {
+                            menu += "<li class='folder'>";
+                            menu += anchor;
+                            menu += "<ul>";
+
                             foreach (Menu childMenu in childMenus)
                             {
-                                menu += string.Format(Thread.CurrentThread.CurrentCulture, "<li><a href='{0}' title='{1}' data-menucode='{2}'>{1}</a></li>", page.ResolveUrl(childMenu.Url), childMenu.MenuText, childMenu.MenuCode);
+                                string id = Conversion.TryCastString(childMenu.MenuId);
+
+                                if (childMenu.Url.Equals(currentPage))
+                                {
+                                    menu += string.Format(Thread.CurrentThread.CurrentCulture,
+                                        "<li id='item{0}' class='expanded' data-selected='true' data-menucode='{1}'><a href='{2}' title='{3}'>{3}</a></li>",
+                                        id, childMenu.MenuCode, page.ResolveUrl(childMenu.Url), childMenu.MenuText);
+                                }
+                                else
+                                {
+                                    menu += string.Format(Thread.CurrentThread.CurrentCulture,
+                                        "<li id='item{0}' data-menucode='{1}'><a href='{2}' title='{3}'>{3}</a></li>",
+                                        id, childMenu.MenuCode, page.ResolveUrl(childMenu.Url), childMenu.MenuText);
+                                }
                             }
+
+                            menu += "</ul>";
+                        }
+                        else
+                        {
+                            menu += "<li>" + anchor;
                         }
                     }
 
-                    menu += "</ul>";
+                    menu += "</li></ul>";
                 }
 
                 return menu;
@@ -168,7 +222,8 @@ namespace MixERP.Net.FrontEnd.Base
 
         public static void SetAuthenticationTicket(Page page, string userName, bool rememberMe)
         {
-            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, userName, DateTime.Now, DateTime.Now.AddMinutes(30), rememberMe, String.Empty, FormsAuthentication.FormsCookiePath);
+            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, userName, DateTime.Now,
+                DateTime.Now.AddMinutes(30), rememberMe, String.Empty, FormsAuthentication.FormsCookiePath);
             string encryptedCookie = FormsAuthentication.Encrypt(ticket);
 
             HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedCookie);

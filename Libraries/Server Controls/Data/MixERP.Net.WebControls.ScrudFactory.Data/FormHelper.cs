@@ -18,13 +18,13 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.Common;
+using MixERP.Net.Common.Base;
 using MixERP.Net.DBFactory;
 using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
-
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
@@ -43,8 +43,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
-
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading;
 
@@ -62,12 +60,14 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
             return DBFactory.FormHelper.GetTable(tableSchema, tableName, orderBy);
         }
 
-        public static DataTable GetTable(string tableSchema, string tableName, string columnNames, string columnValues, string orderBy)
+        public static DataTable GetTable(string tableSchema, string tableName, string columnNames, string columnValues,
+            string orderBy)
         {
             return DBFactory.FormHelper.GetTable(tableSchema, tableName, columnNames, columnValues, orderBy);
         }
 
-        public static DataTable GetTable(string tableSchema, string tableName, string columnNames, string columnValuesLike, int limit, string orderBy)
+        public static DataTable GetTable(string tableSchema, string tableName, string columnNames,
+            string columnValuesLike, int limit, string orderBy)
         {
             return DBFactory.FormHelper.GetTable(tableSchema, tableName, columnNames, columnValuesLike, limit, orderBy);
         }
@@ -105,7 +105,8 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
                 }
             }
 
-            string sql = "INSERT INTO @TableSchema.@TableName(" + columns + ", audit_user_id) SELECT " + columnParamters + ", @AuditUserId;SELECT LASTVAL();";
+            string sql = "INSERT INTO @TableSchema.@TableName(" + columns + ", audit_user_id) SELECT " + columnParamters +
+                         ", @AuditUserId;SELECT LASTVAL();";
             using (NpgsqlCommand command = new NpgsqlCommand())
             {
                 sql = sql.Replace("@TableSchema", DBFactory.Sanitizer.SanitizeIdentifierName(tableSchema));
@@ -141,11 +142,19 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
 
                 command.Parameters.AddWithValue("@AuditUserId", userId);
 
-                return Conversion.TryCastLong(DbOperations.GetScalarValue(command));
+                try
+                {
+                    return Conversion.TryCastLong(DbOperations.GetScalarValue(command));
+                }
+                catch (NpgsqlException ex)
+                {
+                    throw new MixERPException(ex.Message, ex, ex.ConstraintName);
+                }
             }
         }
 
-        public static bool UpdateRecord(int userId, string tableSchema, string tableName, Collection<KeyValuePair<string, string>> data, string keyColumn, string keyColumnValue, string imageColumn)
+        public static bool UpdateRecord(int userId, string tableSchema, string tableName,
+            Collection<KeyValuePair<string, string>> data, string keyColumn, string keyColumnValue, string imageColumn)
         {
             if (data == null)
             {
@@ -157,7 +166,8 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
             int counter = 0;
 
             //Adding the current user to the column collection.
-            KeyValuePair<string, string> auditUserId = new KeyValuePair<string, string>("audit_user_id", userId.ToString(Thread.CurrentThread.CurrentCulture));
+            KeyValuePair<string, string> auditUserId = new KeyValuePair<string, string>("audit_user_id",
+                userId.ToString(Thread.CurrentThread.CurrentCulture));
             data.Add(auditUserId);
 
             foreach (KeyValuePair<string, string> pair in data)
@@ -217,7 +227,14 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
 
                 command.Parameters.AddWithValue("@KeyValue", keyColumnValue);
 
-                return DbOperations.ExecuteNonQuery(command);
+                try
+                {
+                    return DbOperations.ExecuteNonQuery(command);
+                }
+                catch (NpgsqlException ex)
+                {
+                    throw new MixERPException(ex.Message, ex, ex.ConstraintName);
+                }
             }
         }
 
@@ -234,7 +251,14 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
 
                 command.Parameters.AddWithValue("@KeyValue", keyColumnValue);
 
-                return DbOperations.ExecuteNonQuery(command);
+                try
+                {
+                    return DbOperations.ExecuteNonQuery(command);
+                }
+                catch (NpgsqlException ex)
+                {
+                    throw new MixERPException(ex.Message, ex);
+                }
             }
         }
     }

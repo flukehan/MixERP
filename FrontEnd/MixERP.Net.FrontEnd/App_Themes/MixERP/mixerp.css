@@ -26,7 +26,9 @@ html,
 body,
 div,
 table,
-p {
+td,
+p,
+span {
   font-family: 'Segoe UI', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: 12px;
   color: #4f1852;
@@ -35,7 +37,7 @@ body {
   background-color: #ffffff;
 }
 body#SignInBody {
-  background-color: #470b65;
+  background-color: #67238b;
 }
 /*Page Layout Start */
 #dashboard {
@@ -46,13 +48,13 @@ body#SignInBody {
   vertical-align: top;
 }
 .left {
-  width: 274px !important;
+  width: 300px !important;
 }
 #logo {
   padding-left: 16px;
-  background-color: #4c0c6c;
+  background-color: #67238b;
   height: 54px;
-  width: 274px;
+  width: 300px;
 }
 #user-panel {
   vertical-align: middle !important;
@@ -71,9 +73,9 @@ body#SignInBody {
   padding: 0;
 }
 #sidebar {
-  background-color: #530f76;
+  background-color: #67238b;
   color: #f7f1fb;
-  width: 274px;
+  width: 300px;
   height: 100%;
   padding-bottom: 50px;
   margin-bottom: -50px;
@@ -96,46 +98,17 @@ footer {
   margin-top: -16px;
 }
 #SearchInput {
-  background-color: #5e1485;
-  border-color: #4c0c6c;
+  background-color: #5f1488;
+  border-color: #5f1488;
   color: #dbb7ed;
 }
 #SearchInput:hover,
 #SearchInput:active,
 #SearchInput:focus {
-  border-color: #731ea0;
+  border-color: #754092;
   box-shadow: none;
   -moz-box-shadow: none;
   -webkit-box-shadow: none;
-}
-.menu {
-  list-style: none outside none;
-  margin: 0;
-  padding: 2px;
-}
-.menu li a,
-.menu li.menu-title a {
-  width: 100%;
-  text-decoration: none;
-  color: #ccb4d6;
-  background-color: #5e1485;
-  display: block;
-  padding: 8px;
-  padding-left: 32px;
-}
-.menu li.menu-title a {
-  font-weight: bold;
-  padding-left: 12px;
-  background-color: #4c0c6c;
-}
-.menu li a:hover,
-.menu li a:focus {
-  background-color: #470b65;
-  color: #f5d3ed;
-  outline: none;
-}
-.menu-selected {
-  background-color: #470b65 !important;
 }
 .icon {
   padding: 6px;
@@ -205,6 +178,11 @@ a[role=item-selector] {
   font-size: large;
   color: #d4610e;
 }
+.exception,
+.exception:hover {
+  font-weight: lighter;
+  color: #d4610e;
+}
 .error-message {
   font-weight: bold;
   color: #d4610e;
@@ -227,6 +205,14 @@ a[role=item-selector] {
 }
 table .form-control label {
   padding: 6px !important;
+}
+.heading {
+  padding-top: 12px;
+  cursor: pointer;
+}
+.heading span {
+  font-weight: lighter !important;
+  font-size: 36px;
 }
 .form-description {
   font-weight: bold;
@@ -390,9 +376,57 @@ a:focus {
 .table-hover > tbody > tr:hover > th {
   background-color: #fbf5fe;
 }
+textarea {
+  resize: none;
+}
 /*Bootstrap Override Start*/
 tr.form-group td {
   vertical-align: middle !important;
 }
 /*Bootstrap Override End*/
+/*Fancytree Override Start*/
+span.fancytree-node:hover,
+[data-selected=true] {
+  background-color: #4e0572;
+  border-color: #4e0572;
+}
+.fancytree-container.fancytree-treefocus span.fancytree-node.fancytree-focused {
+  border-color: #3399FF;
+}
+span.fancytree-node.fancytree-active,
+span.fancytree-node.fancytree-selected {
+  background-color: #4e0572;
+  border-color: #4e0572;
+}
+.fancytree-container.fancytree-treefocus span.fancytree-node.fancytree-active,
+.fancytree-container.fancytree-treefocus span.fancytree-node.fancytree-selected,
+span.fancytree-node.fancytree-active:hover,
+span.fancytree-node.fancytree-selected:hover {
+  background-color: #4e0572;
+  border-color: #4e0572;
+}
+.fancytree-node.fancytree-selected {
+  font-style: italic;
+}
+.ui-fancytree,
+.fancytree-container {
+  font-family: 'Segoe UI', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  border: 0 none !important;
+  outline: none;
+}
+#tree ul {
+  background-color: #67238b;
+}
+#tree ul li ul {
+  background-color: transparent;
+}
+.ui-fancytree span {
+  color: #dbb7ed !important;
+  font-weight: lighter !important;
+  font-size: 10pt;
+}
+#tree ul:focus {
+  background-color: #5f1488;
+}
+/*Fancytree Override End*/
 /*# sourceMappingURL=mixerp.css.map */

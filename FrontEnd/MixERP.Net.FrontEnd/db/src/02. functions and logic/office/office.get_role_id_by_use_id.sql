@@ -3,11 +3,11 @@ RETURNS integer
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT office.users.role_id FROM office.users
-		WHERE office.users.user_id=$1
-	);
+    RETURN
+    (
+        SELECT office.users.role_id FROM office.users
+        WHERE office.users.user_id=$1
+    );
 END
 $$
 LANGUAGE plpgsql;

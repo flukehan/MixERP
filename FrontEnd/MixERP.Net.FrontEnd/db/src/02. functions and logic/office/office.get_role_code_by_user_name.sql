@@ -3,12 +3,12 @@ RETURNS text
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT office.roles.role_code FROM office.roles, office.users
-		WHERE office.roles.role_id=office.users.role_id
-		AND office.users.user_name=$1
-	);
+    RETURN
+    (
+        SELECT office.roles.role_code FROM office.roles, office.users
+        WHERE office.roles.role_id=office.users.role_id
+        AND office.users.user_name=$1
+    );
 END
 $$
 LANGUAGE plpgsql;

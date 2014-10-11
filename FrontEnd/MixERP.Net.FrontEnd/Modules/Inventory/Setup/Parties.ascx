@@ -17,8 +17,10 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="PartiesPopup.ascx.designer.cs" Inherits="MixERP.Net.Core.Modules.Inventory.Setup.PartiesPopup" %>
+<div id="OverflowDiv">
+    <asp:PlaceHolder ID="ScrudPlaceholder" runat="server" />
+</div>
 
-<asp:PlaceHolder ID="ScrudPlaceholder" runat="server" />
 <script type="text/javascript">
     var partyNameParameter = "<%= GetPartyNameParameter() %>";
 </script>

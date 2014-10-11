@@ -37,7 +37,7 @@ namespace MixERP.Net.FrontEnd.Base
             if (page != null)
             {
                 string relativePath = Conversion.GetRelativePath(this.Page.Request.Url.AbsolutePath);
-                return MixERPWebpage.GetContentPageMenu(this.Page, relativePath);
+                return MixERPWebpage.GetContentPageMenu(this.Page, relativePath, relativePath);
             }
 
             return null;

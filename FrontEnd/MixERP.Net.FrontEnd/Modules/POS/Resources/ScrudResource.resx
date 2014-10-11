@@ -144,6 +144,9 @@
   <data name="office_id" xml:space="preserve">
     <value>Office Id</value>
   </data>
+  <data name="Select" xml:space="preserve">
+    <value>Select</value>
+  </data>
   <data name="store_code" xml:space="preserve">
     <value>Store Code</value>
   </data>

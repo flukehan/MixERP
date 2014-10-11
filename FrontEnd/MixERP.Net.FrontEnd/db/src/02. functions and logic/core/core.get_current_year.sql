@@ -5,7 +5,7 @@ RETURNS integer
 AS
 $$
 BEGIN
-	RETURN(SELECT EXTRACT(year FROM current_date)::integer);
+    RETURN(SELECT EXTRACT(year FROM current_date)::integer);
 END
 $$
 LANGUAGE plpgsql;

@@ -233,6 +233,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.Common\MixERP.Net.WebControls.Common.csproj">
+      <Project>{2d961540-6597-4e7b-969c-974d71d820dd}</Project>
+      <Name>MixERP.Net.WebControls.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\MixERP.Net.WebControls.ScrudFactory.csproj">
       <Project>{07ddce95-a18f-4a35-b892-ce09ead2aa65}</Project>
       <Name>MixERP.Net.WebControls.ScrudFactory</Name>

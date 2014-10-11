@@ -3,29 +3,29 @@ RETURNS TRIGGER
 AS
 $$
 BEGIN
-	IF TG_OP='UPDATE' OR TG_OP='DELETE' THEN
-		IF EXISTS
-		(
-			SELECT *
-			FROM core.accounts
-			WHERE (sys_type=true OR is_cash=true)
-			AND account_id=OLD.account_id
-		) THEN
-			RAISE EXCEPTION 'You are not allowed to change system accounts.';
-		END IF;
-	END IF;
-	
-	IF TG_OP='INSERT' THEN
-		IF (NEW.sys_type=true OR NEW.is_cash=true) THEN
-			RAISE EXCEPTION 'You are not allowed to add system accounts.';
-		END IF;
-	END IF;
+    IF TG_OP='UPDATE' OR TG_OP='DELETE' THEN
+        IF EXISTS
+        (
+            SELECT *
+            FROM core.accounts
+            WHERE (sys_type=true OR is_cash=true)
+            AND account_id=OLD.account_id
+        ) THEN
+            RAISE EXCEPTION 'You are not allowed to change system accounts.';
+        END IF;
+    END IF;
+    
+    IF TG_OP='INSERT' THEN
+        IF (NEW.sys_type=true OR NEW.is_cash=true) THEN
+            RAISE EXCEPTION 'You are not allowed to add system accounts.';
+        END IF;
+    END IF;
 
-	IF TG_OP='DELETE' THEN
-		RETURN OLD;
-	END IF;
+    IF TG_OP='DELETE' THEN
+        RETURN OLD;
+    END IF;
 
-	RETURN NEW;	
+    RETURN NEW; 
 END
 $$
 LANGUAGE plpgsql;

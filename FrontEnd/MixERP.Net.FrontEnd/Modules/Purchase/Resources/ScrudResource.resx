@@ -135,6 +135,9 @@
   <data name="quantity" xml:space="preserve">
     <value>Quantity</value>
   </data>
+  <data name="Select" xml:space="preserve">
+    <value>Select</value>
+  </data>
   <data name="sub_total" xml:space="preserve">
     <value>Sub Total</value>
   </data>
@@ -146,5 +149,8 @@
   </data>
   <data name="unit_name" xml:space="preserve">
     <value>Unit Name</value>
+  </data>
+  <data name="item_id" xml:space="preserve">
+    <value>Item Id</value>
   </data>
 </root>

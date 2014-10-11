@@ -18,10 +18,63 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.WebControls.ScrudFactory;
+using System;
+using System.Linq;
+using System.Reflection;
 
 namespace MixERP.Net.FrontEnd.General
 {
     public partial class ItemSelector : MixERPWebpage
     {
+        protected void Page_Init(object sender, EventArgs e)
+        {
+            using (ScrudItemSelector selector = new ScrudItemSelector())
+            {
+                selector.ID = "ScrudSelector";
+                selector.TopPanelCssClass = "vpad16";
+                selector.TopPanelTableCssClass = "valignmiddle";
+                selector.FilterDropDownListCssClass = "form-control input-sm pad-right";
+                selector.FilterTextBoxCssClass = "form-control input-sm";
+                selector.ButtonCssClass = "btn btn-default btn-sm";
+                selector.GridViewCssClass = "table table-bordered table-hover";
+                selector.GridViewPagerCssClass = "gridpager";
+                selector.GridViewRowCssClass = "";
+                selector.GridViewAlternateRowCssClass = "alt";
+                selector.ResourceAssembly = this.GetAssembly();
+                selector.ResourceClassName = this.GetResourceClassName();
+
+                this.SelectorPlaceholder.Controls.Add(selector);
+            }
+        }
+
+        private Assembly GetAssembly()
+        {
+            string assembly = this.Page.Request.QueryString["Assembly"];
+
+            if (string.IsNullOrWhiteSpace(assembly))
+            {
+                return Assembly.GetAssembly(typeof(ItemSelector));
+            }
+
+            return GetAssemblyByName(assembly);
+        }
+
+        private Assembly GetAssemblyByName(string name)
+        {
+            return AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(assembly => assembly.GetName().Name == name);
+        }
+
+        private string GetResourceClassName()
+        {
+            string resourceClassName = this.Page.Request.QueryString["ResourceClassName"];
+
+            if (!string.IsNullOrWhiteSpace(resourceClassName))
+            {
+                return resourceClassName;
+            }
+
+            return string.Empty;
+        }
     }
 }

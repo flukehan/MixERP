@@ -150,4 +150,7 @@
   <data name="opportunity_stage_name" xml:space="preserve">
     <value>Opportunity Stage Name</value>
   </data>
+  <data name="Select" xml:space="preserve">
+    <value>Select</value>
+  </data>
 </root>

@@ -120,8 +120,14 @@
   <data name="CashRepository" xml:space="preserve">
     <value>Cash Repository</value>
   </data>
+  <data name="Check" xml:space="preserve">
+    <value>Check</value>
+  </data>
   <data name="CostCenter" xml:space="preserve">
     <value>Cost Center</value>
+  </data>
+  <data name="DefaultReorderQuantityAbbreviated" xml:space="preserve">
+    <value>Default Reorder Qty</value>
   </data>
   <data name="DirectPurchase" xml:space="preserve">
     <value>Direct Purchase</value>
@@ -144,6 +150,9 @@
   <data name="EnteredBy" xml:space="preserve">
     <value>Entered By</value>
   </data>
+  <data name="ExchangeRate" xml:space="preserve">
+    <value>Exchange Rate</value>
+  </data>
   <data name="Fax" xml:space="preserve">
     <value>Fax</value>
   </data>
@@ -152,6 +161,18 @@
   </data>
   <data name="InvoiceDetails" xml:space="preserve">
     <value>Invoice Details</value>
+  </data>
+  <data name="ItemCode" xml:space="preserve">
+    <value>Item Code</value>
+  </data>
+  <data name="ItemId" xml:space="preserve">
+    <value>Item Id</value>
+  </data>
+  <data name="ItemName" xml:space="preserve">
+    <value>Item Name</value>
+  </data>
+  <data name="ItemsBelowReorderLevel" xml:space="preserve">
+    <value>Items Below Reorder Level</value>
   </data>
   <data name="Office" xml:space="preserve">
     <value>Office</value>
@@ -162,8 +183,20 @@
   <data name="OtherDetails" xml:space="preserve">
     <value>Other Details</value>
   </data>
+  <data name="PlaceReorderRequests" xml:space="preserve">
+    <value>Place Reorder Request(s)</value>
+  </data>
+  <data name="PreferredSupplier" xml:space="preserve">
+    <value>Preferred Supplier</value>
+  </data>
+  <data name="PreferredSupplierIdAbbreviated" xml:space="preserve">
+    <value>Pref SupId</value>
+  </data>
   <data name="PreparedOn" xml:space="preserve">
     <value>Prepared On</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Price</value>
   </data>
   <data name="PriceType" xml:space="preserve">
     <value>Price Type</value>
@@ -180,8 +213,23 @@
   <data name="PurchaseType" xml:space="preserve">
     <value>Purchase Type</value>
   </data>
+  <data name="QuantityOnHandAbbreviated" xml:space="preserve">
+    <value>Qty (On Hand)</value>
+  </data>
   <data name="ReferenceNumber" xml:space="preserve">
     <value>Reference Number</value>
+  </data>
+  <data name="ReorderLevel" xml:space="preserve">
+    <value>Reorder Level</value>
+  </data>
+  <data name="ReorderQuantityAbbreviated" xml:space="preserve">
+    <value>Reorder Qty</value>
+  </data>
+  <data name="SelectSupplier" xml:space="preserve">
+    <value>Select Supplier</value>
+  </data>
+  <data name="SelectUnit" xml:space="preserve">
+    <value>Select Unit</value>
   </data>
   <data name="StatementReference" xml:space="preserve">
     <value>Statement Reference</value>
@@ -189,17 +237,29 @@
   <data name="SupplierName" xml:space="preserve">
     <value>Supplier Name</value>
   </data>
+  <data name="TaxRate" xml:space="preserve">
+    <value>Tax Rate</value>
+  </data>
   <data name="Tel" xml:space="preserve">
     <value>Tel</value>
   </data>
   <data name="TranCode" xml:space="preserve">
     <value>Tran Code</value>
   </data>
+  <data name="TranId" xml:space="preserve">
+    <value>Tran Id</value>
+  </data>
   <data name="TransactionDate" xml:space="preserve">
     <value>Transaction Date</value>
   </data>
   <data name="TransactionStatus" xml:space="preserve">
     <value>Transaction Status</value>
+  </data>
+  <data name="Unit" xml:space="preserve">
+    <value>Unit</value>
+  </data>
+  <data name="UnitId" xml:space="preserve">
+    <value>Unit Id</value>
   </data>
   <data name="Url" xml:space="preserve">
     <value>Url</value>

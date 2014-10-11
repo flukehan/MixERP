@@ -63,8 +63,8 @@ namespace MixERP.Net.Core.Modules.POS.Setup
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "office.store_types.store_type_id", "office.store_types");
-            ScrudHelper.AddDisplayView(displayViews, "office.offices.office_id", "office.office_view");
+            ScrudHelper.AddDisplayView(displayViews, "office.store_types.store_type_id", "office.store_type_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "office.offices.office_id", "office.office_selector_view");
             return string.Join(",", displayViews);
         }
     }

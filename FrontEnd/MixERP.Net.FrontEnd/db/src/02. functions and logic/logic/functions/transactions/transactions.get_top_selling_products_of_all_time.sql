@@ -71,3 +71,4 @@ LANGUAGE plpgsql;
 
 
 --SELECT * FROM transactions.get_top_selling_products_of_all_time();
+

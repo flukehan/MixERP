@@ -46,12 +46,12 @@ namespace MixERP.Net.WebControls.ScrudFactory
             var scriptManager = ScriptManager.GetCurrent(this.Page);
             if (scriptManager != null)
             {
-                scriptManager.RegisterPostBackControl(this.saveButton);
-                scriptManager.RegisterPostBackControl(this.saveButton);
-                scriptManager.RegisterPostBackControl(this.topCommandPanel.EditButton);
-                scriptManager.RegisterPostBackControl(this.bottomCommandPanel.EditButton);
-                scriptManager.RegisterPostBackControl(this.topCommandPanel.DeleteButton);
-                scriptManager.RegisterPostBackControl(this.bottomCommandPanel.DeleteButton);
+                scriptManager.RegisterAsyncPostBackControl(this.saveButton);
+                scriptManager.RegisterAsyncPostBackControl(this.saveButton);
+                scriptManager.RegisterAsyncPostBackControl(this.topCommandPanel.EditButton);
+                scriptManager.RegisterAsyncPostBackControl(this.bottomCommandPanel.EditButton);
+                scriptManager.RegisterAsyncPostBackControl(this.topCommandPanel.DeleteButton);
+                scriptManager.RegisterAsyncPostBackControl(this.bottomCommandPanel.DeleteButton);
             }
         }
 

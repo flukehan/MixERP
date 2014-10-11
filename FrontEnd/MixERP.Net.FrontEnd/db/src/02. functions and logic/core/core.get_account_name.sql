@@ -4,15 +4,15 @@ RETURNS text
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT
-			account_name
-		FROM	
-			core.accounts
-		WHERE
-			account_id=$1
-	);
+    RETURN
+    (
+        SELECT
+            account_name
+        FROM    
+            core.accounts
+        WHERE
+            account_id=$1
+    );
 END
 $$
 LANGUAGE plpgsql;

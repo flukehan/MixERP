@@ -88,6 +88,15 @@ namespace MixERP.Net.Core.Modules.Purchase.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Item Id.
+        /// </summary>
+        internal static string item_id {
+            get {
+                return ResourceManager.GetString("item_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Item Name.
         /// </summary>
         internal static string item_name {
@@ -111,6 +120,15 @@ namespace MixERP.Net.Core.Modules.Purchase.Resources {
         internal static string quantity {
             get {
                 return ResourceManager.GetString("quantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select.
+        /// </summary>
+        internal static string Select {
+            get {
+                return ResourceManager.GetString("Select", resourceCulture);
             }
         }
         

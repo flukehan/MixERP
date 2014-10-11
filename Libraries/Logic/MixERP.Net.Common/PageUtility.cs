@@ -152,6 +152,11 @@ namespace MixERP.Net.Common
             }
         }
 
+        public static string GetCurrentPageUrl(Page p)
+        {
+            return p.Request.Url.AbsolutePath;
+        }
+
         public static string GetCurrentDomainName()
         {
             string url = HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Host;
@@ -171,17 +176,23 @@ namespace MixERP.Net.Common
                 return null;
             }
 
-            if (root.ID == id) return root;
+            if (root.ID == id)
+            {
+                return root;
+            }
             foreach (Control c in root.Controls)
             {
                 Control t = FindControlIterative(c, id);
-                if (t != null) return t;
+                if (t != null)
+                {
+                    return t;
+                }
             }
             return null;
         }
 
         /// <summary>
-        /// Check if the input is a valid url.
+        ///     Check if the input is a valid url.
         /// </summary>
         /// <param name="url"></param>
         /// <returns>Returns input if it's a valid url. If the input is not a valid url, returns empty string.</returns>
@@ -199,7 +210,7 @@ namespace MixERP.Net.Common
                 url = prefix + "://" + url;
             }
 
-            using (var client = new MyClient())
+            using (MyClient client = new MyClient())
             {
                 client.HeadOnly = true;
                 try

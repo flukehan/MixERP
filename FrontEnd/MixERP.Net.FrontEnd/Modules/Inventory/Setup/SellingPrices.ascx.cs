@@ -37,7 +37,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
                 scrud.TableSchema = "core";
                 scrud.Table = "item_selling_prices";
                 scrud.ViewSchema = "core";
-                scrud.View = "item_selling_price_view";
+                scrud.View = "item_selling_price_scrud_view";
 
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
@@ -54,24 +54,20 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.items.item_id",
-                ConfigurationHelper.GetDbParameter("ItemDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.party_types.party_type_id",
-                ConfigurationHelper.GetDbParameter("PartyTypeDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.price_types.price_type_id",
-                ConfigurationHelper.GetDbParameter("PriceTypeDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.units.unit_id",
-                ConfigurationHelper.GetDbParameter("UnitDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.items.item_id", ConfigurationHelper.GetDbParameter("ItemDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.party_types.party_type_id", ConfigurationHelper.GetDbParameter("PartyTypeDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.price_types.price_type_id", ConfigurationHelper.GetDbParameter("PriceTypeDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.units.unit_id", ConfigurationHelper.GetDbParameter("UnitDisplayField"));
             return string.Join(",", displayFields);
         }
 
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "core.items.item_id", "core.item_view");
-            ScrudHelper.AddDisplayView(displayViews, "core.party_types.party_type_id", "core.party_types");
-            ScrudHelper.AddDisplayView(displayViews, "core.price_types.price_type_id", "core.price_types");
-            ScrudHelper.AddDisplayView(displayViews, "core.units.unit_id", "core.unit_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.items.item_id", "core.item_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.party_types.party_type_id", "core.party_type_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.price_types.price_type_id", "core.price_type_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.units.unit_id", "core.unit_selector_view");
             return string.Join(",", displayViews);
         }
     }

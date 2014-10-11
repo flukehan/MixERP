@@ -5,13 +5,13 @@ RETURNS national character varying(12)
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT office.offices.currency_code 
-		FROM office.offices
-		WHERE office.offices.office_id = $1
-		
-	);
+    RETURN
+    (
+        SELECT office.offices.currency_code 
+        FROM office.offices
+        WHERE office.offices.office_id = $1
+        
+    );
 END
 $$
 LANGUAGE plpgsql;

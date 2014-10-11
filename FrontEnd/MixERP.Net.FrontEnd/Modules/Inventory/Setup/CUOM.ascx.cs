@@ -38,13 +38,13 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
                 scrud.TableSchema = "core";
                 scrud.Table = "compound_units";
                 scrud.ViewSchema = "core";
-                scrud.View = "compound_unit_view";
+                scrud.View = "compound_unit_scrud_view";
 
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
 
                 scrud.Text = Titles.CompoundUnitsOfMeasure;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(CUOM));
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (CUOM));
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
@@ -62,7 +62,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "core.units.unit_id", "core.unit_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.units.unit_id", "core.unit_selector_view");
             return string.Join(",", displayViews);
         }
     }

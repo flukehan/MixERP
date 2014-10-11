@@ -8,9 +8,9 @@ DROP FUNCTION IF EXISTS transactions.post_purchase_return
         _store_id                               integer,
         _party_code                             national character varying(12),
         _price_type_id                          integer,
-        _reference_number 			national character varying(24),
+        _reference_number                       national character varying(24),
         _statement_reference                    text,
-        _details                                stock_detail_type[],
+        _details                                transactions.stock_detail_type[],
         _attachments                            attachment_type[]
 );
 
@@ -24,9 +24,9 @@ CREATE FUNCTION transactions.post_purchase_return
         _store_id                               integer,
         _party_code                             national character varying(12),
         _price_type_id                          integer,
-        _reference_number 			national character varying(24),
+        _reference_number                       national character varying(24),
         _statement_reference                    text,
-        _details                                stock_detail_type[],
+        _details                                transactions.stock_detail_type[],
         _attachments                            attachment_type[]
 )
 RETURNS bigint
@@ -40,7 +40,7 @@ $$
         DECLARE _discount_total                 money_strict2;
         DECLARE _tax_total                      money_strict2;
         DECLARE _is_credit                      boolean;
-        DECLARE _debit_account_id              bigint;
+        DECLARE _debit_account_id               bigint;
 BEGIN
         
         _party_id                               := core.get_party_id_by_party_code(_party_code);
@@ -276,9 +276,29 @@ LANGUAGE plpgsql;
 -- 
 -- SELECT * FROM transactions.post_purchase_return(1, 1, 1, 1, '1-1-2000', 1, 'JASMI-0001', 1, '1234-AD', 'Test', 
 -- ARRAY[
--- ROW(1, 'ITP', 1, 'Piece', 1000, 0, 13, 130)::stock_detail_type,
--- ROW(1, 'ITP', 1, 'Piece', 1000, 0, 13, 130)::stock_detail_type
+-- ROW(1, 'ITP', 1, 'Piece', 1000, 0, 13, 130)::transactions.stock_detail_type,
+-- ROW(1, 'ITP', 1, 'Piece', 1000, 0, 13, 130)::transactions.stock_detail_type
 -- ],
 -- ARRAY[
 -- NULL::attachment_type
 -- ]);
+
+
+
+
+/**************************************************************************************************************************
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+'########::'##:::::::'########:::'######:::'##::::'##:'##::: ##:'####:'########::::'########:'########::'######::'########:
+ ##.... ##: ##::::::: ##.... ##:'##... ##:: ##:::: ##: ###:: ##:. ##::... ##..:::::... ##..:: ##.....::'##... ##:... ##..::
+ ##:::: ##: ##::::::: ##:::: ##: ##:::..::: ##:::: ##: ####: ##:: ##::::: ##:::::::::: ##:::: ##::::::: ##:::..::::: ##::::
+ ########:: ##::::::: ########:: ##::'####: ##:::: ##: ## ## ##:: ##::::: ##:::::::::: ##:::: ######:::. ######::::: ##::::
+ ##.....::: ##::::::: ##.....::: ##::: ##:: ##:::: ##: ##. ####:: ##::::: ##:::::::::: ##:::: ##...:::::..... ##:::: ##::::
+ ##:::::::: ##::::::: ##:::::::: ##::: ##:: ##:::: ##: ##:. ###:: ##::::: ##:::::::::: ##:::: ##:::::::'##::: ##:::: ##::::
+ ##:::::::: ########: ##::::::::. ######:::. #######:: ##::. ##:'####:::: ##:::::::::: ##:::: ########:. ######::::: ##::::
+..:::::::::........::..::::::::::......:::::.......:::..::::..::....:::::..:::::::::::..:::::........:::......::::::..:::::
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+**************************************************************************************************************************/
+
+

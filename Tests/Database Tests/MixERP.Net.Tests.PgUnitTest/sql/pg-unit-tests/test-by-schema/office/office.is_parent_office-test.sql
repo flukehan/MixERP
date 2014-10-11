@@ -22,24 +22,24 @@ $$
 	DECLARE child_id integer;
 BEGIN
 	grand_parent_id := nextval('office.offices_office_id_seq');
-	INSERT INTO office.offices(office_id, office_code,office_name,nick_name,registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number)
-	SELECT grand_parent_id, 'Grand Parent','Grand Parent', 'Grand Parent', '1-1-2000', '','','','','','','','','','0','0';
+	INSERT INTO office.offices(office_id, office_code,office_name,nick_name,registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number, currency_code)
+	SELECT grand_parent_id, 'Grand Parent','Grand Parent', 'Grand Parent', '1-1-2000', '','','','','','','','','','0','0', 'NPR';
 	
 	parent_id := nextval('office.offices_office_id_seq');
-	INSERT INTO office.offices(office_id, parent_office_id, office_code,office_name,nick_name,registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number)
-	SELECT parent_id, grand_parent_id, 'Parent','Parent', 'Parent', '1-1-2000', '','','','','','','','','','0','0';
+	INSERT INTO office.offices(office_id, parent_office_id, office_code,office_name,nick_name,registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number, currency_code)
+	SELECT parent_id, grand_parent_id, 'Parent','Parent', 'Parent', '1-1-2000', '','','','','','','','','','0','0', 'NPR';
 	
 	id := nextval('office.offices_office_id_seq');
-	INSERT INTO office.offices(office_id, parent_office_id, office_code,office_name,nick_name,registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number)
-	SELECT id, parent_id, 'Office','Office', 'Office', '1-1-2000', '','','','','','','','','','0','0';
+	INSERT INTO office.offices(office_id, parent_office_id, office_code,office_name,nick_name,registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number, currency_code)
+	SELECT id, parent_id, 'Office','Office', 'Office', '1-1-2000', '','','','','','','','','','0','0', 'NPR';
 
 	sibling_id := nextval('office.offices_office_id_seq');
-	INSERT INTO office.offices(office_id, parent_office_id, office_code,office_name,nick_name,registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number)
-	SELECT sibling_id, parent_id, 'Sibling','Sibling', 'Sibling', '1-1-2000', '','','','','','','','','','0','0';
+	INSERT INTO office.offices(office_id, parent_office_id, office_code,office_name,nick_name,registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number, currency_code)
+	SELECT sibling_id, parent_id, 'Sibling','Sibling', 'Sibling', '1-1-2000', '','','','','','','','','','0','0', 'NPR';
 	
 	child_id := nextval('office.offices_office_id_seq');
-	INSERT INTO office.offices(office_id, parent_office_id, office_code,office_name,nick_name,registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number)
-	SELECT child_id, id, 'Child','Child', 'Child', '1-1-2000', '','','','','','','','','','0','0';
+	INSERT INTO office.offices(office_id, parent_office_id, office_code,office_name,nick_name,registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number, currency_code)
+	SELECT child_id, id, 'Child','Child', 'Child', '1-1-2000', '','','','','','','','','','0','0', 'NPR';
 	
 	have := office.is_parent_office(id, sibling_id);
 	want := false;

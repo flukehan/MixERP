@@ -18,19 +18,5 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DirectSales.ascx.cs" Inherits="MixERP.Net.Core.Modules.Sales.Confirmation.DirectSales"
     OverridePath="/Modules/Sales/DirectSales.mix" %>
-<mixerp:TransactionChecklist
-    runat="server"
-    ID="TransactionCheckList1"
-    AttachmentBookName="transaction"
-    OverridePath="/Modules/Sales/DirectSales.mix"
-    DisplayWithdrawButton="true"
-    DisplayViewReportButton="true"
-    DisplayEmailReportButton="true"
-    DisplayCustomerReportButton="true"
-    DisplayPrintReceiptButton="true"
-    DisplayPrintGlEntryButton="true"
-    DisplayAttachmentButton="true"
-    ReportPath="~/Modules/Sales/Reports/DirectSalesInvoiceReport.mix"
-    CustomerReportPath="~/Modules/Sales/Reports/CustomerInvoiceReport.mix"
-    ReceiptAdvicePath="~/Modules/Sales/Reports/ReceiptReport.mix"
-    GlAdvicePath="~/Modules/Finance/Reports/GLAdviceReport.mix" />
+
+<asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>

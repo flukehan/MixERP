@@ -42,7 +42,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
                 scrud.TableSchema = "policy";
                 scrud.Table = "voucher_verification_policy";
                 scrud.ViewSchema = "policy";
-                scrud.View = "voucher_verification_policy_view";
+                scrud.View = "voucher_verification_policy_scrud_view";
 
                 scrud.PageSize = 100;
                 scrud.Width = 2000;
@@ -62,14 +62,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "office.users.user_id", ConfigurationHelper.GetDbParameter("UserDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "office.users.user_id",
+                ConfigurationHelper.GetDbParameter("UserDisplayField"));
             return string.Join(",", displayFields);
         }
 
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "office.users.user_id", "office.user_view");
+            ScrudHelper.AddDisplayView(displayViews, "office.users.user_id", "office.user_selector_view");
             return string.Join(",", displayViews);
         }
     }

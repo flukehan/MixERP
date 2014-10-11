@@ -1,58 +1,58 @@
 DROP FUNCTION IF EXISTS transactions.post_receipt_function
 (
-	_user_id				integer, 
-	_office_id				integer, 
-	_login_id				bigint,
-	_party_code				national character varying(12), 
-	_currency_code				national character varying(12), 
-	_amount					money_strict, 
-	_exchange_rate_debit			decimal_strict, 
-	_exchange_rate_credit			decimal_strict,
-	_reference_number			national character varying(24), 
-	_statement_reference			national character varying(128), 
-	_cost_center_id				integer,
-	_cash_repository_id			integer,
-	_posted_date                            date,
-	_bank_account_id			integer,
-	_bank_instrument_code			national character varying(128),
-	_bank_tran_code				national character varying(128)
+    _user_id                integer, 
+    _office_id              integer, 
+    _login_id               bigint,
+    _party_code             national character varying(12), 
+    _currency_code              national character varying(12), 
+    _amount                 money_strict, 
+    _exchange_rate_debit            decimal_strict, 
+    _exchange_rate_credit           decimal_strict,
+    _reference_number           national character varying(24), 
+    _statement_reference            national character varying(128), 
+    _cost_center_id             integer,
+    _cash_repository_id         integer,
+    _posted_date                            date,
+    _bank_account_id            integer,
+    _bank_instrument_code           national character varying(128),
+    _bank_tran_code             national character varying(128)
 );
 
 CREATE FUNCTION transactions.post_receipt_function
 (
-	_user_id				integer, 
-	_office_id				integer, 
-	_login_id				bigint,
-	_party_code				national character varying(12), 
-	_currency_code				national character varying(12), 
-	_amount					money_strict, 
-	_exchange_rate_debit			decimal_strict, 
-	_exchange_rate_credit			decimal_strict,
-	_reference_number			national character varying(24), 
-	_statement_reference			national character varying(128), 
-	_cost_center_id				integer,
-	_cash_repository_id			integer,
-	_posted_date                            date,
-	_bank_account_id			integer,
-	_bank_instrument_code			national character varying(128),
-	_bank_tran_code				national character varying(128)
+    _user_id                integer, 
+    _office_id              integer, 
+    _login_id               bigint,
+    _party_code             national character varying(12), 
+    _currency_code              national character varying(12), 
+    _amount                 money_strict, 
+    _exchange_rate_debit            decimal_strict, 
+    _exchange_rate_credit           decimal_strict,
+    _reference_number           national character varying(24), 
+    _statement_reference            national character varying(128), 
+    _cost_center_id             integer,
+    _cash_repository_id         integer,
+    _posted_date                            date,
+    _bank_account_id            integer,
+    _bank_instrument_code           national character varying(128),
+    _bank_tran_code             national character varying(128)
 )
 RETURNS bigint
 AS
 $$
-	DECLARE _value_date 			date;
-	DECLARE _book				text;
-	DECLARE _transaction_master_id 		bigint;
-	DECLARE _base_currency_code             national character varying(12);
-	DECLARE _local_currency_code            national character varying(12);
-	DECLARE _party_id                       bigint;
-	DECLARE _party_account_id               bigint;
-	DECLARE _debit                          money_strict2;
-	DECLARE _credit                         money_strict2;
-	DECLARE _lc_debit                       money_strict2;
-	DECLARE _lc_credit                      money_strict2;
-	DECLARE _is_cash                        boolean;
-	DECLARE _cash_account_id                bigint;
+    DECLARE _value_date             date;
+    DECLARE _book               text;
+    DECLARE _transaction_master_id      bigint;
+    DECLARE _base_currency_code             national character varying(12);
+    DECLARE _local_currency_code            national character varying(12);
+    DECLARE _party_id                       bigint;
+    DECLARE _party_account_id               bigint;
+    DECLARE _debit                          money_strict2;
+    DECLARE _credit                         money_strict2;
+    DECLARE _lc_debit                       money_strict2;
+    DECLARE _lc_credit                      money_strict2;
+    DECLARE _is_cash                        boolean;
+    DECLARE _cash_account_id                bigint;
 BEGIN
         IF(_cash_repository_id > 0) THEN
                 IF(_posted_Date IS NOT NULL OR _bank_account_id IS NOT NULL OR COALESCE(_bank_instrument_code, '') != '' OR COALESCE(_bank_tran_code, '') != '') THEN
@@ -79,35 +79,35 @@ BEGIN
 
         
 
-	INSERT INTO transactions.transaction_master
-	(
-		transaction_master_id, 
-		transaction_counter, 
-		transaction_code, 
-		book, 
-		value_date, 
-		user_id, 
-		login_id, 
-		office_id, 
-		cost_center_id, 
-		reference_number, 
-		statement_reference
-	)
-	SELECT 
-		nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), 
-		transactions.get_new_transaction_counter(_value_date), 
-		transactions.get_transaction_code(_value_date, _office_id, _user_id, _login_id),
-		_book,
-		_value_date,
-		_user_id,
-		_login_id,
-		_office_id,
-		_cost_center_id,
-		_reference_number,
-		_statement_reference;
+    INSERT INTO transactions.transaction_master
+    (
+        transaction_master_id, 
+        transaction_counter, 
+        transaction_code, 
+        book, 
+        value_date, 
+        user_id, 
+        login_id, 
+        office_id, 
+        cost_center_id, 
+        reference_number, 
+        statement_reference
+    )
+    SELECT 
+        nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), 
+        transactions.get_new_transaction_counter(_value_date), 
+        transactions.get_transaction_code(_value_date, _office_id, _user_id, _login_id),
+        _book,
+        _value_date,
+        _user_id,
+        _login_id,
+        _office_id,
+        _cost_center_id,
+        _reference_number,
+        _statement_reference;
 
 
-	_transaction_master_id := currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
+    _transaction_master_id := currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
 
         --Debit
         IF(_is_cash) THEN
@@ -126,9 +126,27 @@ BEGIN
         INSERT INTO transactions.customer_receipts(transaction_master_id, party_id, currency_code, amount, er_debit, er_credit, cash_repository_id, posted_date, bank_account_id, bank_instrument_code, bank_tran_code)
         SELECT _transaction_master_id, _party_id, _currency_code, _amount,  _exchange_rate_debit, _exchange_rate_credit, _cash_repository_id, _posted_date, _bank_account_id, _bank_instrument_code, _bank_tran_code;
 
-       	------------TODO-----------------
+        ------------TODO-----------------
         RETURN _transaction_master_id;
 END
 $$
 LANGUAGE plpgsql;
+
+
+
+/**************************************************************************************************************************
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+'########::'##:::::::'########:::'######:::'##::::'##:'##::: ##:'####:'########::::'########:'########::'######::'########:
+ ##.... ##: ##::::::: ##.... ##:'##... ##:: ##:::: ##: ###:: ##:. ##::... ##..:::::... ##..:: ##.....::'##... ##:... ##..::
+ ##:::: ##: ##::::::: ##:::: ##: ##:::..::: ##:::: ##: ####: ##:: ##::::: ##:::::::::: ##:::: ##::::::: ##:::..::::: ##::::
+ ########:: ##::::::: ########:: ##::'####: ##:::: ##: ## ## ##:: ##::::: ##:::::::::: ##:::: ######:::. ######::::: ##::::
+ ##.....::: ##::::::: ##.....::: ##::: ##:: ##:::: ##: ##. ####:: ##::::: ##:::::::::: ##:::: ##...:::::..... ##:::: ##::::
+ ##:::::::: ##::::::: ##:::::::: ##::: ##:: ##:::: ##: ##:. ###:: ##::::: ##:::::::::: ##:::: ##:::::::'##::: ##:::: ##::::
+ ##:::::::: ########: ##::::::::. ######:::. #######:: ##::. ##:'####:::: ##:::::::::: ##:::: ########:. ######::::: ##::::
+..:::::::::........::..::::::::::......:::::.......:::..::::..::....:::::..:::::::::::..:::::........:::......::::::..:::::
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+**************************************************************************************************************************/
+
 

@@ -17,15 +17,8 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using System.Security.Permissions;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
 
@@ -39,7 +32,6 @@ using System.Web.UI;
 [assembly: WebResource("MixERP.Net.WebControls.ReportEngine.Scripts.JQueryQRcode.jquery.qrcode.js", "application/x-javascript")]
 [assembly: WebResource("MixERP.Net.WebControls.ReportEngine.Scripts.JQueryQRcode.qrcode.js", "application/x-javascript")]
 [assembly: WebResource("MixERP.Net.WebControls.ReportEngine.Scripts.ReportEngine.QRCode.js", "application/x-javascript")]
-
 namespace MixERP.Net.WebControls.ReportEngine
 {
     public partial class Report

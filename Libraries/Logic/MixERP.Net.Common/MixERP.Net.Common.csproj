@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\MixERPException.cs" />
     <Compile Include="Base\MixERPUserControlBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

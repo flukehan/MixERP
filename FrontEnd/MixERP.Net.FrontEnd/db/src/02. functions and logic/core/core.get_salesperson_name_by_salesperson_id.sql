@@ -3,12 +3,12 @@ RETURNS text
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT salesperson_name
-		FROM core.salespersons
-		WHERE salesperson_id=$1
-	);
+    RETURN
+    (
+        SELECT salesperson_name
+        FROM core.salespersons
+        WHERE salesperson_id=$1
+    );
 END
 $$
 LANGUAGE plpgsql;

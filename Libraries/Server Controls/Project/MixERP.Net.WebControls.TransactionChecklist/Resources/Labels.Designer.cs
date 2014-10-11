@@ -61,11 +61,119 @@ namespace MixERP.Net.WebControls.TransactionChecklist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot withdraw transaction. This is a not a valid GL transaction..
+        /// </summary>
+        internal static string CannotWithdrawNotValidGLTransaction {
+            get {
+                return ResourceManager.GetString("CannotWithdrawNotValidGLTransaction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot withdraw transaction..
+        /// </summary>
+        internal static string CannotWithdrawTransaction {
+            get {
+                return ResourceManager.GetString("CannotWithdrawTransaction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;h2&gt;Hi,&lt;/h2&gt;&lt;p&gt;Please find the attached document.&lt;/p&gt;&lt;p&gt;Thank you.&lt;br /&gt;MixERP&lt;/p&gt;.
         /// </summary>
         internal static string EmailBody {
             get {
                 return ResourceManager.GetString("EmailBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An email was sent to {0}..
+        /// </summary>
+        internal static string EmailSentConfirmation {
+            get {
+                return ResourceManager.GetString("EmailSentConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This field is required..
+        /// </summary>
+        internal static string ThisFieldIsRequired {
+            get {
+                return ResourceManager.GetString("ThisFieldIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This transaction was approved by {0} on {1}..
+        /// </summary>
+        internal static string TransactionApprovedDetails {
+            get {
+                return ResourceManager.GetString("TransactionApprovedDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This transaction was automatically approved by {0} on {1}..
+        /// </summary>
+        internal static string TransactionAutoApprovedDetails {
+            get {
+                return ResourceManager.GetString("TransactionAutoApprovedDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This transaction is awaiting verification from an administrator..
+        /// </summary>
+        internal static string TransactionAwaitingVerification {
+            get {
+                return ResourceManager.GetString("TransactionAwaitingVerification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This transaction was closed by {0} on {1}. Reason: &quot;{2}&quot;..
+        /// </summary>
+        internal static string TransactionClosedDetails {
+            get {
+                return ResourceManager.GetString("TransactionClosedDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The transaction was posted successfully..
+        /// </summary>
+        internal static string TransactionPostedSuccessfully {
+            get {
+                return ResourceManager.GetString("TransactionPostedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This transaction was rejected by {0} on {1}. Reason: &quot;{2}&quot;..
+        /// </summary>
+        internal static string TransactionRejectedDetails {
+            get {
+                return ResourceManager.GetString("TransactionRejectedDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This transaction was withdrawn by {0} on {1}. Reason: &quot;{2}&quot;..
+        /// </summary>
+        internal static string TransactionWithdrawnDetails {
+            get {
+                return ResourceManager.GetString("TransactionWithdrawnDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The transaction was withdrawn successfully. Moreover, this action will affect the all the reports produced on and after &quot;{0}&quot;..
+        /// </summary>
+        internal static string TransactionWithdrawnMessage {
+            get {
+                return ResourceManager.GetString("TransactionWithdrawnMessage", resourceCulture);
             }
         }
     }

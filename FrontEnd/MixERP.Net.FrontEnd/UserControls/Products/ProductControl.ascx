@@ -32,6 +32,50 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         table.input-sm tr {
             vertical-align: bottom;
         }
+
+    #ProductGridView th:nth-child(1) {
+        width: 90px;
+    }
+
+    #ProductGridView th:nth-child(2) {
+        width: 300px;
+    }
+
+    #ProductGridView th:nth-child(3) {
+        width: 50px;
+    }
+
+    #ProductGridView th:nth-child(4) {
+        width: 120px;
+    }
+
+    #ProductGridView th:nth-child(5) {
+        width: 100px;
+    }
+
+    #ProductGridView th:nth-child(6) {
+        width: 100px;
+    }
+
+    #ProductGridView th:nth-child(7) {
+        width: 100px;
+    }
+
+    #ProductGridView th:nth-child(8) {
+        width: 100px;
+    }
+
+    #ProductGridView th:nth-child(9) {
+        width: 100px;
+    }
+
+    #ProductGridView th:nth-child(10) {
+        width: 60px;
+    }
+
+    #ProductGridView th:nth-child(11) {
+        width: 100px;
+    }
 </style>
 
 <div id="info-panel">
@@ -131,38 +175,38 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <table id="ProductGridView" class="table table-hover" runat="server">
         <tbody>
             <tr>
-                <th scope="col" style="width: 90px;">
-                    <asp:Literal runat="server" Text="Code" />
+                <th>
+                    <asp:Literal ID="ItemCodeLiteral" runat="server" />
                 </th>
-                <th style="width: 300px;">
-                    <asp:Literal runat="server" Text="ItemName" />
+                <th>
+                    <asp:Literal ID="ItemNameLiteral" runat="server" />
                 </th>
-                <th class="text-right" style="width: 50px;">
-                    <asp:Literal runat="server" Text="Qty" />
+                <th class="text-right">
+                    <asp:Literal ID="QuantityLiteral" runat="server" />
                 </th>
-                <th style="width: 120px;">
-                    <asp:Literal runat="server" Text="Unit" />
+                <th>
+                    <asp:Literal ID="UnitLiteral" runat="server" />
                 </th>
-                <th class="text-right" style="width: 100px;">
-                    <asp:Literal runat="server" Text="Price" />
+                <th class="text-right">
+                    <asp:Literal ID="PriceLiteral" runat="server" />
                 </th>
-                <th class="text-right" style="width: 100px;">
-                    <asp:Literal runat="server" Text="Amount" />
+                <th class="text-right">
+                    <asp:Literal ID="AmountLiteral" runat="server" />
                 </th>
-                <th class="text-right" style="width: 50px;">
-                    <asp:Literal runat="server" Text="Discount" />
+                <th class="text-right">
+                    <asp:Literal ID="DiscountLiteral" runat="server" />
                 </th>
-                <th class="text-right" style="width: 100px;">
-                    <asp:Literal runat="server" Text="SubTotal" />
+                <th class="text-right">
+                    <asp:Literal ID="SubTotalLiteral" runat="server" />
                 </th>
-                <th class="text-right" style="width: 60px;">
-                    <asp:Literal runat="server" Text="Rate" />
+                <th class="text-right">
+                    <asp:Literal ID="RateLiteral" runat="server" />
                 </th>
-                <th class="text-right" style="width: 100px;">
-                    <asp:Literal runat="server" Text="Tax" />
+                <th class="text-right">
+                    <asp:Literal ID="TaxLiteral" runat="server" />
                 </th>
-                <th class="text-right" style="width: 110px;">
-                    <asp:Literal runat="server" Text="Total" />
+                <th class="text-right">
+                    <asp:Literal ID="TotalLiteral" runat="server" />
                 </th>
                 <th>
                     <asp:Literal runat="server" Text="Action" />
@@ -263,7 +307,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <asp:Panel ID="BottomPanel" CssClass="table-form-pad shade" runat="server" Style="margin: 4px; width: 780px;">
         <asp:Table runat="server">
             <asp:TableRow ID="ShippingAddressRow" runat="server">
-                <asp:TableCell Style="vertical-align: top!important;" Width="190px">
+                <asp:TableCell Style="vertical-align: top !important;" Width="190px">
                     <asp:Literal ID="ShippingAddressDropDownListLabelLiteral" runat="server" />
                 </asp:TableCell><asp:TableCell>
                     <asp:DropDownList ID="ShippingAddressDropDownList" runat="server" CssClass="form-control input-sm">
@@ -316,13 +360,13 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                         </tr>
                         <tr>
                             <td>
-                                <asp:TextBox ID="RunningTotalTextBox" runat="server" CssClass="form-control input-sm" ReadOnly="true" />
+                                <asp:TextBox ID="RunningTotalTextBox" runat="server" CssClass="form-control input-sm currency" ReadOnly="true" />
                             </td>
                             <td>
-                                <asp:TextBox ID="TaxTotalTextBox" runat="server" CssClass="form-control input-sm" ReadOnly="true" />
+                                <asp:TextBox ID="TaxTotalTextBox" runat="server" CssClass="form-control input-sm currency" ReadOnly="true" />
                             </td>
                             <td>
-                                <asp:TextBox ID="GrandTotalTextBox" runat="server" CssClass="form-control input-sm" ReadOnly="true" />
+                                <asp:TextBox ID="GrandTotalTextBox" runat="server" CssClass="form-control input-sm currency" ReadOnly="true" />
                             </td>
                         </tr>
                     </table>
@@ -340,9 +384,14 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
             <asp:TableRow ID="CashRepositoryBalanceRow" runat="server">
                 <asp:TableCell>
                     <asp:Literal ID="CashRepositoryBalanceTextBoxLabelLiteral" runat="server" />
-                </asp:TableCell><asp:TableCell>
-                    <asp:TextBox ID="CashRepositoryBalanceTextBox" runat="server" Width="140" CssClass="form-control input-sm" ReadOnly="true" />
-                    <asp:Literal ID="DrLiteral" runat="server" Text=" Dr" />
+                </asp:TableCell>
+                <asp:TableCell>
+                    <div class="input-group input-group-sm" style="width: 200px;">
+                        <asp:TextBox ID="CashRepositoryBalanceTextBox" runat="server" CssClass="form-control input-sm currency" ReadOnly="true" />
+                        <span class="input-group-addon">
+                            <asp:Literal ID="DrLiteral" runat="server" Text=" Dr" />
+                        </span>
+                    </div>
                 </asp:TableCell>
             </asp:TableRow>
             <asp:TableRow ID="CostCenterRow" runat="server">
@@ -371,12 +420,12 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
             </asp:TableRow>
             <asp:TableRow>
                 <asp:TableCell>
-                                    &nbsp;
+                    &nbsp;
                 </asp:TableCell>
                 <asp:TableCell>
-                        <button type="button" id="SaveButton" class="btn btn-default btn-sm">
-                            <asp:Literal runat="server" Text=" Save" />
-                        </button>
+                    <button type="button" id="SaveButton" class="btn btn-default btn-sm">
+                        <asp:Literal runat="server" Text=" Save" />
+                    </button>
                 </asp:TableCell>
             </asp:TableRow>
         </asp:Table>
@@ -400,8 +449,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
 <script type="text/javascript">
     var isSales = ("<%= this.Book %>" == "Sales");
-    var tranBook = "<%=this.GetTranBook() %>";
-    var taxAfterDiscount = "<%=Switches.TaxAfterDiscount().ToString() %>";
+    var tranBook = "<%= this.GetTranBook() %>";
+    var taxAfterDiscount = "<%= Switches.TaxAfterDiscount().ToString() %>";
     var verifyStock = ("<%= this.VerifyStock %>" == "True");
 </script>
 

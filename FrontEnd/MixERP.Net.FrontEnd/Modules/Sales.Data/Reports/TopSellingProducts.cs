@@ -43,7 +43,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Reports
 
         public static DataTable GetTopSellingProductsOfAllTimeByOffice()
         {
-            const string sql = "SELECT  id, office_code, item_name, total_sales FROM transactions.top_selling_products_by_office();";
+            const string sql = "SELECT  id, office_code, item_name, total_sales FROM transactions.get_top_selling_products_by_office();";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 return GetPivotTable(DbOperations.GetDataTable(command));

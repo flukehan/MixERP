@@ -4,9 +4,9 @@ RETURNS TRIGGER
 AS
 $$
 BEGIN
-	IF TG_OP='DELETE' THEN
-		RAISE EXCEPTION 'Deleting a transaction is not allowed. Mark the transaction as rejected instead.';
-	END IF;
+    IF TG_OP='DELETE' THEN
+        RAISE EXCEPTION 'Deleting a transaction is not allowed. Mark the transaction as rejected instead.';
+    END IF;
 END
 $$
 LANGUAGE 'plpgsql';

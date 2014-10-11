@@ -231,4 +231,7 @@
   <data name="slab_name" xml:space="preserve">
     <value>Slab Name</value>
   </data>
+  <data name="Select" xml:space="preserve">
+    <value>Select</value>
+  </data>
 </root>

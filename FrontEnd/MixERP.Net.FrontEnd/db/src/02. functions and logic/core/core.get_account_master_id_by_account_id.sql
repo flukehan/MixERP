@@ -3,12 +3,12 @@ RETURNS integer
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT core.accounts.account_master_id
-		FROM core.accounts
-		WHERE core.accounts.account_id= $1
-	);
+    RETURN
+    (
+        SELECT core.accounts.account_master_id
+        FROM core.accounts
+        WHERE core.accounts.account_id= $1
+    );
 END
 $$
 LANGUAGE plpgsql;

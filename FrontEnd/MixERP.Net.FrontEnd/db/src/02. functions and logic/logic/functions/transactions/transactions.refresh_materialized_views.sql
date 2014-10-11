@@ -5,8 +5,8 @@ RETURNS void
 AS
 $$
 BEGIN
+        REFRESH MATERIALIZED VIEW transactions.trial_balance_view;
         REFRESH MATERIALIZED VIEW transactions.verified_stock_transaction_view;
 END
 $$
 LANGUAGE plpgsql;
-

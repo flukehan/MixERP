@@ -42,14 +42,14 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
                 scrud.TableSchema = "core";
                 scrud.Table = "salespersons";
                 scrud.ViewSchema = "core";
-                scrud.View = "salesperson_view";
+                scrud.View = "salesperson_scrud_view";
 
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
                 scrud.SelectedValues = GetSelectedValues();
 
                 scrud.Text = Resources.Titles.SalesPersons;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(Salespersons));
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (Salespersons));
 
                 ScrudPlaceholder.Controls.Add(scrud);
             }
@@ -58,16 +58,18 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.accounts.account_id", ConfigurationHelper.GetDbParameter("AccountDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.sales_teams.sales_team_id", ConfigurationHelper.GetDbParameter("SalesTeamDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.accounts.account_id",
+                ConfigurationHelper.GetDbParameter("AccountDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.sales_teams.sales_team_id",
+                ConfigurationHelper.GetDbParameter("SalesTeamDisplayField"));
             return string.Join(",", displayFields);
         }
 
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.account_view");
-            ScrudHelper.AddDisplayView(displayViews, "core.sales_teams.sales_team_id", "core.sales_teams");
+            ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.account_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.sales_teams.sales_team_id", "core.sales_team_selector_view");
             return string.Join(",", displayViews);
         }
 

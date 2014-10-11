@@ -126,15 +126,17 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             return false;
         }
 
-        [WebMethod]
+        [WebMethod(EnableSession = true)]
         public Collection<ListItem> GetCashRepositories()
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = CashRepositories.GetCashRepositoryDataTable())
+            int officeId = SessionHelper.GetOfficeId();
+
+            using (DataTable table = CashRepositories.GetCashRepositoryDataTable(officeId))
             {
                 string displayField = ConfigurationHelper.GetDbParameter("CashRepositoryDisplayField");
-                table.Columns.Add("cash_repository", typeof(string), displayField);
+                table.Columns.Add("cash_repository", typeof (string), displayField);
 
                 foreach (DataRow dr in table.Rows)
                 {
@@ -152,7 +154,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             using (DataTable table = CostCenters.GetCostCenterDataTable())
             {
                 string displayField = ConfigurationHelper.GetDbParameter("CostCenterDisplayField");
-                table.Columns.Add("cost_center", typeof(string), displayField);
+                table.Columns.Add("cost_center", typeof (string), displayField);
 
                 foreach (DataRow dr in table.Rows)
                 {
@@ -210,17 +212,18 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             return false;
         }
 
-        [WebMethod]
+        [WebMethod(EnableSession = true)]
         public Collection<ListItem> GetCashRepositoriesByAccountCode(string accountCode)
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
             if (Accounts.IsCashAccount(accountCode))
             {
-                using (DataTable table = CashRepositories.GetCashRepositoryDataTable())
+                int officeId = SessionHelper.GetOfficeId();
+                using (DataTable table = CashRepositories.GetCashRepositoryDataTable(officeId))
                 {
                     string displayField = ConfigurationHelper.GetDbParameter("CashRepositoryDisplayField");
-                    table.Columns.Add("cash_repository", typeof(string), displayField);
+                    table.Columns.Add("cash_repository", typeof (string), displayField);
 
                     foreach (DataRow dr in table.Rows)
                     {

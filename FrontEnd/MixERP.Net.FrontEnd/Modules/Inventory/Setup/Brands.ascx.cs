@@ -36,10 +36,10 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
                 scrud.TableSchema = "core";
                 scrud.Table = "brands";
                 scrud.ViewSchema = "core";
-                scrud.View = "brands";
+                scrud.View = "brands_scrud_view";
 
                 scrud.Text = Titles.Brands;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (Brands));
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(Brands));
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }

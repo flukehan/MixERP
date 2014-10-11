@@ -447,4 +447,64 @@
   <data name="width_in_centimeters" xml:space="preserve">
     <value>Width In Centimeters</value>
   </data>
+  <data name="Select" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="parent_item_group_id" xml:space="preserve">
+    <value>Parent Item Group Id</value>
+  </data>
+  <data name="parent" xml:space="preserve">
+    <value>Parent</value>
+  </data>
+  <data name="tax" xml:space="preserve">
+    <value>Tax</value>
+  </data>
+  <data name="brand" xml:space="preserve">
+    <value>Brand</value>
+  </data>
+  <data name="item_group" xml:space="preserve">
+    <value>Item Group</value>
+  </data>
+  <data name="preferred_shipping_mail_type" xml:space="preserve">
+    <value>Preferred Shipping Mail Type</value>
+  </data>
+  <data name="preferred_shipping_package_shape" xml:space="preserve">
+    <value>Preferred Shipping Package Shape</value>
+  </data>
+  <data name="preferred_supplier" xml:space="preserve">
+    <value>Preferred Supplier</value>
+  </data>
+  <data name="account" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="reorder_quantity" xml:space="preserve">
+    <value>Reorder Quantity</value>
+  </data>
+  <data name="reorder_unit_id" xml:space="preserve">
+    <value>Reorder Unit Id</value>
+  </data>
+  <data name="reorder_unit" xml:space="preserve">
+    <value>Reorder Unit</value>
+  </data>
+  <data name="items_reorder_quantity_chk" xml:space="preserve">
+    <value>The reorder quantity must be great than or equal to the reorder level.</value>
+  </data>
+  <data name="compound_item_details_unit_chk" xml:space="preserve">
+    <value>Invalid unit provided.</value>
+  </data>
+  <data name="item_cost_prices_unit_chk" xml:space="preserve">
+    <value>Invalid unit provided.</value>
+  </data>
+  <data name="item_opening_inventory_unit_chk" xml:space="preserve">
+    <value>Invalid unit provided.</value>
+  </data>
+  <data name="item_selling_prices_unit_chk" xml:space="preserve">
+    <value>Invalid unit provided.</value>
+  </data>
+  <data name="non_gl_stock_details_unit_chk" xml:space="preserve">
+    <value>Invalid unit provided.</value>
+  </data>
+  <data name="stock_details_unit_chk" xml:space="preserve">
+    <value>Invalid unit provided.</value>
+  </data>
 </root>

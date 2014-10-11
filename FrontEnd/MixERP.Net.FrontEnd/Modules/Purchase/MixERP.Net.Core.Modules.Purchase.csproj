@@ -82,8 +82,10 @@
     <Content Include="GRN.ascx" />
     <Content Include="Index.ascx" />
     <Content Include="Order.ascx" />
-    <Content Include="Package.xml" />
-    <Content Include="Payment.ascx" />
+    <Content Include="Package.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Reorder.ascx" />
     <Content Include="Reports\DirectPurchaseInvoiceReport.ascx" />
     <Content Include="Reports\GRNReport.ascx" />
     <Content Include="Reports\PurchaseOrderReport.ascx" />
@@ -106,6 +108,7 @@
     <Content Include="Scripts\Entry\Order.js" />
     <Content Include="Scripts\Entry\Return.js" />
     <Content Include="Services\Entry\Return.asmx" />
+    <Content Include="Services\Reorder.asmx" />
     <Content Include="SQL\Menu.sql" />
     <Content Include="SQL\Module.sql" />
     <Content Include="Services\DirectPurchase.asmx" />
@@ -198,14 +201,14 @@
     <Compile Include="Order.ascx.designer.cs">
       <DependentUpon>Order.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Payment.ascx.cs">
-      <DependentUpon>Payment.ascx</DependentUpon>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reorder.ascx.cs">
+      <DependentUpon>Reorder.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Payment.ascx.designer.cs">
-      <DependentUpon>Payment.ascx</DependentUpon>
+    <Compile Include="Reorder.ascx.designer.cs">
+      <DependentUpon>Reorder.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\DirectPurchaseInvoiceReport.ascx.cs">
       <DependentUpon>DirectPurchaseInvoiceReport.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -272,6 +275,10 @@
       <DependentUpon>Order.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Services\Reorder.asmx.cs">
+      <DependentUpon>Reorder.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Widgets\" />
@@ -280,6 +287,14 @@
     <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.Net.TransactionGovernor\MixERP.Net.TransactionGovernor.csproj">
       <Project>{0AACF4DB-8332-4C4B-96DF-2BF6AEA68473}</Project>
       <Name>MixERP.Net.TransactionGovernor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.Common\MixERP.Net.WebControls.Common.csproj">
+      <Project>{2d961540-6597-4e7b-969c-974d71d820dd}</Project>
+      <Name>MixERP.Net.WebControls.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.PartyControl\MixERP.Net.WebControls.PartyControl.csproj">
+      <Project>{e566553c-218f-460d-b1a9-c441f01f8fde}</Project>
+      <Name>MixERP.Net.WebControls.PartyControl</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.ReportEngine\MixERP.Net.WebControls.ReportEngine.csproj">
       <Project>{81f04b78-6194-4f86-a795-5f186c602eee}</Project>
@@ -292,6 +307,10 @@
     <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.net.Common\MixERP.Net.Common.csproj">
       <Project>{d5a09c22-8f48-4fb2-a14d-c62c8c8fcec0}</Project>
       <Name>MixERP.Net.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\MixERP.Net.WebControls.TransactionChecklist.csproj">
+      <Project>{64490b89-b228-4188-8235-71744a94c9ae}</Project>
+      <Name>MixERP.Net.WebControls.TransactionChecklist</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\MixERP.Net.FrontEnd.csproj">
       <Project>{ace1017d-71bc-4417-a906-72c4b9c55823}</Project>

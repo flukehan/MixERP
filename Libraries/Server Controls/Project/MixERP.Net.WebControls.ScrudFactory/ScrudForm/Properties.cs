@@ -192,6 +192,11 @@ namespace MixERP.Net.WebControls.ScrudFactory
         /// </summary>
         public string Text { get; set; }
 
+        /// <summary>
+        /// CssClass of the title label.
+        /// </summary>
+        public string TitleLabelCssClass { get; set; }
+
         public string UpdateProgressSpinnerImageCssClass { get; set; }
 
         public string UpdateProgressSpinnerImagePath { get; set; }

@@ -18,14 +18,13 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.Common;
+using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Resources;
 using System;
 using System.Data;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Threading;
-using System.Web.UI.WebControls;
 using FormHelper = MixERP.Net.WebControls.ScrudFactory.Data.FormHelper;
 
 namespace MixERP.Net.WebControls.ScrudFactory
@@ -67,12 +66,20 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 return;
             }
 
-            if (FormHelper.DeleteRecord(this.TableSchema, this.Table, this.KeyColumn, id))
+            try
             {
-                //Refresh the grid.
-                this.BindGridView();
+                if (FormHelper.DeleteRecord(this.TableSchema, this.Table, this.KeyColumn, id))
+                {
+                    //Refresh the grid.
+                    this.BindGridView();
 
-                this.DisplaySuccess();
+                    this.DisplaySuccess();
+                }
+            }
+            catch (MixERPException ex)
+            {
+                this.DisplayError(ex);
+                //Swallow
             }
         }
 
@@ -103,15 +110,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
         protected void SaveButton_Click(object sender, EventArgs e)
         {
             this.Page.Validate();
-
-            foreach (BaseValidator validator in Page.Validators)
-            {
-                if (validator.Enabled && !validator.IsValid)
-                {
-                    // Put a breakpoint here
-                    string clientID = validator.ClientID;
-                }
-            }
 
             if (!this.Page.IsValid)
             {
@@ -169,23 +167,31 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 }
                 else
                 {
-                    var lastValue = FormHelper.InsertRecord(userId, this.TableSchema, this.Table, list, this.imageColumn);
-
-                    if (lastValue > 0)
+                    try
                     {
-                        lastValueHiddenTextBox.Text = lastValue.ToString(CultureInfo.InvariantCulture);
-                        //Clear the form container.
-                        this.formContainer.Controls.Clear();
+                        var lastValue = FormHelper.InsertRecord(userId, this.TableSchema, this.Table, list, this.imageColumn);
 
-                        using (var table = new DataTable())
+                        if (lastValue > 0)
                         {
-                            //Load the form again.
-                            this.LoadForm(this.formContainer, table, this.ResourceAssembly);
-                        }
+                            lastValueHiddenTextBox.Text = lastValue.ToString(CultureInfo.InvariantCulture);
+                            //Clear the form container.
+                            this.formContainer.Controls.Clear();
 
-                        //Refresh the grid.
-                        this.BindGridView();
-                        this.DisplaySuccess();
+                            using (var table = new DataTable())
+                            {
+                                //Load the form again.
+                                this.LoadForm(this.formContainer, table, this.ResourceAssembly);
+                            }
+
+                            //Refresh the grid.
+                            this.BindGridView();
+                            this.DisplaySuccess();
+                        }
+                    }
+                    catch (MixERPException ex)
+                    {
+                        this.DisplayError(ex);
+                        //Swallow
                     }
                 }
             }
@@ -198,28 +204,36 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 }
                 else
                 {
-                    if (FormHelper.UpdateRecord(userId, this.TableSchema, this.Table, list, this.KeyColumn, id, this.imageColumn))
+                    try
                     {
-                        //Clear the form container.
-                        this.formContainer.Controls.Clear();
-
-                        //Load the form again.
-                        using (var table = new DataTable())
+                        if (FormHelper.UpdateRecord(userId, this.TableSchema, this.Table, list, this.KeyColumn, id,
+                            this.imageColumn))
                         {
-                            table.Locale = Thread.CurrentThread.CurrentCulture;
+                            //Clear the form container.
+                            this.formContainer.Controls.Clear();
 
-                            this.LoadForm(this.formContainer, table, this.ResourceAssembly);
+                            //Load the form again.
+                            using (var table = new DataTable())
+                            {
+                                table.Locale = Thread.CurrentThread.CurrentCulture;
+
+                                this.LoadForm(this.formContainer, table, this.ResourceAssembly);
+                            }
+
+                            //Refresh the grid.
+                            this.BindGridView();
+
+                            this.DisplaySuccess();
                         }
-
-                        //Refresh the grid.
-                        this.BindGridView();
-
-                        this.DisplaySuccess();
+                        else
+                        {
+                            this.DisplayError(new MixERPException(Titles.UnknownError));
+                        }
                     }
-                    else
+                    catch (MixERPException ex)
                     {
-                        this.messageLabel.CssClass = this.GetFailureCssClass();
-                        this.messageLabel.Text = Titles.UnknownError;
+                        this.DisplayError(ex);
+                        //Swallow
                     }
                 }
             }

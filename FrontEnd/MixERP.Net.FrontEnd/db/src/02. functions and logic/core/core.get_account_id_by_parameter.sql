@@ -3,15 +3,15 @@ RETURNS bigint
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT
-			account_id
-		FROM	
-			core.account_parameters
-		WHERE
-			parameter_name=$1
-	);
+    RETURN
+    (
+        SELECT
+            account_id
+        FROM    
+            core.account_parameters
+        WHERE
+            parameter_name=$1
+    );
 END
 $$
 LANGUAGE plpgsql;

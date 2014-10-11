@@ -18,7 +18,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Quotation.ascx.cs" Inherits="MixERP.Net.Core.Modules.Sales.Confirmation.Quotation"
     OverridePath="/Modules/Sales/Quotation.mix" %>
-<mixerp:TransactionChecklist runat="server"
+<mixerp:TransactionChecklistForm runat="server"
     ID="TransactionChecklist1"
     AttachmentBookName="non-gl-transaction"
     OverridePath="/Modules/Sales/Quotation.mix"
@@ -31,4 +31,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     DisplayPrintGlEntryButton="false"
     DisplayAttachmentButton="true"
     IsNonGlTransaction="true"
-    ReportPath="~/Modules/Sales/Reports/SalesQuotationReport.mix" />
+    ReportPath="~/Modules/Sales/Reports/SalesQuotationReport.mix"
+    ViewPath="/Modules/Sales/Quotation.mix"
+    AddNewPath="/Modules/Sales/Entry/Quotation.mix" />

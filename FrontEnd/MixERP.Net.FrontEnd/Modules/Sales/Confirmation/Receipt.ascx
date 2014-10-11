@@ -19,7 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Receipt.ascx.cs" Inherits="MixERP.Net.Core.Modules.Sales.Confirmation.Receipt"
     OverridePath="~/Modules/Sales/Receipt.mix" %>
 
-<mixerp:TransactionChecklist
+<mixerp:TransactionChecklistForm
     runat="server"
     ID="TransactionCheckList1"
     AttachmentBookName="transaction"
@@ -32,4 +32,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     DisplayPrintGlEntryButton="true"
     DisplayAttachmentButton="true"
     ReportPath="~/Modules/Sales/Reports/CustomerReceiptReport.mix"
-    GlAdvicePath="~/Modules/Finance/Reports/GLAdviceReport.mix" />
+    GlAdvicePath="~/Modules/Finance/Reports/GLAdviceReport.mix"
+    ViewPath="~/Modules/Sales/Receipt.mix"
+    AddNewPath="~/Modules/Sales/Entry/Receipt.mix" />

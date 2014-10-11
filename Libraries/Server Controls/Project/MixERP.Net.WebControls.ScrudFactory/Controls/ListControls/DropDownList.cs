@@ -50,7 +50,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
             {
                 SetDisplayFields(dropDownList, table, tableSchema, tableName, tableColumn, displayFields);
                 itemSelectorAnchor = GetItemSelector(dropDownList.ClientID, table, itemSelectorPath, tableSchema,
-                    tableName, tableColumn, displayViews);
+                    tableName, tableColumn, displayViews, assembly, resourceClassName);
             }
 
             SetSelectedValue(dropDownList, tableSchema, tableName, tableColumn, defaultValue, selectedValues);
@@ -122,9 +122,12 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
         /// <param name="tableName"></param>
         /// <param name="tableColumn"></param>
         /// <param name="displayViews"></param>
+        /// <param name="assembly"></param>
+        /// <param name="resourceClassName"></param>
         /// <returns></returns>
         private static HtmlAnchor GetItemSelector(string associatedControlId, DataTable table, string itemSelectorPath,
-            string tableSchema, string tableName, string tableColumn, string displayViews)
+            string tableSchema, string tableName, string tableColumn, string displayViews, Assembly assembly,
+            string resourceClassName)
         {
             if (table.Rows.Count.Equals(0) || string.IsNullOrWhiteSpace(displayViews))
             {
@@ -155,13 +158,15 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
                     ConfigurationHelper.GetScrudParameter("ItemSelectorAnchorCssClass");
                 itemSelectorAnchor.Attributes.Add("role", "item-selector");
                 itemSelectorAnchor.HRef = itemSelectorPath + "?Schema=" + schema + "&View=" + view +
-                                          "&AssociatedControlId=" + associatedControlId;
+                                          "&AssociatedControlId=" + associatedControlId + "&Assembly=" +
+                                          assembly.GetName().Name + "&ResourceClassName=" + resourceClassName;
 
                 return itemSelectorAnchor;
             }
         }
 
-        private static DataTable GetTable(string tableSchema, string tableName, string tableColumn, string displayViews, bool useDisplayViewsAsParent)
+        private static DataTable GetTable(string tableSchema, string tableName, string tableColumn, string displayViews,
+            bool useDisplayViewsAsParent)
         {
             if (useDisplayViewsAsParent)
             {

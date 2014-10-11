@@ -19,6 +19,6 @@ namespace MixERP.Net.Core.Modules.Sales.Confirmation {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::MixERP.Net.FrontEnd.UserControls.TransactionChecklistControl TransactionChecklist1;
+        protected global::MixERP.Net.WebControls.TransactionChecklist.TransactionChecklistForm TransactionChecklist1;
     }
 }

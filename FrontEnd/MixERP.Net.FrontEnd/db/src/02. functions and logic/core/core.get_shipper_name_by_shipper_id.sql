@@ -3,12 +3,12 @@ RETURNS text
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT company_name
-		FROM core.shippers
-		WHERE shipper_id=$1
-	);
+    RETURN
+    (
+        SELECT company_name
+        FROM core.shippers
+        WHERE shipper_id=$1
+    );
 END
 $$
 LANGUAGE plpgsql;

@@ -3,15 +3,15 @@ RETURNS integer
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT
-			core.units.unit_id
-		FROM
-			core.units
-		WHERE
-			core.units.unit_name=$1
-	);
+    RETURN
+    (
+        SELECT
+            core.units.unit_id
+        FROM
+            core.units
+        WHERE
+            core.units.unit_name=$1
+    );
 END
 $$
 LANGUAGE plpgsql;

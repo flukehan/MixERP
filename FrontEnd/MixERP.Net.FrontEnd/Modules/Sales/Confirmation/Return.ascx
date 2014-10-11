@@ -19,7 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Return.ascx.cs" Inherits="MixERP.Net.Core.Modules.Sales.Confirmation.Return"
     OverridePath="~/Modules/Sales/Return.mix" %>
 
-<mixerp:TransactionChecklist runat="server"
+<mixerp:TransactionChecklistForm runat="server"
     ID="TransactionChecklist1"
     AttachmentBookName="transaction"
     OverridePath="~/Modules/Sales/Return.mix"
@@ -31,4 +31,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     DisplayPrintGlEntryButton="true"
     DisplayAttachmentButton="true"
     ReportPath="~/Modules/Sales/Reports/SalesReturnReport.mix"
-    GlAdvicePath="~/Modules/Finance/Reports/GLAdviceReport.mix" />
+    GlAdvicePath="~/Modules/Finance/Reports/GLAdviceReport.mix"
+    ViewPath="~/Modules/Sales/Return.mix"
+    AddNewPath="~/Modules/Sales/Entry/Return.mix" />

@@ -5,8 +5,7 @@ RETURNS money_strict2
 AS
 $$
 BEGIN
-	RETURN NULL;
+    RETURN NULL;
 END
 $$
 LANGUAGE plpgsql;
-

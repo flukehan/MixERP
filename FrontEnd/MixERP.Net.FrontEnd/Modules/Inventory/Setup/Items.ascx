@@ -17,4 +17,7 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ItemsPopup.ascx.cs" Inherits="MixERP.Net.Core.Modules.Inventory.Setup.ItemsPopup" %>
-<asp:PlaceHolder ID="ScrudPlaceholder" runat="server" />
+
+<div id="OverflowDiv">
+    <asp:PlaceHolder ID="ScrudPlaceholder" runat="server" />
+</div>

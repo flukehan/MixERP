@@ -158,5 +158,14 @@ namespace MixERP.Net.Core.Modules.CRM.Resources {
                 return ResourceManager.GetString("opportunity_stage_name", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select.
+        /// </summary>
+        internal static string Select {
+            get {
+                return ResourceManager.GetString("Select", resourceCulture);
+            }
+        }
     }
 }

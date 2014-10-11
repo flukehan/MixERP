@@ -47,8 +47,9 @@ namespace MixERP.Net.Utility.SqlBundler.Helpers
                 }
 
                 Console.WriteLine("Adding {0} to bundle", fileName);
-                script.Append("-- ");
-                script.Append(Path.GetFileName(fileName));
+                script.Append("-->-->-- ");
+                script.Append(Path.GetFullPath(fileName).Replace(root, "").Replace("\\", "/"));
+                script.Append(" --<--<--");
 
                 script.Append(Environment.NewLine);
 
@@ -62,7 +63,8 @@ namespace MixERP.Net.Utility.SqlBundler.Helpers
             }
 
             SQLBundle defaultBundle = new SQLBundle();
-            defaultBundle.FileName = GetBundleFileName(model.OutputDirectory, model.OriginalFileName, model.DefaultLanguage);
+            defaultBundle.FileName = GetBundleFileName(model.OutputDirectory, model.OriginalFileName,
+                model.DefaultLanguage);
             defaultBundle.Language = model.DefaultLanguage;
             defaultBundle.Script = script.ToString();
 
@@ -78,7 +80,10 @@ namespace MixERP.Net.Utility.SqlBundler.Helpers
                 bundle.FileName = GetBundleFileName(model.OutputDirectory, model.OriginalFileName, dictionary.Key);
                 bundle.Script = script.ToString();
 
-                List<string> lines = File.ReadAllText(filePath, Encoding.UTF8).Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
+                List<string> lines =
+                    File.ReadAllText(filePath, Encoding.UTF8)
+                        .Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
+                        .ToList();
                 foreach (string line in lines)
                 {
                     string find = line.Split('=')[0].Trim();

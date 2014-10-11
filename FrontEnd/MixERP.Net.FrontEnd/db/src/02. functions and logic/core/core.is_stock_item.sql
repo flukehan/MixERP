@@ -5,14 +5,14 @@ RETURNS bool
 AS
 $$
 BEGIN
-	IF EXISTS
-	(
-		SELECT 1 FROM core.items WHERE core.items.item_id=$1 AND maintain_stock=true
-	) THEN
-		RETURN true;
-	END IF;
+    IF EXISTS
+    (
+        SELECT 1 FROM core.items WHERE core.items.item_id=$1 AND maintain_stock=true
+    ) THEN
+        RETURN true;
+    END IF;
 
-	RETURN false;
+    RETURN false;
 END
 $$
 LANGUAGE plpgsql;
@@ -24,14 +24,14 @@ RETURNS bool
 AS
 $$
 BEGIN
-	IF EXISTS
-	(
-		SELECT 1 FROM core.items WHERE core.items.item_code=$1 AND maintain_stock=true
-	) THEN
-		RETURN true;
-	END IF;
+    IF EXISTS
+    (
+        SELECT 1 FROM core.items WHERE core.items.item_code=$1 AND maintain_stock=true
+    ) THEN
+        RETURN true;
+    END IF;
 
-	RETURN false;
+    RETURN false;
 END
 $$
 LANGUAGE plpgsql;

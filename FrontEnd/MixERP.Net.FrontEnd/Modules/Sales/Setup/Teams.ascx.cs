@@ -46,7 +46,7 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
                 scrud.TableSchema = "core";
                 scrud.Table = "sales_teams";
                 scrud.ViewSchema = "core";
-                scrud.View = "sales_teams";
+                scrud.View = "sales_teams_scrud_view";
 
                 scrud.Text = Resources.Titles.SalesTeams;
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof(Teams));

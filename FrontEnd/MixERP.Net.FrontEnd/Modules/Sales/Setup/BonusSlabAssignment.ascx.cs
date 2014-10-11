@@ -37,11 +37,11 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
                 scrud.TableSchema = "core";
                 scrud.Table = "salesperson_bonus_setups";
                 scrud.ViewSchema = "core";
-                scrud.View = "salesperson_bonus_setup_view";
+                scrud.View = "salesperson_bonus_setup_scrud_view";
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
                 scrud.Text = Titles.AgentBonusSlabAssignment;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(BonusSlabAssignment));
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (BonusSlabAssignment));
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
 
@@ -51,16 +51,18 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.bonus_slabs.bonus_slab_id", ConfigurationHelper.GetDbParameter("BonusSlabDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.salespersons.salesperson_id", ConfigurationHelper.GetDbParameter("SalespersonDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.bonus_slabs.bonus_slab_id",
+                ConfigurationHelper.GetDbParameter("BonusSlabDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.salespersons.salesperson_id",
+                ConfigurationHelper.GetDbParameter("SalespersonDisplayField"));
             return string.Join(",", displayFields);
         }
 
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "core.bonus_slabs.bonus_slab_id", "core.bonus_slab_view");
-            ScrudHelper.AddDisplayView(displayViews, "core.salespersons.salesperson_id", "core.salesperson_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.bonus_slabs.bonus_slab_id", "core.bonus_slab_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.salespersons.salesperson_id", "core.salesperson_selector_view");
             return string.Join(",", displayViews);
         }
     }

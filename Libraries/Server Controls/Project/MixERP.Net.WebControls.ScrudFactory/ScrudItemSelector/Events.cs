@@ -19,6 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.WebControls.ScrudFactory.Helpers;
 using System;
 using System.Web.UI.WebControls;
 using FormHelper = MixERP.Net.WebControls.ScrudFactory.Data.FormHelper;
@@ -38,17 +39,26 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
                 foreach (ListItem item in dropDownList.Items)
                 {
-                    item.Text = LocalizationHelper.GetDefaultAssemblyResourceString("ScrudResource", item.Text);
+                    item.Text = ScrudLocalizationHelper.GetResourceString(this.ResourceAssembly,
+                        this.GetResourceClassName(), item.Text);
                 }
             }
         }
 
         protected void GoButton_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(this.GetSchema())) return;
-            if (string.IsNullOrWhiteSpace(this.GetView())) return;
+            if (string.IsNullOrWhiteSpace(this.GetSchema()))
+            {
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(this.GetView()))
+            {
+                return;
+            }
 
-            using (var table = FormHelper.GetTable(this.GetSchema(), this.GetView(), this.filterDropDownList.SelectedItem.Value, this.filterTextBox.Text, 10, "1"))
+            using (
+                var table = FormHelper.GetTable(this.GetSchema(), this.GetView(),
+                    this.filterDropDownList.SelectedItem.Value, this.filterTextBox.Text, 10, "1"))
             {
                 this.searchGridView.DataSource = table;
                 this.searchGridView.DataBind();
@@ -69,11 +79,23 @@ namespace MixERP.Net.WebControls.ScrudFactory
                     var cellText = e.Row.Cells[i].Text;
                     if (!string.IsNullOrWhiteSpace(cellText))
                     {
-                        cellText = LocalizationHelper.GetDefaultAssemblyResourceString(ConfigurationHelper.GetScrudParameter("ResourceClassName"), cellText);
+                        cellText =
+                            ScrudLocalizationHelper.GetResourceString(this.ResourceAssembly, this.GetResourceClassName(),
+                                cellText);
                         e.Row.Cells[i].Text = cellText;
                     }
                 }
             }
+        }
+
+        private string GetResourceClassName()
+        {
+            if (string.IsNullOrWhiteSpace(this.ResourceClassName))
+            {
+                return ConfigurationHelper.GetScrudParameter("ResourceClassName");
+            }
+
+            return this.ResourceClassName;
         }
 
         private string GetSchema()

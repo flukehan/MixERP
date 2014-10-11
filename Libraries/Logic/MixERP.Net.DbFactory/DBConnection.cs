@@ -51,7 +51,7 @@ namespace MixERP.Net.DBFactory
             connectionStringBuilder.Database = ConfigurationManager.AppSettings["Database"];
             connectionStringBuilder.UserName = ConfigurationManager.AppSettings["UserId"];
             connectionStringBuilder.Password = ConfigurationManager.AppSettings["Password"];
-
+            //connectionStringBuilder.ApplicationName = "MixERP";
             return connectionStringBuilder.ConnectionString;
         }
     }

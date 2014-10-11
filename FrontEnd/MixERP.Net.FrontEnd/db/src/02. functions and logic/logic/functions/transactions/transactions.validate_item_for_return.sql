@@ -9,6 +9,7 @@ $$
         DECLARE _item_id integer = 0;
         DECLARE _unit_id integer = 0;
         DECLARE _actual_quantity decimal_strict2 = 0;
+        DECLARE _returned_in_previous_batch decimal_strict2 = 0;
         DECLARE _actual_price_in_root_unit money_strict2 = 0;
         DECLARE _price_in_root_unit money_strict2 = 0;
         DECLARE _item_in_stock decimal_strict2 = 0;
@@ -30,6 +31,17 @@ BEGIN
         IF(_quantity IS NULL OR _quantity <= 0) THEN
                 RAISE EXCEPTION 'Invalid quantity.';
         END IF;
+
+
+        IF NOT EXISTS
+        (
+                SELECT * FROM transactions.transaction_master
+                WHERE transaction_master_id = _transaction_master_id
+                AND verification_status_id > 0
+        ) THEN
+                RAISE EXCEPTION 'Invalid or rejected transaction.';
+        END IF;
+        
         
         _stock_master_id                := transactions.get_stock_master_id_by_transaction_master_id(_transaction_master_id);
         IF(_stock_master_id  IS NULL OR _stock_master_id  <= 0) THEN
@@ -79,15 +91,40 @@ BEGIN
         END IF;
 
         SELECT 
-                core.convert_unit(base_unit_id, _unit_id) * base_quantity
+                COALESCE(core.convert_unit(base_unit_id, _unit_id) * base_quantity, 0)
                 INTO _actual_quantity
         FROM transactions.stock_details
         WHERE stock_master_id = _stock_master_id
         AND item_id = _item_id;
 
-        IF(_quantity > _actual_quantity) THEN
+        SELECT 
+                COALESCE(SUM(core.convert_unit(base_unit_id, 1) * base_quantity), 0)
+                INTO _returned_in_previous_batch
+        FROM transactions.stock_details
+        WHERE stock_master_id IN
+        (
+                SELECT stock_master_id
+                FROM transactions.stock_master
+                INNER JOIN transactions.transaction_master
+                ON transactions.transaction_master.transaction_master_id = transactions.stock_master.transaction_master_id
+                WHERE transactions.transaction_master.verification_status_id > 0
+                AND transactions.stock_master.transaction_master_id IN (
+
+                        SELECT 
+                        return_transaction_master_id 
+                        FROM transactions.stock_return
+                        WHERE transaction_master_id = _transaction_master_id
+                )
+        )
+        AND item_id = _item_id;
+
+
+
+        IF(_quantity + _returned_in_previous_batch > _actual_quantity) THEN
                 RAISE EXCEPTION 'The returned quantity cannot be greater than actual quantity.';
         END IF;
+
+
 
         _price_in_root_unit := core.convert_unit(core.get_root_unit_id(_unit_id), _unit_id) * _price;
 
@@ -111,4 +148,4 @@ END
 $$
 LANGUAGE plpgsql;
 
---SELECT * FROM transactions.validate_item_for_return(25, 1, 'CAS', 'Piece', 1, 40000);
+--SELECT * FROM transactions.validate_item_for_return(9, 1, 'RMBP', 'Piece', 1, 180000);

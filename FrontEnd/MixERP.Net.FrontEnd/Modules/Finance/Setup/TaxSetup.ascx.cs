@@ -38,14 +38,14 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
                 scrud.TableSchema = "core";
                 scrud.Table = "taxes";
                 scrud.ViewSchema = "core";
-                scrud.View = "tax_view";
+                scrud.View = "tax_scrud_view";
 
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
                 scrud.SelectedValues = GetSelectedValues();
 
                 scrud.Text = Titles.TaxSetup;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(TaxSetup));
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (TaxSetup));
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
@@ -56,16 +56,18 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.tax_types.tax_type_id", ConfigurationHelper.GetDbParameter("TaxTypeDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.accounts.account_id", ConfigurationHelper.GetDbParameter("AccountDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.tax_types.tax_type_id",
+                ConfigurationHelper.GetDbParameter("TaxTypeDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.accounts.account_id",
+                ConfigurationHelper.GetDbParameter("AccountDisplayField"));
             return string.Join(",", displayFields);
         }
 
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "core.tax_types.tax_type_id", "core.tax_types");
-            ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.account_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.tax_types.tax_type_id", "core.tax_type_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.account_selector_view");
             return string.Join(",", displayViews);
         }
 

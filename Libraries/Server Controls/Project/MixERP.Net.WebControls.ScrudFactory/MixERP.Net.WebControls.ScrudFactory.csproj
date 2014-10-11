@@ -68,6 +68,8 @@
       <DependentUpon>Titles.resx</DependentUpon>
     </Compile>
     <Compile Include="ScrudForm\FormFactory\Alert.cs" />
+    <Compile Include="ScrudForm\Validation.cs" />
+    <Compile Include="ScrudForm\IDisposable.cs" />
     <Compile Include="ScrudForm\Styling.cs" />
     <Compile Include="ScrudForm\UpdatePanel.cs" />
     <Compile Include="Controls\CommandPanel.cs" />

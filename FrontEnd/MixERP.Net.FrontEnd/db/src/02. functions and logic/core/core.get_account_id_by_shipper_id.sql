@@ -3,15 +3,15 @@ RETURNS bigint
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT
-			core.shippers.account_id
-		FROM
-			core.shippers
-		WHERE
-			core.shippers.shipper_id=$1
-	);
+    RETURN
+    (
+        SELECT
+            core.shippers.account_id
+        FROM
+            core.shippers
+        WHERE
+            core.shippers.shipper_id=$1
+    );
 END
 $$
 LANGUAGE plpgsql;

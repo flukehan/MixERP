@@ -4,7 +4,7 @@ RETURNS boolean
 AS
 $$
 BEGIN
-	RETURN (SELECT date_part('day', (($1::text || '-02-01')::date + '1 month'::interval - '1 day'::interval)) = 29);
+    RETURN (SELECT date_part('day', (($1::text || '-02-01')::date + '1 month'::interval - '1 day'::interval)) = 29);
 END
 $$
 LANGUAGE plpgsql
@@ -17,7 +17,7 @@ RETURNS boolean
 AS
 $$
 BEGIN
-	RETURN core.is_leap_year(core.get_current_year());
+    RETURN core.is_leap_year(core.get_current_year());
 END
 $$
 LANGUAGE plpgsql

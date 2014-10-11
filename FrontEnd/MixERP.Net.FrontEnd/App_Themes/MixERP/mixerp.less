@@ -26,12 +26,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 @title-color-hover: #7c0c80;
 @soft_background_color: #F3F3F8;
 @border_color: #D1D1E0;
-@menu-color-primary: #530F76;
-@menu-color-primary-light: #5e1485;
-@menu-color-primary-dark: #4c0c6c;
-@menu-color-primary-hover-light: #731ea0;
-@menu-color-primary-hover-dark: #470b65;
-@menu-color-primary-text: #dbb7ed;
 @shade: #FDFAFE;
 @shade-hover: #fbf5fe;
 @shade-hover-border: #f3e3fc;
@@ -40,16 +34,18 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 @sidebar-float: left;
 @top-panel-float: right;
 @top-panel-float-other: left;
-@sidebar-width: 274px;
-@menu-color: #ccb4d6;
-@menu-color-hover: #F5d3ed;
+@sidebar-width: 300px;
+@sidebar-background-color: #67238b;
+@search-background-color: #5f1488;
+@search-text-color: #dbb7ed;
+@search-border-hover-color: #754092;
 
 html, body, form {
     height: 100%;
     font-size: 12px;
 }
 
-html, body, div, table, p {
+html, body, div, table, td, p, span {
     font-family: 'Segoe UI', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 12px;
     color: @primary-text-color;
@@ -60,7 +56,7 @@ body {
 }
 
 body#SignInBody {
-    background-color: @menu-color-primary-hover-dark;
+    background-color: @sidebar-background-color;
 }
 
 /*Page Layout Start */
@@ -79,7 +75,7 @@ body#SignInBody {
 
 #logo {
     padding-left: 16px;
-    background-color: @menu-color-primary-dark;
+    background-color: @sidebar-background-color;
     height: @top-element-height;
     width: @sidebar-width;
 }
@@ -105,7 +101,7 @@ body#SignInBody {
 }
 
 #sidebar {
-    background-color: @menu-color-primary;
+    background-color: @sidebar-background-color;
     color: @background-color-secondary;
     width: @sidebar-width;
     height: 100%;
@@ -134,48 +130,16 @@ footer {
 }
 
 #SearchInput {
-    background-color: @menu-color-primary-light;
-    border-color: @menu-color-primary-dark;
-    color: @menu-color-primary-text;
+    background-color: @search-background-color;
+    border-color: @search-background-color;
+    color: @search-text-color;
 }
 
 #SearchInput:hover, #SearchInput:active, #SearchInput:focus {
-    border-color: @menu-color-primary-hover-light;
+    border-color: @search-border-hover-color;
     box-shadow: none;
     -moz-box-shadow: none;
     -webkit-box-shadow: none;
-}
-
-.menu {
-    list-style: none outside none;
-    margin: 0;
-    padding: 2px;
-}
-
-.menu li a, .menu li.menu-title a {
-    width: 100%;
-    text-decoration: none;
-    color: @menu-color;
-    background-color: @menu-color-primary-light;
-    display: block;
-    padding: 8px;
-    padding-left: 32px;
-}
-
-.menu li.menu-title a {
-    font-weight: bold;
-    padding-left: 12px;
-    background-color: @menu-color-primary-dark;
-}
-
-.menu li a:hover, .menu li a:focus {
-    background-color: @menu-color-primary-hover-dark;
-    color: @menu-color-hover;
-    outline: none;
-}
-
-.menu-selected {
-    background-color: @menu-color-primary-hover-dark !important;
 }
 
 .icon {
@@ -270,6 +234,11 @@ table[role=scrud] .form-control {
     color: @color-error;
 }
 
+.exception, .exception:hover {
+    font-weight: lighter;
+    color: @color-error;
+}
+
 .error-message {
     font-weight: bold;
     color: @color-error;
@@ -300,6 +269,16 @@ table[role=scrud] .form-control {
 
 table .form-control label {
     padding: 6px !important;
+}
+
+.heading {
+    padding-top: 12px;
+    cursor: pointer;
+}
+
+.heading span {
+    font-weight: lighter !important;
+    font-size: 36px;
 }
 
 .form-description {
@@ -480,6 +459,10 @@ a:hover, a:active, a:focus {
     background-color: @shade-hover;
 }
 
+textarea {
+    resize: none;
+}
+
 /*Bootstrap Override Start*/
 
 tr.form-group td {
@@ -487,3 +470,59 @@ tr.form-group td {
 }
 
 /*Bootstrap Override End*/
+
+/*Fancytree Override Start*/
+@menu-color-primary-hover-dark: #4e0572;
+
+span.fancytree-node:hover, [data-selected=true] {
+    background-color: @menu-color-primary-hover-dark;
+    border-color: @menu-color-primary-hover-dark;
+}
+
+.fancytree-container.fancytree-treefocus span.fancytree-node.fancytree-focused {
+    border-color: #3399FF;
+}
+
+span.fancytree-node.fancytree-active,
+span.fancytree-node.fancytree-selected {
+    background-color: @menu-color-primary-hover-dark;
+    border-color: @menu-color-primary-hover-dark;
+}
+
+.fancytree-container.fancytree-treefocus span.fancytree-node.fancytree-active,
+.fancytree-container.fancytree-treefocus span.fancytree-node.fancytree-selected,
+span.fancytree-node.fancytree-active:hover,
+span.fancytree-node.fancytree-selected:hover {
+    background-color: @menu-color-primary-hover-dark;
+    border-color: @menu-color-primary-hover-dark;
+}
+
+.fancytree-node.fancytree-selected {
+    font-style: italic;
+}
+
+.ui-fancytree, .fancytree-container {
+    font-family: 'Segoe UI', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    border: 0 none !important;
+    outline: none;
+}
+
+#tree ul {
+    background-color: @sidebar-background-color;
+}
+
+#tree ul li ul {
+    background-color: transparent;
+}
+
+.ui-fancytree span {
+    color: @search-text-color !important;
+    font-weight: lighter !important;
+    font-size: 10pt;
+}
+
+#tree ul:focus {
+    background-color: @search-background-color;
+}
+
+/*Fancytree Override End*/

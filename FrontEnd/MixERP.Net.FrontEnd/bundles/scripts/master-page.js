@@ -26167,10 +26167,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 function getDocHeight(margin) {
     var D = document;
     var height = Math.max(
-                Math.max(D.body.scrollHeight, D.documentElement.scrollHeight),
-                Math.max(D.body.offsetHeight, D.documentElement.offsetHeight),
-                Math.max(D.body.clientHeight, D.documentElement.clientHeight)
-            );
+        Math.max(D.body.scrollHeight, D.documentElement.scrollHeight),
+        Math.max(D.body.offsetHeight, D.documentElement.offsetHeight),
+        Math.max(D.body.clientHeight, D.documentElement.clientHeight)
+    );
 
     if (margin) {
         height += parseInt2(margin);
@@ -26196,7 +26196,7 @@ var selectDropDownListByValue = function (textBoxId, dropDownListId) {
     if (exists) {
         listControl.val(selectedValue).trigger('change');
     } else {
-        textBox.val('');
+        textBox.val('').trigger('change');
     }
 
     triggerChange(dropDownListId);
@@ -26287,83 +26287,83 @@ $(document).ready(function () {
 
         if (value === "d") {
             result = dateAdd(today, "d", 0);
-            control.val(result);
+            control.val(result).trigger('change');
             validateByControlId(control.attr("id"));
             return;
         }
 
         if (value === "m" || value === "+m") {
-            control.val(dateAdd(today, "m", 1));
+            control.val(dateAdd(today, "m", 1)).trigger('change');
             validateByControlId(control.attr("id"));
             return;
         }
 
         if (value === "w" || value === "+w") {
-            control.val(dateAdd(today, "d", 7));
+            control.val(dateAdd(today, "d", 7)).trigger('change');
             validateByControlId(control.attr("id"));
             return;
         }
 
         if (value === "y" || value === "+y") {
-            control.val(dateAdd(today, "y", 1));
+            control.val(dateAdd(today, "y", 1)).trigger('change');
             validateByControlId(control.attr("id"));
             return;
         }
 
         if (value === "-d") {
-            control.val(dateAdd(today, "d", -1));
+            control.val(dateAdd(today, "d", -1)).trigger('change');
             validateByControlId(control.attr("id"));
             return;
         }
 
         if (value === "+d") {
-            control.val(dateAdd(today, "d", 1));
+            control.val(dateAdd(today, "d", 1)).trigger('change');
             validateByControlId(control.attr("id"));
             return;
         }
 
         if (value === "-w") {
-            control.val(dateAdd(today, "d", -7));
+            control.val(dateAdd(today, "d", -7)).trigger('change');
             validateByControlId(control.attr("id"));
             return;
         }
 
         if (value === "-m") {
-            control.val(dateAdd(today, "m", -1));
+            control.val(dateAdd(today, "m", -1)).trigger('change');
             validateByControlId(control.attr("id"));
             return;
         }
 
         if (value === "-y") {
-            control.val(dateAdd(today, "y", -1));
+            control.val(dateAdd(today, "y", -1)).trigger('change');
             validateByControlId(control.attr("id"));
             return;
         }
 
         if (value.indexOf("d") >= 0) {
             number = parseInt(value.replace("d"));
-            control.val(dateAdd(today, "d", number));
+            control.val(dateAdd(today, "d", number)).trigger('change');
             validateByControlId(control.attr("id"));
             return;
         }
 
         if (value.indexOf("w") >= 0) {
             number = parseInt(value.replace("w"));
-            control.val(dateAdd(today, "d", number * 7));
+            control.val(dateAdd(today, "d", number * 7)).trigger('change');
             validateByControlId(control.attr("id"));
             return;
         }
 
         if (value.indexOf("m") >= 0) {
             number = parseInt(value.replace("m"));
-            control.val(dateAdd(today, "m", number));
+            control.val(dateAdd(today, "m", number)).trigger('change');
             validateByControlId(control.attr("id"));
             return;
         }
 
         if (value.indexOf("y") >= 0) {
             number = parseInt(value.replace("y"));
-            control.val(dateAdd(today, "y", number));
+            control.val(dateAdd(today, "y", number)).trigger('change');
             validateByControlId(control.attr("id"));
             return;
         }
@@ -26425,6 +26425,7 @@ var setNumberFormat = function () {
     };
 
     $('input.float').number(true, 6, decimalSeparator, thousandSeparator);
+    $('input.integer').number(true, 0, decimalSeparator, thousandSeparator);
 };
 
 /******************************************************************************************************
@@ -26473,12 +26474,12 @@ function prepareChart(datasourceId, canvasId, legendId, type, log) {
         var row = $(this);
 
         //The first column of each row is the legend.
-        title = row.find(">:first-child").html();
+        title = row.find(":first-child").html();
 
         //Reset the data object's value from the previous iteration.
         data = [];
         //Loop through the row columns.
-        row.find(">:not(:first-child)").each(function () {
+        row.find(":not(:first-child)").each(function () {
             //Get data from this row.
             data.push(parseFloat2($(this).html()));
         });
@@ -26619,9 +26620,8 @@ if (!String.prototype.format) {
         var args = arguments;
         return this.replace(/{(\d+)}/g, function (match, number) {
             return typeof args[number] !== 'undefined'
-              ? args[number]
-              : match
-            ;
+                ? args[number]
+                : match;
         });
     };
 };
@@ -26709,7 +26709,7 @@ var getData = function (data) {
 
 var initializeItemSelector = function () {
     var itemSelector = $("[role=item-selector]");
-    var modalTemplatePath = "/Resource/Static/Templates/ModalTemplate.html";//Todo
+    var modalTemplatePath = "/Resource/Static/Templates/ModalTemplate.html"; //Todo
 
     itemSelector.each(function () {
         var selector = $(this);
@@ -26842,7 +26842,7 @@ jQuery.fn.bindAjaxData = function (ajaxData, skipSelect, selectedValue) {
 
 var appendItem = function (dropDownList, value, text, selected) {
     var option = $("<option></option>");
-    option.val(value).html(text);
+    option.val(value).html(text).trigger('change');
 
     if (selected) {
         option.prop("selected", true);
@@ -26861,7 +26861,7 @@ var getAjax = function (url, data) {
     });
 };
 
-var ajaxUpdateVal = function (url, targetControl, data) {
+var ajaxUpdateVal = function (url, data, targetControls) {
     var ajax;
 
     if (data) {
@@ -26871,7 +26871,13 @@ var ajaxUpdateVal = function (url, targetControl, data) {
     };
 
     ajax.success(function (msg) {
-        targetControl.val(msg.d);
+        targetControls.each(function () {
+            $(this).val(msg.d).trigger('change');
+        });
+
+        if (typeof ajaxUpdateValCallback == "function") {
+            ajaxUpdateValCallback(targetControls);
+        };
     });
 
     ajax.error(function (xhr) {
@@ -26880,6 +26886,10 @@ var ajaxUpdateVal = function (url, targetControl, data) {
 };
 
 var ajaxDataBind = function (url, targetControl, data, selectedValue, associatedControl) {
+    if (targetControl.length === 0) {
+        return;
+    };
+
     var ajax;
 
     if (data) {
@@ -26889,10 +26899,22 @@ var ajaxDataBind = function (url, targetControl, data, selectedValue, associated
     };
 
     ajax.success(function (msg) {
-        targetControl.bindAjaxData(msg.d, false, selectedValue);
+        if (targetControl.length === 1) {
+            targetControl.bindAjaxData(msg.d, false, selectedValue);
+        };
+
+        if (targetControl.length > 1) {
+            targetControl.each(function () {
+                $(this).bindAjaxData(msg.d, false, selectedValue);
+            });
+        };
 
         if (associatedControl && associatedControl.val) {
-            associatedControl.val(selectedValue);
+            associatedControl.val(selectedValue).trigger('change');
+        };
+
+        if (typeof ajaxDataBindCallBack === "function") {
+            ajaxDataBindCallBack(targetControl);
         };
     });
 
@@ -27071,10 +27093,10 @@ function createFlaggedRows(grid, bgColorColumnPos, fgColorColumnPos) {
 
 jQuery.fn.updateHiddenFieldOnBlur = function (associatedControl) {
     var element = $(this[0]);
-    associatedControl.val(element.getSelectedValue());
+    associatedControl.val(element.getSelectedValue()).trigger('change');
 
     element.blur(function () {
-        associatedControl.val(element.getSelectedValue());
+        associatedControl.val(element.getSelectedValue()).trigger('change');
     });
 };
 

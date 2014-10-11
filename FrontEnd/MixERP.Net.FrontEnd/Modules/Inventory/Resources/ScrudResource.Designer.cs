@@ -61,6 +61,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account.
+        /// </summary>
+        internal static string account {
+            get {
+                return ResourceManager.GetString("account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Account Code.
         /// </summary>
         internal static string account_code {
@@ -138,6 +147,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         internal static string base_unit_name {
             get {
                 return ResourceManager.GetString("base_unit_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Brand.
+        /// </summary>
+        internal static string brand {
+            get {
+                return ResourceManager.GetString("brand", resourceCulture);
             }
         }
         
@@ -237,6 +255,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         internal static string compound_item_detail_id {
             get {
                 return ResourceManager.GetString("compound_item_detail_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid unit provided..
+        /// </summary>
+        internal static string compound_item_details_unit_chk {
+            get {
+                return ResourceManager.GetString("compound_item_details_unit_chk", resourceCulture);
             }
         }
         
@@ -583,6 +610,24 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid unit provided..
+        /// </summary>
+        internal static string item_cost_prices_unit_chk {
+            get {
+                return ResourceManager.GetString("item_cost_prices_unit_chk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Group.
+        /// </summary>
+        internal static string item_group {
+            get {
+                return ResourceManager.GetString("item_group", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Item Group Code.
         /// </summary>
         internal static string item_group_code {
@@ -628,11 +673,38 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid unit provided..
+        /// </summary>
+        internal static string item_opening_inventory_unit_chk {
+            get {
+                return ResourceManager.GetString("item_opening_inventory_unit_chk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Item Selling Price Id.
         /// </summary>
         internal static string item_selling_price_id {
             get {
                 return ResourceManager.GetString("item_selling_price_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid unit provided..
+        /// </summary>
+        internal static string item_selling_prices_unit_chk {
+            get {
+                return ResourceManager.GetString("item_selling_prices_unit_chk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The reorder quantity must be great than or equal to the reorder level..
+        /// </summary>
+        internal static string items_reorder_quantity_chk {
+            get {
+                return ResourceManager.GetString("items_reorder_quantity_chk", resourceCulture);
             }
         }
         
@@ -709,11 +781,38 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid unit provided..
+        /// </summary>
+        internal static string non_gl_stock_details_unit_chk {
+            get {
+                return ResourceManager.GetString("non_gl_stock_details_unit_chk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PAN Number.
         /// </summary>
         internal static string pan_number {
             get {
                 return ResourceManager.GetString("pan_number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parent.
+        /// </summary>
+        internal static string parent {
+            get {
+                return ResourceManager.GetString("parent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parent Item Group Id.
+        /// </summary>
+        internal static string parent_item_group_id {
+            get {
+                return ResourceManager.GetString("parent_item_group_id", resourceCulture);
             }
         }
         
@@ -817,11 +916,38 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Preferred Shipping Mail Type.
+        /// </summary>
+        internal static string preferred_shipping_mail_type {
+            get {
+                return ResourceManager.GetString("preferred_shipping_mail_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Preferred Shipping Mail Type Id.
         /// </summary>
         internal static string preferred_shipping_mail_type_id {
             get {
                 return ResourceManager.GetString("preferred_shipping_mail_type_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preferred Shipping Package Shape.
+        /// </summary>
+        internal static string preferred_shipping_package_shape {
+            get {
+                return ResourceManager.GetString("preferred_shipping_package_shape", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preferred Supplier.
+        /// </summary>
+        internal static string preferred_supplier {
+            get {
+                return ResourceManager.GetString("preferred_supplier", resourceCulture);
             }
         }
         
@@ -867,6 +993,42 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         internal static string reorder_level {
             get {
                 return ResourceManager.GetString("reorder_level", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reorder Quantity.
+        /// </summary>
+        internal static string reorder_quantity {
+            get {
+                return ResourceManager.GetString("reorder_quantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reorder Unit.
+        /// </summary>
+        internal static string reorder_unit {
+            get {
+                return ResourceManager.GetString("reorder_unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reorder Unit Id.
+        /// </summary>
+        internal static string reorder_unit_id {
+            get {
+                return ResourceManager.GetString("reorder_unit_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select.
+        /// </summary>
+        internal static string Select {
+            get {
+                return ResourceManager.GetString("Select", resourceCulture);
             }
         }
         
@@ -961,11 +1123,29 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid unit provided..
+        /// </summary>
+        internal static string stock_details_unit_chk {
+            get {
+                return ResourceManager.GetString("stock_details_unit_chk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Street.
         /// </summary>
         internal static string street {
             get {
                 return ResourceManager.GetString("street", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tax.
+        /// </summary>
+        internal static string tax {
+            get {
+                return ResourceManager.GetString("tax", resourceCulture);
             }
         }
         

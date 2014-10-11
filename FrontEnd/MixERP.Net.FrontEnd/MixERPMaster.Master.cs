@@ -19,8 +19,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.FrontEnd.Base;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Threading;
 using System.Web.UI;
 using Menu = MixERP.Net.Common.Models.Core.Menu;
@@ -38,42 +40,6 @@ namespace MixERP.Net.FrontEnd
             ManageProfileLiteral.Text = Resources.Titles.ManageProfile;
             MixERPDocumentationLiteral.Text = Resources.Titles.MixERPDocumentation;
             NotificationLiteral.Text = Resources.Titles.Notifications;
-            this.LoadMenu();
-        }
-
-        private void LoadMenu()
-        {
-            //Do not load the root menu items if the ContentMenu was already set on the base page.
-            string contentMenu = ContentMenuLiteral.Text;
-
-            if (!string.IsNullOrWhiteSpace(contentMenu))
-            {
-                return;
-            }
-
-            string menu = "<ul class=\"menu\">";
-
-            Collection<Menu> collection = Data.Core.Menu.GetMenuCollection(0, 0);
-
-            if (collection == null)
-            {
-                return;
-            }
-
-            if (collection.Count > 0)
-            {
-                foreach (Menu model in collection)
-                {
-                    string menuText = model.MenuText;
-                    string menuCode = model.MenuCode;
-                    string url = model.Url;
-                    menu += string.Format(Thread.CurrentThread.CurrentCulture, "<li><a href='{0}' title='{1}' data-menucode='{2}'>{1}</a></li>", this.ResolveUrl(url), menuText, menuCode);
-                }
-            }
-
-            menu += "</ul>";
-
-            this.MenuLiteral.Text = menu;
         }
     }
 }

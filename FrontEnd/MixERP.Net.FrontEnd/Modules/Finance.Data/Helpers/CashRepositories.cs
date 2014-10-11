@@ -57,9 +57,9 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
             return cashRepository;
         }
 
-        public static DataTable GetCashRepositoryDataTable()
+        public static DataTable GetCashRepositoryDataTable(int officeId)
         {
-            return FormHelper.GetTable("office", "cash_repositories", "cash_repository_id");
+            return FormHelper.GetTable("office", "cash_repositories", "office_id", Conversion.TryCastString(officeId), "cash_repository_id");
         }
 
         public static Collection<CashRepository> GetCashRepositories()
@@ -107,12 +107,16 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
         {
             CashRepository cashRepository = new CashRepository();
 
-            cashRepository.CashRepositoryId = Conversion.TryCastInteger(DataRowHelper.GetColumnValue(row, "cash_repository_id"));
+            cashRepository.CashRepositoryId =
+                Conversion.TryCastInteger(DataRowHelper.GetColumnValue(row, "cash_repository_id"));
             cashRepository.OfficeId = Conversion.TryCastInteger(DataRowHelper.GetColumnValue(row, "office_id"));
             cashRepository.Office = GetOffice(cashRepository.OfficeId);
-            cashRepository.CashRepositoryCode = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "cash_repository_code"));
-            cashRepository.CashRepositoryName = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "cash_repository_name"));
-            cashRepository.ParentCashRepositoryId = Conversion.TryCastInteger(DataRowHelper.GetColumnValue(row, "parent_cash_repository_id"));
+            cashRepository.CashRepositoryCode =
+                Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "cash_repository_code"));
+            cashRepository.CashRepositoryName =
+                Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "cash_repository_name"));
+            cashRepository.ParentCashRepositoryId =
+                Conversion.TryCastInteger(DataRowHelper.GetColumnValue(row, "parent_cash_repository_id"));
             cashRepository.ParentCashRepository = GetCashRepository(cashRepository.ParentCashRepositoryId);
             cashRepository.Description = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "description"));
 
@@ -165,8 +169,10 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
             office.Phone = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "phone"));
             office.Fax = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "fax"));
             office.Email = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "email"));
-            office.Url = new Uri(Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "url")), UriKind.RelativeOrAbsolute);
-            office.RegistrationNumber = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "registration_number"));
+            office.Url = new Uri(Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "url")),
+                UriKind.RelativeOrAbsolute);
+            office.RegistrationNumber =
+                Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "registration_number"));
             office.PanNumber = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "pan_number"));
             office.ParentOfficeId = Conversion.TryCastInteger(DataRowHelper.GetColumnValue(row, "parent_office_id"));
             office.ParentOffice = GetOffice(office.ParentOfficeId);
@@ -197,7 +203,8 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 
         public static decimal GetBalance(string cashRepositoryCode)
         {
-            const string sql = "SELECT transactions.get_cash_repository_balance(office.get_cash_repository_id_by_cash_repository_code(@CashRepositoryCode));";
+            const string sql =
+                "SELECT transactions.get_cash_repository_balance(office.get_cash_repository_id_by_cash_repository_code(@CashRepositoryCode));";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@CashRepositoryCode", cashRepositoryCode);
@@ -207,7 +214,8 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 
         public static decimal GetBalance(string cashRepositoryCode, string currencyCode)
         {
-            const string sql = "SELECT transactions.get_cash_repository_balance(office.get_cash_repository_id_by_cash_repository_code(@CashRepositoryCode), @CurrencyCode);";
+            const string sql =
+                "SELECT transactions.get_cash_repository_balance(office.get_cash_repository_id_by_cash_repository_code(@CashRepositoryCode), @CurrencyCode);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@CashRepositoryCode", cashRepositoryCode);

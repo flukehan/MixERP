@@ -19,7 +19,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using MixERP.Net.Common;
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Web;
 using System.Web.Routing;
@@ -47,6 +46,10 @@ namespace MixERP.Net.FrontEnd
         private void Application_End(object sender, EventArgs e)
         {
             //  Code that runs on application shutdown
+        }
+
+        protected void Application_BeginRequest(Object sender, EventArgs e)
+        {
         }
 
         private void Application_Error(object sender, EventArgs e)

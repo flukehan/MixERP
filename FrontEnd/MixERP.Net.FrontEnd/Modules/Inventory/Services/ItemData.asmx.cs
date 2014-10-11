@@ -21,6 +21,7 @@ using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Inventory.Data.Helpers;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Globalization;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.Web.UI.WebControls;
@@ -28,7 +29,7 @@ using System.Web.UI.WebControls;
 namespace MixERP.Net.Core.Modules.Inventory.Services
 {
     /// <summary>
-    /// Summary description for ItemData
+    ///     Summary description for ItemData
     /// </summary>
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
@@ -40,29 +41,24 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            switch (tranBook)
+            if (tranBook.ToLower(CultureInfo.InvariantCulture).Equals("sales"))
             {
-                case "Sales":
-                    values = this.GetItems();
-                    break;
-
-                case "Purchase":
-                    values = this.GetStockItems();
-                    break;
+                return this.GetItems();
             }
 
-            return values;
+            return this.GetStockItems();
         }
 
-        [WebMethod]
+        [WebMethod(EnableSession = true)]
         public Collection<ListItem> GetStores()
         {
+            int officeId = SessionHelper.GetOfficeId();
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = Stores.GetStoreDataTable())
+            using (DataTable table = Stores.GetStoreDataTable(officeId))
             {
                 string displayField = ConfigurationHelper.GetDbParameter("StoreDisplayField");
-                table.Columns.Add("store", typeof(string), displayField);
+                table.Columns.Add("store", typeof (string), displayField);
 
                 foreach (DataRow dr in table.Rows)
                 {
@@ -81,7 +77,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
             using (DataTable table = Agents.GetAgentDataTable())
             {
                 string displayField = ConfigurationHelper.GetDbParameter("SalespersonDisplayField");
-                table.Columns.Add("salesperson", typeof(string), displayField);
+                table.Columns.Add("salesperson", typeof (string), displayField);
 
                 foreach (DataRow dr in table.Rows)
                 {
@@ -100,7 +96,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
             using (DataTable table = Shippers.GetShipperDataTable())
             {
                 string displayField = ConfigurationHelper.GetDbParameter("ShipperDisplayField");
-                table.Columns.Add("shipper", typeof(string), displayField);
+                table.Columns.Add("shipper", typeof (string), displayField);
 
                 foreach (DataRow dr in table.Rows)
                 {
@@ -177,7 +173,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
             using (DataTable table = PriceTypes.GetPriceTypeDataTable())
             {
                 string displayField = ConfigurationHelper.GetDbParameter("PriceTypeDisplayField");
-                table.Columns.Add("price_type", typeof(string), displayField);
+                table.Columns.Add("price_type", typeof (string), displayField);
 
                 foreach (DataRow dr in table.Rows)
                 {

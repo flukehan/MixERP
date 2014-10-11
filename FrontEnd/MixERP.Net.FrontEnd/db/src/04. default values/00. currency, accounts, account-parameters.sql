@@ -3,22 +3,22 @@ ALTER column currency_code DROP NOT NULL;
 
 
 INSERT INTO core.currencies
-SELECT 'NPR', 'रू.', 'Nepali Rupees', 'paisa' UNION ALL
-SELECT 'USD', '$', 'United States Dollar', 'cents' UNION ALL
-SELECT 'GBP', '£', 'Pound Sterling', 'penny' UNION ALL
-SELECT 'EUR', '€', 'Euro', 'cents' UNION ALL
-SELECT 'JPY', '¥', 'Japanese Yen', 'sen' UNION ALL
-SELECT 'CHF', 'CHF', 'Swiss Franc', 'centime' UNION ALL
-SELECT 'CAD', '¢', 'Canadian Dollar', 'cent' UNION ALL
-SELECT 'AUD', 'AU$', 'Australian Dollar', 'cent' UNION ALL
-SELECT 'HKD', 'HK$', 'Hong Kong Dollar', 'cent' UNION ALL
-SELECT 'INR', '₹', 'Indian Rupees', 'paise' UNION ALL
-SELECT 'SEK', 'kr', 'Swedish Krona', 'öre' UNION ALL
-SELECT 'NZD', 'NZ$', 'New Zealand Dollar', 'cent';
+SELECT 'NPR', 'रू.',       'Nepali Rupees',        'paisa'     UNION ALL
+SELECT 'USD', '$',      'United States Dollar', 'cents'     UNION ALL
+SELECT 'GBP', '£',      'Pound Sterling',       'penny'     UNION ALL
+SELECT 'EUR', '€',      'Euro',                 'cents'     UNION ALL
+SELECT 'JPY', '¥',      'Japanese Yen',         'sen'       UNION ALL
+SELECT 'CHF', 'CHF',    'Swiss Franc',          'centime'   UNION ALL
+SELECT 'CAD', '¢',      'Canadian Dollar',      'cent'      UNION ALL
+SELECT 'AUD', 'AU$',    'Australian Dollar',    'cent'      UNION ALL
+SELECT 'HKD', 'HK$',    'Hong Kong Dollar',     'cent'      UNION ALL
+SELECT 'INR', '₹',      'Indian Rupees',        'paise'     UNION ALL
+SELECT 'SEK', 'kr',     'Swedish Krona',        'öre'       UNION ALL
+SELECT 'NZD', 'NZ$',    'New Zealand Dollar',   'cent';
 
 INSERT INTO core.attachment_lookup(book, resource, resource_key)
-SELECT 'transaction', 'transactions.transaction_master', 'transaction_master_id' UNION ALL
-SELECT 'non-gl-transaction', 'transactions.non_gl_stock_master', 'non_gl_stock_master_id';
+SELECT 'transaction',           'transactions.transaction_master',  'transaction_master_id' UNION ALL
+SELECT 'non-gl-transaction',    'transactions.non_gl_stock_master', 'non_gl_stock_master_id';
 
 
 INSERT INTO core.account_masters(account_master_code, account_master_name) SELECT 'BSA', 'Balance Sheet A/C';
@@ -239,20 +239,20 @@ SET currency_code='NPR';
 
 
 INSERT INTO core.account_parameters(parameter_name, account_id)
-SELECT 'Sales', core.get_account_id_by_account_code('30100') UNION ALL
-SELECT 'Sales.Receivables', core.get_account_id_by_account_code('10400') UNION ALL
-SELECT 'Sales.Discount', core.get_account_id_by_account_code('30700') UNION ALL
-SELECT 'Sales.Tax', core.get_account_id_by_account_code('20700') UNION ALL
-SELECT 'Sales.Return', core.get_account_id_by_account_code('20701') UNION ALL
-SELECT 'Purchase', core.get_account_id_by_account_code('40100') UNION ALL
-SELECT 'Purchase.Payables', core.get_account_id_by_account_code('20100') UNION ALL
-SELECT 'Purchase.Discount', core.get_account_id_by_account_code('40270') UNION ALL
-SELECT 'Purchase.Tax', core.get_account_id_by_account_code('20700') UNION ALL
-SELECT 'Purchase.Return', core.get_account_id_by_account_code('10501') UNION ALL
-SELECT 'Inventory', core.get_account_id_by_account_code('10700') UNION ALL
-SELECT 'COGS', core.get_account_id_by_account_code('40200') UNION ALL
-SELECT 'Tax.Payable', core.get_account_id_by_account_code('20700') UNION ALL
-SELECT 'Party.Parent.Account', core.get_account_id_by_account_code('20100');
+SELECT 'Sales',                 core.get_account_id_by_account_code('30100')    UNION ALL
+SELECT 'Sales.Receivables',     core.get_account_id_by_account_code('10400')    UNION ALL
+SELECT 'Sales.Discount',        core.get_account_id_by_account_code('30700')    UNION ALL
+SELECT 'Sales.Tax',             core.get_account_id_by_account_code('20700')    UNION ALL
+SELECT 'Sales.Return',          core.get_account_id_by_account_code('20701')    UNION ALL
+SELECT 'Purchase',              core.get_account_id_by_account_code('40100')    UNION ALL
+SELECT 'Purchase.Payables',     core.get_account_id_by_account_code('20100')    UNION ALL
+SELECT 'Purchase.Discount',     core.get_account_id_by_account_code('40270')    UNION ALL
+SELECT 'Purchase.Tax',          core.get_account_id_by_account_code('20700')    UNION ALL
+SELECT 'Purchase.Return',       core.get_account_id_by_account_code('10501')    UNION ALL
+SELECT 'Inventory',             core.get_account_id_by_account_code('10700')    UNION ALL
+SELECT 'COGS',                  core.get_account_id_by_account_code('40200')    UNION ALL
+SELECT 'Tax.Payable',           core.get_account_id_by_account_code('20700')    UNION ALL
+SELECT 'Party.Parent.Account',  core.get_account_id_by_account_code('20100');
 
 
 ALTER TABLE core.accounts

@@ -18,6 +18,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.Common;
+using MixERP.Net.Common.Base;
+using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory
@@ -32,6 +34,32 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             this.gridPanel.Attributes["style"] = "display:block;";
             this.formPanel.Attributes["style"] = "display:none;";
+            this.ResetForm();
+        }
+
+        private void DisplayError(MixERPException ex)
+        {
+            this.messageLabel.CssClass = this.GetErrorCssClass();
+            string message = ex.Message;
+
+            if (!string.IsNullOrWhiteSpace(ex.DBConstraintName))
+            {
+                string fullyQualifiedResourceClassName = this.ResourceAssembly.GetName().Name + ".Resources." + this.GetResourceClassName();
+                message = LocalizationHelper.GetResourceString(this.ResourceAssembly, fullyQualifiedResourceClassName, ex.DBConstraintName);
+            }
+
+            this.messageLabel.Text = message;
+            this.messageLabel.Style.Add("display", "block");
+            this.messageLabel.Style.Add("font-size", "16px;");
+            this.messageLabel.Style.Add("padding", "8px 0;");
+
+            this.gridPanel.Attributes["style"] = "display:block;";
+            this.formPanel.Attributes["style"] = "display:none;";
+            this.ResetForm();
+        }
+
+        private void ResetForm()
+        {
             PageUtility.RegisterJavascript("resetForm", "$('#form1').each(function(){this.reset();});", this.Page, true);
         }
     }

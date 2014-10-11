@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <!--
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
@@ -21,9 +21,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
 <MixERPPackage>
   <Package Name="MixERP CRM Module" Namespace="MixERP.Net.Core.Modules.CRM">
-    <Dependencies>
-      <Assembly File="MixERP.Net.Core.Modules.CRM.dll" />
-    </Dependencies>
     <DBScripts>
       <Script File="/Scripts/SQL/Menu.sql" />
       <Script File="/Scripts/SQL/Module.sql" />

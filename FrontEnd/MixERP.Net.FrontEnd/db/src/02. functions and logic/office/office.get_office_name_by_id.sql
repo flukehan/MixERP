@@ -3,11 +3,11 @@ RETURNS text
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT office.offices.office_name FROM office.offices
-		WHERE office.offices.office_id=$1
-	);
+    RETURN
+    (
+        SELECT office.offices.office_name FROM office.offices
+        WHERE office.offices.office_id=$1
+    );
 END
 $$
 LANGUAGE plpgsql;

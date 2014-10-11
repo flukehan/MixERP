@@ -19,18 +19,20 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Delivery.ascx.cs" Inherits="MixERP.Net.Core.Modules.Sales.Confirmation.Delivery"
     OverridePath="/Modules/Sales/Delivery.mix" %>
-<mixerp:TransactionChecklist
-    ID="TransactionCheckList1"
+<mixerp:TransactionChecklistForm
+    id="TransactionCheckList1"
     runat="server"
-    AttachmentBookName="transaction"
-    OverridePath="/Modules/Sales/Delivery.mix"
-    DisplayWithdrawButton="true"
-    DisplayViewReportButton="true"
-    DisplayEmailReportButton="true"
-    DisplayCustomerReportButton="true"
-    DisplayPrintReceiptButton="false"
-    DisplayPrintGlEntryButton="true"
-    DisplayAttachmentButton="true"
-    ReportPath="~/Modules/Sales/Reports/DeliveryReport.mix"
-    CustomerReportPath="~/Modules/Sales/Reports/DeliveryNoteReport.mix"
-    GlAdvicePath="~/Modules/Finance/Reports/GLAdviceReport.mix" />
+    attachmentbookname="transaction"
+    overridepath="/Modules/Sales/Delivery.mix"
+    displaywithdrawbutton="true"
+    displayviewreportbutton="true"
+    displayemailreportbutton="true"
+    displaycustomerreportbutton="true"
+    displayprintreceiptbutton="false"
+    displayprintglentrybutton="true"
+    displayattachmentbutton="true"
+    reportpath="~/Modules/Sales/Reports/DeliveryReport.mix"
+    customerreportpath="~/Modules/Sales/Reports/DeliveryNoteReport.mix"
+    gladvicepath="~/Modules/Finance/Reports/GLAdviceReport.mix"
+    viewpath="/Modules/Sales/Delivery.mix"
+    addnewpath="/Modules/Sales/Entry/Delivery.mix" />

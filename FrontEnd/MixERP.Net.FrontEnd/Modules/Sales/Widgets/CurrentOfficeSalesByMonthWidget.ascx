@@ -50,6 +50,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
 <script type="text/javascript">
     $(document).ready(function () {
-        prepareChart("SalesByMonthGridView", "curr-office-sales-by-month-canvas", "curr-office-sales-by-month-legend", 'line', true);
+        prepareChart("SalesByMonthGridView", "curr-office-sales-by-month-canvas", "curr-office-sales-by-month-legend", 'line', false);
     });
 </script>

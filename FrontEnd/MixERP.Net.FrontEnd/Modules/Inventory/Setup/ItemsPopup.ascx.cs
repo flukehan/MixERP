@@ -29,7 +29,8 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
 {
     public partial class ItemsPopup : MixERPUserControl
     {
-        public override void OnControlLoad(object sender, EventArgs e)
+        public override void OnControlLoad(object sender,
+            EventArgs e)
         {
             using (ScrudForm scrud = new ScrudForm())
             {
@@ -37,16 +38,16 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
                 scrud.TableSchema = "core";
                 scrud.Table = "items";
                 scrud.ViewSchema = "core";
-                scrud.View = "items";
+                scrud.View = "items_scrud_view";
 
-                scrud.Width = 3000;
+                scrud.Width = 3500;
 
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
                 scrud.UseDisplayViewsAsParents = true;
 
                 scrud.Text = Titles.Items;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(ItemsPopup));
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (ItemsPopup));
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
@@ -64,19 +65,21 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
             ScrudHelper.AddDisplayField(displayFields, "core.taxes.tax_id", ConfigurationHelper.GetDbParameter("TaxDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.shipping_mail_types.shipping_mail_type_id", ConfigurationHelper.GetDbParameter("ShippingMailTypeDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.shipping_package_shapes.shipping_package_shape_id", ConfigurationHelper.GetDbParameter("ShippingPackageShapeDisplayField"));
+
             return string.Join(",", displayFields);
         }
 
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "core.item_groups.item_group_id", "core.item_groups");
-            ScrudHelper.AddDisplayView(displayViews, "core.brands.brand_id", "core.brands");
-            ScrudHelper.AddDisplayView(displayViews, "core.parties.party_id", "core.supplier_view");
-            ScrudHelper.AddDisplayView(displayViews, "core.units.unit_id", "core.unit_view");
-            ScrudHelper.AddDisplayView(displayViews, "core.taxes.tax_id", "core.tax_view");
-            ScrudHelper.AddDisplayView(displayViews, "core.shipping_mail_types.shipping_mail_type_id", "core.shipping_mail_types");
-            ScrudHelper.AddDisplayView(displayViews, "core.shipping_package_shapes.shipping_package_shape_id", "core.shipping_package_shapes");
+            ScrudHelper.AddDisplayView(displayViews, "core.item_groups.item_group_id", "core.item_group_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.brands.brand_id", "core.brand_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.parties.party_id", "core.supplier_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.units.unit_id", "core.unit_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.taxes.tax_id", "core.tax_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.shipping_mail_types.shipping_mail_type_id", "core.shipping_mail_type_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.shipping_package_shapes.shipping_package_shape_id", "core.shipping_package_shape_selector_view");
+
             return string.Join(",", displayViews);
         }
     }

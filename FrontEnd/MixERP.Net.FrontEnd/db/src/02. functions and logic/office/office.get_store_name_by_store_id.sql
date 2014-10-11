@@ -3,12 +3,12 @@ RETURNS text
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT store_name
-		FROM office.stores
-		WHERE store_id=$1
-	);
+    RETURN
+    (
+        SELECT store_name
+        FROM office.stores
+        WHERE store_id=$1
+    );
 END
 $$
 LANGUAGE plpgsql;

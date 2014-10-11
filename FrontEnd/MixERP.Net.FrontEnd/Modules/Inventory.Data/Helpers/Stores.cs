@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.Common;
+using MixERP.Net.Common.Models.Office;
 using MixERP.Net.DBFactory;
 using System;
 using System.Collections.Generic;
@@ -28,9 +30,9 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
 {
     public static class Stores
     {
-        public static System.Data.DataTable GetStoreDataTable()
+        public static System.Data.DataTable GetStoreDataTable(int officeId)
         {
-            return FormHelper.GetTable("office", "stores", "store_id");
+            return FormHelper.GetTable("office", "stores", "office_id", Conversion.TryCastString(officeId), "store_id");
         }
     }
 }

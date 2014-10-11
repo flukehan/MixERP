@@ -3,12 +3,12 @@ RETURNS INTEGER
 AS
 $$
 BEGIN
-	RETURN
-	(
-		SELECT core.menus.menu_id
-		FROM core.menus
-		WHERE core.menus.menu_code=$1
-	);
+    RETURN
+    (
+        SELECT core.menus.menu_id
+        FROM core.menus
+        WHERE core.menus.menu_code=$1
+    );
 END
 $$
 LANGUAGE plpgsql;

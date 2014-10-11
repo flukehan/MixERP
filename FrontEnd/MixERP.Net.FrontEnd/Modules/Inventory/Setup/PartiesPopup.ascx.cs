@@ -37,7 +37,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
                 scrud.TableSchema = "core";
                 scrud.Table = "parties";
                 scrud.ViewSchema = "core";
-                scrud.View = "party_view";
+                scrud.View = "party_scrud_view";
 
                 scrud.Width = 4000;
 
@@ -59,18 +59,21 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.party_types.party_type_id", ConfigurationHelper.GetDbParameter("PartyTypeDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.frequencies.frequency_id", ConfigurationHelper.GetDbParameter("FrequencyDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.currencies.currency_code", ConfigurationHelper.GetDbParameter("CurrencyDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.party_types.party_type_id",
+                ConfigurationHelper.GetDbParameter("PartyTypeDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.frequencies.frequency_id",
+                ConfigurationHelper.GetDbParameter("FrequencyDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.currencies.currency_code",
+                ConfigurationHelper.GetDbParameter("CurrencyDisplayField"));
             return string.Join(",", displayFields);
         }
 
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "core.party_types.party_type_id", "core.party_types");
-            ScrudHelper.AddDisplayView(displayViews, "core.frequencies.frequency_id", "core.frequencies");
-            ScrudHelper.AddDisplayView(displayViews, "core.currencies.currency_code", "core.currencies");
+            ScrudHelper.AddDisplayView(displayViews, "core.party_types.party_type_id", "core.party_type_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.frequencies.frequency_id", "core.frequency_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.currencies.currency_code", "core.currency_selector_view");
             return string.Join(",", displayViews);
         }
 

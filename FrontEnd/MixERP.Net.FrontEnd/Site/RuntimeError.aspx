@@ -24,17 +24,14 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 <asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceholder" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceholder" runat="server">
-    <h1>Error Occurred</h1>
-
-    <div class="error">I tried my best to complete the task, but it failed miserably.</div>
-    <br />
-
-    <p>You should notify the system administrator if this is an urgent issue. Nonetheless, the exception has been logged.</p>
-    <br />
-
+    <h3>Damn<em>!</em> This Went Completely Wrong. O.O</h3>
+    <hr />
+    <h4 class="exception">Man, this <em>literally</em> sucks! Listen, I really tried my best to <em>get the job done</em>, but it <em>failed miserably</em>. :O</h4>
     <asp:Literal ID="ExceptionLiteral" runat="server" />
-    <br />
+    <hr />
 
+    <h4>So, what went wrong was logged into the repository. You should notify the admin, case you feel this, an urgent issue.</h4>
+    <br />
     <a class="btn btn-danger btn-sm" href="javascript:history.go(-1);">Go Back to the Previous Page</a>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceholder" runat="server">

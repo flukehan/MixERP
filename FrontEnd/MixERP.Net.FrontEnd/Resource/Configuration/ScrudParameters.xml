@@ -38,7 +38,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <add key="GridPanelCssClass" value="panel" />
     <add key="GridViewAlternateRowCssClass" value="gridview-row-alt pointer" />
     <add key="GridViewCssClass" value="scrud-grid table-bordered table-responsive" />
-    <add key="GridViewDefaultWidth" value="100%" />
+    <add key="GridViewDefaultWidth" value="1400" />
     <add key="GridViewRowCssClass" value="gridview-row pointer" />
     <add key="HeaderPath" value="~/Reports/Assets/Header.aspx" />
     <add key="ItemSelectorAnchorCssClass" value="" />
@@ -56,6 +56,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <add key="SuccessCssClass" value="lead text-success" />
     <add key="TemplatePath" value="~/Reports/Print.html" />
     <add key="TempMediaPath" value="~/Media/Temp" />
+    <add key="TitleLabelCssClass" value="lead heading" />
     <add key="UpdateProgressSpinnerImageCssClass" value="ajax-loader" />
     <add key="UpdateProgressSpinnerImagePath" value="~/Resource/Static/images/spinner.gif" />
     <add key="UpdateProgressTemplateCssClass" value="ajax-container" />

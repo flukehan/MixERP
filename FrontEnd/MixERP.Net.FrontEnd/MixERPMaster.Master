@@ -26,6 +26,59 @@
         <link href="/bundles/stylesheets/master-page.min.css" rel="stylesheet" />
     </asp:PlaceHolder>
 
+    <script src="/Scripts/fancytree/jquery.fancytree.js" type="text/javascript"></script>
+    <script src="/Scripts/fancytree/jquery.fancytree.filter.js" type="text/javascript"></script>
+    <link href="/Scripts/fancytree/skin-win8/ui.fancytree.css" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript">
+        $(function () {
+            $("#tree").fancytree({
+                extensions: ["filter"],
+                filter: {
+                    mode: "hide"
+                },
+                autoActivate: false,
+                autoCollapse: false,
+                autoScroll: false,
+                clickFolderMode: 1,
+                minExpandLevel: 2,
+                activeVisible: true,
+                tabbable: true,
+                focus: function (event, data) {
+                    var node = data.node;
+                    if (node.data.href) {
+
+                        if (node.data.menucode) {
+                            $("#SearchInput").val(node.data.menucode);
+                        };
+
+                        node.scheduleAction("activate", 1000);
+                    };
+                },
+                blur: function (event, data) {
+                    data.node.scheduleAction("cancel");
+                },
+                activate: function (event, data) {
+                    var node = data.node;
+                    var e = data.originalEvent;
+
+                    if (e) {
+                        if (node.isActive() && node.data.href && e.type == "keydown") {
+                            window.location = node.data.href;
+                        };
+                    };
+                },
+                click: function (event, data) { // allow re-loads
+                    var node = data.node;
+
+                    if (node.isActive() && node.data.href) {
+                        window.location = node.data.href;
+                    };
+                }
+            });
+        });
+    </script>
+
     <asp:ContentPlaceHolder ID="ScriptContentPlaceholder" runat="server">
     </asp:ContentPlaceHolder>
     <asp:ContentPlaceHolder ID="StyleSheetContentPlaceholder" runat="server">
@@ -39,7 +92,7 @@
 </head>
 <body>
     <form id="form1" runat="server" enctype="multipart/form-data" method="post" submitdisabledcontrols="true" defaultbutton="SwallowSubmit">
-        <asp:Button runat="server" ID="SwallowSubmit" OnClientClick="return false;" CssClass="hidden" />
+        <asp:Button runat="server" ID="SwallowSubmit" OnClientClick=" return false; " CssClass="hidden" />
 
         <asp:ScriptManager runat="server" ID="ScriptManager1" />
 
@@ -103,7 +156,6 @@
             </tr>
             <tr>
                 <td id="sidebar" class="left">
-
                     <div id="Search">
                         <div class="form-group has-success has-feedback">
                             <label class="control-label" for="SearchInput">&nbsp;</label>
@@ -111,6 +163,7 @@
                             <span class="glyphicon glyphicon-search form-control-feedback"></span>
                         </div>
                     </div>
+
                     <div>
                         <asp:Literal runat="server" ID="MenuLiteral" />
                         <asp:Literal runat="server" ID="ContentMenuLiteral" />
@@ -147,16 +200,16 @@
             var currencyDecimalPlaces = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetCurrencyDecimalPlaces() %>";
 
             var duplicateEntryLocalized = "<%= Resources.Warnings.DuplicateEntry %>";
-            var selectLocalized = "<%=Resources.Titles.Select %>";
-            var noneLocalized = "<%=Resources.Titles.None %>";
+            var selectLocalized = "<%= Resources.Titles.Select %>";
+            var noneLocalized = "<%= Resources.Titles.None %>";
             var invalidDateWarningLocalized = "<%= Resources.Warnings.InvalidDate %>";
-            var areYouSureLocalized = "<%=Resources.Questions.AreYouSure %>";
+            var areYouSureLocalized = "<%= Resources.Questions.AreYouSure %>";
             var nothingSelectedLocalized = "<%= Resources.Warnings.NothingSelected %>";
-            var yesLocalized = "<%=Resources.Titles.Yes %>";
-            var noLocalized = "<%=Resources.Titles.No %>";
+            var yesLocalized = "<%= Resources.Titles.Yes %>";
+            var noLocalized = "<%= Resources.Titles.No %>";
 
-            var daysLowerCaseLocalized = "<%=Resources.Labels.DaysLowerCase %>";
-            var gridViewEmptyWarningLocalized = "<%=Resources.Warnings.GridViewEmpty%>";
+            var daysLowerCaseLocalized = "<%= Resources.Labels.DaysLowerCase %>";
+            var gridViewEmptyWarningLocalized = "<%= Resources.Warnings.GridViewEmpty %>";
 
             var duplicateFileLocalized = "<% = Resources.Warnings.DuplicateFiles %>";
 
@@ -186,48 +239,73 @@
                 $(".preview").colorbox({ iframe: true, innerWidth: 1024, innerHeight: 450, overlayClose: false });
             };
 
-            $(document).on('ready', function () {
-                initializeItemSelector();
-            });
-
             $(document).ready(function () {
-                shortcut.add("CTRL+M", function () {
-                    $('#SearchInput').focus();
+                initializeItemSelector();
+
+                var tree = $("#tree").fancytree("getTree");
+
+                var expanded = $(".expanded");
+                expanded.each(function () {
+                    tree.getNodeByKey($(this).attr("id")).parent.toggleExpanded();
                 });
 
-                $('#SearchInput').focus();
+                var searchInput = $('#SearchInput');
+
+                shortcut.add("CTRL+M", function () {
+                    searchInput.focus();
+                });
+
+                searchInput.focus();
+
+                searchInput.keyup(function (e) {
+                    var query = $(this).val();
+                    var match = tree.filterNodes(query, true);
+                    var nodeId = getNodeIdByMenuCode(query);
+
+                    if (match && nodeId) {
+                        var node = tree.getNodeByKey(nodeId);
+
+                        if (node) {
+                            node.setActive();
+
+                            if (e.which === 13) {
+                                window.location = node.data.href;
+                            };
+                        };
+                    };
+                });
+
+                var overflowDiv = $("#OverflowDiv");
+                var sideBar = $("#sidebar");
+
+                if (overflowDiv && sideBar) {
+                    var windowWidth = $(window).width();
+                    var sidebarWidth = sideBar.width();
+                    var margin = 100;
+
+                    overflowDiv.css("width", (windowWidth - sidebarWidth - margin) + "px");
+                    overflowDiv.css("overflow", "auto");
+                };
             });
+
+            var getNodeIdByMenuCode = function (menuCode) {
+
+                var nodeId;
+
+                $("li").each(function () {
+                    if ($(this).attr("data-menucode")) {
+                        if ($(this).attr("data-menucode").toLowerCase() === menuCode.toLowerCase()) {
+                            console.log($(this).attr("data-menucode"));
+                            console.log($(this).attr("id"));
+                            nodeId = $(this).attr("id");
+                        };
+                    };
+                });
+
+                return nodeId;
+            };
 
             var anchors = $("a.sub-menu-anchor");
-
-            //Changes the search text box on menu anchor hover.
-            var anchors = $("ul.menu").find("a");
-            anchors.hover(function () {
-                $("#SearchInput").val(($(this).attr("data-menucode")));
-            });
-
-            //Selects menu item from the typed query.
-            $("#SearchInput").keyup(function (e) {
-                var code = e.which;
-                var query = $(this).val();
-
-                anchors.each(function () {
-                    var dataMenuCode = $(this).attr("data-menucode");
-
-                    $(this).removeClass("menu-selected");
-
-                    if (dataMenuCode) {
-                        if (dataMenuCode.toLowerCase() == query.toLowerCase()) {
-                            $(this).addClass("menu-selected");
-
-                            //Return Key
-                            if (code == 13) {
-                                window.location = $(this).attr("href");
-                            }
-                        }
-                    }
-                });
-            });
 
             //Widget Support
             $('#sortable-container').sortable({ placeholder: "ui-state-highlight", helper: 'clone', handle: 'h3' });

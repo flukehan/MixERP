@@ -234,6 +234,9 @@
   <data name="repository" xml:space="preserve">
     <value>Repository</value>
   </data>
+  <data name="Select" xml:space="preserve">
+    <value>Select</value>
+  </data>
   <data name="statement_reference" xml:space="preserve">
     <value>Statement Reference</value>
   </data>
