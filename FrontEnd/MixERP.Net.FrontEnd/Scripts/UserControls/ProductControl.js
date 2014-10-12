@@ -596,7 +596,7 @@ var addRow = function () {
     itemCodeTextBox.val(itemDropDownList.getSelectedValue());
     var itemCode = itemCodeTextBox.val();
     var itemName = itemDropDownList.getSelectedText();
-    var quantity = parseFloat2(quantityTextBox.val());
+    var quantity = parseInt2(quantityTextBox.val());
     var unitId = parseFloat2(unitIdHidden.val());
     var unitName = unitNameHidden.val();
     var price = parseFloat2(priceTextBox.val());

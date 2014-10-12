@@ -71,8 +71,97 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     });
 
     addButton.click(function () {
-        alert("Add");
+        addRow();
     });
+
+    var addRow = function () {
+        itemCodeInputText.val(itemSelect.getSelectedValue());
+
+        var tranType = transactionTypeSelect.getSelectedValue();
+        var storeName = storeSelect.getSelectedText();
+        var itemCode = itemCodeInputText.val();
+        var itemName = itemSelect.getSelectedText();
+        var unitName = unitSelect.getSelectedText();
+        var quantity = parseInt2(quantityInputText.val());
+
+        if (isNullOrWhiteSpace(tranType) || tranType === selectLocalized) {
+            makeDirty(transactionTypeSelect);
+            return;
+        };
+
+        if (isNullOrWhiteSpace(storeName) || storeName === selectLocalized) {
+            makeDirty(storeSelect);
+            return;
+        };
+
+        if (isNullOrWhiteSpace(itemCode)) {
+            makeDirty(itemCodeInputText);
+            return;
+        };
+
+        if (isNullOrWhiteSpace(itemName) || itemName === selectLocalized) {
+            makeDirty(itemSelect);
+            return;
+        };
+
+        if (isNullOrWhiteSpace(unitName) || unitName === selectLocalized) {
+            makeDirty(unitSelect);
+            return;
+        };
+
+        if (quantity <= 0) {
+            makeDirty(quantityInputText);
+            return;
+        };
+
+        removeDirty(transactionTypeSelect);
+        removeDirty(storeSelect);
+        removeDirty(itemCodeInputText);
+        removeDirty(itemSelect);
+        removeDirty(unitSelect);
+        removeDirty(quantityInputText);
+
+        appendToTable(tranType, storeName, itemCode, itemName, unitName, quantity);
+        itemCodeInputText.val("");
+        quantityInputText.val("");
+        transactionTypeSelect.focus();
+    };
+
+    function appendToTable(tranType, storeName, itemCode, itemName, unitName, quantity) {
+        var rows = transferGridView.find("tr:not(:first-child):not(:last-child)");
+        var match = false;
+
+        rows.each(function () {
+            var row = $(this);
+            if (getColumnText(row, 0) !== tranType &&
+                getColumnText(row, 1) === storeName &&
+                getColumnText(row, 2) === itemCode) {
+                $.notify(duplicateEntryLocalized);
+
+                makeDirty(itemSelect);
+                match = true;
+            };
+
+            if (getColumnText(row, 0) === tranType &&
+                getColumnText(row, 1) === storeName &&
+                getColumnText(row, 2) === itemCode &&
+                getColumnText(row, 4) === unitName) {
+
+                setColumnText(row, 5, parseFloat2(getColumnText(row, 5)) + quantity);
+
+                addDanger(row);
+                match = true;
+                return;
+            }
+
+        });
+
+        if (!match) {
+            var html = "<tr class='grid2-row'><td>" + tranType + "</td><td>" + storeName + "</td><td>" + itemCode + "</td><td>" + itemName + "</td><td>" + unitName + "</td><td class='text-right'>" + quantity + "</td>"
+                + "</td><td><span class='glyphicon glyphicon-remove-circle pointer span-icon' onclick='removeRow($(this));'></span><span class='glyphicon glyphicon-ok-sign pointer span-icon' onclick='toggleDanger($(this));'></span><span class='glyphicon glyphicon glyphicon-thumbs-up pointer span-icon' onclick='toggleSuccess($(this));'></span></td></tr>";
+            transferGridView.find("tr:last").before(html);
+        }
+    };
 
     itemSelect.change(function () {
         itemCodeInputText.val(itemSelect.getSelectedValue());

@@ -560,8 +560,10 @@
     <Content Include="Resource\Configuration\PartyControlParameters.xml" />
     <Content Include="Resource\Icons\checklist-16.png" />
     <Content Include="Resource\Icons\insert-16.png" />
+    <Content Include="Resource\Static\Emails\index.html" />
     <Content Include="Resource\Static\images\not-image-file.png" />
     <Content Include="Resource\Static\Templates\EmailTemplate.html" />
+    <Content Include="Resource\Temp\Images\index.html" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\ajax-file-upload.js" />
     <Content Include="Scripts\bootstrap\css\bootstrap-theme.css" />
@@ -1151,8 +1153,6 @@
     <Folder Include="Resource\DatabaseBackups\" />
     <Folder Include="Resource\Frameworks\" />
     <Folder Include="Resource\Logo\" />
-    <Folder Include="Resource\Static\Emails\" />
-    <Folder Include="Resource\Temp\Images\" />
     <Folder Include="Scripts\CodeMirror\bin\" />
   </ItemGroup>
   <ItemGroup>
