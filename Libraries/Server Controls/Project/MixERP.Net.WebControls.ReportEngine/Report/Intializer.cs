@@ -18,10 +18,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.Common;
-using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.ReportEngine.Data;
 using MixERP.Net.WebControls.ReportEngine.Helpers;
-
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
@@ -40,16 +38,12 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
-
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Threading;
-using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Xml;
 
@@ -57,6 +51,11 @@ namespace MixERP.Net.WebControls.ReportEngine
 {
     public partial class Report
     {
+        private Collection<DataTable> dataTableCollection;
+        private Collection<string> decimalFieldIndicesCollection;
+        private Collection<string> runningTotalFieldIndicesCollection;
+        private Collection<int> runningTotalTextColumnIndexCollection;
+
         public void InitializeReport()
         {
             this.EnsureChildControls();
@@ -86,7 +85,7 @@ namespace MixERP.Net.WebControls.ReportEngine
         }
 
         /// <summary>
-        /// Initializes the literals by providing a default value if those were not provided.
+        ///     Initializes the literals by providing a default value if those were not provided.
         /// </summary>
         private void InitializeLiterals()
         {
@@ -105,8 +104,6 @@ namespace MixERP.Net.WebControls.ReportEngine
                 this.InvalidLocationErrorMessage = "Total";
             }
         }
-
-        private Collection<string> decimalFieldIndicesCollection;
 
         private void SetDecimalFields()
         {
@@ -139,9 +136,6 @@ namespace MixERP.Net.WebControls.ReportEngine
                 this.decimalFieldIndicesCollection.Add(decimalFieldIndices);
             }
         }
-
-        private Collection<int> runningTotalTextColumnIndexCollection;
-        private Collection<string> runningTotalFieldIndicesCollection;
 
         private void SetRunningTotalFields()
         {
@@ -187,8 +181,6 @@ namespace MixERP.Net.WebControls.ReportEngine
                 this.runningTotalFieldIndicesCollection.Add(runningTotalFieldIndices);
             }
         }
-
-        private Collection<DataTable> dataTableCollection;
 
         private void SetDataSources()
         {
@@ -357,7 +349,7 @@ namespace MixERP.Net.WebControls.ReportEngine
                         grid.CssClass = "report";
 
                         grid.Width = Unit.Percentage(100);
-                        grid.GridLines = GridLines.Both;
+                        grid.GridLines = GridLines.None;
                         grid.RowDataBound += this.GridView_RowDataBound;
                         grid.DataBound += this.GridView_DataBound;
                         this.gridPlaceHolder.Controls.Add(grid);

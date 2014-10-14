@@ -24,15 +24,10 @@ namespace MixERP.Net.Common.Base
     [Serializable()]
     public class MixERPException : Exception
     {
+        private readonly string dbConstraintName;
+
         public MixERPException()
         {
-        }
-
-        private string dbConstraintName;
-
-        public string DBConstraintName
-        {
-            get { return dbConstraintName; }
         }
 
         public MixERPException(string message)
@@ -49,6 +44,11 @@ namespace MixERP.Net.Common.Base
             : base(message, e)
         {
             this.dbConstraintName = dbConstraintName;
+        }
+
+        public string DBConstraintName
+        {
+            get { return dbConstraintName; }
         }
     }
 }

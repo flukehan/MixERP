@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MixERP.Net.WebControls.TransactionChecklist.Resources {
+namespace MixERP.Net.HtmlParser.Resources {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace MixERP.Net.WebControls.TransactionChecklist.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Warnings {
+    internal class Messages {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Warnings() {
+        internal Messages() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace MixERP.Net.WebControls.TransactionChecklist.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MixERP.Net.WebControls.TransactionChecklist.Resources.Warnings", typeof(Warnings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MixERP.Net.HtmlParser.Resources.Messages", typeof(Messages).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,11 +61,20 @@ namespace MixERP.Net.WebControls.TransactionChecklist.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Could not determine image parser type for email..
+        ///   Looks up a localized string similar to Could not determine virtual path to create an image..
         /// </summary>
-        internal static string CouldNotDetermineEmailImageParserType {
+        internal static string CouldNotDetermineVirtualPathError {
             get {
-                return ResourceManager.GetString("CouldNotDetermineEmailImageParserType", resourceCulture);
+                return ResourceManager.GetString("CouldNotDetermineVirtualPathError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot create an image when the temp directory is null..
+        /// </summary>
+        internal static string TempDirectoryNullError {
+            get {
+                return ResourceManager.GetString("TempDirectoryNullError", resourceCulture);
             }
         }
     }

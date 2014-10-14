@@ -3,75 +3,65 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title>MixERP Report</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=9" />
-    <asp:PlaceHolder runat="server">
-        <script src="<% = MixERP.Net.Common.PageUtility.ResolveAbsoluteUrl(this.Page, "/Scripts/jquery-1.9.1.js")%>"></script>
-        <script src="<% = MixERP.Net.Common.PageUtility.ResolveAbsoluteUrl(this.Page, "/Scripts/mixerp.js") %>"></script>
-        <script src="<% = MixERP.Net.Common.PageUtility.ResolveAbsoluteUrl(this.Page, "/Scripts/chartjs/Chart.min.js") %>"></script>
-        <script src="<% = MixERP.Net.Common.PageUtility.ResolveAbsoluteUrl(this.Page, "/Scripts/chartjs/legend.js")%>"></script>
-    </asp:PlaceHolder>
+    <head runat="server">
+        <title>MixERP Report</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=9" />
+        <asp:PlaceHolder runat="server">
+            <script src="<% = MixERP.Net.Common.PageUtility.ResolveAbsoluteUrl(this.Page, "/Scripts/jquery-1.9.1.js") %>"></script>
+            <script src="<% = MixERP.Net.Common.PageUtility.ResolveAbsoluteUrl(this.Page, "/Scripts/mixerp.js") %>"></script>
+            <script src="<% = MixERP.Net.Common.PageUtility.ResolveAbsoluteUrl(this.Page, "/Scripts/chartjs/Chart.min.js") %>"></script>
+            <script src="<% = MixERP.Net.Common.PageUtility.ResolveAbsoluteUrl(this.Page, "/Scripts/chartjs/legend.js") %>"></script>
+        </asp:PlaceHolder>
 
-    <style type="text/css">
-        html, p, table, div, td {
-            font-size: 12px;
-            background-color: #FFFFFF;
-            font-weight: lighter;
-        }
+        <style type="text/css">
+            html, p, table, div, td {
+                font-size: 12px;
+                background-color: #FFFFFF;
+                font-weight: lighter;
+            }
 
-        html, body, div, table, p, h1, h2, h3, h4, h5, h6, td, th {
-            font-family: 'Segoe UI', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
-        }
+            html, body, div, table, p, h1, h2, h3, h4, h5, h6, td, th { font-family: 'Segoe UI', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important; }
 
-        .table, .report {
-            border-collapse: collapse;
-        }
+            .table, .report { border-collapse: collapse; }
 
-            .table th, .table td, .report th, .report td {
+            .table th, .table td, .report th, .report td { padding: 6px; }
+
+            .table td, .report td, .report th { border: 1px solid black; }
+
+            .report-command {
+                position: fixed;
+                right: 24px;
+                top: 24px;
                 padding: 6px;
+                background-color: #f1e0fb;
+                border: 1px solid #e2c2f5;
+                -ms-border-radius: 5px;
+                border-radius: 5px;
             }
 
-            .table td, .report td {
-                border: 1px solid black;
+            .report-command:hover { background-color: #edd8fa; }
+
+            .report-command input { padding: 2px; }
+
+            th { font-weight: bold; }
+
+            @media print {
+                .hide { display: none; }
             }
-
-        .report-command {
-            position: fixed;
-            right: 24px;
-            top: 24px;
-            padding: 6px;
-            background-color: #f1e0fb;
-            border: 1px solid #e2c2f5;
-            -ms-border-radius: 5px;
-            border-radius: 5px;
-        }
-
-            .report-command:hover {
-                background-color: #edd8fa;
-            }
-
-            .report-command input {
-                padding: 2px;
-            }
-
-        th {
-            font-weight: bold;
-        }
-    </style>
-    <asp:ContentPlaceHolder ID="head" runat="server">
-    </asp:ContentPlaceHolder>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <asp:ContentPlaceHolder ID="BodyContentPlaceholder" runat="server">
+        </style>
+        <asp:ContentPlaceHolder ID="head" runat="server">
         </asp:ContentPlaceHolder>
+    </head>
+    <body>
+        <form id="form1" runat="server">
+            <asp:ContentPlaceHolder ID="BodyContentPlaceholder" runat="server">
+            </asp:ContentPlaceHolder>
 
-        <script type="text/javascript">
-            var closeWindow = function () {
-                parent.$.fn.colorbox.close();
-            };
-        </script>
-    </form>
-</body>
+            <script type="text/javascript">
+                var closeWindow = function() {
+                    parent.$.fn.colorbox.close();
+                };
+            </script>
+        </form>
+    </body>
 </html>

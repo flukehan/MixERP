@@ -19,7 +19,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
-
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
@@ -38,7 +37,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
-
 using System;
 using System.Threading;
 using System.Web;
@@ -86,7 +84,7 @@ namespace MixERP.Net.WebControls.ReportEngine
 
         private void GridView_DataBound(object sender, EventArgs e)
         {
-            GridView grid = (GridView)sender;
+            GridView grid = (GridView) sender;
 
             int arg = Conversion.TryCastInteger(grid.ID.Replace("GridView", ""));
 
@@ -157,13 +155,13 @@ namespace MixERP.Net.WebControls.ReportEngine
 
                     cellText = localized;
                     e.Row.Cells[i].Text = cellText;
-                    e.Row.Cells[i].HorizontalAlign = HorizontalAlign.Left;
+                    e.Row.Cells[i].Attributes.Add("style", "text-align:left;");
                 }
             }
 
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                GridView grid = (GridView)sender;
+                GridView grid = (GridView) sender;
                 int arg = Conversion.TryCastInteger(grid.ID.Replace("GridView", ""));
 
                 //Apply formatting on decimal fields

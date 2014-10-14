@@ -18,7 +18,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System.Configuration;
-using System.Web;
 using System.Web.Hosting;
 
 namespace MixERP.Net.Common.Helpers
@@ -34,6 +33,12 @@ namespace MixERP.Net.Common.Helpers
         public static string GetMessagingParameter(string keyName)
         {
             string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["MessagingParameterConfigFileLocation"]);
+            return GetConfigurationValues(path, keyName);
+        }
+
+        public static string GetTransactionChecklistParameter(string keyName)
+        {
+            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["TransactionChecklistConfigFileLocation"]);
             return GetConfigurationValues(path, keyName);
         }
 
@@ -63,7 +68,7 @@ namespace MixERP.Net.Common.Helpers
 
         public static string GetConfigurationValues(string configFileName, string sectionName)
         {
-            ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap { ExeConfigFilename = configFileName };
+            ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap {ExeConfigFilename = configFileName};
             Configuration config = ConfigurationManager.OpenMappedExeConfiguration(configFileMap, ConfigurationUserLevel.None);
             AppSettingsSection section = config.GetSection("appSettings") as AppSettingsSection;
 

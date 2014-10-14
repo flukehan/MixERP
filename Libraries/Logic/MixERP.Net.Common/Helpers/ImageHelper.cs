@@ -18,42 +18,73 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MixERP.Net.Common.Helpers
 {
     public static class ImageHelper
     {
-        public static ImageFormat GetImageFormat(String path)
+        public static ImageFormat GetImageFormat(string extension)
         {
-            switch (Path.GetExtension(path))
+            switch (extension)
             {
-                case ".bmp": return ImageFormat.Bmp;
-                case ".gif": return ImageFormat.Gif;
-                case ".jpg": return ImageFormat.Jpeg;
-                case ".png": return ImageFormat.Png;
-                default: break;
+                case "bmp":
+                    return ImageFormat.Bmp;
+                case "gif":
+                    return ImageFormat.Gif;
+                case "jpg":
+                    return ImageFormat.Jpeg;
+                case "png":
+                    return ImageFormat.Png;
             }
+
             return ImageFormat.Jpeg;
+        }
+
+        public static ImageCodecInfo GetEncoder(ImageFormat format)
+        {
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
+
+            foreach (ImageCodecInfo codec in codecs)
+            {
+                if (codec.FormatID == format.Guid)
+                {
+                    return codec;
+                }
+            }
+            return null;
+        }
+
+        public static string GetFileExtension(ImageFormat format)
+        {
+            return ImageCodecInfo.GetImageEncoders()
+                .First(x => x.FormatID == format.Guid)
+                .FilenameExtension
+                .Split(new[] {';'}, StringSplitOptions.RemoveEmptyEntries)
+                .First()
+                .Trim('*')
+                .ToLower();
         }
 
         public static string GetContentType(string extension)
         {
             switch (extension)
             {
-                case ".bmp": return "Image/bmp";
-                case ".gif": return "Image/gif";
-                case ".jpg": return "Image/jpeg";
-                case ".jpeg": return "Image/jpeg";
-                case ".png": return "Image/png";
-                default: return "text/plain";
+                case ".bmp":
+                    return "Image/bmp";
+                case ".gif":
+                    return "Image/gif";
+                case ".jpg":
+                    return "Image/jpeg";
+                case ".jpeg":
+                    return "Image/jpeg";
+                case ".png":
+                    return "Image/png";
+                default:
+                    return "text/plain";
             }
         }
 
@@ -79,15 +110,15 @@ namespace MixERP.Net.Common.Helpers
 
             float scalingRatio = CalculateScalingRatio(image.Size, thumbnailSize);
 
-            int scaledWidth = (int)Math.Round((float)image.Size.Width * scalingRatio);
-            int scaledHeight = (int)Math.Round((float)image.Size.Height * scalingRatio);
-            int scaledLeft = (thumbnailSize.Width - scaledWidth) / 2;
-            int scaledTop = (thumbnailSize.Height - scaledHeight) / 2;
+            int scaledWidth = (int) Math.Round((float) image.Size.Width*scalingRatio);
+            int scaledHeight = (int) Math.Round((float) image.Size.Height*scalingRatio);
+            int scaledLeft = (thumbnailSize.Width - scaledWidth)/2;
+            int scaledTop = (thumbnailSize.Height - scaledHeight)/2;
 
             // For portrait mode, adjust the vertical top of the crop area so that we get more of the top area
             if (scaledWidth < scaledHeight && scaledHeight > thumbnailSize.Height)
             {
-                scaledTop = (thumbnailSize.Height - scaledHeight) / 4;
+                scaledTop = (thumbnailSize.Height - scaledHeight)/4;
             }
 
             Rectangle cropArea = new Rectangle(scaledLeft, scaledTop, scaledWidth, scaledHeight);
@@ -107,18 +138,18 @@ namespace MixERP.Net.Common.Helpers
 
         private static float CalculateScalingRatio(Size originalSize, Size targetSize)
         {
-            float originalAspectRatio = (float)originalSize.Width / (float)originalSize.Height;
-            float targetAspectRatio = (float)targetSize.Width / (float)targetSize.Height;
+            float originalAspectRatio = (float) originalSize.Width/(float) originalSize.Height;
+            float targetAspectRatio = (float) targetSize.Width/(float) targetSize.Height;
 
             float scalingRatio = 0;
 
             if (targetAspectRatio >= originalAspectRatio)
             {
-                scalingRatio = (float)targetSize.Width / (float)originalSize.Width;
+                scalingRatio = (float) targetSize.Width/(float) originalSize.Width;
             }
             else
             {
-                scalingRatio = (float)targetSize.Height / (float)originalSize.Height;
+                scalingRatio = (float) targetSize.Height/(float) originalSize.Height;
             }
 
             return scalingRatio;

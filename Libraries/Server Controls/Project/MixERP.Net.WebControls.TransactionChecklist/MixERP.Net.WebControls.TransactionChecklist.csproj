@@ -44,12 +44,11 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
@@ -101,6 +100,10 @@
     <ProjectReference Include="..\..\..\Logic\MixERP.net.Common\MixERP.Net.Common.csproj">
       <Project>{D5A09C22-8F48-4FB2-A14D-C62C8C8FCEC0}</Project>
       <Name>MixERP.Net.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Logic\MixERP.Net.HtmlParser\MixERP.Net.HtmlParser.csproj">
+      <Project>{0ef8a910-9603-477e-9ef7-aae9aea46160}</Project>
+      <Name>MixERP.Net.HtmlParser</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Logic\MixERP.Net.Messaging\MixERP.Net.Messaging.csproj">
       <Project>{D29B7B60-76B2-4A00-A8FA-7654519AFCD4}</Project>
