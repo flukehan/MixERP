@@ -72,6 +72,7 @@
     <Content Include="Index.ascx" />
     <Content Include="Package.xml" />
     <Content Include="Scripts\Setup\Parties.js" />
+    <Content Include="Services\Entry\Transfer.asmx" />
     <Content Include="Setup\CompoundItemDetails.ascx" />
     <Content Include="Setup\CompoundItems.ascx" />
     <Content Include="SQL\Menu.sql" />
@@ -124,6 +125,10 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Titles.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Entry\Transfer.asmx.cs">
+      <DependentUpon>Transfer.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Services\ItemData.asmx.cs">
       <DependentUpon>ItemData.asmx</DependentUpon>

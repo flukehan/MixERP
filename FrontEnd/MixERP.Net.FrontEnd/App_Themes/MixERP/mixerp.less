@@ -142,6 +142,10 @@ footer {
     -webkit-box-shadow: none;
 }
 
+#tree {
+    color: @search-text-color;
+}
+
 .icon {
     padding: 6px;
     cursor: pointer;
@@ -471,58 +475,22 @@ tr.form-group td {
 
 /*Bootstrap Override End*/
 
-/*Fancytree Override Start*/
-@menu-color-primary-hover-dark: #4e0572;
+/*jstree Override Start*/
 
-span.fancytree-node:hover, [data-selected=true] {
-    background-color: @menu-color-primary-hover-dark;
-    border-color: @menu-color-primary-hover-dark;
+.jstree-selected div, .jstree-clicked, .jstree-wholerow-hovered, .jstree-hovered, .jstree-default .jstree-wholerow-clicked {
+    background: #4E0572 !important;
+    background: -moz-linear-gradient(top, #4E0572 0%, #570680 100%) !important;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #4E0572), color-stop(100%, #570680));
+    background: -webkit-linear-gradient(top, #4E0572 0%, #570680 100%);
+    background: -o-linear-gradient(top, #4E0572 0%, #570680 100%);
+    background: -ms-linear-gradient(top, #4E0572 0%, #570680 100%);
+    background: linear-gradient(to bottom, #4E0572 0%, #570680 100%);
+    /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@color1', endColorstr='@color2',GradientType=0 );*/
+    color: #FFFFFF !important;
 }
 
-.fancytree-container.fancytree-treefocus span.fancytree-node.fancytree-focused {
-    border-color: #3399FF;
+.jstree-search {
+    color: #ffffff !important;
+    font-style: normal !important;
 }
-
-span.fancytree-node.fancytree-active,
-span.fancytree-node.fancytree-selected {
-    background-color: @menu-color-primary-hover-dark;
-    border-color: @menu-color-primary-hover-dark;
-}
-
-.fancytree-container.fancytree-treefocus span.fancytree-node.fancytree-active,
-.fancytree-container.fancytree-treefocus span.fancytree-node.fancytree-selected,
-span.fancytree-node.fancytree-active:hover,
-span.fancytree-node.fancytree-selected:hover {
-    background-color: @menu-color-primary-hover-dark;
-    border-color: @menu-color-primary-hover-dark;
-}
-
-.fancytree-node.fancytree-selected {
-    font-style: italic;
-}
-
-.ui-fancytree, .fancytree-container {
-    font-family: 'Segoe UI', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    border: 0 none !important;
-    outline: none;
-}
-
-#tree ul {
-    background-color: @sidebar-background-color;
-}
-
-#tree ul li ul {
-    background-color: transparent;
-}
-
-.ui-fancytree span {
-    color: @search-text-color !important;
-    font-weight: lighter !important;
-    font-size: 10pt;
-}
-
-#tree ul:focus {
-    background-color: @search-background-color;
-}
-
-/*Fancytree Override End*/
+/*jstree Override End*/

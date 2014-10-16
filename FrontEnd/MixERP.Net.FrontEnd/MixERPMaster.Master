@@ -1,347 +1,343 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MixERPMaster.Master.cs"
-    Inherits="MixERP.Net.FrontEnd.MixERPMaster" %>
+           Inherits="MixERP.Net.FrontEnd.MixERPMaster" %>
 
 <!DOCTYPE html>
 <html lang="en">
-<head runat="server">
+    <head runat="server">
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>MixERP: ASP.net ERP</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <title>MixERP: ASP.net ERP</title>
 
-    <link href="/Scripts/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="/Scripts/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" />
-    <script src="/bundles/scripts/master-page.js"></script>
-    <script src="/Scripts/bootstrap/js/bootstrap.min.js"></script>
+        <link href="/Scripts/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="/Scripts/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" />
+        <script src="/bundles/scripts/master-page.js"></script>
+        <script src="/Scripts/bootstrap/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="Scripts/vakata-jstree/dist/themes/default/style.min.css" />
+        <script src="/Scripts/vakata-jstree/dist/jstree.min.js"></script>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
             <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
             <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-    <asp:PlaceHolder ID="HeadHolder" runat="server">
-        <link href="/bundles/stylesheets/master-page.min.css" rel="stylesheet" />
-    </asp:PlaceHolder>
+        <asp:PlaceHolder ID="HeadHolder" runat="server">
+            <link href="/bundles/stylesheets/master-page.min.css" rel="stylesheet" />
+        </asp:PlaceHolder>
 
-    <script src="/Scripts/fancytree/jquery.fancytree.js" type="text/javascript"></script>
-    <script src="/Scripts/fancytree/jquery.fancytree.filter.js" type="text/javascript"></script>
-    <link href="/Scripts/fancytree/skin-win8/ui.fancytree.css" rel="stylesheet" type="text/css">
-
-    <script type="text/javascript">
-        $(function () {
-            $("#tree").fancytree({
-                extensions: ["filter"],
-                filter: {
-                    mode: "hide"
-                },
-                autoActivate: false,
-                autoCollapse: false,
-                autoScroll: false,
-                clickFolderMode: 1,
-                minExpandLevel: 2,
-                activeVisible: true,
-                tabbable: true,
-                focus: function (event, data) {
-                    var node = data.node;
-                    if (node.data.href) {
-
-                        if (node.data.menucode) {
-                            $("#SearchInput").val(node.data.menucode);
-                        };
-
-                        node.scheduleAction("activate", 1000);
-                    };
-                },
-                blur: function (event, data) {
-                    data.node.scheduleAction("cancel");
-                },
-                activate: function (event, data) {
-                    var node = data.node;
-                    var e = data.originalEvent;
-
-                    if (e) {
-                        if (node.isActive() && node.data.href && e.type == "keydown") {
-                            window.location = node.data.href;
-                        };
-                    };
-                },
-                click: function (event, data) { // allow re-loads
-                    var node = data.node;
-
-                    if (node.isActive() && node.data.href) {
-                        window.location = node.data.href;
-                    };
-                }
-            });
-        });
-    </script>
-
-    <asp:ContentPlaceHolder ID="ScriptContentPlaceholder" runat="server">
-    </asp:ContentPlaceHolder>
-    <asp:ContentPlaceHolder ID="StyleSheetContentPlaceholder" runat="server">
-    </asp:ContentPlaceHolder>
-    <!--[if IE]>
+        <asp:ContentPlaceHolder ID="ScriptContentPlaceholder" runat="server">
+        </asp:ContentPlaceHolder>
+        <asp:ContentPlaceHolder ID="StyleSheetContentPlaceholder" runat="server">
+        </asp:ContentPlaceHolder>
+        <!--[if IE]>
             <style>
                 .grid3 td { padding-left: 1px !important; }
             </style>
         <![endif]-->
-    <meta name="description" content="MixERP" />
-</head>
-<body>
-    <form id="form1" runat="server" enctype="multipart/form-data" method="post" submitdisabledcontrols="true" defaultbutton="SwallowSubmit">
-        <asp:Button runat="server" ID="SwallowSubmit" OnClientClick=" return false; " CssClass="hidden" />
+        <meta name="description" content="MixERP" />
+    </head>
+    <body>
+        <form id="form1" runat="server" enctype="multipart/form-data" method="post" submitdisabledcontrols="true" defaultbutton="SwallowSubmit">
+            <asp:Button runat="server" ID="SwallowSubmit" OnClientClick=" return false; " CssClass="hidden" />
 
-        <asp:ScriptManager runat="server" ID="ScriptManager1" />
+            <asp:ScriptManager runat="server" ID="ScriptManager1" />
 
-        <table id="dashboard">
-            <tr>
-                <td id="logo" class="left">
-                    <a href="/Dashboard/Index.aspx">
-                        <img src="/Resource/Static/images/mixerp-logo.png" />
-                    </a>
-                </td>
-                <td id="user-panel">
-
-                    <div class="user-panel-float-other lpad16">
-                        <a class="icon">
-                            <span class="glyphicon glyphicon-heart"></span>
-                            <asp:Literal runat="server" ID="BranchNameLiteral" />
+            <table id="dashboard">
+                <tr>
+                    <td id="logo" class="left">
+                        <a href="/Dashboard/Index.aspx">
+                            <img src="/Resource/Static/images/mixerp-logo.png" />
                         </a>
-                    </div>
+                    </td>
+                    <td id="user-panel">
 
-                    <div class="dropdown icon user-panel-float">
-                        <a id="dropdownMenu2" data-toggle="dropdown" href="#">
-                            <span class="glyphicon glyphicon-user"></span>
-                            <asp:Literal runat="server" ID="UserGreetingLiteral" />
-                            <span class="caret"></span>
-                        </a>
-                        <div class="dropdown-menu pull-right " role="menu" aria-labelledby="dropdownMenu2">
-                            <a class="icon btn btn-sm" href="/Site/Account/ChangePassword.aspx">
+                        <div class="user-panel-float-other lpad16">
+                            <a class="icon">
+                                <span class="glyphicon glyphicon-heart"></span>
+                                <asp:Literal runat="server" ID="BranchNameLiteral" />
+                            </a>
+                        </div>
+
+                        <div class="dropdown icon user-panel-float">
+                            <a id="dropdownMenu2" data-toggle="dropdown" href="#">
+                                <span class="glyphicon glyphicon-user"></span>
+                                <asp:Literal runat="server" ID="UserGreetingLiteral" />
+                                <span class="caret"></span>
+                            </a>
+                            <div class="dropdown-menu pull-right " role="menu" aria-labelledby="dropdownMenu2">
+                                <a class="icon btn btn-sm" href="/Site/Account/ChangePassword.aspx">
+                                    <span class="glyphicon glyphicon-log-out"></span>
+                                    <asp:Literal runat="server" ID="ChangePasswordLiteral" />
+                                </a>
+                                <a class="icon btn btn-sm" href="/Site/Account/UserProfile.aspx">
+                                    <span class="glyphicon glyphicon-certificate"></span>
+                                    <asp:Literal runat="server" ID="ManageProfileLiteral" />
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="icon-set user-panel-float">
+                            <a class="icon" href="https://github.com/mixerp/mixerp/wiki/documentation" target="_blank">
+                                <span class="glyphicon glyphicon glyphicon-asterisk"></span>
+                                <asp:Literal runat="server" ID="MixERPDocumentationLiteral" />
+                            </a>
+                            <a class="icon" href="/Site/Account/SignOut.aspx">
                                 <span class="glyphicon glyphicon-log-out"></span>
-                                <asp:Literal runat="server" ID="ChangePasswordLiteral" />
-                            </a>
-                            <a class="icon btn btn-sm" href="/Site/Account/UserProfile.aspx">
-                                <span class="glyphicon glyphicon-certificate"></span>
-                                <asp:Literal runat="server" ID="ManageProfileLiteral" />
+                                <asp:Literal runat="server" ID="SignOutLiteral" />
                             </a>
                         </div>
-                    </div>
-
-                    <div class="icon-set user-panel-float">
-                        <a class="icon" href="https://github.com/mixerp/mixerp/wiki/documentation" target="_blank">
-                            <span class="glyphicon glyphicon glyphicon-asterisk"></span>
-                            <asp:Literal runat="server" ID="MixERPDocumentationLiteral" />
-                        </a>
-                        <a class="icon" href="/Site/Account/SignOut.aspx">
-                            <span class="glyphicon glyphicon-log-out"></span>
-                            <asp:Literal runat="server" ID="SignOutLiteral" />
-                        </a>
-                    </div>
-                    <div class="icon dropdown user-panel-float">
-                        <a id="NotificationAnchor" data-toggle="dropdown" href="#">
-                            <span class="glyphicon glyphicon-user"></span>
-                            <asp:Literal runat="server" ID="NotificationLiteral" />
-                            <span class="caret"></span>
-                        </a>
-                        <div class="dropdown-menu pull-right" role="menu" aria-labelledby="NotificationAnchor">
-                            <div style="padding: 8px;">
-                                Placeholder
+                        <div class="icon dropdown user-panel-float">
+                            <a id="NotificationAnchor" data-toggle="dropdown" href="#">
+                                <span class="glyphicon glyphicon-user"></span>
+                                <asp:Literal runat="server" ID="NotificationLiteral" />
+                                <span class="caret"></span>
+                            </a>
+                            <div class="dropdown-menu pull-right" role="menu" aria-labelledby="NotificationAnchor">
+                                <div style="padding: 8px;">
+                                    Placeholder
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td id="sidebar" class="left">
-                    <div id="Search">
-                        <div class="form-group has-success has-feedback">
-                            <label class="control-label" for="SearchInput">&nbsp;</label>
-                            <input type="text" class="form-control" id="SearchInput" autocomplete="off" />
-                            <span class="glyphicon glyphicon-search form-control-feedback"></span>
-                        </div>
-                    </div>
-
-                    <div>
-                        <asp:Literal runat="server" ID="MenuLiteral" />
-                        <asp:Literal runat="server" ID="ContentMenuLiteral" />
-                    </div>
-                </td>
-                <td id="body">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <asp:ContentPlaceHolder ID="BodyContentPlaceholder" runat="server">
-                                </asp:ContentPlaceHolder>
+                    </td>
+                </tr>
+                <tr>
+                    <td id="sidebar" class="left">
+                        <div id="Search">
+                            <div class="form-group has-success has-feedback">
+                                <label class="control-label" for="SearchInput">&nbsp;</label>
+                                <input type="text" class="form-control" id="SearchInput" autocomplete="off" />
+                                <span class="glyphicon glyphicon-search form-control-feedback"></span>
                             </div>
                         </div>
-                    </div>
-                    <br />
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <footer>
-                        <p>
-                            Copyright (c) 2014, Mix Open Foundation. All rights reserved (r). Powered by <a href="http://mixerp.org/" target="_blank">MixERP Community Edition</a>
-                        </p>
-                    </footer>
-                </td>
-            </tr>
-        </table>
 
-        <script type="text/javascript">
-            var today = "<%= DateTime.Now.ToShortDateString() %>";
-            var shortDateFormat = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetShortDateFormat() %>";
-            var thousandSeparator = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetThousandSeparator() %>";
-            var decimalSeparator = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetDecimalSeparator() %>";
-            var currencyDecimalPlaces = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetCurrencyDecimalPlaces() %>";
+                        <div>
+                            <asp:Literal runat="server" ID="MenuLiteral" />
+                            <asp:Literal runat="server" ID="ContentMenuLiteral" />
+                        </div>
+                    </td>
+                    <td id="body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <asp:ContentPlaceHolder ID="BodyContentPlaceholder" runat="server">
+                                    </asp:ContentPlaceHolder>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <footer>
+                            <p>
+                                Copyright (c) 2014, Mix Open Foundation. All rights reserved (r). Powered by <a href="http://mixerp.org/" target="_blank">MixERP Community Edition</a>
+                            </p>
+                        </footer>
+                    </td>
+                </tr>
+            </table>
 
-            var duplicateEntryLocalized = "<%= Resources.Warnings.DuplicateEntry %>";
-            var selectLocalized = "<%= Resources.Titles.Select %>";
-            var noneLocalized = "<%= Resources.Titles.None %>";
-            var invalidDateWarningLocalized = "<%= Resources.Warnings.InvalidDate %>";
-            var areYouSureLocalized = "<%= Resources.Questions.AreYouSure %>";
-            var nothingSelectedLocalized = "<%= Resources.Warnings.NothingSelected %>";
-            var yesLocalized = "<%= Resources.Titles.Yes %>";
-            var noLocalized = "<%= Resources.Titles.No %>";
-
-            var daysLowerCaseLocalized = "<%= Resources.Labels.DaysLowerCase %>";
-            var gridViewEmptyWarningLocalized = "<%= Resources.Warnings.GridViewEmpty %>";
-
-            var duplicateFileLocalized = "<% = Resources.Warnings.DuplicateFiles %>";
-
-            var taskCompletedSuccessfullyLocalized = "<%= Resources.Labels.TaskCompletedSuccessfully %>";
-
-            function keypressHandler(e) {
-                if (e.which == 13) {
-                    $(this).blur();
-                    //return false;
-                }
-            };
-
-            $('form').keypress(keypressHandler);
-
-            //Todo:Document this
-            jQuery(document).bind("keyup keydown", function (e) {
-                if (e.ctrlKey && e.keyCode == 80) {
-                    event.preventDefault();
-                    return false;
-                }
-
-                return true;
-            });
-
-            function pageLoad() {
-                $(".item-selector").colorbox({ iframe: true, innerWidth: 1024, innerHeight: 450, overlayClose: false });
-                $(".preview").colorbox({ iframe: true, innerWidth: 1024, innerHeight: 450, overlayClose: false });
-            };
-
-            $(document).ready(function () {
-                initializeItemSelector();
-
-                var tree = $("#tree").fancytree("getTree");
-
-                var expanded = $(".expanded");
-                expanded.each(function () {
-                    tree.getNodeByKey($(this).attr("id")).parent.toggleExpanded();
-                });
-
+            <script type="text/javascript">
                 var searchInput = $('#SearchInput');
+                var today = "<%= DateTime.Now.ToShortDateString() %>";
+                var shortDateFormat = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetShortDateFormat() %>";
+                var thousandSeparator = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetThousandSeparator() %>";
+                var decimalSeparator = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetDecimalSeparator() %>";
+                var currencyDecimalPlaces = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetCurrencyDecimalPlaces() %>";
 
-                shortcut.add("CTRL+M", function () {
-                    searchInput.focus();
-                });
+                var duplicateEntryLocalized = "<%= Resources.Warnings.DuplicateEntry %>";
+                var selectLocalized = "<%= Resources.Titles.Select %>";
+                var noneLocalized = "<%= Resources.Titles.None %>";
+                var invalidDateWarningLocalized = "<%= Resources.Warnings.InvalidDate %>";
+                var areYouSureLocalized = "<%= Resources.Questions.AreYouSure %>";
+                var nothingSelectedLocalized = "<%= Resources.Warnings.NothingSelected %>";
+                var yesLocalized = "<%= Resources.Titles.Yes %>";
+                var noLocalized = "<%= Resources.Titles.No %>";
 
-                searchInput.focus();
+                var daysLowerCaseLocalized = "<%= Resources.Labels.DaysLowerCase %>";
+                var gridViewEmptyWarningLocalized = "<%= Resources.Warnings.GridViewEmpty %>";
 
-                searchInput.keyup(function (e) {
-                    var query = $(this).val();
-                    var match = tree.filterNodes(query, true);
-                    var nodeId = getNodeIdByMenuCode(query);
+                var duplicateFileLocalized = "<% = Resources.Warnings.DuplicateFiles %>";
 
-                    if (match && nodeId) {
-                        var node = tree.getNodeByKey(nodeId);
+                var taskCompletedSuccessfullyLocalized = "<%= Resources.Labels.TaskCompletedSuccessfully %>";
 
-                        if (node) {
-                            node.setActive();
+                $(function() {
+                    var tree = $("#tree");
 
-                            if (e.which === 13) {
-                                window.location = node.data.href;
-                            };
-                        };
-                    };
-                });
-
-                var overflowDiv = $("#OverflowDiv");
-                var sideBar = $("#sidebar");
-
-                if (overflowDiv && sideBar) {
-                    var windowWidth = $(window).width();
-                    var sidebarWidth = sideBar.width();
-                    var margin = 100;
-
-                    overflowDiv.css("width", (windowWidth - sidebarWidth - margin) + "px");
-                    overflowDiv.css("overflow", "auto");
-                };
-            });
-
-            var getNodeIdByMenuCode = function (menuCode) {
-
-                var nodeId;
-
-                $("li").each(function () {
-                    if ($(this).attr("data-menucode")) {
-                        if ($(this).attr("data-menucode").toLowerCase() === menuCode.toLowerCase()) {
-                            console.log($(this).attr("data-menucode"));
-                            console.log($(this).attr("id"));
-                            nodeId = $(this).attr("id");
-                        };
-                    };
-                });
-
-                return nodeId;
-            };
-
-            var anchors = $("a.sub-menu-anchor");
-
-            //Widget Support
-            $('#sortable-container').sortable({ placeholder: "ui-state-highlight", helper: 'clone', handle: 'h3' });
-
-            $(document).ready(function () {
-                var height = 0;
-                $('#sortable-container').each(function () {
-
-                    var items = $(this).find(".sortable-item");
-
-                    items.each(function () {
-                        if ($(this).height() > height) {
-                            height = $(this).height();
+                    tree.jstree({
+                        "plugins": ["wholerow", "search", "types"],
+                        "types": {
+                            "default": {
+                                "icon": "glyphicon glyphicon-folder-open"
+                            },
+                            "file": {
+                                "icon": "glyphicon glyphicon-file"
+                            },
+                            "active": {
+                                "icon": "glyphicon glyphicon-star"
+                            }
+                        },
+                        "search": {
+                            "case_insensitive": true,
+                            "show_only_matches": true
+                        },
+                    }).bind("select_node.jstree", function(e, data) {
+                        var href = data.node.a_attr.href;
+                        document.location.href = href;
+                    }).bind("hover_node.jstree", function(e, data) {
+                        if (data.node.data) {
+                            var menuCode = data.node.data.menucode;
+                            searchInput.val(menuCode);
                         }
+                    }).bind("ready.jstree", function(e, data) {
+                        var depth = 2;
+
+                        $.each(data.instance._model.data, function(i, v) {
+                            var liClass;
+                            var dataSelected = false;
+
+                            if (v.li_attr && v.li_attr.class) {
+                                liClass = v.li_attr.class.toString();
+                            };
+
+                            if (v.data && v.data.selected) {
+                                if (v.data.selected.toString() === "true") {
+                                    dataSelected = true;
+                                    if (v.li_attr && v.li_attr.class) {
+                                        v.li_attr.class = v.li_attr.class.toString() + " jstree-selected";
+                                    };
+                                };
+                            };
+
+                            if (v.parents.length <= depth) {
+                                data.instance._open_to(i);
+                            };
+
+                            if (dataSelected) {
+                                data.instance._open_to(i);
+                                return;
+                            };
+
+                            if (liClass === "expanded") {
+                                data.instance._open_to(i);
+                                return;
+                            };
+
+                        });
+
+                        tree.toggle();
+
                     });
 
-                    var margin = 0;
+                    var to = false;
+                    searchInput.keyup(function(e) {
+                        if (to) {
+                            clearTimeout(to);
+                        }
+                        to = setTimeout(function() {
+                            var v = searchInput.val();
+                            $('#tree').jstree(true).search(v);
+                            var result = $(".jstree-search");
+                            result.prevAll(".jstree-wholerow").addClass("jstree-clicked");
 
-                    items.each(function () {
-                        margin = $(this).find(".panel-heading").height();
-                        $(this).find(".panel-body").css("height", height - margin + "px");
+                            if (result.length >= 1) {
+                                if (e.which === 13) {
+                                    var href = result.first().attr("href");
+                                    if (href) {
+                                        window.location = href;
+                                    };
+                                };
+                            };
+
+                        }, 250);
+
                     });
                 });
 
-            });
+                //Swallow the CTRL + P combination
+                jQuery(document).bind("keyup keydown", function(e) {
+                    if (e.ctrlKey && e.keyCode == 80) {
+                        e.preventDefault();
+                        return false;
+                    }
 
-            if (typeof Sys !== "undefined") {
-                Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
-                    //Fired on each ASP.net AJAX request.
+                    return true;
+                });
+
+                function pageLoad() {
+                    $(".item-selector").colorbox({ iframe: true, innerWidth: 1024, innerHeight: 450, overlayClose: false });
+                    $(".preview").colorbox({ iframe: true, innerWidth: 1024, innerHeight: 450, overlayClose: false });
+                };
+
+                $(document).ready(function() {
                     initializeItemSelector();
-                });
-            };
-        </script>
+                    shortcut.add("CTRL+M", function() {
+                        searchInput.focus();
+                    });
 
-        <asp:ContentPlaceHolder ID="BottomScriptContentPlaceholder" runat="server">
-        </asp:ContentPlaceHolder>
-    </form>
-</body>
+                    shortcut.add("CTRL+,", function() {
+                        $("ul").find("[data-selected='true']").each(function() {
+                            $(this).find("a").focus();
+                        });
+                    });
+
+                    searchInput.focus();
+
+                    var overflowDiv = $("#OverflowDiv");
+                    var sideBar = $("#sidebar");
+
+                    if (overflowDiv && sideBar) {
+                        var windowWidth = $(window).width();
+                        var sidebarWidth = sideBar.width();
+                        var margin = 100;
+
+                        overflowDiv.css("width", (windowWidth - sidebarWidth - margin) + "px");
+                        overflowDiv.css("overflow", "auto");
+                    };
+
+                });
+
+                var anchors = $("a.sub-menu-anchor");
+
+                //Widget Support
+                $('#sortable-container').sortable({ placeholder: "ui-state-highlight", helper: 'clone', handle: 'h3' });
+
+                $(document).ready(function() {
+                    var height = 0;
+                    $('#sortable-container').each(function() {
+
+                        var items = $(this).find(".sortable-item");
+
+                        items.each(function() {
+                            if ($(this).height() > height) {
+                                height = $(this).height();
+                            }
+                        });
+
+                        var margin = 0;
+
+                        items.each(function() {
+                            margin = $(this).find(".panel-heading").height();
+                            $(this).find(".panel-body").css("height", height - margin + "px");
+                        });
+                    });
+
+                });
+
+                if (typeof Sys !== "undefined") {
+                    Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function() {
+                        //Fired on each ASP.net AJAX request.
+                        initializeItemSelector();
+                    });
+                };
+            </script>
+
+            <asp:ContentPlaceHolder ID="BottomScriptContentPlaceholder" runat="server">
+            </asp:ContentPlaceHolder>
+        </form>
+    </body>
 </html>

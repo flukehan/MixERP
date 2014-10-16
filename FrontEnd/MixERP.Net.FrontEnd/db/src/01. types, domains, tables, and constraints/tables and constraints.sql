@@ -796,6 +796,22 @@ CREATE UNIQUE INDEX taxes_tax_name_uix
 ON core.taxes(UPPER(tax_name));
 
 
+CREATE TABLE core.item_types
+(
+    item_type_id                            SERIAL NOT NULL PRIMARY KEY,
+    item_type_code                          national character varying(12) NOT NULL,
+    item_type_name                          national character varying(50) NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
+);
+
+CREATE UNIQUE INDEX item_type_item_type_code_uix
+ON core.item_types(UPPER(item_type_code));
+
+
+CREATE UNIQUE INDEX item_type_item_type_name_uix
+ON core.item_types(UPPER(item_type_name));
 
 CREATE TABLE core.item_groups
 (

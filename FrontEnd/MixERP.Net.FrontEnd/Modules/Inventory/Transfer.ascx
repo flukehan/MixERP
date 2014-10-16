@@ -53,6 +53,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 <script type="text/javascript">
     var addButton = $("#AddButton");
     var dateTextBox = $("#DateTextBox");
+    var errorLabel = $("#ErrorLabel");
     var itemIdHidden = $("#ItemIdHidden");
     var itemCodeInputText = $("#ItemCodeInputText");
     var itemSelect = $("#ItemSelect");
@@ -64,6 +65,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     var transactionTypeSelect = $("#TransactionTypeSelect");
     var transferGridView = $("#TransferGridView");
     var unitSelect = $("#UnitSelect");
+    var valueDateTextBox = $("#ValueDateTextBox");
+    var url = "";
+    var data = "";
 
     $(document).ready(function () {
         loadStores();
@@ -161,6 +165,43 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                 + "</td><td><span class='glyphicon glyphicon-remove-circle pointer span-icon' onclick='removeRow($(this));'></span><span class='glyphicon glyphicon-ok-sign pointer span-icon' onclick='toggleDanger($(this));'></span><span class='glyphicon glyphicon glyphicon-thumbs-up pointer span-icon' onclick='toggleSuccess($(this));'></span></td></tr>";
             transferGridView.find("tr:last").before(html);
         }
+    };
+
+    saveButton.click(function () {
+        errorLabel.html("");
+
+        if (transferGridView.find("tr").length === 2) {
+            errorLabel.html(gridViewEmptyWarningLocalized);
+            return;
+        };
+
+        var valueDate = valueDateTextBox.val();
+        var referenceNumber = referenceNumberInputText.val();
+        var statementReference = statementReferenceTextArea.val();
+        var tableData = tableToJSON(transferGridView);
+
+        var ajaxSaveTransfer = SaveTransfer(valueDate, referenceNumber, statementReference, tableData);
+
+        ajaxSaveTransfer.success(function (msg) {
+            alert(msg.d);
+        });
+
+        ajaxSaveTransfer.fail(function (xhr) {
+            logAjaxErrorMessage(xhr);
+        });
+
+    });
+
+    function SaveTransfer(valueDate, referenceNumber, statementReference, tableData) {
+        url = "/Modules/Inventory/Services/Entry/Transfer.asmx/Save";
+
+        data = appendParameter("", "valueDate", valueDate);
+        data = appendParameter(data, "referenceNumber", referenceNumber);
+        data = appendParameter(data, "statementReference", statementReference);
+        data = appendParameter(data, "data", tableData);
+        data = getData(data);
+
+        return getAjax(url, data);
     };
 
     itemSelect.change(function () {

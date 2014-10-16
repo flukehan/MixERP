@@ -20,13 +20,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Models.Office;
-using MixERP.Net.FrontEnd.Data.Helpers;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Common;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Web;
 using System.Web.Security;
@@ -39,17 +36,17 @@ namespace MixERP.Net.FrontEnd.Base
     public class MixERPWebpage : MixERPWebPageBase
     {
         /// <summary>
-        /// Use this parameter on the Page_Init event of member pages.
-        /// This parameter ensures that the user is not redirected to the login page
-        /// even when the user is not logged in.
+        ///     Use this parameter on the Page_Init event of member pages.
+        ///     This parameter ensures that the user is not redirected to the login page
+        ///     even when the user is not logged in.
         /// </summary>
         public bool NoLogOn { get; set; }
 
         /// <summary>
-        /// Since we save the menu on the database, this parameter is only used
-        /// when there is no associated record of this page's url or path in the menu table.
-        /// Use this to override or fake the page's url or path. This forces navigation menus
-        /// on the left hand side to be displayed in regards with the specified path.
+        ///     Since we save the menu on the database, this parameter is only used
+        ///     when there is no associated record of this page's url or path in the menu table.
+        ///     Use this to override or fake the page's url or path. This forces navigation menus
+        ///     on the left hand side to be displayed in regards with the specified path.
         /// </summary>
         public string OverridePath { get; set; }
 
@@ -62,7 +59,7 @@ namespace MixERP.Net.FrontEnd.Base
 
             Literal contentMenuLiteral = ((Literal) PageUtility.FindControlIterative(this.Master, "ContentMenuLiteral"));
 
-            string menu = "<div id=\"tree\"><ul id='treeData' style=\"display:none;\">";
+            string menu = "<div id=\"tree\" style='display:none;'><ul id='treeData'>";
 
             Collection<Menu> collection = Data.Core.Menu.GetMenuCollection(0, 0);
 
@@ -81,8 +78,8 @@ namespace MixERP.Net.FrontEnd.Base
 
                     string subMenu = GetContentPageMenu(this.Page, url, this.OverridePath);
                     menu += string.Format(Thread.CurrentThread.CurrentCulture,
-                        "<li class='folder' id='item{0}'>" +
-                        "<a id='primaryAnchor{0}' class='primary' href='javascript:void(0);' title='{1}'>{1}</a>" +
+                        "<li id='node{0}'>" +
+                        "<a id='anchorNode{0}' href='javascript:void(0);' title='{1}'>{1}</a>" +
                         "{2}" +
                         "</li>",
                         id,
@@ -127,7 +124,7 @@ namespace MixERP.Net.FrontEnd.Base
 
                         if (childMenus.Count > 0)
                         {
-                            menu += "<li class='folder'>";
+                            menu += "<li>";
                             menu += anchor;
                             menu += "<ul>";
 
@@ -138,13 +135,13 @@ namespace MixERP.Net.FrontEnd.Base
                                 if (childMenu.Url.Equals(currentPage))
                                 {
                                     menu += string.Format(Thread.CurrentThread.CurrentCulture,
-                                        "<li id='item{0}' class='expanded' data-selected='true' data-menucode='{1}'><a href='{2}' title='{3}'>{3}</a></li>",
+                                        "<li id='node{0}' class='expanded' data-selected='true' data-menucode='{1}' data-jstree='{{\"type\":\"active\"}}'><a id='anchorNode{0}' href='{2}' title='{3}'>{3}</a></li>",
                                         id, childMenu.MenuCode, page.ResolveUrl(childMenu.Url), childMenu.MenuText);
                                 }
                                 else
                                 {
                                     menu += string.Format(Thread.CurrentThread.CurrentCulture,
-                                        "<li id='item{0}' data-menucode='{1}'><a href='{2}' title='{3}'>{3}</a></li>",
+                                        "<li id='item{0}' data-menucode='{1}' data-jstree='{{\"type\":\"file\"}}'><a href='{2}' title='{3}'>{3}</a></li>",
                                         id, childMenu.MenuCode, page.ResolveUrl(childMenu.Url), childMenu.MenuText);
                                 }
                             }
@@ -153,7 +150,7 @@ namespace MixERP.Net.FrontEnd.Base
                         }
                         else
                         {
-                            menu += "<li>" + anchor;
+                            menu += "<li data-jstree='{\"type\":\"file\"}'>" + anchor;
                         }
                     }
 
@@ -296,7 +293,7 @@ namespace MixERP.Net.FrontEnd.Base
         {
             FormsAuthentication.SignOut();
 
-            foreach (var cookie in HttpContext.Current.Request.Cookies.AllKeys)
+            foreach (string cookie in HttpContext.Current.Request.Cookies.AllKeys)
             {
                 HttpContext.Current.Request.Cookies.Remove(cookie);
             }

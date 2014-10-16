@@ -33,6 +33,7 @@ namespace MixERP.Net.Core.Modules.Inventory
         {
             this.CreateTopPanel();
             this.CreateGridPanel();
+            this.AddErrorLabelBottom();
             this.CreateBottomPanel();
             base.OnControlLoad(sender, e);
         }
@@ -51,7 +52,6 @@ namespace MixERP.Net.Core.Modules.Inventory
                 {
                     this.AddDateTextBox(rowDiv);
                     this.AddReferenceNumberTextBox(rowDiv);
-
                     shadeDiv.Controls.Add(rowDiv);
                 }
                 this.Placeholder1.Controls.Add(shadeDiv);
@@ -86,7 +86,7 @@ namespace MixERP.Net.Core.Modules.Inventory
 
                     using (DateTextBox dateTextBox = new DateTextBox())
                     {
-                        dateTextBox.ID = "DateTextBox";
+                        dateTextBox.ID = "ValueDateTextBox";
                         dateTextBox.Mode = Frequency.Today;
                         dateTextBox.CssClass = "date form-control input-sm";
                         formGroup.Controls.Add(dateTextBox);
@@ -151,6 +151,17 @@ namespace MixERP.Net.Core.Modules.Inventory
                     columnDiv.Controls.Add(formGroup);
                 }
                 container.Controls.Add(columnDiv);
+            }
+        }
+
+        private void AddErrorLabelBottom()
+        {
+            using (HtmlGenericControl errorLabel = new HtmlGenericControl())
+            {
+                errorLabel.TagName = "div";
+                errorLabel.ID = "ErrorLabel";
+                errorLabel.Attributes.Add("class", "error");
+                this.Placeholder1.Controls.Add(errorLabel);
             }
         }
 
@@ -408,7 +419,7 @@ namespace MixERP.Net.Core.Modules.Inventory
                     {
                         label.TagName = "label";
                         label.Attributes.Add("for", "StatementReferenceTextArea");
-                        label.InnerText = Titles.RefererenceNumberAbbreviated;
+                        label.InnerText = Titles.StatementReference;
                         formGroup.Controls.Add(label);
                     }
 
