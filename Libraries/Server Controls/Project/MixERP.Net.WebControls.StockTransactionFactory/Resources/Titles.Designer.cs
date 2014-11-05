@@ -88,6 +88,15 @@ namespace MixERP.Net.WebControls.StockTransactionFactory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cash Transaction.
+        /// </summary>
+        internal static string CashTransaction {
+            get {
+                return ResourceManager.GetString("CashTransaction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cost Center.
         /// </summary>
         internal static string CostCenter {
@@ -151,15 +160,6 @@ namespace MixERP.Net.WebControls.StockTransactionFactory.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Purchase Type.
-        /// </summary>
-        internal static string PurchaseType {
-            get {
-                return ResourceManager.GetString("PurchaseType", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Qty.
         /// </summary>
         internal static string QuantityAbbreviated {
@@ -201,15 +201,6 @@ namespace MixERP.Net.WebControls.StockTransactionFactory.Resources {
         internal static string Salesperson {
             get {
                 return ResourceManager.GetString("Salesperson", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sales Type.
-        /// </summary>
-        internal static string SalesType {
-            get {
-                return ResourceManager.GetString("SalesType", resourceCulture);
             }
         }
         

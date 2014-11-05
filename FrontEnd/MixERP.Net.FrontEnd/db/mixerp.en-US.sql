@@ -178,6 +178,28 @@ NOT IN
 COMMENT ON VIEW scrud.mixerp_table_view IS 'Lists all schema, table, and columns with associated types, domains, references, and constraints.';
 
 -->-->-- /db/src/00. db core/2. install-unit-test.sql --<--<--
+/********************************************************************************
+The PostgreSQL License
+
+Copyright (c) 2014, Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+Permission to use, copy, modify, and distribute this software and its documentation 
+for any purpose, without fee, and without a written agreement is hereby granted, 
+provided that the above copyright notice and this paragraph and 
+the following two paragraphs appear in all copies.
+
+IN NO EVENT SHALL MIX OPEN FOUNDATION BE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT, 
+SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES, INCLUDING LOST PROFITS, 
+ARISING OUT OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF 
+MIX OPEN FOUNDATION HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+MIX OPEN FOUNDATION SPECIFICALLY DISCLAIMS ANY WARRANTIES, INCLUDING, 
+BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS 
+FOR A PARTICULAR PURPOSE. THE SOFTWARE PROVIDED HEREUNDER IS ON AN "AS IS" BASIS, 
+AND MIX OPEN FOUNDATION HAS NO OBLIGATIONS TO PROVIDE MAINTENANCE, SUPPORT, 
+UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
+***********************************************************************************/
+
 DROP SCHEMA IF EXISTS assert CASCADE;
 DROP SCHEMA IF EXISTS unit_tests CASCADE;
 DROP DOMAIN IF EXISTS public.test_result CASCADE;
@@ -356,7 +378,7 @@ CREATE FUNCTION assert.is_null(IN anyelement, OUT message text, OUT result boole
 AS
 $$
 BEGIN
-    IF($1 == NULL) THEN
+    IF($1 IS NULL) THEN
         message := 'Assert is NULL.';
         PERFORM assert.ok(message);
         result := true;
@@ -377,7 +399,7 @@ CREATE FUNCTION assert.is_not_null(IN anyelement, OUT message text, OUT result b
 AS
 $$
 BEGIN
-    IF($1 != NULL) THEN
+    IF($1 IS NOT NULL) THEN
         message := 'Assert is not NULL.';
         PERFORM assert.ok(message);
         result := true;
@@ -6806,7 +6828,7 @@ DROP FUNCTION IF EXISTS transactions.post_purchase_return
         _reference_number                       national character varying(24),
         _statement_reference                    text,
         _details                                transactions.stock_detail_type[],
-        _attachments                            attachment_type[]
+        _attachments                            core.attachment_type[]
 );
 
 CREATE FUNCTION transactions.post_purchase_return
@@ -6822,7 +6844,7 @@ CREATE FUNCTION transactions.post_purchase_return
         _reference_number                       national character varying(24),
         _statement_reference                    text,
         _details                                transactions.stock_detail_type[],
-        _attachments                            attachment_type[]
+        _attachments                            core.attachment_type[]
 )
 RETURNS bigint
 AS
@@ -7075,7 +7097,7 @@ LANGUAGE plpgsql;
 -- ROW(1, 'ITP', 1, 'Piece', 1000, 0, 13, 130)::transactions.stock_detail_type
 -- ],
 -- ARRAY[
--- NULL::attachment_type
+-- NULL::core.attachment_type
 -- ]);
 
 
@@ -7407,7 +7429,7 @@ DROP FUNCTION IF EXISTS transactions.post_sales_return
         _reference_number                       national character varying(24),
         _statement_reference                    text,
         _details                                transactions.stock_detail_type[],
-        _attachments                            attachment_type[]
+        _attachments                            core.attachment_type[]
 );
 
 CREATE FUNCTION transactions.post_sales_return
@@ -7423,7 +7445,7 @@ CREATE FUNCTION transactions.post_sales_return
         _reference_number                       national character varying(24),
         _statement_reference                    text,
         _details                                transactions.stock_detail_type[],
-        _attachments                            attachment_type[]
+        _attachments                            core.attachment_type[]
 )
 RETURNS bigint
 AS
@@ -7676,7 +7698,7 @@ LANGUAGE plpgsql;
 -- ROW(1, 'ITP', 1, 'Piece', 1000, 0, 13, 130)::transactions.stock_detail_type
 -- ],
 -- ARRAY[
--- NULL::attachment_type
+-- NULL::core.attachment_type
 -- ]);
 
 
@@ -10540,6 +10562,52 @@ INNER JOIN core.party_types
 ON core.parties.party_type_id = core.party_types.party_type_id
 INNER JOIN core.accounts
 ON core.parties.account_id = core.accounts.account_id;
+
+
+-->-->-- /db/src/05. views/core/core.party_view.sql --<--<--
+CREATE VIEW core.party_view
+AS
+SELECT
+    core.parties.party_id,
+    core.party_types.party_type_id,
+    core.party_types.is_supplier,
+    core.party_types.party_type_code || ' (' || core.party_types.party_type_name || ')' AS party_type,
+    core.parties.party_code,
+    core.parties.first_name,
+    core.parties.middle_name,
+    core.parties.last_name,
+    core.parties.party_name,
+    core.parties.po_box,
+    core.parties.address_line_1,
+    core.parties.address_line_2,
+    core.parties.street,
+    core.parties.city,
+    core.parties.state,
+    core.parties.country,
+    core.parties.allow_credit,
+    core.parties.maximum_credit_period,
+    core.parties.maximum_credit_amount,
+    core.parties.charge_interest,
+    core.parties.interest_rate,
+    core.get_frequency_code_by_frequency_id(interest_compounding_frequency_id) AS compounding_frequency,
+    core.parties.pan_number,
+    core.parties.sst_number,
+    core.parties.cst_number,
+    core.parties.phone,
+    core.parties.fax,
+    core.parties.cell,
+    core.parties.email,
+    core.parties.url,
+    core.accounts.account_id,
+    core.accounts.account_code,
+    core.accounts.account_code || ' (' || core.accounts.account_name || ')' AS gl_head
+FROM
+core.parties
+INNER JOIN
+core.party_types
+ON core.parties.party_type_id = core.party_types.party_type_id
+INNER JOIN core.accounts
+ON core.parties.account_id=core.accounts.account_id;
 
 
 -->-->-- /db/src/05. views/core/core.shipping_address_view.sql --<--<--

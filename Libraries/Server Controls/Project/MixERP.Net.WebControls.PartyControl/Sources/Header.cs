@@ -27,48 +27,44 @@ namespace MixERP.Net.WebControls.PartyControl
     {
         private Control GetHeader()
         {
-            using (HtmlGenericControl form = ControlHelper.GetGenericControl(@"div", @"grey form-inline", @"form"))
+            using (HtmlGenericControl form = ControlHelper.GetGenericControl(@"div", @"ui form"))
             {
-                using (HtmlGenericControl formGroup = ControlHelper.GetGenericControl(@"div", @"form-group form-group-sm"))
+                using (HtmlGenericControl fields = ControlHelper.GetGenericControl("div", "inline fields"))
                 {
-                    using (Literal partyDropDownListLabelLiteral = new Literal())
+                    using (HtmlGenericControl partyCodeField = ControlHelper.GetGenericControl(@"div", @"field"))
                     {
-                        partyDropDownListLabelLiteral.Text = ControlHelper.GetLabelText(@"PartyDropDownList", "Select Customer");
-
-                        using (HtmlGenericControl partyCodeTextBoxFormGroup = ControlHelper.GetGenericControl(@"div", @"form-group form-group-sm"))
+                        using (Literal partyDropDownListLabelLiteral = new Literal())
                         {
-                            using (HtmlInputText partyCodeTextBox = ControlHelper.GetInputText(@"PartyCodeTextBox", @"form-control input-sm"))
+                            partyDropDownListLabelLiteral.Text = ControlHelper.GetLabelText(@"PartyCodeTextBox", "Select Customer");
+
+                            using (HtmlInputText partyCodeTextBox = ControlHelper.GetInputText(@"PartyCodeTextBox", string.Empty))
                             {
                                 partyCodeTextBox.Style.Add(@"width", @"100px");
-                                partyCodeTextBoxFormGroup.Controls.Add(partyCodeTextBox);
+
+                                partyCodeField.Controls.Add(partyDropDownListLabelLiteral);
+                                partyCodeField.Controls.Add(partyCodeTextBox);
                             }
 
-                            formGroup.Controls.Add(partyCodeTextBoxFormGroup);
-                        }
-
-                        using (HtmlGenericControl partyDropDownListFormGroup = ControlHelper.GetGenericControl(@"div", @"input-group input-group-sm"))
-                        {
-                            using (HtmlSelect partyDropDownList = ControlHelper.GetSelect(@"PartyDropDownList", @"form-control"))
-                            {
-                                partyDropDownListFormGroup.Controls.Add(partyDropDownList);
-                            }
-
-                            using (HtmlGenericControl goButtonSpan = ControlHelper.GetGenericControl(@"span", @"input-group-btn"))
-                            {
-                                using (HtmlButton goButton = ControlHelper.GetButton(@"GoButton", @"btn btn-primary", "Go"))
-                                {
-                                    goButtonSpan.Controls.Add(goButton);
-                                }
-
-                                partyDropDownListFormGroup.Controls.Add(goButtonSpan);
-                            }
-
-                            formGroup.Controls.Add(partyDropDownListFormGroup);
+                            fields.Controls.Add(partyCodeField);
                         }
                     }
 
-                    form.Controls.Add(formGroup);
+                    using (HtmlGenericControl partyDropDownListField = ControlHelper.GetGenericControl("div", "field"))
+                    {
+                        using (HtmlSelect partyDropDownList = ControlHelper.GetSelect(@"PartyDropDownList", string.Empty))
+                        {
+                            partyDropDownListField.Controls.Add(partyDropDownList);
+                        }
 
+                        fields.Controls.Add(partyDropDownListField);
+                    }
+
+                    using (HtmlButton goButton = ControlHelper.GetButton(@"GoButton", @"ui small teal button", "Go"))
+                    {
+                        fields.Controls.Add(goButton);
+                    }
+
+                    form.Controls.Add(fields);
                     return form;
                 }
             }

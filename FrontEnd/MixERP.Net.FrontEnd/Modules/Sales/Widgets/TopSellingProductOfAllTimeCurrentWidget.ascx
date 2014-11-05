@@ -18,13 +18,11 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="TopSellingProductOfAllTimeCurrentWidget.ascx.cs" Inherits="MixERP.Net.Core.Modules.Sales.Widgets.TopSellingProductOfAllTimeCurrentWidget" %>
 
-<div class="panel panel-default widget">
-    <div class="panel-heading">
-        <h3 class="panel-title">
+<div class="eight wide column widget">
+    <div class="ui segment">
+        <h2>
             <asp:Literal runat="server" ID="TopSellingProductsLiteral" />
-        </h3>
-    </div>
-    <div class="panel-body">
+        </h2>
         <asp:GridView runat="server" ID="TopSellingProductsOfAllTimeGridView" DataKeyNames="id" AutoGenerateColumns="False">
             <Columns>
                 <asp:BoundField HeaderText="ItemName" DataField="item_name" />

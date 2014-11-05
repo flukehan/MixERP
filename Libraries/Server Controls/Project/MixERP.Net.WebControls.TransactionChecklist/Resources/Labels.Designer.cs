@@ -160,6 +160,15 @@ namespace MixERP.Net.WebControls.TransactionChecklist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to When you withdraw a transaction, it won&apos;t be forwarded to the workflow module. This means that your withdrawn transactions are rejected and require no further verification. However, you won&apos;t be able to unwithdraw this transaction later..
+        /// </summary>
+        internal static string TransactionWithdrawalInformation {
+            get {
+                return ResourceManager.GetString("TransactionWithdrawalInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This transaction was withdrawn by {0} on {1}. Reason: &quot;{2}&quot;..
         /// </summary>
         internal static string TransactionWithdrawnDetails {

@@ -20,33 +20,32 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 /*jshint -W032, -W098*/
 /*global getAjax, getAjaxErrorMessage, logError, ajaxDataBind, ajaxUpdateVal, appendParameter, exchangeRateLocalized, getData, parseFloat2, parseInt2, partyDropDownList, repaint*/
 
-var dueAmountTextBox = $("#DueAmountTextBox");
-var costCenterDropDownList = $("#CostCenterDropDownList");
-var currencyTextBox = $("#CurrencyTextBox");
-var currencyDropDownList = $("#CurrencyDropDownList");
-var amountTextBox = $("#AmountTextBox");
-var amountInHomeCurrencyTextBox = $("#AmountInHomeCurrencyTextBox");
-var debitExchangeRateTextBox = $("#DebitExchangeRateTextBox");
-var debitExchangeRateTextBoxLabel = $("label[for='DebitExchangeRateTextBox']");
+var dueAmountInputText = $("#DueAmountInputText");
+var costCenterSelect = $("#CostCenterSelect");
+var currencyInputText = $("#CurrencyInputText");
+var currencySelect = $("#CurrencySelect");
+var amountInputText = $("#AmountInputText");
+var amountInHomeCurrencyInputText = $("#AmountInHomeCurrencyInputText");
+var debitExchangeRateInputText = $("#DebitExchangeRateInputText");
+var debitExchangeRateInputTextLabel = $("label[for='DebitExchangeRateInputText']");
 
-var creditExchangeRateTextBox = $("#CreditExchangeRateTextBox");
-var creditExchangeRateTextBoxLabel = $("label[for='CreditExchangeRateTextBox']");
+var creditExchangeRateInputText = $("#CreditExchangeRateInputText");
+var creditExchangeRateInputTextLabel = $("label[for='CreditExchangeRateInputText']");
 
-var baseAmountTextBox = $("#BaseAmountTextBox");
-var finalDueAmountTextBox = $("#FinalDueAmountTextBox");
+var baseAmountInputText = $("#BaseAmountInputText");
+var finalDueAmountInputText = $("#FinalDueAmountInputText");
 
-var instrumentCodeTextBox = $("#InstrumentCodeTextBox");
+var instrumentCodeInputText = $("#InstrumentCodeInputText");
 
-var cashRadio = $("#CashRadio");
-var bankRadio = $("#BankRadio");
-var cashRepositoryDropDownList = $("#CashRepositoryDropDownList");
-var bankDropDownList = $("#BankDropDownList");
+var cashButton = $("#CashButton");
+var bankButton = $("#BankButton");
+var cashRepositorySelect = $("#CashRepositorySelect");
+var bankSelect = $("#BankSelect");
 var postedDateTextBox = $("#PostedDateTextBox");
-var referenceNumberTextBox = $("#ReferenceNumberTextBox");
+var referenceNumberInputText = $("#ReferenceNumberInputText");
 
-var instrumentCodeTextBox = $("#InstrumentCodeTextBox");
-var transactionCodeTextBox = $("#TransactionCodeTextBox");
-var statementReferenceTextBox = $("#StatementReferenceTextBox");
+var transactionCodeInputText = $("#TransactionCodeInputText");
+var statementReferenceTextArea = $("#StatementReferenceTextArea");
 
 var saveButton = $("#SaveButton");
 var receiptTypeDiv = $("#ReceiptType");
@@ -56,7 +55,7 @@ var homeCurrency = "";
 var url = "";
 var data = "";
 
-receiptTypeDiv.find("label").click(function() {
+receiptTypeDiv.find(".button").click(function () {
     toggleTransactionType($(this));
     repaint();
 });
@@ -64,27 +63,27 @@ receiptTypeDiv.find("label").click(function() {
 //Define a new callback function to subscribe to
 //GoButton's click event
 //in PartyControl.
-var goButtonCallBack = function() {
+var goButtonCallBack = function () {
     var totalDueAmountHidden = $("#TotalDueAmountHidden");
     var defaultCurrencySpan = $("#DefaultCurrencySpan");
 
-    dueAmountTextBox.val(totalDueAmountHidden.val());
-    currencyTextBox.val(defaultCurrencySpan.html());
+    dueAmountInputText.val(totalDueAmountHidden.val());
+    currencyInputText.val(defaultCurrencySpan.html());
 
     var ajaxGetHomeCurrency = getHomeCurrency();
 
-    ajaxGetHomeCurrency.done(function(msg) {
+    ajaxGetHomeCurrency.done(function (msg) {
         homeCurrency = msg.d;
         getExchangeRates();
-        amountTextBox.focus();
+        amountInputText.focus();
     });
 
-    ajaxGetHomeCurrency.fail(function(xhr) {
+    ajaxGetHomeCurrency.fail(function (xhr) {
         logAjaxErrorMessage(xhr);
     });
 };
 
-$(document).ready(function() {
+$(document).ready(function () {
     $("#receipt").appendTo("#home");
     loadCurrencies();
     loadCashRepositories();
@@ -94,29 +93,29 @@ $(document).ready(function() {
 
 //Control Events
 
-saveButton.click(function() {
+saveButton.click(function () {
     var partyCode = partyDropDownList.getSelectedValue();
-    var currencyCode = currencyDropDownList.getSelectedValue();
-    var amount = parseFloat2(amountTextBox.val());
-    var debitExchangeRate = parseFloat2(debitExchangeRateTextBox.val());
-    var creditExchangeRate = parseFloat2(creditExchangeRateTextBox.val());
-    var referenceNumber = referenceNumberTextBox.val();
-    var statementReference = statementReferenceTextBox.val();
-    var costCenterId = parseInt2(costCenterDropDownList.getSelectedValue());
-    var cashRepositoryId = parseInt2(cashRepositoryDropDownList.getSelectedValue());
+    var currencyCode = currencySelect.getSelectedValue();
+    var amount = parseFloat2(amountInputText.val());
+    var debitExchangeRate = parseFloat2(debitExchangeRateInputText.val());
+    var creditExchangeRate = parseFloat2(creditExchangeRateInputText.val());
+    var referenceNumber = referenceNumberInputText.val();
+    var statementReference = statementReferenceTextArea.val();
+    var costCenterId = parseInt2(costCenterSelect.getSelectedValue());
+    var cashRepositoryId = parseInt2(cashRepositorySelect.getSelectedValue());
     var postedDate = postedDateTextBox.val();
-    var bankAccountId = parseInt2(bankDropDownList.getSelectedValue());
-    var bankInstrumentCode = instrumentCodeTextBox.val();
-    var bankTransactionCode = transactionCodeTextBox.val();
+    var bankAccountId = parseInt2(bankSelect.getSelectedValue());
+    var bankInstrumentCode = instrumentCodeInputText.val();
+    var bankTransactionCode = transactionCodeInputText.val();
 
     var ajaxSaveReceipt = saveReceipt(partyCode, currencyCode, amount, debitExchangeRate, creditExchangeRate, referenceNumber, statementReference, costCenterId, cashRepositoryId, postedDate, bankAccountId, bankInstrumentCode, bankTransactionCode);
 
-    ajaxSaveReceipt.success(function(msg) {
+    ajaxSaveReceipt.success(function (msg) {
         var id = msg.d;
         window.location = "/Modules/Sales/Confirmation/Receipt.mix?TranId=" + id;
     });
 
-    ajaxSaveReceipt.fail(function(xhr) {
+    ajaxSaveReceipt.fail(function (xhr) {
         logAjaxErrorMessage(xhr);
     });
 });
@@ -141,18 +140,18 @@ function saveReceipt(partyCode, currencyCode, amount, debitExchangeRate, creditE
     return getAjax(url, data);
 };
 
-currencyDropDownList.blur(function() {
+currencySelect.blur(function () {
     getExchangeRates();
 });
 
 function getExchangeRates() {
     if (exchangeRateLocalized) {
-        debitExchangeRateTextBoxLabel.html(String.format("{0} ({1} - {2})", exchangeRateLocalized, currencyDropDownList.getSelectedValue(), homeCurrency));
-        creditExchangeRateTextBoxLabel.html(String.format("{0} ({1} - {2})", exchangeRateLocalized, homeCurrency, currencyTextBox.val()));
+        debitExchangeRateInputTextLabel.html(String.format("{0} ({1} - {2})", exchangeRateLocalized, currencySelect.getSelectedValue(), homeCurrency));
+        creditExchangeRateInputTextLabel.html(String.format("{0} ({1} - {2})", exchangeRateLocalized, homeCurrency, currencyInputText.val()));
     };
 
-    getER(debitExchangeRateTextBox, currencyDropDownList.getSelectedValue(), homeCurrency);
-    getER(creditExchangeRateTextBox, homeCurrency, currencyTextBox.val());
+    getER(debitExchangeRateInputText, currencySelect.getSelectedValue(), homeCurrency);
+    getER(creditExchangeRateInputText, homeCurrency, currencyInputText.val());
 }
 
 function getER(associatedControl, sourceCurrencyCode, destinationCurrencyCode) {
@@ -164,40 +163,40 @@ function getER(associatedControl, sourceCurrencyCode, destinationCurrencyCode) {
     ajaxUpdateVal(url, data, associatedControl);
 };
 
-amountTextBox.keyup(function() {
+amountInputText.keyup(function () {
     updateTotal();
 });
 
-debitExchangeRateTextBox.keyup(function() {
+debitExchangeRateInputText.keyup(function () {
     updateTotal();
 });
 
 function updateTotal() {
-    var due = parseFloat2(dueAmountTextBox.val());
-    var amount = parseFloat2(amountTextBox.val());
-    var er = parseFloat2(debitExchangeRateTextBox.val());
-    var er2 = parseFloat2(creditExchangeRateTextBox.val());
+    var due = parseFloat2(dueAmountInputText.val());
+    var amount = parseFloat2(amountInputText.val());
+    var er = parseFloat2(debitExchangeRateInputText.val());
+    var er2 = parseFloat2(creditExchangeRateInputText.val());
     var toHomeCurrency = amount * er;
 
-    amountInHomeCurrencyTextBox.val(toHomeCurrency);
+    amountInHomeCurrencyInputText.val(toHomeCurrency);
 
     var toBase = toHomeCurrency * er2;
 
     var remainingDue = due - toBase;
 
-    baseAmountTextBox.val(toBase);
+    baseAmountInputText.val(toBase);
 
-    finalDueAmountTextBox.val(remainingDue);
+    finalDueAmountInputText.val(remainingDue);
 
-    finalDueAmountTextBox.removeClass("alert-danger");
+    finalDueAmountInputText.removeClass("alert-danger");
 
     if (remainingDue < 0) {
-        finalDueAmountTextBox.addClass("alert-danger");
+        finalDueAmountInputText.addClass("alert-danger");
     };
 };
 
-var toggleTransactionType = function(e) {
-    if (e.find("input").attr("id") === "BankRadio") {
+var toggleTransactionType = function (e) {
+    if (e.attr("id") === "BankButton") {
         if (!$("#BankFormGroup").is(":visible"));
         {
             $("#BankFormGroup").show(500);
@@ -206,7 +205,7 @@ var toggleTransactionType = function(e) {
         }
     };
 
-    if (e.find("input").attr("id") === "CashRadio") {
+    if (e.attr("id") === "CashButton") {
         if (!$("#CashFormGroup").is(":visible"));
         {
             $("#CashFormGroup").show(500);
@@ -218,22 +217,22 @@ var toggleTransactionType = function(e) {
 
 function loadCostCenters() {
     url = "/Modules/Sales/Services/Receipt/Accounts.asmx/GetCostCenters";
-    ajaxDataBind(url, costCenterDropDownList);
+    ajaxDataBind(url, costCenterSelect);
 };
 
 function loadCurrencies() {
     url = "/Modules/Sales/Services/Receipt/Currencies.asmx/GetCurrencies";
-    ajaxDataBind(url, currencyDropDownList);
+    ajaxDataBind(url, currencySelect);
 };
 
 function loadCashRepositories() {
     url = "/Modules/Sales/Services/Receipt/Accounts.asmx/GetCashRepositories";
-    ajaxDataBind(url, cashRepositoryDropDownList);
+    ajaxDataBind(url, cashRepositorySelect);
 };
 
 function loadBankAccounts() {
     url = "/Modules/Sales/Services/Receipt/Accounts.asmx/GetBankAccounts";
-    ajaxDataBind(url, bankDropDownList);
+    ajaxDataBind(url, bankSelect);
 };
 
 //Ajax Requests

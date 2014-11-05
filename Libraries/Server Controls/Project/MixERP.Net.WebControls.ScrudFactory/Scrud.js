@@ -85,12 +85,18 @@ var scrudPrintGridView = function () {
             data = data.replace("{Table}", table);
 
             //Creating and opening a new window to display the report.
-            var w = window.open();
-            //w.moveTo(0, 0);
+            var w = window.open('', 'ScrudReport',
+                                   + ',menubar=0'
+                                   + ',toolbar=0'
+                                   + ',status=0'
+                                   + ',scrollbars=1'
+                                   + ',resizable=0');
+            w.moveTo(0, 0);
             w.resizeTo(screen.width, screen.height);
 
             //Writing the report to the window.
             w.document.writeln(data);
+            w.document.close();
 
             //Report sent to the browser.
         });

@@ -280,7 +280,7 @@ var setNumberFormat = function () {
         return;
     };
 
-    $('input.float').number(true, 6, decimalSeparator, thousandSeparator);
+    $('input.decimal').number(true, 6, decimalSeparator, thousandSeparator);
     $('input.integer').number(true, 0, decimalSeparator, thousandSeparator);
 };
 
@@ -459,12 +459,12 @@ var getFormattedNumber = function (input) {
 };
 
 var makeDirty = function (obj) {
-    obj.addClass("dirty");
+    obj.parent().addClass("error");
     obj.focus();
 };
 
 var removeDirty = function (obj) {
-    obj.removeClass("dirty");
+    obj.parent().removeClass("error");
 };
 
 var isNullOrWhiteSpace = function (obj) {
@@ -563,42 +563,6 @@ var getData = function (data) {
     return null;
 };
 
-var initializeItemSelector = function () {
-    var itemSelector = $("[role=item-selector]");
-    var modalTemplatePath = "/Resource/Static/Templates/ModalTemplate.html"; //Todo
-
-    itemSelector.each(function () {
-        var selector = $(this);
-        var href = selector.prop("href");
-        selector.attr("data-url", href);
-        selector.prop("href", "javascript:void(0);");
-    });
-
-    itemSelector.click(function () {
-        var href = $(this).attr("data-url");
-        var title = $(this).attr("data-title");
-
-        $.get(modalTemplatePath, function () { }).done(function (data) {
-            var itemSelectorDiv = $(data);
-
-            if (!isNullOrWhiteSpace(title)) {
-                itemSelectorDiv.find(".modal-title").html(title);
-            };
-
-            $("body").append(itemSelectorDiv);
-
-            itemSelectorDiv.find(".modal-body").html('<iframe width="100%" height="100%" frameborder="0" allowtransparency="true" src="' + href + '"></iframe>');
-            itemSelectorDiv.addClass("item-selector-modal");
-
-            itemSelectorDiv.modal('show');
-        });
-    });
-};
-
-var closeItemSelector = function () {
-    $('.item-selector-modal').modal('hide');
-};
-
 var focusNextElement = function () {
     var $this = document.activeElement;
 
@@ -653,18 +617,17 @@ var focusNextElement = function () {
 
 var toggleDanger = function (cell) {
     var row = cell.closest("tr");
-    row.removeClass("alert-success");
-    row.toggleClass("alert alert-danger");
+    row.toggleClass("negative");
 };
 
 var addDanger = function (row) {
-    row.removeClass("alert-success");
-    row.addClass("alert alert-danger");
+    row.removeClass("negative");
+    row.addClass("negative");
 };
 
 var toggleSuccess = function (cell) {
     var row = cell.closest("tr");
-    row.toggleClass("alert alert-success");
+    row.toggleClass("positive");
 };
 
 jQuery.fn.bindAjaxData = function (ajaxData, skipSelect, selectedValue) {
@@ -966,3 +929,20 @@ function getParameterByName(name) {
 function displaySucess() {
     $.notify(taskCompletedSuccessfullyLocalized, "success");
 };
+
+//Semantic UI Tab Support
+$(document).ready(function () {
+    var tabItems = $('.tabular .item');
+
+    if (tabItems && tabItems.length > 0) {
+        tabItems.tab();
+    };
+
+    //Semantic UI Button Support
+    var buttons = $(".buttons .button");
+
+    buttons.on("click", function () {
+        buttons.removeClass("active");
+        $(this).addClass("active");
+    });
+});

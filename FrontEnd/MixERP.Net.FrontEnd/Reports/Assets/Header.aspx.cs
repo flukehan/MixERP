@@ -18,7 +18,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.FrontEnd.Base;
-
+using MixERP.Net.WebControls.ReportEngine;
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
@@ -39,6 +39,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using System.Reflection;
 
 namespace MixERP.Net.FrontEnd.Reports.Assets
 {
@@ -46,6 +47,13 @@ namespace MixERP.Net.FrontEnd.Reports.Assets
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            //<mixerp:ReportHeader runat="server" Path="" />
+
+            using (ReportHeader header = new ReportHeader())
+            {
+                header.ResourceAssembly = Assembly.GetAssembly(typeof(Header));
+                this.Placeholder1.Controls.Add(header);
+            }
         }
     }
 }

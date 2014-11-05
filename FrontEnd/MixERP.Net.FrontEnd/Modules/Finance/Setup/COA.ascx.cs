@@ -39,7 +39,7 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
                 scrud.ViewSchema = "core";
                 scrud.View = "account_scrud_view";
 
-                scrud.Width = 1500;
+                scrud.GridViewWidth = 1500;
                 scrud.Exclude = "sys_type";
 
                 scrud.DisplayFields = GetDisplayFields();

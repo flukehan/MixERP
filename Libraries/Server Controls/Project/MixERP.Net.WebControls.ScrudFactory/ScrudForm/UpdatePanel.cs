@@ -20,7 +20,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Controls;
 using System;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -43,7 +42,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private void AddScriptManager()
         {
-            var scriptManager = ScriptManager.GetCurrent(this.Page);
+            ScriptManager scriptManager = ScriptManager.GetCurrent(this.Page);
             if (scriptManager != null)
             {
                 scriptManager.RegisterAsyncPostBackControl(this.saveButton);
@@ -72,7 +71,12 @@ namespace MixERP.Net.WebControls.ScrudFactory
             //Bottom command panel.
 
             this.userIdHidden = new HiddenField();
+            this.userIdHidden.ID = "UserIdHidden";
+            this.userIdHidden.Value = SessionHelper.GetUserName();
+
             this.officeCodeHidden = new HiddenField();
+            this.officeCodeHidden.ID = "OfficeCodeHidden";
+            this.officeCodeHidden.Value = SessionHelper.GetOfficeName();
 
             this.updatePanel.ContentTemplateContainer.Controls.Add(this.userIdHidden);
             this.updatePanel.ContentTemplateContainer.Controls.Add(this.officeCodeHidden);
@@ -87,13 +91,13 @@ namespace MixERP.Net.WebControls.ScrudFactory
             this.bottomCommandPanel.ButtonCssClass = this.GetCommandPanelButtonCssClass();
             this.bottomCommandPanel.CssClass = this.GetCommandPanelCssClass();
 
-            this.bottomCommandPanel.SelectButtonCssClass = this.GetSelectButtonCssClass();
-            this.bottomCommandPanel.CompactButtonCssClass = this.GetCompactButtonCssClass();
-            this.bottomCommandPanel.AllButtonCssClass = this.GetAllButtonCssClass();
-            this.bottomCommandPanel.AddButtonCssClass = this.GetAddButtonCssClass();
-            this.bottomCommandPanel.EditButtonCssClass = this.GetEditButtonCssClass();
-            this.bottomCommandPanel.DeleteButtonCssClass = this.GetDeleteButtonCssClass();
-            this.bottomCommandPanel.PrintButtonCssClass = this.GetPrintButtonCssClass();
+            this.bottomCommandPanel.SelectButtonIconCssClass = this.GetSelectButtonIconCssClass();
+            this.bottomCommandPanel.CompactButtonIconCssClass = this.GetCompactButtonIconCssClass();
+            this.bottomCommandPanel.AllButtonIconCssClass = this.GetAllButtonIconCssClass();
+            this.bottomCommandPanel.AddButtonIconCssClass = this.GetAddButtonIconCssClass();
+            this.bottomCommandPanel.EditButtonIconCssClass = this.GetEditButtonIconCssClass();
+            this.bottomCommandPanel.DeleteButtonIconCssClass = this.GetDeleteButtonIconCssClass();
+            this.bottomCommandPanel.PrintButtonIconCssClass = this.GetPrintButtonIconCssClass();
 
             this.topCommandPanel = new CommandPanel();
             this.topCommandPanel.DeleteButtonClick += this.DeleteButton_Click;
@@ -101,18 +105,18 @@ namespace MixERP.Net.WebControls.ScrudFactory
             this.topCommandPanel.ButtonCssClass = this.GetCommandPanelButtonCssClass();
             this.topCommandPanel.CssClass = this.GetCommandPanelCssClass();
 
-            this.topCommandPanel.SelectButtonCssClass = this.GetSelectButtonCssClass();
-            this.topCommandPanel.CompactButtonCssClass = this.GetCompactButtonCssClass();
-            this.topCommandPanel.AllButtonCssClass = this.GetAllButtonCssClass();
-            this.topCommandPanel.AddButtonCssClass = this.GetAddButtonCssClass();
-            this.topCommandPanel.EditButtonCssClass = this.GetEditButtonCssClass();
-            this.topCommandPanel.DeleteButtonCssClass = this.GetDeleteButtonCssClass();
-            this.topCommandPanel.PrintButtonCssClass = this.GetPrintButtonCssClass();
+            this.topCommandPanel.SelectButtonIconCssClass = this.GetSelectButtonIconCssClass();
+            this.topCommandPanel.CompactButtonIconCssClass = this.GetCompactButtonIconCssClass();
+            this.topCommandPanel.AllButtonIconCssClass = this.GetAllButtonIconCssClass();
+            this.topCommandPanel.AddButtonIconCssClass = this.GetAddButtonIconCssClass();
+            this.topCommandPanel.EditButtonIconCssClass = this.GetEditButtonIconCssClass();
+            this.topCommandPanel.DeleteButtonIconCssClass = this.GetDeleteButtonIconCssClass();
+            this.topCommandPanel.PrintButtonIconCssClass = this.GetPrintButtonIconCssClass();
         }
 
         private string GetItemSelectorPath()
         {
-            var itemSelectorPath = this.ItemSelectorPath;
+            string itemSelectorPath = this.ItemSelectorPath;
 
             if (string.IsNullOrWhiteSpace(itemSelectorPath))
             {
@@ -124,7 +128,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private string GetResourceClassName()
         {
-            var resourceClassName = this.ResourceClassName;
+            string resourceClassName = this.ResourceClassName;
 
             if (string.IsNullOrWhiteSpace(resourceClassName))
             {

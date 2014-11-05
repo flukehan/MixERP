@@ -50,7 +50,7 @@ namespace MixERP.Net.FrontEnd.Handlers
                     if (this.GetAllowedExtensions().Contains(extension.Replace(".", "")))
                     {
                         string fileName = this.RandomNumber().ToString(CultureInfo.InvariantCulture) + "_" + Path.GetFileName(file.FileName);
-                        string savePath = context.Server.MapPath(attachmentsDirectory + fileName);
+                        string savePath = context.Server.MapPath(Path.Combine(attachmentsDirectory, fileName));
                         file.SaveAs(savePath);
                         uploadedFiles.Add(fileName);
                     }

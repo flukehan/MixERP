@@ -18,13 +18,11 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="AlertsWidget.ascx.cs" Inherits="MixERP.Net.FrontEnd.UserControls.Widgets.AlertsWidget" %>
-<div class="panel panel-default widget">
 
-    <div class="panel-heading">
-        <h3 class="panel-title">Alerts (4) (Todo)</h3>
-    </div>
-
-    <div class="panel-body">
+<div class="four wide column widget">
+    <div class="ui segment">
+        <h2>Alerts (5) (Todo)
+        </h2>
         <ul>
             <li>
                 <a href="#">12 purchase orders not sent</a>

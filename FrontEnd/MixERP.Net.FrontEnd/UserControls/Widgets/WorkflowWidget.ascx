@@ -18,13 +18,11 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="WorkflowWidget.ascx.cs" Inherits="MixERP.Net.FrontEnd.UserControls.Widgets.WorkflowWidget" %>
-<div class="panel panel-default widget">
-    <div class="panel-heading">
-        <h3 class="panel-title">Workflow(144)(Todo : Admin Only)</h3>
-    </div>
-    <div class="panel-body">
-        <h5>Workflow Today</h5>
 
+<div class="four wide column widget">
+    <div class="ui segment">
+        <h2>Workflow(144)(Todo : Admin Only)
+        </h2>
         <ul>
             <li style="font-weight: bold;">
                 <a href="#">Flagged Transactions (12)</a>

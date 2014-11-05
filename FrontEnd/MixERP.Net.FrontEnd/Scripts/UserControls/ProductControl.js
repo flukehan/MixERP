@@ -17,101 +17,101 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-/*jshint -W032, -W098 */
-/*global addDanger, ajaxDataBind, ajaxUpdateVal, appendParameter, fadeThis, focusNextElement, getAjax, getColumnText, getData, getFormattedNumber, gridViewEmptyWarningLocalized, insufficientStockWarningLocalized, invalidCashRepositoryWarningLocalized, invalidCostCenterWarningLocalized, invalidDateWarningLocalized, invalidPartyWarningLocalized,invalidPriceTypeWarningLocalized, invalidSalesPersonWarningLocalized, invalidShippingCompanyWarningLocalized, invalidStoreWarningLocalized, isDate, isNullOrWhiteSpace, isSales, logError, makeDirty, parseFloat2, parseFormattedNumber, removeDirty, repaint, rowData, selectDropDownListByValue, setColumnText, shortcut, showWindow, sumOfColumn, tableToJSON, taxAfterDiscount, tranBook, unitId, updateTaxLocalized, uploadedFilesHidden, verifyStock */
+/*jshint -W032, -W098, -W020 */
+/*global addDanger, ajaxDataBind, ajaxUpdateVal, appendParameter, fadeThis, focusNextElement, getAjax, getColumnText, getData, getFormattedNumber, gridViewEmptyWarningLocalized, insufficientStockWarningLocalized, invalidCashRepositoryWarningLocalized, invalidCostCenterWarningLocalized, invalidDateWarningLocalized, invalidPartyWarningLocalized,invalidPriceTypeWarningLocalized, invalidSalesPersonWarningLocalized, invalidShippingCompanyWarningLocalized, invalidStoreWarningLocalized, isDate, isNullOrWhiteSpace, isSales, logError, makeDirty, parseFloat2, parseFormattedNumber, removeDirty, repaint, rowData, selectDropDownListByValue, setColumnText, shortcut, showWindow, sumOfColumn, tableToJSON, taxAfterDiscount, tranBook, unitId, updateTaxLocalized, uploadedFilesHidden, verifyStock, parseInt2, updateTaxLocalized */
 
-if (typeof updateTaxLocalized == "undefined") {
+if (typeof updateTaxLocalized === "undefined") {
     updateTaxLocalized = "Update tax?";
 };
 
-if (typeof insufficientStockWarningLocalized == "undefined") {
+if (typeof insufficientStockWarningLocalized === "undefined") {
     insufficientStockWarningLocalized = "Only {0} {1} of {2} left in stock.";
 };
 
-if (typeof invalidPartyWarningLocalized == "undefined") {
+if (typeof invalidPartyWarningLocalized === "undefined") {
     invalidPartyWarningLocalized = "Invalid party.";
 };
 
-if (typeof invalidPriceTypeWarningLocalized == "undefined") {
+if (typeof invalidPriceTypeWarningLocalized === "undefined") {
     invalidPriceTypeWarningLocalized = "Invalid price type.";
 };
 
-if (typeof invalidStoreWarningLocalized == "undefined") {
+if (typeof invalidStoreWarningLocalized === "undefined") {
     invalidStoreWarningLocalized = "Invalid store.";
 };
 
-if (typeof invalidShippingCompanyWarningLocalized == "undefined") {
+if (typeof invalidShippingCompanyWarningLocalized === "undefined") {
     invalidShippingCompanyWarningLocalized = "Invalid shipping company.";
 };
 
-if (typeof invalidCashRepositoryWarningLocalized == "undefined") {
+if (typeof invalidCashRepositoryWarningLocalized === "undefined") {
     invalidCashRepositoryWarningLocalized = "Invalid cash repository.";
 };
 
-if (typeof invalidCostCenterWarningLocalized == "undefined") {
+if (typeof invalidCostCenterWarningLocalized === "undefined") {
     invalidCostCenterWarningLocalized = "Invalid cost center.";
 };
 
-if (typeof invalidSalesPersonWarningLocalized == "undefined") {
+if (typeof invalidSalesPersonWarningLocalized === "undefined") {
     invalidSalesPersonWarningLocalized = "Invalid salesperson.";
 };
 
 //Controls
 var addButton = $("#AddButton");
-var amountTextBox = $("#AmountTextBox");
+var amountInputText = $("#AmountInputText");
 var attachmentLabel = $("#AttachmentLabel");
-var cashRepositoryDropDownList = $("#CashRepositoryDropDownList");
-var cashRepositoryBalanceTextBox = $("#CashRepositoryBalanceTextBox");
-var costCenterDropDownList = $("#CostCenterDropDownList");
+var cashRepositorySelect = $("#CashRepositorySelect");
+var cashRepositoryBalanceInputText = $("#CashRepositoryBalanceInputText");
+var cashTransactionInputCheckBox = $("#CashTransactionInputCheckBox");
+var costCenterSelect = $("#CostCenterSelect");
 
 var dateTextBox = $("#DateTextBox");
-var discountTextBox = $("#DiscountTextBox");
+var discountInputText = $("#DiscountInputText");
 
 var errorLabel = $("#ErrorLabel");
 var errorLabelBottom = $("#ErrorLabelBottom");
 
-var grandTotalTextBox = $("#GrandTotalTextBox");
+var grandTotalInputText = $("#GrandTotalInputText");
 
-var itemCodeTextBox = $("#ItemCodeTextBox");
+var itemCodeInputText = $("#ItemCodeInputText");
 var itemIdHidden = $("#ItemIdHidden");
-var itemDropDownList = $("#ItemDropDownList");
+var itemSelect = $("#ItemSelect");
 
 var partyIdHidden = $("#PartyIdHidden");
-var partyDropDownList = $("#PartyDropDownList");
-var partyCodeTextBox = $("#PartyCodeTextBox");
+var partySelect = $("#PartySelect");
+var partyCodeInputText = $("#PartyCodeInputText");
 var productGridView = $("#ProductGridView");
 var productGridViewDataHidden = $("#ProductGridViewDataHidden");
-var priceTextBox = $("#PriceTextBox");
-var priceTypeDropDownList = $("#PriceTypeDropDownList");
+var priceInputText = $("#PriceInputText");
+var priceTypeSelect = $("#PriceTypeSelect");
 var priceTypeIdHidden = $("#PriceTypeIdHidden");
 
-var quantityTextBox = $("#QuantityTextBox");
+var quantityInputText = $("#QuantityInputText");
 
-var runningTotalTextBox = $("#RunningTotalTextBox");
-var referenceNumberTextBox = $("#ReferenceNumberTextBox");
+var runningTotalInputText = $("#RunningTotalInputText");
+var referenceNumberInputText = $("#ReferenceNumberInputText");
 
 var saveButton = $("#SaveButton");
 
-var salesPersonDropDownList = $("#SalespersonDropDownList");
+var salesPersonSelect = $("#SalesPersonSelect");
 
 var shippingAddressCodeHidden = $("#ShippingAddressCodeHidden");
-var shippingAddressDropDownList = $("#ShippingAddressDropDownList");
-var shippingAddressTextBox = $("#ShippingAddressTextBox");
-var shippingChargeTextBox = $("#ShippingChargeTextBox");
-var shippingCompanyDropDownList = $("#ShippingCompanyDropDownList");
-var statementReferenceTextBox = $("#StatementReferenceTextBox");
-var storeDropDownList = $("#StoreDropDownList");
-var subTotalTextBox = $("#SubtotalTextBox");
+var shippingAddressSelect = $("#ShippingAddressSelect");
+var shippingAddressTextArea = $("#ShippingAddressTextArea");
+var shippingChargeInputText = $("#ShippingChargeInputText");
+var shippingCompanySelect = $("#ShippingCompanySelect");
+var statementReferenceTextArea = $("#StatementReferenceTextArea");
+var storeSelect = $("#StoreSelect");
+var subTotalInputText = $("#SubTotalInputText");
 
-var taxRateTextBox = $("#TaxRateTextBox");
-var taxTotalTextBox = $("#TaxTotalTextBox");
-var taxTextBox = $("#TaxTextBox");
-var totalTextBox = $("#TotalTextBox");
+var taxRateInputText = $("#TaxRateInputText");
+var taxTotalInputText = $("#TaxTotalInputText");
+var taxInputText = $("#TaxInputText");
+var totalAmountInputText = $("#TotalAmountInputText");
 var tranIdCollectionHiddenField = $("#TranIdCollectionHiddenField");
-var transactionTypeRadioButtonList = $("#TransactionTypeRadioButtonList");
 
 var unitIdHidden = $("#UnitIdHidden");
-var unitDropDownList = $("#UnitDropDownList");
+var unitSelect = $("#UnitSelect");
 var unitNameHidden = $("#UnitNameHidden");
 
 //Variables
@@ -150,12 +150,11 @@ $(document).ready(function () {
         if (!content.trim()) {
             $(this).html("");
             $(this).hide();
-        }
+        };
     });
 
     addShortcuts();
     initializeAjaxData();
-    fadeThis("#info-panel");
 });
 
 function initializeAjaxData() {
@@ -164,8 +163,8 @@ function initializeAjaxData() {
     loadPriceTypes();
     loadParties();
 
-    partyDropDownList.change(function () {
-        partyCodeTextBox.val(partyDropDownList.getSelectedValue());
+    partySelect.change(function () {
+        partyCodeInputText.val(partySelect.getSelectedValue());
         showShippingAddress();
         loadAddresses();
     });
@@ -174,12 +173,12 @@ function initializeAjaxData() {
 
     loadItems();
 
-    itemDropDownList.blur(function () {
-        itemDropDownList_OnBlur();
+    itemSelect.blur(function () {
+        itemSelect_OnBlur();
     });
 
-    itemDropDownList.change(function () {
-        itemDropDownList_OnBlur();
+    itemSelect.change(function () {
+        itemSelect_OnBlur();
     });
 
     loadUnits();
@@ -193,10 +192,10 @@ function initializeAjaxData() {
     restoreData();
 };
 
-itemDropDownList.keydown(function (event) {
+itemSelect.keydown(function (event) {
     if (event.ctrlKey) {
         if (event.key === "Enter") {
-            itemDropDownList_OnBlur();
+            itemSelect_OnBlur();
             focusNextElement();
             return false;
         };
@@ -205,8 +204,8 @@ itemDropDownList.keydown(function (event) {
     return true;
 });
 
-function itemDropDownList_OnBlur() {
-    itemCodeTextBox.val(itemDropDownList.getSelectedValue());
+function itemSelect_OnBlur() {
+    itemCodeInputText.val(itemSelect.getSelectedValue());
     loadUnits();
     getPrice();
 };
@@ -221,8 +220,8 @@ function processCallBackActions() {
         data = appendParameter("", "itemId", itemId);
         data = getData(data);
 
-        ajaxUpdateVal(url, data, itemCodeTextBox);
-    }
+        ajaxUpdateVal(url, data, itemCodeInputText);
+    };
 
     var partyId = parseFloat2(partyIdHidden.val());
 
@@ -233,21 +232,21 @@ function processCallBackActions() {
         data = appendParameter("", "partyId", partyId);
         data = getData(data);
 
-        ajaxUpdateVal(url, data, partyCodeTextBox);
-    }
+        ajaxUpdateVal(url, data, partyCodeInputText);
+    };
 };
 
 function ajaxUpdateValCallback(targetControls) {
-    if (targetControls.is(itemCodeTextBox)) {
+    if (targetControls.is(itemCodeInputText)) {
         setTimeout(function () {
-            itemDropDownList.val(itemCodeTextBox.val()).trigger('change');
-            quantityTextBox.focus();
+            itemSelect.val(itemCodeInputText.val()).trigger('change');
+            quantityInputText.focus();
         }, 500);
     };
-    if (targetControls.is(partyCodeTextBox)) {
+    if (targetControls.is(partyCodeInputText)) {
         setTimeout(function () {
-            partyDropDownList.val(partyCodeTextBox.val()).trigger('change');
-            priceTypeDropDownList.focus();
+            partySelect.val(partyCodeInputText.val()).trigger('change');
+            priceTypeSelect.focus();
         }, 500);
     };
 };
@@ -260,7 +259,7 @@ addButton.click(function () {
     addRow();
 });
 
-amountTextBox.blur(function () {
+amountInputText.blur(function () {
     updateTax();
     calculateAmount();
 });
@@ -271,59 +270,62 @@ attachmentLabel.click(function () {
     });
 });
 
-cashRepositoryDropDownList.change(function () {
-    if (cashRepositoryDropDownList.getSelectedValue()) {
+cashRepositorySelect.change(function () {
+    if (cashRepositorySelect.getSelectedValue()) {
         url = "/Modules/Finance/Services/AccountData.asmx/GetCashRepositoryBalance";
-        data = appendParameter("", "cashRepositoryId", cashRepositoryDropDownList.getSelectedValue());
+        data = appendParameter("", "cashRepositoryId", cashRepositorySelect.getSelectedValue());
         data = appendParameter(data, "currencyCode", "");
         data = getData(data);
 
-        ajaxUpdateVal(url, data, cashRepositoryBalanceTextBox);
+        ajaxUpdateVal(url, data, cashRepositoryBalanceInputText);
     };
 });
 
-discountTextBox.blur(function () {
+discountInputText.blur(function () {
     updateTax();
     calculateAmount();
 });
 
-itemCodeTextBox.blur(function () {
-    selectDropDownListByValue(this.id, 'ItemDropDownList');
+itemCodeInputText.blur(function () {
+    selectDropDownListByValue(this.id, 'ItemSelect');
 });
 
-partyCodeTextBox.blur(function () {
-    selectDropDownListByValue(this.id, 'PartyDropDownList');
+partyCodeInputText.blur(function () {
+    selectDropDownListByValue(this.id, 'PartySelect');
 });
 
-priceTextBox.blur(function () {
+priceInputText.blur(function () {
     updateTax();
     calculateAmount();
 });
 
-quantityTextBox.blur(function () {
+quantityInputText.blur(function () {
     updateTax();
     calculateAmount();
 });
 
 var validateProductControl = function () {
-    debugger;
     valueDate = dateTextBox.val();
     errorLabelBottom.html("");
 
     removeDirty(dateTextBox);
-    removeDirty(partyCodeTextBox);
-    removeDirty(partyDropDownList);
-    removeDirty(priceTypeDropDownList);
-    removeDirty(storeDropDownList);
-    removeDirty(shippingCompanyDropDownList);
-    removeDirty(cashRepositoryDropDownList);
-    removeDirty(costCenterDropDownList);
-    removeDirty(salesPersonDropDownList);
+    removeDirty(partyCodeInputText);
+    removeDirty(partySelect);
+    removeDirty(priceTypeSelect);
+    removeDirty(storeSelect);
+    removeDirty(shippingCompanySelect);
+    removeDirty(cashRepositorySelect);
+    removeDirty(costCenterSelect);
+    removeDirty(salesPersonSelect);
 
-    transactionType = transactionTypeRadioButtonList.find("input:checked").val();
-
-    if (transactionType) {
-        isCredit = (transactionType.toLowerCase() === "credit");
+    if (cashTransactionInputCheckBox) {
+        if (cashTransactionInputCheckBox.is(":checked")) {
+            isCredit = false;
+            transactionType = "Cash";
+        } else {
+            isCredit = true;
+            transactionType = "Credit";
+        };
     };
 
     if (!isDate(valueDate)) {
@@ -332,121 +334,129 @@ var validateProductControl = function () {
         return false;
     };
 
-    if (storeDropDownList.length) {
-        if (parseFloat2(storeDropDownList.getSelectedValue()) <= 0) {
-            makeDirty(storeDropDownList);
+    if (storeSelect.length) {
+        if (parseFloat2(storeSelect.getSelectedValue()) <= 0) {
+            makeDirty(storeSelect);
             errorLabelBottom.html(invalidStoreWarningLocalized);
             return false;
         };
     };
 
-    if (isNullOrWhiteSpace(partyCodeTextBox.val())) {
+    if (isNullOrWhiteSpace(partyCodeInputText.val())) {
         errorLabelBottom.html(invalidPartyWarningLocalized);
-        makeDirty(partyCodeTextBox);
-        makeDirty(partyDropDownList);
+        makeDirty(partyCodeInputText);
+        makeDirty(partySelect);
         return false;
     };
 
-    if (priceTypeDropDownList.length) {
-        if (parseFloat2(priceTypeDropDownList.getSelectedValue()) <= 0) {
-            makeDirty(priceTypeDropDownList);
+    if (priceTypeSelect.length) {
+        if (parseFloat2(priceTypeSelect.getSelectedValue()) <= 0) {
+            makeDirty(priceTypeSelect);
             errorLabelBottom.html(invalidPriceTypeWarningLocalized);
             return false;
         };
-    }
+    };
 
     if (productGridView.find("tr").length === 2) {
         errorLabelBottom.html(gridViewEmptyWarningLocalized);
         return false;
     };
 
-    if (shippingCompanyDropDownList.length) {
-        if (parseFloat2(shippingCompanyDropDownList.getSelectedValue()) <= 0) {
-            makeDirty(shippingCompanyDropDownList);
+    if (shippingCompanySelect.length) {
+        if (parseFloat2(shippingCompanySelect.getSelectedValue()) <= 0) {
+            makeDirty(shippingCompanySelect);
             errorLabelBottom.html(invalidShippingCompanyWarningLocalized);
             return false;
         };
     };
 
-    if (cashRepositoryDropDownList.length) {
+    if (cashRepositorySelect.length) {
         if (!isCredit) {
-            if (parseFloat2(cashRepositoryDropDownList.getSelectedValue()) <= 0) {
-                makeDirty(cashRepositoryDropDownList);
+            if (parseFloat2(cashRepositorySelect.getSelectedValue()) <= 0) {
+                makeDirty(cashRepositorySelect);
                 errorLabelBottom.html(invalidCashRepositoryWarningLocalized);
                 return false;
             };
-        }
+        };
+
+        if (isCredit) {
+            if (parseFloat2(cashRepositorySelect.getSelectedValue()) > 0) {
+                makeDirty(cashRepositorySelect);
+                errorLabelBottom.html(invalidCashRepositoryWarningLocalized);
+                return false;
+            };
+        };
     };
 
-    if (costCenterDropDownList.length) {
-        if (parseFloat2(costCenterDropDownList.getSelectedValue()) <= 0) {
-            makeDirty(costCenterDropDownList);
+    if (costCenterSelect.length) {
+        if (parseFloat2(costCenterSelect.getSelectedValue()) <= 0) {
+            makeDirty(costCenterSelect);
             errorLabelBottom.html(invalidCostCenterWarningLocalized);
             return false;
         };
     };
 
-    if (salesPersonDropDownList.length) {
-        if (parseFloat2(salesPersonDropDownList.getSelectedValue()) <= 0) {
-            makeDirty(salesPersonDropDownList);
+    if (salesPersonSelect.length) {
+        if (parseFloat2(salesPersonSelect.getSelectedValue()) <= 0) {
+            makeDirty(salesPersonSelect);
             errorLabelBottom.html(invalidSalesPersonWarningLocalized);
             return false;
         };
     };
 
     productGridViewDataHidden.val(tableToJSON(productGridView));
-    agentId = parseFloat2(salesPersonDropDownList.getSelectedValue());
+    agentId = parseFloat2(salesPersonSelect.getSelectedValue());
     attachments = uploadedFilesHidden.val();
 
-    cashRepositoryId = parseFloat2(cashRepositoryDropDownList.getSelectedValue());
-    costCenterId = parseFloat2(costCenterDropDownList.getSelectedValue());
+    cashRepositoryId = parseFloat2(cashRepositorySelect.getSelectedValue());
+    costCenterId = parseFloat2(costCenterSelect.getSelectedValue());
 
     data = productGridViewDataHidden.val();
 
-    partyCode = partyDropDownList.getSelectedValue();
-    priceTypeId = parseFloat2(priceTypeDropDownList.getSelectedValue());
+    partyCode = partySelect.getSelectedValue();
+    priceTypeId = parseFloat2(priceTypeSelect.getSelectedValue());
 
-    referenceNumber = referenceNumberTextBox.getSelectedValue();
+    referenceNumber = referenceNumberInputText.getSelectedValue();
 
-    shippingAddressCode = shippingAddressDropDownList.getSelectedText();
-    shipperId = parseFloat2(shippingCompanyDropDownList.getSelectedValue());
-    shippingCharge = parseFloat2(shippingChargeTextBox.val());
-    statementReference = statementReferenceTextBox.val();
-    storeId = parseFloat2(storeDropDownList.getSelectedValue());
+    shippingAddressCode = shippingAddressSelect.getSelectedText();
+    shipperId = parseFloat2(shippingCompanySelect.getSelectedValue());
+    shippingCharge = parseFloat2(shippingChargeInputText.val());
+    statementReference = statementReferenceTextArea.val();
+    storeId = parseFloat2(storeSelect.getSelectedValue());
 
     transactionIds = tranIdCollectionHiddenField.val();
 
     return true;
 };
 
-shippingAddressDropDownList.change(function () {
+shippingAddressSelect.change(function () {
     showShippingAddress();
 });
 
-shippingChargeTextBox.blur(function () {
+shippingChargeInputText.blur(function () {
     summate();
 });
 
-taxRateTextBox.blur(function () {
+taxRateInputText.blur(function () {
     updateTax();
     calculateAmount();
 });
 
-taxTextBox.blur(function () {
+taxInputText.blur(function () {
     calculateAmount();
 });
 
-unitDropDownList.change(function () {
+unitSelect.change(function () {
     unitNameHidden.val($(this).getSelectedText());
     unitIdHidden.val($(this).getSelectedValue());
 });
 
-unitDropDownList.blur(function () {
+unitSelect.blur(function () {
     getPrice();
 });
 
 function loadAddresses() {
-    var partyCode = partyDropDownList.val();
+    var partyCode = partySelect.val();
 
     url = "/Modules/Inventory/Services/PartyData.asmx/GetAddressByPartyCode";
     data = appendParameter("", "partyCode", partyCode);
@@ -454,22 +464,22 @@ function loadAddresses() {
 
     var selectedValue = shippingAddressCodeHidden.val();
 
-    ajaxDataBind(url, shippingAddressDropDownList, data, selectedValue);
+    ajaxDataBind(url, shippingAddressSelect, data, selectedValue);
 };
 
 function loadAgents() {
     url = "/Modules/Inventory/Services/ItemData.asmx/GetAgents";
-    ajaxDataBind(url, salesPersonDropDownList);
+    ajaxDataBind(url, salesPersonSelect);
 };
 
 function loadCashRepositories() {
     url = "/Modules/Finance/Services/AccountData.asmx/GetCashRepositories";
-    ajaxDataBind(url, cashRepositoryDropDownList);
+    ajaxDataBind(url, cashRepositorySelect);
 };
 
 function loadCostCenters() {
     url = "/Modules/Finance/Services/AccountData.asmx/GetCostCenters";
-    ajaxDataBind(url, costCenterDropDownList);
+    ajaxDataBind(url, costCenterSelect);
 };
 
 function loadItems() {
@@ -477,39 +487,39 @@ function loadItems() {
     data = appendParameter("", "tranBook", tranBook);
     data = getData(data);
 
-    ajaxDataBind(url, itemDropDownList, data);
+    ajaxDataBind(url, itemSelect, data);
 };
 
 function loadParties() {
     url = "/Modules/Inventory/Services/PartyData.asmx/GetParties";
-    ajaxDataBind(url, partyDropDownList, null);
+    ajaxDataBind(url, partySelect, null);
 };
 
 function loadPriceTypes() {
-    if (priceTypeDropDownList.length) {
+    if (priceTypeSelect.length) {
         url = "/Modules/Inventory/Services/ItemData.asmx/GetPriceTypes";
         var selectedValue = priceTypeIdHidden.val();
 
-        ajaxDataBind(url, priceTypeDropDownList, null, selectedValue);
+        ajaxDataBind(url, priceTypeSelect, null, selectedValue);
     };
 };
 
 function loadShippers() {
-    if (shippingCompanyDropDownList.length) {
+    if (shippingCompanySelect.length) {
         url = "/Modules/Inventory/Services/ItemData.asmx/GetShippers";
-        ajaxDataBind(url, shippingCompanyDropDownList);
+        ajaxDataBind(url, shippingCompanySelect);
     };
 };
 
 function loadStores() {
-    if (storeDropDownList.length) {
+    if (storeSelect.length) {
         url = "/Modules/Inventory/Services/ItemData.asmx/GetStores";
-        ajaxDataBind(url, storeDropDownList);
+        ajaxDataBind(url, storeSelect);
     };
 };
 
 function loadUnits() {
-    var itemCode = itemCodeTextBox.val();
+    var itemCode = itemCodeInputText.val();
 
     url = "/Modules/Inventory/Services/ItemData.asmx/GetUnits";
     data = appendParameter("", "itemCode", itemCode);
@@ -517,7 +527,7 @@ function loadUnits() {
 
     var selectedValue = unitIdHidden.val();
 
-    ajaxDataBind(url, unitDropDownList, data, selectedValue);
+    ajaxDataBind(url, unitSelect, data, selectedValue);
 };
 
 //GridView Data Function
@@ -533,7 +543,7 @@ var restoreData = function () {
 
     if (isNullOrWhiteSpace(sourceControl.val())) {
         return;
-    }
+    };
 
     var rowData = JSON.parse(sourceControl.val());
 
@@ -548,104 +558,104 @@ var restoreData = function () {
         var tax = parseFloat2(rowData[i][9]);
 
         addRowToTable(itemCode, itemName, quantity, unitName, price, discount, taxRate, tax);
-    }
+    };
 };
 
 //New Row Helper Function
 var calculateAmount = function () {
-    amountTextBox.val(parseFloat2(quantityTextBox.val()) * parseFloat2(priceTextBox.val()));
+    amountInputText.val(parseFloat2(quantityInputText.val()) * parseFloat2(priceInputText.val()));
 
-    subTotalTextBox.val(parseFloat2(amountTextBox.val()) - parseFloat2(discountTextBox.val()));
-    totalTextBox.val(parseFloat2(subTotalTextBox.val()) + parseFloat2(taxTextBox.val()));
+    subTotalInputText.val(parseFloat2(amountInputText.val()) - parseFloat2(discountInputText.val()));
+    totalAmountInputText.val(parseFloat2(subTotalInputText.val()) + parseFloat2(taxInputText.val()));
 };
 
 var updateTax = function () {
-    var total = parseFloat2(priceTextBox.val()) * parseFloat2(quantityTextBox.val());
-    var subTotal = total - parseFloat2(discountTextBox.val());
+    var total = parseFloat2(priceInputText.val()) * parseFloat2(quantityInputText.val());
+    var subTotal = total - parseFloat2(discountInputText.val());
     var taxableAmount = total;
 
     if (taxAfterDiscount.toLowerCase() === "true") {
         taxableAmount = subTotal;
-    }
+    };
 
-    var tax = (taxableAmount * parseFloat2(parseFormattedNumber(taxRateTextBox.val()))) / 100;
+    var tax = (taxableAmount * parseFloat2(parseFormattedNumber(taxRateInputText.val()))) / 100;
 
-    if (parseFloat2(taxTextBox.val()) === 0) {
+    if (parseFloat2(taxInputText.val()) === 0) {
         if (tax.toFixed) {
-            taxTextBox.val(getFormattedNumber(tax.toFixed(2)));
+            taxInputText.val(getFormattedNumber(tax.toFixed(2)));
         } else {
-            taxTextBox.val(getFormattedNumber(tax));
-        }
-    }
+            taxInputText.val(getFormattedNumber(tax));
+        };
+    };
 
-    if (parseFloat2(tax).toFixed(2) !== parseFloat2(parseFormattedNumber(taxTextBox.val())).toFixed(2)) {
+    if (parseFloat2(tax).toFixed(2) !== parseFloat2(parseFormattedNumber(taxInputText.val())).toFixed(2)) {
         var question = confirm(updateTaxLocalized);
 
         if (question) {
             if (tax.toFixed) {
-                taxTextBox.val(getFormattedNumber(tax.toFixed(2)));
+                taxInputText.val(getFormattedNumber(tax.toFixed(2)));
             } else {
-                taxTextBox.val(getFormattedNumber(tax));
-            }
-        }
-    }
+                taxInputText.val(getFormattedNumber(tax));
+            };
+        };
+    };
 };
 
 //GridView Manipulation
 var addRow = function () {
-    itemCodeTextBox.val(itemDropDownList.getSelectedValue());
-    var itemCode = itemCodeTextBox.val();
-    var itemName = itemDropDownList.getSelectedText();
-    var quantity = parseInt2(quantityTextBox.val());
+    itemCodeInputText.val(itemSelect.getSelectedValue());
+    var itemCode = itemCodeInputText.val();
+    var itemName = itemSelect.getSelectedText();
+    var quantity = parseInt2(quantityInputText.val());
     var unitId = parseFloat2(unitIdHidden.val());
     var unitName = unitNameHidden.val();
-    var price = parseFloat2(priceTextBox.val());
-    var discount = parseFloat2(discountTextBox.val());
-    var taxRate = parseFloat2(taxRateTextBox.val());
-    var tax = parseFloat2(taxTextBox.val());
-    var storeId = parseFloat2(storeDropDownList.val());
+    var price = parseFloat2(priceInputText.val());
+    var discount = parseFloat2(discountInputText.val());
+    var taxRate = parseFloat2(taxRateInputText.val());
+    var tax = parseFloat2(taxInputText.val());
+    var storeId = parseFloat2(storeSelect.val());
 
     if (isNullOrWhiteSpace(itemCode)) {
-        makeDirty(itemCodeTextBox);
+        makeDirty(itemCodeInputText);
         return;
-    }
+    };
 
-    removeDirty(itemCodeTextBox);
+    removeDirty(itemCodeInputText);
 
     if (quantity < 1) {
-        makeDirty(quantityTextBox);
+        makeDirty(quantityInputText);
         return;
-    }
+    };
 
-    removeDirty(quantityTextBox);
+    removeDirty(quantityInputText);
 
     if (price <= 0) {
-        makeDirty(priceTextBox);
+        makeDirty(priceInputText);
         return;
-    }
+    };
 
-    removeDirty(priceTextBox);
+    removeDirty(priceInputText);
 
     if (discount < 0) {
-        makeDirty(discountTextBox);
+        makeDirty(discountInputText);
         return;
-    }
+    };
 
-    removeDirty(discountTextBox);
+    removeDirty(discountInputText);
 
     if (discount > (price * quantity)) {
-        makeDirty(discountTextBox);
+        makeDirty(discountInputText);
         return;
-    }
+    };
 
-    removeDirty(discountTextBox);
+    removeDirty(discountInputText);
 
     if (tax < 0) {
-        makeDirty(taxTextBox);
+        makeDirty(taxInputText);
         return;
-    }
+    };
 
-    removeDirty(taxTextBox);
+    removeDirty(taxInputText);
 
     var ajaxItemCodeExists = itemCodeExists(itemCode);
     var ajaxUnitNameExists = unitNameExists(unitName);
@@ -657,27 +667,27 @@ var addRow = function () {
 
         if (!itemCodeExists) {
             $.notify(String.format("Item '{0}' does not exist.", itemCode), "error");
-            makeDirty(itemCodeTextBox);
+            makeDirty(itemCodeInputText);
             return;
-        }
+        };
 
-        removeDirty(itemCodeTextBox);
+        removeDirty(itemCodeInputText);
 
         ajaxUnitNameExists.done(function (ajaxUnitNameExistsResult) {
             var unitNameExists = ajaxUnitNameExistsResult.d;
 
             if (!unitNameExists) {
                 $.notify(String.format("Unit '{0}' does not exist.", unitName), "error");
-                makeDirty(unitDropDownList);
+                makeDirty(unitSelect);
                 return;
-            }
+            };
 
-            removeDirty(unitDropDownList);
+            removeDirty(unitSelect);
 
             if (!verifyStock || !isSales) {
                 addRowToTable(itemCode, itemName, quantity, unitName, price, discount, taxRate, tax);
                 return;
-            }
+            };
 
             ajaxIsStockItem.done(function (ajaxIsStockItemResult) {
                 var isStockItem = ajaxIsStockItemResult.d;
@@ -685,16 +695,16 @@ var addRow = function () {
                 if (!isStockItem) {
                     addRowToTable(itemCode, itemName, quantity, unitName, price, discount, taxRate, tax);
                     return;
-                }
+                };
 
                 ajaxCountItemInStock.done(function (ajaxCountItemInStockResult) {
                     var itemInStock = parseFloat2(ajaxCountItemInStockResult.d);
 
                     if (quantity > itemInStock) {
-                        makeDirty(quantityTextBox);
+                        makeDirty(quantityInputText);
                         errorLabel.html(String.format(insufficientStockWarningLocalized, itemInStock, unitName, itemName));
                         return;
-                    }
+                    };
 
                     addRowToTable(itemCode, itemName, quantity, unitName, price, discount, taxRate, tax);
                 });
@@ -730,32 +740,32 @@ var addRowToTable = function (itemCode, itemName, quantity, unitName, price, dis
 
             match = true;
             return;
-        }
+        };
     });
 
     if (!match) {
         var html = "<tr class='grid2-row'><td>" + itemCode + "</td><td>" + itemName + "</td><td class='text-right'>" + quantity + "</td><td>" + unitName + "</td><td class='text-right'>" + price + "</td><td class='text-right'>" + amount + "</td><td class='text-right'>" + discount + "</td><td class='text-right'>" + subTotal + "</td><td class='text-right'>" + taxRate + "</td><td class='text-right'>" + tax + "</td><td class='text-right'>" + total
-            + "</td><td><span class='glyphicon glyphicon-remove-circle pointer span-icon' onclick='removeRow($(this));'></span><span class='glyphicon glyphicon-ok-sign pointer span-icon' onclick='toggleDanger($(this));'></span><span class='glyphicon glyphicon glyphicon-thumbs-up pointer span-icon' onclick='toggleSuccess($(this));'></span></td></tr>";
+            + "</td><td><a class='pointer' onclick='removeRow($(this));'><i class='ui delete icon'></i></a><a class='pointer' onclick='toggleDanger($(this));'><i class='ui pointer check mark icon'></a></i><a class='pointer' onclick='toggleSuccess($(this));'><i class='ui pointer thumbs up icon'></i></a></td></tr>";
         grid.find("tr:last").before(html);
-    }
+    };
 
     summate();
 
-    itemCodeTextBox.val("");
-    quantityTextBox.val(1);
-    priceTextBox.val("");
-    discountTextBox.val("");
-    taxTextBox.val("");
+    itemCodeInputText.val("");
+    quantityInputText.val(1);
+    priceInputText.val("");
+    discountInputText.val("");
+    taxInputText.val("");
     errorLabel.html("");
-    itemCodeTextBox.focus();
+    itemCodeInputText.focus();
     repaint();
 };
 
 //Ajax Requests
 var getPrice = function () {
-    var itemCode = itemCodeTextBox.val();
-    var partyCode = partyCodeTextBox.val();
-    var priceTypeId = parseFloat2(priceTypeDropDownList.val());
+    var itemCode = itemCodeInputText.val();
+    var partyCode = partyCodeInputText.val();
+    var priceTypeId = parseFloat2(priceTypeSelect.val());
     var unitId = unitIdHidden.val();
 
     if (!unitId) return;
@@ -763,7 +773,7 @@ var getPrice = function () {
     if (tranBook.toLowerCase() === "sales") {
         if (priceTypeId <= 0) {
             $.notify(invalidPriceTypeWarningLocalized, "error");
-            priceTypeDropDownList.focus();
+            priceTypeSelect.focus();
             return;
         };
     };
@@ -780,8 +790,8 @@ var getPrice = function () {
     var priceAjax = getAjax(url, data);
 
     priceAjax.success(function (msg) {
-        priceTextBox.val(msg.d);
-        taxTextBox.val("");
+        priceInputText.val(msg.d);
+        taxInputText.val("");
     });
 
     priceAjax.error(function (xhr) {
@@ -793,7 +803,7 @@ var getPrice = function () {
     data = appendParameter("", "itemCode", itemCode);
     data = getData(data);
 
-    ajaxUpdateVal(url, data, taxRateTextBox);
+    ajaxUpdateVal(url, data, taxRateInputText);
 
     calculateAmount();
 };
@@ -849,15 +859,15 @@ var summate = function () {
     var taxTotal = sumOfColumn("#ProductGridView", 9);
     var grandTotal = sumOfColumn("#ProductGridView", 10);
 
-    grandTotal += parseFloat2(shippingChargeTextBox.val());
+    grandTotal += parseFloat2(shippingChargeInputText.val());
 
-    runningTotalTextBox.val(runningTotal);
-    taxTotalTextBox.val(taxTotal);
-    grandTotalTextBox.val(grandTotal);
+    runningTotalInputText.val(runningTotal);
+    taxTotalInputText.val(taxTotal);
+    grandTotalInputText.val(grandTotal);
 };
 
 var showShippingAddress = function () {
-    shippingAddressTextBox.val((shippingAddressDropDownList.val()));
+    shippingAddressTextArea.val((shippingAddressSelect.val()));
 };
 
 //Utilities
@@ -873,23 +883,23 @@ function addShortcuts() {
     });
 
     shortcut.add("ALT+C", function () {
-        itemCodeTextBox.focus();
+        itemCodeInputText.focus();
     });
 
     shortcut.add("CTRL+I", function () {
-        itemDropDownList.focus();
+        itemSelect.focus();
     });
 
     shortcut.add("CTRL+Q", function () {
-        quantityTextBox.focus();
+        quantityInputText.focus();
     });
 
     shortcut.add("ALT+P", function () {
-        priceTextBox.focus();
+        priceInputText.focus();
     });
 
     shortcut.add("CTRL+D", function () {
-        discountTextBox.focus();
+        discountInputText.focus();
     });
 
     shortcut.add("CTRL+R", function () {
@@ -897,11 +907,11 @@ function addShortcuts() {
     });
 
     shortcut.add("CTRL+T", function () {
-        taxTextBox.focus();
+        taxInputText.focus();
     });
 
     shortcut.add("CTRL+U", function () {
-        unitDropDownList.focus();
+        unitSelect.focus();
     });
 
     shortcut.add("CTRL+ENTER", function () {

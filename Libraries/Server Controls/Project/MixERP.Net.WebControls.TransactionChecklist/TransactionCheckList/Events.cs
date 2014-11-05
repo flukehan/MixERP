@@ -66,7 +66,7 @@ namespace MixERP.Net.WebControls.TransactionChecklist
             if (this.IsNonGlTransaction)
             {
                 messageLabel.Text = Labels.CannotWithdrawNotValidGLTransaction;
-                messageLabel.CssClass = "label label-danger vpad12";
+                messageLabel.CssClass = "ui block message red vpad12";
                 return;
             }
 
@@ -86,14 +86,14 @@ namespace MixERP.Net.WebControls.TransactionChecklist
                     if (Verification.WithdrawTransaction(transactionMasterId, SessionHelper.GetUserId(), reasonTextBox.Text))
                     {
                         messageLabel.Text = string.Format(Labels.TransactionWithdrawnMessage, transactionDate.ToShortDateString());
-                        messageLabel.CssClass = "label label-success vpad12";
+                        messageLabel.CssClass = "ui block message yellow vpad12";
                     }
                 }
             }
             else
             {
                 messageLabel.Text = Labels.CannotWithdrawTransaction;
-                messageLabel.CssClass = "label label-danger vpad12";
+                messageLabel.CssClass = "ui block message red vpad12";
             }
 
             this.ShowVerificationStatus(tranId, this.verificationLabel);

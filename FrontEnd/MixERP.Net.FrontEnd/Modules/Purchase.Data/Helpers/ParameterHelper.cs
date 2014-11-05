@@ -91,14 +91,14 @@ namespace MixERP.Net.Core.Modules.Purchase.Data.Helpers
         {
             if (attachments == null)
             {
-                return "NULL::attachment_type";
+                return "NULL::core.attachment_type";
             }
 
             Collection<string> attachmentCollection = new Collection<string>();
 
             for (int i = 0; i < attachments.Count; i++)
             {
-                attachmentCollection.Add(string.Format("ROW(@Comment{0}, @FilePath{0}, @OriginalFileName{0})::attachment_type", i.ToString(CultureInfo.InvariantCulture)));
+                attachmentCollection.Add(string.Format("ROW(@Comment{0}, @FilePath{0}, @OriginalFileName{0})::core.attachment_type", i.ToString(CultureInfo.InvariantCulture)));
             }
 
             return string.Join(",", attachmentCollection);

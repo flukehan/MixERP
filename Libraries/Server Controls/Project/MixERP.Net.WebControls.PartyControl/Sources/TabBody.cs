@@ -17,8 +17,8 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System.Web.UI;
 using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 
 namespace MixERP.Net.WebControls.PartyControl
 {
@@ -33,33 +33,31 @@ namespace MixERP.Net.WebControls.PartyControl
             }
         }
 
-        private Control GetTabBody()
+        private void AddTabBody(Panel p)
         {
-            using (HtmlGenericControl tabContentDiv = ControlHelper.GetGenericControl(@"div", @"tab-content"))
+            using (HtmlGenericControl homeTab = ControlHelper.GetGenericControl(@"div", "ui active tab bottom stacked attached segment"))
             {
-                using (HtmlGenericControl homeTab = ControlHelper.GetGenericControl(@"div", "tab-pane fade in active"))
-                {
-                    homeTab.ID = "home";
-                    tabContentDiv.Controls.Add(homeTab);
-                }
-
-                tabContentDiv.Controls.Add(this.GetPartySummaryTab());
-                tabContentDiv.Controls.Add(this.GetTransactionSummaryTab());
-                tabContentDiv.Controls.Add(this.GetAddressInfoTab());
-
-                return tabContentDiv;
+                homeTab.Attributes.Add("data-tab", "home");
+                homeTab.ID = "home";
+                p.Controls.Add(homeTab);
             }
+
+            p.Controls.Add(this.GetPartySummaryTab());
+            p.Controls.Add(this.GetTransactionSummaryTab());
+            p.Controls.Add(this.GetAddressInfoTab());
         }
 
         private HtmlGenericControl GetPartySummaryTab()
         {
-            using (HtmlGenericControl partSummaryDiv = ControlHelper.GetGenericControl(@"div", @"tab-pane fade"))
+            using (HtmlGenericControl partSummaryDiv = ControlHelper.GetGenericControl(@"div", @"ui tab bottom stacked attached green segment"))
             {
+                partSummaryDiv.Attributes.Add("data-tab", "party-summary");
+
                 partSummaryDiv.ID = "party-summary";
 
                 using (HtmlTable table = new HtmlTable())
                 {
-                    table.Attributes.Add("class", "table table-bordered table-hover");
+                    table.Attributes.Add("class", "ui table segment");
                     table.Rows.Add(ControlHelper.GetNewRow("Party Type", @"PartyTypeSpan", @"span"));
                     table.Rows.Add(ControlHelper.GetNewRow("Email Address", @"EmailAddressSpan", @"span"));
                     table.Rows.Add(ControlHelper.GetNewRow("PAN Number", @"PANNumberSpan", @"span"));
@@ -80,13 +78,15 @@ namespace MixERP.Net.WebControls.PartyControl
 
         private HtmlGenericControl GetTransactionSummaryTab()
         {
-            using (HtmlGenericControl transactionSummaryDiv = ControlHelper.GetGenericControl(@"div", @"tab-pane fade"))
+            using (HtmlGenericControl transactionSummaryDiv = ControlHelper.GetGenericControl(@"div", @"ui tab bottom stacked attached red segment"))
             {
+                transactionSummaryDiv.Attributes.Add("data-tab", "transaction-summary");
+
                 transactionSummaryDiv.ID = "transaction-summary";
 
                 using (HtmlTable table = new HtmlTable())
                 {
-                    table.Attributes.Add("class", "table table-bordered table-hover");
+                    table.Attributes.Add("class", "ui table segment");
                     table.Rows.Add(ControlHelper.GetNewRow("Total Due Amount", @"TotalDueAmountSpan", @"span"));
                     table.Rows.Add(ControlHelper.GetNewRow("Total Due Amount (Current Office)", @"OfficeDueAmountSpan", @"span"));
                     table.Rows.Add(ControlHelper.GetNewRow("Accrued Interest", @"AccruedInterestSpan", @"span"));
@@ -102,20 +102,21 @@ namespace MixERP.Net.WebControls.PartyControl
 
         private HtmlGenericControl GetAddressInfoTab()
         {
-            using (HtmlGenericControl addressInfoDiv = ControlHelper.GetGenericControl(@"div", @"tab-pane fade"))
+            using (HtmlGenericControl addressInfoDiv = ControlHelper.GetGenericControl(@"div", @"ui tab bottom stacked attached teal segment"))
             {
+                addressInfoDiv.Attributes.Add("data-tab", "contact-info");
                 addressInfoDiv.ID = "addresses-and-contact-info";
 
-                using (HtmlGenericControl h4 = ControlHelper.GetGenericControl("h4", string.Empty))
+                using (HtmlGenericControl h3 = ControlHelper.GetGenericControl("h3", "ui header"))
                 {
-                    h4.InnerText = "Address & Contact Information";
+                    h3.InnerHtml = "  <i class='globe icon'></i>Address & Contact Information";
 
-                    addressInfoDiv.Controls.Add(h4);
+                    addressInfoDiv.Controls.Add(h3);
                 }
 
                 using (HtmlTable table = new HtmlTable())
                 {
-                    table.Attributes.Add("class", "table table-bordered table-hover");
+                    table.Attributes.Add("class", "ui table segment");
                     table.Rows.Add(ControlHelper.GetNewRow("Default Address", @"AddressDiv", "div"));
                     table.Rows.Add(ControlHelper.GetNewRow("Shipping Address(es)", @"ShippingAddressesDiv", "div"));
                     addressInfoDiv.Controls.Add(table);

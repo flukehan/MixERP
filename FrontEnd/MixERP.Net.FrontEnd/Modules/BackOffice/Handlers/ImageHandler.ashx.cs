@@ -20,10 +20,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
-using System.Linq;
 using System.Web;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Handlers
@@ -61,13 +59,9 @@ namespace MixERP.Net.Core.Modules.BackOffice.Handlers
 
             context.Response.Clear();
 
-            if (!System.IO.File.Exists(System.Web.HttpContext.Current.Server.MapPath(path)))
+            if (System.IO.File.Exists(HttpContext.Current.Server.MapPath(path)))
             {
-                return; ;
-            }
-            else
-            {
-                System.IO.FileInfo file = new System.IO.FileInfo(System.Web.HttpContext.Current.Server.MapPath(path));
+                System.IO.FileInfo file = new System.IO.FileInfo(HttpContext.Current.Server.MapPath(path));
                 using (Bitmap originalImage = new Bitmap(context.Server.MapPath(path)))
                 {
                     byte[] buffer = ImageHelper.GetResizedImage(originalImage, width, height);

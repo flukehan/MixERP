@@ -315,7 +315,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                     {
                         string popUpQuotationPreviewUrl = this.Page.ResolveUrl(this.PreviewUrl + "?TranId=" + id);
 
-                        using (HtmlAnchor printAnchor = (HtmlAnchor) e.Row.Cells[0].FindControl("PrintAnchor"))
+                        using (HtmlAnchor printAnchor = (HtmlAnchor)e.Row.Cells[0].FindControl("PrintAnchor"))
                         {
                             if (printAnchor != null)
                             {
@@ -324,7 +324,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                         }
                     }
 
-                    using (HtmlAnchor checklistAnchor = (HtmlAnchor) e.Row.Cells[0].FindControl("ChecklistAnchor"))
+                    using (HtmlAnchor checklistAnchor = (HtmlAnchor)e.Row.Cells[0].FindControl("ChecklistAnchor"))
                     {
                         if (!string.IsNullOrWhiteSpace(this.ChecklistUrl))
                         {

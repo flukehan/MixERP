@@ -55,7 +55,7 @@ namespace MixERP.Net.WebControls.TransactionChecklist
 
         public string ReportPath { get; set; }
 
-        public Unit MaxWidth { get; set; }
+        public Unit Width { get; set; }
         public string CustomerReportPath { get; set; }
 
         public string GlAdvicePath { get; set; }

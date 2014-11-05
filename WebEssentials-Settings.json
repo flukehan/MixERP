@@ -82,7 +82,7 @@
     "AutoMinify": true,
     "BlockCommentCompletion": true,
     "GenerateSourceMaps": true,
-    "GzipMinifiedFiles": false,
+    "GzipMinifiedFiles": true,
     "LintOnBuild": false,
     "LintOnSave": true,
     "LintResultLocation": "Message",

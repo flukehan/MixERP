@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Web.Hosting;
 
@@ -68,7 +70,7 @@ namespace MixERP.Net.Common.Helpers
 
         public static string GetConfigurationValues(string configFileName, string sectionName)
         {
-            ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap {ExeConfigFilename = configFileName};
+            ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap { ExeConfigFilename = configFileName };
             Configuration config = ConfigurationManager.OpenMappedExeConfiguration(configFileMap, ConfigurationUserLevel.None);
             AppSettingsSection section = config.GetSection("appSettings") as AppSettingsSection;
 
@@ -81,6 +83,52 @@ namespace MixERP.Net.Common.Helpers
             }
 
             return string.Empty;
+        }
+
+        public static string SetConfigurationValues(string configFileName, string sectionName, string value)
+        {
+            ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap { ExeConfigFilename = configFileName };
+            var config = ConfigurationManager.OpenMappedExeConfiguration(configFileMap, ConfigurationUserLevel.None);
+            AppSettingsSection section = config.GetSection("appSettings") as AppSettingsSection;
+
+            if (section != null)
+            {
+                if (section.Settings[sectionName] != null)
+                {
+                    section.Settings[sectionName].Value = value;
+                }
+            }
+            config.Save(ConfigurationSaveMode.Modified);
+
+            return string.Empty;
+        }
+
+        public static void SetConfigurationValues(string configFileName, Collection<KeyValuePair<string, string>> sections)
+        {
+            ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap { ExeConfigFilename = configFileName };
+            var config = ConfigurationManager.OpenMappedExeConfiguration(configFileMap, ConfigurationUserLevel.None);
+            AppSettingsSection appsetting = config.GetSection("appSettings") as AppSettingsSection;
+
+            if (appsetting == null)
+            {
+                return;
+            }
+
+            if (sections != null && sections.Count > 0)
+            {
+                foreach (var section in sections)
+                {
+                    if (section.Key != null)
+                    {
+                        if (appsetting.Settings[section.Key] != null)
+                        {
+                            appsetting.Settings[section.Key].Value = section.Value;
+                        }
+                    }
+                }
+            }
+
+            config.Save(ConfigurationSaveMode.Modified);
         }
     }
 }

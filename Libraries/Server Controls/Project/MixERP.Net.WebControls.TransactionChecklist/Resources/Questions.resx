@@ -117,7 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AreYouSure" xml:space="preserve">
+    <value>Are you sure you know what you're doing?</value>
+  </data>
   <data name="WithdrawalReason" xml:space="preserve">
-    <value>Why do you want to withdraw this entry?</value>
+    <value>Why do you want to withdraw this transaction?</value>
   </data>
 </root>

@@ -18,14 +18,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.Common;
-using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.WebControls.StockTransactionView.Resources;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -37,13 +32,14 @@ namespace MixERP.Net.WebControls.StockTransactionView.Helpers
         private static void AddTemplateFields(GridView grid)
         {
             TemplateField actionTemplateField = new TemplateField();
-            actionTemplateField.HeaderStyle.Width = 64;
+            actionTemplateField.HeaderStyle.Width = 90;
             actionTemplateField.HeaderText = Titles.Actions;
             actionTemplateField.ItemTemplate = new StockTransactionViewActionTemplate();
 
             grid.Columns.Add(actionTemplateField);
 
             TemplateField checkBoxTemplateField = new TemplateField();
+            checkBoxTemplateField.HeaderText = Titles.Select;
             checkBoxTemplateField.ItemTemplate = new StockTransactionViewSelectTemplate();
             grid.Columns.Add(checkBoxTemplateField);
         }
@@ -55,10 +51,23 @@ namespace MixERP.Net.WebControls.StockTransactionView.Helpers
 
             public void InstantiateIn(Control container)
             {
-                checkBox = new HtmlInputCheckBox();
-                checkBox.ID = "SelectCheckBox";
-                checkBox.ClientIDMode = ClientIDMode.Predictable;
-                container.Controls.Add(checkBox);
+                using (HtmlGenericControl div = new HtmlGenericControl("div"))
+                {
+                    div.Attributes.Add("class", "ui toggle checkbox");
+                    checkBox = new HtmlInputCheckBox();
+                    checkBox.ID = "SelectCheckBox";
+                    checkBox.ClientIDMode = ClientIDMode.Predictable;
+
+                    div.Controls.Add(checkBox);
+
+                    //Added for compatibility with Semantic UI
+                    using (HtmlGenericControl label = new HtmlGenericControl("label"))
+                    {
+                        div.Controls.Add(label);
+                    }
+
+                    container.Controls.Add(div);
+                }
             }
 
             public void Dispose()

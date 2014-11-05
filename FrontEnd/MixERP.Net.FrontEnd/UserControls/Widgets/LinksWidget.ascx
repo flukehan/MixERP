@@ -18,11 +18,11 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="LinksWidget.ascx.cs" Inherits="MixERP.Net.FrontEnd.UserControls.Widgets.LinksWidget" %>
-<div class="panel panel-default widget">
-    <div class="panel-heading">
-        <h3 class="panel-title">MixERP Links (Todo)</h3>
-    </div>
-    <div class="panel-body">
+
+<div class="four wide column widget widget">
+    <div class="ui segment">
+        <h2>MixERP Links (Todo)
+        </h2>
         <ul>
             <li>
                 <a href="#">Documentation</a>

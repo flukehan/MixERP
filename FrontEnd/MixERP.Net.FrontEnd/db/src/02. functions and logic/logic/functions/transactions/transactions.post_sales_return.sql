@@ -11,7 +11,7 @@ DROP FUNCTION IF EXISTS transactions.post_sales_return
         _reference_number                       national character varying(24),
         _statement_reference                    text,
         _details                                transactions.stock_detail_type[],
-        _attachments                            attachment_type[]
+        _attachments                            core.attachment_type[]
 );
 
 CREATE FUNCTION transactions.post_sales_return
@@ -27,7 +27,7 @@ CREATE FUNCTION transactions.post_sales_return
         _reference_number                       national character varying(24),
         _statement_reference                    text,
         _details                                transactions.stock_detail_type[],
-        _attachments                            attachment_type[]
+        _attachments                            core.attachment_type[]
 )
 RETURNS bigint
 AS
@@ -280,7 +280,7 @@ LANGUAGE plpgsql;
 -- ROW(1, 'ITP', 1, 'Piece', 1000, 0, 13, 130)::transactions.stock_detail_type
 -- ],
 -- ARRAY[
--- NULL::attachment_type
+-- NULL::core.attachment_type
 -- ]);
 
 

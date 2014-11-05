@@ -25,28 +25,18 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceholder" runat="server">
 
-    <div id="sortable-container" class="container-fluid vpad16">
+    <div id="sortable-container" class="ui stackable grid">
         <asp:PlaceHolder ID="WidgetPlaceholder" runat="server" />
     </div>
 
     <div style="clear: both;"></div>
     <br />
 
-    <asp:Button ID="SavePositionButton"
-        runat="server"
-        Text="Save Position"
-        Style="margin-left: 12px;"
-        CssClass="btn btn-default btn-sm" />
-
-    <asp:Button ID="ResetPositionButton"
-        runat="server"
-        Text="Reset Position"
-        CssClass="btn btn-default btn-sm" />
-
-    <asp:Button ID="GoToWidgetManagerButton"
-        runat="server"
-        Text="Go to Widget Manager (Todo: Admin Only)"
-        CssClass="btn btn-default btn-sm" />
+    <div class="ui tiny buttons">
+        <button class="ui button">Save Position</button>
+        <div class="or"></div>
+        <button class="ui button">Widget Manager</button>
+    </div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceholder" runat="server">
 </asp:Content>

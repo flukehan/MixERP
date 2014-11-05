@@ -17,16 +17,12 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="SalesByOfficeWidget.ascx.cs" Inherits="MixERP.Net.Core.Modules.Sales.Widgets.SalesByOfficeWidget" %>
-<div class="panel panel-default widget">
 
-    <div class="panel-heading">
-        <h3 class="panel-title">
+<div class="eight wide column widget">
+    <div class="ui segment">
+        <h2>
             <asp:Literal runat="server" ID="TitleLiteral" />
-        </h3>
-    </div>
-
-    <div class="panel-body">
-
+        </h2>
         <asp:GridView runat="server" ID="SalesByOfficeGridView" DataKeyNames="office" AutoGenerateColumns="False">
             <Columns>
                 <asp:BoundField HeaderText="OfficeCode" DataField="office" />

@@ -32,14 +32,15 @@ namespace MixERP.Net.FrontEnd.Modules
         {
             if (plugin == null)
             {
-                string path = @"~/Modules/" + this.RouteData.Values["path"].ToString().Replace(".mix", "") + ".ascx";
-
-                if (!File.Exists(Server.MapPath(path)))
+                if (this.RouteData.Values["path"] != null)
                 {
-                    throw new FileNotFoundException("Invalid path : " + path);
-                }
+                    string path = @"~/Modules/" + this.RouteData.Values["path"].ToString().Replace(".mix", "") + ".ascx";
 
-                this.plugin = this.Page.LoadControl(path) as MixERPUserControlBase;
+                    if (File.Exists(Server.MapPath(path)))
+                    {
+                        this.plugin = this.Page.LoadControl(path) as MixERPUserControlBase;
+                    }
+                }
             }
         }
 

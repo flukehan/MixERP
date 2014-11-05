@@ -22,80 +22,22 @@ form {
   height: 100%;
   font-size: 12px;
 }
-html,
-body,
-div,
-table,
-td,
-p,
-span {
-  font-family: 'Segoe UI', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  font-size: 12px;
-  color: #4f1852;
-}
 body {
   background-color: #ffffff;
+  margin: 0;
 }
-body#SignInBody {
+.sidebar,
+#SignInBody {
   background-color: #67238b;
 }
-/*Page Layout Start */
-#dashboard {
-  width: 100%;
-  height: 100%;
-}
-#dashboard tr td {
-  vertical-align: top;
-}
-.left {
-  width: 300px !important;
-}
-#logo {
-  padding-left: 16px;
-  background-color: #67238b;
-  height: 54px;
-  width: 300px;
-}
-#user-panel {
-  vertical-align: middle !important;
-  background-color: #f7f1fb;
-  height: 54px;
-}
-.user-panel-float {
-  margin-right: 8px;
-  float: right;
-}
-.user-panel-float-other {
-  margin-right: 8px;
-  float: left;
-}
-.icon-set {
-  padding: 0;
-}
-#sidebar {
-  background-color: #67238b;
-  color: #f7f1fb;
-  width: 300px;
-  height: 100%;
-  padding-bottom: 50px;
-  margin-bottom: -50px;
-}
-#body {
-  background-color: #ffffff;
-  border-top: 1px solid #eddaf9;
-  height: 100%;
-  padding-bottom: 50px;
-  margin-bottom: -50px;
+.purple {
+  background-color: #67238b !important;
 }
 footer {
   background-color: #f7f1fb;
   border-top: 1px solid #eddaf9;
   height: 36px;
   padding: 12px;
-}
-#Search {
-  margin: 8px;
-  margin-top: -16px;
 }
 #SearchInput {
   background-color: #5f1488;
@@ -113,16 +55,6 @@ footer {
 #tree {
   color: #dbb7ed;
 }
-.icon {
-  padding: 6px;
-  cursor: pointer;
-  text-decoration: none !important;
-}
-.icon:hover,
-.icon2:hover {
-  background-color: #eddaf9;
-}
-/*Page Layout End */
 /* Padding Start*/
 .pad8 {
   padding: 8px;
@@ -140,9 +72,14 @@ footer {
   padding: 0 0 0 16px;
 }
 .vpad16 {
-  padding: 16px 0 16px 0;
+  padding: 16px 0;
 }
 /* Padding End*/
+/* Margin Start */
+.vmargin8 {
+  margin: 16px 0 !important;
+}
+/* Margin End */
 label {
   cursor: pointer !important;
 }
@@ -169,14 +106,15 @@ table[role=scrud] {
   width: 100%;
 }
 a[role=item-selector] {
-  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAA81BMVEUAAAAAfrYAfrZ5udZ8u9cAfrZ0t9V0t9UAfrYAfrYAfrZqstJttNNrs9IAfrZUp8wulcJFoMhGoMlEn8gAfrYfjb49nMY9nMY7m8YdjL4fjb74+Pj19/ju9fe+6PPW7/Xf8fYAfrYRhrrK4uzV7/U5msWw1eW96PPv9vcBfrYDf7e/6fPz9vfg8fYCf7eo4/ENhLkQhrrO4+3L7PQTh7sTiLvM7PTR5e4ejb4pksEEgLc6m8bh7fLi7fLk7vPm7/NVqM1Yqc1jr9Brs9JzttXN4+0Zir3G4Oup4/Gv1OWTxt252ee62eeUx92o4vF5udbE3+oQSryJAAAAG3RSTlMADxAdHjA6PD9PX25ucK+/1tra29/i5ebm+/s4jNsSAAAAuUlEQVR4Xm2P5W7DQBCEnbQNM/Sc7KEZwsxcxvd/mvZ8VSVLmX/zaUezo11Vut7u9VDx35enx7ed+WXot39+8QRS+zVS9wMTABOCYT6MUrUDAOGWxQmcdAnaL4D52KVjjt99CYINEMv97FNGRgqMfgHtP4fM+2hJcH+RERrOuh27KkHhcQuEM9b1nCAV9aLlHDDxOs6koh67Qcb5++HVXjVFKalQHvl+q55KNETjLjYyI0QmPjuX1X4AQ3QWeDVDvE4AAAAASUVORK5CYII=') /*/Resource/Icons/search-16.png*/ no-repeat;
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAA81BMVEUAAAAAfrYAfrZ5udZ8u9cAfrZ0t9V0t9UAfrYAfrYAfrZqstJttNNrs9IAfrZUp8wulcJFoMhGoMlEn8gAfrYfjb49nMY9nMY7m8YdjL4fjb74+Pj19/ju9fe+6PPW7/Xf8fYAfrYRhrrK4uzV7/U5msWw1eW96PPv9vcBfrYDf7e/6fPz9vfg8fYCf7eo4/ENhLkQhrrO4+3L7PQTh7sTiLvM7PTR5e4ejb4pksEEgLc6m8bh7fLi7fLk7vPm7/NVqM1Yqc1jr9Brs9JzttXN4+0Zir3G4Oup4/Gv1OWTxt252ee62eeUx92o4vF5udbE3+oQSryJAAAAG3RSTlMADxAdHjA6PD9PX25ucK+/1tra29/i5ebm+/s4jNsSAAAAuUlEQVR4Xm2P5W7DQBCEnbQNM/Sc7KEZwsxcxvd/mvZ8VSVLmX/zaUezo11Vut7u9VDx35enx7ed+WXot39+8QRS+zVS9wMTABOCYT6MUrUDAOGWxQmcdAnaL4D52KVjjt99CYINEMv97FNGRgqMfgHtP4fM+2hJcH+RERrOuh27KkHhcQuEM9b1nCAV9aLlHDDxOs6koh67Qcb5++HVXjVFKalQHvl+q55KNETjLjYyI0QmPjuX1X4AQ3QWeDVDvE4AAAAASUVORK5CYII=') /*/Resource/
+        s/search-16.png*/ no-repeat;
   background-position: 4px 4px;
   height: 20px;
   width: 20px;
   display: inline-block;
   outline: none;
 }
-.error {
+.big.error {
   font-weight: bold;
   font-size: large;
   color: #d4610e;
@@ -333,7 +271,8 @@ textarea[readonly],
 textarea[disabled],
 select[readonly],
 select[disabled] {
-  background-color: #fdfafe !important;
+  background-color: #f0f0f0 !important;
+  cursor: not-allowed;
 }
 .date {
   cursor: pointer;
@@ -382,11 +321,6 @@ a:focus {
 textarea {
   resize: none;
 }
-/*Bootstrap Override Start*/
-tr.form-group td {
-  vertical-align: middle !important;
-}
-/*Bootstrap Override End*/
 /*jstree Override Start*/
 .jstree-selected div,
 .jstree-clicked,
@@ -408,4 +342,97 @@ tr.form-group td {
   font-style: normal !important;
 }
 /*jstree Override End*/
+.hidden {
+  display: none;
+}
+#ScrudUpdatePanel .button {
+  margin: 1px;
+}
+.control-cell input {
+  float: left;
+}
+.form-panel {
+  width: 620px;
+}
+.title span,
+#TitleLabel {
+  font-size: 24px;
+}
+tr {
+  cursor: pointer;
+}
+#flag-popunder {
+  z-index: 1000;
+}
+table.borderless td {
+  border: none;
+}
+/*Semantic UI Override Start */
+select {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.3125em;
+  box-sizing: border-box;
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 1em;
+  height: 30px;
+  margin: 0;
+  outline: 0 none;
+  line-height: 1.42857;
+  padding: 6px 12px;
+  transition: background-color 0.3s ease-out 0s, box-shadow 0.2s ease 0s, border-color 0.2s ease 0s;
+  width: 100%;
+}
+.error select {
+  background-color: snow;
+  border-bottom-left-radius: 0;
+  border-color: #e7bebe #e7bebe #e7bebe -moz-use-text-color;
+  border-left: medium none;
+  border-top-left-radius: 0;
+  box-shadow: 0.3em 0 0 0 #d95c5c inset;
+  color: #d95c5c;
+  padding-left: 1.2em;
+}
+select option {
+  padding: 2px 12px;
+}
+.inline select {
+  display: inline-block;
+  margin-bottom: 0;
+  margin-top: 0;
+  vertical-align: middle;
+  width: auto;
+}
+.inline .checkbox {
+  margin-top: 9px !important;
+}
+.form input[type=text]:not(.dirty):focus,
+.form select:not(.dirty):focus,
+.form textarea:not(.dirty):focus {
+  border: 1px solid #4195fc !important;
+  -webkit-border-radius: 4px !important;
+  -moz-border-radius: 4px !important;
+  border-radius: 4px !important;
+  -webkit-box-shadow: 0 0 8px #4195fc !important;
+  -moz-box-shadow: 0 0 8px #4195fc !important;
+  box-shadow: 0 0 8px #4195fc !important;
+}
+.dirty {
+  border: 1px solid #e8003d !important;
+  -webkit-border-radius: 4px !important;
+  -moz-border-radius: 4px !important;
+  border-radius: 4px !important;
+  -webkit-box-shadow: 0 0 2px #e8003d !important;
+  -moz-box-shadow: 0 0 2px #e8003d !important;
+  box-shadow: 0 0 2px #e8003d !important;
+}
+/*Semantic UI Override End */
+#MainContent {
+  padding: 12px;
+}
+.text-right {
+  text-align: right !important;
+}
+.block {
+  display: block;
+}
 /*# sourceMappingURL=mixerp.css.map */

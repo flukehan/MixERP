@@ -40,13 +40,13 @@ namespace MixERP.Net.WebControls.TransactionChecklist
             switch (model.Verification)
             {
                 case -3:
-                    label.CssClass = "alert-danger";
+                    label.CssClass = "ui block message red";
                     label.Text =
                         string.Format(Labels.TransactionWithdrawnMessage, model.VerifierName, model.VerifiedDate.ToString(LocalizationHelper.GetCurrentCulture()), model.VerificationReason);
                     break;
 
                 case -2:
-                    label.CssClass = "alert-warning";
+                    label.CssClass = "ui block message yellow";
                     label.Text =
                         string.Format(Labels.TransactionClosedDetails, model.VerifierName, model.VerifiedDate.ToString(LocalizationHelper.GetCurrentCulture()), model.VerificationReason);
                     break;
@@ -54,21 +54,21 @@ namespace MixERP.Net.WebControls.TransactionChecklist
                 case -1:
                     label.Text =
                         string.Format(Labels.TransactionWithdrawnDetails, model.VerifierName, model.VerifiedDate.ToString(LocalizationHelper.GetCurrentCulture()), model.VerificationReason);
-                    label.CssClass = "alert-warning";
+                    label.CssClass = "ui block message yellow";
                     break;
 
                 case 0:
                     label.Text = Labels.TransactionAwaitingVerification;
-                    label.CssClass = "alert-info";
+                    label.CssClass = "ui block message blue";
                     break;
 
                 case 1:
                     label.Text = string.Format(Labels.TransactionApprovedDetails, model.VerifierName, model.VerifiedDate.ToString(LocalizationHelper.GetCurrentCulture()));
-                    label.CssClass = "alert-success";
+                    label.CssClass = "ui block message green";
                     break;
                 case 2:
                     label.Text = string.Format(Labels.TransactionAutoApprovedDetails, model.VerifierName, model.VerifiedDate.ToString(LocalizationHelper.GetCurrentCulture()));
-                    label.CssClass = "alert-success";
+                    label.CssClass = "ui block message green";
                     break;
             }
         }

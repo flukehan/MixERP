@@ -13,13 +13,13 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
     public partial class ProductControl {
         
         /// <summary>
-        /// TitleLabel control.
+        /// TitleLiteral control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label TitleLabel;
+        protected global::System.Web.UI.WebControls.Literal TitleLiteral;
         
         /// <summary>
         /// DateLiteral control.
@@ -49,58 +49,31 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl StoreDiv;
         
         /// <summary>
-        /// StoreLiteral control.
+        /// StoreSelectLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal StoreLiteral;
+        protected global::System.Web.UI.WebControls.Literal StoreSelectLabel;
         
         /// <summary>
-        /// StoreDropDownList control.
+        /// PartyCodeInputTextLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList StoreDropDownList;
+        protected global::System.Web.UI.WebControls.Literal PartyCodeInputTextLabel;
         
         /// <summary>
-        /// PartyLiteral control.
+        /// PartyCodeInputText control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal PartyLiteral;
-        
-        /// <summary>
-        /// PartyCodeTextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox PartyCodeTextBox;
-        
-        /// <summary>
-        /// Literal1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Literal1;
-        
-        /// <summary>
-        /// PartyDropDownList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList PartyDropDownList;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText PartyCodeInputText;
         
         /// <summary>
         /// PriceTypeDiv control.
@@ -112,67 +85,49 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl PriceTypeDiv;
         
         /// <summary>
-        /// PriceTypeLiteral control.
+        /// PriceTypeSelectLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal PriceTypeLiteral;
+        protected global::System.Web.UI.WebControls.Literal PriceTypeSelectLabel;
         
         /// <summary>
-        /// PriceTypeDropDownList control.
+        /// ReferenceNumberInputTextLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList PriceTypeDropDownList;
+        protected global::System.Web.UI.WebControls.Literal ReferenceNumberInputTextLabel;
         
         /// <summary>
-        /// ReferenceNumberLiteral control.
+        /// ReferenceNumberInputText control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ReferenceNumberLiteral;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText ReferenceNumberInputText;
         
         /// <summary>
-        /// ReferenceNumberTextBox control.
+        /// CashTransactionDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ReferenceNumberTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl CashTransactionDiv;
         
         /// <summary>
-        /// TransactionTypeDiv control.
+        /// CashTransactionLiteral control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TransactionTypeDiv;
-        
-        /// <summary>
-        /// TransactionTypeLiteral control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal TransactionTypeLiteral;
-        
-        /// <summary>
-        /// TransactionTypeRadioButtonList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList TransactionTypeRadioButtonList;
+        protected global::System.Web.UI.WebControls.Literal CashTransactionLiteral;
         
         /// <summary>
         /// ProductGridView control.
@@ -184,103 +139,103 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::System.Web.UI.HtmlControls.HtmlTable ProductGridView;
         
         /// <summary>
-        /// ItemCodeLiteral control.
+        /// ItemCodeInputTextLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ItemCodeLiteral;
+        protected global::System.Web.UI.WebControls.Literal ItemCodeInputTextLabel;
         
         /// <summary>
-        /// ItemNameLiteral control.
+        /// ItemSelectLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ItemNameLiteral;
+        protected global::System.Web.UI.WebControls.Literal ItemSelectLabel;
         
         /// <summary>
-        /// QuantityLiteral control.
+        /// QuantityInputTextLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal QuantityLiteral;
+        protected global::System.Web.UI.WebControls.Literal QuantityInputTextLabel;
         
         /// <summary>
-        /// UnitLiteral control.
+        /// UnitSelectLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal UnitLiteral;
+        protected global::System.Web.UI.WebControls.Literal UnitSelectLabel;
         
         /// <summary>
-        /// PriceLiteral control.
+        /// PriceInputTextLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal PriceLiteral;
+        protected global::System.Web.UI.WebControls.Literal PriceInputTextLabel;
         
         /// <summary>
-        /// AmountLiteral control.
+        /// AmountInputTextLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal AmountLiteral;
+        protected global::System.Web.UI.WebControls.Literal AmountInputTextLabel;
         
         /// <summary>
-        /// DiscountLiteral control.
+        /// DiscountInputTextLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal DiscountLiteral;
+        protected global::System.Web.UI.WebControls.Literal DiscountInputTextLabel;
         
         /// <summary>
-        /// SubTotalLiteral control.
+        /// SubTotalInputTextLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal SubTotalLiteral;
+        protected global::System.Web.UI.WebControls.Literal SubTotalInputTextLabel;
         
         /// <summary>
-        /// RateLiteral control.
+        /// TaxRateInputTextLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal RateLiteral;
+        protected global::System.Web.UI.WebControls.Literal TaxRateInputTextLabel;
         
         /// <summary>
-        /// TaxLiteral control.
+        /// TaxInputTextLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal TaxLiteral;
+        protected global::System.Web.UI.WebControls.Literal TaxInputTextLabel;
         
         /// <summary>
-        /// TotalLiteral control.
+        /// TotalAmountInputTextLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal TotalLiteral;
+        protected global::System.Web.UI.WebControls.Literal TotalAmountInputTextLabel;
         
         /// <summary>
         /// FormPanel control.
@@ -319,301 +274,175 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::MixERP.Net.FrontEnd.UserControls.AttachmentUserControl Attachment1;
         
         /// <summary>
-        /// BottomPanel control.
+        /// ShippingAddressDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel BottomPanel;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ShippingAddressDiv;
         
         /// <summary>
-        /// ShippingAddressRow control.
+        /// ShippingAddressSelectLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableRow ShippingAddressRow;
+        protected global::System.Web.UI.WebControls.Literal ShippingAddressSelectLabel;
         
         /// <summary>
-        /// ShippingAddressDropDownListLabelLiteral control.
+        /// ShippingCompanyDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ShippingAddressDropDownListLabelLiteral;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ShippingCompanyDiv;
         
         /// <summary>
-        /// ShippingAddressDropDownList control.
+        /// ShippingCompanySelectLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ShippingAddressDropDownList;
+        protected global::System.Web.UI.WebControls.Literal ShippingCompanySelectLabel;
         
         /// <summary>
-        /// ShippingAddressTextBox control.
+        /// ShippingChargeDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ShippingAddressTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ShippingChargeDiv;
         
         /// <summary>
-        /// ShippingCompanyRow control.
+        /// ShippingChargeInputTextLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableRow ShippingCompanyRow;
+        protected global::System.Web.UI.WebControls.Literal ShippingChargeInputTextLabel;
         
         /// <summary>
-        /// ShippingCompanyDropDownListLabelLiteral control.
+        /// RunningTotalInputTextLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ShippingCompanyDropDownListLabelLiteral;
+        protected global::System.Web.UI.WebControls.Literal RunningTotalInputTextLabel;
         
         /// <summary>
-        /// ShippingCompanyDropDownList control.
+        /// TaxTotalInputTextLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ShippingCompanyDropDownList;
+        protected global::System.Web.UI.WebControls.Literal TaxTotalInputTextLabel;
         
         /// <summary>
-        /// ShippingChargeRow control.
+        /// GrandTotalInputTextLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableRow ShippingChargeRow;
+        protected global::System.Web.UI.WebControls.Literal GrandTotalInputTextLabel;
         
         /// <summary>
-        /// ShippingChargeTextBoxLabelLiteral control.
+        /// CashRepositoryDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ShippingChargeTextBoxLabelLiteral;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl CashRepositoryDiv;
         
         /// <summary>
-        /// ShippingChargeTextBox control.
+        /// CashRepositorySelectLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ShippingChargeTextBox;
+        protected global::System.Web.UI.WebControls.Literal CashRepositorySelectLabel;
         
         /// <summary>
-        /// TotalsLiteral control.
+        /// CashRepositoryBalanceInputTextLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal TotalsLiteral;
+        protected global::System.Web.UI.WebControls.Literal CashRepositoryBalanceInputTextLabel;
         
         /// <summary>
-        /// RunningTotalTextBoxLabelLiteral control.
+        /// CostCenterDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal RunningTotalTextBoxLabelLiteral;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl CostCenterDiv;
         
         /// <summary>
-        /// TaxTotalTextBoxLabelLiteral control.
+        /// CostCenterSelectLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal TaxTotalTextBoxLabelLiteral;
+        protected global::System.Web.UI.WebControls.Literal CostCenterSelectLabel;
         
         /// <summary>
-        /// GrandTotalTextBoxLabelLiteral control.
+        /// SalespersonDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal GrandTotalTextBoxLabelLiteral;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl SalespersonDiv;
         
         /// <summary>
-        /// RunningTotalTextBox control.
+        /// SalesPersonSelectLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox RunningTotalTextBox;
+        protected global::System.Web.UI.WebControls.Literal SalesPersonSelectLabel;
         
         /// <summary>
-        /// TaxTotalTextBox control.
+        /// SalesPersonSelect control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TaxTotalTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlSelect SalesPersonSelect;
         
         /// <summary>
-        /// GrandTotalTextBox control.
+        /// StatementReferenceTextAreaLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox GrandTotalTextBox;
+        protected global::System.Web.UI.WebControls.Literal StatementReferenceTextAreaLabel;
         
         /// <summary>
-        /// CashRepositoryRow control.
+        /// StatementReferenceTextArea control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableRow CashRepositoryRow;
-        
-        /// <summary>
-        /// CashRepositoryDropDownListLabelLiteral control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal CashRepositoryDropDownListLabelLiteral;
-        
-        /// <summary>
-        /// CashRepositoryDropDownList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList CashRepositoryDropDownList;
-        
-        /// <summary>
-        /// CashRepositoryBalanceRow control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TableRow CashRepositoryBalanceRow;
-        
-        /// <summary>
-        /// CashRepositoryBalanceTextBoxLabelLiteral control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal CashRepositoryBalanceTextBoxLabelLiteral;
-        
-        /// <summary>
-        /// CashRepositoryBalanceTextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox CashRepositoryBalanceTextBox;
-        
-        /// <summary>
-        /// DrLiteral control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal DrLiteral;
-        
-        /// <summary>
-        /// CostCenterRow control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TableRow CostCenterRow;
-        
-        /// <summary>
-        /// CostCenterDropDownListLabelLiteral control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal CostCenterDropDownListLabelLiteral;
-        
-        /// <summary>
-        /// CostCenterDropDownList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList CostCenterDropDownList;
-        
-        /// <summary>
-        /// SalespersonRow control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TableRow SalespersonRow;
-        
-        /// <summary>
-        /// SalespersonDropDownListLabelLiteral control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal SalespersonDropDownListLabelLiteral;
-        
-        /// <summary>
-        /// SalespersonDropDownList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList SalespersonDropDownList;
-        
-        /// <summary>
-        /// StatementReferenceTextBoxLabelLiteral control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal StatementReferenceTextBoxLabelLiteral;
-        
-        /// <summary>
-        /// StatementReferenceTextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox StatementReferenceTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea StatementReferenceTextArea;
         
         /// <summary>
         /// ItemCodeHidden control.

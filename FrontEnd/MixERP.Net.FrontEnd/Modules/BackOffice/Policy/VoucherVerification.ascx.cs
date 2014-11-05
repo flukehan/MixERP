@@ -45,7 +45,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
                 scrud.View = "voucher_verification_policy_scrud_view";
 
                 scrud.PageSize = 100;
-                scrud.Width = 2000;
+                scrud.GridViewWidth = 2000;
 
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();

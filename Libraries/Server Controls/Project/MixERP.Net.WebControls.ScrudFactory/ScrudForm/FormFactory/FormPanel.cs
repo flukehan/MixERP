@@ -45,18 +45,18 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private void AddFormFooter(Panel p)
         {
-            using (var htmlTable = new HtmlTable())
+            using (HtmlTable htmlTable = new HtmlTable())
             {
-                using (var row = new HtmlTableRow())
+                using (HtmlTableRow row = new HtmlTableRow())
                 {
-                    using (var labelCell = new HtmlTableCell())
+                    using (HtmlTableCell labelCell = new HtmlTableCell())
                     {
                         labelCell.Attributes.Add("class", "label-cell");
 
                         row.Cells.Add(labelCell);
                     }
 
-                    using (var controlCell = new HtmlTableCell())
+                    using (HtmlTableCell controlCell = new HtmlTableCell())
                     {
                         controlCell.Attributes.Add("class", "control-cell");
 
@@ -95,7 +95,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
                         controlCell.Controls.Add(this.cancelButton);
 
-                        using (var resetButton = new HtmlInputReset())
+                        using (HtmlInputReset resetButton = new HtmlInputReset())
                         {
                             resetButton.Value = Titles.Reset;
                             resetButton.Attributes.Add("class", this.GetButtonCssClass());
@@ -125,7 +125,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             this.formPanel = new Panel();
             this.formPanel.ID = "FormPanel";
             this.formPanel.Style.Add("display", "none");
-            this.formPanel.CssClass = this.GetFormPanelButtonCssClass();
+            this.formPanel.CssClass = this.GetFormPanelCssClass();
 
             this.form = new Panel();
             this.form.CssClass = this.GetFormCssClass();
@@ -140,7 +140,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private void InitializeScrudControl()
         {
-            using (var table = new DataTable())
+            using (DataTable table = new DataTable())
             {
                 table.Locale = Thread.CurrentThread.CurrentCulture;
                 this.LoadForm(this.formContainer, table, this.ResourceAssembly);
@@ -153,7 +153,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (page != null)
             {
-                var modal = page.Request.QueryString["modal"];
+                string modal = page.Request.QueryString["modal"];
                 if (modal != null)
                 {
                     if (modal.Equals("1"))

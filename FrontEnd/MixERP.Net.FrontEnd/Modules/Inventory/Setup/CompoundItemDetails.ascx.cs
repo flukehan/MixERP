@@ -42,7 +42,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
 
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
-                scrud.Width = 1400;
+                scrud.GridViewWidth = 1400;
                 scrud.Text = Titles.CompoundItemDetails;
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof (CompoundItemDetails));
 

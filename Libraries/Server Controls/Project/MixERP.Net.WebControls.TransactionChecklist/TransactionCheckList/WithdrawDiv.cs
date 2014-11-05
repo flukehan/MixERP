@@ -26,7 +26,7 @@ namespace MixERP.Net.WebControls.TransactionChecklist
 {
     public partial class TransactionChecklistForm
     {
-        private HtmlButton okButton;
+        private Button okButton;
         private TextBox reasonTextBox;
 
         private void AddWidthdrawDiv(HtmlGenericControl p)
@@ -37,11 +37,11 @@ namespace MixERP.Net.WebControls.TransactionChecklist
                 {
                     withdrawDiv.TagName = "div";
                     withdrawDiv.ID = "WithdrawDiv";
-                    withdrawDiv.Attributes.Add("class", "panel panel-default panel-warning");
-                    withdrawDiv.Attributes.Add("style", "max-width:" + this.GetMaxWidth() + "px;");
+                    withdrawDiv.Attributes.Add("style", "max-width:" + this.GetWidth() + "px;");
 
                     this.AddWithdrawHeader(withdrawDiv);
                     this.AddWithdrawPanelBody(withdrawDiv);
+                    this.AddWithdrawFooter(withdrawDiv);
                     p.Controls.Add(withdrawDiv);
                 }
             }
@@ -49,67 +49,46 @@ namespace MixERP.Net.WebControls.TransactionChecklist
 
         private void AddWithdrawHeader(HtmlGenericControl div)
         {
-            using (HtmlGenericControl header = new HtmlGenericControl())
+            using (HtmlGenericControl headerContainer = new HtmlGenericControl("div"))
             {
-                header.TagName = "div";
-                header.Attributes.Add("class", "panel-heading");
-                this.AddWithdrawHeading(header);
-                div.Controls.Add(header);
-            }
-        }
+                headerContainer.Attributes.Add("class", "ui attached red message");
+                headerContainer.Attributes.Add("style", "display:block;");
 
-        private void AddWithdrawHeading(HtmlGenericControl div)
-        {
-            using (HtmlGenericControl heading = new HtmlGenericControl())
-            {
-                heading.TagName = "h3";
-                heading.InnerText = Titles.WithdrawTransaction;
-                heading.Attributes.Add("class", "panel-title");
-                div.Controls.Add(heading);
+                using (HtmlGenericControl header = new HtmlGenericControl("div"))
+                {
+                    header.Attributes.Add("class", "header");
+                    header.InnerText = Questions.WithdrawalReason;
+                    headerContainer.Controls.Add(header);
+                }
+
+                div.Controls.Add(headerContainer);
             }
         }
 
         private void AddWithdrawPanelBody(HtmlGenericControl div)
         {
-            using (HtmlGenericControl body = new HtmlGenericControl())
+            using (HtmlGenericControl form = new HtmlGenericControl("div"))
             {
-                body.TagName = "div";
-                body.Attributes.Add("class", "panel-body");
+                form.Attributes.Add("class", "ui form attached fluid segment");
 
-                using (HtmlGenericControl paragraph = new HtmlGenericControl())
+                using (HtmlGenericControl paragraph = new HtmlGenericControl("p"))
                 {
-                    paragraph.TagName = "p";
-                    paragraph.InnerText = Questions.WithdrawalReason;
-                    body.Controls.Add(paragraph);
+                    paragraph.InnerText = Labels.TransactionWithdrawalInformation;
+                    form.Controls.Add(paragraph);
                 }
 
-                using (HtmlGenericControl paragraph = new HtmlGenericControl())
+                using (HtmlGenericControl field = new HtmlGenericControl("div"))
                 {
-                    paragraph.TagName = "p";
-                    this.AddReasonTextBox(paragraph);
-                    body.Controls.Add(paragraph);
+                    field.Attributes.Add("class", "field");
+                    this.AddReasonTextBox(field);
+                    form.Controls.Add(field);
                 }
 
-                using (HtmlGenericControl paragraph = new HtmlGenericControl())
-                {
-                    paragraph.TagName = "p";
-                    this.AddOkButton(paragraph);
-                    this.AddSpace(paragraph);
-                    this.AddCancelButton(paragraph);
-                    body.Controls.Add(paragraph);
-                }
+                this.AddOkButton(form);
+                this.AddSpacer(form);
+                this.AddCancelButton(form);
 
-                div.Controls.Add(body);
-            }
-        }
-
-        private void AddSpace(HtmlGenericControl p)
-        {
-            using (HtmlGenericControl space = new HtmlGenericControl())
-            {
-                space.InnerHtml = "&nbsp;";
-
-                p.Controls.Add(space);
+                div.Controls.Add(form);
             }
         }
 
@@ -119,7 +98,6 @@ namespace MixERP.Net.WebControls.TransactionChecklist
             reasonTextBox.ID = "ReasonTextBox";
             reasonTextBox.ClientIDMode = ClientIDMode.Static;
             reasonTextBox.TextMode = TextBoxMode.MultiLine;
-            reasonTextBox.CssClass = "form-control input-sm";
             reasonTextBox.Rows = 5;
 
             p.Controls.Add(reasonTextBox);
@@ -138,11 +116,11 @@ namespace MixERP.Net.WebControls.TransactionChecklist
 
         private void AddOkButton(HtmlGenericControl p)
         {
-            okButton = new HtmlButton();
+            okButton = new Button();
             okButton.CausesValidation = true;
-            okButton.InnerText = Titles.OK;
-            okButton.Attributes.Add("class", "btn btn-sm btn-warning");
-            okButton.ServerClick += OkButton_Click;
+            okButton.Text = Titles.OK;
+            okButton.Attributes.Add("class", "ui red small submit button");
+            okButton.Click += OkButton_Click;
 
             p.Controls.Add(okButton);
         }
@@ -154,9 +132,29 @@ namespace MixERP.Net.WebControls.TransactionChecklist
                 button.ID = "CancelButton";
                 button.CausesValidation = false;
                 button.Value = Titles.Cancel;
-                button.Attributes.Add("class", "btn btn-default btn-sm");
+                button.Attributes.Add("class", "ui red small submit button");
 
                 p.Controls.Add(button);
+            }
+        }
+
+        private void AddSpacer(HtmlGenericControl div)
+        {
+            using (HtmlGenericControl spacer = new HtmlGenericControl("span"))
+            {
+                spacer.Attributes.Add("class", "spacer");
+                spacer.InnerHtml = "&nbsp;";
+                div.Controls.Add(spacer);
+            }
+        }
+
+        private void AddWithdrawFooter(HtmlGenericControl div)
+        {
+            using (HtmlGenericControl footer = new HtmlGenericControl("div"))
+            {
+                footer.Attributes.Add("class", "ui bottom attached red info message");
+                footer.InnerHtml = @"<i class='icon help'></i>" + Questions.AreYouSure;
+                div.Controls.Add(footer);
             }
         }
     }

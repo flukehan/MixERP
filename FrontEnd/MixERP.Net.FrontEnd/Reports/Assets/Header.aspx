@@ -26,6 +26,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <title>MixERP WebReport</title>
 </head>
 <body>
-    <mixerp:ReportHeader runat="server" Path="" />
+    <asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
 </body>
 </html>

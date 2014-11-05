@@ -25,14 +25,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         margin: 4px;
     }
 
-    table.input-sm {
-        margin: 4px 0 4px 0 !important;
-    }
-
-        table.input-sm tr {
-            vertical-align: bottom;
-        }
-
     #ProductGridView th:nth-child(1) {
         width: 90px;
     }
@@ -42,7 +34,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     }
 
     #ProductGridView th:nth-child(3) {
-        width: 50px;
+        width: 70px;
     }
 
     #ProductGridView th:nth-child(4) {
@@ -50,163 +42,118 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     }
 
     #ProductGridView th:nth-child(5) {
-        width: 100px;
+        width: 120px;
     }
 
     #ProductGridView th:nth-child(6) {
-        width: 100px;
+        width: 120px;
     }
 
     #ProductGridView th:nth-child(7) {
-        width: 100px;
+        width: 90px;
     }
 
     #ProductGridView th:nth-child(8) {
-        width: 100px;
+        width: 120px;
     }
 
     #ProductGridView th:nth-child(9) {
-        width: 100px;
+        width: 70px;
     }
 
     #ProductGridView th:nth-child(10) {
-        width: 60px;
+        width: 100px;
     }
 
     #ProductGridView th:nth-child(11) {
-        width: 100px;
+        width: 120px;
     }
 </style>
 
-<div id="info-panel">
-    <asp:Literal runat="server" Text="Shortcuts" />
-    <hr style="border-color: #97d300;" />
-    <table>
-        <tr>
-            <td>F2
-            </td>
-            <td>
-                <asp:Literal runat="server" Text="Add a New Party" />
-            </td>
-        </tr>
-        <tr>
-            <td>F4
-            </td>
-            <td>
-                <asp:Literal runat="server" Text="Add a new item" />
-            </td>
-        </tr>
-        <tr>
-            <td>CTRL + RET
-            </td>
-            <td>
-                <asp:Literal runat="server" Text="Add a New Row" />
-            </td>
-        </tr>
-    </table>
-</div>
-
 <h2>
-    <asp:Label ID="TitleLabel" runat="server" />
+    <asp:Literal ID="TitleLiteral" runat="server" />
 </h2>
 
-<div class="shade">
-    <div class="row" style="margin-left: 8px;">
-        <div class="col-md-1 pad4">
-            <div class="form-group">
+<div class="ui segment">
+
+    <div class="ui form">
+        <div class="inline fields">
+
+            <div class="field">
                 <asp:Literal ID="DateLiteral" runat="server" />
-                <mixerp:DateTextBox ID="DateTextBox" runat="server" Mode="Today" CssClass="date form-control input-sm" />
+                <mixerp:DateTextBox ID="DateTextBox" runat="server" Mode="Today" CssClass="date" />
             </div>
-        </div>
 
-        <div class="col-md-1 pad4" id="StoreDiv" runat="server">
-            <div class="form-group">
-                <asp:Literal ID="StoreLiteral" runat="server" />
-                <asp:DropDownList ID="StoreDropDownList" runat="server" CssClass="form-control input-sm">
-                </asp:DropDownList>
+            <div class="field" id="StoreDiv" runat="server">
+                <asp:Literal ID="StoreSelectLabel" runat="server" />
+                <select id="StoreSelect"></select>
             </div>
-        </div>
 
-        <div class="col-md-1 pad4">
-            <div class="form-group">
-                <asp:Literal ID="PartyLiteral" runat="server" />
-                <asp:TextBox ID="PartyCodeTextBox" runat="server"
-                    ToolTip="F2" CssClass="form-control  input-sm" />
+            <div class="field">
+                <asp:Literal ID="PartyCodeInputTextLabel" runat="server" />
+                <input type="text" id="PartyCodeInputText" runat="server" title="F2" />
             </div>
-        </div>
 
-        <div class="col-md-2 pad4">
-            <asp:Literal ID="Literal1" runat="server" Text="<label>&nbsp;</label>" />
-            <asp:DropDownList ID="PartyDropDownList" runat="server"
-                ToolTip="F2" CssClass="form-control  input-sm">
-            </asp:DropDownList>
-        </div>
-
-        <div class="col-md-1 pad4" id="PriceTypeDiv" runat="server">
-            <div class="form-group">
-                <asp:Literal ID="PriceTypeLiteral" runat="server" />
-                <asp:DropDownList ID="PriceTypeDropDownList" runat="server" CssClass="form-control  input-sm">
-                </asp:DropDownList>
+            <div class="field">
+                <select id="PartySelect" title="F2"></select>
             </div>
-        </div>
 
-        <div class="col-md-1 pad4">
-            <div class="form-group">
-                <asp:Literal ID="ReferenceNumberLiteral" runat="server" />
-                <asp:TextBox ID="ReferenceNumberTextBox" runat="server" MaxLength="24" CssClass="form-control  input-sm" />
+            <div class="field" id="PriceTypeDiv" runat="server">
+                <asp:Literal ID="PriceTypeSelectLabel" runat="server" />
+                <select id="PriceTypeSelect"></select>
             </div>
-        </div>
 
-        <div class="col-md-2" id="TransactionTypeDiv" runat="server">
-            <div class="form-group">
-                <asp:Literal ID="TransactionTypeLiteral" runat="server" />
-                <asp:RadioButtonList ID="TransactionTypeRadioButtonList" runat="server" CssClass="input-sm" RepeatDirection="Horizontal">
-                    <asp:ListItem Text=" Cash" Value="Cash" Selected="True" />
-                    <asp:ListItem Text=" Credit" Value="Credit" />
-                </asp:RadioButtonList>
+            <div class="field">
+                <asp:Literal ID="ReferenceNumberInputTextLabel" runat="server" />
+                <input type="text" id="ReferenceNumberInputText" runat="server" maxlength="24" />
             </div>
-        </div>
-        <div class="col-md-3">
+
+            <div class="field" id="CashTransactionDiv" runat="server">
+                <div class="ui toggle checkbox">
+                    <input id="CashTransactionInputCheckBox" type="checkbox" checked="checked">
+                    <asp:Literal ID="CashTransactionLiteral" runat="server" />
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 <div>
-    <table id="ProductGridView" class="table table-hover" runat="server">
+    <table id="ProductGridView" class="ui form celled table segment" runat="server">
         <tbody>
             <tr>
                 <th>
-                    <asp:Literal ID="ItemCodeLiteral" runat="server" />
+                    <asp:Literal ID="ItemCodeInputTextLabel" runat="server" />
                 </th>
                 <th>
-                    <asp:Literal ID="ItemNameLiteral" runat="server" />
+                    <asp:Literal ID="ItemSelectLabel" runat="server" />
                 </th>
                 <th class="text-right">
-                    <asp:Literal ID="QuantityLiteral" runat="server" />
+                    <asp:Literal ID="QuantityInputTextLabel" runat="server" />
                 </th>
                 <th>
-                    <asp:Literal ID="UnitLiteral" runat="server" />
+                    <asp:Literal ID="UnitSelectLabel" runat="server" />
                 </th>
                 <th class="text-right">
-                    <asp:Literal ID="PriceLiteral" runat="server" />
+                    <asp:Literal ID="PriceInputTextLabel" runat="server" />
                 </th>
                 <th class="text-right">
-                    <asp:Literal ID="AmountLiteral" runat="server" />
+                    <asp:Literal ID="AmountInputTextLabel" runat="server" />
                 </th>
                 <th class="text-right">
-                    <asp:Literal ID="DiscountLiteral" runat="server" />
+                    <asp:Literal ID="DiscountInputTextLabel" runat="server" />
                 </th>
                 <th class="text-right">
-                    <asp:Literal ID="SubTotalLiteral" runat="server" />
+                    <asp:Literal ID="SubTotalInputTextLabel" runat="server" />
                 </th>
                 <th class="text-right">
-                    <asp:Literal ID="RateLiteral" runat="server" />
+                    <asp:Literal ID="TaxRateInputTextLabel" runat="server" />
                 </th>
                 <th class="text-right">
-                    <asp:Literal ID="TaxLiteral" runat="server" />
+                    <asp:Literal ID="TaxInputTextLabel" runat="server" />
                 </th>
                 <th class="text-right">
-                    <asp:Literal ID="TotalLiteral" runat="server" />
+                    <asp:Literal ID="TotalAmountInputTextLabel" runat="server" />
                 </th>
                 <th>
                     <asp:Literal runat="server" Text="Action" />
@@ -214,77 +161,43 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
             </tr>
             <tr class="footer-row">
                 <td>
-                    <input type="text"
-                        id="ItemCodeTextBox"
-                        title='<asp:Literal runat="server" Text="Alt + C" />'
-                        class="form-control input-sm" />
+                    <input type="text" id="ItemCodeInputText" title='<asp:Literal runat="server" Text="Alt + C" />' />
                 </td>
                 <td>
-                    <select name="ItemDropDownList"
-                        id="ItemDropDownList"
-                        class="form-control  input-sm"
-                        title='<asp:Literal runat="server" Text="Ctrl + I" />'>
+                    <select name="ItemSelect" id="ItemSelect" title='<asp:Literal runat="server" Text="Ctrl + I" />'>
                     </select>
                 </td>
                 <td>
-                    <input type="text"
-                        id="QuantityTextBox"
-                        class="form-control text-right input-sm"
-                        title='<asp:Literal runat="server" Text="Ctrl + Q" />'
-                        value="1" />
+                    <input type="text" id="QuantityInputText" class="integer text-right" title='<asp:Literal runat="server" Text="Ctrl + Q" />' value="1" />
                 </td>
                 <td>
-                    <select name="UnitDropDownList"
-                        id="UnitDropDownList"
-                        class="form-control input-sm"
-                        title='<asp:Literal runat="server" Text="Ctrl + U" />'>
-                    </select>
+                    <select name="UnitSelect" id="UnitSelect" title='<asp:Literal runat="server" Text="Ctrl + U" />'></select>
                 </td>
                 <td>
-                    <input type="text"
-                        id="PriceTextBox"
-                        class="text-right currency form-control input-sm"
-                        title='<asp:Literal runat="server" Text="Alt + P" />' />
+                    <input type="text" id="PriceInputText" class="text-right currency" title='<asp:Literal runat="server" Text="Alt + P" />' />
                 </td>
                 <td>
-                    <input type="text"
-                        id="AmountTextBox"
-                        readonly="readonly"
-                        class="text-right currency form-control input-sm" />
+                    <input type="text" id="AmountInputText" readonly="readonly" class="text-right currency" />
                 </td>
                 <td>
-                    <input type="text"
-                        id="DiscountTextBox"
-                        class="text-right currency form-control input-sm"
-                        title='<asp:Literal runat="server" Text="Ctrl + D" />' />
+                    <input type="text" id="DiscountInputText" class="text-right currency" title='<asp:Literal runat="server" Text="Ctrl + D" />' />
                 </td>
                 <td>
-                    <input type="text"
-                        id="SubTotalTextBox"
-                        readonly="readonly"
-                        class="text-right currency form-control input-sm" />
+                    <input type="text" id="SubTotalInputText" readonly="readonly" class="text-right currency" />
                 </td>
                 <td>
-                    <input type="text"
-                        id="TaxRateTextBox"
-                        class="text-right form-control input-sm" />
+                    <input type="text" id="TaxRateInputText" class="text-right" />
                 </td>
                 <td>
-                    <input type="text"
-                        id="TaxTextBox"
-                        class="text-right currency form-control input-sm"
-                        title='<asp:Literal runat="server" Text="Ctrl + T" />' />
+                    <input type="text" id="TaxInputText" class="text-right currency" title='<asp:Literal runat="server" Text="Ctrl + T" />' />
                 </td>
                 <td>
-                    <input type="text"
-                        id="TotalTextBox"
-                        readonly="readonly"
-                        class="text-right currency form-control input-sm" />
+                    <input type="text" id="TotalAmountInputText" readonly="readonly" class="text-right currency" />
                 </td>
                 <td>
                     <input type="button"
                         id="AddButton"
-                        class="btn btn-primary btn-sm"
+                        class="small ui button blue"
                         value='<asp:Literal runat="server" Text="Add" />'
                         title='<asp:Literal runat="server" Text="Ctrl + Return" />' />
                 </td>
@@ -304,132 +217,68 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         <mixerp:Attachment ID="Attachment1" runat="server" />
     </div>
 
-    <asp:Panel ID="BottomPanel" CssClass="table-form-pad shade" runat="server" Style="margin: 4px; width: 780px;">
-        <asp:Table runat="server">
-            <asp:TableRow ID="ShippingAddressRow" runat="server">
-                <asp:TableCell Style="vertical-align: top !important;" Width="190px">
-                    <asp:Literal ID="ShippingAddressDropDownListLabelLiteral" runat="server" />
-                </asp:TableCell><asp:TableCell>
-                    <asp:DropDownList ID="ShippingAddressDropDownList" runat="server" CssClass="form-control input-sm">
-                    </asp:DropDownList>
-                    <div style="padding: 4px 0 4px 0">
-                        <asp:TextBox
-                            ID="ShippingAddressTextBox"
-                            runat="server"
-                            ReadOnly="true"
-                            TextMode="MultiLine"
-                            CssClass="form-control input-sm"
-                            Height="72px" />
-                    </div>
-                </asp:TableCell>
-            </asp:TableRow>
-            <asp:TableRow ID="ShippingCompanyRow" runat="server">
-                <asp:TableCell>
-                    <asp:Literal ID="ShippingCompanyDropDownListLabelLiteral" runat="server" />
-                </asp:TableCell><asp:TableCell>
-                    <asp:DropDownList ID="ShippingCompanyDropDownList" runat="server" CssClass="form-control input-sm">
-                    </asp:DropDownList>
-                </asp:TableCell>
-            </asp:TableRow>
-            <asp:TableRow ID="ShippingChargeRow" runat="server">
-                <asp:TableCell>
-                    <asp:Literal ID="ShippingChargeTextBoxLabelLiteral" runat="server" />
-                </asp:TableCell><asp:TableCell>
-                    <asp:TextBox ID="ShippingChargeTextBox" runat="server" Width="140px" CssClass="currency form-control input-sm">
-                    </asp:TextBox>
-                </asp:TableCell>
-            </asp:TableRow>
-            <asp:TableRow>
-                <asp:TableCell>
-                    <label>
-                        <asp:Literal ID="TotalsLiteral" runat="server" Text=" Totals">
-                        </asp:Literal>
-                    </label>
-                </asp:TableCell><asp:TableCell>
-                    <table style="border-collapse: collapse; width: 100%;">
-                        <tr>
-                            <td>
-                                <asp:Literal ID="RunningTotalTextBoxLabelLiteral" runat="server" />
-                            </td>
-                            <td>
-                                <asp:Literal ID="TaxTotalTextBoxLabelLiteral" runat="server" />
-                            </td>
-                            <td>
-                                <asp:Literal ID="GrandTotalTextBoxLabelLiteral" runat="server" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <asp:TextBox ID="RunningTotalTextBox" runat="server" CssClass="form-control input-sm currency" ReadOnly="true" />
-                            </td>
-                            <td>
-                                <asp:TextBox ID="TaxTotalTextBox" runat="server" CssClass="form-control input-sm currency" ReadOnly="true" />
-                            </td>
-                            <td>
-                                <asp:TextBox ID="GrandTotalTextBox" runat="server" CssClass="form-control input-sm currency" ReadOnly="true" />
-                            </td>
-                        </tr>
-                    </table>
-                </asp:TableCell>
-            </asp:TableRow>
-            <asp:TableRow ID="CashRepositoryRow" runat="server">
-                <asp:TableCell runat="server">
-                    <asp:Literal ID="CashRepositoryDropDownListLabelLiteral" runat="server" />
-                </asp:TableCell><asp:TableCell>
-                    <asp:DropDownList ID="CashRepositoryDropDownList" runat="server"
-                        CssClass="form-control input-sm">
-                    </asp:DropDownList>
-                </asp:TableCell>
-            </asp:TableRow>
-            <asp:TableRow ID="CashRepositoryBalanceRow" runat="server">
-                <asp:TableCell>
-                    <asp:Literal ID="CashRepositoryBalanceTextBoxLabelLiteral" runat="server" />
-                </asp:TableCell>
-                <asp:TableCell>
-                    <div class="input-group input-group-sm" style="width: 200px;">
-                        <asp:TextBox ID="CashRepositoryBalanceTextBox" runat="server" CssClass="form-control input-sm currency" ReadOnly="true" />
-                        <span class="input-group-addon">
-                            <asp:Literal ID="DrLiteral" runat="server" Text=" Dr" />
-                        </span>
-                    </div>
-                </asp:TableCell>
-            </asp:TableRow>
-            <asp:TableRow ID="CostCenterRow" runat="server">
-                <asp:TableCell>
-                    <asp:Literal ID="CostCenterDropDownListLabelLiteral" runat="server" />
-                </asp:TableCell><asp:TableCell>
-                    <asp:DropDownList ID="CostCenterDropDownList" runat="server" CssClass="form-control input-sm">
-                    </asp:DropDownList>
-                </asp:TableCell>
-            </asp:TableRow>
-            <asp:TableRow ID="SalespersonRow" runat="server">
-                <asp:TableCell>
-                    <asp:Literal ID="SalespersonDropDownListLabelLiteral" runat="server" />
-                </asp:TableCell><asp:TableCell>
-                    <asp:DropDownList ID="SalespersonDropDownList" runat="server" CssClass="form-control input-sm">
-                    </asp:DropDownList>
-                </asp:TableCell>
-            </asp:TableRow>
-            <asp:TableRow>
-                <asp:TableCell>
-                    <asp:Literal ID="StatementReferenceTextBoxLabelLiteral" runat="server" />
-                </asp:TableCell><asp:TableCell>
-                    <asp:TextBox ID="StatementReferenceTextBox" runat="server" TextMode="MultiLine" CssClass="form-control input-sm" Height="100">
-                    </asp:TextBox>
-                </asp:TableCell>
-            </asp:TableRow>
-            <asp:TableRow>
-                <asp:TableCell>
-                    &nbsp;
-                </asp:TableCell>
-                <asp:TableCell>
-                    <button type="button" id="SaveButton" class="btn btn-default btn-sm">
-                        <asp:Literal runat="server" Text=" Save" />
-                    </button>
-                </asp:TableCell>
-            </asp:TableRow>
-        </asp:Table>
-    </asp:Panel>
+    <div class="" style="width: 500px;">
+        <div class="ui page form segment">
+            <div id="ShippingAddressDiv" runat="server">
+                <div class="field">
+                    <asp:Literal ID="ShippingAddressSelectLabel" runat="server" />
+                    <select id="ShippingAddressSelect"></select>
+                </div>
+                <div class="field">
+                    <textarea id="ShippingAddressTextArea" readonly="readonly"></textarea>
+                </div>
+            </div>
+            <div class="two fields">
+                <div class="field" id="ShippingCompanyDiv" runat="server">
+                    <asp:Literal ID="ShippingCompanySelectLabel" runat="server" />
+                    <select id="ShippingCompanySelect"></select>
+                </div>
+                <div class="field" id="ShippingChargeDiv" runat="server">
+                    <asp:Literal ID="ShippingChargeInputTextLabel" runat="server" />
+                    <input type="text" id="ShippingChargeInputText" class="currency" />
+                </div>
+            </div>
+            <div class="three fields">
+                <div class="field">
+                    <asp:Literal ID="RunningTotalInputTextLabel" runat="server" />
+                    <input type="text" id="RunningTotalInputText" class="currency" readonly="readonly" />
+                </div>
+                <div class="field">
+                    <asp:Literal ID="TaxTotalInputTextLabel" runat="server" />
+                    <input type="text" id="TaxTotalInputText" class="currency" readonly="readonly" />
+                </div>
+                <div class="field">
+                    <asp:Literal ID="GrandTotalInputTextLabel" runat="server" />
+                    <input type="text" id="GrandTotalInputText" class="currency" readonly="readonly" />
+                </div>
+            </div>
+            <div class="two fields" id="CashRepositoryDiv" runat="server">
+                <div class="field">
+                    <asp:Literal ID="CashRepositorySelectLabel" runat="server" />
+                    <select id="CashRepositorySelect"></select>
+                </div>
+                <div class="field">
+                    <asp:Literal ID="CashRepositoryBalanceInputTextLabel" runat="server" />
+                    <input type="text" id="CashRepositoryBalanceInputText" class="currency" readonly="readonly" />
+                </div>
+            </div>
+            <div class="field" id="CostCenterDiv" runat="server">
+                <asp:Literal ID="CostCenterSelectLabel" runat="server" />
+                <select id="CostCenterSelect"></select>
+            </div>
+            <div class="field" id="SalespersonDiv" runat="server">
+                <asp:Literal ID="SalesPersonSelectLabel" runat="server" />
+                <select id="SalesPersonSelect" runat="server"></select>
+            </div>
+            <div class="field">
+                <asp:Literal ID="StatementReferenceTextAreaLabel" runat="server" />
+                <textarea id="StatementReferenceTextArea" runat="server"></textarea>
+            </div>
+            <button type="button" id="SaveButton" class="small ui button red">
+                <asp:Literal runat="server" Text=" Save" />
+            </button>
+        </div>
+    </div>
 
     <asp:HiddenField ID="ItemCodeHidden" runat="server"></asp:HiddenField>
     <asp:HiddenField ID="ItemIdHidden" runat="server"></asp:HiddenField>
@@ -443,7 +292,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <asp:HiddenField ID="UnitIdHidden" runat="server"></asp:HiddenField>
     <asp:HiddenField ID="UnitNameHidden" runat="server"></asp:HiddenField>
     <p>
-        <asp:Label ID="ErrorLabelBottom" runat="server" CssClass="error" />
+        <asp:Label ID="ErrorLabelBottom" runat="server" CssClass="big error" />
     </p>
 </div>
 

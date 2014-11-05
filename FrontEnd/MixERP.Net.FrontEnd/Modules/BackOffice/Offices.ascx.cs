@@ -40,7 +40,7 @@ namespace MixERP.Net.Core.Modules.BackOffice
                 scrud.ViewSchema = "office";
                 scrud.View = "offices";
 
-                scrud.Width = 4000;
+                scrud.GridViewWidth = 4000;
 
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();

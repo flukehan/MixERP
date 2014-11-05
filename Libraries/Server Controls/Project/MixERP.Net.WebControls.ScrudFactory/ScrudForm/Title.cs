@@ -34,9 +34,9 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 return;
             }
 
-            using (var ruler = new HtmlGenericControl("hr"))
+            using (HtmlGenericControl ruler = new HtmlGenericControl("div")) //"hr"
             {
-                ruler.Attributes.Add("class", "hr");
+                ruler.Attributes.Add("class", "ui divider");
                 p.Controls.Add(ruler);
             }
         }

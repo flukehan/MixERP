@@ -280,6 +280,12 @@
     <Content Include="App_Themes\MixERP\mixerp.min.css">
       <DependentUpon>mixerp.css</DependentUpon>
     </Content>
+    <Content Include="bundles\scripts\libraries.js">
+      <DependentUpon>libraries.js.bundle</DependentUpon>
+    </Content>
+    <Content Include="bundles\scripts\libraries.min.js">
+      <DependentUpon>libraries.js</DependentUpon>
+    </Content>
     <Content Include="bundles\scripts\master-page.js">
       <DependentUpon>master-page.js.bundle</DependentUpon>
     </Content>
@@ -618,6 +624,7 @@
     <Content Include="Scripts\colorbox\images\overlay.png" />
     <Content Include="Scripts\colorbox\jquery.colorbox-min.js" />
     <Content Include="Scripts\colorbox\jquery.colorbox.js" />
+    <Content Include="Scripts\jquery.address.js" />
     <Content Include="Scripts\jqueryNumber\jquery.number.js" />
     <Content Include="Scripts\mixerp.js" />
     <Content Include="bundles\scripts\parties-popup.js">
@@ -632,7 +639,28 @@
     <Content Include="bundles\scripts\query.min.js">
       <DependentUpon>query.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\mixerp\master-page\declaration.js" />
+    <Content Include="Scripts\mixerp\master-page\js-tree.js" />
+    <Content Include="Scripts\mixerp\master-page\layout.js" />
+    <Content Include="Scripts\mixerp\master-page\keyboard.js" />
+    <Content Include="Scripts\mixerp\master-page\scrud.js" />
+    <Content Include="Scripts\mixerp\master-page\sortable.js" />
     <Content Include="Scripts\notify-combined.min.js" />
+    <Content Include="Scripts\semantic-ui\css\semantic.css" />
+    <Content Include="Scripts\semantic-ui\css\semantic.min.css" />
+    <Content Include="Scripts\semantic-ui\fonts\basic.icons.svg" />
+    <Content Include="Scripts\semantic-ui\fonts\icons.svg" />
+    <Content Include="Scripts\semantic-ui\images\loader-large-inverted.gif" />
+    <Content Include="Scripts\semantic-ui\images\loader-large.gif" />
+    <Content Include="Scripts\semantic-ui\images\loader-medium-inverted.gif" />
+    <Content Include="Scripts\semantic-ui\images\loader-medium.gif" />
+    <Content Include="Scripts\semantic-ui\images\loader-mini-inverted.gif" />
+    <Content Include="Scripts\semantic-ui\images\loader-mini.gif" />
+    <Content Include="Scripts\semantic-ui\images\loader-small-inverted.gif" />
+    <Content Include="Scripts\semantic-ui\images\loader-small.gif" />
+    <Content Include="Scripts\semantic-ui\javascript\button.js" />
+    <Content Include="Scripts\semantic-ui\javascript\semantic.js" />
+    <Content Include="Scripts\semantic-ui\javascript\semantic.min.js" />
     <Content Include="Scripts\UserControls\AttachmentUserControl.js" />
     <Content Include="Scripts\UserControls\ProductControl.js" />
     <Content Include="Scripts\UserControls\ProductViewControl.js" />
@@ -1053,9 +1081,6 @@
     </Content>
     <Content Include="Mix Open Foundation.snk" />
     <Content Include="MixERPReportMaster.Master" />
-    <Content Include="bundles\scripts\master-page.min.js.map">
-      <DependentUpon>master-page.min.js</DependentUpon>
-    </Content>
     <Content Include="MixERPBlankMaster.Master" />
     <Content Include="Handlers\FileUpload.ashx" />
     <Content Include="App_Themes\MixERP\mixerp.less" />
@@ -1075,7 +1100,20 @@
     <Content Include="..\..\mixerp.licenseheader">
       <Link>mixerp.licenseheader</Link>
     </Content>
-    <None Include="bundles\scripts\master-page.js.bundle" />
+    <Content Include="bundles\scripts\master-page.js.bundle" />
+    <Content Include="bundles\scripts\master-page.min.js.map">
+      <DependentUpon>master-page.min.js</DependentUpon>
+    </Content>
+    <Content Include="bundles\scripts\master-page.min.js.gzip">
+      <DependentUpon>master-page.min.js</DependentUpon>
+    </Content>
+    <Content Include="bundles\scripts\libraries.js.bundle" />
+    <Content Include="bundles\scripts\libraries.min.js.map">
+      <DependentUpon>libraries.min.js</DependentUpon>
+    </Content>
+    <Content Include="bundles\scripts\libraries.min.js.gzip">
+      <DependentUpon>libraries.min.js</DependentUpon>
+    </Content>
     <None Include="bundles\stylesheets\master-page.css.bundle" />
     <None Include="bundles\scripts\parties-popup.js.bundle" />
     <Content Include="bundles\scripts\parties-popup.min.js.map">
@@ -1098,6 +1136,13 @@
     <Content Include="Scripts\vakata-jstree\dist\jstree.min.js.map">
       <DependentUpon>jstree.min.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\semantic-ui\fonts\basic.icons.eot" />
+    <Content Include="Scripts\semantic-ui\fonts\basic.icons.ttf" />
+    <Content Include="Scripts\semantic-ui\fonts\basic.icons.woff" />
+    <Content Include="Scripts\semantic-ui\fonts\icons.eot" />
+    <Content Include="Scripts\semantic-ui\fonts\icons.otf" />
+    <Content Include="Scripts\semantic-ui\fonts\icons.ttf" />
+    <Content Include="Scripts\semantic-ui\fonts\icons.woff" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

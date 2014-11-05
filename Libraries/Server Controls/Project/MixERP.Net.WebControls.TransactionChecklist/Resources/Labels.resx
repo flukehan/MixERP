@@ -155,6 +155,9 @@
     <value>This transaction was rejected by {0} on {1}. Reason: "{2}".</value>
     <comment>This transaction was rejected by binod on 2004.-3-13 12:45 AM. Reason: "No reason specified".</comment>
   </data>
+  <data name="TransactionWithdrawalInformation" xml:space="preserve">
+    <value>When you withdraw a transaction, it won't be forwarded to the workflow module. This means that your withdrawn transactions are rejected and require no further verification. However, you won't be able to unwithdraw this transaction later.</value>
+  </data>
   <data name="TransactionWithdrawnDetails" xml:space="preserve">
     <value>This transaction was withdrawn by {0} on {1}. Reason: "{2}".</value>
     <comment>This transaction was closed by "nirvan" on 2004.-3-13 12:45 AM. Reason: "Mistake".</comment>

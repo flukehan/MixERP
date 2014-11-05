@@ -25,6 +25,7 @@ using System.Reflection;
 using System.Resources;
 using System.Threading;
 using System.Web;
+using System.Web.Compilation;
 
 namespace MixERP.Net.Common.Helpers
 {
@@ -62,6 +63,13 @@ namespace MixERP.Net.Common.Helpers
                 throw new ArgumentNullException("assembly");
             }
 
+            var baseType = BuildManager.GetGlobalAsaxType().BaseType;
+
+            if (baseType != null && baseType.Assembly.Equals(assembly))
+            {
+                return GetDefaultAssemblyResourceString(UnqualifyResourceNamespace(assembly, fullyQualifiedClassName), key);
+            }
+
             ResourceManager r = new ResourceManager(fullyQualifiedClassName, assembly);
             string value = string.Empty;
 
@@ -83,6 +91,11 @@ namespace MixERP.Net.Common.Helpers
             }
 
             return value;
+        }
+
+        private static string UnqualifyResourceNamespace(Assembly assembly, string fullyQualifiedClassName)
+        {
+            return fullyQualifiedClassName.Replace(assembly.GetName().Name + ".Resources.", "");
         }
 
         public static void AddResourceString(string path, string key, string value)
@@ -107,10 +120,10 @@ namespace MixERP.Net.Common.Helpers
                         {
                             // ReSharper disable once ExpressionIsAlwaysNull
                             resources.Add(entry.Key.ToString(),
-                                ((ResXDataNode) entry.Value).GetValue(iResoulution).ToString());
+                                ((ResXDataNode)entry.Value).GetValue(iResoulution).ToString());
                         }
 
-                        ResXDataNode dataNode = (ResXDataNode) entry.Value;
+                        ResXDataNode dataNode = (ResXDataNode)entry.Value;
 
                         if (dataNode != null)
                         {

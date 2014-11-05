@@ -23,7 +23,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     ValidateRequest="false" %>
 
 <asp:Content ContentPlaceHolderID="BodyContentPlaceholder" runat="server">
-    <div class="container-fluid">
+    <div class="container">
         <asp:PlaceHolder runat="server" ID="DefaultContentPlaceholder" />
     </div>
 </asp:Content>

@@ -71,9 +71,9 @@ namespace MixERP.Net.WebControls.TransactionChecklist
 
         private void AddRuler(HtmlGenericControl p)
         {
-            using (HtmlGenericControl ruler = new HtmlGenericControl())
+            using (HtmlGenericControl ruler = new HtmlGenericControl("hr"))
             {
-                ruler.TagName = "hr";
+                ruler.Attributes.Add("class", "ui divider");
                 p.Controls.Add(ruler);
             }
         }

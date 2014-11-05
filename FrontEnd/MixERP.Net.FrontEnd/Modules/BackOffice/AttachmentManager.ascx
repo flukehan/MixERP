@@ -48,7 +48,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                 <%-- ReSharper disable once Html.Obsolete --%>
                 <center>
                     <img  alt="" />
-                    <p class="vpad8">Hello brother</p>
+                    <p class="vpad8"></p>
                 </center>
             </div>
             <div class="modal-footer">

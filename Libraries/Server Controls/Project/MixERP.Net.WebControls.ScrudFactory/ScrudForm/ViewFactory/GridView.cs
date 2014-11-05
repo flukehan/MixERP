@@ -55,9 +55,9 @@ namespace MixERP.Net.WebControls.ScrudFactory
             }
         }
 
-        private Unit GetWidth()
+        private Unit GetGridViewWidth()
         {
-            if (this.Width.Value.Equals(0))
+            if (this.GridViewWidth.Value.Equals(0))
             {
                 var width = Conversion.TryCastInteger(ConfigurationHelper.GetScrudParameter("GridViewDefaultWidth"));
 
@@ -69,7 +69,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 return width;
             }
 
-            return this.Width;
+            return this.GridViewWidth;
         }
 
         private void LoadGrid()
@@ -77,7 +77,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             var showAll = (Conversion.TryCastString(this.Page.Request.QueryString["show"]).Equals("all"));
 
             this.BindGridView();
-            this.formGridView.Width = this.GetWidth();
+            this.formGridView.Width = this.GetGridViewWidth();
             this.pager.RecordCount = FormHelper.GetTotalRecords(this.ViewSchema, this.View);
             this.pager.PageSize = 10;
 

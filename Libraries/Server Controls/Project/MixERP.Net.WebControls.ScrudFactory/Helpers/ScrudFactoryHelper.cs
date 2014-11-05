@@ -17,13 +17,10 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.WebControls.Common;
 using MixERP.Net.WebControls.ScrudFactory.Controls;
 using MixERP.Net.WebControls.ScrudFactory.Controls.ListControls;
 using MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes;
 using MixERP.Net.WebControls.ScrudFactory.Resources;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.Reflection;
 using System.Threading;
 using System.Web.UI;
@@ -58,8 +55,6 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
                         labelCell.Controls.Add(labelLiteral);
                         controlCell.Attributes.Add("class", "control-cell");
 
-                        dropDownList.Attributes.Add("class", "form-control input-sm");
-
                         using (HtmlTable t = new HtmlTable())
                         {
                             using (HtmlTableRow row = new HtmlTableRow())
@@ -88,6 +83,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
                                 }
 
                                 t.Style.Add("width", "100%");
+                                t.Style.Add("border-collapse", "collapse");
                                 t.Rows.Add(row);
                                 t.Attributes.Add("role", "item-selector-table");
 
@@ -95,8 +91,6 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 
                                 using (var newRow = new HtmlTableRow())
                                 {
-                                    newRow.Attributes.Add("class", "form-group");
-
                                     newRow.Cells.Add(labelCell);
                                     newRow.Cells.Add(controlCell);
                                     htmlTable.Rows.Add(newRow);
@@ -212,19 +206,6 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
                                 {
                                     using (WebControl c = control as WebControl)
                                     {
-                                        if (c is RadioButtonList)
-                                        {
-                                            c.Attributes.Add("class", "input-sm");
-                                        }
-                                        //else if (c is NewTextBox)
-                                        //{
-                                        //    c.CssClass = "form-control input-sm";
-                                        //}
-                                        else
-                                        {
-                                            c.Attributes.Add("class", "form-control input-sm");
-                                        }
-
                                         controlCell.Controls.Add(c);
                                     }
                                 }
@@ -237,8 +218,6 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 
                         using (var newRow = new HtmlTableRow())
                         {
-                            newRow.Attributes.Add("class", "form-group");
-
                             newRow.Cells.Add(labelCell);
                             newRow.Cells.Add(controlCell);
                             htmlTable.Rows.Add(newRow);

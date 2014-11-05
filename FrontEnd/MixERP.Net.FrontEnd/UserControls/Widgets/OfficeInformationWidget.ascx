@@ -18,25 +18,27 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="OfficeInformationWidget.ascx.cs" Inherits="MixERP.Net.FrontEnd.UserControls.Widgets.OfficeInformationWidget" %>
-<div class="panel panel-default widget">
-    <div class="panel-heading">
-        <h3 class="panel-title">Office Information (Todo)</h3>
-    </div>
-    <div class="panel-body">
-        Your Office : MoF-NY-MEM (Memphis Branch)
+
+<div class="four wide column widget">
+    <div class="ui segment">
+        <h2>Office Information (Todo)
+        </h2>
+        <p>
+            Your Office : MoF-NY-MEM (Memphis Branch)
                     <br />
-        Logged in to : MoF-NY-BK (Brooklyn Branch)
+            Logged in to : MoF-NY-BK (Brooklyn Branch)
                     <br />
-        Last Login IP : 192.168.0.200
+            Last Login IP : 192.168.0.200
                 <br />
-        Last Login On : <%=DateTime.Now.ToString(MixERP.Net.Common.Helpers.LocalizationHelper.GetCurrentCulture()) %>
-        <br />
-        Current Login IP : 192.168.0.200
+            Last Login On : <%=DateTime.Now.ToString(MixERP.Net.Common.Helpers.LocalizationHelper.GetCurrentCulture()) %>
+            <br />
+            Current Login IP : 192.168.0.200
                 <br />
-        Current Login On: <%=DateTime.Now.ToString(MixERP.Net.Common.Helpers.LocalizationHelper.GetCurrentCulture()) %>
-        <br />
-        Role : ADM (Administrators)
+            Current Login On: <%=DateTime.Now.ToString(MixERP.Net.Common.Helpers.LocalizationHelper.GetCurrentCulture()) %>
+            <br />
+            Role : ADM (Administrators)
                     <br />
-        Department : ITD (IT Department)
+            Department : ITD (IT Department)            
+        </p>
     </div>
 </div>

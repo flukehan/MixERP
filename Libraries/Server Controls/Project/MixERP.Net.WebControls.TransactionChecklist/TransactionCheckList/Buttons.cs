@@ -33,8 +33,8 @@ namespace MixERP.Net.WebControls.TransactionChecklist
             using (HtmlGenericControl div = new HtmlGenericControl())
             {
                 div.TagName = "div";
-                div.Attributes.Add("class", "panel panel-default panel-info");
-                div.Attributes.Add("style", "max-width:" + this.GetMaxWidth() + "px;");
+                div.Attributes.Add("class", "ui vertical menu");
+                div.Attributes.Add("style", "width:" + this.GetWidth() + "px;");
                 this.AddPanelHeader(div);
                 this.AddPanelBody(div);
 
@@ -47,15 +47,8 @@ namespace MixERP.Net.WebControls.TransactionChecklist
             using (HtmlGenericControl header = new HtmlGenericControl())
             {
                 header.TagName = "div";
-                header.Attributes.Add("class", "panel-heading");
-
-                using (HtmlGenericControl heading = new HtmlGenericControl())
-                {
-                    heading.TagName = "h3";
-                    heading.Attributes.Add("class", "panel-title");
-                    heading.InnerText = Resources.Titles.Checklists;
-                    header.Controls.Add(heading);
-                }
+                header.Attributes.Add("class", "ui header inverted green item");
+                header.InnerHtml = "<i class='user icon'></i>" + Titles.Checklists;
 
                 div.Controls.Add(header);
             }
@@ -63,32 +56,16 @@ namespace MixERP.Net.WebControls.TransactionChecklist
 
         private void AddPanelBody(HtmlGenericControl div)
         {
-            using (HtmlGenericControl body = new HtmlGenericControl())
-            {
-                body.TagName = "div";
-                body.Attributes.Add("class", "panel-body");
-
-                using (HtmlGenericControl listGroup = new HtmlGenericControl())
-                {
-                    listGroup.TagName = "div";
-                    listGroup.Attributes.Add("class", "list-group");
-
-                    this.AddWidthdrawAnchor(listGroup);
-                    this.AddViewReportAnchor(listGroup);
-                    this.AddEmailReportLinkButton(listGroup);
-                    this.AddCustomerReportAnchor(listGroup);
-                    this.AddPrintReceiptAnchor(listGroup);
-                    this.AddPrintGLAnchor(listGroup);
-                    this.AddAttachmentAnchor(listGroup);
-                    this.AddNewAnchor(listGroup);
-                    this.AddViewAnchor(listGroup);
-                    this.AddBackAnchor(listGroup);
-
-                    body.Controls.Add(listGroup);
-                }
-
-                div.Controls.Add(body);
-            }
+            this.AddWidthdrawAnchor(div);
+            this.AddViewReportAnchor(div);
+            this.AddEmailReportLinkButton(div);
+            this.AddCustomerReportAnchor(div);
+            this.AddPrintReceiptAnchor(div);
+            this.AddPrintGLAnchor(div);
+            this.AddAttachmentAnchor(div);
+            this.AddNewAnchor(div);
+            this.AddViewAnchor(div);
+            this.AddBackAnchor(div);
         }
 
         private void AddWidthdrawAnchor(HtmlGenericControl h)
@@ -98,8 +75,8 @@ namespace MixERP.Net.WebControls.TransactionChecklist
                 using (HtmlAnchor anchor = new HtmlAnchor())
                 {
                     anchor.ID = "WithdrawAnchor";
-                    anchor.InnerText = Titles.WithdrawTransaction;
-                    anchor.Attributes.Add("class", "list-group-item");
+                    anchor.InnerHtml = "<i class='icon hide'></i>" + Titles.WithdrawTransaction;
+                    anchor.Attributes.Add("class", "item");
                     anchor.HRef = "javascript:void(0);";
                     h.Controls.Add(anchor);
                 }
@@ -125,8 +102,8 @@ namespace MixERP.Net.WebControls.TransactionChecklist
                 using (HtmlAnchor anchor = new HtmlAnchor())
                 {
                     anchor.ID = "ViewReportAnchor";
-                    anchor.InnerText = this.ViewReportButtonText;
-                    anchor.Attributes.Add("class", "list-group-item");
+                    anchor.InnerHtml = "<i class='icon grid layout'></i>" + this.ViewReportButtonText;
+                    anchor.Attributes.Add("class", "item");
                     anchor.Attributes.Add("onclick", "showWindow('" + reportUrl + "');");
                     anchor.HRef = "javascript:void(0);";
                     anchor.Attributes.Add("data-url", reportUrl);
@@ -147,10 +124,9 @@ namespace MixERP.Net.WebControls.TransactionChecklist
                 emailLinkButton = new LinkButton();
 
                 emailLinkButton.ID = "EmailReportLinkButton";
-                emailLinkButton.Text = this.EmailReportButtonText;
+                emailLinkButton.Text = "<i class='icon mail'></i>" + this.EmailReportButtonText;
                 emailLinkButton.CausesValidation = false;
-                emailLinkButton.Attributes.Add("class", "list-group-item");
-                emailLinkButton.Attributes.Add("class", "list-group-item");
+                emailLinkButton.Attributes.Add("class", "item");
                 emailLinkButton.Click += EmailLinkButton_Click;
                 h.Controls.Add(emailLinkButton);
             }
@@ -175,8 +151,8 @@ namespace MixERP.Net.WebControls.TransactionChecklist
                 using (HtmlAnchor anchor = new HtmlAnchor())
                 {
                     anchor.ID = "CustomerReportAnchor";
-                    anchor.InnerText = this.CustomerReportButtonText;
-                    anchor.Attributes.Add("class", "list-group-item");
+                    anchor.InnerHtml = "<i class='icon list layout'></i>" + this.CustomerReportButtonText;
+                    anchor.Attributes.Add("class", "item");
                     anchor.Attributes.Add("onclick", "showWindow('" + customerReportUrl + "');");
                     anchor.HRef = "javascript:void(0);";
                     h.Controls.Add(anchor);
@@ -203,8 +179,8 @@ namespace MixERP.Net.WebControls.TransactionChecklist
                 using (HtmlAnchor anchor = new HtmlAnchor())
                 {
                     anchor.ID = "PrintReceiptAnchor";
-                    anchor.InnerText = Titles.PrintReceipt;
-                    anchor.Attributes.Add("class", "list-group-item");
+                    anchor.InnerHtml = "<i class='icon print'></i>" + Titles.PrintReceipt;
+                    anchor.Attributes.Add("class", "item");
                     anchor.Attributes.Add("onclick", "showWindow('" + receiptUrl + "');");
                     anchor.HRef = "javascript:void(0);";
                     h.Controls.Add(anchor);
@@ -231,8 +207,8 @@ namespace MixERP.Net.WebControls.TransactionChecklist
                 using (HtmlAnchor anchor = new HtmlAnchor())
                 {
                     anchor.ID = "PrintGLAnchor";
-                    anchor.InnerText = Titles.PrintGlEntry;
-                    anchor.Attributes.Add("class", "list-group-item");
+                    anchor.InnerHtml = "<i class='icon print'></i>" + Titles.PrintGlEntry;
+                    anchor.Attributes.Add("class", "item");
                     anchor.Attributes.Add("onclick", "showWindow('" + glAdviceUrl + "');");
                     anchor.HRef = "javascript:void(0);";
                     h.Controls.Add(anchor);
@@ -266,8 +242,8 @@ namespace MixERP.Net.WebControls.TransactionChecklist
                 using (HtmlAnchor anchor = new HtmlAnchor())
                 {
                     anchor.ID = "AttachmentAnchor";
-                    anchor.InnerText = Titles.UploadAttachmentsForThisTransaction;
-                    anchor.Attributes.Add("class", "list-group-item");
+                    anchor.InnerHtml = "<i class='icon cloud upload'></i>" + Titles.UploadAttachmentsForThisTransaction;
+                    anchor.Attributes.Add("class", "item");
                     anchor.HRef = attachmentUrl;
 
                     h.Controls.Add(anchor);
@@ -287,8 +263,8 @@ namespace MixERP.Net.WebControls.TransactionChecklist
             using (HtmlAnchor anchor = new HtmlAnchor())
             {
                 anchor.ID = "AddNewAnchor";
-                anchor.InnerText = Titles.AddNew;
-                anchor.Attributes.Add("class", "list-group-item");
+                anchor.InnerHtml = "<i class='icon add sign'></i>" + Titles.AddNew;
+                anchor.Attributes.Add("class", "item");
                 anchor.HRef = addNewUrl;
                 h.Controls.Add(anchor);
             }
@@ -306,8 +282,8 @@ namespace MixERP.Net.WebControls.TransactionChecklist
             using (HtmlAnchor anchor = new HtmlAnchor())
             {
                 anchor.ID = "ViewAnchor";
-                anchor.InnerText = Titles.ReturnToView;
-                anchor.Attributes.Add("class", "list-group-item");
+                anchor.InnerHtml = "<i class='icon circle left'></i>" + Titles.ReturnToView;
+                anchor.Attributes.Add("class", "item");
                 anchor.HRef = viewUrl;
                 h.Controls.Add(anchor);
             }
@@ -317,18 +293,18 @@ namespace MixERP.Net.WebControls.TransactionChecklist
         {
             using (HtmlAnchor anchor = new HtmlAnchor())
             {
-                anchor.InnerText = Titles.Back;
-                anchor.Attributes.Add("class", "list-group-item");
+                anchor.InnerHtml = "<i class='icon backward'></i>" + Titles.Back;
+                anchor.Attributes.Add("class", "item");
                 anchor.HRef = "javascript:history.go(-1);";
                 h.Controls.Add(anchor);
             }
         }
 
-        private double GetMaxWidth()
+        private double GetWidth()
         {
-            if (this.MaxWidth.Value > 0)
+            if (this.Width.Value > 0)
             {
-                return this.MaxWidth.Value;
+                return this.Width.Value;
             }
 
             return 400; //Todo: Can be parameterized on a config file.

@@ -17,18 +17,15 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using System;
 using System.ComponentModel;
-using System.Reflection;
 using System.Security.Permissions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 [assembly: WebResource("MixERP.Net.WebControls.PartyControl.PartyControl.js", "application/x-javascript")]
-
 namespace MixERP.Net.WebControls.PartyControl
 {
     [DefaultProperty("Text")]
@@ -56,7 +53,7 @@ namespace MixERP.Net.WebControls.PartyControl
             this.container = new Panel();
             this.container.Controls.Add(this.GetHeader());
             this.container.Controls.Add(this.GetTabs());
-            this.container.Controls.Add(this.GetTabBody());
+            this.AddTabBody(this.container);
             this.AddHiddenField(this.container, "TotalDueAmountHidden");
             this.AddHiddenField(this.container, "OfficeDueAmountHidden");
             this.AddHiddenField(this.container, "AccruedInterestHidden");

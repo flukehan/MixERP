@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Resources;
 using System.Web.UI.WebControls;
 using Wuqi.Webdiyer;
@@ -67,9 +69,16 @@ namespace MixERP.Net.WebControls.ScrudFactory
             this.pager.CurrentPageButtonClass = this.GetPagerCurrentPageCssClass();
 
             this.pager.PagingButtonsClass = this.GetPagerPageButtonCssClass();
+
+            //Avoiding conflict with Semantic UI Pagination Menu
+            //because pager control automatically generates an attribute "margin-right:5px";
+            this.pager.PagingButtonsStyle = "margin-right:0;";
+            this.pager.CurrentPageButtonStyle = "margin-right:0;";
+
             this.pager.PagingButtonType = PagingButtonType.Text;
             this.pager.NumericButtonType = PagingButtonType.Text;
             this.pager.NavigationButtonType = PagingButtonType.Text;
+
             this.pager.ShowNavigationToolTip = true;
             this.pager.ShowPageIndexBox = ShowPageIndexBox.Never;
             this.pager.ShowPageIndex = true;
@@ -84,12 +93,41 @@ namespace MixERP.Net.WebControls.ScrudFactory
         {
             this.gridPanel = new Panel();
             this.gridPanel.ID = "GridPanel";
-            this.gridPanel.ScrollBars = ScrollBars.Auto;
             this.gridPanel.CssClass = this.GetGridPanelCssClass();
+            this.gridPanel.Width = this.GetGridPanelWidth();
+
+            if (!string.IsNullOrWhiteSpace(this.GetGridPanelStyle()))
+            {
+                this.gridPanel.Attributes.Add("style", this.GetGridPanelStyle());
+            }
 
             this.AddGridView(this.gridPanel);
             this.AddPager(this.gridPanel);
             this.AddLastValueHiddenField(this.gridPanel);
+        }
+
+        private Unit GetGridPanelWidth()
+        {
+            if (this.GridPanelWidth.Value.Equals(0))
+            {
+                var width = Conversion.TryCastUnit(ConfigurationHelper.GetScrudParameter("GridPanelDefaultWidth"));
+
+                return width;
+            }
+
+            return this.GridPanelWidth;
+        }
+
+        private string GetGridPanelStyle()
+        {
+            if (this.GridPanelWidth.Value.Equals(0))
+            {
+                var style = Conversion.TryCastString(ConfigurationHelper.GetScrudParameter("GridPanelStyle"));
+
+                return style;
+            }
+
+            return this.GridPanelStyle;
         }
     }
 }

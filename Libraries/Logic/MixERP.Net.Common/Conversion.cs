@@ -18,7 +18,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.Common.Helpers;
-
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
@@ -43,6 +42,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Threading;
 using System.Web.Configuration;
+using System.Web.UI.WebControls;
 
 namespace MixERP.Net.Common
 {
@@ -240,6 +240,11 @@ namespace MixERP.Net.Common
             }
 
             return retVal;
+        }
+
+        public static Unit TryCastUnit(object value)
+        {
+            return Unit.Parse(value.ToString());
         }
 
         public static int TryCastInteger(object value)

@@ -5,6 +5,7 @@
     <style type="text/css" media="all">
         html, body {
             padding: 4px;
+            font-size: 12px;
         }
 
         html, body, div, table {
@@ -34,9 +35,11 @@
 <body>
     {Header}
     <div class="hide report-command" style="position: fixed;top:20px;right: 20px; ">
-        <a href="#">
-            <img src="/Resource/Icons/print-16.png" alt="Print" onclick="window.print();" />
-            <a href="#" onclick="top.close();"><img src="/Resource/Icons/close-16.png" alt="Close" /></a>
+        <a href="javascript:window.print();">
+            <img src="/Resource/Icons/print-16.png" alt="Print" />
+        </a>
+        <a href="javascript:top.close();">
+            <img src="/Resource/Icons/close-16.png" alt="Close" />
         </a>
     </div>
     <h1>

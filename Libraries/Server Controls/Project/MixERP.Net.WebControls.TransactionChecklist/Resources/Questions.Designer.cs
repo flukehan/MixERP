@@ -61,7 +61,16 @@ namespace MixERP.Net.WebControls.TransactionChecklist.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Why do you want to withdraw this entry?.
+        ///   Looks up a localized string similar to Are you sure you know what you&apos;re doing?.
+        /// </summary>
+        internal static string AreYouSure {
+            get {
+                return ResourceManager.GetString("AreYouSure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Why do you want to withdraw this transaction?.
         /// </summary>
         internal static string WithdrawalReason {
             get {

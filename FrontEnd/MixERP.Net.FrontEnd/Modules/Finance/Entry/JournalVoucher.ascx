@@ -123,7 +123,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
             <td>
                 <input type="text"
                     id="ERTextBox"
-                    class="text-right float form-control input-sm" />
+                    class="text-right decimal form-control input-sm" />
             </td>
             <td>
                 <input type="text"

@@ -26,45 +26,26 @@ namespace MixERP.Net.WebControls.PartyControl
     {
         private Control GetTabs()
         {
-            using (HtmlGenericControl tabList = ControlHelper.GetGenericControl(@"ul", @"nav nav-tabs", @"tablist"))
+            using (HtmlGenericControl tabList = ControlHelper.GetGenericControl(@"div", @"ui tabular top attached menu"))
             {
-                using (HtmlGenericControl homeListItem = ControlHelper.GetGenericControl(@"li", @"active"))
+                using (HtmlAnchor homeAnchor = ControlHelper.GetAnchor("active item", "Home", "home", "home icon"))
                 {
-                    using (HtmlAnchor homeAnchor = ControlHelper.GetAnchor(@"#home", @"tab", @"tab", "Home"))
-                    {
-                        homeListItem.Controls.Add(homeAnchor);
-                    }
-
-                    tabList.Controls.Add(homeListItem);
+                    tabList.Controls.Add(homeAnchor);
                 }
 
-                using (HtmlGenericControl partySummaryListItem = ControlHelper.GetGenericControl(@"li", string.Empty))
+                using (HtmlAnchor partySummaryAnchor = ControlHelper.GetAnchor("item", "Party Summary", "party-summary", "user icon"))
                 {
-                    using (HtmlAnchor partySummaryAnchor = ControlHelper.GetAnchor(@"#party-summary", @"tab", @"tab", "Party Summary"))
-                    {
-                        partySummaryListItem.Controls.Add(partySummaryAnchor);
-                    }
-                    tabList.Controls.Add(partySummaryListItem);
+                    tabList.Controls.Add(partySummaryAnchor);
                 }
 
-                using (HtmlGenericControl transactionSummaryListItem = ControlHelper.GetGenericControl(@"li", string.Empty))
+                using (HtmlAnchor transactionSummaryAnchor = ControlHelper.GetAnchor("item", "Transaction Summary", "transaction-summary", "book icon"))
                 {
-                    using (HtmlAnchor transactionSummaryAnchor = ControlHelper.GetAnchor(@"#transaction-summary", @"tab", @"tab", "Transaction Summary"))
-                    {
-                        transactionSummaryListItem.Controls.Add(transactionSummaryAnchor);
-                    }
-
-                    tabList.Controls.Add(transactionSummaryListItem);
+                    tabList.Controls.Add(transactionSummaryAnchor);
                 }
 
-                using (HtmlGenericControl contactInfoListItem = ControlHelper.GetGenericControl(@"li", string.Empty))
+                using (HtmlAnchor contactInfoAnchor = ControlHelper.GetAnchor("item", "Address & Contact Information", "contact-info", "globe icon"))
                 {
-                    using (HtmlAnchor contactInfoAnchor = ControlHelper.GetAnchor(@"#addresses-and-contact-info", @"tab", @"tab", "Address & Contact Information"))
-                    {
-                        contactInfoListItem.Controls.Add(contactInfoAnchor);
-                    }
-
-                    tabList.Controls.Add(contactInfoListItem);
+                    tabList.Controls.Add(contactInfoAnchor);
                 }
 
                 return tabList;

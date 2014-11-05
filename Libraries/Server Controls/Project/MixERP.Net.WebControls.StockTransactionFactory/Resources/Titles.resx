@@ -132,9 +132,6 @@
   <data name="PriceType" xml:space="preserve">
     <value>Price Type</value>
   </data>
-  <data name="PurchaseType" xml:space="preserve">
-    <value>Purchase Type</value>
-  </data>
   <data name="ReferenceNumberAbbreviated" xml:space="preserve">
     <value>Ref#</value>
   </data>
@@ -143,9 +140,6 @@
   </data>
   <data name="Salesperson" xml:space="preserve">
     <value>Salesperson</value>
-  </data>
-  <data name="SalesType" xml:space="preserve">
-    <value>Sales Type</value>
   </data>
   <data name="SelectParty" xml:space="preserve">
     <value>Select Party</value>
@@ -203,5 +197,8 @@
   </data>
   <data name="ItemCode" xml:space="preserve">
     <value>Item Code</value>
+  </data>
+  <data name="CashTransaction" xml:space="preserve">
+    <value>Cash Transaction</value>
   </data>
 </root>

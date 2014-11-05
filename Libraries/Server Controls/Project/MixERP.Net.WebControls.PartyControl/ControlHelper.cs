@@ -65,30 +65,26 @@ namespace MixERP.Net.WebControls.PartyControl
             return string.Format(@"<label for='{0}'>{1}</label>", targetControlId, text);
         }
 
-        public static HtmlAnchor GetAnchor(string href, string role, string dataToggle, string text)
+        public static HtmlAnchor GetAnchor(string cssClass, string text, string tabName, string icon)
         {
             using (HtmlAnchor a = new HtmlAnchor())
             {
-                if (!string.IsNullOrWhiteSpace(href))
+                if (!string.IsNullOrWhiteSpace(icon))
                 {
-                    a.HRef = href;
-                }
-
-                if (!string.IsNullOrWhiteSpace(role))
-                {
-                    a.Attributes.Add("role", role);
-                }
-
-                if (!string.IsNullOrWhiteSpace(dataToggle))
-                {
-                    a.Attributes.Add("data-toggle", dataToggle);
+                    a.InnerHtml = "<i class='" + icon + "'></i>";
                 }
 
                 if (!string.IsNullOrWhiteSpace(text))
                 {
-                    a.InnerText = text;
+                    a.InnerHtml += text;
                 }
 
+                if (!string.IsNullOrWhiteSpace(tabName))
+                {
+                    a.Attributes.Add("data-tab", tabName);
+                }
+
+                a.Attributes.Add("class", cssClass);
                 return a;
             }
         }
@@ -158,29 +154,6 @@ namespace MixERP.Net.WebControls.PartyControl
                 if (!string.IsNullOrWhiteSpace(tagName))
                 {
                     genericControl.TagName = tagName;
-                }
-
-                if (!string.IsNullOrWhiteSpace(cssClass))
-                {
-                    genericControl.Attributes.Add("class", cssClass);
-                }
-
-                return genericControl;
-            }
-        }
-
-        public static HtmlGenericControl GetGenericControl(string tagName, string cssClass, string role)
-        {
-            using (HtmlGenericControl genericControl = new HtmlGenericControl())
-            {
-                if (!string.IsNullOrWhiteSpace(tagName))
-                {
-                    genericControl.TagName = tagName;
-                }
-
-                if (!string.IsNullOrWhiteSpace(role))
-                {
-                    genericControl.Attributes.Add("role", role);
                 }
 
                 if (!string.IsNullOrWhiteSpace(cssClass))

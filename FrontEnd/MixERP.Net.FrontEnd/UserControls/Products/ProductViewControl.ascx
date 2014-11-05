@@ -22,135 +22,121 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <asp:Literal ID="TitleLiteral" runat="server" />
 </h2>
 
-<div class="btn-toolbar" role="toolbar">
-    <div class="btn-group">
+<div class="ui icon buttons">
 
-        <button type="button" id="AddNewButton" runat="server" class="btn btn-default btn-sm">
-            <span class="glyphicon glyphicon-plus"></span>
-            <asp:Literal runat="server" Text="Add New" />
-        </button>
+    <button type="button" id="AddNewButton" runat="server" class="ui button">
+        <i class="icon plus"></i>
+        <asp:Literal runat="server" Text="Add New" />
+    </button>
 
-        <button type="button" id="MergeToOrderButton" runat="server" class="btn btn-default btn-sm"
-            onclick="if(!getSelectedItems()){return;};" onserverclick="MergeToOrderButton_Click" visible="False">
-            <span class="glyphicon glyphicon-tree-conifer"></span>
-            <asp:Literal runat="server" Text="Merge Batch To Sales Order" />
-        </button>
+    <button type="button" id="MergeToOrderButton" runat="server" class="ui button"
+        onclick="if(!getSelectedItems()){return;};" onserverclick="MergeToOrderButton_Click" visible="False">
+        <i class="icon magic"></i>
+        <asp:Literal runat="server" Text="Merge Batch To Sales Order" />
+    </button>
 
-        <button type="button" id="MergeToDeliveryButton" runat="server"
-            class="btn btn-default btn-sm"
-            onclick="if(!getSelectedItems()){return;};"
-            onserverclick="MergeToDeliveryButton_Click" visible="false">
-            <span class="glyphicon glyphicon-tree-deciduous"></span>
-            <asp:Literal runat="server" Text="Merge Batch To Sales Delivery" />
-        </button>
+    <button type="button" id="MergeToDeliveryButton" runat="server"
+        class="ui button"
+        onclick="if(!getSelectedItems()){return;};"
+        onserverclick="MergeToDeliveryButton_Click" visible="false">
+        <i class="icon magic"></i>
+        <asp:Literal runat="server" Text="Merge Batch To Sales Delivery" />
+    </button>
 
-        <button type="button" id="MergeToGRNButton" runat="server" class="btn btn-default btn-sm"
-            onclick="if(!getSelectedItems()){return;};" onserverclick="MergeToGRNButton_Click" visible="False">
-            <span class="glyphicon glyphicon-tree-conifer"></span>
-            <asp:Literal runat="server" Text="Merge Batch To GRN" />
-        </button>
+    <button type="button" id="MergeToGRNButton" runat="server" class="ui button"
+        onclick="if(!getSelectedItems()){return;};" onserverclick="MergeToGRNButton_Click" visible="False">
+        <i class="icon magic"></i>
+        <asp:Literal runat="server" Text="Merge Batch To GRN" />
+    </button>
 
-        <button type="button" id="ReturnButton" runat="server" class="btn btn-default btn-sm"
-            onclick="if(!getSelectedItems()){return;};" onserverclick="ReturnButton_Click" visible="False">
-            <span class="glyphicon glyphicon-tree-conifer"></span>
-            <asp:Literal runat="server" Text="Return" />
-        </button>
+    <button type="button" id="ReturnButton" runat="server" class="ui button"
+        onclick="if(!getSelectedItems()){return;};" onserverclick="ReturnButton_Click" visible="False">
+        <i class="icon left"></i>
+        <asp:Literal runat="server" Text="Return" />
+    </button>
 
-        <button type="button" id="flagButton" class="btn btn-default btn-sm">
-            <span class="glyphicon glyphicon-flag"></span>&nbsp;
-                <asp:Literal runat="server" Text="Flag" />
-        </button>
+    <button type="button" id="flagButton" class="ui button">
+        <i class="icon flag"></i>&nbsp;
+        <asp:Literal runat="server" Text="Flag" />
+    </button>
 
-        <button type="button" class="btn btn-default btn-sm">
-            <span class="glyphicon glyphicon-print"></span>&nbsp;
-                <asp:Literal runat="server" Text="Print" />
-        </button>
-    </div>
+    <button type="button" class="ui button">
+        <i class="icon print"></i>&nbsp;
+        <asp:Literal runat="server" Text="Print" />
+    </button>
 </div>
 
-<div id="flag-popunder" style="width: 300px; display: none;" class="popunder">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Flag This Transaction</h3>
-        </div>
-        <div class="panel-body">
-            <div>
-                You can mark this transaction with a flag, however you will not be able to see the flags created by other users.
-            </div>
-            <br />
-            <p>Please select a flag</p>
-            <p>
-                <asp:DropDownList ID="FlagDropDownList" runat="server" CssClass="form-control">
-                </asp:DropDownList>
-            </p>
-            <p>
-                <asp:Button
-                    ID="UpdateButton"
-                    runat="server"
-                    Text="Update"
-                    CssClass="btn btn-primary btn-sm"
-                    OnClientClick="return getSelectedItems();"
-                    OnClick="UpdateButton_Click" />
-                <a href="javascript:void(0);" onclick="$('#flag-popunder').toggle(500);" class="btn btn-default btn-sm">Close</a>
-            </p>
-        </div>
+<div id="flag-popunder" style="width: 300px; display: none;" class="ui segment">
+    <h3 class="panel-title">Flag This Transaction</h3>
+
+    <div>
+        You can mark this transaction with a flag, however you will not be able to see the flags created by other users.
     </div>
+    <br />
+    <p>Select a flag</p>
+    <p>
+        <asp:DropDownList ID="FlagDropDownList" runat="server" CssClass="form-control">
+        </asp:DropDownList>
+    </p>
+    <p>
+        <asp:Button
+            ID="UpdateButton"
+            runat="server"
+            Text="Update"
+            CssClass="green small ui button"
+            OnClientClick=" return getSelectedItems(); "
+            OnClick="UpdateButton_Click" />
+        <a href="javascript:void(0);" onclick=" $('#flag-popunder').toggle(500); " class="red small ui button">Close</a>
+    </p>
 </div>
 
-<asp:Label ID="ErrorLabel" runat="server" CssClass="error" />
+<p>
+    <asp:Label ID="ErrorLabel" runat="server" CssClass="error" />
+</p>
 
-<div id="FilterDiv" class="shade" style="margin: 8px 0 8px 0;">
-    <div class="row" style="margin-left: 8px;">
-
-        <div class="col-md-1 pad4" style="width: 120px;">
-            <div class="input-group">
+<div id="FilterDiv" class="ui segment">
+    <div class="ui form" style="margin-left: 8px;">
+        <div class="inline fields">
+            <div class="field">
                 <mixerp:DateTextBox ID="DateFromDateTextBox" runat="server"
                     CssClass="date form-control input-sm"
                     Mode="FiscalYearStartDate"
                     Required="true" />
-                <span class="input-group-addon" onclick="$('#DateFromDateTextBox').datepicker('show');">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
+                <i class="icon calendar" onclick=" $('#DateFromDateTextBox').datepicker('show'); "></i>
             </div>
-        </div>
 
-        <div class="col-md-1 pad4" style="width: 120px;">
-            <div class="input-group">
+            <div class="field">
                 <mixerp:DateTextBox ID="DateToDateTextBox" runat="server"
                     CssClass="date form-control input-sm"
                     Mode="MonthEndDate" Required="true" />
-                <span class="input-group-addon" onclick="$('#DateToDateTextBox').datepicker('show');">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
+                <i class="icon calendar" onclick=" $('#DateToDateTextBox').datepicker('show'); "></i>
             </div>
-        </div>
 
-        <div class="col-md-1 pad4">
-            <asp:TextBox ID="OfficeTextBox" runat="server" CssClass="form-control input-sm" placeholder="Office" />
-        </div>
+            <div class="field">
+                <asp:TextBox ID="OfficeTextBox" runat="server" CssClass="form-control input-sm" placeholder="Office" />
+            </div>
 
-        <div class="col-md-1 pad4">
-            <asp:TextBox ID="PartyTextBox" runat="server" CssClass="form-control input-sm" placeholder="Party" />
-        </div>
+            <div class="field">
+                <asp:TextBox ID="PartyTextBox" runat="server" CssClass="form-control input-sm" placeholder="Party" />
+            </div>
 
-        <div id="PriceTypeDiv" runat="server">
-            <div class="col-md-1 pad4">
+            <div id="PriceTypeDiv" runat="server" class="field">
                 <asp:TextBox ID="PriceTypeTextBox" runat="server" CssClass="form-control input-sm" placeholder="Price Type" />
             </div>
-        </div>
-        <div class="col-md-1 pad4">
-            <asp:TextBox ID="UserTextBox" runat="server" CssClass="form-control input-sm" placeholder="User" />
-        </div>
+            <div class="field">
+                <asp:TextBox ID="UserTextBox" runat="server" CssClass="form-control input-sm" placeholder="User" />
+            </div>
 
-        <div class="col-md-2 pad4">
-            <asp:TextBox ID="ReferenceNumberTextBox" runat="server" CssClass="form-control input-sm" placeholder="Reference Number" />
-        </div>
+            <div class="field">
+                <asp:TextBox ID="ReferenceNumberTextBox" runat="server" CssClass="form-control input-sm" placeholder="Reference Number" />
+            </div>
 
-        <div class="col-md-2 pad4">
-            <asp:TextBox ID="StatementReferenceTextBox" runat="server" CssClass="form-control input-sm" placeholder="Statement Reference" />
-        </div>
-        <div class="col-md-1 pad4">
-            <asp:Button ID="ShowButton" runat="server" Text="Show" CssClass="btn btn-default input-sm" OnClick="ShowButton_Click" />
+            <div class="field">
+                <asp:TextBox ID="StatementReferenceTextBox" runat="server" CssClass="form-control input-sm" placeholder="Statement Reference" />
+            </div>
+            <div class="field">
+                <asp:Button ID="ShowButton" runat="server" Text="Show" CssClass="blue small ui button" OnClick="ShowButton_Click" />
+            </div>
         </div>
     </div>
 </div>
@@ -159,7 +145,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <asp:GridView
         ID="ProductViewGridView"
         runat="server"
-        CssClass="table table-bordered table-condensed pointer"
+        CssClass="ui celled table segment"
         AutoGenerateColumns="false"
         OnRowDataBound="ProductViewGridView_RowDataBound">
     </asp:GridView>

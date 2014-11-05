@@ -23,25 +23,25 @@ namespace MixERP.Net.WebControls.ScrudFactory
 {
     public partial class ScrudForm
     {
-        private string GetAddButtonCssClass()
+        private string GetAddButtonIconCssClass()
         {
-            var cssClass = this.AddButtonCssClass;
+            string cssClass = this.AddButtonIconCssClass;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("AddButtonCssClass");
+                cssClass = ConfigurationHelper.GetScrudParameter("AddButtonIconCssClass");
             }
 
             return cssClass;
         }
 
-        private string GetAllButtonCssClass()
+        private string GetAllButtonIconCssClass()
         {
-            var cssClass = this.AllButtonCssClass;
+            string cssClass = this.AllButtonIconCssClass;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("AllButtonCssClass");
+                cssClass = ConfigurationHelper.GetScrudParameter("AllButtonIconCssClass");
             }
 
             return cssClass;
@@ -49,7 +49,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private string GetButtonCssClass()
         {
-            var cssClass = this.ButtonCssClass;
+            string cssClass = this.ButtonCssClass;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
@@ -61,7 +61,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private string GetCommandPanelButtonCssClass()
         {
-            var cssClass = this.CommandPanelButtonCssClass;
+            string cssClass = this.CommandPanelButtonCssClass;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
@@ -73,7 +73,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private string GetCommandPanelCssClass()
         {
-            var cssClass = this.CommandPanelButtonCssClass;
+            string cssClass = this.CommandPanelButtonCssClass;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
@@ -83,25 +83,25 @@ namespace MixERP.Net.WebControls.ScrudFactory
             return cssClass;
         }
 
-        private string GetCompactButtonCssClass()
+        private string GetCompactButtonIconCssClass()
         {
-            var cssClass = this.CompactButtonCssClass;
+            string cssClass = this.CompactButtonIconCssClass;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("CompactButtonCssClass");
+                cssClass = ConfigurationHelper.GetScrudParameter("CompactButtonIconCssClass");
             }
 
             return cssClass;
         }
 
-        private string GetDeleteButtonCssClass()
+        private string GetDeleteButtonIconCssClass()
         {
-            var cssClass = this.DeleteButtonCssClass;
+            string cssClass = this.DeleteButtonIconCssClass;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("DeleteButtonCssClass");
+                cssClass = ConfigurationHelper.GetScrudParameter("DeleteButtonIconCssClass");
             }
 
             return cssClass;
@@ -109,7 +109,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private string GetDescriptionCssClass()
         {
-            var cssClass = this.DescriptionCssClass;
+            string cssClass = this.DescriptionCssClass;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
@@ -119,13 +119,13 @@ namespace MixERP.Net.WebControls.ScrudFactory
             return cssClass;
         }
 
-        private string GetEditButtonCssClass()
+        private string GetEditButtonIconCssClass()
         {
-            var cssClass = this.EditButtonCssClass;
+            string cssClass = this.EditButtonIconCssClass;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("EditButtonCssClass");
+                cssClass = ConfigurationHelper.GetScrudParameter("EditButtonIconCssClass");
             }
 
             return cssClass;
@@ -133,7 +133,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private string GetErrorCssClass()
         {
-            var cssClass = this.ErrorCssClass;
+            string cssClass = this.ErrorCssClass;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
@@ -145,7 +145,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private string GetFailureCssClass()
         {
-            var cssClass = this.FailureCssClass;
+            string cssClass = this.FailureCssClass;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
@@ -157,7 +157,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private string GetFormCssClass()
         {
-            var cssClass = this.FormCssClass;
+            string cssClass = this.FormCssClass;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
@@ -167,13 +167,13 @@ namespace MixERP.Net.WebControls.ScrudFactory
             return cssClass;
         }
 
-        private string GetFormPanelButtonCssClass()
+        private string GetFormPanelCssClass()
         {
-            var cssClass = this.FormPanelButtonCssClass;
+            string cssClass = this.FormPanelCssClass;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("FormPanelButtonCssClass");
+                cssClass = ConfigurationHelper.GetScrudParameter("FormPanelCssClass");
             }
 
             return cssClass;
@@ -181,7 +181,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private string GetGridPanelCssClass()
         {
-            var cssClass = this.GridPanelCssClass;
+            string cssClass = this.GridPanelCssClass;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
@@ -193,7 +193,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private string GetGridViewAlternateRowCssClass()
         {
-            var cssClass = this.GridViewAlternateRowCssClass;
+            string cssClass = this.GridViewAlternateRowCssClass;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
@@ -205,7 +205,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private string GetGridViewCssClass()
         {
-            var cssClass = this.GridViewCssClass;
+            string cssClass = this.GridViewCssClass;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
@@ -217,7 +217,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private string GetGridViewRowCssClass()
         {
-            var cssClass = this.GridViewRowCssClass;
+            string cssClass = this.GridViewRowCssClass;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
@@ -229,7 +229,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private string GetPagerCssClass()
         {
-            var cssClass = this.PagerCssClass;
+            string cssClass = this.PagerCssClass;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
@@ -241,7 +241,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private string GetPagerCurrentPageCssClass()
         {
-            var cssClass = this.PagerCurrentPageCssClass;
+            string cssClass = this.PagerCurrentPageCssClass;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
@@ -253,7 +253,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private string GetPagerPageButtonCssClass()
         {
-            var cssClass = this.PagerPageButtonCssClass;
+            string cssClass = this.PagerPageButtonCssClass;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
@@ -263,13 +263,13 @@ namespace MixERP.Net.WebControls.ScrudFactory
             return cssClass;
         }
 
-        private string GetPrintButtonCssClass()
+        private string GetPrintButtonIconCssClass()
         {
-            var cssClass = this.PrintButtonCssClass;
+            string cssClass = this.PrintButtonIconCssClass;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("PrintButtonCssClass");
+                cssClass = ConfigurationHelper.GetScrudParameter("PrintButtonIconCssClass");
             }
 
             return cssClass;
@@ -277,7 +277,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private string GetSaveButtonCssClass()
         {
-            var cssClass = this.SaveButtonCssClass;
+            string cssClass = this.SaveButtonCssClass;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
@@ -287,13 +287,13 @@ namespace MixERP.Net.WebControls.ScrudFactory
             return cssClass;
         }
 
-        private string GetSelectButtonCssClass()
+        private string GetSelectButtonIconCssClass()
         {
-            var cssClass = this.SelectButtonCssClass;
+            string cssClass = this.SelectButtonIconCssClass;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("SelectButtonCssClass");
+                cssClass = ConfigurationHelper.GetScrudParameter("SelectButtonIconCssClass");
             }
 
             return cssClass;
@@ -301,7 +301,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private string GetSuccessCssClass()
         {
-            var cssClass = this.SuccessCssClass;
+            string cssClass = this.SuccessCssClass;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
@@ -313,7 +313,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private string GetTitleLabelCssClass()
         {
-            var cssClass = this.TitleLabelCssClass;
+            string cssClass = this.TitleLabelCssClass;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
@@ -325,7 +325,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private string GetUpdateProgressSpinnerImageCssClass()
         {
-            var cssClass = this.UpdateProgressSpinnerImageCssClass;
+            string cssClass = this.UpdateProgressSpinnerImageCssClass;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
@@ -337,7 +337,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private string GetUpdateProgressTemplateCssClass()
         {
-            var cssClass = this.UpdateProgressTemplateCssClass;
+            string cssClass = this.UpdateProgressTemplateCssClass;
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {

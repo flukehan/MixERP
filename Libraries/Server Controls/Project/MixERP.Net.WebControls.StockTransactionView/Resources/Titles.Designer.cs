@@ -169,6 +169,15 @@ namespace MixERP.Net.WebControls.StockTransactionView.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select.
+        /// </summary>
+        internal static string Select {
+            get {
+                return ResourceManager.GetString("Select", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Statement Reference.
         /// </summary>
         internal static string StatementReference {
