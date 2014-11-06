@@ -18,7 +18,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.TransactionChecklist;
 using System;
 using System.Web.UI.WebControls;
 
@@ -30,10 +29,6 @@ namespace MixERP.Net.FrontEnd.Site.Account
 
         protected void Page_Init(object sender, EventArgs e)
         {
-            using (TransactionChecklistForm checklist = new TransactionChecklistForm())
-            {
-                Placeholder1.Controls.Add(checklist);
-            }
         }
 
         //private void EmailReportLinkButton_Click(object sender, EventArgs e)

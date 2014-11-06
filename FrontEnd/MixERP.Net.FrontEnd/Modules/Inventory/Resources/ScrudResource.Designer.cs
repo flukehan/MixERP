@@ -448,6 +448,24 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Currency Name.
+        /// </summary>
+        internal static string currency_name {
+            get {
+                return ResourceManager.GetString("currency_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Currency Symbol.
+        /// </summary>
+        internal static string currency_symbol {
+            get {
+                return ResourceManager.GetString("currency_symbol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date Of Birth.
         /// </summary>
         internal static string date_of_birth {
@@ -520,6 +538,33 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Frequency Code.
+        /// </summary>
+        internal static string frequency_code {
+            get {
+                return ResourceManager.GetString("frequency_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Frequency Id.
+        /// </summary>
+        internal static string frequency_id {
+            get {
+                return ResourceManager.GetString("frequency_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Frequency Name.
+        /// </summary>
+        internal static string frequency_name {
+            get {
+                return ResourceManager.GetString("frequency_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to GL Head.
         /// </summary>
         internal static string gl_head {
@@ -543,6 +588,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         internal static string hot_item {
             get {
                 return ResourceManager.GetString("hot_item", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hundredth Name.
+        /// </summary>
+        internal static string hundredth_name {
+            get {
+                return ResourceManager.GetString("hundredth_name", resourceCulture);
             }
         }
         

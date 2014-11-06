@@ -39,15 +39,12 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
                 scrud.Table = "items";
                 scrud.ViewSchema = "core";
                 scrud.View = "items_scrud_view";
-
-                scrud.GridViewWidth = 3500;
-
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
                 scrud.UseDisplayViewsAsParents = true;
 
                 scrud.Text = Titles.Items;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (ItemsPopup));
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(ItemsPopup));
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }

@@ -31,7 +31,7 @@ namespace MixERP.Net.WebControls.PartyControl
             {
                 using (HtmlGenericControl fields = ControlHelper.GetGenericControl("div", "inline fields"))
                 {
-                    using (HtmlGenericControl partyCodeField = ControlHelper.GetGenericControl(@"div", @"field"))
+                    using (HtmlGenericControl partyCodeField = ControlHelper.GetGenericControl(@"div", @"small field"))
                     {
                         using (Literal partyDropDownListLabelLiteral = new Literal())
                         {
@@ -39,8 +39,6 @@ namespace MixERP.Net.WebControls.PartyControl
 
                             using (HtmlInputText partyCodeTextBox = ControlHelper.GetInputText(@"PartyCodeTextBox", string.Empty))
                             {
-                                partyCodeTextBox.Style.Add(@"width", @"100px");
-
                                 partyCodeField.Controls.Add(partyDropDownListLabelLiteral);
                                 partyCodeField.Controls.Add(partyCodeTextBox);
                             }
@@ -49,7 +47,7 @@ namespace MixERP.Net.WebControls.PartyControl
                         }
                     }
 
-                    using (HtmlGenericControl partyDropDownListField = ControlHelper.GetGenericControl("div", "field"))
+                    using (HtmlGenericControl partyDropDownListField = ControlHelper.GetGenericControl("div", "medium field"))
                     {
                         using (HtmlSelect partyDropDownList = ControlHelper.GetSelect(@"PartyDropDownList", string.Empty))
                         {

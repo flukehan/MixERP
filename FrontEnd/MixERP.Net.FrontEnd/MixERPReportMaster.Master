@@ -6,6 +6,7 @@
 <head runat="server">
     <title>MixERP Report</title>
     <meta http-equiv="X-UA-Compatible" content="IE=9" />
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css' />
     <asp:PlaceHolder runat="server">
         <script src="<% = MixERP.Net.Common.PageUtility.ResolveAbsoluteUrl(this.Page, "/Scripts/jquery-1.9.1.js") %>"></script>
         <script src="<% = MixERP.Net.Common.PageUtility.ResolveAbsoluteUrl(this.Page, "/Scripts/mixerp.js") %>"></script>

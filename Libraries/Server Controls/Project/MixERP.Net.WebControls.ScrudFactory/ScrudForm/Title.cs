@@ -44,6 +44,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
         private void AddDescription(Panel p)
         {
             this.descriptionLabel = new Label();
+            this.descriptionLabel.Attributes.Add("style", "display:block;");
             p.Controls.Add(this.descriptionLabel);
         }
 

@@ -34,11 +34,9 @@ namespace MixERP.Net.FrontEnd.General
                 selector.ID = "ScrudSelector";
                 selector.TopPanelCssClass = "vpad16";
                 selector.TopPanelTableCssClass = "valignmiddle";
-                selector.FilterDropDownListCssClass = "form-control input-sm pad-right";
-                selector.FilterTextBoxCssClass = "form-control input-sm";
-                selector.ButtonCssClass = "btn btn-default btn-sm";
-                selector.GridViewCssClass = "table table-bordered table-hover";
-                selector.GridViewPagerCssClass = "gridpager";
+                selector.ButtonCssClass = "ui positive button";
+                selector.GridViewCssClass = "ui celled table segment";
+                selector.GridViewPagerCssClass = "ui menu";
                 selector.GridViewRowCssClass = "";
                 selector.GridViewAlternateRowCssClass = "alt";
                 selector.ResourceAssembly = this.GetAssembly();

@@ -162,7 +162,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
         if (!match) {
             var html = "<tr class='grid2-row'><td>" + tranType + "</td><td>" + storeName + "</td><td>" + itemCode + "</td><td>" + itemName + "</td><td>" + unitName + "</td><td class='text-right'>" + quantity + "</td>"
-                + "</td><td><span class='glyphicon glyphicon-remove-circle pointer span-icon' onclick='removeRow($(this));'></span><span class='glyphicon glyphicon-ok-sign pointer span-icon' onclick='toggleDanger($(this));'></span><span class='glyphicon glyphicon glyphicon-thumbs-up pointer span-icon' onclick='toggleSuccess($(this));'></span></td></tr>";
+                + "</td><td><a class='pointer' onclick='removeRow($(this));'><i class='ui delete icon'></i></a><a class='pointer' onclick='toggleDanger($(this));'><i class='ui pointer check mark icon'></a></i><a class='pointer' onclick='toggleSuccess($(this));'><i class='ui pointer thumbs up icon'></i></a></td></tr>";
             transferGridView.find("tr:last").before(html);
         }
     };
@@ -179,6 +179,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         var referenceNumber = referenceNumberInputText.val();
         var statementReference = statementReferenceTextArea.val();
         var tableData = tableToJSON(transferGridView);
+
+        alert(JSON.stringify(tableData));
 
         var ajaxSaveTransfer = SaveTransfer(valueDate, referenceNumber, statementReference, tableData);
 

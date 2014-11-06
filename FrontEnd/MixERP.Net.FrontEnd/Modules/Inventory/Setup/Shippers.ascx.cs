@@ -38,7 +38,6 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
                 scrud.Table = "shippers";
                 scrud.ViewSchema = "core";
                 scrud.View = "shippers_scrud_view";
-                scrud.GridViewWidth = 5000;
 
                 //The following fields will be automatically generated on the database server.
                 scrud.Exclude = "shipper_code, shipper_name";
@@ -48,7 +47,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
                 scrud.SelectedValues = GetSelectedValues();
 
                 scrud.Text = Titles.Shippers;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (Shippers));
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(Shippers));
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }

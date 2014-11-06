@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.Common;
 using MixERP.Net.Common.Models.Transactions;
 using System;
 using System.Collections.ObjectModel;
@@ -31,15 +32,38 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [ToolboxItem(false)]
     [ScriptService]
-    public class Transfer : System.Web.Services.WebService
+    public class Transfer : WebService
     {
         [WebMethod(EnableSession = true)]
         public long Save(DateTime valueDate, string referenceNumber, string statementReference, string data)
         {
-            JavaScriptSerializer js = new JavaScriptSerializer();
-            Collection<StockTransferModel> collection = js.Deserialize<Collection<StockTransferModel>>(data);
+            Collection<StockTransferModel> collection = this.GetModels(data);
 
             return 0;
+        }
+
+        private Collection<StockTransferModel> GetModels(string json)
+        {
+            Collection<StockTransferModel> models = new Collection<StockTransferModel>();
+
+            JavaScriptSerializer jss = new JavaScriptSerializer();
+            dynamic result = jss.Deserialize<dynamic>(json);
+
+            foreach (var item in result)
+            {
+                StockTransferModel model = new StockTransferModel();
+
+                model.TransferType = Conversion.TryCastString(item[0]);
+                model.StoreName = Conversion.TryCastString(item[1]);
+                model.ItemCode = Conversion.TryCastString(item[2]);
+                model.ItemName = Conversion.TryCastString(item[3]);
+                model.UnitName = Conversion.TryCastString(item[4]);
+                model.Quantity = Conversion.TryCastInteger(item[5]);
+
+                models.Add(model);
+            }
+
+            return models;
         }
     }
 }

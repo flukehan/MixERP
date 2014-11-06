@@ -573,12 +573,6 @@
     <Content Include="Resource\Temp\Images\index.html" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\ajax-file-upload.js" />
-    <Content Include="Scripts\bootstrap\css\bootstrap-theme.css" />
-    <Content Include="Scripts\bootstrap\css\bootstrap-theme.min.css" />
-    <Content Include="Scripts\bootstrap\css\bootstrap.css" />
-    <Content Include="Scripts\bootstrap\css\bootstrap.min.css" />
-    <Content Include="Scripts\bootstrap\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Scripts\bootstrap\js\bootstrap.min.js" />
     <Content Include="Scripts\colorbox\colorbox.css" />
     <Content Include="Scripts\colorbox\i18n\jquery.colorbox-ar.js" />
     <Content Include="Scripts\colorbox\i18n\jquery.colorbox-bg.js" />
@@ -1125,11 +1119,6 @@
       <DependentUpon>query.min.js</DependentUpon>
     </Content>
     <None Include="bundles\stylesheets\query.css.bundle" />
-    <Content Include="Scripts\bootstrap\css\bootstrap-theme.css.map" />
-    <Content Include="Scripts\bootstrap\css\bootstrap.css.map" />
-    <Content Include="Scripts\bootstrap\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Scripts\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Scripts\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="db\dumps\dump-transactions.bat" />
     <None Include="Properties\PublishProfiles\MixERPPublish.pubxml" />
     <Content Include="Scripts\vakata-jstree\LICENSE-MIT" />

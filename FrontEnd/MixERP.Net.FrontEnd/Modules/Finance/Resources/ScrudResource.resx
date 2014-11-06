@@ -264,4 +264,28 @@
   <data name="to_days" xml:space="preserve">
     <value>To Days</value>
   </data>
+  <data name="account_master_name" xml:space="preserve">
+    <value>Account Master Name</value>
+  </data>
+  <data name="parent_account_code" xml:space="preserve">
+    <value>Parent Account Code</value>
+  </data>
+  <data name="parent_account_name" xml:space="preserve">
+    <value>Parent Account Name</value>
+  </data>
+  <data name="full_name" xml:space="preserve">
+    <value>Full Name</value>
+  </data>
+  <data name="office_name" xml:space="preserve">
+    <value>Office Name</value>
+  </data>
+  <data name="role_name" xml:space="preserve">
+    <value>Role Name</value>
+  </data>
+  <data name="user_id" xml:space="preserve">
+    <value>User Id</value>
+  </data>
+  <data name="user_name" xml:space="preserve">
+    <value>Username</value>
+  </data>
 </root>

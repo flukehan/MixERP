@@ -178,7 +178,7 @@
     <value>Price</value>
   </data>
   <data name="quantity" xml:space="preserve">
-    <value>Quantity</value>
+    <value>Quantityc</value>
   </data>
   <data name="salesperson_bonus_setup_id" xml:space="preserve">
     <value>Salesperson Bonus Setup Id</value>
@@ -233,5 +233,11 @@
   </data>
   <data name="Select" xml:space="preserve">
     <value>Select</value>
+  </data>
+  <data name="frequency_code" xml:space="preserve">
+    <value>Frequency Code</value>
+  </data>
+  <data name="frequency_id" xml:space="preserve">
+    <value>Frequency Id</value>
   </data>
 </root>

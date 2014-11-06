@@ -28,7 +28,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 {
     public partial class ScrudItemSelector
     {
-        protected void FilterDropDownList_DataBound(object sender, EventArgs e)
+        protected void FilterSelectDataBound(object sender, EventArgs e)
         {
             using (var dropDownList = sender as DropDownList)
             {
@@ -58,7 +58,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             using (
                 var table = FormHelper.GetTable(this.GetSchema(), this.GetView(),
-                    this.filterDropDownList.SelectedItem.Value, this.filterTextBox.Text, 10, "1"))
+                    this.filterSelect.SelectedItem.Value, this.filterInputText.Text, 10, "1"))
             {
                 this.searchGridView.DataSource = table;
                 this.searchGridView.DataBind();

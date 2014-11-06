@@ -33,9 +33,9 @@ var uploadButton = $("#UploadButton");
 var warningLabel = $("#WarningLabel");
 
 $(window).load(function () {
-    $('.browse').on('click', function () { // use .live() for older versions of jQuery
-        var counter = this.id.replace("browseButton", "");
-        var targetControlSelector = "#fileUpload" + counter;
+    $('.browse').on('click', function () {
+        var counter = this.id.replace("BrowseButton", "");
+        var targetControlSelector = "#FileUpload" + counter;
 
         $(targetControlSelector).click();
         return false;
@@ -44,19 +44,19 @@ $(window).load(function () {
 
 $(function () {
     $("input:file").change(function () {
-        var counter = this.id.replace("fileUpload", "");
-        var filePathSelector = "#filePath" + counter;
+        var counter = this.id.replace("FileUpload", "");
+        var filePathSelector = "#FilePath" + counter;
         var fileName = $(this).val();
 
         if (fileName) {
             if (validate(fileName)) {
                 $(filePathSelector).html(fileName);
-                $(filePathSelector).removeClass("error-message");
+                $(filePathSelector).removeClass("big error");
                 return;
             }
 
             $(filePathSelector).html(invalidFileLocalized + " " + fileName);
-            $(filePathSelector).addClass("error-message");
+            $(filePathSelector).addClass("big error");
             $(this).val("");
         }
     });
@@ -113,7 +113,7 @@ function resetAttachmentForm() {
     paragraphs.html("");
     comments.val("");
 
-    $("#fileUploads table *").enable();
+    $("#FileUploads table *").enable();
     uploadedFilesHidden.val("");
 };
 
@@ -131,10 +131,10 @@ uploadButton.on("click", function () {
 
                 $(".upload").each(function () {
                     var fileUploadButtonId = $(this).attr("id");
-                    var counter = fileUploadButtonId.replace("fileUpload", "");
-                    var browseButtonSelector = "#browseButton" + counter;
-                    var commentTextBoxSelector = "#commentTextBox" + counter;
-                    var progressBarSelector = "#progress" + counter;
+                    var counter = fileUploadButtonId.replace("FileUpload", "");
+                    var browseButtonSelector = "#BrowseButton" + counter;
+                    var commentTextBoxSelector = "#CommentTextBox" + counter;
+                    var progressBarSelector = "#Progress" + counter;
                     var originalFileName = $(this).val();
 
                     var comment = $(commentTextBoxSelector).val();
@@ -154,7 +154,7 @@ uploadButton.on("click", function () {
                     };
                 });;
 
-                $("#fileUploads table *").disable();
+                $("#FileUploads table *").disable();
             }
         }
     }

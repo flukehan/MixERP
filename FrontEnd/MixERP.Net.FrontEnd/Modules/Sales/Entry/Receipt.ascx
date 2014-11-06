@@ -124,7 +124,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                 <label for="ReferenceNumberInputText">Reference Number</label>
                 <input type="text" id="ReferenceNumberInputText" />
             </div>
-            <div class="form-group">
+            <div class="field">
                 <label for="StatementReferenceTextArea">Statement Reference</label>
                 <textarea id="StatementReferenceTextArea" rows="3"></textarea>
             </div>

@@ -29,7 +29,6 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using FormHelper = MixERP.Net.WebControls.ScrudFactory.Data.FormHelper;
-using LocalizationHelper = MixERP.Net.Common.Helpers.LocalizationHelper;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 {
@@ -49,8 +48,8 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
             using (var table = GetTable(tableSchema, tableName, tableColumn, displayViews, useDisplayViewsAsParent))
             {
                 SetDisplayFields(dropDownList, table, tableSchema, tableName, tableColumn, displayFields);
-                itemSelectorAnchor = GetItemSelector(dropDownList.ClientID, table, itemSelectorPath, tableSchema,
-                    tableName, tableColumn, displayViews, assembly, resourceClassName);
+
+                itemSelectorAnchor = GetItemSelector(dropDownList.ClientID, table, itemSelectorPath, tableSchema, tableName, tableColumn, displayViews, assembly, resourceClassName, label);
             }
 
             SetSelectedValue(dropDownList, tableSchema, tableName, tableColumn, defaultValue, selectedValues);
@@ -125,9 +124,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
         /// <param name="assembly"></param>
         /// <param name="resourceClassName"></param>
         /// <returns></returns>
-        private static HtmlAnchor GetItemSelector(string associatedControlId, DataTable table, string itemSelectorPath,
-            string tableSchema, string tableName, string tableColumn, string displayViews, Assembly assembly,
-            string resourceClassName)
+        private static HtmlAnchor GetItemSelector(string associatedControlId, DataTable table, string itemSelectorPath, string tableSchema, string tableName, string tableColumn, string displayViews, Assembly assembly, string resourceClassName, string columnNameLocalized)
         {
             if (table.Rows.Count.Equals(0) || string.IsNullOrWhiteSpace(displayViews))
             {
@@ -154,9 +151,13 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
                     return null;
                 }
 
-                itemSelectorAnchor.Attributes["class"] =
-                    ConfigurationHelper.GetScrudParameter("ItemSelectorAnchorCssClass");
+                itemSelectorAnchor.Attributes["class"] = ConfigurationHelper.GetScrudParameter("ItemSelectorAnchorCssClass");
+
                 itemSelectorAnchor.Attributes.Add("role", "item-selector");
+
+                itemSelectorAnchor.Attributes.Add("tabindex", "10000");
+                itemSelectorAnchor.Attributes.Add("data-title", columnNameLocalized);
+
                 itemSelectorAnchor.HRef = itemSelectorPath + "?Schema=" + schema + "&View=" + view +
                                           "&AssociatedControlId=" + associatedControlId + "&Assembly=" +
                                           assembly.GetName().Name + "&ResourceClassName=" + resourceClassName;

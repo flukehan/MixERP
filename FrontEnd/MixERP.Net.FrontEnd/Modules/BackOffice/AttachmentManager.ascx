@@ -25,34 +25,31 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         }
     }
 </style>
-<h2>Manage Attachments</h2>
+
+<div class="ui massive teal header">Upload Attachments</div>
 
 <mixerp:Attachment runat="server" ID="AttachmentUserControl" ShowSaveButton="true" />
 
-<h3>View Attachments</h3>
+<div class="ui massive teal header">View Attachments</div>
 
-<div class="row">
-    <ul id="images" class="thumbnails list-unstyled">
-    </ul>
+<div id="images">
 </div>
 
 <!-- Modal -->
-<div class="modal modal-wide fade" id="opener" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title"></h4>
-            </div>
-            <div class="modal-body">
-                <%-- ReSharper disable once Html.Obsolete --%>
-                <center>
-                    <img  alt="" />
-                    <p class="vpad8"></p>
-                </center>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+<div class="ui large modal" id="opener">
+    <i class="close icon"></i>
+    <div class="ui teal header">
+    </div>
+    <div class="content">
+
+        <div class="ui segment">
+            <img src="/" alt="" />
+            <p class="vpad8"></p>
+        </div>
+
+        <div class="actions">
+            <div class="ui teal button">
+                Okay
             </div>
         </div>
     </div>
@@ -80,17 +77,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         var ajaxGetAttachments = getAttachments(book, id);
 
         ajaxGetAttachments.success(function (msg) {
-            images.html("");
-            $.each(msg.d, function (index, item) {
-                var id = item.Id;
-                var comment = item.Comment;
-                var filePath = item.FilePath;
-                var originalFileName = item.OriginalFileName;
-                var addedOn = new Date(parseInt(item.AddedOn.substr(6)));
-                appendImage(id, comment, filePath, originalFileName, addedOn);
-            });
-
-            repaint();
+            LoadImages(msg.d);
         });
 
         ajaxGetAttachments.fail(function (xhr) {
@@ -98,25 +85,67 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         });
     };
 
-    function appendImage(id, comment, filePath, originalFileName, addedOn) {
-        images.append("<li class='col-md-3' id='li" + id + "'>" +
-                        "<div class='thumbnail'>" +
-                        "<center><h5>" + originalFileName + "</h5>" +
-                            "<img src='/Modules/BackOffice/Handlers/ImageHandler.ashx?Path=" + filePath + "&H=300&W=250'  />" +
-                        "<p class='vpad16'>" + comment + "<br />" + addedOn.toLocaleDateString() + ' ' + addedOn.toLocaleTimeString() + "</p>" +
-                        "<div class='vpad8'>" +
-                        "<a class='btn btn-sm btn-success' data-toggle='modal' data-target='#opener' onclick=\"initializeModal('" + filePath + "', '" + originalFileName + "', '" + comment + "');\">View</a>&nbsp;" +
-                        "<a class='btn btn-sm btn-primary' target='_blank' href='" + filePath + "'>Download</a>&nbsp;" +
-                        "<a class='btn btn-sm btn-danger' onclick=\"removeAttachment('" + id + "');\">Delete</a>&nbsp;" +
-                        "</div>" +
-                        "</center>" +
-                        "</div></li>");
+    function LoadImages(model) {
+        images.html("");
+        images.addClass("loading");
+
+        var connectedItems = "";
+
+        for (var i = 0; i < model.length; i++) {
+            mod = (i + 1) % 5;
+
+            if (i === 0) {
+                initializeModal(model[i].FilePath, "", "", true);//Initialize modal to avoid flickering animation
+            };
+
+            if (mod === 1) {
+                connectedItems += '<div class="ui five connected items">';
+            };
+
+            connectedItems += LoadImageGroup(model[i]);
+
+            if (mod === 0 || i === model.length - 1) {
+                connectedItems += "</div>";
+                images.append(connectedItems);
+
+                connectedItems = "";
+            };
+
+            images.removeClass("loading");
+        };
+
+        repaint();
     };
 
-    function initializeModal(filePath, originalFileName, comment) {
-        $('#opener h4').html(originalFileName);
-        $('#opener img').attr('src', '/Modules/BackOffice/Handlers/ImageHandler.ashx?&H=700&W=600&Path=' + filePath);
+    function LoadImageGroup(file) {
+        var imagePath = "/Modules/BackOffice/Handlers/ImageHandler.ashx?Path=" + file.FilePath + "&H=300&W=250";
+
+        var html = '<div class="item">' +
+                        '<div class="image">' + '<img src="' + imagePath + '" />' + '</div>' +
+                        '<div class="content">' +
+                            '<div class="name">' + file.OriginalFileName + '</div>' +
+                            '<div class="description">' + file.Comment + '<br />' + file.AddedOn + '<br />' + '<br />' + '</div>' +
+                            "<a class='ui positive button' data-toggle='modal' data-target='#opener' onclick=\"initializeModal('" + file.FilePath + "', '" + file.OriginalFileName + "', '" + file.Comment + "');\">View</a>&nbsp;" +
+                            "<a class='ui blue button' target='_blank' href='" + file.FilePath + "'>Download</a>&nbsp;" +
+                            "<a class='ui negative button' onclick=\"removeAttachment('" + file.Id + "');\">Delete</a>&nbsp;" +
+                        '</div>' +
+                    '</div>';
+
+        return html;
+    };
+
+    function initializeModal(filePath, originalFileName, comment, initializer) {
+        $('#opener .header').html("<i class='photo icon'></i>" + originalFileName);
+        $('#opener img').attr('src', '/Modules/BackOffice/Handlers/ImageHandler.ashx?&H=538&W=956&Path=' + filePath);
         $('#opener p').html(comment);
+
+        if (initializer) {
+            repaint();
+        };
+
+        if (!initializer) {
+            $("#opener").modal('setting', 'transition', 'vertical flip').modal("show");
+        }
     };
 
     function removeAttachment(id) {

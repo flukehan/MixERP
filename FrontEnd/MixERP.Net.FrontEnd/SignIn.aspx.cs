@@ -109,8 +109,7 @@ namespace MixERP.Net.FrontEnd
 
             if (!results)
             {
-                this.MessageLiteral.Text = @"<span class='error-message'>" + Warnings.UserIdOrPasswordIncorrect +
-                                           @"</span>";
+                this.MessageLiteral.Text = @"<span class='big error'>" + Warnings.UserIdOrPasswordIncorrect + @"</span>";
             }
         }
 

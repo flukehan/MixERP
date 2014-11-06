@@ -39,6 +39,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 @search-text-color: #dbb7ed;
 @search-border-hover-color: #754092;
 
+html, body, form, table, div, span, p, option, ul, li, ol, button, a, input, select, table, tr, th, td {
+    font-family: "Roboto", 'Segoe UI', "Open Sans",Helvetica,Arial,sans-serif;
+}
+
 html, body, form {
     height: 100%;
     font-size: 12px;
@@ -377,7 +381,6 @@ input[readonly], input[disabled], textarea[readonly], textarea[disabled], select
     padding: 8px;
 }
 
-/*Bootstrap Override Start*/
 a {
     outline: none;
     color: @title-color;
@@ -496,7 +499,7 @@ select option {
     margin-top: 9px !important;
 }
 
-.form input[type=text]:not(.dirty):focus, .form select:not(.dirty):focus, .form textarea:not(.dirty):focus {
+.field:not(.error) input[type=password]:focus, .field:not(.error) .form input[type=text]:focus, .field:not(.error) .form select:focus, .field:not(.error) .form textarea:focus {
     border: 1px solid #4195fc !important;
     -webkit-border-radius: 4px !important;
     -moz-border-radius: 4px !important;
@@ -528,4 +531,46 @@ select option {
 
 .block {
     display: block;
+}
+
+.inline.fields .small.field input,
+.inline.fields .small.field select {
+    width: 100px !important;
+}
+
+.inline.fields .medium.field input,
+.inline.fields .medium.field select {
+    width: 200px !important;
+}
+
+table.segment tr td a.pointer {
+    color: #333333 !important;
+    padding: 0 4px;
+}
+
+table.segment tr td a.pointer .icon:hover {
+    color: #009fda;
+    -moz-transform: scale(2);
+    -ms-transform: scale(2);
+    -o-transform: scale(2);
+    -webkit-transform: scale(2);
+    transform: scale(2);
+}
+
+table.segment tr.negative td a.pointer .icon:hover {
+    color: #cd2929;
+    -moz-transform: scale(2);
+    -ms-transform: scale(2);
+    -o-transform: scale(2);
+    -webkit-transform: scale(2);
+    transform: scale(2);
+}
+
+table.segment tr.positive td a.pointer .icon:hover {
+    color: #119000;
+    -moz-transform: scale(2);
+    -ms-transform: scale(2);
+    -o-transform: scale(2);
+    -webkit-transform: scale(2);
+    transform: scale(2);
 }

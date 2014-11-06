@@ -19,12 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using MixERP.Net.Common;
 using MixERP.Net.Common.Models.Transactions;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MixERP.Net.TransactionGovernor.Verification
 {
@@ -32,6 +27,11 @@ namespace MixERP.Net.TransactionGovernor.Verification
     {
         public static VerificationModel GetVerificationStatus(long transactionMasterId)
         {
+            if (transactionMasterId <= 0)
+            {
+                return null;
+            }
+
             VerificationModel model = new VerificationModel();
             DataRow row = Data.Verification.VerificationStatus.GetVerificationStatusDataRow(transactionMasterId);
 

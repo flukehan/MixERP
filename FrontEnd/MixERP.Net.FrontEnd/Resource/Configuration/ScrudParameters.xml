@@ -32,7 +32,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <add key="DeleteButtonIconCssClass" value="" />
     <add key="PrintButtonIconCssClass" value="" />
 
-    <add key="DescriptionCssClass" value="lead" />
+    <add key="DescriptionCssClass" value="ui large blue message" />
     <add key="ErrorCssClass" value="error-message" />
     <add key="ExpressionSeparator" value="-->" />
     <add key="FailiureCssClass" value="failure" />
@@ -44,8 +44,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <add key="GridPanelCssClass" value="segment" />
     <add key="GridViewAlternateRowCssClass" value="" />
     <add key="GridViewCssClass" value="ui celled table segment" />
-    <add key="GridViewDefaultWidth" value="1400" />
-    <add key="GridPanelDefaultWidth" value="1440px" />
+    <add key="GridViewDefaultWidth" value="100%" />
+    <add key="GridPanelDefaultWidth" value="100px" />
     <add key="GridPanelStyle" value="padding:2px;overflow:auto;" />
 
     <add key="GridViewRowCssClass" value="gridview-row pointer" />
@@ -63,7 +63,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <add key="ButtonCssClass" value="small ui button" />
     <add key="SaveButtonCssClass" value="small ui button" />
 
-    <add key="SuccessCssClass" value="positive" />
+    <add key="SuccessCssClass" value="ui compact large green message" />
     <add key="TemplatePath" value="~/Reports/Print.html" />
     <add key="TempMediaPath" value="~/Media/Temp" />
     <add key="TitleLabelCssClass" value="title" />

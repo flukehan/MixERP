@@ -48,8 +48,8 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             using (var table = TableHelper.GetTable(this.GetSchema(), this.GetView(), ""))
             {
-                this.filterDropDownList.DataSource = table;
-                this.filterDropDownList.DataBind();
+                this.filterSelect.DataSource = table;
+                this.filterSelect.DataBind();
             }
         }
     }

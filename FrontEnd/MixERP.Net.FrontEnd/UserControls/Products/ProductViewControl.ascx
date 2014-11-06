@@ -97,7 +97,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 <div id="FilterDiv" class="ui segment">
     <div class="ui form" style="margin-left: 8px;">
         <div class="inline fields">
-            <div class="field">
+            <div class="small field">
                 <mixerp:DateTextBox ID="DateFromDateTextBox" runat="server"
                     CssClass="date form-control input-sm"
                     Mode="FiscalYearStartDate"
@@ -105,14 +105,14 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                 <i class="icon calendar" onclick=" $('#DateFromDateTextBox').datepicker('show'); "></i>
             </div>
 
-            <div class="field">
+            <div class="small field">
                 <mixerp:DateTextBox ID="DateToDateTextBox" runat="server"
                     CssClass="date form-control input-sm"
                     Mode="MonthEndDate" Required="true" />
                 <i class="icon calendar" onclick=" $('#DateToDateTextBox').datepicker('show'); "></i>
             </div>
 
-            <div class="field">
+            <div class="small field">
                 <asp:TextBox ID="OfficeTextBox" runat="server" CssClass="form-control input-sm" placeholder="Office" />
             </div>
 
@@ -120,23 +120,22 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                 <asp:TextBox ID="PartyTextBox" runat="server" CssClass="form-control input-sm" placeholder="Party" />
             </div>
 
-            <div id="PriceTypeDiv" runat="server" class="field">
+            <div id="PriceTypeDiv" runat="server" class="small field">
                 <asp:TextBox ID="PriceTypeTextBox" runat="server" CssClass="form-control input-sm" placeholder="Price Type" />
             </div>
-            <div class="field">
+            <div class="small field">
                 <asp:TextBox ID="UserTextBox" runat="server" CssClass="form-control input-sm" placeholder="User" />
             </div>
 
-            <div class="field">
+            <div class="small field">
                 <asp:TextBox ID="ReferenceNumberTextBox" runat="server" CssClass="form-control input-sm" placeholder="Reference Number" />
             </div>
 
             <div class="field">
                 <asp:TextBox ID="StatementReferenceTextBox" runat="server" CssClass="form-control input-sm" placeholder="Statement Reference" />
             </div>
-            <div class="field">
-                <asp:Button ID="ShowButton" runat="server" Text="Show" CssClass="blue small ui button" OnClick="ShowButton_Click" />
-            </div>
+
+            <asp:Button ID="ShowButton" runat="server" Text="Show" CssClass="blue ui button" OnClick="ShowButton_Click" />
         </div>
     </div>
 </div>

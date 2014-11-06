@@ -223,6 +223,24 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Frequency Code.
+        /// </summary>
+        internal static string frequency_code {
+            get {
+                return ResourceManager.GetString("frequency_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Frequency Id.
+        /// </summary>
+        internal static string frequency_id {
+            get {
+                return ResourceManager.GetString("frequency_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Frequency Name.
         /// </summary>
         internal static string frequency_name {
@@ -277,7 +295,7 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quantity.
+        ///   Looks up a localized string similar to Quantityc.
         /// </summary>
         internal static string quantity {
             get {

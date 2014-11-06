@@ -29,17 +29,16 @@ var initializeItemSelector = function () {
         var href = $(this).attr("data-url");
         var title = $(this).attr("data-title");
 
-        $.get(modalTemplatePath, function () { }).done(function (data) {
+        $.get(modalTemplatePath + "?v=8", function () { }).done(function (data) {
             var itemSelectorDiv = $(data);
-
             if (!isNullOrWhiteSpace(title)) {
-                itemSelectorDiv.find(".modal-title").html(title);
+                itemSelectorDiv.find(".header").html("<i class='help basic icon'></i>" + title);
             };
 
             $("body").append(itemSelectorDiv);
 
-            itemSelectorDiv.find(".modal-body").html('<iframe width="100%" height="100%" frameborder="0" allowtransparency="true" src="' + href + '"></iframe>');
-            itemSelectorDiv.addClass("item-selector-modal");
+            itemSelectorDiv.find(".content").html('<div class="ui segment"><iframe width="100%" height="400px" frameborder="0" allowtransparency="true" src="' + href + '"></iframe></div>');
+            //itemSelectorDiv.addClass("item-selector-modal");
 
             itemSelectorDiv.modal('show');
         });

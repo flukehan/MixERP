@@ -31,7 +31,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 {
     public static class ScrudFactoryHelper
     {
-        public static void AddDropDownList(HtmlTable htmlTable, string p, DropDownList dropDownList, HtmlAnchor itemSelectorAnchor, RequiredFieldValidator required)
+        public static void AddDropDownList(HtmlTable htmlTable, string label, DropDownList dropDownList, HtmlAnchor itemSelectorAnchor, RequiredFieldValidator required)
         {
             if (htmlTable == null)
             {
@@ -49,7 +49,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
                 {
                     using (var labelLiteral = new Literal())
                     {
-                        labelLiteral.Text = string.Format(Thread.CurrentThread.CurrentCulture, "<label for='{0}'>{1}</label>", dropDownList.ID, p);
+                        labelLiteral.Text = string.Format(Thread.CurrentThread.CurrentCulture, "<label for='{0}'>{1}</label>", dropDownList.ID, label);
                         labelCell.Attributes.Add("class", "label-cell");
 
                         labelCell.Controls.Add(labelLiteral);

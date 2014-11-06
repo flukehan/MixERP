@@ -39,9 +39,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
                 scrud.ViewSchema = "core";
                 scrud.View = "party_scrud_view";
 
-                scrud.GridViewWidth = 4000;
-
-                //Party code will be automtically generated on the database.
+                //Party code will be automatically generated on the database.
                 scrud.Exclude = "party_code, account_id";
 
                 scrud.DisplayFields = GetDisplayFields();

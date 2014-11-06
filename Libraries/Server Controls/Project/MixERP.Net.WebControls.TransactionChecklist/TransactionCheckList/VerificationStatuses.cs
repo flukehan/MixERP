@@ -35,6 +35,12 @@ namespace MixERP.Net.WebControls.TransactionChecklist
             }
 
             long transactionMasterId = Conversion.TryCastLong(tranId);
+
+            if (transactionMasterId <= 0)
+            {
+                return;
+            }
+
             VerificationModel model = Verification.GetVerificationStatus(transactionMasterId);
 
             switch (model.Verification)

@@ -67,6 +67,15 @@ namespace MixERP.Net.FrontEnd {
         protected global::System.Web.UI.WebControls.TextBox PasswordTextBox;
         
         /// <summary>
+        /// RememberMe control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox RememberMe;
+        
+        /// <summary>
         /// SelectBranchLiteral control.
         /// </summary>
         /// <remarks>
@@ -103,13 +112,13 @@ namespace MixERP.Net.FrontEnd {
         protected global::System.Web.UI.WebControls.DropDownList LanguageDropDownList;
         
         /// <summary>
-        /// RememberMe control.
+        /// MessageLiteral control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox RememberMe;
+        protected global::System.Web.UI.WebControls.Literal MessageLiteral;
         
         /// <summary>
         /// SignInButton control.
@@ -128,14 +137,5 @@ namespace MixERP.Net.FrontEnd {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton CannotAccessAccountLinkButton;
-        
-        /// <summary>
-        /// MessageLiteral control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal MessageLiteral;
     }
 }

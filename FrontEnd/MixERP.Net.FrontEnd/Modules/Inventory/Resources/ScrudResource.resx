@@ -507,4 +507,22 @@
   <data name="stock_details_unit_chk" xml:space="preserve">
     <value>Invalid unit provided.</value>
   </data>
+  <data name="currency_name" xml:space="preserve">
+    <value>Currency Name</value>
+  </data>
+  <data name="currency_symbol" xml:space="preserve">
+    <value>Currency Symbol</value>
+  </data>
+  <data name="frequency_code" xml:space="preserve">
+    <value>Frequency Code</value>
+  </data>
+  <data name="frequency_id" xml:space="preserve">
+    <value>Frequency Id</value>
+  </data>
+  <data name="frequency_name" xml:space="preserve">
+    <value>Frequency Name</value>
+  </data>
+  <data name="hundredth_name" xml:space="preserve">
+    <value>Hundredth Name</value>
+  </data>
 </root>

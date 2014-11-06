@@ -59,12 +59,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
         {
             if (this.GridViewWidth.Value.Equals(0))
             {
-                var width = Conversion.TryCastInteger(ConfigurationHelper.GetScrudParameter("GridViewDefaultWidth"));
-
-                if (width.Equals(0))
-                {
-                    return 1000;
-                }
+                var width = Conversion.TryCastUnit(ConfigurationHelper.GetScrudParameter("GridViewDefaultWidth"));
 
                 return width;
             }
@@ -78,6 +73,8 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             this.BindGridView();
             this.formGridView.Width = this.GetGridViewWidth();
+            this.formGridView.Attributes.Add("style", "white-space: nowrap;");
+
             this.pager.RecordCount = FormHelper.GetTotalRecords(this.ViewSchema, this.View);
             this.pager.PageSize = 10;
 

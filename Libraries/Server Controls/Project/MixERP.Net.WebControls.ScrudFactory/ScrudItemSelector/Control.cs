@@ -18,8 +18,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
-using System.Security.Permissions;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -29,8 +27,8 @@ namespace MixERP.Net.WebControls.ScrudFactory
     public partial class ScrudItemSelector : CompositeControl
     {
         public Panel container;
-        public DropDownList filterDropDownList;
-        public TextBox filterTextBox;
+        public DropDownList filterSelect;
+        public TextBox filterInputText;
         public Button goButton;
         public GridView searchGridView;
         private bool disposed;
@@ -63,17 +61,17 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         this.container = null;
                     }
 
-                    if (this.filterDropDownList != null)
+                    if (this.filterSelect != null)
                     {
-                        this.filterDropDownList.DataBound -= this.FilterDropDownList_DataBound;
-                        this.filterDropDownList.Dispose();
-                        this.filterDropDownList = null;
+                        this.filterSelect.DataBound -= this.FilterSelectDataBound;
+                        this.filterSelect.Dispose();
+                        this.filterSelect = null;
                     }
 
-                    if (this.filterTextBox != null)
+                    if (this.filterInputText != null)
                     {
-                        this.filterTextBox.Dispose();
-                        this.filterTextBox = null;
+                        this.filterInputText.Dispose();
+                        this.filterInputText = null;
                     }
 
                     if (this.searchGridView != null)

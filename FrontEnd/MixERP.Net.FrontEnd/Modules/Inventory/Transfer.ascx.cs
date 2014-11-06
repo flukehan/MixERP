@@ -42,115 +42,86 @@ namespace MixERP.Net.Core.Modules.Inventory
         {
             this.CreateHeader();
             this.AddRuler();
-            using (HtmlGenericControl shadeDiv = new HtmlGenericControl())
+            using (HtmlGenericControl form = new HtmlGenericControl())
             {
-                shadeDiv.TagName = "div";
-                shadeDiv.Attributes.Add("class", "shade");
-                shadeDiv.Attributes.Add("style", "width:300px");
+                form.TagName = "div";
+                form.Attributes.Add("class", "ui form");
 
-                using (HtmlGenericControl rowDiv = this.GetRow())
+                using (HtmlGenericControl fields = this.GetFields())
                 {
-                    this.AddDateTextBox(rowDiv);
-                    this.AddReferenceNumberTextBox(rowDiv);
-                    shadeDiv.Controls.Add(rowDiv);
+                    this.AddDateTextBox(fields);
+                    this.AddReferenceNumberTextBox(fields);
+                    form.Controls.Add(fields);
                 }
-                this.Placeholder1.Controls.Add(shadeDiv);
+                this.Placeholder1.Controls.Add(form);
             }
         }
 
-        private HtmlGenericControl GetRow()
+        private HtmlGenericControl GetFields()
         {
             using (HtmlGenericControl row = new HtmlGenericControl())
             {
                 row.TagName = "div";
-                row.Attributes.Add("class", "row");
-                row.Attributes.Add("style", "margin-left: 2px;");
+                row.Attributes.Add("class", "inline fields");
 
                 return row;
             }
         }
 
-        private void AddDateTextBox(HtmlGenericControl container)
+        private void AddDateTextBox(HtmlGenericControl fields)
         {
-            using (HtmlGenericControl columnDiv = this.GetColumn(5))
+            using (HtmlGenericControl field = this.GetField())
             {
-                using (HtmlGenericControl formGroup = this.GetFormGroup())
+                using (HtmlGenericControl label = new HtmlGenericControl())
                 {
-                    using (HtmlGenericControl label = new HtmlGenericControl())
-                    {
-                        label.TagName = "label";
-                        label.Attributes.Add("for", "DateTextBox");
-                        label.InnerText = Titles.ValueDate;
-                        formGroup.Controls.Add(label);
-                    }
-
-                    using (DateTextBox dateTextBox = new DateTextBox())
-                    {
-                        dateTextBox.ID = "ValueDateTextBox";
-                        dateTextBox.Mode = Frequency.Today;
-                        dateTextBox.CssClass = "date form-control input-sm";
-                        formGroup.Controls.Add(dateTextBox);
-                    }
-
-                    columnDiv.Controls.Add(formGroup);
+                    label.TagName = "label";
+                    label.Attributes.Add("for", "ValueDateTextBox");
+                    label.InnerText = Titles.ValueDate;
+                    field.Controls.Add(label);
                 }
-                container.Controls.Add(columnDiv);
+
+                using (DateTextBox dateTextBox = new DateTextBox())
+                {
+                    dateTextBox.ID = "ValueDateTextBox";
+                    dateTextBox.Mode = Frequency.Today;
+                    field.Controls.Add(dateTextBox);
+                }
+
+                fields.Controls.Add(field);
             }
         }
 
-        private HtmlGenericControl GetFormGroup()
+        private HtmlGenericControl GetField()
         {
             using (HtmlGenericControl formGroup = new HtmlGenericControl())
             {
                 formGroup.TagName = "div";
-                formGroup.Attributes.Add("class", "form-group");
+                formGroup.Attributes.Add("class", "small field");
 
                 return formGroup;
             }
         }
 
-        private HtmlGenericControl GetColumn(int colSpan)
+        private void AddReferenceNumberTextBox(HtmlGenericControl fields)
         {
-            using (HtmlGenericControl column = new HtmlGenericControl())
+            using (HtmlGenericControl field = this.GetField())
             {
-                if (colSpan == 0)
+                using (HtmlGenericControl label = new HtmlGenericControl())
                 {
-                    colSpan = 12;
+                    label.TagName = "label";
+                    label.Attributes.Add("for", "ReferenceNumberInputText");
+                    label.InnerText = Titles.RefererenceNumberAbbreviated;
+                    field.Controls.Add(label);
                 }
 
-                column.TagName = "div";
-                column.Attributes.Add("class", "col-xs-" + colSpan + " pad4");
-
-                return column;
-            }
-        }
-
-        private void AddReferenceNumberTextBox(HtmlGenericControl container)
-        {
-            using (HtmlGenericControl columnDiv = this.GetColumn(5))
-            {
-                using (HtmlGenericControl formGroup = this.GetFormGroup())
+                using (HtmlInputText referenceNumberInputText = new HtmlInputText())
                 {
-                    using (HtmlGenericControl label = new HtmlGenericControl())
-                    {
-                        label.TagName = "label";
-                        label.Attributes.Add("for", "ReferenceNumberInputText");
-                        label.InnerText = Titles.RefererenceNumberAbbreviated;
-                        formGroup.Controls.Add(label);
-                    }
+                    referenceNumberInputText.ID = "ReferenceNumberInputText";
+                    referenceNumberInputText.MaxLength = 24;
 
-                    using (HtmlInputText referenceNumberInputText = new HtmlInputText())
-                    {
-                        referenceNumberInputText.ID = "ReferenceNumberInputText";
-                        referenceNumberInputText.Attributes.Add("class", "form-control input-sm");
-                        referenceNumberInputText.MaxLength = 24;
-
-                        formGroup.Controls.Add(referenceNumberInputText);
-                    }
-
-                    columnDiv.Controls.Add(formGroup);
+                    field.Controls.Add(referenceNumberInputText);
                 }
-                container.Controls.Add(columnDiv);
+                fields.Controls.Add(field);
             }
         }
 
@@ -160,7 +131,7 @@ namespace MixERP.Net.Core.Modules.Inventory
             {
                 errorLabel.TagName = "div";
                 errorLabel.ID = "ErrorLabel";
-                errorLabel.Attributes.Add("class", "error");
+                errorLabel.Attributes.Add("class", "big error vpad16");
                 this.Placeholder1.Controls.Add(errorLabel);
             }
         }
@@ -177,24 +148,23 @@ namespace MixERP.Net.Core.Modules.Inventory
 
         private void AddRuler()
         {
-            using (HtmlGenericControl ruler = new HtmlGenericControl())
+            using (HtmlGenericControl divider = new HtmlGenericControl("div"))
             {
-                ruler.TagName = "hr";
-                this.Placeholder1.Controls.Add(ruler);
+                divider.Attributes.Add("class", "ui divider");
+                this.Placeholder1.Controls.Add(divider);
             }
         }
 
         private void CreateGridPanel()
         {
-            using (HtmlGenericControl gridPanel = new HtmlGenericControl())
+            using (HtmlGenericControl gridPanel = new HtmlGenericControl("div"))
             {
-                gridPanel.TagName = "div";
                 gridPanel.Attributes.Add("style", "width: 1100px;");
 
                 using (HtmlTable table = new HtmlTable())
                 {
                     table.ID = "TransferGridView";
-                    table.Attributes.Add("class", "table table-hover");
+                    table.Attributes.Add("class", "ui table form segment");
                     table.Rows.Add(this.GetHeaderRow());
                     table.Rows.Add(this.GetControlRow());
 
@@ -209,22 +179,27 @@ namespace MixERP.Net.Core.Modules.Inventory
         {
             using (HtmlTableRow row = new HtmlTableRow())
             {
-                row.Cells.Add(this.GetHeaderCell(Titles.Type, "TransactionTypeSelect"));
-                row.Cells.Add(this.GetHeaderCell(Titles.Store, "StoreSelect"));
-                row.Cells.Add(this.GetHeaderCell(Titles.ItemCode, "ItemCodeInputText"));
-                row.Cells.Add(this.GetHeaderCell(Titles.ItemName, "ItemSelect"));
-                row.Cells.Add(this.GetHeaderCell(Titles.Unit, "UnitSelect"));
-                row.Cells.Add(this.GetHeaderCell(Titles.Quantity, "QuantityInputText"));
-                row.Cells.Add(this.GetHeaderCell(Titles.Action, null));
+                row.Cells.Add(this.GetHeaderCell(Titles.Type, "TransactionTypeSelect", false));
+                row.Cells.Add(this.GetHeaderCell(Titles.Store, "StoreSelect", false));
+                row.Cells.Add(this.GetHeaderCell(Titles.ItemCode, "ItemCodeInputText", false));
+                row.Cells.Add(this.GetHeaderCell(Titles.ItemName, "ItemSelect", false));
+                row.Cells.Add(this.GetHeaderCell(Titles.Unit, "UnitSelect", false));
+                row.Cells.Add(this.GetHeaderCell(Titles.Quantity, "QuantityInputText", true));
+                row.Cells.Add(this.GetHeaderCell(Titles.Action, null, false));
 
                 return row;
             }
         }
 
-        private HtmlTableCell GetHeaderCell(string innerText, string AssociatedControlId)
+        private HtmlTableCell GetHeaderCell(string innerText, string AssociatedControlId, bool alignRight)
         {
             using (HtmlTableCell header = new HtmlTableCell("th"))
             {
+                if (alignRight)
+                {
+                    header.Attributes.Add("class", "text-right");
+                }
+
                 if (string.IsNullOrWhiteSpace(AssociatedControlId))
                 {
                     header.InnerText = innerText;
@@ -269,7 +244,6 @@ namespace MixERP.Net.Core.Modules.Inventory
                 using (HtmlSelect transactionTypeSelect = new HtmlSelect())
                 {
                     transactionTypeSelect.ID = "TransactionTypeSelect";
-                    transactionTypeSelect.Attributes.Add("class", "form-control input-sm");
 
                     transactionTypeSelect.Items.Add(new ListItem(@"Dr", @"Dr"));
                     transactionTypeSelect.Items.Add(new ListItem(@"Cr", @"Cr"));
@@ -288,7 +262,6 @@ namespace MixERP.Net.Core.Modules.Inventory
                 using (HtmlSelect storeSelect = new HtmlSelect())
                 {
                     storeSelect.ID = "StoreSelect";
-                    storeSelect.Attributes.Add("class", "form-control input-sm");
 
                     cell.Controls.Add(storeSelect);
                 }
@@ -304,7 +277,6 @@ namespace MixERP.Net.Core.Modules.Inventory
                 using (HtmlInputText itemCodeInputText = new HtmlInputText())
                 {
                     itemCodeInputText.ID = "ItemCodeInputText";
-                    itemCodeInputText.Attributes.Add("class", "form-control input-sm");
 
                     cell.Controls.Add(itemCodeInputText);
                 }
@@ -320,7 +292,6 @@ namespace MixERP.Net.Core.Modules.Inventory
                 using (HtmlSelect itemSelect = new HtmlSelect())
                 {
                     itemSelect.ID = "ItemSelect";
-                    itemSelect.Attributes.Add("class", "form-control input-sm");
 
                     cell.Controls.Add(itemSelect);
                 }
@@ -336,8 +307,6 @@ namespace MixERP.Net.Core.Modules.Inventory
                 using (HtmlSelect unitSelect = new HtmlSelect())
                 {
                     unitSelect.ID = "UnitSelect";
-                    unitSelect.Attributes.Add("class", "form-control input-sm");
-
                     cell.Controls.Add(unitSelect);
                 }
 
@@ -352,8 +321,7 @@ namespace MixERP.Net.Core.Modules.Inventory
                 using (HtmlInputText quantityInputText = new HtmlInputText())
                 {
                     quantityInputText.ID = "QuantityInputText";
-                    quantityInputText.Attributes.Add("class", "form-control input-sm number");
-
+                    quantityInputText.Attributes.Add("class", "text-right");
                     cell.Controls.Add(quantityInputText);
                 }
 
@@ -369,7 +337,7 @@ namespace MixERP.Net.Core.Modules.Inventory
                 {
                     addButton.ID = "AddButton";
                     addButton.Value = Titles.Add;
-                    addButton.Attributes.Add("class", "btn btn-sm btn-primary");
+                    addButton.Attributes.Add("class", "ui small red button");
 
                     cell.Controls.Add(addButton);
                 }
@@ -388,69 +356,51 @@ namespace MixERP.Net.Core.Modules.Inventory
 
         private void CreateBottomPanel()
         {
-            using (HtmlGenericControl shadeDiv = new HtmlGenericControl())
+            using (HtmlGenericControl fields = this.GetFields())
             {
-                shadeDiv.TagName = "div";
-                shadeDiv.Attributes.Add("class", "shade");
-                shadeDiv.Attributes.Add("style", "width:300px");
+                fields.TagName = "div";
+                fields.Attributes.Add("class", "ui form");
+                fields.Attributes.Add("style", "width:290px;");
 
-                using (HtmlGenericControl rowDiv = this.GetRow())
-                {
-                    rowDiv.TagName = "div";
-                    rowDiv.Attributes.Add("style", "margin-left: 2px;");
+                this.AddStatementReferenceTextArea(fields);
+                this.AddSaveButton(fields);
 
-                    this.AddStatementReferenceTextArea(rowDiv);
-                    this.AddSaveButton(rowDiv);
-
-                    shadeDiv.Controls.Add(rowDiv);
-                }
-
-                this.Placeholder1.Controls.Add(shadeDiv);
+                this.Placeholder1.Controls.Add(fields);
             }
         }
 
-        private void AddStatementReferenceTextArea(HtmlGenericControl container)
+        private void AddStatementReferenceTextArea(HtmlGenericControl fields)
         {
-            using (HtmlGenericControl columnDiv = this.GetColumn(11))
+            using (HtmlGenericControl field = this.GetField())
             {
-                using (HtmlGenericControl formGroup = this.GetFormGroup())
+                using (HtmlGenericControl label = new HtmlGenericControl())
                 {
-                    using (HtmlGenericControl label = new HtmlGenericControl())
-                    {
-                        label.TagName = "label";
-                        label.Attributes.Add("for", "StatementReferenceTextArea");
-                        label.InnerText = Titles.StatementReference;
-                        formGroup.Controls.Add(label);
-                    }
-
-                    using (HtmlTextArea statementReferenceTextArea = new HtmlTextArea())
-                    {
-                        statementReferenceTextArea.ID = "StatementReferenceTextArea";
-                        statementReferenceTextArea.Attributes.Add("class", "form-control input-sm");
-                        statementReferenceTextArea.Rows = 4;
-
-                        formGroup.Controls.Add(statementReferenceTextArea);
-                    }
-
-                    columnDiv.Controls.Add(formGroup);
+                    label.TagName = "label";
+                    label.Attributes.Add("for", "StatementReferenceTextArea");
+                    label.InnerText = Titles.StatementReference;
+                    field.Controls.Add(label);
                 }
-                container.Controls.Add(columnDiv);
+
+                using (HtmlTextArea statementReferenceTextArea = new HtmlTextArea())
+                {
+                    statementReferenceTextArea.ID = "StatementReferenceTextArea";
+                    statementReferenceTextArea.Rows = 4;
+
+                    field.Controls.Add(statementReferenceTextArea);
+                }
+
+                fields.Controls.Add(field);
             }
         }
 
         private void AddSaveButton(HtmlGenericControl container)
         {
-            using (HtmlGenericControl columnDiv = this.GetColumn(12))
+            using (HtmlInputButton button = new HtmlInputButton())
             {
-                using (HtmlInputButton button = new HtmlInputButton())
-                {
-                    button.ID = "SaveButton";
-                    button.Value = Titles.Save;
-                    button.Attributes.Add("class", "btn btn-default btn-sm");
-                    columnDiv.Controls.Add(button);
-                }
-
-                container.Controls.Add(columnDiv);
+                button.ID = "SaveButton";
+                button.Value = Titles.Save;
+                button.Attributes.Add("class", "ui small blue button");
+                container.Controls.Add(button);
             }
         }
     }

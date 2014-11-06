@@ -97,6 +97,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account Master Name.
+        /// </summary>
+        internal static string account_master_name {
+            get {
+                return ResourceManager.GetString("account_master_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Account Name.
         /// </summary>
         internal static string account_name {
@@ -313,6 +322,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Full Name.
+        /// </summary>
+        internal static string full_name {
+            get {
+                return ResourceManager.GetString("full_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Has Child.
         /// </summary>
         internal static string has_child {
@@ -367,6 +385,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Office Name.
+        /// </summary>
+        internal static string office_name {
+            get {
+                return ResourceManager.GetString("office_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parent.
         /// </summary>
         internal static string parent {
@@ -376,11 +403,29 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Parent Account Code.
+        /// </summary>
+        internal static string parent_account_code {
+            get {
+                return ResourceManager.GetString("parent_account_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parent Account Id.
         /// </summary>
         internal static string parent_account_id {
             get {
                 return ResourceManager.GetString("parent_account_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parent Account Name.
+        /// </summary>
+        internal static string parent_account_name {
+            get {
+                return ResourceManager.GetString("parent_account_name", resourceCulture);
             }
         }
         
@@ -408,6 +453,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string repository {
             get {
                 return ResourceManager.GetString("repository", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role Name.
+        /// </summary>
+        internal static string role_name {
+            get {
+                return ResourceManager.GetString("role_name", resourceCulture);
             }
         }
         
@@ -498,6 +552,24 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string to_days {
             get {
                 return ResourceManager.GetString("to_days", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Id.
+        /// </summary>
+        internal static string user_id {
+            get {
+                return ResourceManager.GetString("user_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username.
+        /// </summary>
+        internal static string user_name {
+            get {
+                return ResourceManager.GetString("user_name", resourceCulture);
             }
         }
     }

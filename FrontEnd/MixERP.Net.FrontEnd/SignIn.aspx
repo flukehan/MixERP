@@ -23,117 +23,106 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 
-    <link href="/bundles/stylesheets/sign-in.min.css" rel="stylesheet" />
     <script src="//code.jquery.com/jquery-1.9.1.js" type="text/javascript"></script>
-    <link href="/Scripts/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="/Scripts/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" />
-    <script src="/Scripts/bootstrap/js/bootstrap.min.js"></script>
+    <link href="/Scripts/semantic-ui/css/semantic.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="/Scripts/semantic-ui/javascript/semantic.min.js"></script>
 
     <title>Sign In</title>
 </head>
 <body id="SignInBody">
     <form id="form1" runat="server">
-        <div id="signin-form" style="">
-
-            <div style="margin-left: 24px;">
-                <div class="sign-in-logo">
-                    <a href="/SignIn.aspx">
-                        <asp:Image runat="server" ImageUrl="~/Resource/Static/images/mixerp-logo.png" />
-                    </a>
-                </div>
+        <div id="signin-form">
+            <div class="sign-in-logo">
+                <a href="/SignIn.aspx">
+                    <asp:Image runat="server" ImageUrl="~/Resource/Static/images/mixerp-logo.png" />
+                </a>
             </div>
 
-            <div class="panel container" style="width: 100%; margin: 0 24px;">
-                <div class="sign-in" role="form">
-                    <h1>
-                        <asp:Literal ID="SignInLiteral" runat="server" Text="<%$Resources:Titles, SignIn %>" />
-                    </h1>
+            <div class="ui form segment" style="padding: 24px 48px;">
 
-                    <div class="form-horizontal" role="form">
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-4 control-label">
-                                <asp:Literal ID="UserIdLiteral" runat="server" Text="<%$Resources:Titles, UserId %>" />
-                            </label>
-                            <div class="col-sm-8">
-                                <asp:TextBox ID="UserIdTextBox" runat="server" CssClass="form-control input-sm" placeholder="<%$Resources:Titles, UserId %>" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputPassword3" class="col-sm-4 control-label">
-                                <asp:Literal ID="PasswordLiteral" runat="server" Text="<%$Resources:Titles, Password %>" />
-                            </label>
-                            <div class="col-sm-8">
-                                <asp:TextBox ID="PasswordTextBox" runat="server" TextMode="Password" CssClass="form-control input-sm" placeholder="<%$Resources:Titles, Password %>" />
-                            </div>
-                        </div>
+                <div class="ui large header" style="padding: 8px 0;">
+                    <asp:Literal ID="SignInLiteral" runat="server" Text="<%$Resources:Titles, SignIn %>" />
+                </div>
+                <div class="ui divider">
+                </div>
 
-                        <div class="form-group">
-                            <label for="BranchDropDownList" class="col-sm-4 control-label">
-                                <asp:Literal ID="SelectBranchLiteral" runat="server" Text="<%$Resources:Titles, SelectYourBranch  %>" />
-                            </label>
-                            <div class="col-sm-8">
-                                <asp:HiddenField runat="server" ID="BranchIdHiddenField"></asp:HiddenField>
-                                <asp:DropDownList ID="BranchDropDownList" runat="server" CssClass="form-control input-sm"
-                                    DataTextField="OfficeName" DataValueField="OfficeId"
-                                    placeholder="<%$Resources:Titles, SelectYourBranch  %>">
-                                </asp:DropDownList>
-                            </div>
-                        </div>
+                <div class="field">
+                    <label for="UserIdTextBox">
+                        <asp:Literal ID="UserIdLiteral" runat="server" Text="<%$Resources:Titles, UserId %>" />
+                    </label>
+                    <asp:TextBox ID="UserIdTextBox" runat="server" placeholder="<%$Resources:Titles, UserId %>" />
+                </div>
+                <div class="field">
+                    <label for="PasswordTextBox">
+                        <asp:Literal ID="PasswordLiteral" runat="server" Text="<%$Resources:Titles, Password %>" />
+                    </label>
 
-                        <div class="form-group">
-                            <label for="BranchDropDownList" class="col-sm-4 control-label">Select Language</label>
-                            <div class="col-sm-8">
-                                <asp:DropDownList ID="LanguageDropDownList" runat="server" CssClass="form-control input-sm">
-                                    <asp:ListItem Text="English (United States)" Value="en-US" />
-                                    <asp:ListItem Text="English (Great Britain)" Value="en-GB" />
-                                    <asp:ListItem Text="Français (France)" Value="fr-FR" />
-                                    <asp:ListItem Text="Deutsch (Deutschland)" Value="de-DE" />
-                                    <asp:ListItem Text="नेपाली (नेपाल)" Value="ne-NP" />
-                                    <asp:ListItem Text="हिन्दी (India)" Value="hi-IN" />
-                                </asp:DropDownList>
-                            </div>
-                        </div>
+                    <asp:TextBox ID="PasswordTextBox" runat="server" TextMode="Password" placeholder="<%$Resources:Titles, Password %>" />
+                </div>
 
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label"></label>
-                            <div class="col-sm-8">
-
-                                <div class="checkbox">
-                                    <label>
-                                        <asp:CheckBox ID="RememberMe" runat="server" />
-                                        <asp:Literal runat="server" Text="<%$Resources:Titles, RememberMe %>" />
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label"></label>
-                            <div class="col-sm-8">
-                                <asp:Button ID="SignInButton" runat="server" Text="<%$Resources:Titles, SignIn %>" OnClick="SignInButton_Click" OnClientClick="$('#BranchIdHiddenField').val($('#BranchDropDownList').val());" CssClass="btn btn-default btn-sm" />
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label"></label>
-                            <div class="col-sm-8">
-                                <asp:LinkButton ID="CannotAccessAccountLinkButton" runat="server" Text="<%$Resources:Questions, CannotAccessAccount %>" />
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label"></label>
-                            <div class="col-sm-8">
-                                <asp:Literal ID="MessageLiteral" runat="server" />
-                            </div>
-                        </div>
+                <div class="field">
+                    <div class="ui toggle checkbox">
+                        <asp:CheckBox ID="RememberMe" runat="server" />
+                        <label>
+                            <asp:Literal runat="server" Text="<%$Resources:Titles, RememberMe %>" />
+                        </label>
                     </div>
                 </div>
-                <script type="text/javascript">
-                    $("#UserIdTextBox").val('binod');
-                    $("#PasswordTextBox").val('binod');
-                </script>
+
+                <div class="ui horizontal icon divider">
+                    <i class="circular user icon"></i>
+                </div>
+
+                <div class="field">
+                    <label for="BranchDropDownList">
+                        <asp:Literal ID="SelectBranchLiteral" runat="server" Text="<%$Resources:Titles, SelectYourBranch  %>" />
+                    </label>
+
+                    <asp:HiddenField runat="server" ID="BranchIdHiddenField"></asp:HiddenField>
+                    <asp:DropDownList ID="BranchDropDownList" runat="server"
+                        DataTextField="OfficeName" DataValueField="OfficeId"
+                        placeholder="<%$Resources:Titles, SelectYourBranch  %>">
+                    </asp:DropDownList>
+                </div>
+
+                <div class="field">
+                    <label for="LanguageDropDownList">Select Language</label>
+
+                    <asp:DropDownList ID="LanguageDropDownList" runat="server">
+                        <asp:ListItem Text="English (United States)" Value="en-US" />
+                        <asp:ListItem Text="English (Great Britain)" Value="en-GB" />
+                        <asp:ListItem Text="Français (France)" Value="fr-FR" />
+                        <asp:ListItem Text="Deutsch (Deutschland)" Value="de-DE" />
+                        <asp:ListItem Text="नेपाली (नेपाल)" Value="ne-NP" />
+                        <asp:ListItem Text="हिन्दी (India)" Value="hi-IN" />
+                    </asp:DropDownList>
+                </div>
+
+                <div class="field">
+                    <asp:Literal ID="MessageLiteral" runat="server" />
+                </div>
+
+                <div class="field">
+                    <asp:Button ID="SignInButton" runat="server" Text="<%$Resources:Titles, SignIn %>" OnClick="SignInButton_Click" OnClientClick="$('#BranchIdHiddenField').val($('#BranchDropDownList').val());" CssClass="ui teal button" />
+                </div>
+
+                <div class="field">
+                    <label></label>
+
+                    <asp:LinkButton ID="CannotAccessAccountLinkButton" runat="server" Text="<%$Resources:Questions, CannotAccessAccount %>" />
+                </div>
             </div>
+            <script type="text/javascript">
+                $("#UserIdTextBox").val('binod');
+                $("#PasswordTextBox").val('binod');
+                $(".ui.checkbox").checkbox();
+
+                $(document).ready(function () {
+                    if ($(".big.error").html()) {
+                        $(".field").addClass("error");
+                    };
+                });
+            </script>
         </div>
     </form>
 </body>

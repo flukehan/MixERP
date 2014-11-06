@@ -42,8 +42,9 @@ namespace MixERP.Net.WebControls.ScrudFactory
         private void LoadGridPanel(Panel gridPanel)
         {
             gridPanel.ID = "GridPanel";
-            gridPanel.ScrollBars = ScrollBars.Auto;
             gridPanel.CssClass = this.GridPanelCssClass;
+            gridPanel.Attributes.Add("style", "overflow:auto");
+            gridPanel.Attributes.Add("padding", "4px");
 
             if (this.GridPanelHeight.Value > 0)
             {
@@ -57,6 +58,8 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             this.searchGridView = new GridView();
             this.searchGridView.ID = "SearchGridView";
+
+            this.searchGridView.Attributes.Add("style", "white-space: nowrap;");
             this.searchGridView.GridLines = GridLines.None;
             this.searchGridView.CssClass = this.GridViewCssClass;
             this.searchGridView.PagerStyle.CssClass = this.GridViewPagerCssClass;
@@ -87,33 +90,40 @@ namespace MixERP.Net.WebControls.ScrudFactory
         private void LoadTopPanel(Panel topPanel)
         {
             topPanel.CssClass = this.TopPanelCssClass;
-            using (var table = new HtmlTable())
+
+            using (HtmlGenericControl form = new HtmlGenericControl("div"))
             {
-                using (var row = new HtmlTableRow())
+                form.Attributes.Add("class", "ui small form");
+                using (var fields = new HtmlGenericControl("div"))
                 {
-                    using (var dropDownListCell = new HtmlTableCell())
+                    fields.Attributes.Add("class", "inline fields");
+                    using (var filterSelectField = new HtmlGenericControl("div"))
                     {
-                        this.filterDropDownList = new DropDownList();
+                        filterSelectField.Attributes.Add("class", "field");
 
-                        this.filterDropDownList.ID = "FilterDropDownList";
-                        this.filterDropDownList.CssClass = this.FilterDropDownListCssClass;
-                        this.filterDropDownList.DataTextField = "column_name";
-                        this.filterDropDownList.DataValueField = "column_name";
-                        this.filterDropDownList.DataBound += this.FilterDropDownList_DataBound;
+                        this.filterSelect = new DropDownList();
 
-                        dropDownListCell.Controls.Add(this.filterDropDownList);
-                        row.Cells.Add(dropDownListCell);
+                        this.filterSelect.ID = "FilterDropDownList";
+                        this.filterSelect.CssClass = this.FilterDropDownListCssClass;
+                        this.filterSelect.DataTextField = "column_name";
+                        this.filterSelect.DataValueField = "column_name";
+                        this.filterSelect.DataBound += this.FilterSelectDataBound;
+
+                        filterSelectField.Controls.Add(this.filterSelect);
+                        fields.Controls.Add(filterSelectField);
                     }
-                    using (var textBoxCell = new HtmlTableCell())
+                    using (var filterInputTextField = new HtmlGenericControl("div"))
                     {
-                        this.filterTextBox = new TextBox();
-                        this.filterTextBox.ID = "FilterTextBox";
-                        this.filterTextBox.CssClass = this.FilterTextBoxCssClass;
-                        textBoxCell.Controls.Add(this.filterTextBox);
-                        row.Cells.Add(textBoxCell);
+                        filterInputTextField.Attributes.Add("class", "field");
+
+                        this.filterInputText = new TextBox();
+                        this.filterInputText.ID = "FilterTextBox";
+                        this.filterInputText.CssClass = this.FilterTextBoxCssClass;
+                        filterInputTextField.Controls.Add(this.filterInputText);
+                        fields.Controls.Add(filterInputTextField);
                     }
 
-                    using (var buttonCell = new HtmlTableCell())
+                    using (var buttonCell = new HtmlGenericControl("div"))
                     {
                         this.goButton = new Button();
                         this.goButton.ID = "GoButton";
@@ -132,11 +142,11 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         this.goButton.Click += this.GoButton_Click;
                         this.goButton.Text = Titles.Go;
                         buttonCell.Controls.Add(this.goButton);
-                        row.Cells.Add(buttonCell);
+                        fields.Controls.Add(buttonCell);
                     }
 
-                    table.Rows.Add(row);
-                    topPanel.Controls.Add(table);
+                    form.Controls.Add(fields);
+                    topPanel.Controls.Add(form);
                 }
             }
         }

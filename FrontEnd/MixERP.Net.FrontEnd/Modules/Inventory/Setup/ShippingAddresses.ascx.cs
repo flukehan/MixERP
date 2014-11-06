@@ -38,7 +38,6 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
                 scrud.Table = "shipping_addresses";
                 scrud.ViewSchema = "core";
                 scrud.View = "shipping_address_scrud_view";
-                scrud.GridViewWidth = 1400;
 
                 //Shipping address code will be automatically generated on the database.
                 scrud.Exclude = "shipping_address_code";
