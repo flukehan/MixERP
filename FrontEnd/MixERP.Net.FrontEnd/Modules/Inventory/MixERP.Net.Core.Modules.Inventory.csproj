@@ -111,6 +111,11 @@
       <DependentUpon>Index.ascx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Errors.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Errors.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Labels.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -250,6 +255,10 @@
       <Project>{D5A09C22-8F48-4FB2-A14D-C62C8C8FCEC0}</Project>
       <Name>MixERP.Net.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockAdjustmentFactory\MixERP.Net.WebControls.StockAdjustmentFactory.csproj">
+      <Project>{935fbcef-5f6b-4bd3-b6f3-0c65fea66a15}</Project>
+      <Name>MixERP.Net.WebControls.StockAdjustmentFactory</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\MixERP.Net.FrontEnd.csproj">
       <Project>{ace1017d-71bc-4417-a906-72c4b9c55823}</Project>
       <Name>MixERP.Net.FrontEnd</Name>
@@ -264,6 +273,10 @@
     <Folder Include="Widgets\" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Errors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Errors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Labels.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Labels.Designer.cs</LastGenOutput>

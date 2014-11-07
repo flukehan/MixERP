@@ -18,10 +18,14 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.Common;
+using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Models.Transactions;
+using MixERP.Net.Core.Modules.Inventory.Resources;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
+using System.Linq;
 using System.Web.Script.Serialization;
 using System.Web.Script.Services;
 using System.Web.Services;
@@ -37,11 +41,25 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
         [WebMethod(EnableSession = true)]
         public long Save(DateTime valueDate, string referenceNumber, string statementReference, string data)
         {
-            Collection<StockTransferModel> collection = this.GetModels(data);
+            Collection<StockTransferModel> stockTransferModels = this.GetModels(data);
+
+            foreach (var model in stockTransferModels)
+            {
+                if (model.TransferType.ToLower(CultureInfo.InvariantCulture).Equals("cr"))
+                {
+                    decimal existingQuantity = Data.Helpers.Items.CountItemInStock(model.ItemCode, model.UnitName, model.StoreName);
+
+                    if (existingQuantity < model.Quantity)
+                    {
+                        throw new MixERPException(string.Format(Errors.InsufficientStockWarning, Conversion.TryCastInteger(existingQuantity), model.UnitName, model.ItemName));
+                    }
+                }
+            }
 
             return 0;
         }
 
+        // ReSharper disable once ReturnTypeCanBeEnumerable.Local
         private Collection<StockTransferModel> GetModels(string json)
         {
             Collection<StockTransferModel> models = new Collection<StockTransferModel>();
@@ -61,6 +79,22 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
                 model.Quantity = Conversion.TryCastInteger(item[5]);
 
                 models.Add(model);
+            }
+
+            var results = from rows in models
+                          group rows by new { rows.ItemCode, rows.UnitName }
+                              into aggregate
+                              select new
+                              {
+                                  aggregate.Key.ItemCode,
+                                  aggregate.Key.UnitName,
+                                  Debit = aggregate.Where(row => row.TransferType.ToLower().Equals("dr")).Sum(row => row.Quantity),
+                                  Credit = aggregate.Where(row => row.TransferType.ToLower().Equals("cr")).Sum(row => row.Quantity)
+                              };
+
+            if ((from query in results where query.Debit != query.Credit select query).Any())
+            {
+                throw new MixERPException(Errors.ReferencingSidesNotEqual);
             }
 
             return models;

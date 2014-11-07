@@ -96,7 +96,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.Core.Modules.Inv
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.Core.Modules.Finance.Data", "FrontEnd\MixERP.Net.FrontEnd\Modules\Finance.Data\MixERP.Net.Core.Modules.Finance.Data.csproj", "{8027734A-20B1-42E5-ADDE-5F51BF5BBC08}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{EE97E3B1-0DD0-453B-A0AA-4AF12099B0CA}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Module Projects", "Module Projects", "{EE97E3B1-0DD0-453B-A0AA-4AF12099B0CA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.FrontEnd.Data", "FrontEnd\MixERP.Net.FrontEnd.Data\MixERP.Net.FrontEnd.Data.csproj", "{A84ED536-8E44-4D32-A22D-26D9924A9481}"
 EndProject
@@ -107,6 +107,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.Messaging", "Libraries\Logic\MixERP.Net.Messaging\MixERP.Net.Messaging.csproj", "{D29B7B60-76B2-4A00-A8FA-7654519AFCD4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.HtmlParser", "Libraries\Logic\MixERP.Net.HtmlParser\MixERP.Net.HtmlParser.csproj", "{0EF8A910-9603-477E-9EF7-AAE9AEA46160}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Module-Specific Server Controls", "Module-Specific Server Controls", "{F6686C51-15FC-4E3A-A96B-E17C7F983B05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.WebControls.StockAdjustmentFactory", "Libraries\Server Controls\Project\MixERP.Net.WebControls.StockAdjustmentFactory\MixERP.Net.WebControls.StockAdjustmentFactory.csproj", "{935FBCEF-5F6B-4BD3-B6F3-0C65FEA66A15}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1012,6 +1016,30 @@ Global
 		{0EF8A910-9603-477E-9EF7-AAE9AEA46160}.Release-net40|Any CPU.Build.0 = Release|Any CPU
 		{0EF8A910-9603-477E-9EF7-AAE9AEA46160}.Release-net45|Any CPU.ActiveCfg = Release|Any CPU
 		{0EF8A910-9603-477E-9EF7-AAE9AEA46160}.Release-net45|Any CPU.Build.0 = Release|Any CPU
+		{935FBCEF-5F6B-4BD3-B6F3-0C65FEA66A15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{935FBCEF-5F6B-4BD3-B6F3-0C65FEA66A15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{935FBCEF-5F6B-4BD3-B6F3-0C65FEA66A15}.Debug-net20|Any CPU.ActiveCfg = Debug|Any CPU
+		{935FBCEF-5F6B-4BD3-B6F3-0C65FEA66A15}.Debug-net20|Any CPU.Build.0 = Debug|Any CPU
+		{935FBCEF-5F6B-4BD3-B6F3-0C65FEA66A15}.Debug-net35|Any CPU.ActiveCfg = Debug|Any CPU
+		{935FBCEF-5F6B-4BD3-B6F3-0C65FEA66A15}.Debug-net35|Any CPU.Build.0 = Debug|Any CPU
+		{935FBCEF-5F6B-4BD3-B6F3-0C65FEA66A15}.Debug-net40|Any CPU.ActiveCfg = Debug|Any CPU
+		{935FBCEF-5F6B-4BD3-B6F3-0C65FEA66A15}.Debug-net40|Any CPU.Build.0 = Debug|Any CPU
+		{935FBCEF-5F6B-4BD3-B6F3-0C65FEA66A15}.Debug-net45|Any CPU.ActiveCfg = Debug|Any CPU
+		{935FBCEF-5F6B-4BD3-B6F3-0C65FEA66A15}.Debug-net45|Any CPU.Build.0 = Debug|Any CPU
+		{935FBCEF-5F6B-4BD3-B6F3-0C65FEA66A15}.Mono-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{935FBCEF-5F6B-4BD3-B6F3-0C65FEA66A15}.Mono-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{935FBCEF-5F6B-4BD3-B6F3-0C65FEA66A15}.Mono-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{935FBCEF-5F6B-4BD3-B6F3-0C65FEA66A15}.Mono-Release|Any CPU.Build.0 = Release|Any CPU
+		{935FBCEF-5F6B-4BD3-B6F3-0C65FEA66A15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{935FBCEF-5F6B-4BD3-B6F3-0C65FEA66A15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{935FBCEF-5F6B-4BD3-B6F3-0C65FEA66A15}.Release-net20|Any CPU.ActiveCfg = Release|Any CPU
+		{935FBCEF-5F6B-4BD3-B6F3-0C65FEA66A15}.Release-net20|Any CPU.Build.0 = Release|Any CPU
+		{935FBCEF-5F6B-4BD3-B6F3-0C65FEA66A15}.Release-net35|Any CPU.ActiveCfg = Release|Any CPU
+		{935FBCEF-5F6B-4BD3-B6F3-0C65FEA66A15}.Release-net35|Any CPU.Build.0 = Release|Any CPU
+		{935FBCEF-5F6B-4BD3-B6F3-0C65FEA66A15}.Release-net40|Any CPU.ActiveCfg = Release|Any CPU
+		{935FBCEF-5F6B-4BD3-B6F3-0C65FEA66A15}.Release-net40|Any CPU.Build.0 = Release|Any CPU
+		{935FBCEF-5F6B-4BD3-B6F3-0C65FEA66A15}.Release-net45|Any CPU.ActiveCfg = Release|Any CPU
+		{935FBCEF-5F6B-4BD3-B6F3-0C65FEA66A15}.Release-net45|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1063,5 +1091,7 @@ Global
 		{4FB50AA0-EEFB-497C-A5F8-E79249EE3895} = {ADD35728-15DC-4939-98B8-2823E6F22E8A}
 		{D29B7B60-76B2-4A00-A8FA-7654519AFCD4} = {ADD35728-15DC-4939-98B8-2823E6F22E8A}
 		{0EF8A910-9603-477E-9EF7-AAE9AEA46160} = {ADD35728-15DC-4939-98B8-2823E6F22E8A}
+		{F6686C51-15FC-4E3A-A96B-E17C7F983B05} = {817B9B9C-EFB6-42DF-A8C7-C0389B346A07}
+		{935FBCEF-5F6B-4BD3-B6F3-0C65FEA66A15} = {F6686C51-15FC-4E3A-A96B-E17C7F983B05}
 	EndGlobalSection
 EndGlobal

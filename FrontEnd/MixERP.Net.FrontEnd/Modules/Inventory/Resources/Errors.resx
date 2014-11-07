@@ -117,73 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Brands" xml:space="preserve">
-    <value>Brands</value>
+  <data name="InsufficientStockWarning" xml:space="preserve">
+    <value>Only {0} {1} of {2} left in stock.</value>
+    <comment>Only {Qty} {Unit} of {ItemName} left in stock.</comment>
   </data>
-  <data name="CompoundUnitsOfMeasure" xml:space="preserve">
-    <value>Compound Units of Measure</value>
-  </data>
-  <data name="ItemCostPrices" xml:space="preserve">
-    <value>Item Cost Prices</value>
-  </data>
-  <data name="ItemGroups" xml:space="preserve">
-    <value>Item Groups</value>
-  </data>
-  <data name="Items" xml:space="preserve">
-    <value>Items</value>
-  </data>
-  <data name="ItemSellingPrices" xml:space="preserve">
-    <value>Item Selling Prices</value>
-  </data>
-  <data name="UnitsOfMeasure" xml:space="preserve">
-    <value>Units of Measure</value>
-  </data>
-  <data name="Parties" xml:space="preserve">
-    <value>Parties</value>
-  </data>
-  <data name="PartyTypes" xml:space="preserve">
-    <value>Party Types</value>
-  </data>
-  <data name="Shippers" xml:space="preserve">
-    <value>Shippers</value>
-  </data>
-  <data name="ShippingAddressMaintenance" xml:space="preserve">
-    <value>Shipping Address Maintenance</value>
-  </data>
-  <data name="CompoundItemDetails" xml:space="preserve">
-    <value>Compound Item Details</value>
-  </data>
-  <data name="CompoundItems" xml:space="preserve">
-    <value>Compound Items</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>Email</value>
-  </data>
-  <data name="Fax" xml:space="preserve">
-    <value>Fax</value>
-  </data>
-  <data name="PreparedOn" xml:space="preserve">
-    <value>Prepared On</value>
-  </data>
-  <data name="Tel" xml:space="preserve">
-    <value>Tel</value>
-  </data>
-  <data name="Url" xml:space="preserve">
-    <value>Url</value>
-  </data>
-  <data name="User" xml:space="preserve">
-    <value>User</value>
-  </data>
-  <data name="StockTransferJournal" xml:space="preserve">
-    <value>Stock Transfer Journal</value>
-  </data>
-  <data name="Type" xml:space="preserve">
-    <value>Type</value>
-  </data>
-  <data name="ValueDate" xml:space="preserve">
-    <value>ValueDate</value>
-  </data>
-  <data name="StockAdjustment" xml:space="preserve">
-    <value>Stock Adjustment</value>
+  <data name="ReferencingSidesNotEqual" xml:space="preserve">
+    <value>Referencing sides are not equal.</value>
   </data>
 </root>

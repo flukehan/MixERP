@@ -17,3 +17,15 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Adjustment.ascx.cs" Inherits="MixERP.Net.Core.Modules.Inventory.Adjustment" %>
+
+<asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
+<script type="text/javascript">
+    function StockAdjustmentFactory_FormvView_SaveButton_Callback() {
+        alert("callback");
+        var valueDate = valueDateTextBox.val();
+        var referenceNumber = referenceNumberInputText.val();
+        var statementReference = statementReferenceTextArea.val();
+        var tableData = tableToJSON(transferGridView);
+
+    };
+</script>

@@ -106,6 +106,17 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
                 return Conversion.TryCastDecimal(DbOperations.GetScalarValue(command));
             }
         }
+        public static decimal CountItemInStock(string itemCode, string unitName, string storeName)
+        {
+            const string sql = "SELECT core.count_item_in_stock(core.get_item_id_by_item_code(@ItemCode), core.get_unit_id_by_unit_name(@UnitName), office.get_store_id_by_store_name(@StoreName));";
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                command.Parameters.AddWithValue("@ItemCode", itemCode);
+                command.Parameters.AddWithValue("@UnitName", unitName);
+                command.Parameters.AddWithValue("@StoreName", storeName);
+                return Conversion.TryCastDecimal(DbOperations.GetScalarValue(command));
+            }
+        }
 
         public static bool IsStockItem(string itemCode)
         {

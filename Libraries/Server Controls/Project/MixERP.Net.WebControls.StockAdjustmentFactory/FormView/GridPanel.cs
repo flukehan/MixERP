@@ -1,0 +1,79 @@
+﻿using MixERP.Net.WebControls.StockAdjustmentFactory.Resources;
+using System.Globalization;
+using System.Web.UI.HtmlControls;
+
+namespace MixERP.Net.WebControls.StockAdjustmentFactory
+{
+    public partial class FormView
+    {
+        private void CreateGridPanel()
+        {
+            using (HtmlGenericControl gridPanel = new HtmlGenericControl("div"))
+            {
+                gridPanel.Attributes.Add("style", "width: 1100px;");
+
+                using (HtmlTable table = new HtmlTable())
+                {
+                    table.ID = "TransferGridView";
+                    table.Attributes.Add("class", "ui table form segment");
+                    table.Rows.Add(this.GetHeaderRow());
+                    table.Rows.Add(this.GetControlRow());
+
+                    gridPanel.Controls.Add(table);
+                }
+
+                this.container.Controls.Add(gridPanel);
+            }
+        }
+
+        private HtmlTableRow GetHeaderRow()
+        {
+            using (HtmlTableRow row = new HtmlTableRow())
+            {
+                row.Cells.Add(this.GetHeaderCell(Titles.Type, "TransactionTypeSelect", false, 80));
+                row.Cells.Add(this.GetHeaderCell(Titles.Store, "StoreSelect", false, 140));
+                row.Cells.Add(this.GetHeaderCell(Titles.ItemCode, "ItemCodeInputText", false, 90));
+                row.Cells.Add(this.GetHeaderCell(Titles.ItemName, "ItemSelect", false, 0));
+                row.Cells.Add(this.GetHeaderCell(Titles.Unit, "UnitSelect", false, 120));
+                row.Cells.Add(this.GetHeaderCell(Titles.Quantity, "QuantityInputText", true, 120));
+                row.Cells.Add(this.GetHeaderCell(Titles.Action, null, false, 120));
+
+                return row;
+            }
+        }
+
+        private HtmlTableCell GetHeaderCell(string innerText, string AssociatedControlId, bool alignRight, int width)
+        {
+            using (HtmlTableCell header = new HtmlTableCell("th"))
+            {
+                if (alignRight)
+                {
+                    header.Attributes.Add("class", "text-right");
+                }
+
+                if (width > 0)
+                {
+                    header.Attributes.Add("style", "width:" + width.ToString(CultureInfo.InvariantCulture) + "px;");
+                }
+
+                if (string.IsNullOrWhiteSpace(AssociatedControlId))
+                {
+                    header.InnerText = innerText;
+                }
+                else
+                {
+                    using (HtmlGenericControl label = new HtmlGenericControl())
+                    {
+                        label.TagName = "label";
+                        label.Attributes.Add("for", AssociatedControlId);
+                        label.InnerText = innerText;
+
+                        header.Controls.Add(label);
+                    }
+                }
+
+                return header;
+            }
+        }
+    }
+}
