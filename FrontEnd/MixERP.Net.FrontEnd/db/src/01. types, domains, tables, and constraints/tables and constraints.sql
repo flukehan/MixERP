@@ -554,6 +554,8 @@ CREATE TABLE core.bonus_slabs
     bonus_slab_id                           SERIAL NOT NULL PRIMARY KEY,
     bonus_slab_code                         national character varying(12) NOT NULL,
     bonus_slab_name                         national character varying(50) NOT NULL,
+    effective_from                          date NOT NULL,
+    ends_on                                 date NOT NULL,
     checking_frequency_id                   integer NOT NULL REFERENCES core.frequencies(frequency_id),
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL   

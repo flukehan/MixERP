@@ -26,7 +26,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     }
 
     #ProductGridView th:nth-child(1) {
-        width: 90px;
+        width: 100px;
     }
 
     #ProductGridView th:nth-child(2) {
@@ -38,15 +38,15 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     }
 
     #ProductGridView th:nth-child(4) {
-        width: 120px;
+        width: 140px;
     }
 
     #ProductGridView th:nth-child(5) {
-        width: 120px;
+        width: 140px;
     }
 
     #ProductGridView th:nth-child(6) {
-        width: 120px;
+        width: 140px;
     }
 
     #ProductGridView th:nth-child(7) {
@@ -54,7 +54,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     }
 
     #ProductGridView th:nth-child(8) {
-        width: 120px;
+        width: 140px;
     }
 
     #ProductGridView th:nth-child(9) {
@@ -62,10 +62,14 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     }
 
     #ProductGridView th:nth-child(10) {
-        width: 100px;
+        width: 140px;
     }
 
     #ProductGridView th:nth-child(11) {
+        width: 140px;
+    }
+
+    #ProductGridView th:nth-child(12) {
         width: 120px;
     }
 </style>
@@ -75,11 +79,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 </h2>
 
 <div class="ui segment">
-
     <div class="ui form">
         <div class="seven inline fields">
 
-            <div class="small field">
+            <div class="mini field">
                 <asp:Literal ID="DateLiteral" runat="server" />
                 <mixerp:DateTextBox ID="DateTextBox" runat="server" Mode="Today" CssClass="date" />
             </div>
@@ -98,17 +101,17 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                 <select id="PartySelect" title="F2"></select>
             </div>
 
-            <div class="small field" id="PriceTypeDiv" runat="server">
+            <div class="field" id="PriceTypeDiv" runat="server">
                 <asp:Literal ID="PriceTypeSelectLabel" runat="server" />
                 <select id="PriceTypeSelect"></select>
             </div>
 
-            <div class="small field">
+            <div class="tiny field">
                 <asp:Literal ID="ReferenceNumberInputTextLabel" runat="server" />
                 <input type="text" id="ReferenceNumberInputText" runat="server" maxlength="24" />
             </div>
 
-            <div class="field" id="CashTransactionDiv" runat="server">
+            <div class="tiny field" id="CashTransactionDiv" runat="server">
                 <div class="ui toggle checkbox">
                     <input id="CashTransactionInputCheckBox" type="checkbox" checked="checked">
                     <asp:Literal ID="CashTransactionLiteral" runat="server" />
@@ -118,7 +121,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     </div>
 </div>
 
-<table id="ProductGridView" class="ui form celled table segment" runat="server">
+<table id="ProductGridView" class="ui form celled table segment" style="min-width: 1400px; max-width: 2000px;" runat="server">
     <tbody>
         <tr>
             <th>

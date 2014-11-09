@@ -25,33 +25,33 @@ if (typeof invalidCostCenterWarningLocalized == "undefined") {
 };
 
 //Controls
-var addButton = $("#AddButton");
-var accountCodeTextBox = $("#AccountCodeTextBox");
-var accountDropDownList = $("#AccountDropDownList");
+var addInputButton = $("#AddInputButton");
+var accountCodeInputText = $("#AccountCodeInputText");
+var accountSelect = $("#AccountSelect");
 var attachmentDiv = $("#AttachmentDiv");
 var attachmentLabel = $("#AttachmentLabel");
 
-var cashRepositoryDropDownList = $("#CashRepositoryDropDownList");
+var cashRepositorySelect = $("#CashRepositorySelect");
 var costCenterDropDownList = $("#CostCenterDropDownList");
-var creditTextBox = $("#CreditTextBox");
+var creditInputText = $("#CreditInputText");
 
 var creditTotalTextBox = $("#CreditTotalTextBox");
-var currencyDropDownList = $("#CurrencyDropDownList");
+var currencySelect = $("#CurrencySelect");
 
-var debitTextBox = $("#DebitTextBox");
+var debitInputText = $("#DebitInputText");
 var debitTotalTextBox = $("#DebitTotalTextBox");
 
 var errorLabelBottom = $("#ErrorLabelBottom");
-var erTextBox = $("#ERTextBox");
+var erInputText = $("#ERInputText");
 
-var lcCreditTextBox = $("#LCCreditTextBox");
-var lcDebitTextBox = $("#LCDebitTextBox");
+var lcCreditInputText = $("#LCCreditInputText");
+var lcDebitInputText = $("#LCDebitInputText");
 
 var postButton = $("#PostButton");
 
-var referenceNumberTextBox = $("#ReferenceNumberTextBox");
+var referenceNumberInputText = $("#ReferenceNumberInputText");
 
-var statementReferenceTextBox = $("#StatementReferenceTextBox");
+var statementReferenceInputText = $("#StatementReferenceInputText");
 
 var transactionGridView = $("#TransactionGridView");
 var transactionGridViewHidden = $("#TransactionGridViewHidden");
@@ -95,11 +95,11 @@ function initializeAjaxData() {
 
 function loadAccounts() {
     url = "/Modules/Finance/Services/AccountData.asmx/GetAccounts";
-    ajaxDataBind(url, accountDropDownList);
+    ajaxDataBind(url, accountSelect);
 };
 
 function loadCashRepositories() {
-    accountCode = accountDropDownList.getSelectedValue();
+    accountCode = accountSelect.getSelectedValue();
 
     url = "/Modules/Finance/Services/AccountData.asmx/GetCashRepositoriesByAccountCode";
     data = appendParameter("", "accountCode", accountCode);
@@ -108,9 +108,9 @@ function loadCashRepositories() {
     var repoAjax = getAjax(url, data);
 
     repoAjax.success(function (msg) {
-        $.when(cashRepositoryDropDownList.bindAjaxData(msg.d)).done(function () {
-            if (cashRepositoryDropDownList.children('option').length === 1) {
-                loadCurrenciesByAccountCode(accountDropDownList.getSelectedValue());
+        $.when(cashRepositorySelect.bindAjaxData(msg.d)).done(function () {
+            if (cashRepositorySelect.children('option').length === 1) {
+                loadCurrenciesByAccountCode(accountSelect.getSelectedValue());
                 return;
             };
 
@@ -120,7 +120,7 @@ function loadCashRepositories() {
 
     repoAjax.error(function (xhr) {
         var err = $.parseJSON(xhr.responseText);
-        appendItem(cashRepositoryDropDownList, 0, err.Message);
+        appendItem(cashRepositorySelect, 0, err.Message);
     });
 };
 
@@ -131,7 +131,7 @@ function loadCostCenters() {
 
 function loadCurrencies() {
     url = "/Modules/Finance/Services/AccountData.asmx/GetCurrencies";
-    ajaxDataBind(url, currencyDropDownList);
+    ajaxDataBind(url, currencySelect);
 };
 
 function loadCurrenciesByAccountCode(accountCode) {
@@ -139,84 +139,84 @@ function loadCurrenciesByAccountCode(accountCode) {
     data = appendParameter("", "accountCode", accountCode);
     data = getData(data);
 
-    ajaxDataBind(url, currencyDropDownList, data);
+    ajaxDataBind(url, currencySelect, data);
 };
 
 //Control Events
-accountDropDownList.change(function () {
-    accountCodeTextBox.val(accountDropDownList.getSelectedValue());
+accountSelect.change(function () {
+    accountCodeInputText.val(accountSelect.getSelectedValue());
 });
 
-accountDropDownList.blur(function () {
+accountSelect.blur(function () {
     loadCashRepositories();
 });
 
-addButton.click(function () {
-    statementReference = statementReferenceTextBox.val();
-    accountCode = accountCodeTextBox.val();
-    account = accountDropDownList.getSelectedText();
-    cashRepositoryCode = cashRepositoryDropDownList.getSelectedValue();
+addInputButton.click(function () {
+    statementReference = statementReferenceInputText.val();
+    accountCode = accountCodeInputText.val();
+    account = accountSelect.getSelectedText();
+    cashRepositoryCode = cashRepositorySelect.getSelectedValue();
 
-    currencyCode = currencyDropDownList.getSelectedValue();
+    currencyCode = currencySelect.getSelectedValue();
 
-    debit = parseFloat2(debitTextBox.val());
-    credit = parseFloat2(creditTextBox.val());
+    debit = parseFloat2(debitInputText.val());
+    credit = parseFloat2(creditInputText.val());
 
-    er = parseFloat2(erTextBox.val());
+    er = parseFloat2(erInputText.val());
 
-    lcDebit = parseFloat2(lcDebitTextBox.val());
-    lcCredit = parseFloat2(lcCreditTextBox.val());
+    lcDebit = parseFloat2(lcDebitInputText.val());
+    lcCredit = parseFloat2(lcCreditInputText.val());
 
     if (isNullOrWhiteSpace(statementReference)) {
-        makeDirty(statementReferenceTextBox);
+        makeDirty(statementReferenceInputText);
         return;
     };
 
-    removeDirty(statementReferenceTextBox);
+    removeDirty(statementReferenceInputText);
 
-    if (isNullOrWhiteSpace(accountCodeTextBox.val())) {
-        makeDirty(accountCodeTextBox);
+    if (isNullOrWhiteSpace(accountCodeInputText.val())) {
+        makeDirty(accountCodeInputText);
         return;
     };
 
-    removeDirty(accountCodeTextBox);
+    removeDirty(accountCodeInputText);
 
-    if (isNullOrWhiteSpace(accountDropDownList.getSelectedText())) {
-        makeDirty(accountDropDownList);
+    if (isNullOrWhiteSpace(accountSelect.getSelectedText())) {
+        makeDirty(accountSelect);
         return;
     };
 
-    removeDirty(accountDropDownList);
+    removeDirty(accountSelect);
 
     if ((debit > 0 && credit > 0) || (debit === 0 && credit === 0)) {
-        makeDirty(debitTextBox);
-        makeDirty(creditTextBox);
+        makeDirty(debitInputText);
+        makeDirty(creditInputText);
         return;
     };
 
     if ((lcDebit > 0 && lcCredit > 0) || (lcDebit === 0 && lcCredit === 0)) {
-        makeDirty(lcDebitTextBox);
-        makeDirty(lcCreditTextBox);
+        makeDirty(lcDebitInputText);
+        makeDirty(lcCreditInputText);
         return;
     };
 
     if (lcDebit < 0) {
-        makeDirty(lcDebitTextBox);
+        makeDirty(lcDebitInputText);
         return;
     };
 
     if (lcCredit < 0) {
-        makeDirty(lcCreditTextBox);
+        makeDirty(lcCreditInputText);
         return;
     };
 
-    removeDirty(debitTextBox);
-    removeDirty(creditTextBox);
-    removeDirty(lcDebitTextBox);
-    removeDirty(lcCreditTextBox);
-    removeDirty(cashRepositoryDropDownList);
+    removeDirty(debitInputText);
+    removeDirty(creditInputText);
+    removeDirty(lcDebitInputText);
+    removeDirty(lcCreditInputText);
+    removeDirty(cashRepositorySelect);
 
-    if (cashRepositoryDropDownList.find("option").size() > 1 && isNullOrWhiteSpace(cashRepositoryDropDownList.getSelectedValue())) {
+    if (cashRepositorySelect.find("option").size() > 1 && isNullOrWhiteSpace(cashRepositorySelect.getSelectedValue())) {
         $.notify("Invalid cash repository specified.");
         return;
     }
@@ -244,7 +244,7 @@ addButton.click(function () {
 
         if (!accountCodeExists) {
             $.notify(String.format("Account code '{0}' does not exist.", accountCode), "error");
-            makeDirty(accountCodeTextBox);
+            makeDirty(accountCodeInputText);
             return;
         };
 
@@ -253,7 +253,7 @@ addButton.click(function () {
 
             if (!isCash && !isNullOrWhiteSpace(cashRepositoryCode)) {
                 $.notify("Invalid cash repository specified.");
-                makeDirty(cashRepositoryDropDownList);
+                makeDirty(cashRepositorySelect);
                 return;
             };
 
@@ -263,7 +263,7 @@ addButton.click(function () {
             };
 
             if (isNullOrWhiteSpace(cashRepositoryCode)) {
-                makeDirty(cashRepositoryDropDownList);
+                makeDirty(cashRepositorySelect);
                 $.notify("Invalid cash repository specified.", "error");
                 return;
             };
@@ -273,7 +273,7 @@ addButton.click(function () {
 
                 if (!cashRepositoryCodeExists) {
                     $.notify(String.format("Cash repository '{0}' does not exist.", cashRepositoryCode), "error");
-                    makeDirty(cashRepositoryDropDownList);
+                    makeDirty(cashRepositorySelect);
                     return;
                 };
 
@@ -293,7 +293,7 @@ addButton.click(function () {
 
                         if (!hasBalance) {
                             $.notify(String.format("Not enough balance in the cash repository '{0}'.", cashRepositoryCode), "error");
-                            makeDirty(cashRepositoryDropDownList);
+                            makeDirty(cashRepositorySelect);
                             return;
                         };
 
@@ -315,34 +315,34 @@ var addRow = function (statementReference, accountCode, account, cashRepository,
         if (!isCash) {
             if (getColumnText(row, 1) === accountCode) {
                 $.notify(duplicateEntryLocalized);
-                makeDirty(accountCodeTextBox);
+                makeDirty(accountCodeInputText);
                 return;
             }
         };
 
         if (getColumnText(row, 3) === cashRepository) {
             $.notify(duplicateEntryLocalized);
-            makeDirty(accountCodeTextBox);
+            makeDirty(accountCodeInputText);
             return;
         }
     });
 
     var html = "<tr class='grid2-row'><td>" + statementReference + "</td><td>" + accountCode + "</td><td>" + account + "</td><td>" + cashRepository + "</td><td>" + currencyCode + "</td><td class='text-right'>" + debit + "</td><td class='text-right'>" + credit + "</td>"
             + "<td class='text-right'>" + er + "</td><td class='text-right'>" + lcDebit + "</td><td class='text-right'>" + lcCredit + "</td>"
-            + "<td><span class='glyphicon glyphicon-remove-circle pointer span-icon' onclick='removeRow($(this));'></span><span class='glyphicon glyphicon-ok-sign pointer span-icon' onclick='toggleDanger($(this));'></span><span class='glyphicon glyphicon glyphicon-thumbs-up pointer span-icon' onclick='toggleSuccess($(this));'></span></td></tr>";
+            + "<td><a class='pointer' onclick='removeRow($(this));'><i class='ui delete icon'></i></a><a class='pointer' onclick='toggleDanger($(this));'><i class='ui pointer check mark icon'></a></i><a class='pointer' onclick='toggleSuccess($(this));'><i class='ui pointer thumbs up icon'></i></a></td></tr>";
     grid.find("tr:last").before(html);
 
     summate();
 
-    lcDebitTextBox.val("");
-    lcCreditTextBox.val("");
-    debitTextBox.val("");
-    creditTextBox.val("");
+    lcDebitInputText.val("");
+    lcCreditInputText.val("");
+    debitInputText.val("");
+    creditInputText.val("");
 
-    creditTextBox.prop("disabled", false);
+    creditInputText.prop("disabled", false);
 
     repaint();
-    statementReferenceTextBox.focus();
+    statementReferenceInputText.focus();
 };
 
 attachmentLabel.on("click", function () {
@@ -350,11 +350,11 @@ attachmentLabel.on("click", function () {
     attachmentDiv.toggle(500);
 });
 
-currencyDropDownList.blur(function () {
-    var ajaxGetExchangeRate = getExchangeRate(currencyDropDownList.getSelectedValue());
+currencySelect.blur(function () {
+    var ajaxGetExchangeRate = getExchangeRate(currencySelect.getSelectedValue());
 
     ajaxGetExchangeRate.done(function (msg) {
-        erTextBox.val(msg.d);
+        erInputText.val(msg.d);
     });
 
     ajaxGetExchangeRate.fail(function (xhr) {
@@ -362,31 +362,38 @@ currencyDropDownList.blur(function () {
     });
 });
 
-debitTextBox.blur(function () {
-    debit = parseFloat2(debitTextBox.val());
+debitInputText.blur(function () {
+    debit = parseFloat2(debitInputText.val());
 
     if (debit > 0) {
-        creditTextBox.prop("disabled", true);
-        erTextBox.focus();
+        creditInputText.prop("disabled", true);
+        erInputText.focus();
         return;
     };
 
-    creditTextBox.prop("disabled", false);
+    creditInputText.prop("disabled", false);
 });
 
-debitTextBox.keyup(function () {
-    er = parseFloat2(erTextBox.val());
-    if (er > 0) {
-        lcDebitTextBox.val(parseFloat2(debitTextBox.val() * er));
-    };
+debitInputText.keyup(function () {
+    UpdateLocalCurrencies();
 });
 
-creditTextBox.keyup(function () {
-    er = parseFloat2(erTextBox.val());
-    if (er > 0) {
-        lcCreditTextBox.val(parseFloat2(creditTextBox.val() * er));
-    };
+creditInputText.keyup(function () {
+    UpdateLocalCurrencies();
 });
+
+erInputText.keyup(function () {
+    UpdateLocalCurrencies();
+});
+
+function UpdateLocalCurrencies() {
+    er = parseFloat2(erInputText.val());
+
+    if (er > 0) {
+        lcDebitInputText.val(parseFloat2(debitInputText.val() * er));
+        lcCreditInputText.val(parseFloat2(creditInputText.val() * er));
+    };
+};
 
 postButton.click(function () {
     if (validate()) {
@@ -429,13 +436,13 @@ var validate = function () {
     errorLabelBottom.html("");
 
     removeDirty(valueDateTextBox);
-    removeDirty(referenceNumberTextBox);
-    removeDirty(statementReferenceTextBox);
-    removeDirty(accountCodeTextBox);
-    removeDirty(accountDropDownList);
-    removeDirty(cashRepositoryDropDownList);
-    removeDirty(lcDebitTextBox);
-    removeDirty(lcCreditTextBox);
+    removeDirty(referenceNumberInputText);
+    removeDirty(statementReferenceInputText);
+    removeDirty(accountCodeInputText);
+    removeDirty(accountSelect);
+    removeDirty(cashRepositorySelect);
+    removeDirty(lcDebitInputText);
+    removeDirty(lcCreditInputText);
     removeDirty(costCenterDropDownList);
 
     if (!isDate(valueDate)) {
@@ -490,7 +497,7 @@ var validate = function () {
         return false;
     };
 
-    referenceNumber = referenceNumberTextBox.getSelectedValue();
+    referenceNumber = referenceNumberInputText.getSelectedValue();
     transactionGridViewHidden.val(tableToJSON(transactionGridView));
     costCenterId = parseFloat2(costCenterDropDownList.getSelectedValue());
 

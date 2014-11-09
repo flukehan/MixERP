@@ -102,7 +102,7 @@ footer {
 }
 /* Margin End */
 label {
-  cursor: pointer !important;
+  cursor: pointer;
 }
 .text-secondary {
   color: #7c0c80;
@@ -209,9 +209,14 @@ h6:hover {
   font-size: 11px;
 }
 #signin-form {
-  width: 500px;
-  margin: 0 auto;
-  margin-top: 100px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  margin-top: -300px;
+  /*set to a negative number 1/2 of your height*/
+  margin-left: -200px;
+  /*set to a negative number 1/2 of your width*/
 }
 .widget {
   height: 100%;
@@ -394,7 +399,7 @@ select {
   box-sizing: border-box;
   color: rgba(0, 0, 0, 0.7);
   font-size: 1em;
-  height: 30px;
+  height: 33px;
   margin: 0;
   outline: 0 none;
   line-height: 1.42857;
@@ -425,10 +430,10 @@ select option {
 .inline .checkbox {
   margin-top: 9px !important;
 }
-.field:not(.error) input[type=password]:focus,
-.field:not(.error) .form input[type=text]:focus,
-.field:not(.error) .form select:focus,
-.field:not(.error) .form textarea:focus {
+.form input[type=password]:focus,
+.form input[type=text]:focus,
+.form select:focus,
+.form textarea:focus {
   border: 1px solid #4195fc !important;
   -webkit-border-radius: 4px !important;
   -moz-border-radius: 4px !important;
@@ -436,6 +441,18 @@ select option {
   -webkit-box-shadow: 0 0 8px #4195fc !important;
   -moz-box-shadow: 0 0 8px #4195fc !important;
   box-shadow: 0 0 8px #4195fc !important;
+}
+.field.error input[type=password]:focus,
+.field.error input[type=text]:focus,
+.field.error select:focus,
+.field.error textarea:focus {
+  border: 1px solid #d4610e !important;
+  -webkit-border-radius: 4px !important;
+  -moz-border-radius: 4px !important;
+  border-radius: 4px !important;
+  -webkit-box-shadow: 0 0 8px #d4610e !important;
+  -moz-box-shadow: 0 0 8px #d4610e !important;
+  box-shadow: 0 0 8px #d4610e !important;
 }
 .dirty {
   border: 1px solid #e8003d !important;
@@ -456,9 +473,21 @@ select option {
 .block {
   display: block;
 }
+.inline.fields .tiny.field input,
+.inline.fields .tiny.field select {
+  width: 80px !important;
+}
+.inline.fields .mini.field input,
+.inline.fields .mini.field select {
+  width: 90px !important;
+}
 .inline.fields .small.field input,
 .inline.fields .small.field select {
   width: 100px !important;
+}
+.inline.fields .compact.field input,
+.inline.fields .compact.field select {
+  width: 150px !important;
 }
 .inline.fields .medium.field input,
 .inline.fields .medium.field select {
@@ -491,5 +520,23 @@ table.segment tr.positive td a.pointer .icon:hover {
   -o-transform: scale(2);
   -webkit-transform: scale(2);
   transform: scale(2);
+}
+.tiny.segment {
+  width: 400px;
+}
+.mini.segment {
+  width: 500px;
+}
+.small.segment {
+  width: 600px;
+}
+.normal.segment {
+  width: 700px;
+}
+.widget .segment {
+  overflow: auto;
+}
+table.nowrap {
+  white-space: nowrap;
 }
 /*# sourceMappingURL=mixerp.css.map */

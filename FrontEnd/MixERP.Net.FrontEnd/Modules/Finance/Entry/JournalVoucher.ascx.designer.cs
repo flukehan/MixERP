@@ -49,13 +49,13 @@ namespace MixERP.Net.Core.Modules.Finance.Entry {
         protected global::System.Web.UI.WebControls.Literal ReferenceNumberLiteral;
         
         /// <summary>
-        /// ReferenceNumberTextBox control.
+        /// ReferenceNumberInputText control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ReferenceNumberTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText ReferenceNumberInputText;
         
         /// <summary>
         /// TransactionGridView control.
@@ -166,13 +166,13 @@ namespace MixERP.Net.Core.Modules.Finance.Entry {
         protected global::System.Web.UI.WebControls.Literal ActionLiteral;
         
         /// <summary>
-        /// AddButton control.
+        /// AddInputButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputButton AddButton;
+        protected global::System.Web.UI.HtmlControls.HtmlInputButton AddInputButton;
         
         /// <summary>
         /// AttachmentLabel control.

@@ -11,7 +11,9 @@ SELECT
     parent_accounts.account_name AS parent_account_name,
     core.account_masters.account_master_id,
     core.account_masters.account_master_code,
-    core.account_masters.account_master_name
+    core.account_masters.account_master_name,
+    core.has_child_accounts(core.accounts.account_id) AS has_child,
+    core.accounts.confidential
 FROM
     core.account_masters
     INNER JOIN core.accounts 

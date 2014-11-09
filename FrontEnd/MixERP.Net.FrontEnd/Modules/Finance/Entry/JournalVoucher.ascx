@@ -17,60 +17,85 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 
-<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="JournalVoucher.ascx.cs" Inherits="MixERP.Net.Core.Modules.Finance.Entry.JournalVoucher" %>
+<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="JournalVoucher.ascx.cs"
+    Inherits="MixERP.Net.Core.Modules.Finance.Entry.JournalVoucher"
+    OverridePath="/Modules/Finance/JournalVoucher.mix" %>
 
 <h2>
     <asp:Label ID="TitleLabel" runat="server" />
 </h2>
 
-<div class="form form-inline grey" style="padding: 24px; max-width: 600px;" role="form">
-    <div class="form-group">
-        <label for="ValueDateTextBox">
-            <asp:Literal ID="ValueDateLiteral" runat="server" />
-        </label>
-        <mixerp:DateTextBox ID="ValueDateTextBox" runat="server" Mode="Today" CssClass="date form-control input-sm" />
-    </div>
-    <div class="form-group">
-        <label for="ReferenceNumberTextBox">
-            <asp:Literal ID="ReferenceNumberLiteral" runat="server" />
-        </label>
-        <asp:TextBox ID="ReferenceNumberTextBox" runat="server" CssClass="form-control input-sm" />
+<div class="ui tiny form segment">
+    <div class="inline fields">
+        <div class="small field">
+            <label for="ValueDateTextBox">
+                <asp:Literal ID="ValueDateLiteral" runat="server" />
+            </label>
+            <mixerp:DateTextBox ID="ValueDateTextBox" runat="server" Mode="Today" CssClass="date" />
+        </div>
+        <div class="small field">
+            <label for="ReferenceNumberInputText">
+                <asp:Literal ID="ReferenceNumberLiteral" runat="server" />
+            </label>
+            <input type="text" id="ReferenceNumberInputText" runat="server" />
+        </div>
     </div>
 </div>
 
 <input type="hidden" id="TransactionGridViewHidden" />
-<table id="TransactionGridView" class="table table-hover" runat="server">
+
+<table id="TransactionGridView" class="ui table form segment" runat="server">
     <tbody>
         <tr>
             <th style="width: 200px;">
-                <asp:Literal runat="server" ID="StatementReferenceLiteral" />
+                <label for="StatementReferenceInputText">
+                    <asp:Literal runat="server" ID="StatementReferenceLiteral" />
+                </label>
             </th>
             <th scope="col" style="width: 100px;">
-                <asp:Literal runat="server" ID="AccountCodeLiteral" />
+                <label for="AccountCodeInputText">
+                    <asp:Literal runat="server" ID="AccountCodeLiteral" />
+                </label>
             </th>
             <th style="width: 250px;">
-                <asp:Literal runat="server" ID="AccountLiteral" />
+                <label for="AccountSelect">
+                    <asp:Literal runat="server" ID="AccountLiteral" />
+                </label>
             </th>
             <th style="width: 160px;">
-                <asp:Literal runat="server" ID="CashRepositoryLiteral" />
+                <label for="CashRepositorySelect">
+                    <asp:Literal runat="server" ID="CashRepositoryLiteral" />
+                </label>
             </th>
             <th style="width: 120px;">
-                <asp:Literal runat="server" ID="CurrencyLiteral" />
+                <label for="CurrencySelect">
+                    <asp:Literal runat="server" ID="CurrencyLiteral" />
+                </label>
             </th>
             <th class="text-right" style="width: 100px;">
-                <asp:Literal runat="server" ID="DebitLiteral" />
+                <label for="DebitInputText">
+                    <asp:Literal runat="server" ID="DebitLiteral" />
+                </label>
             </th>
             <th class="text-right" style="width: 100px;">
-                <asp:Literal runat="server" ID="CreditLiteral" />
+                <label for="CreditInputText">
+                    <asp:Literal runat="server" ID="CreditLiteral" />
+                </label>
             </th>
             <th class="text-right" style="width: 80px;">
-                <asp:Literal runat="server" ID="ERLiteral" />
+                <label for="ERInputText">
+                    <asp:Literal runat="server" ID="ERLiteral" />
+                </label>
             </th>
             <th class="text-right" style="width: 100px;">
-                <asp:Literal runat="server" ID="LCDebitLiteral" />
+                <label for="LCDebitInputText">
+                    <asp:Literal runat="server" ID="LCDebitLiteral" />
+                </label>
             </th>
             <th class="text-right" style="width: 100px;">
-                <asp:Literal runat="server" ID="LCCreditLiteral" />
+                <label for="LCCreditInputText">
+                    <asp:Literal runat="server" ID="LCCreditLiteral" />
+                </label>
             </th>
             <th style="width: 100px;">
                 <asp:Literal runat="server" ID="ActionLiteral" />
@@ -78,117 +103,80 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         </tr>
         <tr class="footer-row">
             <td>
-                <input type="text"
-                    id="StatementReferenceTextBox"
-                    class="form-control input-sm"
-                    title='Ctrl + Alt +S' />
+                <input type="text" id="StatementReferenceInputText" title='Ctrl + Alt +S' />
             </td>
             <td>
-                <input type="text"
-                    id="AccountCodeTextBox"
-                    title='Ctrl + Alt + T'
-                    class="form-control input-sm" />
+                <input type="text" id="AccountCodeInputText" title='Ctrl + Alt + T' />
             </td>
             <td>
-                <select name="AccountDropDownList"
-                    id="AccountDropDownList"
-                    class="form-control  input-sm"
-                    title='Ctrl + Alt + A'>
-                </select>
+                <select id="AccountSelect" title='Ctrl + Alt + A'></select>
             </td>
             <td>
-                <select name="CashRepositoryDropDownList"
-                    id="CashRepositoryDropDownList"
-                    class="form-control  input-sm">
-                </select>
+                <select id="CashRepositorySelect"></select>
             </td>
             <td>
-                <select name="CurrencyDropDownList"
-                    id="CurrencyDropDownList"
-                    class="form-control  input-sm">
-                </select>
+                <select id="CurrencySelect"></select>
             </td>
             <td>
-                <input type="text"
-                    id="DebitTextBox"
-                    class="text-right currency form-control input-sm"
-                    title='Ctrl + Alt + D' />
+                <input type="text" id="DebitInputText" class="text-right currency" title='Ctrl + Alt + D' />
             </td>
             <td>
-                <input type="text"
-                    id="CreditTextBox"
-                    class="text-right currency form-control input-sm"
-                    title='Ctrl + Alt + C' />
+                <input type="text" id="CreditInputText" class="text-right currency" title='Ctrl + Alt + C' />
             </td>
             <td>
-                <input type="text"
-                    id="ERTextBox"
-                    class="text-right decimal form-control input-sm" />
+                <input type="text" id="ERInputText" class="text-right decimal" />
             </td>
             <td>
-                <input type="text"
-                    id="LCDebitTextBox"
-                    class="text-right currency form-control input-sm"
-                    disabled="disabled"
-                    title='Ctrl + Alt + D' />
+                <input type="text" id="LCDebitInputText" class="text-right currency" readonly="readonly" title='Ctrl + Alt + D' />
             </td>
             <td>
-                <input type="text"
-                    id="LCCreditTextBox"
-                    class="text-right currency form-control input-sm"
-                    disabled="disabled"
-                    title='Ctrl + Alt + C' />
+                <input type="text" id="LCCreditInputText" class="text-right currency" readonly="readonly" title='Ctrl + Alt + C' />
             </td>
             <td>
-                <input type="button"
-                    id="AddButton"
-                    runat="server"
-                    class="btn btn-sm btn-default"
-                    title='Ctrl + Return' />
+                <input type="button" id="AddInputButton" runat="server" class="ui small blue button" title='Ctrl + Return' />
             </td>
         </tr>
     </tbody>
 </table>
 
 <h4>
-    <asp:Label ID="AttachmentLabel" runat="server" />
+    <asp:Label ID="AttachmentLabel" runat="server" Text="Attachments" />
 </h4>
 <div id="AttachmentDiv" class="grey" style="display: none; padding-left: 24px;">
     <mixerp:Attachment ID="Attachment1" runat="server" />
 </div>
 
-<div class="grey" role="form" style="max-width: 600px; padding: 24px;">
-    <div class="form-group">
+<div class="ui tiny form segment">
+    <div class="field">
         <label for="CostCenterDropDownList">
             <asp:Literal ID="CostCenterLiteral" runat="server" />
         </label>
         <select name="CostCenterDropDownList"
-            id="CostCenterDropDownList"
-            class="form-control  input-sm">
+            id="CostCenterDropDownList">
         </select>
     </div>
-    <div class="form-group">
+    <div class="field">
         <label for="DebitTotalTextBox">
             <asp:Literal ID="DebitTotalLiteral" runat="server" />
         </label>
         <input type="text"
             id="DebitTotalTextBox"
             readonly="readonly"
-            class="text-right currency form-control input-sm" />
+            class="text-right currency" />
     </div>
-    <div class="form-group">
+    <div class="field">
         <label for="CreditTotalLiteral">
             <asp:Literal ID="CreditTotalLiteral" runat="server" />
         </label>
         <input type="text"
             id="CreditTotalTextBox"
             readonly="readonly"
-            class="text-right currency form-control input-sm" />
+            class="text-right currency" />
     </div>
-    <button id="PostButton" type="button" class="btn btn-primary btn-sm">
+    <button id="PostButton" type="button" class="ui small positive button">
         <asp:Literal runat="server" ID="PostTransactionLiteral" />
     </button>
 </div>
-<asp:Label runat="server" ID="ErrorLabelBottom" CssClass="error"></asp:Label>
+<asp:Label runat="server" ID="ErrorLabelBottom" CssClass="big error"></asp:Label>
 
 <script src="../Scripts/Entry/JournalVoucher.js"></script>

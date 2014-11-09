@@ -144,7 +144,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <asp:GridView
         ID="ProductViewGridView"
         runat="server"
-        CssClass="ui celled table segment"
+        CssClass="ui celled nowrap table segment"
         AutoGenerateColumns="false"
         OnRowDataBound="ProductViewGridView_RowDataBound">
     </asp:GridView>

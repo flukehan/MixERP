@@ -44,7 +44,7 @@ namespace MixERP.Net.Core.Modules.Finance.Entry
             DebitTotalLiteral.Text = Resources.Titles.DebitTotal;
             CreditTotalLiteral.Text = Resources.Titles.CreditTotal;
             PostTransactionLiteral.Text = Resources.Titles.PostTransaction;
-            AddButton.Value = Resources.Titles.Add;
+            AddInputButton.Value = Resources.Titles.Add;
 
             base.OnControlLoad(sender, e);
         }
