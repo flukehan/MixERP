@@ -1,4 +1,4 @@
-﻿/********************************************************************************
+﻿<%-- 
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
 This file is part of MixERP.
@@ -14,18 +14,9 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
-***********************************************************************************/
+along with MixERP.  If not, see <http://www.gnu.org/licenses />.
+--%>
+<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Transfer.ascx.cs" Inherits="MixERP.Net.Core.Modules.Inventory.Confirmation.Transfer"
+    OverridePath="/Modules/Inventory/Transfer.mix" %>
 
-namespace MixERP.Net.Common.Models.Transactions
-{
-    public class StockTransferModel
-    {
-        public string TransferType { get; set; }
-        public string StoreName { get; set; }
-        public string ItemCode { get; set; }
-        public string ItemName { get; set; }
-        public string UnitName { get; set; }
-        public int Quantity { get; set; }
-    }
-}
+<asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>

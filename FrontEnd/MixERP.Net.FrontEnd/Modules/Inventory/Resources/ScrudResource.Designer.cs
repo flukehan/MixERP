@@ -115,6 +115,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Amount.
+        /// </summary>
+        internal static string amount {
+            get {
+                return ResourceManager.GetString("amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Audit Timestamp.
         /// </summary>
         internal static string audit_ts {
@@ -1186,6 +1195,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Store.
+        /// </summary>
+        internal static string store {
+            get {
+                return ResourceManager.GetString("store", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Street.
         /// </summary>
         internal static string street {
@@ -1209,6 +1227,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         internal static string tax_id {
             get {
                 return ResourceManager.GetString("tax_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tran Type.
+        /// </summary>
+        internal static string tran_type {
+            get {
+                return ResourceManager.GetString("tran_type", resourceCulture);
             }
         }
         

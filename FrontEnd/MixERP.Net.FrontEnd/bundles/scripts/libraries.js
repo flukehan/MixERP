@@ -38978,6 +38978,10 @@ var selectDropDownListByValue = function (textBoxId, dropDownListId) {
     var selectedValue = textBox.val();
     var exists;
 
+    if (isNullOrWhiteSpace(textBox.val())) {
+        return;
+    };
+
     if (listControl.length) {
         listControl.find('option').each(function () {
             if (this.value === selectedValue) {

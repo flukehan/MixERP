@@ -19,6 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
+using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.Core.Modules.Inventory.Resources;
 using System;
@@ -41,7 +42,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
         [WebMethod(EnableSession = true)]
         public long Save(DateTime valueDate, string referenceNumber, string statementReference, string data)
         {
-            Collection<StockTransferModel> stockTransferModels = this.GetModels(data);
+            Collection<StockAdjustmentModel> stockTransferModels = this.GetModels(data);
 
             foreach (var model in stockTransferModels)
             {
@@ -56,20 +57,24 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
                 }
             }
 
-            return 0;
+            int officeId = SessionHelper.GetOfficeId();
+            int userId = SessionHelper.GetUserId();
+            long loginId = SessionHelper.GetLogOnId();
+
+            return Inventory.Data.Helpers.StockTransfer.Add(officeId, userId, loginId, valueDate, referenceNumber, statementReference, stockTransferModels);
         }
 
         // ReSharper disable once ReturnTypeCanBeEnumerable.Local
-        private Collection<StockTransferModel> GetModels(string json)
+        private Collection<StockAdjustmentModel> GetModels(string json)
         {
-            Collection<StockTransferModel> models = new Collection<StockTransferModel>();
+            Collection<StockAdjustmentModel> models = new Collection<StockAdjustmentModel>();
 
             JavaScriptSerializer jss = new JavaScriptSerializer();
             dynamic result = jss.Deserialize<dynamic>(json);
 
             foreach (var item in result)
             {
-                StockTransferModel model = new StockTransferModel();
+                StockAdjustmentModel model = new StockAdjustmentModel();
 
                 model.TransferType = Conversion.TryCastString(item[0]);
                 model.StoreName = Conversion.TryCastString(item[1]);

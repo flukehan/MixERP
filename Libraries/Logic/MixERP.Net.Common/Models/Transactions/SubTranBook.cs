@@ -28,6 +28,8 @@ namespace MixERP.Net.Common.Models.Transactions
         Receipt, /*Readonly*/
         Invoice,
         Payment,
-        Return
+        Return,
+        Transfer,
+        Suspense
     }
 }

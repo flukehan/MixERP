@@ -69,8 +69,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Adjustment.ascx" />
+    <Content Include="Confirmation\Transfer.ascx" />
+    <Content Include="Entry\Transfer.ascx" />
     <Content Include="Index.ascx" />
     <Content Include="Package.xml" />
+    <Content Include="Reports\InventoryTransferReport.ascx" />
+    <Content Include="Reports\Source\Inventory.Transfer.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Scripts\Setup\Parties.js" />
     <Content Include="Services\Entry\Transfer.asmx" />
     <Content Include="Setup\CompoundItemDetails.ascx" />
@@ -103,6 +109,20 @@
     <Compile Include="Adjustment.ascx.designer.cs">
       <DependentUpon>Adjustment.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Confirmation\Transfer.ascx.cs">
+      <DependentUpon>Transfer.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Confirmation\Transfer.ascx.designer.cs">
+      <DependentUpon>Transfer.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Entry\Transfer.ascx.cs">
+      <DependentUpon>Transfer.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Entry\Transfer.ascx.designer.cs">
+      <DependentUpon>Transfer.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Index.ascx.cs">
       <DependentUpon>Index.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -111,6 +131,13 @@
       <DependentUpon>Index.ascx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\InventoryTransferReport.ascx.cs">
+      <DependentUpon>InventoryTransferReport.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\InventoryTransferReport.ascx.designer.cs">
+      <DependentUpon>InventoryTransferReport.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Errors.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -247,6 +274,10 @@
       <Project>{2d961540-6597-4e7b-969c-974d71d820dd}</Project>
       <Name>MixERP.Net.WebControls.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.ReportEngine\MixERP.Net.WebControls.ReportEngine.csproj">
+      <Project>{81F04B78-6194-4F86-A795-5F186C602EEE}</Project>
+      <Name>MixERP.Net.WebControls.ReportEngine</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\MixERP.Net.WebControls.ScrudFactory.csproj">
       <Project>{07ddce95-a18f-4a35-b892-ce09ead2aa65}</Project>
       <Name>MixERP.Net.WebControls.ScrudFactory</Name>
@@ -259,6 +290,10 @@
       <Project>{935fbcef-5f6b-4bd3-b6f3-0c65fea66a15}</Project>
       <Name>MixERP.Net.WebControls.StockAdjustmentFactory</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\MixERP.Net.WebControls.TransactionChecklist.csproj">
+      <Project>{64490B89-B228-4188-8235-71744A94C9AE}</Project>
+      <Name>MixERP.Net.WebControls.TransactionChecklist</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\MixERP.Net.FrontEnd.csproj">
       <Project>{ace1017d-71bc-4417-a906-72c4b9c55823}</Project>
       <Name>MixERP.Net.FrontEnd</Name>
@@ -269,7 +304,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Reports\" />
     <Folder Include="Widgets\" />
   </ItemGroup>
   <ItemGroup>

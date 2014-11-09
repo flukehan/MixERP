@@ -61,6 +61,78 @@ namespace MixERP.Net.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid SubTranBook &quot;Inventory Delivery&quot;.
+        /// </summary>
+        internal static string InvalidSubTranBookInventoryDelivery {
+            get {
+                return ResourceManager.GetString("InvalidSubTranBookInventoryDelivery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid SubTranBook &quot;Inventory Direct&quot;.
+        /// </summary>
+        internal static string InvalidSubTranBookInventoryDirect {
+            get {
+                return ResourceManager.GetString("InvalidSubTranBookInventoryDirect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid SubTranBook &quot;Inventory Invoice&quot;.
+        /// </summary>
+        internal static string InvalidSubTranBookInventoryInvoice {
+            get {
+                return ResourceManager.GetString("InvalidSubTranBookInventoryInvoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid SubTranBook &quot;Inventory Order&quot;.
+        /// </summary>
+        internal static string InvalidSubTranBookInventoryOrder {
+            get {
+                return ResourceManager.GetString("InvalidSubTranBookInventoryOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid SubTranBook &quot;Inventory Payment&quot;.
+        /// </summary>
+        internal static string InvalidSubTranBookInventoryPayment {
+            get {
+                return ResourceManager.GetString("InvalidSubTranBookInventoryPayment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid SubTranBook &quot;Inventory Quotation&quot;.
+        /// </summary>
+        internal static string InvalidSubTranBookInventoryQuotation {
+            get {
+                return ResourceManager.GetString("InvalidSubTranBookInventoryQuotation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid SubTranBook &quot;Inventory Receipt&quot;.
+        /// </summary>
+        internal static string InvalidSubTranBookInventoryReceipt {
+            get {
+                return ResourceManager.GetString("InvalidSubTranBookInventoryReceipt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid SubTranBook &quot;Inventory Return&quot;.
+        /// </summary>
+        internal static string InvalidSubTranBookInventoryReturn {
+            get {
+                return ResourceManager.GetString("InvalidSubTranBookInventoryReturn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid SubTranBook &quot;Purchase Delivery&quot;.
         /// </summary>
         internal static string InvalidSubTranBookPurchaseDelivery {
@@ -79,11 +151,47 @@ namespace MixERP.Net.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid SubTranBook &quot;Purchase Suspense&quot;.
+        /// </summary>
+        internal static string InvalidSubTranBookPurchaseSuspense {
+            get {
+                return ResourceManager.GetString("InvalidSubTranBookPurchaseSuspense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid SubTranBook &quot;Purchase Transfer&quot;.
+        /// </summary>
+        internal static string InvalidSubTranBookPurchaseTransfer {
+            get {
+                return ResourceManager.GetString("InvalidSubTranBookPurchaseTransfer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid SubTranBook &quot;Sales Payment&quot;.
         /// </summary>
         internal static string InvalidSubTranBookSalesPayment {
             get {
                 return ResourceManager.GetString("InvalidSubTranBookSalesPayment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid SubTranBook &quot;Sales Suspense&quot;.
+        /// </summary>
+        internal static string InvalidSubTranBookSalesSuspense {
+            get {
+                return ResourceManager.GetString("InvalidSubTranBookSalesSuspense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid SubTranBook &quot;Sales Transfer&quot;.
+        /// </summary>
+        internal static string InvalidSubTranBookSalesTransfer {
+            get {
+                return ResourceManager.GetString("InvalidSubTranBookSalesTransfer", resourceCulture);
             }
         }
     }

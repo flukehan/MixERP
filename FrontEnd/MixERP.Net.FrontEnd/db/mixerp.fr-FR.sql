@@ -2782,7 +2782,6 @@ CREATE TYPE core.attachment_type AS
 );
 
 DROP TYPE IF EXISTS transactions.purchase_reorder_type CASCADE;
-
 CREATE TYPE transactions.purchase_reorder_type
 AS
 (
@@ -2794,6 +2793,16 @@ AS
         order_quantity          integer_strict
 );
 
+
+DROP TYPE IF EXISTS transactions.stock_adjustment_type CASCADE;
+CREATE TYPE transactions.stock_adjustment_type AS
+(
+        tran_type       transaction_type,
+        store_name      national character varying(50),
+        item_code       national character varying(12),
+        unit_name       national character varying(50),
+        quantity        integer_strict
+);
 
 
 -->-->-- /db/src/02. functions and logic/audit/audit.is_valid_login_id.sql --<--<--
@@ -6230,7 +6239,7 @@ BEGIN
     FROM transactions.stock_master
     INNER JOIN transactions.stock_details
     ON transactions.stock_master.stock_master_id = transactions.stock_details.stock_master_id
-    INNER JOIN core.parties
+    LEFT OUTER JOIN core.parties
     ON transactions.stock_master.party_id = core.parties.party_id
     INNER JOIN transactions.transaction_master
     ON transactions.transaction_master.transaction_master_id=transactions.stock_master.transaction_master_id
@@ -6246,7 +6255,7 @@ BEGIN
     AND 
     lower
     (
-        core.parties.party_code || ' (' || core.parties.party_name || ')'
+        COALESCE(core.parties.party_code || ' (' || core.parties.party_name || ')', '')
     ) LIKE '%' || lower(party_) || '%'
     AND
     lower
@@ -6291,7 +6300,7 @@ END
 $$
 LANGUAGE plpgsql;
 
---select * from transactions.get_product_view(1, 'Sales.Return', 1, '1-1-2000',  '1-1-2020', '', '', '', '', '', '');
+--select * from transactions.get_product_view(1, 'Inventory.Transfer', 1, '1-1-2000',  '1-1-2020', '', '', '', '', '', '');
 
 
 
@@ -7718,6 +7727,149 @@ LANGUAGE plpgsql;
 --------------------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------------------
 **************************************************************************************************************************/
+
+
+
+
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.post_stock_journal.sql --<--<--
+DROP FUNCTION IF EXISTS transactions.post_stock_journal
+(
+        _office_id                              integer,
+        _user_id                                integer,
+        _login_id                               bigint,
+        _value_date                             date,
+        _reference_number                       national character varying(24),
+        _statement_reference                    text,
+        _details                                transactions.stock_adjustment_type[]
+);
+
+
+CREATE FUNCTION transactions.post_stock_journal
+(
+        _office_id                              integer,
+        _user_id                                integer,
+        _login_id                               bigint,
+        _value_date                             date,
+        _reference_number                       national character varying(24),
+        _statement_reference                    text,
+        _details                                transactions.stock_adjustment_type[]
+)
+RETURNS bigint
+AS
+$$
+        DECLARE _transaction_master_id                  bigint;
+        DECLARE _stock_master_id                        bigint;
+BEGIN
+        CREATE TEMPORARY TABLE IF NOT EXISTS temp_stock_details
+        (
+                tran_type       transaction_type,
+                store_id        integer,
+                store_name      national character varying(50),
+                item_id         integer,
+                item_code       national character varying(12),
+                unit_id         integer,
+                base_unit_id    integer,
+                unit_name       national character varying(50),
+                quantity        integer_strict,
+                base_quantity   integer,                
+                price           money_strict                             
+        ) 
+        ON COMMIT DROP; 
+
+        INSERT INTO temp_stock_details(tran_type, store_name, item_code, unit_name, quantity)
+        SELECT tran_type, store_name, item_code, unit_name, quantity FROM explode_array(_details);
+
+        UPDATE temp_stock_details SET 
+        item_id         = core.get_item_id_by_item_code(item_code),
+        unit_id         = core.get_unit_id_by_unit_name(unit_name),
+        store_id        = office.get_store_id_by_store_name(store_name);
+
+        UPDATE temp_stock_details SET
+        base_unit_id    = core.get_root_unit_id(unit_id),
+        base_quantity   = core.get_base_quantity_by_unit_id(unit_id, quantity),
+        price           = core.get_item_cost_price(item_id, unit_id, NULL);
+
+
+        IF EXISTS
+        (
+                SELECT 1
+                FROM 
+                office.stores
+                WHERE office.stores.store_id
+                IN
+                (
+                        SELECT temp_stock_details.store_id
+                        FROM temp_stock_details
+                )
+                HAVING COUNT(DISTINCT office.stores.office_id) > 1
+
+        ) THEN
+                RAISE EXCEPTION E'Access is denied!\nA stock journal transaction cannot references multiple branches.';
+        END IF;
+
+        IF EXISTS
+        (
+                SELECT 1
+                FROM 
+                temp_stock_details
+                WHERE tran_type = 'Cr'
+                AND quantity > core.count_item_in_stock(item_id, unit_id, store_id)
+        ) THEN
+                RAISE EXCEPTION 'Negative stock is not allowed.';
+        END IF;
+
+        INSERT INTO transactions.transaction_master
+        (
+                transaction_master_id,
+                transaction_counter,
+                transaction_code,
+                book,
+                value_date,
+                login_id,
+                user_id,
+                office_id,
+                reference_number,
+                statement_reference
+        )
+        SELECT
+                nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), 
+                transactions.get_new_transaction_counter(_value_date), 
+                transactions.get_transaction_code(_value_date, _office_id, _user_id, _login_id),
+                'Inventory.Transfer',
+                _value_date,
+                _login_id,
+                _user_id,
+                _office_id,
+                _reference_number,
+                _statement_reference;
+
+
+        _transaction_master_id                          := currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
+
+
+        INSERT INTO transactions.stock_master(stock_master_id, transaction_master_id)
+        SELECT nextval(pg_get_serial_sequence('transactions.stock_master', 'stock_master_id')), _transaction_master_id;
+
+        _stock_master_id                                := currval(pg_get_serial_sequence('transactions.stock_master', 'stock_master_id'));
+
+        INSERT INTO transactions.stock_details(stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price)
+        SELECT _stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price
+        FROM temp_stock_details;
+        
+        
+        RETURN _transaction_master_id;
+END
+$$
+LANGUAGE plpgsql;
+
+
+-- SELECT * FROM transactions.post_stock_journal(1, 1, 1, '1-1-2010', '22', 'Test', 
+-- ARRAY[
+-- ROW('Cr', 'Store 1', 'RMBP', 'Pièce', 2)::transactions.stock_adjustment_type,
+-- ROW('Dr', 'Godown 2', 'RMBP', 'Pièce', 2)::transactions.stock_adjustment_type
+-- 
+-- ]
+-- );
 
 
 

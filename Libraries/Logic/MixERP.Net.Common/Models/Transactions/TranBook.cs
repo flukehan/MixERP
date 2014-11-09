@@ -22,6 +22,7 @@ namespace MixERP.Net.Common.Models.Transactions
     public enum TranBook
     {
         Sales,
-        Purchase
+        Purchase,
+        Inventory
     }
 }

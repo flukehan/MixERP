@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.Common.Resources;
 using System;
@@ -54,7 +55,7 @@ namespace MixERP.Net.Common.Helpers
                         break;
 
                     case SubTranBook.Payment:
-                        throw new InvalidOperationException(Warnings.InvalidSubTranBookSalesPayment);
+                        throw new MixERPException(Warnings.InvalidSubTranBookSalesPayment);
                     case SubTranBook.Quotation:
                         bookName = "Sales.Quotation";
                         break;
@@ -66,6 +67,10 @@ namespace MixERP.Net.Common.Helpers
                     case SubTranBook.Return:
                         bookName = "Sales.Return";
                         break;
+                    case SubTranBook.Transfer:
+                        throw new MixERPException(Warnings.InvalidSubTranBookSalesTransfer);
+                    case SubTranBook.Suspense:
+                        throw new MixERPException(Warnings.InvalidSubTranBookSalesSuspense);
                 }
             }
 
@@ -74,7 +79,7 @@ namespace MixERP.Net.Common.Helpers
                 switch (subBook)
                 {
                     case SubTranBook.Delivery:
-                        throw new InvalidOperationException(Warnings.InvalidSubTranBookPurchaseDelivery);
+                        throw new MixERPException(Warnings.InvalidSubTranBookPurchaseDelivery);
                     case SubTranBook.Direct:
                         bookName = "Purchase.Direct";
                         break;
@@ -92,13 +97,46 @@ namespace MixERP.Net.Common.Helpers
                         break;
 
                     case SubTranBook.Quotation:
-                        throw new InvalidOperationException(Warnings.InvalidSubTranBookPurchaseQuotation);
+                        throw new MixERPException(Warnings.InvalidSubTranBookPurchaseQuotation);
                     case SubTranBook.Receipt:
                         bookName = "Purchase.Receipt"; //Also known as GRN
                         break;
 
                     case SubTranBook.Return:
                         bookName = "Purchase.Return";
+                        break;
+                    case SubTranBook.Transfer:
+                        throw new MixERPException(Warnings.InvalidSubTranBookPurchaseTransfer);
+                    case SubTranBook.Suspense:
+                        throw new MixERPException(Warnings.InvalidSubTranBookPurchaseSuspense);
+                }
+            }
+
+            if (book == TranBook.Inventory)
+            {
+                switch (subBook)
+                {
+                    case SubTranBook.Delivery:
+                        throw new MixERPException(Warnings.InvalidSubTranBookInventoryDelivery);
+                    case SubTranBook.Direct:
+                        throw new MixERPException(Warnings.InvalidSubTranBookInventoryDirect);
+                    case SubTranBook.Invoice:
+                        throw new MixERPException(Warnings.InvalidSubTranBookInventoryInvoice);
+                    case SubTranBook.Order:
+                        throw new MixERPException(Warnings.InvalidSubTranBookInventoryOrder);
+                    case SubTranBook.Payment:
+                        throw new MixERPException(Warnings.InvalidSubTranBookInventoryPayment);
+                    case SubTranBook.Quotation:
+                        throw new MixERPException(Warnings.InvalidSubTranBookInventoryQuotation);
+                    case SubTranBook.Receipt:
+                        throw new MixERPException(Warnings.InvalidSubTranBookInventoryReceipt);
+                    case SubTranBook.Return:
+                        throw new MixERPException(Warnings.InvalidSubTranBookInventoryReturn);
+                    case SubTranBook.Transfer:
+                        bookName = "Inventory.Transfer";
+                        break;
+                    case SubTranBook.Suspense:
+                        bookName = "Inventory.Suspense";
                         break;
                 }
             }

@@ -20,13 +20,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using MixERP.Net.Common.Models.Core;
 using MixERP.Net.Common.Models.Transactions;
 using Npgsql;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
 {
@@ -75,13 +71,13 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
         {
             if (details == null)
             {
-                return "NULL::stock_detail_type";
+                return "NULL::transactions.stock_detail_type";
             }
 
             Collection<string> detailCollection = new Collection<string>();
             for (int i = 0; i < details.Count; i++)
             {
-                detailCollection.Add(string.Format("ROW(@StoreId{0}, @ItemCode{0}, @Quantity{0}, @UnitName{0},@Price{0}, @Discount{0}, @TaxRate{0}, @Tax{0})::stock_detail_type", i.ToString(CultureInfo.InvariantCulture)));
+                detailCollection.Add(string.Format("ROW(@StoreId{0}, @ItemCode{0}, @Quantity{0}, @UnitName{0},@Price{0}, @Discount{0}, @TaxRate{0}, @Tax{0})::transactions.stock_detail_type", i.ToString(CultureInfo.InvariantCulture)));
             }
 
             return string.Join(",", detailCollection);

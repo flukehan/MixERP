@@ -525,4 +525,13 @@
   <data name="hundredth_name" xml:space="preserve">
     <value>Hundredth Name</value>
   </data>
+  <data name="amount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="store" xml:space="preserve">
+    <value>Store</value>
+  </data>
+  <data name="tran_type" xml:space="preserve">
+    <value>Tran Type</value>
+  </data>
 </root>

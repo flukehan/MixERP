@@ -20,7 +20,6 @@ CREATE TYPE core.attachment_type AS
 );
 
 DROP TYPE IF EXISTS transactions.purchase_reorder_type CASCADE;
-
 CREATE TYPE transactions.purchase_reorder_type
 AS
 (
@@ -32,3 +31,13 @@ AS
         order_quantity          integer_strict
 );
 
+
+DROP TYPE IF EXISTS transactions.stock_adjustment_type CASCADE;
+CREATE TYPE transactions.stock_adjustment_type AS
+(
+        tran_type       transaction_type,
+        store_name      national character varying(50),
+        item_code       national character varying(12),
+        unit_name       national character varying(50),
+        quantity        integer_strict
+);

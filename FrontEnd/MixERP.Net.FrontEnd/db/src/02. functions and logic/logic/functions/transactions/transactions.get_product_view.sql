@@ -90,7 +90,7 @@ BEGIN
     FROM transactions.stock_master
     INNER JOIN transactions.stock_details
     ON transactions.stock_master.stock_master_id = transactions.stock_details.stock_master_id
-    INNER JOIN core.parties
+    LEFT OUTER JOIN core.parties
     ON transactions.stock_master.party_id = core.parties.party_id
     INNER JOIN transactions.transaction_master
     ON transactions.transaction_master.transaction_master_id=transactions.stock_master.transaction_master_id
@@ -106,7 +106,7 @@ BEGIN
     AND 
     lower
     (
-        core.parties.party_code || ' (' || core.parties.party_name || ')'
+        COALESCE(core.parties.party_code || ' (' || core.parties.party_name || ')', '')
     ) LIKE '%' || lower(party_) || '%'
     AND
     lower
@@ -151,5 +151,5 @@ END
 $$
 LANGUAGE plpgsql;
 
---select * from transactions.get_product_view(1, 'Sales.Return', 1, '1-1-2000',  '1-1-2020', '', '', '', '', '', '');
+--select * from transactions.get_product_view(1, 'Inventory.Transfer', 1, '1-1-2000',  '1-1-2020', '', '', '', '', '', '');
 

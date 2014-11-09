@@ -31,8 +31,8 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
                 {
                     transactionTypeSelect.ID = "TransactionTypeSelect";
 
-                    transactionTypeSelect.Items.Add(new ListItem(@"Dr", @"Dr"));
                     transactionTypeSelect.Items.Add(new ListItem(@"Cr", @"Cr"));
+                    transactionTypeSelect.Items.Add(new ListItem(@"Dr", @"Dr"));
 
                     cell.Controls.Add(transactionTypeSelect);
                 }

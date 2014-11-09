@@ -23,7 +23,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 </h2>
 
 <div class="ui icon buttons">
-
     <button type="button" id="AddNewButton" runat="server" class="ui button">
         <i class="icon plus"></i>
         <asp:Literal runat="server" Text="Add New" />
@@ -102,14 +101,14 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                     CssClass="date form-control input-sm"
                     Mode="FiscalYearStartDate"
                     Required="true" />
-                <i class="icon calendar" onclick=" $('#DateFromDateTextBox').datepicker('show'); "></i>
+                <i class="icon calendar pointer" onclick=" $('#DateFromDateTextBox').datepicker('show'); "></i>
             </div>
 
             <div class="small field">
                 <mixerp:DateTextBox ID="DateToDateTextBox" runat="server"
                     CssClass="date form-control input-sm"
                     Mode="MonthEndDate" Required="true" />
-                <i class="icon calendar" onclick=" $('#DateToDateTextBox').datepicker('show'); "></i>
+                <i class="icon calendar pointer" onclick=" $('#DateToDateTextBox').datepicker('show'); "></i>
             </div>
 
             <div class="small field">

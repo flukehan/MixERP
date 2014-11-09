@@ -53,9 +53,11 @@
   <ItemGroup>
     <Compile Include="Helpers\Agents.cs" />
     <Compile Include="Helpers\Items.cs" />
+    <Compile Include="Helpers\ParameterHelper.cs" />
     <Compile Include="Helpers\Parties.cs" />
     <Compile Include="Helpers\PriceTypes.cs" />
     <Compile Include="Helpers\Shippers.cs" />
+    <Compile Include="Helpers\StockTransfer.cs" />
     <Compile Include="Helpers\Stores.cs" />
     <Compile Include="Helpers\Units.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -75,6 +77,10 @@
     <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.Net.DbFactory\MixERP.Net.DBFactory.csproj">
       <Project>{8fd9661c-2473-4581-8722-18b08d4db252}</Project>
       <Name>MixERP.Net.DBFactory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.Net.TransactionGovernor\MixERP.Net.TransactionGovernor.csproj">
+      <Project>{0aacf4db-8332-4c4b-96df-2bf6aea68473}</Project>
+      <Name>MixERP.Net.TransactionGovernor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
