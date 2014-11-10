@@ -17,12 +17,4 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DirectPurchase.ascx.cs" Inherits="MixERP.Net.Core.Modules.Purchase.DirectPurchase" %>
-
-<mixerp:ProductView
-    ID="ProductView1"
-    runat="server"
-    Book="Purchase" SubBook="Direct"
-    AddNewUrl="~/Modules/Purchase/Entry/DirectPurchase.mix"
-    PreviewUrl="~/Modules/Purchase/Reports/DirectPurchaseInvoiceReport.mix"
-    ChecklistUrl="~/Modules/Purchase/Confirmation/DirectPurchase.mix"
-    ShowReturnButton="true" />
+<asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>

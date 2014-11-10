@@ -1,5 +1,6 @@
 ﻿using MixERP.Net.Core.Modules.Inventory.Resources;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.WebControls.StockAdjustmentFactory;
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
@@ -26,16 +27,18 @@ namespace MixERP.Net.Core.Modules.Inventory.Entry
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            WebControls.StockAdjustmentFactory.FormView form = new WebControls.StockAdjustmentFactory.FormView();
-            form.Text = Titles.StockTransferJournal;
-            form.StoreServiceUrl = "/Modules/Inventory/Services/ItemData.asmx/GetStores";
-            form.ItemServiceUrl = "/Modules/Inventory/Services/ItemData.asmx/GetItems";
-            form.UnitServiceUrl = "/Modules/Inventory/Services/ItemData.asmx/GetUnits";
-            form.ItemPopupUrl = "/Modules/Inventory/Setup/ItemsPopup.mix?modal=1&CallBackFunctionName=loadItems&AssociatedControlId=ItemIdHidden";
-            form.ItemIdQuerySericeUrl = "/Modules/Inventory/Services/ItemData.asmx/GetItemCodeByItemId";
-            form.ValidateSides = true;
+            using (FormView form = new FormView())
+            {
+                form.Text = Titles.StockTransferJournal;
+                form.StoreServiceUrl = "/Modules/Inventory/Services/ItemData.asmx/GetStores";
+                form.ItemServiceUrl = "/Modules/Inventory/Services/ItemData.asmx/GetItems";
+                form.UnitServiceUrl = "/Modules/Inventory/Services/ItemData.asmx/GetUnits";
+                form.ItemPopupUrl = "/Modules/Inventory/Setup/ItemsPopup.mix?modal=1&CallBackFunctionName=loadItems&AssociatedControlId=ItemIdHidden";
+                form.ItemIdQuerySericeUrl = "/Modules/Inventory/Services/ItemData.asmx/GetItemCodeByItemId";
+                form.ValidateSides = true;
 
-            this.Placeholder1.Controls.Add(form);
+                this.Placeholder1.Controls.Add(form);
+            }
 
             base.OnControlLoad(sender, e);
         }

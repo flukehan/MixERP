@@ -17,8 +17,10 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.Core.Modules.Sales.Resources;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.UserControls.Products;
 using System;
 
 namespace MixERP.Net.Core.Modules.Sales
@@ -27,7 +29,20 @@ namespace MixERP.Net.Core.Modules.Sales
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            ProductView1.Text = Titles.DirectSales;
+            using (ProductViewControl productView = (ProductViewControl)this.Page.LoadControl("~/UserControls/Products/ProductViewControl.ascx"))
+            {
+                productView.Text = Titles.DirectSales;
+                productView.Book = TranBook.Sales;
+                productView.SubBook = SubTranBook.Direct;
+                productView.AddNewUrl = "~/Modules/Sales/Entry/DirectSales.mix";
+                productView.PreviewUrl = "~/Modules/Sales/Reports/DirectSalesInvoiceReport.mix";
+                productView.ChecklistUrl = "~/Modules/Sales/Confirmation/DirectSales.mix";
+                productView.ShowReturnButton = true;
+                productView.Initialize();
+
+                Placeholder1.Controls.Add(productView);
+            }
+
             base.OnControlLoad(sender, e);
         }
     }

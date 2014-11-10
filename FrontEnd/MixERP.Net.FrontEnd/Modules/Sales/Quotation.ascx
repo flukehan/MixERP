@@ -17,13 +17,4 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Quotation.ascx.cs" Inherits="MixERP.Net.Core.Modules.Sales.Quotation" %>
-<mixerp:ProductView
-    ID="ProductView1"
-    runat="server"
-    Book="Sales"
-    SubBook="Quotation"
-    AddNewUrl="~/Modules/Sales/Entry/Quotation.mix"
-    PreviewUrl="~/Modules/Sales/Reports/SalesQuotationReport.mix"
-    ChecklistUrl="~/Modules/Sales/Confirmation/Quotation.mix"
-    ShowMergeToOrderButton="True"
-    ShowMergeToDeliveryButton="True" />
+<asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>

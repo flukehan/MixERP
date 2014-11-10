@@ -18,15 +18,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DirectPurchase.ascx.cs" Inherits="MixERP.Net.Core.Modules.Purchase.Entry.DirectPurchase"
     OverridePath="/Modules/Purchase/DirectPurchase.mix" %>
-
-<mixerp:Product runat="server" ID="DirectPurchaseControl"
-    Book="Purchase"
-    SubBook="Direct"
-    ShowTransactionType="true"
-    ShowCashRepository="true"
-    ShowStore="True"
-    ShowCostCenter="True"
-    OnSaveButtonClick="Purchase_SaveButtonClick"
-    TopPanelWidth="750px" />
+<asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
 
 <script src="../Scripts/Entry/DirectPurchase.js"></script>

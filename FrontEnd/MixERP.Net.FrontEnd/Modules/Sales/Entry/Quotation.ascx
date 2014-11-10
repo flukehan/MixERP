@@ -18,12 +18,5 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Quotation.ascx.cs" Inherits="MixERP.Net.Core.Modules.Sales.Entry.Quotation"
     OverridePath="/Modules/Sales/Quotation.mix" %>
-<mixerp:Product runat="server"
-    ID="SalesQuotationControl"
-    Book="Sales"
-    SubBook="Quotation"
-    ShowPriceTypes="True"
-    ShowShippingInformation="True"
-    ShowSalesAgents="True"
-    ShowStore="True" />
+<asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
 <script src="../Scripts/Entry/Quotation.js"></script>

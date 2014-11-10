@@ -19,6 +19,5 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="GLAdviceReport.ascx.cs" Inherits="MixERP.Net.Core.Modules.Finance.Reports.GLAdviceReport"
     MasterPageId="MixERPReportMaster.Master" RemoveTheme="true" OverridePath="/Modules/Finance/JournalVoucher.mix" %>
-<mixerp:Report ID="Report1" runat="server"
-    Path="~/Modules/Finance/Reports/Source/Transactions.GLEntry.xml"
-    AutoInitialize="true" />
+
+<asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>

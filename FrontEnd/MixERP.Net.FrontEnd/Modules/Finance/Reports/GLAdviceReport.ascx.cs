@@ -19,6 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using MixERP.Net.Core.Modules.Finance.Resources;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.WebControls.ReportEngine;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -33,10 +34,16 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             Collection<KeyValuePair<string, string>> list = new Collection<KeyValuePair<string, string>>();
             list.Add(new KeyValuePair<string, string>("@transaction_master_id", this.Page.Request["TranId"]));
 
-            this.Report1.AddParameterToCollection(list);
-            this.Report1.AddParameterToCollection(list);
-            this.Report1.RunningTotalText = Titles.RunningTotal;
-            this.Report1.ResourceAssembly = Assembly.GetAssembly(typeof(GLAdviceReport));
+            using (Report report = new Report())
+            {
+                report.AddParameterToCollection(list);
+                report.AddParameterToCollection(list);
+                report.RunningTotalText = Titles.RunningTotal;
+                report.ResourceAssembly = Assembly.GetAssembly(typeof(GLAdviceReport));
+                report.Path = "~/Modules/Finance/Reports/Source/Transactions.GLEntry.xml";
+                report.AutoInitialize = true;
+            }
+
             base.OnControlLoad(sender, e);
         }
     }

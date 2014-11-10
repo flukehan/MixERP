@@ -128,14 +128,27 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         #region "Page Initialization"
         protected void Page_Init(object sender, EventArgs e)
         {
-            if (!this.IsPostBack)
-            {
-                this.ClearSession(this.ID);
-            }
+            this.Initialize();
+        }
 
-            this.InitializeControls();
-            this.LoadValuesFromSession();
-            this.BindGridView();
+        private bool initialized;
+
+        public void Initialize()
+        {
+            if (!initialized)
+            {
+                if (!this.IsPostBack)
+                {
+                    this.ClearSession(this.ID);
+                }
+
+                this.InitializeControls();
+                this.LoadValuesFromSession();
+                this.BindGridView();
+                this.TitleLiteral.Text = this.Text;
+                this.Page.Title = this.Text;
+                initialized = true;
+            }
         }
 
         private void ClearSession(string key)
@@ -329,11 +342,5 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         #endregion "JSON Grid Binding"
 
         #endregion "Page Initialization"
-
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            this.TitleLiteral.Text = this.Text;
-            this.Page.Title = this.Text;
-        }
     }
 }

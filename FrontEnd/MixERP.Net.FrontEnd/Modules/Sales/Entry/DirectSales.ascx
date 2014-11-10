@@ -18,17 +18,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DirectSales.ascx.cs" Inherits="MixERP.Net.Core.Modules.Sales.Entry.DirectSales"
     OverridePath="/Modules/Sales/DirectSales.mix" %>
-<mixerp:Product runat="server"
-    ID="DirectSalesControl"
-    Book="Sales"
-    SubBook="Direct"
-    ShowPriceTypes="True"
-    ShowShippingInformation="True"
-    ShowSalesAgents="True"
-    ShowStore="True"
-    ShowCashRepository="True"
-    ShowTransactionType="True"
-    ShowCostCenter="True"
-    VerifyStock="true"
-    TopPanelWidth="850" />
+<asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
+
 <script src="../Scripts/Entry/DirectSales.js"></script>

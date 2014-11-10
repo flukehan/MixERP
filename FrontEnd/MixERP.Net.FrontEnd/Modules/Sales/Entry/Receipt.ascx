@@ -17,13 +17,15 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Receipt.ascx.cs" Inherits="MixERP.Net.Core.Modules.Sales.Entry.Receipt"
-    OverridePath="~/Modules/Sales/Receipt.mix" %>
+    OverridePath="/Modules/Sales/Receipt.mix" %>
+<%@ Register TagPrefix="mixerp" Namespace="MixERP.Net.WebControls.Common"
+    Assembly="MixERP.Net.WebControls.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a724a47a0879d02f" %>
 
 <h3>Receipt from Customer</h3>
 
 <asp:ScriptManagerProxy runat="server"></asp:ScriptManagerProxy>
 
-<mixerp:PartyControl runat="server" />
+<asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
 
 <div id="receipt" class="">
     <div class="row ui grid fluid form segment">

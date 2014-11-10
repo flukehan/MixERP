@@ -11220,7 +11220,10 @@ UNION ALL SELECT 'Database Statistics', '~/Modules/BackOffice/Admin/DatabaseStat
 UNION ALL SELECT 'Backup Database', '~/Modules/BackOffice/Admin/Backup.mix', 'BAK', 2, core.get_menu_id('SAT')
 UNION ALL SELECT 'Restore Database', '~/Modules/BackOffice/Admin/Restore.mix', 'RES', 2, core.get_menu_id('SAT')
 UNION ALL SELECT 'Change User Password', '~/Modules/BackOffice/Admin/ChangePassword.mix', 'PWD', 2, core.get_menu_id('SAT')
-UNION ALL SELECT 'New Company', '~/Modules/BackOffice/Admin/NewCompany.mix', 'NEW', 2, core.get_menu_id('SAT');
+UNION ALL SELECT 'New Company', '~/Modules/BackOffice/Admin/NewCompany.mix', 'NEW', 2, core.get_menu_id('SAT')
+UNION ALL SELECT 'One Time Setup', NULL, 'OTS', 1, core.get_menu_id('BO')
+UNION ALL SELECT 'Opening Inventory', '~/Modules/BackOffice/OTS/OpeningInventory.mix', 'OTSI', 2, core.get_menu_id('OTS')
+UNION ALL SELECT 'Opening Balances', '~/Modules/BackOffice/OTS/OpeningBalance.mix', 'OTSB', 2, core.get_menu_id('OTS');
 
 
 INSERT INTO policy.menu_access(office_id, menu_id, user_id)

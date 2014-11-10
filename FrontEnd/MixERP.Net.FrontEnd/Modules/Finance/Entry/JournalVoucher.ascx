@@ -20,6 +20,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="JournalVoucher.ascx.cs"
     Inherits="MixERP.Net.Core.Modules.Finance.Entry.JournalVoucher"
     OverridePath="/Modules/Finance/JournalVoucher.mix" %>
+<%@ Register TagPrefix="mixerp" Namespace="MixERP.Net.WebControls.Common" Assembly="MixERP.Net.WebControls.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a724a47a0879d02f" %>
+<%@ Register TagPrefix="mixerp" TagName="Attachment" Src="~/UserControls/AttachmentUserControl.ascx" %>
 
 <h2>
     <asp:Label ID="TitleLabel" runat="server" />

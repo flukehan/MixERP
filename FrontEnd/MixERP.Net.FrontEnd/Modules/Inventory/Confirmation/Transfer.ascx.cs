@@ -1,5 +1,4 @@
-﻿using MixERP.Net.Common;
-using MixERP.Net.FrontEnd.Base;
+﻿using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.TransactionChecklist;
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
@@ -27,8 +26,6 @@ namespace MixERP.Net.Core.Modules.Inventory.Confirmation
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            long transactionMasterId = Conversion.TryCastLong(this.Request["TranId"]);
-
             using (TransactionChecklistForm checklist = new TransactionChecklistForm())
             {
                 checklist.ViewReportButtonText = Resources.Titles.ViewThisTransfer;

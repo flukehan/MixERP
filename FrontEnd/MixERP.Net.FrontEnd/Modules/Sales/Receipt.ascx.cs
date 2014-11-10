@@ -17,24 +17,11 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common;
-using MixERP.Net.Common.Helpers;
+using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.Core.Modules.Sales.Resources;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.TransactionGovernor;
+using MixERP.Net.FrontEnd.UserControls.Products;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data;
-using System.IO;
-using System.Reflection;
-using System.Resources;
-using System.Web;
-using System.Web.Compilation;
-using System.Web.Configuration;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
 
 namespace MixERP.Net.Core.Modules.Sales
 {
@@ -42,7 +29,18 @@ namespace MixERP.Net.Core.Modules.Sales
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            ProductView1.Text = Titles.SalesReceipt;
+            using (ProductViewControl productView = (ProductViewControl)this.Page.LoadControl("~/UserControls/Products/ProductViewControl.ascx"))
+            {
+                productView.Text = Titles.SalesReceipt;
+                productView.Book = TranBook.Sales;
+                productView.SubBook = SubTranBook.Receipt;
+                productView.AddNewUrl = "~/Modules/Sales/Entry/Receipt.mix";
+                productView.PreviewUrl = "~/Modules/Sales/Reports/CustomerReceiptReport.mix";
+                productView.ChecklistUrl = "~/Modules/Sales/Confirmation/Receipt.mix";
+                productView.Initialize();
+
+                Placeholder1.Controls.Add(productView);
+            }
 
             base.OnControlLoad(sender, e);
         }

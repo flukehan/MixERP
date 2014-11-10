@@ -18,10 +18,5 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Order.ascx.cs" Inherits="MixERP.Net.Core.Modules.Purchase.Entry.Order"
     OverridePath="/Modules/Purchase/Order.mix" %>
-
-<mixerp:Product runat="server"
-    ID="PurchaseOrder"
-    Book="Purchase"
-    SubBook="Order"
-    OnSaveButtonClick="PurchaseOrder_SaveButtonClick" />
+<asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
 <script src="../Scripts/Entry/Order.js"></script>

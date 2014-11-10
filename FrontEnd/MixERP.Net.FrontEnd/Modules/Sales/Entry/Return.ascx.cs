@@ -18,14 +18,11 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.Common;
+using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.Core.Modules.Sales.Resources;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.UserControls.Products;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace MixERP.Net.Core.Modules.Sales.Entry
 {
@@ -34,11 +31,22 @@ namespace MixERP.Net.Core.Modules.Sales.Entry
         public override void OnControlLoad(object sender, EventArgs e)
         {
             long tranId = Conversion.TryCastLong(this.Request.QueryString["TranId"]);
-            SalesReturnControl.Text = Titles.SalesReturn;
-
             if (tranId <= 0)
             {
                 Response.Redirect("~/Modules/Sales/Return.mix");
+            }
+
+            using (ProductControl product = (ProductControl)this.Page.LoadControl("~/UserControls/Products/ProductControl.ascx"))
+            {
+                product.Book = TranBook.Sales;
+                product.SubBook = SubTranBook.Return;
+                product.Text = Titles.SalesReturn;
+                product.ShowPriceTypes = true;
+                product.ShowStore = true;
+
+                product.Initialize();
+
+                Placeholder1.Controls.Add(product);
             }
 
             base.OnControlLoad(sender, e);

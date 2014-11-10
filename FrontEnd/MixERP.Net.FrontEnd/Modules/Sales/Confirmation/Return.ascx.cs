@@ -20,12 +20,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using MixERP.Net.Common;
 using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.WebControls.TransactionChecklist;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace MixERP.Net.Core.Modules.Sales.Confirmation
 {
@@ -35,10 +31,26 @@ namespace MixERP.Net.Core.Modules.Sales.Confirmation
         {
             long transactionMasterId = Conversion.TryCastLong(this.Request["TranId"]);
 
-            this.TransactionChecklist1.Text = Resources.Titles.SalesReturn;
-            this.TransactionChecklist1.ViewReportButtonText = Resources.Titles.ViewThisReturn;
-            this.TransactionChecklist1.EmailReportButtonText = Resources.Titles.EmailThisReturn;
-            this.TransactionChecklist1.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(TranBook.Sales, SubTranBook.Return, transactionMasterId);
+            using (TransactionChecklistForm checklist = new TransactionChecklistForm())
+            {
+                checklist.Text = Resources.Titles.SalesReturn;
+                checklist.ViewReportButtonText = Resources.Titles.ViewThisReturn;
+                checklist.EmailReportButtonText = Resources.Titles.EmailThisReturn;
+                checklist.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(TranBook.Sales, SubTranBook.Return, transactionMasterId);
+                checklist.AttachmentBookName = "transaction";
+                checklist.OverridePath = "~/Modules/Sales/Return.mix";
+                checklist.DisplayWithdrawButton = true;
+                checklist.DisplayViewReportButton = true;
+                checklist.DisplayEmailReportButton = true;
+                checklist.DisplayPrintGlEntryButton = true;
+                checklist.DisplayAttachmentButton = true;
+                checklist.ReportPath = "~/Modules/Sales/Reports/SalesReturnReport.mix";
+                checklist.GlAdvicePath = "~/Modules/Finance/Reports/GLAdviceReport.mix";
+                checklist.ViewPath = "~/Modules/Sales/Return.mix";
+                checklist.AddNewPath = "~/Modules/Sales/Entry/Return.mix";
+
+                Placeholder1.Controls.Add(checklist);
+            }
 
             base.OnControlLoad(sender, e);
         }

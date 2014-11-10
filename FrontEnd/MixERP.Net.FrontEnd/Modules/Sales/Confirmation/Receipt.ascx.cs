@@ -20,12 +20,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using MixERP.Net.Common;
 using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.WebControls.TransactionChecklist;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace MixERP.Net.Core.Modules.Sales.Confirmation
 {
@@ -35,11 +31,26 @@ namespace MixERP.Net.Core.Modules.Sales.Confirmation
         {
             long transactionMasterId = Conversion.TryCastLong(this.Request["TranId"]);
 
-            TransactionCheckList1.ViewReportButtonText = Resources.Titles.PrintReceipt;
-            TransactionCheckList1.EmailReportButtonText = Resources.Titles.EmailThisReceipt;
+            using (TransactionChecklistForm checklist = new TransactionChecklistForm())
+            {
+                checklist.ViewReportButtonText = Resources.Titles.PrintReceipt;
+                checklist.EmailReportButtonText = Resources.Titles.EmailThisReceipt;
+                checklist.Text = Resources.Titles.SalesReceipt;
+                checklist.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(TranBook.Sales, SubTranBook.Receipt, transactionMasterId);
+                checklist.AttachmentBookName = "transaction";
+                checklist.OverridePath = "/Modules/Sales/DirectSales.mix";
+                checklist.DisplayWithdrawButton = true;
+                checklist.DisplayViewReportButton = true;
+                checklist.DisplayEmailReportButton = true;
+                checklist.DisplayPrintGlEntryButton = true;
+                checklist.DisplayAttachmentButton = true;
+                checklist.ReportPath = "~/Modules/Sales/Reports/CustomerReceiptReport.mix";
+                checklist.GlAdvicePath = "~/Modules/Finance/Reports/GLAdviceReport.mix";
+                checklist.ViewPath = "~/Modules/Sales/Receipt.mix";
+                checklist.AddNewPath = "~/Modules/Sales/Entry/Receipt.mix";
 
-            TransactionCheckList1.Text = Resources.Titles.SalesReceipt;
-            TransactionCheckList1.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(TranBook.Sales, SubTranBook.Receipt, transactionMasterId);
+                Placeholder1.Controls.Add(checklist);
+            }
 
             base.OnControlLoad(sender, e);
         }

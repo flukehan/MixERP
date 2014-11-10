@@ -18,17 +18,23 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.WebControls.PartyControl;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace MixERP.Net.Core.Modules.Sales.Entry
 {
     public partial class Receipt : MixERPUserControl
     {
+        public override void OnControlLoad(object sender, EventArgs e)
+        {
+            using (PartyControl partyControl = new PartyControl())
+            {
+                Placeholder1.Controls.Add(partyControl);
+            }
+
+            base.OnControlLoad(sender, e);
+        }
+
         public string ExchangeRateLocalized()
         {
             return Resources.Titles.ExchangeRate;

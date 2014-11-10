@@ -27,14 +27,16 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         cursor: pointer;
     }
 
-    input[type=checkbox] { margin-left: 10px; }
+    input[type=checkbox] {
+        margin-left: 10px;
+    }
 </style>
 <script type="text/javascript">
     var reorderGrid = $("#ReorderGrid");
 
     if (reorderGrid) {
 
-        reorderGrid.on("click", "td", function() {
+        reorderGrid.on("click", "td", function () {
             var checkBox = $(this).parent().find("input[type=checkbox]");
 
             console.log(checkBox.is(":checked"));
@@ -48,48 +50,48 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
             check(checkBox);
         });
 
-        reorderGrid.on("click", "input, select", function() {
+        reorderGrid.on("click", "input, select", function () {
             e.stopPropagation();
         });
 
-        reorderGrid.addClass("table table-bordered table-hover");
+        reorderGrid.addClass("ui form nowrap table segment");
 
-        reorderGrid.find("tr td:first-child").each(function() {
+        reorderGrid.find("tr td:first-child").each(function () {
             $(this).css("width", "40px");
             $(this).html("<input type='checkbox' onclick='check($(this));' />");
         });
 
-        reorderGrid.find("tr td:nth-child(6)").each(function() {
+        reorderGrid.find("tr td:nth-child(6)").each(function () {
             $(this).css("width", "224px");
             $(this).css("padding", "0");
-            $(this).html("<select data-role='party' class='form-control input-sm' disabled='disabled'></select>");
+            $(this).html("<select data-role='party' disabled='disabled'></select>");
         });
 
-        reorderGrid.find("tr td:nth-child(7)").each(function() {
+        reorderGrid.find("tr td:nth-child(7)").each(function () {
             $(this).css("width", "124px");
             $(this).css("padding", "0");
-            $(this).html("<select data-role='unit' class='form-control input-sm' disabled='disabled'></select>");
+            $(this).html("<select data-role='unit' disabled='disabled'></select>");
         });
 
-        reorderGrid.find("tr td:nth-child(8)").each(function() {
+        reorderGrid.find("tr td:nth-child(8)").each(function () {
             var value = $(this).parent().find("td:nth-child(13)").html();
             $(this).css("width", "78px");
             $(this).css("padding", "0");
-            $(this).html(String.format("<input type='text' data-role='quantity' class='form-control input-sm integer' disabled='disabled' value={0} />", value));
+            $(this).html(String.format("<input type='text' data-role='quantity' class='integer' disabled='disabled' value={0} />", value));
         });
 
-        reorderGrid.find("tr td:nth-child(9)").each(function() {
+        reorderGrid.find("tr td:nth-child(9)").each(function () {
             var value = $(this).parent().find("td:nth-child(15)").html();
             $(this).css("width", "100px");
             $(this).css("padding", "0");
-            $(this).html(String.format("<input type='text' data-role='price' class='form-control input-sm integer' disabled='disabled' value={0} />", value));
+            $(this).html(String.format("<input type='text' data-role='price' class='integer' disabled='disabled' value={0} />", value));
         });
 
-        reorderGrid.find("tr td:nth-child(10)").each(function() {
+        reorderGrid.find("tr td:nth-child(10)").each(function () {
             var value = $(this).parent().find("td:nth-child(16)").html();
             $(this).css("width", "70px");
             $(this).css("padding", "0");
-            $(this).html(String.format("<input type='text' data-role='tax_rate' class='form-control input-sm integer' disabled='disabled' value={0} />", value));
+            $(this).html(String.format("<input type='text' data-role='tax_rate' class='integer' disabled='disabled' value={0} />", value));
         });
 
         loadParties();
@@ -110,7 +112,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
     function loadUnits() {
 
-        reorderGrid.find("tr").not(":first-child").each(function() {
+        reorderGrid.find("tr").not(":first-child").each(function () {
             var row = $(this);
 
             var itemCode = row.find("td:nth-child(3)").html();
@@ -130,10 +132,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         var selectedText;
 
         if (targetControl.attr("data-role") === "party") {
-            targetControl.each(function() {
+            targetControl.each(function () {
                 selectedText = $(this).parent().parent().find("td:nth-child(14)").html();
 
-                $(this).find("option").filter(function() {
+                $(this).find("option").filter(function () {
                     return this.text === selectedText;
                 }).attr("selected", true);
             });
@@ -141,7 +143,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
         if (targetControl.attr("data-role") === "unit") {
             selectedText = targetControl.parent().parent().find("td:nth-child(5)").html();
-            targetControl.find("option").filter(function() {
+            targetControl.find("option").filter(function () {
                 return this.text === selectedText;
             }).attr("selected", true);
         }
@@ -161,7 +163,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         if (reorderGrid) {
             var details = new Array();
 
-            reorderGrid.find("tr").not(":first-child").each(function() {
+            reorderGrid.find("tr").not(":first-child").each(function () {
                 var selected = $(this).find(":first-child").find("input").is(":checked");
 
                 if (selected) {
@@ -185,13 +187,13 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
             if (confirm(confirmLocalized)) {
                 var ajaxsaveReorder = saveReorder(details);
 
-                ajaxsaveReorder.success(function(msg) {
+                ajaxsaveReorder.success(function (msg) {
                     if (msg.d) {
                         window.location = "/Modules/Purchase/Order.mix";
                     };
                 });
 
-                ajaxsaveReorder.fail(function(xhr) {
+                ajaxsaveReorder.fail(function (xhr) {
                     logAjaxErrorMessage(xhr);
                 });
 

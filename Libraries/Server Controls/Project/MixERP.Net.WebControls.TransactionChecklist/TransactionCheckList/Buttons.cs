@@ -124,7 +124,7 @@ namespace MixERP.Net.WebControls.TransactionChecklist
                 emailLinkButton = new LinkButton();
 
                 emailLinkButton.ID = "EmailReportLinkButton";
-                emailLinkButton.Text = "<i class='icon mail'></i>" + this.EmailReportButtonText;
+                emailLinkButton.Text = @"<i class='icon mail'></i>" + this.EmailReportButtonText;
                 emailLinkButton.CausesValidation = false;
                 emailLinkButton.Attributes.Add("class", "item");
                 emailLinkButton.Click += EmailLinkButton_Click;

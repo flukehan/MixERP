@@ -84,9 +84,19 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.SetVisibleStates();
-            this.LoadGridView();
-            this.InitializePostBackUrls();
+            this.Initialize();
+        }
+
+        private bool initialized;
+        public void Initialize()
+        {
+            if (!initialized)
+            {
+                this.SetVisibleStates();
+                this.LoadGridView();
+                this.InitializePostBackUrls();
+                initialized = true;
+            }
         }
 
         private void SetVisibleStates()

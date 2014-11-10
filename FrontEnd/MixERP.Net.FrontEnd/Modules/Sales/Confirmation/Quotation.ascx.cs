@@ -20,6 +20,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using MixERP.Net.Common;
 using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.WebControls.TransactionChecklist;
 using System;
 
 namespace MixERP.Net.Core.Modules.Sales.Confirmation
@@ -30,11 +31,24 @@ namespace MixERP.Net.Core.Modules.Sales.Confirmation
         {
             long transactionMasterId = Conversion.TryCastLong(this.Request["TranId"]);
 
-            TransactionChecklist1.ViewReportButtonText = Resources.Titles.ViewThisQuotation;
-            TransactionChecklist1.EmailReportButtonText = Resources.Titles.EmailThisQuotation;
-            TransactionChecklist1.Text = Resources.Titles.SalesQuotation;
-            TransactionChecklist1.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(TranBook.Sales,
-                SubTranBook.Quotation, transactionMasterId);
+            using (TransactionChecklistForm checklist = new TransactionChecklistForm())
+            {
+                checklist.ViewReportButtonText = Resources.Titles.ViewThisQuotation;
+                checklist.EmailReportButtonText = Resources.Titles.EmailThisQuotation;
+                checklist.Text = Resources.Titles.SalesQuotation;
+                checklist.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(TranBook.Sales, SubTranBook.Quotation, transactionMasterId);
+                checklist.AttachmentBookName = "non-gl-transaction";
+                checklist.OverridePath = "/Modules/Sales/Quotation.mix";
+                checklist.DisplayViewReportButton = true;
+                checklist.DisplayEmailReportButton = true;
+                checklist.DisplayAttachmentButton = true;
+                checklist.IsNonGlTransaction = true;
+                checklist.ReportPath = "~/Modules/Sales/Reports/SalesQuotationReport.mix";
+                checklist.ViewPath = "/Modules/Sales/Quotation.mix";
+                checklist.AddNewPath = "/Modules/Sales/Entry/Quotation.mix";
+
+                Placeholder1.Controls.Add(checklist);
+            }
 
             base.OnControlLoad(sender, e);
         }

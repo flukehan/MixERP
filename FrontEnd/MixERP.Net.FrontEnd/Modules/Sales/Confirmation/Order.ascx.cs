@@ -20,6 +20,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using MixERP.Net.Common;
 using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.WebControls.TransactionChecklist;
 using System;
 
 namespace MixERP.Net.Core.Modules.Sales.Confirmation
@@ -30,10 +31,24 @@ namespace MixERP.Net.Core.Modules.Sales.Confirmation
         {
             long transactionMasterId = Conversion.TryCastLong(this.Request["TranId"]);
 
-            TransactionChecklist1.ViewReportButtonText = Resources.Titles.ViewThisOrder;
-            TransactionChecklist1.EmailReportButtonText = Resources.Titles.EmailThisOrder;
-            TransactionChecklist1.Text = Resources.Titles.SalesOrder;
-            TransactionChecklist1.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(TranBook.Sales, SubTranBook.Order, transactionMasterId);
+            using (TransactionChecklistForm checklist = new TransactionChecklistForm())
+            {
+                checklist.ViewReportButtonText = Resources.Titles.ViewThisOrder;
+                checklist.EmailReportButtonText = Resources.Titles.EmailThisOrder;
+                checklist.Text = Resources.Titles.SalesOrder;
+                checklist.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(TranBook.Sales, SubTranBook.Order, transactionMasterId);
+                checklist.AttachmentBookName = "non-gl-transaction";
+                checklist.OverridePath = "/Modules/Sales/Order.mix";
+                checklist.DisplayViewReportButton = true;
+                checklist.DisplayEmailReportButton = true;
+                checklist.DisplayAttachmentButton = true;
+                checklist.IsNonGlTransaction = true;
+                checklist.ReportPath = "~/Modules/Sales/Reports/SalesOrderReport.mix";
+                checklist.ViewPath = "/Modules/Sales/Order.mix";
+                checklist.AddNewPath = "/Modules/Sales/Entry/Order.mix";
+
+                Placeholder1.Controls.Add(checklist);
+            }
 
             base.OnControlLoad(sender, e);
         }

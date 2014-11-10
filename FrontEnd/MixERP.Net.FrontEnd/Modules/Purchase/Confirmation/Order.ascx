@@ -17,21 +17,6 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Order.ascx.cs" Inherits="MixERP.Net.Core.Modules.Purchase.Confirmation.Order"
-            OverridePath="/Modules/Purchase/Order.mix" %>
+    OverridePath="/Modules/Purchase/Order.mix" %>
 
-<mixerp:TransactionChecklistForm
-    ID="TransactionCheckList1"
-    runat="server"
-    AttachmentBookName="non-gl-transaction"
-    OverridePath="/Modules/Purchase/Order.mix"
-    DisplayWithdrawButton="false"
-    DisplayViewReportButton="true"
-    DisplayEmailReportButton="true"
-    DisplayCustomerReportButton="false"
-    DisplayPrintReceiptButton="false"
-    DisplayPrintGlEntryButton="false"
-    DisplayAttachmentButton="true"
-    IsNonGlTransaction="true"
-    ReportPath="~/Modules/Purchase/Reports/PurchaseOrderReport.mix"
-    ViewPath="/Modules/Purchase/Order.mix"
-    AddNewPath="/Modules/Purchase/Entry/Order.mix" />
+<asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>

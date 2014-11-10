@@ -47,8 +47,6 @@ namespace MixERP.Net.FrontEnd.Reports.Assets
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //<mixerp:ReportHeader runat="server" Path="" />
-
             using (ReportHeader header = new ReportHeader())
             {
                 header.ResourceAssembly = Assembly.GetAssembly(typeof(Header));

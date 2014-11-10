@@ -19,12 +19,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="GRN.ascx.cs" Inherits="MixERP.Net.Core.Modules.Purchase.Entry.GRN"
     OverridePath="/Modules/Purchase/GRN.mix" %>
 
-<mixerp:Product runat="server"
-    ID="GoodReceiptNote"
-    Book="Purchase"
-    SubBook="Receipt"
-    ShowTransactionType="False"
-    ShowStore="True"
-    ShowCostCenter="True" />
+<asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
 
 <script src="../Scripts/Entry/GRN.js"></script>

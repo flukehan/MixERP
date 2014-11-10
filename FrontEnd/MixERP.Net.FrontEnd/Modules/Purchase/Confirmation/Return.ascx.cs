@@ -20,12 +20,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using MixERP.Net.Common;
 using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.WebControls.TransactionChecklist;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace MixERP.Net.Core.Modules.Purchase.Confirmation
 {
@@ -35,12 +31,26 @@ namespace MixERP.Net.Core.Modules.Purchase.Confirmation
         {
             long transactionMasterId = Conversion.TryCastLong(this.Request["TranId"]);
 
-            this.TransactionCheckList1.Text = Resources.Titles.PurchaseReturn;
+            using (TransactionChecklistForm checklist = new TransactionChecklistForm())
+            {
+                checklist.Text = Resources.Titles.PurchaseReturn;
+                checklist.ViewReportButtonText = Resources.Titles.ViewThisReturn;
+                checklist.EmailReportButtonText = Resources.Titles.EmailThisReturn;
+                checklist.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(TranBook.Purchase, SubTranBook.Return, transactionMasterId);
+                checklist.AttachmentBookName = "transaction";
+                checklist.OverridePath = "/Modules/Purchase/Return.mix";
+                checklist.DisplayWithdrawButton = true;
+                checklist.DisplayViewReportButton = true;
+                checklist.DisplayEmailReportButton = true;
+                checklist.DisplayPrintGlEntryButton = true;
+                checklist.DisplayAttachmentButton = true;
+                checklist.ReportPath = "~/Modules/Purchase/Reports/PurchaseReturnReport.mix";
+                checklist.GlAdvicePath = "~/Modules/Finance/Reports/GLAdviceReport.mix";
+                checklist.ViewPath = "/Modules/Purchase/Return.mix";
+                checklist.AddNewPath = "/Modules/Purchase/Entry/Return.mix";
 
-            this.TransactionCheckList1.ViewReportButtonText = Resources.Titles.ViewThisReturn;
-            this.TransactionCheckList1.EmailReportButtonText = Resources.Titles.EmailThisReturn;
-
-            this.TransactionCheckList1.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(TranBook.Purchase, SubTranBook.Return, transactionMasterId);
+                Placeholder1.Controls.Add(checklist);
+            }
 
             base.OnControlLoad(sender, e);
         }

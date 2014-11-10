@@ -17,11 +17,4 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Transfer.ascx.cs" Inherits="MixERP.Net.Core.Modules.Inventory.Transfer" %>
-<mixerp:ProductView
-    ID="ProductView1"
-    runat="server"
-    Book="Inventory"
-    SubBook="Transfer"
-    AddNewUrl="~/Modules/Inventory/Entry/Transfer.mix"
-    PreviewUrl="~/Modules/Inventory/Reports/InventoryTransferReport.mix"
-    ChecklistUrl="~/Modules/Inventory/Confirmation/Transfer.mix" />
+<asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>

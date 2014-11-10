@@ -17,20 +17,6 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DirectPurchase.ascx.cs" Inherits="MixERP.Net.Core.Modules.Purchase.Confirmation.DirectPurchase"
-            OverridePath="/Modules/Purchase/DirectPurchase.mix" %>
-<mixerp:TransactionChecklistForm
-    ID="TransactionCheckList1"
-    runat="server"
-    AttachmentBookName="transaction"
-    OverridePath="/Modules/Purchase/DirectPurchase.mix"
-    DisplayWithdrawButton="true"
-    DisplayViewReportButton="true"
-    DisplayEmailReportButton="true"
-    DisplayCustomerReportButton="false"
-    DisplayPrintReceiptButton="false"
-    DisplayPrintGlEntryButton="true"
-    DisplayAttachmentButton="true"
-    ReportPath="~/Modules/Purchase/Reports/DirectPurchaseInvoiceReport.mix"
-    GlAdvicePath="~/Modules/Finance/Reports/GLAdviceReport.mix"
-    ViewPath="/Modules/Purchase/DirectPurchase.mix"
-    AddNewPath="/Modules/Purchase/Entry/DirectPurchase.mix" />
+    OverridePath="/Modules/Purchase/DirectPurchase.mix" %>
+
+<asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>

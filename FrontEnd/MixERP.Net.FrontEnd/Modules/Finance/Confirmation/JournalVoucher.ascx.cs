@@ -18,10 +18,26 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.WebControls.TransactionChecklist;
+using System;
 
 namespace MixERP.Net.Core.Modules.Finance.Confirmation
 {
     public partial class JournalVoucher : MixERPUserControl
     {
+        public override void OnControlLoad(object sender, EventArgs e)
+        {
+            using (TransactionChecklistForm checklist = new TransactionChecklistForm())
+            {
+                checklist.Text = Resources.Titles.JournalVoucherEntry;
+                checklist.DisplayWithdrawButton = true;
+                checklist.DisplayPrintGlEntryButton = true;
+                checklist.DisplayAttachmentButton = true;
+                checklist.GlAdvicePath = "~/Modules/Finance/Reports/GLAdviceReport.mix";
+                Placeholder1.Controls.Add(checklist);
+            }
+
+            base.OnControlLoad(sender, e);
+        }
     }
 }

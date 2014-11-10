@@ -51,9 +51,9 @@ namespace MixERP.Net.Core.Modules.Purchase
 
         private void AddRuler()
         {
-            using (HtmlGenericControl ruler = new HtmlGenericControl())
+            using (HtmlGenericControl ruler = new HtmlGenericControl("div"))
             {
-                ruler.TagName = "hr";
+                ruler.Attributes.Add("class", "ui divider");
                 this.Placeholder1.Controls.Add(ruler);
             }
         }
@@ -66,6 +66,7 @@ namespace MixERP.Net.Core.Modules.Purchase
             {
                 using (DataTable table = Data.Helpers.Reorder.GetReorderView(officeId))
                 {
+                    grid.GridLines = GridLines.None;
                     this.CreateColumns(grid);
                     grid.DataSource = table;
                     grid.ID = "ReorderGrid";
@@ -117,11 +118,10 @@ namespace MixERP.Net.Core.Modules.Purchase
             {
                 div.TagName = "div";
                 div.Attributes.Add("class", "vpad16");
-                div.Attributes.Add("role", "toolbar");
 
                 using (HtmlInputButton reorderButton = new HtmlInputButton())
                 {
-                    reorderButton.Attributes.Add("class", "btn btn-sm btn-primary");
+                    reorderButton.Attributes.Add("class", "ui positive button");
                     reorderButton.Attributes.Add("onclick", "ReorderInputButtonClick()");
                     reorderButton.Value = Titles.PlaceReorderRequests;
                     div.Controls.Add(reorderButton);

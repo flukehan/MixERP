@@ -13,12 +13,12 @@ namespace MixERP.Net.Core.Modules.Purchase {
     public partial class Return {
         
         /// <summary>
-        /// ProductView1 control.
+        /// Placeholder1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::MixERP.Net.FrontEnd.UserControls.Products.ProductViewControl ProductView1;
+        protected global::System.Web.UI.WebControls.PlaceHolder Placeholder1;
     }
 }

@@ -20,6 +20,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using MixERP.Net.Common;
 using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.WebControls.TransactionChecklist;
 using System;
 
 namespace MixERP.Net.Core.Modules.Purchase.Confirmation
@@ -30,10 +31,25 @@ namespace MixERP.Net.Core.Modules.Purchase.Confirmation
         {
             long transactionMasterId = Conversion.TryCastLong(this.Request["TranId"]);
 
-            TransactionCheckList1.ViewReportButtonText = Resources.Titles.ViewThisOrder;
-            TransactionCheckList1.EmailReportButtonText = Resources.Titles.EmailThisOrder;
-            TransactionCheckList1.Text = Resources.Titles.PurchaseOrder;
-            TransactionCheckList1.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(TranBook.Purchase, SubTranBook.Order, transactionMasterId);
+            using (TransactionChecklistForm checklist = new TransactionChecklistForm())
+            {
+                checklist.ViewReportButtonText = Resources.Titles.ViewThisOrder;
+                checklist.EmailReportButtonText = Resources.Titles.EmailThisOrder;
+                checklist.Text = Resources.Titles.PurchaseOrder;
+                checklist.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(TranBook.Purchase, SubTranBook.Order, transactionMasterId);
+
+                checklist.AttachmentBookName = "non-gl-transaction";
+                checklist.OverridePath = "/Modules/Purchase/Order.mix";
+                checklist.DisplayViewReportButton = true;
+                checklist.DisplayEmailReportButton = true;
+                checklist.DisplayAttachmentButton = true;
+                checklist.IsNonGlTransaction = true;
+                checklist.ReportPath = "~/Modules/Purchase/Reports/PurchaseOrderReport.mix";
+                checklist.ViewPath = "/Modules/Purchase/Order.mix";
+                checklist.AddNewPath = "/Modules/Purchase/Entry/Order.mix";
+
+                Placeholder1.Controls.Add(checklist);
+            }
 
             base.OnControlLoad(sender, e);
         }

@@ -20,6 +20,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using MixERP.Net.Common;
 using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.WebControls.TransactionChecklist;
 using System;
 
 namespace MixERP.Net.Core.Modules.Purchase.Confirmation
@@ -30,10 +31,27 @@ namespace MixERP.Net.Core.Modules.Purchase.Confirmation
         {
             long transactionMasterId = Conversion.TryCastLong(this.Request["TranId"]);
 
-            TransactionCheckList1.Text = Resources.Titles.GoodsReceiptNote;
-            TransactionCheckList1.ViewReportButtonText = Resources.Titles.ViewThisNote;
-            TransactionCheckList1.EmailReportButtonText = Resources.Titles.EmailThisNote;
-            TransactionCheckList1.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(TranBook.Purchase, SubTranBook.Receipt, transactionMasterId);
+            using (TransactionChecklistForm checklist = new TransactionChecklistForm())
+            {
+                checklist.Text = Resources.Titles.GoodsReceiptNote;
+                checklist.ViewReportButtonText = Resources.Titles.ViewThisNote;
+                checklist.EmailReportButtonText = Resources.Titles.EmailThisNote;
+                checklist.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(TranBook.Purchase, SubTranBook.Receipt, transactionMasterId);
+
+                checklist.AttachmentBookName = "transaction";
+                checklist.OverridePath = "/Modules/Purchase/GRN.mix";
+                checklist.DisplayWithdrawButton = true;
+                checklist.DisplayViewReportButton = true;
+                checklist.DisplayEmailReportButton = true;
+                checklist.DisplayPrintGlEntryButton = true;
+                checklist.DisplayAttachmentButton = true;
+                checklist.ReportPath = "~/Modules/Purchase/Reports/GRNReport.mix";
+                checklist.GlAdvicePath = "~/Modules/Finance/Reports/GLAdviceReport.mix";
+                checklist.ViewPath = "/Modules/Purchase/GRN.mix";
+                checklist.AddNewPath = "/Modules/Purchase/Entry/GRN.mix";
+
+                Placeholder1.Controls.Add(checklist);
+            }
 
             base.OnControlLoad(sender, e);
         }
