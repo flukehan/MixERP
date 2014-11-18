@@ -22,6 +22,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>1685</NoWarn>
+    <CodeAnalysisRuleSet>..\..\..\..\MixERP.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -53,16 +54,16 @@
   <ItemGroup>
     <Compile Include="Helpers\Accounts.cs" />
     <Compile Include="Helpers\Currencies.cs" />
-    <Compile Include="Helpers\Delivery.cs" />
-    <Compile Include="Helpers\DirectSales.cs" />
+    <Compile Include="Transactions\Delivery.cs" />
+    <Compile Include="Transactions\DirectSales.cs" />
     <Compile Include="Helpers\Items.cs" />
-    <Compile Include="Helpers\NonGlStockTransaction.cs" />
-    <Compile Include="Helpers\Order.cs" />
-    <Compile Include="Helpers\ParameterHelper.cs" />
+    <Compile Include="Transactions\NonGlStockTransaction.cs" />
+    <Compile Include="Transactions\Order.cs" />
     <Compile Include="Helpers\Parties.cs" />
-    <Compile Include="Helpers\Quotation.cs" />
-    <Compile Include="Helpers\Receipt.cs" />
-    <Compile Include="Helpers\Return.cs" />
+    <Compile Include="Transactions\Quotation.cs" />
+    <Compile Include="Transactions\Receipt.cs" />
+    <Compile Include="Transactions\Return.cs" />
+    <Compile Include="Transactions\GlTransaction.cs" />
     <Compile Include="Helpers\Transaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\Stores.cs" />

@@ -24,7 +24,7 @@ function QR8bitByte(data) {
 }
 
 QR8bitByte.prototype = {
-    getLength: function (buffer) {
+    getLength: function () {
         return this.data.length;
     },
 
@@ -70,7 +70,7 @@ QRCode.prototype = {
     make: function () {
         // Calculate automatically typeNumber if provided is < 1
         if (this.typeNumber < 1) {
-            var typeNumber = 1;
+            var typeNumber;
             for (typeNumber = 1; typeNumber < 40; typeNumber++) {
                 var rsBlocks = QRRSBlock.getRSBlocks(typeNumber, this.errorCorrectLevel);
 
@@ -346,10 +346,10 @@ QRCode.createData = function (typeNumber, errorCorrectLevel, dataList) {
 
     if (buffer.getLengthInBits() > totalDataCount * 8) {
         throw new Error("code length overflow. ("
-			+ buffer.getLengthInBits()
-			+ ">"
-			+ totalDataCount * 8
-			+ ")");
+            + buffer.getLengthInBits()
+            + ">"
+            + totalDataCount * 8
+            + ")");
     }
 
     // end code
@@ -376,7 +376,7 @@ QRCode.createData = function (typeNumber, errorCorrectLevel, dataList) {
     }
 
     return QRCode.createBytes(buffer, rsBlocks);
-}
+};
 
 QRCode.createBytes = function (buffer, rsBlocks) {
     var offset = 0;
@@ -437,7 +437,7 @@ QRCode.createBytes = function (buffer, rsBlocks) {
     }
 
     return data;
-}
+};
 
 //---------------------------------------------------------------------
 // QRMode
@@ -1112,7 +1112,7 @@ QRRSBlock.getRSBlocks = function (typeNumber, errorCorrectLevel) {
     }
 
     return list;
-}
+};
 
 QRRSBlock.getRsBlockTable = function (typeNumber, errorCorrectLevel) {
     switch (errorCorrectLevel) {
@@ -1127,7 +1127,7 @@ QRRSBlock.getRsBlockTable = function (typeNumber, errorCorrectLevel) {
         default:
             return undefined;
     }
-}
+};
 
 //---------------------------------------------------------------------
 // QRBitBuffer

@@ -17,20 +17,18 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Resources;
 using System.Reflection;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using LocalizationHelper = MixERP.Net.Common.Helpers.LocalizationHelper;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 {
-    public static class ScrudCheckBoxList
+    internal static class ScrudCheckBoxList
     {
-        public static void AddCheckBoxList(HtmlTable htmlTable, string resourceClassName, string columnName, bool isNullable, string keys, string values, string selectedValues, string errorCssClass, Assembly assembly)
+        internal static void AddCheckBoxList(HtmlTable htmlTable, string resourceClassName, string columnName, bool isNullable, string keys, string values, string selectedValues, string errorCssClass, Assembly assembly)
         {
             var checkBoxList = GetCheckBoxList(columnName + "_radiobuttonlist", keys, values, selectedValues);
             var label = ScrudLocalizationHelper.GetResourceString(assembly, resourceClassName, columnName);
@@ -46,7 +44,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
             ScrudFactoryHelper.AddRow(htmlTable, label, checkBoxList);
         }
 
-        private static CheckBoxList GetCheckBoxList(string id, string keys, string values, string selectedValues)
+        internal static CheckBoxList GetCheckBoxList(string id, string keys, string values, string selectedValues)
         {
             using (var list = new CheckBoxList())
             {

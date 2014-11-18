@@ -17,7 +17,9 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-namespace MixERP.Net.Common.Models.Transactions
+using MixERP.Net.Common.Models.Transactions;
+
+namespace MixERP.Net.Common.Domains.Transactions
 {
     public static class VerificationDomain
     {

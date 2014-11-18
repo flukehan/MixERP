@@ -29,6 +29,11 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
 {
     public partial class PartiesPopup : MixERPUserControl
     {
+        public static string GetPartyNameParameter()
+        {
+            return Parameters.GetParameter("PartyName");
+        }
+
         public override void OnControlLoad(object sender, EventArgs e)
         {
             using (ScrudForm scrud = new ScrudForm())
@@ -73,11 +78,6 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
             ScrudHelper.AddDisplayView(displayViews, "core.frequencies.frequency_id", "core.frequency_selector_view");
             ScrudHelper.AddDisplayView(displayViews, "core.currencies.currency_code", "core.currency_selector_view");
             return string.Join(",", displayViews);
-        }
-
-        public static string GetPartyNameParameter()
-        {
-            return Parameters.PartyNameFormat();
         }
     }
 }

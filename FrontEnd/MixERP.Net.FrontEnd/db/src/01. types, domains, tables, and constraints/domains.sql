@@ -12,6 +12,7 @@ CHECK
 
 COMMENT ON DOMAIN transaction_type IS 'This domain should not be localized.';
 
+
 /*******************************************************************
     MIXERP STRICT Data Types: NEGATIVES ARE NOT ALLOWED
 *******************************************************************/

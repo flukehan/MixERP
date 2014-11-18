@@ -17,14 +17,19 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 
 namespace MixERP.Net.WebControls.ReportEngine.Helpers
 {
     public static class XmlHelper
     {
+        public static XmlNode GetNode(string path, string name)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(path);
+            return doc.SelectSingleNode(name);
+        }
+
         public static XmlNodeList GetNodes(string path, string name)
         {
             XmlDocument doc = new XmlDocument();
@@ -66,13 +71,6 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
             }
 
             return string.Empty;
-        }
-
-        public static XmlNode GetNode(string path, string name)
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(path);
-            return doc.SelectSingleNode(name);
         }
     }
 }

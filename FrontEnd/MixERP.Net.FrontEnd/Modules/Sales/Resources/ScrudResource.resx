@@ -178,7 +178,7 @@
     <value>Price</value>
   </data>
   <data name="quantity" xml:space="preserve">
-    <value>Quantityc</value>
+    <value>Quantity</value>
   </data>
   <data name="salesperson_bonus_setup_id" xml:space="preserve">
     <value>Salesperson Bonus Setup Id</value>
@@ -239,5 +239,41 @@
   </data>
   <data name="frequency_id" xml:space="preserve">
     <value>Frequency Id</value>
+  </data>
+  <data name="account_code" xml:space="preserve">
+    <value>Account Code</value>
+  </data>
+  <data name="account_master_code" xml:space="preserve">
+    <value>Account Master Code</value>
+  </data>
+  <data name="account_master_id" xml:space="preserve">
+    <value>Account Master Id</value>
+  </data>
+  <data name="account_master_name" xml:space="preserve">
+    <value>Account Master Name</value>
+  </data>
+  <data name="bonus_slab_details_amounts_chk" xml:space="preserve">
+    <value>The field "AmountTo" must be greater than "AmountFrom".</value>
+  </data>
+  <data name="description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="effective_from" xml:space="preserve">
+    <value>Effective From</value>
+  </data>
+  <data name="ends_on" xml:space="preserve">
+    <value>Ends On</value>
+  </data>
+  <data name="parent_account_code" xml:space="preserve">
+    <value>Parent Account Code</value>
+  </data>
+  <data name="parent_account_id" xml:space="preserve">
+    <value>Parent Account Id</value>
+  </data>
+  <data name="parent_account_name" xml:space="preserve">
+    <value>Parent Account Name</value>
+  </data>
+  <data name="sys_type" xml:space="preserve">
+    <value>Sys Type</value>
   </data>
 </root>

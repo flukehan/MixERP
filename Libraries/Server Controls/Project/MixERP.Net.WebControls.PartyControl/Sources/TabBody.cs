@@ -24,9 +24,9 @@ namespace MixERP.Net.WebControls.PartyControl
 {
     public partial class PartyControl
     {
-        private void AddHiddenField(System.Web.UI.WebControls.Panel p, string id)
+        private void AddHiddenField(Panel p, string id)
         {
-            using (System.Web.UI.WebControls.HiddenField hidden = new System.Web.UI.WebControls.HiddenField())
+            using (HiddenField hidden = new HiddenField())
             {
                 hidden.ID = id;
                 p.Controls.Add(hidden);
@@ -45,6 +45,32 @@ namespace MixERP.Net.WebControls.PartyControl
             p.Controls.Add(this.GetPartySummaryTab());
             p.Controls.Add(this.GetTransactionSummaryTab());
             p.Controls.Add(this.GetAddressInfoTab());
+        }
+
+        private HtmlGenericControl GetAddressInfoTab()
+        {
+            using (HtmlGenericControl addressInfoDiv = ControlHelper.GetGenericControl(@"div", @"ui tab bottom stacked attached teal segment"))
+            {
+                addressInfoDiv.Attributes.Add("data-tab", "contact-info");
+                addressInfoDiv.ID = "addresses-and-contact-info";
+
+                using (HtmlGenericControl h3 = ControlHelper.GetGenericControl("h3", "ui header"))
+                {
+                    h3.InnerHtml = "  <i class='globe icon'></i>Address & Contact Information";
+
+                    addressInfoDiv.Controls.Add(h3);
+                }
+
+                using (HtmlTable table = new HtmlTable())
+                {
+                    table.Attributes.Add("class", "ui table segment");
+                    table.Rows.Add(ControlHelper.GetNewRow("Default Address", @"AddressDiv", "div"));
+                    table.Rows.Add(ControlHelper.GetNewRow("Shipping Address(es)", @"ShippingAddressesDiv", "div"));
+                    addressInfoDiv.Controls.Add(table);
+                }
+
+                return addressInfoDiv;
+            }
         }
 
         private HtmlGenericControl GetPartySummaryTab()
@@ -97,32 +123,6 @@ namespace MixERP.Net.WebControls.PartyControl
                 }
 
                 return transactionSummaryDiv;
-            }
-        }
-
-        private HtmlGenericControl GetAddressInfoTab()
-        {
-            using (HtmlGenericControl addressInfoDiv = ControlHelper.GetGenericControl(@"div", @"ui tab bottom stacked attached teal segment"))
-            {
-                addressInfoDiv.Attributes.Add("data-tab", "contact-info");
-                addressInfoDiv.ID = "addresses-and-contact-info";
-
-                using (HtmlGenericControl h3 = ControlHelper.GetGenericControl("h3", "ui header"))
-                {
-                    h3.InnerHtml = "  <i class='globe icon'></i>Address & Contact Information";
-
-                    addressInfoDiv.Controls.Add(h3);
-                }
-
-                using (HtmlTable table = new HtmlTable())
-                {
-                    table.Attributes.Add("class", "ui table segment");
-                    table.Rows.Add(ControlHelper.GetNewRow("Default Address", @"AddressDiv", "div"));
-                    table.Rows.Add(ControlHelper.GetNewRow("Shipping Address(es)", @"ShippingAddressesDiv", "div"));
-                    addressInfoDiv.Controls.Add(table);
-                }
-
-                return addressInfoDiv;
             }
         }
     }

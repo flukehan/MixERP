@@ -19,7 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace MixERP.Net.Common.Models.Transactions
 {
-    public class StockMasterModel
+    public sealed class StockMasterModel
     {
         public long StockMasterId { get; set; }
 

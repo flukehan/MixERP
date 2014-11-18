@@ -21,11 +21,6 @@ using MixERP.Net.Common;
 using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.DBFactory;
 using Npgsql;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MixERP.Net.Core.Modules.Purchase.Data.Helpers
 {

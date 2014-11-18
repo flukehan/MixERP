@@ -18,9 +18,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Services;
 
 namespace MixERP.Net.Core.Modules.Sales.Services.Entry
@@ -31,7 +28,8 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
-    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line.
+    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the
+    // following line.
     [System.Web.Script.Services.ScriptService]
     public class DirectSales : WebService
     {
@@ -46,7 +44,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
 
             if (!string.IsNullOrWhiteSpace(transactionIds))
             {
-                foreach (var transactionId in transactionIds.Split(','))
+                foreach (string transactionId in transactionIds.Split(','))
                 {
                     tranIds.Add(Common.Conversion.TryCastInteger(transactionId));
                 }
@@ -77,9 +75,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
                 }
             }
 
-            return Data.Helpers.DirectSales.Add(valueDate, storeId, isCredit, partyCode,
-                agentId, priceTypeId, details, shipperId, shippingAddressCode, shippingCharge, cashRepositoryId,
-                costCenterId, referenceNumber, statementReference, attachments);
+            return Data.Transactions.DirectSales.Add(valueDate, storeId, isCredit, partyCode, agentId, priceTypeId, details, shipperId, shippingAddressCode, shippingCharge, cashRepositoryId, costCenterId, referenceNumber, statementReference, attachments);
         }
     }
 }

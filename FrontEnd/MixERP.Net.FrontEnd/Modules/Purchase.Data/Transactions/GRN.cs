@@ -23,19 +23,26 @@ using MixERP.Net.Common.Models.Transactions;
 using System;
 using System.Collections.ObjectModel;
 
-namespace MixERP.Net.Core.Modules.Purchase.Data.Helpers
+namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
 {
-    public static class Order
+    public static class GRN
     {
-        public static long Add(string book, DateTime valueDate, string partyCode, int priceTypeId, Collection<StockMasterDetailModel> details, string referenceNumber, string statementReference, Collection<int> transactionIdCollection, Collection<AttachmentModel> attachments)
+        public static long Add(DateTime valueDate, int storeId, string partyCode, Collection<StockMasterDetailModel> details, int costCenterId, string referenceNumber, string statementReference, Collection<long> transactionIdCollection, Collection<AttachmentModel> attachments)
         {
             StockMasterModel stockMaster = new StockMasterModel();
 
             stockMaster.PartyCode = partyCode;
-            stockMaster.PriceTypeId = priceTypeId;
+            stockMaster.StoreId = storeId;
+            stockMaster.IsCredit = true;
 
-            long nonGlStockMasterId = NonGlStockTransaction.Add(book, valueDate, SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), referenceNumber, statementReference, stockMaster, details, transactionIdCollection, attachments);
-            return nonGlStockMasterId;
+            if (!string.IsNullOrWhiteSpace(statementReference))
+            {
+                statementReference = statementReference.Replace("&nbsp;", " ").Trim();
+            }
+
+            long transactionMasterId = GlTransaction.Add(valueDate, "Purchase.Receipt", SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), costCenterId, referenceNumber, statementReference, stockMaster, details, transactionIdCollection, attachments);
+            TransactionGovernor.Autoverification.Autoverify.PassTransactionMasterId(transactionMasterId);
+            return transactionMasterId;
         }
     }
 }

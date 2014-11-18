@@ -27,11 +27,10 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using LocalizationHelper = MixERP.Net.Common.Helpers.LocalizationHelper;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls
 {
-    public static class ScrudFileUpload
+    internal static class ScrudFileUpload
     {
         public static void AddFileUpload(HtmlTable htmlTable, string resourceClassName, string columnName, bool isNullable, string errorCssClass, Assembly assembly)
         {

@@ -19,7 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace MixERP.Net.Common.Models.Core
 {
-    public class PartyShippingAddress
+    public sealed class PartyShippingAddress
     {
         public string ShippingAddressCode { get; set; }
 

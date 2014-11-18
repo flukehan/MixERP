@@ -43,7 +43,7 @@ using System.Collections.ObjectModel;
 
 namespace MixERP.Net.WebControls.StockTransactionView.Data.Models
 {
-    public class MergeModel
+    public sealed class MergeModel
     {
         public DateTime ValueDate { get; set; }
 

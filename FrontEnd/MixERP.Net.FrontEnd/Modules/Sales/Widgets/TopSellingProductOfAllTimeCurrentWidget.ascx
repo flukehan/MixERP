@@ -23,7 +23,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         <h2>
             <asp:Literal runat="server" ID="TopSellingProductsLiteral" />
         </h2>
-        <asp:GridView runat="server" ID="TopSellingProductsOfAllTimeGridView" DataKeyNames="id" AutoGenerateColumns="False">
+        <asp:GridView runat="server" ID="TopSellingProductsOfAllTimeGridView" DataKeyNames="id" AutoGenerateColumns="False" CssClass="hidden">
             <Columns>
                 <asp:BoundField HeaderText="ItemName" DataField="item_name" />
                 <asp:BoundField HeaderText="TotalSales" DataField="total_sales" />

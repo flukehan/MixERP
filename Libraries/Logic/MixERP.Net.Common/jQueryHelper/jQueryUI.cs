@@ -21,15 +21,12 @@ using MixERP.Net.Common.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
 
 namespace MixERP.Net.Common.jQueryHelper
 {
-    public class jQueryUI
+    public static class jQueryUI
     {
         #region "Helpers"
 

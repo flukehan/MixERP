@@ -20,7 +20,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.ReportEngine.Helpers;
-using Resources;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -33,11 +32,6 @@ namespace MixERP.Net.FrontEnd.Reports
     {
         private bool disposed;
         private Button updateButton = new Button();
-
-        protected void Page_Init(object sender, EventArgs e)
-        {
-            this.AddParameters();
-        }
 
         public override sealed void Dispose()
         {
@@ -61,6 +55,42 @@ namespace MixERP.Net.FrontEnd.Reports
 
                 this.disposed = true;
             }
+        }
+
+        protected void Page_Init(object sender, EventArgs e)
+        {
+            this.AddParameters();
+        }
+
+        protected void UpdateButton_Click(object sender, EventArgs e)
+        {
+            if (this.ReportParameterTable.Rows.Count.Equals(0))
+            {
+                return;
+            }
+
+            Collection<KeyValuePair<string, string>> list = new Collection<KeyValuePair<string, string>>();
+
+            foreach (TableRow row in this.ReportParameterTable.Rows)
+            {
+                TableCell cell = row.Cells[1];
+
+                var box = cell.Controls[0] as TextBox;
+
+                if (box != null)
+                {
+                    TextBox textBox = box;
+                    list.Add(new KeyValuePair<string, string>("@" + textBox.ID.Replace("_text_box", ""), textBox.Text));
+                }
+            }
+            this.ReportViewer11.Path = this.ReportPath();
+
+            foreach (var parameter in ParameterHelper.BindParameters(this.Server.MapPath(this.ReportPath()), list))
+            {
+                this.ReportViewer11.AddParameterToCollection(parameter);
+            }
+
+            this.ReportViewer11.InitializeReport();
         }
 
         private void AddParameters()
@@ -102,37 +132,6 @@ namespace MixERP.Net.FrontEnd.Reports
             this.AddRow("", this.updateButton);
         }
 
-        protected void UpdateButton_Click(object sender, EventArgs e)
-        {
-            if (this.ReportParameterTable.Rows.Count.Equals(0))
-            {
-                return;
-            }
-
-            Collection<KeyValuePair<string, string>> list = new Collection<KeyValuePair<string, string>>();
-
-            foreach (TableRow row in this.ReportParameterTable.Rows)
-            {
-                TableCell cell = row.Cells[1];
-
-                var box = cell.Controls[0] as TextBox;
-
-                if (box != null)
-                {
-                    TextBox textBox = box;
-                    list.Add(new KeyValuePair<string, string>("@" + textBox.ID.Replace("_text_box", ""), textBox.Text));
-                }
-            }
-            this.ReportViewer11.Path = this.ReportPath();
-
-            foreach (var parameter in ParameterHelper.BindParameters(this.Server.MapPath(this.ReportPath()), list))
-            {
-                this.ReportViewer11.AddParameterToCollection(parameter);
-            }
-
-            this.ReportViewer11.InitializeReport();
-        }
-
         private void AddRow(string label, Control control)
         {
             if (control == null)
@@ -159,6 +158,13 @@ namespace MixERP.Net.FrontEnd.Reports
             }
         }
 
+        private Collection<KeyValuePair<string, string>> GetParameters()
+        {
+            string path = this.Server.MapPath(this.ReportPath());
+            Collection<KeyValuePair<string, string>> collection = ParameterHelper.GetParameters(path);
+            return collection;
+        }
+
         private string ReportPath()
         {
             string id = this.Request["Id"];
@@ -168,13 +174,6 @@ namespace MixERP.Net.FrontEnd.Reports
             }
 
             return "~/Reports/Sources/" + id;
-        }
-
-        private Collection<KeyValuePair<string, string>> GetParameters()
-        {
-            string path = this.Server.MapPath(this.ReportPath());
-            Collection<KeyValuePair<string, string>> collection = ParameterHelper.GetParameters(path);
-            return collection;
         }
     }
 }

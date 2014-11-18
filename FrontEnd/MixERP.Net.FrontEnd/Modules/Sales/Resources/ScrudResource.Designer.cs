@@ -61,11 +61,47 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account Code.
+        /// </summary>
+        internal static string account_code {
+            get {
+                return ResourceManager.GetString("account_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Account Id.
         /// </summary>
         internal static string account_id {
             get {
                 return ResourceManager.GetString("account_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account Master Code.
+        /// </summary>
+        internal static string account_master_code {
+            get {
+                return ResourceManager.GetString("account_master_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account Master Id.
+        /// </summary>
+        internal static string account_master_id {
+            get {
+                return ResourceManager.GetString("account_master_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account Master Name.
+        /// </summary>
+        internal static string account_master_name {
+            get {
+                return ResourceManager.GetString("account_master_name", resourceCulture);
             }
         }
         
@@ -160,6 +196,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The field &quot;AmountTo&quot; must be greater than &quot;AmountFrom&quot;..
+        /// </summary>
+        internal static string bonus_slab_details_amounts_chk {
+            get {
+                return ResourceManager.GetString("bonus_slab_details_amounts_chk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bonus Slab Id.
         /// </summary>
         internal static string bonus_slab_id {
@@ -214,11 +259,38 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        internal static string description {
+            get {
+                return ResourceManager.GetString("description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Discount.
         /// </summary>
         internal static string discount {
             get {
                 return ResourceManager.GetString("discount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Effective From.
+        /// </summary>
+        internal static string effective_from {
+            get {
+                return ResourceManager.GetString("effective_from", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ends On.
+        /// </summary>
+        internal static string ends_on {
+            get {
+                return ResourceManager.GetString("ends_on", resourceCulture);
             }
         }
         
@@ -286,6 +358,33 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Parent Account Code.
+        /// </summary>
+        internal static string parent_account_code {
+            get {
+                return ResourceManager.GetString("parent_account_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parent Account Id.
+        /// </summary>
+        internal static string parent_account_id {
+            get {
+                return ResourceManager.GetString("parent_account_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parent Account Name.
+        /// </summary>
+        internal static string parent_account_name {
+            get {
+                return ResourceManager.GetString("parent_account_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Price.
         /// </summary>
         internal static string price {
@@ -295,7 +394,7 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quantityc.
+        ///   Looks up a localized string similar to Quantity.
         /// </summary>
         internal static string quantity {
             get {
@@ -390,6 +489,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         internal static string sub_total {
             get {
                 return ResourceManager.GetString("sub_total", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sys Type.
+        /// </summary>
+        internal static string sys_type {
+            get {
+                return ResourceManager.GetString("sys_type", resourceCulture);
             }
         }
         

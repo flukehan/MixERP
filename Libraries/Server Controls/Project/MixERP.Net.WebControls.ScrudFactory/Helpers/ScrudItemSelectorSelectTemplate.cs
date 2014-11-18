@@ -27,7 +27,7 @@ using System.Web.UI.WebControls;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 {
-    public class ScrudItemSelectorSelectTemplate : ITemplate, IDisposable
+    internal sealed class ScrudItemSelectorSelectTemplate : ITemplate, IDisposable
     {
         private bool disposed;
         private HtmlAnchor selectAnchor;
@@ -47,7 +47,6 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
         public void Dispose()
         {
             this.Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
         public void InstantiateIn(Control container)
@@ -61,7 +60,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
             container.Controls.Add(this.selectAnchor);
         }
 
-        protected virtual void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (!this.disposed)
             {

@@ -40,11 +40,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
-using System.Collections;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.Diagnostics;
-using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -55,6 +52,56 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
 {
     public static class ReportParser
     {
+        public static string GetSessionValue(string key)
+        {
+            var val = HttpContext.Current.Session[key];
+
+            if (val != null)
+            {
+                return val.ToString();
+            }
+
+            return string.Empty;
+        }
+
+        public static string ParseDataSource(string expression, Collection<DataTable> table)
+        {
+            if (string.IsNullOrWhiteSpace(expression))
+            {
+                return null;
+            }
+
+            if (table == null)
+            {
+                return null;
+            }
+
+            foreach (var match in Regex.Matches(expression, "{.*?}"))
+            {
+                string word = match.ToString();
+
+                if (word.StartsWith("{DataSource", StringComparison.OrdinalIgnoreCase))
+                {
+                    int index = Conversion.TryCastInteger(word.Split('.').First().Replace("{DataSource[", "").Replace("]", ""));
+                    string column = word.Split('.').Last().Replace("}", "");
+
+                    if (table[index] != null)
+                    {
+                        if (table[index].Rows.Count > 0)
+                        {
+                            if (table[index].Columns.Contains(column))
+                            {
+                                string value = table[index].Rows[0][column].ToString();
+                                expression = expression.Replace(word, value);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return expression;
+        }
+
         public static string ParseExpression(string expression, Collection<DataTable> dataTableCollection, Assembly assembly)
         {
             if (string.IsNullOrWhiteSpace(expression))
@@ -154,55 +201,6 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
             return expression;
         }
 
-        private static decimal GetSum(DataTable table, int index)
-        {
-            if (table != null && table.Rows.Count > 0)
-            {
-                string expression = "SUM(" + table.Columns[index].ColumnName + ")"; ;
-                return Conversion.TryCastDecimal(table.Compute(expression, ""));
-            }
-
-            return 0;
-        }
-
-        public static string ParseDataSource(string expression, Collection<DataTable> table)
-        {
-            if (string.IsNullOrWhiteSpace(expression))
-            {
-                return null;
-            }
-
-            if (table == null)
-            {
-                return null;
-            }
-
-            foreach (var match in Regex.Matches(expression, "{.*?}"))
-            {
-                string word = match.ToString();
-
-                if (word.StartsWith("{DataSource", StringComparison.OrdinalIgnoreCase))
-                {
-                    int index = Conversion.TryCastInteger(word.Split('.').First().Replace("{DataSource[", "").Replace("]", ""));
-                    string column = word.Split('.').Last().Replace("}", "");
-
-                    if (table[index] != null)
-                    {
-                        if (table[index].Rows.Count > 0)
-                        {
-                            if (table[index].Columns.Contains(column))
-                            {
-                                string value = table[index].Rows[0][column].ToString();
-                                expression = expression.Replace(word, value);
-                            }
-                        }
-                    }
-                }
-            }
-
-            return expression;
-        }
-
         public static string RemoveBraces(string expression)
         {
             if (string.IsNullOrWhiteSpace(expression))
@@ -213,16 +211,15 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
             return expression.Replace("{", "").Replace("}", "");
         }
 
-        public static string GetSessionValue(string key)
+        private static decimal GetSum(DataTable table, int index)
         {
-            var val = HttpContext.Current.Session[key];
-
-            if (val != null)
+            if (table != null && table.Rows.Count > 0)
             {
-                return val.ToString();
+                string expression = "SUM(" + table.Columns[index].ColumnName + ")";
+                return Conversion.TryCastDecimal(table.Compute(expression, ""));
             }
 
-            return string.Empty;
+            return 0;
         }
     }
 }

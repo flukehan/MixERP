@@ -17,24 +17,19 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.WebControls.Common;
 using MixERP.Net.WebControls.ScrudFactory.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Resources;
 using System;
-using System.Net.Mime;
 using System.Reflection;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using LocalizationHelper = MixERP.Net.Common.Helpers.LocalizationHelper;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 {
-    public static class ScrudDateTextBox
+    internal static class ScrudDateTextBox
     {
-        public static void AddDateTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isNullable, string validatorCssClass, Assembly assembly)
+        internal static void AddDateTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isNullable, string validatorCssClass, Assembly assembly)
         {
             if (htmlTable == null)
             {
@@ -72,7 +67,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
             }
         }
 
-        public static CompareValidator GetDateValidator(Control controlToValidate, string cssClass)
+        private static CompareValidator GetDateValidator(Control controlToValidate, string cssClass)
         {
             if (controlToValidate == null)
             {

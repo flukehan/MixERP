@@ -38,14 +38,51 @@ namespace MixERP.Net.Core.Modules.Purchase
             base.OnControlLoad(sender, e);
         }
 
-        private void AddTitle()
+        protected void ReorderButton_Click(object sender, EventArgs e)
         {
-            using (HtmlGenericControl heading = new HtmlGenericControl())
+        }
+
+        private void AddBoundField(GridView grid, string text, string dataField)
+        {
+            BoundField field = new BoundField { HeaderText = text, DataField = dataField };
+
+            grid.Columns.Add(field);
+        }
+
+        private void AddButton()
+        {
+            using (HtmlGenericControl div = new HtmlGenericControl())
             {
-                heading.TagName = "h1";
-                heading.Attributes.Add("class", "lead heading");
-                heading.InnerText = Titles.ItemsBelowReorderLevel;
-                this.Placeholder1.Controls.Add(heading);
+                div.TagName = "div";
+                div.Attributes.Add("class", "vpad16");
+
+                using (HtmlInputButton reorderButton = new HtmlInputButton())
+                {
+                    reorderButton.Attributes.Add("class", "ui positive button");
+                    reorderButton.Attributes.Add("onclick", "ReorderInputButtonClick()");
+                    reorderButton.Value = Titles.PlaceReorderRequests;
+                    div.Controls.Add(reorderButton);
+                    this.Placeholder1.Controls.Add(div);
+                }
+            }
+        }
+
+        private void AddGridView()
+        {
+            int officeId = SessionHelper.GetOfficeId();
+
+            using (GridView grid = new GridView())
+            {
+                using (DataTable table = Data.Transactions.Reorder.GetReorderView(officeId))
+                {
+                    grid.GridLines = GridLines.None;
+                    this.CreateColumns(grid);
+                    grid.DataSource = table;
+                    grid.ID = "ReorderGrid";
+                    grid.AutoGenerateColumns = false;
+                    grid.DataBind();
+                    this.Placeholder1.Controls.Add(grid);
+                }
             }
         }
 
@@ -58,22 +95,22 @@ namespace MixERP.Net.Core.Modules.Purchase
             }
         }
 
-        private void AddGridView()
+        private void AddTemplateField(GridView grid,
+            string text)
         {
-            int officeId = SessionHelper.GetOfficeId();
+            TemplateField template = new TemplateField();
+            template.HeaderText = text;
+            grid.Columns.Add(template);
+        }
 
-            using (GridView grid = new GridView())
+        private void AddTitle()
+        {
+            using (HtmlGenericControl heading = new HtmlGenericControl())
             {
-                using (DataTable table = Data.Helpers.Reorder.GetReorderView(officeId))
-                {
-                    grid.GridLines = GridLines.None;
-                    this.CreateColumns(grid);
-                    grid.DataSource = table;
-                    grid.ID = "ReorderGrid";
-                    grid.AutoGenerateColumns = false;
-                    grid.DataBind();
-                    this.Placeholder1.Controls.Add(grid);
-                }
+                heading.TagName = "h1";
+                heading.Attributes.Add("class", "lead heading");
+                heading.InnerText = Titles.ItemsBelowReorderLevel;
+                this.Placeholder1.Controls.Add(heading);
             }
         }
 
@@ -95,43 +132,6 @@ namespace MixERP.Net.Core.Modules.Purchase
             this.AddBoundField(grid, Titles.PreferredSupplier, "preferred_supplier");
             this.AddBoundField(grid, Titles.Price, "price");
             this.AddBoundField(grid, Titles.TaxRate, "tax_rate");
-        }
-
-        private void AddBoundField(GridView grid, string text, string dataField)
-        {
-            BoundField field = new BoundField() { HeaderText = text, DataField = dataField };
-
-            grid.Columns.Add(field);
-        }
-
-        private void AddTemplateField(GridView grid,
-            string text)
-        {
-            TemplateField template = new TemplateField();
-            template.HeaderText = text;
-            grid.Columns.Add(template);
-        }
-
-        private void AddButton()
-        {
-            using (HtmlGenericControl div = new HtmlGenericControl())
-            {
-                div.TagName = "div";
-                div.Attributes.Add("class", "vpad16");
-
-                using (HtmlInputButton reorderButton = new HtmlInputButton())
-                {
-                    reorderButton.Attributes.Add("class", "ui positive button");
-                    reorderButton.Attributes.Add("onclick", "ReorderInputButtonClick()");
-                    reorderButton.Value = Titles.PlaceReorderRequests;
-                    div.Controls.Add(reorderButton);
-                    this.Placeholder1.Controls.Add(div);
-                }
-            }
-        }
-
-        protected void ReorderButton_Click(object sender, EventArgs e)
-        {
         }
     }
 }

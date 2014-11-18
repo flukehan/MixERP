@@ -21,7 +21,7 @@ using System;
 
 namespace MixERP.Net.Common.Models.Office
 {
-    public class SignInView
+    public sealed class SignInView
     {
         public int UserId { get; set; }
 

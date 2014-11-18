@@ -17,11 +17,6 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -30,22 +25,6 @@ namespace MixERP.Net.Common.Base
     public class MixERPWebPageBase : Page
     {
         private MixERPPageStatePersister pageStatePersister;
-
-        private class MixERPPageStatePersister : PageStatePersister
-        {
-            public MixERPPageStatePersister(Page p)
-                : base(p)
-            {
-            }
-
-            public override void Load()
-            {
-            }
-
-            public override void Save()
-            {
-            }
-        }
 
         protected override PageStatePersister PageStatePersister
         {
@@ -92,6 +71,22 @@ namespace MixERP.Net.Common.Base
                         namingContainer.Controls.Add(control);
                     }
                 }
+            }
+        }
+
+        private class MixERPPageStatePersister : PageStatePersister
+        {
+            public MixERPPageStatePersister(Page p)
+                : base(p)
+            {
+            }
+
+            public override void Load()
+            {
+            }
+
+            public override void Save()
+            {
             }
         }
     }

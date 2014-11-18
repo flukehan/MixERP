@@ -42,6 +42,8 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 report.ResourceAssembly = Assembly.GetAssembly(typeof(GLAdviceReport));
                 report.Path = "~/Modules/Finance/Reports/Source/Transactions.GLEntry.xml";
                 report.AutoInitialize = true;
+
+                this.Placeholder1.Controls.Add(report);
             }
 
             base.OnControlLoad(sender, e);

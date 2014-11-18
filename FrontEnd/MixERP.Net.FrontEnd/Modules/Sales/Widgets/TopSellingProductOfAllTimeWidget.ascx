@@ -24,7 +24,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
             <asp:Literal runat="server" ID="TopSellingProductsLiteral" />
         </h2>
 
-        <asp:GridView runat="server" ID="TopSellingProductsGridView" AutoGenerateColumns="True">
+        <asp:GridView runat="server" ID="TopSellingProductsGridView" AutoGenerateColumns="True" CssClass="hidden">
         </asp:GridView>
 
         <canvas id="curr-office-top-selling-products-canvas" width="500px" height="180px"></canvas>

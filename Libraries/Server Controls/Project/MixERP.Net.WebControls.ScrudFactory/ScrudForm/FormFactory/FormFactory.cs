@@ -18,7 +18,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.Common;
-using MixERP.Net.WebControls.Common;
 using MixERP.Net.WebControls.ScrudFactory.Controls;
 using MixERP.Net.WebControls.ScrudFactory.Data;
 using MixERP.Net.WebControls.ScrudFactory.Helpers;
@@ -43,7 +42,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
         /// Skip the PostgreSQL serial column.
         /// There is no need to explicitly set the value for the serial column.
         /// This value should be <strong>true</strong> if you are obtaining the form to insert the record.
-        /// Set this paramter to <b>false</b> if you want to update the form, based on the serial's columns value.
+        /// Set this parameter to <b>false</b> if you want to update the form, based on the serial's columns value.
         /// </param>
         /// <returns>Returns a list of column and values mapped as
         /// KeyValuePair of column_name (key) and value.</returns>

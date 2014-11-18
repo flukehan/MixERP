@@ -24,7 +24,7 @@ using System.Web.UI.WebControls;
 namespace MixERP.Net.WebControls.TransactionChecklist
 {
     [ToolboxData("<{0}:TransactionChecklistForm runat=server></{0}:TransactionChecklistForm>")]
-    public partial class TransactionChecklistForm : CompositeControl
+    public sealed partial class TransactionChecklistForm : CompositeControl
     {
         private HtmlGenericControl checkListContainer;
 

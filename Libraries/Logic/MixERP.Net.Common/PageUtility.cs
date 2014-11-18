@@ -28,119 +28,6 @@ namespace MixERP.Net.Common
 {
     public static class PageUtility
     {
-        public static void RefreshPage(Page page)
-        {
-            if (page != null)
-            {
-                page.Response.Redirect(page.Request.Url.AbsolutePath);
-            }
-        }
-
-        public static string GetUserIpAddress()
-        {
-            Page page = HttpContext.Current.Handler as Page;
-
-            if (page != null)
-            {
-                string ip = page.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-                if (!string.IsNullOrEmpty(ip))
-                {
-                    string[] ipRange = ip.Split(',');
-                    ip = ipRange[0];
-                }
-                else
-                {
-                    ip = page.Request.ServerVariables["REMOTE_ADDR"];
-                }
-                return ip.Trim();
-            }
-
-            return string.Empty;
-        }
-
-        public static void RegisterJavascript(string key, string javaScript, Page page, bool addScriptTags)
-        {
-            if (page == null)
-            {
-                page = HttpContext.Current.Handler as Page;
-            }
-
-            if (page == null)
-            {
-                throw new InvalidOperationException("Could not register javascript on this page because the page instance was invalid or empty.");
-            }
-
-            ScriptManager.RegisterStartupScript(page, typeof(Page), key, javaScript, addScriptTags);
-        }
-
-        public static string ResolveAbsoluteUrl(Page page, string relativeUrl)
-        {
-            if (page != null)
-            {
-                return page.Request.Url.GetLeftPart(UriPartial.Authority) + page.ResolveUrl(relativeUrl);
-            }
-            return relativeUrl;
-        }
-
-        public static string ResolveUrl(string relativeUrl)
-        {
-            if (HttpContext.Current != null)
-            {
-                Page p = HttpContext.Current.Handler as Page;
-                if (p != null)
-                {
-                    return p.ResolveUrl(relativeUrl);
-                }
-            }
-            return relativeUrl;
-        }
-
-        public static bool IsLocalUrl(Uri url, Page page)
-        {
-            if (page == null)
-            {
-                return false;
-            }
-
-            try
-            {
-                Uri requested = new Uri(page.Request.Url, url);
-
-                if (requested.Host == page.Request.Url.Host)
-                {
-                    return true;
-                }
-            }
-            catch (InvalidOperationException)
-            {
-                //
-            }
-
-            return false;
-        }
-
-        public static int InvalidPasswordAttempts(Page page, int increment)
-        {
-            if (page == null)
-            {
-                return 0;
-            }
-
-            int retVal = 0;
-            if (page.Session["InvalidPasswordAttempts"] == null)
-            {
-                retVal = retVal + increment;
-                page.Session.Add("InvalidPasswordAttempts", retVal);
-            }
-            else
-            {
-                retVal = Conversion.TryCastInteger(page.Session["InvalidPasswordAttempts"]) + increment;
-                page.Session["InvalidPasswordAttempts"] = retVal;
-            }
-
-            return retVal;
-        }
-
         public static void CheckInvalidAttempts(Page page)
         {
             if (page != null)
@@ -152,50 +39,13 @@ namespace MixERP.Net.Common
             }
         }
 
-        public static string GetCurrentPageUrl(Page p)
-        {
-            return p.Request.Url.AbsolutePath;
-        }
-
-        public static string GetCurrentDomainName()
-        {
-            string url = HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Host;
-
-            if (HttpContext.Current.Request.Url.Port != 80)
-            {
-                url += ":" + HttpContext.Current.Request.Url.Port.ToString(CultureInfo.InvariantCulture);
-            }
-
-            return url;
-        }
-
-        public static Control FindControlIterative(Control root, string id)
-        {
-            if (root == null)
-            {
-                return null;
-            }
-
-            if (root.ID == id)
-            {
-                return root;
-            }
-            foreach (Control c in root.Controls)
-            {
-                Control t = FindControlIterative(c, id);
-                if (t != null)
-                {
-                    return t;
-                }
-            }
-            return null;
-        }
-
         /// <summary>
-        ///     Check if the input is a valid url.
+        /// Check if the input is a valid url.
         /// </summary>
         /// <param name="url"></param>
-        /// <returns>Returns input if it's a valid url. If the input is not a valid url, returns empty string.</returns>
+        /// <returns>
+        /// Returns input if it's a valid url. If the input is not a valid url, returns empty string.
+        /// </returns>
         public static string CleanUrl(string url)
         {
             if (string.IsNullOrWhiteSpace(url))
@@ -224,6 +74,168 @@ namespace MixERP.Net.Common
 
                 return url;
             }
+        }
+
+        public static Control FindControlIterative(Control root, string id)
+        {
+            if (root == null)
+            {
+                return null;
+            }
+
+            if (root.ID == id)
+            {
+                return root;
+            }
+            foreach (Control c in root.Controls)
+            {
+                Control t = FindControlIterative(c, id);
+                if (t != null)
+                {
+                    return t;
+                }
+            }
+            return null;
+        }
+
+        public static string GetCurrentDomainName()
+        {
+            string url = HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Host;
+
+            if (HttpContext.Current.Request.Url.Port != 80)
+            {
+                url += ":" + HttpContext.Current.Request.Url.Port.ToString(CultureInfo.InvariantCulture);
+            }
+
+            return url;
+        }
+
+        public static string GetCurrentPageUrl(Page p)
+        {
+            if (p == null)
+            {
+                return string.Empty;
+            }
+
+            return p.Request.Url.AbsolutePath;
+        }
+
+        public static string GetUserIpAddress()
+        {
+            Page page = HttpContext.Current.Handler as Page;
+
+            if (page != null)
+            {
+                string ip = page.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+                if (!string.IsNullOrEmpty(ip))
+                {
+                    string[] ipRange = ip.Split(',');
+                    ip = ipRange[0];
+                }
+                else
+                {
+                    ip = page.Request.ServerVariables["REMOTE_ADDR"];
+                }
+                return ip.Trim();
+            }
+
+            return string.Empty;
+        }
+
+        public static int InvalidPasswordAttempts(Page page, int increment)
+        {
+            if (page == null)
+            {
+                return 0;
+            }
+
+            int retVal = 0;
+            if (page.Session["InvalidPasswordAttempts"] == null)
+            {
+                retVal = retVal + increment;
+                page.Session.Add("InvalidPasswordAttempts", retVal);
+            }
+            else
+            {
+                retVal = Conversion.TryCastInteger(page.Session["InvalidPasswordAttempts"]) + increment;
+                page.Session["InvalidPasswordAttempts"] = retVal;
+            }
+
+            return retVal;
+        }
+
+        public static bool IsLocalUrl(Uri url, Page page)
+        {
+            if (page == null)
+            {
+                return false;
+            }
+
+            try
+            {
+                Uri requested = new Uri(page.Request.Url, url);
+
+                if (requested.Host == page.Request.Url.Host)
+                {
+                    return true;
+                }
+            }
+            catch (InvalidOperationException)
+            {
+                //
+            }
+
+            return false;
+        }
+
+        public static void RefreshPage(Page page)
+        {
+            if (page != null)
+            {
+                page.Response.Redirect(page.Request.Url.AbsolutePath);
+            }
+        }
+
+        public static void RegisterJavascript(string key, string javaScript, Page page, bool addScriptTags)
+        {
+            if (page == null)
+            {
+                page = HttpContext.Current.Handler as Page;
+            }
+
+            if (page == null)
+            {
+                throw new InvalidOperationException(Resources.Warnings.CouldNotRegisterJavaScript);
+            }
+
+            ScriptManager.RegisterStartupScript(page, typeof(Page), key, javaScript, addScriptTags);
+        }
+
+        public static string ResolveAbsoluteUrl(Page page, string relativeUrl)
+        {
+            if (page != null)
+            {
+                return page.Request.Url.GetLeftPart(UriPartial.Authority) + page.ResolveUrl(relativeUrl);
+            }
+            return relativeUrl;
+        }
+
+        public static string ResolveUrl(string relativeUrl)
+        {
+            if (string.IsNullOrWhiteSpace(relativeUrl))
+            {
+                return string.Empty;
+            }
+
+            if (HttpContext.Current != null)
+            {
+                Page p = HttpContext.Current.Handler as Page;
+                if (p != null)
+                {
+                    return p.ResolveUrl(relativeUrl);
+                }
+            }
+            return relativeUrl;
         }
 
         private class MyClient : WebClient

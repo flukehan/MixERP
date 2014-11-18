@@ -21,7 +21,7 @@ using System;
 
 namespace MixERP.Net.Common.Models.Core
 {
-    public class PartyDueModel
+    public sealed class PartyDueModel
     {
         public string CurrencyCode { get; set; }
 

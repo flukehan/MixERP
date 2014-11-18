@@ -22,11 +22,7 @@ using MixERP.Net.WebControls.ReportEngine;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Reflection;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace MixERP.Net.Core.Modules.Sales.Reports
 {
@@ -42,7 +38,7 @@ namespace MixERP.Net.Core.Modules.Sales.Reports
                 report.AddParameterToCollection(list);
                 report.AddParameterToCollection(list);
                 report.AutoInitialize = true;
-                report.ResourceAssembly = Assembly.GetAssembly(typeof(ReceiptReport));
+                report.ResourceAssembly = Assembly.GetAssembly(typeof (ReceiptReport));
                 report.Path = "~/Modules/Sales/Reports/Source/Sales.Receipt.xml";
 
                 this.Controls.Add(report);

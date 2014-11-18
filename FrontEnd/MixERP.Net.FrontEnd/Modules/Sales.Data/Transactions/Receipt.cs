@@ -20,13 +20,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using MixERP.Net.Common;
 using Npgsql;
 using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
+namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
 {
     public static class Receipt
     {

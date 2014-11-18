@@ -20,35 +20,12 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.IO;
 using System.Reflection;
-using System.Web;
 using System.Web.UI;
 
 namespace MixERP.Net.Common.Helpers
 {
     public static class JavaScriptHelper
     {
-        public static string GetEmbeddedScript(string embeddedScriptName, Assembly assembly)
-        {
-            var stream = assembly.GetManifestResourceStream(embeddedScriptName);
-
-            if (stream == null)
-            {
-                return string.Empty;
-            }
-
-            try
-            {
-                using (var reader = new StreamReader(stream))
-                {
-                    return reader.ReadToEnd();
-                }
-            }
-            finally
-            {
-                stream.Close();
-            }
-        }
-
         public static void AddJSReference(Page page, string resourceName, string key, Type type)
         {
             if (page != null)
@@ -57,6 +34,31 @@ namespace MixERP.Net.Common.Helpers
                 PageUtility.RegisterJavascript(key, script, page, false);
 
                 //page.ClientScript.RegisterClientScriptInclude(type, key, page.ClientScript.GetWebResourceUrl(type, resourceName));
+            }
+        }
+
+        public static string GetEmbeddedScript(string embeddedScriptName, Assembly assembly)
+        {
+            if (assembly == null)
+            {
+                return string.Empty;
+            }
+
+            if (string.IsNullOrWhiteSpace(embeddedScriptName))
+            {
+                return string.Empty;
+            }
+
+            Stream stream = assembly.GetManifestResourceStream(embeddedScriptName);
+
+            if (stream == null)
+            {
+                return string.Empty;
+            }
+
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                return reader.ReadToEnd();
             }
         }
     }

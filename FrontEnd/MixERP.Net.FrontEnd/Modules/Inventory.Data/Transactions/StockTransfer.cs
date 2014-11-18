@@ -18,46 +18,35 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.Common;
-using MixERP.Net.Common.Models.Core;
 using MixERP.Net.Common.Models.Transactions;
+using MixERP.Net.Core.Modules.Inventory.Data.Helpers;
 using MixERP.Net.DBFactory;
 using Npgsql;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MixERP.Net.Core.Modules.Purchase.Data.Helpers
+namespace MixERP.Net.Core.Modules.Inventory.Data.Transactions
 {
-    public static class Return
+    public static class StockTransfer
     {
-        public static long PostTransaction(long transactionMasterId, DateTime valueDate, int officeId, int userId, long loginId, int storeId, string partyCode, int priceTypeId, string referenceNumber, string statementReference, Collection<StockMasterDetailModel> details, Collection<AttachmentModel> attachments)
+        public static long Add(int officeId, int userId, long loginId, DateTime valueDate, string referenceNumber, string statementReference, Collection<StockAdjustmentModel> details)
         {
-            string detail = ParameterHelper.CreateStockMasterDetailParameter(details);
-            string attachment = ParameterHelper.CreateAttachmentModelParameter(attachments);
-
-            string sql = string.Format("SELECT * FROM transactions.post_purchase_return(@TransactionMasterId, @OfficeId, @UserId, @LoginId, @ValueDate, @StoreId, @PartyCode, @PriceTypeId, @ReferenceNumber, @StatementReference, ARRAY[{0}], ARRAY[{1}]);", detail, attachment);
+            string detailParameter = ParameterHelper.CreateStockTransferModelParameter(details);
+            string sql = string.Format("SELECT * FROM transactions.post_stock_journal(@OfficeId, @UserId, @LoginId, @ValueDate, @ReferenceNumber, @StatementReference, ARRAY[{0}]);", detailParameter);
 
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@TransactionMasterId", transactionMasterId);
                 command.Parameters.AddWithValue("@OfficeId", officeId);
                 command.Parameters.AddWithValue("@UserId", userId);
                 command.Parameters.AddWithValue("@LoginId", loginId);
                 command.Parameters.AddWithValue("@ValueDate", valueDate);
-                command.Parameters.AddWithValue("@StoreId", storeId);
-                command.Parameters.AddWithValue("@PartyCode", partyCode);
-                command.Parameters.AddWithValue("@PriceTypeId", priceTypeId);
                 command.Parameters.AddWithValue("@ReferenceNumber", referenceNumber);
                 command.Parameters.AddWithValue("@StatementReference", statementReference);
-
-                command.Parameters.AddRange(ParameterHelper.AddStockMasterDetailParameter(details).ToArray());
-                command.Parameters.AddRange(ParameterHelper.AddAttachmentParameter(attachments).ToArray());
+                command.Parameters.AddRange(ParameterHelper.AddStockTransferModelParameter(details).ToArray());
 
                 long tranId = Conversion.TryCastLong(DbOperations.GetScalarValue(command));
-                MixERP.Net.TransactionGovernor.Autoverification.Autoverify.PassTransactionMasterId(tranId);
+                TransactionGovernor.Autoverification.Autoverify.PassTransactionMasterId(tranId);
                 return tranId;
             }
         }

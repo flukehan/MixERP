@@ -31,73 +31,6 @@ namespace MixERP.Net.Common.Helpers
 {
     public static class LocalizationHelper
     {
-        public static string GetDefaultAssemblyResourceString(string className, string key)
-        {
-            if (string.IsNullOrWhiteSpace(key) || HttpContext.Current == null)
-            {
-                return string.Empty;
-            }
-
-            try
-            {
-                var globalResourceObject = HttpContext.GetGlobalResourceObject(className, key, GetCurrentCulture());
-
-                if (globalResourceObject != null)
-                {
-                    return globalResourceObject.ToString();
-                }
-
-                return string.Empty;
-            }
-            catch
-            {
-                throw new InvalidOperationException("Resource could not be found for the key " + key + " on class " +
-                                                    className + " .");
-            }
-        }
-
-        public static string GetResourceString(Assembly assembly, string fullyQualifiedClassName, string key)
-        {
-            if (assembly == null)
-            {
-                throw new ArgumentNullException("assembly");
-            }
-
-            var baseType = BuildManager.GetGlobalAsaxType().BaseType;
-
-            if (baseType != null && baseType.Assembly.Equals(assembly))
-            {
-                return GetDefaultAssemblyResourceString(UnqualifyResourceNamespace(assembly, fullyQualifiedClassName), key);
-            }
-
-            ResourceManager r = new ResourceManager(fullyQualifiedClassName, assembly);
-            string value = string.Empty;
-
-            try
-            {
-                value = r.GetString(key, GetCurrentCulture());
-
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    throw new InvalidOperationException("Resource could not be found for the key " + key + " on Class " +
-                                                        fullyQualifiedClassName + " on Assembly " +
-                                                        assembly.GetName().Name);
-                }
-            }
-            catch (MissingManifestResourceException)
-            {
-                throw new InvalidOperationException("Resource could not be found for the key " + key + " on Class " +
-                                                    fullyQualifiedClassName + " on Assembly " + assembly.GetName().Name);
-            }
-
-            return value;
-        }
-
-        private static string UnqualifyResourceNamespace(Assembly assembly, string fullyQualifiedClassName)
-        {
-            return fullyQualifiedClassName.Replace(assembly.GetName().Name + ".Resources.", "");
-        }
-
         public static void AddResourceString(string path, string key, string value)
         {
             using (ResXResourceReader reader = new ResXResourceReader(path))
@@ -141,16 +74,16 @@ namespace MixERP.Net.Common.Helpers
             }
         }
 
+        public static int GetCurrencyDecimalPlaces()
+        {
+            CultureInfo culture = GetCurrentCulture();
+            return culture.NumberFormat.CurrencyDecimalDigits;
+        }
+
         public static CultureInfo GetCurrentCulture()
         {
             CultureInfo culture = Thread.CurrentThread.CurrentUICulture;
             return culture;
-        }
-
-        public static string GetThousandSeparator()
-        {
-            CultureInfo culture = GetCurrentCulture();
-            return culture.NumberFormat.CurrencyGroupSeparator;
         }
 
         public static string GetDecimalSeparator()
@@ -159,10 +92,29 @@ namespace MixERP.Net.Common.Helpers
             return culture.NumberFormat.CurrencyDecimalSeparator;
         }
 
-        public static int GetCurrencyDecimalPlaces()
+        public static string GetDefaultAssemblyResourceString(string className, string key)
         {
-            CultureInfo culture = GetCurrentCulture();
-            return culture.NumberFormat.CurrencyDecimalDigits;
+            if (string.IsNullOrWhiteSpace(key) || HttpContext.Current == null)
+            {
+                return string.Empty;
+            }
+
+            try
+            {
+                var globalResourceObject = HttpContext.GetGlobalResourceObject(className, key, GetCurrentCulture());
+
+                if (globalResourceObject != null)
+                {
+                    return globalResourceObject.ToString();
+                }
+
+                return string.Empty;
+            }
+            catch
+            {
+                throw new InvalidOperationException("Resource could not be found for the key " + key + " on class " +
+                                                    className + " .");
+            }
         }
 
         public static int GetNumberDecimalPlaces()
@@ -171,10 +123,58 @@ namespace MixERP.Net.Common.Helpers
             return culture.NumberFormat.NumberDecimalDigits;
         }
 
+        public static string GetResourceString(Assembly assembly, string fullyQualifiedClassName, string key)
+        {
+            if (assembly == null)
+            {
+                throw new ArgumentNullException("assembly");
+            }
+
+            var baseType = BuildManager.GetGlobalAsaxType().BaseType;
+
+            if (baseType != null && baseType.Assembly.Equals(assembly))
+            {
+                return GetDefaultAssemblyResourceString(UnqualifyResourceNamespace(assembly, fullyQualifiedClassName), key);
+            }
+
+            ResourceManager r = new ResourceManager(fullyQualifiedClassName, assembly);
+            string value;
+
+            try
+            {
+                value = r.GetString(key, GetCurrentCulture());
+
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new InvalidOperationException("Resource could not be found for the key " + key + " on Class " +
+                                                        fullyQualifiedClassName + " on Assembly " +
+                                                        assembly.GetName().Name);
+                }
+            }
+            catch (MissingManifestResourceException)
+            {
+                throw new InvalidOperationException("Resource could not be found for the key " + key + " on Class " +
+                                                    fullyQualifiedClassName + " on Assembly " + assembly.GetName().Name);
+            }
+
+            return value;
+        }
+
         public static string GetShortDateFormat()
         {
             CultureInfo culture = GetCurrentCulture();
             return culture.DateTimeFormat.ShortDatePattern;
+        }
+
+        public static string GetThousandSeparator()
+        {
+            CultureInfo culture = GetCurrentCulture();
+            return culture.NumberFormat.CurrencyGroupSeparator;
+        }
+
+        private static string UnqualifyResourceNamespace(Assembly assembly, string fullyQualifiedClassName)
+        {
+            return fullyQualifiedClassName.Replace(assembly.GetName().Name + ".Resources.", "");
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace MixERP.Net.HtmlParser.ImageSerializer
 {
-    public class WebBrowserImageSerializer : HtmlImageSerializer
+    public sealed class WebBrowserImageSerializer : HtmlImageSerializer
     {
         internal override void CreateImage(string imagePath)
         {
@@ -70,12 +70,12 @@ namespace MixERP.Net.HtmlParser.ImageSerializer
                 int width = browser.Width;
                 string imagePath = browser.Tag + ImageHelper.GetFileExtension(this.ImageFormat);
 
-                using (Bitmap bitmap = new Bitmap(width + 2*margin, height))
+                using (Bitmap bitmap = new Bitmap(width + 2 * margin, height))
                 {
                     using (Graphics g = Graphics.FromImage(bitmap))
                     {
                         g.Clear(Color.White);
-                        g.DrawImage(bitmap, 0, 0, width + 2*margin, height);
+                        g.DrawImage(bitmap, 0, 0, width + 2 * margin, height);
                     }
 
                     browser.DrawToBitmap(bitmap, new Rectangle(margin, 0, width, height));

@@ -19,17 +19,13 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using MixERP.Net.Common.Helpers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 {
-    public static class ScrudLocalizationHelper
+    internal static class ScrudLocalizationHelper
     {
-        public static string GetResourceString(Assembly assembly, string resourceClassName, string key)
+        internal static string GetResourceString(Assembly assembly, string resourceClassName, string key)
         {
             if (assembly == null)
             {

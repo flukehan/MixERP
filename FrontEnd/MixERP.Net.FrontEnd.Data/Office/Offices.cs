@@ -22,12 +22,8 @@ using MixERP.Net.Common.Helpers;
 using MixERP.Net.DBFactory;
 using Npgsql;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MixERP.Net.FrontEnd.Data.Office
 {

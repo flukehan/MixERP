@@ -21,7 +21,7 @@ using System;
 
 namespace MixERP.Net.Common.Models.Core
 {
-    public class AttachmentModel
+    public sealed class AttachmentModel
     {
         public long Id { get; set; }
 

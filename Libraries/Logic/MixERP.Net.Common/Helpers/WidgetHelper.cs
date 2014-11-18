@@ -23,13 +23,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace MixERP.Net.Common.Helpers
 {
     public static class WidgetHelper
     {
-        public static void LoadWidgets(IEnumerable<WidgetModel> widgetModels, PlaceHolder placeholder, Page page)
+        public static void LoadWidgets(IEnumerable<WidgetModel> widgetModels, Control placeholder, TemplateControl page)
         {
             if (placeholder == null)
             {

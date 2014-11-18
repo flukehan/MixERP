@@ -17,26 +17,24 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
     [ToolboxData("<{0}:ScrudItemSelector runat=server></{0}:ScrudItemSelector>")]
-    public partial class ScrudItemSelector : CompositeControl
+    public sealed partial class ScrudItemSelector : CompositeControl
     {
         public Panel container;
-        public DropDownList filterSelect;
         public TextBox filterInputText;
+        public DropDownList filterSelect;
         public Button goButton;
         public GridView searchGridView;
         private bool disposed;
 
-        public sealed override void Dispose()
+        public override void Dispose()
         {
             this.Dispose(true);
-            GC.SuppressFinalize(this);
             base.Dispose();
         }
 
@@ -49,7 +47,17 @@ namespace MixERP.Net.WebControls.ScrudFactory
             this.Controls.Add(this.container);
         }
 
-        protected virtual void Dispose(bool disposing)
+        protected override void RecreateChildControls()
+        {
+            this.EnsureChildControls();
+        }
+
+        protected override void Render(HtmlTextWriter w)
+        {
+            this.container.RenderControl(w);
+        }
+
+        private void Dispose(bool disposing)
         {
             if (!this.disposed)
             {
@@ -91,16 +99,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
                 this.disposed = true;
             }
-        }
-
-        protected override void RecreateChildControls()
-        {
-            this.EnsureChildControls();
-        }
-
-        protected override void Render(HtmlTextWriter w)
-        {
-            this.container.RenderControl(w);
         }
     }
 }

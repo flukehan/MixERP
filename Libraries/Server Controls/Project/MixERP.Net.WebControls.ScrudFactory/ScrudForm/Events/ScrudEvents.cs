@@ -35,7 +35,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         public event EventHandler UseButtonClick;
 
-        protected void CancelButton_Click(object sender, EventArgs e)
+        private void CancelButton_Click(object sender, EventArgs e)
         {
             //Clear the form.
             this.formContainer.Controls.Clear();
@@ -51,7 +51,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             }
         }
 
-        protected void DeleteButton_Click(object sender, EventArgs e)
+        private void DeleteButton_Click(object sender, EventArgs e)
         {
             var id = this.GetSelectedValue();
             if (string.IsNullOrWhiteSpace(id))
@@ -83,7 +83,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             }
         }
 
-        protected void EditButton_Click(object sender, EventArgs e)
+        private void EditButton_Click(object sender, EventArgs e)
         {
             var id = this.GetSelectedValue();
             if (string.IsNullOrWhiteSpace(id))
@@ -107,7 +107,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             }
         }
 
-        protected void SaveButton_Click(object sender, EventArgs e)
+        private void SaveButton_Click(object sender, EventArgs e)
         {
             this.Page.Validate();
 
@@ -125,7 +125,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             this.Save(false);
         }
 
-        protected void UseButton_Click(object sender, EventArgs e)
+        private void UseButton_Click(object sender, EventArgs e)
         {
             this.Page.Validate();
             if (!this.Page.IsValid)

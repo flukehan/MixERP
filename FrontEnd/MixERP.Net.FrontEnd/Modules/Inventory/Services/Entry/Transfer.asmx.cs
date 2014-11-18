@@ -61,7 +61,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
             int userId = SessionHelper.GetUserId();
             long loginId = SessionHelper.GetLogOnId();
 
-            return Inventory.Data.Helpers.StockTransfer.Add(officeId, userId, loginId, valueDate, referenceNumber, statementReference, stockTransferModels);
+            return Data.Transactions.StockTransfer.Add(officeId, userId, loginId, valueDate, referenceNumber, statementReference, stockTransferModels);
         }
 
         // ReSharper disable once ReturnTypeCanBeEnumerable.Local

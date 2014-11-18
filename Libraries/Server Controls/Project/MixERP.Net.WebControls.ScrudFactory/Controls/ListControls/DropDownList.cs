@@ -32,12 +32,9 @@ using FormHelper = MixERP.Net.WebControls.ScrudFactory.Data.FormHelper;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 {
-    public static class ScrudDropDownList
+    internal static class ScrudDropDownList
     {
-        public static void AddDropDownList(HtmlTable htmlTable, string resourceClassName, string itemSelectorPath,
-            string columnName, bool isNullable, string tableSchema, string tableName, string tableColumn,
-            string defaultValue, string displayFields, string displayViews, bool useDisplayViewsAsParent,
-            string selectedValues, string errorCssClass, Assembly assembly)
+        internal static void AddDropDownList(HtmlTable htmlTable, string resourceClassName, string itemSelectorPath, string columnName, bool isNullable, string tableSchema, string tableName, string tableColumn, string defaultValue, string displayFields, string displayViews, bool useDisplayViewsAsParent, string selectedValues, string errorCssClass, Assembly assembly)
         {
             var label = ScrudLocalizationHelper.GetResourceString(assembly, resourceClassName, columnName);
 
@@ -110,11 +107,13 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
         }
 
         /// <summary>
-        /// Creates item selector html anchor which bascially is an extender of the control.
-        /// The extender is an html image button which, when clicked, will open
-        /// a popup window which allows selection, filtering, search, etc. on the target table.
+        /// Creates item selector html anchor which bascially is an extender of the control. The
+        /// extender is an html image button which, when clicked, will open a popup window which
+        /// allows selection, filtering, search, etc. on the target table.
         /// </summary>
-        /// <param name="associatedControlId">ClientID of the DropDownList control to wich this control is associated to.</param>
+        /// <param name="associatedControlId">
+        /// ClientID of the DropDownList control to wich this control is associated to.
+        /// </param>
         /// <param name="table"></param>
         /// <param name="itemSelectorPath"></param>
         /// <param name="tableSchema"></param>
@@ -123,6 +122,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
         /// <param name="displayViews"></param>
         /// <param name="assembly"></param>
         /// <param name="resourceClassName"></param>
+        /// <param name="columnNameLocalized"></param>
         /// <returns></returns>
         private static HtmlAnchor GetItemSelector(string associatedControlId, DataTable table, string itemSelectorPath, string tableSchema, string tableName, string tableColumn, string displayViews, Assembly assembly, string resourceClassName, string columnNameLocalized)
         {
@@ -166,8 +166,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
             }
         }
 
-        private static DataTable GetTable(string tableSchema, string tableName, string tableColumn, string displayViews,
-            bool useDisplayViewsAsParent)
+        private static DataTable GetTable(string tableSchema, string tableName, string tableColumn, string displayViews, bool useDisplayViewsAsParent)
         {
             if (useDisplayViewsAsParent)
             {

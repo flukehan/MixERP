@@ -23,7 +23,6 @@ using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
 namespace MixERP.Net.Tests.PgUnitTest.Helpers
@@ -39,31 +38,19 @@ namespace MixERP.Net.Tests.PgUnitTest.Helpers
             return true;
         }
 
-        private static void RunInstallScript()
+        private static string CombineScripts(string directory)
         {
-            bool run = Conversion.TryCastBoolean(ConfigurationManager.AppSettings["RunInstallScript"]);
+            string sql = string.Empty;
 
-            if (!run)
+            files = new List<string>();
+            RecursiveSearch(directory);
+
+            foreach (string file in files)
             {
-                return;
+                sql += File.ReadAllText(file) + ";";
             }
 
-            string script = ConfigurationManager.AppSettings["InstallScriptPath"];
-
-            using (NpgsqlCommand command = new NpgsqlCommand(script))
-            {
-                DbOperations.ExecuteNonQuery(command);
-            }
-        }
-
-        private static void InstallUnitTests()
-        {
-            string sql = GetScript();
-
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                DbOperations.ExecuteNonQuery(command);
-            }
+            return sql;
         }
 
         private static string GetScript()
@@ -86,19 +73,14 @@ namespace MixERP.Net.Tests.PgUnitTest.Helpers
             return string.Empty;
         }
 
-        private static string CombineScripts(string directory)
+        private static void InstallUnitTests()
         {
-            string sql = string.Empty;
+            string sql = GetScript();
 
-            files = new List<string>();
-            RecursiveSearch(directory);
-
-            foreach (string file in files)
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                sql += File.ReadAllText(file) + ";";
+                DbOperations.ExecuteNonQuery(command);
             }
-
-            return sql;
         }
 
         private static void RecursiveSearch(string directoryPath)
@@ -114,6 +96,23 @@ namespace MixERP.Net.Tests.PgUnitTest.Helpers
                 }
 
                 RecursiveSearch(subDirectory);
+            }
+        }
+
+        private static void RunInstallScript()
+        {
+            bool run = Conversion.TryCastBoolean(ConfigurationManager.AppSettings["RunInstallScript"]);
+
+            if (!run)
+            {
+                return;
+            }
+
+            string script = ConfigurationManager.AppSettings["InstallScriptPath"];
+
+            using (NpgsqlCommand command = new NpgsqlCommand(script))
+            {
+                DbOperations.ExecuteNonQuery(command);
             }
         }
     }

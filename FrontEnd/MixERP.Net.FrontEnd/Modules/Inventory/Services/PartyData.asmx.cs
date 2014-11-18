@@ -35,24 +35,6 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
     public class PartyData : WebService
     {
         [WebMethod]
-        public Collection<ListItem> GetParties()
-        {
-            Collection<ListItem> values = new Collection<ListItem>();
-
-            using (DataTable table = Data.Helpers.Parties.GetPartyDataTable())
-            {
-                string displayField = ConfigurationHelper.GetDbParameter("PartyDisplayField");
-                table.Columns.Add("party", typeof(string), displayField);
-                foreach (DataRow dr in table.Rows)
-                {
-                    values.Add(new ListItem(dr["party"].ToString(), dr["party_code"].ToString()));
-                }
-            }
-
-            return values;
-        }
-
-        [WebMethod]
         public Collection<ListItem> GetAddressByPartyCode(string partyCode)
         {
             Collection<ListItem> values = new Collection<ListItem>();
@@ -69,6 +51,36 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
             }
 
             return values;
+        }
+
+        [WebMethod]
+        public Collection<ListItem> GetParties()
+        {
+            Collection<ListItem> values = new Collection<ListItem>();
+
+            using (DataTable table = Parties.GetPartyDataTable())
+            {
+                string displayField = ConfigurationHelper.GetDbParameter("PartyDisplayField");
+                table.Columns.Add("party", typeof(string), displayField);
+                foreach (DataRow dr in table.Rows)
+                {
+                    values.Add(new ListItem(dr["party"].ToString(), dr["party_code"].ToString()));
+                }
+            }
+
+            return values;
+        }
+
+        [WebMethod]
+        public string GetPartyCodeByPartyId(int partyId)
+        {
+            return Parties.GetPartyCodeByPartyId(partyId);
+        }
+
+        [WebMethod(EnableSession = true)]
+        public PartyDueModel GetPartyDue(string partyCode)
+        {
+            return Parties.GetPartyDue(partyCode);
         }
 
         [WebMethod]
@@ -117,18 +129,6 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         public Collection<PartyShippingAddress> GetShippingAddresses(string partyCode)
         {
             return Parties.GetShippingAddresses(partyCode);
-        }
-
-        [WebMethod]
-        public string GetPartyCodeByPartyId(int partyId)
-        {
-            return Parties.GetPartyCodeByPartyId(partyId);
-        }
-
-        [WebMethod(EnableSession = true)]
-        public PartyDueModel GetPartyDue(string partyCode)
-        {
-            return Parties.GetPartyDue(partyCode);
         }
     }
 }

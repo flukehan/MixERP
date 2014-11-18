@@ -19,7 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace MixERP.Net.Common.Models.Office
 {
-    public class User
+    public sealed class User
     {
         public int UserId { get; set; }
 

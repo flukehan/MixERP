@@ -17,8 +17,6 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System.Diagnostics.CodeAnalysis;
-
 namespace MixERP.Net.Common.Models.Core
 {
     public enum Frequency

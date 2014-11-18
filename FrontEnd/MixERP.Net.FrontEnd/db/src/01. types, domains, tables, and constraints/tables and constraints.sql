@@ -1236,6 +1236,7 @@ CREATE TABLE transactions.transaction_details
 (
     transaction_detail_id                   BIGSERIAL NOT NULL PRIMARY KEY,
     transaction_master_id                   bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id),
+    value_date                              date NOT NULL,
     tran_type                               transaction_type NOT NULL,
     account_id                              bigint NOT NULL REFERENCES core.accounts(account_id),
     statement_reference                     text NULL,
@@ -1293,6 +1294,7 @@ CREATE TABLE transactions.stock_master
 (
     stock_master_id                         BIGSERIAL NOT NULL PRIMARY KEY,
     transaction_master_id                   bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id),
+    value_date                              date NOT NULL,
     party_id                                bigint NULL REFERENCES core.parties(party_id),
     salesperson_id                          integer NULL REFERENCES core.salespersons(salesperson_id),
     price_type_id                           integer NULL REFERENCES core.price_types(price_type_id),
@@ -1317,7 +1319,8 @@ ON transactions.stock_master(transaction_master_id);
 
 CREATE TABLE transactions.stock_details
 (
-    stock_master_detail_id                  BIGSERIAL NOT NULL PRIMARY KEY,
+    stock_detail_id                         BIGSERIAL NOT NULL PRIMARY KEY,
+    value_date                              date NOT NULL,
     stock_master_id                         bigint NOT NULL REFERENCES transactions.stock_master(stock_master_id),
     tran_type                               transaction_type NOT NULL,
     store_id                                integer NULL REFERENCES office.stores(store_id),
@@ -1327,6 +1330,7 @@ CREATE TABLE transactions.stock_details
     base_quantity                           decimal NOT NULL,
     base_unit_id                            integer NOT NULL REFERENCES core.units(unit_id),
     price                                   money_strict NOT NULL,
+    cost_of_goods_sold                      money_strict2 NOT NULL DEFAULT(0),
     discount                                money_strict2 NOT NULL   
                                             CONSTRAINT stock_details_discount_df   
                                             DEFAULT(0),
@@ -1376,6 +1380,7 @@ CREATE TABLE transactions.non_gl_stock_details
 (
     non_gl_stock_detail_id                  BIGSERIAL NOT NULL PRIMARY KEY,
     non_gl_stock_master_id                  bigint NOT NULL REFERENCES transactions.non_gl_stock_master(non_gl_stock_master_id),
+    value_date                              date NOT NULL,
     item_id                                 integer NOT NULL REFERENCES core.items(item_id),
     quantity                                integer NOT NULL,
     unit_id                                 integer NOT NULL REFERENCES core.units(unit_id),
@@ -1475,19 +1480,6 @@ ON crm.opportunity_stages(UPPER(opportunity_stage_name));
 
 
 
-
-CREATE TABLE core.switch_categories
-(
-    switch_category_id                      SERIAL NOT NULL PRIMARY KEY,
-    switch_category_name                    national character varying(128) NOT NULL,
-    audit_user_id                           integer NULL REFERENCES office.users(user_id),
-    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
-                                            DEFAULT(NOW())
-);
-
-CREATE UNIQUE INDEX switch_categories_switch_category_name_uix
-ON core.switch_categories(UPPER(switch_category_name));
-
 CREATE TABLE office.work_centers
 (
     work_center_id                          SERIAL NOT NULL PRIMARY KEY,
@@ -1571,3 +1563,21 @@ CREATE TABLE policy.auto_verification_policy
                                             DEFAULT(NOW())
 );
 
+
+CREATE TABLE core.config
+(
+    config_id                               integer PRIMARY KEY,
+    config_name                             national character varying(50) NOT NULL UNIQUE    
+);
+
+CREATE TABLE office.configuration
+(
+    configuration_id                        SERIAL PRIMARY KEY,
+    config_id                               integer REFERENCES core.config(config_id),
+    office_id                               integer NOT NULL,
+    configuration                           text NOT NULL,
+    configuration_details                   text NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())    
+);

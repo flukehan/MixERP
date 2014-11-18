@@ -29,36 +29,6 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
 {
     public static class Parties
     {
-        public static Collection<PartyShippingAddress> GetShippingAddresses(string partyCode)
-        {
-            Collection<PartyShippingAddress> addresses = new Collection<PartyShippingAddress>();
-
-            const string sql =
-                "SELECT * FROM core.shipping_addresses WHERE party_id=core.get_party_id_by_party_code(@PartyCode);";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@PartyCode", partyCode);
-                using (DataTable table = DbOperations.GetDataTable(command))
-                {
-                    for (int i = 0; i < table.Rows.Count; i++)
-                    {
-                        PartyShippingAddress address = new PartyShippingAddress();
-                        address.POBox = Conversion.TryCastString(table.Rows[i]["po_box"]);
-                        address.AddressLine1 = Conversion.TryCastString(table.Rows[i]["address_line_1"]);
-                        address.AddressLine2 = Conversion.TryCastString(table.Rows[i]["address_line_2"]);
-                        address.Street = Conversion.TryCastString(table.Rows[i]["street"]);
-                        address.City = Conversion.TryCastString(table.Rows[i]["city"]);
-                        address.State = Conversion.TryCastString(table.Rows[i]["state"]);
-                        address.Country = Conversion.TryCastString(table.Rows[i]["country"]);
-
-                        addresses.Add(address);
-                    }
-                }
-            }
-
-            return addresses;
-        }
-
         public static string GetPartyCodeByPartyId(int partyId)
         {
             const string sql = "SELECT party_code FROM core.parties WHERE party_id=@PartyId;";
@@ -68,6 +38,11 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
                 command.Parameters.AddWithValue("@PartyId", partyId);
                 return Conversion.TryCastString(DbOperations.GetScalarValue((command)));
             }
+        }
+
+        public static DataTable GetPartyDataTable()
+        {
+            return FormHelper.GetTable("core", "parties", "party_id");
         }
 
         public static PartyDueModel GetPartyDue(string partyCode)
@@ -93,6 +68,40 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
             return model;
         }
 
+        public static DataTable GetPartyViewDataTable(string partyCode)
+        {
+            return FormHelper.GetTable("core", "party_view", "party_code", partyCode, "party_id");
+        }
+
+        public static Collection<PartyShippingAddress> GetShippingAddresses(string partyCode)
+        {
+            Collection<PartyShippingAddress> addresses = new Collection<PartyShippingAddress>();
+
+            const string sql = "SELECT * FROM core.shipping_addresses WHERE party_id=core.get_party_id_by_party_code(@PartyCode);";
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                command.Parameters.AddWithValue("@PartyCode", partyCode);
+                using (DataTable table = DbOperations.GetDataTable(command))
+                {
+                    for (int i = 0; i < table.Rows.Count; i++)
+                    {
+                        PartyShippingAddress address = new PartyShippingAddress();
+                        address.POBox = Conversion.TryCastString(table.Rows[i]["po_box"]);
+                        address.AddressLine1 = Conversion.TryCastString(table.Rows[i]["address_line_1"]);
+                        address.AddressLine2 = Conversion.TryCastString(table.Rows[i]["address_line_2"]);
+                        address.Street = Conversion.TryCastString(table.Rows[i]["street"]);
+                        address.City = Conversion.TryCastString(table.Rows[i]["city"]);
+                        address.State = Conversion.TryCastString(table.Rows[i]["state"]);
+                        address.Country = Conversion.TryCastString(table.Rows[i]["country"]);
+
+                        addresses.Add(address);
+                    }
+                }
+            }
+
+            return addresses;
+        }
+
         private static DataTable GetPartyDue(int officeId, string partyCode)
         {
             const string sql =
@@ -104,16 +113,6 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
 
                 return DbOperations.GetDataTable(command);
             }
-        }
-
-        public static DataTable GetPartyDataTable()
-        {
-            return FormHelper.GetTable("core", "parties", "party_id");
-        }
-
-        public static DataTable GetPartyViewDataTable(string partyCode)
-        {
-            return FormHelper.GetTable("core", "party_view", "party_code", partyCode, "party_id");
         }
     }
 }

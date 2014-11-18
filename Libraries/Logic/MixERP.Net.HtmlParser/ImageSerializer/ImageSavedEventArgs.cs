@@ -1,6 +1,6 @@
 ﻿namespace MixERP.Net.HtmlParser.ImageSerializer
 {
-    public class ImageSavedEventArgs : System.EventArgs
+    public sealed class ImageSavedEventArgs : System.EventArgs
     {
         public ImageSavedEventArgs(string imagePath)
         {

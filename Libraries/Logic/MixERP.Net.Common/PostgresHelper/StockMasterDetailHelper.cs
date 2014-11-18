@@ -1,4 +1,7 @@
-﻿/********************************************************************************
+﻿using MixERP.Net.Common.Models.Transactions;
+using Npgsql;
+
+/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
 This file is part of MixERP.
@@ -17,20 +20,13 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Models.Core;
-using MixERP.Net.Common.Models.Transactions;
-using Npgsql;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MixERP.Net.Core.Modules.Purchase.Data.Helpers
+namespace MixERP.Net.Common.PostgresHelper
 {
-    public static class ParameterHelper
+    public static class StockMasterDetailHelper
     {
         public static IEnumerable<NpgsqlParameter> AddStockMasterDetailParameter(Collection<StockMasterDetailModel> details)
         {
@@ -54,54 +50,20 @@ namespace MixERP.Net.Core.Modules.Purchase.Data.Helpers
             return collection;
         }
 
-        public static IEnumerable<NpgsqlParameter> AddAttachmentParameter(Collection<AttachmentModel> attachments)
-        {
-            Collection<NpgsqlParameter> collection = new Collection<NpgsqlParameter>();
-
-            if (attachments != null)
-            {
-                for (int i = 0; i < attachments.Count; i++)
-                {
-                    collection.Add(new NpgsqlParameter("@Comment" + i, attachments[i].Comment));
-                    collection.Add(new NpgsqlParameter("@FilePath" + i, attachments[i].FilePath));
-                    collection.Add(new NpgsqlParameter("@OriginalFileName" + i, attachments[i].OriginalFileName));
-                }
-            }
-
-            return collection;
-        }
-
         public static string CreateStockMasterDetailParameter(Collection<StockMasterDetailModel> details)
         {
             if (details == null)
             {
-                return "NULL::stock_detail_type";
+                return "NULL::transactions.stock_detail_type";
             }
 
             Collection<string> detailCollection = new Collection<string>();
             for (int i = 0; i < details.Count; i++)
             {
-                detailCollection.Add(string.Format("ROW(@StoreId{0}, @ItemCode{0}, @Quantity{0}, @UnitName{0},@Price{0}, @Discount{0}, @TaxRate{0}, @Tax{0})::stock_detail_type", i.ToString(CultureInfo.InvariantCulture)));
+                detailCollection.Add(string.Format("ROW(@StoreId{0}, @ItemCode{0}, @Quantity{0}, @UnitName{0},@Price{0}, @Discount{0}, @TaxRate{0}, @Tax{0})::transactions.stock_detail_type", i.ToString(CultureInfo.InvariantCulture)));
             }
 
             return string.Join(",", detailCollection);
-        }
-
-        public static string CreateAttachmentModelParameter(Collection<AttachmentModel> attachments)
-        {
-            if (attachments == null)
-            {
-                return "NULL::core.attachment_type";
-            }
-
-            Collection<string> attachmentCollection = new Collection<string>();
-
-            for (int i = 0; i < attachments.Count; i++)
-            {
-                attachmentCollection.Add(string.Format("ROW(@Comment{0}, @FilePath{0}, @OriginalFileName{0})::core.attachment_type", i.ToString(CultureInfo.InvariantCulture)));
-            }
-
-            return string.Join(",", attachmentCollection);
         }
     }
 }

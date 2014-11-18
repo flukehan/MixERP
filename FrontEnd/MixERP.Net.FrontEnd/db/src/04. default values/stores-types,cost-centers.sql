@@ -4,8 +4,6 @@ SELECT 'SAL', 'Sales Center'                        UNION ALL
 SELECT 'WAR', 'Warehouse'                           UNION ALL
 SELECT 'PRO', 'Production';
 
-
-
 INSERT INTO office.cost_centers(cost_center_code, cost_center_name)
 SELECT 'DEF', 'Default'                             UNION ALL
 SELECT 'GEN', 'General Administration'              UNION ALL

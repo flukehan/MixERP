@@ -20,16 +20,12 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.Common.Resources;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MixERP.Net.Common.Helpers
 {
     public static class TransactionBookHelper
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public static string GetTransactionBookName(TranBook book, SubTranBook subBook)
         {
             string bookName = string.Empty;
@@ -67,6 +63,7 @@ namespace MixERP.Net.Common.Helpers
                     case SubTranBook.Return:
                         bookName = "Sales.Return";
                         break;
+
                     case SubTranBook.Transfer:
                         throw new MixERPException(Warnings.InvalidSubTranBookSalesTransfer);
                     case SubTranBook.Suspense:
@@ -105,6 +102,7 @@ namespace MixERP.Net.Common.Helpers
                     case SubTranBook.Return:
                         bookName = "Purchase.Return";
                         break;
+
                     case SubTranBook.Transfer:
                         throw new MixERPException(Warnings.InvalidSubTranBookPurchaseTransfer);
                     case SubTranBook.Suspense:
@@ -135,6 +133,7 @@ namespace MixERP.Net.Common.Helpers
                     case SubTranBook.Transfer:
                         bookName = "Inventory.Transfer";
                         break;
+
                     case SubTranBook.Suspense:
                         bookName = "Inventory.Suspense";
                         break;

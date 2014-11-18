@@ -19,7 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace MixERP.Net.Common.Models.Core
 {
-    public class Menu
+    public sealed class Menu
     {
         public int MenuId { get; set; }
 

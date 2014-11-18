@@ -6,18 +6,25 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
 {
     public partial class FormView
     {
-        private void CreateBottomPanel()
+        private void AddErrorLabelBottom()
         {
-            using (HtmlGenericControl fields = FormHelper.GetFields())
+            using (HtmlGenericControl errorLabel = new HtmlGenericControl())
             {
-                fields.TagName = "div";
-                fields.Attributes.Add("class", "ui form");
-                fields.Attributes.Add("style", "width:290px;");
+                errorLabel.TagName = "div";
+                errorLabel.ID = "ErrorLabel";
+                errorLabel.Attributes.Add("class", "big error vpad16");
+                this.container.Controls.Add(errorLabel);
+            }
+        }
 
-                this.AddStatementReferenceTextArea(fields);
-                this.AddSaveButton(fields);
-
-                this.container.Controls.Add(fields);
+        private void AddSaveButton(HtmlGenericControl div)
+        {
+            using (HtmlInputButton button = new HtmlInputButton())
+            {
+                button.ID = "SaveButton";
+                button.Value = Titles.Save;
+                button.Attributes.Add("class", "ui small blue button");
+                div.Controls.Add(button);
             }
         }
 
@@ -45,25 +52,18 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
             }
         }
 
-        private void AddErrorLabelBottom()
+        private void CreateBottomPanel()
         {
-            using (HtmlGenericControl errorLabel = new HtmlGenericControl())
+            using (HtmlGenericControl fields = FormHelper.GetFields())
             {
-                errorLabel.TagName = "div";
-                errorLabel.ID = "ErrorLabel";
-                errorLabel.Attributes.Add("class", "big error vpad16");
-                this.container.Controls.Add(errorLabel);
-            }
-        }
+                fields.TagName = "div";
+                fields.Attributes.Add("class", "ui form");
+                fields.Attributes.Add("style", "width:290px;");
 
-        private void AddSaveButton(HtmlGenericControl container)
-        {
-            using (HtmlInputButton button = new HtmlInputButton())
-            {
-                button.ID = "SaveButton";
-                button.Value = Titles.Save;
-                button.Attributes.Add("class", "ui small blue button");
-                container.Controls.Add(button);
+                this.AddStatementReferenceTextArea(fields);
+                this.AddSaveButton(fields);
+
+                this.container.Controls.Add(fields);
             }
         }
     }

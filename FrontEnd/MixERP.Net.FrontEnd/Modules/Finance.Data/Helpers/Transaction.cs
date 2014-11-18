@@ -33,8 +33,20 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
         public static long Add(DateTime valueDate, string referenceNumber, int costCenterId, Collection<JournalDetailsModel> details, Collection<Common.Models.Core.AttachmentModel> attachments)
         {
             long transactionMasterId = Add(valueDate, SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), costCenterId, referenceNumber, details, attachments);
-            MixERP.Net.TransactionGovernor.Autoverification.Autoverify.PassTransactionMasterId(transactionMasterId);
+            TransactionGovernor.Autoverification.Autoverify.PassTransactionMasterId(transactionMasterId);
             return transactionMasterId;
+        }
+
+        public static decimal GetExchangeRate(int officeId, string currencyCode)
+        {
+            const string sql = "SELECT transactions.get_exchange_rate(@OfficeId, @CurrencyCode);";
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                command.Parameters.AddWithValue("@OfficeId", officeId);
+                command.Parameters.AddWithValue("@CurrencyCode", currencyCode);
+
+                return Conversion.TryCastDecimal(DbOperations.GetScalarValue(command));
+            }
         }
 
         private static long Add(DateTime valueDate, int officeId, int userId, long logOnId, int costCenterId, string referenceNumber, Collection<JournalDetailsModel> details, Collection<Common.Models.Core.AttachmentModel> attachments)
@@ -177,18 +189,6 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
                         throw;
                     }
                 }
-            }
-        }
-
-        public static decimal GetExchangeRate(int officeId, string currencyCode)
-        {
-            const string sql = "SELECT transactions.get_exchange_rate(@OfficeId, @CurrencyCode);";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@OfficeId", officeId);
-                command.Parameters.AddWithValue("@CurrencyCode", currencyCode);
-
-                return Conversion.TryCastDecimal(DbOperations.GetScalarValue(command));
             }
         }
     }

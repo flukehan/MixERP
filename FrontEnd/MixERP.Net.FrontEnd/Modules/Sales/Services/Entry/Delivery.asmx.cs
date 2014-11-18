@@ -21,10 +21,7 @@ using MixERP.Net.Common.Models.Core;
 using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.Services;
 
@@ -65,13 +62,13 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
 
             if (!string.IsNullOrWhiteSpace(transactionIds))
             {
-                foreach (var transactionId in transactionIds.Split(','))
+                foreach (string transactionId in transactionIds.Split(','))
                 {
                     tranIds.Add(Common.Conversion.TryCastInteger(transactionId));
                 }
             }
 
-            return Data.Helpers.Delivery.Add(valueDate, storeId, partyCode, priceTypeId, details, shipperId, shippingAddressCode, shippingCharge, costCenterId, referenceNumber, agentId, statementReference, tranIds, attachments);
+            return Data.Transactions.Delivery.Add(valueDate, storeId, partyCode, priceTypeId, details, shipperId, shippingAddressCode, shippingCharge, costCenterId, referenceNumber, agentId, statementReference, tranIds, attachments);
         }
     }
 }

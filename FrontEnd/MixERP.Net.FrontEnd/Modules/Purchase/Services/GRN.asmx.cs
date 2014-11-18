@@ -34,7 +34,8 @@ namespace MixERP.Net.Core.Modules.Purchase.Services
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
-    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line.
+    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the
+    // following line.
     [System.Web.Script.Services.ScriptService]
     public class GRN : WebService
     {
@@ -42,7 +43,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Services
         public long Save(DateTime valueDate, int storeId, string partyCode, string referenceNumber, string data, string statementReference, int costCenterId, string transactionIds, string attachmentsJSON)
         {
             Collection<StockMasterDetailModel> details = CollectionHelper.GetStockMasterDetailCollection(data, storeId);
-            Collection<int> tranIds = new Collection<int>();
+            Collection<long> tranIds = new Collection<long>();
 
             JavaScriptSerializer js = new JavaScriptSerializer();
             Collection<AttachmentModel> attachments = js.Deserialize<Collection<AttachmentModel>>(attachmentsJSON);
@@ -55,7 +56,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Services
                 }
             }
 
-            return Data.Helpers.GRN.Add(valueDate, storeId, partyCode, details, costCenterId, referenceNumber, statementReference, tranIds, attachments);
+            return Data.Transactions.GRN.Add(valueDate, storeId, partyCode, details, costCenterId, referenceNumber, statementReference, tranIds, attachments);
         }
     }
 }

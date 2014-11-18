@@ -20,13 +20,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using MixERP.Net.Common;
 using MixERP.Net.DBFactory;
 using Npgsql;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MixERP.Net.Core.Modules.Sales.Data.Reports
 {

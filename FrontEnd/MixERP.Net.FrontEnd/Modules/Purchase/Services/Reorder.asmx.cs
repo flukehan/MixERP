@@ -20,6 +20,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using MixERP.Net.Common.Helpers;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Web.Script.Services;
 using System.Web.Services;
 
@@ -27,9 +28,9 @@ namespace MixERP.Net.Core.Modules.Purchase.Services
 {
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
-    [System.ComponentModel.ToolboxItem(false)]
+    [ToolboxItem(false)]
     [ScriptService]
-    public class Reorder : System.Web.Services.WebService
+    public class Reorder : WebService
     {
         [WebMethod(EnableSession = true)]
         public bool Save(Collection<Data.Models.Reorder> details)
@@ -43,7 +44,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Services
             int userId = SessionHelper.GetUserId();
             int officeId = SessionHelper.GetOfficeId();
 
-            return Data.Helpers.Reorder.Save(loginId, userId, officeId, details);
+            return Data.Transactions.Reorder.Save(loginId, userId, officeId, details);
         }
     }
 }

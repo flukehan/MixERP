@@ -22,6 +22,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>1685</NoWarn>
+    <CodeAnalysisRuleSet>..\..\..\..\MixERP.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -57,7 +58,7 @@
     <Compile Include="Helpers\Parties.cs" />
     <Compile Include="Helpers\PriceTypes.cs" />
     <Compile Include="Helpers\Shippers.cs" />
-    <Compile Include="Helpers\StockTransfer.cs" />
+    <Compile Include="Transactions\StockTransfer.cs" />
     <Compile Include="Helpers\Stores.cs" />
     <Compile Include="Helpers\Units.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

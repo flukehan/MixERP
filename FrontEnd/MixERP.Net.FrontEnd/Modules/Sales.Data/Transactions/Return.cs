@@ -20,24 +20,21 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using MixERP.Net.Common;
 using MixERP.Net.Common.Models.Core;
 using MixERP.Net.Common.Models.Transactions;
+using MixERP.Net.Common.PostgresHelper;
 using MixERP.Net.DBFactory;
 using Npgsql;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
+namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
 {
     public static class Return
     {
         public static long PostTransaction(long transactionMasterId, DateTime valueDate, int officeId, int userId, long loginId, int storeId, string partyCode, int priceTypeId, string referenceNumber, string statementReference, Collection<StockMasterDetailModel> details, Collection<AttachmentModel> attachments)
         {
-            string detail = ParameterHelper.CreateStockMasterDetailParameter(details);
-            string attachment = ParameterHelper.CreateAttachmentModelParameter(attachments);
+            string detail = StockMasterDetailHelper.CreateStockMasterDetailParameter(details);
+            string attachment = AttachmentHelper.CreateAttachmentModelParameter(attachments);
 
             string sql = string.Format("SELECT * FROM transactions.post_sales_return(@TransactionMasterId, @OfficeId, @UserId, @LoginId, @ValueDate, @StoreId, @PartyCode, @PriceTypeId, @ReferenceNumber, @StatementReference, ARRAY[{0}], ARRAY[{1}]);", detail, attachment);
 
@@ -54,11 +51,11 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
                 command.Parameters.AddWithValue("@ReferenceNumber", referenceNumber);
                 command.Parameters.AddWithValue("@StatementReference", statementReference);
 
-                command.Parameters.AddRange(ParameterHelper.AddStockMasterDetailParameter(details).ToArray());
-                command.Parameters.AddRange(ParameterHelper.AddAttachmentParameter(attachments).ToArray());
+                command.Parameters.AddRange(StockMasterDetailHelper.AddStockMasterDetailParameter(details).ToArray());
+                command.Parameters.AddRange(AttachmentHelper.AddAttachmentParameter(attachments).ToArray());
 
                 long tranId = Conversion.TryCastLong(DbOperations.GetScalarValue(command));
-                MixERP.Net.TransactionGovernor.Autoverification.Autoverify.PassTransactionMasterId(tranId);
+                TransactionGovernor.Autoverification.Autoverify.PassTransactionMasterId(tranId);
                 return tranId;
             }
         }

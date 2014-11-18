@@ -23,19 +23,27 @@ using MixERP.Net.Common.Models.Transactions;
 using System;
 using System.Collections.ObjectModel;
 
-namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
+namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
 {
-    public static class Order
+    public static class DirectPurchase
     {
-        public static long Add(DateTime valueDate, string partyCode, int priceTypeId, Collection<StockMasterDetailModel> details, string referenceNumber, string statementReference, Collection<int> transactionIdCollection, Collection<AttachmentModel> attachments)
+        public static long Add(DateTime valueDate, int storeId, bool isCredit, string partyCode, Collection<StockMasterDetailModel> details, int cashRepositoryId, int costCenterId, string referenceNumber, string statementReference, Collection<AttachmentModel> attachments)
         {
             StockMasterModel stockMaster = new StockMasterModel();
 
             stockMaster.PartyCode = partyCode;
-            stockMaster.PriceTypeId = priceTypeId;
+            stockMaster.StoreId = storeId;
+            stockMaster.CashRepositoryId = cashRepositoryId;
+            stockMaster.IsCredit = isCredit;
 
-            long nonGlStockMasterId = NonGlStockTransaction.Add("Sales.Order", valueDate, SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), referenceNumber, statementReference, stockMaster, details, transactionIdCollection, attachments);
-            return nonGlStockMasterId;
+            if (!string.IsNullOrWhiteSpace(statementReference))
+            {
+                statementReference = statementReference.Replace("&nbsp;", " ").Trim();
+            }
+
+            long transactionMasterId = GlTransaction.Add(valueDate, "Purchase.Direct", SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), costCenterId, referenceNumber, statementReference, stockMaster, details, new Collection<long>(), attachments);
+            TransactionGovernor.Autoverification.Autoverify.PassTransactionMasterId(transactionMasterId);
+            return transactionMasterId;
         }
     }
 }

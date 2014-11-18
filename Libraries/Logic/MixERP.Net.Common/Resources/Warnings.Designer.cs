@@ -61,6 +61,15 @@ namespace MixERP.Net.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not register JavaScript on this page because the page instance was invalid or empty..
+        /// </summary>
+        internal static string CouldNotRegisterJavaScript {
+            get {
+                return ResourceManager.GetString("CouldNotRegisterJavaScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid SubTranBook &quot;Inventory Delivery&quot;.
         /// </summary>
         internal static string InvalidSubTranBookInventoryDelivery {

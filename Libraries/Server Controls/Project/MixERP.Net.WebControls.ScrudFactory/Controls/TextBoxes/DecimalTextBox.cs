@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Resources;
 using System.Reflection;
@@ -27,9 +26,9 @@ using System.Web.UI.WebControls;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 {
-    public static class ScrudDecimalTextBox
+    internal static class ScrudDecimalTextBox
     {
-        public static void AddDecimalTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isNullable, int maxLength, string domain, string errorCssClass, Assembly assembly)
+        internal static void AddDecimalTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isNullable, int maxLength, string domain, string errorCssClass, Assembly assembly)
         {
             var textBox = ScrudTextBox.GetTextBox(columnName + "_textbox", maxLength);
             var label = ScrudLocalizationHelper.GetResourceString(assembly, resourceClassName, columnName);

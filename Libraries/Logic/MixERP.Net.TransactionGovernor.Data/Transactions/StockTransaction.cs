@@ -20,33 +20,18 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using MixERP.Net.Common;
 using MixERP.Net.DBFactory;
 using Npgsql;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MixERP.Net.TransactionGovernor.Data.Transactions
 {
     public static class StockTransaction
     {
-        public static bool IsValidStockTransaction(long transactionMasterId)
+        public static bool IsValidPartyByStockMasterId(long stockMasterId, string partyCode)
         {
-            const string sql = "SELECT transactions.is_valid_stock_transaction_by_transaction_master_id(@TransactionMasterId);";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@TransactionMasterId", transactionMasterId);
-
-                return Conversion.TryCastBoolean(DbOperations.GetScalarValue(command));
-            }
-        }
-
-        public static bool IsValidStockTransactionByStockMasterId(long stockMasterId)
-        {
-            const string sql = "SELECT transactions.is_valid_stock_transaction_by_stock_master_id(@StockMasterId::bigint);";
+            const string sql = "SELECT transactions.is_valid_party_by_stock_master_id(@StockMasterId, core.get_party_id_by_party_code(@PartyCode));";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@StockMasterId", stockMasterId);
+                command.Parameters.AddWithValue("@PartyCode", partyCode);
 
                 return Conversion.TryCastBoolean(DbOperations.GetScalarValue(command));
             }
@@ -64,13 +49,23 @@ namespace MixERP.Net.TransactionGovernor.Data.Transactions
             }
         }
 
-        public static bool IsValidPartyByStockMasterId(long stockMasterId, string partyCode)
+        public static bool IsValidStockTransaction(long transactionMasterId)
         {
-            const string sql = "SELECT transactions.is_valid_party_by_stock_master_id(@StockMasterId, core.get_party_id_by_party_code(@PartyCode));";
+            const string sql = "SELECT transactions.is_valid_stock_transaction_by_transaction_master_id(@TransactionMasterId);";
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                command.Parameters.AddWithValue("@TransactionMasterId", transactionMasterId);
+
+                return Conversion.TryCastBoolean(DbOperations.GetScalarValue(command));
+            }
+        }
+
+        public static bool IsValidStockTransactionByStockMasterId(long stockMasterId)
+        {
+            const string sql = "SELECT transactions.is_valid_stock_transaction_by_stock_master_id(@StockMasterId::bigint);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@StockMasterId", stockMasterId);
-                command.Parameters.AddWithValue("@PartyCode", partyCode);
 
                 return Conversion.TryCastBoolean(DbOperations.GetScalarValue(command));
             }

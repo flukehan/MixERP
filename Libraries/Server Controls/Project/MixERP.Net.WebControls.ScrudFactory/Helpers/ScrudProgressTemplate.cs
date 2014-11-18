@@ -22,7 +22,7 @@ using System.Web.UI.HtmlControls;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 {
-    public class AjaxProgressTemplate : ITemplate
+    internal sealed class AjaxProgressTemplate : ITemplate
     {
         private readonly string cssClass;
         private readonly string spinnerImageCssClass;

@@ -5,7 +5,7 @@ AS
 SELECT
         transactions.transaction_master.transaction_master_id,
         transactions.stock_master.stock_master_id,
-        transactions.stock_details.stock_master_detail_id,
+        transactions.stock_details.stock_detail_id,
         transactions.transaction_master.book,
         transactions.transaction_master.transaction_counter,
         transactions.transaction_master.transaction_code,

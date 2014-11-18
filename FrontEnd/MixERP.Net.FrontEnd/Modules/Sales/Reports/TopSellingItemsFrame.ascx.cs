@@ -20,12 +20,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.ReportEngine;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace MixERP.Net.Core.Modules.Sales.Reports
 {
@@ -37,7 +32,7 @@ namespace MixERP.Net.Core.Modules.Sales.Reports
             {
                 report.AutoInitialize = true;
                 report.NoHeader = true;
-                report.ResourceAssembly = Assembly.GetAssembly(typeof(TopSellingItems));
+                report.ResourceAssembly = Assembly.GetAssembly(typeof (TopSellingItems));
                 report.Path = "~/Modules/Sales/Reports/Source/TopSellingProductsOfAllTime.xml";
                 this.Controls.Add(report);
             }

@@ -25,8 +25,6 @@ using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.Services;
 
@@ -36,7 +34,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Services.Entry
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
     [System.Web.Script.Services.ScriptService]
-    public class Return : System.Web.Services.WebService
+    public class Return : WebService
     {
         [WebMethod(EnableSession = true)]
         public long Save(long tranId, DateTime valueDate, int storeId, string partyCode, int priceTypeId, string referenceNumber, string data, string statementReference, string attachmentsJSON)
@@ -65,7 +63,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Services.Entry
             int userId = SessionHelper.GetUserId();
             long loginId = SessionHelper.GetLogOnId();
 
-            return Data.Helpers.Return.PostTransaction(tranId, valueDate, officeId, userId, loginId, storeId, partyCode, priceTypeId, referenceNumber, statementReference, details, attachments);
+            return Data.Transactions.Return.PostTransaction(tranId, valueDate, officeId, userId, loginId, storeId, partyCode, priceTypeId, referenceNumber, statementReference, details, attachments);
         }
 
         private bool ValidateDetails(IEnumerable<StockMasterDetailModel> details, long stockMasterId)

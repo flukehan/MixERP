@@ -25,13 +25,12 @@ using System.Globalization;
 using System.Reflection;
 using System.Text;
 using System.Web;
-using System.Web.UI;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 {
-    public static class ScrudJavaScriptHelper
+    internal static class ScrudJavaScriptHelper
     {
-        public static string GetScript(string keyColumn, string customFormUrl, string formGridViewId, string gridPanelId, string userIdHiddenId, string officeCodeHiddenId, string titleLabelId, string formPanelId, string cancelButtonId)
+        internal static string GetScript(string keyColumn, string customFormUrl, string formGridViewId, string gridPanelId, string userIdHiddenId, string officeCodeHiddenId, string titleLabelId, string formPanelId, string cancelButtonId)
         {
             var resource = JavaScriptHelper.GetEmbeddedScript("MixERP.Net.WebControls.ScrudFactory.Scrud.js", Assembly.GetExecutingAssembly());
             var script = new StringBuilder();

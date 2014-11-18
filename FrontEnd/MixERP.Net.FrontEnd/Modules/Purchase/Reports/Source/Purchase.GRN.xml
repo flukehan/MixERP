@@ -176,7 +176,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         FROM transactions.stock_master
         WHERE transactions.stock_master.transaction_master_id=@transaction_master_id
         )
-        ORDER BY stock_master_detail_id;
+        ORDER BY stock_detail_id;
       </Query>
       <Parameters>
         <Parameter Name="@transaction_master_id" Type="Number" />

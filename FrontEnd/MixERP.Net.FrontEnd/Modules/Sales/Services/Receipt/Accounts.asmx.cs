@@ -18,13 +18,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.Common.Helpers;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
-using System.Linq;
-using System.Web;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.Web.UI.WebControls;
@@ -35,7 +31,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [ToolboxItem(false)]
     [ScriptService]
-    public class Accounts : System.Web.Services.WebService
+    public class Accounts : WebService
     {
         [WebMethod]
         public Collection<ListItem> GetCashRepositories()

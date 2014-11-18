@@ -17,16 +17,9 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Core;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Services;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
 
 namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
 {
@@ -34,7 +27,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
     [System.Web.Script.Services.ScriptService]
-    public class TransactionPosting : System.Web.Services.WebService
+    public class TransactionPosting : WebService
     {
         [WebMethod(EnableSession = true)]
         public long Save(string partyCode, string currencyCode, decimal amount, decimal debitExchangeRate, decimal creditExchangeRate, string referenceNumber, string statementReference, int costCenterId, int cashRepositoryId, DateTime? postedDate, int bankAccountId, string bankInstrumentCode, string bankTransactionCode)
@@ -83,7 +76,8 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
             int officeId = SessionHelper.GetOfficeId();
             long loginId = SessionHelper.GetLogOnId();
 
-            long transactionMasterID = Data.Helpers.Receipt.PostTransaction(userId, officeId, loginId, partyCode, currencyCode, amount, debitExchangeRate, creditExchangeRate, referenceNumber, statementReference, costCenterId, cashRepositoryId, postedDate, bankAccountId, bankInstrumentCode, bankTransactionCode);
+            long transactionMasterID = Data.Transactions.Receipt.PostTransaction(userId, officeId, loginId, partyCode, currencyCode, amount, debitExchangeRate, creditExchangeRate, referenceNumber, statementReference, costCenterId, cashRepositoryId, postedDate, bankAccountId, bankInstrumentCode, bankTransactionCode);
+
             TransactionGovernor.Autoverification.Autoverify.PassTransactionMasterId(transactionMasterID);
 
             return transactionMasterID;

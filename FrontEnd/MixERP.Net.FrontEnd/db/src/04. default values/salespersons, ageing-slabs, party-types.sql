@@ -11,15 +11,12 @@ SELECT 3, 'AWB', 'Alexander Walter Bishop', 'Texas',    '', 0,  (SELECT account_
 SELECT 3, 'LMA', 'Lisa Mary Ann',           'Austin',   '', 0,  (SELECT account_id FROM core.accounts WHERE account_code='20100');
 
 
-
-
 INSERT INTO core.ageing_slabs(ageing_slab_name,from_days,to_days)
 SELECT 'SLAB 1',0, 30   UNION ALL
 SELECT 'SLAB 2',31, 60  UNION ALL
 SELECT 'SLAB 3',61, 90  UNION ALL
 SELECT 'SLAB 4',91, 365 UNION ALL
 SELECT 'SLAB 5',366, 999999;
-
 
 
 INSERT INTO core.party_types(party_type_code, party_type_name) SELECT 'A', 'Agent';

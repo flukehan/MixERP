@@ -46,7 +46,7 @@ namespace MixERP.Net.Utility.SqlBundler.Helpers
                     script.Append(Environment.NewLine);
                 }
 
-                Console.WriteLine("Adding {0} to bundle", fileName);
+                Console.WriteLine(@"Adding {0} to bundle", fileName);
                 script.Append("-->-->-- ");
                 script.Append(Path.GetFullPath(fileName).Replace(root, "").Replace("\\", "/"));
                 script.Append(" --<--<--");
@@ -72,7 +72,7 @@ namespace MixERP.Net.Utility.SqlBundler.Helpers
 
             foreach (var dictionary in model.Dictionaries)
             {
-                Console.WriteLine("SQL localization dictionary: {0}", dictionary.Value);
+                Console.WriteLine(@"SQL localization dictionary: {0}", dictionary.Value);
 
                 SQLBundle bundle = new SQLBundle();
                 string filePath = Path.Combine(root, dictionary.Value);

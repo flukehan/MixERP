@@ -29,7 +29,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>..\MixERP.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\..\MixERP.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
     <PublishDatabases>false</PublishDatabases>
     <FilesToIncludeForPublish>AllFilesInProjectFolder</FilesToIncludeForPublish>
@@ -292,9 +292,12 @@
     <Content Include="bundles\scripts\master-page.min.js">
       <DependentUpon>master-page.js</DependentUpon>
     </Content>
+    <Content Include="db\dumps\dump-transactions.bat" />
+    <Content Include="db\index.html" />
     <Content Include="db\mixerp.de-DE.sql" />
     <Content Include="db\mixerp.en-US.sql" />
     <Content Include="db\mixerp.fr-FR.sql" />
+    <Content Include="db\mixerp.sqlbundle" />
     <Content Include="db\src\00. db core\0. mixerp.sql" />
     <Content Include="db\src\00. db core\1. scrud.sql" />
     <Content Include="db\src\00. db core\2. install-unit-test.sql" />
@@ -309,6 +312,8 @@
     <Content Include="db\src\02. functions and logic\core\core.append_if_not_null.sql" />
     <Content Include="db\src\02. functions and logic\core\core.convert_unit.sql" />
     <Content Include="db\src\02. functions and logic\core\core.count_item_in_stock.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.count_purchases.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.count_sales.sql" />
     <Content Include="db\src\02. functions and logic\core\core.create_flag.sql" />
     <Content Include="db\src\02. functions and logic\core\core.get_account_ids.sql" />
     <Content Include="db\src\02. functions and logic\core\core.get_account_id_by_account_code.sql" />
@@ -362,7 +367,6 @@
     <Content Include="db\src\02. functions and logic\core\core.get_shipping_address_by_shipping_address_id.sql" />
     <Content Include="db\src\02. functions and logic\core\core.get_shipping_address_code_by_shipping_address_id.sql" />
     <Content Include="db\src\02. functions and logic\core\core.get_shipping_address_id_by_shipping_address_code.sql" />
-    <Content Include="db\src\02. functions and logic\core\core.get_switch_category_id_by_name.sql" />
     <Content Include="db\src\02. functions and logic\core\core.get_unit_code_by_unit_id.sql" />
     <Content Include="db\src\02. functions and logic\core\core.get_unit_id_by_unit_code.sql" />
     <Content Include="db\src\02. functions and logic\core\core.get_unit_id_by_unit_name.sql" />
@@ -388,22 +392,29 @@
     <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_accrued_interest-todo.sql" />
     <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_average_party_transaction.sql" />
     <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_cash_repository_balance.sql" />
+    <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_cost_of_goods_sold.sql" />
     <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_last_receipt_date.sql" />
+    <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_mavcogs.sql" />
     <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_non_gl_product_view.sql" />
     <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_party_transaction_summary.sql" />
     <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_product_view.sql" />
     <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_receipt_view.sql" />
     <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_reorder_view_function.sql" />
     <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_sales_by_offices.sql" />
+    <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_top_selling_products_by_office.sql" />
     <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_top_selling_products_of_all_time.sql" />
     <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_total_due.sql" />
     <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_value_date.sql" />
+    <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_write_off_cost_of_goods_sold.sql" />
+    <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.post_purchase.sql" />
+    <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.post_sales.sql" />
+    <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.post_non_gl_transaction.sql" />
     <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.post_purchase_return.sql" />
     <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.post_purhcase_reorder.sql" />
     <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.post_receipt_function.sql" />
     <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.post_sales_return.sql" />
+    <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.post_stock_journal.sql" />
     <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.refresh_materialized_views.sql" />
-    <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.get_top_selling_products_by_office.sql" />
     <Content Include="db\src\02. functions and logic\logic\functions\transactions\transactions.validate_item_for_return.sql" />
     <Content Include="db\src\02. functions and logic\logic\triggers\policy.check_menu_policy_trigger.sql" />
     <Content Include="db\src\02. functions and logic\logic\triggers\transactions.verification_trigger.sql" />
@@ -411,6 +422,7 @@
     <Content Include="db\src\02. functions and logic\office\office.create_user.sql" />
     <Content Include="db\src\02. functions and logic\office\office.get_cash_repository_id_by_cash_repository_code.sql" />
     <Content Include="db\src\02. functions and logic\office\office.get_cash_repository_id_by_cash_repository_name.sql" />
+    <Content Include="db\src\02. functions and logic\office\office.get_cost_of_good_method.sql" />
     <Content Include="db\src\02. functions and logic\office\office.get_logged_in_culture.sql" />
     <Content Include="db\src\02. functions and logic\office\office.get_logged_in_office_id.sql" />
     <Content Include="db\src\02. functions and logic\office\office.get_login_id.sql" />
@@ -426,12 +438,14 @@
     <Content Include="db\src\02. functions and logic\office\office.get_role_id_by_role_code.sql" />
     <Content Include="db\src\02. functions and logic\office\office.get_role_id_by_role_name.sql" />
     <Content Include="db\src\02. functions and logic\office\office.get_role_id_by_use_id.sql" />
+    <Content Include="db\src\02. functions and logic\office\office.get_store_id_by_store_name.sql" />
     <Content Include="db\src\02. functions and logic\office\office.get_store_name_by_store_id.sql" />
     <Content Include="db\src\02. functions and logic\office\office.get_sys_user_id.sql" />
     <Content Include="db\src\02. functions and logic\office\office.get_user_id_by_user_name.sql" />
     <Content Include="db\src\02. functions and logic\office\office.get_user_name_by_user_id.sql" />
     <Content Include="db\src\02. functions and logic\office\office.is_admin.sql" />
     <Content Include="db\src\02. functions and logic\office\office.is_parent_office.sql" />
+    <Content Include="db\src\02. functions and logic\office\office.is_periodic_inventory.sql" />
     <Content Include="db\src\02. functions and logic\office\office.is_sys.sql" />
     <Content Include="db\src\02. functions and logic\office\office.is_sys_user.sql" />
     <Content Include="db\src\02. functions and logic\office\office.is_valid_office_id.sql" />
@@ -457,9 +471,9 @@
     <Content Include="db\src\04. default values\brands, item-groups, tax, shipping.sql" />
     <Content Include="db\src\04. default values\crm.lead-sources, lead-statuses, opportunity-stages.sql" />
     <Content Include="db\src\04. default values\office, department, roles, users.sql" />
+    <Content Include="db\src\04. default values\policy, config.sql" />
     <Content Include="db\src\04. default values\salespersons, ageing-slabs, party-types.sql" />
     <Content Include="db\src\04. default values\stores-types,cost-centers.sql" />
-    <Content Include="db\src\04. default values\switches, policy.sql" />
     <Content Include="db\src\04. default values\units.sql" />
     <Content Include="db\src\04. default values\verification-statuses, flag-types, frequencies.sql" />
     <Content Include="db\src\05. scrud-views\core\core.account_scrud_view.sql" />
@@ -517,6 +531,8 @@
     <Content Include="db\src\05. views\core\core.bank_account_view.sql" />
     <Content Include="db\src\05. views\core\core.item_view.sql" />
     <Content Include="db\src\05. views\core\core.party_user_control_view.sql" />
+    <Content Include="db\src\05. views\core\core.party_view.sql" />
+    <Content Include="db\src\05. views\core\core.shipping_address_view.sql" />
     <Content Include="db\src\05. views\core\core.supplier_view.sql" />
     <Content Include="db\src\05. views\core\core.unit_view.sql" />
     <Content Include="db\src\05. views\office\office.office_view.sql" />
@@ -671,7 +687,6 @@
     <Content Include="Resource\Static\Attachments\index.html" />
     <Content Include="Resource\Static\Templates\ModalTemplate.html" />
     <Content Include="Dashboard\Index.aspx" />
-    <Content Include="db\index.html" />
     <Content Include="General\ItemSelector.aspx" />
     <Content Include="Global.asax" />
     <Content Include="index.html" />
@@ -775,7 +790,6 @@
     <Content Include="App_Themes\MixERP\mixerp.css.map">
       <DependentUpon>mixerp.css</DependentUpon>
     </Content>
-    <Content Include="db\mixerp.sqlbundle" />
     <Content Include="Reports\Assets\ReadMe.txt" />
     <Content Include="Resource\Configuration\Switches.xml" />
     <Content Include="Resource\Configuration\Parameters.xml">
@@ -808,7 +822,6 @@
       <DependentUpon>parties-popup.min.js</DependentUpon>
     </Content>
     <None Include="bundles\stylesheets\parties-popup.css.bundle" />
-    <Content Include="db\dumps\dump-transactions.bat" />
     <None Include="Properties\PublishProfiles\MixERPPublish.pubxml" />
     <Content Include="Scripts\vakata-jstree\LICENSE-MIT" />
     <Content Include="Scripts\vakata-jstree\dist\jstree.min.js.map">

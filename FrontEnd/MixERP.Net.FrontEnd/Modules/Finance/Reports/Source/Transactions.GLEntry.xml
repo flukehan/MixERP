@@ -149,7 +149,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         LEFT JOIN
         office.cash_repositories
         ON transactions.transaction_details.cash_repository_id=office.cash_repositories.cash_repository_id
-        WHERE transactions.transaction_details.transaction_master_id=@transaction_master_id;
+        WHERE transactions.transaction_details.transaction_master_id=@transaction_master_id
+        ORDER BY tran_type DESC, amount_in_local_currency DESC;
       </Query>
       <Parameters>
         <Parameter Name="@transaction_master_id" Type="Number" />

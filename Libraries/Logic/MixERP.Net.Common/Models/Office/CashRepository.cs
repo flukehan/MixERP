@@ -19,7 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace MixERP.Net.Common.Models.Office
 {
-    public class CashRepository
+    public sealed class CashRepository
     {
         public int CashRepositoryId { get; set; }
 

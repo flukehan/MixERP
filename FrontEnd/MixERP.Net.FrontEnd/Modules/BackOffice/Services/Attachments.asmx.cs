@@ -20,12 +20,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models.Core;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.Script.Services;
 using System.Web.Services;
@@ -38,6 +35,17 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
     [ScriptService]
     public class Attachments : WebService
     {
+        [WebMethod]
+        public bool DeleteAttachment(long id)
+        {
+            if (id <= 0)
+            {
+                throw new ArgumentNullException("id");
+            }
+
+            return DeleteImage(Data.Attachments.DeleteReturningPath(id));
+        }
+
         [WebMethod]
         public Collection<AttachmentModel> GetAttachments(string book, long id)
         {
@@ -52,38 +60,6 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
             }
 
             return Data.Attachments.GetAttachments("/Resource/Static/Attachments/", book, id);
-        }
-
-        [WebMethod]
-        public bool DeleteAttachment(long id)
-        {
-            if (id <= 0)
-            {
-                throw new ArgumentNullException("id");
-            }
-
-            return DeleteImage(Data.Attachments.DeleteReturningPath(id));
-        }
-
-        private bool DeleteImage(string filePath)
-        {
-            filePath = Server.MapPath("~/Resource/Static/Attachments/" + filePath);
-
-            if (File.Exists(filePath))
-            {
-                try
-                {
-                    File.Delete(filePath);
-                    return true;
-                }
-                // ReSharper disable once EmptyGeneralCatchClause
-                catch
-                {
-                    //Swallow
-                }
-            }
-
-            return false;
         }
 
         [WebMethod(EnableSession = true)]
@@ -109,6 +85,27 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
             int userId = SessionHelper.GetUserId();
 
             return Data.Attachments.Save(userId, book, id, attachments);
+        }
+
+        private bool DeleteImage(string filePath)
+        {
+            filePath = Server.MapPath("~/Resource/Static/Attachments/" + filePath);
+
+            if (File.Exists(filePath))
+            {
+                try
+                {
+                    File.Delete(filePath);
+                    return true;
+                }
+                // ReSharper disable once EmptyGeneralCatchClause
+                catch
+                {
+                    //Swallow
+                }
+            }
+
+            return false;
         }
     }
 }

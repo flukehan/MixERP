@@ -23,7 +23,7 @@ using System.Web.UI.WebControls;
 namespace MixERP.Net.WebControls.ReportEngine
 {
     [ToolboxData("<{0}:Report runat=server></{0}:Report>")]
-    public partial class Report : CompositeControl
+    public sealed partial class Report : CompositeControl
     {
         private Panel reportContainer;
 

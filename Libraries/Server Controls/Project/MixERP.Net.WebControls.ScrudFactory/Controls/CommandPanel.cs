@@ -26,10 +26,14 @@ using System.Web.UI.WebControls;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls
 {
-    public class CommandPanel : IDisposable
+    internal sealed class CommandPanel : IDisposable
     {
         private Panel commandPanel;
         private bool disposed;
+
+        public event EventHandler DeleteButtonClick;
+
+        public event EventHandler EditButtonClick;
 
         public string AddButtonIconCssClass { get; set; }
 
@@ -56,12 +60,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
         public void Dispose()
         {
             this.Dispose(true);
-            GC.SuppressFinalize(this);
         }
-
-        public event EventHandler DeleteButtonClick;
-
-        public event EventHandler EditButtonClick;
 
         public Panel GetCommandPanel(string controlSuffix)
         {
@@ -78,39 +77,6 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
             this.AddDeleteButtonVisible(this.commandPanel, controlSuffix);
             this.AddPrintButton(this.commandPanel);
             return this.commandPanel;
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!this.disposed)
-            {
-                if (disposing)
-                {
-                    if (this.commandPanel != null)
-                    {
-                        this.commandPanel.Dispose();
-                        this.commandPanel = null;
-                    }
-
-                    if (this.EditButton != null)
-                    {
-                        this.EditButton.Click -= this.OnEditButtonClick;
-                        this.EditButtonClick = null;
-                        this.EditButton.Dispose();
-                        this.EditButton = null;
-                    }
-
-                    if (this.DeleteButton != null)
-                    {
-                        this.DeleteButton.Click -= this.OnDeleteButtonClick;
-                        this.DeleteButtonClick = null;
-                        this.DeleteButton.Dispose();
-                        this.DeleteButton = null;
-                    }
-                }
-
-                this.disposed = true;
-            }
         }
 
         private void AddAddButton(Panel p)
@@ -176,6 +142,39 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
         {
             HtmlButton showCompactButton = this.GetInputButton("ALT + C", "scrudShowCompact();", Titles.ShowCompact, this.ButtonCssClass, this.CompactButtonIconCssClass);
             p.Controls.Add(showCompactButton);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    if (this.commandPanel != null)
+                    {
+                        this.commandPanel.Dispose();
+                        this.commandPanel = null;
+                    }
+
+                    if (this.EditButton != null)
+                    {
+                        this.EditButton.Click -= this.OnEditButtonClick;
+                        this.EditButtonClick = null;
+                        this.EditButton.Dispose();
+                        this.EditButton = null;
+                    }
+
+                    if (this.DeleteButton != null)
+                    {
+                        this.DeleteButton.Click -= this.OnDeleteButtonClick;
+                        this.DeleteButtonClick = null;
+                        this.DeleteButton.Dispose();
+                        this.DeleteButton = null;
+                    }
+                }
+
+                this.disposed = true;
+            }
         }
 
         private Button GetButton(string toolTip, string onClientClick, string text)

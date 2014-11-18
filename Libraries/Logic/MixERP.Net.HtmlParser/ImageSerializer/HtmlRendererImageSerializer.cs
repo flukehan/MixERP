@@ -5,7 +5,7 @@ using TheArtOfDev.HtmlRenderer.WinForms;
 
 namespace MixERP.Net.HtmlParser.ImageSerializer
 {
-    public class HtmlRendererImageSerializer : HtmlImageSerializer
+    public sealed class HtmlRendererImageSerializer : HtmlImageSerializer
     {
         internal override void CreateImage(string imagePath)
         {

@@ -17,54 +17,13 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System.Globalization;
 using System.Web.UI.HtmlControls;
 
 namespace MixERP.Net.WebControls.PartyControl
 {
     public static class ControlHelper
     {
-        public static HtmlTableRow GetNewRow(string text, string id, string tagName)
-        {
-            using (HtmlTableRow row = new HtmlTableRow())
-            {
-                using (HtmlTableCell cell = new HtmlTableCell())
-                {
-                    cell.Style.Add("width", "300px");
-                    cell.InnerHtml = @"<strong>" + text + @"</strong>";
-                    row.Cells.Add(cell);
-                }
-
-                using (HtmlTableCell cell = new HtmlTableCell())
-                {
-                    using (HtmlGenericControl element = new HtmlGenericControl())
-                    {
-                        element.ID = id;
-                        element.TagName = tagName;
-                        cell.Controls.Add(element);
-                    }
-
-                    row.Cells.Add(cell);
-                }
-
-                return row;
-            }
-        }
-
-        public static string GetLabelText(string targetControlId, string text)
-        {
-            if (string.IsNullOrWhiteSpace(targetControlId))
-            {
-                return string.Empty;
-            }
-
-            if (string.IsNullOrWhiteSpace(text))
-            {
-                return string.Empty;
-            }
-
-            return string.Format(@"<label for='{0}'>{1}</label>", targetControlId, text);
-        }
-
         public static HtmlAnchor GetAnchor(string cssClass, string text, string tabName, string icon)
         {
             using (HtmlAnchor a = new HtmlAnchor())
@@ -111,6 +70,24 @@ namespace MixERP.Net.WebControls.PartyControl
             }
         }
 
+        public static HtmlGenericControl GetGenericControl(string tagName, string cssClass)
+        {
+            using (HtmlGenericControl genericControl = new HtmlGenericControl())
+            {
+                if (!string.IsNullOrWhiteSpace(tagName))
+                {
+                    genericControl.TagName = tagName;
+                }
+
+                if (!string.IsNullOrWhiteSpace(cssClass))
+                {
+                    genericControl.Attributes.Add("class", cssClass);
+                }
+
+                return genericControl;
+            }
+        }
+
         public static HtmlInputText GetInputText(string id, string cssClass)
         {
             using (HtmlInputText input = new HtmlInputText())
@@ -129,6 +106,48 @@ namespace MixERP.Net.WebControls.PartyControl
             }
         }
 
+        public static string GetLabelText(string targetControlId, string text)
+        {
+            if (string.IsNullOrWhiteSpace(targetControlId))
+            {
+                return string.Empty;
+            }
+
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                return string.Empty;
+            }
+
+            return string.Format(CultureInfo.InvariantCulture, @"<label for='{0}'>{1}</label>", targetControlId, text);
+        }
+
+        public static HtmlTableRow GetNewRow(string text, string id, string tagName)
+        {
+            using (HtmlTableRow row = new HtmlTableRow())
+            {
+                using (HtmlTableCell cell = new HtmlTableCell())
+                {
+                    cell.Style.Add("width", "300px");
+                    cell.InnerHtml = @"<strong>" + text + @"</strong>";
+                    row.Cells.Add(cell);
+                }
+
+                using (HtmlTableCell cell = new HtmlTableCell())
+                {
+                    using (HtmlGenericControl element = new HtmlGenericControl())
+                    {
+                        element.ID = id;
+                        element.TagName = tagName;
+                        cell.Controls.Add(element);
+                    }
+
+                    row.Cells.Add(cell);
+                }
+
+                return row;
+            }
+        }
+
         public static HtmlSelect GetSelect(string id, string cssClass)
         {
             using (HtmlSelect select = new HtmlSelect())
@@ -144,24 +163,6 @@ namespace MixERP.Net.WebControls.PartyControl
                 }
 
                 return select;
-            }
-        }
-
-        public static HtmlGenericControl GetGenericControl(string tagName, string cssClass)
-        {
-            using (HtmlGenericControl genericControl = new HtmlGenericControl())
-            {
-                if (!string.IsNullOrWhiteSpace(tagName))
-                {
-                    genericControl.TagName = tagName;
-                }
-
-                if (!string.IsNullOrWhiteSpace(cssClass))
-                {
-                    genericControl.Attributes.Add("class", cssClass);
-                }
-
-                return genericControl;
             }
         }
     }

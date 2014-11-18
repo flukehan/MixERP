@@ -18,28 +18,27 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.Common.Helpers;
-using System;
 using System.Security.Permissions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 [assembly: WebResource("MixERP.Net.WebControls.PartyControl.PartyControl.js", "application/x-javascript")]
+
 namespace MixERP.Net.WebControls.PartyControl
 {
     [ToolboxData("<{0}:PartyControl runat=server></{0}:PartyControl>")]
     [AspNetHostingPermission(SecurityAction.Demand, Level = AspNetHostingPermissionLevel.Minimal)]
-    public partial class PartyControl : CompositeControl
+    public sealed partial class PartyControl : CompositeControl
     {
-        private bool disposed;
         public Panel container;
+        private bool disposed;
 
-        public override sealed void Dispose()
+        public override void Dispose()
         {
             if (!this.disposed)
             {
                 this.Dispose(true);
-                GC.SuppressFinalize(this);
                 base.Dispose();
             }
         }
@@ -49,7 +48,7 @@ namespace MixERP.Net.WebControls.PartyControl
             //this.Validate();
 
             this.container = new Panel();
-            this.container.Controls.Add(this.GetHeader());
+            this.container.Controls.Add(GetHeader());
             this.container.Controls.Add(this.GetTabs());
             this.AddTabBody(this.container);
             this.AddHiddenField(this.container, "TotalDueAmountHidden");
@@ -60,6 +59,16 @@ namespace MixERP.Net.WebControls.PartyControl
             this.AddScript();
         }
 
+        protected override void RecreateChildControls()
+        {
+            this.EnsureChildControls();
+        }
+
+        protected override void Render(HtmlTextWriter w)
+        {
+            this.container.RenderControl(w);
+        }
+
         private void AddScript()
         {
             JavaScriptHelper.AddJSReference(this.Page, "MixERP.Net.WebControls.PartyControl.PartyControl.js", "party_control", typeof(PartyControl));
@@ -67,7 +76,7 @@ namespace MixERP.Net.WebControls.PartyControl
             //PageUtility.RegisterJavascript("partyControl", script, this.Page);
         }
 
-        protected virtual void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (!this.disposed)
             {
@@ -82,16 +91,6 @@ namespace MixERP.Net.WebControls.PartyControl
 
                 this.disposed = true;
             }
-        }
-
-        protected override void RecreateChildControls()
-        {
-            this.EnsureChildControls();
-        }
-
-        protected override void Render(HtmlTextWriter w)
-        {
-            this.container.RenderControl(w);
         }
     }
 }

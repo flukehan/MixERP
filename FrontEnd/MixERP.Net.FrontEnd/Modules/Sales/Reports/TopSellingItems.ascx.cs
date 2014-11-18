@@ -18,23 +18,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.ReportEngine;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Reflection;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace MixERP.Net.Core.Modules.Sales.Reports
 {
     public partial class TopSellingItems : MixERPUserControl
     {
-        public override void OnControlLoad(object sender, EventArgs e)
-        {
-            base.OnControlLoad(sender, e);
-        }
     }
 }

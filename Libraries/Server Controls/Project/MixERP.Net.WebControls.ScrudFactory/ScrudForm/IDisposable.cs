@@ -17,25 +17,22 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-
 namespace MixERP.Net.WebControls.ScrudFactory
 {
     public partial class ScrudForm
     {
         private bool disposed;
 
-        public override sealed void Dispose()
+        public override void Dispose()
         {
             if (!this.disposed)
             {
                 this.Dispose(true);
-                GC.SuppressFinalize(this);
                 base.Dispose();
             }
         }
 
-        protected virtual void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (!this.disposed)
             {

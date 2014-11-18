@@ -19,3 +19,12 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BonusSlabDetails.ascx.cs"
     Inherits="MixERP.Net.Core.Modules.Sales.Setup.BonusSlabDetails" %>
 <asp:PlaceHolder ID="ScrudPlaceholder" runat="server" />
+
+<script type="text/javascript">
+    var amountFromTextBox = $("#amount_from_textbox");
+    var amountToTextBox = $("#amount_from_textbox");
+
+    $("#SaveButton").click(function () {
+        
+    });
+</script>

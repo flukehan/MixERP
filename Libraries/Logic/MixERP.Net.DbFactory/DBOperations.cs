@@ -17,8 +17,9 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.DbFactory.Resources;
 using Npgsql;
-using NpgsqlTypes;
 using System;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -29,25 +30,6 @@ namespace MixERP.Net.DBFactory
 {
     public static class DbOperations
     {
-        public static bool IsServerAvailable()
-        {
-            try
-            {
-                using (var connection = new NpgsqlConnection(DbConnection.ConnectionString()))
-                {
-                    connection.Open();
-                }
-
-                return true;
-            }
-            catch (NpgsqlException)
-            {
-                //swallow exception
-            }
-
-            return false;
-        }
-
         [CLSCompliant(false)]
         public static bool ExecuteNonQuery(NpgsqlCommand command)
         {
@@ -69,50 +51,8 @@ namespace MixERP.Net.DBFactory
             return false;
         }
 
-        private static bool ValidateCommand(NpgsqlCommand command)
-        {
-            return ValidateParameters(command);
-        }
-
-        private static Collection<string> GetCommandTextParameterCollection(string commandText)
-        {
-            var parameters = new Collection<string>();
-
-            foreach (Match match in Regex.Matches(commandText, @"@(\w+)"))
-            {
-                parameters.Add(match.Value);
-            }
-
-            return parameters;
-        }
-
-        private static bool ValidateParameters(NpgsqlCommand command)
-        {
-            var commandTextParameters = GetCommandTextParameterCollection(command.CommandText);
-
-            foreach (NpgsqlParameter npgsqlParameter in command.Parameters)
-            {
-                var match = false;
-
-                foreach (var commandTextParameter in commandTextParameters)
-                {
-                    if (npgsqlParameter.ParameterName.Equals(commandTextParameter))
-                    {
-                        match = true;
-                    }
-                }
-
-                if (!match)
-                {
-                    throw new InvalidOperationException("Invalid Npgsql parameter name '" + npgsqlParameter.ParameterName + "'. Make sure that the parameter name matches with your command text.");
-                }
-            }
-
-            return true;
-        }
-
         [CLSCompliant(false)]
-        public static object GetScalarValue(NpgsqlCommand command)
+        public static NpgsqlDataAdapter GetDataAdapter(NpgsqlCommand command)
         {
             if (command != null)
             {
@@ -121,8 +61,49 @@ namespace MixERP.Net.DBFactory
                     using (var connection = new NpgsqlConnection(DbConnection.ConnectionString()))
                     {
                         command.Connection = connection;
-                        connection.Open();
-                        return command.ExecuteScalar();
+
+                        using (var adapter = new NpgsqlDataAdapter(command))
+                        {
+                            return adapter;
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        [CLSCompliant(false)]
+        public static NpgsqlDataReader GetDataReader(NpgsqlCommand command)
+        {
+            if (command != null)
+            {
+                if (ValidateCommand(command))
+                {
+                    using (var connection = new NpgsqlConnection(DbConnection.ConnectionString()))
+                    {
+                        command.Connection = connection;
+                        command.Connection.Open();
+                        return command.ExecuteReader();
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        [CLSCompliant(false)]
+        public static DataSet GetDataSet(NpgsqlCommand command)
+        {
+            if (ValidateCommand(command))
+            {
+                using (var adapter = GetDataAdapter(command))
+                {
+                    using (var set = new DataSet())
+                    {
+                        adapter.Fill(set);
+                        set.Locale = CultureInfo.CurrentUICulture;
+                        return set;
                     }
                 }
             }
@@ -164,25 +145,6 @@ namespace MixERP.Net.DBFactory
         }
 
         [CLSCompliant(false)]
-        public static NpgsqlDataReader GetDataReader(NpgsqlCommand command)
-        {
-            if (command != null)
-            {
-                if (ValidateCommand(command))
-                {
-                    using (var connection = new NpgsqlConnection(DbConnection.ConnectionString()))
-                    {
-                        command.Connection = connection;
-                        command.Connection.Open();
-                        return command.ExecuteReader();
-                    }
-                }
-            }
-
-            return null;
-        }
-
-        [CLSCompliant(false)]
         public static DataView GetDataView(NpgsqlCommand command)
         {
             if (ValidateCommand(command))
@@ -197,7 +159,7 @@ namespace MixERP.Net.DBFactory
         }
 
         [CLSCompliant(false)]
-        public static NpgsqlDataAdapter GetDataAdapter(NpgsqlCommand command)
+        public static object GetScalarValue(NpgsqlCommand command)
         {
             if (command != null)
             {
@@ -206,11 +168,8 @@ namespace MixERP.Net.DBFactory
                     using (var connection = new NpgsqlConnection(DbConnection.ConnectionString()))
                     {
                         command.Connection = connection;
-
-                        using (var adapter = new NpgsqlDataAdapter(command))
-                        {
-                            return adapter;
-                        }
+                        connection.Open();
+                        return command.ExecuteScalar();
                     }
                 }
             }
@@ -218,23 +177,65 @@ namespace MixERP.Net.DBFactory
             return null;
         }
 
-        [CLSCompliant(false)]
-        public static DataSet GetDataSet(NpgsqlCommand command)
+        public static bool IsServerAvailable()
         {
-            if (ValidateCommand(command))
+            try
             {
-                using (var adapter = GetDataAdapter(command))
+                using (var connection = new NpgsqlConnection(DbConnection.ConnectionString()))
                 {
-                    using (var set = new DataSet())
+                    connection.Open();
+                }
+
+                return true;
+            }
+            catch (NpgsqlException)
+            {
+                //swallow exception
+            }
+
+            return false;
+        }
+
+        private static Collection<string> GetCommandTextParameterCollection(string commandText)
+        {
+            var parameters = new Collection<string>();
+
+            foreach (Match match in Regex.Matches(commandText, @"@(\w+)"))
+            {
+                parameters.Add(match.Value);
+            }
+
+            return parameters;
+        }
+
+        private static bool ValidateCommand(NpgsqlCommand command)
+        {
+            return ValidateParameters(command);
+        }
+
+        private static bool ValidateParameters(NpgsqlCommand command)
+        {
+            var commandTextParameters = GetCommandTextParameterCollection(command.CommandText);
+
+            foreach (NpgsqlParameter npgsqlParameter in command.Parameters)
+            {
+                var match = false;
+
+                foreach (var commandTextParameter in commandTextParameters)
+                {
+                    if (npgsqlParameter.ParameterName.Equals(commandTextParameter))
                     {
-                        adapter.Fill(set);
-                        set.Locale = CultureInfo.CurrentUICulture;
-                        return set;
+                        match = true;
                     }
+                }
+
+                if (!match)
+                {
+                    throw new InvalidOperationException(string.Format(LocalizationHelper.GetCurrentCulture(), Warnings.InvalidParameterName, npgsqlParameter.ParameterName));
                 }
             }
 
-            return null;
+            return true;
         }
     }
 }

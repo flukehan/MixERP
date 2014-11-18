@@ -29,9 +29,9 @@ using System.Web.UI.WebControls;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 {
-    public static class ScrudFactoryHelper
+    internal static class ScrudFactoryHelper
     {
-        public static void AddDropDownList(HtmlTable htmlTable, string label, DropDownList dropDownList, HtmlAnchor itemSelectorAnchor, RequiredFieldValidator required)
+        internal static void AddDropDownList(HtmlTable htmlTable, string label, DropDownList dropDownList, HtmlAnchor itemSelectorAnchor, RequiredFieldValidator required)
         {
             if (htmlTable == null)
             {
@@ -102,7 +102,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
             }
         }
 
-        public static void AddField(HtmlTable htmlTable, string resourceClassName, string itemSelectorPath, string columnName, string defaultValue, bool isSerial, bool isNullable, string dataType, string domain, int maxLength, string parentTableSchema, string parentTable, string parentTableColumn, string displayFields, string displayViews, bool useDisplayFieldAsParent, string selectedValues, string errorCssClass, Assembly assembly)
+        internal static void AddField(HtmlTable htmlTable, string resourceClassName, string itemSelectorPath, string columnName, string defaultValue, bool isSerial, bool isNullable, string dataType, string domain, int maxLength, string parentTableSchema, string parentTable, string parentTableColumn, string displayFields, string displayViews, bool useDisplayFieldAsParent, string selectedValues, string errorCssClass, Assembly assembly)
         {
             if (htmlTable == null)
             {
@@ -169,7 +169,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
             }
         }
 
-        public static void AddRow(HtmlTable htmlTable, string label, params Control[] controls)
+        internal static void AddRow(HtmlTable htmlTable, string label, params Control[] controls)
         {
             if (htmlTable == null)
             {
@@ -227,7 +227,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
             }
         }
 
-        public static RequiredFieldValidator GetRequiredFieldValidator(Control controlToValidate, string cssClass)
+        internal static RequiredFieldValidator GetRequiredFieldValidator(Control controlToValidate, string cssClass)
         {
             if (controlToValidate == null)
             {

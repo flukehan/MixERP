@@ -17,15 +17,10 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using System.Net.Mail;
 using System.Net.Mime;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MixERP.Net.Messaging.Email
 {
@@ -35,20 +30,25 @@ namespace MixERP.Net.Messaging.Email
         {
             Collection<Attachment> attachments = new Collection<Attachment>();
 
-            foreach (var file in files)
+            if (files != null)
             {
-                if (file != null)
+                foreach (var file in files)
                 {
-                    Attachment attachment = new Attachment(file, MediaTypeNames.Application.Octet);
-                    ContentDisposition disposition = attachment.ContentDisposition;
-                    disposition.CreationDate = File.GetCreationTime(file);
-                    disposition.ModificationDate = File.GetLastWriteTime(file);
-                    disposition.ReadDate = File.GetLastAccessTime(file);
-                    disposition.FileName = Path.GetFileName(file);
-                    disposition.Size = new FileInfo(file).Length;
-                    disposition.DispositionType = DispositionTypeNames.Attachment;
+                    if (file != null)
+                    {
+                        using (Attachment attachment = new Attachment(file, MediaTypeNames.Application.Octet))
+                        {
+                            ContentDisposition disposition = attachment.ContentDisposition;
+                            disposition.CreationDate = File.GetCreationTime(file);
+                            disposition.ModificationDate = File.GetLastWriteTime(file);
+                            disposition.ReadDate = File.GetLastAccessTime(file);
+                            disposition.FileName = Path.GetFileName(file);
+                            disposition.Size = new FileInfo(file).Length;
+                            disposition.DispositionType = DispositionTypeNames.Attachment;
 
-                    attachments.Add(attachment);
+                            attachments.Add(attachment);
+                        }
+                    }
                 }
             }
 

@@ -41,7 +41,7 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
                 scrud.Text = Titles.AgentBonusSlabAssignment;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (BonusSlabAssignment));
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(BonusSlabAssignment));
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
 
@@ -51,10 +51,8 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.bonus_slabs.bonus_slab_id",
-                ConfigurationHelper.GetDbParameter("BonusSlabDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.salespersons.salesperson_id",
-                ConfigurationHelper.GetDbParameter("SalespersonDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.bonus_slabs.bonus_slab_id", ConfigurationHelper.GetDbParameter("BonusSlabDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.salespersons.salesperson_id", ConfigurationHelper.GetDbParameter("SalespersonDisplayField"));
             return string.Join(",", displayFields);
         }
 

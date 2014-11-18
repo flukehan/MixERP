@@ -29,7 +29,7 @@ using System.Web.UI.WebControls;
 namespace MixERP.Net.Core.Modules.Inventory.Services
 {
     /// <summary>
-    ///     Summary description for ItemData
+    /// Summary description for ItemData
     /// </summary>
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
@@ -37,36 +37,9 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
     public class ItemData : WebService
     {
         [WebMethod]
-        public Collection<ListItem> GetItems(string tranBook)
+        public decimal CountItemInStock(string itemCode, int unitId, int storeId)
         {
-            Collection<ListItem> values = new Collection<ListItem>();
-
-            if (tranBook.ToLower(CultureInfo.InvariantCulture).Equals("sales"))
-            {
-                return this.GetItems();
-            }
-
-            return this.GetStockItems();
-        }
-
-        [WebMethod(EnableSession = true)]
-        public Collection<ListItem> GetStores()
-        {
-            int officeId = SessionHelper.GetOfficeId();
-            Collection<ListItem> values = new Collection<ListItem>();
-
-            using (DataTable table = Stores.GetStoreDataTable(officeId))
-            {
-                string displayField = ConfigurationHelper.GetDbParameter("StoreDisplayField");
-                table.Columns.Add("store", typeof (string), displayField);
-
-                foreach (DataRow dr in table.Rows)
-                {
-                    values.Add(new ListItem(dr["store"].ToString(), dr["store_id"].ToString()));
-                }
-
-                return values;
-            }
+            return Items.CountItemInStock(itemCode, unitId, storeId);
         }
 
         [WebMethod]
@@ -77,7 +50,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
             using (DataTable table = Agents.GetAgentDataTable())
             {
                 string displayField = ConfigurationHelper.GetDbParameter("SalespersonDisplayField");
-                table.Columns.Add("salesperson", typeof (string), displayField);
+                table.Columns.Add("salesperson", typeof(string), displayField);
 
                 foreach (DataRow dr in table.Rows)
                 {
@@ -89,6 +62,61 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         }
 
         [WebMethod]
+        public string GetItemCodeByItemId(int itemId)
+        {
+            return Items.GetItemCodeByItemId(itemId);
+        }
+
+        [WebMethod]
+        public Collection<ListItem> GetItems(string tranBook)
+        {
+            if (tranBook.ToLower(CultureInfo.InvariantCulture).Equals("sales"))
+            {
+                return this.GetItems();
+            }
+
+            return this.GetStockItems();
+        }
+
+        [WebMethod]
+        public decimal GetPrice(string tranBook, string itemCode, string partyCode, int priceTypeId, int unitId)
+        {
+            decimal price = 0;
+
+            switch (tranBook)
+            {
+                case "Sales":
+                    price = Items.GetItemSellingPrice(itemCode, partyCode, priceTypeId, unitId);
+                    break;
+
+                case "Purchase":
+                    price = Items.GetItemCostPrice(itemCode, partyCode, unitId);
+                    break;
+            }
+
+            return price;
+        }
+
+        [WebMethod]
+        public Collection<ListItem> GetPriceTypes()
+        {
+            Collection<ListItem> values = new Collection<ListItem>();
+
+            using (DataTable table = PriceTypes.GetPriceTypeDataTable())
+            {
+                string displayField = ConfigurationHelper.GetDbParameter("PriceTypeDisplayField");
+                table.Columns.Add("price_type", typeof(string), displayField);
+
+                foreach (DataRow dr in table.Rows)
+                {
+                    values.Add(new ListItem(dr["price_type"].ToString(), dr["price_type_id"].ToString()));
+                }
+            }
+
+            return values;
+        }
+
+        [WebMethod]
         public Collection<ListItem> GetShippers()
         {
             Collection<ListItem> values = new Collection<ListItem>();
@@ -96,7 +124,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
             using (DataTable table = Shippers.GetShipperDataTable())
             {
                 string displayField = ConfigurationHelper.GetDbParameter("ShipperDisplayField");
-                table.Columns.Add("shipper", typeof (string), displayField);
+                table.Columns.Add("shipper", typeof(string), displayField);
 
                 foreach (DataRow dr in table.Rows)
                 {
@@ -107,10 +135,64 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
             }
         }
 
+        [WebMethod(EnableSession = true)]
+        public Collection<ListItem> GetStores()
+        {
+            int officeId = SessionHelper.GetOfficeId();
+            Collection<ListItem> values = new Collection<ListItem>();
+
+            using (DataTable table = Stores.GetStoreDataTable(officeId))
+            {
+                string displayField = ConfigurationHelper.GetDbParameter("StoreDisplayField");
+                table.Columns.Add("store", typeof(string), displayField);
+
+                foreach (DataRow dr in table.Rows)
+                {
+                    values.Add(new ListItem(dr["store"].ToString(), dr["store_id"].ToString()));
+                }
+
+                return values;
+            }
+        }
+
+        [WebMethod]
+        public decimal GetTaxRate(string itemCode)
+        {
+            return Items.GetTaxRate(itemCode);
+        }
+
+        [WebMethod]
+        public Collection<ListItem> GetUnits(string itemCode)
+        {
+            Collection<ListItem> values = new Collection<ListItem>();
+
+            using (DataTable table = Units.GetUnitViewByItemCode(itemCode))
+            {
+                foreach (DataRow dr in table.Rows)
+                {
+                    values.Add(new ListItem(dr["unit_name"].ToString(), dr["unit_id"].ToString()));
+                }
+
+                return values;
+            }
+        }
+
         [WebMethod]
         public bool IsStockItem(string itemCode)
         {
             return Items.IsStockItem(itemCode);
+        }
+
+        [WebMethod]
+        public bool ItemCodeExists(string itemCode)
+        {
+            return Items.ItemExistsByCode(itemCode);
+        }
+
+        [WebMethod]
+        public bool UnitNameExists(string unitName)
+        {
+            return Units.UnitExistsByName(unitName);
         }
 
         private Collection<ListItem> GetItems()
@@ -141,90 +223,6 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
 
                 return values;
             }
-        }
-
-        [WebMethod]
-        public decimal CountItemInStock(string itemCode, int unitId, int storeId)
-        {
-            return Items.CountItemInStock(itemCode, unitId, storeId);
-        }
-
-        [WebMethod]
-        public Collection<ListItem> GetUnits(string itemCode)
-        {
-            Collection<ListItem> values = new Collection<ListItem>();
-
-            using (DataTable table = Units.GetUnitViewByItemCode(itemCode))
-            {
-                foreach (DataRow dr in table.Rows)
-                {
-                    values.Add(new ListItem(dr["unit_name"].ToString(), dr["unit_id"].ToString()));
-                }
-
-                return values;
-            }
-        }
-
-        [WebMethod]
-        public Collection<ListItem> GetPriceTypes()
-        {
-            Collection<ListItem> values = new Collection<ListItem>();
-
-            using (DataTable table = PriceTypes.GetPriceTypeDataTable())
-            {
-                string displayField = ConfigurationHelper.GetDbParameter("PriceTypeDisplayField");
-                table.Columns.Add("price_type", typeof (string), displayField);
-
-                foreach (DataRow dr in table.Rows)
-                {
-                    values.Add(new ListItem(dr["price_type"].ToString(), dr["price_type_id"].ToString()));
-                }
-            }
-
-            return values;
-        }
-
-        [WebMethod]
-        public bool UnitNameExists(string unitName)
-        {
-            return Units.UnitExistsByName(unitName);
-        }
-
-        [WebMethod]
-        public decimal GetPrice(string tranBook, string itemCode, string partyCode, int priceTypeId, int unitId)
-        {
-            decimal price = 0;
-
-            switch (tranBook)
-            {
-                case "Sales":
-                    price = Items.GetItemSellingPrice(itemCode, partyCode, priceTypeId, unitId);
-                    break;
-
-                case "Purchase":
-                    price = Items.GetItemCostPrice(itemCode, partyCode, unitId);
-                    break;
-            }
-
-            return price;
-        }
-
-        [WebMethod]
-        public decimal GetTaxRate(string itemCode)
-        {
-            return Items.GetTaxRate(itemCode);
-        }
-
-        [WebMethod]
-        public string GetItemCodeByItemId(int itemId)
-        {
-            return Items.GetItemCodeByItemId(itemId);
-        }
-
-        [WebMethod]
-        public bool ItemCodeExists(string itemCode)
-        {
-            return Items.ItemExistsByCode(itemCode);
         }
     }
 }

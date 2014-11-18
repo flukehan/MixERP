@@ -40,7 +40,7 @@ namespace MixERP.Net.FrontEnd.Base
         ///     This parameter ensures that the user is not redirected to the login page
         ///     even when the user is not logged in.
         /// </summary>
-        public bool NoLogOn { get; set; }
+        public bool SkipLoginCheck { get; set; }
 
         /// <summary>
         ///     Since we save the menu on the database, this parameter is only used
@@ -48,7 +48,7 @@ namespace MixERP.Net.FrontEnd.Base
         ///     Use this to override or fake the page's url or path. This forces navigation menus
         ///     on the left hand side to be displayed in regards with the specified path.
         /// </summary>
-        public string OverridePath { get; set; }
+        public virtual string OverridePath { get; set; }
 
         protected override void OnLoad(EventArgs e)
         {
@@ -57,7 +57,7 @@ namespace MixERP.Net.FrontEnd.Base
                 this.OverridePath = this.Page.Request.Url.AbsolutePath;
             }
 
-            Literal contentMenuLiteral = ((Literal) PageUtility.FindControlIterative(this.Master, "ContentMenuLiteral"));
+            Literal contentMenuLiteral = ((Literal)PageUtility.FindControlIterative(this.Master, "ContentMenuLiteral"));
 
             string menu = "<div id=\"tree\" style='display:none;'><ul id='treeData'>";
 
@@ -189,7 +189,7 @@ namespace MixERP.Net.FrontEnd.Base
                 }
                 else
                 {
-                    if (!this.NoLogOn)
+                    if (!this.SkipLoginCheck)
                     {
                         RequestLogOnPage();
                     }

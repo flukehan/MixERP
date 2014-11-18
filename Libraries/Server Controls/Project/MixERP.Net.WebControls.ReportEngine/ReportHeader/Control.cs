@@ -18,8 +18,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.WebControls.ReportEngine.Helpers;
-using System.Collections.ObjectModel;
-using System.Data;
 
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
@@ -59,6 +57,27 @@ namespace MixERP.Net.WebControls.ReportEngine
             return this.html;
         }
 
+        protected override void RecreateChildControls()
+        {
+            this.EnsureChildControls();
+        }
+
+        protected override void Render(HtmlTextWriter w)
+        {
+            if (!this.IsValid())
+            {
+                return;
+            }
+
+            this.PrepareReportHeader();
+
+            w.RenderBeginTag(HtmlTextWriterTag.Div);
+            w.AddAttribute(HtmlTextWriterAttribute.Id, "reportheader");
+            w.Write(this.html);
+            w.RenderEndTag();
+            base.Render(w);
+        }
+
         private string GetPath()
         {
             if (!string.IsNullOrWhiteSpace(this.Path))
@@ -90,27 +109,6 @@ namespace MixERP.Net.WebControls.ReportEngine
         {
             string header = File.ReadAllText(this.Page.Server.MapPath(this.GetPath()));
             this.html = ReportParser.ParseExpression(header, null, this.ResourceAssembly);
-        }
-
-        protected override void RecreateChildControls()
-        {
-            this.EnsureChildControls();
-        }
-
-        protected override void Render(HtmlTextWriter w)
-        {
-            if (!this.IsValid())
-            {
-                return;
-            }
-
-            this.PrepareReportHeader();
-
-            w.RenderBeginTag(HtmlTextWriterTag.Div);
-            w.AddAttribute(HtmlTextWriterAttribute.Id, "reportheader");
-            w.Write(this.html);
-            w.RenderEndTag();
-            base.Render(w);
         }
     }
 }

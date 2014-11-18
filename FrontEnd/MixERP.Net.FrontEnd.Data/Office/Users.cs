@@ -23,64 +23,14 @@ using MixERP.Net.Common.Models.Office;
 using MixERP.Net.DBFactory;
 using Npgsql;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
-using System.Web.Security;
 using System.Web.UI;
 
 namespace MixERP.Net.FrontEnd.Data.Office
 {
     public static class User
     {
-        public static bool SignIn(int officeId, string userName, string password, string culture, bool remember, Page page)
-        {
-            if (page != null)
-            {
-                try
-                {
-                    string remoteAddress = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
-                    string remoteUser = HttpContext.Current.Request.ServerVariables["REMOTE_USER"];
-
-                    long logOnId = SignIn(officeId, userName, Conversion.HashSha512(password, userName), page.Request.UserAgent, remoteAddress, remoteUser, culture);
-
-                    if (logOnId > 0)
-                    {
-                        return true;
-                    }
-                }
-                // ReSharper disable once EmptyGeneralCatchClause
-                catch
-                {
-                    //Swallow the exception here
-                }
-            }
-
-            return false;
-        }
-
-        private static long SignIn(int officeId, string userName, string password, string browser, string remoteAddress, string remoteUser, string culture)
-        {
-            const string sql = "SELECT * FROM office.sign_in(@OfficeId, @UserName, @Password, @Browser, @IPAddress, @RemoteUser, @Culture);";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@OfficeId", officeId);
-                command.Parameters.AddWithValue("@UserName", userName);
-                command.Parameters.AddWithValue("@Password", password);
-                command.Parameters.AddWithValue("@Browser", browser);
-                command.Parameters.AddWithValue("@IPAddress", remoteAddress);
-                command.Parameters.AddWithValue("@RemoteUser", remoteUser);
-                command.Parameters.AddWithValue("@Culture", culture);
-
-                return Conversion.TryCastLong(DbOperations.GetScalarValue(command));
-            }
-        }
-
         public static SignInView GetLastSignInView(string userName)
         {
             SignInView view = new SignInView();
@@ -135,6 +85,49 @@ namespace MixERP.Net.FrontEnd.Data.Office
             view.Url = new Uri(Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "url")), UriKind.RelativeOrAbsolute);
 
             return view;
+        }
+
+        public static bool SignIn(int officeId, string userName, string password, string culture, bool remember, Page page)
+        {
+            if (page != null)
+            {
+                try
+                {
+                    string remoteAddress = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+                    string remoteUser = HttpContext.Current.Request.ServerVariables["REMOTE_USER"];
+
+                    long logOnId = SignIn(officeId, userName, Conversion.HashSha512(password, userName), page.Request.UserAgent, remoteAddress, remoteUser, culture);
+
+                    if (logOnId > 0)
+                    {
+                        return true;
+                    }
+                }
+                // ReSharper disable once EmptyGeneralCatchClause
+                catch
+                {
+                    //Swallow the exception here
+                }
+            }
+
+            return false;
+        }
+
+        private static long SignIn(int officeId, string userName, string password, string browser, string remoteAddress, string remoteUser, string culture)
+        {
+            const string sql = "SELECT * FROM office.sign_in(@OfficeId, @UserName, @Password, @Browser, @IPAddress, @RemoteUser, @Culture);";
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                command.Parameters.AddWithValue("@OfficeId", officeId);
+                command.Parameters.AddWithValue("@UserName", userName);
+                command.Parameters.AddWithValue("@Password", password);
+                command.Parameters.AddWithValue("@Browser", browser);
+                command.Parameters.AddWithValue("@IPAddress", remoteAddress);
+                command.Parameters.AddWithValue("@RemoteUser", remoteUser);
+                command.Parameters.AddWithValue("@Culture", culture);
+
+                return Conversion.TryCastLong(DbOperations.GetScalarValue(command));
+            }
         }
     }
 }

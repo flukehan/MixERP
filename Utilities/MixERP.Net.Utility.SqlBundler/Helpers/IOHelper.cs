@@ -32,7 +32,7 @@ namespace MixERP.Net.Utility.SqlBundler.Helpers
             foreach (var bundle in bundles)
             {
                 string filePath = Path.Combine(root, bundle.FileName);
-                Console.WriteLine("Writing bundle {0}", filePath);
+                Console.WriteLine(@"Writing bundle {0}", filePath);
                 File.WriteAllText(filePath, bundle.Script, Encoding.UTF8);
             }
         }

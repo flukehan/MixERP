@@ -33,7 +33,8 @@ namespace MixERP.Net.Core.Modules.Purchase.Services
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
-    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line.
+    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the
+    // following line.
     [System.Web.Script.Services.ScriptService]
     public class Order : WebService
     {
@@ -45,7 +46,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Services
             JavaScriptSerializer js = new JavaScriptSerializer();
             Collection<AttachmentModel> attachments = js.Deserialize<Collection<AttachmentModel>>(attachmentsJSON);
 
-            return Data.Helpers.Order.Add("Purchase.Order", valueDate, partyCode, 0, details, referenceNumber, statementReference, null, attachments);
+            return Data.Transactions.Order.Add("Purchase.Order", valueDate, partyCode, 0, details, referenceNumber, statementReference, null, attachments);
         }
     }
 }

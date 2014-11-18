@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Helpers;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
@@ -27,7 +26,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 {
     public partial class ScrudForm
     {
-        protected void FormGridView_RowDataBound(object sender, GridViewRowEventArgs e)
+        private void FormGridView_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e == null)
             {

@@ -18,7 +18,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using Npgsql;
-using System;
 using System.Data;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Data.Admin

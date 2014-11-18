@@ -65,7 +65,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
             int userId = SessionHelper.GetUserId();
             long loginId = SessionHelper.GetLogOnId();
 
-            return Data.Helpers.Return.PostTransaction(tranId, valueDate, officeId, userId, loginId, storeId, partyCode, priceTypeId, referenceNumber, statementReference, details, attachments);
+            return Data.Transactions.Return.PostTransaction(tranId, valueDate, officeId, userId, loginId, storeId, partyCode, priceTypeId, referenceNumber, statementReference, details, attachments);
         }
 
         private bool ValidateDetails(IEnumerable<StockMasterDetailModel> details, long stockMasterId)

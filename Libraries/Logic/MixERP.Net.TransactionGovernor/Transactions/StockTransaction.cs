@@ -17,34 +17,18 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace MixERP.Net.TransactionGovernor.Transactions
 {
     public static class StockTransaction
     {
-        public static bool IsValidStockTransactionByTransactionMasterId(long transactionMasterId)
+        public static bool IsValidPartyByStockMasterId(long stockMasterId, string partyCode)
         {
-            if (transactionMasterId <= 0)
+            if (stockMasterId <= 0 || string.IsNullOrWhiteSpace(partyCode))
             {
                 return false;
             }
 
-            return Data.Transactions.StockTransaction.IsValidStockTransaction(transactionMasterId);
-        }
-
-        public static bool IsValidStockTransactionByStockMasterId(long stockMasterId)
-        {
-            if (stockMasterId <= 0)
-            {
-                return false;
-            }
-
-            return Data.Transactions.StockTransaction.IsValidStockTransactionByStockMasterId(stockMasterId);
+            return Data.Transactions.StockTransaction.IsValidPartyByStockMasterId(stockMasterId, partyCode);
         }
 
         public static bool IsValidPartyByTransactionMasterId(long transactionMasterId, string partyCode)
@@ -57,14 +41,24 @@ namespace MixERP.Net.TransactionGovernor.Transactions
             return Data.Transactions.StockTransaction.IsValidPartyByTransactionMasterId(transactionMasterId, partyCode);
         }
 
-        public static bool IsValidPartyByStockMasterId(long stockMasterId, string partyCode)
+        public static bool IsValidStockTransactionByStockMasterId(long stockMasterId)
         {
-            if (stockMasterId <= 0 || string.IsNullOrWhiteSpace(partyCode))
+            if (stockMasterId <= 0)
             {
                 return false;
             }
 
-            return Data.Transactions.StockTransaction.IsValidPartyByStockMasterId(stockMasterId, partyCode);
+            return Data.Transactions.StockTransaction.IsValidStockTransactionByStockMasterId(stockMasterId);
+        }
+
+        public static bool IsValidStockTransactionByTransactionMasterId(long transactionMasterId)
+        {
+            if (transactionMasterId <= 0)
+            {
+                return false;
+            }
+
+            return Data.Transactions.StockTransaction.IsValidStockTransaction(transactionMasterId);
         }
 
         public static bool ValidateItemForReturn(long stockMasterId, int storeId, string itemCode, string unit, int quantity, decimal price)

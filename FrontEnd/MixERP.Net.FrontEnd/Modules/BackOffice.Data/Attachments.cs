@@ -10,12 +10,22 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data
 {
     public static class Attachments
     {
+        public static string DeleteReturningPath(long id)
+        {
+            const string sql = "DELETE from core.attachments WHERE attachment_id=@AttachmentId RETURNING file_path;";
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                command.Parameters.AddWithValue("@AttachmentId", id);
+
+                return Conversion.TryCastString(DbOperations.GetScalarValue(command));
+            }
+        }
+
         public static Collection<AttachmentModel> GetAttachments(string attachmentDirectory, string book, long id)
         {
             Collection<AttachmentModel> collection = new Collection<AttachmentModel>();
 
-            const string sql =
-                "SELECT attachment_id, comment, @AttachmentDirectory || file_path as file_path, original_file_name, added_on FROM core.attachments WHERE resource || resource_key=core.get_attachment_lookup_info(@Book) AND resource_id=@ResourceId;";
+            const string sql = "SELECT attachment_id, comment, @AttachmentDirectory || file_path as file_path, original_file_name, added_on FROM core.attachments WHERE resource || resource_key=core.get_attachment_lookup_info(@Book) AND resource_id=@ResourceId;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@AttachmentDirectory", attachmentDirectory);
@@ -46,17 +56,6 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data
             }
 
             return collection;
-        }
-
-        public static string DeleteReturningPath(long id)
-        {
-            const string sql = "DELETE from core.attachments WHERE attachment_id=@AttachmentId RETURNING file_path;";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@AttachmentId", id);
-
-                return Conversion.TryCastString(DbOperations.GetScalarValue(command));
-            }
         }
 
         public static bool Save(int userId, string book, long id, Collection<AttachmentModel> attachments)

@@ -18,10 +18,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.UI;
 
 namespace MixERP.Net.Common.Base
@@ -30,11 +26,11 @@ namespace MixERP.Net.Common.Base
     {
         public string MasterPageId { get; set; }
 
+        public string OverridePath { get; set; }
+
         public bool RemoveTheme { get; set; }
 
         public string TargetContentPlaceHolder { get; set; }
-
-        public string OverridePath { get; set; }
 
         public virtual void OnControlLoad(object sender, EventArgs e)
         {

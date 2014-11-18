@@ -25,8 +25,24 @@ namespace MixERP.Net.Utility.SqlBundler
 {
     internal class Program
     {
-        private static string root = string.Empty;
         private static string bundlePath = string.Empty;
+        private static string root = string.Empty;
+
+        public static void SetBundleDirectory(string path)
+        {
+            if (Directory.Exists(Path.Combine(root, path)))
+            {
+                bundlePath = Path.Combine(root, path);
+            }
+        }
+
+        public static void SetRootDirectory(string dir)
+        {
+            if (Directory.Exists(dir))
+            {
+                root = dir;
+            }
+        }
 
         private static void Main(string[] args)
         {
@@ -54,7 +70,7 @@ namespace MixERP.Net.Utility.SqlBundler
                 return;
             }
 
-            Console.WriteLine("---------MixERP.Net.Utility.SqlBundler---------");
+            Console.WriteLine(@"---------MixERP.Net.Utility.SqlBundler---------");
 
             Collection<string> files = new Collection<string>();
 
@@ -74,23 +90,7 @@ namespace MixERP.Net.Utility.SqlBundler
                 Bundler.Bundle(root, files);
             }
 
-            Console.WriteLine("---------MixERP.Net.Utility.SqlBundler---------");
-        }
-
-        public static void SetRootDirectory(string dir)
-        {
-            if (Directory.Exists(dir))
-            {
-                root = dir;
-            }
-        }
-
-        public static void SetBundleDirectory(string path)
-        {
-            if (Directory.Exists(Path.Combine(root, path)))
-            {
-                bundlePath = Path.Combine(root, path);
-            }
+            Console.WriteLine(@"---------MixERP.Net.Utility.SqlBundler---------");
         }
     }
 }

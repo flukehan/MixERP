@@ -24,7 +24,7 @@ using System.Web.Script.Serialization;
 
 namespace MixERP.Net.WebControls.StockTransactionFactory.Helpers
 {
-    public class CollectionHelper
+    public static class CollectionHelper
     {
         public static Collection<StockMasterDetailModel> GetStockMasterDetailCollection(string json, int storeId)
         {

@@ -16,7 +16,8 @@ CREATE TYPE core.attachment_type AS
 (
     comment                 national character varying(96),
     file_path               text,
-    original_file_name          text
+    original_file_name      text,
+    file_extension          text
 );
 
 DROP TYPE IF EXISTS transactions.purchase_reorder_type CASCADE;

@@ -23,9 +23,9 @@ using System.Web.UI.WebControls;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 {
-    public static class Helper
+    internal static class Helper
     {
-        public static void AddListItems(ListControl control, string keys, string values, string selectedValues)
+        internal static void AddListItems(ListControl control, string keys, string values, string selectedValues)
         {
             if (control == null)
             {

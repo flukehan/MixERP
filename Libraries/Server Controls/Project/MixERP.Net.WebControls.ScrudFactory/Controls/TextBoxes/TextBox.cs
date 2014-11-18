@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Resources;
 using System.Reflection;
@@ -27,9 +26,9 @@ using System.Web.UI.WebControls;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 {
-    public static class ScrudTextBox
+    internal static class ScrudTextBox
     {
-        public static void AddTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isNullable, int maxLength, string errorCssClass, Assembly assembly)
+        internal static void AddTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isNullable, int maxLength, string errorCssClass, Assembly assembly)
         {
             if (htmlTable == null)
             {
@@ -58,7 +57,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
             }
         }
 
-        public static TextBox GetTextBox(string id, int maxLength)
+        internal static TextBox GetTextBox(string id, int maxLength)
         {
             if (string.IsNullOrWhiteSpace(id))
             {

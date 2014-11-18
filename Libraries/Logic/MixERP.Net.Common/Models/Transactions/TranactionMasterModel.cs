@@ -21,7 +21,7 @@ using System;
 
 namespace MixERP.Net.Common.Models.Transactions
 {
-    public class TransactionMasterModel
+    public sealed class TransactionMasterModel
     {
         public long TransactionMasterId { get; set; }
 

@@ -21,7 +21,7 @@ using System;
 
 namespace MixERP.Net.Common.Models.Transactions
 {
-    public class VerificationModel
+    public sealed class VerificationModel
     {
         public short Verification { get; set; }
 

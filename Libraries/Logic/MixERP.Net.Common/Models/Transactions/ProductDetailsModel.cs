@@ -19,7 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace MixERP.Net.Common.Models.Transactions
 {
-    public class ProductDetailsModel
+    public sealed class ProductDetailsModel
     {
         public string ItemCode { get; set; }
 
