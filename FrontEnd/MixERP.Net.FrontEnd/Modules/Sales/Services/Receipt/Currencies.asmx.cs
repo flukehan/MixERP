@@ -22,12 +22,13 @@ using System.Web.Services;
 namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
 {
     /// <summary>
-    ///     Summary description for Currencies
+    /// Summary description for Currencies
     /// </summary>
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
-    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line.
+    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the
+    // following line.
     [System.Web.Script.Services.ScriptService]
     public class Currencies : WebService
     {
@@ -47,15 +48,18 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
         }
 
         [WebMethod(EnableSession = true)]
-        public string GetHomeCurrency()
-        {
-            int officeId = Common.Helpers.SessionHelper.GetOfficeId();
-            return Data.Helpers.Currencies.GetHomeCurrency(officeId);
-        }
-
-        [WebMethod(EnableSession = true)]
         public decimal GetExchangeRate(string sourceCurrencyCode, string destinationCurrencyCode)
         {
+            if (string.IsNullOrWhiteSpace(sourceCurrencyCode))
+            {
+                return 0;
+            }
+
+            if (string.IsNullOrWhiteSpace(destinationCurrencyCode))
+            {
+                return 0;
+            }
+
             if (sourceCurrencyCode.Equals(destinationCurrencyCode))
             {
                 return 1;
@@ -66,6 +70,13 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
             decimal exchangeRate = Data.Helpers.Transaction.GetExchangeRate(officeId, sourceCurrencyCode, destinationCurrencyCode);
 
             return exchangeRate;
+        }
+
+        [WebMethod(EnableSession = true)]
+        public string GetHomeCurrency()
+        {
+            int officeId = Common.Helpers.SessionHelper.GetOfficeId();
+            return Data.Helpers.Currencies.GetHomeCurrency(officeId);
         }
     }
 }

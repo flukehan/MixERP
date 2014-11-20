@@ -61,6 +61,7 @@
     <Content Include="..\..\..\..\mixerp.licenseheader">
       <Link>mixerp.licenseheader</Link>
     </Content>
+    <Content Include="Mix Open Foundation.snk" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -143,6 +144,11 @@
     </Compile>
     <Compile Include="Reports\GLAdviceReport.ascx.designer.cs">
       <DependentUpon>GLAdviceReport.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Errors.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Errors.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\ScrudResource.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -299,6 +305,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Errors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Errors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\ScrudResource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ScrudResource.Designer.cs</LastGenOutput>
@@ -312,6 +322,12 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Mix Open Foundation.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

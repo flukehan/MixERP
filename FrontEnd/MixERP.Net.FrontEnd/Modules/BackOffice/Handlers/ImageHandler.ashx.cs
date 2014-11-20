@@ -31,6 +31,14 @@ namespace MixERP.Net.Core.Modules.BackOffice.Handlers
     /// </summary>
     public class ImageHandler : IHttpHandler
     {
+        public bool IsReusable
+        {
+            get
+            {
+                return false;
+            }
+        }
+
         public void ProcessRequest(HttpContext context)
         {
             ProcessImage(context);
@@ -75,14 +83,6 @@ namespace MixERP.Net.Core.Modules.BackOffice.Handlers
                     context.Response.OutputStream.Write(buffer, 0, buffer.Length);
                     context.Response.End();
                 }
-            }
-        }
-
-        public bool IsReusable
-        {
-            get
-            {
-                return false;
             }
         }
     }

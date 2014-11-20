@@ -22,6 +22,7 @@ using MixERP.Net.FrontEnd.Base;
 using Npgsql;
 using System;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -45,53 +46,56 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
             this.QueryTextBox.Text = "";
         }
 
-        protected void LoadButton_Click(object sender, EventArgs e)
+        protected void ExecuteButton_Click(object sender, EventArgs e)
         {
-            this.LoadSql();
-        }
-
-        private void LoadSql()
-        {
-            string sql = File.ReadAllText(this.Page.Server.MapPath("~/bundles/sql/mixerp-blank-db.sql"));
-            this.QueryTextBox.Text = sql;
+            try
+            {
+                using (NpgsqlCommand command = new NpgsqlCommand(this.QueryTextBox.Text))
+                {
+                    using (DataTable table = Data.Admin.QueryTool.GetDataTable(command))
+                    {
+                        this.MessageLiteral.Text = string.Format(CultureInfo.CurrentCulture, "<div class='success'>" + Labels.NumRowsAffected + "</div>", table.Rows.Count);
+                        this.SQLGridView.DataSource = table;
+                        this.SQLGridView.DataBind();
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                this.MessageLiteral.Text = @"<div class='error'>" + ex.Message + @"</div>";
+            }
         }
 
         protected void LoadBlankDBButton_Click(object sender, EventArgs e)
         {
             string sql = File.ReadAllText(this.Page.Server.MapPath("~/bundles/sql/mixerp-blank-db.sql"));
-            using (DataTable table = Data.Admin.QueryTool.GetDataTable(new NpgsqlCommand(sql)))
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                this.MessageLiteral.Text = string.Format("<div class='success'>{0} row(s) affected.</div>", table.Rows.Count);
-                this.SQLGridView.DataSource = table;
-                this.SQLGridView.DataBind();
+                using (DataTable table = Data.Admin.QueryTool.GetDataTable(command))
+                {
+                    this.MessageLiteral.Text = string.Format(CultureInfo.CurrentCulture, "<div class='success'>" + Labels.NumRowsAffected + "</div>", table.Rows.Count);
+                    this.SQLGridView.DataSource = table;
+                    this.SQLGridView.DataBind();
+                }
             }
+        }
+
+        protected void LoadButton_Click(object sender, EventArgs e)
+        {
+            this.LoadSql();
         }
 
         protected void LoadSampleData_Click(object sender, EventArgs e)
         {
             string sql = File.ReadAllText(this.Page.Server.MapPath("~/bundles/sql/mixerp-db-sample.sql"));
-            using (DataTable table = Data.Admin.QueryTool.GetDataTable(new NpgsqlCommand(sql)))
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                this.MessageLiteral.Text = string.Format("<div class='success'>{0} row(s) affected.</div>", table.Rows.Count);
-                this.SQLGridView.DataSource = table;
-                this.SQLGridView.DataBind();
-            }
-        }
-
-        protected void ExecuteButton_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                using (DataTable table = Data.Admin.QueryTool.GetDataTable(new NpgsqlCommand(this.QueryTextBox.Text)))
+                using (DataTable table = Data.Admin.QueryTool.GetDataTable(command))
                 {
-                    this.MessageLiteral.Text = string.Format("<div class='success'>{0} row(s) affected.</div>", table.Rows.Count);
+                    this.MessageLiteral.Text = string.Format(CultureInfo.CurrentCulture, "<div class='success'>" + Labels.NumRowsAffected + "</div>", table.Rows.Count);
                     this.SQLGridView.DataSource = table;
                     this.SQLGridView.DataBind();
                 }
-            }
-            catch (Exception ex)
-            {
-                this.MessageLiteral.Text = @"<div class='error'>" + ex.Message + @"</div>";
             }
         }
 
@@ -105,6 +109,12 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
                 File.Delete(path);
                 File.WriteAllText(path, sql, Encoding.UTF8);
             }
+        }
+
+        private void LoadSql()
+        {
+            string sql = File.ReadAllText(this.Page.Server.MapPath("~/bundles/sql/mixerp-blank-db.sql"));
+            this.QueryTextBox.Text = sql;
         }
     }
 }

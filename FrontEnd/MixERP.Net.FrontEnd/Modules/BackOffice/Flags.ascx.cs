@@ -25,6 +25,7 @@ using System.Reflection;
 
 namespace MixERP.Net.Core.Modules.BackOffice
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags")]
     public partial class Flags : MixERPUserControl
     {
         public override void OnControlLoad(object sender, EventArgs e)

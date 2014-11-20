@@ -21,7 +21,6 @@ using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Inventory.Data.Helpers;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.Globalization;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.Web.UI.WebControls;
@@ -70,12 +69,17 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         [WebMethod]
         public Collection<ListItem> GetItems(string tranBook)
         {
-            if (tranBook.ToLower(CultureInfo.InvariantCulture).Equals("sales"))
+            if (string.IsNullOrWhiteSpace(tranBook))
             {
-                return this.GetItems();
+                return new Collection<ListItem>();
             }
 
-            return this.GetStockItems();
+            if (tranBook.ToUpperInvariant().Equals("SALES"))
+            {
+                return GetItems();
+            }
+
+            return GetStockItems();
         }
 
         [WebMethod]
@@ -195,7 +199,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
             return Units.UnitExistsByName(unitName);
         }
 
-        private Collection<ListItem> GetItems()
+        private static Collection<ListItem> GetItems()
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
@@ -210,7 +214,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
             }
         }
 
-        private Collection<ListItem> GetStockItems()
+        private static Collection<ListItem> GetStockItems()
         {
             Collection<ListItem> values = new Collection<ListItem>();
 

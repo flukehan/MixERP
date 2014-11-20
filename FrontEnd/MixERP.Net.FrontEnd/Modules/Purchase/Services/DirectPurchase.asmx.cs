@@ -46,7 +46,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Services
             JavaScriptSerializer js = new JavaScriptSerializer();
             Collection<AttachmentModel> attachments = js.Deserialize<Collection<AttachmentModel>>(attachmentsJSON);
 
-            bool isCredit = !transactionType.ToLower().Equals("cash");
+            bool isCredit = !string.IsNullOrWhiteSpace(transactionType) && !transactionType.ToUpperInvariant().Equals("CASH");
 
             if (isCredit && cashRepositoryId > 0)
             {

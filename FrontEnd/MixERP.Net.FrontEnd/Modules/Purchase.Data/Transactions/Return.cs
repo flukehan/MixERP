@@ -25,6 +25,7 @@ using MixERP.Net.DBFactory;
 using Npgsql;
 using System;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 
 namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
@@ -36,7 +37,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
             string detail = StockMasterDetailHelper.CreateStockMasterDetailParameter(details);
             string attachment = AttachmentHelper.CreateAttachmentModelParameter(attachments);
 
-            string sql = string.Format("SELECT * FROM transactions.post_purchase_return(@TransactionMasterId, @OfficeId, @UserId, @LoginId, @ValueDate, @StoreId, @PartyCode, @PriceTypeId, @ReferenceNumber, @StatementReference, ARRAY[{0}], ARRAY[{1}]);", detail, attachment);
+            string sql = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM transactions.post_purchase_return(@TransactionMasterId, @OfficeId, @UserId, @LoginId, @ValueDate, @StoreId, @PartyCode, @PriceTypeId, @ReferenceNumber, @StatementReference, ARRAY[{0}], ARRAY[{1}]);", detail, attachment);
 
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {

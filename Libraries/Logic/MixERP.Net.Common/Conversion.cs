@@ -23,7 +23,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
@@ -318,16 +317,18 @@ namespace MixERP.Net.Common
             return retVal;
         }
 
-        public static byte[] TryCastByteArray(Bitmap bitmap)
-        {
-            ImageConverter converter = new ImageConverter();
-            return (byte[])converter.ConvertTo(bitmap, typeof(byte[]));
-        }
-
         public static byte[] TryCastByteArray(Image image)
         {
-            ImageConverter converter = new ImageConverter();
-            return (byte[])converter.ConvertTo(image, typeof(byte[]));
+            if (image == null)
+            {
+                return null;
+            }
+
+            using (var ms = new MemoryStream())
+            {
+                image.Save(ms, ImageFormat.Jpeg);
+                return ms.ToArray();
+            }
         }
 
         public static DateTime TryCastDate(object value)

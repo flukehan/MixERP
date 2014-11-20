@@ -1,4 +1,4 @@
-DROP FUNCTION IF EXISTS transactions.get_mavcogs(_item_id integer, _unit_id integer, _base_quantity decimal, _factor decimal(24, 4));
+DROP FUNCTION IF EXISTS transactions.get_mavcogs(_item_id integer, _store_id integer, _base_quantity decimal, _factor decimal(24, 4));
 
 CREATE FUNCTION transactions.get_mavcogs(_item_id integer, _store_id integer, _base_quantity decimal, _factor decimal(24, 4))
 RETURNS decimal(24, 4)
@@ -26,8 +26,9 @@ BEGIN
         ELSE
         0
         END
-        FROM transactions.stock_details
-        WHERE item_id = 1
+        FROM transactions.verified_stock_details_view
+        WHERE item_id = $1
+        AND store_id=$2
         order by value_date, audit_ts, stock_detail_id;
 
 
@@ -61,3 +62,4 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+

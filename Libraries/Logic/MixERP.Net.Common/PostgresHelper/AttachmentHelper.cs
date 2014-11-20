@@ -58,7 +58,7 @@ namespace MixERP.Net.Common.PostgresHelper
 
             for (int i = 0; i < attachments.Count; i++)
             {
-                attachmentCollection.Add(string.Format("ROW(@Comment{0}, @FilePath{0}, @OriginalFileName{0}, @Extension{0})::core.attachment_type", i.ToString(CultureInfo.InvariantCulture)));
+                attachmentCollection.Add(string.Format(CultureInfo.InvariantCulture, "ROW(@Comment{0}, @FilePath{0}, @OriginalFileName{0}, @Extension{0})::core.attachment_type", i.ToString(CultureInfo.InvariantCulture)));
             }
 
             return string.Join(",", attachmentCollection);

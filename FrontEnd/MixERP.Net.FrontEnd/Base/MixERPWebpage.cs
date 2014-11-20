@@ -36,67 +36,18 @@ namespace MixERP.Net.FrontEnd.Base
     public class MixERPWebpage : MixERPWebPageBase
     {
         /// <summary>
-        ///     Use this parameter on the Page_Init event of member pages.
-        ///     This parameter ensures that the user is not redirected to the login page
-        ///     even when the user is not logged in.
-        /// </summary>
-        public bool SkipLoginCheck { get; set; }
-
-        /// <summary>
-        ///     Since we save the menu on the database, this parameter is only used
-        ///     when there is no associated record of this page's url or path in the menu table.
-        ///     Use this to override or fake the page's url or path. This forces navigation menus
-        ///     on the left hand side to be displayed in regards with the specified path.
+        /// Since we save the menu on the database, this parameter is only used when there is no
+        /// associated record of this page's url or path in the menu table. Use this to override or
+        /// fake the page's url or path. This forces navigation menus on the left hand side to be
+        /// displayed in regards with the specified path.
         /// </summary>
         public virtual string OverridePath { get; set; }
 
-        protected override void OnLoad(EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(this.OverridePath))
-            {
-                this.OverridePath = this.Page.Request.Url.AbsolutePath;
-            }
-
-            Literal contentMenuLiteral = ((Literal)PageUtility.FindControlIterative(this.Master, "ContentMenuLiteral"));
-
-            string menu = "<div id=\"tree\" style='display:none;'><ul id='treeData'>";
-
-            Collection<Menu> collection = Data.Core.Menu.GetMenuCollection(0, 0);
-
-            if (collection == null)
-            {
-                return;
-            }
-
-            if (collection.Count > 0)
-            {
-                foreach (Menu model in collection)
-                {
-                    string menuText = model.MenuText;
-                    string url = model.Url;
-                    string id = Conversion.TryCastString(model.MenuId);
-
-                    string subMenu = GetContentPageMenu(this.Page, url, this.OverridePath);
-                    menu += string.Format(Thread.CurrentThread.CurrentCulture,
-                        "<li id='node{0}'>" +
-                        "<a id='anchorNode{0}' href='javascript:void(0);' title='{1}'>{1}</a>" +
-                        "{2}" +
-                        "</li>",
-                        id,
-                        menuText,
-                        subMenu);
-                }
-            }
-
-            menu += "</ul></div>";
-
-            if (contentMenuLiteral != null)
-            {
-                contentMenuLiteral.Text = menu;
-            }
-
-            base.OnLoad(e);
-        }
+        /// <summary>
+        /// Use this parameter on the Page_Init event of member pages. This parameter ensures that
+        /// the user is not redirected to the login page even when the user is not logged in.
+        /// </summary>
+        public bool SkipLoginCheck { get; set; }
 
         public static string GetContentPageMenu(Control page, string path, string currentPage)
         {
@@ -163,62 +114,44 @@ namespace MixERP.Net.FrontEnd.Base
             return null;
         }
 
-        protected override void InitializeCulture()
+        public static void RedirectToRootPage()
         {
-            SetCulture();
-            base.InitializeCulture();
+            HttpContext.Current.Response.Redirect("~/");
         }
 
-        protected override void OnInit(EventArgs e)
+        public static void RequestLogOnPage()
         {
-            if (!this.IsPostBack)
+            FormsAuthentication.SignOut();
+
+            foreach (string cookie in HttpContext.Current.Request.Cookies.AllKeys)
             {
-                if (this.Request.IsAuthenticated)
-                {
-                    if (this.Context.Session == null)
-                    {
-                        this.SetSession();
-                    }
-                    else
-                    {
-                        if (this.Context.Session["UserId"] == null)
-                        {
-                            this.SetSession();
-                        }
-                    }
-                }
-                else
-                {
-                    if (!this.SkipLoginCheck)
-                    {
-                        RequestLogOnPage();
-                    }
-                }
+                HttpContext.Current.Request.Cookies.Remove(cookie);
             }
 
-            base.OnInit(e);
-        }
+            string currentPage = HttpContext.Current.Request.Url.AbsolutePath;
 
-        private static void SetCulture()
-        {
-            if (HttpContext.Current.Session["Culture"] == null)
+            Page page = HttpContext.Current.Handler as Page;
+
+            if (page == null)
             {
                 return;
             }
 
-            string cultureName = HttpContext.Current.Session["Culture"].ToString();
-            CultureInfo culture = new CultureInfo(cultureName);
-            Thread.CurrentThread.CurrentCulture = culture;
-            Thread.CurrentThread.CurrentUICulture = culture;
-        }
+            string loginUrl = (page).ResolveUrl(FormsAuthentication.LoginUrl);
 
-        private void SetSession()
-        {
-            SetSession(this.Page, this.User.Identity.Name);
+            if (currentPage != loginUrl)
+            {
+                FormsAuthentication.RedirectToLoginPage(currentPage);
+            }
         }
 
         public static void SetAuthenticationTicket(Page page, string userName, bool rememberMe)
         {
+            if (page == null)
+            {
+                return;
+            }
+
             FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, userName, DateTime.Now,
                 DateTime.Now.AddMinutes(30), rememberMe, String.Empty, FormsAuthentication.FormsCookiePath);
             string encryptedCookie = FormsAuthentication.Encrypt(ticket);
@@ -284,35 +217,106 @@ namespace MixERP.Net.FrontEnd.Base
             return false;
         }
 
-        public static void RedirectToRootPage()
+        protected override void InitializeCulture()
         {
-            HttpContext.Current.Response.Redirect("~/");
+            SetCulture();
+            base.InitializeCulture();
         }
 
-        public static void RequestLogOnPage()
+        protected override void OnInit(EventArgs e)
         {
-            FormsAuthentication.SignOut();
-
-            foreach (string cookie in HttpContext.Current.Request.Cookies.AllKeys)
+            if (!this.IsPostBack)
             {
-                HttpContext.Current.Request.Cookies.Remove(cookie);
+                if (this.Request.IsAuthenticated)
+                {
+                    if (this.Context.Session == null)
+                    {
+                        this.SetSession();
+                    }
+                    else
+                    {
+                        if (this.Context.Session["UserId"] == null)
+                        {
+                            this.SetSession();
+                        }
+                    }
+                }
+                else
+                {
+                    if (!this.SkipLoginCheck)
+                    {
+                        RequestLogOnPage();
+                    }
+                }
             }
 
-            string currentPage = HttpContext.Current.Request.Url.AbsolutePath;
+            base.OnInit(e);
+        }
 
-            Page page = HttpContext.Current.Handler as Page;
+        protected override void OnLoad(EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(this.OverridePath))
+            {
+                this.OverridePath = this.Page.Request.Url.AbsolutePath;
+            }
 
-            if (page == null)
+            Literal contentMenuLiteral = ((Literal)PageUtility.FindControlIterative(this.Master, "ContentMenuLiteral"));
+
+            string menu = "<div id=\"tree\" style='display:none;'><ul id='treeData'>";
+
+            Collection<Menu> collection = Data.Core.Menu.GetMenuCollection(0, 0);
+
+            if (collection == null)
             {
                 return;
             }
 
-            string loginUrl = (page).ResolveUrl(FormsAuthentication.LoginUrl);
-
-            if (currentPage != loginUrl)
+            if (collection.Count > 0)
             {
-                FormsAuthentication.RedirectToLoginPage(currentPage);
+                foreach (Menu model in collection)
+                {
+                    string menuText = model.MenuText;
+                    string url = model.Url;
+                    string id = Conversion.TryCastString(model.MenuId);
+
+                    string subMenu = GetContentPageMenu(this.Page, url, this.OverridePath);
+                    menu += string.Format(Thread.CurrentThread.CurrentCulture,
+                        "<li id='node{0}'>" +
+                        "<a id='anchorNode{0}' href='javascript:void(0);' title='{1}'>{1}</a>" +
+                        "{2}" +
+                        "</li>",
+                        id,
+                        menuText,
+                        subMenu);
+                }
             }
+
+            menu += "</ul></div>";
+
+            if (contentMenuLiteral != null)
+            {
+                contentMenuLiteral.Text = menu;
+            }
+
+            base.OnLoad(e);
+        }
+
+        private static void SetCulture()
+        {
+            if (HttpContext.Current.Session["Culture"] == null)
+            {
+                return;
+            }
+
+            string cultureName = HttpContext.Current.Session["Culture"].ToString();
+            CultureInfo culture = new CultureInfo(cultureName);
+            Thread.CurrentThread.CurrentCulture = culture;
+            Thread.CurrentThread.CurrentUICulture = culture;
+        }
+
+        private void SetSession()
+        {
+            SetSession(this.Page, this.User.Identity.Name);
         }
     }
 }

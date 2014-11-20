@@ -8,7 +8,6 @@ $$
     DECLARE _base_unit_id integer;
     DECLARE _base_unit_cost money_strict;
     DECLARE _total_sold integer;
-    DECLARE _factor decimal;
     DECLARE _office_id integer      = office.get_office_id_by_store_id($3);
     DECLARE _method text            = office.get_cost_of_good_method(_office_id);
 BEGIN
@@ -17,10 +16,10 @@ BEGIN
 
 
         IF(_method = 'MAVCO') THEN
-                RETURN transactions.get_mavcogs(_item_id, _store_id, _base_quantity, _factor);
+                --RAISE NOTICE '% % % %',_item_id, _store_id, _base_quantity, 1.00;
+                RETURN transactions.get_mavcogs(_item_id, _store_id, _base_quantity, 1.00);
         END IF;
 
-        RAISE NOTICE '% % %', _base_quantity, _base_unit_id, _factor;
 
         DROP TABLE IF EXISTS temp_cost_of_goods_sold;
         CREATE TEMPORARY TABLE temp_cost_of_goods_sold
@@ -43,7 +42,7 @@ BEGIN
                     generate_series(1, base_quantity::integer) AS series,
                     (price * quantity) / base_quantity AS price,
                     tran_type
-                FROM transactions.stock_details
+                FROM transactions.verified_stock_details_view
                 WHERE item_id = $1
                 AND store_id = $3
         )
@@ -98,3 +97,4 @@ LANGUAGE PLPGSQL;
 -- 
 -- 
 -- 
+--SELECT * FROM transactions.get_cost_of_goods_sold(1, 7, 1, 1);

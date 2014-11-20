@@ -95,7 +95,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data
                             transaction.Commit();
                             return true;
                         }
-                        catch
+                        catch (NpgsqlException)
                         {
                             transaction.Rollback();
                             return false;

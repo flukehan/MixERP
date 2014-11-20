@@ -42,17 +42,17 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
         [WebMethod(EnableSession = true)]
         public long Save(DateTime valueDate, string referenceNumber, string statementReference, string data)
         {
-            Collection<StockAdjustmentModel> stockTransferModels = this.GetModels(data);
+            Collection<StockAdjustmentModel> stockTransferModels = GetModels(data);
 
             foreach (var model in stockTransferModels)
             {
-                if (model.TransferType.ToLower(CultureInfo.InvariantCulture).Equals("cr"))
+                if (model.TransferType.ToUpperInvariant().Equals("CR"))
                 {
                     decimal existingQuantity = Data.Helpers.Items.CountItemInStock(model.ItemCode, model.UnitName, model.StoreName);
 
                     if (existingQuantity < model.Quantity)
                     {
-                        throw new MixERPException(string.Format(Errors.InsufficientStockWarning, Conversion.TryCastInteger(existingQuantity), model.UnitName, model.ItemName));
+                        throw new MixERPException(string.Format(CultureInfo.CurrentCulture, Errors.InsufficientStockWarning, Conversion.TryCastInteger(existingQuantity), model.UnitName, model.ItemName));
                     }
                 }
             }
@@ -65,7 +65,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
         }
 
         // ReSharper disable once ReturnTypeCanBeEnumerable.Local
-        private Collection<StockAdjustmentModel> GetModels(string json)
+        private static Collection<StockAdjustmentModel> GetModels(string json)
         {
             Collection<StockAdjustmentModel> models = new Collection<StockAdjustmentModel>();
 
@@ -93,8 +93,8 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
                               {
                                   aggregate.Key.ItemCode,
                                   aggregate.Key.UnitName,
-                                  Debit = aggregate.Where(row => row.TransferType.ToLower().Equals("dr")).Sum(row => row.Quantity),
-                                  Credit = aggregate.Where(row => row.TransferType.ToLower().Equals("cr")).Sum(row => row.Quantity)
+                                  Debit = aggregate.Where(row => row.TransferType.ToUpperInvariant().Equals("DR")).Sum(row => row.Quantity),
+                                  Credit = aggregate.Where(row => row.TransferType.ToUpperInvariant().Equals("CR")).Sum(row => row.Quantity)
                               };
 
             if ((from query in results where query.Debit != query.Credit select query).Any())

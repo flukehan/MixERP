@@ -51,7 +51,7 @@ namespace MixERP.Net.Common.PostgresHelper
             Collection<string> detailCollection = new Collection<string>();
             for (int i = 0; i < collection.Count; i++)
             {
-                detailCollection.Add(string.Format("{0}{1}::{2}", parameterPrefix, i.ToString(CultureInfo.InvariantCulture), pgType));
+                detailCollection.Add(string.Format(CultureInfo.InvariantCulture, "{0}{1}::{2}", parameterPrefix, i.ToString(CultureInfo.InvariantCulture), pgType));
             }
 
             return string.Join(",", detailCollection);

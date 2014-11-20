@@ -99,7 +99,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
                     return true;
                 }
                 // ReSharper disable once EmptyGeneralCatchClause
-                catch
+                catch (IOException)
                 {
                     //Swallow
                 }

@@ -61,6 +61,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} rows affected..
+        /// </summary>
+        internal static string NumRowsAffected {
+            get {
+                return ResourceManager.GetString("NumRowsAffected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Task completed successfully..
         /// </summary>
         internal static string TaskCompletedSuccessfully {

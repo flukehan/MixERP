@@ -60,7 +60,7 @@ namespace MixERP.Net.Common.PostgresHelper
             Collection<string> detailCollection = new Collection<string>();
             for (int i = 0; i < details.Count; i++)
             {
-                detailCollection.Add(string.Format("ROW(@StoreId{0}, @ItemCode{0}, @Quantity{0}, @UnitName{0},@Price{0}, @Discount{0}, @TaxRate{0}, @Tax{0})::transactions.stock_detail_type", i.ToString(CultureInfo.InvariantCulture)));
+                detailCollection.Add(string.Format(CultureInfo.InvariantCulture, "ROW(@StoreId{0}, @ItemCode{0}, @Quantity{0}, @UnitName{0},@Price{0}, @Discount{0}, @TaxRate{0}, @Tax{0})::transactions.stock_detail_type", i.ToString(CultureInfo.InvariantCulture)));
             }
 
             return string.Join(",", detailCollection);

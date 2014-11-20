@@ -19,6 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using MixERP.Net.Common.Helpers;
 using System;
+using System.Globalization;
 using System.Web.UI;
 
 namespace MixERP.Net.FrontEnd
@@ -29,7 +30,7 @@ namespace MixERP.Net.FrontEnd
         {
             BranchNameLiteral.Text = SessionHelper.GetOfficeName();
             SignOutLiteral.Text = Resources.Titles.SignOut;
-            UserGreetingLiteral.Text = String.Format(Resources.Labels.UserGreeting, SessionHelper.GetUserName());
+            UserGreetingLiteral.Text = String.Format(CultureInfo.CurrentCulture, Resources.Labels.UserGreeting, SessionHelper.GetUserName());
             ChangePasswordLiteral.Text = Resources.Titles.ChangePassword;
             ManageProfileLiteral.Text = Resources.Titles.ManageProfile;
             MixERPDocumentationLiteral.Text = Resources.Titles.MixERPDocumentation;

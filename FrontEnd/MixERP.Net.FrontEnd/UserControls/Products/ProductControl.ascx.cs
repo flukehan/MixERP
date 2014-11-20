@@ -32,106 +32,108 @@ using System.Web.UI;
 namespace MixERP.Net.FrontEnd.UserControls.Products
 {
     /// <summary>
-    ///     Todo: This class is subject to be moved to a standalone server control class library.
-    ///     This UserControl provides a common interface for all transactions that are related to
-    ///     stock and/or inventory. Everything is handled in this class, except for the Save event.
-    ///     The save event is exposed to the page containing this control and should be handled there.
+    /// Todo: This class is subject to be moved to a standalone server control class library. This
+    ///       UserControl provides a common interface for all transactions that are related to stock
+    ///       and/or inventory. Everything is handled in this class, except for the Save event. The
+    ///       save event is exposed to the page containing this control and should be handled there.
     /// </summary>
     public partial class ProductControl : UserControl
     {
         #region Properties
 
         /// <summary>
-        ///     This property is used to temporarily store pre assigned instance of transactions for merging transactions
-        ///     and creating a batch transactions.
-        ///     Some cases:
-        ///     Multiple Sales Quotations --> Sales Order.
-        ///     Multiple Sales Quotations --> Sales Delivery.
+        /// This property is used to temporarily store pre assigned instance of transactions for
+        /// merging transactions and creating a batch transactions. Some cases: Multiple Sales
+        /// Quotations --&gt; Sales Order. Multiple Sales Quotations --&gt; Sales Delivery.
         /// </summary>
         private MergeModel model = new MergeModel();
 
         /// <summary>
-        ///     Transaction book for products are Sales and Purchase.
+        /// Transaction book for products are Sales and Purchase.
         /// </summary>
         public TranBook Book { get; set; }
 
         /// <summary>
-        ///     Sub transaction books are maintained for breaking down the Purchase and Sales transaction into smaller steps
-        ///     such as Quotations, Orders, Deliveries, e.t.c.
-        /// </summary>
-        public SubTranBook SubBook { get; set; }
-
-        /// <summary>
-        ///     The title displayed in the form.
-        /// </summary>
-        public string Text { get; set; }
-
-        /// <summary>
-        ///     This property when set to true will display transaction types.
-        ///     Transaction types are Cash and Credit.
-        /// </summary>
-        public bool ShowTransactionType { get; set; }
-
-        /// <summary>
-        ///     This property when set to true will display stores.
-        /// </summary>
-        public bool ShowStore { get; set; }
-
-        /// <summary>
-        ///     This property when set to true will display stores.
-        /// </summary>
-        public bool ShowPriceTypes { get; set; }
-
-        /// <summary>
-        ///     This property when enabled will display cash repositories and their available balance.
-        ///     Not all available cash repositories will be displayed here but those which belong to the current (or logged in)
-        ///     branch office.
-        ///     This property must be enabled for transactions which have affect on cash ledger, namely "Direct Purchase" and
-        ///     "Direct Sales".
+        /// This property when enabled will display cash repositories and their available balance.
+        /// Not all available cash repositories will be displayed here but those which belong to the
+        /// current (or logged in) branch office. This property must be enabled for transactions
+        /// which have affect on cash ledger, namely "Direct Purchase" and "Direct Sales".
         /// </summary>
         public bool ShowCashRepository { get; set; }
 
         /// <summary>
-        ///     This property when enabled will display shipping information, such as shipping address, shipping company, and
-        ///     shipping costs.
-        /// </summary>
-        public bool ShowShippingInformation { get; set; }
-
-        /// <summary>
-        ///     This property when enabled will display cost centers.
+        /// This property when enabled will display cost centers.
         /// </summary>
         public bool ShowCostCenter { get; set; }
 
         /// <summary>
-        ///     This property when enabled will display sales agents.
+        /// This property when set to true will display stores.
+        /// </summary>
+        public bool ShowPriceTypes { get; set; }
+
+        /// <summary>
+        /// This property when enabled will display sales agents.
         /// </summary>
         public bool ShowSalesAgents { get; set; }
 
         /// <summary>
-        ///     This property when set to true will verify the stock against the credit inventory transactions or "Sales".
-        ///     Since negative stock is not allowed, you will not be able to add a product to the grid.
-        ///     This property must be enabled for Sales transaction which affect the available inventory on hand.
-        ///     Please also note that even when this property is enabled, the products having the switch "Maintain Stock" set to
-        ///     "Off"
-        ///     will not be checked for stock availability.
-        ///     This property should be disabled or set to false for stock transactions that do not affect stock such as
-        ///     "Quotations", "Orders", e.t.c.
+        /// This property when enabled will display shipping information, such as shipping address,
+        /// shipping company, and shipping costs.
+        /// </summary>
+        public bool ShowShippingInformation { get; set; }
+
+        /// <summary>
+        /// This property when set to true will display stores.
+        /// </summary>
+        public bool ShowStore { get; set; }
+
+        /// <summary>
+        /// This property when set to true will display transaction types. Transaction types are
+        /// Cash and Credit.
+        /// </summary>
+        public bool ShowTransactionType { get; set; }
+
+        /// <summary>
+        /// Sub transaction books are maintained for breaking down the Purchase and Sales
+        /// transaction into smaller steps such as Quotations, Orders, Deliveries, e.t.c.
+        /// </summary>
+        public SubTranBook SubBook { get; set; }
+
+        /// <summary>
+        /// The title displayed in the form.
+        /// </summary>
+        public string Text { get; set; }
+
+        /// <summary>
+        /// This property when set to true will verify the stock against the credit inventory
+        /// transactions or "Sales". Since negative stock is not allowed, you will not be able to
+        /// add a product to the grid. This property must be enabled for Sales transaction which
+        /// affect the available inventory on hand. Please also note that even when this property is
+        /// enabled, the products having the switch "Maintain Stock" set to "Off" will not be
+        /// checked for stock availability. This property should be disabled or set to false for
+        /// stock transactions that do not affect stock such as "Quotations", "Orders", e.t.c.
         /// </summary>
         public bool VerifyStock { get; set; }
 
         /// <summary>
-        ///     This class is a representation of the controls in this UserControl.
+        /// This class is a representation of the controls in this UserControl.
         /// </summary>
 
         #endregion Properties
 
         #region "Page Initialization"
-        protected void Page_Init(object sender, EventArgs e)
-        {
-            this.Initialize();
-        }
 
         private bool initialized;
+
+        public string GetTranBook()
+        {
+            if (this.Book == TranBook.Sales)
+            {
+                return "Sales";
+            }
+
+            return "Purchase";
+        }
 
         public void Initialize()
         {
@@ -151,6 +153,11 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             }
         }
 
+        protected void Page_Init(object sender, EventArgs e)
+        {
+            this.Initialize();
+        }
+
         private void ClearSession(string key)
         {
             if (this.Session[key] != null)
@@ -163,32 +170,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         {
             this.LoadLabels();
             this.SetVisibleStates();
-        }
-
-        private void LoadValuesFromSession()
-        {
-            if (this.Session["Product"] == null)
-            {
-                return;
-            }
-
-            this.model = this.Session["Product"] as MergeModel;
-
-            if (this.model == null)
-            {
-                return;
-            }
-
-            this.PartyCodeHidden.Value = this.model.PartyCode.ToString(LocalizationHelper.GetCurrentCulture());
-            this.PartyCodeInputText.Value = this.model.PartyCode.ToString(LocalizationHelper.GetCurrentCulture());
-            this.PriceTypeIdHidden.Value = this.model.PriceTypeId.ToString(SessionHelper.GetCulture());
-
-            this.ReferenceNumberInputText.Value = this.model.ReferenceNumber;
-            this.StatementReferenceTextArea.Value = this.model.StatementReference;
-
-            this.Session[this.ID] = this.model.View;
-            TranIdCollectionHiddenField.Value = string.Join(",", this.model.TransactionIdCollection);
-            this.ClearSession("Product");
         }
 
         private void LoadLabels()
@@ -227,14 +208,30 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             this.CashTransactionLiteral.Text = HtmlControlHelper.GetLabel("CashTransactionCheckBox", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "CashTransaction"));
         }
 
-        public string GetTranBook()
+        private void LoadValuesFromSession()
         {
-            if (this.Book == TranBook.Sales)
+            if (this.Session["Product"] == null)
             {
-                return "Sales";
+                return;
             }
 
-            return "Purchase";
+            this.model = this.Session["Product"] as MergeModel;
+
+            if (this.model == null)
+            {
+                return;
+            }
+
+            this.PartyCodeHidden.Value = this.model.PartyCode.ToString(LocalizationHelper.GetCurrentCulture());
+            this.PartyCodeInputText.Value = this.model.PartyCode.ToString(LocalizationHelper.GetCurrentCulture());
+            this.PriceTypeIdHidden.Value = this.model.PriceTypeId.ToString(SessionHelper.GetCulture());
+
+            this.ReferenceNumberInputText.Value = this.model.ReferenceNumber;
+            this.StatementReferenceTextArea.Value = this.model.StatementReference;
+
+            this.Session[this.ID] = this.model.View;
+            TranIdCollectionHiddenField.Value = string.Join(",", this.model.TransactionIdCollection);
+            this.ClearSession("Product");
         }
 
         private void SetVisibleStates()
@@ -251,59 +248,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         }
 
         #region "JSON Grid Binding"
-
-        private void BindGridView()
-        {
-            Collection<ProductDetailsModel> table = this.GetTable();
-
-            if (table.Count > 0)
-            {
-                List<string[]> rowData = new List<string[]>();
-
-                foreach (ProductDetailsModel row in table)
-                {
-                    string[] colData = new string[11];
-
-                    colData[0] = row.ItemCode;
-                    colData[1] = row.ItemName;
-                    colData[2] = row.Quantity.ToString(CultureInfo.CurrentUICulture);
-                    colData[3] = row.Unit;
-                    colData[4] = row.Price.ToString(CultureInfo.CurrentUICulture);
-                    colData[5] = row.Amount.ToString(CultureInfo.CurrentUICulture);
-                    colData[6] = row.Discount.ToString(CultureInfo.CurrentUICulture);
-                    colData[7] = row.Subtotal.ToString(CultureInfo.CurrentUICulture);
-                    colData[8] = row.Rate.ToString(CultureInfo.CurrentUICulture);
-                    colData[9] = row.Tax.ToString(CultureInfo.CurrentUICulture);
-                    colData[10] = row.Total.ToString(CultureInfo.CurrentUICulture);
-
-                    rowData.Add(colData);
-                }
-
-                JavaScriptSerializer serializer = new JavaScriptSerializer();
-                string data = serializer.Serialize(rowData);
-
-                ProductGridViewDataHidden.Value = data;
-            }
-        }
-
-        private Collection<ProductDetailsModel> GetTable()
-        {
-            Collection<ProductDetailsModel> productCollection = new Collection<ProductDetailsModel>();
-
-            if (this.Session[this.ID] != null)
-            {
-                //Get an instance of the ProductDetailsModel collection stored in session.
-                productCollection = (Collection<ProductDetailsModel>)this.Session[this.ID];
-
-                //Summate the collection.
-                productCollection = SummateProducts(productCollection);
-
-                //Store the summed table in session.
-                this.Session[this.ID] = productCollection;
-            }
-
-            return productCollection;
-        }
 
         private static Collection<ProductDetailsModel> SummateProducts(IEnumerable<ProductDetailsModel> productCollection)
         {
@@ -337,6 +281,59 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             }
 
             return collection;
+        }
+
+        private void BindGridView()
+        {
+            Collection<ProductDetailsModel> table = this.GetTable();
+
+            if (table.Count > 0)
+            {
+                List<string[]> rowData = new List<string[]>();
+
+                foreach (ProductDetailsModel row in table)
+                {
+                    string[] colData = new string[11];
+
+                    colData[0] = row.ItemCode;
+                    colData[1] = row.ItemName;
+                    colData[2] = row.Quantity.ToString(CultureInfo.CurrentCulture);
+                    colData[3] = row.Unit;
+                    colData[4] = row.Price.ToString(CultureInfo.CurrentCulture);
+                    colData[5] = row.Amount.ToString(CultureInfo.CurrentCulture);
+                    colData[6] = row.Discount.ToString(CultureInfo.CurrentCulture);
+                    colData[7] = row.Subtotal.ToString(CultureInfo.CurrentCulture);
+                    colData[8] = row.Rate.ToString(CultureInfo.CurrentCulture);
+                    colData[9] = row.Tax.ToString(CultureInfo.CurrentCulture);
+                    colData[10] = row.Total.ToString(CultureInfo.CurrentCulture);
+
+                    rowData.Add(colData);
+                }
+
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                string data = serializer.Serialize(rowData);
+
+                ProductGridViewDataHidden.Value = data;
+            }
+        }
+
+        private Collection<ProductDetailsModel> GetTable()
+        {
+            Collection<ProductDetailsModel> productCollection = new Collection<ProductDetailsModel>();
+
+            if (this.Session[this.ID] != null)
+            {
+                //Get an instance of the ProductDetailsModel collection stored in session.
+                productCollection = (Collection<ProductDetailsModel>)this.Session[this.ID];
+
+                //Summate the collection.
+                productCollection = SummateProducts(productCollection);
+
+                //Store the summed table in session.
+                this.Session[this.ID] = productCollection;
+            }
+
+            return productCollection;
         }
 
         #endregion "JSON Grid Binding"

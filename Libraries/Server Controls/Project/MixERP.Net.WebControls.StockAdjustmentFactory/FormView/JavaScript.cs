@@ -1,5 +1,6 @@
 ﻿using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.StockAdjustmentFactory.Resources;
+using System.Globalization;
 using System.Text;
 
 namespace MixERP.Net.WebControls.StockAdjustmentFactory
@@ -15,7 +16,7 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
             inline.Append("var unitServiceUrl ='" + this.UnitServiceUrl + "';");
             inline.Append("var itemPopupUrl ='" + this.ItemPopupUrl + "';");
             inline.Append("var itemIdQuerySericeUrl ='" + this.ItemIdQuerySericeUrl + "';");
-            inline.Append("var validateSides= " + this.ValidateSides.ToString().ToLower() + ";");
+            inline.Append("var validateSides= " + this.ValidateSides.ToString().ToLower(CultureInfo.InvariantCulture) + ";");
 
             Net.Common.PageUtility.RegisterJavascript("StockAdjustmentFormViewInlineScript", inline.ToString(), this.Page, true);
         }

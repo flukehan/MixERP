@@ -33,6 +33,14 @@ namespace MixERP.Net.FrontEnd.Handlers
     /// </summary>
     public class FileUpload : IHttpHandler
     {
+        public bool IsReusable
+        {
+            get
+            {
+                return false;
+            }
+        }
+
         public void ProcessRequest(HttpContext context)
         {
             string attachmentsDirectory = ConfigurationManager.AppSettings["AttachmentsDirectory"];
@@ -64,14 +72,6 @@ namespace MixERP.Net.FrontEnd.Handlers
         private List<string> GetAllowedExtensions()
         {
             return ConfigurationManager.AppSettings["AllowedExtensions"].Split(',').ToList();
-        }
-
-        public bool IsReusable
-        {
-            get
-            {
-                return false;
-            }
         }
 
         private int RandomNumber()

@@ -22,6 +22,7 @@ using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
 using System;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Web.Script.Serialization;
 using System.Web.Services;
 
@@ -55,7 +56,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
 
                     if (available < model.Quantity)
                     {
-                        throw new InvalidOperationException(string.Format(Resources.Warnings.InsufficientStockWarning, available, model.UnitName, model.ItemCode));
+                        throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.Warnings.InsufficientStockWarning, available, model.UnitName, model.ItemCode));
                     }
                 }
             }

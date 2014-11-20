@@ -38,12 +38,30 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
             this.AnalyzeButton.Text = Titles.AnalyzeDatabse;
 
             this.AddScrud();
-            this.LocalizeButtons();
+            LocalizeButtons();
 
             base.OnControlLoad(sender, e);
         }
 
-        private void LocalizeButtons()
+        protected void AnalyzeButton_Click(object sender, EventArgs e)
+        {
+            Data.Admin.DatabaseStatistics.Analyze();
+            this.DisplaySuccess();
+        }
+
+        protected void FullVacuumButton_Click(object sender, EventArgs e)
+        {
+            Data.Admin.DatabaseStatistics.VacuumFull();
+            this.DisplaySuccess();
+        }
+
+        protected void VacuumButton_Click(object sender, EventArgs e)
+        {
+            Data.Admin.DatabaseStatistics.Vacuum();
+            this.DisplaySuccess();
+        }
+
+        private static void LocalizeButtons()
         {
             //this.VacuumButton.Text = Titles.VacuumDatabase;
             //this.FullVacuumButton.Text = Titles.VacuumFullDatabase;
@@ -71,24 +89,6 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
-        }
-
-        protected void VacuumButton_Click(object sender, EventArgs e)
-        {
-            Data.Admin.DatabaseStatistics.Vacuum();
-            this.DisplaySuccess();
-        }
-
-        protected void FullVacuumButton_Click(object sender, EventArgs e)
-        {
-            Data.Admin.DatabaseStatistics.VacuumFull();
-            this.DisplaySuccess();
-        }
-
-        protected void AnalyzeButton_Click(object sender, EventArgs e)
-        {
-            Data.Admin.DatabaseStatistics.Analyze();
-            this.DisplaySuccess();
         }
 
         private void DisplaySuccess()

@@ -18,6 +18,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using System.Globalization;
 using System.Web.Services;
 
 namespace MixERP.Net.Core.Modules.Sales.Services.Entry
@@ -50,7 +51,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
                 }
             }
 
-            bool isCredit = !transactionType.ToLower().Equals("cash");
+            bool isCredit = transactionType != null && !transactionType.ToUpperInvariant().Equals("CASH");
 
             if (isCredit && cashRepositoryId > 0)
             {
@@ -70,7 +71,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
 
                     if (available < model.Quantity)
                     {
-                        throw new InvalidOperationException(string.Format(Resources.Warnings.InsufficientStockWarning, available, model.UnitName, model.ItemCode));
+                        throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.Warnings.InsufficientStockWarning, available, model.UnitName, model.ItemCode));
                     }
                 }
             }

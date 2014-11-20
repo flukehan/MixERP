@@ -17,9 +17,10 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Finance.Data.Helpers;
-using System;
+using MixERP.Net.Core.Modules.Finance.Resources;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
@@ -36,11 +37,28 @@ namespace MixERP.Net.Core.Modules.Finance.Services
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [ToolboxItem(false)]
-    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line.
-    // [System.Web.Script.Services.ScriptService]
+    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the
+    // following line. [System.Web.Script.Services.ScriptService]
     [ScriptService]
     public class AccountData : WebService
     {
+        [WebMethod]
+        public bool AccountCodeExists(string accountCode)
+        {
+            if (!string.IsNullOrWhiteSpace(accountCode))
+            {
+                return Accounts.AccountCodeExists(accountCode);
+            }
+
+            return false;
+        }
+
+        [WebMethod]
+        public bool CashRepositoryCodeExists(string cashRepositoryCode)
+        {
+            return CashRepositories.CashRepositoryCodeExists(cashRepositoryCode);
+        }
+
         [WebMethod(EnableSession = true)]
         public Collection<ListItem> GetAccounts()
         {
@@ -74,58 +92,6 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             }
         }
 
-        private static Collection<ListItem> GetValues(DataTable table)
-        {
-            Collection<ListItem> values = new Collection<ListItem>();
-
-            foreach (DataRow dr in table.Rows)
-            {
-                values.Add(new ListItem(dr["account_name"].ToString(), dr["account_code"].ToString()));
-            }
-
-            return values;
-        }
-
-        [WebMethod]
-        public bool AccountCodeExists(string accountCode)
-        {
-            if (!string.IsNullOrWhiteSpace(accountCode))
-            {
-                return Accounts.AccountCodeExists(accountCode);
-            }
-
-            return false;
-        }
-
-        [WebMethod]
-        public bool CashRepositoryCodeExists(string cashRepositoryCode)
-        {
-            return CashRepositories.CashRepositoryCodeExists(cashRepositoryCode);
-        }
-
-        [WebMethod]
-        public bool HasBalance(string cashRepositoryCode, string currencyCode, decimal credit)
-        {
-            if (credit.Equals(0))
-            {
-                return true;
-            }
-
-            if (credit < 0)
-            {
-                throw new InvalidOperationException("Negetive value supplied.");
-            }
-
-            decimal balance = CashRepositories.GetBalance(cashRepositoryCode, currencyCode);
-
-            if (balance > credit)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
         [WebMethod(EnableSession = true)]
         public Collection<ListItem> GetCashRepositories()
         {
@@ -136,7 +102,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             using (DataTable table = CashRepositories.GetCashRepositoryDataTable(officeId))
             {
                 string displayField = ConfigurationHelper.GetDbParameter("CashRepositoryDisplayField");
-                table.Columns.Add("cash_repository", typeof (string), displayField);
+                table.Columns.Add("cash_repository", typeof(string), displayField);
 
                 foreach (DataRow dr in table.Rows)
                 {
@@ -144,6 +110,40 @@ namespace MixERP.Net.Core.Modules.Finance.Services
                 }
             }
             return values;
+        }
+
+        [WebMethod(EnableSession = true)]
+        public Collection<ListItem> GetCashRepositoriesByAccountCode(string accountCode)
+        {
+            Collection<ListItem> values = new Collection<ListItem>();
+
+            if (Accounts.IsCashAccount(accountCode))
+            {
+                int officeId = SessionHelper.GetOfficeId();
+                using (DataTable table = CashRepositories.GetCashRepositoryDataTable(officeId))
+                {
+                    string displayField = ConfigurationHelper.GetDbParameter("CashRepositoryDisplayField");
+                    table.Columns.Add("cash_repository", typeof(string), displayField);
+
+                    foreach (DataRow dr in table.Rows)
+                    {
+                        values.Add(new ListItem(dr["cash_repository"].ToString(), dr["cash_repository_code"].ToString()));
+                    }
+                }
+            }
+
+            return values;
+        }
+
+        [WebMethod]
+        public decimal GetCashRepositoryBalance(int cashRepositoryId, string currencyCode)
+        {
+            if (string.IsNullOrWhiteSpace(currencyCode))
+            {
+                return CashRepositories.GetBalance(cashRepositoryId);
+            }
+
+            return CashRepositories.GetBalance(cashRepositoryId, currencyCode);
         }
 
         [WebMethod]
@@ -154,7 +154,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             using (DataTable table = CostCenters.GetCostCenterDataTable())
             {
                 string displayField = ConfigurationHelper.GetDbParameter("CostCenterDisplayField");
-                table.Columns.Add("cost_center", typeof (string), displayField);
+                table.Columns.Add("cost_center", typeof(string), displayField);
 
                 foreach (DataRow dr in table.Rows)
                 {
@@ -162,6 +162,21 @@ namespace MixERP.Net.Core.Modules.Finance.Services
                 }
             }
 
+            return values;
+        }
+
+        [WebMethod]
+        public Collection<ListItem> GetCurrencies()
+        {
+            Collection<ListItem> values = new Collection<ListItem>();
+
+            using (DataTable table = Currencies.GetCurrencyDataTable())
+            {
+                foreach (DataRow dr in table.Rows)
+                {
+                    values.Add(new ListItem(dr["currency_code"].ToString(), dr["currency_code"].ToString()));
+                }
+            }
             return values;
         }
 
@@ -187,18 +202,26 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         }
 
         [WebMethod]
-        public Collection<ListItem> GetCurrencies()
+        public bool HasBalance(string cashRepositoryCode, string currencyCode, decimal credit)
         {
-            Collection<ListItem> values = new Collection<ListItem>();
-
-            using (DataTable table = Currencies.GetCurrencyDataTable())
+            if (credit.Equals(0))
             {
-                foreach (DataRow dr in table.Rows)
-                {
-                    values.Add(new ListItem(dr["currency_code"].ToString(), dr["currency_code"].ToString()));
-                }
+                return true;
             }
-            return values;
+
+            if (credit < 0)
+            {
+                throw new MixERPException(Errors.NegativeValueSupplied);
+            }
+
+            decimal balance = CashRepositories.GetBalance(cashRepositoryCode, currencyCode);
+
+            if (balance > credit)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         [WebMethod]
@@ -212,38 +235,16 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             return false;
         }
 
-        [WebMethod(EnableSession = true)]
-        public Collection<ListItem> GetCashRepositoriesByAccountCode(string accountCode)
+        private static Collection<ListItem> GetValues(DataTable table)
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            if (Accounts.IsCashAccount(accountCode))
+            foreach (DataRow dr in table.Rows)
             {
-                int officeId = SessionHelper.GetOfficeId();
-                using (DataTable table = CashRepositories.GetCashRepositoryDataTable(officeId))
-                {
-                    string displayField = ConfigurationHelper.GetDbParameter("CashRepositoryDisplayField");
-                    table.Columns.Add("cash_repository", typeof (string), displayField);
-
-                    foreach (DataRow dr in table.Rows)
-                    {
-                        values.Add(new ListItem(dr["cash_repository"].ToString(), dr["cash_repository_code"].ToString()));
-                    }
-                }
+                values.Add(new ListItem(dr["account_name"].ToString(), dr["account_code"].ToString()));
             }
 
             return values;
-        }
-
-        [WebMethod]
-        public decimal GetCashRepositoryBalance(int cashRepositoryId, string currencyCode)
-        {
-            if (string.IsNullOrWhiteSpace(currencyCode))
-            {
-                return CashRepositories.GetBalance(cashRepositoryId);
-            }
-
-            return CashRepositories.GetBalance(cashRepositoryId, currencyCode);
         }
     }
 }

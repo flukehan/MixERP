@@ -61,6 +61,15 @@ namespace MixERP.Net.WebControls.PartyControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Address &amp; Contact Information.
+        /// </summary>
+        internal static string AddressAndContactInfo {
+            get {
+                return ResourceManager.GetString("AddressAndContactInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Go.
         /// </summary>
         internal static string Go {
@@ -70,11 +79,38 @@ namespace MixERP.Net.WebControls.PartyControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Home.
+        /// </summary>
+        internal static string Home {
+            get {
+                return ResourceManager.GetString("Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Party Summary.
+        /// </summary>
+        internal static string PartySummary {
+            get {
+                return ResourceManager.GetString("PartySummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Customer.
         /// </summary>
         internal static string SelectCustomer {
             get {
                 return ResourceManager.GetString("SelectCustomer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transaction Summary.
+        /// </summary>
+        internal static string TransactionSummary {
+            get {
+                return ResourceManager.GetString("TransactionSummary", resourceCulture);
             }
         }
     }
