@@ -366,4 +366,175 @@
   <data name="Select" xml:space="preserve">
     <value>Select</value>
   </data>
+  <data name="tax_master_code" xml:space="preserve">
+    <value>Tax Master Code</value>
+  </data>
+  <data name="tax_master_id" xml:space="preserve">
+    <value>Tax Master Id</value>
+  </data>
+  <data name="tax_master_name" xml:space="preserve">
+    <value>Tax Master Name</value>
+  </data>
+  <data name="account_id" xml:space="preserve">
+    <value>Account Id</value>
+  </data>
+  <data name="based_on_shipping_address" xml:space="preserve">
+    <value>Based On Shipping Address</value>
+  </data>
+  <data name="collecting_account_id" xml:space="preserve">
+    <value>Collecting Account Id</value>
+  </data>
+  <data name="collecting_tax_authority_id" xml:space="preserve">
+    <value>Collecting Tax Authority Id</value>
+  </data>
+  <data name="entity_id" xml:space="preserve">
+    <value>Entity Id</value>
+  </data>
+  <data name="industry_id" xml:space="preserve">
+    <value>Industry Id</value>
+  </data>
+  <data name="is_exemption" xml:space="preserve">
+    <value>Is Exemption</value>
+  </data>
+  <data name="is_vat" xml:space="preserve">
+    <value>Is Vat</value>
+  </data>
+  <data name="item_group_id" xml:space="preserve">
+    <value>Item Group Id</value>
+  </data>
+  <data name="item_id" xml:space="preserve">
+    <value>Item Id</value>
+  </data>
+  <data name="party_id" xml:space="preserve">
+    <value>Party Id</value>
+  </data>
+  <data name="price_from" xml:space="preserve">
+    <value>Price From</value>
+  </data>
+  <data name="price_to" xml:space="preserve">
+    <value>Price To</value>
+  </data>
+  <data name="priority" xml:space="preserve">
+    <value>Priority</value>
+  </data>
+  <data name="rate" xml:space="preserve">
+    <value>Rate</value>
+  </data>
+  <data name="reporting_tax_authority_id" xml:space="preserve">
+    <value>Reporting Tax Authority Id</value>
+  </data>
+  <data name="rounding_method_code" xml:space="preserve">
+    <value>Rounding Method Code</value>
+  </data>
+  <data name="sales_tax_code" xml:space="preserve">
+    <value>Sales Tax Code</value>
+  </data>
+  <data name="sales_tax_detail_code" xml:space="preserve">
+    <value>Sales Tax Detail Code</value>
+  </data>
+  <data name="sales_tax_detail_id" xml:space="preserve">
+    <value>Sales Tax Detail Id</value>
+  </data>
+  <data name="sales_tax_detail_name" xml:space="preserve">
+    <value>Sales Tax Detail Name</value>
+  </data>
+  <data name="sales_tax_exempt_code" xml:space="preserve">
+    <value>Sales Tax Exempt Code</value>
+  </data>
+  <data name="sales_tax_exempt_detail_id" xml:space="preserve">
+    <value>Sales Tax Exempt Detail Id</value>
+  </data>
+  <data name="sales_tax_exempt_id" xml:space="preserve">
+    <value>Sales Tax Exempt Id</value>
+  </data>
+  <data name="sales_tax_exempt_name" xml:space="preserve">
+    <value>Sales Tax Exempt Name</value>
+  </data>
+  <data name="sales_tax_name" xml:space="preserve">
+    <value>Sales Tax Name</value>
+  </data>
+  <data name="sales_tax_type_code" xml:space="preserve">
+    <value>Sales Tax Type Code</value>
+  </data>
+  <data name="sales_tax_type_id" xml:space="preserve">
+    <value>Sales Tax Type Id</value>
+  </data>
+  <data name="sales_tax_type_name" xml:space="preserve">
+    <value>Sales Tax Type Name</value>
+  </data>
+  <data name="state_id" xml:space="preserve">
+    <value>State Id</value>
+  </data>
+  <data name="state_sales_tax_code" xml:space="preserve">
+    <value>State Sales Tax Code</value>
+  </data>
+  <data name="state_sales_tax_id" xml:space="preserve">
+    <value>State Sales Tax Id</value>
+  </data>
+  <data name="state_sales_tax_name" xml:space="preserve">
+    <value>State Sales Tax Name</value>
+  </data>
+  <data name="tax_authority_code" xml:space="preserve">
+    <value>Tax Authority Code</value>
+  </data>
+  <data name="tax_authority_id" xml:space="preserve">
+    <value>Tax Authority Id</value>
+  </data>
+  <data name="tax_authority_name" xml:space="preserve">
+    <value>Tax Authority Name</value>
+  </data>
+  <data name="tax_base_amount_type_code" xml:space="preserve">
+    <value>Tax Base Amount Type Code</value>
+  </data>
+  <data name="tax_exempt_type_code" xml:space="preserve">
+    <value>Tax Exempt Type Code</value>
+  </data>
+  <data name="tax_exempt_type_id" xml:space="preserve">
+    <value>Tax Exempt Type Id</value>
+  </data>
+  <data name="tax_exempt_type_name" xml:space="preserve">
+    <value>Tax Exempt Type Name</value>
+  </data>
+  <data name="tax_rate_type_code" xml:space="preserve">
+    <value>Tax Rate Type Code</value>
+  </data>
+  <data name="valid_from" xml:space="preserve">
+    <value>Valid From</value>
+  </data>
+  <data name="valid_till" xml:space="preserve">
+    <value>Valid Till</value>
+  </data>
+  <data name="sales_tax_id" xml:space="preserve">
+    <value>Sales Tax Id</value>
+  </data>
+  <data name="rounding_method_name" xml:space="preserve">
+    <value>Rounding Method Name</value>
+  </data>
+  <data name="tax_base_amount_type_name" xml:space="preserve">
+    <value>Tax Base Amount Type Name</value>
+  </data>
+  <data name="tax_rate_type_name" xml:space="preserve">
+    <value>Tax Rate Type Name</value>
+  </data>
+  <data name="account_code" xml:space="preserve">
+    <value>Account Code</value>
+  </data>
+  <data name="rounding_decimal_places" xml:space="preserve">
+    <value>Roungin Decimal Places</value>
+  </data>
+  <data name="entity_name" xml:space="preserve">
+    <value>Entity Name</value>
+  </data>
+  <data name="industry_name" xml:space="preserve">
+    <value>Industry Name</value>
+  </data>
+  <data name="is_exempt" xml:space="preserve">
+    <value>Is Exempt</value>
+  </data>
+  <data name="parent_industry_id" xml:space="preserve">
+    <value>Parent Industry Id</value>
+  </data>
+  <data name="country_id" xml:space="preserve">
+    <value>Country Id</value>
+  </data>
 </root>

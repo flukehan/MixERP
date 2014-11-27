@@ -24,7 +24,7 @@ SELECT
         cost_price_includes_tax,
         selling_price,
         selling_price_includes_tax,
-        tax_code || ' (' || tax_name || ')' AS tax,
+        sales_tax_code || ' (' || sales_tax_name || ')' AS sales_tax,
         reorder_unit.unit_code || ' (' || reorder_unit.unit_name || ')' AS reorder_unit,
         reorder_level,
         reorder_quantity
@@ -39,8 +39,8 @@ INNER JOIN core.units
 ON core.items.unit_id = core.units.unit_id
 INNER JOIN core.units AS reorder_unit
 ON core.items.reorder_unit_id = reorder_unit.unit_id
-INNER JOIN core.taxes
-ON core.items.tax_id = core.taxes.tax_id
+INNER JOIN core.sales_taxes
+ON core.items.sales_tax_id = core.sales_taxes.sales_tax_id
 LEFT JOIN core.shipping_mail_types
 ON core.items.preferred_shipping_mail_type_id = core.shipping_mail_types.shipping_mail_type_id
 LEFT JOIN core.shipping_package_shapes

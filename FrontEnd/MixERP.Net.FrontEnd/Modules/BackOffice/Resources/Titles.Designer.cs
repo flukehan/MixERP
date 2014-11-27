@@ -223,11 +223,92 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sales Tax Details.
+        /// </summary>
+        internal static string SalesTaxDetails {
+            get {
+                return ResourceManager.GetString("SalesTaxDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sales Taxes.
+        /// </summary>
+        internal static string SalesTaxes {
+            get {
+                return ResourceManager.GetString("SalesTaxes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sales Tax Exempt Details.
+        /// </summary>
+        internal static string SalesTaxExemptDetails {
+            get {
+                return ResourceManager.GetString("SalesTaxExemptDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sales Tax Exempts.
+        /// </summary>
+        internal static string SalesTaxExempts {
+            get {
+                return ResourceManager.GetString("SalesTaxExempts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sales Tax Types.
+        /// </summary>
+        internal static string SalesTaxTypes {
+            get {
+                return ResourceManager.GetString("SalesTaxTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         internal static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to State Sales Taxes.
+        /// </summary>
+        internal static string StateSalesTaxes {
+            get {
+                return ResourceManager.GetString("StateSalesTaxes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tax Authorities.
+        /// </summary>
+        internal static string TaxAuthorities {
+            get {
+                return ResourceManager.GetString("TaxAuthorities", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tax Exempt Types.
+        /// </summary>
+        internal static string TaxExemptTypes {
+            get {
+                return ResourceManager.GetString("TaxExemptTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tax Master.
+        /// </summary>
+        internal static string TaxMaster {
+            get {
+                return ResourceManager.GetString("TaxMaster", resourceCulture);
             }
         }
         

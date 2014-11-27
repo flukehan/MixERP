@@ -2,7 +2,7 @@
 
 CREATE TABLE core.verification_statuses
 (
-    verification_status_id                  smallint NOT NULL PRIMARY KEY,
+    verification_status_id                  smallint PRIMARY KEY,
     verification_status_name                national character varying(128) NOT NULL
 );
 
@@ -31,7 +31,7 @@ ON core.verification_statuses(UPPER(verification_status_name));
 
 CREATE TABLE office.users
 (
-    user_id                                 SERIAL NOT NULL PRIMARY KEY,
+    user_id                                 SERIAL PRIMARY KEY,
     role_id                                 smallint NOT NULL,
     office_id                               integer NOT NULL,
     user_name                               national character varying(50) NOT NULL,
@@ -50,7 +50,7 @@ or cannot be allowed to log in interactively.';
 
 CREATE TABLE office.departments
 (
-    department_id SERIAL                    NOT NULL PRIMARY KEY,
+    department_id SERIAL                    PRIMARY KEY,
     department_code                         national character varying(12) NOT NULL,
     department_name                         national character varying(50) NOT NULL,
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
@@ -61,7 +61,7 @@ CREATE TABLE office.departments
 
 CREATE TABLE core.flag_types
 (
-    flag_type_id                            SERIAL NOT NULL PRIMARY KEY,
+    flag_type_id                            SERIAL PRIMARY KEY,
     flag_type_name                          national character varying(24) NOT NULL,
     background_color                        color NOT NULL,
     foreground_color                        color NOT NULL,
@@ -74,7 +74,7 @@ COMMENT ON TABLE core.flag_types IS 'Flags are used by users to mark transaction
 
 CREATE TABLE core.flags
 (
-    flag_id                                 BIGSERIAL NOT NULL PRIMARY KEY,
+    flag_id                                 BIGSERIAL PRIMARY KEY,
     user_id                                 integer NOT NULL REFERENCES office.users(user_id),
     flag_type_id                            integer NOT NULL REFERENCES core.flag_types(flag_type_id),
     resource                                text, --Fully qualified resource name. Example: transactions.non_gl_stock_master.
@@ -84,12 +84,75 @@ CREATE TABLE core.flags
                                             DEFAULT(NOW())
 );
 
+
+CREATE TABLE core.countries
+(
+    country_id                              SERIAL PRIMARY KEY,
+    country_code                            national character varying(12) NOT NULL,
+    country_name                            national character varying(100) NOT NULL
+);
+
+CREATE UNIQUE INDEX countries_country_code_uix
+ON core.countries(UPPER(country_code));
+
+CREATE UNIQUE INDEX countries_country_name_uix
+ON core.countries(UPPER(country_name));
+
+CREATE TABLE core.states
+(
+    state_id                                SERIAL PRIMARY KEY,
+    country_id                              integer NOT NULL REFERENCES core.countries(country_id),
+    state_code                              national character varying(12) NOT NULL,
+    state_name                              national character varying(100) NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL 
+                                            DEFAULT(NOW())
+);
+
+CREATE UNIQUE INDEX states_state_code_uix
+ON core.states(country_id, UPPER(state_code));
+
+CREATE UNIQUE INDEX states_state_name_uix
+ON core.states(country_id, UPPER(state_name));
+
+CREATE TABLE core.zip_code_types
+(
+    zip_code_type_id                        SERIAL PRIMARY KEY,
+    zip_code_type                           national character varying(12),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL 
+                                            DEFAULT(NOW())
+);
+
+CREATE UNIQUE INDEX zip_code_types_zip_code_type_uix
+ON core.zip_code_types(UPPER(zip_code_type));
+
+INSERT INTO core.zip_code_types(zip_code_type) VALUES('Standard'),('PO Box'),('Unique');
+
+
+CREATE TABLE core.zip_codes
+(
+    zip_code_id                             BIGSERIAL PRIMARY KEY,
+    state_id                                integer NOT NULL REFERENCES core.states(state_id),
+    zip_code                                national character varying(12) NOT NULL,
+    zip_code_type_id                        integer NOT NULL REFERENCES core.zip_code_types(zip_code_type_id),
+    city                                    national character varying(100) NOT NULL,
+    lat                                     decimal,
+    lon                                     decimal,
+    x_axis                                  decimal,
+    y_axis                                  decimal,    
+    z_axis                                  decimal,    
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL 
+                                            DEFAULT(NOW())    
+);
+
 CREATE UNIQUE INDEX flags_user_id_resource_resource_id_uix
 ON core.flags(user_id, UPPER(resource), UPPER(resource_key), resource_id);
 
 CREATE TABLE core.attachment_lookup
 (
-        attachment_lookup_id                SERIAL NOT NULL PRIMARY KEY,
+        attachment_lookup_id                SERIAL PRIMARY KEY,
         book                                national character varying(50) NOT NULL,
         resource                            text NOT NULL,
         resource_key                        text NOT NULL        
@@ -104,7 +167,7 @@ ON core.attachment_lookup(lower(book), lower(resource_key));
 
 CREATE TABLE core.attachments
 (
-    attachment_id                           BIGSERIAL NOT NULL PRIMARY KEY,
+    attachment_id                           BIGSERIAL PRIMARY KEY,
     user_id                                 integer NOT NULL 
                                             REFERENCES office.users(user_id),
     resource                                text, --Fully qualified resource name. Example: transactions.non_gl_stock_master.
@@ -127,7 +190,7 @@ ON core.attachments(UPPER(file_path));
 
 CREATE TABLE core.currencies
 (
-    currency_code                           national character varying(12) NOT NULL PRIMARY KEY,
+    currency_code                           national character varying(12) PRIMARY KEY,
     currency_symbol                         national character varying(12) NOT NULL,
     currency_name                           national character varying(48) NOT NULL UNIQUE,
     hundredth_name                          national character varying(48) NOT NULL,
@@ -140,7 +203,7 @@ CREATE TABLE core.currencies
 
 CREATE TABLE office.offices
 (
-    office_id                               SERIAL NOT NULL PRIMARY KEY,
+    office_id                               SERIAL PRIMARY KEY,
     office_code                             national character varying(12) NOT NULL,
     office_name                             national character varying(150) NOT NULL,
     nick_name                               national character varying(50) NULL,
@@ -185,7 +248,7 @@ ON office.offices(UPPER(nick_name));
 
 CREATE TABLE core.exchange_rates
 (
-    exchange_rate_id                        BIGSERIAL NOT NULL PRIMARY KEY,
+    exchange_rate_id                        BIGSERIAL PRIMARY KEY,
     updated_on                              TIMESTAMP WITH TIME ZONE NOT NULL   
                                             CONSTRAINT exchange_rates_updated_on_df 
                                             DEFAULT(NOW()),
@@ -197,7 +260,7 @@ CREATE TABLE core.exchange_rates
 
 CREATE TABLE core.exchange_rate_details
 (
-    exchange_rate_detail_id                 BIGSERIAL NOT NULL PRIMARY KEY,
+    exchange_rate_detail_id                 BIGSERIAL PRIMARY KEY,
     exchange_rate_id                        bigint NOT NULL REFERENCES core.exchange_rates(exchange_rate_id),
     local_currency_code                     national character varying(12) NOT NULL REFERENCES core.currencies(currency_code),
     foreign_currency_code                   national character varying(12) NOT NULL REFERENCES core.currencies(currency_code),
@@ -215,7 +278,7 @@ ON office.departments(UPPER(department_name));
 
 CREATE TABLE office.roles
 (
-    role_id SERIAL                          NOT NULL PRIMARY KEY,
+    role_id SERIAL                          PRIMARY KEY,
     role_code                               national character varying(12) NOT NULL,
     role_name                               national character varying(50) NOT NULL,
     is_admin                                boolean NOT NULL   
@@ -246,7 +309,7 @@ ON office.users(UPPER(user_name));
 
 CREATE TABLE audit.logins
 (
-    login_id                                BIGSERIAL NOT NULL PRIMARY KEY,
+    login_id                                BIGSERIAL PRIMARY KEY,
     user_id                                 integer NOT NULL REFERENCES office.users(user_id),
     office_id                               integer NOT NULL REFERENCES office.offices(office_id),
     browser                                 national character varying(500) NOT NULL,
@@ -260,7 +323,7 @@ CREATE TABLE audit.logins
 
 CREATE TABLE audit.failed_logins
 (
-    failed_login_id                         BIGSERIAL NOT NULL PRIMARY KEY,
+    failed_login_id                         BIGSERIAL PRIMARY KEY,
     user_id                                 integer NULL REFERENCES office.users(user_id),
     user_name                               national character varying(50) NOT NULL,
     office_id                               integer NULL REFERENCES office.offices(office_id),
@@ -275,7 +338,7 @@ CREATE TABLE audit.failed_logins
 
 CREATE TABLE policy.lock_outs
 (
-    lock_out_id                             BIGSERIAL NOT NULL PRIMARY KEY,
+    lock_out_id                             BIGSERIAL PRIMARY KEY,
     user_id                                 integer NOT NULL REFERENCES office.users(user_id),
     lock_out_time                           TIMESTAMP WITH TIME ZONE NOT NULL 
                                             DEFAULT(NOW()),
@@ -286,7 +349,7 @@ CREATE TABLE policy.lock_outs
 
 CREATE TABLE core.price_types
 (
-    price_type_id                           SERIAL  NOT NULL PRIMARY KEY,
+    price_type_id                           SERIAL  PRIMARY KEY,
     price_type_code                         national character varying(12) NOT NULL,
     price_type_name                         national character varying(50) NOT NULL,
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
@@ -304,7 +367,7 @@ ON core.price_types(UPPER(price_type_name));
 
 CREATE TABLE core.menus
 (
-    menu_id                                 SERIAL NOT NULL PRIMARY KEY,
+    menu_id                                 SERIAL PRIMARY KEY,
     menu_text                               national character varying(250) NOT NULL,
     url                                     national character varying(250) NULL,
     menu_code                               national character varying(12) NOT NULL,
@@ -320,7 +383,7 @@ ON core.menus(UPPER(menu_code));
 
 CREATE TABLE core.menu_locale
 (
-    menu_locale_id                          SERIAL NOT NULL PRIMARY KEY,
+    menu_locale_id                          SERIAL PRIMARY KEY,
     menu_id                                 integer NOT NULL REFERENCES core.menus(menu_id),
     culture                                 national character varying(12) NOT NULL,
     menu_text                               national character varying(250) NOT NULL
@@ -331,7 +394,7 @@ ON core.menu_locale(menu_id, LOWER(culture));
 
 CREATE TABLE policy.menu_policy
 (
-    policy_id                               SERIAL NOT NULL PRIMARY KEY,
+    policy_id                               SERIAL PRIMARY KEY,
     menu_id                                 integer NOT NULL REFERENCES core.menus(menu_id),
     office_id                               integer NULL REFERENCES office.offices(office_id),
     inherit_in_child_offices                boolean NOT NULL  
@@ -346,7 +409,7 @@ CREATE TABLE policy.menu_policy
 
 CREATE TABLE policy.menu_access
 (
-    access_id                               BIGSERIAL NOT NULL PRIMARY KEY,
+    access_id                               BIGSERIAL PRIMARY KEY,
     office_id                               integer NOT NULL REFERENCES office.offices(office_id),
     menu_id                                 integer NOT NULL REFERENCES core.menus(menu_id),
     user_id                                 integer NULL REFERENCES office.users(user_id)   
@@ -355,7 +418,7 @@ CREATE TABLE policy.menu_access
     
 CREATE TABLE core.frequencies
 (
-    frequency_id                            SERIAL NOT NULL PRIMARY KEY,
+    frequency_id                            SERIAL PRIMARY KEY,
     frequency_code                          national character varying(12) NOT NULL,
     frequency_name                          national character varying(50) NOT NULL
 );
@@ -370,7 +433,7 @@ ON core.frequencies(UPPER(frequency_name));
 
 CREATE TABLE core.fiscal_year
 (
-    fiscal_year_code                        national character varying(12) NOT NULL PRIMARY KEY,
+    fiscal_year_code                        national character varying(12) PRIMARY KEY,
     fiscal_year_name                        national character varying(50) NOT NULL,
     starts_from                             date NOT NULL,
     ends_on                                 date NOT NULL,
@@ -391,7 +454,7 @@ ON core.fiscal_year(ends_on);
 
 CREATE TABLE core.frequency_setups
 (
-    frequency_setup_id                      SERIAL NOT NULL PRIMARY KEY,
+    frequency_setup_id                      SERIAL PRIMARY KEY,
     fiscal_year_code                        national character varying(12) NOT NULL REFERENCES core.fiscal_year(fiscal_year_code),
     value_date                              date NOT NULL UNIQUE,
     frequency_id                            integer NOT NULL REFERENCES core.frequencies(frequency_id),
@@ -404,7 +467,7 @@ CREATE TABLE core.frequency_setups
 
 CREATE TABLE core.units
 (
-    unit_id                                 SERIAL NOT NULL PRIMARY KEY,
+    unit_id                                 SERIAL PRIMARY KEY,
     unit_code                               national character varying(12) NOT NULL,
     unit_name                               national character varying(50) NOT NULL,
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
@@ -421,7 +484,7 @@ ON core.units(UPPER(unit_name));
 
 CREATE TABLE core.compound_units
 (
-    compound_unit_id                        SERIAL NOT NULL PRIMARY KEY,
+    compound_unit_id                        SERIAL PRIMARY KEY,
     base_unit_id                            integer NOT NULL REFERENCES core.units(unit_id),
     value                                   smallint NOT NULL,
     compare_unit_id                         integer NOT NULL REFERENCES core.units(unit_id),
@@ -437,7 +500,7 @@ ON core.compound_units(base_unit_id, compare_unit_id);
 
 CREATE TABLE core.account_masters
 (
-    account_master_id                       SERIAL NOT NULL PRIMARY KEY,
+    account_master_id                       SERIAL PRIMARY KEY,
     account_master_code                     national character varying(3) NOT NULL,
     account_master_name                     national character varying(40) NOT NULL 
 );
@@ -452,7 +515,7 @@ ON core.account_masters(UPPER(account_master_name));
 
 CREATE TABLE core.accounts
 (
-    account_id                              BIGSERIAL NOT NULL PRIMARY KEY,
+    account_id                              BIGSERIAL PRIMARY KEY,
     account_master_id                       integer NOT NULL REFERENCES core.account_masters(account_master_id),
     account_code                            national character varying(12) NOT NULL,
     external_code                           national character varying(12) NULL   
@@ -486,7 +549,7 @@ ON core.accounts(UPPER(account_name));
 
 CREATE TABLE core.account_parameters
 (
-    account_parameter_id                    SERIAL NOT NULL PRIMARY KEY,
+    account_parameter_id                    SERIAL PRIMARY KEY,
     parameter_name                          national character varying(128) NOT NULL,
     account_id                              bigint NOT NULL REFERENCES core.accounts(account_id),
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
@@ -499,7 +562,7 @@ ON core.account_parameters(UPPER(parameter_name));
 
 CREATE TABLE core.bank_accounts
 (
-    account_id                              bigint NOT NULL PRIMARY KEY REFERENCES core.accounts(account_id),
+    account_id                              bigint PRIMARY KEY REFERENCES core.accounts(account_id),
     maintained_by_user_id                   integer NOT NULL REFERENCES office.users(user_id),
     bank_name                               national character varying(128) NOT NULL,
     bank_branch                             national character varying(128) NOT NULL,
@@ -513,10 +576,9 @@ CREATE TABLE core.bank_accounts
                                             DEFAULT(NOW())
 );
 
-
 CREATE TABLE core.sales_teams
 (
-    sales_team_id                           SERIAL NOT NULL PRIMARY KEY,
+    sales_team_id                           SERIAL PRIMARY KEY,
     sales_team_code                         national character varying(12),
     sales_team_name                         national character varying(50),
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
@@ -532,7 +594,7 @@ ON core.sales_teams(UPPER(sales_team_name));
 
 CREATE TABLE core.salespersons
 (
-    salesperson_id                          SERIAL NOT NULL PRIMARY KEY,
+    salesperson_id                          SERIAL PRIMARY KEY,
     sales_team_id                           integer NOT NULL REFERENCES core.sales_teams(sales_team_id),
     salesperson_code                        national character varying(12) NOT NULL,
     salesperson_name                        national character varying(100) NOT NULL,
@@ -551,7 +613,7 @@ ON core.salespersons(UPPER(salesperson_name));
 
 CREATE TABLE core.bonus_slabs
 (
-    bonus_slab_id                           SERIAL NOT NULL PRIMARY KEY,
+    bonus_slab_id                           SERIAL PRIMARY KEY,
     bonus_slab_code                         national character varying(12) NOT NULL,
     bonus_slab_name                         national character varying(50) NOT NULL,
     effective_from                          date NOT NULL,
@@ -573,7 +635,7 @@ ON core.bonus_slabs(UPPER(bonus_slab_name));
 
 CREATE TABLE core.bonus_slab_details
 (
-    bonus_slab_detail_id                    SERIAL NOT NULL PRIMARY KEY,
+    bonus_slab_detail_id                    SERIAL PRIMARY KEY,
     bonus_slab_id                           integer NOT NULL REFERENCES core.bonus_slabs(bonus_slab_id),
     amount_from                             money_strict NOT NULL,
     amount_to                               money_strict NOT NULL,
@@ -588,7 +650,7 @@ CREATE TABLE core.bonus_slab_details
 
 CREATE TABLE core.salesperson_bonus_setups
 (
-    salesperson_bonus_setup_id SERIAL       NOT NULL PRIMARY KEY,
+    salesperson_bonus_setup_id SERIAL       PRIMARY KEY,
     salesperson_id                          integer NOT NULL REFERENCES core.salespersons(salesperson_id),
     bonus_slab_id                           integer NOT NULL REFERENCES core.bonus_slabs(bonus_slab_id),
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
@@ -601,7 +663,7 @@ ON core.salesperson_bonus_setups(salesperson_id, bonus_slab_id);
 
 CREATE TABLE core.ageing_slabs
 (
-    ageing_slab_id SERIAL NOT NULL PRIMARY KEY,
+    ageing_slab_id SERIAL PRIMARY KEY,
     ageing_slab_name national character varying(24) NOT NULL,
     from_days integer NOT NULL,
     to_days integer NOT NULL CHECK(to_days > 0)
@@ -613,7 +675,7 @@ ON core.ageing_slabs(UPPER(ageing_slab_name));
 
 CREATE TABLE core.party_types
 (
-    party_type_id                           SERIAL NOT NULL PRIMARY KEY,
+    party_type_id                           SERIAL PRIMARY KEY,
     party_type_code                         national character varying(12) NOT NULL, 
     party_type_name                         national character varying(50) NOT NULL,
     is_supplier                             boolean NOT NULL   
@@ -634,7 +696,7 @@ ON core.party_types(UPPER(party_type_name));
 
 CREATE TABLE core.parties
 (
-    party_id BIGSERIAL                      NOT NULL PRIMARY KEY,
+    party_id BIGSERIAL                      PRIMARY KEY,
     party_type_id                           smallint NOT NULL REFERENCES core.party_types(party_type_id),
     party_code                              national character varying(12) NULL,
     first_name                              national character varying(50) NOT NULL,
@@ -642,13 +704,13 @@ CREATE TABLE core.parties
     last_name                               national character varying(50) NOT NULL,
     party_name                              text NULL,
     date_of_birth                           date NULL,
-    po_box                                  national character varying(128) NULL,
+    country_id                              integer NOT NULL REFERENCES core.countries(country_id),
+    state_id                                integer NOT NULL REFERENCES core.states(state_id),
+    zip_code                                national character varying(12) NULL,
     address_line_1                          national character varying(128) NULL,   
     address_line_2                          national character varying(128) NULL,
     street                                  national character varying(50) NULL,
     city                                    national character varying(50) NULL,
-    state                                   national character varying(50) NULL,
-    country                                 national character varying(50) NULL,
     phone                                   national character varying(24) NULL,
     fax                                     national character varying(24) NULL,
     cell                                    national character varying(24) NULL,
@@ -676,16 +738,16 @@ ON core.parties(UPPER(party_code));
 
 CREATE TABLE core.shipping_addresses
 (
-    shipping_address_id                     BIGSERIAL NOT NULL PRIMARY KEY,
+    shipping_address_id                     BIGSERIAL PRIMARY KEY,
     shipping_address_code                   national character varying(24) NOT NULL,
     party_id                                bigint NOT NULL REFERENCES core.parties(party_id),
-    po_box                                  national character varying(128) NULL,
+    country_id                              integer NOT NULL REFERENCES core.countries(country_id),
+    state_id                                integer NOT NULL REFERENCES core.states(state_id),
+    zip_code                                national character varying(12) NULL,
     address_line_1                          national character varying(128) NULL,   
     address_line_2                          national character varying(128) NULL,
     street                                  national character varying(128) NULL,
     city                                    national character varying(128) NOT NULL,
-    state                                   national character varying(128) NOT NULL,
-    country                                 national character varying(128) NOT NULL,
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
                                             DEFAULT(NOW())
@@ -696,9 +758,290 @@ ON core.shipping_addresses(UPPER(shipping_address_code), party_id);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE TABLE core.entities
+(
+    entity_id                               SERIAL PRIMARY KEY,
+    entity_name                             national character varying(100),
+    is_exempt                               boolean NOT NULL DEFAULT(false),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
+);
+
+CREATE UNIQUE INDEX entities_entity_name_uix
+ON core.entities(UPPER(entity_name));
+
+
+CREATE TABLE core.industries
+(
+    industry_id                             SERIAL PRIMARY KEY,
+    industry_name                           national character varying(100),
+    parent_industry_id                      integer REFERENCES core.industries(industry_id),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
+);
+
+CREATE UNIQUE INDEX industries_industry_name_uix
+ON core.industries(UPPER(industry_name));
+
+
+CREATE TABLE core.tax_master
+(
+    tax_master_id                           SERIAL PRIMARY KEY,
+    tax_master_code                         national character varying(12) NOT NULL,
+    tax_master_name                         national character varying(50) NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
+);
+
+CREATE UNIQUE INDEX tax_master_tax_master_code_uix
+ON core.tax_master(UPPER(tax_master_code));
+
+CREATE UNIQUE INDEX tax_master_tax_master_name_uix
+ON core.tax_master(UPPER(tax_master_name));
+
+
+CREATE TABLE core.tax_authorities
+(
+    tax_authority_id                        SERIAL PRIMARY KEY,
+    tax_master_id                           integer NOT NULL REFERENCES core.tax_master(tax_master_id),
+    tax_authority_code                      national character varying(12) NOT NULL,
+    tax_authority_name                      national character varying(100) NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
+);
+
+CREATE UNIQUE INDEX tax_authorities_tax_authority_code_uix
+ON core.tax_authorities(UPPER(tax_authority_code));
+
+
+CREATE UNIQUE INDEX tax_authorities_tax_authority_name_uix
+ON core.tax_authorities(UPPER(tax_authority_name));
+
+CREATE TABLE core.sales_tax_types
+(
+    sales_tax_type_id                       SERIAL  PRIMARY KEY,
+    sales_tax_type_code                     national character varying(12) NOT NULL,
+    sales_tax_type_name                     national character varying(50) NOT NULL,
+    is_vat                                  boolean NOT NULL DEFAULT(false),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
+);
+
+CREATE UNIQUE INDEX sales_tax_types_sales_tax_type_code_uix
+ON core.sales_tax_types(UPPER(sales_tax_type_code));
+
+CREATE UNIQUE INDEX sales_tax_types_sales_tax_type_name_uix
+ON core.sales_tax_types(UPPER(sales_tax_type_name));
+
+CREATE INDEX sales_tax_types_is_vat_inx
+ON core.sales_tax_types(is_vat);
+
+
+CREATE TABLE core.tax_base_amount_types
+(
+    tax_base_amount_type_code               national character varying(12) PRIMARY KEY,--Should not be localized
+    tax_base_amount_type_name               national character varying(50) NOT NULL
+);
+
+CREATE UNIQUE INDEX tax_base_amount_type_tax_base_amount_type_name_uix
+ON core.tax_base_amount_types(UPPER(tax_base_amount_type_name));
+
+INSERT INTO core.tax_base_amount_types(tax_base_amount_type_code, tax_base_amount_type_name)
+SELECT 'P', 'Item price'            UNION ALL
+SELECT 'L', 'Last computed tax';
+
+
+CREATE TABLE core.tax_rate_types
+(
+    tax_rate_type_code                      national character varying(4) PRIMARY KEY,--Should not be localized
+    tax_rate_type_name                      national character varying(50) NOT NULL
+);
+
+CREATE UNIQUE INDEX tax_rate_type_tax_rate_type_name_uix
+ON core.tax_rate_types(UPPER(tax_rate_type_name));
+
+INSERT INTO core.tax_rate_types(tax_rate_type_code, tax_rate_type_name)
+SELECT 'P', 'Percentage'    UNION ALL
+SELECT 'F', 'Flat amount';
+
+CREATE TABLE core.rounding_methods
+(
+    rounding_method_code                    national character varying(4) PRIMARY KEY, --Should not be localized
+    rounding_method_name                    national character varying(50) NOT NULL
+);
+
+CREATE UNIQUE INDEX rounding_methods_rounding_method_name_uix
+ON core.rounding_methods(UPPER(rounding_method_name));
+
+INSERT INTO core.rounding_methods(rounding_method_code, rounding_method_name)
+SELECT 'R', 'Round to specified decimal places.' UNION ALL
+SELECT 'F', 'Floor' UNION ALL
+SELECT 'C', 'Ceiling';
+
+
+CREATE TABLE core.state_sales_taxes
+(
+    state_sales_tax_id                      SERIAL PRIMARY KEY,
+    state_sales_tax_code                    character varying(12) NOT NULL,
+    state_sales_tax_name                    character varying(100) NOT NULL,
+    state_id                                integer REFERENCES core.states(state_id),
+    rate                                    decimal_strict2 NOT NULL DEFAULT(0),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
+);
+
+CREATE UNIQUE INDEX state_sales_taxes_state_sales_tax_code_uix
+ON core.state_sales_taxes(UPPER(state_sales_tax_code));
+
+CREATE UNIQUE INDEX state_sales_taxes_state_sales_tax_name_uix
+ON core.state_sales_taxes(UPPER(state_sales_tax_name));
+
+
+CREATE TABLE core.sales_taxes
+(
+    sales_tax_id                            SERIAL PRIMARY KEY,
+    tax_master_id                           integer NOT NULL REFERENCES core.tax_master(tax_master_id),
+    office_id                               integer NOT NULL REFERENCES office.offices(office_id),
+    sales_tax_code                          national character varying(12) NOT NULL,
+    sales_tax_name                          national character varying(50) NOT NULL,
+    is_exemption                            boolean NOT NULL DEFAULT(false),        
+    rate                                    decimal_strict2 NOT NULL DEFAULT(0), --Tax rate should be zero for parent tax.
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW()),
+                                            CONSTRAINT taxes_is_exemption_chk
+                                            CHECK
+                                            (
+                                            
+                                                CASE WHEN is_exemption = true THEN rate = 0 END
+                                            )
+);
+
+CREATE UNIQUE INDEX sales_taxes_sales_tax_code_uix
+ON core.sales_taxes(UPPER(sales_tax_code));
+
+CREATE UNIQUE INDEX sales_taxes_sales_tax_name_uix
+ON core.sales_taxes(UPPER(sales_tax_name));
+
+CREATE TABLE core.sales_tax_details
+(
+    sales_tax_detail_id                     SERIAL PRIMARY KEY,
+    sales_tax_type_id                       smallint NOT NULL REFERENCES core.sales_tax_types(sales_tax_type_id),
+    priority                                smallint NOT NULL DEFAULT(0),
+    sales_tax_detail_code                   national character varying(24) NOT NULL,
+    sales_tax_detail_name                   national character varying(50) NOT NULL,
+    based_on_shipping_address               boolean NOT NULL,
+    state_sales_tax_id                      integer NULL REFERENCES core.state_sales_taxes(state_sales_tax_id),
+    tax_base_amount_type_code               national character varying(12) NOT NULL REFERENCES core.tax_base_amount_types(tax_base_amount_type_code),
+    tax_rate_type_code                      national character varying(12) NOT NULL REFERENCES core.tax_rate_types(tax_rate_type_code),
+    rate                                    decimal_strict2 NOT NULL
+                                            CHECK(CASE WHEN state_sales_tax_id IS NOT NULL THEN rate = 0 ELSE rate > 0 end),
+    reporting_tax_authority_id              integer NOT NULL REFERENCES core.tax_authorities(tax_authority_id),
+    collecting_tax_authority_id             integer NOT NULL REFERENCES core.tax_authorities(tax_authority_id),
+    collecting_account_id                   integer NOT NULL REFERENCES core.accounts(account_id),
+    rounding_method_code                    national character varying(4) NULL REFERENCES core.rounding_methods(rounding_method_code),
+    rounding_decimal_places                 integer_strict2 NOT NULL DEFAULT(2),
+    account_id                              bigint NOT NULL REFERENCES core.accounts(account_id),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
+);
+
+CREATE UNIQUE INDEX sales_tax_details_sales_tax_detail_code_uix
+ON core.sales_tax_details(UPPER(sales_tax_detail_code));
+
+CREATE UNIQUE INDEX sales_tax_details_sales_tax_detail_name_uix
+ON core.sales_tax_details(UPPER(sales_tax_detail_name));
+
+
+
+CREATE TABLE core.tax_exempt_types
+(
+    tax_exempt_type_id                      SERIAL PRIMARY KEY,
+    tax_exempt_type_code                    national character varying(12) NOT NULL,
+    tax_exempt_type_name                    national character varying(50) NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
+);
+
+CREATE UNIQUE INDEX tax_exempt_types_tax_exempt_type_code_uix
+ON core.tax_exempt_types(UPPER(tax_exempt_type_code));
+
+CREATE UNIQUE INDEX tax_exempt_types_tax_exempt_type_name_uix
+ON core.tax_exempt_types(UPPER(tax_exempt_type_name));
+
+
+CREATE TABLE core.sales_tax_exempts
+(
+    sales_tax_exempt_id                     SERIAL PRIMARY KEY,
+    tax_master_id                           integer NOT NULL REFERENCES core.tax_master(tax_master_id),
+    sales_tax_exempt_code                   national character varying(12),
+    sales_tax_exempt_name                   national character varying(12),
+    tax_exempt_type_id                      integer NOT NULL REFERENCES core.tax_exempt_types(tax_exempt_type_id),
+    store_id                                integer NOT NULL,
+    sales_tax_id                            integer NOT NULL REFERENCES core.sales_taxes(sales_tax_id),
+    valid_from                              date NOT NULL,
+    valid_till                              date NOT NULL,
+                                            CONSTRAINT sales_tax_exempts_valid_till_chk 
+                                            CHECK(valid_till >= valid_from),
+    price_from                              money_strict2 NOT NULL DEFAULT(0),
+    price_to                                money_strict2 NOT NULL DEFAULT(0),
+                                            CONSTRAINT sales_tax_exempts_price_to_chk 
+                                            CHECK(price_to >= price_from),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL
+                                            DEFAULT(NOW())
+);
+
+CREATE UNIQUE INDEX sales_tax_exempts_sales_tax_exempt_code_uix
+ON core.sales_tax_exempts(UPPER(sales_tax_exempt_code));
+
+CREATE UNIQUE INDEX sales_tax_exempts_sales_tax_exempt_name_uix
+ON core.sales_tax_exempts(UPPER(sales_tax_exempt_name));
+
+
+CREATE TABLE core.sales_tax_exempt_details
+(
+    sales_tax_exempt_detail_id              SERIAL PRIMARY KEY,
+    sales_tax_exempt_id                     integer REFERENCES core.sales_tax_exempts(sales_tax_exempt_id),
+    entity_id                               integer NULL REFERENCES core.entities(entity_id),
+    industry_id                             integer NULL REFERENCES core.industries(industry_id),
+    party_id                                integer NULL REFERENCES core.parties(party_id),
+    item_id                                 integer NULL,
+    item_group_id                           integer NULL, --Create trigger to disallow adding item group which is not allowed in sales.
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL
+                                            DEFAULT(NOW())
+);
+
+
+
+
+
 CREATE TABLE core.brands
 (
-    brand_id SERIAL                         NOT NULL PRIMARY KEY,
+    brand_id SERIAL                         PRIMARY KEY,
     brand_code                              national character varying(12) NOT NULL,
     brand_name                              national character varying(150) NOT NULL,
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
@@ -716,7 +1059,7 @@ ON core.brands(UPPER(brand_name));
 
 CREATE TABLE core.shippers
 (
-    shipper_id                              BIGSERIAL NOT NULL PRIMARY KEY,
+    shipper_id                              BIGSERIAL PRIMARY KEY,
     shipper_code                            national character varying(12) NULL,
     company_name                            national character varying(128) NOT NULL,
     shipper_name                            national character varying(150) NULL,
@@ -758,49 +1101,9 @@ CREATE TABLE core.shippers
 CREATE UNIQUE INDEX shippers_shipper_code_uix
 ON core.shippers(UPPER(shipper_code));
 
-
-CREATE TABLE core.tax_types
-(
-    tax_type_id                             SERIAL  NOT NULL PRIMARY KEY,
-    tax_type_code                           national character varying(12) NOT NULL,
-    tax_type_name                           national character varying(50) NOT NULL,
-    audit_user_id                           integer NULL REFERENCES office.users(user_id),
-    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
-                                            DEFAULT(NOW())
-);
-
-CREATE UNIQUE INDEX tax_types_tax_type_code_uix
-ON core.tax_types(UPPER(tax_type_code));
-
-CREATE UNIQUE INDEX tax_types_tax_type_name_uix
-ON core.tax_types(UPPER(tax_type_name));
-
-
-CREATE TABLE core.taxes
-(
-    tax_id SERIAL                           NOT NULL PRIMARY KEY,
-    tax_type_id                             smallint NOT NULL REFERENCES core.tax_types(tax_type_id),
-    tax_code                                national character varying(12) NOT NULL,
-    tax_name                                national character varying(50) NOT NULL,
-    rate                                    decimal NOT NULL,
-    account_id                              bigint NOT NULL REFERENCES core.accounts(account_id),
-    audit_user_id                           integer NULL REFERENCES office.users(user_id),
-    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
-                                            DEFAULT(NOW())
-);
-
-
-
-CREATE UNIQUE INDEX taxes_tax_code_uix
-ON core.taxes(UPPER(tax_code));
-
-CREATE UNIQUE INDEX taxes_tax_name_uix
-ON core.taxes(UPPER(tax_name));
-
-
 CREATE TABLE core.item_types
 (
-    item_type_id                            SERIAL NOT NULL PRIMARY KEY,
+    item_type_id                            SERIAL PRIMARY KEY,
     item_type_code                          national character varying(12) NOT NULL,
     item_type_name                          national character varying(50) NOT NULL,
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
@@ -817,22 +1120,24 @@ ON core.item_types(UPPER(item_type_name));
 
 CREATE TABLE core.item_groups
 (
-    item_group_id                           SERIAL NOT NULL PRIMARY KEY,
+    item_group_id                           SERIAL PRIMARY KEY,
     item_group_code                         national character varying(12) NOT NULL,
     item_group_name                         national character varying(50) NOT NULL,
     exclude_from_purchase                   boolean NOT NULL   
                                             CONSTRAINT item_groups_exclude_from_purchase_df   
                                             DEFAULT(false),
-    exclude_from_sales                      boolean NOT NULL   
+    exclude_from_sales                      boolean NOT NULL   --Todo: Create trigger to disallow switching this on when table "core.sales_tax_exempt_details" depends on it.
                                             CONSTRAINT item_groups_exclude_from_sales_df   
                                             DEFAULT(false),
-    tax_id                                  smallint NOT NULL REFERENCES core.taxes(tax_id),
+    sales_tax_id                            integer NOT NULL REFERENCES core.sales_taxes(sales_tax_id),
     parent_item_group_id                    integer NULL REFERENCES core.item_groups(item_group_id),
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
                                             DEFAULT(NOW())
 );
 
+ALTER TABLE core.sales_tax_exempt_details
+ADD FOREIGN KEY(item_group_id) REFERENCES core.item_groups(item_group_id);
 
 CREATE UNIQUE INDEX item_groups_item_group_code_uix
 ON core.item_groups(UPPER(item_group_code));
@@ -844,7 +1149,7 @@ ON core.item_groups(UPPER(item_group_name));
 
 CREATE TABLE core.shipping_mail_types
 (
-    shipping_mail_type_id                   SERIAL NOT NULL PRIMARY KEY,
+    shipping_mail_type_id                   SERIAL PRIMARY KEY,
     shipping_mail_type_code                 national character varying(12) NOT NULL,
     shipping_mail_type_name                 national character varying(64) NOT NULL,
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
@@ -865,7 +1170,7 @@ ON core.shipping_mail_types(UPPER(shipping_mail_type_name));
 
 CREATE TABLE core.shipping_package_shapes
 (
-    shipping_package_shape_id               SERIAL NOT NULL PRIMARY KEY,
+    shipping_package_shape_id               SERIAL PRIMARY KEY,
     shipping_package_shape_code             national character varying(12) NOT NULL,
     shipping_package_shape_name             national character varying(64) NOT NULL,
     is_rectangular                          boolean NOT NULL   
@@ -886,7 +1191,7 @@ ON core.shipping_package_shapes(UPPER(shipping_package_shape_name));
 
 CREATE TABLE core.items
 (
-    item_id                                 SERIAL NOT NULL PRIMARY KEY,
+    item_id                                 SERIAL PRIMARY KEY,
     item_code                               national character varying(12) NOT NULL,
     item_name                               national character varying(150) NOT NULL,
     item_group_id                           integer NOT NULL REFERENCES core.item_groups(item_group_id),
@@ -916,7 +1221,7 @@ CREATE TABLE core.items
     selling_price_includes_tax              boolean NOT NULL   
                                             CONSTRAINT items_selling_price_includes_tax_df 
                                             DEFAULT(false),
-    tax_id                                  integer NOT NULL REFERENCES core.taxes(tax_id),
+    sales_tax_id                            integer NOT NULL REFERENCES core.sales_taxes(sales_tax_id),
     reorder_unit_id                         integer NOT NULL REFERENCES core.units(unit_id),
     reorder_level                           integer NOT NULL,
     reorder_quantity                        integer NOT NULL
@@ -929,12 +1234,15 @@ CREATE TABLE core.items
                                             DEFAULT(NOW())
 );
 
+ALTER TABLE core.sales_tax_exempt_details
+ADD FOREIGN KEY(item_id) REFERENCES core.items(item_id);
+
 CREATE UNIQUE INDEX items_item_name_uix
 ON core.items(UPPER(item_name));
 
 CREATE TABLE core.compound_items
 (
-    compound_item_id                        SERIAL NOT NULL PRIMARY KEY,
+    compound_item_id                        SERIAL PRIMARY KEY,
     compound_item_code                      national character varying(12) NOT NULL,
     compound_item_name                      national character varying(150) NOT NULL,
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
@@ -951,7 +1259,7 @@ ON core.compound_items(LOWER(compound_item_name));
 
 CREATE TABLE core.compound_item_details
 (
-    compound_item_detail_id                 SERIAL NOT NULL PRIMARY KEY,
+    compound_item_detail_id                 SERIAL PRIMARY KEY,
     compound_item_id                        integer NOT NULL REFERENCES core.compound_items(compound_item_id),
     item_id                                 integer NOT NULL REFERENCES core.items(item_id),
     unit_id                                 integer NOT NULL REFERENCES core.units(unit_id),
@@ -984,7 +1292,7 @@ ON core.compound_item_details(compound_item_id, item_id);
 
 CREATE TABLE core.item_selling_prices
 (   
-    item_selling_price_id                   BIGSERIAL NOT NULL PRIMARY KEY,
+    item_selling_price_id                   BIGSERIAL PRIMARY KEY,
     item_id                                 integer NOT NULL REFERENCES core.items(item_id),
     unit_id                                 integer NOT NULL REFERENCES core.units(unit_id),
     party_type_id                           smallint NULL REFERENCES core.party_types(party_type_id), 
@@ -1003,7 +1311,7 @@ CREATE TABLE core.item_selling_prices
 
 CREATE TABLE core.item_cost_prices
 (   
-    item_cost_price_id                      BIGSERIAL NOT NULL PRIMARY KEY,
+    item_cost_price_id                      BIGSERIAL PRIMARY KEY,
     item_id                                 integer NOT NULL REFERENCES core.items(item_id),
     entry_ts                                TIMESTAMP WITH TIME ZONE NOT NULL   
                                             DEFAULT(NOW()),
@@ -1024,7 +1332,7 @@ CREATE TABLE core.item_cost_prices
 
 CREATE TABLE office.store_types
 (
-    store_type_id                           SERIAL NOT NULL PRIMARY KEY,
+    store_type_id                           SERIAL PRIMARY KEY,
     store_type_code                         national character varying(12) NOT NULL,
     store_type_name                         national character varying(50) NOT NULL,
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
@@ -1044,7 +1352,7 @@ ON office.store_types(UPPER(store_type_name));
 
 CREATE TABLE office.stores
 (
-    store_id SERIAL                         NOT NULL PRIMARY KEY,
+    store_id SERIAL                         PRIMARY KEY,
     office_id                               integer NOT NULL REFERENCES office.offices(office_id),
     store_code                              national character varying(12) NOT NULL,
     store_name                              national character varying(50) NOT NULL,
@@ -1057,6 +1365,8 @@ CREATE TABLE office.stores
                                             DEFAULT(NOW())
 );
 
+ALTER TABLE core.sales_tax_exempts
+ADD FOREIGN KEY(store_id) REFERENCES office.stores(store_id);
 
 CREATE UNIQUE INDEX stores_store_code_uix
 ON office.stores(UPPER(store_code));
@@ -1068,7 +1378,7 @@ ON office.stores(UPPER(store_name));
 
 CREATE TABLE office.cash_repositories
 (
-    cash_repository_id                      BIGSERIAL NOT NULL PRIMARY KEY,
+    cash_repository_id                      BIGSERIAL PRIMARY KEY,
     office_id                               integer NOT NULL REFERENCES office.offices(office_id),
     cash_repository_code                    national character varying(12) NOT NULL,
     cash_repository_name                    national character varying(50) NOT NULL,
@@ -1090,7 +1400,7 @@ ON office.cash_repositories(UPPER(cash_repository_name));
  
 CREATE TABLE office.counters
 (
-    counter_id                              SERIAL NOT NULL PRIMARY KEY,
+    counter_id                              SERIAL PRIMARY KEY,
     store_id                                smallint NOT NULL REFERENCES office.stores(store_id),
     cash_repository_id                      integer NOT NULL REFERENCES office.cash_repositories(cash_repository_id),
     counter_code                            national character varying(12) NOT NULL,
@@ -1110,7 +1420,7 @@ ON office.counters(UPPER(counter_name));
 
 CREATE TABLE office.cost_centers
 (
-    cost_center_id                          SERIAL NOT NULL PRIMARY KEY,
+    cost_center_id                          SERIAL PRIMARY KEY,
     cost_center_code                        national character varying(24) NOT NULL,
     cost_center_name                        national character varying(50) NOT NULL,
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
@@ -1127,7 +1437,7 @@ ON office.cost_centers(UPPER(cost_center_name));
 
 CREATE TABLE office.cashiers
 (
-    cashier_id                              BIGSERIAL NOT NULL PRIMARY KEY,
+    cashier_id                              BIGSERIAL PRIMARY KEY,
     counter_id                              integer NOT NULL REFERENCES office.counters(counter_id),
     user_id                                 integer NOT NULL REFERENCES office.users(user_id),
     assigned_by_user_id                     integer NOT NULL REFERENCES office.users(user_id),
@@ -1146,7 +1456,7 @@ ON office.cashiers(user_id ASC, transaction_date DESC);
 
 CREATE TABLE policy.store_policies
 (
-    store_policy_id                         BIGSERIAL NOT NULL PRIMARY KEY,
+    store_policy_id                         BIGSERIAL PRIMARY KEY,
     written_by_user_id                      integer NOT NULL REFERENCES office.users(user_id),
     status                                  boolean NOT NULL,
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
@@ -1156,7 +1466,7 @@ CREATE TABLE policy.store_policies
 
 CREATE TABLE policy.store_policy_details
 (
-    store_policy_detail_id                  BIGSERIAL NOT NULL PRIMARY KEY,
+    store_policy_detail_id                  BIGSERIAL PRIMARY KEY,
     store_policy_id                         integer NOT NULL REFERENCES policy.store_policies(store_policy_id),
     user_id                                 integer NOT NULL REFERENCES office.users(user_id),
     store_id                                smallint NOT NULL REFERENCES office.stores(store_id),
@@ -1168,7 +1478,7 @@ CREATE TABLE policy.store_policy_details
 
 CREATE TABLE core.item_opening_inventory
 (
-    item_opening_inventory_id               BIGSERIAL NOT NULL PRIMARY KEY,
+    item_opening_inventory_id               BIGSERIAL PRIMARY KEY,
     entry_ts                                TIMESTAMP WITH TIME ZONE NOT NULL,
     item_id                                 integer NOT NULL REFERENCES core.items(item_id),
     store_id                                smallint NOT NULL REFERENCES office.stores(store_id),
@@ -1188,7 +1498,7 @@ CREATE TABLE core.item_opening_inventory
 
 CREATE TABLE transactions.transaction_master
 (
-    transaction_master_id                   BIGSERIAL NOT NULL PRIMARY KEY,
+    transaction_master_id                   BIGSERIAL PRIMARY KEY,
     transaction_counter                     integer NOT NULL, --Sequence of transactions of a date
     transaction_code                        national character varying(50) NOT NULL,
     book                                    national character varying(50) NOT NULL, --Transaction book. Ex. Sales, Purchase, Journal
@@ -1234,7 +1544,7 @@ ON transactions.transaction_master(UPPER(transaction_code));
 
 CREATE TABLE transactions.transaction_details
 (
-    transaction_detail_id                   BIGSERIAL NOT NULL PRIMARY KEY,
+    transaction_detail_id                   BIGSERIAL PRIMARY KEY,
     transaction_master_id                   bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id),
     value_date                              date NOT NULL,
     tran_type                               transaction_type NOT NULL,
@@ -1253,7 +1563,7 @@ CREATE TABLE transactions.transaction_details
 
 CREATE TABLE transactions.customer_receipts
 (
-    receipt_id                              BIGSERIAL NOT NULL PRIMARY KEY,
+    receipt_id                              BIGSERIAL PRIMARY KEY,
     transaction_master_id                   bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id),
     party_id                                bigint NOT NULL REFERENCES core.parties(party_id),
     currency_code                           national character varying(12) NOT NULL REFERENCES core.currencies(currency_code),
@@ -1292,7 +1602,7 @@ ON transactions.customer_receipts(bank_account_id);
 
 CREATE TABLE transactions.stock_master
 (
-    stock_master_id                         BIGSERIAL NOT NULL PRIMARY KEY,
+    stock_master_id                         BIGSERIAL PRIMARY KEY,
     transaction_master_id                   bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id),
     value_date                              date NOT NULL,
     party_id                                bigint NULL REFERENCES core.parties(party_id),
@@ -1319,7 +1629,7 @@ ON transactions.stock_master(transaction_master_id);
 
 CREATE TABLE transactions.stock_details
 (
-    stock_detail_id                         BIGSERIAL NOT NULL PRIMARY KEY,
+    stock_detail_id                         BIGSERIAL PRIMARY KEY,
     value_date                              date NOT NULL,
     stock_master_id                         bigint NOT NULL REFERENCES transactions.stock_master(stock_master_id),
     tran_type                               transaction_type NOT NULL,
@@ -1348,7 +1658,7 @@ CREATE TABLE transactions.stock_details
 
 CREATE TABLE transactions.stock_return
 (
-    sales_return_id                         BIGSERIAL NOT NULL PRIMARY KEY, 
+    sales_return_id                         BIGSERIAL PRIMARY KEY, 
     transaction_master_id                   bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id),
     return_transaction_master_id            bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id)
 );
@@ -1358,7 +1668,7 @@ CREATE TABLE transactions.stock_return
 --TODO
 CREATE TABLE transactions.non_gl_stock_master
 (
-    non_gl_stock_master_id                  BIGSERIAL NOT NULL PRIMARY KEY,
+    non_gl_stock_master_id                  BIGSERIAL PRIMARY KEY,
     value_date                              date NOT NULL,
     book                                    national character varying(48) NOT NULL,
     party_id                                bigint NULL REFERENCES core.parties(party_id),
@@ -1378,7 +1688,7 @@ CREATE TABLE transactions.non_gl_stock_master
 
 CREATE TABLE transactions.non_gl_stock_details
 (
-    non_gl_stock_detail_id                  BIGSERIAL NOT NULL PRIMARY KEY,
+    non_gl_stock_detail_id                  BIGSERIAL PRIMARY KEY,
     non_gl_stock_master_id                  bigint NOT NULL REFERENCES transactions.non_gl_stock_master(non_gl_stock_master_id),
     value_date                              date NOT NULL,
     item_id                                 integer NOT NULL REFERENCES core.items(item_id),
@@ -1406,7 +1716,7 @@ CREATE TABLE transactions.non_gl_stock_details
 --which were upgraded to order(s).
 CREATE TABLE transactions.non_gl_stock_master_relations
 (
-    non_gl_stock_master_relation_id         BIGSERIAL NOT NULL PRIMARY KEY, 
+    non_gl_stock_master_relation_id         BIGSERIAL PRIMARY KEY, 
     order_non_gl_stock_master_id            bigint NOT NULL REFERENCES transactions.non_gl_stock_master(non_gl_stock_master_id),
     quotation_non_gl_stock_master_id        bigint NOT NULL REFERENCES transactions.non_gl_stock_master(non_gl_stock_master_id)
 );
@@ -1416,7 +1726,7 @@ CREATE TABLE transactions.non_gl_stock_master_relations
 --which were upgraded to deliveries or invoices.
 CREATE TABLE transactions.stock_master_non_gl_relations
 (
-    stock_master_non_gl_relation_id         BIGSERIAL NOT NULL PRIMARY KEY, 
+    stock_master_non_gl_relation_id         BIGSERIAL PRIMARY KEY, 
     stock_master_id                         bigint NOT NULL REFERENCES transactions.stock_master(stock_master_id),
     non_gl_stock_master_id                  bigint NOT NULL REFERENCES transactions.non_gl_stock_master(non_gl_stock_master_id)
 );
@@ -1424,7 +1734,7 @@ CREATE TABLE transactions.stock_master_non_gl_relations
 
 CREATE TABLE crm.lead_sources
 (
-    lead_source_id                          SERIAL NOT NULL PRIMARY KEY,
+    lead_source_id                          SERIAL PRIMARY KEY,
     lead_source_code                        national character varying(12) NOT NULL,
     lead_source_name                        national character varying(128) NOT NULL,
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
@@ -1443,7 +1753,7 @@ ON crm.lead_sources(UPPER(lead_source_name));
 
 CREATE TABLE crm.lead_statuses
 (
-    lead_status_id                          SERIAL NOT NULL PRIMARY KEY,
+    lead_status_id                          SERIAL PRIMARY KEY,
     lead_status_code                        national character varying(12) NOT NULL,
     lead_status_name                        national character varying(128) NOT NULL,
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
@@ -1462,7 +1772,7 @@ ON crm.lead_statuses(UPPER(lead_status_name));
 
 CREATE TABLE crm.opportunity_stages
 (
-    opportunity_stage_id                    SERIAL  NOT NULL PRIMARY KEY,
+    opportunity_stage_id                    SERIAL  PRIMARY KEY,
     opportunity_stage_code                  national character varying(12) NOT NULL,
     opportunity_stage_name                  national character varying(50) NOT NULL,
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
@@ -1482,7 +1792,7 @@ ON crm.opportunity_stages(UPPER(opportunity_stage_name));
 
 CREATE TABLE office.work_centers
 (
-    work_center_id                          SERIAL NOT NULL PRIMARY KEY,
+    work_center_id                          SERIAL PRIMARY KEY,
     office_id                               integer NOT NULL REFERENCES office.offices(office_id),
     work_center_code                        national character varying(12) NOT NULL,
     work_center_name                        national character varying(128) NOT NULL,
@@ -1500,7 +1810,7 @@ ON office.work_centers(UPPER(work_center_name));
 
 CREATE TABLE policy.voucher_verification_policy
 (
-    user_id                                 integer NOT NULL PRIMARY KEY REFERENCES office.users(user_id),
+    user_id                                 integer PRIMARY KEY REFERENCES office.users(user_id),
     can_verify_sales_transactions           boolean NOT NULL   
                                             CONSTRAINT voucher_verification_policy_verify_sales_df 
                                             DEFAULT(false),
@@ -1536,7 +1846,7 @@ CREATE TABLE policy.voucher_verification_policy
 
 CREATE TABLE policy.auto_verification_policy
 (
-    user_id                                 integer NOT NULL PRIMARY KEY REFERENCES office.users(user_id),
+    user_id                                 integer PRIMARY KEY REFERENCES office.users(user_id),
     verify_sales_transactions               boolean NOT NULL   
                                             CONSTRAINT auto_verification_policy_verify_sales_df   
                                             DEFAULT(false),

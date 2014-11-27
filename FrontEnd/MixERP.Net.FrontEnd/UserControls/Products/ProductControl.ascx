@@ -54,11 +54,11 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     }
 
     #ProductGridView th:nth-child(8) {
-        width: 140px;
+        width: 120px;
     }
 
     #ProductGridView th:nth-child(9) {
-        width: 70px;
+        width: 100px;
     }
 
     #ProductGridView th:nth-child(10) {
@@ -66,11 +66,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     }
 
     #ProductGridView th:nth-child(11) {
-        width: 140px;
-    }
-
-    #ProductGridView th:nth-child(12) {
-        width: 120px;
+        width: 100px;
     }
 </style>
 
@@ -121,6 +117,21 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     </div>
 </div>
 
+<div id="ShippingAddressInfoDiv" runat="server" style="width: 500px;">
+    <div class="ui page form segment">
+        <div class="two fields">
+            <div class="field">
+                <asp:Literal ID="ShippingCompanySelectLabel" runat="server" />
+                <select id="ShippingCompanySelect"></select>
+            </div>
+            <div class="field">
+                <asp:Literal ID="ShippingAddressSelectLabel" runat="server" />
+                <select id="ShippingAddressSelect"></select>
+            </div>
+        </div>
+    </div>
+</div>
+
 <table id="ProductGridView" class="ui form celled table segment" style="min-width: 1400px; max-width: 2000px;" runat="server">
     <tbody>
         <tr>
@@ -146,16 +157,16 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                 <asp:Literal ID="DiscountInputTextLabel" runat="server" />
             </th>
             <th class="text-right">
+                <asp:Literal ID="ShippingChargeInputTextLabel" runat="server" />
+            </th>
+            <th class="text-right">
                 <asp:Literal ID="SubTotalInputTextLabel" runat="server" />
             </th>
-            <th class="text-right">
-                <asp:Literal ID="TaxRateInputTextLabel" runat="server" />
+            <th>
+                <asp:Literal ID="TaxSelectLabel" runat="server" />
             </th>
-            <th class="text-right">
+            <th>
                 <asp:Literal ID="TaxInputTextLabel" runat="server" />
-            </th>
-            <th class="text-right">
-                <asp:Literal ID="TotalAmountInputTextLabel" runat="server" />
             </th>
             <th>
                 <asp:Literal runat="server" Text="Action" />
@@ -185,16 +196,16 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                 <input type="text" id="DiscountInputText" class="text-right currency" title='<asp:Literal runat="server" Text="Ctrl + D" />' />
             </td>
             <td>
+                <input type="text" id="ShippingChargeInputText" class="currency" runat="server" />
+            </td>
+            <td>
                 <input type="text" id="SubTotalInputText" readonly="readonly" class="text-right currency" />
             </td>
             <td>
-                <input type="text" id="TaxRateInputText" class="text-right" />
+                <select name="TaxSelect" id="TaxSelect" title='<asp:Literal runat="server" Text="Ctrl + T" />'></select>
             </td>
             <td>
-                <input type="text" id="TaxInputText" class="text-right currency" title='<asp:Literal runat="server" Text="Ctrl + T" />' />
-            </td>
-            <td>
-                <input type="text" id="TotalAmountInputText" readonly="readonly" class="text-right currency" />
+                <input type="text" id="TaxInputText" readonly="readonly" class="text-right currency" />
             </td>
             <td>
                 <input type="button"
@@ -221,24 +232,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
 <div class="" style="width: 500px;">
     <div class="ui page form segment">
-        <div id="ShippingAddressDiv" runat="server">
-            <div class="field">
-                <asp:Literal ID="ShippingAddressSelectLabel" runat="server" />
-                <select id="ShippingAddressSelect"></select>
-            </div>
-            <div class="field">
-                <textarea id="ShippingAddressTextArea" readonly="readonly"></textarea>
-            </div>
-        </div>
-        <div class="two fields">
-            <div class="field" id="ShippingCompanyDiv" runat="server">
-                <asp:Literal ID="ShippingCompanySelectLabel" runat="server" />
-                <select id="ShippingCompanySelect"></select>
-            </div>
-            <div class="field" id="ShippingChargeDiv" runat="server">
-                <asp:Literal ID="ShippingChargeInputTextLabel" runat="server" />
-                <input type="text" id="ShippingChargeInputText" class="currency" />
-            </div>
+        <div class="field" id="ShippingAddressDiv" runat="server">
+            <asp:Literal ID="ShippingAddressTextAreaLabel" runat="server" />
+            <textarea id="ShippingAddressTextArea" readonly="readonly"></textarea>
         </div>
         <div class="three fields">
             <div class="field">
@@ -250,7 +246,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                 <input type="text" id="TaxTotalInputText" class="currency" readonly="readonly" />
             </div>
             <div class="field">
-                <asp:Literal ID="GrandTotalInputTextLabel" runat="server" />
+                <asp:Literal ID="GrandTotalInputTextInputTextLabel" runat="server" />
                 <input type="text" id="GrandTotalInputText" class="currency" readonly="readonly" />
             </div>
         </div>

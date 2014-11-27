@@ -53,8 +53,6 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
                 }
             }
 
-            textBox.Width = 200;
-
             if (isSerial)
             {
                 textBox.ReadOnly = true;
@@ -94,7 +92,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
                 validator.Type = ValidationDataType.Integer;
 
                 //MixERP strict data type
-                if (domain.Contains("strict"))
+                if (domain.EndsWith("strict"))
                 {
                     validator.Operator = ValidationCompareOperator.GreaterThan;
                 }

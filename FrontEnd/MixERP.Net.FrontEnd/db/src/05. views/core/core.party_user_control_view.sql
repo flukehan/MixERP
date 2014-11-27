@@ -15,15 +15,15 @@ SELECT
     core.parties.interest_rate,
     core.accounts.account_code,
     core.accounts.account_name,
-    core.parties.po_box,
+    core.parties.zip_code,
     core.parties.address_line_1,
     core.parties.address_line_2,
     core.parties.street,
-    core.parties.city,
-    core.parties.state,
-    core.parties.country
+    core.get_state_name_by_state_id(core.parties.state_id) AS state,
+    core.get_country_name_by_country_id(core.parties.country_id) AS country
 FROM core.parties
 INNER JOIN core.party_types
 ON core.parties.party_type_id = core.party_types.party_type_id
 INNER JOIN core.accounts
 ON core.parties.account_id = core.accounts.account_id;
+

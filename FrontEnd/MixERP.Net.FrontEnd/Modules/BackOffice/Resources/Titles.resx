@@ -171,8 +171,35 @@
   <data name="Roles" xml:space="preserve">
     <value>Roles</value>
   </data>
+  <data name="SalesTaxDetails" xml:space="preserve">
+    <value>Sales Tax Details</value>
+  </data>
+  <data name="SalesTaxes" xml:space="preserve">
+    <value>Sales Taxes</value>
+  </data>
+  <data name="SalesTaxExemptDetails" xml:space="preserve">
+    <value>Sales Tax Exempt Details</value>
+  </data>
+  <data name="SalesTaxExempts" xml:space="preserve">
+    <value>Sales Tax Exempts</value>
+  </data>
+  <data name="SalesTaxTypes" xml:space="preserve">
+    <value>Sales Tax Types</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="StateSalesTaxes" xml:space="preserve">
+    <value>State Sales Taxes</value>
+  </data>
+  <data name="TaxAuthorities" xml:space="preserve">
+    <value>Tax Authorities</value>
+  </data>
+  <data name="TaxExemptTypes" xml:space="preserve">
+    <value>Tax Exempt Types</value>
+  </data>
+  <data name="TaxMaster" xml:space="preserve">
+    <value>Tax Master</value>
   </data>
   <data name="Tel" xml:space="preserve">
     <value>Tel</value>

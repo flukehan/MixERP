@@ -25,7 +25,7 @@ SELECT 'ACR', 'Acer'        UNION ALL
 SELECT 'SNG', 'Samsung'     UNION ALL
 SELECT 'ITX', 'Index';
 
-INSERT INTO core.item_groups(item_group_code, item_group_name, tax_id, parent_item_group_id)
+INSERT INTO core.item_groups(item_group_code, item_group_name, sales_tax_id, parent_item_group_id)
 SELECT 'ELE', 'Electronics & Computers',                1, NULL                                                 UNION ALL
 SELECT 'TVV', 'TV & Video',                             1, core.get_item_group_id_by_item_group_code('ELE')     UNION ALL
 SELECT 'HAT', 'Home Audio & Theater',                   1, core.get_item_group_id_by_item_group_code('ELE')     UNION ALL
@@ -46,7 +46,7 @@ SELECT 'PRI', 'Printers & Ink',                         1, core.get_item_group_i
 SELECT 'OSS', 'Office & School Supplies',               1, core.get_item_group_id_by_item_group_code('ELE');
 
 
-INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, tax_id, reorder_level, maintain_stock, cost_price, selling_price, reorder_unit_id, reorder_quantity)
+INSERT INTO core.items(item_code, item_name, item_group_id, brand_id, preferred_supplier_id, unit_id, hot_item, sales_tax_id, reorder_level, maintain_stock, cost_price, selling_price, reorder_unit_id, reorder_quantity)
 SELECT 'RMBP',  'Macbook Pro 15'''' Retina',            core.get_item_group_id_by_item_group_code('LPT'), core.get_brand_id_by_brand_code('APP'),       1,  1, false,   1,  100,    true,    180000,    225000, 1, 200  UNION ALL
 SELECT '13MBA', 'Macbook Air 13''''',                   core.get_item_group_id_by_item_group_code('LPT'), core.get_brand_id_by_brand_code('APP'),       5,  1, false,   1,  100,    true,    130000,    155000, 1, 200  UNION ALL
 SELECT '11MBA', 'Macbook Air 11''''',                   core.get_item_group_id_by_item_group_code('LPT'), core.get_brand_id_by_brand_code('APP'),       6,  1, false,   1,  100,    true,    110000,    135000, 1, 200  UNION ALL

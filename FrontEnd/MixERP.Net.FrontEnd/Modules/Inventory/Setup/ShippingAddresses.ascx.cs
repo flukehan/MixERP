@@ -58,6 +58,8 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
         {
             List<string> displayFields = new List<string>();
             ScrudHelper.AddDisplayField(displayFields, "core.parties.party_id", ConfigurationHelper.GetDbParameter("PartyDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.countries.country_id", "country_name");
+            ScrudHelper.AddDisplayField(displayFields, "core.states.state_id", "state_name");
             return string.Join(",", displayFields);
         }
 
@@ -65,6 +67,8 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
         {
             List<string> displayViews = new List<string>();
             ScrudHelper.AddDisplayView(displayViews, "core.parties.party_id", "core.party_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.countries.country_id", "core.countries");
+            ScrudHelper.AddDisplayView(displayViews, "core.states.state_id", "core.states");
             return string.Join(",", displayViews);
         }
     }

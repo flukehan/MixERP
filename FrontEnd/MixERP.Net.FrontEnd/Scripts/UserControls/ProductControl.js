@@ -18,11 +18,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 /*jshint -W032, -W098, -W020 */
-/*global addDanger, ajaxDataBind, ajaxUpdateVal, appendParameter, fadeThis, focusNextElement, getAjax, getColumnText, getData, getFormattedNumber, gridViewEmptyWarningLocalized, insufficientStockWarningLocalized, invalidCashRepositoryWarningLocalized, invalidCostCenterWarningLocalized, invalidDateWarningLocalized, invalidPartyWarningLocalized,invalidPriceTypeWarningLocalized, invalidSalesPersonWarningLocalized, invalidShippingCompanyWarningLocalized, invalidStoreWarningLocalized, isDate, isNullOrWhiteSpace, isSales, logError, makeDirty, parseFloat2, parseFormattedNumber, removeDirty, repaint, rowData, selectDropDownListByValue, setColumnText, shortcut, showWindow, sumOfColumn, tableToJSON, taxAfterDiscount, tranBook, unitId, updateTaxLocalized, uploadedFilesHidden, verifyStock, parseInt2, updateTaxLocalized */
-
-if (typeof updateTaxLocalized === "undefined") {
-    updateTaxLocalized = "Update tax?";
-};
+/*global addDanger, ajaxDataBind, ajaxUpdateVal, appendParameter, fadeThis, focusNextElement, getAjax, getColumnText, getData, getFormattedNumber, gridViewEmptyWarningLocalized, insufficientStockWarningLocalized, invalidCashRepositoryWarningLocalized, invalidCostCenterWarningLocalized, invalidDateWarningLocalized, invalidPartyWarningLocalized,invalidPriceTypeWarningLocalized, invalidSalesPersonWarningLocalized, invalidShippingCompanyWarningLocalized, invalidStoreWarningLocalized, isDate, isNullOrWhiteSpace, isSales, logError, makeDirty, parseFloat2, parseFormattedNumber, removeDirty, repaint, rowData, selectDropDownListByValue, setColumnText, shortcut, showWindow, sumOfColumn, tableToJSON, taxAfterDiscount, tranBook, unitId, uploadedFilesHidden, verifyStock, parseInt2 */
 
 if (typeof insufficientStockWarningLocalized === "undefined") {
     insufficientStockWarningLocalized = "Only {0} {1} of {2} left in stock.";
@@ -100,14 +96,15 @@ var shippingAddressSelect = $("#ShippingAddressSelect");
 var shippingAddressTextArea = $("#ShippingAddressTextArea");
 var shippingChargeInputText = $("#ShippingChargeInputText");
 var shippingCompanySelect = $("#ShippingCompanySelect");
+var taxTotalInputText = $("#TaxTotalInputText");
+
 var statementReferenceTextArea = $("#StatementReferenceTextArea");
 var storeSelect = $("#StoreSelect");
 var subTotalInputText = $("#SubTotalInputText");
 
-var taxRateInputText = $("#TaxRateInputText");
-var taxTotalInputText = $("#TaxTotalInputText");
+var taxSelect = $("#TaxSelect");
 var taxInputText = $("#TaxInputText");
-var totalAmountInputText = $("#TotalAmountInputText");
+
 var tranIdCollectionHiddenField = $("#TranIdCollectionHiddenField");
 
 var unitIdHidden = $("#UnitIdHidden");
@@ -185,6 +182,7 @@ function initializeAjaxData() {
 
     loadCostCenters();
     loadStores();
+    loadTaxes();
     loadCashRepositories();
     loadAgents();
     loadShippers();
@@ -208,10 +206,11 @@ function itemSelect_OnBlur() {
     itemCodeInputText.val(itemSelect.getSelectedValue());
     loadUnits();
     getPrice();
+    getDefaultSalesTax();
 };
 
 function processCallBackActions() {
-    var itemId = parseFloat2(itemIdHidden.val());
+    var itemId = parseInt2(itemIdHidden.val());
 
     itemIdHidden.val("");
 
@@ -223,7 +222,7 @@ function processCallBackActions() {
         ajaxUpdateVal(url, data, itemCodeInputText);
     };
 
-    var partyId = parseFloat2(partyIdHidden.val());
+    var partyId = parseInt2(partyIdHidden.val());
 
     partyIdHidden.val("");
 
@@ -254,7 +253,11 @@ function ajaxUpdateValCallback(targetControls) {
 //Control Events
 
 addButton.click(function () {
-    updateTax();
+    if (updateTax() === -1) {
+        logError("Please select a tax form");
+        return;
+    };
+
     calculateAmount();
     addRow();
 });
@@ -304,6 +307,79 @@ quantityInputText.blur(function () {
     calculateAmount();
 });
 
+taxSelect.blur(function () {
+    updateTax();
+});
+
+function updateTax() {
+    var storeId = parseInt2(storeSelect.getSelectedValue());
+    var partyCode = partySelect.getSelectedValue();
+    var shippingAddressCode = shippingAddressSelect.getSelectedText();
+    var priceTypeId = parseInt2(priceTypeSelect.getSelectedValue());
+    var itemCode = itemCodeInputText.val();
+    var price = parseFloat2(priceInputText.val());
+    var quantity = parseInt2(quantityInputText.val());
+    var discount = parseFloat2(discountInputText.val());
+    var shippingCharge = parseFloat2(shippingChargeInputText.val());
+    var salesTaxId = parseInt2(taxSelect.getSelectedValue());
+
+    if (storeId == 0) {
+        return 0;
+    };
+
+    if (isNullOrWhiteSpace(partyCode)) {
+        return 0;
+    };
+
+    if (salesTaxId === 0) {
+        return -1;
+    };
+
+    if (price == 0) {
+        return 0;
+    };
+
+    if (quantity == 0) {
+        return 0;
+    };
+
+    if (salesTaxId == 0) {
+        return 0;
+    };
+
+    var ajaxGetSalesTax = getSalesTax(tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode, price, quantity, discount, shippingCharge, salesTaxId);
+
+    ajaxGetSalesTax.success(function (msg) {
+        taxInputText.val(parseFloat2(msg.d));
+    });
+
+    ajaxGetSalesTax.fail(function (xhr) {
+        logAjaxErrorMessage(xhr);
+    });
+};
+
+function getDefaultSalesTax() {
+    var storeId = parseInt2(storeSelect.getSelectedValue());
+    var partyCode = partySelect.getSelectedValue();
+    var shippingAddressCode = shippingAddressSelect.getSelectedText();
+    var priceTypeId = parseInt2(priceTypeSelect.getSelectedValue());
+    var itemCode = itemCodeInputText.val();
+
+    var ajaxGetDefaultSalesTaxId = getDefaultSalesTaxId(tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode);
+
+    ajaxGetDefaultSalesTaxId.success(function (msg) {
+        var result = parseInt2(msg.d);
+
+        if (result) {
+            taxSelect.val(result);
+        };
+    });
+
+    ajaxGetDefaultSalesTaxId.fail(function (xhr) {
+        logAjaxErrorMessage(xhr);
+    });
+};
+
 var validateProductControl = function () {
     valueDate = dateTextBox.val();
     errorLabelBottom.html("");
@@ -335,7 +411,7 @@ var validateProductControl = function () {
     };
 
     if (storeSelect.length) {
-        if (parseFloat2(storeSelect.getSelectedValue()) <= 0) {
+        if (parseInt2(storeSelect.getSelectedValue()) <= 0) {
             makeDirty(storeSelect);
             errorLabelBottom.html(invalidStoreWarningLocalized);
             return false;
@@ -350,7 +426,7 @@ var validateProductControl = function () {
     };
 
     if (priceTypeSelect.length) {
-        if (parseFloat2(priceTypeSelect.getSelectedValue()) <= 0) {
+        if (parseInt2(priceTypeSelect.getSelectedValue()) <= 0) {
             makeDirty(priceTypeSelect);
             errorLabelBottom.html(invalidPriceTypeWarningLocalized);
             return false;
@@ -363,7 +439,7 @@ var validateProductControl = function () {
     };
 
     if (shippingCompanySelect.length) {
-        if (parseFloat2(shippingCompanySelect.getSelectedValue()) <= 0) {
+        if (parseInt2(shippingCompanySelect.getSelectedValue()) <= 0) {
             makeDirty(shippingCompanySelect);
             errorLabelBottom.html(invalidShippingCompanyWarningLocalized);
             return false;
@@ -372,7 +448,7 @@ var validateProductControl = function () {
 
     if (cashRepositorySelect.length) {
         if (!isCredit) {
-            if (parseFloat2(cashRepositorySelect.getSelectedValue()) <= 0) {
+            if (parseInt2(cashRepositorySelect.getSelectedValue()) <= 0) {
                 makeDirty(cashRepositorySelect);
                 errorLabelBottom.html(invalidCashRepositoryWarningLocalized);
                 return false;
@@ -380,7 +456,7 @@ var validateProductControl = function () {
         };
 
         if (isCredit) {
-            if (parseFloat2(cashRepositorySelect.getSelectedValue()) > 0) {
+            if (parseInt2(cashRepositorySelect.getSelectedValue()) > 0) {
                 makeDirty(cashRepositorySelect);
                 errorLabelBottom.html(invalidCashRepositoryWarningLocalized);
                 return false;
@@ -389,7 +465,7 @@ var validateProductControl = function () {
     };
 
     if (costCenterSelect.length) {
-        if (parseFloat2(costCenterSelect.getSelectedValue()) <= 0) {
+        if (parseInt2(costCenterSelect.getSelectedValue()) <= 0) {
             makeDirty(costCenterSelect);
             errorLabelBottom.html(invalidCostCenterWarningLocalized);
             return false;
@@ -397,7 +473,7 @@ var validateProductControl = function () {
     };
 
     if (salesPersonSelect.length) {
-        if (parseFloat2(salesPersonSelect.getSelectedValue()) <= 0) {
+        if (parseInt2(salesPersonSelect.getSelectedValue()) <= 0) {
             makeDirty(salesPersonSelect);
             errorLabelBottom.html(invalidSalesPersonWarningLocalized);
             return false;
@@ -405,24 +481,24 @@ var validateProductControl = function () {
     };
 
     productGridViewDataHidden.val(tableToJSON(productGridView));
-    agentId = parseFloat2(salesPersonSelect.getSelectedValue());
+    agentId = parseInt2(salesPersonSelect.getSelectedValue());
     attachments = uploadedFilesHidden.val();
 
-    cashRepositoryId = parseFloat2(cashRepositorySelect.getSelectedValue());
-    costCenterId = parseFloat2(costCenterSelect.getSelectedValue());
+    cashRepositoryId = parseInt2(cashRepositorySelect.getSelectedValue());
+    costCenterId = parseInt2(costCenterSelect.getSelectedValue());
 
     data = productGridViewDataHidden.val();
 
     partyCode = partySelect.getSelectedValue();
-    priceTypeId = parseFloat2(priceTypeSelect.getSelectedValue());
+    priceTypeId = parseInt2(priceTypeSelect.getSelectedValue());
 
     referenceNumber = referenceNumberInputText.getSelectedValue();
 
     shippingAddressCode = shippingAddressSelect.getSelectedText();
-    shipperId = parseFloat2(shippingCompanySelect.getSelectedValue());
+    shipperId = parseInt2(shippingCompanySelect.getSelectedValue());
     shippingCharge = parseFloat2(shippingChargeInputText.val());
     statementReference = statementReferenceTextArea.val();
-    storeId = parseFloat2(storeSelect.getSelectedValue());
+    storeId = parseInt2(storeSelect.getSelectedValue());
 
     transactionIds = tranIdCollectionHiddenField.val();
 
@@ -435,15 +511,6 @@ shippingAddressSelect.change(function () {
 
 shippingChargeInputText.blur(function () {
     summate();
-});
-
-taxRateInputText.blur(function () {
-    updateTax();
-    calculateAmount();
-});
-
-taxInputText.blur(function () {
-    calculateAmount();
 });
 
 unitSelect.change(function () {
@@ -518,6 +585,13 @@ function loadStores() {
     };
 };
 
+function loadTaxes() {
+    if (taxSelect.length) {
+        url = "/Modules/BackOffice/Services/TaxData.asmx/GetSalesTaxes";
+        ajaxDataBind(url, taxSelect);
+    };
+};
+
 function loadUnits() {
     var itemCode = itemCodeInputText.val();
 
@@ -554,10 +628,9 @@ var restoreData = function () {
         var unitName = rowData[i][3];
         var price = parseFloat2(rowData[i][4]);
         var discount = parseFloat2(rowData[i][6]);
-        var taxRate = parseFloat2(rowData[i][8]);
-        var tax = parseFloat2(rowData[i][9]);
+        var tax = rowData[i][8];
 
-        addRowToTable(itemCode, itemName, quantity, unitName, price, discount, taxRate, tax);
+        addRowToTable(itemCode, itemName, quantity, unitName, price, discount, tax);
     };
 };
 
@@ -566,39 +639,6 @@ var calculateAmount = function () {
     amountInputText.val(parseFloat2(quantityInputText.val()) * parseFloat2(priceInputText.val()));
 
     subTotalInputText.val(parseFloat2(amountInputText.val()) - parseFloat2(discountInputText.val()));
-    totalAmountInputText.val(parseFloat2(subTotalInputText.val()) + parseFloat2(taxInputText.val()));
-};
-
-var updateTax = function () {
-    var total = parseFloat2(priceInputText.val()) * parseFloat2(quantityInputText.val());
-    var subTotal = total - parseFloat2(discountInputText.val());
-    var taxableAmount = total;
-
-    if (taxAfterDiscount.toLowerCase() === "true") {
-        taxableAmount = subTotal;
-    };
-
-    var tax = (taxableAmount * parseFloat2(parseFormattedNumber(taxRateInputText.val()))) / 100;
-
-    if (parseFloat2(taxInputText.val()) === 0) {
-        if (tax.toFixed) {
-            taxInputText.val(getFormattedNumber(tax.toFixed(2)));
-        } else {
-            taxInputText.val(getFormattedNumber(tax));
-        };
-    };
-
-    if (parseFloat2(tax).toFixed(2) !== parseFloat2(parseFormattedNumber(taxInputText.val())).toFixed(2)) {
-        var question = confirm(updateTaxLocalized);
-
-        if (question) {
-            if (tax.toFixed) {
-                taxInputText.val(getFormattedNumber(tax.toFixed(2)));
-            } else {
-                taxInputText.val(getFormattedNumber(tax));
-            };
-        };
-    };
 };
 
 //GridView Manipulation
@@ -607,13 +647,15 @@ var addRow = function () {
     var itemCode = itemCodeInputText.val();
     var itemName = itemSelect.getSelectedText();
     var quantity = parseInt2(quantityInputText.val());
-    var unitId = parseFloat2(unitIdHidden.val());
+    var unitId = parseInt2(unitIdHidden.val());
     var unitName = unitNameHidden.val();
     var price = parseFloat2(priceInputText.val());
     var discount = parseFloat2(discountInputText.val());
-    var taxRate = parseFloat2(taxRateInputText.val());
-    var tax = parseFloat2(taxInputText.val());
-    var storeId = parseFloat2(storeSelect.val());
+    var shippingCharge = parseFloat2(shippingChargeInputText.val());
+    var tax = taxSelect.getSelectedText();
+    var computedTax = parseFloat2(taxInputText.val());
+
+    var storeId = parseInt2(storeSelect.val());
 
     if (isNullOrWhiteSpace(itemCode)) {
         makeDirty(itemCodeInputText);
@@ -650,12 +692,12 @@ var addRow = function () {
 
     removeDirty(discountInputText);
 
-    if (tax < 0) {
-        makeDirty(taxInputText);
+    if (tax === selectLocalized) {
+        makeDirty(taxSelect);
         return;
     };
 
-    removeDirty(taxInputText);
+    removeDirty(taxSelect);
 
     var ajaxItemCodeExists = itemCodeExists(itemCode);
     var ajaxUnitNameExists = unitNameExists(unitName);
@@ -685,7 +727,7 @@ var addRow = function () {
             removeDirty(unitSelect);
 
             if (!verifyStock || !isSales) {
-                addRowToTable(itemCode, itemName, quantity, unitName, price, discount, taxRate, tax);
+                addRowToTable(itemCode, itemName, quantity, unitName, price, discount, shippingCharge, tax, computedTax);
                 return;
             };
 
@@ -693,7 +735,7 @@ var addRow = function () {
                 var isStockItem = ajaxIsStockItemResult.d;
 
                 if (!isStockItem) {
-                    addRowToTable(itemCode, itemName, quantity, unitName, price, discount, taxRate, tax);
+                    addRowToTable(itemCode, itemName, quantity, unitName, price, discount, shippingCharge, tax, computedTax);
                     return;
                 };
 
@@ -706,19 +748,18 @@ var addRow = function () {
                         return;
                     };
 
-                    addRowToTable(itemCode, itemName, quantity, unitName, price, discount, taxRate, tax);
+                    addRowToTable(itemCode, itemName, quantity, unitName, price, discount, shippingCharge, tax, computedTax);
                 });
             });
         });
     });
 };
 
-var addRowToTable = function (itemCode, itemName, quantity, unitName, price, discount, taxRate, tax) {
+var addRowToTable = function (itemCode, itemName, quantity, unitName, price, discount, shippingCharge, tax, computedTax) {
     var grid = productGridView;
     var rows = grid.find("tr:not(:first-child):not(:last-child)");
     var amount = price * quantity;
-    var subTotal = amount - discount;
-    var total = subTotal + tax;
+    var subTotal = amount - discount + shippingCharge;
     var match = false;
 
     rows.each(function () {
@@ -727,14 +768,14 @@ var addRowToTable = function (itemCode, itemName, quantity, unitName, price, dis
             getColumnText(row, 1) === itemName &&
             getColumnText(row, 3) === unitName &&
             parseFloat2(getColumnText(row, 4)) === price &&
-            parseFloat2(getColumnText(row, 8)) === taxRate &&
+            getColumnText(row, 9) === tax &&
             parseFloat(getColumnText(row, 5)) / parseFloat(getColumnText(row, 6)) === amount / discount) {
             setColumnText(row, 2, parseFloat2(getColumnText(row, 2)) + quantity);
             setColumnText(row, 5, parseFloat2(getColumnText(row, 5)) + amount);
             setColumnText(row, 6, parseFloat2(getColumnText(row, 6)) + discount);
-            setColumnText(row, 7, parseFloat2(getColumnText(row, 7)) + subTotal);
-            setColumnText(row, 9, parseFloat2(getColumnText(row, 9)) + tax);
-            setColumnText(row, 10, parseFloat2(getColumnText(row, 10)) + total);
+            setColumnText(row, 7, parseFloat2(getColumnText(row, 7)) + shippingCharge);
+            setColumnText(row, 8, parseFloat2(getColumnText(row, 8)) + subTotal);
+            setColumnText(row, 8, parseFloat2(getColumnText(row, 10)) + computedTax);
 
             addDanger(row);
 
@@ -744,8 +785,8 @@ var addRowToTable = function (itemCode, itemName, quantity, unitName, price, dis
     });
 
     if (!match) {
-        var html = "<tr class='grid2-row'><td>" + itemCode + "</td><td>" + itemName + "</td><td class='text-right'>" + quantity + "</td><td>" + unitName + "</td><td class='text-right'>" + price + "</td><td class='text-right'>" + amount + "</td><td class='text-right'>" + discount + "</td><td class='text-right'>" + subTotal + "</td><td class='text-right'>" + taxRate + "</td><td class='text-right'>" + tax + "</td><td class='text-right'>" + total
-            + "</td><td><a class='pointer' onclick='removeRow($(this));'><i class='ui delete icon'></i></a><a class='pointer' onclick='toggleDanger($(this));'><i class='ui pointer check mark icon'></a></i><a class='pointer' onclick='toggleSuccess($(this));'><i class='ui pointer thumbs up icon'></i></a></td></tr>";
+        var html = "<tr class='grid2-row'><td>" + itemCode + "</td><td>" + itemName + "</td><td class='text-right'>" + quantity + "</td><td>" + unitName + "</td><td class='text-right'>" + price + "</td><td class='text-right'>" + amount + "</td><td class='text-right'>" + discount + "</td><td class='text-right'>" + shippingCharge + "</td><td class='text-right'>" + subTotal + "</td><td>" + tax + "</td><td class='text-right'>" + computedTax
+            + "</td><td><a class='pointer' onclick='removeRow($(this));summate();'><i class='ui delete icon'></i></a><a class='pointer' onclick='toggleDanger($(this));'><i class='ui pointer check mark icon'></a></i><a class='pointer' onclick='toggleSuccess($(this));'><i class='ui pointer thumbs up icon'></i></a></td></tr>";
         grid.find("tr:last").before(html);
     };
 
@@ -755,7 +796,6 @@ var addRowToTable = function (itemCode, itemName, quantity, unitName, price, dis
     quantityInputText.val(1);
     priceInputText.val("");
     discountInputText.val("");
-    taxInputText.val("");
     errorLabel.html("");
     itemCodeInputText.focus();
     repaint();
@@ -765,7 +805,7 @@ var addRowToTable = function (itemCode, itemName, quantity, unitName, price, dis
 var getPrice = function () {
     var itemCode = itemCodeInputText.val();
     var partyCode = partyCodeInputText.val();
-    var priceTypeId = parseFloat2(priceTypeSelect.val());
+    var priceTypeId = parseInt2(priceTypeSelect.val());
     var unitId = unitIdHidden.val();
 
     if (!unitId) return;
@@ -791,19 +831,12 @@ var getPrice = function () {
 
     priceAjax.success(function (msg) {
         priceInputText.val(msg.d);
-        taxInputText.val("");
     });
 
     priceAjax.error(function (xhr) {
         var err = $.parseJSON(xhr.responseText);
         logError(err, "error");
     });
-
-    url = "/Modules/Inventory/Services/ItemData.asmx/GetTaxRate";
-    data = appendParameter("", "itemCode", itemCode);
-    data = getData(data);
-
-    ajaxUpdateVal(url, data, taxRateInputText);
 
     calculateAmount();
 };
@@ -853,17 +886,47 @@ var countItemInStockByUnitName = function (itemCode, unitName, storeId) {
     return getAjax(url, data);
 };
 
+var getDefaultSalesTaxId = function (tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode) {
+    url = "/Modules/BackOffice/Services/TaxData.asmx/GetSalesTaxId";
+    data = appendParameter("", "tranBook", tranBook);
+    data = appendParameter(data, "storeId", storeId);
+    data = appendParameter(data, "partyCode", partyCode);
+    data = appendParameter(data, "shippingAddressCode", shippingAddressCode);
+    data = appendParameter(data, "priceTypeId", priceTypeId);
+    data = appendParameter(data, "itemCode", itemCode);
+
+    data = getData(data);
+
+    return getAjax(url, data);
+};
+
+var getSalesTax = function (tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode, price, quantity, discount, shippingCharge, salesTaxId) {
+    url = "/Modules/BackOffice/Services/TaxData.asmx/GetSalesTax";
+    data = appendParameter("", "storeId", storeId);
+    data = appendParameter(data, "tranBook", tranBook);
+    data = appendParameter(data, "partyCode", partyCode);
+    data = appendParameter(data, "shippingAddressCode", shippingAddressCode);
+    data = appendParameter(data, "priceTypeId", priceTypeId);
+    data = appendParameter(data, "itemCode", itemCode);
+    data = appendParameter(data, "price", price);
+    data = appendParameter(data, "quantity", quantity);
+    data = appendParameter(data, "discount", discount);
+    data = appendParameter(data, "shippingCharge", shippingCharge);
+    data = appendParameter(data, "salesTaxId", salesTaxId);
+    data = getData(data);
+
+    return getAjax(url, data);
+};
+
 //Logic & Validation
 var summate = function () {
-    var runningTotal = sumOfColumn("#ProductGridView", 4);
-    var taxTotal = sumOfColumn("#ProductGridView", 9);
-    var grandTotal = sumOfColumn("#ProductGridView", 10);
-
-    grandTotal += parseFloat2(shippingChargeInputText.val());
-
+    var runningTotal = sumOfColumn("#ProductGridView", 8);
     runningTotalInputText.val(runningTotal);
+
+    var taxTotal = sumOfColumn("#ProductGridView", 10);
     taxTotalInputText.val(taxTotal);
-    grandTotalInputText.val(grandTotal);
+
+    grandTotalInputText.val(runningTotal + taxTotal);
 };
 
 var showShippingAddress = function () {
@@ -907,7 +970,7 @@ function addShortcuts() {
     });
 
     shortcut.add("CTRL+T", function () {
-        taxInputText.focus();
+        taxSelect.focus();
     });
 
     shortcut.add("CTRL+U", function () {

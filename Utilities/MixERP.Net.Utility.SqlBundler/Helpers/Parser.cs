@@ -29,7 +29,7 @@ namespace MixERP.Net.Utility.SqlBundler.Helpers
 {
     public static class Parser
     {
-        public static BundlerModel Parse(string root, string path)
+        public static BundlerModel Parse(string root, string path, bool includeOptionalFiles)
         {
             if (string.IsNullOrWhiteSpace(path))
             {
@@ -84,21 +84,39 @@ namespace MixERP.Net.Utility.SqlBundler.Helpers
             }
 
             model.OriginalFileName = Path.GetFileNameWithoutExtension(path).Replace(".sqlbundle", "");
-            model.Files = GetScripts(scriptDirectory);
+            model.Files = GetScripts(scriptDirectory, includeOptionalFiles);
             model.Dictionaries = dictionaries;
 
             return model;
         }
 
-        private static Collection<string> GetScripts(string directory)
+        private static string GetDefaultLanguage(string key, string value)
         {
-            return new Collection<string>(GetFiles(directory).OrderBy(s => s).ToList());
+            if (key.Equals("default-language"))
+            {
+                return value;
+            }
+
+            return String.Empty;
         }
 
-        private static IEnumerable<string> GetFiles(string path)
+        private static KeyValuePair<string, string> GetDictionary(string key, string value)
+        {
+            if (key.Equals("dictionary"))
+            {
+                value = value.TrimStart('[').TrimEnd(']');
+
+                return new KeyValuePair<string, string>(value.Split(',')[0].Trim(), value.Split(',')[1].Trim());
+            }
+
+            return new KeyValuePair<string, string>();
+        }
+
+        private static IEnumerable<string> GetFiles(string path, bool includeOptionalFiles)
         {
             Queue<string> queue = new Queue<string>();
             queue.Enqueue(path);
+
             while (queue.Count > 0)
             {
                 path = queue.Dequeue();
@@ -118,7 +136,14 @@ namespace MixERP.Net.Utility.SqlBundler.Helpers
                 string[] files = null;
                 try
                 {
-                    files = Directory.GetFiles(path, "*.sql");
+                    if (includeOptionalFiles)
+                    {
+                        files = GetFiles(path, "*.sql|*.optional");
+                    }
+                    else
+                    {
+                        files = GetFiles(path, "*.sql");
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -134,9 +159,14 @@ namespace MixERP.Net.Utility.SqlBundler.Helpers
             }
         }
 
-        private static string GetDefaultLanguage(string key, string value)
+        private static string[] GetFiles(string sourceFolder, string filters)
         {
-            if (key.Equals("default-language"))
+            return filters.Split('|').SelectMany(filter => System.IO.Directory.GetFiles(sourceFolder, filter)).ToArray();
+        }
+
+        private static string GetOutputDirectory(string key, string value)
+        {
+            if (key.Equals("output-directory"))
             {
                 return value;
             }
@@ -154,26 +184,9 @@ namespace MixERP.Net.Utility.SqlBundler.Helpers
             return string.Empty;
         }
 
-        private static KeyValuePair<string, string> GetDictionary(string key, string value)
+        private static Collection<string> GetScripts(string directory, bool includeOptionalFiles)
         {
-            if (key.Equals("dictionary"))
-            {
-                value = value.TrimStart('[').TrimEnd(']');
-
-                return new KeyValuePair<string, string>(value.Split(',')[0].Trim(), value.Split(',')[1].Trim());
-            }
-
-            return new KeyValuePair<string, string>();
-        }
-
-        private static string GetOutputDirectory(string key, string value)
-        {
-            if (key.Equals("output-directory"))
-            {
-                return value;
-            }
-
-            return String.Empty;
+            return new Collection<string>(GetFiles(directory, includeOptionalFiles).OrderBy(s => s).ToList());
         }
     }
 }

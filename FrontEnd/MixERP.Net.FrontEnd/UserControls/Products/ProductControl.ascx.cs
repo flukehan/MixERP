@@ -189,16 +189,16 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             this.AmountInputTextLabel.Text = HtmlControlHelper.GetLabel("AmountInputText", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "Amount"));
             this.DiscountInputTextLabel.Text = HtmlControlHelper.GetLabel("DiscountInputText", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "Discount"));
             this.SubTotalInputTextLabel.Text = HtmlControlHelper.GetLabel("SubTotalInputText", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "SubTotal"));
-            this.TaxRateInputTextLabel.Text = HtmlControlHelper.GetLabel("TaxRateInputText", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "Rate"));
+            this.TaxSelectLabel.Text = HtmlControlHelper.GetLabel("TaxSelect", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "TaxForm"));
             this.TaxInputTextLabel.Text = HtmlControlHelper.GetLabel("TaxInputText", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "Tax"));
-            this.TotalAmountInputTextLabel.Text = HtmlControlHelper.GetLabel("TotalAmountInputText", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "Total"));
 
             this.ShippingAddressSelectLabel.Text = HtmlControlHelper.GetLabel("ShippingAddressSelect", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ShippingAddress"));
+            this.ShippingAddressTextAreaLabel.Text = HtmlControlHelper.GetLabel("ShippingAddressTextArea", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ShippingAddress"));
             this.ShippingCompanySelectLabel.Text = HtmlControlHelper.GetLabel("ShippingCompanySelect", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ShippingCompany"));
             this.ShippingChargeInputTextLabel.Text = HtmlControlHelper.GetLabel("ShippingChargeInputText", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ShippingCharge"));
             this.RunningTotalInputTextLabel.Text = HtmlControlHelper.GetLabel("RunningTotalInputText", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "RunningTotal"));
             this.TaxTotalInputTextLabel.Text = HtmlControlHelper.GetLabel("TaxTotalInputText", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "TaxTotal"));
-            this.GrandTotalInputTextLabel.Text = HtmlControlHelper.GetLabel("GrandTotalInputText", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "GrandTotal"));
+            this.GrandTotalInputTextInputTextLabel.Text = HtmlControlHelper.GetLabel("GrandTotalInputTextInputText", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "GrandTotal"));
             this.CashRepositorySelectLabel.Text = HtmlControlHelper.GetLabel("CashRepositorySelect", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "CashRepository"));
             this.CashRepositoryBalanceInputTextLabel.Text = HtmlControlHelper.GetLabel("CashRepositoryBalanceInputText", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "CashRepositoryBalance"));
             this.CostCenterSelectLabel.Text = HtmlControlHelper.GetLabel("CostCenterSelect", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "CostCenter"));
@@ -241,8 +241,13 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             this.CashTransactionDiv.Visible = this.ShowTransactionType;
             this.PriceTypeDiv.Visible = this.ShowPriceTypes;
             this.ShippingAddressDiv.Visible = this.ShowShippingInformation;
-            this.ShippingCompanyDiv.Visible = this.ShowShippingInformation;
-            this.ShippingChargeDiv.Visible = this.ShowShippingInformation;
+            this.ShippingAddressInfoDiv.Visible = this.ShowShippingInformation;
+
+            if (!this.ShowShippingInformation)
+            {
+                this.ShippingChargeInputText.Attributes.Add("readonly", "readonly");
+            }
+
             this.CostCenterDiv.Visible = this.ShowCostCenter;
             this.SalespersonDiv.Visible = this.ShowSalesAgents;
         }

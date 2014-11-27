@@ -439,6 +439,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Country Id.
+        /// </summary>
+        internal static string country_id {
+            get {
+                return ResourceManager.GetString("country_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CST Number.
         /// </summary>
         internal static string cst_number {
@@ -1186,6 +1195,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to State Id.
+        /// </summary>
+        internal static string state_id {
+            get {
+                return ResourceManager.GetString("state_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid unit provided..
         /// </summary>
         internal static string stock_details_unit_chk {
@@ -1308,6 +1326,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         internal static string width_in_centimeters {
             get {
                 return ResourceManager.GetString("width_in_centimeters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ZIP Code.
+        /// </summary>
+        internal static string zip_code {
+            get {
+                return ResourceManager.GetString("zip_code", resourceCulture);
             }
         }
     }

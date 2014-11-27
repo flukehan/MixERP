@@ -130,6 +130,33 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::System.Web.UI.WebControls.Literal CashTransactionLiteral;
         
         /// <summary>
+        /// ShippingAddressInfoDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ShippingAddressInfoDiv;
+        
+        /// <summary>
+        /// ShippingCompanySelectLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ShippingCompanySelectLabel;
+        
+        /// <summary>
+        /// ShippingAddressSelectLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ShippingAddressSelectLabel;
+        
+        /// <summary>
         /// ProductGridView control.
         /// </summary>
         /// <remarks>
@@ -202,6 +229,15 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::System.Web.UI.WebControls.Literal DiscountInputTextLabel;
         
         /// <summary>
+        /// ShippingChargeInputTextLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ShippingChargeInputTextLabel;
+        
+        /// <summary>
         /// SubTotalInputTextLabel control.
         /// </summary>
         /// <remarks>
@@ -211,13 +247,13 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::System.Web.UI.WebControls.Literal SubTotalInputTextLabel;
         
         /// <summary>
-        /// TaxRateInputTextLabel control.
+        /// TaxSelectLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal TaxRateInputTextLabel;
+        protected global::System.Web.UI.WebControls.Literal TaxSelectLabel;
         
         /// <summary>
         /// TaxInputTextLabel control.
@@ -229,13 +265,13 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::System.Web.UI.WebControls.Literal TaxInputTextLabel;
         
         /// <summary>
-        /// TotalAmountInputTextLabel control.
+        /// ShippingChargeInputText control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal TotalAmountInputTextLabel;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText ShippingChargeInputText;
         
         /// <summary>
         /// FormPanel control.
@@ -283,49 +319,13 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl ShippingAddressDiv;
         
         /// <summary>
-        /// ShippingAddressSelectLabel control.
+        /// ShippingAddressTextAreaLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ShippingAddressSelectLabel;
-        
-        /// <summary>
-        /// ShippingCompanyDiv control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ShippingCompanyDiv;
-        
-        /// <summary>
-        /// ShippingCompanySelectLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ShippingCompanySelectLabel;
-        
-        /// <summary>
-        /// ShippingChargeDiv control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ShippingChargeDiv;
-        
-        /// <summary>
-        /// ShippingChargeInputTextLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ShippingChargeInputTextLabel;
+        protected global::System.Web.UI.WebControls.Literal ShippingAddressTextAreaLabel;
         
         /// <summary>
         /// RunningTotalInputTextLabel control.
@@ -346,13 +346,13 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::System.Web.UI.WebControls.Literal TaxTotalInputTextLabel;
         
         /// <summary>
-        /// GrandTotalInputTextLabel control.
+        /// GrandTotalInputTextInputTextLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal GrandTotalInputTextLabel;
+        protected global::System.Web.UI.WebControls.Literal GrandTotalInputTextInputTextLabel;
         
         /// <summary>
         /// CashRepositoryDiv control.

@@ -534,4 +534,13 @@
   <data name="tran_type" xml:space="preserve">
     <value>Tran Type</value>
   </data>
+  <data name="country_id" xml:space="preserve">
+    <value>Country Id</value>
+  </data>
+  <data name="state_id" xml:space="preserve">
+    <value>State Id</value>
+  </data>
+  <data name="zip_code" xml:space="preserve">
+    <value>ZIP Code</value>
+  </data>
 </root>

@@ -277,6 +277,15 @@ namespace MixERP.Net.WebControls.StockTransactionFactory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tax Form.
+        /// </summary>
+        internal static string TaxForm {
+            get {
+                return ResourceManager.GetString("TaxForm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tax Total.
         /// </summary>
         internal static string TaxTotal {

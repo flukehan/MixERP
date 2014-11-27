@@ -201,4 +201,7 @@
   <data name="CashTransaction" xml:space="preserve">
     <value>Cash Transaction</value>
   </data>
+  <data name="TaxForm" xml:space="preserve">
+    <value>Tax Form</value>
+  </data>
 </root>

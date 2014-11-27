@@ -99,8 +99,18 @@
     <Content Include="Policy\VoucherVerification.ascx" />
     <Content Include="Roles.ascx" />
     <Content Include="Services\Attachments.asmx" />
+    <Content Include="Services\TaxData.asmx" />
     <Content Include="SQL\Module.sql" />
     <Content Include="SQL\Menu.sql" />
+    <Content Include="Tax\SalesTaxDetails.ascx" />
+    <Content Include="Tax\SalesTaxes.ascx" />
+    <Content Include="Tax\SalesTaxExemptDetails.ascx" />
+    <Content Include="Tax\SalesTaxExempts.ascx" />
+    <Content Include="Tax\SalesTaxTypes.ascx" />
+    <Content Include="Tax\StateSalesTaxes.ascx" />
+    <Content Include="Tax\TaxAuthorities.ascx" />
+    <Content Include="Tax\TaxExemptTypes.ascx" />
+    <Content Include="Tax\TaxMaster.ascx" />
     <Content Include="Users.ascx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -279,6 +289,73 @@
     <Compile Include="Services\Attachments.asmx.cs">
       <DependentUpon>Attachments.asmx</DependentUpon>
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\TaxData.asmx.cs">
+      <DependentUpon>TaxData.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Tax\SalesTaxDetails.ascx.cs">
+      <DependentUpon>SalesTaxDetails.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tax\SalesTaxDetails.ascx.designer.cs">
+      <DependentUpon>SalesTaxDetails.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Tax\SalesTaxes.ascx.cs">
+      <DependentUpon>SalesTaxes.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tax\SalesTaxes.ascx.designer.cs">
+      <DependentUpon>SalesTaxes.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Tax\SalesTaxExemptDetails.ascx.cs">
+      <DependentUpon>SalesTaxExemptDetails.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tax\SalesTaxExemptDetails.ascx.designer.cs">
+      <DependentUpon>SalesTaxExemptDetails.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Tax\SalesTaxExempts.ascx.cs">
+      <DependentUpon>SalesTaxExempts.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tax\SalesTaxExempts.ascx.designer.cs">
+      <DependentUpon>SalesTaxExempts.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Tax\SalesTaxTypes.ascx.cs">
+      <DependentUpon>SalesTaxTypes.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tax\SalesTaxTypes.ascx.designer.cs">
+      <DependentUpon>SalesTaxTypes.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Tax\StateSalesTaxes.ascx.cs">
+      <DependentUpon>StateSalesTaxes.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tax\StateSalesTaxes.ascx.designer.cs">
+      <DependentUpon>StateSalesTaxes.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Tax\TaxAuthorities.ascx.cs">
+      <DependentUpon>TaxAuthorities.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tax\TaxAuthorities.ascx.designer.cs">
+      <DependentUpon>TaxAuthorities.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Tax\TaxExemptTypes.ascx.cs">
+      <DependentUpon>TaxExemptTypes.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tax\TaxExemptTypes.ascx.designer.cs">
+      <DependentUpon>TaxExemptTypes.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Tax\TaxMaster.ascx.cs">
+      <DependentUpon>TaxMaster.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tax\TaxMaster.ascx.designer.cs">
+      <DependentUpon>TaxMaster.ascx</DependentUpon>
     </Compile>
     <Compile Include="Users.ascx.cs">
       <DependentUpon>Users.ascx</DependentUpon>
