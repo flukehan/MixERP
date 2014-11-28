@@ -106,6 +106,33 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Counties.
+        /// </summary>
+        internal static string Counties {
+            get {
+                return ResourceManager.GetString("Counties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Countries.
+        /// </summary>
+        internal static string Countries {
+            get {
+                return ResourceManager.GetString("Countries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to County Sales Taxes.
+        /// </summary>
+        internal static string CountySalesTaxes {
+            get {
+                return ResourceManager.GetString("CountySalesTaxes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Database Statistics.
         /// </summary>
         internal static string DatabaseStatistics {
@@ -129,6 +156,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string Email {
             get {
                 return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Entities.
+        /// </summary>
+        internal static string Entities {
+            get {
+                return ResourceManager.GetString("Entities", resourceCulture);
             }
         }
         
@@ -183,6 +219,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string GoToTop {
             get {
                 return ResourceManager.GetString("GoToTop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Industries.
+        /// </summary>
+        internal static string Industries {
+            get {
+                return ResourceManager.GetString("Industries", resourceCulture);
             }
         }
         
@@ -273,6 +318,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to States.
+        /// </summary>
+        internal static string States {
+            get {
+                return ResourceManager.GetString("States", resourceCulture);
             }
         }
         

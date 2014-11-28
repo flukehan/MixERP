@@ -63,10 +63,14 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Counties.ascx" />
+    <Content Include="Countries.ascx" />
+    <Content Include="Entities.ascx" />
     <Content Include="Handlers\ImageHandler.ashx" />
     <Content Include="..\..\..\..\mixerp.licenseheader">
       <Link>mixerp.licenseheader</Link>
     </Content>
+    <Content Include="Industries.ascx" />
     <Content Include="Mix Open Foundation.snk" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -102,6 +106,8 @@
     <Content Include="Services\TaxData.asmx" />
     <Content Include="SQL\Module.sql" />
     <Content Include="SQL\Menu.sql" />
+    <Content Include="States.ascx" />
+    <Content Include="Tax\CountySalesTaxes.ascx" />
     <Content Include="Tax\SalesTaxDetails.ascx" />
     <Content Include="Tax\SalesTaxes.ascx" />
     <Content Include="Tax\SalesTaxExemptDetails.ascx" />
@@ -178,12 +184,33 @@
     <Compile Include="Counters.ascx.designer.cs">
       <DependentUpon>Counters.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Counties.ascx.cs">
+      <DependentUpon>Counties.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Counties.ascx.designer.cs">
+      <DependentUpon>Counties.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Countries.ascx.cs">
+      <DependentUpon>Countries.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Countries.ascx.designer.cs">
+      <DependentUpon>Countries.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Departments.ascx.cs">
       <DependentUpon>Departments.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Departments.ascx.designer.cs">
       <DependentUpon>Departments.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Entities.ascx.cs">
+      <DependentUpon>Entities.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Entities.ascx.designer.cs">
+      <DependentUpon>Entities.ascx</DependentUpon>
     </Compile>
     <Compile Include="FiscalYear.ascx.cs">
       <DependentUpon>FiscalYear.ascx</DependentUpon>
@@ -215,6 +242,13 @@
     </Compile>
     <Compile Include="Index.ascx.designer.cs">
       <DependentUpon>Index.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Industries.ascx.cs">
+      <DependentUpon>Industries.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Industries.ascx.designer.cs">
+      <DependentUpon>Industries.ascx</DependentUpon>
     </Compile>
     <Compile Include="Offices.ascx.cs">
       <DependentUpon>Offices.ascx</DependentUpon>
@@ -293,6 +327,20 @@
     <Compile Include="Services\TaxData.asmx.cs">
       <DependentUpon>TaxData.asmx</DependentUpon>
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="States.ascx.cs">
+      <DependentUpon>States.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="States.ascx.designer.cs">
+      <DependentUpon>States.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Tax\CountySalesTaxes.ascx.cs">
+      <DependentUpon>CountySalesTaxes.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tax\CountySalesTaxes.ascx.designer.cs">
+      <DependentUpon>CountySalesTaxes.ascx</DependentUpon>
     </Compile>
     <Compile Include="Tax\SalesTaxDetails.ascx.cs">
       <DependentUpon>SalesTaxDetails.ascx</DependentUpon>

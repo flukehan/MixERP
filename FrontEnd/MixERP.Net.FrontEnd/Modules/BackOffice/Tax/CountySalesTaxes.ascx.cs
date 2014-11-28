@@ -28,18 +28,18 @@ using System.Reflection;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Tax
 {
-    public partial class StateSalesTaxes : MixERPUserControl
+    public partial class CountySalesTaxes : MixERPUserControl
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
             using (ScrudForm scrud = new ScrudForm())
             {
-                scrud.KeyColumn = "state_sales_tax_id";
+                scrud.KeyColumn = "county_sales_tax_id";
                 scrud.TableSchema = "core";
-                scrud.Table = "state_sales_taxes";
+                scrud.Table = "county_sales_taxes";
                 scrud.ViewSchema = "core";
-                scrud.View = "state_sales_taxes";
-                scrud.Text = Titles.StateSalesTaxes;
+                scrud.View = "county_sales_taxes";
+                scrud.Text = Titles.CountySalesTaxes;
 
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
@@ -52,7 +52,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.states.state_id", ConfigurationHelper.GetDbParameter("StateDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.counties.county_id", ConfigurationHelper.GetDbParameter("CountyDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.entities.entity_id", ConfigurationHelper.GetDbParameter("EntityDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.industries.industry_id", ConfigurationHelper.GetDbParameter("IndustryDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.item_groups.item_group_id", ConfigurationHelper.GetDbParameter("ItemGroupDisplayField"));
@@ -62,7 +62,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "core.states.state_id", "core.states");
+            ScrudHelper.AddDisplayView(displayViews, "core.counties.county_id", "core.counties");
             ScrudHelper.AddDisplayView(displayViews, "core.entities.entity_id", "core.entities");
             ScrudHelper.AddDisplayView(displayViews, "core.industries.industry_id", "core.industries");
             ScrudHelper.AddDisplayView(displayViews, "core.item_groups.item_group_id", "core.item_groups");

@@ -89,7 +89,10 @@ CREATE TABLE core.countries
 (
     country_id                              SERIAL PRIMARY KEY,
     country_code                            national character varying(12) NOT NULL,
-    country_name                            national character varying(100) NOT NULL
+    country_name                            national character varying(100) NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL 
+                                            DEFAULT(NOW())
 );
 
 CREATE UNIQUE INDEX countries_country_code_uix
@@ -114,6 +117,20 @@ ON core.states(country_id, UPPER(state_code));
 
 CREATE UNIQUE INDEX states_state_name_uix
 ON core.states(country_id, UPPER(state_name));
+
+
+CREATE TABLE core.counties
+(
+    county_id                               SERIAL PRIMARY KEY,
+    county_code                             national character varying(12) NOT NULL,
+    county_name                             national character varying(100) NOT NULL,
+    state_id                                integer NOT NULL REFERENCES core.states(state_id),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
+    
+);
+
 
 CREATE TABLE core.zip_code_types
 (
@@ -823,6 +840,18 @@ CREATE TABLE core.tax_authorities
     tax_master_id                           integer NOT NULL REFERENCES core.tax_master(tax_master_id),
     tax_authority_code                      national character varying(12) NOT NULL,
     tax_authority_name                      national character varying(100) NOT NULL,
+    country_id                              integer NOT NULL REFERENCES core.countries(country_id),
+    state_id                                integer NULL REFERENCES core.states(state_id),
+    zip_code                                national character varying(12) NULL,
+    address_line_1                          national character varying(128) NULL,   
+    address_line_2                          national character varying(128) NULL,
+    street                                  national character varying(50) NULL,
+    city                                    national character varying(50) NULL,
+    phone                                   national character varying(100) NULL,
+    fax                                     national character varying(24) NULL,
+    cell                                    national character varying(24) NULL,
+    email                                   national character varying(128) NULL,
+    url                                     national character varying(50) NULL,
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
                                             DEFAULT(NOW())
@@ -867,8 +896,7 @@ ON core.tax_base_amount_types(UPPER(tax_base_amount_type_name));
 
 INSERT INTO core.tax_base_amount_types(tax_base_amount_type_code, tax_base_amount_type_name)
 SELECT 'P', 'Item price'            UNION ALL
-SELECT 'L', 'Last computed tax';
-
+SELECT 'L', 'Item price + last taxes';
 
 CREATE TABLE core.tax_rate_types
 (
@@ -903,7 +931,10 @@ CREATE TABLE core.state_sales_taxes
     state_sales_tax_id                      SERIAL PRIMARY KEY,
     state_sales_tax_code                    character varying(12) NOT NULL,
     state_sales_tax_name                    character varying(100) NOT NULL,
-    state_id                                integer REFERENCES core.states(state_id),
+    state_id                                integer NOT NULL REFERENCES core.states(state_id),
+    entity_id                               integer NULL REFERENCES core.entities(entity_id),
+    industry_id                             integer NULL REFERENCES core.industries(industry_id),
+    item_group_id                           integer NULL /*REFERENCES core.item_groups(item_group_id)*/,        
     rate                                    decimal_strict2 NOT NULL DEFAULT(0),
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
@@ -916,13 +947,53 @@ ON core.state_sales_taxes(UPPER(state_sales_tax_code));
 CREATE UNIQUE INDEX state_sales_taxes_state_sales_tax_name_uix
 ON core.state_sales_taxes(UPPER(state_sales_tax_name));
 
+CREATE UNIQUE INDEX state_sales_taxes_state_id_entity_id_uix
+ON core.state_sales_taxes(state_id, entity_id);
+
+CREATE UNIQUE INDEX state_sales_taxes_state_id_industry_id_uix
+ON core.state_sales_taxes(state_id, industry_id);
+
+CREATE UNIQUE INDEX state_sales_taxes_state_id_item_group_id_uix
+ON core.state_sales_taxes(state_id, item_group_id);
+
+CREATE TABLE core.county_sales_taxes
+(
+    county_sales_tax_id                     SERIAL PRIMARY KEY,
+    county_sales_tax_code                    character varying(12) NOT NULL,
+    county_sales_tax_name                    character varying(100) NOT NULL,
+    county_id                               integer REFERENCES core.counties(county_id),
+    entity_id                               integer NULL REFERENCES core.entities(entity_id),
+    industry_id                             integer NULL REFERENCES core.industries(industry_id),
+    item_group_id                           integer NULL /*REFERENCES core.item_groups(item_group_id)*/,        
+    rate                                    decimal_strict2 NOT NULL DEFAULT(0),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
+
+);
+
+
+CREATE UNIQUE INDEX county_sales_taxes_county_sales_tax_code_uix
+ON core.county_sales_taxes(UPPER(county_sales_tax_code));
+
+CREATE UNIQUE INDEX county_sales_taxes_county_sales_tax_name_uix
+ON core.county_sales_taxes(UPPER(county_sales_tax_name));
+
+CREATE UNIQUE INDEX county_sales_taxes_county_id_entity_id_uix
+ON core.county_sales_taxes(county_id, entity_id);
+
+CREATE UNIQUE INDEX county_sales_taxes_county_id_industry_id_uix
+ON core.county_sales_taxes(county_id, industry_id);
+
+CREATE UNIQUE INDEX county_sales_taxes_county_id_item_group_id_uix
+ON core.county_sales_taxes(county_id, item_group_id);
 
 CREATE TABLE core.sales_taxes
 (
     sales_tax_id                            SERIAL PRIMARY KEY,
     tax_master_id                           integer NOT NULL REFERENCES core.tax_master(tax_master_id),
     office_id                               integer NOT NULL REFERENCES office.offices(office_id),
-    sales_tax_code                          national character varying(12) NOT NULL,
+    sales_tax_code                          national character varying(24) NOT NULL,
     sales_tax_name                          national character varying(50) NOT NULL,
     is_exemption                            boolean NOT NULL DEFAULT(false),        
     rate                                    decimal_strict2 NOT NULL DEFAULT(0), --Tax rate should be zero for parent tax.
@@ -938,30 +1009,49 @@ CREATE TABLE core.sales_taxes
 );
 
 CREATE UNIQUE INDEX sales_taxes_sales_tax_code_uix
-ON core.sales_taxes(UPPER(sales_tax_code));
+ON core.sales_taxes(office_id, UPPER(sales_tax_code));
 
 CREATE UNIQUE INDEX sales_taxes_sales_tax_name_uix
-ON core.sales_taxes(UPPER(sales_tax_name));
+ON core.sales_taxes(office_id, UPPER(sales_tax_name));
 
 CREATE TABLE core.sales_tax_details
 (
     sales_tax_detail_id                     SERIAL PRIMARY KEY,
+    sales_tax_id                            integer NOT NULL REFERENCES core.sales_taxes(sales_tax_id),
     sales_tax_type_id                       smallint NOT NULL REFERENCES core.sales_tax_types(sales_tax_type_id),
     priority                                smallint NOT NULL DEFAULT(0),
     sales_tax_detail_code                   national character varying(24) NOT NULL,
     sales_tax_detail_name                   national character varying(50) NOT NULL,
     based_on_shipping_address               boolean NOT NULL,
     state_sales_tax_id                      integer NULL REFERENCES core.state_sales_taxes(state_sales_tax_id),
-    tax_base_amount_type_code               national character varying(12) NOT NULL REFERENCES core.tax_base_amount_types(tax_base_amount_type_code),
-    tax_rate_type_code                      national character varying(12) NOT NULL REFERENCES core.tax_rate_types(tax_rate_type_code),
+    county_sales_tax_id                     integer NULL REFERENCES core.county_sales_taxes(county_sales_tax_id),
+    tax_base_amount_type_code               national character varying(12) NOT NULL 
+                                            REFERENCES core.tax_base_amount_types(tax_base_amount_type_code)
+                                            DEFAULT('P'),
+    tax_rate_type_code                      national character varying(12) NOT NULL 
+                                            REFERENCES core.tax_rate_types(tax_rate_type_code)
+                                            DEFAULT('P'),
     rate                                    decimal_strict2 NOT NULL
-                                            CHECK(CASE WHEN state_sales_tax_id IS NOT NULL THEN rate = 0 ELSE rate > 0 end),
+                                            CONSTRAINT sales_tax_details_rate_chk CHECK
+                                            (
+                                                CASE 
+                                                    WHEN
+                                                        (
+                                                            state_sales_tax_id IS NOT NULL 
+                                                            OR
+                                                            county_sales_tax_id IS NOT NULL
+                                                        )
+                                                    THEN 
+                                                        rate = 0 
+                                                    ELSE 
+                                                        rate > 0 
+                                                    END
+                                            ),
     reporting_tax_authority_id              integer NOT NULL REFERENCES core.tax_authorities(tax_authority_id),
     collecting_tax_authority_id             integer NOT NULL REFERENCES core.tax_authorities(tax_authority_id),
     collecting_account_id                   integer NOT NULL REFERENCES core.accounts(account_id),
     rounding_method_code                    national character varying(4) NULL REFERENCES core.rounding_methods(rounding_method_code),
     rounding_decimal_places                 integer_strict2 NOT NULL DEFAULT(2),
-    account_id                              bigint NOT NULL REFERENCES core.accounts(account_id),
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
                                             DEFAULT(NOW())
@@ -1138,6 +1228,13 @@ CREATE TABLE core.item_groups
 
 ALTER TABLE core.sales_tax_exempt_details
 ADD FOREIGN KEY(item_group_id) REFERENCES core.item_groups(item_group_id);
+
+ALTER TABLE core.state_sales_taxes
+ADD FOREIGN KEY(item_group_id) REFERENCES core.item_groups(item_group_id);
+
+ALTER TABLE core.county_sales_taxes
+ADD FOREIGN KEY(item_group_id) REFERENCES core.item_groups(item_group_id);
+
 
 CREATE UNIQUE INDEX item_groups_item_group_code_uix
 ON core.item_groups(UPPER(item_group_code));

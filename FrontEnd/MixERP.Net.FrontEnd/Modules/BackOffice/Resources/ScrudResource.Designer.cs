@@ -214,6 +214,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cell.
+        /// </summary>
+        internal static string cell {
+            get {
+                return ResourceManager.GetString("cell", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to City.
         /// </summary>
         internal static string city {
@@ -277,11 +286,83 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Country Code.
+        /// </summary>
+        internal static string country_code {
+            get {
+                return ResourceManager.GetString("country_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Country Id.
         /// </summary>
         internal static string country_id {
             get {
                 return ResourceManager.GetString("country_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Country Name.
+        /// </summary>
+        internal static string country_name {
+            get {
+                return ResourceManager.GetString("country_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to County Code.
+        /// </summary>
+        internal static string county_code {
+            get {
+                return ResourceManager.GetString("county_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to County Id.
+        /// </summary>
+        internal static string county_id {
+            get {
+                return ResourceManager.GetString("county_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to County Name.
+        /// </summary>
+        internal static string county_name {
+            get {
+                return ResourceManager.GetString("county_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to County Sales Tax Code.
+        /// </summary>
+        internal static string county_sales_tax_code {
+            get {
+                return ResourceManager.GetString("county_sales_tax_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to County Sales Tax Id.
+        /// </summary>
+        internal static string county_sales_tax_id {
+            get {
+                return ResourceManager.GetString("county_sales_tax_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to County Sales Tax Name.
+        /// </summary>
+        internal static string county_sales_tax_name {
+            get {
+                return ResourceManager.GetString("county_sales_tax_name", resourceCulture);
             }
         }
         
@@ -925,6 +1006,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rate should not be empty unless you have selected state or county tax. Similarly, you cannot provide both rate and choose to have state or county tax..
+        /// </summary>
+        internal static string sales_tax_details_rate_chk {
+            get {
+                return ResourceManager.GetString("sales_tax_details_rate_chk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sales Tax Exempt Code.
         /// </summary>
         internal static string sales_tax_exempt_code {
@@ -1051,11 +1141,29 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to State Code.
+        /// </summary>
+        internal static string state_code {
+            get {
+                return ResourceManager.GetString("state_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to State Id.
         /// </summary>
         internal static string state_id {
             get {
                 return ResourceManager.GetString("state_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to State Name.
+        /// </summary>
+        internal static string state_name {
+            get {
+                return ResourceManager.GetString("state_name", resourceCulture);
             }
         }
         

@@ -77,7 +77,7 @@ SELECT 'Venture Capital';
 
 INSERT INTO core.sales_tax_types(sales_tax_type_code, sales_tax_type_name, is_vat)
 SELECT 'SAT',   'Sales Tax',            false   UNION ALL
-SELECT 'VAT',   'Value Added Tax',      false;
+SELECT 'VAT',   'Value Added Tax',      true;
 
 INSERT INTO core.tax_exempt_types(tax_exempt_type_code, tax_exempt_type_name)
 SELECT 'EXI', 'Exempt (Item)' UNION ALL
@@ -88,6 +88,11 @@ SELECT 'EXE', 'Exempt (Entity)';
 INSERT INTO core.tax_master(tax_master_code, tax_master_name)
 SELECT 'UST', 'United States Taxation' UNION ALL
 SELECT 'NPT', 'Nepal Taxation';
+
+INSERT INTO core.tax_authorities(tax_master_id, tax_authority_code, tax_authority_name, country_id, state_id, zip_code, address_line_1, address_line_2, street, city, phone, fax, email, url)
+SELECT 1, 'IRS', 'Internal Revenue Service', core.get_country_id_by_country_code('US'), core.get_state_id_by_state_code('NY'), '11201', '2 Metro Tech', '1st floor', '', 'Brooklyn', '(718) 834-6559', '', '', 'http://www.irs.gov' UNION ALL
+SELECT 1, 'IRD', 'Inland Revenue Department', core.get_country_id_by_country_code('NP'), NULL, '', 'INLAND REVENUE DEPARTMENT', 'Large Taxpayers Office', 'Hariharbhawan', 'Kathmandu', '5010049, 5010050, 5010051, 5010052, 5010053', '4411788', 'iro52@ird.gov.np', 'www.ird.gov.np/';
+
 
 INSERT INTO core.state_sales_taxes(state_sales_tax_code, state_sales_tax_name, state_id, rate) VALUES
 ('AL-STT', 'Alabama State Tax',             core.get_state_id_by_state_name('Alabama'),                 4), 
@@ -138,10 +143,70 @@ INSERT INTO core.state_sales_taxes(state_sales_tax_code, state_sales_tax_name, s
 ('WI-STT', 'Wisconsin State Tax',           core.get_state_id_by_state_name('Wisconsin'),               5), 
 ('WY-STT', 'Wyoming State Tax',             core.get_state_id_by_state_name('Wyoming'),                 4);
 
+INSERT INTO core.county_sales_taxes(county_id, county_sales_tax_code, county_sales_tax_name, rate)
+SELECT core.get_county_id_by_county_code('36047'), '36047-STX', 'Kings County Sales Tax', 4.875 UNION ALL
+SELECT core.get_county_id_by_county_code('6095'), '6095-STX', 'Solano County Sales Tax', 0.125;
 
-INSERT INTO core.sales_taxes(tax_master_id, sales_tax_code, sales_tax_name, rate, office_id)
-SELECT 1, 'SAT', 'Sales Tax', 5, office_id
-FROM office.offices;
+
+
+INSERT INTO core.sales_taxes(tax_master_id, sales_tax_code, sales_tax_name, rate, office_id, is_exemption)
+SELECT 1, office_code || '-STX', office_name || ' Sales Tax', 8.875, office_id, false FROM office.offices WHERE office_code='MoF-NY-BK' UNION ALL
+SELECT 1, office_code || '-EXT', office_name || ' Exempt', 0, office_id, true FROM office.offices WHERE office_code='MoF-NY-BK';
+
+INSERT INTO core.sales_taxes(tax_master_id, sales_tax_code, sales_tax_name, rate, office_id, is_exemption)
+SELECT 1, office_code || '-STX', office_name || ' Sales Tax', 8.375, office_id, false FROM office.offices WHERE office_code='MoF-NY-RV' UNION ALL
+SELECT 1, office_code || '-EXT', office_name || ' Exempt', 0, office_id, true FROM office.offices WHERE office_code='MoF-NY-RV';
+
+INSERT INTO core.sales_taxes(tax_master_id, sales_tax_code, sales_tax_name, rate, office_id, is_exemption)
+SELECT 2, office_code || '-STX', office_name || ' Value Added Tax', 13, office_id, false FROM office.offices WHERE office_code='MoF-NP-KTM' UNION ALL
+SELECT 2, office_code || '-EXT', office_name || ' Exempt', 0, office_id, true FROM office.offices WHERE office_code='MoF-NP-KTM';
+
+
+INSERT INTO core.sales_tax_details
+(
+    sales_tax_id, sales_tax_detail_code, sales_tax_detail_name, sales_tax_type_id, priority, 
+    based_on_shipping_address, state_sales_tax_id, county_sales_tax_id, tax_base_amount_type_code,  tax_rate_type_code, 
+    rate, reporting_tax_authority_id, collecting_tax_authority_id, collecting_account_id, 
+    rounding_method_code, rounding_decimal_places
+)
+
+SELECT 
+    1, 'BK-NYC-STX', 'New York State Sales Tax (Brooklyn)', 1, 0,
+    true, (SELECT state_sales_tax_id FROM core.state_sales_taxes WHERE state_id = core.get_state_id_by_state_code('NY')), NULL, 'P', 'P',
+    0, 1, 1, core.get_account_id_by_account_code('20710'),
+    'R', 2 
+UNION ALL
+SELECT 
+    1, 'BK-36047-STX', 'Kings County Sales Tax (Brooklyn)', 1, 1,
+    false, NULL, (SELECT county_sales_tax_id FROM core.county_sales_taxes WHERE county_id = core.get_county_id_by_county_code('36047')), 'P', 'P',
+    0, 1, 1, core.get_account_id_by_account_code('20710'),
+    'R', 2 
+UNION ALL
+SELECT 
+    3, 'RV-CA-STX', 'California State Sales Tax (Rio Vista)', 1, 0,
+    true, (SELECT state_sales_tax_id FROM core.state_sales_taxes WHERE state_id = core.get_state_id_by_state_code('CA')), NULL, 'P', 'P',
+    0, 1, 1, core.get_account_id_by_account_code('20710'),
+    'R', 2 
+UNION ALL
+SELECT 
+    3, 'RV-6095-STX', 'Solano County Sales Tax (Rio Vista)', 1, 1,
+    false, NULL, (SELECT county_sales_tax_id FROM core.county_sales_taxes WHERE county_id = core.get_county_id_by_county_code('6095')), 'P', 'P',
+    0, 1, 1, core.get_account_id_by_account_code('20710'),
+    'R', 2 
+UNION ALL   
+SELECT 
+    3, 'RV-STX', 'Rio Vista Sales Tax', 1, 2,
+    false, NULL, NULL, 'P', 'P',
+    0.75, 1, 1, core.get_account_id_by_account_code('20710'),
+    'R', 2
+UNION ALL   
+SELECT 
+    5, 'KTM-VAT', 'Kathmandu Value Added Tax', 2, 0,
+    false, NULL, NULL, 'P', 'P',
+    13, 1, 1, core.get_account_id_by_account_code('20710'),
+    'R', 2;
+
+   
 
 INSERT INTO core.brands(brand_code, brand_name)
 SELECT 'DEF', 'Default';

@@ -1,4 +1,4 @@
-﻿-->-->-- /db/src/00. db core/0. mixerp.sql --<--<--
+﻿-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/00. db core/0. mixerp.sql --<--<--
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
@@ -30,7 +30,7 @@ LANGUAGE plpgsql;
 
 CREATE EXTENSION IF NOT EXISTS tablefunc;
 
--->-->-- /db/src/00. db core/1. scrud.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/00. db core/1. scrud.sql --<--<--
 DROP SCHEMA IF EXISTS scrud CASCADE;
 CREATE SCHEMA scrud;
 
@@ -177,7 +177,7 @@ NOT IN
 
 COMMENT ON VIEW scrud.mixerp_table_view IS 'Lists all schema, table, and columns with associated types, domains, references, and constraints.';
 
--->-->-- /db/src/00. db core/2. install-unit-test.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/00. db core/2. install-unit-test.sql --<--<--
 /********************************************************************************
 The PostgreSQL License
 
@@ -835,7 +835,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/00. db core/2. mixerp-db-schema.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/00. db core/2. mixerp-db-schema.sql --<--<--
 DROP SCHEMA IF EXISTS audit CASCADE;
 DROP SCHEMA IF EXISTS core CASCADE;
 DROP SCHEMA IF EXISTS office CASCADE;
@@ -867,7 +867,7 @@ CREATE SCHEMA mrp;
 COMMENT ON SCHEMA office IS 'Contains objects related to material resource planning.';
 
 
--->-->-- /db/src/00. db core/2nd-quadrant-audit-trigger.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/00. db core/2nd-quadrant-audit-trigger.sql --<--<--
 -- An audit history is important on most tables. Provide an audit trigger that logs to
 -- a dedicated audit table for the major relations.
 --
@@ -1125,7 +1125,7 @@ Add auditing support to the given table. Row-level changes will be logged with f
 $body$;
 
 
--->-->-- /db/src/00. db core/3. roles-and-priviledge.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/00. db core/3. roles-and-priviledge.sql --<--<--
 DO
 $$
 BEGIN
@@ -1238,7 +1238,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/00. db core/4.casts.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/00. db core/4.casts.sql --<--<--
 DROP FUNCTION IF EXISTS pg_catalog.text(unknown) CASCADE;
 CREATE FUNCTION pg_catalog.text(unknown) 
 RETURNS text 
@@ -1305,7 +1305,7 @@ CREATE FUNCTION pg_catalog.text(numeric) RETURNS text STRICT IMMUTABLE LANGUAGE 
 CREATE CAST (numeric AS text) WITH FUNCTION pg_catalog.text(numeric) AS IMPLICIT;
 
 
--->-->-- /db/src/01. types, domains, tables, and constraints/domains.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/01. types, domains, tables, and constraints/domains.sql --<--<--
 DROP DOMAIN IF EXISTS transaction_type CASCADE;
 CREATE DOMAIN transaction_type
 AS char(2)
@@ -1395,7 +1395,7 @@ CREATE DOMAIN color
 AS text;
 
 
--->-->-- /db/src/01. types, domains, tables, and constraints/tables and constraints.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/01. types, domains, tables, and constraints/tables and constraints.sql --<--<--
 --Todo: Indexing has not been properly thought of, as of now.
 
 CREATE TABLE core.verification_statuses
@@ -1487,7 +1487,10 @@ CREATE TABLE core.countries
 (
     country_id                              SERIAL PRIMARY KEY,
     country_code                            national character varying(12) NOT NULL,
-    country_name                            national character varying(100) NOT NULL
+    country_name                            national character varying(100) NOT NULL,
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL 
+                                            DEFAULT(NOW())
 );
 
 CREATE UNIQUE INDEX countries_country_code_uix
@@ -1512,6 +1515,20 @@ ON core.states(country_id, UPPER(state_code));
 
 CREATE UNIQUE INDEX states_state_name_uix
 ON core.states(country_id, UPPER(state_name));
+
+
+CREATE TABLE core.counties
+(
+    county_id                               SERIAL PRIMARY KEY,
+    county_code                             national character varying(12) NOT NULL,
+    county_name                             national character varying(100) NOT NULL,
+    state_id                                integer NOT NULL REFERENCES core.states(state_id),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
+    
+);
+
 
 CREATE TABLE core.zip_code_types
 (
@@ -2221,6 +2238,18 @@ CREATE TABLE core.tax_authorities
     tax_master_id                           integer NOT NULL REFERENCES core.tax_master(tax_master_id),
     tax_authority_code                      national character varying(12) NOT NULL,
     tax_authority_name                      national character varying(100) NOT NULL,
+    country_id                              integer NOT NULL REFERENCES core.countries(country_id),
+    state_id                                integer NULL REFERENCES core.states(state_id),
+    zip_code                                national character varying(12) NULL,
+    address_line_1                          national character varying(128) NULL,   
+    address_line_2                          national character varying(128) NULL,
+    street                                  national character varying(50) NULL,
+    city                                    national character varying(50) NULL,
+    phone                                   national character varying(100) NULL,
+    fax                                     national character varying(24) NULL,
+    cell                                    national character varying(24) NULL,
+    email                                   national character varying(128) NULL,
+    url                                     national character varying(50) NULL,
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
                                             DEFAULT(NOW())
@@ -2265,8 +2294,7 @@ ON core.tax_base_amount_types(UPPER(tax_base_amount_type_name));
 
 INSERT INTO core.tax_base_amount_types(tax_base_amount_type_code, tax_base_amount_type_name)
 SELECT 'P', 'Item price'            UNION ALL
-SELECT 'L', 'Last computed tax';
-
+SELECT 'L', 'Item price + last taxes';
 
 CREATE TABLE core.tax_rate_types
 (
@@ -2301,7 +2329,10 @@ CREATE TABLE core.state_sales_taxes
     state_sales_tax_id                      SERIAL PRIMARY KEY,
     state_sales_tax_code                    character varying(12) NOT NULL,
     state_sales_tax_name                    character varying(100) NOT NULL,
-    state_id                                integer REFERENCES core.states(state_id),
+    state_id                                integer NOT NULL REFERENCES core.states(state_id),
+    entity_id                               integer NULL REFERENCES core.entities(entity_id),
+    industry_id                             integer NULL REFERENCES core.industries(industry_id),
+    item_group_id                           integer NULL /*REFERENCES core.item_groups(item_group_id)*/,        
     rate                                    decimal_strict2 NOT NULL DEFAULT(0),
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
@@ -2314,13 +2345,53 @@ ON core.state_sales_taxes(UPPER(state_sales_tax_code));
 CREATE UNIQUE INDEX state_sales_taxes_state_sales_tax_name_uix
 ON core.state_sales_taxes(UPPER(state_sales_tax_name));
 
+CREATE UNIQUE INDEX state_sales_taxes_state_id_entity_id_uix
+ON core.state_sales_taxes(state_id, entity_id);
+
+CREATE UNIQUE INDEX state_sales_taxes_state_id_industry_id_uix
+ON core.state_sales_taxes(state_id, industry_id);
+
+CREATE UNIQUE INDEX state_sales_taxes_state_id_item_group_id_uix
+ON core.state_sales_taxes(state_id, item_group_id);
+
+CREATE TABLE core.county_sales_taxes
+(
+    county_sales_tax_id                     SERIAL PRIMARY KEY,
+    county_sales_tax_code                    character varying(12) NOT NULL,
+    county_sales_tax_name                    character varying(100) NOT NULL,
+    county_id                               integer REFERENCES core.counties(county_id),
+    entity_id                               integer NULL REFERENCES core.entities(entity_id),
+    industry_id                             integer NULL REFERENCES core.industries(industry_id),
+    item_group_id                           integer NULL /*REFERENCES core.item_groups(item_group_id)*/,        
+    rate                                    decimal_strict2 NOT NULL DEFAULT(0),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
+
+);
+
+
+CREATE UNIQUE INDEX county_sales_taxes_county_sales_tax_code_uix
+ON core.county_sales_taxes(UPPER(county_sales_tax_code));
+
+CREATE UNIQUE INDEX county_sales_taxes_county_sales_tax_name_uix
+ON core.county_sales_taxes(UPPER(county_sales_tax_name));
+
+CREATE UNIQUE INDEX county_sales_taxes_county_id_entity_id_uix
+ON core.county_sales_taxes(county_id, entity_id);
+
+CREATE UNIQUE INDEX county_sales_taxes_county_id_industry_id_uix
+ON core.county_sales_taxes(county_id, industry_id);
+
+CREATE UNIQUE INDEX county_sales_taxes_county_id_item_group_id_uix
+ON core.county_sales_taxes(county_id, item_group_id);
 
 CREATE TABLE core.sales_taxes
 (
     sales_tax_id                            SERIAL PRIMARY KEY,
     tax_master_id                           integer NOT NULL REFERENCES core.tax_master(tax_master_id),
     office_id                               integer NOT NULL REFERENCES office.offices(office_id),
-    sales_tax_code                          national character varying(12) NOT NULL,
+    sales_tax_code                          national character varying(24) NOT NULL,
     sales_tax_name                          national character varying(50) NOT NULL,
     is_exemption                            boolean NOT NULL DEFAULT(false),        
     rate                                    decimal_strict2 NOT NULL DEFAULT(0), --Tax rate should be zero for parent tax.
@@ -2336,30 +2407,49 @@ CREATE TABLE core.sales_taxes
 );
 
 CREATE UNIQUE INDEX sales_taxes_sales_tax_code_uix
-ON core.sales_taxes(UPPER(sales_tax_code));
+ON core.sales_taxes(office_id, UPPER(sales_tax_code));
 
 CREATE UNIQUE INDEX sales_taxes_sales_tax_name_uix
-ON core.sales_taxes(UPPER(sales_tax_name));
+ON core.sales_taxes(office_id, UPPER(sales_tax_name));
 
 CREATE TABLE core.sales_tax_details
 (
     sales_tax_detail_id                     SERIAL PRIMARY KEY,
+    sales_tax_id                            integer NOT NULL REFERENCES core.sales_taxes(sales_tax_id),
     sales_tax_type_id                       smallint NOT NULL REFERENCES core.sales_tax_types(sales_tax_type_id),
     priority                                smallint NOT NULL DEFAULT(0),
     sales_tax_detail_code                   national character varying(24) NOT NULL,
     sales_tax_detail_name                   national character varying(50) NOT NULL,
     based_on_shipping_address               boolean NOT NULL,
     state_sales_tax_id                      integer NULL REFERENCES core.state_sales_taxes(state_sales_tax_id),
-    tax_base_amount_type_code               national character varying(12) NOT NULL REFERENCES core.tax_base_amount_types(tax_base_amount_type_code),
-    tax_rate_type_code                      national character varying(12) NOT NULL REFERENCES core.tax_rate_types(tax_rate_type_code),
+    county_sales_tax_id                     integer NULL REFERENCES core.county_sales_taxes(county_sales_tax_id),
+    tax_base_amount_type_code               national character varying(12) NOT NULL 
+                                            REFERENCES core.tax_base_amount_types(tax_base_amount_type_code)
+                                            DEFAULT('P'),
+    tax_rate_type_code                      national character varying(12) NOT NULL 
+                                            REFERENCES core.tax_rate_types(tax_rate_type_code)
+                                            DEFAULT('P'),
     rate                                    decimal_strict2 NOT NULL
-                                            CHECK(CASE WHEN state_sales_tax_id IS NOT NULL THEN rate = 0 ELSE rate > 0 end),
+                                            CONSTRAINT sales_tax_details_rate_chk CHECK
+                                            (
+                                                CASE 
+                                                    WHEN
+                                                        (
+                                                            state_sales_tax_id IS NOT NULL 
+                                                            OR
+                                                            county_sales_tax_id IS NOT NULL
+                                                        )
+                                                    THEN 
+                                                        rate = 0 
+                                                    ELSE 
+                                                        rate > 0 
+                                                    END
+                                            ),
     reporting_tax_authority_id              integer NOT NULL REFERENCES core.tax_authorities(tax_authority_id),
     collecting_tax_authority_id             integer NOT NULL REFERENCES core.tax_authorities(tax_authority_id),
     collecting_account_id                   integer NOT NULL REFERENCES core.accounts(account_id),
     rounding_method_code                    national character varying(4) NULL REFERENCES core.rounding_methods(rounding_method_code),
     rounding_decimal_places                 integer_strict2 NOT NULL DEFAULT(2),
-    account_id                              bigint NOT NULL REFERENCES core.accounts(account_id),
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
                                             DEFAULT(NOW())
@@ -2536,6 +2626,13 @@ CREATE TABLE core.item_groups
 
 ALTER TABLE core.sales_tax_exempt_details
 ADD FOREIGN KEY(item_group_id) REFERENCES core.item_groups(item_group_id);
+
+ALTER TABLE core.state_sales_taxes
+ADD FOREIGN KEY(item_group_id) REFERENCES core.item_groups(item_group_id);
+
+ALTER TABLE core.county_sales_taxes
+ADD FOREIGN KEY(item_group_id) REFERENCES core.item_groups(item_group_id);
+
 
 CREATE UNIQUE INDEX item_groups_item_group_code_uix
 ON core.item_groups(UPPER(item_group_code));
@@ -3291,10 +3388,10 @@ CREATE TABLE office.configuration
 );
 
 
--->-->-- /db/src/01. types, domains, tables, and constraints/tables2.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/01. types, domains, tables, and constraints/tables2.sql --<--<--
 
 
--->-->-- /db/src/01. types, domains, tables, and constraints/types.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/01. types, domains, tables, and constraints/types.sql --<--<--
 DROP TYPE IF EXISTS transactions.stock_detail_type CASCADE;
 CREATE TYPE transactions.stock_detail_type AS
 (
@@ -3341,7 +3438,7 @@ CREATE TYPE transactions.stock_adjustment_type AS
 );
 
 
--->-->-- /db/src/02. functions and logic/audit/audit.is_valid_login_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/audit/audit.is_valid_login_id.sql --<--<--
 DROP FUNCTION IF EXISTS audit.is_valid_login_id(bigint);
 
 CREATE FUNCTION audit.is_valid_login_id(bigint)
@@ -3359,7 +3456,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.append_if_not_null.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.append_if_not_null.sql --<--<--
 CREATE FUNCTION core.append_if_not_null(text, text)
 RETURNS text
 AS
@@ -3377,7 +3474,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/core/core.convert_unit.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.convert_unit.sql --<--<--
 DROP FUNCTION IF EXISTS core.convert_unit(from_unit integer, to_unit integer);
 
 CREATE FUNCTION core.convert_unit(from_unit integer, to_unit integer)
@@ -3435,7 +3532,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.count_item_in_stock.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.count_item_in_stock.sql --<--<--
 DROP FUNCTION IF EXISTS core.count_item_in_stock(_item_id integer, _unit_id integer, _store_id integer);
 
 CREATE FUNCTION core.count_item_in_stock(_item_id integer, _unit_id integer, _store_id integer)
@@ -3458,7 +3555,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/core/core.count_purchases.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.count_purchases.sql --<--<--
 DROP FUNCTION IF EXISTS core.count_purchases(_item_id integer, _unit_id integer, _store_id integer);
 
 CREATE FUNCTION core.count_purchases(_item_id integer, _unit_id integer, _store_id integer)
@@ -3496,7 +3593,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.count_sales.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.count_sales.sql --<--<--
 DROP FUNCTION IF EXISTS core.count_sales(_item_id integer, _unit_id integer, _store_id integer);
 CREATE FUNCTION core.count_sales(_item_id integer, _unit_id integer, _store_id integer)
 RETURNS decimal
@@ -3533,7 +3630,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.create_flag.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.create_flag.sql --<--<--
 CREATE FUNCTION core.create_flag
 (
     user_id_    integer,
@@ -3568,7 +3665,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_account_id_by_account_code.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_account_id_by_account_code.sql --<--<--
 CREATE FUNCTION core.get_account_id_by_account_code(text)
 RETURNS bigint
 AS
@@ -3585,7 +3682,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_account_id_by_parameter.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_account_id_by_parameter.sql --<--<--
 CREATE FUNCTION core.get_account_id_by_parameter(text)
 RETURNS bigint
 AS
@@ -3605,7 +3702,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_account_id_by_party_code.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_account_id_by_party_code.sql --<--<--
 CREATE FUNCTION core.get_account_id_by_party_code(party_code text)
 RETURNS bigint
 AS
@@ -3622,7 +3719,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_account_id_by_party_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_account_id_by_party_id.sql --<--<--
 CREATE FUNCTION core.get_account_id_by_party_id(party_id bigint)
 RETURNS bigint
 AS
@@ -3639,7 +3736,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_account_id_by_shipper_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_account_id_by_shipper_id.sql --<--<--
 CREATE FUNCTION core.get_account_id_by_shipper_id(integer)
 RETURNS bigint
 AS
@@ -3659,7 +3756,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_account_ids.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_account_ids.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_account_ids(root_account_id bigint);
 
 CREATE FUNCTION core.get_account_ids(root_account_id bigint)
@@ -3684,7 +3781,7 @@ BEGIN
 END
 $$LANGUAGE plpgsql;
 
--->-->-- /db/src/02. functions and logic/core/core.get_account_master_id_by_account_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_account_master_id_by_account_id.sql --<--<--
 CREATE FUNCTION core.get_account_master_id_by_account_id(bigint)
 RETURNS integer
 AS
@@ -3703,7 +3800,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_account_master_id_by_account_master_code.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_account_master_id_by_account_master_code.sql --<--<--
 CREATE FUNCTION core.get_account_master_id_by_account_master_code(text)
 RETURNS integer
 AS
@@ -3720,7 +3817,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_account_name.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_account_name.sql --<--<--
 --Todo:Rename to core.get_account_name_by_account_id
 CREATE FUNCTION core.get_account_name(bigint)
 RETURNS text
@@ -3741,7 +3838,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_account_name_by_account_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_account_name_by_account_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_account_name_by_account_id(bigint);
 
 CREATE FUNCTION core.get_account_name_by_account_id(bigint)
@@ -3761,7 +3858,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_associated_units.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_associated_units.sql --<--<--
 CREATE FUNCTION core.get_associated_units(integer)
 RETURNS TABLE(unit_id integer, unit_code text, unit_name text)
 AS
@@ -3824,7 +3921,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_associated_units_from_item_code.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_associated_units_from_item_code.sql --<--<--
 CREATE FUNCTION core.get_associated_units_from_item_code(text)
 RETURNS TABLE(unit_id integer, unit_code text, unit_name text)
 AS
@@ -3844,7 +3941,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_associated_units_from_item_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_associated_units_from_item_id.sql --<--<--
 CREATE FUNCTION core.get_associated_units_from_item_id(integer)
 RETURNS TABLE(unit_id integer, unit_code text, unit_name text)
 AS
@@ -3864,7 +3961,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_attachment_lookup_info.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_attachment_lookup_info.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_attachment_lookup_info(national character varying(50));
 
 CREATE FUNCTION core.get_attachment_lookup_info(national character varying(50))
@@ -3885,7 +3982,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_base_quantity_by_unit_name.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_base_quantity_by_unit_name.sql --<--<--
 CREATE FUNCTION core.get_base_quantity_by_unit_name(text, integer)
 RETURNS decimal
 AS
@@ -3904,7 +4001,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_base_unit_id_by_unit_name.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_base_unit_id_by_unit_name.sql --<--<--
 CREATE FUNCTION core.get_base_unit_id_by_unit_name(text)
 RETURNS integer
 AS
@@ -3922,7 +4019,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_brand_code_by_brand_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_brand_code_by_brand_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_brand_code_by_brand_id(integer);
 
 CREATE FUNCTION core.get_brand_code_by_brand_id(integer)
@@ -3939,7 +4036,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_brand_id_by_brand_code.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_brand_id_by_brand_code.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_brand_id_by_brand_code(text);
 
 CREATE FUNCTION core.get_brand_id_by_brand_code(text)
@@ -3956,7 +4053,7 @@ LANGUAGE plpgsql;
 
 --SELECT * FROM core.get_brand_id_by_brand_code('DEF');
 
--->-->-- /db/src/02. functions and logic/core/core.get_brand_id_by_brand_name.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_brand_id_by_brand_name.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_brand_id_by_brand_name(text);
 
 CREATE FUNCTION core.get_brand_id_by_brand_name(text)
@@ -3973,7 +4070,7 @@ LANGUAGE plpgsql;
 
 --SELECT * FROM core.get_brand_id_by_brand_name('DEF');
 
--->-->-- /db/src/02. functions and logic/core/core.get_brand_name_by_brand_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_brand_name_by_brand_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_brand_name_by_brand_id(integer);
 
 CREATE FUNCTION core.get_brand_name_by_brand_id(integer)
@@ -3990,7 +4087,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_cash_account_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_cash_account_id.sql --<--<--
 CREATE FUNCTION core.get_cash_account_id()
 RETURNS bigint
 AS
@@ -4008,7 +4105,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_country_id_by_country_code.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_country_id_by_country_code.sql --<--<--
 CREATE FUNCTION core.get_country_id_by_country_code(national character varying(12))
 RETURNS integer
 AS
@@ -4024,7 +4121,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- /db/src/02. functions and logic/core/core.get_country_name_by_country_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_country_name_by_country_id.sql --<--<--
 CREATE FUNCTION core.get_country_name_by_country_id(integer)
 RETURNS text
 AS
@@ -4040,7 +4137,41 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_currency_code_by_office_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_county_id_by_county_code.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_county_id_by_county_code(national character varying(12));
+
+CREATE FUNCTION core.get_county_id_by_county_code(national character varying(12))
+RETURNS integer
+AS
+$$
+BEGIN
+    RETURN
+        county_id
+    FROM
+        core.counties
+    WHERE
+        county_code = $1;
+END
+$$
+LANGUAGE plpgsql;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_county_id_by_county_name.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_county_id_by_county_name(text);
+
+CREATE FUNCTION core.get_county_id_by_county_name(text)
+RETURNS integer
+AS
+$$
+BEGIN
+    RETURN county_id
+    FROM core.counties
+    WHERE county_name = $1;
+END
+$$
+LANGUAGE plpgsql;
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_currency_code_by_office_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_currency_code_by_office_id(integer);
 
 CREATE FUNCTION core.get_currency_code_by_office_id(office_id integer)
@@ -4060,7 +4191,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_currency_code_by_party_code.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_currency_code_by_party_code.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_currency_code_by_party_code(national character varying(12));
 
 CREATE FUNCTION core.get_currency_code_by_party_code(_party_code national character varying(12))
@@ -4082,7 +4213,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_currency_code_by_party_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_currency_code_by_party_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_currency_code_by_party_id(bigint);
 
 CREATE FUNCTION core.get_currency_code_by_party_id(party_id bigint)
@@ -4103,7 +4234,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_current_year.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_current_year.sql --<--<--
 
 DROP FUNCTION IF EXISTS core.get_current_year();
 CREATE FUNCTION core.get_current_year()
@@ -4118,7 +4249,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_email_address_by_party_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_email_address_by_party_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_email_address_by_party_id(bigint);
 
 CREATE FUNCTION core.get_email_address_by_party_id(bigint)
@@ -4134,7 +4265,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- /db/src/02. functions and logic/core/core.get_flag_background_color.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_flag_background_color.sql --<--<--
 CREATE FUNCTION core.get_flag_background_color(flag_type_id_ integer)
 RETURNS text
 AS
@@ -4151,7 +4282,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_flag_foreground_color.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_flag_foreground_color.sql --<--<--
 CREATE FUNCTION core.get_flag_foreground_color(flag_type_id_ integer)
 RETURNS text
 AS
@@ -4168,7 +4299,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_flag_type_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_flag_type_id.sql --<--<--
 CREATE FUNCTION core.get_flag_type_id
 (
     user_id_ integer,
@@ -4224,7 +4355,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_frequency_code_by_frequency_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_frequency_code_by_frequency_id.sql --<--<--
 CREATE FUNCTION core.get_frequency_code_by_frequency_id(integer)
 RETURNS text
 AS
@@ -4241,7 +4372,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_item_code_by_item_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_item_code_by_item_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_item_code_by_item_id(integer);
 
 CREATE FUNCTION core.get_item_code_by_item_id(integer)
@@ -4260,7 +4391,7 @@ LANGUAGE plpgsql;
 
 --SELECT core.get_item_code_by_item_id(1);
 
--->-->-- /db/src/02. functions and logic/core/core.get_item_cost_price.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_item_cost_price.sql --<--<--
 CREATE FUNCTION core.get_item_cost_price(item_id_ integer, unit_id_ integer, party_id_ bigint)
 RETURNS money_strict2
 AS
@@ -4334,7 +4465,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_item_group_code_by_item_group_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_item_group_code_by_item_group_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_item_group_code_by_item_group_id(integer);
 
 CREATE FUNCTION core.get_item_group_code_by_item_group_id(integer)
@@ -4351,7 +4482,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_item_group_id_by_item_group_code.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_item_group_id_by_item_group_code.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_item_group_id_by_item_group_code(text);
 
 CREATE FUNCTION core.get_item_group_id_by_item_group_code(text)
@@ -4368,7 +4499,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_item_group_id_by_item_group_name.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_item_group_id_by_item_group_name.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_item_group_id_by_item_group_name(text);
 
 CREATE FUNCTION core.get_item_group_id_by_item_group_name(text)
@@ -4385,7 +4516,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_item_group_name_by_item_group_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_item_group_name_by_item_group_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_item_group_name_by_item_group_id(integer);
 
 CREATE FUNCTION core.get_item_group_name_by_item_group_id(integer)
@@ -4402,7 +4533,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_item_id_by_item_code.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_item_id_by_item_code.sql --<--<--
 CREATE FUNCTION core.get_item_id_by_item_code(text)
 RETURNS integer
 AS
@@ -4422,7 +4553,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_item_name_by_item_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_item_name_by_item_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_item_name_by_item_id(integer);
 
 CREATE FUNCTION core.get_item_name_by_item_id(integer)
@@ -4441,7 +4572,7 @@ LANGUAGE plpgsql;
 
 --SELECT core.get_item_name_by_item_id(1);
 
--->-->-- /db/src/02. functions and logic/core/core.get_item_tax_rate.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_item_tax_rate.sql --<--<--
 CREATE FUNCTION core.get_item_tax_rate(integer)
 RETURNS decimal
 AS
@@ -4460,7 +4591,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_menu_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_menu_id.sql --<--<--
 CREATE FUNCTION core.get_menu_id(menu_code text)
 RETURNS INTEGER
 AS
@@ -4477,7 +4608,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_party_code.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_party_code.sql --<--<--
 
 
 /*******************************************************************
@@ -4544,7 +4675,7 @@ LANGUAGE 'plpgsql';
 
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_party_id_by_party_code.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_party_id_by_party_code.sql --<--<--
 CREATE FUNCTION core.get_party_id_by_party_code(text)
 RETURNS bigint
 AS
@@ -4564,7 +4695,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_party_type_id_by_party_code.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_party_type_id_by_party_code.sql --<--<--
 CREATE FUNCTION core.get_party_type_id_by_party_code(text)
 RETURNS smallint
 AS
@@ -4584,7 +4715,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_price_type_name_by_price_type_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_price_type_name_by_price_type_id.sql --<--<--
 CREATE FUNCTION core.get_price_type_name_by_price_type_id(integer)
 RETURNS text
 AS
@@ -4601,7 +4732,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_root_parent_menu_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_root_parent_menu_id.sql --<--<--
 CREATE FUNCTION core.get_root_parent_menu_id(text)
 RETURNS integer
 AS
@@ -4635,7 +4766,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_root_unit_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_root_unit_id.sql --<--<--
 CREATE FUNCTION core.get_root_unit_id(integer)
 RETURNS integer
 AS
@@ -4656,7 +4787,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_salesperson_name_by_salesperson_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_salesperson_name_by_salesperson_id.sql --<--<--
 CREATE FUNCTION core.get_salesperson_name_by_salesperson_id(integer)
 RETURNS text
 AS
@@ -4673,7 +4804,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_shipper_code.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_shipper_code.sql --<--<--
 
 /*******************************************************************
     GET UNIQUE EIGHT-TO-TEN DIGIT shipper CODE
@@ -4724,7 +4855,7 @@ LANGUAGE 'plpgsql';
 
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_shipper_name_by_shipper_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_shipper_name_by_shipper_id.sql --<--<--
 CREATE FUNCTION core.get_shipper_name_by_shipper_id(integer)
 RETURNS text
 AS
@@ -4741,7 +4872,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_shipping_address_by_shipping_address_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_shipping_address_by_shipping_address_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_shipping_address_by_shipping_address_id(integer);
 
 CREATE FUNCTION core.get_shipping_address_by_shipping_address_id(integer)
@@ -4773,7 +4904,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_shipping_address_code_by_shipping_address_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_shipping_address_code_by_shipping_address_id.sql --<--<--
 CREATE FUNCTION core.get_shipping_address_code_by_shipping_address_id(integer)
 RETURNS text
 AS
@@ -4793,7 +4924,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_shipping_address_id_by_shipping_address_code.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_shipping_address_id_by_shipping_address_code.sql --<--<--
 
 CREATE FUNCTION core.get_shipping_address_id_by_shipping_address_code(text, bigint)
 RETURNS smallint
@@ -4816,7 +4947,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_state_id_by_state_code.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_state_id_by_state_code.sql --<--<--
 CREATE FUNCTION core.get_state_id_by_state_code(national character varying(12))
 RETURNS integer
 AS
@@ -4832,7 +4963,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- /db/src/02. functions and logic/core/core.get_state_id_by_state_name.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_state_id_by_state_name.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_state_id_by_state_name(text);
 
 CREATE FUNCTION core.get_state_id_by_state_name(text)
@@ -4848,7 +4979,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_state_name_by_state_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_state_name_by_state_id.sql --<--<--
 CREATE FUNCTION core.get_state_name_by_state_id(integer)
 RETURNS text
 AS
@@ -4864,7 +4995,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- /db/src/02. functions and logic/core/core.get_unit_code_by_unit_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_unit_code_by_unit_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_unit_code_by_unit_id(integer);
 
 CREATE FUNCTION core.get_unit_code_by_unit_id(integer)
@@ -4883,7 +5014,7 @@ LANGUAGE plpgsql;
 
 --SELECT core.get_unit_code_by_unit_id(1);
 
--->-->-- /db/src/02. functions and logic/core/core.get_unit_id_by_unit_code.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_unit_id_by_unit_code.sql --<--<--
 CREATE FUNCTION core.get_unit_id_by_unit_code(text)
 RETURNS smallint
 AS
@@ -4904,7 +5035,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_unit_id_by_unit_name.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_unit_id_by_unit_name.sql --<--<--
 CREATE FUNCTION core.get_unit_id_by_unit_name(text)
 RETURNS integer
 AS
@@ -4924,7 +5055,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.get_unit_name_by_unit_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_unit_name_by_unit_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_unit_name_by_unit_id(integer);
 
 CREATE FUNCTION core.get_unit_name_by_unit_id(integer)
@@ -4943,7 +5074,7 @@ LANGUAGE plpgsql;
 
 --SELECT core.get_unit_name_by_unit_id(1);
 
--->-->-- /db/src/02. functions and logic/core/core.has_child_accounts.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.has_child_accounts.sql --<--<--
 CREATE FUNCTION core.has_child_accounts(bigint)
 RETURNS boolean
 AS
@@ -4959,7 +5090,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.is_leap_year.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.is_leap_year.sql --<--<--
 DROP FUNCTION IF EXISTS core.is_leap_year(integer);
 CREATE FUNCTION core.is_leap_year(integer)
 RETURNS boolean
@@ -4986,7 +5117,7 @@ LANGUAGE plpgsql
 IMMUTABLE STRICT;
 
 
--->-->-- /db/src/02. functions and logic/core/core.is_parent_unit.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.is_parent_unit.sql --<--<--
 CREATE FUNCTION core.is_parent_unit(parent integer, child integer)
 RETURNS boolean
 AS
@@ -5019,7 +5150,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.is_stock_item.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.is_stock_item.sql --<--<--
 DROP FUNCTION IF EXISTS core.is_stock_item(item_id integer);
 
 CREATE FUNCTION core.is_stock_item(item_id integer)
@@ -5059,7 +5190,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/core/core.is_supplier.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.is_supplier.sql --<--<--
 CREATE FUNCTION core.is_supplier(bigint)
 RETURNS boolean
 AS
@@ -5083,7 +5214,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/core/core.is_valid_item_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.is_valid_item_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.is_valid_item_id(integer);
 
 CREATE FUNCTION core.is_valid_item_id(integer)
@@ -5100,7 +5231,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- /db/src/02. functions and logic/core/core.is_valid_unit.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.is_valid_unit.sql --<--<--
 DROP FUNCTION IF EXISTS core.is_valid_unit(_item_id integer, _unit_id integer);
 
 CREATE FUNCTION core.is_valid_unit(_item_id integer, _unit_id integer)
@@ -5122,7 +5253,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- /db/src/02. functions and logic/core/core.is_valid_unit_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.is_valid_unit_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.is_valid_unit_id(integer);
 
 CREATE FUNCTION core.is_valid_unit_id(integer)
@@ -5161,7 +5292,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- /db/src/02. functions and logic/logic/functions/core/core.calculate_interest.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/core/core.calculate_interest.sql --<--<--
 DROP FUNCTION IF EXISTS core.calculate_interest(principal numeric, rate numeric, days integer, num_of_days_in_year integer, round_up integer);
 CREATE FUNCTION core.calculate_interest(principal numeric, rate numeric, days integer, round_up integer, num_of_days_in_year integer)
 RETURNS numeric
@@ -5219,7 +5350,7 @@ IMMUTABLE STRICT;
 
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/core/core.get_item_cost_price.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/core/core.get_item_cost_price.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_item_cost_price(item_id_ integer, party_id_ bigint, unit_id_ integer);
 CREATE FUNCTION core.get_item_cost_price(item_id_ integer, party_id_ bigint, unit_id_ integer)
 RETURNS money_strict2
@@ -5313,7 +5444,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/core/core.get_item_selling_price.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/core/core.get_item_selling_price.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_item_selling_price(item_id_ integer, party_type_id_ integer, price_type_id_ integer, unit_id_ integer);
 CREATE FUNCTION core.get_item_selling_price(item_id_ integer, party_type_id_ integer, price_type_id_ integer, unit_id_ integer)
 RETURNS money_strict2
@@ -5410,7 +5541,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/core/core.get_ordered_quantity.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/core/core.get_ordered_quantity.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_ordered_quantity(_item_id integer, _unit_id integer, _office_id integer);
 
 CREATE FUNCTION core.get_ordered_quantity(_item_id integer, _unit_id integer, _office_id integer)
@@ -5451,7 +5582,7 @@ LANGUAGE plpgsql;
 --SELECT core.get_ordered_quantity(17, 1, 2);
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/office/office.can_login.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/office/office.can_login.sql --<--<--
 DROP FUNCTION IF EXISTS office.can_login(user_id integer_strict, office_id integer_strict);
 CREATE FUNCTION office.can_login(user_id integer_strict, office_id integer_strict)
 RETURNS boolean
@@ -5498,7 +5629,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/office/office.sign_in.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/office/office.sign_in.sql --<--<--
 DROP FUNCTION IF EXISTS office.sign_in(office_id integer_strict, user_name text, password text, browser text, ip_address text, remote_user text, culture text);
 CREATE FUNCTION office.sign_in(office_id integer_strict, user_name text, password text, browser text, ip_address text, remote_user text, culture text)
 RETURNS integer
@@ -5557,7 +5688,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/policy/policy.can_post_transaction.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/policy/policy.can_post_transaction.sql --<--<--
 DROP FUNCTION IF EXISTS policy.can_post_transaction(_user_id integer, _office_id integer, transaction_book text);
 
 CREATE FUNCTION policy.can_post_transaction(_user_id integer, _office_id integer, transaction_book text) --TODO
@@ -5600,7 +5731,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/policy/policy.get_menu.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/policy/policy.get_menu.sql --<--<--
 DROP FUNCTION IF EXISTS policy.get_menu(user_id_ integer, office_id_ integer, culture_ text);
 CREATE FUNCTION policy.get_menu(user_id_ integer, office_id_ integer, culture_ text)
 RETURNS TABLE
@@ -5658,7 +5789,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/transactions/core.get_base_quantity_by_unit_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/core.get_base_quantity_by_unit_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_base_quantity_by_unit_id(integer, integer);
 
 CREATE FUNCTION core.get_base_quantity_by_unit_id(integer, integer)
@@ -5738,7 +5869,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.auto_verify.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.auto_verify.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.auto_verify(bigint) CASCADE;
 
 CREATE FUNCTION transactions.auto_verify(bigint)
@@ -6404,7 +6535,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_accrued_interest-todo.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_accrued_interest-todo.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_accrued_interest(office_id integer, party_id bigint);
 
 CREATE FUNCTION transactions.get_accrued_interest(office_id integer, party_id bigint)
@@ -6418,7 +6549,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_average_party_transaction.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_average_party_transaction.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_average_party_transaction(party_id bigint);
 
 
@@ -6508,7 +6639,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_cash_repository_balance.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_cash_repository_balance.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_cash_repository_balance(_cash_repository_id integer, _currency_code national character varying(12));
 CREATE FUNCTION transactions.get_cash_repository_balance(_cash_repository_id integer, _currency_code national character varying(12))
 RETURNS money_strict2
@@ -6564,7 +6695,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_cost_of_goods_sold.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_cost_of_goods_sold.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_cost_of_goods_sold(_item_id integer, _unit_id integer, _store_id integer, _quantity integer);
 
 CREATE FUNCTION transactions.get_cost_of_goods_sold(_item_id integer, _unit_id integer, _store_id integer, _quantity integer)
@@ -6667,7 +6798,7 @@ LANGUAGE PLPGSQL;
 --SELECT * FROM transactions.get_cost_of_goods_sold(1, 7, 1, 1);
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_last_receipt_date.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_last_receipt_date.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_last_receipt_date(office_id integer, party_id bigint);
 CREATE FUNCTION transactions.get_last_receipt_date(office_id integer, party_id bigint)
 RETURNS date
@@ -6690,7 +6821,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_mavcogs.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_mavcogs.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_mavcogs(_item_id integer, _store_id integer, _base_quantity decimal, _factor decimal(24, 4));
 
 CREATE FUNCTION transactions.get_mavcogs(_item_id integer, _store_id integer, _base_quantity decimal, _factor decimal(24, 4))
@@ -6758,7 +6889,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_non_gl_product_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_non_gl_product_view.sql --<--<--
 
 DROP FUNCTION IF EXISTS transactions.get_non_gl_product_view
 (   
@@ -6903,7 +7034,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_party_transaction_summary.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_party_transaction_summary.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_party_transaction_summary
 (
     office_id integer, 
@@ -6954,7 +7085,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_product_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_product_view.sql --<--<--
 
 DROP FUNCTION IF EXISTS transactions.get_product_view
 (   
@@ -7112,7 +7243,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_receipt_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_receipt_view.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_receipt_view
 (
     _user_id                integer,
@@ -7218,7 +7349,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_reorder_view_function.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_reorder_view_function.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_reorder_view_function(office_id integer);
 
 CREATE FUNCTION transactions.get_reorder_view_function(office_id integer)
@@ -7276,7 +7407,7 @@ LANGUAGE plpgsql;
 --SELECT * FROM transactions.get_reorder_view_function(2);
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_sales_by_offices.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_sales_by_offices.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_sales_by_offices(office_id integer, divide_by integer);
 
 CREATE FUNCTION transactions.get_sales_by_offices(office_id integer, divide_by integer)
@@ -7383,16 +7514,17 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_sales_tax.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_sales_tax.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_sales_tax
 (
+    _tran_book                  national character varying(12),
     _store_id                   integer,
     _party_code                 national character varying(12), 
     _shipping_address_code      national character varying(12),
     _price_type_id              integer,
     _item_id                    national character varying(12),
-    _price                      money_strict,
-    _quantity                   integer_strict,
+    _price                      money_strict2,
+    _quantity                   integer_strict2,
     _discount                   money_strict2,
     _shipping_charge            money_strict2,
     _sales_tax_id               integer
@@ -7400,13 +7532,14 @@ DROP FUNCTION IF EXISTS transactions.get_sales_tax
 
 CREATE FUNCTION transactions.get_sales_tax
 (
+    _tran_book                  national character varying(12),
     _store_id                   integer,
     _party_code                 national character varying(12), 
     _shipping_address_code      national character varying(12),
     _price_type_id              integer,
     _item_id                    national character varying(12),
-    _price                      money_strict,
-    _quantity                   integer_strict,
+    _price                      money_strict2,
+    _quantity                   integer_strict2,
     _discount                   money_strict2,
     _shipping_charge            money_strict2,
     _sales_tax_id               integer
@@ -7415,13 +7548,47 @@ RETURNS money_strict2
 AS
 $$
 BEGIN
+    IF(COALESCE(_tran_book, '') = '') THEN
+        RETURN 0;
+    END IF;
+
+    IF(COALESCE(_store_id, 0) = 0) THEN
+        RETURN 0;
+    END IF;
+
+    IF(COALESCE(_party_code, '') = '') THEN
+        RETURN 0;
+    END IF;
+    
+    IF(COALESCE(_price, 0) = 0) THEN
+        RETURN 0;
+    END IF;
+    
+    IF(COALESCE(_quantity, 0) = 0) THEN
+        RETURN 0;
+    END IF;
+    
+    IF(COALESCE(_sales_tax_id, 0) = 0) THEN
+        RETURN 0;
+    END IF;
+
     RETURN 100;--Todo;
 END
 $$
 LANGUAGE plpgsql;
     
 
--->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_sales_tax_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_sales_tax_id.sql --<--<--
+DROP FUNCTION IF EXISTS transactions.get_sales_tax_id
+(
+    _tran_book                  national character varying(12),
+    _store_id                   integer,
+    _party_code                 national character varying(12),
+    _shipping_address_code      national character varying(12),
+    _price_type_id              integer,
+    _item_code                  national character varying(12)    
+);
+
 CREATE FUNCTION transactions.get_sales_tax_id
 (
     _tran_book                  national character varying(12),
@@ -7435,12 +7602,25 @@ RETURNS integer
 AS
 $$
 BEGIN
-    RETURN 1; --Todo
+    IF(COALESCE(_tran_book, '') = '') THEN
+        RETURN 0;
+    END IF;
+
+    IF(COALESCE(_store_id, 0) = 0) THEN
+        RETURN 0;
+    END IF;
+
+    IF(COALESCE(_party_code, '') = '') THEN
+        RETURN 0;
+    END IF;
+    
+
+    RETURN 2; --Todo
 END
 $$
 LANGUAGE plpgsql;
 
--->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_top_selling_products_by_office.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_top_selling_products_by_office.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_top_selling_products_by_office(_office_id integer, top integer);
 
 CREATE FUNCTION transactions.get_top_selling_products_by_office(_office_id integer, top integer)
@@ -7549,7 +7729,7 @@ LANGUAGE plpgsql;
 --SELECT  id, office_code, item_name, total_sales FROM transactions.get_top_selling_products_by_office()
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_top_selling_products_of_all_time.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_top_selling_products_of_all_time.sql --<--<--
 
 DROP FUNCTION IF EXISTS transactions.get_top_selling_products_of_all_time(top int);
 
@@ -7626,7 +7806,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_total_due.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_total_due.sql --<--<--
 CREATE FUNCTION transactions.get_total_due(office_id integer, party_id bigint)
 RETURNS DECIMAL(24, 4)
 AS
@@ -7676,7 +7856,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_value_date.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_value_date.sql --<--<--
 CREATE FUNCTION transactions.get_value_date()
 RETURNS date
 AS
@@ -7690,7 +7870,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_write_off_cost_of_goods_sold.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_write_off_cost_of_goods_sold.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_write_off_cost_of_goods_sold(_stock_master_id bigint, _item_id integer, _unit_id integer, _quantity integer);
 
 CREATE FUNCTION transactions.get_write_off_cost_of_goods_sold(_stock_master_id bigint, _item_id integer, _unit_id integer, _quantity integer)
@@ -7719,7 +7899,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.post_non_gl_transaction.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.post_non_gl_transaction.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_non_gl_transaction
 (
     _book_name                              national character varying(12),
@@ -7824,7 +8004,7 @@ END;
 $$
 LANGUAGE plpgsql;
 
--->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.post_purchase.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.post_purchase.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_purchase
 (
     _book_name                              national character varying(12),
@@ -8012,7 +8192,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.post_purchase_return.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.post_purchase_return.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_direct_sales
 (
         _office_id                              integer,
@@ -8285,7 +8465,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.post_purhcase_reorder.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.post_purhcase_reorder.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_purhcase_reorder
 (
         _value_date                             date,
@@ -8424,7 +8604,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.post_receipt_function.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.post_receipt_function.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_receipt_function
 (
     _user_id                integer, 
@@ -8579,7 +8759,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.post_sales.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.post_sales.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_sales
 (
     _book_name                              national character varying(12),
@@ -8805,7 +8985,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.post_sales_return.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.post_sales_return.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_sales_return
 (
     _transaction_master_id          bigint,
@@ -8992,7 +9172,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.post_stock_journal.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.post_stock_journal.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_stock_journal
 (
         _office_id                              integer,
@@ -9135,7 +9315,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.refresh_materialized_views.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.refresh_materialized_views.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.refresh_materialized_views();
 
 CREATE FUNCTION transactions.refresh_materialized_views()
@@ -9150,7 +9330,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.validate_item_for_return.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.validate_item_for_return.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.validate_item_for_return(_transaction_master_id bigint, _store_id integer, _item_code national character varying(12), _unit_name national character varying(50), _quantity integer, _price money_strict);
 
 CREATE FUNCTION transactions.validate_item_for_return(_transaction_master_id bigint, _store_id integer, _item_code national character varying(12), _unit_name national character varying(50), _quantity integer, _price money_strict)
@@ -9304,7 +9484,7 @@ LANGUAGE plpgsql;
 --SELECT * FROM transactions.validate_item_for_return(9, 1, 'RMBP', 'Pièce', 1, 180000);
 
 
--->-->-- /db/src/02. functions and logic/logic/triggers/policy.check_menu_policy_trigger.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/triggers/policy.check_menu_policy_trigger.sql --<--<--
 DROP FUNCTION IF EXISTS policy.check_menu_policy_trigger() CASCADE;
 
 
@@ -9341,7 +9521,7 @@ ON policy.menu_policy
 FOR EACH ROW EXECUTE PROCEDURE policy.check_menu_policy_trigger();
 
 
--->-->-- /db/src/02. functions and logic/logic/triggers/transactions.verification_trigger.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/triggers/transactions.verification_trigger.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.verification_trigger() CASCADE;
 CREATE FUNCTION transactions.verification_trigger()
 RETURNS TRIGGER
@@ -9567,7 +9747,7 @@ FOR EACH ROW
 EXECUTE PROCEDURE transactions.verification_trigger();
 
 
--->-->-- /db/src/02. functions and logic/office/office.count_item_in_stock.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.count_item_in_stock.sql --<--<--
 CREATE FUNCTION office.count_item_in_stock(item_id_ integer, unit_id_ integer, office_id_ integer)
 RETURNS decimal
 AS
@@ -9626,7 +9806,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/office/office.create_user.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.create_user.sql --<--<--
 CREATE FUNCTION office.create_user
 (
     role_id integer_strict,
@@ -9647,7 +9827,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/office/office.get_cash_repository_id_by_cash_repository_code.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_cash_repository_id_by_cash_repository_code.sql --<--<--
 CREATE FUNCTION office.get_cash_repository_id_by_cash_repository_code(text)
 RETURNS integer
 AS
@@ -9664,7 +9844,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/office/office.get_cash_repository_id_by_cash_repository_name.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_cash_repository_id_by_cash_repository_name.sql --<--<--
 CREATE FUNCTION office.get_cash_repository_id_by_cash_repository_name(text)
 RETURNS integer
 AS
@@ -9682,7 +9862,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/office/office.get_cost_of_good_method.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_cost_of_good_method.sql --<--<--
 DROP FUNCTION IF EXISTS office.get_cost_of_good_method(_office_id integer);
 
 CREATE FUNCTION office.get_cost_of_good_method(_office_id integer)
@@ -9700,7 +9880,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/office/office.get_logged_in_culture.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_logged_in_culture.sql --<--<--
 CREATE FUNCTION office.get_logged_in_culture(_user_id integer)
 RETURNS text
 AS
@@ -9723,7 +9903,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/office/office.get_logged_in_office_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_logged_in_office_id.sql --<--<--
 CREATE FUNCTION office.get_logged_in_office_id(_user_id integer)
 RETURNS integer
 AS
@@ -9746,7 +9926,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/office/office.get_login_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_login_id.sql --<--<--
 CREATE FUNCTION office.get_login_id(_user_id integer)
 RETURNS bigint
 AS
@@ -9769,7 +9949,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/office/office.get_office_code_by_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_office_code_by_id.sql --<--<--
 CREATE FUNCTION office.get_office_code_by_id(office_id integer_strict)
 RETURNS text
 AS
@@ -9785,7 +9965,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/office/office.get_office_id_by_cash_repository_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_office_id_by_cash_repository_id.sql --<--<--
 DROP FUNCTION IF EXISTS office.get_office_id_by_cash_repository_id(integer);
 
 CREATE FUNCTION office.get_office_id_by_cash_repository_id(integer)
@@ -9804,7 +9984,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/office/office.get_office_id_by_office_code.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_office_id_by_office_code.sql --<--<--
 CREATE FUNCTION office.get_office_id_by_office_code(office_code text)
 RETURNS integer
 AS
@@ -9820,7 +10000,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/office/office.get_office_id_by_store_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_office_id_by_store_id.sql --<--<--
 DROP FUNCTION IF EXISTS office.get_office_id_by_store_id(integer);
 
 CREATE FUNCTION office.get_office_id_by_store_id(integer)
@@ -9838,7 +10018,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/office/office.get_office_id_by_user_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_office_id_by_user_id.sql --<--<--
 CREATE FUNCTION office.get_office_id_by_user_id(user_id integer_strict)
 RETURNS integer
 AS
@@ -9854,7 +10034,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/office/office.get_office_ids.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_office_ids.sql --<--<--
 DROP FUNCTION IF EXISTS office.get_office_ids(root_office_id integer);
 
 CREATE FUNCTION office.get_office_ids(root_office_id integer)
@@ -9879,7 +10059,7 @@ BEGIN
 END
 $$LANGUAGE plpgsql;
 
--->-->-- /db/src/02. functions and logic/office/office.get_office_name_by_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_office_name_by_id.sql --<--<--
 CREATE FUNCTION office.get_office_name_by_id(office_id integer_strict)
 RETURNS text
 AS
@@ -9895,7 +10075,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/office/office.get_offices.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_offices.sql --<--<--
 CREATE TYPE office.office_type AS
 (
     office_id               integer_strict,
@@ -9928,7 +10108,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/office/office.get_role_code_by_user_name.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_role_code_by_user_name.sql --<--<--
 CREATE FUNCTION office.get_role_code_by_user_name(user_name text)
 RETURNS text
 AS
@@ -9945,7 +10125,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/office/office.get_role_id_by_role_code.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_role_id_by_role_code.sql --<--<--
 DROP FUNCTION IF EXISTS office.get_role_id_by_role_code(text);
 
 CREATE FUNCTION office.get_role_id_by_role_code(text)
@@ -9962,7 +10142,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/office/office.get_role_id_by_role_name.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_role_id_by_role_name.sql --<--<--
 DROP FUNCTION IF EXISTS office.get_role_id_by_role_name(text);
 
 CREATE FUNCTION office.get_role_id_by_role_name(text)
@@ -9979,7 +10159,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/office/office.get_role_id_by_use_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_role_id_by_use_id.sql --<--<--
 CREATE FUNCTION office.get_role_id_by_use_id(user_id integer_strict)
 RETURNS integer
 AS
@@ -9996,7 +10176,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/office/office.get_store_id_by_store_name.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_store_id_by_store_name.sql --<--<--
 CREATE FUNCTION office.get_store_id_by_store_name(text)
 RETURNS integer
 AS
@@ -10013,7 +10193,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/office/office.get_store_name_by_store_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_store_name_by_store_id.sql --<--<--
 CREATE FUNCTION office.get_store_name_by_store_id(integer)
 RETURNS text
 AS
@@ -10030,7 +10210,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/office/office.get_sys_user_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_sys_user_id.sql --<--<--
 CREATE FUNCTION office.get_sys_user_id()
 RETURNS integer
 AS
@@ -10048,7 +10228,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/office/office.get_user_id_by_user_name.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_user_id_by_user_name.sql --<--<--
 CREATE FUNCTION office.get_user_id_by_user_name(user_name text)
 RETURNS integer
 AS
@@ -10064,7 +10244,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/office/office.get_user_name_by_user_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_user_name_by_user_id.sql --<--<--
 CREATE FUNCTION office.get_user_name_by_user_id(user_id integer)
 RETURNS text
 AS
@@ -10080,7 +10260,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/office/office.is_admin.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.is_admin.sql --<--<--
 CREATE FUNCTION office.is_admin(integer)
 RETURNS boolean
 AS
@@ -10098,7 +10278,7 @@ $$
 LANGUAGE PLPGSQL;
 
 
--->-->-- /db/src/02. functions and logic/office/office.is_parent_office.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.is_parent_office.sql --<--<--
 
 CREATE FUNCTION office.is_parent_office(parent integer_strict, child integer_strict)
 RETURNS boolean
@@ -10143,7 +10323,7 @@ ADD CONSTRAINT offices_check_if_parent_chk
         );
 
 
--->-->-- /db/src/02. functions and logic/office/office.is_periodic_inventory.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.is_periodic_inventory.sql --<--<--
 DROP FUNCTION IF EXISTS office.is_periodic_inventory(_office_id integer);
 
 CREATE FUNCTION office.is_periodic_inventory(_office_id integer)
@@ -10166,7 +10346,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- /db/src/02. functions and logic/office/office.is_sys.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.is_sys.sql --<--<--
 CREATE FUNCTION office.is_sys(integer)
 RETURNS boolean
 AS
@@ -10187,7 +10367,7 @@ LANGUAGE PLPGSQL;
 
 
 
--->-->-- /db/src/02. functions and logic/office/office.is_sys_user.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.is_sys_user.sql --<--<--
 CREATE FUNCTION office.is_sys_user(integer)
 RETURNS boolean
 AS
@@ -10212,7 +10392,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/office/office.is_valid_office_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.is_valid_office_id.sql --<--<--
 DROP FUNCTION IF EXISTS office.is_valid_office_id(integer);
 
 CREATE FUNCTION office.is_valid_office_id(integer)
@@ -10230,7 +10410,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/office/office.validate_login.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.validate_login.sql --<--<--
 CREATE FUNCTION office.validate_login
 (
     user_name text,
@@ -10261,7 +10441,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/policy/policy.is_locked_out_till.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/policy/policy.is_locked_out_till.sql --<--<--
 CREATE FUNCTION policy.is_locked_out_till(user_id integer_strict)
 RETURNS TIMESTAMP
 AS
@@ -10278,7 +10458,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/public/explode_array.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/public/explode_array.sql --<--<--
 DROP FUNCTION IF EXISTS explode_array(in_array anyarray);
 
 CREATE FUNCTION explode_array(in_array anyarray) 
@@ -10291,7 +10471,7 @@ IMMUTABLE;
 
 --select * from explode_array(ARRAY[ROW(1, 1)::FOO_TYPE,ROW(1, 1)::FOO_TYPE])
 
--->-->-- /db/src/02. functions and logic/transactions/transactions.are_sales_orders_already_merged.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.are_sales_orders_already_merged.sql --<--<--
 CREATE FUNCTION transactions.are_sales_orders_already_merged(VARIADIC arr bigint[])
 RETURNS boolean
 AS
@@ -10314,7 +10494,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/transactions/transactions.are_sales_quotations_already_merged.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.are_sales_quotations_already_merged.sql --<--<--
 CREATE FUNCTION transactions.are_sales_quotations_already_merged(VARIADIC arr bigint[])
 RETURNS boolean
 AS
@@ -10347,7 +10527,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/transactions/transactions.get_default_currency_code.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.get_default_currency_code.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_default_currency_code(cash_repository_id integer);
 
 CREATE FUNCTION transactions.get_default_currency_code(cash_repository_id integer)
@@ -10369,7 +10549,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/transactions/transactions.get_default_currency_code_by_office_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.get_default_currency_code_by_office_id.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_default_currency_code_by_office_id(office_id integer);
 
 CREATE FUNCTION transactions.get_default_currency_code_by_office_id(office_id integer)
@@ -10389,7 +10569,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/transactions/transactions.get_exchange_rate.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.get_exchange_rate.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_exchange_rate(office_id integer, currency_code national character varying(12));
 
 CREATE FUNCTION transactions.get_exchange_rate(office_id integer, currency_code national character varying(12))
@@ -10451,7 +10631,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/transactions/transactions.get_invoice_amount.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.get_invoice_amount.sql --<--<--
 
 CREATE FUNCTION transactions.get_invoice_amount(transaction_master_id_ bigint)
 RETURNS money_strict2
@@ -10480,7 +10660,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/transactions/transactions.get_new_transaction_counter.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.get_new_transaction_counter.sql --<--<--
 
 /*******************************************************************
     THIS FUNCTION RETURNS A NEW INCREMENTAL COUNTER SUBJECT 
@@ -10508,7 +10688,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/transactions/transactions.get_stock_master_id_by_transaction_master_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.get_stock_master_id_by_transaction_master_id.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_stock_master_id_by_transaction_master_id(_stock_master_id bigint);
 
 CREATE FUNCTION transactions.get_stock_master_id_by_transaction_master_id(_stock_master_id bigint)
@@ -10526,7 +10706,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- /db/src/02. functions and logic/transactions/transactions.get_transaction_code.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.get_transaction_code.sql --<--<--
 CREATE FUNCTION transactions.get_transaction_code(value_date date, office_id integer, user_id integer, login_id bigint)
 RETURNS text
 AS
@@ -10543,7 +10723,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/transactions/transactions.get_transaction_master_id_by_stock_master_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.get_transaction_master_id_by_stock_master_id.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_transaction_master_id_by_stock_master_id(_stock_master_id bigint);
 
 CREATE FUNCTION transactions.get_transaction_master_id_by_stock_master_id(_stock_master_id bigint)
@@ -10561,7 +10741,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- /db/src/02. functions and logic/transactions/transactions.is_purchase.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.is_purchase.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.is_purchase(_transaction_master_id bigint);
 
 CREATE FUNCTION transactions.is_purchase(_transaction_master_id bigint)
@@ -10585,7 +10765,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/02. functions and logic/transactions/transactions.is_valid_party_by_stock_master_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.is_valid_party_by_stock_master_id.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.is_valid_party_by_stock_master_id(_stock_master_id bigint, _party_id bigint);
 
 CREATE FUNCTION transactions.is_valid_party_by_stock_master_id(_stock_master_id bigint, _party_id bigint)
@@ -10603,7 +10783,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/transactions/transactions.is_valid_party_by_transaction_master_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.is_valid_party_by_transaction_master_id.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.is_valid_party_by_transaction_master_id(_transaction_master_id bigint, _party_id bigint);
 
 CREATE FUNCTION transactions.is_valid_party_by_transaction_master_id(_transaction_master_id bigint, _party_id bigint)
@@ -10621,7 +10801,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/transactions/transactions.is_valid_stock_transaction_by_stock_master_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.is_valid_stock_transaction_by_stock_master_id.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.is_valid_stock_transaction_by_stock_master_id(_stock_master_id bigint);
 
 CREATE FUNCTION transactions.is_valid_stock_transaction_by_stock_master_id(_stock_master_id bigint)
@@ -10639,7 +10819,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/02. functions and logic/transactions/transactions.is_valid_stock_transaction_by_transaction_master_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.is_valid_stock_transaction_by_transaction_master_id.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.is_valid_stock_transaction_by_transaction_master_id(_transaction_master_id bigint);
 
 CREATE FUNCTION transactions.is_valid_stock_transaction_by_transaction_master_id(_transaction_master_id bigint)
@@ -10657,7 +10837,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/04. default values/00. currency, accounts, account-parameters.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/00. currency, accounts, account-parameters.sql --<--<--
 ALTER TABLE core.accounts
 ALTER column currency_code DROP NOT NULL;
 
@@ -10918,7 +11098,7 @@ ALTER TABLE core.accounts
 ALTER column currency_code SET NOT NULL;
 
 
--->-->-- /db/src/04. default values/00.countries,states,cities.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/00.countries,states,cities.sql --<--<--
 INSERT INTO core.countries(country_code, country_name)
 SELECT 'AF', 'Afghanistan' UNION ALL 
 SELECT 'AX', 'Åland Islands' UNION ALL 
@@ -11234,7 +11414,3151 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- /db/src/04. default values/crm.lead-sources, lead-statuses, opportunity-stages.sql --<--<--
+INSERT INTO core.counties(county_code, county_name, state_id) VALUES
+('1001', 'Autauga County', core.get_state_id_by_state_name('Alabama')),
+('1003', 'Baldwin County', core.get_state_id_by_state_name('Alabama')),
+('1005', 'Barbour County', core.get_state_id_by_state_name('Alabama')),
+('1007', 'Bibb County', core.get_state_id_by_state_name('Alabama')),
+('1009', 'Blount County', core.get_state_id_by_state_name('Alabama')),
+('1011', 'Bullock County', core.get_state_id_by_state_name('Alabama')),
+('1013', 'Butler County', core.get_state_id_by_state_name('Alabama')),
+('1015', 'Calhoun County', core.get_state_id_by_state_name('Alabama')),
+('1017', 'Chambers County', core.get_state_id_by_state_name('Alabama')),
+('1019', 'Cherokee County', core.get_state_id_by_state_name('Alabama')),
+('1021', 'Chilton County', core.get_state_id_by_state_name('Alabama')),
+('1023', 'Choctaw County', core.get_state_id_by_state_name('Alabama')),
+('1025', 'Clarke County', core.get_state_id_by_state_name('Alabama')),
+('1027', 'Clay County', core.get_state_id_by_state_name('Alabama')),
+('1029', 'Cleburne County', core.get_state_id_by_state_name('Alabama')),
+('1031', 'Coffee County', core.get_state_id_by_state_name('Alabama')),
+('1033', 'Colbert County', core.get_state_id_by_state_name('Alabama')),
+('1035', 'Conecuh County', core.get_state_id_by_state_name('Alabama')),
+('1037', 'Coosa County', core.get_state_id_by_state_name('Alabama')),
+('1039', 'Covington County', core.get_state_id_by_state_name('Alabama')),
+('1041', 'Crenshaw County', core.get_state_id_by_state_name('Alabama')),
+('1043', 'Cullman County', core.get_state_id_by_state_name('Alabama')),
+('1045', 'Dale County', core.get_state_id_by_state_name('Alabama')),
+('1047', 'Dallas County', core.get_state_id_by_state_name('Alabama')),
+('1049', 'DeKalb County', core.get_state_id_by_state_name('Alabama')),
+('1051', 'Elmore County', core.get_state_id_by_state_name('Alabama')),
+('1053', 'Escambia County', core.get_state_id_by_state_name('Alabama')),
+('1055', 'Etowah County', core.get_state_id_by_state_name('Alabama')),
+('1057', 'Fayette County', core.get_state_id_by_state_name('Alabama')),
+('1059', 'Franklin County', core.get_state_id_by_state_name('Alabama')),
+('1061', 'Geneva County', core.get_state_id_by_state_name('Alabama')),
+('1063', 'Greene County', core.get_state_id_by_state_name('Alabama')),
+('1065', 'Hale County', core.get_state_id_by_state_name('Alabama')),
+('1067', 'Henry County', core.get_state_id_by_state_name('Alabama')),
+('1069', 'Houston County', core.get_state_id_by_state_name('Alabama')),
+('1071', 'Jackson County', core.get_state_id_by_state_name('Alabama')),
+('1073', 'Jefferson County', core.get_state_id_by_state_name('Alabama')),
+('1075', 'Lamar County', core.get_state_id_by_state_name('Alabama')),
+('1077', 'Lauderdale County', core.get_state_id_by_state_name('Alabama')),
+('1079', 'Lawrence County', core.get_state_id_by_state_name('Alabama')),
+('1081', 'Lee County', core.get_state_id_by_state_name('Alabama')),
+('1083', 'Limestone County', core.get_state_id_by_state_name('Alabama')),
+('1085', 'Lowndes County', core.get_state_id_by_state_name('Alabama')),
+('1087', 'Macon County', core.get_state_id_by_state_name('Alabama')),
+('1089', 'Madison County', core.get_state_id_by_state_name('Alabama')),
+('1091', 'Marengo County', core.get_state_id_by_state_name('Alabama')),
+('1093', 'Marion County', core.get_state_id_by_state_name('Alabama')),
+('1095', 'Marshall County', core.get_state_id_by_state_name('Alabama')),
+('1097', 'Mobile County', core.get_state_id_by_state_name('Alabama')),
+('1099', 'Monroe County', core.get_state_id_by_state_name('Alabama')),
+('1101', 'Montgomery County', core.get_state_id_by_state_name('Alabama')),
+('1103', 'Morgan County', core.get_state_id_by_state_name('Alabama')),
+('1105', 'Perry County', core.get_state_id_by_state_name('Alabama')),
+('1107', 'Pickens County', core.get_state_id_by_state_name('Alabama')),
+('1109', 'Pike County', core.get_state_id_by_state_name('Alabama')),
+('1111', 'Randolph County', core.get_state_id_by_state_name('Alabama')),
+('1113', 'Russell County', core.get_state_id_by_state_name('Alabama')),
+('1115', 'St. Clair County', core.get_state_id_by_state_name('Alabama')),
+('1117', 'Shelby County', core.get_state_id_by_state_name('Alabama')),
+('1119', 'Sumter County', core.get_state_id_by_state_name('Alabama')),
+('1121', 'Talladega County', core.get_state_id_by_state_name('Alabama')),
+('1123', 'Tallapoosa County', core.get_state_id_by_state_name('Alabama')),
+('1125', 'Tuscaloosa County', core.get_state_id_by_state_name('Alabama')),
+('1127', 'Walker County', core.get_state_id_by_state_name('Alabama')),
+('1129', 'Washington County', core.get_state_id_by_state_name('Alabama')),
+('1131', 'Wilcox County', core.get_state_id_by_state_name('Alabama')),
+('1133', 'Winston County', core.get_state_id_by_state_name('Alabama')),
+('2013', 'Aleutians East Borough', core.get_state_id_by_state_name('Alaska')),
+('2016', 'Aleutians West Census Area', core.get_state_id_by_state_name('Alaska')),
+('2020', 'Anchorage, Municipality of', core.get_state_id_by_state_name('Alaska')),
+('2050', 'Bethel Census Area', core.get_state_id_by_state_name('Alaska')),
+('2060', 'Bristol Bay Borough', core.get_state_id_by_state_name('Alaska')),
+('2068', 'Denali Borough', core.get_state_id_by_state_name('Alaska')),
+('2070', 'Dillingham Census Area', core.get_state_id_by_state_name('Alaska')),
+('2090', 'Fairbanks North Star Borough', core.get_state_id_by_state_name('Alaska')),
+('2100', 'Haines Borough', core.get_state_id_by_state_name('Alaska')),
+('2105', 'Hoonah–Angoon Census Area', core.get_state_id_by_state_name('Alaska')),
+('2110', 'Juneau, City and Borough of', core.get_state_id_by_state_name('Alaska')),
+('2122', 'Kenai Peninsula Borough', core.get_state_id_by_state_name('Alaska')),
+('2130', 'Ketchikan Gateway Borough', core.get_state_id_by_state_name('Alaska')),
+('2150', 'Kodiak Island Borough', core.get_state_id_by_state_name('Alaska')),
+('2164', 'Lake and Peninsula Borough', core.get_state_id_by_state_name('Alaska')),
+('2170', 'Matanuska-Susitna Borough', core.get_state_id_by_state_name('Alaska')),
+('2180', 'Nome Census Area', core.get_state_id_by_state_name('Alaska')),
+('2185', 'North Slope Borough', core.get_state_id_by_state_name('Alaska')),
+('2188', 'Northwest Arctic Borough', core.get_state_id_by_state_name('Alaska')),
+('2195', 'Petersburg Borough', core.get_state_id_by_state_name('Alaska')),
+('2198', 'Prince of Wales – Hyder Census Area', core.get_state_id_by_state_name('Alaska')),
+('2220', 'Sitka, City and Borough of', core.get_state_id_by_state_name('Alaska')),
+('2230', 'Skagway, Municipality of', core.get_state_id_by_state_name('Alaska')),
+('2240', 'Southeast Fairbanks Census Area', core.get_state_id_by_state_name('Alaska')),
+('2261', 'Valdez–Cordova Census Area', core.get_state_id_by_state_name('Alaska')),
+('2270', 'Wade Hampton Census Area', core.get_state_id_by_state_name('Alaska')),
+('2275', 'Wrangell, City and Borough of', core.get_state_id_by_state_name('Alaska')),
+('2282', 'Yakutat, City and Borough of', core.get_state_id_by_state_name('Alaska')),
+('2290', 'Yukon–Koyukuk Census Area', core.get_state_id_by_state_name('Alaska')),
+('4001', 'Apache County', core.get_state_id_by_state_name('Arizona')),
+('4003', 'Cochise County', core.get_state_id_by_state_name('Arizona')),
+('4005', 'Coconino County', core.get_state_id_by_state_name('Arizona')),
+('4007', 'Gila County', core.get_state_id_by_state_name('Arizona')),
+('4009', 'Graham County', core.get_state_id_by_state_name('Arizona')),
+('4011', 'Greenlee County', core.get_state_id_by_state_name('Arizona')),
+('4012', 'La Paz County', core.get_state_id_by_state_name('Arizona')),
+('4013', 'Maricopa County', core.get_state_id_by_state_name('Arizona')),
+('4015', 'Mohave County', core.get_state_id_by_state_name('Arizona')),
+('4017', 'Navajo County', core.get_state_id_by_state_name('Arizona')),
+('4019', 'Pima County', core.get_state_id_by_state_name('Arizona')),
+('4021', 'Pinal County', core.get_state_id_by_state_name('Arizona')),
+('4023', 'Santa Cruz County', core.get_state_id_by_state_name('Arizona')),
+('4025', 'Yavapai County', core.get_state_id_by_state_name('Arizona')),
+('4027', 'Yuma County', core.get_state_id_by_state_name('Arizona')),
+('5001', 'Arkansas County', core.get_state_id_by_state_name('Arkansas')),
+('5003', 'Ashley County', core.get_state_id_by_state_name('Arkansas')),
+('5005', 'Baxter County', core.get_state_id_by_state_name('Arkansas')),
+('5007', 'Benton County', core.get_state_id_by_state_name('Arkansas')),
+('5009', 'Boone County', core.get_state_id_by_state_name('Arkansas')),
+('5011', 'Bradley County', core.get_state_id_by_state_name('Arkansas')),
+('5013', 'Calhoun County', core.get_state_id_by_state_name('Arkansas')),
+('5015', 'Carroll County', core.get_state_id_by_state_name('Arkansas')),
+('5017', 'Chicot County', core.get_state_id_by_state_name('Arkansas')),
+('5019', 'Clark County', core.get_state_id_by_state_name('Arkansas')),
+('5021', 'Clay County', core.get_state_id_by_state_name('Arkansas')),
+('5023', 'Cleburne County', core.get_state_id_by_state_name('Arkansas')),
+('5025', 'Cleveland County', core.get_state_id_by_state_name('Arkansas')),
+('5027', 'Columbia County', core.get_state_id_by_state_name('Arkansas')),
+('5029', 'Conway County', core.get_state_id_by_state_name('Arkansas')),
+('5031', 'Craighead County', core.get_state_id_by_state_name('Arkansas')),
+('5033', 'Crawford County', core.get_state_id_by_state_name('Arkansas')),
+('5035', 'Crittenden County', core.get_state_id_by_state_name('Arkansas')),
+('5037', 'Cross County', core.get_state_id_by_state_name('Arkansas')),
+('5039', 'Dallas County', core.get_state_id_by_state_name('Arkansas')),
+('5041', 'Desha County', core.get_state_id_by_state_name('Arkansas')),
+('5043', 'Drew County', core.get_state_id_by_state_name('Arkansas')),
+('5045', 'Faulkner County', core.get_state_id_by_state_name('Arkansas')),
+('5047', 'Franklin County', core.get_state_id_by_state_name('Arkansas')),
+('5049', 'Fulton County', core.get_state_id_by_state_name('Arkansas')),
+('5051', 'Garland County', core.get_state_id_by_state_name('Arkansas')),
+('5053', 'Grant County', core.get_state_id_by_state_name('Arkansas')),
+('5055', 'Greene County', core.get_state_id_by_state_name('Arkansas')),
+('5057', 'Hempstead County', core.get_state_id_by_state_name('Arkansas')),
+('5059', 'Hot Spring County', core.get_state_id_by_state_name('Arkansas')),
+('5061', 'Howard County', core.get_state_id_by_state_name('Arkansas')),
+('5063', 'Independence County', core.get_state_id_by_state_name('Arkansas')),
+('5065', 'Izard County', core.get_state_id_by_state_name('Arkansas')),
+('5067', 'Jackson County', core.get_state_id_by_state_name('Arkansas')),
+('5069', 'Jefferson County', core.get_state_id_by_state_name('Arkansas')),
+('5071', 'Johnson County', core.get_state_id_by_state_name('Arkansas')),
+('5073', 'Lafayette County', core.get_state_id_by_state_name('Arkansas')),
+('5075', 'Lawrence County', core.get_state_id_by_state_name('Arkansas')),
+('5077', 'Lee County', core.get_state_id_by_state_name('Arkansas')),
+('5079', 'Lincoln County', core.get_state_id_by_state_name('Arkansas')),
+('5081', 'Little River County', core.get_state_id_by_state_name('Arkansas')),
+('5083', 'Logan County', core.get_state_id_by_state_name('Arkansas')),
+('5085', 'Lonoke County', core.get_state_id_by_state_name('Arkansas')),
+('5087', 'Madison County', core.get_state_id_by_state_name('Arkansas')),
+('5089', 'Marion County', core.get_state_id_by_state_name('Arkansas')),
+('5091', 'Miller County', core.get_state_id_by_state_name('Arkansas')),
+('5093', 'Mississippi County', core.get_state_id_by_state_name('Arkansas')),
+('5095', 'Monroe County', core.get_state_id_by_state_name('Arkansas')),
+('5097', 'Montgomery County', core.get_state_id_by_state_name('Arkansas')),
+('5099', 'Nevada County', core.get_state_id_by_state_name('Arkansas')),
+('5101', 'Newton County', core.get_state_id_by_state_name('Arkansas')),
+('5103', 'Ouachita County', core.get_state_id_by_state_name('Arkansas')),
+('5105', 'Perry County', core.get_state_id_by_state_name('Arkansas')),
+('5107', 'Phillips County', core.get_state_id_by_state_name('Arkansas')),
+('5109', 'Pike County', core.get_state_id_by_state_name('Arkansas')),
+('5111', 'Poinsett County', core.get_state_id_by_state_name('Arkansas')),
+('5113', 'Polk County', core.get_state_id_by_state_name('Arkansas')),
+('5115', 'Pope County', core.get_state_id_by_state_name('Arkansas')),
+('5117', 'Prairie County', core.get_state_id_by_state_name('Arkansas')),
+('5119', 'Pulaski County', core.get_state_id_by_state_name('Arkansas')),
+('5121', 'Randolph County', core.get_state_id_by_state_name('Arkansas')),
+('5123', 'St. Francis County', core.get_state_id_by_state_name('Arkansas')),
+('5125', 'Saline County', core.get_state_id_by_state_name('Arkansas')),
+('5127', 'Scott County', core.get_state_id_by_state_name('Arkansas')),
+('5129', 'Searcy County', core.get_state_id_by_state_name('Arkansas')),
+('5131', 'Sebastian County', core.get_state_id_by_state_name('Arkansas')),
+('5133', 'Sevier County', core.get_state_id_by_state_name('Arkansas')),
+('5135', 'Sharp County', core.get_state_id_by_state_name('Arkansas')),
+('5137', 'Stone County', core.get_state_id_by_state_name('Arkansas')),
+('5139', 'Union County', core.get_state_id_by_state_name('Arkansas')),
+('5141', 'Van Buren County', core.get_state_id_by_state_name('Arkansas')),
+('5143', 'Washington County', core.get_state_id_by_state_name('Arkansas')),
+('5145', 'White County', core.get_state_id_by_state_name('Arkansas')),
+('5147', 'Woodruff County', core.get_state_id_by_state_name('Arkansas')),
+('5149', 'Yell County', core.get_state_id_by_state_name('Arkansas')),
+('6001', 'Alameda County', core.get_state_id_by_state_name('California')),
+('6003', 'Alpine County', core.get_state_id_by_state_name('California')),
+('6005', 'Amador County', core.get_state_id_by_state_name('California')),
+('6007', 'Butte County', core.get_state_id_by_state_name('California')),
+('6009', 'Calaveras County', core.get_state_id_by_state_name('California')),
+('6011', 'Colusa County', core.get_state_id_by_state_name('California')),
+('6013', 'Contra Costa County', core.get_state_id_by_state_name('California')),
+('6015', 'Del Norte County', core.get_state_id_by_state_name('California')),
+('6017', 'El Dorado County', core.get_state_id_by_state_name('California')),
+('6019', 'Fresno County', core.get_state_id_by_state_name('California')),
+('6021', 'Glenn County', core.get_state_id_by_state_name('California')),
+('6023', 'Humboldt County', core.get_state_id_by_state_name('California')),
+('6025', 'Imperial County', core.get_state_id_by_state_name('California')),
+('6027', 'Inyo County', core.get_state_id_by_state_name('California')),
+('6029', 'Kern County', core.get_state_id_by_state_name('California')),
+('6031', 'Kings County', core.get_state_id_by_state_name('California')),
+('6033', 'Lake County', core.get_state_id_by_state_name('California')),
+('6035', 'Lassen County', core.get_state_id_by_state_name('California')),
+('6037', 'Los Angeles County', core.get_state_id_by_state_name('California')),
+('6039', 'Madera County', core.get_state_id_by_state_name('California')),
+('6041', 'Marin County', core.get_state_id_by_state_name('California')),
+('6043', 'Mariposa County', core.get_state_id_by_state_name('California')),
+('6045', 'Mendocino County', core.get_state_id_by_state_name('California')),
+('6047', 'Merced County', core.get_state_id_by_state_name('California')),
+('6049', 'Modoc County', core.get_state_id_by_state_name('California')),
+('6051', 'Mono County', core.get_state_id_by_state_name('California')),
+('6053', 'Monterey County', core.get_state_id_by_state_name('California')),
+('6055', 'Napa County', core.get_state_id_by_state_name('California')),
+('6057', 'Nevada County', core.get_state_id_by_state_name('California')),
+('6059', 'Orange County', core.get_state_id_by_state_name('California')),
+('6061', 'Placer County', core.get_state_id_by_state_name('California')),
+('6063', 'Plumas County', core.get_state_id_by_state_name('California')),
+('6065', 'Riverside County', core.get_state_id_by_state_name('California')),
+('6067', 'Sacramento County', core.get_state_id_by_state_name('California')),
+('6069', 'San Benito County', core.get_state_id_by_state_name('California')),
+('6071', 'San Bernardino County', core.get_state_id_by_state_name('California')),
+('6073', 'San Diego County', core.get_state_id_by_state_name('California')),
+('6075', 'San Francisco, City and County of', core.get_state_id_by_state_name('California')),
+('6077', 'San Joaquin County', core.get_state_id_by_state_name('California')),
+('6079', 'San Luis Obispo County', core.get_state_id_by_state_name('California')),
+('6081', 'San Mateo County', core.get_state_id_by_state_name('California')),
+('6083', 'Santa Barbara County', core.get_state_id_by_state_name('California')),
+('6085', 'Santa Clara County', core.get_state_id_by_state_name('California')),
+('6087', 'Santa Cruz County', core.get_state_id_by_state_name('California')),
+('6089', 'Shasta County', core.get_state_id_by_state_name('California')),
+('6091', 'Sierra County', core.get_state_id_by_state_name('California')),
+('6093', 'Siskiyou County', core.get_state_id_by_state_name('California')),
+('6095', 'Solano County', core.get_state_id_by_state_name('California')),
+('6097', 'Sonoma County', core.get_state_id_by_state_name('California')),
+('6099', 'Stanislaus County', core.get_state_id_by_state_name('California')),
+('6101', 'Sutter County', core.get_state_id_by_state_name('California')),
+('6103', 'Tehama County', core.get_state_id_by_state_name('California')),
+('6105', 'Trinity County', core.get_state_id_by_state_name('California')),
+('6107', 'Tulare County', core.get_state_id_by_state_name('California')),
+('6109', 'Tuolumne County', core.get_state_id_by_state_name('California')),
+('6111', 'Ventura County', core.get_state_id_by_state_name('California')),
+('6113', 'Yolo County', core.get_state_id_by_state_name('California')),
+('6115', 'Yuba County', core.get_state_id_by_state_name('California')),
+('8001', 'Adams County', core.get_state_id_by_state_name('Colorado')),
+('8003', 'Alamosa County', core.get_state_id_by_state_name('Colorado')),
+('8005', 'Arapahoe County', core.get_state_id_by_state_name('Colorado')),
+('8007', 'Archuleta County', core.get_state_id_by_state_name('Colorado')),
+('8009', 'Baca County', core.get_state_id_by_state_name('Colorado')),
+('8011', 'Bent County', core.get_state_id_by_state_name('Colorado')),
+('8013', 'Boulder County', core.get_state_id_by_state_name('Colorado')),
+('8014', 'Broomfield, City and County of', core.get_state_id_by_state_name('Colorado')),
+('8015', 'Chaffee County', core.get_state_id_by_state_name('Colorado')),
+('8017', 'Cheyenne County', core.get_state_id_by_state_name('Colorado')),
+('8019', 'Clear Creek County', core.get_state_id_by_state_name('Colorado')),
+('8021', 'Conejos County', core.get_state_id_by_state_name('Colorado')),
+('8023', 'Costilla County', core.get_state_id_by_state_name('Colorado')),
+('8025', 'Crowley County', core.get_state_id_by_state_name('Colorado')),
+('8027', 'Custer County', core.get_state_id_by_state_name('Colorado')),
+('8029', 'Delta County', core.get_state_id_by_state_name('Colorado')),
+('8031', 'Denver, City and County of', core.get_state_id_by_state_name('Colorado')),
+('8033', 'Dolores County', core.get_state_id_by_state_name('Colorado')),
+('8035', 'Douglas County', core.get_state_id_by_state_name('Colorado')),
+('8037', 'Eagle County', core.get_state_id_by_state_name('Colorado')),
+('8039', 'Elbert County', core.get_state_id_by_state_name('Colorado')),
+('8041', 'El Paso County', core.get_state_id_by_state_name('Colorado')),
+('8043', 'Fremont County', core.get_state_id_by_state_name('Colorado')),
+('8045', 'Garfield County', core.get_state_id_by_state_name('Colorado')),
+('8047', 'Gilpin County', core.get_state_id_by_state_name('Colorado')),
+('8049', 'Grand County', core.get_state_id_by_state_name('Colorado')),
+('8051', 'Gunnison County', core.get_state_id_by_state_name('Colorado')),
+('8053', 'Hinsdale County', core.get_state_id_by_state_name('Colorado')),
+('8055', 'Huerfano County', core.get_state_id_by_state_name('Colorado')),
+('8057', 'Jackson County', core.get_state_id_by_state_name('Colorado')),
+('8059', 'Jefferson County', core.get_state_id_by_state_name('Colorado')),
+('8061', 'Kiowa County', core.get_state_id_by_state_name('Colorado')),
+('8063', 'Kit Carson County', core.get_state_id_by_state_name('Colorado')),
+('8065', 'Lake County', core.get_state_id_by_state_name('Colorado')),
+('8067', 'La Plata County', core.get_state_id_by_state_name('Colorado')),
+('8069', 'Larimer County', core.get_state_id_by_state_name('Colorado')),
+('8071', 'Las Animas County', core.get_state_id_by_state_name('Colorado')),
+('8073', 'Lincoln County', core.get_state_id_by_state_name('Colorado')),
+('8075', 'Logan County', core.get_state_id_by_state_name('Colorado')),
+('8077', 'Mesa County', core.get_state_id_by_state_name('Colorado')),
+('8079', 'Mineral County', core.get_state_id_by_state_name('Colorado')),
+('8081', 'Moffat County', core.get_state_id_by_state_name('Colorado')),
+('8083', 'Montezuma County', core.get_state_id_by_state_name('Colorado')),
+('8085', 'Montrose County', core.get_state_id_by_state_name('Colorado')),
+('8087', 'Morgan County', core.get_state_id_by_state_name('Colorado')),
+('8089', 'Otero County', core.get_state_id_by_state_name('Colorado')),
+('8091', 'Ouray County', core.get_state_id_by_state_name('Colorado')),
+('8093', 'Park County', core.get_state_id_by_state_name('Colorado')),
+('8095', 'Phillips County', core.get_state_id_by_state_name('Colorado')),
+('8097', 'Pitkin County', core.get_state_id_by_state_name('Colorado')),
+('8099', 'Prowers County', core.get_state_id_by_state_name('Colorado')),
+('8101', 'Pueblo County', core.get_state_id_by_state_name('Colorado')),
+('8103', 'Rio Blanco County', core.get_state_id_by_state_name('Colorado')),
+('8105', 'Rio Grande County', core.get_state_id_by_state_name('Colorado')),
+('8107', 'Routt County', core.get_state_id_by_state_name('Colorado')),
+('8109', 'Saguache County', core.get_state_id_by_state_name('Colorado')),
+('8111', 'San Juan County', core.get_state_id_by_state_name('Colorado')),
+('8113', 'San Miguel County', core.get_state_id_by_state_name('Colorado')),
+('8115', 'Sedgwick County', core.get_state_id_by_state_name('Colorado')),
+('8117', 'Summit County', core.get_state_id_by_state_name('Colorado')),
+('8119', 'Teller County', core.get_state_id_by_state_name('Colorado')),
+('8121', 'Washington County', core.get_state_id_by_state_name('Colorado')),
+('8123', 'Weld County', core.get_state_id_by_state_name('Colorado')),
+('8125', 'Yuma County', core.get_state_id_by_state_name('Colorado')),
+('9001', 'Fairfield County', core.get_state_id_by_state_name('Connecticut')),
+('9003', 'Hartford County', core.get_state_id_by_state_name('Connecticut')),
+('9005', 'Litchfield County', core.get_state_id_by_state_name('Connecticut')),
+('9007', 'Middlesex County', core.get_state_id_by_state_name('Connecticut')),
+('9009', 'New Haven County', core.get_state_id_by_state_name('Connecticut')),
+('9011', 'New London County', core.get_state_id_by_state_name('Connecticut')),
+('9013', 'Tolland County', core.get_state_id_by_state_name('Connecticut')),
+('9015', 'Windham County', core.get_state_id_by_state_name('Connecticut')),
+('10001', 'Kent County', core.get_state_id_by_state_name('Delaware')),
+('10003', 'New Castle County', core.get_state_id_by_state_name('Delaware')),
+('10005', 'Sussex County', core.get_state_id_by_state_name('Delaware')),
+('11001', 'District of Columbia', core.get_state_id_by_state_name('District of Columbia')),
+('12001', 'Alachua County', core.get_state_id_by_state_name('Florida')),
+('12003', 'Baker County', core.get_state_id_by_state_name('Florida')),
+('12005', 'Bay County', core.get_state_id_by_state_name('Florida')),
+('12007', 'Bradford County', core.get_state_id_by_state_name('Florida')),
+('12009', 'Brevard County', core.get_state_id_by_state_name('Florida')),
+('12011', 'Broward County', core.get_state_id_by_state_name('Florida')),
+('12013', 'Calhoun County', core.get_state_id_by_state_name('Florida')),
+('12015', 'Charlotte County', core.get_state_id_by_state_name('Florida')),
+('12017', 'Citrus County', core.get_state_id_by_state_name('Florida')),
+('12019', 'Clay County', core.get_state_id_by_state_name('Florida')),
+('12021', 'Collier County', core.get_state_id_by_state_name('Florida')),
+('12023', 'Columbia County', core.get_state_id_by_state_name('Florida')),
+('12027', 'DeSoto County', core.get_state_id_by_state_name('Florida')),
+('12029', 'Dixie County', core.get_state_id_by_state_name('Florida')),
+('12031', 'Duval County', core.get_state_id_by_state_name('Florida')),
+('12033', 'Escambia County', core.get_state_id_by_state_name('Florida')),
+('12035', 'Flagler County', core.get_state_id_by_state_name('Florida')),
+('12037', 'Franklin County', core.get_state_id_by_state_name('Florida')),
+('12039', 'Gadsden County', core.get_state_id_by_state_name('Florida')),
+('12041', 'Gilchrist County', core.get_state_id_by_state_name('Florida')),
+('12043', 'Glades County', core.get_state_id_by_state_name('Florida')),
+('12045', 'Gulf County', core.get_state_id_by_state_name('Florida')),
+('12047', 'Hamilton County', core.get_state_id_by_state_name('Florida')),
+('12049', 'Hardee County', core.get_state_id_by_state_name('Florida')),
+('12051', 'Hendry County', core.get_state_id_by_state_name('Florida')),
+('12053', 'Hernando County', core.get_state_id_by_state_name('Florida')),
+('12055', 'Highlands County', core.get_state_id_by_state_name('Florida')),
+('12057', 'Hillsborough County', core.get_state_id_by_state_name('Florida')),
+('12059', 'Holmes County', core.get_state_id_by_state_name('Florida')),
+('12061', 'Indian River County', core.get_state_id_by_state_name('Florida')),
+('12063', 'Jackson County', core.get_state_id_by_state_name('Florida')),
+('12065', 'Jefferson County', core.get_state_id_by_state_name('Florida')),
+('12067', 'Lafayette County', core.get_state_id_by_state_name('Florida')),
+('12069', 'Lake County', core.get_state_id_by_state_name('Florida')),
+('12071', 'Lee County', core.get_state_id_by_state_name('Florida')),
+('12073', 'Leon County', core.get_state_id_by_state_name('Florida')),
+('12075', 'Levy County', core.get_state_id_by_state_name('Florida')),
+('12077', 'Liberty County', core.get_state_id_by_state_name('Florida')),
+('12079', 'Madison County', core.get_state_id_by_state_name('Florida')),
+('12081', 'Manatee County', core.get_state_id_by_state_name('Florida')),
+('12083', 'Marion County', core.get_state_id_by_state_name('Florida')),
+('12085', 'Martin County', core.get_state_id_by_state_name('Florida')),
+('12086', 'Miami-Dade County', core.get_state_id_by_state_name('Florida')),
+('12087', 'Monroe County', core.get_state_id_by_state_name('Florida')),
+('12089', 'Nassau County', core.get_state_id_by_state_name('Florida')),
+('12091', 'Okaloosa County', core.get_state_id_by_state_name('Florida')),
+('12093', 'Okeechobee County', core.get_state_id_by_state_name('Florida')),
+('12095', 'Orange County', core.get_state_id_by_state_name('Florida')),
+('12097', 'Osceola County', core.get_state_id_by_state_name('Florida')),
+('12099', 'Palm Beach County', core.get_state_id_by_state_name('Florida')),
+('12101', 'Pasco County', core.get_state_id_by_state_name('Florida')),
+('12103', 'Pinellas County', core.get_state_id_by_state_name('Florida')),
+('12105', 'Polk County', core.get_state_id_by_state_name('Florida')),
+('12107', 'Putnam County', core.get_state_id_by_state_name('Florida')),
+('12109', 'St. Johns County', core.get_state_id_by_state_name('Florida')),
+('12111', 'St. Lucie County', core.get_state_id_by_state_name('Florida')),
+('12113', 'Santa Rosa County', core.get_state_id_by_state_name('Florida')),
+('12115', 'Sarasota County', core.get_state_id_by_state_name('Florida')),
+('12117', 'Seminole County', core.get_state_id_by_state_name('Florida')),
+('12119', 'Sumter County', core.get_state_id_by_state_name('Florida')),
+('12121', 'Suwannee County', core.get_state_id_by_state_name('Florida')),
+('12123', 'Taylor County', core.get_state_id_by_state_name('Florida')),
+('12125', 'Union County', core.get_state_id_by_state_name('Florida')),
+('12127', 'Volusia County', core.get_state_id_by_state_name('Florida')),
+('12129', 'Wakulla County', core.get_state_id_by_state_name('Florida')),
+('12131', 'Walton County', core.get_state_id_by_state_name('Florida')),
+('12133', 'Washington County', core.get_state_id_by_state_name('Florida')),
+('13001', 'Appling County', core.get_state_id_by_state_name('Georgia')),
+('13003', 'Atkinson County', core.get_state_id_by_state_name('Georgia')),
+('13005', 'Bacon County', core.get_state_id_by_state_name('Georgia')),
+('13007', 'Baker County', core.get_state_id_by_state_name('Georgia')),
+('13009', 'Baldwin County', core.get_state_id_by_state_name('Georgia')),
+('13011', 'Banks County', core.get_state_id_by_state_name('Georgia')),
+('13013', 'Barrow County', core.get_state_id_by_state_name('Georgia')),
+('13015', 'Bartow County', core.get_state_id_by_state_name('Georgia')),
+('13017', 'Ben Hill County', core.get_state_id_by_state_name('Georgia')),
+('13019', 'Berrien County', core.get_state_id_by_state_name('Georgia')),
+('13021', 'Bibb County', core.get_state_id_by_state_name('Georgia')),
+('13023', 'Bleckley County', core.get_state_id_by_state_name('Georgia')),
+('13025', 'Brantley County', core.get_state_id_by_state_name('Georgia')),
+('13027', 'Brooks County', core.get_state_id_by_state_name('Georgia')),
+('13029', 'Bryan County', core.get_state_id_by_state_name('Georgia')),
+('13031', 'Bulloch County', core.get_state_id_by_state_name('Georgia')),
+('13033', 'Burke County', core.get_state_id_by_state_name('Georgia')),
+('13035', 'Butts County', core.get_state_id_by_state_name('Georgia')),
+('13037', 'Calhoun County', core.get_state_id_by_state_name('Georgia')),
+('13039', 'Camden County', core.get_state_id_by_state_name('Georgia')),
+('13043', 'Candler County', core.get_state_id_by_state_name('Georgia')),
+('13045', 'Carroll County', core.get_state_id_by_state_name('Georgia')),
+('13047', 'Catoosa County', core.get_state_id_by_state_name('Georgia')),
+('13049', 'Charlton County', core.get_state_id_by_state_name('Georgia')),
+('13051', 'Chatham County', core.get_state_id_by_state_name('Georgia')),
+('13053', 'Chattahoochee County', core.get_state_id_by_state_name('Georgia')),
+('13055', 'Chattooga County', core.get_state_id_by_state_name('Georgia')),
+('13057', 'Cherokee County', core.get_state_id_by_state_name('Georgia')),
+('13059', 'Clarke County', core.get_state_id_by_state_name('Georgia')),
+('13061', 'Clay County', core.get_state_id_by_state_name('Georgia')),
+('13063', 'Clayton County', core.get_state_id_by_state_name('Georgia')),
+('13065', 'Clinch County', core.get_state_id_by_state_name('Georgia')),
+('13067', 'Cobb County', core.get_state_id_by_state_name('Georgia')),
+('13069', 'Coffee County', core.get_state_id_by_state_name('Georgia')),
+('13071', 'Colquitt County', core.get_state_id_by_state_name('Georgia')),
+('13073', 'Columbia County', core.get_state_id_by_state_name('Georgia')),
+('13075', 'Cook County', core.get_state_id_by_state_name('Georgia')),
+('13077', 'Coweta County', core.get_state_id_by_state_name('Georgia')),
+('13079', 'Crawford County', core.get_state_id_by_state_name('Georgia')),
+('13081', 'Crisp County', core.get_state_id_by_state_name('Georgia')),
+('13083', 'Dade County', core.get_state_id_by_state_name('Georgia')),
+('13085', 'Dawson County', core.get_state_id_by_state_name('Georgia')),
+('13087', 'Decatur County', core.get_state_id_by_state_name('Georgia')),
+('13089', 'DeKalb County', core.get_state_id_by_state_name('Georgia')),
+('13091', 'Dodge County', core.get_state_id_by_state_name('Georgia')),
+('13093', 'Dooly County', core.get_state_id_by_state_name('Georgia')),
+('13095', 'Dougherty County', core.get_state_id_by_state_name('Georgia')),
+('13097', 'Douglas County', core.get_state_id_by_state_name('Georgia')),
+('13099', 'Early County', core.get_state_id_by_state_name('Georgia')),
+('13101', 'Echols County', core.get_state_id_by_state_name('Georgia')),
+('13103', 'Effingham County', core.get_state_id_by_state_name('Georgia')),
+('13105', 'Elbert County', core.get_state_id_by_state_name('Georgia')),
+('13107', 'Emanuel County', core.get_state_id_by_state_name('Georgia')),
+('13109', 'Evans County', core.get_state_id_by_state_name('Georgia')),
+('13111', 'Fannin County', core.get_state_id_by_state_name('Georgia')),
+('13113', 'Fayette County', core.get_state_id_by_state_name('Georgia')),
+('13115', 'Floyd County', core.get_state_id_by_state_name('Georgia')),
+('13117', 'Forsyth County', core.get_state_id_by_state_name('Georgia')),
+('13119', 'Franklin County', core.get_state_id_by_state_name('Georgia')),
+('13121', 'Fulton County', core.get_state_id_by_state_name('Georgia')),
+('13123', 'Gilmer County', core.get_state_id_by_state_name('Georgia')),
+('13125', 'Glascock County', core.get_state_id_by_state_name('Georgia')),
+('13127', 'Glynn County', core.get_state_id_by_state_name('Georgia')),
+('13129', 'Gordon County', core.get_state_id_by_state_name('Georgia')),
+('13131', 'Grady County', core.get_state_id_by_state_name('Georgia')),
+('13133', 'Greene County', core.get_state_id_by_state_name('Georgia')),
+('13135', 'Gwinnett County', core.get_state_id_by_state_name('Georgia')),
+('13137', 'Habersham County', core.get_state_id_by_state_name('Georgia')),
+('13139', 'Hall County', core.get_state_id_by_state_name('Georgia')),
+('13141', 'Hancock County', core.get_state_id_by_state_name('Georgia')),
+('13143', 'Haralson County', core.get_state_id_by_state_name('Georgia')),
+('13145', 'Harris County', core.get_state_id_by_state_name('Georgia')),
+('13147', 'Hart County', core.get_state_id_by_state_name('Georgia')),
+('13149', 'Heard County', core.get_state_id_by_state_name('Georgia')),
+('13151', 'Henry County', core.get_state_id_by_state_name('Georgia')),
+('13153', 'Houston County', core.get_state_id_by_state_name('Georgia')),
+('13155', 'Irwin County', core.get_state_id_by_state_name('Georgia')),
+('13157', 'Jackson County', core.get_state_id_by_state_name('Georgia')),
+('13159', 'Jasper County', core.get_state_id_by_state_name('Georgia')),
+('13161', 'Jeff Davis County', core.get_state_id_by_state_name('Georgia')),
+('13163', 'Jefferson County', core.get_state_id_by_state_name('Georgia')),
+('13165', 'Jenkins County', core.get_state_id_by_state_name('Georgia')),
+('13167', 'Johnson County', core.get_state_id_by_state_name('Georgia')),
+('13169', 'Jones County', core.get_state_id_by_state_name('Georgia')),
+('13171', 'Lamar County', core.get_state_id_by_state_name('Georgia')),
+('13173', 'Lanier County', core.get_state_id_by_state_name('Georgia')),
+('13175', 'Laurens County', core.get_state_id_by_state_name('Georgia')),
+('13177', 'Lee County', core.get_state_id_by_state_name('Georgia')),
+('13179', 'Liberty County', core.get_state_id_by_state_name('Georgia')),
+('13181', 'Lincoln County', core.get_state_id_by_state_name('Georgia')),
+('13183', 'Long County', core.get_state_id_by_state_name('Georgia')),
+('13185', 'Lowndes County', core.get_state_id_by_state_name('Georgia')),
+('13187', 'Lumpkin County', core.get_state_id_by_state_name('Georgia')),
+('13189', 'McDuffie County', core.get_state_id_by_state_name('Georgia')),
+('13191', 'McIntosh County', core.get_state_id_by_state_name('Georgia')),
+('13193', 'Macon County', core.get_state_id_by_state_name('Georgia')),
+('13195', 'Madison County', core.get_state_id_by_state_name('Georgia')),
+('13197', 'Marion County', core.get_state_id_by_state_name('Georgia')),
+('13199', 'Meriwether County', core.get_state_id_by_state_name('Georgia')),
+('13201', 'Miller County', core.get_state_id_by_state_name('Georgia')),
+('13205', 'Mitchell County', core.get_state_id_by_state_name('Georgia')),
+('13207', 'Monroe County', core.get_state_id_by_state_name('Georgia')),
+('13209', 'Montgomery County', core.get_state_id_by_state_name('Georgia')),
+('13211', 'Morgan County', core.get_state_id_by_state_name('Georgia')),
+('13213', 'Murray County', core.get_state_id_by_state_name('Georgia')),
+('13215', 'Muscogee County', core.get_state_id_by_state_name('Georgia')),
+('13217', 'Newton County', core.get_state_id_by_state_name('Georgia')),
+('13219', 'Oconee County', core.get_state_id_by_state_name('Georgia')),
+('13221', 'Oglethorpe County', core.get_state_id_by_state_name('Georgia')),
+('13223', 'Paulding County', core.get_state_id_by_state_name('Georgia')),
+('13225', 'Peach County', core.get_state_id_by_state_name('Georgia')),
+('13227', 'Pickens County', core.get_state_id_by_state_name('Georgia')),
+('13229', 'Pierce County', core.get_state_id_by_state_name('Georgia')),
+('13231', 'Pike County', core.get_state_id_by_state_name('Georgia')),
+('13233', 'Polk County', core.get_state_id_by_state_name('Georgia')),
+('13235', 'Pulaski County', core.get_state_id_by_state_name('Georgia')),
+('13237', 'Putnam County', core.get_state_id_by_state_name('Georgia')),
+('13239', 'Quitman County', core.get_state_id_by_state_name('Georgia')),
+('13241', 'Rabun County', core.get_state_id_by_state_name('Georgia')),
+('13243', 'Randolph County', core.get_state_id_by_state_name('Georgia')),
+('13245', 'Richmond County', core.get_state_id_by_state_name('Georgia')),
+('13247', 'Rockdale County', core.get_state_id_by_state_name('Georgia')),
+('13249', 'Schley County', core.get_state_id_by_state_name('Georgia')),
+('13251', 'Screven County', core.get_state_id_by_state_name('Georgia')),
+('13253', 'Seminole County', core.get_state_id_by_state_name('Georgia')),
+('13255', 'Spalding County', core.get_state_id_by_state_name('Georgia')),
+('13257', 'Stephens County', core.get_state_id_by_state_name('Georgia')),
+('13259', 'Stewart County', core.get_state_id_by_state_name('Georgia')),
+('13261', 'Sumter County', core.get_state_id_by_state_name('Georgia')),
+('13263', 'Talbot County', core.get_state_id_by_state_name('Georgia')),
+('13265', 'Taliaferro County', core.get_state_id_by_state_name('Georgia')),
+('13267', 'Tattnall County', core.get_state_id_by_state_name('Georgia')),
+('13269', 'Taylor County', core.get_state_id_by_state_name('Georgia')),
+('13271', 'Telfair County', core.get_state_id_by_state_name('Georgia')),
+('13273', 'Terrell County', core.get_state_id_by_state_name('Georgia')),
+('13275', 'Thomas County', core.get_state_id_by_state_name('Georgia')),
+('13277', 'Tift County', core.get_state_id_by_state_name('Georgia')),
+('13279', 'Toombs County', core.get_state_id_by_state_name('Georgia')),
+('13281', 'Towns County', core.get_state_id_by_state_name('Georgia')),
+('13283', 'Treutlen County', core.get_state_id_by_state_name('Georgia')),
+('13285', 'Troup County', core.get_state_id_by_state_name('Georgia')),
+('13287', 'Turner County', core.get_state_id_by_state_name('Georgia')),
+('13289', 'Twiggs County', core.get_state_id_by_state_name('Georgia')),
+('13291', 'Union County', core.get_state_id_by_state_name('Georgia')),
+('13293', 'Upson County', core.get_state_id_by_state_name('Georgia')),
+('13295', 'Walker County', core.get_state_id_by_state_name('Georgia')),
+('13297', 'Walton County', core.get_state_id_by_state_name('Georgia')),
+('13299', 'Ware County', core.get_state_id_by_state_name('Georgia')),
+('13301', 'Warren County', core.get_state_id_by_state_name('Georgia')),
+('13303', 'Washington County', core.get_state_id_by_state_name('Georgia')),
+('13305', 'Wayne County', core.get_state_id_by_state_name('Georgia')),
+('13307', 'Webster County', core.get_state_id_by_state_name('Georgia')),
+('13309', 'Wheeler County', core.get_state_id_by_state_name('Georgia')),
+('13311', 'White County', core.get_state_id_by_state_name('Georgia')),
+('13313', 'Whitfield County', core.get_state_id_by_state_name('Georgia')),
+('13315', 'Wilcox County', core.get_state_id_by_state_name('Georgia')),
+('13317', 'Wilkes County', core.get_state_id_by_state_name('Georgia')),
+('13319', 'Wilkinson County', core.get_state_id_by_state_name('Georgia')),
+('13321', 'Worth County', core.get_state_id_by_state_name('Georgia')),
+('15001', 'Hawaii County', core.get_state_id_by_state_name('Hawaii')),
+('15003', 'Honolulu, City and County of', core.get_state_id_by_state_name('Hawaii')),
+('15005', 'Kalawao County', core.get_state_id_by_state_name('Hawaii')),
+('15007', 'Kauai County', core.get_state_id_by_state_name('Hawaii')),
+('15009', 'Maui County', core.get_state_id_by_state_name('Hawaii')),
+('16001', 'Ada County', core.get_state_id_by_state_name('Idaho')),
+('16003', 'Adams County', core.get_state_id_by_state_name('Idaho')),
+('16005', 'Bannock County', core.get_state_id_by_state_name('Idaho')),
+('16007', 'Bear Lake County', core.get_state_id_by_state_name('Idaho')),
+('16009', 'Benewah County', core.get_state_id_by_state_name('Idaho')),
+('16011', 'Bingham County', core.get_state_id_by_state_name('Idaho')),
+('16013', 'Blaine County', core.get_state_id_by_state_name('Idaho')),
+('16015', 'Boise County', core.get_state_id_by_state_name('Idaho')),
+('16017', 'Bonner County', core.get_state_id_by_state_name('Idaho')),
+('16019', 'Bonneville County', core.get_state_id_by_state_name('Idaho')),
+('16021', 'Boundary County', core.get_state_id_by_state_name('Idaho')),
+('16023', 'Butte County', core.get_state_id_by_state_name('Idaho')),
+('16025', 'Camas County', core.get_state_id_by_state_name('Idaho')),
+('16027', 'Canyon County', core.get_state_id_by_state_name('Idaho')),
+('16029', 'Caribou County', core.get_state_id_by_state_name('Idaho')),
+('16031', 'Cassia County', core.get_state_id_by_state_name('Idaho')),
+('16033', 'Clark County', core.get_state_id_by_state_name('Idaho')),
+('16035', 'Clearwater County', core.get_state_id_by_state_name('Idaho')),
+('16037', 'Custer County', core.get_state_id_by_state_name('Idaho')),
+('16039', 'Elmore County', core.get_state_id_by_state_name('Idaho')),
+('16041', 'Franklin County', core.get_state_id_by_state_name('Idaho')),
+('16043', 'Fremont County', core.get_state_id_by_state_name('Idaho')),
+('16045', 'Gem County', core.get_state_id_by_state_name('Idaho')),
+('16047', 'Gooding County', core.get_state_id_by_state_name('Idaho')),
+('16049', 'Idaho County', core.get_state_id_by_state_name('Idaho')),
+('16051', 'Jefferson County', core.get_state_id_by_state_name('Idaho')),
+('16053', 'Jerome County', core.get_state_id_by_state_name('Idaho')),
+('16055', 'Kootenai County', core.get_state_id_by_state_name('Idaho')),
+('16057', 'Latah County', core.get_state_id_by_state_name('Idaho')),
+('16059', 'Lemhi County', core.get_state_id_by_state_name('Idaho')),
+('16061', 'Lewis County', core.get_state_id_by_state_name('Idaho')),
+('16063', 'Lincoln County', core.get_state_id_by_state_name('Idaho')),
+('16065', 'Madison County', core.get_state_id_by_state_name('Idaho')),
+('16067', 'Minidoka County', core.get_state_id_by_state_name('Idaho')),
+('16069', 'Nez Perce County', core.get_state_id_by_state_name('Idaho')),
+('16071', 'Oneida County', core.get_state_id_by_state_name('Idaho')),
+('16073', 'Owyhee County', core.get_state_id_by_state_name('Idaho')),
+('16075', 'Payette County', core.get_state_id_by_state_name('Idaho')),
+('16077', 'Power County', core.get_state_id_by_state_name('Idaho')),
+('16079', 'Shoshone County', core.get_state_id_by_state_name('Idaho')),
+('16081', 'Teton County', core.get_state_id_by_state_name('Idaho')),
+('16083', 'Twin Falls County', core.get_state_id_by_state_name('Idaho')),
+('16085', 'Valley County', core.get_state_id_by_state_name('Idaho')),
+('16087', 'Washington County', core.get_state_id_by_state_name('Idaho')),
+('17001', 'Adams County', core.get_state_id_by_state_name('Illinois')),
+('17003', 'Alexander County', core.get_state_id_by_state_name('Illinois')),
+('17005', 'Bond County', core.get_state_id_by_state_name('Illinois')),
+('17007', 'Boone County', core.get_state_id_by_state_name('Illinois')),
+('17009', 'Brown County', core.get_state_id_by_state_name('Illinois')),
+('17011', 'Bureau County', core.get_state_id_by_state_name('Illinois')),
+('17013', 'Calhoun County', core.get_state_id_by_state_name('Illinois')),
+('17015', 'Carroll County', core.get_state_id_by_state_name('Illinois')),
+('17017', 'Cass County', core.get_state_id_by_state_name('Illinois')),
+('17019', 'Champaign County', core.get_state_id_by_state_name('Illinois')),
+('17021', 'Christian County', core.get_state_id_by_state_name('Illinois')),
+('17023', 'Clark County', core.get_state_id_by_state_name('Illinois')),
+('17025', 'Clay County', core.get_state_id_by_state_name('Illinois')),
+('17027', 'Clinton County', core.get_state_id_by_state_name('Illinois')),
+('17029', 'Coles County', core.get_state_id_by_state_name('Illinois')),
+('17031', 'Cook County', core.get_state_id_by_state_name('Illinois')),
+('17033', 'Crawford County', core.get_state_id_by_state_name('Illinois')),
+('17035', 'Cumberland County', core.get_state_id_by_state_name('Illinois')),
+('17037', 'DeKalb County', core.get_state_id_by_state_name('Illinois')),
+('17039', 'De Witt County', core.get_state_id_by_state_name('Illinois')),
+('17041', 'Douglas County', core.get_state_id_by_state_name('Illinois')),
+('17043', 'DuPage County', core.get_state_id_by_state_name('Illinois')),
+('17045', 'Edgar County', core.get_state_id_by_state_name('Illinois')),
+('17047', 'Edwards County', core.get_state_id_by_state_name('Illinois')),
+('17049', 'Effingham County', core.get_state_id_by_state_name('Illinois')),
+('17051', 'Fayette County', core.get_state_id_by_state_name('Illinois')),
+('17053', 'Ford County', core.get_state_id_by_state_name('Illinois')),
+('17055', 'Franklin County', core.get_state_id_by_state_name('Illinois')),
+('17057', 'Fulton County', core.get_state_id_by_state_name('Illinois')),
+('17059', 'Gallatin County', core.get_state_id_by_state_name('Illinois')),
+('17061', 'Greene County', core.get_state_id_by_state_name('Illinois')),
+('17063', 'Grundy County', core.get_state_id_by_state_name('Illinois')),
+('17065', 'Hamilton County', core.get_state_id_by_state_name('Illinois')),
+('17067', 'Hancock County', core.get_state_id_by_state_name('Illinois')),
+('17069', 'Hardin County', core.get_state_id_by_state_name('Illinois')),
+('17071', 'Henderson County', core.get_state_id_by_state_name('Illinois')),
+('17073', 'Henry County', core.get_state_id_by_state_name('Illinois')),
+('17075', 'Iroquois County', core.get_state_id_by_state_name('Illinois')),
+('17077', 'Jackson County', core.get_state_id_by_state_name('Illinois')),
+('17079', 'Jasper County', core.get_state_id_by_state_name('Illinois')),
+('17081', 'Jefferson County', core.get_state_id_by_state_name('Illinois')),
+('17083', 'Jersey County', core.get_state_id_by_state_name('Illinois')),
+('17085', 'Jo Daviess County', core.get_state_id_by_state_name('Illinois')),
+('17087', 'Johnson County', core.get_state_id_by_state_name('Illinois')),
+('17089', 'Kane County', core.get_state_id_by_state_name('Illinois')),
+('17091', 'Kankakee County', core.get_state_id_by_state_name('Illinois')),
+('17093', 'Kendall County', core.get_state_id_by_state_name('Illinois')),
+('17095', 'Knox County', core.get_state_id_by_state_name('Illinois')),
+('17097', 'Lake County', core.get_state_id_by_state_name('Illinois')),
+('17099', 'LaSalle County', core.get_state_id_by_state_name('Illinois')),
+('17101', 'Lawrence County', core.get_state_id_by_state_name('Illinois')),
+('17103', 'Lee County', core.get_state_id_by_state_name('Illinois')),
+('17105', 'Livingston County', core.get_state_id_by_state_name('Illinois')),
+('17107', 'Logan County', core.get_state_id_by_state_name('Illinois')),
+('17109', 'McDonough County', core.get_state_id_by_state_name('Illinois')),
+('17111', 'McHenry County', core.get_state_id_by_state_name('Illinois')),
+('17113', 'McLean County', core.get_state_id_by_state_name('Illinois')),
+('17115', 'Macon County', core.get_state_id_by_state_name('Illinois')),
+('17117', 'Macoupin County', core.get_state_id_by_state_name('Illinois')),
+('17119', 'Madison County', core.get_state_id_by_state_name('Illinois')),
+('17121', 'Marion County', core.get_state_id_by_state_name('Illinois')),
+('17123', 'Marshall County', core.get_state_id_by_state_name('Illinois')),
+('17125', 'Mason County', core.get_state_id_by_state_name('Illinois')),
+('17127', 'Massac County', core.get_state_id_by_state_name('Illinois')),
+('17129', 'Menard County', core.get_state_id_by_state_name('Illinois')),
+('17131', 'Mercer County', core.get_state_id_by_state_name('Illinois')),
+('17133', 'Monroe County', core.get_state_id_by_state_name('Illinois')),
+('17135', 'Montgomery County', core.get_state_id_by_state_name('Illinois')),
+('17137', 'Morgan County', core.get_state_id_by_state_name('Illinois')),
+('17139', 'Moultrie County', core.get_state_id_by_state_name('Illinois')),
+('17141', 'Ogle County', core.get_state_id_by_state_name('Illinois')),
+('17143', 'Peoria County', core.get_state_id_by_state_name('Illinois')),
+('17145', 'Perry County', core.get_state_id_by_state_name('Illinois')),
+('17147', 'Piatt County', core.get_state_id_by_state_name('Illinois')),
+('17149', 'Pike County', core.get_state_id_by_state_name('Illinois')),
+('17151', 'Pope County', core.get_state_id_by_state_name('Illinois')),
+('17153', 'Pulaski County', core.get_state_id_by_state_name('Illinois')),
+('17155', 'Putnam County', core.get_state_id_by_state_name('Illinois')),
+('17157', 'Randolph County', core.get_state_id_by_state_name('Illinois')),
+('17159', 'Richland County', core.get_state_id_by_state_name('Illinois')),
+('17161', 'Rock Island County', core.get_state_id_by_state_name('Illinois')),
+('17163', 'St. Clair County', core.get_state_id_by_state_name('Illinois')),
+('17165', 'Saline County', core.get_state_id_by_state_name('Illinois')),
+('17167', 'Sangamon County', core.get_state_id_by_state_name('Illinois')),
+('17169', 'Schuyler County', core.get_state_id_by_state_name('Illinois')),
+('17171', 'Scott County', core.get_state_id_by_state_name('Illinois')),
+('17173', 'Shelby County', core.get_state_id_by_state_name('Illinois')),
+('17175', 'Stark County', core.get_state_id_by_state_name('Illinois')),
+('17177', 'Stephenson County', core.get_state_id_by_state_name('Illinois')),
+('17179', 'Tazewell County', core.get_state_id_by_state_name('Illinois')),
+('17181', 'Union County', core.get_state_id_by_state_name('Illinois')),
+('17183', 'Vermilion County', core.get_state_id_by_state_name('Illinois')),
+('17185', 'Wabash County', core.get_state_id_by_state_name('Illinois')),
+('17187', 'Warren County', core.get_state_id_by_state_name('Illinois')),
+('17189', 'Washington County', core.get_state_id_by_state_name('Illinois')),
+('17191', 'Wayne County', core.get_state_id_by_state_name('Illinois')),
+('17193', 'White County', core.get_state_id_by_state_name('Illinois')),
+('17195', 'Whiteside County', core.get_state_id_by_state_name('Illinois')),
+('17197', 'Will County', core.get_state_id_by_state_name('Illinois')),
+('17199', 'Williamson County', core.get_state_id_by_state_name('Illinois')),
+('17201', 'Winnebago County', core.get_state_id_by_state_name('Illinois')),
+('17203', 'Woodford County', core.get_state_id_by_state_name('Illinois')),
+('18001', 'Adams County', core.get_state_id_by_state_name('Indiana')),
+('18003', 'Allen County', core.get_state_id_by_state_name('Indiana')),
+('18005', 'Bartholomew County', core.get_state_id_by_state_name('Indiana')),
+('18007', 'Benton County', core.get_state_id_by_state_name('Indiana')),
+('18009', 'Blackford County', core.get_state_id_by_state_name('Indiana')),
+('18011', 'Boone County', core.get_state_id_by_state_name('Indiana')),
+('18013', 'Brown County', core.get_state_id_by_state_name('Indiana')),
+('18015', 'Carroll County', core.get_state_id_by_state_name('Indiana')),
+('18017', 'Cass County', core.get_state_id_by_state_name('Indiana')),
+('18019', 'Clark County', core.get_state_id_by_state_name('Indiana')),
+('18021', 'Clay County', core.get_state_id_by_state_name('Indiana')),
+('18023', 'Clinton County', core.get_state_id_by_state_name('Indiana')),
+('18025', 'Crawford County', core.get_state_id_by_state_name('Indiana')),
+('18027', 'Daviess County', core.get_state_id_by_state_name('Indiana')),
+('18029', 'Dearborn County', core.get_state_id_by_state_name('Indiana')),
+('18031', 'Decatur County', core.get_state_id_by_state_name('Indiana')),
+('18033', 'DeKalb County', core.get_state_id_by_state_name('Indiana')),
+('18035', 'Delaware County', core.get_state_id_by_state_name('Indiana')),
+('18037', 'Dubois County', core.get_state_id_by_state_name('Indiana')),
+('18039', 'Elkhart County', core.get_state_id_by_state_name('Indiana')),
+('18041', 'Fayette County', core.get_state_id_by_state_name('Indiana')),
+('18043', 'Floyd County', core.get_state_id_by_state_name('Indiana')),
+('18045', 'Fountain County', core.get_state_id_by_state_name('Indiana')),
+('18047', 'Franklin County', core.get_state_id_by_state_name('Indiana')),
+('18049', 'Fulton County', core.get_state_id_by_state_name('Indiana')),
+('18051', 'Gibson County', core.get_state_id_by_state_name('Indiana')),
+('18053', 'Grant County', core.get_state_id_by_state_name('Indiana')),
+('18055', 'Greene County', core.get_state_id_by_state_name('Indiana')),
+('18057', 'Hamilton County', core.get_state_id_by_state_name('Indiana')),
+('18059', 'Hancock County', core.get_state_id_by_state_name('Indiana')),
+('18061', 'Harrison County', core.get_state_id_by_state_name('Indiana')),
+('18063', 'Hendricks County', core.get_state_id_by_state_name('Indiana')),
+('18065', 'Henry County', core.get_state_id_by_state_name('Indiana')),
+('18067', 'Howard County', core.get_state_id_by_state_name('Indiana')),
+('18069', 'Huntington County', core.get_state_id_by_state_name('Indiana')),
+('18071', 'Jackson County', core.get_state_id_by_state_name('Indiana')),
+('18073', 'Jasper County', core.get_state_id_by_state_name('Indiana')),
+('18075', 'Jay County', core.get_state_id_by_state_name('Indiana')),
+('18077', 'Jefferson County', core.get_state_id_by_state_name('Indiana')),
+('18079', 'Jennings County', core.get_state_id_by_state_name('Indiana')),
+('18081', 'Johnson County', core.get_state_id_by_state_name('Indiana')),
+('18083', 'Knox County', core.get_state_id_by_state_name('Indiana')),
+('18085', 'Kosciusko County', core.get_state_id_by_state_name('Indiana')),
+('18087', 'LaGrange County', core.get_state_id_by_state_name('Indiana')),
+('18089', 'Lake County', core.get_state_id_by_state_name('Indiana')),
+('18091', 'LaPorte County', core.get_state_id_by_state_name('Indiana')),
+('18093', 'Lawrence County', core.get_state_id_by_state_name('Indiana')),
+('18095', 'Madison County', core.get_state_id_by_state_name('Indiana')),
+('18097', 'Marion County', core.get_state_id_by_state_name('Indiana')),
+('18099', 'Marshall County', core.get_state_id_by_state_name('Indiana')),
+('18101', 'Martin County', core.get_state_id_by_state_name('Indiana')),
+('18103', 'Miami County', core.get_state_id_by_state_name('Indiana')),
+('18105', 'Monroe County', core.get_state_id_by_state_name('Indiana')),
+('18107', 'Montgomery County', core.get_state_id_by_state_name('Indiana')),
+('18109', 'Morgan County', core.get_state_id_by_state_name('Indiana')),
+('18111', 'Newton County', core.get_state_id_by_state_name('Indiana')),
+('18113', 'Noble County', core.get_state_id_by_state_name('Indiana')),
+('18115', 'Ohio County', core.get_state_id_by_state_name('Indiana')),
+('18117', 'Orange County', core.get_state_id_by_state_name('Indiana')),
+('18119', 'Owen County', core.get_state_id_by_state_name('Indiana')),
+('18121', 'Parke County', core.get_state_id_by_state_name('Indiana')),
+('18123', 'Perry County', core.get_state_id_by_state_name('Indiana')),
+('18125', 'Pike County', core.get_state_id_by_state_name('Indiana')),
+('18127', 'Porter County', core.get_state_id_by_state_name('Indiana')),
+('18129', 'Posey County', core.get_state_id_by_state_name('Indiana')),
+('18131', 'Pulaski County', core.get_state_id_by_state_name('Indiana')),
+('18133', 'Putnam County', core.get_state_id_by_state_name('Indiana')),
+('18135', 'Randolph County', core.get_state_id_by_state_name('Indiana')),
+('18137', 'Ripley County', core.get_state_id_by_state_name('Indiana')),
+('18139', 'Rush County', core.get_state_id_by_state_name('Indiana')),
+('18141', 'St. Joseph County', core.get_state_id_by_state_name('Indiana')),
+('18143', 'Scott County', core.get_state_id_by_state_name('Indiana')),
+('18145', 'Shelby County', core.get_state_id_by_state_name('Indiana')),
+('18147', 'Spencer County', core.get_state_id_by_state_name('Indiana')),
+('18149', 'Starke County', core.get_state_id_by_state_name('Indiana')),
+('18151', 'Steuben County', core.get_state_id_by_state_name('Indiana')),
+('18153', 'Sullivan County', core.get_state_id_by_state_name('Indiana')),
+('18155', 'Switzerland County', core.get_state_id_by_state_name('Indiana')),
+('18157', 'Tippecanoe County', core.get_state_id_by_state_name('Indiana')),
+('18159', 'Tipton County', core.get_state_id_by_state_name('Indiana')),
+('18161', 'Union County', core.get_state_id_by_state_name('Indiana')),
+('18163', 'Vanderburgh County', core.get_state_id_by_state_name('Indiana')),
+('18165', 'Vermillion County', core.get_state_id_by_state_name('Indiana')),
+('18167', 'Vigo County', core.get_state_id_by_state_name('Indiana')),
+('18169', 'Wabash County', core.get_state_id_by_state_name('Indiana')),
+('18171', 'Warren County', core.get_state_id_by_state_name('Indiana')),
+('18173', 'Warrick County', core.get_state_id_by_state_name('Indiana')),
+('18175', 'Washington County', core.get_state_id_by_state_name('Indiana')),
+('18177', 'Wayne County', core.get_state_id_by_state_name('Indiana')),
+('18179', 'Wells County', core.get_state_id_by_state_name('Indiana')),
+('18181', 'White County', core.get_state_id_by_state_name('Indiana')),
+('18183', 'Whitley County', core.get_state_id_by_state_name('Indiana')),
+('19001', 'Adair County', core.get_state_id_by_state_name('Iowa')),
+('19003', 'Adams County', core.get_state_id_by_state_name('Iowa')),
+('19005', 'Allamakee County', core.get_state_id_by_state_name('Iowa')),
+('19007', 'Appanoose County', core.get_state_id_by_state_name('Iowa')),
+('19009', 'Audubon County', core.get_state_id_by_state_name('Iowa')),
+('19011', 'Benton County', core.get_state_id_by_state_name('Iowa')),
+('19013', 'Black Hawk County', core.get_state_id_by_state_name('Iowa')),
+('19015', 'Boone County', core.get_state_id_by_state_name('Iowa')),
+('19017', 'Bremer County', core.get_state_id_by_state_name('Iowa')),
+('19019', 'Buchanan County', core.get_state_id_by_state_name('Iowa')),
+('19021', 'Buena Vista County', core.get_state_id_by_state_name('Iowa')),
+('19023', 'Butler County', core.get_state_id_by_state_name('Iowa')),
+('19025', 'Calhoun County', core.get_state_id_by_state_name('Iowa')),
+('19027', 'Carroll County', core.get_state_id_by_state_name('Iowa')),
+('19029', 'Cass County', core.get_state_id_by_state_name('Iowa')),
+('19031', 'Cedar County', core.get_state_id_by_state_name('Iowa')),
+('19033', 'Cerro Gordo County', core.get_state_id_by_state_name('Iowa')),
+('19035', 'Cherokee County', core.get_state_id_by_state_name('Iowa')),
+('19037', 'Chickasaw County', core.get_state_id_by_state_name('Iowa')),
+('19039', 'Clarke County', core.get_state_id_by_state_name('Iowa')),
+('19041', 'Clay County', core.get_state_id_by_state_name('Iowa')),
+('19043', 'Clayton County', core.get_state_id_by_state_name('Iowa')),
+('19045', 'Clinton County', core.get_state_id_by_state_name('Iowa')),
+('19047', 'Crawford County', core.get_state_id_by_state_name('Iowa')),
+('19049', 'Dallas County', core.get_state_id_by_state_name('Iowa')),
+('19051', 'Davis County', core.get_state_id_by_state_name('Iowa')),
+('19053', 'Decatur County', core.get_state_id_by_state_name('Iowa')),
+('19055', 'Delaware County', core.get_state_id_by_state_name('Iowa')),
+('19057', 'Des Moines County', core.get_state_id_by_state_name('Iowa')),
+('19059', 'Dickinson County', core.get_state_id_by_state_name('Iowa')),
+('19061', 'Dubuque County', core.get_state_id_by_state_name('Iowa')),
+('19063', 'Emmet County', core.get_state_id_by_state_name('Iowa')),
+('19065', 'Fayette County', core.get_state_id_by_state_name('Iowa')),
+('19067', 'Floyd County', core.get_state_id_by_state_name('Iowa')),
+('19069', 'Franklin County', core.get_state_id_by_state_name('Iowa')),
+('19071', 'Fremont County', core.get_state_id_by_state_name('Iowa')),
+('19073', 'Greene County', core.get_state_id_by_state_name('Iowa')),
+('19075', 'Grundy County', core.get_state_id_by_state_name('Iowa')),
+('19077', 'Guthrie County', core.get_state_id_by_state_name('Iowa')),
+('19079', 'Hamilton County', core.get_state_id_by_state_name('Iowa')),
+('19081', 'Hancock County', core.get_state_id_by_state_name('Iowa')),
+('19083', 'Hardin County', core.get_state_id_by_state_name('Iowa')),
+('19085', 'Harrison County', core.get_state_id_by_state_name('Iowa')),
+('19087', 'Henry County', core.get_state_id_by_state_name('Iowa')),
+('19089', 'Howard County', core.get_state_id_by_state_name('Iowa')),
+('19091', 'Humboldt County', core.get_state_id_by_state_name('Iowa')),
+('19093', 'Ida County', core.get_state_id_by_state_name('Iowa')),
+('19095', 'Iowa County', core.get_state_id_by_state_name('Iowa')),
+('19097', 'Jackson County', core.get_state_id_by_state_name('Iowa')),
+('19099', 'Jasper County', core.get_state_id_by_state_name('Iowa')),
+('19101', 'Jefferson County', core.get_state_id_by_state_name('Iowa')),
+('19103', 'Johnson County', core.get_state_id_by_state_name('Iowa')),
+('19105', 'Jones County', core.get_state_id_by_state_name('Iowa')),
+('19107', 'Keokuk County', core.get_state_id_by_state_name('Iowa')),
+('19109', 'Kossuth County', core.get_state_id_by_state_name('Iowa')),
+('19111', 'Lee County', core.get_state_id_by_state_name('Iowa')),
+('19113', 'Linn County', core.get_state_id_by_state_name('Iowa')),
+('19115', 'Louisa County', core.get_state_id_by_state_name('Iowa')),
+('19117', 'Lucas County', core.get_state_id_by_state_name('Iowa')),
+('19119', 'Lyon County', core.get_state_id_by_state_name('Iowa')),
+('19121', 'Madison County', core.get_state_id_by_state_name('Iowa')),
+('19123', 'Mahaska County', core.get_state_id_by_state_name('Iowa')),
+('19125', 'Marion County', core.get_state_id_by_state_name('Iowa')),
+('19127', 'Marshall County', core.get_state_id_by_state_name('Iowa')),
+('19129', 'Mills County', core.get_state_id_by_state_name('Iowa')),
+('19131', 'Mitchell County', core.get_state_id_by_state_name('Iowa')),
+('19133', 'Monona County', core.get_state_id_by_state_name('Iowa')),
+('19135', 'Monroe County', core.get_state_id_by_state_name('Iowa')),
+('19137', 'Montgomery County', core.get_state_id_by_state_name('Iowa')),
+('19139', 'Muscatine County', core.get_state_id_by_state_name('Iowa')),
+('19141', 'O''Brien County', core.get_state_id_by_state_name('Iowa')),
+('19143', 'Osceola County', core.get_state_id_by_state_name('Iowa')),
+('19145', 'Page County', core.get_state_id_by_state_name('Iowa')),
+('19147', 'Palo Alto County', core.get_state_id_by_state_name('Iowa')),
+('19149', 'Plymouth County', core.get_state_id_by_state_name('Iowa')),
+('19151', 'Pocahontas County', core.get_state_id_by_state_name('Iowa')),
+('19153', 'Polk County', core.get_state_id_by_state_name('Iowa')),
+('19155', 'Pottawattamie County', core.get_state_id_by_state_name('Iowa')),
+('19157', 'Poweshiek County', core.get_state_id_by_state_name('Iowa')),
+('19159', 'Ringgold County', core.get_state_id_by_state_name('Iowa')),
+('19161', 'Sac County', core.get_state_id_by_state_name('Iowa')),
+('19163', 'Scott County', core.get_state_id_by_state_name('Iowa')),
+('19165', 'Shelby County', core.get_state_id_by_state_name('Iowa')),
+('19167', 'Sioux County', core.get_state_id_by_state_name('Iowa')),
+('19169', 'Story County', core.get_state_id_by_state_name('Iowa')),
+('19171', 'Tama County', core.get_state_id_by_state_name('Iowa')),
+('19173', 'Taylor County', core.get_state_id_by_state_name('Iowa')),
+('19175', 'Union County', core.get_state_id_by_state_name('Iowa')),
+('19177', 'Van Buren County', core.get_state_id_by_state_name('Iowa')),
+('19179', 'Wapello County', core.get_state_id_by_state_name('Iowa')),
+('19181', 'Warren County', core.get_state_id_by_state_name('Iowa')),
+('19183', 'Washington County', core.get_state_id_by_state_name('Iowa')),
+('19185', 'Wayne County', core.get_state_id_by_state_name('Iowa')),
+('19187', 'Webster County', core.get_state_id_by_state_name('Iowa')),
+('19189', 'Winnebago County', core.get_state_id_by_state_name('Iowa')),
+('19191', 'Winneshiek County', core.get_state_id_by_state_name('Iowa')),
+('19193', 'Woodbury County', core.get_state_id_by_state_name('Iowa')),
+('19195', 'Worth County', core.get_state_id_by_state_name('Iowa')),
+('19197', 'Wright County', core.get_state_id_by_state_name('Iowa')),
+('20001', 'Allen County', core.get_state_id_by_state_name('Kansas')),
+('20003', 'Anderson County', core.get_state_id_by_state_name('Kansas')),
+('20005', 'Atchison County', core.get_state_id_by_state_name('Kansas')),
+('20007', 'Barber County', core.get_state_id_by_state_name('Kansas')),
+('20009', 'Barton County', core.get_state_id_by_state_name('Kansas')),
+('20011', 'Bourbon County', core.get_state_id_by_state_name('Kansas')),
+('20013', 'Brown County', core.get_state_id_by_state_name('Kansas')),
+('20015', 'Butler County', core.get_state_id_by_state_name('Kansas')),
+('20017', 'Chase County', core.get_state_id_by_state_name('Kansas')),
+('20019', 'Chautauqua County', core.get_state_id_by_state_name('Kansas')),
+('20021', 'Cherokee County', core.get_state_id_by_state_name('Kansas')),
+('20023', 'Cheyenne County', core.get_state_id_by_state_name('Kansas')),
+('20025', 'Clark County', core.get_state_id_by_state_name('Kansas')),
+('20027', 'Clay County', core.get_state_id_by_state_name('Kansas')),
+('20029', 'Cloud County', core.get_state_id_by_state_name('Kansas')),
+('20031', 'Coffey County', core.get_state_id_by_state_name('Kansas')),
+('20033', 'Comanche County', core.get_state_id_by_state_name('Kansas')),
+('20035', 'Cowley County', core.get_state_id_by_state_name('Kansas')),
+('20037', 'Crawford County', core.get_state_id_by_state_name('Kansas')),
+('20039', 'Decatur County', core.get_state_id_by_state_name('Kansas')),
+('20041', 'Dickinson County', core.get_state_id_by_state_name('Kansas')),
+('20043', 'Doniphan County', core.get_state_id_by_state_name('Kansas')),
+('20045', 'Douglas County', core.get_state_id_by_state_name('Kansas')),
+('20047', 'Edwards County', core.get_state_id_by_state_name('Kansas')),
+('20049', 'Elk County', core.get_state_id_by_state_name('Kansas')),
+('20051', 'Ellis County', core.get_state_id_by_state_name('Kansas')),
+('20053', 'Ellsworth County', core.get_state_id_by_state_name('Kansas')),
+('20055', 'Finney County', core.get_state_id_by_state_name('Kansas')),
+('20057', 'Ford County', core.get_state_id_by_state_name('Kansas')),
+('20059', 'Franklin County', core.get_state_id_by_state_name('Kansas')),
+('20061', 'Geary County', core.get_state_id_by_state_name('Kansas')),
+('20063', 'Gove County', core.get_state_id_by_state_name('Kansas')),
+('20065', 'Graham County', core.get_state_id_by_state_name('Kansas')),
+('20067', 'Grant County', core.get_state_id_by_state_name('Kansas')),
+('20069', 'Gray County', core.get_state_id_by_state_name('Kansas')),
+('20071', 'Greeley County', core.get_state_id_by_state_name('Kansas')),
+('20073', 'Greenwood County', core.get_state_id_by_state_name('Kansas')),
+('20075', 'Hamilton County', core.get_state_id_by_state_name('Kansas')),
+('20077', 'Harper County', core.get_state_id_by_state_name('Kansas')),
+('20079', 'Harvey County', core.get_state_id_by_state_name('Kansas')),
+('20081', 'Haskell County', core.get_state_id_by_state_name('Kansas')),
+('20083', 'Hodgeman County', core.get_state_id_by_state_name('Kansas')),
+('20085', 'Jackson County', core.get_state_id_by_state_name('Kansas')),
+('20087', 'Jefferson County', core.get_state_id_by_state_name('Kansas')),
+('20089', 'Jewell County', core.get_state_id_by_state_name('Kansas')),
+('20091', 'Johnson County', core.get_state_id_by_state_name('Kansas')),
+('20093', 'Kearny County', core.get_state_id_by_state_name('Kansas')),
+('20095', 'Kingman County', core.get_state_id_by_state_name('Kansas')),
+('20097', 'Kiowa County', core.get_state_id_by_state_name('Kansas')),
+('20099', 'Labette County', core.get_state_id_by_state_name('Kansas')),
+('20101', 'Lane County', core.get_state_id_by_state_name('Kansas')),
+('20103', 'Leavenworth County', core.get_state_id_by_state_name('Kansas')),
+('20105', 'Lincoln County', core.get_state_id_by_state_name('Kansas')),
+('20107', 'Linn County', core.get_state_id_by_state_name('Kansas')),
+('20109', 'Logan County', core.get_state_id_by_state_name('Kansas')),
+('20111', 'Lyon County', core.get_state_id_by_state_name('Kansas')),
+('20113', 'McPherson County', core.get_state_id_by_state_name('Kansas')),
+('20115', 'Marion County', core.get_state_id_by_state_name('Kansas')),
+('20117', 'Marshall County', core.get_state_id_by_state_name('Kansas')),
+('20119', 'Meade County', core.get_state_id_by_state_name('Kansas')),
+('20121', 'Miami County', core.get_state_id_by_state_name('Kansas')),
+('20123', 'Mitchell County', core.get_state_id_by_state_name('Kansas')),
+('20125', 'Montgomery County', core.get_state_id_by_state_name('Kansas')),
+('20127', 'Morris County', core.get_state_id_by_state_name('Kansas')),
+('20129', 'Morton County', core.get_state_id_by_state_name('Kansas')),
+('20131', 'Nemaha County', core.get_state_id_by_state_name('Kansas')),
+('20133', 'Neosho County', core.get_state_id_by_state_name('Kansas')),
+('20135', 'Ness County', core.get_state_id_by_state_name('Kansas')),
+('20137', 'Norton County', core.get_state_id_by_state_name('Kansas')),
+('20139', 'Osage County', core.get_state_id_by_state_name('Kansas')),
+('20141', 'Osborne County', core.get_state_id_by_state_name('Kansas')),
+('20143', 'Ottawa County', core.get_state_id_by_state_name('Kansas')),
+('20145', 'Pawnee County', core.get_state_id_by_state_name('Kansas')),
+('20147', 'Phillips County', core.get_state_id_by_state_name('Kansas')),
+('20149', 'Pottawatomie County', core.get_state_id_by_state_name('Kansas')),
+('20151', 'Pratt County', core.get_state_id_by_state_name('Kansas')),
+('20153', 'Rawlins County', core.get_state_id_by_state_name('Kansas')),
+('20155', 'Reno County', core.get_state_id_by_state_name('Kansas')),
+('20157', 'Republic County', core.get_state_id_by_state_name('Kansas')),
+('20159', 'Rice County', core.get_state_id_by_state_name('Kansas')),
+('20161', 'Riley County', core.get_state_id_by_state_name('Kansas')),
+('20163', 'Rooks County', core.get_state_id_by_state_name('Kansas')),
+('20165', 'Rush County', core.get_state_id_by_state_name('Kansas')),
+('20167', 'Russell County', core.get_state_id_by_state_name('Kansas')),
+('20169', 'Saline County', core.get_state_id_by_state_name('Kansas')),
+('20171', 'Scott County', core.get_state_id_by_state_name('Kansas')),
+('20173', 'Sedgwick County', core.get_state_id_by_state_name('Kansas')),
+('20175', 'Seward County', core.get_state_id_by_state_name('Kansas')),
+('20177', 'Shawnee County', core.get_state_id_by_state_name('Kansas')),
+('20179', 'Sheridan County', core.get_state_id_by_state_name('Kansas')),
+('20181', 'Sherman County', core.get_state_id_by_state_name('Kansas')),
+('20183', 'Smith County', core.get_state_id_by_state_name('Kansas')),
+('20185', 'Stafford County', core.get_state_id_by_state_name('Kansas')),
+('20187', 'Stanton County', core.get_state_id_by_state_name('Kansas')),
+('20189', 'Stevens County', core.get_state_id_by_state_name('Kansas')),
+('20191', 'Sumner County', core.get_state_id_by_state_name('Kansas')),
+('20193', 'Thomas County', core.get_state_id_by_state_name('Kansas')),
+('20195', 'Trego County', core.get_state_id_by_state_name('Kansas')),
+('20197', 'Wabaunsee County', core.get_state_id_by_state_name('Kansas')),
+('20199', 'Wallace County', core.get_state_id_by_state_name('Kansas')),
+('20201', 'Washington County', core.get_state_id_by_state_name('Kansas')),
+('20203', 'Wichita County', core.get_state_id_by_state_name('Kansas')),
+('20205', 'Wilson County', core.get_state_id_by_state_name('Kansas')),
+('20207', 'Woodson County', core.get_state_id_by_state_name('Kansas')),
+('20209', 'Wyandotte County', core.get_state_id_by_state_name('Kansas')),
+('21001', 'Adair County', core.get_state_id_by_state_name('Kentucky')),
+('21003', 'Allen County', core.get_state_id_by_state_name('Kentucky')),
+('21005', 'Anderson County', core.get_state_id_by_state_name('Kentucky')),
+('21007', 'Ballard County', core.get_state_id_by_state_name('Kentucky')),
+('21009', 'Barren County', core.get_state_id_by_state_name('Kentucky')),
+('21011', 'Bath County', core.get_state_id_by_state_name('Kentucky')),
+('21013', 'Bell County', core.get_state_id_by_state_name('Kentucky')),
+('21015', 'Boone County', core.get_state_id_by_state_name('Kentucky')),
+('21017', 'Bourbon County', core.get_state_id_by_state_name('Kentucky')),
+('21019', 'Boyd County', core.get_state_id_by_state_name('Kentucky')),
+('21021', 'Boyle County', core.get_state_id_by_state_name('Kentucky')),
+('21023', 'Bracken County', core.get_state_id_by_state_name('Kentucky')),
+('21025', 'Breathitt County', core.get_state_id_by_state_name('Kentucky')),
+('21027', 'Breckinridge County', core.get_state_id_by_state_name('Kentucky')),
+('21029', 'Bullitt County', core.get_state_id_by_state_name('Kentucky')),
+('21031', 'Butler County', core.get_state_id_by_state_name('Kentucky')),
+('21033', 'Caldwell County', core.get_state_id_by_state_name('Kentucky')),
+('21035', 'Calloway County', core.get_state_id_by_state_name('Kentucky')),
+('21037', 'Campbell County', core.get_state_id_by_state_name('Kentucky')),
+('21039', 'Carlisle County', core.get_state_id_by_state_name('Kentucky')),
+('21041', 'Carroll County', core.get_state_id_by_state_name('Kentucky')),
+('21043', 'Carter County', core.get_state_id_by_state_name('Kentucky')),
+('21045', 'Casey County', core.get_state_id_by_state_name('Kentucky')),
+('21047', 'Christian County', core.get_state_id_by_state_name('Kentucky')),
+('21049', 'Clark County', core.get_state_id_by_state_name('Kentucky')),
+('21051', 'Clay County', core.get_state_id_by_state_name('Kentucky')),
+('21053', 'Clinton County', core.get_state_id_by_state_name('Kentucky')),
+('21055', 'Crittenden County', core.get_state_id_by_state_name('Kentucky')),
+('21057', 'Cumberland County', core.get_state_id_by_state_name('Kentucky')),
+('21059', 'Daviess County', core.get_state_id_by_state_name('Kentucky')),
+('21061', 'Edmonson County', core.get_state_id_by_state_name('Kentucky')),
+('21063', 'Elliott County', core.get_state_id_by_state_name('Kentucky')),
+('21065', 'Estill County', core.get_state_id_by_state_name('Kentucky')),
+('21067', 'Fayette County', core.get_state_id_by_state_name('Kentucky')),
+('21069', 'Fleming County', core.get_state_id_by_state_name('Kentucky')),
+('21071', 'Floyd County', core.get_state_id_by_state_name('Kentucky')),
+('21073', 'Franklin County', core.get_state_id_by_state_name('Kentucky')),
+('21075', 'Fulton County', core.get_state_id_by_state_name('Kentucky')),
+('21077', 'Gallatin County', core.get_state_id_by_state_name('Kentucky')),
+('21079', 'Garrard County', core.get_state_id_by_state_name('Kentucky')),
+('21081', 'Grant County', core.get_state_id_by_state_name('Kentucky')),
+('21083', 'Graves County', core.get_state_id_by_state_name('Kentucky')),
+('21085', 'Grayson County', core.get_state_id_by_state_name('Kentucky')),
+('21087', 'Green County', core.get_state_id_by_state_name('Kentucky')),
+('21089', 'Greenup County', core.get_state_id_by_state_name('Kentucky')),
+('21091', 'Hancock County', core.get_state_id_by_state_name('Kentucky')),
+('21093', 'Hardin County', core.get_state_id_by_state_name('Kentucky')),
+('21095', 'Harlan County', core.get_state_id_by_state_name('Kentucky')),
+('21097', 'Harrison County', core.get_state_id_by_state_name('Kentucky')),
+('21099', 'Hart County', core.get_state_id_by_state_name('Kentucky')),
+('21101', 'Henderson County', core.get_state_id_by_state_name('Kentucky')),
+('21103', 'Henry County', core.get_state_id_by_state_name('Kentucky')),
+('21105', 'Hickman County', core.get_state_id_by_state_name('Kentucky')),
+('21107', 'Hopkins County', core.get_state_id_by_state_name('Kentucky')),
+('21109', 'Jackson County', core.get_state_id_by_state_name('Kentucky')),
+('21111', 'Jefferson County', core.get_state_id_by_state_name('Kentucky')),
+('21113', 'Jessamine County', core.get_state_id_by_state_name('Kentucky')),
+('21115', 'Johnson County', core.get_state_id_by_state_name('Kentucky')),
+('21117', 'Kenton County', core.get_state_id_by_state_name('Kentucky')),
+('21119', 'Knott County', core.get_state_id_by_state_name('Kentucky')),
+('21121', 'Knox County', core.get_state_id_by_state_name('Kentucky')),
+('21123', 'LaRue County', core.get_state_id_by_state_name('Kentucky')),
+('21125', 'Laurel County', core.get_state_id_by_state_name('Kentucky')),
+('21127', 'Lawrence County', core.get_state_id_by_state_name('Kentucky')),
+('21129', 'Lee County', core.get_state_id_by_state_name('Kentucky')),
+('21131', 'Leslie County', core.get_state_id_by_state_name('Kentucky')),
+('21133', 'Letcher County', core.get_state_id_by_state_name('Kentucky')),
+('21135', 'Lewis County', core.get_state_id_by_state_name('Kentucky')),
+('21137', 'Lincoln County', core.get_state_id_by_state_name('Kentucky')),
+('21139', 'Livingston County', core.get_state_id_by_state_name('Kentucky')),
+('21141', 'Logan County', core.get_state_id_by_state_name('Kentucky')),
+('21143', 'Lyon County', core.get_state_id_by_state_name('Kentucky')),
+('21145', 'McCracken County', core.get_state_id_by_state_name('Kentucky')),
+('21147', 'McCreary County', core.get_state_id_by_state_name('Kentucky')),
+('21149', 'McLean County', core.get_state_id_by_state_name('Kentucky')),
+('21151', 'Madison County', core.get_state_id_by_state_name('Kentucky')),
+('21153', 'Magoffin County', core.get_state_id_by_state_name('Kentucky')),
+('21155', 'Marion County', core.get_state_id_by_state_name('Kentucky')),
+('21157', 'Marshall County', core.get_state_id_by_state_name('Kentucky')),
+('21159', 'Martin County', core.get_state_id_by_state_name('Kentucky')),
+('21161', 'Mason County', core.get_state_id_by_state_name('Kentucky')),
+('21163', 'Meade County', core.get_state_id_by_state_name('Kentucky')),
+('21165', 'Menifee County', core.get_state_id_by_state_name('Kentucky')),
+('21167', 'Mercer County', core.get_state_id_by_state_name('Kentucky')),
+('21169', 'Metcalfe County', core.get_state_id_by_state_name('Kentucky')),
+('21171', 'Monroe County', core.get_state_id_by_state_name('Kentucky')),
+('21173', 'Montgomery County', core.get_state_id_by_state_name('Kentucky')),
+('21175', 'Morgan County', core.get_state_id_by_state_name('Kentucky')),
+('21177', 'Muhlenberg County', core.get_state_id_by_state_name('Kentucky')),
+('21179', 'Nelson County', core.get_state_id_by_state_name('Kentucky')),
+('21181', 'Nicholas County', core.get_state_id_by_state_name('Kentucky')),
+('21183', 'Ohio County', core.get_state_id_by_state_name('Kentucky')),
+('21185', 'Oldham County', core.get_state_id_by_state_name('Kentucky')),
+('21187', 'Owen County', core.get_state_id_by_state_name('Kentucky')),
+('21189', 'Owsley County', core.get_state_id_by_state_name('Kentucky')),
+('21191', 'Pendleton County', core.get_state_id_by_state_name('Kentucky')),
+('21193', 'Perry County', core.get_state_id_by_state_name('Kentucky')),
+('21195', 'Pike County', core.get_state_id_by_state_name('Kentucky')),
+('21197', 'Powell County', core.get_state_id_by_state_name('Kentucky')),
+('21199', 'Pulaski County', core.get_state_id_by_state_name('Kentucky')),
+('21201', 'Robertson County', core.get_state_id_by_state_name('Kentucky')),
+('21203', 'Rockcastle County', core.get_state_id_by_state_name('Kentucky')),
+('21205', 'Rowan County', core.get_state_id_by_state_name('Kentucky')),
+('21207', 'Russell County', core.get_state_id_by_state_name('Kentucky')),
+('21209', 'Scott County', core.get_state_id_by_state_name('Kentucky')),
+('21211', 'Shelby County', core.get_state_id_by_state_name('Kentucky')),
+('21213', 'Simpson County', core.get_state_id_by_state_name('Kentucky')),
+('21215', 'Spencer County', core.get_state_id_by_state_name('Kentucky')),
+('21217', 'Taylor County', core.get_state_id_by_state_name('Kentucky')),
+('21219', 'Todd County', core.get_state_id_by_state_name('Kentucky')),
+('21221', 'Trigg County', core.get_state_id_by_state_name('Kentucky')),
+('21223', 'Trimble County', core.get_state_id_by_state_name('Kentucky')),
+('21225', 'Union County', core.get_state_id_by_state_name('Kentucky')),
+('21227', 'Warren County', core.get_state_id_by_state_name('Kentucky')),
+('21229', 'Washington County', core.get_state_id_by_state_name('Kentucky')),
+('21231', 'Wayne County', core.get_state_id_by_state_name('Kentucky')),
+('21233', 'Webster County', core.get_state_id_by_state_name('Kentucky')),
+('21235', 'Whitley County', core.get_state_id_by_state_name('Kentucky')),
+('21237', 'Wolfe County', core.get_state_id_by_state_name('Kentucky')),
+('21239', 'Woodford County', core.get_state_id_by_state_name('Kentucky')),
+('22001', 'Acadia Parish', core.get_state_id_by_state_name('Louisiana')),
+('22003', 'Allen Parish', core.get_state_id_by_state_name('Louisiana')),
+('22005', 'Ascension Parish', core.get_state_id_by_state_name('Louisiana')),
+('22007', 'Assumption Parish', core.get_state_id_by_state_name('Louisiana')),
+('22009', 'Avoyelles Parish', core.get_state_id_by_state_name('Louisiana')),
+('22011', 'Beauregard Parish', core.get_state_id_by_state_name('Louisiana')),
+('22013', 'Bienville Parish', core.get_state_id_by_state_name('Louisiana')),
+('22015', 'Bossier Parish', core.get_state_id_by_state_name('Louisiana')),
+('22017', 'Caddo Parish', core.get_state_id_by_state_name('Louisiana')),
+('22019', 'Calcasieu Parish', core.get_state_id_by_state_name('Louisiana')),
+('22021', 'Caldwell Parish', core.get_state_id_by_state_name('Louisiana')),
+('22023', 'Cameron Parish', core.get_state_id_by_state_name('Louisiana')),
+('22025', 'Catahoula Parish', core.get_state_id_by_state_name('Louisiana')),
+('22027', 'Claiborne Parish', core.get_state_id_by_state_name('Louisiana')),
+('22029', 'Concordia Parish', core.get_state_id_by_state_name('Louisiana')),
+('22031', 'De Soto Parish', core.get_state_id_by_state_name('Louisiana')),
+('22033', 'East Baton Rouge Parish', core.get_state_id_by_state_name('Louisiana')),
+('22035', 'East Carroll Parish', core.get_state_id_by_state_name('Louisiana')),
+('22037', 'East Feliciana Parish', core.get_state_id_by_state_name('Louisiana')),
+('22039', 'Evangeline Parish', core.get_state_id_by_state_name('Louisiana')),
+('22041', 'Franklin Parish', core.get_state_id_by_state_name('Louisiana')),
+('22043', 'Grant Parish', core.get_state_id_by_state_name('Louisiana')),
+('22045', 'Iberia Parish', core.get_state_id_by_state_name('Louisiana')),
+('22047', 'Iberville Parish', core.get_state_id_by_state_name('Louisiana')),
+('22049', 'Jackson Parish', core.get_state_id_by_state_name('Louisiana')),
+('22051', 'Jefferson Parish', core.get_state_id_by_state_name('Louisiana')),
+('22053', 'Jefferson Davis Parish', core.get_state_id_by_state_name('Louisiana')),
+('22055', 'Lafayette Parish', core.get_state_id_by_state_name('Louisiana')),
+('22057', 'Lafourche Parish', core.get_state_id_by_state_name('Louisiana')),
+('22059', 'LaSalle Parish', core.get_state_id_by_state_name('Louisiana')),
+('22061', 'Lincoln Parish', core.get_state_id_by_state_name('Louisiana')),
+('22063', 'Livingston Parish', core.get_state_id_by_state_name('Louisiana')),
+('22065', 'Madison Parish', core.get_state_id_by_state_name('Louisiana')),
+('22067', 'Morehouse Parish', core.get_state_id_by_state_name('Louisiana')),
+('22069', 'Natchitoches Parish', core.get_state_id_by_state_name('Louisiana')),
+('22071', 'Orleans Parish', core.get_state_id_by_state_name('Louisiana')),
+('22073', 'Ouachita Parish', core.get_state_id_by_state_name('Louisiana')),
+('22075', 'Plaquemines Parish', core.get_state_id_by_state_name('Louisiana')),
+('22077', 'Pointe Coupee Parish', core.get_state_id_by_state_name('Louisiana')),
+('22079', 'Rapides Parish', core.get_state_id_by_state_name('Louisiana')),
+('22081', 'Red River Parish', core.get_state_id_by_state_name('Louisiana')),
+('22083', 'Richland Parish', core.get_state_id_by_state_name('Louisiana')),
+('22085', 'Sabine Parish', core.get_state_id_by_state_name('Louisiana')),
+('22087', 'St. Bernard Parish', core.get_state_id_by_state_name('Louisiana')),
+('22089', 'St. Charles Parish', core.get_state_id_by_state_name('Louisiana')),
+('22091', 'St. Helena Parish', core.get_state_id_by_state_name('Louisiana')),
+('22093', 'St. James Parish', core.get_state_id_by_state_name('Louisiana')),
+('22095', 'St. John the Baptist Parish', core.get_state_id_by_state_name('Louisiana')),
+('22097', 'St. Landry Parish', core.get_state_id_by_state_name('Louisiana')),
+('22099', 'St. Martin Parish', core.get_state_id_by_state_name('Louisiana')),
+('22101', 'St. Mary Parish', core.get_state_id_by_state_name('Louisiana')),
+('22103', 'St. Tammany Parish', core.get_state_id_by_state_name('Louisiana')),
+('22105', 'Tangipahoa Parish', core.get_state_id_by_state_name('Louisiana')),
+('22107', 'Tensas Parish', core.get_state_id_by_state_name('Louisiana')),
+('22109', 'Terrebonne Parish', core.get_state_id_by_state_name('Louisiana')),
+('22111', 'Union Parish', core.get_state_id_by_state_name('Louisiana')),
+('22113', 'Vermilion Parish', core.get_state_id_by_state_name('Louisiana')),
+('22115', 'Vernon Parish', core.get_state_id_by_state_name('Louisiana')),
+('22117', 'Washington Parish', core.get_state_id_by_state_name('Louisiana')),
+('22119', 'Webster Parish', core.get_state_id_by_state_name('Louisiana')),
+('22121', 'West Baton Rouge Parish', core.get_state_id_by_state_name('Louisiana')),
+('22123', 'West Carroll Parish', core.get_state_id_by_state_name('Louisiana')),
+('22125', 'West Feliciana Parish', core.get_state_id_by_state_name('Louisiana')),
+('22127', 'Winn Parish', core.get_state_id_by_state_name('Louisiana')),
+('23001', 'Androscoggin County', core.get_state_id_by_state_name('Maine')),
+('23003', 'Aroostook County', core.get_state_id_by_state_name('Maine')),
+('23005', 'Cumberland County', core.get_state_id_by_state_name('Maine')),
+('23007', 'Franklin County', core.get_state_id_by_state_name('Maine')),
+('23009', 'Hancock County', core.get_state_id_by_state_name('Maine')),
+('23011', 'Kennebec County', core.get_state_id_by_state_name('Maine')),
+('23013', 'Knox County', core.get_state_id_by_state_name('Maine')),
+('23015', 'Lincoln County', core.get_state_id_by_state_name('Maine')),
+('23017', 'Oxford County', core.get_state_id_by_state_name('Maine')),
+('23019', 'Penobscot County', core.get_state_id_by_state_name('Maine')),
+('23021', 'Piscataquis County', core.get_state_id_by_state_name('Maine')),
+('23023', 'Sagadahoc County', core.get_state_id_by_state_name('Maine')),
+('23025', 'Somerset County', core.get_state_id_by_state_name('Maine')),
+('23027', 'Waldo County', core.get_state_id_by_state_name('Maine')),
+('23029', 'Washington County', core.get_state_id_by_state_name('Maine')),
+('23031', 'York County', core.get_state_id_by_state_name('Maine')),
+('24001', 'Allegany County', core.get_state_id_by_state_name('Maryland')),
+('24003', 'Anne Arundel County', core.get_state_id_by_state_name('Maryland')),
+('24005', 'Baltimore County', core.get_state_id_by_state_name('Maryland')),
+('24009', 'Calvert County', core.get_state_id_by_state_name('Maryland')),
+('24011', 'Caroline County', core.get_state_id_by_state_name('Maryland')),
+('24013', 'Carroll County', core.get_state_id_by_state_name('Maryland')),
+('24015', 'Cecil County', core.get_state_id_by_state_name('Maryland')),
+('24017', 'Charles County', core.get_state_id_by_state_name('Maryland')),
+('24019', 'Dorchester County', core.get_state_id_by_state_name('Maryland')),
+('24021', 'Frederick County', core.get_state_id_by_state_name('Maryland')),
+('24023', 'Garrett County', core.get_state_id_by_state_name('Maryland')),
+('24025', 'Harford County', core.get_state_id_by_state_name('Maryland')),
+('24027', 'Howard County', core.get_state_id_by_state_name('Maryland')),
+('24029', 'Kent County', core.get_state_id_by_state_name('Maryland')),
+('24031', 'Montgomery County', core.get_state_id_by_state_name('Maryland')),
+('24033', 'Prince George''s County', core.get_state_id_by_state_name('Maryland')),
+('24035', 'Queen Anne''s County', core.get_state_id_by_state_name('Maryland')),
+('24037', 'St. Mary''s County', core.get_state_id_by_state_name('Maryland')),
+('24039', 'Somerset County', core.get_state_id_by_state_name('Maryland')),
+('24041', 'Talbot County', core.get_state_id_by_state_name('Maryland')),
+('24043', 'Washington County', core.get_state_id_by_state_name('Maryland')),
+('24045', 'Wicomico County', core.get_state_id_by_state_name('Maryland')),
+('24047', 'Worcester County', core.get_state_id_by_state_name('Maryland')),
+('24510', 'Baltimore, City of', core.get_state_id_by_state_name('Maryland')),
+('25001', 'Barnstable County', core.get_state_id_by_state_name('Massachusetts')),
+('25003', 'Berkshire County', core.get_state_id_by_state_name('Massachusetts')),
+('25005', 'Bristol County', core.get_state_id_by_state_name('Massachusetts')),
+('25007', 'Dukes County', core.get_state_id_by_state_name('Massachusetts')),
+('25009', 'Essex County', core.get_state_id_by_state_name('Massachusetts')),
+('25011', 'Franklin County', core.get_state_id_by_state_name('Massachusetts')),
+('25013', 'Hampden County', core.get_state_id_by_state_name('Massachusetts')),
+('25015', 'Hampshire County', core.get_state_id_by_state_name('Massachusetts')),
+('25017', 'Middlesex County', core.get_state_id_by_state_name('Massachusetts')),
+('25019', 'Nantucket, Town and County of', core.get_state_id_by_state_name('Massachusetts')),
+('25021', 'Norfolk County', core.get_state_id_by_state_name('Massachusetts')),
+('25023', 'Plymouth County', core.get_state_id_by_state_name('Massachusetts')),
+('25025', 'Suffolk County', core.get_state_id_by_state_name('Massachusetts')),
+('25027', 'Worcester County', core.get_state_id_by_state_name('Massachusetts')),
+('26001', 'Alcona County', core.get_state_id_by_state_name('Michigan')),
+('26003', 'Alger County', core.get_state_id_by_state_name('Michigan')),
+('26005', 'Allegan County', core.get_state_id_by_state_name('Michigan')),
+('26007', 'Alpena County', core.get_state_id_by_state_name('Michigan')),
+('26009', 'Antrim County', core.get_state_id_by_state_name('Michigan')),
+('26011', 'Arenac County', core.get_state_id_by_state_name('Michigan')),
+('26013', 'Baraga County', core.get_state_id_by_state_name('Michigan')),
+('26015', 'Barry County', core.get_state_id_by_state_name('Michigan')),
+('26017', 'Bay County', core.get_state_id_by_state_name('Michigan')),
+('26019', 'Benzie County', core.get_state_id_by_state_name('Michigan')),
+('26021', 'Berrien County', core.get_state_id_by_state_name('Michigan')),
+('26023', 'Branch County', core.get_state_id_by_state_name('Michigan')),
+('26025', 'Calhoun County', core.get_state_id_by_state_name('Michigan')),
+('26027', 'Cass County', core.get_state_id_by_state_name('Michigan')),
+('26029', 'Charlevoix County', core.get_state_id_by_state_name('Michigan')),
+('26031', 'Cheboygan County', core.get_state_id_by_state_name('Michigan')),
+('26033', 'Chippewa County', core.get_state_id_by_state_name('Michigan')),
+('26035', 'Clare County', core.get_state_id_by_state_name('Michigan')),
+('26037', 'Clinton County', core.get_state_id_by_state_name('Michigan')),
+('26039', 'Crawford County', core.get_state_id_by_state_name('Michigan')),
+('26041', 'Delta County', core.get_state_id_by_state_name('Michigan')),
+('26043', 'Dickinson County', core.get_state_id_by_state_name('Michigan')),
+('26045', 'Eaton County', core.get_state_id_by_state_name('Michigan')),
+('26047', 'Emmet County', core.get_state_id_by_state_name('Michigan')),
+('26049', 'Genesee County', core.get_state_id_by_state_name('Michigan')),
+('26051', 'Gladwin County', core.get_state_id_by_state_name('Michigan')),
+('26053', 'Gogebic County', core.get_state_id_by_state_name('Michigan')),
+('26055', 'Grand Traverse County', core.get_state_id_by_state_name('Michigan')),
+('26057', 'Gratiot County', core.get_state_id_by_state_name('Michigan')),
+('26059', 'Hillsdale County', core.get_state_id_by_state_name('Michigan')),
+('26061', 'Houghton County', core.get_state_id_by_state_name('Michigan')),
+('26063', 'Huron County', core.get_state_id_by_state_name('Michigan')),
+('26065', 'Ingham County', core.get_state_id_by_state_name('Michigan')),
+('26067', 'Ionia County', core.get_state_id_by_state_name('Michigan')),
+('26069', 'Iosco County', core.get_state_id_by_state_name('Michigan')),
+('26071', 'Iron County', core.get_state_id_by_state_name('Michigan')),
+('26073', 'Isabella County', core.get_state_id_by_state_name('Michigan')),
+('26075', 'Jackson County', core.get_state_id_by_state_name('Michigan')),
+('26077', 'Kalamazoo County', core.get_state_id_by_state_name('Michigan')),
+('26079', 'Kalkaska County', core.get_state_id_by_state_name('Michigan')),
+('26081', 'Kent County', core.get_state_id_by_state_name('Michigan')),
+('26083', 'Keweenaw County', core.get_state_id_by_state_name('Michigan')),
+('26085', 'Lake County', core.get_state_id_by_state_name('Michigan')),
+('26087', 'Lapeer County', core.get_state_id_by_state_name('Michigan')),
+('26089', 'Leelanau County', core.get_state_id_by_state_name('Michigan')),
+('26091', 'Lenawee County', core.get_state_id_by_state_name('Michigan')),
+('26093', 'Livingston County', core.get_state_id_by_state_name('Michigan')),
+('26095', 'Luce County', core.get_state_id_by_state_name('Michigan')),
+('26097', 'Mackinac County', core.get_state_id_by_state_name('Michigan')),
+('26099', 'Macomb County', core.get_state_id_by_state_name('Michigan')),
+('26101', 'Manistee County', core.get_state_id_by_state_name('Michigan')),
+('26103', 'Marquette County', core.get_state_id_by_state_name('Michigan')),
+('26105', 'Mason County', core.get_state_id_by_state_name('Michigan')),
+('26107', 'Mecosta County', core.get_state_id_by_state_name('Michigan')),
+('26109', 'Menominee County', core.get_state_id_by_state_name('Michigan')),
+('26111', 'Midland County', core.get_state_id_by_state_name('Michigan')),
+('26113', 'Missaukee County', core.get_state_id_by_state_name('Michigan')),
+('26115', 'Monroe County', core.get_state_id_by_state_name('Michigan')),
+('26117', 'Montcalm County', core.get_state_id_by_state_name('Michigan')),
+('26119', 'Montmorency County', core.get_state_id_by_state_name('Michigan')),
+('26121', 'Muskegon County', core.get_state_id_by_state_name('Michigan')),
+('26123', 'Newaygo County', core.get_state_id_by_state_name('Michigan')),
+('26125', 'Oakland County', core.get_state_id_by_state_name('Michigan')),
+('26127', 'Oceana County', core.get_state_id_by_state_name('Michigan')),
+('26129', 'Ogemaw County', core.get_state_id_by_state_name('Michigan')),
+('26131', 'Ontonagon County', core.get_state_id_by_state_name('Michigan')),
+('26133', 'Osceola County', core.get_state_id_by_state_name('Michigan')),
+('26135', 'Oscoda County', core.get_state_id_by_state_name('Michigan')),
+('26137', 'Otsego County', core.get_state_id_by_state_name('Michigan')),
+('26139', 'Ottawa County', core.get_state_id_by_state_name('Michigan')),
+('26141', 'Presque Isle County', core.get_state_id_by_state_name('Michigan')),
+('26143', 'Roscommon County', core.get_state_id_by_state_name('Michigan')),
+('26145', 'Saginaw County', core.get_state_id_by_state_name('Michigan')),
+('26147', 'St. Clair County', core.get_state_id_by_state_name('Michigan')),
+('26149', 'St. Joseph County', core.get_state_id_by_state_name('Michigan')),
+('26151', 'Sanilac County', core.get_state_id_by_state_name('Michigan')),
+('26153', 'Schoolcraft County', core.get_state_id_by_state_name('Michigan')),
+('26155', 'Shiawassee County', core.get_state_id_by_state_name('Michigan')),
+('26157', 'Tuscola County', core.get_state_id_by_state_name('Michigan')),
+('26159', 'Van Buren County', core.get_state_id_by_state_name('Michigan')),
+('26161', 'Washtenaw County', core.get_state_id_by_state_name('Michigan')),
+('26163', 'Wayne County', core.get_state_id_by_state_name('Michigan')),
+('26165', 'Wexford County', core.get_state_id_by_state_name('Michigan')),
+('27001', 'Aitkin County', core.get_state_id_by_state_name('Minnesota')),
+('27003', 'Anoka County', core.get_state_id_by_state_name('Minnesota')),
+('27005', 'Becker County', core.get_state_id_by_state_name('Minnesota')),
+('27007', 'Beltrami County', core.get_state_id_by_state_name('Minnesota')),
+('27009', 'Benton County', core.get_state_id_by_state_name('Minnesota')),
+('27011', 'Big Stone County', core.get_state_id_by_state_name('Minnesota')),
+('27013', 'Blue Earth County', core.get_state_id_by_state_name('Minnesota')),
+('27015', 'Brown County', core.get_state_id_by_state_name('Minnesota')),
+('27017', 'Carlton County', core.get_state_id_by_state_name('Minnesota')),
+('27019', 'Carver County', core.get_state_id_by_state_name('Minnesota')),
+('27021', 'Cass County', core.get_state_id_by_state_name('Minnesota')),
+('27023', 'Chippewa County', core.get_state_id_by_state_name('Minnesota')),
+('27025', 'Chisago County', core.get_state_id_by_state_name('Minnesota')),
+('27027', 'Clay County', core.get_state_id_by_state_name('Minnesota')),
+('27029', 'Clearwater County', core.get_state_id_by_state_name('Minnesota')),
+('27031', 'Cook County', core.get_state_id_by_state_name('Minnesota')),
+('27033', 'Cottonwood County', core.get_state_id_by_state_name('Minnesota')),
+('27035', 'Crow Wing County', core.get_state_id_by_state_name('Minnesota')),
+('27037', 'Dakota County', core.get_state_id_by_state_name('Minnesota')),
+('27039', 'Dodge County', core.get_state_id_by_state_name('Minnesota')),
+('27041', 'Douglas County', core.get_state_id_by_state_name('Minnesota')),
+('27043', 'Faribault County', core.get_state_id_by_state_name('Minnesota')),
+('27045', 'Fillmore County', core.get_state_id_by_state_name('Minnesota')),
+('27047', 'Freeborn County', core.get_state_id_by_state_name('Minnesota')),
+('27049', 'Goodhue County', core.get_state_id_by_state_name('Minnesota')),
+('27051', 'Grant County', core.get_state_id_by_state_name('Minnesota')),
+('27053', 'Hennepin County', core.get_state_id_by_state_name('Minnesota')),
+('27055', 'Houston County', core.get_state_id_by_state_name('Minnesota')),
+('27057', 'Hubbard County', core.get_state_id_by_state_name('Minnesota')),
+('27059', 'Isanti County', core.get_state_id_by_state_name('Minnesota')),
+('27061', 'Itasca County', core.get_state_id_by_state_name('Minnesota')),
+('27063', 'Jackson County', core.get_state_id_by_state_name('Minnesota')),
+('27065', 'Kanabec County', core.get_state_id_by_state_name('Minnesota')),
+('27067', 'Kandiyohi County', core.get_state_id_by_state_name('Minnesota')),
+('27069', 'Kittson County', core.get_state_id_by_state_name('Minnesota')),
+('27071', 'Koochiching County', core.get_state_id_by_state_name('Minnesota')),
+('27073', 'Lac qui Parle County', core.get_state_id_by_state_name('Minnesota')),
+('27075', 'Lake County', core.get_state_id_by_state_name('Minnesota')),
+('27077', 'Lake of the Woods County', core.get_state_id_by_state_name('Minnesota')),
+('27079', 'Le Sueur County', core.get_state_id_by_state_name('Minnesota')),
+('27081', 'Lincoln County', core.get_state_id_by_state_name('Minnesota')),
+('27083', 'Lyon County', core.get_state_id_by_state_name('Minnesota')),
+('27085', 'McLeod County', core.get_state_id_by_state_name('Minnesota')),
+('27087', 'Mahnomen County', core.get_state_id_by_state_name('Minnesota')),
+('27089', 'Marshall County', core.get_state_id_by_state_name('Minnesota')),
+('27091', 'Martin County', core.get_state_id_by_state_name('Minnesota')),
+('27093', 'Meeker County', core.get_state_id_by_state_name('Minnesota')),
+('27095', 'Mille Lacs County', core.get_state_id_by_state_name('Minnesota')),
+('27097', 'Morrison County', core.get_state_id_by_state_name('Minnesota')),
+('27099', 'Mower County', core.get_state_id_by_state_name('Minnesota')),
+('27101', 'Murray County', core.get_state_id_by_state_name('Minnesota')),
+('27103', 'Nicollet County', core.get_state_id_by_state_name('Minnesota')),
+('27105', 'Nobles County', core.get_state_id_by_state_name('Minnesota')),
+('27107', 'Norman County', core.get_state_id_by_state_name('Minnesota')),
+('27109', 'Olmsted County', core.get_state_id_by_state_name('Minnesota')),
+('27111', 'Otter Tail County', core.get_state_id_by_state_name('Minnesota')),
+('27113', 'Pennington County', core.get_state_id_by_state_name('Minnesota')),
+('27115', 'Pine County', core.get_state_id_by_state_name('Minnesota')),
+('27117', 'Pipestone County', core.get_state_id_by_state_name('Minnesota')),
+('27119', 'Polk County', core.get_state_id_by_state_name('Minnesota')),
+('27121', 'Pope County', core.get_state_id_by_state_name('Minnesota')),
+('27123', 'Ramsey County', core.get_state_id_by_state_name('Minnesota')),
+('27125', 'Red Lake County', core.get_state_id_by_state_name('Minnesota')),
+('27127', 'Redwood County', core.get_state_id_by_state_name('Minnesota')),
+('27129', 'Renville County', core.get_state_id_by_state_name('Minnesota')),
+('27131', 'Rice County', core.get_state_id_by_state_name('Minnesota')),
+('27133', 'Rock County', core.get_state_id_by_state_name('Minnesota')),
+('27135', 'Roseau County', core.get_state_id_by_state_name('Minnesota')),
+('27137', 'St. Louis County', core.get_state_id_by_state_name('Minnesota')),
+('27139', 'Scott County', core.get_state_id_by_state_name('Minnesota')),
+('27141', 'Sherburne County', core.get_state_id_by_state_name('Minnesota')),
+('27143', 'Sibley County', core.get_state_id_by_state_name('Minnesota')),
+('27145', 'Stearns County', core.get_state_id_by_state_name('Minnesota')),
+('27147', 'Steele County', core.get_state_id_by_state_name('Minnesota')),
+('27149', 'Stevens County', core.get_state_id_by_state_name('Minnesota')),
+('27151', 'Swift County', core.get_state_id_by_state_name('Minnesota')),
+('27153', 'Todd County', core.get_state_id_by_state_name('Minnesota')),
+('27155', 'Traverse County', core.get_state_id_by_state_name('Minnesota')),
+('27157', 'Wabasha County', core.get_state_id_by_state_name('Minnesota')),
+('27159', 'Wadena County', core.get_state_id_by_state_name('Minnesota')),
+('27161', 'Waseca County', core.get_state_id_by_state_name('Minnesota')),
+('27163', 'Washington County', core.get_state_id_by_state_name('Minnesota')),
+('27165', 'Watonwan County', core.get_state_id_by_state_name('Minnesota')),
+('27167', 'Wilkin County', core.get_state_id_by_state_name('Minnesota')),
+('27169', 'Winona County', core.get_state_id_by_state_name('Minnesota')),
+('27171', 'Wright County', core.get_state_id_by_state_name('Minnesota')),
+('27173', 'Yellow Medicine County', core.get_state_id_by_state_name('Minnesota')),
+('28001', 'Adams County', core.get_state_id_by_state_name('Mississippi')),
+('28003', 'Alcorn County', core.get_state_id_by_state_name('Mississippi')),
+('28005', 'Amite County', core.get_state_id_by_state_name('Mississippi')),
+('28007', 'Attala County', core.get_state_id_by_state_name('Mississippi')),
+('28009', 'Benton County', core.get_state_id_by_state_name('Mississippi')),
+('28011', 'Bolivar County', core.get_state_id_by_state_name('Mississippi')),
+('28013', 'Calhoun County', core.get_state_id_by_state_name('Mississippi')),
+('28015', 'Carroll County', core.get_state_id_by_state_name('Mississippi')),
+('28017', 'Chickasaw County', core.get_state_id_by_state_name('Mississippi')),
+('28019', 'Choctaw County', core.get_state_id_by_state_name('Mississippi')),
+('28021', 'Claiborne County', core.get_state_id_by_state_name('Mississippi')),
+('28023', 'Clarke County', core.get_state_id_by_state_name('Mississippi')),
+('28025', 'Clay County', core.get_state_id_by_state_name('Mississippi')),
+('28027', 'Coahoma County', core.get_state_id_by_state_name('Mississippi')),
+('28029', 'Copiah County', core.get_state_id_by_state_name('Mississippi')),
+('28031', 'Covington County', core.get_state_id_by_state_name('Mississippi')),
+('28033', 'DeSoto County', core.get_state_id_by_state_name('Mississippi')),
+('28035', 'Forrest County', core.get_state_id_by_state_name('Mississippi')),
+('28037', 'Franklin County', core.get_state_id_by_state_name('Mississippi')),
+('28039', 'George County', core.get_state_id_by_state_name('Mississippi')),
+('28041', 'Greene County', core.get_state_id_by_state_name('Mississippi')),
+('28043', 'Grenada County', core.get_state_id_by_state_name('Mississippi')),
+('28045', 'Hancock County', core.get_state_id_by_state_name('Mississippi')),
+('28047', 'Harrison County', core.get_state_id_by_state_name('Mississippi')),
+('28049', 'Hinds County', core.get_state_id_by_state_name('Mississippi')),
+('28051', 'Holmes County', core.get_state_id_by_state_name('Mississippi')),
+('28053', 'Humphreys County', core.get_state_id_by_state_name('Mississippi')),
+('28055', 'Issaquena County', core.get_state_id_by_state_name('Mississippi')),
+('28057', 'Itawamba County', core.get_state_id_by_state_name('Mississippi')),
+('28059', 'Jackson County', core.get_state_id_by_state_name('Mississippi')),
+('28061', 'Jasper County', core.get_state_id_by_state_name('Mississippi')),
+('28063', 'Jefferson County', core.get_state_id_by_state_name('Mississippi')),
+('28065', 'Jefferson Davis County', core.get_state_id_by_state_name('Mississippi')),
+('28067', 'Jones County', core.get_state_id_by_state_name('Mississippi')),
+('28069', 'Kemper County', core.get_state_id_by_state_name('Mississippi')),
+('28071', 'Lafayette County', core.get_state_id_by_state_name('Mississippi')),
+('28073', 'Lamar County', core.get_state_id_by_state_name('Mississippi')),
+('28075', 'Lauderdale County', core.get_state_id_by_state_name('Mississippi')),
+('28077', 'Lawrence County', core.get_state_id_by_state_name('Mississippi')),
+('28079', 'Leake County', core.get_state_id_by_state_name('Mississippi')),
+('28081', 'Lee County', core.get_state_id_by_state_name('Mississippi')),
+('28083', 'Leflore County', core.get_state_id_by_state_name('Mississippi')),
+('28085', 'Lincoln County', core.get_state_id_by_state_name('Mississippi')),
+('28087', 'Lowndes County', core.get_state_id_by_state_name('Mississippi')),
+('28089', 'Madison County', core.get_state_id_by_state_name('Mississippi')),
+('28091', 'Marion County', core.get_state_id_by_state_name('Mississippi')),
+('28093', 'Marshall County', core.get_state_id_by_state_name('Mississippi')),
+('28095', 'Monroe County', core.get_state_id_by_state_name('Mississippi')),
+('28097', 'Montgomery County', core.get_state_id_by_state_name('Mississippi')),
+('28099', 'Neshoba County', core.get_state_id_by_state_name('Mississippi')),
+('28101', 'Newton County', core.get_state_id_by_state_name('Mississippi')),
+('28103', 'Noxubee County', core.get_state_id_by_state_name('Mississippi')),
+('28105', 'Oktibbeha County', core.get_state_id_by_state_name('Mississippi')),
+('28107', 'Panola County', core.get_state_id_by_state_name('Mississippi')),
+('28109', 'Pearl River County', core.get_state_id_by_state_name('Mississippi')),
+('28111', 'Perry County', core.get_state_id_by_state_name('Mississippi')),
+('28113', 'Pike County', core.get_state_id_by_state_name('Mississippi')),
+('28115', 'Pontotoc County', core.get_state_id_by_state_name('Mississippi')),
+('28117', 'Prentiss County', core.get_state_id_by_state_name('Mississippi')),
+('28119', 'Quitman County', core.get_state_id_by_state_name('Mississippi')),
+('28121', 'Rankin County', core.get_state_id_by_state_name('Mississippi')),
+('28123', 'Scott County', core.get_state_id_by_state_name('Mississippi')),
+('28125', 'Sharkey County', core.get_state_id_by_state_name('Mississippi')),
+('28127', 'Simpson County', core.get_state_id_by_state_name('Mississippi')),
+('28129', 'Smith County', core.get_state_id_by_state_name('Mississippi')),
+('28131', 'Stone County', core.get_state_id_by_state_name('Mississippi')),
+('28133', 'Sunflower County', core.get_state_id_by_state_name('Mississippi')),
+('28135', 'Tallahatchie County', core.get_state_id_by_state_name('Mississippi')),
+('28137', 'Tate County', core.get_state_id_by_state_name('Mississippi')),
+('28139', 'Tippah County', core.get_state_id_by_state_name('Mississippi')),
+('28141', 'Tishomingo County', core.get_state_id_by_state_name('Mississippi')),
+('28143', 'Tunica County', core.get_state_id_by_state_name('Mississippi')),
+('28145', 'Union County', core.get_state_id_by_state_name('Mississippi')),
+('28147', 'Walthall County', core.get_state_id_by_state_name('Mississippi')),
+('28149', 'Warren County', core.get_state_id_by_state_name('Mississippi')),
+('28151', 'Washington County', core.get_state_id_by_state_name('Mississippi')),
+('28153', 'Wayne County', core.get_state_id_by_state_name('Mississippi')),
+('28155', 'Webster County', core.get_state_id_by_state_name('Mississippi')),
+('28157', 'Wilkinson County', core.get_state_id_by_state_name('Mississippi')),
+('28159', 'Winston County', core.get_state_id_by_state_name('Mississippi')),
+('28161', 'Yalobusha County', core.get_state_id_by_state_name('Mississippi')),
+('28163', 'Yazoo County', core.get_state_id_by_state_name('Mississippi')),
+('29001', 'Adair County', core.get_state_id_by_state_name('Missouri')),
+('29003', 'Andrew County', core.get_state_id_by_state_name('Missouri')),
+('29005', 'Atchison County', core.get_state_id_by_state_name('Missouri')),
+('29007', 'Audrain County', core.get_state_id_by_state_name('Missouri')),
+('29009', 'Barry County', core.get_state_id_by_state_name('Missouri')),
+('29011', 'Barton County', core.get_state_id_by_state_name('Missouri')),
+('29013', 'Bates County', core.get_state_id_by_state_name('Missouri')),
+('29015', 'Benton County', core.get_state_id_by_state_name('Missouri')),
+('29017', 'Bollinger County', core.get_state_id_by_state_name('Missouri')),
+('29019', 'Boone County', core.get_state_id_by_state_name('Missouri')),
+('29021', 'Buchanan County', core.get_state_id_by_state_name('Missouri')),
+('29023', 'Butler County', core.get_state_id_by_state_name('Missouri')),
+('29025', 'Caldwell County', core.get_state_id_by_state_name('Missouri')),
+('29027', 'Callaway County', core.get_state_id_by_state_name('Missouri')),
+('29029', 'Camden County', core.get_state_id_by_state_name('Missouri')),
+('29031', 'Cape Girardeau County', core.get_state_id_by_state_name('Missouri')),
+('29033', 'Carroll County', core.get_state_id_by_state_name('Missouri')),
+('29035', 'Carter County', core.get_state_id_by_state_name('Missouri')),
+('29037', 'Cass County', core.get_state_id_by_state_name('Missouri')),
+('29039', 'Cedar County', core.get_state_id_by_state_name('Missouri')),
+('29041', 'Chariton County', core.get_state_id_by_state_name('Missouri')),
+('29043', 'Christian County', core.get_state_id_by_state_name('Missouri')),
+('29045', 'Clark County', core.get_state_id_by_state_name('Missouri')),
+('29047', 'Clay County', core.get_state_id_by_state_name('Missouri')),
+('29049', 'Clinton County', core.get_state_id_by_state_name('Missouri')),
+('29051', 'Cole County', core.get_state_id_by_state_name('Missouri')),
+('29053', 'Cooper County', core.get_state_id_by_state_name('Missouri')),
+('29055', 'Crawford County', core.get_state_id_by_state_name('Missouri')),
+('29057', 'Dade County', core.get_state_id_by_state_name('Missouri')),
+('29059', 'Dallas County', core.get_state_id_by_state_name('Missouri')),
+('29061', 'Daviess County', core.get_state_id_by_state_name('Missouri')),
+('29063', 'DeKalb County', core.get_state_id_by_state_name('Missouri')),
+('29065', 'Dent County', core.get_state_id_by_state_name('Missouri')),
+('29067', 'Douglas County', core.get_state_id_by_state_name('Missouri')),
+('29069', 'Dunklin County', core.get_state_id_by_state_name('Missouri')),
+('29071', 'Franklin County', core.get_state_id_by_state_name('Missouri')),
+('29073', 'Gasconade County', core.get_state_id_by_state_name('Missouri')),
+('29075', 'Gentry County', core.get_state_id_by_state_name('Missouri')),
+('29077', 'Greene County', core.get_state_id_by_state_name('Missouri')),
+('29079', 'Grundy County', core.get_state_id_by_state_name('Missouri')),
+('29081', 'Harrison County', core.get_state_id_by_state_name('Missouri')),
+('29083', 'Henry County', core.get_state_id_by_state_name('Missouri')),
+('29085', 'Hickory County', core.get_state_id_by_state_name('Missouri')),
+('29087', 'Holt County', core.get_state_id_by_state_name('Missouri')),
+('29089', 'Howard County', core.get_state_id_by_state_name('Missouri')),
+('29091', 'Howell County', core.get_state_id_by_state_name('Missouri')),
+('29093', 'Iron County', core.get_state_id_by_state_name('Missouri')),
+('29095', 'Jackson County', core.get_state_id_by_state_name('Missouri')),
+('29097', 'Jasper County', core.get_state_id_by_state_name('Missouri')),
+('29099', 'Jefferson County', core.get_state_id_by_state_name('Missouri')),
+('29101', 'Johnson County', core.get_state_id_by_state_name('Missouri')),
+('29103', 'Knox County', core.get_state_id_by_state_name('Missouri')),
+('29105', 'Laclede County', core.get_state_id_by_state_name('Missouri')),
+('29107', 'Lafayette County', core.get_state_id_by_state_name('Missouri')),
+('29109', 'Lawrence County', core.get_state_id_by_state_name('Missouri')),
+('29111', 'Lewis County', core.get_state_id_by_state_name('Missouri')),
+('29113', 'Lincoln County', core.get_state_id_by_state_name('Missouri')),
+('29115', 'Linn County', core.get_state_id_by_state_name('Missouri')),
+('29117', 'Livingston County', core.get_state_id_by_state_name('Missouri')),
+('29119', 'McDonald County', core.get_state_id_by_state_name('Missouri')),
+('29121', 'Macon County', core.get_state_id_by_state_name('Missouri')),
+('29123', 'Madison County', core.get_state_id_by_state_name('Missouri')),
+('29125', 'Maries County', core.get_state_id_by_state_name('Missouri')),
+('29127', 'Marion County', core.get_state_id_by_state_name('Missouri')),
+('29129', 'Mercer County', core.get_state_id_by_state_name('Missouri')),
+('29131', 'Miller County', core.get_state_id_by_state_name('Missouri')),
+('29133', 'Mississippi County', core.get_state_id_by_state_name('Missouri')),
+('29135', 'Moniteau County', core.get_state_id_by_state_name('Missouri')),
+('29137', 'Monroe County', core.get_state_id_by_state_name('Missouri')),
+('29139', 'Montgomery County', core.get_state_id_by_state_name('Missouri')),
+('29141', 'Morgan County', core.get_state_id_by_state_name('Missouri')),
+('29143', 'New Madrid County', core.get_state_id_by_state_name('Missouri')),
+('29145', 'Newton County', core.get_state_id_by_state_name('Missouri')),
+('29147', 'Nodaway County', core.get_state_id_by_state_name('Missouri')),
+('29149', 'Oregon County', core.get_state_id_by_state_name('Missouri')),
+('29151', 'Osage County', core.get_state_id_by_state_name('Missouri')),
+('29153', 'Ozark County', core.get_state_id_by_state_name('Missouri')),
+('29155', 'Pemiscot County', core.get_state_id_by_state_name('Missouri')),
+('29157', 'Perry County', core.get_state_id_by_state_name('Missouri')),
+('29159', 'Pettis County', core.get_state_id_by_state_name('Missouri')),
+('29161', 'Phelps County', core.get_state_id_by_state_name('Missouri')),
+('29163', 'Pike County', core.get_state_id_by_state_name('Missouri')),
+('29165', 'Platte County', core.get_state_id_by_state_name('Missouri')),
+('29167', 'Polk County', core.get_state_id_by_state_name('Missouri')),
+('29169', 'Pulaski County', core.get_state_id_by_state_name('Missouri')),
+('29171', 'Putnam County', core.get_state_id_by_state_name('Missouri')),
+('29173', 'Ralls County', core.get_state_id_by_state_name('Missouri')),
+('29175', 'Randolph County', core.get_state_id_by_state_name('Missouri')),
+('29177', 'Ray County', core.get_state_id_by_state_name('Missouri')),
+('29179', 'Reynolds County', core.get_state_id_by_state_name('Missouri')),
+('29181', 'Ripley County', core.get_state_id_by_state_name('Missouri')),
+('29183', 'St. Charles County', core.get_state_id_by_state_name('Missouri')),
+('29185', 'St. Clair County', core.get_state_id_by_state_name('Missouri')),
+('29186', 'Ste. Genevieve County', core.get_state_id_by_state_name('Missouri')),
+('29187', 'St. Francois County', core.get_state_id_by_state_name('Missouri')),
+('29189', 'St. Louis County', core.get_state_id_by_state_name('Missouri')),
+('29195', 'Saline County', core.get_state_id_by_state_name('Missouri')),
+('29197', 'Schuyler County', core.get_state_id_by_state_name('Missouri')),
+('29199', 'Scotland County', core.get_state_id_by_state_name('Missouri')),
+('29201', 'Scott County', core.get_state_id_by_state_name('Missouri')),
+('29203', 'Shannon County', core.get_state_id_by_state_name('Missouri')),
+('29205', 'Shelby County', core.get_state_id_by_state_name('Missouri')),
+('29207', 'Stoddard County', core.get_state_id_by_state_name('Missouri')),
+('29209', 'Stone County', core.get_state_id_by_state_name('Missouri')),
+('29211', 'Sullivan County', core.get_state_id_by_state_name('Missouri')),
+('29213', 'Taney County', core.get_state_id_by_state_name('Missouri')),
+('29215', 'Texas County', core.get_state_id_by_state_name('Missouri')),
+('29217', 'Vernon County', core.get_state_id_by_state_name('Missouri')),
+('29219', 'Warren County', core.get_state_id_by_state_name('Missouri')),
+('29221', 'Washington County', core.get_state_id_by_state_name('Missouri')),
+('29223', 'Wayne County', core.get_state_id_by_state_name('Missouri')),
+('29225', 'Webster County', core.get_state_id_by_state_name('Missouri')),
+('29227', 'Worth County', core.get_state_id_by_state_name('Missouri')),
+('29229', 'Wright County', core.get_state_id_by_state_name('Missouri')),
+('29510', 'St. Louis, City of', core.get_state_id_by_state_name('Missouri')),
+('30001', 'Beaverhead County', core.get_state_id_by_state_name('Montana')),
+('30003', 'Big Horn County', core.get_state_id_by_state_name('Montana')),
+('30005', 'Blaine County', core.get_state_id_by_state_name('Montana')),
+('30007', 'Broadwater County', core.get_state_id_by_state_name('Montana')),
+('30009', 'Carbon County', core.get_state_id_by_state_name('Montana')),
+('30011', 'Carter County', core.get_state_id_by_state_name('Montana')),
+('30013', 'Cascade County', core.get_state_id_by_state_name('Montana')),
+('30015', 'Chouteau County', core.get_state_id_by_state_name('Montana')),
+('30017', 'Custer County', core.get_state_id_by_state_name('Montana')),
+('30019', 'Daniels County', core.get_state_id_by_state_name('Montana')),
+('30021', 'Dawson County', core.get_state_id_by_state_name('Montana')),
+('30023', 'Deer Lodge County', core.get_state_id_by_state_name('Montana')),
+('30025', 'Fallon County', core.get_state_id_by_state_name('Montana')),
+('30027', 'Fergus County', core.get_state_id_by_state_name('Montana')),
+('30029', 'Flathead County', core.get_state_id_by_state_name('Montana')),
+('30031', 'Gallatin County', core.get_state_id_by_state_name('Montana')),
+('30033', 'Garfield County', core.get_state_id_by_state_name('Montana')),
+('30035', 'Glacier County', core.get_state_id_by_state_name('Montana')),
+('30037', 'Golden Valley County', core.get_state_id_by_state_name('Montana')),
+('30039', 'Granite County', core.get_state_id_by_state_name('Montana')),
+('30041', 'Hill County', core.get_state_id_by_state_name('Montana')),
+('30043', 'Jefferson County', core.get_state_id_by_state_name('Montana')),
+('30045', 'Judith Basin County', core.get_state_id_by_state_name('Montana')),
+('30047', 'Lake County', core.get_state_id_by_state_name('Montana')),
+('30049', 'Lewis and Clark County', core.get_state_id_by_state_name('Montana')),
+('30051', 'Liberty County', core.get_state_id_by_state_name('Montana')),
+('30053', 'Lincoln County', core.get_state_id_by_state_name('Montana')),
+('30055', 'McCone County', core.get_state_id_by_state_name('Montana')),
+('30057', 'Madison County', core.get_state_id_by_state_name('Montana')),
+('30059', 'Meagher County', core.get_state_id_by_state_name('Montana')),
+('30061', 'Mineral County', core.get_state_id_by_state_name('Montana')),
+('30063', 'Missoula County', core.get_state_id_by_state_name('Montana')),
+('30065', 'Musselshell County', core.get_state_id_by_state_name('Montana')),
+('30067', 'Park County', core.get_state_id_by_state_name('Montana')),
+('30069', 'Petroleum County', core.get_state_id_by_state_name('Montana')),
+('30071', 'Phillips County', core.get_state_id_by_state_name('Montana')),
+('30073', 'Pondera County', core.get_state_id_by_state_name('Montana')),
+('30075', 'Powder River County', core.get_state_id_by_state_name('Montana')),
+('30077', 'Powell County', core.get_state_id_by_state_name('Montana')),
+('30079', 'Prairie County', core.get_state_id_by_state_name('Montana')),
+('30081', 'Ravalli County', core.get_state_id_by_state_name('Montana')),
+('30083', 'Richland County', core.get_state_id_by_state_name('Montana')),
+('30085', 'Roosevelt County', core.get_state_id_by_state_name('Montana')),
+('30087', 'Rosebud County', core.get_state_id_by_state_name('Montana')),
+('30089', 'Sanders County', core.get_state_id_by_state_name('Montana')),
+('30091', 'Sheridan County', core.get_state_id_by_state_name('Montana')),
+('30093', 'Silver Bow County', core.get_state_id_by_state_name('Montana')),
+('30095', 'Stillwater County', core.get_state_id_by_state_name('Montana')),
+('30097', 'Sweet Grass County', core.get_state_id_by_state_name('Montana')),
+('30099', 'Teton County', core.get_state_id_by_state_name('Montana')),
+('30101', 'Toole County', core.get_state_id_by_state_name('Montana')),
+('30103', 'Treasure County', core.get_state_id_by_state_name('Montana')),
+('30105', 'Valley County', core.get_state_id_by_state_name('Montana')),
+('30107', 'Wheatland County', core.get_state_id_by_state_name('Montana')),
+('30109', 'Wibaux County', core.get_state_id_by_state_name('Montana')),
+('30111', 'Yellowstone County', core.get_state_id_by_state_name('Montana')),
+('31001', 'Adams County', core.get_state_id_by_state_name('Nebraska')),
+('31003', 'Antelope County', core.get_state_id_by_state_name('Nebraska')),
+('31005', 'Arthur County', core.get_state_id_by_state_name('Nebraska')),
+('31007', 'Banner County', core.get_state_id_by_state_name('Nebraska')),
+('31009', 'Blaine County', core.get_state_id_by_state_name('Nebraska')),
+('31011', 'Boone County', core.get_state_id_by_state_name('Nebraska')),
+('31013', 'Box Butte County', core.get_state_id_by_state_name('Nebraska')),
+('31015', 'Boyd County', core.get_state_id_by_state_name('Nebraska')),
+('31017', 'Brown County', core.get_state_id_by_state_name('Nebraska')),
+('31019', 'Buffalo County', core.get_state_id_by_state_name('Nebraska')),
+('31021', 'Burt County', core.get_state_id_by_state_name('Nebraska')),
+('31023', 'Butler County', core.get_state_id_by_state_name('Nebraska')),
+('31025', 'Cass County', core.get_state_id_by_state_name('Nebraska')),
+('31027', 'Cedar County', core.get_state_id_by_state_name('Nebraska')),
+('31029', 'Chase County', core.get_state_id_by_state_name('Nebraska')),
+('31031', 'Cherry County', core.get_state_id_by_state_name('Nebraska')),
+('31033', 'Cheyenne County', core.get_state_id_by_state_name('Nebraska')),
+('31035', 'Clay County', core.get_state_id_by_state_name('Nebraska')),
+('31037', 'Colfax County', core.get_state_id_by_state_name('Nebraska')),
+('31039', 'Cuming County', core.get_state_id_by_state_name('Nebraska')),
+('31041', 'Custer County', core.get_state_id_by_state_name('Nebraska')),
+('31043', 'Dakota County', core.get_state_id_by_state_name('Nebraska')),
+('31045', 'Dawes County', core.get_state_id_by_state_name('Nebraska')),
+('31047', 'Dawson County', core.get_state_id_by_state_name('Nebraska')),
+('31049', 'Deuel County', core.get_state_id_by_state_name('Nebraska')),
+('31051', 'Dixon County', core.get_state_id_by_state_name('Nebraska')),
+('31053', 'Dodge County', core.get_state_id_by_state_name('Nebraska')),
+('31055', 'Douglas County', core.get_state_id_by_state_name('Nebraska')),
+('31057', 'Dundy County', core.get_state_id_by_state_name('Nebraska')),
+('31059', 'Fillmore County', core.get_state_id_by_state_name('Nebraska')),
+('31061', 'Franklin County', core.get_state_id_by_state_name('Nebraska')),
+('31063', 'Frontier County', core.get_state_id_by_state_name('Nebraska')),
+('31065', 'Furnas County', core.get_state_id_by_state_name('Nebraska')),
+('31067', 'Gage County', core.get_state_id_by_state_name('Nebraska')),
+('31069', 'Garden County', core.get_state_id_by_state_name('Nebraska')),
+('31071', 'Garfield County', core.get_state_id_by_state_name('Nebraska')),
+('31073', 'Gosper County', core.get_state_id_by_state_name('Nebraska')),
+('31075', 'Grant County', core.get_state_id_by_state_name('Nebraska')),
+('31077', 'Greeley County', core.get_state_id_by_state_name('Nebraska')),
+('31079', 'Hall County', core.get_state_id_by_state_name('Nebraska')),
+('31081', 'Hamilton County', core.get_state_id_by_state_name('Nebraska')),
+('31083', 'Harlan County', core.get_state_id_by_state_name('Nebraska')),
+('31085', 'Hayes County', core.get_state_id_by_state_name('Nebraska')),
+('31087', 'Hitchcock County', core.get_state_id_by_state_name('Nebraska')),
+('31089', 'Holt County', core.get_state_id_by_state_name('Nebraska')),
+('31091', 'Hooker County', core.get_state_id_by_state_name('Nebraska')),
+('31093', 'Howard County', core.get_state_id_by_state_name('Nebraska')),
+('31095', 'Jefferson County', core.get_state_id_by_state_name('Nebraska')),
+('31097', 'Johnson County', core.get_state_id_by_state_name('Nebraska')),
+('31099', 'Kearney County', core.get_state_id_by_state_name('Nebraska')),
+('31101', 'Keith County', core.get_state_id_by_state_name('Nebraska')),
+('31103', 'Keya Paha County', core.get_state_id_by_state_name('Nebraska')),
+('31105', 'Kimball County', core.get_state_id_by_state_name('Nebraska')),
+('31107', 'Knox County', core.get_state_id_by_state_name('Nebraska')),
+('31109', 'Lancaster County', core.get_state_id_by_state_name('Nebraska')),
+('31111', 'Lincoln County', core.get_state_id_by_state_name('Nebraska')),
+('31113', 'Logan County', core.get_state_id_by_state_name('Nebraska')),
+('31115', 'Loup County', core.get_state_id_by_state_name('Nebraska')),
+('31117', 'McPherson County', core.get_state_id_by_state_name('Nebraska')),
+('31119', 'Madison County', core.get_state_id_by_state_name('Nebraska')),
+('31121', 'Merrick County', core.get_state_id_by_state_name('Nebraska')),
+('31123', 'Morrill County', core.get_state_id_by_state_name('Nebraska')),
+('31125', 'Nance County', core.get_state_id_by_state_name('Nebraska')),
+('31127', 'Nemaha County', core.get_state_id_by_state_name('Nebraska')),
+('31129', 'Nuckolls County', core.get_state_id_by_state_name('Nebraska')),
+('31131', 'Otoe County', core.get_state_id_by_state_name('Nebraska')),
+('31133', 'Pawnee County', core.get_state_id_by_state_name('Nebraska')),
+('31135', 'Perkins County', core.get_state_id_by_state_name('Nebraska')),
+('31137', 'Phelps County', core.get_state_id_by_state_name('Nebraska')),
+('31139', 'Pierce County', core.get_state_id_by_state_name('Nebraska')),
+('31141', 'Platte County', core.get_state_id_by_state_name('Nebraska')),
+('31143', 'Polk County', core.get_state_id_by_state_name('Nebraska')),
+('31145', 'Red Willow County', core.get_state_id_by_state_name('Nebraska')),
+('31147', 'Richardson County', core.get_state_id_by_state_name('Nebraska')),
+('31149', 'Rock County', core.get_state_id_by_state_name('Nebraska')),
+('31151', 'Saline County', core.get_state_id_by_state_name('Nebraska')),
+('31153', 'Sarpy County', core.get_state_id_by_state_name('Nebraska')),
+('31155', 'Saunders County', core.get_state_id_by_state_name('Nebraska')),
+('31157', 'Scotts Bluff County', core.get_state_id_by_state_name('Nebraska')),
+('31159', 'Seward County', core.get_state_id_by_state_name('Nebraska')),
+('31161', 'Sheridan County', core.get_state_id_by_state_name('Nebraska')),
+('31163', 'Sherman County', core.get_state_id_by_state_name('Nebraska')),
+('31165', 'Sioux County', core.get_state_id_by_state_name('Nebraska')),
+('31167', 'Stanton County', core.get_state_id_by_state_name('Nebraska')),
+('31169', 'Thayer County', core.get_state_id_by_state_name('Nebraska')),
+('31171', 'Thomas County', core.get_state_id_by_state_name('Nebraska')),
+('31173', 'Thurston County', core.get_state_id_by_state_name('Nebraska')),
+('31175', 'Valley County', core.get_state_id_by_state_name('Nebraska')),
+('31177', 'Washington County', core.get_state_id_by_state_name('Nebraska')),
+('31179', 'Wayne County', core.get_state_id_by_state_name('Nebraska')),
+('31181', 'Webster County', core.get_state_id_by_state_name('Nebraska')),
+('31183', 'Wheeler County', core.get_state_id_by_state_name('Nebraska')),
+('31185', 'York County', core.get_state_id_by_state_name('Nebraska')),
+('32001', 'Churchill County', core.get_state_id_by_state_name('Nevada')),
+('32003', 'Clark County', core.get_state_id_by_state_name('Nevada')),
+('32005', 'Douglas County', core.get_state_id_by_state_name('Nevada')),
+('32007', 'Elko County', core.get_state_id_by_state_name('Nevada')),
+('32009', 'Esmeralda County', core.get_state_id_by_state_name('Nevada')),
+('32011', 'Eureka County', core.get_state_id_by_state_name('Nevada')),
+('32013', 'Humboldt County', core.get_state_id_by_state_name('Nevada')),
+('32015', 'Lander County', core.get_state_id_by_state_name('Nevada')),
+('32017', 'Lincoln County', core.get_state_id_by_state_name('Nevada')),
+('32019', 'Lyon County', core.get_state_id_by_state_name('Nevada')),
+('32021', 'Mineral County', core.get_state_id_by_state_name('Nevada')),
+('32023', 'Nye County', core.get_state_id_by_state_name('Nevada')),
+('32027', 'Pershing County', core.get_state_id_by_state_name('Nevada')),
+('32029', 'Storey County', core.get_state_id_by_state_name('Nevada')),
+('32031', 'Washoe County', core.get_state_id_by_state_name('Nevada')),
+('32033', 'White Pine County', core.get_state_id_by_state_name('Nevada')),
+('32510', 'Carson City, Consolidated Municipality of', core.get_state_id_by_state_name('Nevada')),
+('33001', 'Belknap County', core.get_state_id_by_state_name('New Hampshire')),
+('33003', 'Carroll County', core.get_state_id_by_state_name('New Hampshire')),
+('33005', 'Cheshire County', core.get_state_id_by_state_name('New Hampshire')),
+('33007', 'Coos County', core.get_state_id_by_state_name('New Hampshire')),
+('33009', 'Grafton County', core.get_state_id_by_state_name('New Hampshire')),
+('33011', 'Hillsborough County', core.get_state_id_by_state_name('New Hampshire')),
+('33013', 'Merrimack County', core.get_state_id_by_state_name('New Hampshire')),
+('33015', 'Rockingham County', core.get_state_id_by_state_name('New Hampshire')),
+('33017', 'Strafford County', core.get_state_id_by_state_name('New Hampshire')),
+('33019', 'Sullivan County', core.get_state_id_by_state_name('New Hampshire')),
+('34001', 'Atlantic County', core.get_state_id_by_state_name('New Jersey')),
+('34003', 'Bergen County', core.get_state_id_by_state_name('New Jersey')),
+('34005', 'Burlington County', core.get_state_id_by_state_name('New Jersey')),
+('34007', 'Camden County', core.get_state_id_by_state_name('New Jersey')),
+('34009', 'Cape May County', core.get_state_id_by_state_name('New Jersey')),
+('34011', 'Cumberland County', core.get_state_id_by_state_name('New Jersey')),
+('34013', 'Essex County', core.get_state_id_by_state_name('New Jersey')),
+('34015', 'Gloucester County', core.get_state_id_by_state_name('New Jersey')),
+('34017', 'Hudson County', core.get_state_id_by_state_name('New Jersey')),
+('34019', 'Hunterdon County', core.get_state_id_by_state_name('New Jersey')),
+('34021', 'Mercer County', core.get_state_id_by_state_name('New Jersey')),
+('34023', 'Middlesex County', core.get_state_id_by_state_name('New Jersey')),
+('34025', 'Monmouth County', core.get_state_id_by_state_name('New Jersey')),
+('34027', 'Morris County', core.get_state_id_by_state_name('New Jersey')),
+('34029', 'Ocean County', core.get_state_id_by_state_name('New Jersey')),
+('34031', 'Passaic County', core.get_state_id_by_state_name('New Jersey')),
+('34033', 'Salem County', core.get_state_id_by_state_name('New Jersey')),
+('34035', 'Somerset County', core.get_state_id_by_state_name('New Jersey')),
+('34037', 'Sussex County', core.get_state_id_by_state_name('New Jersey')),
+('34039', 'Union County', core.get_state_id_by_state_name('New Jersey')),
+('34041', 'Warren County', core.get_state_id_by_state_name('New Jersey')),
+('35001', 'Bernalillo County', core.get_state_id_by_state_name('New Mexico')),
+('35003', 'Catron County', core.get_state_id_by_state_name('New Mexico')),
+('35005', 'Chaves County', core.get_state_id_by_state_name('New Mexico')),
+('35006', 'Cibola County', core.get_state_id_by_state_name('New Mexico')),
+('35007', 'Colfax County', core.get_state_id_by_state_name('New Mexico')),
+('35009', 'Curry County', core.get_state_id_by_state_name('New Mexico')),
+('35011', 'De Baca County', core.get_state_id_by_state_name('New Mexico')),
+('35013', 'Doña Ana County', core.get_state_id_by_state_name('New Mexico')),
+('35015', 'Eddy County', core.get_state_id_by_state_name('New Mexico')),
+('35017', 'Grant County', core.get_state_id_by_state_name('New Mexico')),
+('35019', 'Guadalupe County', core.get_state_id_by_state_name('New Mexico')),
+('35021', 'Harding County', core.get_state_id_by_state_name('New Mexico')),
+('35023', 'Hidalgo County', core.get_state_id_by_state_name('New Mexico')),
+('35025', 'Lea County', core.get_state_id_by_state_name('New Mexico')),
+('35027', 'Lincoln County', core.get_state_id_by_state_name('New Mexico')),
+('35028', 'Los Alamos County', core.get_state_id_by_state_name('New Mexico')),
+('35029', 'Luna County', core.get_state_id_by_state_name('New Mexico')),
+('35031', 'McKinley County', core.get_state_id_by_state_name('New Mexico')),
+('35033', 'Mora County', core.get_state_id_by_state_name('New Mexico')),
+('35035', 'Otero County', core.get_state_id_by_state_name('New Mexico')),
+('35037', 'Quay County', core.get_state_id_by_state_name('New Mexico')),
+('35039', 'Rio Arriba County', core.get_state_id_by_state_name('New Mexico')),
+('35041', 'Roosevelt County', core.get_state_id_by_state_name('New Mexico')),
+('35043', 'Sandoval County', core.get_state_id_by_state_name('New Mexico')),
+('35045', 'San Juan County', core.get_state_id_by_state_name('New Mexico')),
+('35047', 'San Miguel County', core.get_state_id_by_state_name('New Mexico')),
+('35049', 'Santa Fe County', core.get_state_id_by_state_name('New Mexico')),
+('35051', 'Sierra County', core.get_state_id_by_state_name('New Mexico')),
+('35053', 'Socorro County', core.get_state_id_by_state_name('New Mexico')),
+('35055', 'Taos County', core.get_state_id_by_state_name('New Mexico')),
+('35057', 'Torrance County', core.get_state_id_by_state_name('New Mexico')),
+('35059', 'Union County', core.get_state_id_by_state_name('New Mexico')),
+('35061', 'Valencia County', core.get_state_id_by_state_name('New Mexico')),
+('36001', 'Albany County', core.get_state_id_by_state_name('New York')),
+('36003', 'Allegany County', core.get_state_id_by_state_name('New York')),
+('36005', 'Bronx County', core.get_state_id_by_state_name('New York')),
+('36007', 'Broome County', core.get_state_id_by_state_name('New York')),
+('36009', 'Cattaraugus County', core.get_state_id_by_state_name('New York')),
+('36011', 'Cayuga County', core.get_state_id_by_state_name('New York')),
+('36013', 'Chautauqua County', core.get_state_id_by_state_name('New York')),
+('36015', 'Chemung County', core.get_state_id_by_state_name('New York')),
+('36017', 'Chenango County', core.get_state_id_by_state_name('New York')),
+('36019', 'Clinton County', core.get_state_id_by_state_name('New York')),
+('36021', 'Columbia County', core.get_state_id_by_state_name('New York')),
+('36023', 'Cortland County', core.get_state_id_by_state_name('New York')),
+('36025', 'Delaware County', core.get_state_id_by_state_name('New York')),
+('36027', 'Dutchess County', core.get_state_id_by_state_name('New York')),
+('36029', 'Erie County', core.get_state_id_by_state_name('New York')),
+('36031', 'Essex County', core.get_state_id_by_state_name('New York')),
+('36033', 'Franklin County', core.get_state_id_by_state_name('New York')),
+('36035', 'Fulton County', core.get_state_id_by_state_name('New York')),
+('36037', 'Genesee County', core.get_state_id_by_state_name('New York')),
+('36039', 'Greene County', core.get_state_id_by_state_name('New York')),
+('36041', 'Hamilton County', core.get_state_id_by_state_name('New York')),
+('36043', 'Herkimer County', core.get_state_id_by_state_name('New York')),
+('36045', 'Jefferson County', core.get_state_id_by_state_name('New York')),
+('36047', 'Kings County', core.get_state_id_by_state_name('New York')),
+('36049', 'Lewis County', core.get_state_id_by_state_name('New York')),
+('36051', 'Livingston County', core.get_state_id_by_state_name('New York')),
+('36053', 'Madison County', core.get_state_id_by_state_name('New York')),
+('36055', 'Monroe County', core.get_state_id_by_state_name('New York')),
+('36057', 'Montgomery County', core.get_state_id_by_state_name('New York')),
+('36059', 'Nassau County', core.get_state_id_by_state_name('New York')),
+('36061', 'New York County', core.get_state_id_by_state_name('New York')),
+('36063', 'Niagara County', core.get_state_id_by_state_name('New York')),
+('36065', 'Oneida County', core.get_state_id_by_state_name('New York')),
+('36067', 'Onondaga County', core.get_state_id_by_state_name('New York')),
+('36069', 'Ontario County', core.get_state_id_by_state_name('New York')),
+('36071', 'Orange County', core.get_state_id_by_state_name('New York')),
+('36073', 'Orleans County', core.get_state_id_by_state_name('New York')),
+('36075', 'Oswego County', core.get_state_id_by_state_name('New York')),
+('36077', 'Otsego County', core.get_state_id_by_state_name('New York')),
+('36079', 'Putnam County', core.get_state_id_by_state_name('New York')),
+('36081', 'Queens County', core.get_state_id_by_state_name('New York')),
+('36083', 'Rensselaer County', core.get_state_id_by_state_name('New York')),
+('36085', 'Richmond County', core.get_state_id_by_state_name('New York')),
+('36087', 'Rockland County', core.get_state_id_by_state_name('New York')),
+('36089', 'St. Lawrence County', core.get_state_id_by_state_name('New York')),
+('36091', 'Saratoga County', core.get_state_id_by_state_name('New York')),
+('36093', 'Schenectady County', core.get_state_id_by_state_name('New York')),
+('36095', 'Schoharie County', core.get_state_id_by_state_name('New York')),
+('36097', 'Schuyler County', core.get_state_id_by_state_name('New York')),
+('36099', 'Seneca County', core.get_state_id_by_state_name('New York')),
+('36101', 'Steuben County', core.get_state_id_by_state_name('New York')),
+('36103', 'Suffolk County', core.get_state_id_by_state_name('New York')),
+('36105', 'Sullivan County', core.get_state_id_by_state_name('New York')),
+('36107', 'Tioga County', core.get_state_id_by_state_name('New York')),
+('36109', 'Tompkins County', core.get_state_id_by_state_name('New York')),
+('36111', 'Ulster County', core.get_state_id_by_state_name('New York')),
+('36113', 'Warren County', core.get_state_id_by_state_name('New York')),
+('36115', 'Washington County', core.get_state_id_by_state_name('New York')),
+('36117', 'Wayne County', core.get_state_id_by_state_name('New York')),
+('36119', 'Westchester County', core.get_state_id_by_state_name('New York')),
+('36121', 'Wyoming County', core.get_state_id_by_state_name('New York')),
+('36123', 'Yates County', core.get_state_id_by_state_name('New York')),
+('37001', 'Alamance County', core.get_state_id_by_state_name('North Carolina')),
+('37003', 'Alexander County', core.get_state_id_by_state_name('North Carolina')),
+('37005', 'Alleghany County', core.get_state_id_by_state_name('North Carolina')),
+('37007', 'Anson County', core.get_state_id_by_state_name('North Carolina')),
+('37009', 'Ashe County', core.get_state_id_by_state_name('North Carolina')),
+('37011', 'Avery County', core.get_state_id_by_state_name('North Carolina')),
+('37013', 'Beaufort County', core.get_state_id_by_state_name('North Carolina')),
+('37015', 'Bertie County', core.get_state_id_by_state_name('North Carolina')),
+('37017', 'Bladen County', core.get_state_id_by_state_name('North Carolina')),
+('37019', 'Brunswick County', core.get_state_id_by_state_name('North Carolina')),
+('37021', 'Buncombe County', core.get_state_id_by_state_name('North Carolina')),
+('37023', 'Burke County', core.get_state_id_by_state_name('North Carolina')),
+('37025', 'Cabarrus County', core.get_state_id_by_state_name('North Carolina')),
+('37027', 'Caldwell County', core.get_state_id_by_state_name('North Carolina')),
+('37029', 'Camden County', core.get_state_id_by_state_name('North Carolina')),
+('37031', 'Carteret County', core.get_state_id_by_state_name('North Carolina')),
+('37033', 'Caswell County', core.get_state_id_by_state_name('North Carolina')),
+('37035', 'Catawba County', core.get_state_id_by_state_name('North Carolina')),
+('37037', 'Chatham County', core.get_state_id_by_state_name('North Carolina')),
+('37039', 'Cherokee County', core.get_state_id_by_state_name('North Carolina')),
+('37041', 'Chowan County', core.get_state_id_by_state_name('North Carolina')),
+('37043', 'Clay County', core.get_state_id_by_state_name('North Carolina')),
+('37045', 'Cleveland County', core.get_state_id_by_state_name('North Carolina')),
+('37047', 'Columbus County', core.get_state_id_by_state_name('North Carolina')),
+('37049', 'Craven County', core.get_state_id_by_state_name('North Carolina')),
+('37051', 'Cumberland County', core.get_state_id_by_state_name('North Carolina')),
+('37053', 'Currituck County', core.get_state_id_by_state_name('North Carolina')),
+('37055', 'Dare County', core.get_state_id_by_state_name('North Carolina')),
+('37057', 'Davidson County', core.get_state_id_by_state_name('North Carolina')),
+('37059', 'Davie County', core.get_state_id_by_state_name('North Carolina')),
+('37061', 'Duplin County', core.get_state_id_by_state_name('North Carolina')),
+('37063', 'Durham County', core.get_state_id_by_state_name('North Carolina')),
+('37065', 'Edgecombe County', core.get_state_id_by_state_name('North Carolina')),
+('37067', 'Forsyth County', core.get_state_id_by_state_name('North Carolina')),
+('37069', 'Franklin County', core.get_state_id_by_state_name('North Carolina')),
+('37071', 'Gaston County', core.get_state_id_by_state_name('North Carolina')),
+('37073', 'Gates County', core.get_state_id_by_state_name('North Carolina')),
+('37075', 'Graham County', core.get_state_id_by_state_name('North Carolina')),
+('37077', 'Granville County', core.get_state_id_by_state_name('North Carolina')),
+('37079', 'Greene County', core.get_state_id_by_state_name('North Carolina')),
+('37081', 'Guilford County', core.get_state_id_by_state_name('North Carolina')),
+('37083', 'Halifax County', core.get_state_id_by_state_name('North Carolina')),
+('37085', 'Harnett County', core.get_state_id_by_state_name('North Carolina')),
+('37087', 'Haywood County', core.get_state_id_by_state_name('North Carolina')),
+('37089', 'Henderson County', core.get_state_id_by_state_name('North Carolina')),
+('37091', 'Hertford County', core.get_state_id_by_state_name('North Carolina')),
+('37093', 'Hoke County', core.get_state_id_by_state_name('North Carolina')),
+('37095', 'Hyde County', core.get_state_id_by_state_name('North Carolina')),
+('37097', 'Iredell County', core.get_state_id_by_state_name('North Carolina')),
+('37099', 'Jackson County', core.get_state_id_by_state_name('North Carolina')),
+('37101', 'Johnston County', core.get_state_id_by_state_name('North Carolina')),
+('37103', 'Jones County', core.get_state_id_by_state_name('North Carolina')),
+('37105', 'Lee County', core.get_state_id_by_state_name('North Carolina')),
+('37107', 'Lenoir County', core.get_state_id_by_state_name('North Carolina')),
+('37109', 'Lincoln County', core.get_state_id_by_state_name('North Carolina')),
+('37111', 'McDowell County', core.get_state_id_by_state_name('North Carolina')),
+('37113', 'Macon County', core.get_state_id_by_state_name('North Carolina')),
+('37115', 'Madison County', core.get_state_id_by_state_name('North Carolina')),
+('37117', 'Martin County', core.get_state_id_by_state_name('North Carolina')),
+('37119', 'Mecklenburg County', core.get_state_id_by_state_name('North Carolina')),
+('37121', 'Mitchell County', core.get_state_id_by_state_name('North Carolina')),
+('37123', 'Montgomery County', core.get_state_id_by_state_name('North Carolina')),
+('37125', 'Moore County', core.get_state_id_by_state_name('North Carolina')),
+('37127', 'Nash County', core.get_state_id_by_state_name('North Carolina')),
+('37129', 'New Hanover County', core.get_state_id_by_state_name('North Carolina')),
+('37131', 'Northampton County', core.get_state_id_by_state_name('North Carolina')),
+('37133', 'Onslow County', core.get_state_id_by_state_name('North Carolina')),
+('37135', 'Orange County', core.get_state_id_by_state_name('North Carolina')),
+('37137', 'Pamlico County', core.get_state_id_by_state_name('North Carolina')),
+('37139', 'Pasquotank County', core.get_state_id_by_state_name('North Carolina')),
+('37141', 'Pender County', core.get_state_id_by_state_name('North Carolina')),
+('37143', 'Perquimans County', core.get_state_id_by_state_name('North Carolina')),
+('37145', 'Person County', core.get_state_id_by_state_name('North Carolina')),
+('37147', 'Pitt County', core.get_state_id_by_state_name('North Carolina')),
+('37149', 'Polk County', core.get_state_id_by_state_name('North Carolina')),
+('37151', 'Randolph County', core.get_state_id_by_state_name('North Carolina')),
+('37153', 'Richmond County', core.get_state_id_by_state_name('North Carolina')),
+('37155', 'Robeson County', core.get_state_id_by_state_name('North Carolina')),
+('37157', 'Rockingham County', core.get_state_id_by_state_name('North Carolina')),
+('37159', 'Rowan County', core.get_state_id_by_state_name('North Carolina')),
+('37161', 'Rutherford County', core.get_state_id_by_state_name('North Carolina')),
+('37163', 'Sampson County', core.get_state_id_by_state_name('North Carolina')),
+('37165', 'Scotland County', core.get_state_id_by_state_name('North Carolina')),
+('37167', 'Stanly County', core.get_state_id_by_state_name('North Carolina')),
+('37169', 'Stokes County', core.get_state_id_by_state_name('North Carolina')),
+('37171', 'Surry County', core.get_state_id_by_state_name('North Carolina')),
+('37173', 'Swain County', core.get_state_id_by_state_name('North Carolina')),
+('37175', 'Transylvania County', core.get_state_id_by_state_name('North Carolina')),
+('37177', 'Tyrrell County', core.get_state_id_by_state_name('North Carolina')),
+('37179', 'Union County', core.get_state_id_by_state_name('North Carolina')),
+('37181', 'Vance County', core.get_state_id_by_state_name('North Carolina')),
+('37183', 'Wake County', core.get_state_id_by_state_name('North Carolina')),
+('37185', 'Warren County', core.get_state_id_by_state_name('North Carolina')),
+('37187', 'Washington County', core.get_state_id_by_state_name('North Carolina')),
+('37189', 'Watauga County', core.get_state_id_by_state_name('North Carolina')),
+('37191', 'Wayne County', core.get_state_id_by_state_name('North Carolina')),
+('37193', 'Wilkes County', core.get_state_id_by_state_name('North Carolina')),
+('37195', 'Wilson County', core.get_state_id_by_state_name('North Carolina')),
+('37197', 'Yadkin County', core.get_state_id_by_state_name('North Carolina')),
+('37199', 'Yancey County', core.get_state_id_by_state_name('North Carolina')),
+('38001', 'Adams County', core.get_state_id_by_state_name('North Dakota')),
+('38003', 'Barnes County', core.get_state_id_by_state_name('North Dakota')),
+('38005', 'Benson County', core.get_state_id_by_state_name('North Dakota')),
+('38007', 'Billings County', core.get_state_id_by_state_name('North Dakota')),
+('38009', 'Bottineau County', core.get_state_id_by_state_name('North Dakota')),
+('38011', 'Bowman County', core.get_state_id_by_state_name('North Dakota')),
+('38013', 'Burke County', core.get_state_id_by_state_name('North Dakota')),
+('38015', 'Burleigh County', core.get_state_id_by_state_name('North Dakota')),
+('38017', 'Cass County', core.get_state_id_by_state_name('North Dakota')),
+('38019', 'Cavalier County', core.get_state_id_by_state_name('North Dakota')),
+('38021', 'Dickey County', core.get_state_id_by_state_name('North Dakota')),
+('38023', 'Divide County', core.get_state_id_by_state_name('North Dakota')),
+('38025', 'Dunn County', core.get_state_id_by_state_name('North Dakota')),
+('38027', 'Eddy County', core.get_state_id_by_state_name('North Dakota')),
+('38029', 'Emmons County', core.get_state_id_by_state_name('North Dakota')),
+('38031', 'Foster County', core.get_state_id_by_state_name('North Dakota')),
+('38033', 'Golden Valley County', core.get_state_id_by_state_name('North Dakota')),
+('38035', 'Grand Forks County', core.get_state_id_by_state_name('North Dakota')),
+('38037', 'Grant County', core.get_state_id_by_state_name('North Dakota')),
+('38039', 'Griggs County', core.get_state_id_by_state_name('North Dakota')),
+('38041', 'Hettinger County', core.get_state_id_by_state_name('North Dakota')),
+('38043', 'Kidder County', core.get_state_id_by_state_name('North Dakota')),
+('38045', 'LaMoure County', core.get_state_id_by_state_name('North Dakota')),
+('38047', 'Logan County', core.get_state_id_by_state_name('North Dakota')),
+('38049', 'McHenry County', core.get_state_id_by_state_name('North Dakota')),
+('38051', 'McIntosh County', core.get_state_id_by_state_name('North Dakota')),
+('38053', 'McKenzie County', core.get_state_id_by_state_name('North Dakota')),
+('38055', 'McLean County', core.get_state_id_by_state_name('North Dakota')),
+('38057', 'Mercer County', core.get_state_id_by_state_name('North Dakota')),
+('38059', 'Morton County', core.get_state_id_by_state_name('North Dakota')),
+('38061', 'Mountrail County', core.get_state_id_by_state_name('North Dakota')),
+('38063', 'Nelson County', core.get_state_id_by_state_name('North Dakota')),
+('38065', 'Oliver County', core.get_state_id_by_state_name('North Dakota')),
+('38067', 'Pembina County', core.get_state_id_by_state_name('North Dakota')),
+('38069', 'Pierce County', core.get_state_id_by_state_name('North Dakota')),
+('38071', 'Ramsey County', core.get_state_id_by_state_name('North Dakota')),
+('38073', 'Ransom County', core.get_state_id_by_state_name('North Dakota')),
+('38075', 'Renville County', core.get_state_id_by_state_name('North Dakota')),
+('38077', 'Richland County', core.get_state_id_by_state_name('North Dakota')),
+('38079', 'Rolette County', core.get_state_id_by_state_name('North Dakota')),
+('38081', 'Sargent County', core.get_state_id_by_state_name('North Dakota')),
+('38083', 'Sheridan County', core.get_state_id_by_state_name('North Dakota')),
+('38085', 'Sioux County', core.get_state_id_by_state_name('North Dakota')),
+('38087', 'Slope County', core.get_state_id_by_state_name('North Dakota')),
+('38089', 'Stark County', core.get_state_id_by_state_name('North Dakota')),
+('38091', 'Steele County', core.get_state_id_by_state_name('North Dakota')),
+('38093', 'Stutsman County', core.get_state_id_by_state_name('North Dakota')),
+('38095', 'Towner County', core.get_state_id_by_state_name('North Dakota')),
+('38097', 'Traill County', core.get_state_id_by_state_name('North Dakota')),
+('38099', 'Walsh County', core.get_state_id_by_state_name('North Dakota')),
+('38101', 'Ward County', core.get_state_id_by_state_name('North Dakota')),
+('38103', 'Wells County', core.get_state_id_by_state_name('North Dakota')),
+('38105', 'Williams County', core.get_state_id_by_state_name('North Dakota')),
+('39001', 'Adams County', core.get_state_id_by_state_name('Ohio')),
+('39003', 'Allen County', core.get_state_id_by_state_name('Ohio')),
+('39005', 'Ashland County', core.get_state_id_by_state_name('Ohio')),
+('39007', 'Ashtabula County', core.get_state_id_by_state_name('Ohio')),
+('39009', 'Athens County', core.get_state_id_by_state_name('Ohio')),
+('39011', 'Auglaize County', core.get_state_id_by_state_name('Ohio')),
+('39013', 'Belmont County', core.get_state_id_by_state_name('Ohio')),
+('39015', 'Brown County', core.get_state_id_by_state_name('Ohio')),
+('39017', 'Butler County', core.get_state_id_by_state_name('Ohio')),
+('39019', 'Carroll County', core.get_state_id_by_state_name('Ohio')),
+('39021', 'Champaign County', core.get_state_id_by_state_name('Ohio')),
+('39023', 'Clark County', core.get_state_id_by_state_name('Ohio')),
+('39025', 'Clermont County', core.get_state_id_by_state_name('Ohio')),
+('39027', 'Clinton County', core.get_state_id_by_state_name('Ohio')),
+('39029', 'Columbiana County', core.get_state_id_by_state_name('Ohio')),
+('39031', 'Coshocton County', core.get_state_id_by_state_name('Ohio')),
+('39033', 'Crawford County', core.get_state_id_by_state_name('Ohio')),
+('39035', 'Cuyahoga County', core.get_state_id_by_state_name('Ohio')),
+('39037', 'Darke County', core.get_state_id_by_state_name('Ohio')),
+('39039', 'Defiance County', core.get_state_id_by_state_name('Ohio')),
+('39041', 'Delaware County', core.get_state_id_by_state_name('Ohio')),
+('39043', 'Erie County', core.get_state_id_by_state_name('Ohio')),
+('39045', 'Fairfield County', core.get_state_id_by_state_name('Ohio')),
+('39047', 'Fayette County', core.get_state_id_by_state_name('Ohio')),
+('39049', 'Franklin County', core.get_state_id_by_state_name('Ohio')),
+('39051', 'Fulton County', core.get_state_id_by_state_name('Ohio')),
+('39053', 'Gallia County', core.get_state_id_by_state_name('Ohio')),
+('39055', 'Geauga County', core.get_state_id_by_state_name('Ohio')),
+('39057', 'Greene County', core.get_state_id_by_state_name('Ohio')),
+('39059', 'Guernsey County', core.get_state_id_by_state_name('Ohio')),
+('39061', 'Hamilton County', core.get_state_id_by_state_name('Ohio')),
+('39063', 'Hancock County', core.get_state_id_by_state_name('Ohio')),
+('39065', 'Hardin County', core.get_state_id_by_state_name('Ohio')),
+('39067', 'Harrison County', core.get_state_id_by_state_name('Ohio')),
+('39069', 'Henry County', core.get_state_id_by_state_name('Ohio')),
+('39071', 'Highland County', core.get_state_id_by_state_name('Ohio')),
+('39073', 'Hocking County', core.get_state_id_by_state_name('Ohio')),
+('39075', 'Holmes County', core.get_state_id_by_state_name('Ohio')),
+('39077', 'Huron County', core.get_state_id_by_state_name('Ohio')),
+('39079', 'Jackson County', core.get_state_id_by_state_name('Ohio')),
+('39081', 'Jefferson County', core.get_state_id_by_state_name('Ohio')),
+('39083', 'Knox County', core.get_state_id_by_state_name('Ohio')),
+('39085', 'Lake County', core.get_state_id_by_state_name('Ohio')),
+('39087', 'Lawrence County', core.get_state_id_by_state_name('Ohio')),
+('39089', 'Licking County', core.get_state_id_by_state_name('Ohio')),
+('39091', 'Logan County', core.get_state_id_by_state_name('Ohio')),
+('39093', 'Lorain County', core.get_state_id_by_state_name('Ohio')),
+('39095', 'Lucas County', core.get_state_id_by_state_name('Ohio')),
+('39097', 'Madison County', core.get_state_id_by_state_name('Ohio')),
+('39099', 'Mahoning County', core.get_state_id_by_state_name('Ohio')),
+('39101', 'Marion County', core.get_state_id_by_state_name('Ohio')),
+('39103', 'Medina County', core.get_state_id_by_state_name('Ohio')),
+('39105', 'Meigs County', core.get_state_id_by_state_name('Ohio')),
+('39107', 'Mercer County', core.get_state_id_by_state_name('Ohio')),
+('39109', 'Miami County', core.get_state_id_by_state_name('Ohio')),
+('39111', 'Monroe County', core.get_state_id_by_state_name('Ohio')),
+('39113', 'Montgomery County', core.get_state_id_by_state_name('Ohio')),
+('39115', 'Morgan County', core.get_state_id_by_state_name('Ohio')),
+('39117', 'Morrow County', core.get_state_id_by_state_name('Ohio')),
+('39119', 'Muskingum County', core.get_state_id_by_state_name('Ohio')),
+('39121', 'Noble County', core.get_state_id_by_state_name('Ohio')),
+('39123', 'Ottawa County', core.get_state_id_by_state_name('Ohio')),
+('39125', 'Paulding County', core.get_state_id_by_state_name('Ohio')),
+('39127', 'Perry County', core.get_state_id_by_state_name('Ohio')),
+('39129', 'Pickaway County', core.get_state_id_by_state_name('Ohio')),
+('39131', 'Pike County', core.get_state_id_by_state_name('Ohio')),
+('39133', 'Portage County', core.get_state_id_by_state_name('Ohio')),
+('39135', 'Preble County', core.get_state_id_by_state_name('Ohio')),
+('39137', 'Putnam County', core.get_state_id_by_state_name('Ohio')),
+('39139', 'Richland County', core.get_state_id_by_state_name('Ohio')),
+('39141', 'Ross County', core.get_state_id_by_state_name('Ohio')),
+('39143', 'Sandusky County', core.get_state_id_by_state_name('Ohio')),
+('39145', 'Scioto County', core.get_state_id_by_state_name('Ohio')),
+('39147', 'Seneca County', core.get_state_id_by_state_name('Ohio')),
+('39149', 'Shelby County', core.get_state_id_by_state_name('Ohio')),
+('39151', 'Stark County', core.get_state_id_by_state_name('Ohio')),
+('39153', 'Summit County', core.get_state_id_by_state_name('Ohio')),
+('39155', 'Trumbull County', core.get_state_id_by_state_name('Ohio')),
+('39157', 'Tuscarawas County', core.get_state_id_by_state_name('Ohio')),
+('39159', 'Union County', core.get_state_id_by_state_name('Ohio')),
+('39161', 'Van Wert County', core.get_state_id_by_state_name('Ohio')),
+('39163', 'Vinton County', core.get_state_id_by_state_name('Ohio')),
+('39165', 'Warren County', core.get_state_id_by_state_name('Ohio')),
+('39167', 'Washington County', core.get_state_id_by_state_name('Ohio')),
+('39169', 'Wayne County', core.get_state_id_by_state_name('Ohio')),
+('39171', 'Williams County', core.get_state_id_by_state_name('Ohio')),
+('39173', 'Wood County', core.get_state_id_by_state_name('Ohio')),
+('39175', 'Wyandot County', core.get_state_id_by_state_name('Ohio')),
+('40001', 'Adair County', core.get_state_id_by_state_name('Oklahoma')),
+('40003', 'Alfalfa County', core.get_state_id_by_state_name('Oklahoma')),
+('40005', 'Atoka County', core.get_state_id_by_state_name('Oklahoma')),
+('40007', 'Beaver County', core.get_state_id_by_state_name('Oklahoma')),
+('40009', 'Beckham County', core.get_state_id_by_state_name('Oklahoma')),
+('40011', 'Blaine County', core.get_state_id_by_state_name('Oklahoma')),
+('40013', 'Bryan County', core.get_state_id_by_state_name('Oklahoma')),
+('40015', 'Caddo County', core.get_state_id_by_state_name('Oklahoma')),
+('40017', 'Canadian County', core.get_state_id_by_state_name('Oklahoma')),
+('40019', 'Carter County', core.get_state_id_by_state_name('Oklahoma')),
+('40021', 'Cherokee County', core.get_state_id_by_state_name('Oklahoma')),
+('40023', 'Choctaw County', core.get_state_id_by_state_name('Oklahoma')),
+('40025', 'Cimarron County', core.get_state_id_by_state_name('Oklahoma')),
+('40027', 'Cleveland County', core.get_state_id_by_state_name('Oklahoma')),
+('40029', 'Coal County', core.get_state_id_by_state_name('Oklahoma')),
+('40031', 'Comanche County', core.get_state_id_by_state_name('Oklahoma')),
+('40033', 'Cotton County', core.get_state_id_by_state_name('Oklahoma')),
+('40035', 'Craig County', core.get_state_id_by_state_name('Oklahoma')),
+('40037', 'Creek County', core.get_state_id_by_state_name('Oklahoma')),
+('40039', 'Custer County', core.get_state_id_by_state_name('Oklahoma')),
+('40041', 'Delaware County', core.get_state_id_by_state_name('Oklahoma')),
+('40043', 'Dewey County', core.get_state_id_by_state_name('Oklahoma')),
+('40045', 'Ellis County', core.get_state_id_by_state_name('Oklahoma')),
+('40047', 'Garfield County', core.get_state_id_by_state_name('Oklahoma')),
+('40049', 'Garvin County', core.get_state_id_by_state_name('Oklahoma')),
+('40051', 'Grady County', core.get_state_id_by_state_name('Oklahoma')),
+('40053', 'Grant County', core.get_state_id_by_state_name('Oklahoma')),
+('40055', 'Greer County', core.get_state_id_by_state_name('Oklahoma')),
+('40057', 'Harmon County', core.get_state_id_by_state_name('Oklahoma')),
+('40059', 'Harper County', core.get_state_id_by_state_name('Oklahoma')),
+('40061', 'Haskell County', core.get_state_id_by_state_name('Oklahoma')),
+('40063', 'Hughes County', core.get_state_id_by_state_name('Oklahoma')),
+('40065', 'Jackson County', core.get_state_id_by_state_name('Oklahoma')),
+('40067', 'Jefferson County', core.get_state_id_by_state_name('Oklahoma')),
+('40069', 'Johnston County', core.get_state_id_by_state_name('Oklahoma')),
+('40071', 'Kay County', core.get_state_id_by_state_name('Oklahoma')),
+('40073', 'Kingfisher County', core.get_state_id_by_state_name('Oklahoma')),
+('40075', 'Kiowa County', core.get_state_id_by_state_name('Oklahoma')),
+('40077', 'Latimer County', core.get_state_id_by_state_name('Oklahoma')),
+('40079', 'Le Flore County', core.get_state_id_by_state_name('Oklahoma')),
+('40081', 'Lincoln County', core.get_state_id_by_state_name('Oklahoma')),
+('40083', 'Logan County', core.get_state_id_by_state_name('Oklahoma')),
+('40085', 'Love County', core.get_state_id_by_state_name('Oklahoma')),
+('40087', 'McClain County', core.get_state_id_by_state_name('Oklahoma')),
+('40089', 'McCurtain County', core.get_state_id_by_state_name('Oklahoma')),
+('40091', 'McIntosh County', core.get_state_id_by_state_name('Oklahoma')),
+('40093', 'Major County', core.get_state_id_by_state_name('Oklahoma')),
+('40095', 'Marshall County', core.get_state_id_by_state_name('Oklahoma')),
+('40097', 'Mayes County', core.get_state_id_by_state_name('Oklahoma')),
+('40099', 'Murray County', core.get_state_id_by_state_name('Oklahoma')),
+('40101', 'Muskogee County', core.get_state_id_by_state_name('Oklahoma')),
+('40103', 'Noble County', core.get_state_id_by_state_name('Oklahoma')),
+('40105', 'Nowata County', core.get_state_id_by_state_name('Oklahoma')),
+('40107', 'Okfuskee County', core.get_state_id_by_state_name('Oklahoma')),
+('40109', 'Oklahoma County', core.get_state_id_by_state_name('Oklahoma')),
+('40111', 'Okmulgee County', core.get_state_id_by_state_name('Oklahoma')),
+('40113', 'Osage County', core.get_state_id_by_state_name('Oklahoma')),
+('40115', 'Ottawa County', core.get_state_id_by_state_name('Oklahoma')),
+('40117', 'Pawnee County', core.get_state_id_by_state_name('Oklahoma')),
+('40119', 'Payne County', core.get_state_id_by_state_name('Oklahoma')),
+('40121', 'Pittsburg County', core.get_state_id_by_state_name('Oklahoma')),
+('40123', 'Pontotoc County', core.get_state_id_by_state_name('Oklahoma')),
+('40125', 'Pottawatomie County', core.get_state_id_by_state_name('Oklahoma')),
+('40127', 'Pushmataha County', core.get_state_id_by_state_name('Oklahoma')),
+('40129', 'Roger Mills County', core.get_state_id_by_state_name('Oklahoma')),
+('40131', 'Rogers County', core.get_state_id_by_state_name('Oklahoma')),
+('40133', 'Seminole County', core.get_state_id_by_state_name('Oklahoma')),
+('40135', 'Sequoyah County', core.get_state_id_by_state_name('Oklahoma')),
+('40137', 'Stephens County', core.get_state_id_by_state_name('Oklahoma')),
+('40139', 'Texas County', core.get_state_id_by_state_name('Oklahoma')),
+('40141', 'Tillman County', core.get_state_id_by_state_name('Oklahoma')),
+('40143', 'Tulsa County', core.get_state_id_by_state_name('Oklahoma')),
+('40145', 'Wagoner County', core.get_state_id_by_state_name('Oklahoma')),
+('40147', 'Washington County', core.get_state_id_by_state_name('Oklahoma')),
+('40149', 'Washita County', core.get_state_id_by_state_name('Oklahoma')),
+('40151', 'Woods County', core.get_state_id_by_state_name('Oklahoma')),
+('40153', 'Woodward County', core.get_state_id_by_state_name('Oklahoma')),
+('41001', 'Baker County', core.get_state_id_by_state_name('Oregon')),
+('41003', 'Benton County', core.get_state_id_by_state_name('Oregon')),
+('41005', 'Clackamas County', core.get_state_id_by_state_name('Oregon')),
+('41007', 'Clatsop County', core.get_state_id_by_state_name('Oregon')),
+('41009', 'Columbia County', core.get_state_id_by_state_name('Oregon')),
+('41011', 'Coos County', core.get_state_id_by_state_name('Oregon')),
+('41013', 'Crook County', core.get_state_id_by_state_name('Oregon')),
+('41015', 'Curry County', core.get_state_id_by_state_name('Oregon')),
+('41017', 'Deschutes County', core.get_state_id_by_state_name('Oregon')),
+('41019', 'Douglas County', core.get_state_id_by_state_name('Oregon')),
+('41021', 'Gilliam County', core.get_state_id_by_state_name('Oregon')),
+('41023', 'Grant County', core.get_state_id_by_state_name('Oregon')),
+('41025', 'Harney County', core.get_state_id_by_state_name('Oregon')),
+('41027', 'Hood River County', core.get_state_id_by_state_name('Oregon')),
+('41029', 'Jackson County', core.get_state_id_by_state_name('Oregon')),
+('41031', 'Jefferson County', core.get_state_id_by_state_name('Oregon')),
+('41033', 'Josephine County', core.get_state_id_by_state_name('Oregon')),
+('41035', 'Klamath County', core.get_state_id_by_state_name('Oregon')),
+('41037', 'Lake County', core.get_state_id_by_state_name('Oregon')),
+('41039', 'Lane County', core.get_state_id_by_state_name('Oregon')),
+('41041', 'Lincoln County', core.get_state_id_by_state_name('Oregon')),
+('41043', 'Linn County', core.get_state_id_by_state_name('Oregon')),
+('41045', 'Malheur County', core.get_state_id_by_state_name('Oregon')),
+('41047', 'Marion County', core.get_state_id_by_state_name('Oregon')),
+('41049', 'Morrow County', core.get_state_id_by_state_name('Oregon')),
+('41051', 'Multnomah County', core.get_state_id_by_state_name('Oregon')),
+('41053', 'Polk County', core.get_state_id_by_state_name('Oregon')),
+('41055', 'Sherman County', core.get_state_id_by_state_name('Oregon')),
+('41057', 'Tillamook County', core.get_state_id_by_state_name('Oregon')),
+('41059', 'Umatilla County', core.get_state_id_by_state_name('Oregon')),
+('41061', 'Union County', core.get_state_id_by_state_name('Oregon')),
+('41063', 'Wallowa County', core.get_state_id_by_state_name('Oregon')),
+('41065', 'Wasco County', core.get_state_id_by_state_name('Oregon')),
+('41067', 'Washington County', core.get_state_id_by_state_name('Oregon')),
+('41069', 'Wheeler County', core.get_state_id_by_state_name('Oregon')),
+('41071', 'Yamhill County', core.get_state_id_by_state_name('Oregon')),
+('42001', 'Adams County', core.get_state_id_by_state_name('Pennsylvania')),
+('42003', 'Allegheny County', core.get_state_id_by_state_name('Pennsylvania')),
+('42005', 'Armstrong County', core.get_state_id_by_state_name('Pennsylvania')),
+('42007', 'Beaver County', core.get_state_id_by_state_name('Pennsylvania')),
+('42009', 'Bedford County', core.get_state_id_by_state_name('Pennsylvania')),
+('42011', 'Berks County', core.get_state_id_by_state_name('Pennsylvania')),
+('42013', 'Blair County', core.get_state_id_by_state_name('Pennsylvania')),
+('42015', 'Bradford County', core.get_state_id_by_state_name('Pennsylvania')),
+('42017', 'Bucks County', core.get_state_id_by_state_name('Pennsylvania')),
+('42019', 'Butler County', core.get_state_id_by_state_name('Pennsylvania')),
+('42021', 'Cambria County', core.get_state_id_by_state_name('Pennsylvania')),
+('42023', 'Cameron County', core.get_state_id_by_state_name('Pennsylvania')),
+('42025', 'Carbon County', core.get_state_id_by_state_name('Pennsylvania')),
+('42027', 'Centre County', core.get_state_id_by_state_name('Pennsylvania')),
+('42029', 'Chester County', core.get_state_id_by_state_name('Pennsylvania')),
+('42031', 'Clarion County', core.get_state_id_by_state_name('Pennsylvania')),
+('42033', 'Clearfield County', core.get_state_id_by_state_name('Pennsylvania')),
+('42035', 'Clinton County', core.get_state_id_by_state_name('Pennsylvania')),
+('42037', 'Columbia County', core.get_state_id_by_state_name('Pennsylvania')),
+('42039', 'Crawford County', core.get_state_id_by_state_name('Pennsylvania')),
+('42041', 'Cumberland County', core.get_state_id_by_state_name('Pennsylvania')),
+('42043', 'Dauphin County', core.get_state_id_by_state_name('Pennsylvania')),
+('42045', 'Delaware County', core.get_state_id_by_state_name('Pennsylvania')),
+('42047', 'Elk County', core.get_state_id_by_state_name('Pennsylvania')),
+('42049', 'Erie County', core.get_state_id_by_state_name('Pennsylvania')),
+('42051', 'Fayette County', core.get_state_id_by_state_name('Pennsylvania')),
+('42053', 'Forest County', core.get_state_id_by_state_name('Pennsylvania')),
+('42055', 'Franklin County', core.get_state_id_by_state_name('Pennsylvania')),
+('42057', 'Fulton County', core.get_state_id_by_state_name('Pennsylvania')),
+('42059', 'Greene County', core.get_state_id_by_state_name('Pennsylvania')),
+('42061', 'Huntingdon County', core.get_state_id_by_state_name('Pennsylvania')),
+('42063', 'Indiana County', core.get_state_id_by_state_name('Pennsylvania')),
+('42065', 'Jefferson County', core.get_state_id_by_state_name('Pennsylvania')),
+('42067', 'Juniata County', core.get_state_id_by_state_name('Pennsylvania')),
+('42069', 'Lackawanna County', core.get_state_id_by_state_name('Pennsylvania')),
+('42071', 'Lancaster County', core.get_state_id_by_state_name('Pennsylvania')),
+('42073', 'Lawrence County', core.get_state_id_by_state_name('Pennsylvania')),
+('42075', 'Lebanon County', core.get_state_id_by_state_name('Pennsylvania')),
+('42077', 'Lehigh County', core.get_state_id_by_state_name('Pennsylvania')),
+('42079', 'Luzerne County', core.get_state_id_by_state_name('Pennsylvania')),
+('42081', 'Lycoming County', core.get_state_id_by_state_name('Pennsylvania')),
+('42083', 'McKean County', core.get_state_id_by_state_name('Pennsylvania')),
+('42085', 'Mercer County', core.get_state_id_by_state_name('Pennsylvania')),
+('42087', 'Mifflin County', core.get_state_id_by_state_name('Pennsylvania')),
+('42089', 'Monroe County', core.get_state_id_by_state_name('Pennsylvania')),
+('42091', 'Montgomery County', core.get_state_id_by_state_name('Pennsylvania')),
+('42093', 'Montour County', core.get_state_id_by_state_name('Pennsylvania')),
+('42095', 'Northampton County', core.get_state_id_by_state_name('Pennsylvania')),
+('42097', 'Northumberland County', core.get_state_id_by_state_name('Pennsylvania')),
+('42099', 'Perry County', core.get_state_id_by_state_name('Pennsylvania')),
+('42101', 'Philadelphia County', core.get_state_id_by_state_name('Pennsylvania')),
+('42103', 'Pike County', core.get_state_id_by_state_name('Pennsylvania')),
+('42105', 'Potter County', core.get_state_id_by_state_name('Pennsylvania')),
+('42107', 'Schuylkill County', core.get_state_id_by_state_name('Pennsylvania')),
+('42109', 'Snyder County', core.get_state_id_by_state_name('Pennsylvania')),
+('42111', 'Somerset County', core.get_state_id_by_state_name('Pennsylvania')),
+('42113', 'Sullivan County', core.get_state_id_by_state_name('Pennsylvania')),
+('42115', 'Susquehanna County', core.get_state_id_by_state_name('Pennsylvania')),
+('42117', 'Tioga County', core.get_state_id_by_state_name('Pennsylvania')),
+('42119', 'Union County', core.get_state_id_by_state_name('Pennsylvania')),
+('42121', 'Venango County', core.get_state_id_by_state_name('Pennsylvania')),
+('42123', 'Warren County', core.get_state_id_by_state_name('Pennsylvania')),
+('42125', 'Washington County', core.get_state_id_by_state_name('Pennsylvania')),
+('42127', 'Wayne County', core.get_state_id_by_state_name('Pennsylvania')),
+('42129', 'Westmoreland County', core.get_state_id_by_state_name('Pennsylvania')),
+('42131', 'Wyoming County', core.get_state_id_by_state_name('Pennsylvania')),
+('42133', 'York County', core.get_state_id_by_state_name('Pennsylvania')),
+('44001', 'Bristol County', core.get_state_id_by_state_name('Rhode Island')),
+('44003', 'Kent County', core.get_state_id_by_state_name('Rhode Island')),
+('44005', 'Newport County', core.get_state_id_by_state_name('Rhode Island')),
+('44007', 'Providence County', core.get_state_id_by_state_name('Rhode Island')),
+('44009', 'Washington County', core.get_state_id_by_state_name('Rhode Island')),
+('45001', 'Abbeville County', core.get_state_id_by_state_name('South Carolina')),
+('45003', 'Aiken County', core.get_state_id_by_state_name('South Carolina')),
+('45005', 'Allendale County', core.get_state_id_by_state_name('South Carolina')),
+('45007', 'Anderson County', core.get_state_id_by_state_name('South Carolina')),
+('45009', 'Bamberg County', core.get_state_id_by_state_name('South Carolina')),
+('45011', 'Barnwell County', core.get_state_id_by_state_name('South Carolina')),
+('45013', 'Beaufort County', core.get_state_id_by_state_name('South Carolina')),
+('45015', 'Berkeley County', core.get_state_id_by_state_name('South Carolina')),
+('45017', 'Calhoun County', core.get_state_id_by_state_name('South Carolina')),
+('45019', 'Charleston County', core.get_state_id_by_state_name('South Carolina')),
+('45021', 'Cherokee County', core.get_state_id_by_state_name('South Carolina')),
+('45023', 'Chester County', core.get_state_id_by_state_name('South Carolina')),
+('45025', 'Chesterfield County', core.get_state_id_by_state_name('South Carolina')),
+('45027', 'Clarendon County', core.get_state_id_by_state_name('South Carolina')),
+('45029', 'Colleton County', core.get_state_id_by_state_name('South Carolina')),
+('45031', 'Darlington County', core.get_state_id_by_state_name('South Carolina')),
+('45033', 'Dillon County', core.get_state_id_by_state_name('South Carolina')),
+('45035', 'Dorchester County', core.get_state_id_by_state_name('South Carolina')),
+('45037', 'Edgefield County', core.get_state_id_by_state_name('South Carolina')),
+('45039', 'Fairfield County', core.get_state_id_by_state_name('South Carolina')),
+('45041', 'Florence County', core.get_state_id_by_state_name('South Carolina')),
+('45043', 'Georgetown County', core.get_state_id_by_state_name('South Carolina')),
+('45045', 'Greenville County', core.get_state_id_by_state_name('South Carolina')),
+('45047', 'Greenwood County', core.get_state_id_by_state_name('South Carolina')),
+('45049', 'Hampton County', core.get_state_id_by_state_name('South Carolina')),
+('45051', 'Horry County', core.get_state_id_by_state_name('South Carolina')),
+('45053', 'Jasper County', core.get_state_id_by_state_name('South Carolina')),
+('45055', 'Kershaw County', core.get_state_id_by_state_name('South Carolina')),
+('45057', 'Lancaster County', core.get_state_id_by_state_name('South Carolina')),
+('45059', 'Laurens County', core.get_state_id_by_state_name('South Carolina')),
+('45061', 'Lee County', core.get_state_id_by_state_name('South Carolina')),
+('45063', 'Lexington County', core.get_state_id_by_state_name('South Carolina')),
+('45065', 'McCormick County', core.get_state_id_by_state_name('South Carolina')),
+('45067', 'Marion County', core.get_state_id_by_state_name('South Carolina')),
+('45069', 'Marlboro County', core.get_state_id_by_state_name('South Carolina')),
+('45071', 'Newberry County', core.get_state_id_by_state_name('South Carolina')),
+('45073', 'Oconee County', core.get_state_id_by_state_name('South Carolina')),
+('45075', 'Orangeburg County', core.get_state_id_by_state_name('South Carolina')),
+('45077', 'Pickens County', core.get_state_id_by_state_name('South Carolina')),
+('45079', 'Richland County', core.get_state_id_by_state_name('South Carolina')),
+('45081', 'Saluda County', core.get_state_id_by_state_name('South Carolina')),
+('45083', 'Spartanburg County', core.get_state_id_by_state_name('South Carolina')),
+('45085', 'Sumter County', core.get_state_id_by_state_name('South Carolina')),
+('45087', 'Union County', core.get_state_id_by_state_name('South Carolina')),
+('45089', 'Williamsburg County', core.get_state_id_by_state_name('South Carolina')),
+('45091', 'York County', core.get_state_id_by_state_name('South Carolina')),
+('46003', 'Aurora County', core.get_state_id_by_state_name('South Dakota')),
+('46005', 'Beadle County', core.get_state_id_by_state_name('South Dakota')),
+('46007', 'Bennett County', core.get_state_id_by_state_name('South Dakota')),
+('46009', 'Bon Homme County', core.get_state_id_by_state_name('South Dakota')),
+('46011', 'Brookings County', core.get_state_id_by_state_name('South Dakota')),
+('46013', 'Brown County', core.get_state_id_by_state_name('South Dakota')),
+('46015', 'Brule County', core.get_state_id_by_state_name('South Dakota')),
+('46017', 'Buffalo County', core.get_state_id_by_state_name('South Dakota')),
+('46019', 'Butte County', core.get_state_id_by_state_name('South Dakota')),
+('46021', 'Campbell County', core.get_state_id_by_state_name('South Dakota')),
+('46023', 'Charles Mix County', core.get_state_id_by_state_name('South Dakota')),
+('46025', 'Clark County', core.get_state_id_by_state_name('South Dakota')),
+('46027', 'Clay County', core.get_state_id_by_state_name('South Dakota')),
+('46029', 'Codington County', core.get_state_id_by_state_name('South Dakota')),
+('46031', 'Corson County', core.get_state_id_by_state_name('South Dakota')),
+('46033', 'Custer County', core.get_state_id_by_state_name('South Dakota')),
+('46035', 'Davison County', core.get_state_id_by_state_name('South Dakota')),
+('46037', 'Day County', core.get_state_id_by_state_name('South Dakota')),
+('46039', 'Deuel County', core.get_state_id_by_state_name('South Dakota')),
+('46041', 'Dewey County', core.get_state_id_by_state_name('South Dakota')),
+('46043', 'Douglas County', core.get_state_id_by_state_name('South Dakota')),
+('46045', 'Edmunds County', core.get_state_id_by_state_name('South Dakota')),
+('46047', 'Fall River County', core.get_state_id_by_state_name('South Dakota')),
+('46049', 'Faulk County', core.get_state_id_by_state_name('South Dakota')),
+('46051', 'Grant County', core.get_state_id_by_state_name('South Dakota')),
+('46053', 'Gregory County', core.get_state_id_by_state_name('South Dakota')),
+('46055', 'Haakon County', core.get_state_id_by_state_name('South Dakota')),
+('46057', 'Hamlin County', core.get_state_id_by_state_name('South Dakota')),
+('46059', 'Hand County', core.get_state_id_by_state_name('South Dakota')),
+('46061', 'Hanson County', core.get_state_id_by_state_name('South Dakota')),
+('46063', 'Harding County', core.get_state_id_by_state_name('South Dakota')),
+('46065', 'Hughes County', core.get_state_id_by_state_name('South Dakota')),
+('46067', 'Hutchinson County', core.get_state_id_by_state_name('South Dakota')),
+('46069', 'Hyde County', core.get_state_id_by_state_name('South Dakota')),
+('46071', 'Jackson County', core.get_state_id_by_state_name('South Dakota')),
+('46073', 'Jerauld County', core.get_state_id_by_state_name('South Dakota')),
+('46075', 'Jones County', core.get_state_id_by_state_name('South Dakota')),
+('46077', 'Kingsbury County', core.get_state_id_by_state_name('South Dakota')),
+('46079', 'Lake County', core.get_state_id_by_state_name('South Dakota')),
+('46081', 'Lawrence County', core.get_state_id_by_state_name('South Dakota')),
+('46083', 'Lincoln County', core.get_state_id_by_state_name('South Dakota')),
+('46085', 'Lyman County', core.get_state_id_by_state_name('South Dakota')),
+('46087', 'McCook County', core.get_state_id_by_state_name('South Dakota')),
+('46089', 'McPherson County', core.get_state_id_by_state_name('South Dakota')),
+('46091', 'Marshall County', core.get_state_id_by_state_name('South Dakota')),
+('46093', 'Meade County', core.get_state_id_by_state_name('South Dakota')),
+('46095', 'Mellette County', core.get_state_id_by_state_name('South Dakota')),
+('46097', 'Miner County', core.get_state_id_by_state_name('South Dakota')),
+('46099', 'Minnehaha County', core.get_state_id_by_state_name('South Dakota')),
+('46101', 'Moody County', core.get_state_id_by_state_name('South Dakota')),
+('46103', 'Pennington County', core.get_state_id_by_state_name('South Dakota')),
+('46105', 'Perkins County', core.get_state_id_by_state_name('South Dakota')),
+('46107', 'Potter County', core.get_state_id_by_state_name('South Dakota')),
+('46109', 'Roberts County', core.get_state_id_by_state_name('South Dakota')),
+('46111', 'Sanborn County', core.get_state_id_by_state_name('South Dakota')),
+('46113', 'Shannon County', core.get_state_id_by_state_name('South Dakota')),
+('46115', 'Spink County', core.get_state_id_by_state_name('South Dakota')),
+('46117', 'Stanley County', core.get_state_id_by_state_name('South Dakota')),
+('46119', 'Sully County', core.get_state_id_by_state_name('South Dakota')),
+('46121', 'Todd County', core.get_state_id_by_state_name('South Dakota')),
+('46123', 'Tripp County', core.get_state_id_by_state_name('South Dakota')),
+('46125', 'Turner County', core.get_state_id_by_state_name('South Dakota')),
+('46127', 'Union County', core.get_state_id_by_state_name('South Dakota')),
+('46129', 'Walworth County', core.get_state_id_by_state_name('South Dakota')),
+('46135', 'Yankton County', core.get_state_id_by_state_name('South Dakota')),
+('46137', 'Ziebach County', core.get_state_id_by_state_name('South Dakota')),
+('47001', 'Anderson County', core.get_state_id_by_state_name('Tennessee')),
+('47003', 'Bedford County', core.get_state_id_by_state_name('Tennessee')),
+('47005', 'Benton County', core.get_state_id_by_state_name('Tennessee')),
+('47007', 'Bledsoe County', core.get_state_id_by_state_name('Tennessee')),
+('47009', 'Blount County', core.get_state_id_by_state_name('Tennessee')),
+('47011', 'Bradley County', core.get_state_id_by_state_name('Tennessee')),
+('47013', 'Campbell County', core.get_state_id_by_state_name('Tennessee')),
+('47015', 'Cannon County', core.get_state_id_by_state_name('Tennessee')),
+('47017', 'Carroll County', core.get_state_id_by_state_name('Tennessee')),
+('47019', 'Carter County', core.get_state_id_by_state_name('Tennessee')),
+('47021', 'Cheatham County', core.get_state_id_by_state_name('Tennessee')),
+('47023', 'Chester County', core.get_state_id_by_state_name('Tennessee')),
+('47025', 'Claiborne County', core.get_state_id_by_state_name('Tennessee')),
+('47027', 'Clay County', core.get_state_id_by_state_name('Tennessee')),
+('47029', 'Cocke County', core.get_state_id_by_state_name('Tennessee')),
+('47031', 'Coffee County', core.get_state_id_by_state_name('Tennessee')),
+('47033', 'Crockett County', core.get_state_id_by_state_name('Tennessee')),
+('47035', 'Cumberland County', core.get_state_id_by_state_name('Tennessee')),
+('47037', 'Davidson County', core.get_state_id_by_state_name('Tennessee')),
+('47039', 'Decatur County', core.get_state_id_by_state_name('Tennessee')),
+('47041', 'DeKalb County', core.get_state_id_by_state_name('Tennessee')),
+('47043', 'Dickson County', core.get_state_id_by_state_name('Tennessee')),
+('47045', 'Dyer County', core.get_state_id_by_state_name('Tennessee')),
+('47047', 'Fayette County', core.get_state_id_by_state_name('Tennessee')),
+('47049', 'Fentress County', core.get_state_id_by_state_name('Tennessee')),
+('47051', 'Franklin County', core.get_state_id_by_state_name('Tennessee')),
+('47053', 'Gibson County', core.get_state_id_by_state_name('Tennessee')),
+('47055', 'Giles County', core.get_state_id_by_state_name('Tennessee')),
+('47057', 'Grainger County', core.get_state_id_by_state_name('Tennessee')),
+('47059', 'Greene County', core.get_state_id_by_state_name('Tennessee')),
+('47061', 'Grundy County', core.get_state_id_by_state_name('Tennessee')),
+('47063', 'Hamblen County', core.get_state_id_by_state_name('Tennessee')),
+('47065', 'Hamilton County', core.get_state_id_by_state_name('Tennessee')),
+('47067', 'Hancock County', core.get_state_id_by_state_name('Tennessee')),
+('47069', 'Hardeman County', core.get_state_id_by_state_name('Tennessee')),
+('47071', 'Hardin County', core.get_state_id_by_state_name('Tennessee')),
+('47073', 'Hawkins County', core.get_state_id_by_state_name('Tennessee')),
+('47075', 'Haywood County', core.get_state_id_by_state_name('Tennessee')),
+('47077', 'Henderson County', core.get_state_id_by_state_name('Tennessee')),
+('47079', 'Henry County', core.get_state_id_by_state_name('Tennessee')),
+('47081', 'Hickman County', core.get_state_id_by_state_name('Tennessee')),
+('47083', 'Houston County', core.get_state_id_by_state_name('Tennessee')),
+('47085', 'Humphreys County', core.get_state_id_by_state_name('Tennessee')),
+('47087', 'Jackson County', core.get_state_id_by_state_name('Tennessee')),
+('47089', 'Jefferson County', core.get_state_id_by_state_name('Tennessee')),
+('47091', 'Johnson County', core.get_state_id_by_state_name('Tennessee')),
+('47093', 'Knox County', core.get_state_id_by_state_name('Tennessee')),
+('47095', 'Lake County', core.get_state_id_by_state_name('Tennessee')),
+('47097', 'Lauderdale County', core.get_state_id_by_state_name('Tennessee')),
+('47099', 'Lawrence County', core.get_state_id_by_state_name('Tennessee')),
+('47101', 'Lewis County', core.get_state_id_by_state_name('Tennessee')),
+('47103', 'Lincoln County', core.get_state_id_by_state_name('Tennessee')),
+('47105', 'Loudon County', core.get_state_id_by_state_name('Tennessee')),
+('47107', 'McMinn County', core.get_state_id_by_state_name('Tennessee')),
+('47109', 'McNairy County', core.get_state_id_by_state_name('Tennessee')),
+('47111', 'Macon County', core.get_state_id_by_state_name('Tennessee')),
+('47113', 'Madison County', core.get_state_id_by_state_name('Tennessee')),
+('47115', 'Marion County', core.get_state_id_by_state_name('Tennessee')),
+('47117', 'Marshall County', core.get_state_id_by_state_name('Tennessee')),
+('47119', 'Maury County', core.get_state_id_by_state_name('Tennessee')),
+('47121', 'Meigs County', core.get_state_id_by_state_name('Tennessee')),
+('47123', 'Monroe County', core.get_state_id_by_state_name('Tennessee')),
+('47125', 'Montgomery County', core.get_state_id_by_state_name('Tennessee')),
+('47127', 'Moore County', core.get_state_id_by_state_name('Tennessee')),
+('47129', 'Morgan County', core.get_state_id_by_state_name('Tennessee')),
+('47131', 'Obion County', core.get_state_id_by_state_name('Tennessee')),
+('47133', 'Overton County', core.get_state_id_by_state_name('Tennessee')),
+('47135', 'Perry County', core.get_state_id_by_state_name('Tennessee')),
+('47137', 'Pickett County', core.get_state_id_by_state_name('Tennessee')),
+('47139', 'Polk County', core.get_state_id_by_state_name('Tennessee')),
+('47141', 'Putnam County', core.get_state_id_by_state_name('Tennessee')),
+('47143', 'Rhea County', core.get_state_id_by_state_name('Tennessee')),
+('47145', 'Roane County', core.get_state_id_by_state_name('Tennessee')),
+('47147', 'Robertson County', core.get_state_id_by_state_name('Tennessee')),
+('47149', 'Rutherford County', core.get_state_id_by_state_name('Tennessee')),
+('47151', 'Scott County', core.get_state_id_by_state_name('Tennessee')),
+('47153', 'Sequatchie County', core.get_state_id_by_state_name('Tennessee')),
+('47155', 'Sevier County', core.get_state_id_by_state_name('Tennessee')),
+('47157', 'Shelby County', core.get_state_id_by_state_name('Tennessee')),
+('47159', 'Smith County', core.get_state_id_by_state_name('Tennessee')),
+('47161', 'Stewart County', core.get_state_id_by_state_name('Tennessee')),
+('47163', 'Sullivan County', core.get_state_id_by_state_name('Tennessee')),
+('47165', 'Sumner County', core.get_state_id_by_state_name('Tennessee')),
+('47167', 'Tipton County', core.get_state_id_by_state_name('Tennessee')),
+('47169', 'Trousdale County', core.get_state_id_by_state_name('Tennessee')),
+('47171', 'Unicoi County', core.get_state_id_by_state_name('Tennessee')),
+('47173', 'Union County', core.get_state_id_by_state_name('Tennessee')),
+('47175', 'Van Buren County', core.get_state_id_by_state_name('Tennessee')),
+('47177', 'Warren County', core.get_state_id_by_state_name('Tennessee')),
+('47179', 'Washington County', core.get_state_id_by_state_name('Tennessee')),
+('47181', 'Wayne County', core.get_state_id_by_state_name('Tennessee')),
+('47183', 'Weakley County', core.get_state_id_by_state_name('Tennessee')),
+('47185', 'White County', core.get_state_id_by_state_name('Tennessee')),
+('47187', 'Williamson County', core.get_state_id_by_state_name('Tennessee')),
+('47189', 'Wilson County', core.get_state_id_by_state_name('Tennessee')),
+('48001', 'Anderson County', core.get_state_id_by_state_name('Texas')),
+('48003', 'Andrews County', core.get_state_id_by_state_name('Texas')),
+('48005', 'Angelina County', core.get_state_id_by_state_name('Texas')),
+('48007', 'Aransas County', core.get_state_id_by_state_name('Texas')),
+('48009', 'Archer County', core.get_state_id_by_state_name('Texas')),
+('48011', 'Armstrong County', core.get_state_id_by_state_name('Texas')),
+('48013', 'Atascosa County', core.get_state_id_by_state_name('Texas')),
+('48015', 'Austin County', core.get_state_id_by_state_name('Texas')),
+('48017', 'Bailey County', core.get_state_id_by_state_name('Texas')),
+('48019', 'Bandera County', core.get_state_id_by_state_name('Texas')),
+('48021', 'Bastrop County', core.get_state_id_by_state_name('Texas')),
+('48023', 'Baylor County', core.get_state_id_by_state_name('Texas')),
+('48025', 'Bee County', core.get_state_id_by_state_name('Texas')),
+('48027', 'Bell County', core.get_state_id_by_state_name('Texas')),
+('48029', 'Bexar County', core.get_state_id_by_state_name('Texas')),
+('48031', 'Blanco County', core.get_state_id_by_state_name('Texas')),
+('48033', 'Borden County', core.get_state_id_by_state_name('Texas')),
+('48035', 'Bosque County', core.get_state_id_by_state_name('Texas')),
+('48037', 'Bowie County', core.get_state_id_by_state_name('Texas')),
+('48039', 'Brazoria County', core.get_state_id_by_state_name('Texas')),
+('48041', 'Brazos County', core.get_state_id_by_state_name('Texas')),
+('48043', 'Brewster County', core.get_state_id_by_state_name('Texas')),
+('48045', 'Briscoe County', core.get_state_id_by_state_name('Texas')),
+('48047', 'Brooks County', core.get_state_id_by_state_name('Texas')),
+('48049', 'Brown County', core.get_state_id_by_state_name('Texas')),
+('48051', 'Burleson County', core.get_state_id_by_state_name('Texas')),
+('48053', 'Burnet County', core.get_state_id_by_state_name('Texas')),
+('48055', 'Caldwell County', core.get_state_id_by_state_name('Texas')),
+('48057', 'Calhoun County', core.get_state_id_by_state_name('Texas')),
+('48059', 'Callahan County', core.get_state_id_by_state_name('Texas')),
+('48061', 'Cameron County', core.get_state_id_by_state_name('Texas')),
+('48063', 'Camp County', core.get_state_id_by_state_name('Texas')),
+('48065', 'Carson County', core.get_state_id_by_state_name('Texas')),
+('48067', 'Cass County', core.get_state_id_by_state_name('Texas')),
+('48069', 'Castro County', core.get_state_id_by_state_name('Texas')),
+('48071', 'Chambers County', core.get_state_id_by_state_name('Texas')),
+('48073', 'Cherokee County', core.get_state_id_by_state_name('Texas')),
+('48075', 'Childress County', core.get_state_id_by_state_name('Texas')),
+('48077', 'Clay County', core.get_state_id_by_state_name('Texas')),
+('48079', 'Cochran County', core.get_state_id_by_state_name('Texas')),
+('48081', 'Coke County', core.get_state_id_by_state_name('Texas')),
+('48083', 'Coleman County', core.get_state_id_by_state_name('Texas')),
+('48085', 'Collin County', core.get_state_id_by_state_name('Texas')),
+('48087', 'Collingsworth County', core.get_state_id_by_state_name('Texas')),
+('48089', 'Colorado County', core.get_state_id_by_state_name('Texas')),
+('48091', 'Comal County', core.get_state_id_by_state_name('Texas')),
+('48093', 'Comanche County', core.get_state_id_by_state_name('Texas')),
+('48095', 'Concho County', core.get_state_id_by_state_name('Texas')),
+('48097', 'Cooke County', core.get_state_id_by_state_name('Texas')),
+('48099', 'Coryell County', core.get_state_id_by_state_name('Texas')),
+('48101', 'Cottle County', core.get_state_id_by_state_name('Texas')),
+('48103', 'Crane County', core.get_state_id_by_state_name('Texas')),
+('48105', 'Crockett County', core.get_state_id_by_state_name('Texas')),
+('48107', 'Crosby County', core.get_state_id_by_state_name('Texas')),
+('48109', 'Culberson County', core.get_state_id_by_state_name('Texas')),
+('48111', 'Dallam County', core.get_state_id_by_state_name('Texas')),
+('48113', 'Dallas County', core.get_state_id_by_state_name('Texas')),
+('48115', 'Dawson County', core.get_state_id_by_state_name('Texas')),
+('48117', 'Deaf Smith County', core.get_state_id_by_state_name('Texas')),
+('48119', 'Delta County', core.get_state_id_by_state_name('Texas')),
+('48121', 'Denton County', core.get_state_id_by_state_name('Texas')),
+('48123', 'DeWitt County', core.get_state_id_by_state_name('Texas')),
+('48125', 'Dickens County', core.get_state_id_by_state_name('Texas')),
+('48127', 'Dimmit County', core.get_state_id_by_state_name('Texas')),
+('48129', 'Donley County', core.get_state_id_by_state_name('Texas')),
+('48131', 'Duval County', core.get_state_id_by_state_name('Texas')),
+('48133', 'Eastland County', core.get_state_id_by_state_name('Texas')),
+('48135', 'Ector County', core.get_state_id_by_state_name('Texas')),
+('48137', 'Edwards County', core.get_state_id_by_state_name('Texas')),
+('48139', 'Ellis County', core.get_state_id_by_state_name('Texas')),
+('48141', 'El Paso County', core.get_state_id_by_state_name('Texas')),
+('48143', 'Erath County', core.get_state_id_by_state_name('Texas')),
+('48145', 'Falls County', core.get_state_id_by_state_name('Texas')),
+('48147', 'Fannin County', core.get_state_id_by_state_name('Texas')),
+('48149', 'Fayette County', core.get_state_id_by_state_name('Texas')),
+('48151', 'Fisher County', core.get_state_id_by_state_name('Texas')),
+('48153', 'Floyd County', core.get_state_id_by_state_name('Texas')),
+('48155', 'Foard County', core.get_state_id_by_state_name('Texas')),
+('48157', 'Fort Bend County', core.get_state_id_by_state_name('Texas')),
+('48159', 'Franklin County', core.get_state_id_by_state_name('Texas')),
+('48161', 'Freestone County', core.get_state_id_by_state_name('Texas')),
+('48163', 'Frio County', core.get_state_id_by_state_name('Texas')),
+('48165', 'Gaines County', core.get_state_id_by_state_name('Texas')),
+('48167', 'Galveston County', core.get_state_id_by_state_name('Texas')),
+('48169', 'Garza County', core.get_state_id_by_state_name('Texas')),
+('48171', 'Gillespie County', core.get_state_id_by_state_name('Texas')),
+('48173', 'Glasscock County', core.get_state_id_by_state_name('Texas')),
+('48175', 'Goliad County', core.get_state_id_by_state_name('Texas')),
+('48177', 'Gonzales County', core.get_state_id_by_state_name('Texas')),
+('48179', 'Gray County', core.get_state_id_by_state_name('Texas')),
+('48181', 'Grayson County', core.get_state_id_by_state_name('Texas')),
+('48183', 'Gregg County', core.get_state_id_by_state_name('Texas')),
+('48185', 'Grimes County', core.get_state_id_by_state_name('Texas')),
+('48187', 'Guadalupe County', core.get_state_id_by_state_name('Texas')),
+('48189', 'Hale County', core.get_state_id_by_state_name('Texas')),
+('48191', 'Hall County', core.get_state_id_by_state_name('Texas')),
+('48193', 'Hamilton County', core.get_state_id_by_state_name('Texas')),
+('48195', 'Hansford County', core.get_state_id_by_state_name('Texas')),
+('48197', 'Hardeman County', core.get_state_id_by_state_name('Texas')),
+('48199', 'Hardin County', core.get_state_id_by_state_name('Texas')),
+('48201', 'Harris County', core.get_state_id_by_state_name('Texas')),
+('48203', 'Harrison County', core.get_state_id_by_state_name('Texas')),
+('48205', 'Hartley County', core.get_state_id_by_state_name('Texas')),
+('48207', 'Haskell County', core.get_state_id_by_state_name('Texas')),
+('48209', 'Hays County', core.get_state_id_by_state_name('Texas')),
+('48211', 'Hemphill County', core.get_state_id_by_state_name('Texas')),
+('48213', 'Henderson County', core.get_state_id_by_state_name('Texas')),
+('48215', 'Hidalgo County', core.get_state_id_by_state_name('Texas')),
+('48217', 'Hill County', core.get_state_id_by_state_name('Texas')),
+('48219', 'Hockley County', core.get_state_id_by_state_name('Texas')),
+('48221', 'Hood County', core.get_state_id_by_state_name('Texas')),
+('48223', 'Hopkins County', core.get_state_id_by_state_name('Texas')),
+('48225', 'Houston County', core.get_state_id_by_state_name('Texas')),
+('48227', 'Howard County', core.get_state_id_by_state_name('Texas')),
+('48229', 'Hudspeth County', core.get_state_id_by_state_name('Texas')),
+('48231', 'Hunt County', core.get_state_id_by_state_name('Texas')),
+('48233', 'Hutchinson County', core.get_state_id_by_state_name('Texas')),
+('48235', 'Irion County', core.get_state_id_by_state_name('Texas')),
+('48237', 'Jack County', core.get_state_id_by_state_name('Texas')),
+('48239', 'Jackson County', core.get_state_id_by_state_name('Texas')),
+('48241', 'Jasper County', core.get_state_id_by_state_name('Texas')),
+('48243', 'Jeff Davis County', core.get_state_id_by_state_name('Texas')),
+('48245', 'Jefferson County', core.get_state_id_by_state_name('Texas')),
+('48247', 'Jim Hogg County', core.get_state_id_by_state_name('Texas')),
+('48249', 'Jim Wells County', core.get_state_id_by_state_name('Texas')),
+('48251', 'Johnson County', core.get_state_id_by_state_name('Texas')),
+('48253', 'Jones County', core.get_state_id_by_state_name('Texas')),
+('48255', 'Karnes County', core.get_state_id_by_state_name('Texas')),
+('48257', 'Kaufman County', core.get_state_id_by_state_name('Texas')),
+('48259', 'Kendall County', core.get_state_id_by_state_name('Texas')),
+('48261', 'Kenedy County', core.get_state_id_by_state_name('Texas')),
+('48263', 'Kent County', core.get_state_id_by_state_name('Texas')),
+('48265', 'Kerr County', core.get_state_id_by_state_name('Texas')),
+('48267', 'Kimble County', core.get_state_id_by_state_name('Texas')),
+('48269', 'King County', core.get_state_id_by_state_name('Texas')),
+('48271', 'Kinney County', core.get_state_id_by_state_name('Texas')),
+('48273', 'Kleberg County', core.get_state_id_by_state_name('Texas')),
+('48275', 'Knox County', core.get_state_id_by_state_name('Texas')),
+('48277', 'Lamar County', core.get_state_id_by_state_name('Texas')),
+('48279', 'Lamb County', core.get_state_id_by_state_name('Texas')),
+('48281', 'Lampasas County', core.get_state_id_by_state_name('Texas')),
+('48283', 'La Salle County', core.get_state_id_by_state_name('Texas')),
+('48285', 'Lavaca County', core.get_state_id_by_state_name('Texas')),
+('48287', 'Lee County', core.get_state_id_by_state_name('Texas')),
+('48289', 'Leon County', core.get_state_id_by_state_name('Texas')),
+('48291', 'Liberty County', core.get_state_id_by_state_name('Texas')),
+('48293', 'Limestone County', core.get_state_id_by_state_name('Texas')),
+('48295', 'Lipscomb County', core.get_state_id_by_state_name('Texas')),
+('48297', 'Live Oak County', core.get_state_id_by_state_name('Texas')),
+('48299', 'Llano County', core.get_state_id_by_state_name('Texas')),
+('48301', 'Loving County', core.get_state_id_by_state_name('Texas')),
+('48303', 'Lubbock County', core.get_state_id_by_state_name('Texas')),
+('48305', 'Lynn County', core.get_state_id_by_state_name('Texas')),
+('48307', 'McCulloch County', core.get_state_id_by_state_name('Texas')),
+('48309', 'McLennan County', core.get_state_id_by_state_name('Texas')),
+('48311', 'McMullen County', core.get_state_id_by_state_name('Texas')),
+('48313', 'Madison County', core.get_state_id_by_state_name('Texas')),
+('48315', 'Marion County', core.get_state_id_by_state_name('Texas')),
+('48317', 'Martin County', core.get_state_id_by_state_name('Texas')),
+('48319', 'Mason County', core.get_state_id_by_state_name('Texas')),
+('48321', 'Matagorda County', core.get_state_id_by_state_name('Texas')),
+('48323', 'Maverick County', core.get_state_id_by_state_name('Texas')),
+('48325', 'Medina County', core.get_state_id_by_state_name('Texas')),
+('48327', 'Menard County', core.get_state_id_by_state_name('Texas')),
+('48329', 'Midland County', core.get_state_id_by_state_name('Texas')),
+('48331', 'Milam County', core.get_state_id_by_state_name('Texas')),
+('48333', 'Mills County', core.get_state_id_by_state_name('Texas')),
+('48335', 'Mitchell County', core.get_state_id_by_state_name('Texas')),
+('48337', 'Montague County', core.get_state_id_by_state_name('Texas')),
+('48339', 'Montgomery County', core.get_state_id_by_state_name('Texas')),
+('48341', 'Moore County', core.get_state_id_by_state_name('Texas')),
+('48343', 'Morris County', core.get_state_id_by_state_name('Texas')),
+('48345', 'Motley County', core.get_state_id_by_state_name('Texas')),
+('48347', 'Nacogdoches County', core.get_state_id_by_state_name('Texas')),
+('48349', 'Navarro County', core.get_state_id_by_state_name('Texas')),
+('48351', 'Newton County', core.get_state_id_by_state_name('Texas')),
+('48353', 'Nolan County', core.get_state_id_by_state_name('Texas')),
+('48355', 'Nueces County', core.get_state_id_by_state_name('Texas')),
+('48357', 'Ochiltree County', core.get_state_id_by_state_name('Texas')),
+('48359', 'Oldham County', core.get_state_id_by_state_name('Texas')),
+('48361', 'Orange County', core.get_state_id_by_state_name('Texas')),
+('48363', 'Palo Pinto County', core.get_state_id_by_state_name('Texas')),
+('48365', 'Panola County', core.get_state_id_by_state_name('Texas')),
+('48367', 'Parker County', core.get_state_id_by_state_name('Texas')),
+('48369', 'Parmer County', core.get_state_id_by_state_name('Texas')),
+('48371', 'Pecos County', core.get_state_id_by_state_name('Texas')),
+('48373', 'Polk County', core.get_state_id_by_state_name('Texas')),
+('48375', 'Potter County', core.get_state_id_by_state_name('Texas')),
+('48377', 'Presidio County', core.get_state_id_by_state_name('Texas')),
+('48379', 'Rains County', core.get_state_id_by_state_name('Texas')),
+('48381', 'Randall County', core.get_state_id_by_state_name('Texas')),
+('48383', 'Reagan County', core.get_state_id_by_state_name('Texas')),
+('48385', 'Real County', core.get_state_id_by_state_name('Texas')),
+('48387', 'Red River County', core.get_state_id_by_state_name('Texas')),
+('48389', 'Reeves County', core.get_state_id_by_state_name('Texas')),
+('48391', 'Refugio County', core.get_state_id_by_state_name('Texas')),
+('48393', 'Roberts County', core.get_state_id_by_state_name('Texas')),
+('48395', 'Robertson County', core.get_state_id_by_state_name('Texas')),
+('48397', 'Rockwall County', core.get_state_id_by_state_name('Texas')),
+('48399', 'Runnels County', core.get_state_id_by_state_name('Texas')),
+('48401', 'Rusk County', core.get_state_id_by_state_name('Texas')),
+('48403', 'Sabine County', core.get_state_id_by_state_name('Texas')),
+('48405', 'San Augustine County', core.get_state_id_by_state_name('Texas')),
+('48407', 'San Jacinto County', core.get_state_id_by_state_name('Texas')),
+('48409', 'San Patricio County', core.get_state_id_by_state_name('Texas')),
+('48411', 'San Saba County', core.get_state_id_by_state_name('Texas')),
+('48413', 'Schleicher County', core.get_state_id_by_state_name('Texas')),
+('48415', 'Scurry County', core.get_state_id_by_state_name('Texas')),
+('48417', 'Shackelford County', core.get_state_id_by_state_name('Texas')),
+('48419', 'Shelby County', core.get_state_id_by_state_name('Texas')),
+('48421', 'Sherman County', core.get_state_id_by_state_name('Texas')),
+('48423', 'Smith County', core.get_state_id_by_state_name('Texas')),
+('48425', 'Somervell County', core.get_state_id_by_state_name('Texas')),
+('48427', 'Starr County', core.get_state_id_by_state_name('Texas')),
+('48429', 'Stephens County', core.get_state_id_by_state_name('Texas')),
+('48431', 'Sterling County', core.get_state_id_by_state_name('Texas')),
+('48433', 'Stonewall County', core.get_state_id_by_state_name('Texas')),
+('48435', 'Sutton County', core.get_state_id_by_state_name('Texas')),
+('48437', 'Swisher County', core.get_state_id_by_state_name('Texas')),
+('48439', 'Tarrant County', core.get_state_id_by_state_name('Texas')),
+('48441', 'Taylor County', core.get_state_id_by_state_name('Texas')),
+('48443', 'Terrell County', core.get_state_id_by_state_name('Texas')),
+('48445', 'Terry County', core.get_state_id_by_state_name('Texas')),
+('48447', 'Throckmorton County', core.get_state_id_by_state_name('Texas')),
+('48449', 'Titus County', core.get_state_id_by_state_name('Texas')),
+('48451', 'Tom Green County', core.get_state_id_by_state_name('Texas')),
+('48453', 'Travis County', core.get_state_id_by_state_name('Texas')),
+('48455', 'Trinity County', core.get_state_id_by_state_name('Texas')),
+('48457', 'Tyler County', core.get_state_id_by_state_name('Texas')),
+('48459', 'Upshur County', core.get_state_id_by_state_name('Texas')),
+('48461', 'Upton County', core.get_state_id_by_state_name('Texas')),
+('48463', 'Uvalde County', core.get_state_id_by_state_name('Texas')),
+('48465', 'Val Verde County', core.get_state_id_by_state_name('Texas')),
+('48467', 'Van Zandt County', core.get_state_id_by_state_name('Texas')),
+('48469', 'Victoria County', core.get_state_id_by_state_name('Texas')),
+('48471', 'Walker County', core.get_state_id_by_state_name('Texas')),
+('48473', 'Waller County', core.get_state_id_by_state_name('Texas')),
+('48475', 'Ward County', core.get_state_id_by_state_name('Texas')),
+('48477', 'Washington County', core.get_state_id_by_state_name('Texas')),
+('48479', 'Webb County', core.get_state_id_by_state_name('Texas')),
+('48481', 'Wharton County', core.get_state_id_by_state_name('Texas')),
+('48483', 'Wheeler County', core.get_state_id_by_state_name('Texas')),
+('48485', 'Wichita County', core.get_state_id_by_state_name('Texas')),
+('48487', 'Wilbarger County', core.get_state_id_by_state_name('Texas')),
+('48489', 'Willacy County', core.get_state_id_by_state_name('Texas')),
+('48491', 'Williamson County', core.get_state_id_by_state_name('Texas')),
+('48493', 'Wilson County', core.get_state_id_by_state_name('Texas')),
+('48495', 'Winkler County', core.get_state_id_by_state_name('Texas')),
+('48497', 'Wise County', core.get_state_id_by_state_name('Texas')),
+('48499', 'Wood County', core.get_state_id_by_state_name('Texas')),
+('48501', 'Yoakum County', core.get_state_id_by_state_name('Texas')),
+('48503', 'Young County', core.get_state_id_by_state_name('Texas')),
+('48505', 'Zapata County', core.get_state_id_by_state_name('Texas')),
+('48507', 'Zavala County', core.get_state_id_by_state_name('Texas')),
+('49001', 'Beaver County', core.get_state_id_by_state_name('Utah')),
+('49003', 'Box Elder County', core.get_state_id_by_state_name('Utah')),
+('49005', 'Cache County', core.get_state_id_by_state_name('Utah')),
+('49007', 'Carbon County', core.get_state_id_by_state_name('Utah')),
+('49009', 'Daggett County', core.get_state_id_by_state_name('Utah')),
+('49011', 'Davis County', core.get_state_id_by_state_name('Utah')),
+('49013', 'Duchesne County', core.get_state_id_by_state_name('Utah')),
+('49015', 'Emery County', core.get_state_id_by_state_name('Utah')),
+('49017', 'Garfield County', core.get_state_id_by_state_name('Utah')),
+('49019', 'Grand County', core.get_state_id_by_state_name('Utah')),
+('49021', 'Iron County', core.get_state_id_by_state_name('Utah')),
+('49023', 'Juab County', core.get_state_id_by_state_name('Utah')),
+('49025', 'Kane County', core.get_state_id_by_state_name('Utah')),
+('49027', 'Millard County', core.get_state_id_by_state_name('Utah')),
+('49029', 'Morgan County', core.get_state_id_by_state_name('Utah')),
+('49031', 'Piute County', core.get_state_id_by_state_name('Utah')),
+('49033', 'Rich County', core.get_state_id_by_state_name('Utah')),
+('49035', 'Salt Lake County', core.get_state_id_by_state_name('Utah')),
+('49037', 'San Juan County', core.get_state_id_by_state_name('Utah')),
+('49039', 'Sanpete County', core.get_state_id_by_state_name('Utah')),
+('49041', 'Sevier County', core.get_state_id_by_state_name('Utah')),
+('49043', 'Summit County', core.get_state_id_by_state_name('Utah')),
+('49045', 'Tooele County', core.get_state_id_by_state_name('Utah')),
+('49047', 'Uintah County', core.get_state_id_by_state_name('Utah')),
+('49049', 'Utah County', core.get_state_id_by_state_name('Utah')),
+('49051', 'Wasatch County', core.get_state_id_by_state_name('Utah')),
+('49053', 'Washington County', core.get_state_id_by_state_name('Utah')),
+('49055', 'Wayne County', core.get_state_id_by_state_name('Utah')),
+('49057', 'Weber County', core.get_state_id_by_state_name('Utah')),
+('50001', 'Addison County', core.get_state_id_by_state_name('Vermont')),
+('50003', 'Bennington County', core.get_state_id_by_state_name('Vermont')),
+('50005', 'Caledonia County', core.get_state_id_by_state_name('Vermont')),
+('50007', 'Chittenden County', core.get_state_id_by_state_name('Vermont')),
+('50009', 'Essex County', core.get_state_id_by_state_name('Vermont')),
+('50011', 'Franklin County', core.get_state_id_by_state_name('Vermont')),
+('50013', 'Grand Isle County', core.get_state_id_by_state_name('Vermont')),
+('50015', 'Lamoille County', core.get_state_id_by_state_name('Vermont')),
+('50017', 'Orange County', core.get_state_id_by_state_name('Vermont')),
+('50019', 'Orleans County', core.get_state_id_by_state_name('Vermont')),
+('50021', 'Rutland County', core.get_state_id_by_state_name('Vermont')),
+('50023', 'Washington County', core.get_state_id_by_state_name('Vermont')),
+('50025', 'Windham County', core.get_state_id_by_state_name('Vermont')),
+('50027', 'Windsor County', core.get_state_id_by_state_name('Vermont')),
+('51001', 'Accomack County', core.get_state_id_by_state_name('Virginia')),
+('51003', 'Albemarle County', core.get_state_id_by_state_name('Virginia')),
+('51005', 'Alleghany County', core.get_state_id_by_state_name('Virginia')),
+('51007', 'Amelia County', core.get_state_id_by_state_name('Virginia')),
+('51009', 'Amherst County', core.get_state_id_by_state_name('Virginia')),
+('51011', 'Appomattox County', core.get_state_id_by_state_name('Virginia')),
+('51013', 'Arlington County', core.get_state_id_by_state_name('Virginia')),
+('51015', 'Augusta County', core.get_state_id_by_state_name('Virginia')),
+('51017', 'Bath County', core.get_state_id_by_state_name('Virginia')),
+('51019', 'Bedford County', core.get_state_id_by_state_name('Virginia')),
+('51021', 'Bland County', core.get_state_id_by_state_name('Virginia')),
+('51023', 'Botetourt County', core.get_state_id_by_state_name('Virginia')),
+('51025', 'Brunswick County', core.get_state_id_by_state_name('Virginia')),
+('51027', 'Buchanan County', core.get_state_id_by_state_name('Virginia')),
+('51029', 'Buckingham County', core.get_state_id_by_state_name('Virginia')),
+('51031', 'Campbell County', core.get_state_id_by_state_name('Virginia')),
+('51033', 'Caroline County', core.get_state_id_by_state_name('Virginia')),
+('51035', 'Carroll County', core.get_state_id_by_state_name('Virginia')),
+('51036', 'Charles City County', core.get_state_id_by_state_name('Virginia')),
+('51037', 'Charlotte County', core.get_state_id_by_state_name('Virginia')),
+('51041', 'Chesterfield County', core.get_state_id_by_state_name('Virginia')),
+('51043', 'Clarke County', core.get_state_id_by_state_name('Virginia')),
+('51045', 'Craig County', core.get_state_id_by_state_name('Virginia')),
+('51047', 'Culpeper County', core.get_state_id_by_state_name('Virginia')),
+('51049', 'Cumberland County', core.get_state_id_by_state_name('Virginia')),
+('51051', 'Dickenson County', core.get_state_id_by_state_name('Virginia')),
+('51053', 'Dinwiddie County', core.get_state_id_by_state_name('Virginia')),
+('51057', 'Essex County', core.get_state_id_by_state_name('Virginia')),
+('51059', 'Fairfax County', core.get_state_id_by_state_name('Virginia')),
+('51061', 'Fauquier County', core.get_state_id_by_state_name('Virginia')),
+('51063', 'Floyd County', core.get_state_id_by_state_name('Virginia')),
+('51065', 'Fluvanna County', core.get_state_id_by_state_name('Virginia')),
+('51067', 'Franklin County', core.get_state_id_by_state_name('Virginia')),
+('51069', 'Frederick County', core.get_state_id_by_state_name('Virginia')),
+('51071', 'Giles County', core.get_state_id_by_state_name('Virginia')),
+('51073', 'Gloucester County', core.get_state_id_by_state_name('Virginia')),
+('51075', 'Goochland County', core.get_state_id_by_state_name('Virginia')),
+('51077', 'Grayson County', core.get_state_id_by_state_name('Virginia')),
+('51079', 'Greene County', core.get_state_id_by_state_name('Virginia')),
+('51081', 'Greensville County', core.get_state_id_by_state_name('Virginia')),
+('51083', 'Halifax County', core.get_state_id_by_state_name('Virginia')),
+('51085', 'Hanover County', core.get_state_id_by_state_name('Virginia')),
+('51087', 'Henrico County', core.get_state_id_by_state_name('Virginia')),
+('51089', 'Henry County', core.get_state_id_by_state_name('Virginia')),
+('51091', 'Highland County', core.get_state_id_by_state_name('Virginia')),
+('51093', 'Isle of Wight County', core.get_state_id_by_state_name('Virginia')),
+('51095', 'James City County', core.get_state_id_by_state_name('Virginia')),
+('51097', 'King and Queen County', core.get_state_id_by_state_name('Virginia')),
+('51099', 'King George County', core.get_state_id_by_state_name('Virginia')),
+('51101', 'King William County', core.get_state_id_by_state_name('Virginia')),
+('51103', 'Lancaster County', core.get_state_id_by_state_name('Virginia')),
+('51105', 'Lee County', core.get_state_id_by_state_name('Virginia')),
+('51107', 'Loudoun County', core.get_state_id_by_state_name('Virginia')),
+('51109', 'Louisa County', core.get_state_id_by_state_name('Virginia')),
+('51111', 'Lunenburg County', core.get_state_id_by_state_name('Virginia')),
+('51113', 'Madison County', core.get_state_id_by_state_name('Virginia')),
+('51115', 'Mathews County', core.get_state_id_by_state_name('Virginia')),
+('51117', 'Mecklenburg County', core.get_state_id_by_state_name('Virginia')),
+('51119', 'Middlesex County', core.get_state_id_by_state_name('Virginia')),
+('51121', 'Montgomery County', core.get_state_id_by_state_name('Virginia')),
+('51125', 'Nelson County', core.get_state_id_by_state_name('Virginia')),
+('51127', 'New Kent County', core.get_state_id_by_state_name('Virginia')),
+('51131', 'Northampton County', core.get_state_id_by_state_name('Virginia')),
+('51133', 'Northumberland County', core.get_state_id_by_state_name('Virginia')),
+('51135', 'Nottoway County', core.get_state_id_by_state_name('Virginia')),
+('51137', 'Orange County', core.get_state_id_by_state_name('Virginia')),
+('51139', 'Page County', core.get_state_id_by_state_name('Virginia')),
+('51141', 'Patrick County', core.get_state_id_by_state_name('Virginia')),
+('51143', 'Pittsylvania County', core.get_state_id_by_state_name('Virginia')),
+('51145', 'Powhatan County', core.get_state_id_by_state_name('Virginia')),
+('51147', 'Prince Edward County', core.get_state_id_by_state_name('Virginia')),
+('51149', 'Prince George County', core.get_state_id_by_state_name('Virginia')),
+('51153', 'Prince William County', core.get_state_id_by_state_name('Virginia')),
+('51155', 'Pulaski County', core.get_state_id_by_state_name('Virginia')),
+('51157', 'Rappahannock County', core.get_state_id_by_state_name('Virginia')),
+('51159', 'Richmond County', core.get_state_id_by_state_name('Virginia')),
+('51161', 'Roanoke County', core.get_state_id_by_state_name('Virginia')),
+('51163', 'Rockbridge County', core.get_state_id_by_state_name('Virginia')),
+('51165', 'Rockingham County', core.get_state_id_by_state_name('Virginia')),
+('51167', 'Russell County', core.get_state_id_by_state_name('Virginia')),
+('51169', 'Scott County', core.get_state_id_by_state_name('Virginia')),
+('51171', 'Shenandoah County', core.get_state_id_by_state_name('Virginia')),
+('51173', 'Smyth County', core.get_state_id_by_state_name('Virginia')),
+('51175', 'Southampton County', core.get_state_id_by_state_name('Virginia')),
+('51177', 'Spotsylvania County', core.get_state_id_by_state_name('Virginia')),
+('51179', 'Stafford County', core.get_state_id_by_state_name('Virginia')),
+('51181', 'Surry County', core.get_state_id_by_state_name('Virginia')),
+('51183', 'Sussex County', core.get_state_id_by_state_name('Virginia')),
+('51185', 'Tazewell County', core.get_state_id_by_state_name('Virginia')),
+('51187', 'Warren County', core.get_state_id_by_state_name('Virginia')),
+('51191', 'Washington County', core.get_state_id_by_state_name('Virginia')),
+('51193', 'Westmoreland County', core.get_state_id_by_state_name('Virginia')),
+('51195', 'Wise County', core.get_state_id_by_state_name('Virginia')),
+('51197', 'Wythe County', core.get_state_id_by_state_name('Virginia')),
+('51199', 'York County', core.get_state_id_by_state_name('Virginia')),
+('51510', 'Alexandria, City of', core.get_state_id_by_state_name('Virginia')),
+('51520', 'Bristol, City of', core.get_state_id_by_state_name('Virginia')),
+('51530', 'Buena Vista, City of', core.get_state_id_by_state_name('Virginia')),
+('51540', 'Charlottesville, City of', core.get_state_id_by_state_name('Virginia')),
+('51550', 'Chesapeake, City of', core.get_state_id_by_state_name('Virginia')),
+('51570', 'Colonial Heights, City of', core.get_state_id_by_state_name('Virginia')),
+('51580', 'Covington, City of', core.get_state_id_by_state_name('Virginia')),
+('51590', 'Danville, City of', core.get_state_id_by_state_name('Virginia')),
+('51595', 'Emporia, City of', core.get_state_id_by_state_name('Virginia')),
+('51600', 'Fairfax, City of', core.get_state_id_by_state_name('Virginia')),
+('51610', 'Falls Church, City of', core.get_state_id_by_state_name('Virginia')),
+('51620', 'Franklin, City of', core.get_state_id_by_state_name('Virginia')),
+('51630', 'Fredericksburg, City of', core.get_state_id_by_state_name('Virginia')),
+('51640', 'Galax, City of', core.get_state_id_by_state_name('Virginia')),
+('51650', 'Hampton, City of', core.get_state_id_by_state_name('Virginia')),
+('51660', 'Harrisonburg, City of', core.get_state_id_by_state_name('Virginia')),
+('51670', 'Hopewell, City of', core.get_state_id_by_state_name('Virginia')),
+('51678', 'Lexington, City of', core.get_state_id_by_state_name('Virginia')),
+('51680', 'Lynchburg, City of', core.get_state_id_by_state_name('Virginia')),
+('51683', 'Manassas, City of', core.get_state_id_by_state_name('Virginia')),
+('51685', 'Manassas Park, City of', core.get_state_id_by_state_name('Virginia')),
+('51690', 'Martinsville, City of', core.get_state_id_by_state_name('Virginia')),
+('51700', 'Newport News, City of', core.get_state_id_by_state_name('Virginia')),
+('51710', 'Norfolk, City of', core.get_state_id_by_state_name('Virginia')),
+('51720', 'Norton, City of', core.get_state_id_by_state_name('Virginia')),
+('51730', 'Petersburg, City of', core.get_state_id_by_state_name('Virginia')),
+('51735', 'Poquoson, City of', core.get_state_id_by_state_name('Virginia')),
+('51740', 'Portsmouth, City of', core.get_state_id_by_state_name('Virginia')),
+('51750', 'Radford, City of', core.get_state_id_by_state_name('Virginia')),
+('51760', 'Richmond, City of', core.get_state_id_by_state_name('Virginia')),
+('51770', 'Roanoke, City of', core.get_state_id_by_state_name('Virginia')),
+('51775', 'Salem, City of', core.get_state_id_by_state_name('Virginia')),
+('51790', 'Staunton, City of', core.get_state_id_by_state_name('Virginia')),
+('51800', 'Suffolk, City of', core.get_state_id_by_state_name('Virginia')),
+('51810', 'Virginia Beach, City of', core.get_state_id_by_state_name('Virginia')),
+('51820', 'Waynesboro, City of', core.get_state_id_by_state_name('Virginia')),
+('51830', 'Williamsburg, City of', core.get_state_id_by_state_name('Virginia')),
+('51840', 'Winchester, City of', core.get_state_id_by_state_name('Virginia')),
+('53001', 'Adams County', core.get_state_id_by_state_name('Washington')),
+('53003', 'Asotin County', core.get_state_id_by_state_name('Washington')),
+('53005', 'Benton County', core.get_state_id_by_state_name('Washington')),
+('53007', 'Chelan County', core.get_state_id_by_state_name('Washington')),
+('53009', 'Clallam County', core.get_state_id_by_state_name('Washington')),
+('53011', 'Clark County', core.get_state_id_by_state_name('Washington')),
+('53013', 'Columbia County', core.get_state_id_by_state_name('Washington')),
+('53015', 'Cowlitz County', core.get_state_id_by_state_name('Washington')),
+('53017', 'Douglas County', core.get_state_id_by_state_name('Washington')),
+('53019', 'Ferry County', core.get_state_id_by_state_name('Washington')),
+('53021', 'Franklin County', core.get_state_id_by_state_name('Washington')),
+('53023', 'Garfield County', core.get_state_id_by_state_name('Washington')),
+('53025', 'Grant County', core.get_state_id_by_state_name('Washington')),
+('53027', 'Grays Harbor County', core.get_state_id_by_state_name('Washington')),
+('53029', 'Island County', core.get_state_id_by_state_name('Washington')),
+('53031', 'Jefferson County', core.get_state_id_by_state_name('Washington')),
+('53033', 'King County', core.get_state_id_by_state_name('Washington')),
+('53035', 'Kitsap County', core.get_state_id_by_state_name('Washington')),
+('53037', 'Kittitas County', core.get_state_id_by_state_name('Washington')),
+('53039', 'Klickitat County', core.get_state_id_by_state_name('Washington')),
+('53041', 'Lewis County', core.get_state_id_by_state_name('Washington')),
+('53043', 'Lincoln County', core.get_state_id_by_state_name('Washington')),
+('53045', 'Mason County', core.get_state_id_by_state_name('Washington')),
+('53047', 'Okanogan County', core.get_state_id_by_state_name('Washington')),
+('53049', 'Pacific County', core.get_state_id_by_state_name('Washington')),
+('53051', 'Pend Oreille County', core.get_state_id_by_state_name('Washington')),
+('53053', 'Pierce County', core.get_state_id_by_state_name('Washington')),
+('53055', 'San Juan County', core.get_state_id_by_state_name('Washington')),
+('53057', 'Skagit County', core.get_state_id_by_state_name('Washington')),
+('53059', 'Skamania County', core.get_state_id_by_state_name('Washington')),
+('53061', 'Snohomish County', core.get_state_id_by_state_name('Washington')),
+('53063', 'Spokane County', core.get_state_id_by_state_name('Washington')),
+('53065', 'Stevens County', core.get_state_id_by_state_name('Washington')),
+('53067', 'Thurston County', core.get_state_id_by_state_name('Washington')),
+('53069', 'Wahkiakum County', core.get_state_id_by_state_name('Washington')),
+('53071', 'Walla Walla County', core.get_state_id_by_state_name('Washington')),
+('53073', 'Whatcom County', core.get_state_id_by_state_name('Washington')),
+('53075', 'Whitman County', core.get_state_id_by_state_name('Washington')),
+('53077', 'Yakima County', core.get_state_id_by_state_name('Washington')),
+('54001', 'Barbour County', core.get_state_id_by_state_name('West Virginia')),
+('54003', 'Berkeley County', core.get_state_id_by_state_name('West Virginia')),
+('54005', 'Boone County', core.get_state_id_by_state_name('West Virginia')),
+('54007', 'Braxton County', core.get_state_id_by_state_name('West Virginia')),
+('54009', 'Brooke County', core.get_state_id_by_state_name('West Virginia')),
+('54011', 'Cabell County', core.get_state_id_by_state_name('West Virginia')),
+('54013', 'Calhoun County', core.get_state_id_by_state_name('West Virginia')),
+('54015', 'Clay County', core.get_state_id_by_state_name('West Virginia')),
+('54017', 'Doddridge County', core.get_state_id_by_state_name('West Virginia')),
+('54019', 'Fayette County', core.get_state_id_by_state_name('West Virginia')),
+('54021', 'Gilmer County', core.get_state_id_by_state_name('West Virginia')),
+('54023', 'Grant County', core.get_state_id_by_state_name('West Virginia')),
+('54025', 'Greenbrier County', core.get_state_id_by_state_name('West Virginia')),
+('54027', 'Hampshire County', core.get_state_id_by_state_name('West Virginia')),
+('54029', 'Hancock County', core.get_state_id_by_state_name('West Virginia')),
+('54031', 'Hardy County', core.get_state_id_by_state_name('West Virginia')),
+('54033', 'Harrison County', core.get_state_id_by_state_name('West Virginia')),
+('54035', 'Jackson County', core.get_state_id_by_state_name('West Virginia')),
+('54037', 'Jefferson County', core.get_state_id_by_state_name('West Virginia')),
+('54039', 'Kanawha County', core.get_state_id_by_state_name('West Virginia')),
+('54041', 'Lewis County', core.get_state_id_by_state_name('West Virginia')),
+('54043', 'Lincoln County', core.get_state_id_by_state_name('West Virginia')),
+('54045', 'Logan County', core.get_state_id_by_state_name('West Virginia')),
+('54047', 'McDowell County', core.get_state_id_by_state_name('West Virginia')),
+('54049', 'Marion County', core.get_state_id_by_state_name('West Virginia')),
+('54051', 'Marshall County', core.get_state_id_by_state_name('West Virginia')),
+('54053', 'Mason County', core.get_state_id_by_state_name('West Virginia')),
+('54055', 'Mercer County', core.get_state_id_by_state_name('West Virginia')),
+('54057', 'Mineral County', core.get_state_id_by_state_name('West Virginia')),
+('54059', 'Mingo County', core.get_state_id_by_state_name('West Virginia')),
+('54061', 'Monongalia County', core.get_state_id_by_state_name('West Virginia')),
+('54063', 'Monroe County', core.get_state_id_by_state_name('West Virginia')),
+('54065', 'Morgan County', core.get_state_id_by_state_name('West Virginia')),
+('54067', 'Nicholas County', core.get_state_id_by_state_name('West Virginia')),
+('54069', 'Ohio County', core.get_state_id_by_state_name('West Virginia')),
+('54071', 'Pendleton County', core.get_state_id_by_state_name('West Virginia')),
+('54073', 'Pleasants County', core.get_state_id_by_state_name('West Virginia')),
+('54075', 'Pocahontas County', core.get_state_id_by_state_name('West Virginia')),
+('54077', 'Preston County', core.get_state_id_by_state_name('West Virginia')),
+('54079', 'Putnam County', core.get_state_id_by_state_name('West Virginia')),
+('54081', 'Raleigh County', core.get_state_id_by_state_name('West Virginia')),
+('54083', 'Randolph County', core.get_state_id_by_state_name('West Virginia')),
+('54085', 'Ritchie County', core.get_state_id_by_state_name('West Virginia')),
+('54087', 'Roane County', core.get_state_id_by_state_name('West Virginia')),
+('54089', 'Summers County', core.get_state_id_by_state_name('West Virginia')),
+('54091', 'Taylor County', core.get_state_id_by_state_name('West Virginia')),
+('54093', 'Tucker County', core.get_state_id_by_state_name('West Virginia')),
+('54095', 'Tyler County', core.get_state_id_by_state_name('West Virginia')),
+('54097', 'Upshur County', core.get_state_id_by_state_name('West Virginia')),
+('54099', 'Wayne County', core.get_state_id_by_state_name('West Virginia')),
+('54101', 'Webster County', core.get_state_id_by_state_name('West Virginia')),
+('54103', 'Wetzel County', core.get_state_id_by_state_name('West Virginia')),
+('54105', 'Wirt County', core.get_state_id_by_state_name('West Virginia')),
+('54107', 'Wood County', core.get_state_id_by_state_name('West Virginia')),
+('54109', 'Wyoming County', core.get_state_id_by_state_name('West Virginia')),
+('55001', 'Adams County', core.get_state_id_by_state_name('Wisconsin')),
+('55003', 'Ashland County', core.get_state_id_by_state_name('Wisconsin')),
+('55005', 'Barron County', core.get_state_id_by_state_name('Wisconsin')),
+('55007', 'Bayfield County', core.get_state_id_by_state_name('Wisconsin')),
+('55009', 'Brown County', core.get_state_id_by_state_name('Wisconsin')),
+('55011', 'Buffalo County', core.get_state_id_by_state_name('Wisconsin')),
+('55013', 'Burnett County', core.get_state_id_by_state_name('Wisconsin')),
+('55015', 'Calumet County', core.get_state_id_by_state_name('Wisconsin')),
+('55017', 'Chippewa County', core.get_state_id_by_state_name('Wisconsin')),
+('55019', 'Clark County', core.get_state_id_by_state_name('Wisconsin')),
+('55021', 'Columbia County', core.get_state_id_by_state_name('Wisconsin')),
+('55023', 'Crawford County', core.get_state_id_by_state_name('Wisconsin')),
+('55025', 'Dane County', core.get_state_id_by_state_name('Wisconsin')),
+('55027', 'Dodge County', core.get_state_id_by_state_name('Wisconsin')),
+('55029', 'Door County', core.get_state_id_by_state_name('Wisconsin')),
+('55031', 'Douglas County', core.get_state_id_by_state_name('Wisconsin')),
+('55033', 'Dunn County', core.get_state_id_by_state_name('Wisconsin')),
+('55035', 'Eau Claire County', core.get_state_id_by_state_name('Wisconsin')),
+('55037', 'Florence County', core.get_state_id_by_state_name('Wisconsin')),
+('55039', 'Fond du Lac County', core.get_state_id_by_state_name('Wisconsin')),
+('55041', 'Forest County', core.get_state_id_by_state_name('Wisconsin')),
+('55043', 'Grant County', core.get_state_id_by_state_name('Wisconsin')),
+('55045', 'Green County', core.get_state_id_by_state_name('Wisconsin')),
+('55047', 'Green Lake County', core.get_state_id_by_state_name('Wisconsin')),
+('55049', 'Iowa County', core.get_state_id_by_state_name('Wisconsin')),
+('55051', 'Iron County', core.get_state_id_by_state_name('Wisconsin')),
+('55053', 'Jackson County', core.get_state_id_by_state_name('Wisconsin')),
+('55055', 'Jefferson County', core.get_state_id_by_state_name('Wisconsin')),
+('55057', 'Juneau County', core.get_state_id_by_state_name('Wisconsin')),
+('55059', 'Kenosha County', core.get_state_id_by_state_name('Wisconsin')),
+('55061', 'Kewaunee County', core.get_state_id_by_state_name('Wisconsin')),
+('55063', 'La Crosse County', core.get_state_id_by_state_name('Wisconsin')),
+('55065', 'Lafayette County', core.get_state_id_by_state_name('Wisconsin')),
+('55067', 'Langlade County', core.get_state_id_by_state_name('Wisconsin')),
+('55069', 'Lincoln County', core.get_state_id_by_state_name('Wisconsin')),
+('55071', 'Manitowoc County', core.get_state_id_by_state_name('Wisconsin')),
+('55073', 'Marathon County', core.get_state_id_by_state_name('Wisconsin')),
+('55075', 'Marinette County', core.get_state_id_by_state_name('Wisconsin')),
+('55077', 'Marquette County', core.get_state_id_by_state_name('Wisconsin')),
+('55078', 'Menominee County', core.get_state_id_by_state_name('Wisconsin')),
+('55079', 'Milwaukee County', core.get_state_id_by_state_name('Wisconsin')),
+('55081', 'Monroe County', core.get_state_id_by_state_name('Wisconsin')),
+('55083', 'Oconto County', core.get_state_id_by_state_name('Wisconsin')),
+('55085', 'Oneida County', core.get_state_id_by_state_name('Wisconsin')),
+('55087', 'Outagamie County', core.get_state_id_by_state_name('Wisconsin')),
+('55089', 'Ozaukee County', core.get_state_id_by_state_name('Wisconsin')),
+('55091', 'Pepin County', core.get_state_id_by_state_name('Wisconsin')),
+('55093', 'Pierce County', core.get_state_id_by_state_name('Wisconsin')),
+('55095', 'Polk County', core.get_state_id_by_state_name('Wisconsin')),
+('55097', 'Portage County', core.get_state_id_by_state_name('Wisconsin')),
+('55099', 'Price County', core.get_state_id_by_state_name('Wisconsin')),
+('55101', 'Racine County', core.get_state_id_by_state_name('Wisconsin')),
+('55103', 'Richland County', core.get_state_id_by_state_name('Wisconsin')),
+('55105', 'Rock County', core.get_state_id_by_state_name('Wisconsin')),
+('55107', 'Rusk County', core.get_state_id_by_state_name('Wisconsin')),
+('55109', 'St. Croix County', core.get_state_id_by_state_name('Wisconsin')),
+('55111', 'Sauk County', core.get_state_id_by_state_name('Wisconsin')),
+('55113', 'Sawyer County', core.get_state_id_by_state_name('Wisconsin')),
+('55115', 'Shawano County', core.get_state_id_by_state_name('Wisconsin')),
+('55117', 'Sheboygan County', core.get_state_id_by_state_name('Wisconsin')),
+('55119', 'Taylor County', core.get_state_id_by_state_name('Wisconsin')),
+('55121', 'Trempealeau County', core.get_state_id_by_state_name('Wisconsin')),
+('55123', 'Vernon County', core.get_state_id_by_state_name('Wisconsin')),
+('55125', 'Vilas County', core.get_state_id_by_state_name('Wisconsin')),
+('55127', 'Walworth County', core.get_state_id_by_state_name('Wisconsin')),
+('55129', 'Washburn County', core.get_state_id_by_state_name('Wisconsin')),
+('55131', 'Washington County', core.get_state_id_by_state_name('Wisconsin')),
+('55133', 'Waukesha County', core.get_state_id_by_state_name('Wisconsin')),
+('55135', 'Waupaca County', core.get_state_id_by_state_name('Wisconsin')),
+('55137', 'Waushara County', core.get_state_id_by_state_name('Wisconsin')),
+('55139', 'Winnebago County', core.get_state_id_by_state_name('Wisconsin')),
+('55141', 'Wood County', core.get_state_id_by_state_name('Wisconsin')),
+('56001', 'Albany County', core.get_state_id_by_state_name('Wyoming')),
+('56003', 'Big Horn County', core.get_state_id_by_state_name('Wyoming')),
+('56005', 'Campbell County', core.get_state_id_by_state_name('Wyoming')),
+('56007', 'Carbon County', core.get_state_id_by_state_name('Wyoming')),
+('56009', 'Converse County', core.get_state_id_by_state_name('Wyoming')),
+('56011', 'Crook County', core.get_state_id_by_state_name('Wyoming')),
+('56013', 'Fremont County', core.get_state_id_by_state_name('Wyoming')),
+('56015', 'Goshen County', core.get_state_id_by_state_name('Wyoming')),
+('56017', 'Hot Springs County', core.get_state_id_by_state_name('Wyoming')),
+('56019', 'Johnson County', core.get_state_id_by_state_name('Wyoming')),
+('56021', 'Laramie County', core.get_state_id_by_state_name('Wyoming')),
+('56023', 'Lincoln County', core.get_state_id_by_state_name('Wyoming')),
+('56025', 'Natrona County', core.get_state_id_by_state_name('Wyoming')),
+('56027', 'Niobrara County', core.get_state_id_by_state_name('Wyoming')),
+('56029', 'Park County', core.get_state_id_by_state_name('Wyoming')),
+('56031', 'Platte County', core.get_state_id_by_state_name('Wyoming')),
+('56033', 'Sheridan County', core.get_state_id_by_state_name('Wyoming')),
+('56035', 'Sublette County', core.get_state_id_by_state_name('Wyoming')),
+('56037', 'Sweetwater County', core.get_state_id_by_state_name('Wyoming')),
+('56039', 'Teton County', core.get_state_id_by_state_name('Wyoming')),
+('56041', 'Uinta County', core.get_state_id_by_state_name('Wyoming')),
+('56043', 'Washakie County', core.get_state_id_by_state_name('Wyoming')),
+('56045', 'Weston County', core.get_state_id_by_state_name('Wyoming'));
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/crm.lead-sources, lead-statuses, opportunity-stages.sql --<--<--
 INSERT INTO crm.lead_sources(lead_source_code, lead_source_name)
 SELECT 'AG', 'Agent'                UNION ALL
 SELECT 'CC', 'Appel à froid'            UNION ALL
@@ -11261,7 +14585,7 @@ SELECT 'CLW', 'Won fermé'          UNION ALL
 SELECT 'CLL', 'Clos perdus';
 
 
--->-->-- /db/src/04. default values/office, department, roles, users.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/office, department, roles, users.sql --<--<--
 
 
 /*******************************************************************
@@ -11274,10 +14598,13 @@ SELECT 'MoF','Mix Open Foundation', 'MoF', '06/06/1989', 'Brooklyn','NY','','US'
 
 
 INSERT INTO office.offices(office_code,office_name,nick_name, registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number,currency_code,parent_office_id)
-SELECT 'MoF-NY-BK','Brooklyn Branch', 'MoF Brooklyn', '06/06/1989', 'Brooklyn','NY','12345555','','','','','info@mixof.org','http://mixof.org','0','0','NPR',(SELECT office_id FROM office.offices WHERE office_code='MoF');
+SELECT 'MoF-NY-BK','Brooklyn Branch', 'MoF Brooklyn', '06/06/1989', 'Brooklyn','NY','12345555','US','','','','info@mixof.org','http://mixof.org','0','0','NPR',(SELECT office_id FROM office.offices WHERE office_code='MoF');
 
 INSERT INTO office.offices(office_code,office_name,nick_name, registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number,currency_code,parent_office_id)
-SELECT 'MoF-NY-MEM','Memphis Branch', 'MoF Memphis', '06/06/1989', 'Memphis', 'NY','','','','64464554','','info@mixof.org','http://mixof.org','0','0','NPR',(SELECT office_id FROM office.offices WHERE office_code='MoF');
+SELECT 'MoF-NY-RV','Rio Vista Branch', 'MoF Rio Vista', '06/06/1989', 'Rio Vista', 'CA','','US','','64464554','','info@mixof.org','http://mixof.org','0','0','NPR',(SELECT office_id FROM office.offices WHERE office_code='MoF');
+
+INSERT INTO office.offices(office_code,office_name,nick_name, registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number,currency_code,parent_office_id)
+SELECT 'MoF-NP-KTM','Kathmandu Branch', 'MoF Kathmandu', '06/06/1989', 'Baneshwor', 'Kathmandu','Bagmati','NP','','64464554','','info@mixof.org','http://mixof.org','0','0','NPR',(SELECT office_id FROM office.offices WHERE office_code='MoF');
 
 
 INSERT INTO office.departments(department_code, department_name)
@@ -11315,7 +14642,7 @@ SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='ADM
 
 
 
--->-->-- /db/src/04. default values/policy, config.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/policy, config.sql --<--<--
 INSERT INTO policy.auto_verification_policy
 SELECT 2, true, 0, true, 0, true, 0, '1-1-2010', '1-1-2020', true;
 
@@ -11338,7 +14665,7 @@ WHERE parent_office_id IS NOT NULL;
 
 
 
--->-->-- /db/src/04. default values/salespersons, ageing-slabs, party-types.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/salespersons, ageing-slabs, party-types.sql --<--<--
 INSERT INTO core.sales_teams(sales_team_code, sales_team_name)
 SELECT 'DEF', 'Par défaut'                 UNION ALL
 SELECT 'CST', 'Corporate Sales Team'    UNION ALL
@@ -11368,7 +14695,7 @@ INSERT INTO core.party_types(party_type_code, party_type_name, is_supplier) SELE
 
 
 
--->-->-- /db/src/04. default values/stores-types,cost-centers.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/stores-types,cost-centers.sql --<--<--
 INSERT INTO office.store_types(store_type_code,store_type_name)
 SELECT 'GOD', 'Groupeur'                              UNION ALL
 SELECT 'SAL', 'Centre de ventes'                        UNION ALL
@@ -11387,7 +14714,7 @@ SELECT 'FIN', 'Finance comptabilité &';
 
 
 
--->-->-- /db/src/04. default values/tax, item-groups, brands, shipping.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/tax, item-groups, brands, shipping.sql --<--<--
 INSERT INTO core.entities(entity_name, is_exempt)
 SELECT 'Federal Government', true;
 
@@ -11467,7 +14794,7 @@ SELECT 'Venture Capital';
 
 INSERT INTO core.sales_tax_types(sales_tax_type_code, sales_tax_type_name, is_vat)
 SELECT 'SAT',   'Sales Tax',            false   UNION ALL
-SELECT 'VAT',   'Value Added Tax',      false;
+SELECT 'VAT',   'Value Added Tax',      true;
 
 INSERT INTO core.tax_exempt_types(tax_exempt_type_code, tax_exempt_type_name)
 SELECT 'EXI', 'Exempt (Item)' UNION ALL
@@ -11478,6 +14805,11 @@ SELECT 'EXE', 'Exempt (Entity)';
 INSERT INTO core.tax_master(tax_master_code, tax_master_name)
 SELECT 'UST', 'United States Taxation' UNION ALL
 SELECT 'NPT', 'Nepal Taxation';
+
+INSERT INTO core.tax_authorities(tax_master_id, tax_authority_code, tax_authority_name, country_id, state_id, zip_code, address_line_1, address_line_2, street, city, phone, fax, email, url)
+SELECT 1, 'IRS', 'Internal Revenue Service', core.get_country_id_by_country_code('US'), core.get_state_id_by_state_code('NY'), '11201', '2 Metro Tech', '1st floor', '', 'Brooklyn', '(718) 834-6559', '', '', 'http://www.irs.gov' UNION ALL
+SELECT 1, 'IRD', 'Inland Revenue Department', core.get_country_id_by_country_code('NP'), NULL, '', 'INLAND REVENUE DEPARTMENT', 'Large Taxpayers Office', 'Hariharbhawan', 'Kathmandu', '5010049, 5010050, 5010051, 5010052, 5010053', '4411788', 'iro52@ird.gov.np', 'www.ird.gov.np/';
+
 
 INSERT INTO core.state_sales_taxes(state_sales_tax_code, state_sales_tax_name, state_id, rate) VALUES
 ('AL-STT', 'Alabama State Tax',             core.get_state_id_by_state_name('Alabama'),                 4), 
@@ -11528,10 +14860,70 @@ INSERT INTO core.state_sales_taxes(state_sales_tax_code, state_sales_tax_name, s
 ('WI-STT', 'Wisconsin State Tax',           core.get_state_id_by_state_name('Wisconsin'),               5), 
 ('WY-STT', 'Wyoming State Tax',             core.get_state_id_by_state_name('Wyoming'),                 4);
 
+INSERT INTO core.county_sales_taxes(county_id, county_sales_tax_code, county_sales_tax_name, rate)
+SELECT core.get_county_id_by_county_code('36047'), '36047-STX', 'Kings County Sales Tax', 4.875 UNION ALL
+SELECT core.get_county_id_by_county_code('6095'), '6095-STX', 'Solano County Sales Tax', 0.125;
 
-INSERT INTO core.sales_taxes(tax_master_id, sales_tax_code, sales_tax_name, rate, office_id)
-SELECT 1, 'SAT', 'Sales Tax', 5, office_id
-FROM office.offices;
+
+
+INSERT INTO core.sales_taxes(tax_master_id, sales_tax_code, sales_tax_name, rate, office_id, is_exemption)
+SELECT 1, office_code || '-STX', office_name || ' Sales Tax', 8.875, office_id, false FROM office.offices WHERE office_code='MoF-NY-BK' UNION ALL
+SELECT 1, office_code || '-EXT', office_name || ' Exempt', 0, office_id, true FROM office.offices WHERE office_code='MoF-NY-BK';
+
+INSERT INTO core.sales_taxes(tax_master_id, sales_tax_code, sales_tax_name, rate, office_id, is_exemption)
+SELECT 1, office_code || '-STX', office_name || ' Sales Tax', 8.375, office_id, false FROM office.offices WHERE office_code='MoF-NY-RV' UNION ALL
+SELECT 1, office_code || '-EXT', office_name || ' Exempt', 0, office_id, true FROM office.offices WHERE office_code='MoF-NY-RV';
+
+INSERT INTO core.sales_taxes(tax_master_id, sales_tax_code, sales_tax_name, rate, office_id, is_exemption)
+SELECT 2, office_code || '-STX', office_name || ' Value Added Tax', 13, office_id, false FROM office.offices WHERE office_code='MoF-NP-KTM' UNION ALL
+SELECT 2, office_code || '-EXT', office_name || ' Exempt', 0, office_id, true FROM office.offices WHERE office_code='MoF-NP-KTM';
+
+
+INSERT INTO core.sales_tax_details
+(
+    sales_tax_id, sales_tax_detail_code, sales_tax_detail_name, sales_tax_type_id, priority, 
+    based_on_shipping_address, state_sales_tax_id, county_sales_tax_id, tax_base_amount_type_code,  tax_rate_type_code, 
+    rate, reporting_tax_authority_id, collecting_tax_authority_id, collecting_account_id, 
+    rounding_method_code, rounding_decimal_places
+)
+
+SELECT 
+    1, 'BK-NYC-STX', 'New York State Sales Tax (Brooklyn)', 1, 0,
+    true, (SELECT state_sales_tax_id FROM core.state_sales_taxes WHERE state_id = core.get_state_id_by_state_code('NY')), NULL, 'P', 'P',
+    0, 1, 1, core.get_account_id_by_account_code('20710'),
+    'R', 2 
+UNION ALL
+SELECT 
+    1, 'BK-36047-STX', 'Kings County Sales Tax (Brooklyn)', 1, 1,
+    false, NULL, (SELECT county_sales_tax_id FROM core.county_sales_taxes WHERE county_id = core.get_county_id_by_county_code('36047')), 'P', 'P',
+    0, 1, 1, core.get_account_id_by_account_code('20710'),
+    'R', 2 
+UNION ALL
+SELECT 
+    3, 'RV-CA-STX', 'California State Sales Tax (Rio Vista)', 1, 0,
+    true, (SELECT state_sales_tax_id FROM core.state_sales_taxes WHERE state_id = core.get_state_id_by_state_code('CA')), NULL, 'P', 'P',
+    0, 1, 1, core.get_account_id_by_account_code('20710'),
+    'R', 2 
+UNION ALL
+SELECT 
+    3, 'RV-6095-STX', 'Solano County Sales Tax (Rio Vista)', 1, 1,
+    false, NULL, (SELECT county_sales_tax_id FROM core.county_sales_taxes WHERE county_id = core.get_county_id_by_county_code('6095')), 'P', 'P',
+    0, 1, 1, core.get_account_id_by_account_code('20710'),
+    'R', 2 
+UNION ALL   
+SELECT 
+    3, 'RV-STX', 'Rio Vista Sales Tax', 1, 2,
+    false, NULL, NULL, 'P', 'P',
+    0.75, 1, 1, core.get_account_id_by_account_code('20710'),
+    'R', 2
+UNION ALL   
+SELECT 
+    5, 'KTM-VAT', 'Kathmandu Value Added Tax', 2, 0,
+    false, NULL, NULL, 'P', 'P',
+    13, 1, 1, core.get_account_id_by_account_code('20710'),
+    'R', 2;
+
+   
 
 INSERT INTO core.brands(brand_code, brand_name)
 SELECT 'DEF', 'Par défaut';
@@ -11555,7 +14947,7 @@ SELECT 'IRR',   false,  'Emballage irrégulière';
 
 
 
--->-->-- /db/src/04. default values/units.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/units.sql --<--<--
 INSERT INTO core.units(unit_code, unit_name)
 SELECT 'PC', 'Pièce'        UNION ALL
 SELECT 'FT', 'Pieds'         UNION ALL
@@ -11574,7 +14966,7 @@ SELECT core.get_unit_id_by_unit_code('GM'), core.get_unit_id_by_unit_code('KG'),
 
 
 
--->-->-- /db/src/04. default values/verification-statuses, flag-types, frequencies.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/verification-statuses, flag-types, frequencies.sql --<--<--
 --These are hardcoded values and therefore the meanings should always remain intact
 --regardless of the language.
 INSERT INTO core.verification_statuses
@@ -11604,7 +14996,7 @@ SELECT 5, 'EOY', 'Fin de l''année';
 
 
 
--->-->-- /db/src/05. scrud-views/core/core.account_scrud_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.account_scrud_view.sql --<--<--
 CREATE VIEW core.account_scrud_view
 AS
 SELECT
@@ -11626,7 +15018,7 @@ LEFT JOIN core.accounts parent_account
 ON parent_account.account_id=core.accounts.parent_account_id;
 
 
--->-->-- /db/src/05. scrud-views/core/core.bonus_slab_detail_scrud_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.bonus_slab_detail_scrud_view.sql --<--<--
 CREATE VIEW core.bonus_slab_detail_scrud_view
 AS
 SELECT
@@ -11643,7 +15035,7 @@ WHERE
     core.bonus_slab_details.bonus_slab_id = core.bonus_slabs.bonus_slab_id;
 
 
--->-->-- /db/src/05. scrud-views/core/core.bonus_slab_scrud_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.bonus_slab_scrud_view.sql --<--<--
 CREATE VIEW core.bonus_slab_scrud_view
 AS
 SELECT
@@ -11658,7 +15050,7 @@ WHERE
 core.bonus_slabs.checking_frequency_id = core.frequencies.frequency_id;
 
 
--->-->-- /db/src/05. scrud-views/core/core.brands_scrud_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.brands_scrud_view.sql --<--<--
 CREATE VIEW core.brands_scrud_view
 AS
 SELECT 
@@ -11667,7 +15059,7 @@ SELECT
         brand_name
 FROM core.brands;
 
--->-->-- /db/src/05. scrud-views/core/core.compound_item_detail_scrud_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.compound_item_detail_scrud_view.sql --<--<--
 CREATE VIEW core.compound_item_detail_scrud_view
 AS
 SELECT
@@ -11684,7 +15076,7 @@ INNER JOIN core.compound_items
 ON core.compound_item_details.compound_item_id = core.compound_items.compound_item_id;
 
 
--->-->-- /db/src/05. scrud-views/core/core.compound_items_scrud_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.compound_items_scrud_view.sql --<--<--
 CREATE VIEW core.compound_items_scrud_view
 AS
 SELECT 
@@ -11693,7 +15085,7 @@ SELECT
         compound_item_name
 FROM core.compound_items;
 
--->-->-- /db/src/05. scrud-views/core/core.compound_unit_scrud_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.compound_unit_scrud_view.sql --<--<--
 CREATE VIEW core.compound_unit_scrud_view
 AS
 SELECT
@@ -11712,7 +15104,7 @@ AND
 
 
 
--->-->-- /db/src/05. scrud-views/core/core.frequency_setup_scrud_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.frequency_setup_scrud_view.sql --<--<--
 CREATE VIEW core.frequency_setup_scrud_view
 AS
 SELECT 
@@ -11722,7 +15114,7 @@ SELECT
         core.get_frequency_code_by_frequency_id(frequency_id) AS frequency_code
 FROM core.frequency_setups;
 
--->-->-- /db/src/05. scrud-views/core/core.item_cost_price_scrud_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.item_cost_price_scrud_view.sql --<--<--
 DROP VIEW IF EXISTS core.item_cost_price_scrud_view;
 
 CREATE VIEW core.item_cost_price_scrud_view
@@ -11746,7 +15138,7 @@ ON core.item_cost_prices.party_id = core.parties.party_id;
 
 
 
--->-->-- /db/src/05. scrud-views/core/core.item_group_scrud_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.item_group_scrud_view.sql --<--<--
 CREATE VIEW core.item_group_scrud_view
 AS
 SELECT 
@@ -11764,7 +15156,7 @@ LEFT JOIN core.item_groups AS parent_item_group
 ON core.item_groups.parent_item_group_id = parent_item_group.item_group_id;
 
 
--->-->-- /db/src/05. scrud-views/core/core.item_selling_price_scrud_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.item_selling_price_scrud_view.sql --<--<--
 DROP VIEW IF EXISTS core.item_selling_price_scrud_view;
 
 CREATE VIEW core.item_selling_price_scrud_view
@@ -11790,7 +15182,7 @@ ON  core.item_selling_prices.party_type_id = core.party_types.party_type_id;
 
 
 
--->-->-- /db/src/05. scrud-views/core/core.items_scrud_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.items_scrud_view.sql --<--<--
 DROP VIEW IF EXISTS core.items_scrud_view;
 
 CREATE VIEW core.items_scrud_view
@@ -11840,7 +15232,7 @@ LEFT JOIN core.shipping_package_shapes
 ON core.items.shipping_package_shape_id = core.shipping_package_shapes.shipping_package_shape_id;
 
 
--->-->-- /db/src/05. scrud-views/core/core.party_scrud_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.party_scrud_view.sql --<--<--
 CREATE VIEW core.party_scrud_view
 AS
 SELECT
@@ -11886,7 +15278,7 @@ INNER JOIN core.accounts
 ON core.parties.account_id=core.accounts.account_id;
 
 
--->-->-- /db/src/05. scrud-views/core/core.party_types_scrud_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.party_types_scrud_view.sql --<--<--
 CREATE VIEW core.party_types_scrud_view
 AS
 SELECT 
@@ -11896,7 +15288,7 @@ SELECT
         is_supplier
 FROM core.party_types;
 
--->-->-- /db/src/05. scrud-views/core/core.sales_teams_scrud_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.sales_teams_scrud_view.sql --<--<--
 CREATE VIEW core.sales_teams_scrud_view
 AS
 SELECT 
@@ -11905,7 +15297,7 @@ SELECT
         sales_team_name
 FROM core.sales_teams;
 
--->-->-- /db/src/05. scrud-views/core/core.salesperson_bonus_setup_scrud_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.salesperson_bonus_setup_scrud_view.sql --<--<--
 CREATE VIEW core.salesperson_bonus_setup_scrud_view
 AS
 SELECT
@@ -11922,7 +15314,7 @@ AND
     core.salesperson_bonus_setups.bonus_slab_id = core.bonus_slabs.bonus_slab_id;
 
 
--->-->-- /db/src/05. scrud-views/core/core.salesperson_scrud_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.salesperson_scrud_view.sql --<--<--
 CREATE VIEW core.salesperson_scrud_view
 AS
 SELECT
@@ -11940,7 +15332,7 @@ WHERE
     core.salespersons.account_id = core.accounts.account_id;
 
 
--->-->-- /db/src/05. scrud-views/core/core.shippers_scrud_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.shippers_scrud_view.sql --<--<--
 CREATE VIEW core.shippers_scrud_view
 AS
 SELECT
@@ -11982,7 +15374,7 @@ ON core.shippers.account_id = core.accounts.account_id;
 
 
 
--->-->-- /db/src/05. scrud-views/core/core.shipping_address_scrud_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.shipping_address_scrud_view.sql --<--<--
 CREATE VIEW core.shipping_address_scrud_view
 AS
 SELECT
@@ -12002,14 +15394,14 @@ INNER JOIN core.parties
 ON core.shipping_addresses.party_id=core.parties.party_id;
 
 
--->-->-- /db/src/05. scrud-views/core/core.tax_scrud_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.tax_scrud_view.sql --<--<--
 CREATE VIEW core.tax_scrud_view
 AS
 SELECT
 *
 FROM core.sales_taxes;
 
--->-->-- /db/src/05. scrud-views/core/core.units_scrud_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.units_scrud_view.sql --<--<--
 CREATE VIEW core.units_scrud_view
 AS
 SELECT
@@ -12018,7 +15410,7 @@ SELECT
         unit_name
 FROM core.units;
 
--->-->-- /db/src/05. scrud-views/office/office.cash_repository_scrud_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/office/office.cash_repository_scrud_view.sql --<--<--
 CREATE VIEW office.cash_repository_view
 AS
 SELECT
@@ -12036,7 +15428,7 @@ ON
     office.cash_repositories.parent_cash_repository_id=parent_cash_repositories.cash_repository_id;
 
 
--->-->-- /db/src/05. scrud-views/office/office.cost_center_scrud_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/office/office.cost_center_scrud_view.sql --<--<--
 CREATE VIEW office.cost_center_scrud_view
 AS
 SELECT
@@ -12047,7 +15439,7 @@ FROM
     office.cost_centers;
 
 
--->-->-- /db/src/05. scrud-views/policy/policy.auto_verification_policy_scrud_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/policy/policy.auto_verification_policy_scrud_view.sql --<--<--
 CREATE VIEW policy.auto_verification_policy_scrud_view
 AS
 SELECT
@@ -12068,7 +15460,7 @@ ON policy.auto_verification_policy.user_id=office.users.user_id;
 
 
 
--->-->-- /db/src/05. scrud-views/policy/policy.voucher_verification_policy_scrud_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/policy/policy.voucher_verification_policy_scrud_view.sql --<--<--
 CREATE VIEW policy.voucher_verification_policy_scrud_view
 AS
 SELECT
@@ -12092,14 +15484,14 @@ ON policy.voucher_verification_policy.user_id=office.users.user_id;
 
 
 
--->-->-- /db/src/05. selector-views/core/core.account_master_selector_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.account_master_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.account_master_selector_view;
 
 CREATE VIEW core.account_master_selector_view
 AS
 SELECT * FROM core.account_masters;
 
--->-->-- /db/src/05. selector-views/core/core.account_selector_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.account_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.account_selector_view;
 
 CREATE VIEW core.account_selector_view
@@ -12124,42 +15516,42 @@ FROM
     ON core.accounts.parent_account_id = parent_accounts.account_id;
 
 
--->-->-- /db/src/05. selector-views/core/core.bonus_slab_selector_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.bonus_slab_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.bonus_slab_selector_view;
 
 CREATE VIEW core.bonus_slab_selector_view
 AS
 SELECT * FROM core.bonus_slabs;
 
--->-->-- /db/src/05. selector-views/core/core.brand_selector_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.brand_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.brand_selector_view;
 
 CREATE VIEW core.brand_selector_view
 AS
 SELECT * FROM core.brands;
 
--->-->-- /db/src/05. selector-views/core/core.compound_item_selector_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.compound_item_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.compound_item_selector_view;
 
 CREATE VIEW core.compound_item_selector_view
 AS
 SELECT * FROM core.compound_items;
 
--->-->-- /db/src/05. selector-views/core/core.currency_selector_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.currency_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.currency_selector_view;
 
 CREATE VIEW core.currency_selector_view
 AS
 SELECT * FROM core.currencies;
 
--->-->-- /db/src/05. selector-views/core/core.fiscal_year_selector_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.fiscal_year_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.fiscal_year_selector_view;
 
 CREATE VIEW core.fiscal_year_selector_view
 AS
 SELECT * FROM core.fiscal_year;
 
--->-->-- /db/src/05. selector-views/core/core.frequency_selector_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.frequency_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.frequency_selector_view;
 
 CREATE VIEW core.frequency_selector_view
@@ -12167,21 +15559,21 @@ AS
 SELECT * FROM core.frequencies;
 
 
--->-->-- /db/src/05. selector-views/core/core.item_group_selector_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.item_group_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.item_group_selector_view;
 
 CREATE VIEW core.item_group_selector_view
 AS
 SELECT * FROM core.item_groups;
 
--->-->-- /db/src/05. selector-views/core/core.item_selector_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.item_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.item_selector_view;
 
 CREATE VIEW core.item_selector_view
 AS
 SELECT * FROM core.items;
 
--->-->-- /db/src/05. selector-views/core/core.party_selector_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.party_selector_view.sql --<--<--
 CREATE VIEW core.party_selector_view
 AS
 SELECT
@@ -12227,21 +15619,21 @@ INNER JOIN core.accounts
 ON core.parties.account_id=core.accounts.account_id;
 
 
--->-->-- /db/src/05. selector-views/core/core.party_type_selector_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.party_type_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.party_type_selector_view;
 
 CREATE VIEW core.party_type_selector_view
 AS
 SELECT * FROM core.party_types;
 
--->-->-- /db/src/05. selector-views/core/core.price_type_selector_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.price_type_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.price_type_selector_view;
 
 CREATE VIEW core.price_type_selector_view
 AS
 SELECT * FROM core.price_types;
 
--->-->-- /db/src/05. selector-views/core/core.sales_team_selector_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.sales_team_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.sales_team_selector_view;
 
 CREATE VIEW core.sales_team_selector_view
@@ -12249,7 +15641,7 @@ AS
 SELECT * FROM core.sales_teams;
 
 
--->-->-- /db/src/05. selector-views/core/core.salesperson_selector_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.salesperson_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.salesperson_selector_view;
 
 CREATE VIEW core.salesperson_selector_view
@@ -12270,21 +15662,21 @@ WHERE
 
 
 
--->-->-- /db/src/05. selector-views/core/core.shipping_mail_type_selector_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.shipping_mail_type_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.shipping_mail_type_selector_view;
 
 CREATE VIEW core.shipping_mail_type_selector_view
 AS
 SELECT * FROM core.shipping_mail_types;
 
--->-->-- /db/src/05. selector-views/core/core.shipping_package_shape_selector_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.shipping_package_shape_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.shipping_package_shape_selector_view;
 
 CREATE VIEW core.shipping_package_shape_selector_view
 AS
 SELECT * FROM core.shipping_package_shapes;
 
--->-->-- /db/src/05. selector-views/core/core.supplier_selector_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.supplier_selector_view.sql --<--<--
 CREATE VIEW core.supplier_selector_view
 AS
 SELECT * FROM core.parties
@@ -12295,7 +15687,7 @@ WHERE party_type_id IN
 );
 
 
--->-->-- /db/src/05. selector-views/core/core.tax_selector_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.tax_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.tax_selector_view;
 
 CREATE VIEW core.tax_selector_view
@@ -12303,7 +15695,7 @@ AS
 SELECT * FROM core.sales_taxes;
 
 
--->-->-- /db/src/05. selector-views/core/core.tax_type_selector_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.tax_type_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.tax_type_selector_view;
 
 CREATE VIEW core.tax_type_selector_view
@@ -12311,14 +15703,14 @@ AS
 SELECT * FROM core.sales_tax_types;
 
 
--->-->-- /db/src/05. selector-views/core/core.unit_selector_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.unit_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.unit_selector_view;
 
 CREATE VIEW core.unit_selector_view
 AS
 SELECT * FROM core.units;
 
--->-->-- /db/src/05. selector-views/office/office.cash_repository_selector_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/office/office.cash_repository_selector_view.sql --<--<--
 DROP VIEW IF EXISTS office.cash_repository_selector_view;
 
 CREATE VIEW office.cash_repository_selector_view
@@ -12339,7 +15731,7 @@ ON
 
 
 
--->-->-- /db/src/05. selector-views/office/office.office_selector_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/office/office.office_selector_view.sql --<--<--
 DROP VIEW IF EXISTS office.office_selector_view;
 
 CREATE VIEW office.office_selector_view
@@ -12347,7 +15739,7 @@ AS
 SELECT * FROM office.offices;
 
 
--->-->-- /db/src/05. selector-views/office/office.store_selector_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/office/office.store_selector_view.sql --<--<--
 DROP VIEW IF EXISTS office.store_selector_view;
 
 CREATE VIEW office.store_selector_view
@@ -12356,7 +15748,7 @@ SELECT * FROM office.stores;
 
 
 
--->-->-- /db/src/05. selector-views/office/office.store_type_selector_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/office/office.store_type_selector_view.sql --<--<--
 DROP VIEW IF EXISTS office.store_type_selector_view;
 
 CREATE VIEW office.store_type_selector_view
@@ -12365,7 +15757,7 @@ SELECT * FROM office.store_types;
 
 
 
--->-->-- /db/src/05. selector-views/office/office.user_selector_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/office/office.user_selector_view.sql --<--<--
 DROP VIEW IF EXISTS office.user_selector_view;
 
 CREATE VIEW office.user_selector_view
@@ -12384,7 +15776,7 @@ INNER JOIN office.offices
 ON office.users.office_id = office.offices.office_id;
 
 
--->-->-- /db/src/05. views/core/core.account_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/core/core.account_view.sql --<--<--
 CREATE VIEW core.account_view
 AS
 SELECT
@@ -12410,7 +15802,7 @@ FROM
 
 
 
--->-->-- /db/src/05. views/core/core.bank_account_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/core/core.bank_account_view.sql --<--<--
 CREATE VIEW core.bank_account_view
 AS
 SELECT
@@ -12432,14 +15824,14 @@ INNER JOIN office.users ON core.bank_accounts.maintained_by_user_id = office.use
 
 
 
--->-->-- /db/src/05. views/core/core.item_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/core/core.item_view.sql --<--<--
 --TODO
 CREATE VIEW core.item_view
 AS
 SELECT * FROM core.items;
 
 
--->-->-- /db/src/05. views/core/core.party_user_control_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/core/core.party_user_control_view.sql --<--<--
 CREATE VIEW core.party_user_control_view
 AS
 SELECT
@@ -12471,7 +15863,7 @@ ON core.parties.account_id = core.accounts.account_id;
 
 
 
--->-->-- /db/src/05. views/core/core.party_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/core/core.party_view.sql --<--<--
 CREATE VIEW core.party_view
 AS
 SELECT
@@ -12517,7 +15909,7 @@ INNER JOIN core.accounts
 ON core.parties.account_id=core.accounts.account_id;
 
 
--->-->-- /db/src/05. views/core/core.shipping_address_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/core/core.shipping_address_view.sql --<--<--
 CREATE VIEW core.shipping_address_view
 AS
 SELECT
@@ -12538,7 +15930,7 @@ ON core.shipping_addresses.party_id=core.parties.party_id;
 
 
 
--->-->-- /db/src/05. views/core/core.supplier_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/core/core.supplier_view.sql --<--<--
 CREATE VIEW core.supplier_view
 AS
 SELECT * FROM core.parties
@@ -12548,7 +15940,7 @@ WHERE party_type_id IN
         WHERE is_supplier=true
 );
 
--->-->-- /db/src/05. views/core/core.unit_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/core/core.unit_view.sql --<--<--
 --TODO
 CREATE VIEW core.unit_view
 AS
@@ -12556,14 +15948,14 @@ SELECT * FROM core.units;
 
 
 
--->-->-- /db/src/05. views/office/office.office_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/office/office.office_view.sql --<--<--
 --TODO
 CREATE VIEW office.office_view
 AS
 SELECT * FROM office.offices;
 
 
--->-->-- /db/src/05. views/office/office.role_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/office/office.role_view.sql --<--<--
 CREATE OR REPLACE VIEW office.role_view
 AS
 SELECT 
@@ -12574,7 +15966,7 @@ FROM
   office.roles;
    
 
--->-->-- /db/src/05. views/office/office.sign_in_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/office/office.sign_in_view.sql --<--<--
 CREATE VIEW office.sign_in_view
 AS
 SELECT
@@ -12622,14 +16014,14 @@ ON
     logged_in_office.office_id = office.get_logged_in_office_id(office.users.user_id);
 
 
--->-->-- /db/src/05. views/office/office.store_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/office/office.store_view.sql --<--<--
 --TODO
 CREATE VIEW office.store_view
 AS
 SELECT * FROM office.stores;
 
 
--->-->-- /db/src/05. views/office/office.user_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/office/office.user_view.sql --<--<--
 CREATE VIEW office.user_view
 AS
 SELECT
@@ -12647,7 +16039,7 @@ ON office.users.office_id = office.offices.office_id;
 
 
 
--->-->-- /db/src/05. views/office/office.work_center_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/office/office.work_center_view.sql --<--<--
 CREATE VIEW office.work_center_view
 AS
 SELECT
@@ -12660,7 +16052,7 @@ INNER JOIN office.offices
 ON office.work_centers.office_id = office.offices.office_id;
 
 
--->-->-- /db/src/05. views/public.dbstat.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/public.dbstat.sql --<--<--
 DROP VIEW IF EXISTS db_stat;
 
 CREATE VIEW db_stat
@@ -12679,7 +16071,7 @@ FROM
    pg_stat_user_tables;
 
 
--->-->-- /db/src/05. views/transactions/1. transactions.transaction_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/transactions/1. transactions.transaction_view.sql --<--<--
 DROP VIEW IF EXISTS transactions.transaction_view;
 CREATE VIEW transactions.transaction_view
 AS
@@ -12716,7 +16108,7 @@ INNER JOIN transactions.transaction_details
 ON transactions.transaction_master.transaction_master_id = transactions.transaction_details.transaction_master_id;
 
 
--->-->-- /db/src/05. views/transactions/2. transactions.verified_transaction_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/transactions/2. transactions.verified_transaction_view.sql --<--<--
 
 DROP VIEW IF EXISTS transactions.verified_transaction_view CASCADE;
 
@@ -12726,7 +16118,7 @@ SELECT * FROM transactions.transaction_view
 WHERE verification_status_id > 0;
 
 
--->-->-- /db/src/05. views/transactions/3. transactions.trial_balance_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/transactions/3. transactions.trial_balance_view.sql --<--<--
 DROP MATERIALIZED VIEW IF EXISTS transactions.trial_balance_view;
 CREATE MATERIALIZED VIEW transactions.trial_balance_view
 AS
@@ -12737,7 +16129,7 @@ FROM transactions.verified_transaction_view
 GROUP BY account_id;
 
 
--->-->-- /db/src/05. views/transactions/4. transactions.stock_transaction_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/transactions/4. transactions.stock_transaction_view.sql --<--<--
 DROP VIEW IF EXISTS transactions.stock_transaction_view;
 
 CREATE VIEW transactions.stock_transaction_view
@@ -12790,7 +16182,7 @@ ON transactions.transaction_master.transaction_master_id = transactions.stock_ma
 
 
 
--->-->-- /db/src/05. views/transactions/5. transactions.verified_stock_transaction_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/transactions/5. transactions.verified_stock_transaction_view.sql --<--<--
 DROP MATERIALIZED VIEW IF EXISTS transactions.verified_stock_transaction_view;
 
 CREATE MATERIALIZED VIEW transactions.verified_stock_transaction_view
@@ -12799,7 +16191,7 @@ SELECT * FROM transactions.stock_transaction_view
 WHERE verification_status_id > 0;
 
 
--->-->-- /db/src/05. views/transactions/transactions.verified_stock_details_view.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/transactions/transactions.verified_stock_details_view.sql --<--<--
 DROP VIEW IF EXISTS transactions.verified_stock_details_view;
 
 CREATE VIEW transactions.verified_stock_details_view
@@ -12814,7 +16206,7 @@ AND transactions.transaction_master.verification_status_id > 0;
 
 
 
--->-->-- /db/src/06. sample-data/exchange-rates.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/06. sample-data/exchange-rates.sql --<--<--
 INSERT INTO core.exchange_rates(office_id)
 SELECT 1;
 
@@ -12844,7 +16236,7 @@ SELECT 3, 'NPR', 'INR', 1, 1.6;
 
 
 
--->-->-- /db/src/06. sample-data/menus.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/06. sample-data/menus.sql --<--<--
 
 INSERT INTO core.menus(menu_text, url, menu_code, level)
 SELECT 'Ventes', '~/Modules/Sales/Index.mix', 'SA', 0 UNION ALL
@@ -12947,6 +16339,7 @@ UNION ALL SELECT 'Tax Master', '~/Modules/BackOffice/Tax/TaxMaster.mix', 'TXM', 
 UNION ALL SELECT 'Tax Authorities', '~/Modules/BackOffice/Tax/TaxAuthorities.mix', 'TXA', 2, core.get_menu_id('BOTC')
 UNION ALL SELECT 'Sales Tax Types', '~/Modules/BackOffice/Tax/SalesTaxTypes.mix', 'STXT', 2, core.get_menu_id('BOTC')
 UNION ALL SELECT 'State Sales Taxes', '~/Modules/BackOffice/Tax/StateSalesTaxes.mix', 'STST', 2, core.get_menu_id('BOTC')
+UNION ALL SELECT 'Counties Sales Taxes', '~/Modules/BackOffice/Tax/CountySalesTaxes.mix', 'CTST', 2, core.get_menu_id('BOTC')
 UNION ALL SELECT 'Sales Taxes', '~/Modules/BackOffice/Tax/SalesTaxes.mix', 'STX', 2, core.get_menu_id('BOTC')
 UNION ALL SELECT 'Sales Tax Details', '~/Modules/BackOffice/Tax/SalesTaxDetails.mix', 'STXD', 2, core.get_menu_id('BOTC')
 UNION ALL SELECT 'Tax Exempt Types', '~/Modules/BackOffice/Tax/TaxExemptTypes.mix', 'TXEXT', 2, core.get_menu_id('BOTC')
@@ -12962,6 +16355,11 @@ UNION ALL SELECT 'Cash Repository Setup', '~/Modules/BackOffice/CashRepositories
 UNION ALL SELECT 'Department Setup', '~/Modules/BackOffice/Departments.mix', 'SDS', 2, core.get_menu_id('SOS')
 UNION ALL SELECT 'Role Management', '~/Modules/BackOffice/Roles.mix', 'SRM', 2, core.get_menu_id('SOS')
 UNION ALL SELECT 'User Management', '~/Modules/BackOffice/Users.mix', 'SUM', 2, core.get_menu_id('SOS')
+UNION ALL SELECT 'Entity Setup', '~/Modules/BackOffice/Entities.mix', 'SES', 2, core.get_menu_id('SOS')
+UNION ALL SELECT 'Industry Setup', '~/Modules/BackOffice/Industries.mix', 'SIS', 2, core.get_menu_id('SOS')
+UNION ALL SELECT 'Country Setup', '~/Modules/BackOffice/Countries.mix', 'SCRS', 2, core.get_menu_id('SOS')
+UNION ALL SELECT 'State Setup', '~/Modules/BackOffice/States.mix', 'SSS', 2, core.get_menu_id('SOS')
+UNION ALL SELECT 'County Setup', '~/Modules/BackOffice/Counties.mix', 'SCTS', 2, core.get_menu_id('SOS')
 UNION ALL SELECT 'Fiscal Year Information', '~/Modules/BackOffice/FiscalYear.mix', 'SFY', 2, core.get_menu_id('SOS')
 UNION ALL SELECT 'Frequency & Fiscal Year Management', '~/Modules/BackOffice/Frequency.mix', 'SFR', 2, core.get_menu_id('SOS')
 UNION ALL SELECT 'Policy Management', NULL, 'SPM', 1, core.get_menu_id('BO')
@@ -12988,7 +16386,11 @@ SELECT office.get_office_id_by_office_code('MoF-NY-BK'), core.menus.menu_id, off
 FROM core.menus
 
 UNION ALL
-SELECT office.get_office_id_by_office_code('MoF-NY-MEM'), core.menus.menu_id, office.get_user_id_by_user_name('binod')
+SELECT office.get_office_id_by_office_code('MoF-NY-RV'), core.menus.menu_id, office.get_user_id_by_user_name('binod')
+FROM core.menus
+
+UNION ALL
+SELECT office.get_office_id_by_office_code('MoF-NP-KTM'), core.menus.menu_id, office.get_user_id_by_user_name('binod')
 FROM core.menus;
 
 
@@ -13131,7 +16533,7 @@ SELECT core.get_menu_id('NEW'), 'fr', 'nouvelle entreprise';
 
 
 
--->-->-- /db/src/06. sample-data/price-types.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/06. sample-data/price-types.sql --<--<--
 
 INSERT INTO core.price_types(price_type_code, price_type_name)
 SELECT 'RET', 'Retail'      UNION ALL
@@ -13139,7 +16541,7 @@ SELECT 'WHO', 'Wholesale';
 
 
 
--->-->-- /db/src/10. triggers/core/core.disable_editing_sys_type.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/10. triggers/core/core.disable_editing_sys_type.sql --<--<--
 CREATE FUNCTION core.disable_editing_sys_type()
 RETURNS TRIGGER
 AS
@@ -13189,7 +16591,7 @@ FOR EACH ROW EXECUTE PROCEDURE core.disable_editing_sys_type();
 
 
 
--->-->-- /db/src/10. triggers/core/core.items_unit_check_trigger.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/10. triggers/core/core.items_unit_check_trigger.sql --<--<--
 DROP FUNCTION IF EXISTS core.items_unit_check_trigger() CASCADE;
 
 CREATE FUNCTION core.items_unit_check_trigger()
@@ -13210,7 +16612,7 @@ AFTER INSERT OR UPDATE
 ON core.items
 FOR EACH ROW EXECUTE PROCEDURE core.items_unit_check_trigger();
 
--->-->-- /db/src/10. triggers/core/core.party_after_insert_trigger.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/10. triggers/core/core.party_after_insert_trigger.sql --<--<--
 CREATE FUNCTION core.party_after_insert_trigger()
 RETURNS TRIGGER
 AS
@@ -13256,7 +16658,7 @@ AFTER INSERT
 ON core.parties
 FOR EACH ROW EXECUTE PROCEDURE core.party_after_insert_trigger();
 
--->-->-- /db/src/10. triggers/core/core.party_before_update_trigger.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/10. triggers/core/core.party_before_update_trigger.sql --<--<--
 CREATE FUNCTION core.party_before_update_trigger()
 RETURNS TRIGGER
 AS
@@ -13288,7 +16690,7 @@ FOR EACH ROW EXECUTE PROCEDURE core.party_before_update_trigger();
 
 
 
--->-->-- /db/src/10. triggers/core/core.shippers_after_insert_trigger.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/10. triggers/core/core.shippers_after_insert_trigger.sql --<--<--
 CREATE FUNCTION core.shippers_after_insert_trigger()
 RETURNS trigger
 AS
@@ -13310,7 +16712,7 @@ ON core.shippers
 FOR EACH ROW EXECUTE PROCEDURE core.shippers_after_insert_trigger();
 
 
--->-->-- /db/src/10. triggers/core/core.update_shipping_address_code_trigger.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/10. triggers/core/core.update_shipping_address_code_trigger.sql --<--<--
 CREATE FUNCTION core.update_shipping_address_code_trigger()
 RETURNS TRIGGER
 AS
@@ -13340,7 +16742,7 @@ FOR EACH ROW EXECUTE PROCEDURE core.update_shipping_address_code_trigger();
 
 
 
--->-->-- /db/src/10. triggers/policy/policy.perform_lock_out.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/10. triggers/policy/policy.perform_lock_out.sql --<--<--
 --TODO: Create a lockout policy.
 CREATE FUNCTION policy.perform_lock_out()
 RETURNS TRIGGER
@@ -13369,7 +16771,7 @@ FOR EACH ROW EXECUTE PROCEDURE policy.perform_lock_out();
 
 
 
--->-->-- /db/src/10. triggers/transactions/transactions.restrict_delete_trigger.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/10. triggers/transactions/transactions.restrict_delete_trigger.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.restrict_delete_trigger() CASCADE;
 CREATE FUNCTION transactions.restrict_delete_trigger()
 RETURNS TRIGGER
@@ -13406,7 +16808,7 @@ EXECUTE PROCEDURE transactions.restrict_delete_trigger();
 
 
 
--->-->-- /db/src/10. triggers/transactions/transactions.verify_stock_master_integrity_trigger.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/10. triggers/transactions/transactions.verify_stock_master_integrity_trigger.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.verify_stock_master_integrity_trigger() CASCADE;
 
 CREATE FUNCTION transactions.verify_stock_master_integrity_trigger()
@@ -13451,7 +16853,7 @@ EXECUTE PROCEDURE transactions.verify_stock_master_integrity_trigger();
 
 
 
--->-->-- /db/src/11. sample-data/party-sample.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/11. sample-data/party-sample.sql --<--<--
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
@@ -14566,7 +17968,7 @@ SET
 WHERE core.parties.party_id=party_id;
 
 
--->-->-- /db/src/11. sample-data/sample-data.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/11. sample-data/sample-data.sql --<--<--
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
@@ -14649,7 +18051,7 @@ SELECT 3, 'VLT2',   'Vault 2',      'Vault';
 INSERT INTO core.shippers(company_name, account_id)
 SELECT 'Par défaut', core.get_account_id_by_account_code('20110');
 
--->-->-- /db/src/12. plpgunit-tests/core/parties/unit_tests.check_party_currency_code_mismatch.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/12. plpgunit-tests/core/parties/unit_tests.check_party_currency_code_mismatch.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.check_party_currency_code_mismatch();
 
 CREATE FUNCTION unit_tests.check_party_currency_code_mismatch()
@@ -14678,7 +18080,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/12. plpgunit-tests/core/parties/unit_tests.check_party_null_account_id.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/12. plpgunit-tests/core/parties/unit_tests.check_party_null_account_id.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.check_party_null_account_id();
 
 CREATE FUNCTION unit_tests.check_party_null_account_id()
@@ -14705,7 +18107,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/12. plpgunit-tests/core/parties/unit_tests.test_transactions_post_receipt_function.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/12. plpgunit-tests/core/parties/unit_tests.test_transactions_post_receipt_function.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.test_transactions_post_receipt_function();
 
 CREATE FUNCTION unit_tests.test_transactions_post_receipt_function()
@@ -14786,7 +18188,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/12. plpgunit-tests/others/unit_tests.if_functions_compile.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/12. plpgunit-tests/others/unit_tests.if_functions_compile.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.if_functions_compile();
 
 CREATE FUNCTION unit_tests.if_functions_compile()
@@ -14820,7 +18222,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/12. plpgunit-tests/others/unit_tests.if_views_compile.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/12. plpgunit-tests/others/unit_tests.if_views_compile.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.if_views_compile();
 
 CREATE FUNCTION unit_tests.if_views_compile()
@@ -14855,7 +18257,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/12. plpgunit-tests-mock/unit_tests.create_dummy_accounts.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/12. plpgunit-tests-mock/unit_tests.create_dummy_accounts.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.create_dummy_accounts();
 
 CREATE FUNCTION unit_tests.create_dummy_accounts()
@@ -14893,7 +18295,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/12. plpgunit-tests-mock/unit_tests.create_dummy_auto_verification_policy.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/12. plpgunit-tests-mock/unit_tests.create_dummy_auto_verification_policy.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.create_dummy_auto_verification_policy
 (
         _user_id integer, 
@@ -14948,7 +18350,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- /db/src/12. plpgunit-tests-mock/unit_tests.create_dummy_office.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/12. plpgunit-tests-mock/unit_tests.create_dummy_office.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.create_dummy_office();
 
 CREATE FUNCTION unit_tests.create_dummy_office()
@@ -14968,7 +18370,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- /db/src/12. plpgunit-tests-mock/unit_tests.create_dummy_users.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/12. plpgunit-tests-mock/unit_tests.create_dummy_users.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.create_dummy_users();
 
 CREATE FUNCTION unit_tests.create_dummy_users()
@@ -14985,7 +18387,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- /db/src/13. triggers/audit-all-tables.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/13. triggers/audit-all-tables.sql --<--<--
 DO
 $$
         DECLARE sql text;
@@ -15007,7 +18409,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- /db/src/14. constraints/core.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/14. constraints/core.sql --<--<--
 ALTER TABLE core.items
 DROP CONSTRAINT IF EXISTS items_preferred_supplier_id_chk;
 
@@ -15057,7 +18459,7 @@ core.convert_unit(reorder_unit_id, unit_id) * reorder_quantity >= reorder_level
 );
 
 
--->-->-- /db/src/14. constraints/transactions.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/14. constraints/transactions.sql --<--<--
 
 ALTER TABLE transactions.stock_details
 DROP CONSTRAINT IF EXISTS stock_details_unit_chk;
@@ -15082,7 +18484,7 @@ ADD CONSTRAINT transaction_master_sys_user_id_chk
 CHECK(sys_user_id IS NULL OR office.is_sys_user(sys_user_id)=true);
 
 
--->-->-- /db/src/dump.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/dump.sql --<--<--
 --
 -- PostgreSQL database dump
 --
@@ -15378,5 +18780,5 @@ SELECT pg_catalog.setval('transaction_master_transaction_master_id_seq', 8, true
 
 
 
--->-->-- /db/src/refresh-materialized-views.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/refresh-materialized-views.sql --<--<--
 SELECT * FROM transactions.refresh_materialized_views();

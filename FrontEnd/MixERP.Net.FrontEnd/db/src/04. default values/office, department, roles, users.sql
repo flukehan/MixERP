@@ -1,4 +1,4 @@
-﻿
+
 
 /*******************************************************************
     SAMPLE DATA FEED
@@ -10,10 +10,13 @@ SELECT 'MoF','Mix Open Foundation', 'MoF', '06/06/1989', 'Brooklyn','NY','','US'
 
 
 INSERT INTO office.offices(office_code,office_name,nick_name, registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number,currency_code,parent_office_id)
-SELECT 'MoF-NY-BK','Brooklyn Branch', 'MoF Brooklyn', '06/06/1989', 'Brooklyn','NY','12345555','','','','','info@mixof.org','http://mixof.org','0','0','NPR',(SELECT office_id FROM office.offices WHERE office_code='MoF');
+SELECT 'MoF-NY-BK','Brooklyn Branch', 'MoF Brooklyn', '06/06/1989', 'Brooklyn','NY','12345555','US','','','','info@mixof.org','http://mixof.org','0','0','NPR',(SELECT office_id FROM office.offices WHERE office_code='MoF');
 
 INSERT INTO office.offices(office_code,office_name,nick_name, registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number,currency_code,parent_office_id)
-SELECT 'MoF-NY-MEM','Memphis Branch', 'MoF Memphis', '06/06/1989', 'Memphis', 'NY','','','','64464554','','info@mixof.org','http://mixof.org','0','0','NPR',(SELECT office_id FROM office.offices WHERE office_code='MoF');
+SELECT 'MoF-NY-RV','Rio Vista Branch', 'MoF Rio Vista', '06/06/1989', 'Rio Vista', 'CA','','US','','64464554','','info@mixof.org','http://mixof.org','0','0','NPR',(SELECT office_id FROM office.offices WHERE office_code='MoF');
+
+INSERT INTO office.offices(office_code,office_name,nick_name, registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number,currency_code,parent_office_id)
+SELECT 'MoF-NP-KTM','Kathmandu Branch', 'MoF Kathmandu', '06/06/1989', 'Baneshwor', 'Kathmandu','Bagmati','NP','','64464554','','info@mixof.org','http://mixof.org','0','0','NPR',(SELECT office_id FROM office.offices WHERE office_code='MoF');
 
 
 INSERT INTO office.departments(department_code, department_name)

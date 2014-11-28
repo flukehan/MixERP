@@ -53,6 +53,8 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
         {
             List<string> displayFields = new List<string>();
             ScrudHelper.AddDisplayField(displayFields, "core.tax_master.tax_master_id", ConfigurationHelper.GetDbParameter("TaxMasterDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.countries.country_id", ConfigurationHelper.GetDbParameter("CountryDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.states.state_id", ConfigurationHelper.GetDbParameter("StateDisplayField"));
             return string.Join(",", displayFields);
         }
 
@@ -60,6 +62,8 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
         {
             List<string> displayViews = new List<string>();
             ScrudHelper.AddDisplayView(displayViews, "core.tax_master.tax_master_id", "core.tax_master");
+            ScrudHelper.AddDisplayView(displayViews, "core.countries.country_id", "core.countries");
+            ScrudHelper.AddDisplayView(displayViews, "core.states.state_id", "core.states");
             return string.Join(",", displayViews);
         }
     }

@@ -537,4 +537,40 @@
   <data name="country_id" xml:space="preserve">
     <value>Country Id</value>
   </data>
+  <data name="cell" xml:space="preserve">
+    <value>Cell</value>
+  </data>
+  <data name="state_code" xml:space="preserve">
+    <value>State Code</value>
+  </data>
+  <data name="state_name" xml:space="preserve">
+    <value>State Name</value>
+  </data>
+  <data name="county_code" xml:space="preserve">
+    <value>County Code</value>
+  </data>
+  <data name="county_id" xml:space="preserve">
+    <value>County Id</value>
+  </data>
+  <data name="county_name" xml:space="preserve">
+    <value>County Name</value>
+  </data>
+  <data name="county_sales_tax_code" xml:space="preserve">
+    <value>County Sales Tax Code</value>
+  </data>
+  <data name="county_sales_tax_id" xml:space="preserve">
+    <value>County Sales Tax Id</value>
+  </data>
+  <data name="county_sales_tax_name" xml:space="preserve">
+    <value>County Sales Tax Name</value>
+  </data>
+  <data name="sales_tax_details_rate_chk" xml:space="preserve">
+    <value>Rate should not be empty unless you have selected state or county tax. Similarly, you cannot provide both rate and choose to have state or county tax.</value>
+  </data>
+  <data name="country_code" xml:space="preserve">
+    <value>Country Code</value>
+  </data>
+  <data name="country_name" xml:space="preserve">
+    <value>Country Name</value>
+  </data>
 </root>

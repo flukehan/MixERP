@@ -219,4 +219,22 @@
   <data name="VoucherVerificationPolicy" xml:space="preserve">
     <value>Voucher Verification Policy</value>
   </data>
+  <data name="CountySalesTaxes" xml:space="preserve">
+    <value>County Sales Taxes</value>
+  </data>
+  <data name="Counties" xml:space="preserve">
+    <value>Counties</value>
+  </data>
+  <data name="Countries" xml:space="preserve">
+    <value>Countries</value>
+  </data>
+  <data name="Entities" xml:space="preserve">
+    <value>Entities</value>
+  </data>
+  <data name="Industries" xml:space="preserve">
+    <value>Industries</value>
+  </data>
+  <data name="States" xml:space="preserve">
+    <value>States</value>
+  </data>
 </root>
