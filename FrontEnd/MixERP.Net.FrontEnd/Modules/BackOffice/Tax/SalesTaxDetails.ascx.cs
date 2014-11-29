@@ -56,7 +56,6 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
             ScrudHelper.AddDisplayField(displayFields, "core.sales_taxes.sales_tax_id", ConfigurationHelper.GetDbParameter("SalesTaxDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.state_sales_taxes.state_sales_tax_id", ConfigurationHelper.GetDbParameter("StateSalesTaxDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.county_sales_taxes.county_sales_tax_id", ConfigurationHelper.GetDbParameter("CountySalesTaxDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.tax_base_amount_types.tax_base_amount_type_code", ConfigurationHelper.GetDbParameter("TaxBaseAmountTypeDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.tax_rate_types.tax_rate_type_code", ConfigurationHelper.GetDbParameter("TaxRateTypeDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.tax_authorities.tax_authority_id", ConfigurationHelper.GetDbParameter("TaxAuthorityDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.accounts.account_id", ConfigurationHelper.GetDbParameter("AccountDisplayField"));
@@ -71,7 +70,6 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
             ScrudHelper.AddDisplayView(displayViews, "core.sales_taxes.sales_tax_id", "core.sales_taxes");
             ScrudHelper.AddDisplayView(displayViews, "core.state_sales_taxes.state_sales_tax_id", "core.state_sales_taxes");
             ScrudHelper.AddDisplayView(displayViews, "core.county_sales_taxes.county_sales_tax_id", "core.county_sales_taxes");
-            ScrudHelper.AddDisplayView(displayViews, "core.tax_base_amount_types.tax_base_amount_type_code", "core.tax_base_amount_types");
             ScrudHelper.AddDisplayView(displayViews, "core.tax_rate_types.tax_rate_type_code", "core.tax_rate_types");
             ScrudHelper.AddDisplayView(displayViews, "core.tax_authorities.tax_authority_id", "core.tax_authorities");
             ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.account_selector_view");

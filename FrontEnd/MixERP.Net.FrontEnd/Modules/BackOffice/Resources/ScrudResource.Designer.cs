@@ -106,6 +106,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Applied on Shipping Charge.
+        /// </summary>
+        internal static string applied_on_shipping_charge {
+            get {
+                return ResourceManager.GetString("applied_on_shipping_charge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Audit Timestamp.
         /// </summary>
         internal static string audit_ts {
@@ -219,6 +228,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string cell {
             get {
                 return ResourceManager.GetString("cell", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check Nexus.
+        /// </summary>
+        internal static string check_nexus {
+            get {
+                return ResourceManager.GetString("check_nexus", resourceCulture);
             }
         }
         
@@ -1335,6 +1353,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string url {
             get {
                 return ResourceManager.GetString("url", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Tax Collecting Account Id.
+        /// </summary>
+        internal static string use_tax_collecting_account_id {
+            get {
+                return ResourceManager.GetString("use_tax_collecting_account_id", resourceCulture);
             }
         }
         

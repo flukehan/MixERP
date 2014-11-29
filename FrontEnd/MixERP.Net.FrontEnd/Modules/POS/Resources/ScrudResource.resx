@@ -165,4 +165,25 @@
   <data name="store_type_name" xml:space="preserve">
     <value>Store Type Name</value>
   </data>
+  <data name="is_exemption" xml:space="preserve">
+    <value>Is Exemption</value>
+  </data>
+  <data name="rate" xml:space="preserve">
+    <value>Rate</value>
+  </data>
+  <data name="sales_tax_code" xml:space="preserve">
+    <value>Sales Tax Code</value>
+  </data>
+  <data name="sales_tax_id" xml:space="preserve">
+    <value>Sales Tax Id</value>
+  </data>
+  <data name="sales_tax_name" xml:space="preserve">
+    <value>Sales Tax Name</value>
+  </data>
+  <data name="tax_master_id" xml:space="preserve">
+    <value>Tax Master Id</value>
+  </data>
+  <data name="stores_sales_tax_id_chk" xml:space="preserve">
+    <value>The chosen SalesTaxId is invalid for this office.</value>
+  </data>
 </root>

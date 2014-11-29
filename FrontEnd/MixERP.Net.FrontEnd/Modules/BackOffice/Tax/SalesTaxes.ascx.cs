@@ -53,6 +53,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
             List<string> displayFields = new List<string>();
             ScrudHelper.AddDisplayField(displayFields, "core.tax_master.tax_master_id", ConfigurationHelper.GetDbParameter("TaxMasterDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "office.offices.office_id", ConfigurationHelper.GetDbParameter("OfficeDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.tax_base_amount_types.tax_base_amount_type_code", ConfigurationHelper.GetDbParameter("TaxBaseAmountTypeDisplayField"));
             return string.Join(",", displayFields);
         }
 
@@ -61,6 +62,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
             List<string> displayViews = new List<string>();
             ScrudHelper.AddDisplayView(displayViews, "core.tax_master.tax_master_id", "core.tax_master");
             ScrudHelper.AddDisplayView(displayViews, "office.offices.office_id", "office.office_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.tax_base_amount_types.tax_base_amount_type_code", "core.tax_base_amount_types");
             return string.Join(",", displayViews);
         }
     }

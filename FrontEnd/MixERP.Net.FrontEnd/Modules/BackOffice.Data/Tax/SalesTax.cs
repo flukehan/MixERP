@@ -29,7 +29,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.Tax
     {
         public static decimal GetSalesTax(string tranBook, int storeId, string partyCode, string shippingAddressCode, int priceTypeId, string itemCode, decimal price, int quantity, decimal discount, decimal shippingCharge, int salesTaxId)
         {
-            const string sql = "SELECT transactions.get_sales_tax(@TranBook, @StoreId, @PartyCode, @ShippingAddressCode, @PriceTypeId, @ItemCode, @Price, @Quantity, @Discount, @ShippingCharge, @SalesTaxId);";
+            const string sql = "SELECT SUM(tax) FROM transactions.get_sales_tax(@TranBook, @StoreId, @PartyCode, @ShippingAddressCode, @PriceTypeId, @ItemCode, @Price, @Quantity, @Discount, @ShippingCharge, @SalesTaxId);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@TranBook", tranBook);
@@ -53,9 +53,9 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.Tax
             return FormHelper.GetTable("core", "sales_taxes", "office_id", officeId.ToString(CultureInfo.InvariantCulture), "sales_tax_id");
         }
 
-        public static int GetSalesTaxId(string tranBook, int storeId, string partyCode, string shippingAddressCode, int priceTypeId, string itemCode)
+        public static int GetSalesTaxId(string tranBook, int storeId, string partyCode, string shippingAddressCode, int priceTypeId, string itemCode, int unitId, decimal price)
         {
-            const string sql = "SELECT transactions.get_sales_tax_id(@TranBook, @StoreId, @PartyCode, @ShippingAddressCode, @PriceTypeId, @ItemCode);";
+            const string sql = "SELECT transactions.get_sales_tax_id(@TranBook, @StoreId, @PartyCode, @ShippingAddressCode, @PriceTypeId, @ItemCode, @UnitId, @Price);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@TranBook", tranBook);
@@ -64,6 +64,8 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.Tax
                 command.Parameters.AddWithValue("@ShippingAddressCode", shippingAddressCode);
                 command.Parameters.AddWithValue("@PriceTypeId", priceTypeId);
                 command.Parameters.AddWithValue("@ItemCode", itemCode);
+                command.Parameters.AddWithValue("@UnitId", unitId);
+                command.Parameters.AddWithValue("@Price", price);
 
                 return Conversion.TryCastInteger(DbOperations.GetScalarValue(command));
             }

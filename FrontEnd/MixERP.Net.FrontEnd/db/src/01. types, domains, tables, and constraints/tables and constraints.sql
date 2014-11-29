@@ -996,6 +996,9 @@ CREATE TABLE core.sales_taxes
     sales_tax_code                          national character varying(24) NOT NULL,
     sales_tax_name                          national character varying(50) NOT NULL,
     is_exemption                            boolean NOT NULL DEFAULT(false),        
+    tax_base_amount_type_code               national character varying(12) NOT NULL 
+                                            REFERENCES core.tax_base_amount_types(tax_base_amount_type_code)
+                                            DEFAULT('P'),
     rate                                    decimal_strict2 NOT NULL DEFAULT(0), --Tax rate should be zero for parent tax.
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
@@ -1022,12 +1025,11 @@ CREATE TABLE core.sales_tax_details
     priority                                smallint NOT NULL DEFAULT(0),
     sales_tax_detail_code                   national character varying(24) NOT NULL,
     sales_tax_detail_name                   national character varying(50) NOT NULL,
-    based_on_shipping_address               boolean NOT NULL,
+    based_on_shipping_address               boolean NOT NULL DEFAULT(true),
+    check_nexus                             boolean NOT NULL DEFAULT(true),
+    applied_on_shipping_charge              boolean NOT NULL DEFAULT(true),
     state_sales_tax_id                      integer NULL REFERENCES core.state_sales_taxes(state_sales_tax_id),
     county_sales_tax_id                     integer NULL REFERENCES core.county_sales_taxes(county_sales_tax_id),
-    tax_base_amount_type_code               national character varying(12) NOT NULL 
-                                            REFERENCES core.tax_base_amount_types(tax_base_amount_type_code)
-                                            DEFAULT('P'),
     tax_rate_type_code                      national character varying(12) NOT NULL 
                                             REFERENCES core.tax_rate_types(tax_rate_type_code)
                                             DEFAULT('P'),
@@ -1050,6 +1052,7 @@ CREATE TABLE core.sales_tax_details
     reporting_tax_authority_id              integer NOT NULL REFERENCES core.tax_authorities(tax_authority_id),
     collecting_tax_authority_id             integer NOT NULL REFERENCES core.tax_authorities(tax_authority_id),
     collecting_account_id                   integer NOT NULL REFERENCES core.accounts(account_id),
+    use_tax_collecting_account_id           integer NULL REFERENCES core.accounts(account_id),
     rounding_method_code                    national character varying(4) NULL REFERENCES core.rounding_methods(rounding_method_code),
     rounding_decimal_places                 integer_strict2 NOT NULL DEFAULT(2),
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
@@ -1087,7 +1090,7 @@ CREATE TABLE core.sales_tax_exempts
     sales_tax_exempt_id                     SERIAL PRIMARY KEY,
     tax_master_id                           integer NOT NULL REFERENCES core.tax_master(tax_master_id),
     sales_tax_exempt_code                   national character varying(12),
-    sales_tax_exempt_name                   national character varying(12),
+    sales_tax_exempt_name                   national character varying(100),
     tax_exempt_type_id                      integer NOT NULL REFERENCES core.tax_exempt_types(tax_exempt_type_id),
     store_id                                integer NOT NULL,
     sales_tax_id                            integer NOT NULL REFERENCES core.sales_taxes(sales_tax_id),
@@ -1457,6 +1460,7 @@ CREATE TABLE office.stores
     store_type_id                           integer NOT NULL REFERENCES office.store_types(store_type_id),
     allow_sales                             boolean NOT NULL   
                                             DEFAULT(true),
+    sales_tax_id                            integer NOT NULL REFERENCES core.sales_taxes(sales_tax_id),
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
                                             DEFAULT(NOW())

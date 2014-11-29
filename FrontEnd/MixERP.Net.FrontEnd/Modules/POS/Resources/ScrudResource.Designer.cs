@@ -133,11 +133,56 @@ namespace MixERP.Net.Core.Modules.POS.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Is Exemption.
+        /// </summary>
+        internal static string is_exemption {
+            get {
+                return ResourceManager.GetString("is_exemption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Office Id.
         /// </summary>
         internal static string office_id {
             get {
                 return ResourceManager.GetString("office_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rate.
+        /// </summary>
+        internal static string rate {
+            get {
+                return ResourceManager.GetString("rate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sales Tax Code.
+        /// </summary>
+        internal static string sales_tax_code {
+            get {
+                return ResourceManager.GetString("sales_tax_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sales Tax Id.
+        /// </summary>
+        internal static string sales_tax_id {
+            get {
+                return ResourceManager.GetString("sales_tax_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sales Tax Name.
+        /// </summary>
+        internal static string sales_tax_name {
+            get {
+                return ResourceManager.GetString("sales_tax_name", resourceCulture);
             }
         }
         
@@ -201,6 +246,24 @@ namespace MixERP.Net.Core.Modules.POS.Resources {
         internal static string store_type_name {
             get {
                 return ResourceManager.GetString("store_type_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The chosen SalesTaxId is invalid for this office..
+        /// </summary>
+        internal static string stores_sales_tax_id_chk {
+            get {
+                return ResourceManager.GetString("stores_sales_tax_id_chk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tax Master Id.
+        /// </summary>
+        internal static string tax_master_id {
+            get {
+                return ResourceManager.GetString("tax_master_id", resourceCulture);
             }
         }
     }

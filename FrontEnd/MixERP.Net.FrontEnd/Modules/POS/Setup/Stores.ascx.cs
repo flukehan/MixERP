@@ -57,6 +57,7 @@ namespace MixERP.Net.Core.Modules.POS.Setup
             List<string> displayFields = new List<string>();
             ScrudHelper.AddDisplayField(displayFields, "office.store_types.store_type_id", ConfigurationHelper.GetDbParameter("StoreTypeDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "office.offices.office_id", ConfigurationHelper.GetDbParameter("OfficeDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.sales_taxes.sales_tax_id", ConfigurationHelper.GetDbParameter("SalesTaxDisplayField"));
             return string.Join(",", displayFields);
         }
 
@@ -65,6 +66,8 @@ namespace MixERP.Net.Core.Modules.POS.Setup
             List<string> displayViews = new List<string>();
             ScrudHelper.AddDisplayView(displayViews, "office.store_types.store_type_id", "office.store_type_selector_view");
             ScrudHelper.AddDisplayView(displayViews, "office.offices.office_id", "office.office_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.sales_taxes.sales_tax_id", "core.sales_taxes");
+
             return string.Join(",", displayViews);
         }
     }

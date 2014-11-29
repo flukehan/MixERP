@@ -1,4 +1,4 @@
-﻿-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/00. db core/0. mixerp.sql --<--<--
+﻿-->-->-- /db/src/00. db core/0. mixerp.sql --<--<--
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
@@ -30,7 +30,7 @@ LANGUAGE plpgsql;
 
 CREATE EXTENSION IF NOT EXISTS tablefunc;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/00. db core/1. scrud.sql --<--<--
+-->-->-- /db/src/00. db core/1. scrud.sql --<--<--
 DROP SCHEMA IF EXISTS scrud CASCADE;
 CREATE SCHEMA scrud;
 
@@ -177,7 +177,7 @@ NOT IN
 
 COMMENT ON VIEW scrud.mixerp_table_view IS 'Lists all schema, table, and columns with associated types, domains, references, and constraints.';
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/00. db core/2. install-unit-test.sql --<--<--
+-->-->-- /db/src/00. db core/2. install-unit-test.sql --<--<--
 /********************************************************************************
 The PostgreSQL License
 
@@ -835,7 +835,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/00. db core/2. mixerp-db-schema.sql --<--<--
+-->-->-- /db/src/00. db core/2. mixerp-db-schema.sql --<--<--
 DROP SCHEMA IF EXISTS audit CASCADE;
 DROP SCHEMA IF EXISTS core CASCADE;
 DROP SCHEMA IF EXISTS office CASCADE;
@@ -867,7 +867,7 @@ CREATE SCHEMA mrp;
 COMMENT ON SCHEMA office IS 'Contains objects related to material resource planning.';
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/00. db core/2nd-quadrant-audit-trigger.sql --<--<--
+-->-->-- /db/src/00. db core/2nd-quadrant-audit-trigger.sql --<--<--
 -- An audit history is important on most tables. Provide an audit trigger that logs to
 -- a dedicated audit table for the major relations.
 --
@@ -1125,7 +1125,7 @@ Add auditing support to the given table. Row-level changes will be logged with f
 $body$;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/00. db core/3. roles-and-priviledge.sql --<--<--
+-->-->-- /db/src/00. db core/3. roles-and-priviledge.sql --<--<--
 DO
 $$
 BEGIN
@@ -1238,7 +1238,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/00. db core/4.casts.sql --<--<--
+-->-->-- /db/src/00. db core/4.casts.sql --<--<--
 DROP FUNCTION IF EXISTS pg_catalog.text(unknown) CASCADE;
 CREATE FUNCTION pg_catalog.text(unknown) 
 RETURNS text 
@@ -1305,7 +1305,7 @@ CREATE FUNCTION pg_catalog.text(numeric) RETURNS text STRICT IMMUTABLE LANGUAGE 
 CREATE CAST (numeric AS text) WITH FUNCTION pg_catalog.text(numeric) AS IMPLICIT;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/01. types, domains, tables, and constraints/domains.sql --<--<--
+-->-->-- /db/src/01. types, domains, tables, and constraints/domains.sql --<--<--
 DROP DOMAIN IF EXISTS transaction_type CASCADE;
 CREATE DOMAIN transaction_type
 AS char(2)
@@ -1395,7 +1395,7 @@ CREATE DOMAIN color
 AS text;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/01. types, domains, tables, and constraints/tables and constraints.sql --<--<--
+-->-->-- /db/src/01. types, domains, tables, and constraints/tables and constraints.sql --<--<--
 --Todo: Indexing has not been properly thought of, as of now.
 
 CREATE TABLE core.verification_statuses
@@ -2394,6 +2394,9 @@ CREATE TABLE core.sales_taxes
     sales_tax_code                          national character varying(24) NOT NULL,
     sales_tax_name                          national character varying(50) NOT NULL,
     is_exemption                            boolean NOT NULL DEFAULT(false),        
+    tax_base_amount_type_code               national character varying(12) NOT NULL 
+                                            REFERENCES core.tax_base_amount_types(tax_base_amount_type_code)
+                                            DEFAULT('P'),
     rate                                    decimal_strict2 NOT NULL DEFAULT(0), --Tax rate should be zero for parent tax.
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
@@ -2420,12 +2423,11 @@ CREATE TABLE core.sales_tax_details
     priority                                smallint NOT NULL DEFAULT(0),
     sales_tax_detail_code                   national character varying(24) NOT NULL,
     sales_tax_detail_name                   national character varying(50) NOT NULL,
-    based_on_shipping_address               boolean NOT NULL,
+    based_on_shipping_address               boolean NOT NULL DEFAULT(true),
+    check_nexus                             boolean NOT NULL DEFAULT(true),
+    applied_on_shipping_charge              boolean NOT NULL DEFAULT(true),
     state_sales_tax_id                      integer NULL REFERENCES core.state_sales_taxes(state_sales_tax_id),
     county_sales_tax_id                     integer NULL REFERENCES core.county_sales_taxes(county_sales_tax_id),
-    tax_base_amount_type_code               national character varying(12) NOT NULL 
-                                            REFERENCES core.tax_base_amount_types(tax_base_amount_type_code)
-                                            DEFAULT('P'),
     tax_rate_type_code                      national character varying(12) NOT NULL 
                                             REFERENCES core.tax_rate_types(tax_rate_type_code)
                                             DEFAULT('P'),
@@ -2448,6 +2450,7 @@ CREATE TABLE core.sales_tax_details
     reporting_tax_authority_id              integer NOT NULL REFERENCES core.tax_authorities(tax_authority_id),
     collecting_tax_authority_id             integer NOT NULL REFERENCES core.tax_authorities(tax_authority_id),
     collecting_account_id                   integer NOT NULL REFERENCES core.accounts(account_id),
+    use_tax_collecting_account_id           integer NULL REFERENCES core.accounts(account_id),
     rounding_method_code                    national character varying(4) NULL REFERENCES core.rounding_methods(rounding_method_code),
     rounding_decimal_places                 integer_strict2 NOT NULL DEFAULT(2),
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
@@ -2485,7 +2488,7 @@ CREATE TABLE core.sales_tax_exempts
     sales_tax_exempt_id                     SERIAL PRIMARY KEY,
     tax_master_id                           integer NOT NULL REFERENCES core.tax_master(tax_master_id),
     sales_tax_exempt_code                   national character varying(12),
-    sales_tax_exempt_name                   national character varying(12),
+    sales_tax_exempt_name                   national character varying(100),
     tax_exempt_type_id                      integer NOT NULL REFERENCES core.tax_exempt_types(tax_exempt_type_id),
     store_id                                integer NOT NULL,
     sales_tax_id                            integer NOT NULL REFERENCES core.sales_taxes(sales_tax_id),
@@ -2855,6 +2858,7 @@ CREATE TABLE office.stores
     store_type_id                           integer NOT NULL REFERENCES office.store_types(store_type_id),
     allow_sales                             boolean NOT NULL   
                                             DEFAULT(true),
+    sales_tax_id                            integer NOT NULL REFERENCES core.sales_taxes(sales_tax_id),
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
                                             DEFAULT(NOW())
@@ -3388,10 +3392,10 @@ CREATE TABLE office.configuration
 );
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/01. types, domains, tables, and constraints/tables2.sql --<--<--
+-->-->-- /db/src/01. types, domains, tables, and constraints/tables2.sql --<--<--
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/01. types, domains, tables, and constraints/types.sql --<--<--
+-->-->-- /db/src/01. types, domains, tables, and constraints/types.sql --<--<--
 DROP TYPE IF EXISTS transactions.stock_detail_type CASCADE;
 CREATE TYPE transactions.stock_detail_type AS
 (
@@ -3438,7 +3442,7 @@ CREATE TYPE transactions.stock_adjustment_type AS
 );
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/audit/audit.is_valid_login_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/audit/audit.is_valid_login_id.sql --<--<--
 DROP FUNCTION IF EXISTS audit.is_valid_login_id(bigint);
 
 CREATE FUNCTION audit.is_valid_login_id(bigint)
@@ -3456,7 +3460,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.append_if_not_null.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.append_if_not_null.sql --<--<--
 CREATE FUNCTION core.append_if_not_null(text, text)
 RETURNS text
 AS
@@ -3474,7 +3478,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.convert_unit.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.convert_unit.sql --<--<--
 DROP FUNCTION IF EXISTS core.convert_unit(from_unit integer, to_unit integer);
 
 CREATE FUNCTION core.convert_unit(from_unit integer, to_unit integer)
@@ -3532,7 +3536,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.count_item_in_stock.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.count_item_in_stock.sql --<--<--
 DROP FUNCTION IF EXISTS core.count_item_in_stock(_item_id integer, _unit_id integer, _store_id integer);
 
 CREATE FUNCTION core.count_item_in_stock(_item_id integer, _unit_id integer, _store_id integer)
@@ -3555,7 +3559,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.count_purchases.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.count_purchases.sql --<--<--
 DROP FUNCTION IF EXISTS core.count_purchases(_item_id integer, _unit_id integer, _store_id integer);
 
 CREATE FUNCTION core.count_purchases(_item_id integer, _unit_id integer, _store_id integer)
@@ -3593,7 +3597,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.count_sales.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.count_sales.sql --<--<--
 DROP FUNCTION IF EXISTS core.count_sales(_item_id integer, _unit_id integer, _store_id integer);
 CREATE FUNCTION core.count_sales(_item_id integer, _unit_id integer, _store_id integer)
 RETURNS decimal
@@ -3630,7 +3634,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.create_flag.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.create_flag.sql --<--<--
 CREATE FUNCTION core.create_flag
 (
     user_id_    integer,
@@ -3665,7 +3669,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_account_id_by_account_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_account_id_by_account_code.sql --<--<--
 CREATE FUNCTION core.get_account_id_by_account_code(text)
 RETURNS bigint
 AS
@@ -3682,7 +3686,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_account_id_by_parameter.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_account_id_by_parameter.sql --<--<--
 CREATE FUNCTION core.get_account_id_by_parameter(text)
 RETURNS bigint
 AS
@@ -3702,7 +3706,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_account_id_by_party_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_account_id_by_party_code.sql --<--<--
 CREATE FUNCTION core.get_account_id_by_party_code(party_code text)
 RETURNS bigint
 AS
@@ -3719,7 +3723,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_account_id_by_party_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_account_id_by_party_id.sql --<--<--
 CREATE FUNCTION core.get_account_id_by_party_id(party_id bigint)
 RETURNS bigint
 AS
@@ -3736,7 +3740,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_account_id_by_shipper_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_account_id_by_shipper_id.sql --<--<--
 CREATE FUNCTION core.get_account_id_by_shipper_id(integer)
 RETURNS bigint
 AS
@@ -3756,7 +3760,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_account_ids.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_account_ids.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_account_ids(root_account_id bigint);
 
 CREATE FUNCTION core.get_account_ids(root_account_id bigint)
@@ -3781,7 +3785,7 @@ BEGIN
 END
 $$LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_account_master_id_by_account_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_account_master_id_by_account_id.sql --<--<--
 CREATE FUNCTION core.get_account_master_id_by_account_id(bigint)
 RETURNS integer
 AS
@@ -3800,7 +3804,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_account_master_id_by_account_master_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_account_master_id_by_account_master_code.sql --<--<--
 CREATE FUNCTION core.get_account_master_id_by_account_master_code(text)
 RETURNS integer
 AS
@@ -3817,7 +3821,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_account_name.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_account_name.sql --<--<--
 --Todo:Rename to core.get_account_name_by_account_id
 CREATE FUNCTION core.get_account_name(bigint)
 RETURNS text
@@ -3838,7 +3842,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_account_name_by_account_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_account_name_by_account_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_account_name_by_account_id(bigint);
 
 CREATE FUNCTION core.get_account_name_by_account_id(bigint)
@@ -3858,7 +3862,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_associated_units.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_associated_units.sql --<--<--
 CREATE FUNCTION core.get_associated_units(integer)
 RETURNS TABLE(unit_id integer, unit_code text, unit_name text)
 AS
@@ -3921,7 +3925,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_associated_units_from_item_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_associated_units_from_item_code.sql --<--<--
 CREATE FUNCTION core.get_associated_units_from_item_code(text)
 RETURNS TABLE(unit_id integer, unit_code text, unit_name text)
 AS
@@ -3941,7 +3945,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_associated_units_from_item_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_associated_units_from_item_id.sql --<--<--
 CREATE FUNCTION core.get_associated_units_from_item_id(integer)
 RETURNS TABLE(unit_id integer, unit_code text, unit_name text)
 AS
@@ -3961,7 +3965,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_attachment_lookup_info.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_attachment_lookup_info.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_attachment_lookup_info(national character varying(50));
 
 CREATE FUNCTION core.get_attachment_lookup_info(national character varying(50))
@@ -3982,7 +3986,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_base_quantity_by_unit_name.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_base_quantity_by_unit_name.sql --<--<--
 CREATE FUNCTION core.get_base_quantity_by_unit_name(text, integer)
 RETURNS decimal
 AS
@@ -4001,7 +4005,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_base_unit_id_by_unit_name.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_base_unit_id_by_unit_name.sql --<--<--
 CREATE FUNCTION core.get_base_unit_id_by_unit_name(text)
 RETURNS integer
 AS
@@ -4019,7 +4023,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_brand_code_by_brand_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_brand_code_by_brand_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_brand_code_by_brand_id(integer);
 
 CREATE FUNCTION core.get_brand_code_by_brand_id(integer)
@@ -4036,7 +4040,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_brand_id_by_brand_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_brand_id_by_brand_code.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_brand_id_by_brand_code(text);
 
 CREATE FUNCTION core.get_brand_id_by_brand_code(text)
@@ -4053,7 +4057,7 @@ LANGUAGE plpgsql;
 
 --SELECT * FROM core.get_brand_id_by_brand_code('DEF');
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_brand_id_by_brand_name.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_brand_id_by_brand_name.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_brand_id_by_brand_name(text);
 
 CREATE FUNCTION core.get_brand_id_by_brand_name(text)
@@ -4070,7 +4074,7 @@ LANGUAGE plpgsql;
 
 --SELECT * FROM core.get_brand_id_by_brand_name('DEF');
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_brand_name_by_brand_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_brand_name_by_brand_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_brand_name_by_brand_id(integer);
 
 CREATE FUNCTION core.get_brand_name_by_brand_id(integer)
@@ -4087,7 +4091,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_cash_account_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_cash_account_id.sql --<--<--
 CREATE FUNCTION core.get_cash_account_id()
 RETURNS bigint
 AS
@@ -4105,7 +4109,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_country_id_by_country_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_country_id_by_country_code.sql --<--<--
 CREATE FUNCTION core.get_country_id_by_country_code(national character varying(12))
 RETURNS integer
 AS
@@ -4121,7 +4125,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_country_name_by_country_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_country_name_by_country_id.sql --<--<--
 CREATE FUNCTION core.get_country_name_by_country_id(integer)
 RETURNS text
 AS
@@ -4137,7 +4141,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_county_id_by_county_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_county_id_by_county_code.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_county_id_by_county_code(national character varying(12));
 
 CREATE FUNCTION core.get_county_id_by_county_code(national character varying(12))
@@ -4155,7 +4159,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_county_id_by_county_name.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_county_id_by_county_name.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_county_id_by_county_name(text);
 
 CREATE FUNCTION core.get_county_id_by_county_name(text)
@@ -4171,7 +4175,27 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_currency_code_by_office_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_county_sales_tax_rate.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_county_sales_tax_rate(_county_sales_tax_id integer);
+
+CREATE FUNCTION core.get_county_sales_tax_rate(_county_sales_tax_id integer)
+RETURNS decimal_strict2
+AS
+$$
+BEGIN
+    RETURN
+        rate
+    FROM core.county_sales_taxes
+    WHERE county_sales_tax_id=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+
+
+-->-->-- /db/src/02. functions and logic/core/core.get_currency_code_by_office_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_currency_code_by_office_id(integer);
 
 CREATE FUNCTION core.get_currency_code_by_office_id(office_id integer)
@@ -4191,7 +4215,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_currency_code_by_party_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_currency_code_by_party_code.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_currency_code_by_party_code(national character varying(12));
 
 CREATE FUNCTION core.get_currency_code_by_party_code(_party_code national character varying(12))
@@ -4213,7 +4237,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_currency_code_by_party_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_currency_code_by_party_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_currency_code_by_party_id(bigint);
 
 CREATE FUNCTION core.get_currency_code_by_party_id(party_id bigint)
@@ -4234,7 +4258,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_current_year.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_current_year.sql --<--<--
 
 DROP FUNCTION IF EXISTS core.get_current_year();
 CREATE FUNCTION core.get_current_year()
@@ -4249,7 +4273,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_email_address_by_party_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_email_address_by_party_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_email_address_by_party_id(bigint);
 
 CREATE FUNCTION core.get_email_address_by_party_id(bigint)
@@ -4265,7 +4289,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_flag_background_color.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_flag_background_color.sql --<--<--
 CREATE FUNCTION core.get_flag_background_color(flag_type_id_ integer)
 RETURNS text
 AS
@@ -4282,7 +4306,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_flag_foreground_color.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_flag_foreground_color.sql --<--<--
 CREATE FUNCTION core.get_flag_foreground_color(flag_type_id_ integer)
 RETURNS text
 AS
@@ -4299,7 +4323,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_flag_type_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_flag_type_id.sql --<--<--
 CREATE FUNCTION core.get_flag_type_id
 (
     user_id_ integer,
@@ -4355,7 +4379,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_frequency_code_by_frequency_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_frequency_code_by_frequency_id.sql --<--<--
 CREATE FUNCTION core.get_frequency_code_by_frequency_id(integer)
 RETURNS text
 AS
@@ -4372,7 +4396,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_item_code_by_item_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_item_code_by_item_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_item_code_by_item_id(integer);
 
 CREATE FUNCTION core.get_item_code_by_item_id(integer)
@@ -4391,7 +4415,7 @@ LANGUAGE plpgsql;
 
 --SELECT core.get_item_code_by_item_id(1);
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_item_cost_price.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_item_cost_price.sql --<--<--
 CREATE FUNCTION core.get_item_cost_price(item_id_ integer, unit_id_ integer, party_id_ bigint)
 RETURNS money_strict2
 AS
@@ -4465,7 +4489,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_item_group_code_by_item_group_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_item_group_code_by_item_group_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_item_group_code_by_item_group_id(integer);
 
 CREATE FUNCTION core.get_item_group_code_by_item_group_id(integer)
@@ -4482,7 +4506,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_item_group_id_by_item_group_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_item_group_id_by_item_group_code.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_item_group_id_by_item_group_code(text);
 
 CREATE FUNCTION core.get_item_group_id_by_item_group_code(text)
@@ -4499,7 +4523,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_item_group_id_by_item_group_name.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_item_group_id_by_item_group_name.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_item_group_id_by_item_group_name(text);
 
 CREATE FUNCTION core.get_item_group_id_by_item_group_name(text)
@@ -4516,7 +4540,24 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_item_group_name_by_item_group_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_item_group_id_by_item_id.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_item_group_id_by_item_id(integer);
+
+CREATE FUNCTION core.get_item_group_id_by_item_id(integer)
+RETURNS integer
+AS
+$$
+BEGIN
+        RETURN item_group_id
+        FROM core.items
+        WHERE item_id=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+-->-->-- /db/src/02. functions and logic/core/core.get_item_group_name_by_item_group_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_item_group_name_by_item_group_id(integer);
 
 CREATE FUNCTION core.get_item_group_name_by_item_group_id(integer)
@@ -4533,7 +4574,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_item_id_by_item_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_item_id_by_item_code.sql --<--<--
 CREATE FUNCTION core.get_item_id_by_item_code(text)
 RETURNS integer
 AS
@@ -4553,7 +4594,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_item_name_by_item_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_item_name_by_item_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_item_name_by_item_id(integer);
 
 CREATE FUNCTION core.get_item_name_by_item_id(integer)
@@ -4572,7 +4613,7 @@ LANGUAGE plpgsql;
 
 --SELECT core.get_item_name_by_item_id(1);
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_item_tax_rate.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_item_tax_rate.sql --<--<--
 CREATE FUNCTION core.get_item_tax_rate(integer)
 RETURNS decimal
 AS
@@ -4591,7 +4632,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_menu_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_menu_id.sql --<--<--
 CREATE FUNCTION core.get_menu_id(menu_code text)
 RETURNS INTEGER
 AS
@@ -4608,7 +4649,26 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_party_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_office_id_by_sales_tax_id.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_office_id_by_sales_tax_id(_sales_tax_id integer);
+
+CREATE FUNCTION core.get_office_id_by_sales_tax_id(_sales_tax_id integer)
+RETURNS integer
+AS
+$$
+BEGIN
+    RETURN office_id
+    FROM core.sales_taxes
+    WHERE core.sales_taxes.sales_tax_id=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+ALTER TABLE office.stores
+ADD CONSTRAINT stores_sales_tax_id_chk
+CHECK(core.get_office_id_by_sales_tax_id(sales_tax_id) = office_id);
+
+-->-->-- /db/src/02. functions and logic/core/core.get_party_code.sql --<--<--
 
 
 /*******************************************************************
@@ -4675,7 +4735,7 @@ LANGUAGE 'plpgsql';
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_party_id_by_party_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_party_id_by_party_code.sql --<--<--
 CREATE FUNCTION core.get_party_id_by_party_code(text)
 RETURNS bigint
 AS
@@ -4695,7 +4755,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_party_type_id_by_party_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_party_type_id_by_party_code.sql --<--<--
 CREATE FUNCTION core.get_party_type_id_by_party_code(text)
 RETURNS smallint
 AS
@@ -4715,7 +4775,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_price_type_name_by_price_type_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_price_type_name_by_price_type_id.sql --<--<--
 CREATE FUNCTION core.get_price_type_name_by_price_type_id(integer)
 RETURNS text
 AS
@@ -4732,7 +4792,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_root_parent_menu_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_root_parent_menu_id.sql --<--<--
 CREATE FUNCTION core.get_root_parent_menu_id(text)
 RETURNS integer
 AS
@@ -4766,7 +4826,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_root_unit_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_root_unit_id.sql --<--<--
 CREATE FUNCTION core.get_root_unit_id(integer)
 RETURNS integer
 AS
@@ -4787,7 +4847,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_salesperson_name_by_salesperson_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_salesperson_name_by_salesperson_id.sql --<--<--
 CREATE FUNCTION core.get_salesperson_name_by_salesperson_id(integer)
 RETURNS text
 AS
@@ -4804,7 +4864,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_shipper_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_shipper_code.sql --<--<--
 
 /*******************************************************************
     GET UNIQUE EIGHT-TO-TEN DIGIT shipper CODE
@@ -4855,7 +4915,7 @@ LANGUAGE 'plpgsql';
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_shipper_name_by_shipper_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_shipper_name_by_shipper_id.sql --<--<--
 CREATE FUNCTION core.get_shipper_name_by_shipper_id(integer)
 RETURNS text
 AS
@@ -4872,7 +4932,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_shipping_address_by_shipping_address_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_shipping_address_by_shipping_address_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_shipping_address_by_shipping_address_id(integer);
 
 CREATE FUNCTION core.get_shipping_address_by_shipping_address_id(integer)
@@ -4904,7 +4964,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_shipping_address_code_by_shipping_address_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_shipping_address_code_by_shipping_address_id.sql --<--<--
 CREATE FUNCTION core.get_shipping_address_code_by_shipping_address_id(integer)
 RETURNS text
 AS
@@ -4924,7 +4984,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_shipping_address_id_by_shipping_address_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_shipping_address_id_by_shipping_address_code.sql --<--<--
 
 CREATE FUNCTION core.get_shipping_address_id_by_shipping_address_code(text, bigint)
 RETURNS smallint
@@ -4947,7 +5007,31 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_state_id_by_state_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_state_id_by_shipping_address_code.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_state_id_by_shipping_address_code(text, bigint);
+
+CREATE FUNCTION core.get_state_id_by_shipping_address_code(text, bigint)
+RETURNS integer
+AS
+$$
+BEGIN
+    RETURN
+    (
+        SELECT
+            state_id
+        FROM
+            core.shipping_addresses
+        WHERE 
+            core.shipping_addresses.shipping_address_code=$1
+        AND
+            core.shipping_addresses.party_id=$2
+    );
+END
+$$
+LANGUAGE plpgsql;
+
+
+-->-->-- /db/src/02. functions and logic/core/core.get_state_id_by_state_code.sql --<--<--
 CREATE FUNCTION core.get_state_id_by_state_code(national character varying(12))
 RETURNS integer
 AS
@@ -4963,7 +5047,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_state_id_by_state_name.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_state_id_by_state_name.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_state_id_by_state_name(text);
 
 CREATE FUNCTION core.get_state_id_by_state_name(text)
@@ -4979,7 +5063,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_state_name_by_state_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_state_name_by_state_id.sql --<--<--
 CREATE FUNCTION core.get_state_name_by_state_id(integer)
 RETURNS text
 AS
@@ -4995,7 +5079,24 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_unit_code_by_unit_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_state_sales_tax_rate.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_state_sales_tax_rate(_state_sales_tax_id integer);
+
+CREATE FUNCTION core.get_state_sales_tax_rate(_state_sales_tax_id integer)
+RETURNS decimal_strict2
+AS
+$$
+BEGIN
+    RETURN
+        rate
+    FROM core.state_sales_taxes
+    WHERE state_sales_tax_id=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+
+-->-->-- /db/src/02. functions and logic/core/core.get_unit_code_by_unit_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_unit_code_by_unit_id(integer);
 
 CREATE FUNCTION core.get_unit_code_by_unit_id(integer)
@@ -5014,7 +5115,7 @@ LANGUAGE plpgsql;
 
 --SELECT core.get_unit_code_by_unit_id(1);
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_unit_id_by_unit_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_unit_id_by_unit_code.sql --<--<--
 CREATE FUNCTION core.get_unit_id_by_unit_code(text)
 RETURNS smallint
 AS
@@ -5035,7 +5136,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_unit_id_by_unit_name.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_unit_id_by_unit_name.sql --<--<--
 CREATE FUNCTION core.get_unit_id_by_unit_name(text)
 RETURNS integer
 AS
@@ -5055,7 +5156,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_unit_name_by_unit_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_unit_name_by_unit_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_unit_name_by_unit_id(integer);
 
 CREATE FUNCTION core.get_unit_name_by_unit_id(integer)
@@ -5074,7 +5175,7 @@ LANGUAGE plpgsql;
 
 --SELECT core.get_unit_name_by_unit_id(1);
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.has_child_accounts.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.has_child_accounts.sql --<--<--
 CREATE FUNCTION core.has_child_accounts(bigint)
 RETURNS boolean
 AS
@@ -5090,7 +5191,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.is_leap_year.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.is_leap_year.sql --<--<--
 DROP FUNCTION IF EXISTS core.is_leap_year(integer);
 CREATE FUNCTION core.is_leap_year(integer)
 RETURNS boolean
@@ -5117,7 +5218,7 @@ LANGUAGE plpgsql
 IMMUTABLE STRICT;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.is_parent_unit.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.is_parent_unit.sql --<--<--
 CREATE FUNCTION core.is_parent_unit(parent integer, child integer)
 RETURNS boolean
 AS
@@ -5150,7 +5251,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.is_stock_item.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.is_stock_item.sql --<--<--
 DROP FUNCTION IF EXISTS core.is_stock_item(item_id integer);
 
 CREATE FUNCTION core.is_stock_item(item_id integer)
@@ -5190,7 +5291,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.is_supplier.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.is_supplier.sql --<--<--
 CREATE FUNCTION core.is_supplier(bigint)
 RETURNS boolean
 AS
@@ -5214,7 +5315,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.is_valid_item_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.is_valid_item_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.is_valid_item_id(integer);
 
 CREATE FUNCTION core.is_valid_item_id(integer)
@@ -5231,7 +5332,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.is_valid_unit.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.is_valid_unit.sql --<--<--
 DROP FUNCTION IF EXISTS core.is_valid_unit(_item_id integer, _unit_id integer);
 
 CREATE FUNCTION core.is_valid_unit(_item_id integer, _unit_id integer)
@@ -5253,7 +5354,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.is_valid_unit_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.is_valid_unit_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.is_valid_unit_id(integer);
 
 CREATE FUNCTION core.is_valid_unit_id(integer)
@@ -5292,7 +5393,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/core/core.calculate_interest.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/core/core.calculate_interest.sql --<--<--
 DROP FUNCTION IF EXISTS core.calculate_interest(principal numeric, rate numeric, days integer, num_of_days_in_year integer, round_up integer);
 CREATE FUNCTION core.calculate_interest(principal numeric, rate numeric, days integer, round_up integer, num_of_days_in_year integer)
 RETURNS numeric
@@ -5350,7 +5451,7 @@ IMMUTABLE STRICT;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/core/core.get_item_cost_price.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/core/core.get_item_cost_price.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_item_cost_price(item_id_ integer, party_id_ bigint, unit_id_ integer);
 CREATE FUNCTION core.get_item_cost_price(item_id_ integer, party_id_ bigint, unit_id_ integer)
 RETURNS money_strict2
@@ -5444,7 +5545,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/core/core.get_item_selling_price.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/core/core.get_item_selling_price.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_item_selling_price(item_id_ integer, party_type_id_ integer, price_type_id_ integer, unit_id_ integer);
 CREATE FUNCTION core.get_item_selling_price(item_id_ integer, party_type_id_ integer, price_type_id_ integer, unit_id_ integer)
 RETURNS money_strict2
@@ -5541,7 +5642,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/core/core.get_ordered_quantity.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/core/core.get_ordered_quantity.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_ordered_quantity(_item_id integer, _unit_id integer, _office_id integer);
 
 CREATE FUNCTION core.get_ordered_quantity(_item_id integer, _unit_id integer, _office_id integer)
@@ -5582,7 +5683,7 @@ LANGUAGE plpgsql;
 --SELECT core.get_ordered_quantity(17, 1, 2);
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/office/office.can_login.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/office/office.can_login.sql --<--<--
 DROP FUNCTION IF EXISTS office.can_login(user_id integer_strict, office_id integer_strict);
 CREATE FUNCTION office.can_login(user_id integer_strict, office_id integer_strict)
 RETURNS boolean
@@ -5629,7 +5730,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/office/office.sign_in.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/office/office.sign_in.sql --<--<--
 DROP FUNCTION IF EXISTS office.sign_in(office_id integer_strict, user_name text, password text, browser text, ip_address text, remote_user text, culture text);
 CREATE FUNCTION office.sign_in(office_id integer_strict, user_name text, password text, browser text, ip_address text, remote_user text, culture text)
 RETURNS integer
@@ -5688,7 +5789,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/policy/policy.can_post_transaction.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/policy/policy.can_post_transaction.sql --<--<--
 DROP FUNCTION IF EXISTS policy.can_post_transaction(_user_id integer, _office_id integer, transaction_book text);
 
 CREATE FUNCTION policy.can_post_transaction(_user_id integer, _office_id integer, transaction_book text) --TODO
@@ -5731,7 +5832,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/policy/policy.get_menu.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/policy/policy.get_menu.sql --<--<--
 DROP FUNCTION IF EXISTS policy.get_menu(user_id_ integer, office_id_ integer, culture_ text);
 CREATE FUNCTION policy.get_menu(user_id_ integer, office_id_ integer, culture_ text)
 RETURNS TABLE
@@ -5789,7 +5890,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/core.get_base_quantity_by_unit_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/core.get_base_quantity_by_unit_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_base_quantity_by_unit_id(integer, integer);
 
 CREATE FUNCTION core.get_base_quantity_by_unit_id(integer, integer)
@@ -5869,7 +5970,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.auto_verify.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.auto_verify.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.auto_verify(bigint) CASCADE;
 
 CREATE FUNCTION transactions.auto_verify(bigint)
@@ -6535,7 +6636,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_accrued_interest-todo.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_accrued_interest-todo.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_accrued_interest(office_id integer, party_id bigint);
 
 CREATE FUNCTION transactions.get_accrued_interest(office_id integer, party_id bigint)
@@ -6549,7 +6650,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_average_party_transaction.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_average_party_transaction.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_average_party_transaction(party_id bigint);
 
 
@@ -6639,7 +6740,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_cash_repository_balance.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_cash_repository_balance.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_cash_repository_balance(_cash_repository_id integer, _currency_code national character varying(12));
 CREATE FUNCTION transactions.get_cash_repository_balance(_cash_repository_id integer, _currency_code national character varying(12))
 RETURNS money_strict2
@@ -6695,7 +6796,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_cost_of_goods_sold.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_cost_of_goods_sold.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_cost_of_goods_sold(_item_id integer, _unit_id integer, _store_id integer, _quantity integer);
 
 CREATE FUNCTION transactions.get_cost_of_goods_sold(_item_id integer, _unit_id integer, _store_id integer, _quantity integer)
@@ -6798,7 +6899,7 @@ LANGUAGE PLPGSQL;
 --SELECT * FROM transactions.get_cost_of_goods_sold(1, 7, 1, 1);
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_last_receipt_date.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_last_receipt_date.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_last_receipt_date(office_id integer, party_id bigint);
 CREATE FUNCTION transactions.get_last_receipt_date(office_id integer, party_id bigint)
 RETURNS date
@@ -6821,7 +6922,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_mavcogs.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_mavcogs.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_mavcogs(_item_id integer, _store_id integer, _base_quantity decimal, _factor decimal(24, 4));
 
 CREATE FUNCTION transactions.get_mavcogs(_item_id integer, _store_id integer, _base_quantity decimal, _factor decimal(24, 4))
@@ -6889,7 +6990,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_non_gl_product_view.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_non_gl_product_view.sql --<--<--
 
 DROP FUNCTION IF EXISTS transactions.get_non_gl_product_view
 (   
@@ -7034,7 +7135,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_party_transaction_summary.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_party_transaction_summary.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_party_transaction_summary
 (
     office_id integer, 
@@ -7085,7 +7186,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_product_view.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_product_view.sql --<--<--
 
 DROP FUNCTION IF EXISTS transactions.get_product_view
 (   
@@ -7243,7 +7344,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_receipt_view.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_receipt_view.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_receipt_view
 (
     _user_id                integer,
@@ -7349,7 +7450,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_reorder_view_function.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_reorder_view_function.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_reorder_view_function(office_id integer);
 
 CREATE FUNCTION transactions.get_reorder_view_function(office_id integer)
@@ -7407,7 +7508,7 @@ LANGUAGE plpgsql;
 --SELECT * FROM transactions.get_reorder_view_function(2);
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_sales_by_offices.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_sales_by_offices.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_sales_by_offices(office_id integer, divide_by integer);
 
 CREATE FUNCTION transactions.get_sales_by_offices(office_id integer, divide_by integer)
@@ -7514,7 +7615,33 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_sales_tax.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_sales_tax.sql --<--<--
+DROP TYPE IF EXISTS transactions.sales_tax_type CASCADE;
+
+CREATE TYPE transactions.sales_tax_type AS
+(
+    id                          integer,
+    sales_tax_detail_id         integer,
+    sales_tax_id                integer,
+    sales_tax_detail_code       text,
+    sales_tax_detail_name       text,
+    is_use_tax                  boolean,
+    account_id                  integer,
+    price                       money_strict,
+    quantity                    integer_strict,
+    discount                    money_strict2,
+    shipping_charge             money_strict2,
+    taxable_amount              money_strict,
+    state_sales_tax_id          integer,
+    county_sales_tax_id         integer,
+    rate                        decimal_strict2,
+    base_amount_type            text,
+    rate_type                   text,
+    rounding_type               text,
+    rounding_places             integer,
+    tax                         money_strict2
+);
+
 DROP FUNCTION IF EXISTS transactions.get_sales_tax
 (
     _tran_book                  national character varying(12),
@@ -7522,7 +7649,7 @@ DROP FUNCTION IF EXISTS transactions.get_sales_tax
     _party_code                 national character varying(12), 
     _shipping_address_code      national character varying(12),
     _price_type_id              integer,
-    _item_id                    national character varying(12),
+    _item_code                  national character varying(12),
     _price                      money_strict2,
     _quantity                   integer_strict2,
     _discount                   money_strict2,
@@ -7537,48 +7664,211 @@ CREATE FUNCTION transactions.get_sales_tax
     _party_code                 national character varying(12), 
     _shipping_address_code      national character varying(12),
     _price_type_id              integer,
-    _item_id                    national character varying(12),
+    _item_code                  national character varying(12),
     _price                      money_strict2,
     _quantity                   integer_strict2,
     _discount                   money_strict2,
     _shipping_charge            money_strict2,
     _sales_tax_id               integer
 )
-RETURNS money_strict2
+RETURNS SETOF transactions.sales_tax_type
 AS
 $$
+    DECLARE _has_nexus              boolean=false;
+    DECLARE _party_id               bigint;
+    DECLARE _state_id               bigint;
+    DECLARE _state_sales_tax_id     integer;
+    DECLARE _state_sales_tax_rate   decimal_strict2;
 BEGIN
+
+    DROP TABLE IF EXISTS temp_sales_tax;
+    
+    CREATE TEMPORARY TABLE temp_sales_tax
+    (
+        id                          SERIAL,
+        sales_tax_detail_id         integer,
+        sales_tax_id                integer,
+        sales_tax_detail_code       text,
+        sales_tax_detail_name       text,
+        is_use_tax                  boolean,
+        account_id                  integer,
+        price                       money_strict,
+        quantity                    integer_strict,
+        discount                    money_strict2,
+        shipping_charge             money_strict2,
+        taxable_amount              money_strict,
+        state_sales_tax_id          integer,
+        county_sales_tax_id         integer,
+        rate                        decimal_strict2,
+        base_amount_type            text,
+        rate_type                   text,
+        rounding_type               text,
+        rounding_places             integer,
+        tax                         money_strict2
+    ) ON COMMIT DROP;
+
     IF(COALESCE(_tran_book, '') = '') THEN
-        RETURN 0;
+        RETURN QUERY SELECT * FROM temp_sales_tax;
     END IF;
 
     IF(COALESCE(_store_id, 0) = 0) THEN
-        RETURN 0;
+        RETURN QUERY SELECT * FROM temp_sales_tax;
     END IF;
 
     IF(COALESCE(_party_code, '') = '') THEN
-        RETURN 0;
+        RETURN QUERY SELECT * FROM temp_sales_tax;
     END IF;
     
     IF(COALESCE(_price, 0) = 0) THEN
-        RETURN 0;
+        RETURN QUERY SELECT * FROM temp_sales_tax;
     END IF;
     
     IF(COALESCE(_quantity, 0) = 0) THEN
-        RETURN 0;
+        RETURN QUERY SELECT * FROM temp_sales_tax;
     END IF;
     
     IF(COALESCE(_sales_tax_id, 0) = 0) THEN
-        RETURN 0;
+        RETURN QUERY SELECT * FROM temp_sales_tax;
     END IF;
 
-    RETURN 100;--Todo;
+    IF(TRIM(COALESCE(_shipping_address_code, '')) = '') THEN
+        _has_nexus                  := false;        
+    ELSE
+        _state_id                   := core.get_state_id_by_shipping_address_code(_party_id, _shipping_address_code);
+        _has_nexus                  := transactions.has_nexus(_state_id);
+    END IF;
+
+    IF(_has_nexus) THEN
+        SELECT 
+            state_sales_tax_id,
+            rate
+        INTO
+            _state_sales_tax_id         
+            _state_sales_tax_rate      
+        FROM
+        core.state_sales_taxes;
+
+    END IF;
+
+    IF(COALESCE(_state_sales_tax_id) = 0) THEN
+        _has_nexus                  := false;
+    END IF;
+    
+
+
+    INSERT INTO temp_sales_tax
+    (
+        sales_tax_detail_id, 
+        sales_tax_id, 
+        sales_tax_detail_code, 
+        sales_tax_detail_name, 
+        price, 
+        quantity, 
+        discount, 
+        shipping_charge, 
+        taxable_amount,
+        is_use_tax,        
+        account_id,
+        state_sales_tax_id,
+        county_sales_tax_id,
+        rate,
+        base_amount_type,
+        rate_type,
+        rounding_type,
+        rounding_places,
+        tax
+
+    )
+    SELECT 
+        sales_tax_detail_id, 
+        sales_tax_id, 
+        sales_tax_detail_code, 
+        sales_tax_detail_name,
+        _price,
+        _quantity,
+        _discount,
+        _shipping_charge,
+
+        (_price * _quantity) 
+        + 
+        CASE 
+            WHEN applied_on_shipping_charge 
+            THEN _shipping_charge 
+        ELSE 0 
+        END
+        - 
+        _discount,
+        CASE 
+            WHEN state_sales_tax_id IS NOT NULL AND based_on_shipping_address AND check_nexus AND _has_nexus
+            THEN true
+            ELSE false
+        END,
+        CASE 
+            WHEN based_on_shipping_address AND check_nexus AND _has_nexus AND use_tax_collecting_account_id IS NOT NULL
+            THEN use_tax_collecting_account_id
+            ELSE collecting_account_id
+        END,
+        CASE 
+            WHEN based_on_shipping_address AND check_nexus AND _has_nexus
+            THEN _state_sales_tax_id
+            ELSE state_sales_tax_id
+        END,
+        county_sales_tax_id,
+        CASE 
+            WHEN state_sales_tax_id IS NOT NULL 
+            THEN 
+                CASE WHEN based_on_shipping_address AND check_nexus AND _has_nexus
+                THEN _state_sales_tax_rate
+                ELSE
+                    core.get_state_sales_tax_rate(state_sales_tax_id)
+                END
+            WHEN county_sales_tax_id IS NOT NULL
+            THEN 
+                core.get_county_sales_tax_rate(county_sales_tax_id)
+            ELSE
+                rate
+        END,
+        tax_base_amount_type_code,
+        tax_rate_type_code,
+        rounding_method_code,
+        rounding_decimal_places,
+        CASE WHEN state_sales_tax_id IS NULL AND county_sales_tax_id IS NULL AND tax_rate_type_code = 'F'
+        THEN
+            rate
+        ELSE
+            NULL
+        END
+    FROM core.sales_tax_details
+    WHERE sales_tax_id=_sales_tax_id;
+
+    UPDATE temp_sales_tax
+    SET tax = 
+    CASE WHEN rounding_type = 'R'
+    THEN ROUND((taxable_amount * rate)/100, rounding_places)
+    WHEN rounding_type = 'F'
+    THEN FLOOR((taxable_amount * rate)/100)
+    WHEN rounding_type = 'C'
+    THEN CEILING((taxable_amount * rate)/100)
+    END;
+
+
+    UPDATE temp_sales_tax
+    SET taxable_amount = taxable_amount + tax
+    WHERE base_amount_type='L';
+    
+    RETURN QUERY SELECT * FROM temp_sales_tax;
 END
 $$
 LANGUAGE plpgsql;
-    
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_sales_tax_id.sql --<--<--
+
+--SELECT *     FROM core.sales_tax_details
+
+
+SELECT * FROM transactions.get_sales_tax('Vertrieb', 1, 'MAJON-0002', '', 1, 'RMBP', 1000, 2, 200, 50, 1);
+
+
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_sales_tax_id.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_sales_tax_id
 (
     _tran_book                  national character varying(12),
@@ -7586,7 +7876,9 @@ DROP FUNCTION IF EXISTS transactions.get_sales_tax_id
     _party_code                 national character varying(12),
     _shipping_address_code      national character varying(12),
     _price_type_id              integer,
-    _item_code                  national character varying(12)    
+    _item_code                  national character varying(12),
+    _unit_id                    integer,
+    _price                      money_strict
 );
 
 CREATE FUNCTION transactions.get_sales_tax_id
@@ -7596,11 +7888,18 @@ CREATE FUNCTION transactions.get_sales_tax_id
     _party_code                 national character varying(12),
     _shipping_address_code      national character varying(12),
     _price_type_id              integer,
-    _item_code                  national character varying(12)    
+    _item_code                  national character varying(12),
+    _unit_id                    integer,--todo
+    _price                      money_strict
 )
 RETURNS integer
 AS
 $$
+    DECLARE _item_id                    integer;
+    DECLARE _party_id                   bigint;
+    DECLARE _value_date                 date;
+    DECLARE _sales_tax_id               integer;
+    DECLARE _item_group_id              integer;
 BEGIN
     IF(COALESCE(_tran_book, '') = '') THEN
         RETURN 0;
@@ -7613,14 +7912,43 @@ BEGIN
     IF(COALESCE(_party_code, '') = '') THEN
         RETURN 0;
     END IF;
+
+    IF(COALESCE(_price, 0) = 0 ) THEN
+        RETURN 0;
+    END IF;
+
+    _item_id        := core.get_item_id_by_item_code(_item_code);
+    _party_id       := core.get_party_id_by_party_code(_party_code);
+    _value_date     := transactions.get_value_date();
+    _item_group_id  := core.get_item_group_id_by_item_id(_item_id);
     
 
-    RETURN 2; --Todo
+    SELECT core.sales_tax_exempts.sales_tax_id INTO _sales_tax_id
+    FROM core.sales_tax_exempts
+    INNER JOIN core.sales_tax_exempt_details
+    ON core.sales_tax_exempt_details.sales_tax_exempt_id = core.sales_tax_exempts.sales_tax_exempt_id
+    WHERE (item_id = _item_id OR item_group_id = _item_group_id)
+    AND store_id = _store_id
+    AND price_from <= _price AND price_to >= _price
+    AND core.sales_tax_exempts.valid_from <= _value_date AND core.sales_tax_exempts.valid_till >= _value_date;
+
+    IF(_sales_tax_id IS NOT NULL) THEN
+        RETURN _sales_tax_id;
+    END IF;
+
+    RETURN
+        sales_tax_id
+    FROM
+        office.stores
+    WHERE store_id=_store_id;    
 END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_top_selling_products_by_office.sql --<--<--
+
+
+
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_top_selling_products_by_office.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_top_selling_products_by_office(_office_id integer, top integer);
 
 CREATE FUNCTION transactions.get_top_selling_products_by_office(_office_id integer, top integer)
@@ -7729,7 +8057,7 @@ LANGUAGE plpgsql;
 --SELECT  id, office_code, item_name, total_sales FROM transactions.get_top_selling_products_by_office()
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_top_selling_products_of_all_time.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_top_selling_products_of_all_time.sql --<--<--
 
 DROP FUNCTION IF EXISTS transactions.get_top_selling_products_of_all_time(top int);
 
@@ -7806,7 +8134,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_total_due.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_total_due.sql --<--<--
 CREATE FUNCTION transactions.get_total_due(office_id integer, party_id bigint)
 RETURNS DECIMAL(24, 4)
 AS
@@ -7856,7 +8184,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_value_date.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_value_date.sql --<--<--
 CREATE FUNCTION transactions.get_value_date()
 RETURNS date
 AS
@@ -7870,7 +8198,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_write_off_cost_of_goods_sold.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_write_off_cost_of_goods_sold.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_write_off_cost_of_goods_sold(_stock_master_id bigint, _item_id integer, _unit_id integer, _quantity integer);
 
 CREATE FUNCTION transactions.get_write_off_cost_of_goods_sold(_stock_master_id bigint, _item_id integer, _unit_id integer, _quantity integer)
@@ -7899,7 +8227,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.post_non_gl_transaction.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.post_non_gl_transaction.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_non_gl_transaction
 (
     _book_name                              national character varying(12),
@@ -8004,7 +8332,7 @@ END;
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.post_purchase.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.post_purchase.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_purchase
 (
     _book_name                              national character varying(12),
@@ -8192,7 +8520,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.post_purchase_return.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.post_purchase_return.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_direct_sales
 (
         _office_id                              integer,
@@ -8465,7 +8793,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.post_purhcase_reorder.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.post_purhcase_reorder.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_purhcase_reorder
 (
         _value_date                             date,
@@ -8604,7 +8932,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.post_receipt_function.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.post_receipt_function.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_receipt_function
 (
     _user_id                integer, 
@@ -8759,7 +9087,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.post_sales.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.post_sales.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_sales
 (
     _book_name                              national character varying(12),
@@ -8985,7 +9313,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.post_sales_return.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.post_sales_return.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_sales_return
 (
     _transaction_master_id          bigint,
@@ -9172,7 +9500,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.post_stock_journal.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.post_stock_journal.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_stock_journal
 (
         _office_id                              integer,
@@ -9315,7 +9643,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.refresh_materialized_views.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.refresh_materialized_views.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.refresh_materialized_views();
 
 CREATE FUNCTION transactions.refresh_materialized_views()
@@ -9330,7 +9658,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.validate_item_for_return.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.validate_item_for_return.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.validate_item_for_return(_transaction_master_id bigint, _store_id integer, _item_code national character varying(12), _unit_name national character varying(50), _quantity integer, _price money_strict);
 
 CREATE FUNCTION transactions.validate_item_for_return(_transaction_master_id bigint, _store_id integer, _item_code national character varying(12), _unit_name national character varying(50), _quantity integer, _price money_strict)
@@ -9484,7 +9812,7 @@ LANGUAGE plpgsql;
 --SELECT * FROM transactions.validate_item_for_return(9, 1, 'RMBP', 'Stück', 1, 180000);
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/triggers/policy.check_menu_policy_trigger.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/triggers/policy.check_menu_policy_trigger.sql --<--<--
 DROP FUNCTION IF EXISTS policy.check_menu_policy_trigger() CASCADE;
 
 
@@ -9521,7 +9849,7 @@ ON policy.menu_policy
 FOR EACH ROW EXECUTE PROCEDURE policy.check_menu_policy_trigger();
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/triggers/transactions.verification_trigger.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/triggers/transactions.verification_trigger.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.verification_trigger() CASCADE;
 CREATE FUNCTION transactions.verification_trigger()
 RETURNS TRIGGER
@@ -9747,7 +10075,7 @@ FOR EACH ROW
 EXECUTE PROCEDURE transactions.verification_trigger();
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.count_item_in_stock.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.count_item_in_stock.sql --<--<--
 CREATE FUNCTION office.count_item_in_stock(item_id_ integer, unit_id_ integer, office_id_ integer)
 RETURNS decimal
 AS
@@ -9806,7 +10134,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.create_user.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.create_user.sql --<--<--
 CREATE FUNCTION office.create_user
 (
     role_id integer_strict,
@@ -9827,7 +10155,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_cash_repository_id_by_cash_repository_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_cash_repository_id_by_cash_repository_code.sql --<--<--
 CREATE FUNCTION office.get_cash_repository_id_by_cash_repository_code(text)
 RETURNS integer
 AS
@@ -9844,7 +10172,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_cash_repository_id_by_cash_repository_name.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_cash_repository_id_by_cash_repository_name.sql --<--<--
 CREATE FUNCTION office.get_cash_repository_id_by_cash_repository_name(text)
 RETURNS integer
 AS
@@ -9862,7 +10190,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_cost_of_good_method.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_cost_of_good_method.sql --<--<--
 DROP FUNCTION IF EXISTS office.get_cost_of_good_method(_office_id integer);
 
 CREATE FUNCTION office.get_cost_of_good_method(_office_id integer)
@@ -9880,7 +10208,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_logged_in_culture.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_logged_in_culture.sql --<--<--
 CREATE FUNCTION office.get_logged_in_culture(_user_id integer)
 RETURNS text
 AS
@@ -9903,7 +10231,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_logged_in_office_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_logged_in_office_id.sql --<--<--
 CREATE FUNCTION office.get_logged_in_office_id(_user_id integer)
 RETURNS integer
 AS
@@ -9926,7 +10254,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_login_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_login_id.sql --<--<--
 CREATE FUNCTION office.get_login_id(_user_id integer)
 RETURNS bigint
 AS
@@ -9949,7 +10277,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_office_code_by_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_office_code_by_id.sql --<--<--
 CREATE FUNCTION office.get_office_code_by_id(office_id integer_strict)
 RETURNS text
 AS
@@ -9965,7 +10293,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_office_id_by_cash_repository_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_office_id_by_cash_repository_id.sql --<--<--
 DROP FUNCTION IF EXISTS office.get_office_id_by_cash_repository_id(integer);
 
 CREATE FUNCTION office.get_office_id_by_cash_repository_id(integer)
@@ -9984,7 +10312,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_office_id_by_office_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_office_id_by_office_code.sql --<--<--
 CREATE FUNCTION office.get_office_id_by_office_code(office_code text)
 RETURNS integer
 AS
@@ -10000,7 +10328,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_office_id_by_store_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_office_id_by_store_id.sql --<--<--
 DROP FUNCTION IF EXISTS office.get_office_id_by_store_id(integer);
 
 CREATE FUNCTION office.get_office_id_by_store_id(integer)
@@ -10018,7 +10346,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_office_id_by_user_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_office_id_by_user_id.sql --<--<--
 CREATE FUNCTION office.get_office_id_by_user_id(user_id integer_strict)
 RETURNS integer
 AS
@@ -10034,7 +10362,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_office_ids.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_office_ids.sql --<--<--
 DROP FUNCTION IF EXISTS office.get_office_ids(root_office_id integer);
 
 CREATE FUNCTION office.get_office_ids(root_office_id integer)
@@ -10059,7 +10387,7 @@ BEGIN
 END
 $$LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_office_name_by_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_office_name_by_id.sql --<--<--
 CREATE FUNCTION office.get_office_name_by_id(office_id integer_strict)
 RETURNS text
 AS
@@ -10075,7 +10403,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_offices.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_offices.sql --<--<--
 CREATE TYPE office.office_type AS
 (
     office_id               integer_strict,
@@ -10108,7 +10436,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_role_code_by_user_name.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_role_code_by_user_name.sql --<--<--
 CREATE FUNCTION office.get_role_code_by_user_name(user_name text)
 RETURNS text
 AS
@@ -10125,7 +10453,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_role_id_by_role_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_role_id_by_role_code.sql --<--<--
 DROP FUNCTION IF EXISTS office.get_role_id_by_role_code(text);
 
 CREATE FUNCTION office.get_role_id_by_role_code(text)
@@ -10142,7 +10470,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_role_id_by_role_name.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_role_id_by_role_name.sql --<--<--
 DROP FUNCTION IF EXISTS office.get_role_id_by_role_name(text);
 
 CREATE FUNCTION office.get_role_id_by_role_name(text)
@@ -10159,7 +10487,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_role_id_by_use_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_role_id_by_use_id.sql --<--<--
 CREATE FUNCTION office.get_role_id_by_use_id(user_id integer_strict)
 RETURNS integer
 AS
@@ -10176,7 +10504,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_store_id_by_store_name.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_store_id_by_store_name.sql --<--<--
 CREATE FUNCTION office.get_store_id_by_store_name(text)
 RETURNS integer
 AS
@@ -10193,7 +10521,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_store_name_by_store_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_store_name_by_store_id.sql --<--<--
 CREATE FUNCTION office.get_store_name_by_store_id(integer)
 RETURNS text
 AS
@@ -10210,7 +10538,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_sys_user_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_sys_user_id.sql --<--<--
 CREATE FUNCTION office.get_sys_user_id()
 RETURNS integer
 AS
@@ -10228,7 +10556,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_user_id_by_user_name.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_user_id_by_user_name.sql --<--<--
 CREATE FUNCTION office.get_user_id_by_user_name(user_name text)
 RETURNS integer
 AS
@@ -10244,7 +10572,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_user_name_by_user_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_user_name_by_user_id.sql --<--<--
 CREATE FUNCTION office.get_user_name_by_user_id(user_id integer)
 RETURNS text
 AS
@@ -10260,7 +10588,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.is_admin.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.is_admin.sql --<--<--
 CREATE FUNCTION office.is_admin(integer)
 RETURNS boolean
 AS
@@ -10278,7 +10606,7 @@ $$
 LANGUAGE PLPGSQL;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.is_parent_office.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.is_parent_office.sql --<--<--
 
 CREATE FUNCTION office.is_parent_office(parent integer_strict, child integer_strict)
 RETURNS boolean
@@ -10323,7 +10651,7 @@ ADD CONSTRAINT offices_check_if_parent_chk
         );
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.is_periodic_inventory.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.is_periodic_inventory.sql --<--<--
 DROP FUNCTION IF EXISTS office.is_periodic_inventory(_office_id integer);
 
 CREATE FUNCTION office.is_periodic_inventory(_office_id integer)
@@ -10346,7 +10674,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.is_sys.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.is_sys.sql --<--<--
 CREATE FUNCTION office.is_sys(integer)
 RETURNS boolean
 AS
@@ -10367,7 +10695,7 @@ LANGUAGE PLPGSQL;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.is_sys_user.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.is_sys_user.sql --<--<--
 CREATE FUNCTION office.is_sys_user(integer)
 RETURNS boolean
 AS
@@ -10392,7 +10720,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.is_valid_office_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.is_valid_office_id.sql --<--<--
 DROP FUNCTION IF EXISTS office.is_valid_office_id(integer);
 
 CREATE FUNCTION office.is_valid_office_id(integer)
@@ -10410,7 +10738,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.validate_login.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.validate_login.sql --<--<--
 CREATE FUNCTION office.validate_login
 (
     user_name text,
@@ -10441,7 +10769,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/policy/policy.is_locked_out_till.sql --<--<--
+-->-->-- /db/src/02. functions and logic/policy/policy.is_locked_out_till.sql --<--<--
 CREATE FUNCTION policy.is_locked_out_till(user_id integer_strict)
 RETURNS TIMESTAMP
 AS
@@ -10458,7 +10786,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/public/explode_array.sql --<--<--
+-->-->-- /db/src/02. functions and logic/public/explode_array.sql --<--<--
 DROP FUNCTION IF EXISTS explode_array(in_array anyarray);
 
 CREATE FUNCTION explode_array(in_array anyarray) 
@@ -10471,7 +10799,7 @@ IMMUTABLE;
 
 --select * from explode_array(ARRAY[ROW(1, 1)::FOO_TYPE,ROW(1, 1)::FOO_TYPE])
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.are_sales_orders_already_merged.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.are_sales_orders_already_merged.sql --<--<--
 CREATE FUNCTION transactions.are_sales_orders_already_merged(VARIADIC arr bigint[])
 RETURNS boolean
 AS
@@ -10494,7 +10822,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.are_sales_quotations_already_merged.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.are_sales_quotations_already_merged.sql --<--<--
 CREATE FUNCTION transactions.are_sales_quotations_already_merged(VARIADIC arr bigint[])
 RETURNS boolean
 AS
@@ -10527,7 +10855,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.get_default_currency_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.get_default_currency_code.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_default_currency_code(cash_repository_id integer);
 
 CREATE FUNCTION transactions.get_default_currency_code(cash_repository_id integer)
@@ -10549,7 +10877,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.get_default_currency_code_by_office_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.get_default_currency_code_by_office_id.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_default_currency_code_by_office_id(office_id integer);
 
 CREATE FUNCTION transactions.get_default_currency_code_by_office_id(office_id integer)
@@ -10569,7 +10897,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.get_exchange_rate.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.get_exchange_rate.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_exchange_rate(office_id integer, currency_code national character varying(12));
 
 CREATE FUNCTION transactions.get_exchange_rate(office_id integer, currency_code national character varying(12))
@@ -10631,7 +10959,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.get_invoice_amount.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.get_invoice_amount.sql --<--<--
 
 CREATE FUNCTION transactions.get_invoice_amount(transaction_master_id_ bigint)
 RETURNS money_strict2
@@ -10660,7 +10988,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.get_new_transaction_counter.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.get_new_transaction_counter.sql --<--<--
 
 /*******************************************************************
     THIS FUNCTION RETURNS A NEW INCREMENTAL COUNTER SUBJECT 
@@ -10688,7 +11016,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.get_stock_master_id_by_transaction_master_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.get_stock_master_id_by_transaction_master_id.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_stock_master_id_by_transaction_master_id(_stock_master_id bigint);
 
 CREATE FUNCTION transactions.get_stock_master_id_by_transaction_master_id(_stock_master_id bigint)
@@ -10706,7 +11034,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.get_transaction_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.get_transaction_code.sql --<--<--
 CREATE FUNCTION transactions.get_transaction_code(value_date date, office_id integer, user_id integer, login_id bigint)
 RETURNS text
 AS
@@ -10723,7 +11051,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.get_transaction_master_id_by_stock_master_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.get_transaction_master_id_by_stock_master_id.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_transaction_master_id_by_stock_master_id(_stock_master_id bigint);
 
 CREATE FUNCTION transactions.get_transaction_master_id_by_stock_master_id(_stock_master_id bigint)
@@ -10741,7 +11069,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.is_purchase.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.is_purchase.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.is_purchase(_transaction_master_id bigint);
 
 CREATE FUNCTION transactions.is_purchase(_transaction_master_id bigint)
@@ -10765,7 +11093,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.is_valid_party_by_stock_master_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.is_valid_party_by_stock_master_id.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.is_valid_party_by_stock_master_id(_stock_master_id bigint, _party_id bigint);
 
 CREATE FUNCTION transactions.is_valid_party_by_stock_master_id(_stock_master_id bigint, _party_id bigint)
@@ -10783,7 +11111,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.is_valid_party_by_transaction_master_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.is_valid_party_by_transaction_master_id.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.is_valid_party_by_transaction_master_id(_transaction_master_id bigint, _party_id bigint);
 
 CREATE FUNCTION transactions.is_valid_party_by_transaction_master_id(_transaction_master_id bigint, _party_id bigint)
@@ -10801,7 +11129,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.is_valid_stock_transaction_by_stock_master_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.is_valid_stock_transaction_by_stock_master_id.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.is_valid_stock_transaction_by_stock_master_id(_stock_master_id bigint);
 
 CREATE FUNCTION transactions.is_valid_stock_transaction_by_stock_master_id(_stock_master_id bigint)
@@ -10819,7 +11147,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.is_valid_stock_transaction_by_transaction_master_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.is_valid_stock_transaction_by_transaction_master_id.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.is_valid_stock_transaction_by_transaction_master_id(_transaction_master_id bigint);
 
 CREATE FUNCTION transactions.is_valid_stock_transaction_by_transaction_master_id(_transaction_master_id bigint)
@@ -10837,7 +11165,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/00. currency, accounts, account-parameters.sql --<--<--
+-->-->-- /db/src/04. default values/00. currency, accounts, account-parameters.sql --<--<--
 ALTER TABLE core.accounts
 ALTER column currency_code DROP NOT NULL;
 
@@ -11098,7 +11426,7 @@ ALTER TABLE core.accounts
 ALTER column currency_code SET NOT NULL;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/00.countries,states,cities.sql --<--<--
+-->-->-- /db/src/04. default values/00.countries,states,cities.sql --<--<--
 INSERT INTO core.countries(country_code, country_name)
 SELECT 'AF', 'Afghanistan' UNION ALL 
 SELECT 'AX', 'Åland Islands' UNION ALL 
@@ -14558,7 +14886,7 @@ INSERT INTO core.counties(county_code, county_name, state_id) VALUES
 ('56043', 'Washakie County', core.get_state_id_by_state_name('Wyoming')),
 ('56045', 'Weston County', core.get_state_id_by_state_name('Wyoming'));
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/crm.lead-sources, lead-statuses, opportunity-stages.sql --<--<--
+-->-->-- /db/src/04. default values/crm.lead-sources, lead-statuses, opportunity-stages.sql --<--<--
 INSERT INTO crm.lead_sources(lead_source_code, lead_source_name)
 SELECT 'AG', 'Agent'                UNION ALL
 SELECT 'CC', 'Cold Call'            UNION ALL
@@ -14585,7 +14913,7 @@ SELECT 'CLW', 'Geschlossene Won'          UNION ALL
 SELECT 'CLL', 'Geschlossen verloren';
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/office, department, roles, users.sql --<--<--
+-->-->-- /db/src/04. default values/office, department, roles, users.sql --<--<--
 
 
 /*******************************************************************
@@ -14642,7 +14970,7 @@ SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='ADM
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/policy, config.sql --<--<--
+-->-->-- /db/src/04. default values/policy, config.sql --<--<--
 INSERT INTO policy.auto_verification_policy
 SELECT 2, true, 0, true, 0, true, 0, '1-1-2010', '1-1-2020', true;
 
@@ -14665,7 +14993,7 @@ WHERE parent_office_id IS NOT NULL;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/salespersons, ageing-slabs, party-types.sql --<--<--
+-->-->-- /db/src/04. default values/salespersons, ageing-slabs, party-types.sql --<--<--
 INSERT INTO core.sales_teams(sales_team_code, sales_team_name)
 SELECT 'DEF', 'Standard'                 UNION ALL
 SELECT 'CST', 'Corporate Sales Team'    UNION ALL
@@ -14695,7 +15023,7 @@ INSERT INTO core.party_types(party_type_code, party_type_name, is_supplier) SELE
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/stores-types,cost-centers.sql --<--<--
+-->-->-- /db/src/04. default values/stores-types,cost-centers.sql --<--<--
 INSERT INTO office.store_types(store_type_code,store_type_name)
 SELECT 'GOD', 'Gar'                              UNION ALL
 SELECT 'SAL', 'Bestellcenter'                        UNION ALL
@@ -14714,7 +15042,7 @@ SELECT 'FIN', 'Finanzen- & -Buchhaltung';
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/tax, item-groups, brands, shipping.sql --<--<--
+-->-->-- /db/src/04. default values/tax, item-groups, brands, shipping.sql --<--<--
 INSERT INTO core.entities(entity_name, is_exempt)
 SELECT 'Federal Government', true;
 
@@ -14866,61 +15194,61 @@ SELECT core.get_county_id_by_county_code('6095'), '6095-STX', 'Solano County Sal
 
 
 
-INSERT INTO core.sales_taxes(tax_master_id, sales_tax_code, sales_tax_name, rate, office_id, is_exemption)
-SELECT 1, office_code || '-STX', office_name || ' Sales Tax', 8.875, office_id, false FROM office.offices WHERE office_code='MoF-NY-BK' UNION ALL
-SELECT 1, office_code || '-EXT', office_name || ' Exempt', 0, office_id, true FROM office.offices WHERE office_code='MoF-NY-BK';
+INSERT INTO core.sales_taxes(tax_master_id, sales_tax_code, sales_tax_name, rate, office_id, is_exemption, tax_base_amount_type_code)
+SELECT 1, office_code || '-STX', office_name || ' Sales Tax', 8.875, office_id, false, 'P' FROM office.offices WHERE office_code='MoF-NY-BK' UNION ALL
+SELECT 1, office_code || '-EXT', office_name || ' Exempt', 0, office_id, true, 'P' FROM office.offices WHERE office_code='MoF-NY-BK';
 
-INSERT INTO core.sales_taxes(tax_master_id, sales_tax_code, sales_tax_name, rate, office_id, is_exemption)
-SELECT 1, office_code || '-STX', office_name || ' Sales Tax', 8.375, office_id, false FROM office.offices WHERE office_code='MoF-NY-RV' UNION ALL
-SELECT 1, office_code || '-EXT', office_name || ' Exempt', 0, office_id, true FROM office.offices WHERE office_code='MoF-NY-RV';
+INSERT INTO core.sales_taxes(tax_master_id, sales_tax_code, sales_tax_name, rate, office_id, is_exemption, tax_base_amount_type_code)
+SELECT 1, office_code || '-STX', office_name || ' Sales Tax', 8.375, office_id, false, 'P' FROM office.offices WHERE office_code='MoF-NY-RV' UNION ALL
+SELECT 1, office_code || '-EXT', office_name || ' Exempt', 0, office_id, true, 'P' FROM office.offices WHERE office_code='MoF-NY-RV';
 
-INSERT INTO core.sales_taxes(tax_master_id, sales_tax_code, sales_tax_name, rate, office_id, is_exemption)
-SELECT 2, office_code || '-STX', office_name || ' Value Added Tax', 13, office_id, false FROM office.offices WHERE office_code='MoF-NP-KTM' UNION ALL
-SELECT 2, office_code || '-EXT', office_name || ' Exempt', 0, office_id, true FROM office.offices WHERE office_code='MoF-NP-KTM';
+INSERT INTO core.sales_taxes(tax_master_id, sales_tax_code, sales_tax_name, rate, office_id, is_exemption, tax_base_amount_type_code)
+SELECT 2, office_code || '-VAT', office_name || ' Value Added Tax', 13, office_id, false, 'P' FROM office.offices WHERE office_code='MoF-NP-KTM' UNION ALL
+SELECT 2, office_code || '-EXT', office_name || ' Exempt', 0, office_id, true, 'P' FROM office.offices WHERE office_code='MoF-NP-KTM';
 
 
 INSERT INTO core.sales_tax_details
 (
     sales_tax_id, sales_tax_detail_code, sales_tax_detail_name, sales_tax_type_id, priority, 
-    based_on_shipping_address, state_sales_tax_id, county_sales_tax_id, tax_base_amount_type_code,  tax_rate_type_code, 
-    rate, reporting_tax_authority_id, collecting_tax_authority_id, collecting_account_id, 
+    based_on_shipping_address, state_sales_tax_id, county_sales_tax_id, tax_rate_type_code, 
+    rate, reporting_tax_authority_id, collecting_tax_authority_id, collecting_account_id, use_tax_collecting_account_id, 
     rounding_method_code, rounding_decimal_places
 )
 
 SELECT 
     1, 'BK-NYC-STX', 'New York State Sales Tax (Brooklyn)', 1, 0,
-    true, (SELECT state_sales_tax_id FROM core.state_sales_taxes WHERE state_id = core.get_state_id_by_state_code('NY')), NULL, 'P', 'P',
-    0, 1, 1, core.get_account_id_by_account_code('20710'),
+    true, (SELECT state_sales_tax_id FROM core.state_sales_taxes WHERE state_id = core.get_state_id_by_state_code('NY')), NULL, 'P',
+    0, 1, 1, core.get_account_id_by_account_code('20710'), core.get_account_id_by_account_code('20710'),
     'R', 2 
 UNION ALL
 SELECT 
     1, 'BK-36047-STX', 'Kings County Sales Tax (Brooklyn)', 1, 1,
-    false, NULL, (SELECT county_sales_tax_id FROM core.county_sales_taxes WHERE county_id = core.get_county_id_by_county_code('36047')), 'P', 'P',
-    0, 1, 1, core.get_account_id_by_account_code('20710'),
+    false, NULL, (SELECT county_sales_tax_id FROM core.county_sales_taxes WHERE county_id = core.get_county_id_by_county_code('36047')), 'P',
+    0, 1, 1, core.get_account_id_by_account_code('20710'), NULL,
     'R', 2 
 UNION ALL
 SELECT 
     3, 'RV-CA-STX', 'California State Sales Tax (Rio Vista)', 1, 0,
-    true, (SELECT state_sales_tax_id FROM core.state_sales_taxes WHERE state_id = core.get_state_id_by_state_code('CA')), NULL, 'P', 'P',
-    0, 1, 1, core.get_account_id_by_account_code('20710'),
+    true, (SELECT state_sales_tax_id FROM core.state_sales_taxes WHERE state_id = core.get_state_id_by_state_code('CA')), NULL, 'P',
+    0, 1, 1, core.get_account_id_by_account_code('20710'), core.get_account_id_by_account_code('20710'),
     'R', 2 
 UNION ALL
 SELECT 
     3, 'RV-6095-STX', 'Solano County Sales Tax (Rio Vista)', 1, 1,
-    false, NULL, (SELECT county_sales_tax_id FROM core.county_sales_taxes WHERE county_id = core.get_county_id_by_county_code('6095')), 'P', 'P',
-    0, 1, 1, core.get_account_id_by_account_code('20710'),
+    false, NULL, (SELECT county_sales_tax_id FROM core.county_sales_taxes WHERE county_id = core.get_county_id_by_county_code('6095')), 'P',
+    0, 1, 1, core.get_account_id_by_account_code('20710'), NULL,
     'R', 2 
 UNION ALL   
 SELECT 
     3, 'RV-STX', 'Rio Vista Sales Tax', 1, 2,
-    false, NULL, NULL, 'P', 'P',
-    0.75, 1, 1, core.get_account_id_by_account_code('20710'),
+    false, NULL, NULL, 'P',
+    0.75, 1, 1, core.get_account_id_by_account_code('20710'), NULL,
     'R', 2
 UNION ALL   
 SELECT 
     5, 'KTM-VAT', 'Kathmandu Value Added Tax', 2, 0,
-    false, NULL, NULL, 'P', 'P',
-    13, 1, 1, core.get_account_id_by_account_code('20710'),
+    false, NULL, NULL, 'P',
+    13, 1, 1, core.get_account_id_by_account_code('20710'), NULL,
     'R', 2;
 
    
@@ -14947,7 +15275,7 @@ SELECT 'IRR',   false,  'Unregelmäßige Verpackung';
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/units.sql --<--<--
+-->-->-- /db/src/04. default values/units.sql --<--<--
 INSERT INTO core.units(unit_code, unit_name)
 SELECT 'PC', 'Stück'        UNION ALL
 SELECT 'FT', 'Füße'         UNION ALL
@@ -14966,7 +15294,7 @@ SELECT core.get_unit_id_by_unit_code('GM'), core.get_unit_id_by_unit_code('KG'),
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/verification-statuses, flag-types, frequencies.sql --<--<--
+-->-->-- /db/src/04. default values/verification-statuses, flag-types, frequencies.sql --<--<--
 --These are hardcoded values and therefore the meanings should always remain intact
 --regardless of the language.
 INSERT INTO core.verification_statuses
@@ -14996,7 +15324,7 @@ SELECT 5, 'EOY', 'Ende des Jahres';
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.account_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.account_scrud_view.sql --<--<--
 CREATE VIEW core.account_scrud_view
 AS
 SELECT
@@ -15018,7 +15346,7 @@ LEFT JOIN core.accounts parent_account
 ON parent_account.account_id=core.accounts.parent_account_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.bonus_slab_detail_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.bonus_slab_detail_scrud_view.sql --<--<--
 CREATE VIEW core.bonus_slab_detail_scrud_view
 AS
 SELECT
@@ -15035,7 +15363,7 @@ WHERE
     core.bonus_slab_details.bonus_slab_id = core.bonus_slabs.bonus_slab_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.bonus_slab_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.bonus_slab_scrud_view.sql --<--<--
 CREATE VIEW core.bonus_slab_scrud_view
 AS
 SELECT
@@ -15050,7 +15378,7 @@ WHERE
 core.bonus_slabs.checking_frequency_id = core.frequencies.frequency_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.brands_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.brands_scrud_view.sql --<--<--
 CREATE VIEW core.brands_scrud_view
 AS
 SELECT 
@@ -15059,7 +15387,7 @@ SELECT
         brand_name
 FROM core.brands;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.compound_item_detail_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.compound_item_detail_scrud_view.sql --<--<--
 CREATE VIEW core.compound_item_detail_scrud_view
 AS
 SELECT
@@ -15076,7 +15404,7 @@ INNER JOIN core.compound_items
 ON core.compound_item_details.compound_item_id = core.compound_items.compound_item_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.compound_items_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.compound_items_scrud_view.sql --<--<--
 CREATE VIEW core.compound_items_scrud_view
 AS
 SELECT 
@@ -15085,7 +15413,7 @@ SELECT
         compound_item_name
 FROM core.compound_items;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.compound_unit_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.compound_unit_scrud_view.sql --<--<--
 CREATE VIEW core.compound_unit_scrud_view
 AS
 SELECT
@@ -15104,7 +15432,7 @@ AND
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.frequency_setup_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.frequency_setup_scrud_view.sql --<--<--
 CREATE VIEW core.frequency_setup_scrud_view
 AS
 SELECT 
@@ -15114,7 +15442,7 @@ SELECT
         core.get_frequency_code_by_frequency_id(frequency_id) AS frequency_code
 FROM core.frequency_setups;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.item_cost_price_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.item_cost_price_scrud_view.sql --<--<--
 DROP VIEW IF EXISTS core.item_cost_price_scrud_view;
 
 CREATE VIEW core.item_cost_price_scrud_view
@@ -15138,7 +15466,7 @@ ON core.item_cost_prices.party_id = core.parties.party_id;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.item_group_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.item_group_scrud_view.sql --<--<--
 CREATE VIEW core.item_group_scrud_view
 AS
 SELECT 
@@ -15156,7 +15484,7 @@ LEFT JOIN core.item_groups AS parent_item_group
 ON core.item_groups.parent_item_group_id = parent_item_group.item_group_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.item_selling_price_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.item_selling_price_scrud_view.sql --<--<--
 DROP VIEW IF EXISTS core.item_selling_price_scrud_view;
 
 CREATE VIEW core.item_selling_price_scrud_view
@@ -15182,7 +15510,7 @@ ON  core.item_selling_prices.party_type_id = core.party_types.party_type_id;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.items_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.items_scrud_view.sql --<--<--
 DROP VIEW IF EXISTS core.items_scrud_view;
 
 CREATE VIEW core.items_scrud_view
@@ -15232,7 +15560,7 @@ LEFT JOIN core.shipping_package_shapes
 ON core.items.shipping_package_shape_id = core.shipping_package_shapes.shipping_package_shape_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.party_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.party_scrud_view.sql --<--<--
 CREATE VIEW core.party_scrud_view
 AS
 SELECT
@@ -15278,7 +15606,7 @@ INNER JOIN core.accounts
 ON core.parties.account_id=core.accounts.account_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.party_types_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.party_types_scrud_view.sql --<--<--
 CREATE VIEW core.party_types_scrud_view
 AS
 SELECT 
@@ -15288,7 +15616,7 @@ SELECT
         is_supplier
 FROM core.party_types;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.sales_teams_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.sales_teams_scrud_view.sql --<--<--
 CREATE VIEW core.sales_teams_scrud_view
 AS
 SELECT 
@@ -15297,7 +15625,7 @@ SELECT
         sales_team_name
 FROM core.sales_teams;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.salesperson_bonus_setup_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.salesperson_bonus_setup_scrud_view.sql --<--<--
 CREATE VIEW core.salesperson_bonus_setup_scrud_view
 AS
 SELECT
@@ -15314,7 +15642,7 @@ AND
     core.salesperson_bonus_setups.bonus_slab_id = core.bonus_slabs.bonus_slab_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.salesperson_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.salesperson_scrud_view.sql --<--<--
 CREATE VIEW core.salesperson_scrud_view
 AS
 SELECT
@@ -15332,7 +15660,7 @@ WHERE
     core.salespersons.account_id = core.accounts.account_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.shippers_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.shippers_scrud_view.sql --<--<--
 CREATE VIEW core.shippers_scrud_view
 AS
 SELECT
@@ -15374,7 +15702,7 @@ ON core.shippers.account_id = core.accounts.account_id;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.shipping_address_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.shipping_address_scrud_view.sql --<--<--
 CREATE VIEW core.shipping_address_scrud_view
 AS
 SELECT
@@ -15394,14 +15722,14 @@ INNER JOIN core.parties
 ON core.shipping_addresses.party_id=core.parties.party_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.tax_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.tax_scrud_view.sql --<--<--
 CREATE VIEW core.tax_scrud_view
 AS
 SELECT
 *
 FROM core.sales_taxes;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.units_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.units_scrud_view.sql --<--<--
 CREATE VIEW core.units_scrud_view
 AS
 SELECT
@@ -15410,7 +15738,7 @@ SELECT
         unit_name
 FROM core.units;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/office/office.cash_repository_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/office/office.cash_repository_scrud_view.sql --<--<--
 CREATE VIEW office.cash_repository_view
 AS
 SELECT
@@ -15428,7 +15756,7 @@ ON
     office.cash_repositories.parent_cash_repository_id=parent_cash_repositories.cash_repository_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/office/office.cost_center_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/office/office.cost_center_scrud_view.sql --<--<--
 CREATE VIEW office.cost_center_scrud_view
 AS
 SELECT
@@ -15439,7 +15767,7 @@ FROM
     office.cost_centers;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/policy/policy.auto_verification_policy_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/policy/policy.auto_verification_policy_scrud_view.sql --<--<--
 CREATE VIEW policy.auto_verification_policy_scrud_view
 AS
 SELECT
@@ -15460,7 +15788,7 @@ ON policy.auto_verification_policy.user_id=office.users.user_id;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/policy/policy.voucher_verification_policy_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/policy/policy.voucher_verification_policy_scrud_view.sql --<--<--
 CREATE VIEW policy.voucher_verification_policy_scrud_view
 AS
 SELECT
@@ -15484,14 +15812,14 @@ ON policy.voucher_verification_policy.user_id=office.users.user_id;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.account_master_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.account_master_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.account_master_selector_view;
 
 CREATE VIEW core.account_master_selector_view
 AS
 SELECT * FROM core.account_masters;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.account_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.account_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.account_selector_view;
 
 CREATE VIEW core.account_selector_view
@@ -15516,42 +15844,42 @@ FROM
     ON core.accounts.parent_account_id = parent_accounts.account_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.bonus_slab_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.bonus_slab_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.bonus_slab_selector_view;
 
 CREATE VIEW core.bonus_slab_selector_view
 AS
 SELECT * FROM core.bonus_slabs;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.brand_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.brand_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.brand_selector_view;
 
 CREATE VIEW core.brand_selector_view
 AS
 SELECT * FROM core.brands;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.compound_item_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.compound_item_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.compound_item_selector_view;
 
 CREATE VIEW core.compound_item_selector_view
 AS
 SELECT * FROM core.compound_items;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.currency_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.currency_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.currency_selector_view;
 
 CREATE VIEW core.currency_selector_view
 AS
 SELECT * FROM core.currencies;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.fiscal_year_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.fiscal_year_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.fiscal_year_selector_view;
 
 CREATE VIEW core.fiscal_year_selector_view
 AS
 SELECT * FROM core.fiscal_year;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.frequency_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.frequency_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.frequency_selector_view;
 
 CREATE VIEW core.frequency_selector_view
@@ -15559,21 +15887,21 @@ AS
 SELECT * FROM core.frequencies;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.item_group_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.item_group_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.item_group_selector_view;
 
 CREATE VIEW core.item_group_selector_view
 AS
 SELECT * FROM core.item_groups;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.item_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.item_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.item_selector_view;
 
 CREATE VIEW core.item_selector_view
 AS
 SELECT * FROM core.items;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.party_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.party_selector_view.sql --<--<--
 CREATE VIEW core.party_selector_view
 AS
 SELECT
@@ -15619,21 +15947,21 @@ INNER JOIN core.accounts
 ON core.parties.account_id=core.accounts.account_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.party_type_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.party_type_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.party_type_selector_view;
 
 CREATE VIEW core.party_type_selector_view
 AS
 SELECT * FROM core.party_types;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.price_type_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.price_type_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.price_type_selector_view;
 
 CREATE VIEW core.price_type_selector_view
 AS
 SELECT * FROM core.price_types;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.sales_team_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.sales_team_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.sales_team_selector_view;
 
 CREATE VIEW core.sales_team_selector_view
@@ -15641,7 +15969,7 @@ AS
 SELECT * FROM core.sales_teams;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.salesperson_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.salesperson_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.salesperson_selector_view;
 
 CREATE VIEW core.salesperson_selector_view
@@ -15662,21 +15990,21 @@ WHERE
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.shipping_mail_type_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.shipping_mail_type_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.shipping_mail_type_selector_view;
 
 CREATE VIEW core.shipping_mail_type_selector_view
 AS
 SELECT * FROM core.shipping_mail_types;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.shipping_package_shape_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.shipping_package_shape_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.shipping_package_shape_selector_view;
 
 CREATE VIEW core.shipping_package_shape_selector_view
 AS
 SELECT * FROM core.shipping_package_shapes;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.supplier_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.supplier_selector_view.sql --<--<--
 CREATE VIEW core.supplier_selector_view
 AS
 SELECT * FROM core.parties
@@ -15687,7 +16015,7 @@ WHERE party_type_id IN
 );
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.tax_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.tax_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.tax_selector_view;
 
 CREATE VIEW core.tax_selector_view
@@ -15695,7 +16023,7 @@ AS
 SELECT * FROM core.sales_taxes;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.tax_type_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.tax_type_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.tax_type_selector_view;
 
 CREATE VIEW core.tax_type_selector_view
@@ -15703,14 +16031,14 @@ AS
 SELECT * FROM core.sales_tax_types;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.unit_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.unit_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.unit_selector_view;
 
 CREATE VIEW core.unit_selector_view
 AS
 SELECT * FROM core.units;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/office/office.cash_repository_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/office/office.cash_repository_selector_view.sql --<--<--
 DROP VIEW IF EXISTS office.cash_repository_selector_view;
 
 CREATE VIEW office.cash_repository_selector_view
@@ -15731,7 +16059,7 @@ ON
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/office/office.office_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/office/office.office_selector_view.sql --<--<--
 DROP VIEW IF EXISTS office.office_selector_view;
 
 CREATE VIEW office.office_selector_view
@@ -15739,7 +16067,7 @@ AS
 SELECT * FROM office.offices;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/office/office.store_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/office/office.store_selector_view.sql --<--<--
 DROP VIEW IF EXISTS office.store_selector_view;
 
 CREATE VIEW office.store_selector_view
@@ -15748,7 +16076,7 @@ SELECT * FROM office.stores;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/office/office.store_type_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/office/office.store_type_selector_view.sql --<--<--
 DROP VIEW IF EXISTS office.store_type_selector_view;
 
 CREATE VIEW office.store_type_selector_view
@@ -15757,7 +16085,7 @@ SELECT * FROM office.store_types;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/office/office.user_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/office/office.user_selector_view.sql --<--<--
 DROP VIEW IF EXISTS office.user_selector_view;
 
 CREATE VIEW office.user_selector_view
@@ -15776,7 +16104,7 @@ INNER JOIN office.offices
 ON office.users.office_id = office.offices.office_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/core/core.account_view.sql --<--<--
+-->-->-- /db/src/05. views/core/core.account_view.sql --<--<--
 CREATE VIEW core.account_view
 AS
 SELECT
@@ -15802,7 +16130,7 @@ FROM
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/core/core.bank_account_view.sql --<--<--
+-->-->-- /db/src/05. views/core/core.bank_account_view.sql --<--<--
 CREATE VIEW core.bank_account_view
 AS
 SELECT
@@ -15824,14 +16152,14 @@ INNER JOIN office.users ON core.bank_accounts.maintained_by_user_id = office.use
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/core/core.item_view.sql --<--<--
+-->-->-- /db/src/05. views/core/core.item_view.sql --<--<--
 --TODO
 CREATE VIEW core.item_view
 AS
 SELECT * FROM core.items;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/core/core.party_user_control_view.sql --<--<--
+-->-->-- /db/src/05. views/core/core.party_user_control_view.sql --<--<--
 CREATE VIEW core.party_user_control_view
 AS
 SELECT
@@ -15863,7 +16191,7 @@ ON core.parties.account_id = core.accounts.account_id;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/core/core.party_view.sql --<--<--
+-->-->-- /db/src/05. views/core/core.party_view.sql --<--<--
 CREATE VIEW core.party_view
 AS
 SELECT
@@ -15909,7 +16237,7 @@ INNER JOIN core.accounts
 ON core.parties.account_id=core.accounts.account_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/core/core.shipping_address_view.sql --<--<--
+-->-->-- /db/src/05. views/core/core.shipping_address_view.sql --<--<--
 CREATE VIEW core.shipping_address_view
 AS
 SELECT
@@ -15930,7 +16258,7 @@ ON core.shipping_addresses.party_id=core.parties.party_id;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/core/core.supplier_view.sql --<--<--
+-->-->-- /db/src/05. views/core/core.supplier_view.sql --<--<--
 CREATE VIEW core.supplier_view
 AS
 SELECT * FROM core.parties
@@ -15940,7 +16268,7 @@ WHERE party_type_id IN
         WHERE is_supplier=true
 );
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/core/core.unit_view.sql --<--<--
+-->-->-- /db/src/05. views/core/core.unit_view.sql --<--<--
 --TODO
 CREATE VIEW core.unit_view
 AS
@@ -15948,14 +16276,14 @@ SELECT * FROM core.units;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/office/office.office_view.sql --<--<--
+-->-->-- /db/src/05. views/office/office.office_view.sql --<--<--
 --TODO
 CREATE VIEW office.office_view
 AS
 SELECT * FROM office.offices;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/office/office.role_view.sql --<--<--
+-->-->-- /db/src/05. views/office/office.role_view.sql --<--<--
 CREATE OR REPLACE VIEW office.role_view
 AS
 SELECT 
@@ -15966,7 +16294,7 @@ FROM
   office.roles;
    
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/office/office.sign_in_view.sql --<--<--
+-->-->-- /db/src/05. views/office/office.sign_in_view.sql --<--<--
 CREATE VIEW office.sign_in_view
 AS
 SELECT
@@ -16014,14 +16342,14 @@ ON
     logged_in_office.office_id = office.get_logged_in_office_id(office.users.user_id);
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/office/office.store_view.sql --<--<--
+-->-->-- /db/src/05. views/office/office.store_view.sql --<--<--
 --TODO
 CREATE VIEW office.store_view
 AS
 SELECT * FROM office.stores;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/office/office.user_view.sql --<--<--
+-->-->-- /db/src/05. views/office/office.user_view.sql --<--<--
 CREATE VIEW office.user_view
 AS
 SELECT
@@ -16039,7 +16367,7 @@ ON office.users.office_id = office.offices.office_id;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/office/office.work_center_view.sql --<--<--
+-->-->-- /db/src/05. views/office/office.work_center_view.sql --<--<--
 CREATE VIEW office.work_center_view
 AS
 SELECT
@@ -16052,7 +16380,7 @@ INNER JOIN office.offices
 ON office.work_centers.office_id = office.offices.office_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/public.dbstat.sql --<--<--
+-->-->-- /db/src/05. views/public.dbstat.sql --<--<--
 DROP VIEW IF EXISTS db_stat;
 
 CREATE VIEW db_stat
@@ -16071,7 +16399,7 @@ FROM
    pg_stat_user_tables;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/transactions/1. transactions.transaction_view.sql --<--<--
+-->-->-- /db/src/05. views/transactions/1. transactions.transaction_view.sql --<--<--
 DROP VIEW IF EXISTS transactions.transaction_view;
 CREATE VIEW transactions.transaction_view
 AS
@@ -16108,7 +16436,7 @@ INNER JOIN transactions.transaction_details
 ON transactions.transaction_master.transaction_master_id = transactions.transaction_details.transaction_master_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/transactions/2. transactions.verified_transaction_view.sql --<--<--
+-->-->-- /db/src/05. views/transactions/2. transactions.verified_transaction_view.sql --<--<--
 
 DROP VIEW IF EXISTS transactions.verified_transaction_view CASCADE;
 
@@ -16118,7 +16446,7 @@ SELECT * FROM transactions.transaction_view
 WHERE verification_status_id > 0;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/transactions/3. transactions.trial_balance_view.sql --<--<--
+-->-->-- /db/src/05. views/transactions/3. transactions.trial_balance_view.sql --<--<--
 DROP MATERIALIZED VIEW IF EXISTS transactions.trial_balance_view;
 CREATE MATERIALIZED VIEW transactions.trial_balance_view
 AS
@@ -16129,7 +16457,7 @@ FROM transactions.verified_transaction_view
 GROUP BY account_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/transactions/4. transactions.stock_transaction_view.sql --<--<--
+-->-->-- /db/src/05. views/transactions/4. transactions.stock_transaction_view.sql --<--<--
 DROP VIEW IF EXISTS transactions.stock_transaction_view;
 
 CREATE VIEW transactions.stock_transaction_view
@@ -16182,7 +16510,7 @@ ON transactions.transaction_master.transaction_master_id = transactions.stock_ma
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/transactions/5. transactions.verified_stock_transaction_view.sql --<--<--
+-->-->-- /db/src/05. views/transactions/5. transactions.verified_stock_transaction_view.sql --<--<--
 DROP MATERIALIZED VIEW IF EXISTS transactions.verified_stock_transaction_view;
 
 CREATE MATERIALIZED VIEW transactions.verified_stock_transaction_view
@@ -16191,7 +16519,7 @@ SELECT * FROM transactions.stock_transaction_view
 WHERE verification_status_id > 0;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/transactions/transactions.verified_stock_details_view.sql --<--<--
+-->-->-- /db/src/05. views/transactions/transactions.verified_stock_details_view.sql --<--<--
 DROP VIEW IF EXISTS transactions.verified_stock_details_view;
 
 CREATE VIEW transactions.verified_stock_details_view
@@ -16206,7 +16534,7 @@ AND transactions.transaction_master.verification_status_id > 0;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/06. sample-data/exchange-rates.sql --<--<--
+-->-->-- /db/src/06. sample-data/exchange-rates.sql --<--<--
 INSERT INTO core.exchange_rates(office_id)
 SELECT 1;
 
@@ -16236,7 +16564,7 @@ SELECT 3, 'NPR', 'INR', 1, 1.6;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/06. sample-data/menus.sql --<--<--
+-->-->-- /db/src/06. sample-data/menus.sql --<--<--
 
 INSERT INTO core.menus(menu_text, url, menu_code, level)
 SELECT 'Vertrieb', '~/Modules/Sales/Index.mix', 'SA', 0 UNION ALL
@@ -16533,7 +16861,7 @@ SELECT core.get_menu_id('NEW'), 'fr', 'nouvelle entreprise';
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/06. sample-data/price-types.sql --<--<--
+-->-->-- /db/src/06. sample-data/price-types.sql --<--<--
 
 INSERT INTO core.price_types(price_type_code, price_type_name)
 SELECT 'RET', 'Retail'      UNION ALL
@@ -16541,7 +16869,7 @@ SELECT 'WHO', 'Wholesale';
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/10. triggers/core/core.disable_editing_sys_type.sql --<--<--
+-->-->-- /db/src/10. triggers/core/core.disable_editing_sys_type.sql --<--<--
 CREATE FUNCTION core.disable_editing_sys_type()
 RETURNS TRIGGER
 AS
@@ -16591,7 +16919,7 @@ FOR EACH ROW EXECUTE PROCEDURE core.disable_editing_sys_type();
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/10. triggers/core/core.items_unit_check_trigger.sql --<--<--
+-->-->-- /db/src/10. triggers/core/core.items_unit_check_trigger.sql --<--<--
 DROP FUNCTION IF EXISTS core.items_unit_check_trigger() CASCADE;
 
 CREATE FUNCTION core.items_unit_check_trigger()
@@ -16612,7 +16940,7 @@ AFTER INSERT OR UPDATE
 ON core.items
 FOR EACH ROW EXECUTE PROCEDURE core.items_unit_check_trigger();
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/10. triggers/core/core.party_after_insert_trigger.sql --<--<--
+-->-->-- /db/src/10. triggers/core/core.party_after_insert_trigger.sql --<--<--
 CREATE FUNCTION core.party_after_insert_trigger()
 RETURNS TRIGGER
 AS
@@ -16658,7 +16986,7 @@ AFTER INSERT
 ON core.parties
 FOR EACH ROW EXECUTE PROCEDURE core.party_after_insert_trigger();
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/10. triggers/core/core.party_before_update_trigger.sql --<--<--
+-->-->-- /db/src/10. triggers/core/core.party_before_update_trigger.sql --<--<--
 CREATE FUNCTION core.party_before_update_trigger()
 RETURNS TRIGGER
 AS
@@ -16690,7 +17018,7 @@ FOR EACH ROW EXECUTE PROCEDURE core.party_before_update_trigger();
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/10. triggers/core/core.shippers_after_insert_trigger.sql --<--<--
+-->-->-- /db/src/10. triggers/core/core.shippers_after_insert_trigger.sql --<--<--
 CREATE FUNCTION core.shippers_after_insert_trigger()
 RETURNS trigger
 AS
@@ -16712,7 +17040,7 @@ ON core.shippers
 FOR EACH ROW EXECUTE PROCEDURE core.shippers_after_insert_trigger();
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/10. triggers/core/core.update_shipping_address_code_trigger.sql --<--<--
+-->-->-- /db/src/10. triggers/core/core.update_shipping_address_code_trigger.sql --<--<--
 CREATE FUNCTION core.update_shipping_address_code_trigger()
 RETURNS TRIGGER
 AS
@@ -16742,7 +17070,7 @@ FOR EACH ROW EXECUTE PROCEDURE core.update_shipping_address_code_trigger();
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/10. triggers/policy/policy.perform_lock_out.sql --<--<--
+-->-->-- /db/src/10. triggers/policy/policy.perform_lock_out.sql --<--<--
 --TODO: Create a lockout policy.
 CREATE FUNCTION policy.perform_lock_out()
 RETURNS TRIGGER
@@ -16771,7 +17099,7 @@ FOR EACH ROW EXECUTE PROCEDURE policy.perform_lock_out();
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/10. triggers/transactions/transactions.restrict_delete_trigger.sql --<--<--
+-->-->-- /db/src/10. triggers/transactions/transactions.restrict_delete_trigger.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.restrict_delete_trigger() CASCADE;
 CREATE FUNCTION transactions.restrict_delete_trigger()
 RETURNS TRIGGER
@@ -16808,7 +17136,7 @@ EXECUTE PROCEDURE transactions.restrict_delete_trigger();
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/10. triggers/transactions/transactions.verify_stock_master_integrity_trigger.sql --<--<--
+-->-->-- /db/src/10. triggers/transactions/transactions.verify_stock_master_integrity_trigger.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.verify_stock_master_integrity_trigger() CASCADE;
 
 CREATE FUNCTION transactions.verify_stock_master_integrity_trigger()
@@ -16853,7 +17181,7 @@ EXECUTE PROCEDURE transactions.verify_stock_master_integrity_trigger();
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/11. sample-data/party-sample.sql --<--<--
+-->-->-- /db/src/11. sample-data/party-sample.sql --<--<--
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
@@ -17968,7 +18296,7 @@ SET
 WHERE core.parties.party_id=party_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/11. sample-data/sample-data.sql --<--<--
+-->-->-- /db/src/11. sample-data/sample-data.sql --<--<--
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
@@ -18036,11 +18364,14 @@ SELECT 'MIX',   'MixERP Community Edition',             core.get_item_group_id_b
 SELECT 'SFIX',  'SFIX Financial Edition',               core.get_item_group_id_by_item_group_code('SFT'), 1,                                            1,  1, true,    1,  0,      false,   40000,     40000,  1, 0    UNION ALL
 SELECT 'SGT',   'Samsung Galaxy Tab 10.1',              core.get_item_group_id_by_item_group_code('LPT'), core.get_brand_id_by_brand_code('SNG'),       6,  1, false,   1,  10,     true,    30000,     45000,  1, 20;
 
-INSERT INTO office.stores(office_id, store_code, store_name, address, store_type_id, allow_sales)
-SELECT 2, 'STORE-1', 'Store 1',     'Office', 2, true       UNION ALL
-SELECT 2, 'GODOW-1', 'Godown 1',    'Office', 1, false      UNION ALL
-SELECT 3, 'STORE-2', 'Store 2',     'Office', 2, true       UNION ALL
-SELECT 3, 'GODOW-2', 'Godown 2',    'Office', 1, false;
+INSERT INTO office.stores(office_id, store_code, store_name, address, store_type_id, allow_sales, sales_tax_id)
+SELECT 2, 'STORE-1', 'Store 1',     'Office', 2, true,  1     UNION ALL
+SELECT 2, 'GODOW-1', 'Godown 1',    'Office', 1, false, 1     UNION ALL
+SELECT 3, 'STORE-2', 'Store 2',     'Office', 2, true,  3     UNION ALL
+SELECT 3, 'GODOW-2', 'Godown 2',    'Office', 1, false, 3     UNION ALL
+SELECT 4, 'STORE-3', 'Store 3',     'Office', 2, true,  5     UNION ALL
+SELECT 4, 'GODOW-3', 'Godown 3',    'Office', 1, false, 5;
+
 
 INSERT INTO office.cash_repositories(office_id, cash_repository_code, cash_repository_name, description)
 SELECT 2, 'DRW1',   'Drawer 1',     'Drawer'    UNION ALL
@@ -18051,7 +18382,7 @@ SELECT 3, 'VLT2',   'Vault 2',      'Vault';
 INSERT INTO core.shippers(company_name, account_id)
 SELECT 'Standard', core.get_account_id_by_account_code('20110');
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/12. plpgunit-tests/core/parties/unit_tests.check_party_currency_code_mismatch.sql --<--<--
+-->-->-- /db/src/12. plpgunit-tests/core/parties/unit_tests.check_party_currency_code_mismatch.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.check_party_currency_code_mismatch();
 
 CREATE FUNCTION unit_tests.check_party_currency_code_mismatch()
@@ -18080,7 +18411,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/12. plpgunit-tests/core/parties/unit_tests.check_party_null_account_id.sql --<--<--
+-->-->-- /db/src/12. plpgunit-tests/core/parties/unit_tests.check_party_null_account_id.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.check_party_null_account_id();
 
 CREATE FUNCTION unit_tests.check_party_null_account_id()
@@ -18107,7 +18438,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/12. plpgunit-tests/core/parties/unit_tests.test_transactions_post_receipt_function.sql --<--<--
+-->-->-- /db/src/12. plpgunit-tests/core/parties/unit_tests.test_transactions_post_receipt_function.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.test_transactions_post_receipt_function();
 
 CREATE FUNCTION unit_tests.test_transactions_post_receipt_function()
@@ -18188,7 +18519,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/12. plpgunit-tests/others/unit_tests.if_functions_compile.sql --<--<--
+-->-->-- /db/src/12. plpgunit-tests/others/unit_tests.if_functions_compile.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.if_functions_compile();
 
 CREATE FUNCTION unit_tests.if_functions_compile()
@@ -18222,7 +18553,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/12. plpgunit-tests/others/unit_tests.if_views_compile.sql --<--<--
+-->-->-- /db/src/12. plpgunit-tests/others/unit_tests.if_views_compile.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.if_views_compile();
 
 CREATE FUNCTION unit_tests.if_views_compile()
@@ -18257,7 +18588,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/12. plpgunit-tests-mock/unit_tests.create_dummy_accounts.sql --<--<--
+-->-->-- /db/src/12. plpgunit-tests-mock/unit_tests.create_dummy_accounts.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.create_dummy_accounts();
 
 CREATE FUNCTION unit_tests.create_dummy_accounts()
@@ -18295,7 +18626,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/12. plpgunit-tests-mock/unit_tests.create_dummy_auto_verification_policy.sql --<--<--
+-->-->-- /db/src/12. plpgunit-tests-mock/unit_tests.create_dummy_auto_verification_policy.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.create_dummy_auto_verification_policy
 (
         _user_id integer, 
@@ -18350,7 +18681,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/12. plpgunit-tests-mock/unit_tests.create_dummy_office.sql --<--<--
+-->-->-- /db/src/12. plpgunit-tests-mock/unit_tests.create_dummy_office.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.create_dummy_office();
 
 CREATE FUNCTION unit_tests.create_dummy_office()
@@ -18370,7 +18701,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/12. plpgunit-tests-mock/unit_tests.create_dummy_users.sql --<--<--
+-->-->-- /db/src/12. plpgunit-tests-mock/unit_tests.create_dummy_users.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.create_dummy_users();
 
 CREATE FUNCTION unit_tests.create_dummy_users()
@@ -18387,7 +18718,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/13. triggers/audit-all-tables.sql --<--<--
+-->-->-- /db/src/13. triggers/audit-all-tables.sql --<--<--
 DO
 $$
         DECLARE sql text;
@@ -18409,7 +18740,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/14. constraints/core.sql --<--<--
+-->-->-- /db/src/14. constraints/core.sql --<--<--
 ALTER TABLE core.items
 DROP CONSTRAINT IF EXISTS items_preferred_supplier_id_chk;
 
@@ -18459,7 +18790,7 @@ core.convert_unit(reorder_unit_id, unit_id) * reorder_quantity >= reorder_level
 );
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/14. constraints/transactions.sql --<--<--
+-->-->-- /db/src/14. constraints/transactions.sql --<--<--
 
 ALTER TABLE transactions.stock_details
 DROP CONSTRAINT IF EXISTS stock_details_unit_chk;
@@ -18484,7 +18815,7 @@ ADD CONSTRAINT transaction_master_sys_user_id_chk
 CHECK(sys_user_id IS NULL OR office.is_sys_user(sys_user_id)=true);
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/dump.sql --<--<--
+-->-->-- /db/src/dump.sql --<--<--
 --
 -- PostgreSQL database dump
 --
@@ -18780,5 +19111,5 @@ SELECT pg_catalog.setval('transaction_master_transaction_master_id_seq', 8, true
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/refresh-materialized-views.sql --<--<--
+-->-->-- /db/src/refresh-materialized-views.sql --<--<--
 SELECT * FROM transactions.refresh_materialized_views();

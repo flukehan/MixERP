@@ -206,7 +206,6 @@ function itemSelect_OnBlur() {
     itemCodeInputText.val(itemSelect.getSelectedValue());
     loadUnits();
     getPrice();
-    getDefaultSalesTax();
 };
 
 function processCallBackActions() {
@@ -287,6 +286,7 @@ cashRepositorySelect.change(function () {
 discountInputText.blur(function () {
     updateTax();
     calculateAmount();
+    getDefaultSalesTax();
 });
 
 itemCodeInputText.blur(function () {
@@ -364,8 +364,10 @@ function getDefaultSalesTax() {
     var shippingAddressCode = shippingAddressSelect.getSelectedText();
     var priceTypeId = parseInt2(priceTypeSelect.getSelectedValue());
     var itemCode = itemCodeInputText.val();
+    var unitId = parseInt2(unitSelect.getSelectedValue());
+    var price = parseFloat2(priceInputText.val()) - parseFloat2(discountInputText.val());
 
-    var ajaxGetDefaultSalesTaxId = getDefaultSalesTaxId(tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode);
+    var ajaxGetDefaultSalesTaxId = getDefaultSalesTaxId(tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode, unitId, price);
 
     ajaxGetDefaultSalesTaxId.success(function (msg) {
         var result = parseInt2(msg.d);
@@ -886,7 +888,7 @@ var countItemInStockByUnitName = function (itemCode, unitName, storeId) {
     return getAjax(url, data);
 };
 
-var getDefaultSalesTaxId = function (tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode) {
+var getDefaultSalesTaxId = function (tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode, unitId, price) {
     url = "/Modules/BackOffice/Services/TaxData.asmx/GetSalesTaxId";
     data = appendParameter("", "tranBook", tranBook);
     data = appendParameter(data, "storeId", storeId);
@@ -894,6 +896,8 @@ var getDefaultSalesTaxId = function (tranBook, storeId, partyCode, shippingAddre
     data = appendParameter(data, "shippingAddressCode", shippingAddressCode);
     data = appendParameter(data, "priceTypeId", priceTypeId);
     data = appendParameter(data, "itemCode", itemCode);
+    data = appendParameter(data, "unitId", unitId);
+    data = appendParameter(data, "price", price);
 
     data = getData(data);
 

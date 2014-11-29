@@ -573,4 +573,13 @@
   <data name="country_name" xml:space="preserve">
     <value>Country Name</value>
   </data>
+  <data name="applied_on_shipping_charge" xml:space="preserve">
+    <value>Applied on Shipping Charge</value>
+  </data>
+  <data name="check_nexus" xml:space="preserve">
+    <value>Check Nexus</value>
+  </data>
+  <data name="use_tax_collecting_account_id" xml:space="preserve">
+    <value>Use Tax Collecting Account Id</value>
+  </data>
 </root>
