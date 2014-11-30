@@ -502,6 +502,24 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Entity Id.
+        /// </summary>
+        internal static string entity_id {
+            get {
+                return ResourceManager.GetString("entity_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Entity Name.
+        /// </summary>
+        internal static string entity_name {
+            get {
+                return ResourceManager.GetString("entity_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Entry Ts.
         /// </summary>
         internal static string entry_ts {
@@ -624,6 +642,24 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         internal static string includes_tax {
             get {
                 return ResourceManager.GetString("includes_tax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Industry Id.
+        /// </summary>
+        internal static string industry_id {
+            get {
+                return ResourceManager.GetString("industry_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Industry Name.
+        /// </summary>
+        internal static string industry_name {
+            get {
+                return ResourceManager.GetString("industry_name", resourceCulture);
             }
         }
         
@@ -880,6 +916,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Parent Industry Id.
+        /// </summary>
+        internal static string parent_industry_id {
+            get {
+                return ResourceManager.GetString("parent_industry_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parent Item Group Id.
         /// </summary>
         internal static string parent_item_group_id {
@@ -1092,6 +1137,24 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         internal static string reorder_unit_id {
             get {
                 return ResourceManager.GetString("reorder_unit_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sales Tax.
+        /// </summary>
+        internal static string sales_tax {
+            get {
+                return ResourceManager.GetString("sales_tax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sales Tax Id.
+        /// </summary>
+        internal static string sales_tax_id {
+            get {
+                return ResourceManager.GetString("sales_tax_id", resourceCulture);
             }
         }
         

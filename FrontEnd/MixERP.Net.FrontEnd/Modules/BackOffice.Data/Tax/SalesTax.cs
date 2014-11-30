@@ -21,7 +21,6 @@ using MixERP.Net.Common;
 using MixERP.Net.DBFactory;
 using Npgsql;
 using System.Data;
-using System.Globalization;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Data.Tax
 {
@@ -48,9 +47,25 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.Tax
             }
         }
 
-        public static DataTable GetSalesTaxes(int officeId)
+        public static DataTable GetSalesTaxes(int officeId, string tranBook)
         {
-            return FormHelper.GetTable("core", "sales_taxes", "office_id", officeId.ToString(CultureInfo.InvariantCulture), "sales_tax_id");
+            string sql = string.Empty;
+
+            if (tranBook.ToUpperInvariant().Equals("SALES"))
+            {
+                sql = "SELECT * FROM core.sales_taxes WHERE office_id=@OfficeId;";
+            }
+            else
+            {
+                sql = "SELECT * FROM core.sales_taxes WHERE sales_tax_id IN (SELECT sales_tax_id FROM core.sales_tax_details INNER JOIN core.sales_tax_types ON core.sales_tax_details.sales_tax_type_id = core.sales_tax_types.sales_tax_type_id AND core.sales_tax_types.is_vat=true) AND office_id=@OfficeId;";
+            }
+
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                command.Parameters.AddWithValue("@OfficeId", officeId);
+
+                return DbOperations.GetDataTable(command);
+            }
         }
 
         public static int GetSalesTaxId(string tranBook, int storeId, string partyCode, string shippingAddressCode, int priceTypeId, string itemCode, int unitId, decimal price)

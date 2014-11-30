@@ -26,31 +26,6 @@ namespace MixERP.Net.WebControls.StockTransactionFactory.Helpers
 {
     public static class CollectionHelper
     {
-        public static Collection<StockMasterDetailModel> GetStockMasterDetailCollection(string json, int storeId)
-        {
-            Collection<StockMasterDetailModel> details = new Collection<StockMasterDetailModel>();
-            var jss = new JavaScriptSerializer();
-
-            dynamic result = jss.Deserialize<dynamic>(json);
-
-            foreach (var item in result)
-            {
-                StockMasterDetailModel detail = new StockMasterDetailModel();
-                detail.ItemCode = item[0];
-                detail.Quantity = Conversion.TryCastInteger(item[2]);
-                detail.UnitName = item[3];
-                detail.Price = Conversion.TryCastDecimal(item[4]);
-                detail.Discount = Conversion.TryCastDecimal(item[6]);
-                detail.TaxRate = Conversion.TryCastDecimal(item[8]);
-                detail.Tax = Conversion.TryCastDecimal(item[9]);
-                detail.StoreId = storeId;
-
-                details.Add(detail);
-            }
-
-            return details;
-        }
-
         public static Collection<JournalDetailsModel> GetJournalDetailCollection(string json)
         {
             Collection<JournalDetailsModel> details = new Collection<JournalDetailsModel>();
@@ -71,6 +46,32 @@ namespace MixERP.Net.WebControls.StockTransactionFactory.Helpers
                 detail.ExchangeRate = Conversion.TryCastDecimal(item[7]);
                 detail.LocalCurrencyDebit = Conversion.TryCastDecimal(item[8]);
                 detail.LocalCurrencyCredit = Conversion.TryCastDecimal(item[9]);
+                details.Add(detail);
+            }
+
+            return details;
+        }
+
+        public static Collection<StockMasterDetailModel> GetStockMasterDetailCollection(string json, int storeId)
+        {
+            Collection<StockMasterDetailModel> details = new Collection<StockMasterDetailModel>();
+            var jss = new JavaScriptSerializer();
+
+            dynamic result = jss.Deserialize<dynamic>(json);
+
+            foreach (var item in result)
+            {
+                StockMasterDetailModel detail = new StockMasterDetailModel();
+                detail.ItemCode = item[0];
+                detail.Quantity = Conversion.TryCastInteger(item[2]);
+                detail.UnitName = item[3];
+                detail.Price = Conversion.TryCastDecimal(item[4]);
+                detail.Discount = Conversion.TryCastDecimal(item[6]);
+                detail.ShippingCharge = Conversion.TryCastDecimal(item[7]);
+                detail.TaxForm = item[9];
+                detail.Tax = Conversion.TryCastDecimal(item[10]);
+                detail.StoreId = storeId;
+
                 details.Add(detail);
             }
 

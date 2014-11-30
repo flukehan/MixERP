@@ -24,10 +24,6 @@ Remember:
    if you have pending transactions to verify. You cannot perform EOD operation if you have pending verifications.
 ';
 
-CREATE UNIQUE INDEX verification_statuses_verification_status_name_uix
-ON core.verification_statuses(UPPER(verification_status_name));
-
-
 
 CREATE TABLE office.users
 (
@@ -47,6 +43,38 @@ COMMENT ON TABLE office.users IS
 The users table contains users accounts and their login information. It also contains a sys user account which does not have a password.
 The sys user account is a special account used by the MixERP workflow to perform routine tasks. The sys user cannot have a valid password
 or cannot be allowed to log in interactively.';
+
+
+CREATE UNIQUE INDEX verification_statuses_verification_status_name_uix
+ON core.verification_statuses(UPPER(verification_status_name));
+
+CREATE TABLE core.entities
+(
+    entity_id                               SERIAL PRIMARY KEY,
+    entity_name                             national character varying(100),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
+);
+
+CREATE UNIQUE INDEX entities_entity_name_uix
+ON core.entities(UPPER(entity_name));
+
+
+CREATE TABLE core.industries
+(
+    industry_id                             SERIAL PRIMARY KEY,
+    industry_name                           national character varying(100),
+    parent_industry_id                      integer REFERENCES core.industries(industry_id),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
+);
+
+CREATE UNIQUE INDEX industries_industry_name_uix
+ON core.industries(UPPER(industry_name));
+
+
 
 CREATE TABLE office.departments
 (
@@ -721,6 +749,8 @@ CREATE TABLE core.parties
     last_name                               national character varying(50) NOT NULL,
     party_name                              text NULL,
     date_of_birth                           date NULL,
+    entity_id                               integer NULL REFERENCES core.entities(entity_id),
+    industry_id                             integer NULL REFERENCES core.industries(industry_id),
     country_id                              integer NOT NULL REFERENCES core.countries(country_id),
     state_id                                integer NOT NULL REFERENCES core.states(state_id),
     zip_code                                national character varying(12) NULL,
@@ -772,50 +802,6 @@ CREATE TABLE core.shipping_addresses
 
 CREATE UNIQUE INDEX shipping_addresses_shipping_address_code_uix
 ON core.shipping_addresses(UPPER(shipping_address_code), party_id);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-CREATE TABLE core.entities
-(
-    entity_id                               SERIAL PRIMARY KEY,
-    entity_name                             national character varying(100),
-    is_exempt                               boolean NOT NULL DEFAULT(false),
-    audit_user_id                           integer NULL REFERENCES office.users(user_id),
-    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
-                                            DEFAULT(NOW())
-);
-
-CREATE UNIQUE INDEX entities_entity_name_uix
-ON core.entities(UPPER(entity_name));
-
-
-CREATE TABLE core.industries
-(
-    industry_id                             SERIAL PRIMARY KEY,
-    industry_name                           national character varying(100),
-    parent_industry_id                      integer REFERENCES core.industries(industry_id),
-    audit_user_id                           integer NULL REFERENCES office.users(user_id),
-    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
-                                            DEFAULT(NOW())
-);
-
-CREATE UNIQUE INDEX industries_industry_name_uix
-ON core.industries(UPPER(industry_name));
-
 
 CREATE TABLE core.tax_master
 (
@@ -1119,17 +1105,15 @@ CREATE TABLE core.sales_tax_exempt_details
     sales_tax_exempt_detail_id              SERIAL PRIMARY KEY,
     sales_tax_exempt_id                     integer REFERENCES core.sales_tax_exempts(sales_tax_exempt_id),
     entity_id                               integer NULL REFERENCES core.entities(entity_id),
-    industry_id                             integer NULL REFERENCES core.industries(industry_id),
+    industry_id                             integer NULL REFERENCES core.industries(industry_id),    
     party_id                                integer NULL REFERENCES core.parties(party_id),
-    item_id                                 integer NULL,
-    item_group_id                           integer NULL, --Create trigger to disallow adding item group which is not allowed in sales.
+    party_type_id                           integer NULL REFERENCES core.party_types(party_type_id),
+    item_id                                 integer NULL /*REFERENCES core.items(item_id)*/,
+    item_group_id                           integer NULL /*REFERENCES core.item_groups(item_group_id)*/, --Create trigger to disallow adding item group which is not allowed in sales.
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL
                                             DEFAULT(NOW())
 );
-
-
-
 
 
 CREATE TABLE core.brands
@@ -1231,6 +1215,7 @@ CREATE TABLE core.item_groups
 
 ALTER TABLE core.sales_tax_exempt_details
 ADD FOREIGN KEY(item_group_id) REFERENCES core.item_groups(item_group_id);
+
 
 ALTER TABLE core.state_sales_taxes
 ADD FOREIGN KEY(item_group_id) REFERENCES core.item_groups(item_group_id);
@@ -1336,6 +1321,7 @@ CREATE TABLE core.items
 
 ALTER TABLE core.sales_tax_exempt_details
 ADD FOREIGN KEY(item_id) REFERENCES core.items(item_id);
+
 
 CREATE UNIQUE INDEX items_item_name_uix
 ON core.items(UPPER(item_name));
@@ -1745,15 +1731,26 @@ CREATE TABLE transactions.stock_details
     discount                                money_strict2 NOT NULL   
                                             CONSTRAINT stock_details_discount_df   
                                             DEFAULT(0),
-    tax_rate                                decimal NOT NULL   
-                                            CONSTRAINT stock_details_tax_rate_df   
-                                            DEFAULT(0),
+    sales_tax_id                            integer NULL REFERENCES core.sales_taxes(sales_tax_id),
     tax                                     money_strict2 NOT NULL   
                                             CONSTRAINT stock_details_tax_df   
-                                            DEFAULT(0),
+                                            DEFAULT(0)
+                                            CONSTRAINT stock_details_tax_chk
+                                            CHECK(CASE WHEN tax > 0 THEN sales_tax_id IS NOT NULL END),
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
                                             DEFAULT(NOW())
+);
+
+CREATE TABLE transactions.stock_tax_details
+(
+    stock_detail_id                         bigint NOT NULL REFERENCES transactions.stock_details(stock_detail_id),
+    sales_tax_detail_id                     integer NOT NULL REFERENCES core.sales_tax_details(sales_tax_detail_id),
+    state_sales_tax_id                      integer NULL REFERENCES core.state_sales_taxes(state_sales_tax_id),
+    county_sales_tax_id                     integer NULL REFERENCES core.county_sales_taxes(county_sales_tax_id),
+    principal                               money_strict NOT NULL,
+    rate                                    decimal_strict NOT NULL,
+    tax                                     money_strict NOT NULL
 );
 
 
@@ -1801,16 +1798,29 @@ CREATE TABLE transactions.non_gl_stock_details
     discount                                money_strict2 NOT NULL   
                                             CONSTRAINT non_gl_stock_details_discount_df   
                                             DEFAULT(0),
-    tax_rate                                decimal NOT NULL   
-                                            CONSTRAINT non_gl_stock_details_tax_rate_df   
-                                            DEFAULT(0),
+    sales_tax_id                            integer NULL REFERENCES core.sales_taxes(sales_tax_id),
     tax                                     money_strict2 NOT NULL   
-                                            CONSTRAINT non_gl_stock_details_tax_df   
-                                            DEFAULT(0),
+                                            CONSTRAINT stock_details_tax_df   
+                                            DEFAULT(0)
+                                            CONSTRAINT stock_details_tax_chk
+                                            CHECK(CASE WHEN tax > 0 THEN sales_tax_id IS NOT NULL END),
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
                                             DEFAULT(NOW())
 );
+
+
+CREATE TABLE transactions.non_gl_stock_tax_details
+(
+    non_gl_stock_detail_id                  bigint NOT NULL REFERENCES transactions.stock_details(stock_detail_id),
+    sales_tax_detail_id                     integer NOT NULL REFERENCES core.sales_tax_details(sales_tax_detail_id),
+    state_sales_tax_id                      integer NULL REFERENCES core.state_sales_taxes(state_sales_tax_id),
+    county_sales_tax_id                     integer NULL REFERENCES core.county_sales_taxes(county_sales_tax_id),
+    principal                               money_strict NOT NULL,
+    rate                                    decimal_strict NOT NULL,
+    tax                                     money_strict NOT NULL
+);
+
 
 
 --This table stores information of quotations

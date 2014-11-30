@@ -196,7 +196,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                 <input type="text" id="DiscountInputText" class="text-right currency" title='<asp:Literal runat="server" Text="Ctrl + D" />' />
             </td>
             <td>
-                <input type="text" id="ShippingChargeInputText" class="currency" runat="server" />
+                <input type="text" id="ShippingChargeInputText" class="currency" runat="server" readonly="readonly" />
             </td>
             <td>
                 <input type="text" id="SubTotalInputText" readonly="readonly" class="text-right currency" />

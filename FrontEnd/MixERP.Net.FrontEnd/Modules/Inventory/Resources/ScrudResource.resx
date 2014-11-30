@@ -543,4 +543,25 @@
   <data name="zip_code" xml:space="preserve">
     <value>ZIP Code</value>
   </data>
+  <data name="entity_id" xml:space="preserve">
+    <value>Entity Id</value>
+  </data>
+  <data name="entity_name" xml:space="preserve">
+    <value>Entity Name</value>
+  </data>
+  <data name="industry_id" xml:space="preserve">
+    <value>Industry Id</value>
+  </data>
+  <data name="industry_name" xml:space="preserve">
+    <value>Industry Name</value>
+  </data>
+  <data name="parent_industry_id" xml:space="preserve">
+    <value>Parent Industry Id</value>
+  </data>
+  <data name="sales_tax" xml:space="preserve">
+    <value>Sales Tax</value>
+  </data>
+  <data name="sales_tax_id" xml:space="preserve">
+    <value>Sales Tax Id</value>
+  </data>
 </root>

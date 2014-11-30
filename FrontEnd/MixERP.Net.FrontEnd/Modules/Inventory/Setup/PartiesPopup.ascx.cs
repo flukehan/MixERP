@@ -62,12 +62,13 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.party_types.party_type_id",
-                ConfigurationHelper.GetDbParameter("PartyTypeDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.frequencies.frequency_id",
-                ConfigurationHelper.GetDbParameter("FrequencyDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.currencies.currency_code",
-                ConfigurationHelper.GetDbParameter("CurrencyDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.party_types.party_type_id", ConfigurationHelper.GetDbParameter("PartyTypeDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.frequencies.frequency_id", ConfigurationHelper.GetDbParameter("FrequencyDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.currencies.currency_code", ConfigurationHelper.GetDbParameter("CurrencyDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.countries.country_id", ConfigurationHelper.GetDbParameter("CountryDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.states.state_id", ConfigurationHelper.GetDbParameter("StateDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.entities.entity_id", ConfigurationHelper.GetDbParameter("EntityDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.industries.industry_id", ConfigurationHelper.GetDbParameter("IndustryDisplayField"));
             return string.Join(",", displayFields);
         }
 
@@ -77,6 +78,11 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
             ScrudHelper.AddDisplayView(displayViews, "core.party_types.party_type_id", "core.party_type_selector_view");
             ScrudHelper.AddDisplayView(displayViews, "core.frequencies.frequency_id", "core.frequency_selector_view");
             ScrudHelper.AddDisplayView(displayViews, "core.currencies.currency_code", "core.currency_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.countries.country_id", "core.countries");
+            ScrudHelper.AddDisplayView(displayViews, "core.states.state_id", "core.states");
+            ScrudHelper.AddDisplayView(displayViews, "core.entities.entity_id", "core.entities");
+            ScrudHelper.AddDisplayView(displayViews, "core.industries.industry_id", "core.industries");
+
             return string.Join(",", displayViews);
         }
     }

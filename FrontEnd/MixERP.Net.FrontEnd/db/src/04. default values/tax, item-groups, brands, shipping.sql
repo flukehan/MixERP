@@ -1,7 +1,5 @@
-INSERT INTO core.entities(entity_name, is_exempt)
-SELECT 'Federal Government', true;
-
 INSERT INTO core.entities(entity_name)
+SELECT 'Federal Government'                         UNION
 SELECT 'Sole Proprietorship'                        UNION
 SELECT 'General Partnership'                        UNION
 SELECT 'Limited Partnership'                        UNION

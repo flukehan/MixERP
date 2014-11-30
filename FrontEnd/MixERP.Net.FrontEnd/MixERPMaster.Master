@@ -77,7 +77,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a class="item" href="https://github.com/mixerp/mixerp/wiki/documentation" target="_blank">
+                        <a class="item" href="http://docs.mixerp.org/" target="_blank">
                             <i class="github basic icon"></i>
                             <asp:Literal runat="server" ID="MixERPDocumentationLiteral" />
                         </a>

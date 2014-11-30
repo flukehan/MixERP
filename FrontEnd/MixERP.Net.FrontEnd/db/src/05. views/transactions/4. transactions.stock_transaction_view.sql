@@ -40,7 +40,7 @@ SELECT
         transactions.stock_details.base_unit_id,
         transactions.stock_details.price,
         transactions.stock_details.discount,
-        transactions.stock_details.tax_rate,
+        transactions.stock_details.sales_tax_id,
         transactions.stock_details.tax
 FROM transactions.stock_details
 INNER JOIN transactions.stock_master

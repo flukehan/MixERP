@@ -39,13 +39,13 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
         }
 
         [WebMethod(EnableSession = true)]
-        public Collection<ListItem> GetSalesTaxes()
+        public Collection<ListItem> GetSalesTaxes(string tranBook)
         {
             int officeId = SessionHelper.GetOfficeId();
 
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = Data.Tax.SalesTax.GetSalesTaxes(officeId))
+            using (DataTable table = Data.Tax.SalesTax.GetSalesTaxes(officeId, tranBook))
             {
                 foreach (DataRow dr in table.Rows)
                 {

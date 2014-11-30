@@ -53,7 +53,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
             string detail = StockMasterDetailHelper.CreateStockMasterDetailParameter(details);
             string attachment = AttachmentHelper.CreateAttachmentModelParameter(attachments);
 
-            string sql = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM transactions.post_purchase(@BookName, @OfficeId, @UserId, @LoginId, @ValueDate, @CostCenterId, @ReferenceNumber, @StatementReference, @CashRepositoryId, @IsCredit, @PartyCode, @PriceTypeId, @ShipperId, @ShippingCharge, @StoreId, ARRAY[{0}]::bigint[], ARRAY[{1}], ARRAY[{2}])", tranIds, detail, attachment);
+            string sql = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM transactions.post_purchase(@BookName, @OfficeId, @UserId, @LoginId, @ValueDate, @CostCenterId, @ReferenceNumber, @StatementReference, @CashRepositoryId, @IsCredit, @PartyCode, @PriceTypeId, @ShipperId, @StoreId, ARRAY[{0}]::bigint[], ARRAY[{1}], ARRAY[{2}])", tranIds, detail, attachment);
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@BookName", book);
@@ -95,7 +95,6 @@ namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
                     command.Parameters.AddWithValue("@ShipperId", stockMaster.ShipperId);
                 }
 
-                command.Parameters.AddWithValue("@ShippingCharge", stockMaster.ShippingCharge);
                 command.Parameters.AddWithValue("@StoreId", stockMaster.StoreId);
 
                 command.Parameters.AddRange(ParameterHelper.AddBigintArrayParameter(transactionIdCollection, "@TranId").ToArray());

@@ -42,7 +42,8 @@ namespace MixERP.Net.Common.PostgresHelper
                     collection.Add(new NpgsqlParameter("@UnitName" + i, details[i].UnitName));
                     collection.Add(new NpgsqlParameter("@Price" + i, details[i].Price));
                     collection.Add(new NpgsqlParameter("@Discount" + i, details[i].Discount));
-                    collection.Add(new NpgsqlParameter("@TaxRate" + i, details[i].TaxRate));
+                    collection.Add(new NpgsqlParameter("@ShippingCharge" + i, details[i].ShippingCharge));
+                    collection.Add(new NpgsqlParameter("@TaxForm" + i, details[i].TaxForm));
                     collection.Add(new NpgsqlParameter("@Tax" + i, details[i].Tax));
                 }
             }
@@ -60,7 +61,7 @@ namespace MixERP.Net.Common.PostgresHelper
             Collection<string> detailCollection = new Collection<string>();
             for (int i = 0; i < details.Count; i++)
             {
-                detailCollection.Add(string.Format(CultureInfo.InvariantCulture, "ROW(@StoreId{0}, @ItemCode{0}, @Quantity{0}, @UnitName{0},@Price{0}, @Discount{0}, @TaxRate{0}, @Tax{0})::transactions.stock_detail_type", i.ToString(CultureInfo.InvariantCulture)));
+                detailCollection.Add(string.Format(CultureInfo.InvariantCulture, "ROW(@StoreId{0}, @ItemCode{0}, @Quantity{0}, @UnitName{0},@Price{0}, @Discount{0}, @ShippingCharge{0}, @TaxForm{0}, @Tax{0})::transactions.stock_detail_type", i.ToString(CultureInfo.InvariantCulture)));
             }
 
             return string.Join(",", detailCollection);
