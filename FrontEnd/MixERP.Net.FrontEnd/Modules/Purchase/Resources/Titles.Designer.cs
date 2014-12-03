@@ -430,6 +430,15 @@ namespace MixERP.Net.Core.Modules.Purchase.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tax.
+        /// </summary>
+        internal static string Tax {
+            get {
+                return ResourceManager.GetString("Tax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tax Rate.
         /// </summary>
         internal static string TaxRate {

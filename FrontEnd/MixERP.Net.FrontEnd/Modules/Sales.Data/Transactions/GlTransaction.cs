@@ -32,7 +32,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
 {
     internal static class GlTransaction
     {
-        public static long Add(string bookName, DateTime valueDate, int officeId, int userId, long logOnId, int costCenterId, string referenceNumber, string statementReference, StockMasterModel stockMaster, Collection<StockMasterDetailModel> details, Collection<AttachmentModel> attachments)
+        public static long Add(string bookName, DateTime valueDate, int officeId, int userId, long logOnId, int costCenterId, string referenceNumber, string statementReference, StockMasterModel stockMaster, Collection<StockMasterDetailModel> details, Collection<AttachmentModel> attachments, bool nonTaxable)
         {
             if (stockMaster == null)
             {
@@ -52,7 +52,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
             string detail = StockMasterDetailHelper.CreateStockMasterDetailParameter(details);
             string attachment = AttachmentHelper.CreateAttachmentModelParameter(attachments);
 
-            string sql = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM transactions.post_sales(@BookName, @OfficeId, @UserId, @LoginId, @ValueDate, @CostCenterId, @ReferenceNumber, @StatementReference, @CashRepositoryId, @IsCredit, @PartyCode, @PriceTypeId, @SalespersonId, @ShipperId, @ShippingAddressCode, @StoreId, ARRAY[{0}], ARRAY[{1}])", detail, attachment);
+            string sql = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM transactions.post_sales(@BookName, @OfficeId, @UserId, @LoginId, @ValueDate, @CostCenterId, @ReferenceNumber, @StatementReference, @CashRepositoryId, @IsCredit, @PartyCode, @PriceTypeId, @SalespersonId, @ShipperId, @ShippingAddressCode, @StoreId, @NonTaxable, ARRAY[{0}], ARRAY[{1}])", detail, attachment);
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@BookName", bookName);
@@ -80,6 +80,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
                 command.Parameters.AddWithValue("@ShipperId", stockMaster.ShipperId);
                 command.Parameters.AddWithValue("@ShippingAddressCode", stockMaster.ShippingAddressCode);
                 command.Parameters.AddWithValue("@StoreId", stockMaster.StoreId);
+                command.Parameters.AddWithValue("@NonTaxable", nonTaxable);
 
                 command.Parameters.AddRange(StockMasterDetailHelper.AddStockMasterDetailParameter(details).ToArray());
                 command.Parameters.AddRange(AttachmentHelper.AddAttachmentParameter(attachments).ToArray());

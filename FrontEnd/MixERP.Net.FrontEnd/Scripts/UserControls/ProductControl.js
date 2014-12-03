@@ -87,20 +87,26 @@ var quantityInputText = $("#QuantityInputText");
 var runningTotalInputText = $("#RunningTotalInputText");
 var referenceNumberInputText = $("#ReferenceNumberInputText");
 
+var salesTypeSelect = $("#SalesTypeSelect");
 var saveButton = $("#SaveButton");
 
 var salesPersonSelect = $("#SalesPersonSelect");
 
-var shippingAddressCodeHidden = $("#ShippingAddressCodeHidden");
 var shippingAddressSelect = $("#ShippingAddressSelect");
 var shippingAddressTextArea = $("#ShippingAddressTextArea");
 var shippingChargeInputText = $("#ShippingChargeInputText");
 var shippingCompanySelect = $("#ShippingCompanySelect");
-var taxTotalInputText = $("#TaxTotalInputText");
+
+var storeIdHidden = $("#StoreIdHidden");
+var shipperIdHidden = $("#ShipperIdHidden");
+var shippingAddressCodeHidden = $("#ShippingAddressCodeHidden");
+var salesPersonIdHidden = $("#SalesPersonIdHidden");
 
 var statementReferenceTextArea = $("#StatementReferenceTextArea");
 var storeSelect = $("#StoreSelect");
 var subTotalInputText = $("#SubTotalInputText");
+
+var taxTotalInputText = $("#TaxTotalInputText");
 
 var taxSelect = $("#TaxSelect");
 var taxInputText = $("#TaxInputText");
@@ -112,7 +118,7 @@ var unitSelect = $("#UnitSelect");
 var unitNameHidden = $("#UnitNameHidden");
 
 //Variables
-var agentId;
+var salespersonId;
 var attachments;
 
 var cashRepositoryId;
@@ -135,6 +141,8 @@ var storeId;
 
 var transactionIds;
 var transactionType;
+
+var nonTaxable;
 
 var url;
 
@@ -184,7 +192,7 @@ function initializeAjaxData() {
     loadStores();
     loadTaxes(tranBook);
     loadCashRepositories();
-    loadAgents();
+    loadSalespersons();
     loadShippers();
 
     restoreData();
@@ -274,7 +282,7 @@ function ajaxUpdateValCallback(targetControls) {
 //Control Events
 
 function taxRequired() {
-    return tranBook.toLowerCase() === "sales";
+    return (salesTypeSelect.length === 1 && salesTypeSelect.getSelectedValue() === "1");
 };
 
 addButton.click(function () {
@@ -339,6 +347,10 @@ taxSelect.blur(function () {
 });
 
 function updateTax() {
+    if (!taxRequired()) {
+        return 0;
+    };
+
     var storeId = parseInt2(storeSelect.getSelectedValue());
     var partyCode = partySelect.getSelectedValue();
     var shippingAddressCode = shippingAddressSelect.getSelectedText();
@@ -390,6 +402,10 @@ function updateTax() {
 };
 
 function getDefaultSalesTax() {
+    if (!taxRequired()) {
+        return;
+    };
+
     var storeId = parseInt2(storeSelect.getSelectedValue());
     var partyCode = partySelect.getSelectedValue();
     var shippingAddressCode = shippingAddressSelect.getSelectedText();
@@ -538,7 +554,7 @@ var validateProductControl = function () {
     };
 
     productGridViewDataHidden.val(tableToJSON(productGridView));
-    agentId = parseInt2(salesPersonSelect.getSelectedValue());
+    salespersonId = parseInt2(salesPersonSelect.getSelectedValue());
     attachments = uploadedFilesHidden.val();
 
     cashRepositoryId = parseInt2(cashRepositorySelect.getSelectedValue());
@@ -558,6 +574,12 @@ var validateProductControl = function () {
     storeId = parseInt2(storeSelect.getSelectedValue());
 
     transactionIds = tranIdCollectionHiddenField.val();
+
+    nonTaxable = false;
+
+    if (salesTypeSelect.length === 1 && salesTypeSelect.getSelectedValue() === "0") {
+        nonTaxable = true;
+    };
 
     return true;
 };
@@ -580,20 +602,27 @@ unitSelect.blur(function () {
 });
 
 function loadAddresses() {
-    var partyCode = partySelect.val();
+    var partyCode = partyCodeInputText.val();
 
     url = "/Modules/Inventory/Services/PartyData.asmx/GetAddressByPartyCode";
     data = appendParameter("", "partyCode", partyCode);
     data = getData(data);
 
-    var selectedValue = shippingAddressCodeHidden.val();
-
-    ajaxDataBind(url, shippingAddressSelect, data, selectedValue);
+    ajaxDataBind(url, shippingAddressSelect, data);
 };
 
-function loadAgents() {
+function ajaxDataBindCallBack(targetControlId) {
+    if (targetControlId.is(shippingAddressSelect)) {
+        var selectedValue = shippingAddressCodeHidden.val();
+
+        shippingAddressSelect.find("option:contains(" + selectedValue + ")").attr('selected', true);
+        shippingAddressSelect.trigger("change");
+    };
+};
+
+function loadSalespersons() {
     url = "/Modules/Inventory/Services/ItemData.asmx/GetAgents";
-    ajaxDataBind(url, salesPersonSelect);
+    ajaxDataBind(url, salesPersonSelect, null, salesPersonIdHidden.val());
 };
 
 function loadCashRepositories() {
@@ -616,7 +645,7 @@ function loadItems() {
 
 function loadParties() {
     url = "/Modules/Inventory/Services/PartyData.asmx/GetParties";
-    ajaxDataBind(url, partySelect, null);
+    ajaxDataBind(url, partySelect, null, partyCodeInputText.val());
 };
 
 function loadPriceTypes() {
@@ -631,14 +660,14 @@ function loadPriceTypes() {
 function loadShippers() {
     if (shippingCompanySelect.length) {
         url = "/Modules/Inventory/Services/ItemData.asmx/GetShippers";
-        ajaxDataBind(url, shippingCompanySelect);
+        ajaxDataBind(url, shippingCompanySelect, null, shipperIdHidden.val());
     };
 };
 
 function loadStores() {
     if (storeSelect.length) {
         url = "/Modules/Inventory/Services/ItemData.asmx/GetStores";
-        ajaxDataBind(url, storeSelect);
+        ajaxDataBind(url, storeSelect, null, storeIdHidden.val());
     };
 };
 
@@ -688,9 +717,12 @@ var restoreData = function () {
         var unitName = rowData[i][3];
         var price = parseFloat2(rowData[i][4]);
         var discount = parseFloat2(rowData[i][6]);
-        var tax = rowData[i][8];
+        var shippingCharge = parseFloat2(rowData[i][7]);
 
-        addRowToTable(itemCode, itemName, quantity, unitName, price, discount, tax);
+        var tax = rowData[i][9];
+        var computedTax = parseFloat2(rowData[i][10]);
+
+        addRowToTable(itemCode, itemName, quantity, unitName, price, discount, shippingCharge, tax, computedTax);
     };
 };
 
@@ -703,8 +735,6 @@ var calculateAmount = function () {
 
 //GridView Manipulation
 var addRow = function () {
-    console.log("add row");
-
     if (parseInt2(taxSelect.getSelectedValue()) > 0 && typeof taxInputText.data("val") === "undefined") {
         updateTax();
         return;
@@ -759,12 +789,16 @@ var addRow = function () {
 
     removeDirty(discountInputText);
 
-    if (tax === selectLocalized) {
+    if (taxRequired() && tax === selectLocalized) {
         makeDirty(taxSelect);
         return;
     };
 
     removeDirty(taxSelect);
+
+    if (tax === selectLocalized || tax === noneLocalized) {
+        tax = "";
+    };
 
     var ajaxItemCodeExists = itemCodeExists(itemCode);
     var ajaxUnitNameExists = unitNameExists(unitName);

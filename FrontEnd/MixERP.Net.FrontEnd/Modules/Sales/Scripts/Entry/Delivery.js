@@ -26,7 +26,7 @@ saveButton.click(function () {
 });
 
 var save = function () {
-    var ajaxSalesDelivery = saveSalesDelivery(valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, statementReference, transactionType, agentId, shipperId, shippingAddressCode, shippingCharge, cashRepositoryId, costCenterId, transactionIds, attachments);
+    var ajaxSalesDelivery = saveSalesDelivery(valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, statementReference, transactionType, salespersonId, shipperId, shippingAddressCode, shippingCharge, cashRepositoryId, costCenterId, transactionIds, attachments, nonTaxable);
 
     ajaxSalesDelivery.done(function (response) {
         var id = response.d;
@@ -40,7 +40,7 @@ var save = function () {
     });
 };
 
-var saveSalesDelivery = function (valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, statementReference, transactionType, agentId, shipperId, shippingAddressCode, shippingCharge, cashRepositoryId, costCenterId, transactionIds, attachments) {
+var saveSalesDelivery = function (valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, statementReference, transactionType, salespersonId, shipperId, shippingAddressCode, shippingCharge, cashRepositoryId, costCenterId, transactionIds, attachments, nonTaxable) {
     var d = "";
     d = appendParameter(d, "valueDate", valueDate);
     d = appendParameter(d, "storeId", storeId);
@@ -50,7 +50,7 @@ var saveSalesDelivery = function (valueDate, storeId, partyCode, priceTypeId, re
     d = appendParameter(d, "data", data);
     d = appendParameter(d, "statementReference", statementReference);
     d = appendParameter(d, "transactionType", transactionType);
-    d = appendParameter(d, "agentId", agentId);
+    d = appendParameter(d, "salespersonId", salespersonId);
     d = appendParameter(d, "shipperId", shipperId);
     d = appendParameter(d, "shippingAddressCode", shippingAddressCode);
     d = appendParameter(d, "shippingCharge", shippingCharge);
@@ -58,6 +58,7 @@ var saveSalesDelivery = function (valueDate, storeId, partyCode, priceTypeId, re
     d = appendParameter(d, "costCenterId", costCenterId);
     d = appendParameter(d, "transactionIds", transactionIds);
     d = appendParameter(d, "attachmentsJSON", attachments);
+    d = appendParameter(d, "nonTaxable", nonTaxable);
 
     d = getData(d);
 

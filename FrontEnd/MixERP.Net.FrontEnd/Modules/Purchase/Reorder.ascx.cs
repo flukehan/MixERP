@@ -131,7 +131,7 @@ namespace MixERP.Net.Core.Modules.Purchase
             this.AddBoundField(grid, Titles.DefaultReorderQuantityAbbreviated, "reorder_quantity");
             this.AddBoundField(grid, Titles.PreferredSupplier, "preferred_supplier");
             this.AddBoundField(grid, Titles.Price, "price");
-            this.AddBoundField(grid, Titles.TaxRate, "tax_rate");
+            this.AddBoundField(grid, Titles.Tax, "tax");
         }
     }
 }

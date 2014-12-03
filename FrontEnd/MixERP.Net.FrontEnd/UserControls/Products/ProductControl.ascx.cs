@@ -28,6 +28,7 @@ using System.Globalization;
 using System.Linq;
 using System.Web.Script.Serialization;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace MixERP.Net.FrontEnd.UserControls.Products
 {
@@ -75,6 +76,11 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         /// This property when enabled will display sales agents.
         /// </summary>
         public bool ShowSalesAgents { get; set; }
+
+        /// <summary>
+        /// This property when set to true will display sales types, namely "Taxable" and "Nontaxable".
+        /// </summary>
+        public bool ShowSalesType { get; set; }
 
         /// <summary>
         /// This property when enabled will display shipping information, such as shipping address,
@@ -147,6 +153,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 this.InitializeControls();
                 this.LoadValuesFromSession();
                 this.BindGridView();
+
                 this.TitleLiteral.Text = this.Text;
                 this.Page.Title = this.Text;
                 initialized = true;
@@ -196,6 +203,11 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             this.ShippingAddressTextAreaLabel.Text = HtmlControlHelper.GetLabel("ShippingAddressTextArea", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ShippingAddress"));
             this.ShippingCompanySelectLabel.Text = HtmlControlHelper.GetLabel("ShippingCompanySelect", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ShippingCompany"));
             this.ShippingChargeInputTextLabel.Text = HtmlControlHelper.GetLabel("ShippingChargeInputText", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ShippingCharge"));
+            this.SalesTypeSelectLabel.Text = HtmlControlHelper.GetLabel("SalesTypeSelect", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "SalesType"));
+
+            this.SalesTypeSelect.Items.Add(new ListItem(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "TaxableSales"), "1"));
+            this.SalesTypeSelect.Items.Add(new ListItem(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "NonTaxableSales"), "0"));
+
             this.RunningTotalInputTextLabel.Text = HtmlControlHelper.GetLabel("RunningTotalInputText", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "RunningTotal"));
             this.TaxTotalInputTextLabel.Text = HtmlControlHelper.GetLabel("TaxTotalInputText", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "TaxTotal"));
             this.GrandTotalInputTextInputTextLabel.Text = HtmlControlHelper.GetLabel("GrandTotalInputTextInputText", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "GrandTotal"));
@@ -222,12 +234,20 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 return;
             }
 
-            this.PartyCodeHidden.Value = this.model.PartyCode.ToString(LocalizationHelper.GetCurrentCulture());
-            this.PartyCodeInputText.Value = this.model.PartyCode.ToString(LocalizationHelper.GetCurrentCulture());
-            this.PriceTypeIdHidden.Value = this.model.PriceTypeId.ToString(SessionHelper.GetCulture());
+            this.PartyCodeHidden.Value = this.model.PartyCode.ToString(CultureInfo.InvariantCulture);
+            this.PartyCodeInputText.Value = this.model.PartyCode.ToString(CultureInfo.InvariantCulture);
+            this.PriceTypeIdHidden.Value = this.model.PriceTypeId.ToString(CultureInfo.InvariantCulture);
+            this.StoreIdHidden.Value = this.model.StoreId.ToString(CultureInfo.InvariantCulture);
+            this.ShipperIdHidden.Value = this.model.ShippingCompanyId.ToString(CultureInfo.InvariantCulture);
+            this.ShippingAddressCodeHidden.Value = this.model.ShippingAddressCode.ToString(CultureInfo.InvariantCulture);
+            this.SalesPersonIdHidden.Value = this.model.SalesPersonId.ToString(CultureInfo.InvariantCulture);
 
             this.ReferenceNumberInputText.Value = this.model.ReferenceNumber;
             this.StatementReferenceTextArea.Value = this.model.StatementReference;
+            if (this.model.NonTaxableSales)
+            {
+                this.SalesTypeSelect.SelectedIndex = 1;
+            }
 
             this.Session[this.ID] = this.model.View;
             TranIdCollectionHiddenField.Value = string.Join(",", this.model.TransactionIdCollection);
@@ -248,11 +268,13 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 this.ShippingChargeInputText.Attributes.Add("readonly", "readonly");
             }
 
+            SalesTypeDiv.Visible = (this.Book == TranBook.Sales && this.ShowSalesType);
+
             this.CostCenterDiv.Visible = this.ShowCostCenter;
             this.SalespersonDiv.Visible = this.ShowSalesAgents;
         }
 
-        #region "JSON Grid Binding"
+        #region "Grid Binding"
 
         private static Collection<ProductDetailsModel> SummateProducts(IEnumerable<ProductDetailsModel> productCollection)
         {
@@ -267,7 +289,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
                 if (collection.Count > 0)
                 {
-                    productInCollection = collection.FirstOrDefault(x => x.ItemCode == product.ItemCode && x.ItemName == product.ItemName && x.Unit == product.Unit && x.Price == product.Price && x.Rate == product.Rate);
+                    productInCollection = collection.FirstOrDefault(x => x.ItemCode == product.ItemCode && x.ItemName == product.ItemName && x.Unit == product.Unit && x.Price == product.Price && x.TaxCode == product.TaxCode);
                 }
 
                 if (productInCollection == null)
@@ -280,6 +302,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                     productInCollection.Amount += product.Amount;
                     productInCollection.Discount += product.Discount;
                     productInCollection.Subtotal += product.Subtotal;
+                    productInCollection.ShippingCharge += product.ShippingCharge;
                     productInCollection.Tax += product.Tax;
                     productInCollection.Total += product.Total;
                 }
@@ -298,7 +321,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
                 foreach (ProductDetailsModel row in table)
                 {
-                    string[] colData = new string[11];
+                    string[] colData = new string[12];
 
                     colData[0] = row.ItemCode;
                     colData[1] = row.ItemName;
@@ -307,10 +330,11 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                     colData[4] = row.Price.ToString(CultureInfo.CurrentCulture);
                     colData[5] = row.Amount.ToString(CultureInfo.CurrentCulture);
                     colData[6] = row.Discount.ToString(CultureInfo.CurrentCulture);
-                    colData[7] = row.Subtotal.ToString(CultureInfo.CurrentCulture);
-                    colData[8] = row.Rate.ToString(CultureInfo.CurrentCulture);
-                    colData[9] = row.Tax.ToString(CultureInfo.CurrentCulture);
-                    colData[10] = row.Total.ToString(CultureInfo.CurrentCulture);
+                    colData[7] = row.ShippingCharge.ToString(CultureInfo.CurrentCulture);
+                    colData[8] = row.Subtotal.ToString(CultureInfo.CurrentCulture);
+                    colData[9] = row.TaxCode.ToString(CultureInfo.CurrentCulture);
+                    colData[10] = row.Tax.ToString(CultureInfo.CurrentCulture);
+                    colData[11] = row.Total.ToString(CultureInfo.CurrentCulture);
 
                     rowData.Add(colData);
                 }
@@ -341,7 +365,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             return productCollection;
         }
 
-        #endregion "JSON Grid Binding"
+        #endregion "Grid Binding"
 
         #endregion "Page Initialization"
     }

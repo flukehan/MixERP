@@ -799,6 +799,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Party Type Id.
+        /// </summary>
+        internal static string party_type_id {
+            get {
+                return ResourceManager.GetString("party_type_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password.
         /// </summary>
         internal static string password {

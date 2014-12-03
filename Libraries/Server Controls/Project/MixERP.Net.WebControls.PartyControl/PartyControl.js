@@ -146,7 +146,7 @@ goButton.click(function () {
         interestApplicableSpan.html(interestDetails.join(""));
 
         gLHeadSpan.html(partyView.GLHead);
-        addressDiv.html(getAddress(partyView.POBox, partyView.AddressLine1, partyView.AddressLine2, partyView.Street, partyView.City, partyView.State, partyView.Country, partyView.Phone, partyView.Cell, partyView.Fax, partyView.Url));
+        addressDiv.html(getAddress(partyView.ZipCode, partyView.AddressLine1, partyView.AddressLine2, partyView.Street, partyView.City, partyView.State, partyView.Country, partyView.Phone, partyView.Cell, partyView.Fax, partyView.Url));
     });
 
     ajaxGetPartyView.fail(function (xhr) {

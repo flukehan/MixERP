@@ -1,13 +1,11 @@
+DELETE FROM core.menus;
 
 INSERT INTO core.menus(menu_text, url, menu_code, level)
 SELECT 'Sales', '~/Modules/Sales/Index.mix', 'SA', 0 UNION ALL
 SELECT 'Purchase', '~/Modules/Purchase/Index.mix', 'PU', 0 UNION ALL
 SELECT 'Products & Items', '~/Modules/Inventory/Index.mix', 'ITM', 0 UNION ALL
 SELECT 'Finance', '~/Modules/Finance/Index.mix', 'FI', 0 UNION ALL
-SELECT 'Manufacturing', '~/Modules/Manufacturing/Index.mix', 'MF', 0 UNION ALL
-SELECT 'CRM', '~/Modules/CRM/Index.mix', 'CRM', 0 UNION ALL
-SELECT 'Back Office', '~/Modules/BackOffice/Index.mix', 'BO', 0 UNION ALL
-SELECT 'POS', '~/Modules/POS/Index.mix', 'POS', 0;
+SELECT 'Back Office', '~/Modules/BackOffice/Index.mix', 'BO', 0;
 
 
 INSERT INTO core.menus(menu_text, url, menu_code, level, parent_menu_id)
@@ -26,12 +24,6 @@ UNION ALL SELECT 'Salespersons', '~/Modules/Sales/Setup/Salespersons.mix', 'SSA'
 UNION ALL SELECT 'Bonus Slab Assignment', '~/Modules/Sales/Setup/BonusSlabAssignment.mix', 'BSA', 2, core.get_menu_id('SSM')
 UNION ALL SELECT 'Sales Reports', NULL, 'SAR', 1, core.get_menu_id('SA')
 UNION ALL SELECT 'Top Selling Items', '~/Modules/Sales/Reports/TopSellingItems.mix', 'SAR-TSI', 2, core.get_menu_id('SAR')
-UNION ALL SELECT 'Cashier Management', NULL, 'CM', 1, core.get_menu_id('POS')
-UNION ALL SELECT 'Assign Cashier', '~/Modules/POS/AssignCashier.mix', 'ASC', 2, core.get_menu_id('CM')
-UNION ALL SELECT 'POS Setup', NULL, 'POSS', 1, core.get_menu_id('POS')
-UNION ALL SELECT 'Store Types', '~/Modules/POS/Setup/StoreTypes.mix', 'STT', 2, core.get_menu_id('POSS')
-UNION ALL SELECT 'Stores', '~/Modules/POS/Setup/Stores.mix', 'STO', 2, core.get_menu_id('POSS')
-UNION ALL SELECT 'Counter Setup', '~/Modules/BackOffice/Counters.mix', 'SCS', 2, core.get_menu_id('POSS')
 UNION ALL SELECT 'Purchase & Quotation', NULL, 'PUQ', 1, core.get_menu_id('PU')
 UNION ALL SELECT 'Direct Purchase', '~/Modules/Purchase/DirectPurchase.mix', 'DRP', 2, core.get_menu_id('PUQ')
 UNION ALL SELECT 'Purchase Order', '~/Modules/Purchase/Order.mix', 'PO', 2, core.get_menu_id('PUQ')
@@ -43,6 +35,9 @@ UNION ALL SELECT 'Inventory Movements', NULL, 'IIM', 1, core.get_menu_id('ITM')
 UNION ALL SELECT 'Stock Transfer Journal', '~/Modules/Inventory/Transfer.mix', 'STJ', 2, core.get_menu_id('IIM')
 UNION ALL SELECT 'Stock Adjustments', '~/Modules/Inventory/Adjustment.mix', 'STA', 2, core.get_menu_id('IIM')
 UNION ALL SELECT 'Setup & Maintenance', NULL, 'ISM', 1, core.get_menu_id('ITM')
+UNION ALL SELECT 'Store Types', '~/Modules/POS/Setup/StoreTypes.mix', 'STT', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Stores', '~/Modules/POS/Setup/Stores.mix', 'STO', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Counter Setup', '~/Modules/BackOffice/Counters.mix', 'SCS', 2, core.get_menu_id('ISM')
 UNION ALL SELECT 'Party Types', '~/Modules/Inventory/Setup/PartyTypes.mix', 'PT', 2, core.get_menu_id('ISM')
 UNION ALL SELECT 'Party Accounts', '~/Modules/Inventory/Setup/Parties.mix', 'PA', 2, core.get_menu_id('ISM')
 UNION ALL SELECT 'Shipping Addresses', '~/Modules/Inventory/Setup/ShippingAddresses.mix', 'PSA', 2, core.get_menu_id('ISM')
@@ -71,30 +66,7 @@ UNION ALL SELECT 'Bank Accounts', '~/Modules/Finance/Setup/BankAccounts.mix', 'C
 UNION ALL SELECT 'Product GL Mapping', '~/Modules/Finance/Setup/ProductGLMapping.mix', 'PGM', 2, core.get_menu_id('FSM')
 UNION ALL SELECT 'Budgets & Targets', '~/Modules/Finance/Setup/BudgetAndTarget.mix', 'BT', 2, core.get_menu_id('FSM')
 UNION ALL SELECT 'Ageing Slabs', '~/Modules/Finance/Setup/AgeingSlabs.mix', 'AGS', 2, core.get_menu_id('FSM')
-UNION ALL SELECT 'Tax Types', '~/Modules/Finance/Setup/TaxTypes.mix', 'TTY', 2, core.get_menu_id('FSM')
-UNION ALL SELECT 'Tax Setup', '~/Modules/Finance/Setup/TaxSetup.mix', 'TS', 2, core.get_menu_id('FSM')
 UNION ALL SELECT 'Cost Centers', '~/Modules/Finance/Setup/CostCenters.mix', 'CC', 2, core.get_menu_id('FSM')
-UNION ALL SELECT 'Manufacturing Workflow', NULL, 'MFW', 1, core.get_menu_id('MF')
-UNION ALL SELECT 'Sales Forecast', '~/Modules/Manufacturing/Workflow/SalesForecast.mix', 'MFWSF', 2, core.get_menu_id('MFW')
-UNION ALL SELECT 'Master Production Schedule', '~/Modules/Manufacturing/Workflow/MasterProductionSchedule.mix', 'MFWMPS', 2, core.get_menu_id('MFW')
-UNION ALL SELECT 'Manufacturing Setup', NULL, 'MFS', 1, core.get_menu_id('MF')
-UNION ALL SELECT 'Work Centers', '~/Modules/Manufacturing/Setup/WorkCenters.mix', 'MFSWC', 2, core.get_menu_id('MFS')
-UNION ALL SELECT 'Bills of Material', '~/Modules/Manufacturing/Setup/BillsOfMaterial.mix', 'MFSBOM', 2, core.get_menu_id('MFS')
-UNION ALL SELECT 'Manufacturing Reports', NULL, 'MFR', 1, core.get_menu_id('MF')
-UNION ALL SELECT 'Gross & Net Requirements', '~/Modules/Manufacturing/Reports/GrossAndNetRequirements.mix', 'MFRGNR', 2, core.get_menu_id('MFR')
-UNION ALL SELECT 'Capacity vs Lead', '~/Modules/Manufacturing/Reports/CapacityVersusLead.mix', 'MFRCVSL', 2, core.get_menu_id('MFR')
-UNION ALL SELECT 'Shop Floor Planning', '~/Modules/Manufacturing/Reports/ShopFloorPlanning.mix', 'MFRSFP', 2, core.get_menu_id('MFR')
-UNION ALL SELECT 'Production Order Status', '~/Modules/Manufacturing/Reports/ProductionOrderStatus.mix', 'MFRPOS', 2, core.get_menu_id('MFR')
-UNION ALL SELECT 'CRM Main', NULL, 'CRMM', 1, core.get_menu_id('CRM')
-UNION ALL SELECT 'Add a New Lead', '~/Modules/CRM/Lead.mix', 'CRML', 2, core.get_menu_id('CRMM')
-UNION ALL SELECT 'Add a New Opportunity', '~/Modules/CRM/Opportunity.mix', 'CRMO', 2, core.get_menu_id('CRMM')
-UNION ALL SELECT 'Convert Lead to Opportunity', '~/Modules/CRM/ConvertLeadToOpportunity.mix', 'CRMC', 2, core.get_menu_id('CRMM')
-UNION ALL SELECT 'Lead Follow Up', '~/Modules/CRM/LeadFollowUp.mix', 'CRMFL', 2, core.get_menu_id('CRMM')
-UNION ALL SELECT 'Opportunity Follow Up', '~/Modules/CRM/OpportunityFollowUp.mix', 'CRMFO', 2, core.get_menu_id('CRMM')
-UNION ALL SELECT 'Setup & Maintenance', NULL, 'CSM', 1, core.get_menu_id('CRM')
-UNION ALL SELECT 'Lead Sources Setup', '~/Modules/CRM/Setup/LeadSources.mix', 'CRMLS', 2, core.get_menu_id('CSM')
-UNION ALL SELECT 'Lead Status Setup', '~/Modules/CRM/Setup/LeadStatuses.mix', 'CRMLST', 2, core.get_menu_id('CSM')
-UNION ALL SELECT 'Opportunity Stages Setup', '~/Modules/CRM/Setup/OpportunityStages.mix', 'CRMOS', 2, core.get_menu_id('CSM')
 UNION ALL SELECT 'Tax Configuration', NULL, 'BOTC', 1, core.get_menu_id('BO')
 UNION ALL SELECT 'Tax Master', '~/Modules/BackOffice/Tax/TaxMaster.mix', 'TXM', 2, core.get_menu_id('BOTC')
 UNION ALL SELECT 'Tax Authorities', '~/Modules/BackOffice/Tax/TaxAuthorities.mix', 'TXA', 2, core.get_menu_id('BOTC')
@@ -181,10 +153,7 @@ SELECT core.get_menu_id('SA'), 'fr', 'ventes' UNION ALL
 SELECT core.get_menu_id('PU'), 'fr', 'acheter' UNION ALL
 SELECT core.get_menu_id('ITM'), 'fr', 'Produits et Articles' UNION ALL
 SELECT core.get_menu_id('FI'), 'fr', 'Finances' UNION ALL
-SELECT core.get_menu_id('MF'), 'fr', 'fabrication' UNION ALL
-SELECT core.get_menu_id('CRM'), 'fr', 'CRM' UNION ALL
 SELECT core.get_menu_id('BO'), 'fr', 'Paramètres de configuration' UNION ALL
-SELECT core.get_menu_id('POS'), 'fr', 'POS' UNION ALL
 SELECT core.get_menu_id('SAQ'), 'fr', 'Ventes & Devis' UNION ALL
 SELECT core.get_menu_id('DRS'), 'fr', 'vente directe' UNION ALL
 SELECT core.get_menu_id('SQ'), 'fr', 'Offre de vente' UNION ALL
@@ -198,9 +167,6 @@ SELECT core.get_menu_id('BSD'), 'fr', 'Bonus Slab Détails' UNION ALL
 SELECT core.get_menu_id('SSA'), 'fr', 'Agents de vente' UNION ALL
 SELECT core.get_menu_id('BSA'), 'fr', 'Bonus dalle Affectation' UNION ALL
 SELECT core.get_menu_id('SAR'), 'fr', 'Rapports de vente' UNION ALL
-SELECT core.get_menu_id('CM'), 'fr', 'Gestion de la Caisse' UNION ALL
-SELECT core.get_menu_id('ASC'), 'fr', 'attribuer Caissier' UNION ALL
-SELECT core.get_menu_id('POSS'), 'fr', 'Configuration de POS' UNION ALL
 SELECT core.get_menu_id('STT'), 'fr', 'Types de magasins' UNION ALL
 SELECT core.get_menu_id('STO'), 'fr', 'magasins' UNION ALL
 SELECT core.get_menu_id('SCR'), 'fr', 'Configuration espace d''archivage automatique' UNION ALL
@@ -242,30 +208,7 @@ SELECT core.get_menu_id('CBA'), 'fr', 'Comptes bancaires' UNION ALL
 SELECT core.get_menu_id('PGM'), 'fr', 'Cartographie de GL produit' UNION ALL
 SELECT core.get_menu_id('BT'), 'fr', 'Budgets et objectifs' UNION ALL
 SELECT core.get_menu_id('AGS'), 'fr', 'Vieillissement Dalles' UNION ALL
-SELECT core.get_menu_id('TTY'), 'fr', 'Types d''impôt' UNION ALL
-SELECT core.get_menu_id('TS'), 'fr', 'Configuration de l''impôt' UNION ALL
 SELECT core.get_menu_id('CC'), 'fr', 'Centres de coûts' UNION ALL
-SELECT core.get_menu_id('MFW'), 'fr', 'Flux de travail de fabrication' UNION ALL
-SELECT core.get_menu_id('MFWSF'), 'fr', 'Prévisions de ventes' UNION ALL
-SELECT core.get_menu_id('MFWMPS'), 'fr', 'Le calendrier de production de Maître' UNION ALL
-SELECT core.get_menu_id('MFS'), 'fr', 'Configuration de fabrication' UNION ALL
-SELECT core.get_menu_id('MFSWC'), 'fr', 'Centres de travail' UNION ALL
-SELECT core.get_menu_id('MFSBOM'), 'fr', 'Nomenclatures' UNION ALL
-SELECT core.get_menu_id('MFR'), 'fr', 'Rapports de fabrication' UNION ALL
-SELECT core.get_menu_id('MFRGNR'), 'fr', 'Exigences bruts et nets' UNION ALL
-SELECT core.get_menu_id('MFRCVSL'), 'fr', 'Capacité vs plomb' UNION ALL
-SELECT core.get_menu_id('MFRSFP'), 'fr', 'Planification d''atelier' UNION ALL
-SELECT core.get_menu_id('MFRPOS'), 'fr', 'Suivi de commande de production' UNION ALL
-SELECT core.get_menu_id('CRMM'), 'fr', 'CRM principal' UNION ALL
-SELECT core.get_menu_id('CRML'), 'fr', 'Ajouter un nouveau chef' UNION ALL
-SELECT core.get_menu_id('CRMO'), 'fr', 'Ajouter une nouvelle opportunité' UNION ALL
-SELECT core.get_menu_id('CRMC'), 'fr', 'Autre plomb à la relance' UNION ALL
-SELECT core.get_menu_id('CRMFL'), 'fr', 'Suivi plomb' UNION ALL
-SELECT core.get_menu_id('CRMFO'), 'fr', 'possibilité de Suivi' UNION ALL
-SELECT core.get_menu_id('CSM'), 'fr', 'Configuration et Maintenance' UNION ALL
-SELECT core.get_menu_id('CRMLS'), 'fr', 'Sources plomb Configuration' UNION ALL
-SELECT core.get_menu_id('CRMLST'), 'fr', 'Configuration de l''état de plomb' UNION ALL
-SELECT core.get_menu_id('CRMOS'), 'fr', 'Possibilité de configuration Etapes' UNION ALL
 SELECT core.get_menu_id('SMP'), 'fr', 'Paramètres divers' UNION ALL
 SELECT core.get_menu_id('TRF'), 'fr', 'drapeaux' UNION ALL
 SELECT core.get_menu_id('SEAR'), 'fr', 'Rapports de vérification' UNION ALL

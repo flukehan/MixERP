@@ -240,6 +240,9 @@
   <data name="SupplierName" xml:space="preserve">
     <value>Supplier Name</value>
   </data>
+  <data name="Tax" xml:space="preserve">
+    <value>Tax</value>
+  </data>
   <data name="TaxRate" xml:space="preserve">
     <value>Tax Rate</value>
   </data>

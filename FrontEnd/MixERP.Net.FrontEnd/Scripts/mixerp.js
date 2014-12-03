@@ -653,7 +653,6 @@ jQuery.fn.bindAjaxData = function (ajaxData, skipSelect, selectedValue) {
         selected = false;
 
         if (selectedValue) {
-            console.log("Selected value :" + selectedValue);
             if (this.Value === selectedValue) {
                 selected = true;
             };

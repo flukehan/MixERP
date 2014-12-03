@@ -157,6 +157,33 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::System.Web.UI.WebControls.Literal ShippingAddressSelectLabel;
         
         /// <summary>
+        /// SalesTypeDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl SalesTypeDiv;
+        
+        /// <summary>
+        /// SalesTypeSelectLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal SalesTypeSelectLabel;
+        
+        /// <summary>
+        /// SalesTypeSelect control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlSelect SalesTypeSelect;
+        
+        /// <summary>
         /// ProductGridView control.
         /// </summary>
         /// <remarks>
@@ -508,15 +535,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::System.Web.UI.WebControls.HiddenField PriceTypeIdHidden;
         
         /// <summary>
-        /// ShippingAddressCodeHidden control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField ShippingAddressCodeHidden;
-        
-        /// <summary>
         /// TranIdCollectionHiddenField control.
         /// </summary>
         /// <remarks>
@@ -542,6 +560,42 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField UnitNameHidden;
+        
+        /// <summary>
+        /// StoreIdHidden control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField StoreIdHidden;
+        
+        /// <summary>
+        /// ShipperIdHidden control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField ShipperIdHidden;
+        
+        /// <summary>
+        /// ShippingAddressCodeHidden control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField ShippingAddressCodeHidden;
+        
+        /// <summary>
+        /// SalesPersonIdHidden control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField SalesPersonIdHidden;
         
         /// <summary>
         /// ErrorLabelBottom control.

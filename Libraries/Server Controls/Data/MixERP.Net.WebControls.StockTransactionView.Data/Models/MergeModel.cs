@@ -45,7 +45,15 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data.Models
 {
     public sealed class MergeModel
     {
-        public DateTime ValueDate { get; set; }
+        private readonly Collection<int> transactionIdCollection = new Collection<int>();
+
+        private readonly Collection<ProductDetailsModel> view = new Collection<ProductDetailsModel>();
+
+        public int AgentId { get; set; }
+
+        public TranBook Book { get; set; }
+
+        public bool NonTaxableSales { get; set; }
 
         public string PartyCode { get; set; }
 
@@ -53,30 +61,17 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data.Models
 
         public string ReferenceNumber { get; set; }
 
-        public int AgentId { get; set; }
+        public int SalesPersonId { get; set; }
 
-        private readonly Collection<ProductDetailsModel> view = new Collection<ProductDetailsModel>();
+        public string ShippingAddressCode { get; set; }
 
-        public Collection<ProductDetailsModel> View
-        {
-            get
-            {
-                return this.view;
-            }
-        }
-
-        public void AddViewToCollection(ProductDetailsModel product)
-        {
-            this.view.Add(product);
-        }
+        public int ShippingCompanyId { get; set; }
 
         public string StatementReference { get; set; }
 
-        public TranBook Book { get; set; }
+        public int StoreId { get; set; }
 
         public SubTranBook SubBook { get; set; }
-
-        private readonly Collection<int> transactionIdCollection = new Collection<int>();
 
         public Collection<int> TransactionIdCollection
         {
@@ -86,9 +81,24 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data.Models
             }
         }
 
+        public DateTime ValueDate { get; set; }
+
+        public Collection<ProductDetailsModel> View
+        {
+            get
+            {
+                return this.view;
+            }
+        }
+
         public void AddTransactionIdToCollection(int transactionId)
         {
             this.transactionIdCollection.Add(transactionId);
+        }
+
+        public void AddViewToCollection(ProductDetailsModel product)
+        {
+            this.view.Add(product);
         }
     }
 }

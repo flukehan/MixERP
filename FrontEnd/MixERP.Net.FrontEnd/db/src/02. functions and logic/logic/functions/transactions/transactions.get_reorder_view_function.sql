@@ -14,7 +14,7 @@ RETURNS TABLE
         preferred_supplier_id   bigint,
         preferred_supplier      text,
         price                   money_strict2,
-        tax_rate                numeric
+        tax                     national character varying(24)
 )
 AS
 $$
@@ -32,7 +32,7 @@ BEGIN
                 core.items.preferred_supplier_id,
                 core.parties.party_code || ' (' || core.parties.party_name || ')'::text AS party,
                 core.get_item_cost_price(core.items.item_id, core.items.reorder_unit_id, core.items.preferred_supplier_id),
-                core.get_item_tax_rate(core.items.item_id)
+                core.get_sales_tax_code_by_sales_tax_id(core.items.sales_tax_id) as tax
         FROM core.items
         INNER JOIN core.parties
         ON core.items.preferred_supplier_id = core.parties.party_id

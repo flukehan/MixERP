@@ -117,18 +117,24 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     </div>
 </div>
 
-<div id="ShippingAddressInfoDiv" runat="server" style="width: 500px;">
-    <div class="ui page form segment">
-        <div class="two fields">
-            <div class="field">
-                <asp:Literal ID="ShippingCompanySelectLabel" runat="server" />
-                <select id="ShippingCompanySelect"></select>
-            </div>
-            <div class="field">
-                <asp:Literal ID="ShippingAddressSelectLabel" runat="server" />
-                <select id="ShippingAddressSelect"></select>
-            </div>
+<div id="ShippingAddressInfoDiv" runat="server" style="width: 500px;" class="ui page form">
+    <div class="two fields">
+        <div class="field">
+            <asp:Literal ID="ShippingCompanySelectLabel" runat="server" />
+            <select id="ShippingCompanySelect"></select>
         </div>
+        <div class="field">
+            <asp:Literal ID="ShippingAddressSelectLabel" runat="server" />
+            <select id="ShippingAddressSelect"></select>
+        </div>
+    </div>
+</div>
+
+<div id="SalesTypeDiv" runat="server" style="width: 200px;" class="ui page form">
+    <div class="field">
+        <asp:Literal ID="SalesTypeSelectLabel" runat="server" />
+        <select id="SalesTypeSelect" runat="server">
+        </select>
     </div>
 </div>
 
@@ -285,10 +291,15 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 <asp:HiddenField ID="PartyIdHidden" runat="server" />
 <asp:HiddenField ID="ProductGridViewDataHidden" runat="server" />
 <asp:HiddenField ID="PriceTypeIdHidden" runat="server" />
-<asp:HiddenField ID="ShippingAddressCodeHidden" runat="server" />
 <asp:HiddenField ID="TranIdCollectionHiddenField" runat="server"></asp:HiddenField>
 <asp:HiddenField ID="UnitIdHidden" runat="server"></asp:HiddenField>
 <asp:HiddenField ID="UnitNameHidden" runat="server"></asp:HiddenField>
+
+<asp:HiddenField ID="StoreIdHidden" runat="server" />
+<asp:HiddenField ID="ShipperIdHidden" runat="server" />
+<asp:HiddenField ID="ShippingAddressCodeHidden" runat="server" />
+<asp:HiddenField ID="SalesPersonIdHidden" runat="server" />
+
 <p>
     <asp:Label ID="ErrorLabelBottom" runat="server" CssClass="big error" />
 </p>

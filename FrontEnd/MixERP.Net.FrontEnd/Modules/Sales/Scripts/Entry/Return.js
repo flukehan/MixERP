@@ -28,7 +28,7 @@ saveButton.click(function () {
 
 var save = function () {
     var tranId = getParameterByName("TranId");
-    var ajaxSaveOder = saveOrder(tranId, valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, cashRepositoryId, costCenterId, agentId, statementReference, transactionIds, attachments);
+    var ajaxSaveOder = saveOrder(tranId, valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, cashRepositoryId, costCenterId, salespersonId, statementReference, transactionIds, attachments);
 
     ajaxSaveOder.done(function (response) {
         var id = response.d;
@@ -42,7 +42,7 @@ var save = function () {
     });
 };
 
-var saveOrder = function (tranId, valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, cashRepositoryId, costCenterId, agentId, statementReference, transactionIds, attachments) {
+var saveOrder = function (tranId, valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, cashRepositoryId, costCenterId, salespersonId, statementReference, transactionIds, attachments) {
     var d = "";
     d = appendParameter(d, "tranId", tranId);
     d = appendParameter(d, "valueDate", valueDate);

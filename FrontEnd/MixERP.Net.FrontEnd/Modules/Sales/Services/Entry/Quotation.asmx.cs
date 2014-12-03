@@ -36,7 +36,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
     public class Quotation : WebService
     {
         [WebMethod(EnableSession = true)]
-        public long Save(DateTime valueDate, int storeId, string partyCode, int priceTypeId, string referenceNumber, string data, string statementReference, string transactionIds, string attachmentsJSON)
+        public long Save(DateTime valueDate, int storeId, string partyCode, int priceTypeId, string referenceNumber, string data, string statementReference, string transactionIds, string attachmentsJSON, bool nonTaxable, int salespersonId, int shipperId, string shippingAddressCode)
         {
             Collection<StockMasterDetailModel> details = CollectionHelper.GetStockMasterDetailCollection(data, storeId);
             Collection<long> tranIds = new Collection<long>();
@@ -52,7 +52,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
                 }
             }
 
-            return Data.Transactions.Quotation.Add(valueDate, partyCode, priceTypeId, details, referenceNumber, statementReference, tranIds, attachments);
+            return Data.Transactions.Quotation.Add(valueDate, partyCode, priceTypeId, details, referenceNumber, statementReference, tranIds, attachments, nonTaxable, salespersonId, shipperId, shippingAddressCode, storeId);
         }
     }
 }

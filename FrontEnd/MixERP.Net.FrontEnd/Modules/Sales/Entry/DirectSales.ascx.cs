@@ -41,6 +41,7 @@ namespace MixERP.Net.Core.Modules.Sales.Entry
                 product.ShowTransactionType = true;
                 product.ShowStore = true;
                 product.ShowCostCenter = true;
+                product.ShowSalesType = true;
                 product.VerifyStock = true;
                 product.Initialize();
 

@@ -1704,6 +1704,7 @@ CREATE TABLE transactions.stock_master
                                             CONSTRAINT stock_master_shipping_charge_df   
                                             DEFAULT(0),
     store_id                                integer NULL REFERENCES office.stores(store_id),
+    non_taxable                             boolean NOT NULL DEFAULT(false),
     cash_repository_id                      integer NULL REFERENCES office.cash_repositories(cash_repository_id),
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
@@ -1730,6 +1731,9 @@ CREATE TABLE transactions.stock_details
     cost_of_goods_sold                      money_strict2 NOT NULL DEFAULT(0),
     discount                                money_strict2 NOT NULL   
                                             CONSTRAINT stock_details_discount_df   
+                                            DEFAULT(0),
+    shipping_charge                         money_strict2 NOT NULL   
+                                            CONSTRAINT stock_master_shipping_charge_df   
                                             DEFAULT(0),
     sales_tax_id                            integer NULL REFERENCES core.sales_taxes(sales_tax_id),
     tax                                     money_strict2 NOT NULL   
@@ -1761,9 +1765,6 @@ CREATE TABLE transactions.stock_return
     return_transaction_master_id            bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id)
 );
 
-
-
---TODO
 CREATE TABLE transactions.non_gl_stock_master
 (
     non_gl_stock_master_id                  BIGSERIAL PRIMARY KEY,
@@ -1778,6 +1779,14 @@ CREATE TABLE transactions.non_gl_stock_master
     office_id                               integer NOT NULL REFERENCES office.offices(office_id),
     reference_number                        national character varying(24) NULL,
     statement_reference                     text NULL,
+    non_taxable                             boolean NOT NULL DEFAULT(false),
+    salesperson_id                          integer NULL REFERENCES core.salespersons(salesperson_id),
+    shipper_id                              integer NULL REFERENCES core.shippers(shipper_id),
+    shipping_address_id                     integer NULL REFERENCES core.shipping_addresses(shipping_address_id),
+    shipping_charge                         money_strict2 NOT NULL   
+                                            CONSTRAINT stock_master_shipping_charge_df   
+                                            DEFAULT(0),
+    store_id                                integer NULL REFERENCES office.stores(store_id),
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
                                             DEFAULT(NOW())
@@ -1798,6 +1807,9 @@ CREATE TABLE transactions.non_gl_stock_details
     discount                                money_strict2 NOT NULL   
                                             CONSTRAINT non_gl_stock_details_discount_df   
                                             DEFAULT(0),
+    shipping_charge                         money_strict2 NOT NULL   
+                                            CONSTRAINT stock_master_shipping_charge_df   
+                                            DEFAULT(0),
     sales_tax_id                            integer NULL REFERENCES core.sales_taxes(sales_tax_id),
     tax                                     money_strict2 NOT NULL   
                                             CONSTRAINT stock_details_tax_df   
@@ -1812,7 +1824,7 @@ CREATE TABLE transactions.non_gl_stock_details
 
 CREATE TABLE transactions.non_gl_stock_tax_details
 (
-    non_gl_stock_detail_id                  bigint NOT NULL REFERENCES transactions.stock_details(stock_detail_id),
+    non_gl_stock_detail_id                  bigint NOT NULL REFERENCES transactions.non_gl_stock_details(non_gl_stock_detail_id),
     sales_tax_detail_id                     integer NOT NULL REFERENCES core.sales_tax_details(sales_tax_detail_id),
     state_sales_tax_id                      integer NULL REFERENCES core.state_sales_taxes(state_sales_tax_id),
     county_sales_tax_id                     integer NULL REFERENCES core.county_sales_taxes(county_sales_tax_id),

@@ -90,7 +90,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 </div>
 
 <p>
-    <asp:Label ID="ErrorLabel" runat="server" CssClass="error" />
+    <asp:Label ID="ErrorLabel" runat="server" CssClass="big error" />
 </p>
 
 <div id="FilterDiv" class="ui segment">

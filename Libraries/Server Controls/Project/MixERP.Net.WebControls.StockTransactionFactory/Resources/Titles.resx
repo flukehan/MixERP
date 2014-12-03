@@ -204,4 +204,13 @@
   <data name="TaxForm" xml:space="preserve">
     <value>Tax Form</value>
   </data>
+  <data name="SalesType" xml:space="preserve">
+    <value>Sales Type</value>
+  </data>
+  <data name="NonTaxableSales" xml:space="preserve">
+    <value>Nontaxable Sales</value>
+  </data>
+  <data name="TaxableSales" xml:space="preserve">
+    <value>Taxable Sales</value>
+  </data>
 </root>

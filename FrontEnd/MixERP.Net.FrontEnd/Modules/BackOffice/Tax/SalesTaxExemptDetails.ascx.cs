@@ -55,6 +55,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
             ScrudHelper.AddDisplayField(displayFields, "core.entities.entity_id", ConfigurationHelper.GetDbParameter("EntityDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.industries.industry_id", ConfigurationHelper.GetDbParameter("IndustryDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.parties.party_id", ConfigurationHelper.GetDbParameter("PartyDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.party_types.party_type_id", ConfigurationHelper.GetDbParameter("PartyTypeDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.items.item_id", ConfigurationHelper.GetDbParameter("ItemDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.item_groups.item_group_id", ConfigurationHelper.GetDbParameter("ItemGroupDisplayField"));
             return string.Join(",", displayFields);
@@ -66,6 +67,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
             ScrudHelper.AddDisplayView(displayViews, "core.sales_tax_exempts.sales_tax_exempt_id", "core.sales_tax_exempts");
             ScrudHelper.AddDisplayView(displayViews, "core.entities.entity_id", "core.entities");
             ScrudHelper.AddDisplayView(displayViews, "core.industries.industry_id", "core.industries");
+            ScrudHelper.AddDisplayView(displayViews, "core.party_types.party_type_id", "core.party_types");
             ScrudHelper.AddDisplayView(displayViews, "core.parties.party_id", "core.parties");
             ScrudHelper.AddDisplayView(displayViews, "core.items.item_id", "core.items");
             ScrudHelper.AddDisplayView(displayViews, "core.item_groups.item_group_id", "core.item_groups");

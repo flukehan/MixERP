@@ -36,7 +36,35 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
     /// This class is subject to be moved to a standalone server control class library.
     public partial class ProductViewControl : UserControl
     {
+        private bool initialized;
+
+        public string AddNewUrl { get; set; }
+
         public TranBook Book { get; set; }
+
+        public string ChecklistUrl { get; set; }
+
+        public string PreviewUrl { get; set; }
+
+        public bool ShowMergeToDeliveryButton
+        {
+            set { MergeToDeliveryButton.Visible = value; }
+        }
+
+        public bool ShowMergeToGRNButton
+        {
+            set { MergeToGRNButton.Visible = value; }
+        }
+
+        public bool ShowMergeToOrderButton
+        {
+            set { MergeToOrderButton.Visible = value; }
+        }
+
+        public bool ShowReturnButton
+        {
+            set { ReturnButton.Visible = value; }
+        }
 
         public SubTranBook SubBook { get; set; }
 
@@ -46,48 +74,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             set { this.TitleLiteral.Text = value; }
         }
 
-        public string ChecklistUrl { get; set; }
-
-        public string PreviewUrl { get; set; }
-
-        public string AddNewUrl { get; set; }
-
-        public bool ShowMergeToDeliveryButton
-        {
-            set { MergeToDeliveryButton.Visible = value; }
-        }
-
-        public bool ShowMergeToOrderButton
-        {
-            set { MergeToOrderButton.Visible = value; }
-        }
-
-        public bool ShowMergeToGRNButton
-        {
-            set { MergeToGRNButton.Visible = value; }
-        }
-
-        public bool ShowReturnButton
-        {
-            set { ReturnButton.Visible = value; }
-        }
-
-        protected void Page_Init()
-        {
-            this.BindFlagTypeDropDownList();
-        }
-
-        private void BindFlagTypeDropDownList()
-        {
-            Data.Helpers.DropDownListHelper.BindDropDownList(this.FlagDropDownList, "core", "flag_types", "flag_type_id", "flag_type_name", "flag_type_id");
-        }
-
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            this.Initialize();
-        }
-
-        private bool initialized;
         public void Initialize()
         {
             if (!initialized)
@@ -99,23 +85,127 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             }
         }
 
-        private void SetVisibleStates()
+        protected void MergeToDeliveryButton_Click(object sender, EventArgs e)
         {
-            if (this.SubBook == SubTranBook.Receipt)
+            Collection<int> values = this.GetSelectedValues();
+
+            if (this.IsValid())
             {
-                this.PriceTypeDiv.Visible = false;
+                this.Merge(values, "~/Modules/Sales/Entry/Delivery.mix");
             }
         }
 
-        private void InitializePostBackUrls()
+        protected void MergeToGRNButton_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(this.AddNewUrl))
+            Collection<int> values = this.GetSelectedValues();
+
+            if (this.IsValid())
             {
-                this.AddNewButton.Visible = false;
+                this.Merge(values, "~/Modules/Purchase/Entry/GRN.mix");
+            }
+        }
+
+        protected void MergeToOrderButton_Click(object sender, EventArgs e)
+        {
+            Collection<int> values = this.GetSelectedValues();
+
+            if (this.IsValid())
+            {
+                this.Merge(values, "~/Modules/Sales/Entry/Order.mix");
+            }
+        }
+
+        protected void Page_Init()
+        {
+            this.BindFlagTypeDropDownList();
+        }
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            this.Initialize();
+        }
+
+        protected void ProductViewGridView_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e == null)
+            {
+                return;
+            }
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                string id = e.Row.Cells[2].Text;
+                //Todo: Fix 403 errors.
+                if (!string.IsNullOrWhiteSpace(id))
+                {
+                    if (!string.IsNullOrWhiteSpace(this.PreviewUrl))
+                    {
+                        string popUpQuotationPreviewUrl = this.Page.ResolveUrl(this.PreviewUrl + "?TranId=" + id);
+
+                        using (HtmlAnchor printAnchor = (HtmlAnchor)e.Row.Cells[0].FindControl("PrintAnchor"))
+                        {
+                            if (printAnchor != null)
+                            {
+                                printAnchor.Attributes.Add("onclick", "showWindow('" + popUpQuotationPreviewUrl + "');return false;");
+                            }
+                        }
+                    }
+
+                    using (HtmlAnchor checklistAnchor = (HtmlAnchor)e.Row.Cells[0].FindControl("ChecklistAnchor"))
+                    {
+                        if (!string.IsNullOrWhiteSpace(this.ChecklistUrl))
+                        {
+                            if (checklistAnchor != null)
+                            {
+                                string checkListUrl = this.Page.ResolveUrl(this.ChecklistUrl + "?TranId=" + id);
+                                checklistAnchor.HRef = checkListUrl;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        protected void ReturnButton_Click(object sender, EventArgs e)
+        {
+            Collection<int> values = this.GetSelectedValues();
+
+            if (this.Book == TranBook.Sales)
+            {
+                Response.Redirect("~/Modules/Sales/Entry/Return.mix?TranId=" + values[0]);
                 return;
             }
 
-            this.AddNewButton.Attributes.Add("onclick", "window.location='" + ResolveUrl(this.AddNewUrl) + "'");
+            Response.Redirect("~/Modules/Purchase/Entry/Return.mix?TranId=" + values[0]);
+        }
+
+        protected void ShowButton_Click(object sender, EventArgs e)
+        {
+            this.LoadGridView();
+        }
+
+        protected void UpdateButton_Click(object sender, EventArgs e)
+        {
+            int flagTypeId = Conversion.TryCastInteger(this.FlagDropDownList.SelectedValue);
+            string resource = this.GetTransactionTableName();
+            string resourceKey = this.GetTransactionTablePrimaryKeyName();
+
+            if (this.SubBook == SubTranBook.Receipt)
+            {
+                resource = "transactions.transaction_master";
+                resourceKey = "transaction_master_id";
+            }
+
+            Collection<int> resourceIds = this.GetSelectedValues();
+
+            int userId = SessionHelper.GetUserId();
+
+            WebControls.StockTransactionView.Helpers.Flags.CreateFlag(userId, flagTypeId, resource, resourceKey, resourceIds);
+            this.LoadGridView();
+        }
+
+        private void BindFlagTypeDropDownList()
+        {
+            Data.Helpers.DropDownListHelper.BindDropDownList(this.FlagDropDownList, "core", "flag_types", "flag_type_id", "flag_type_name", "flag_type_id");
         }
 
         private Collection<int> GetSelectedValues()
@@ -150,70 +240,65 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             return values;
         }
 
-        protected void MergeToOrderButton_Click(object sender, EventArgs e)
+        private string GetTransactionTableName()
         {
-            Collection<int> values = this.GetSelectedValues();
+            string tableName = "transactions.stock_master";
 
-            if (this.IsValid())
+            if (this.IsNonGlTransaction())
             {
-                this.Merge(values, "~/Modules/Sales/Entry/Order.mix");
+                tableName = "transactions.non_gl_stock_master";
             }
+            return tableName;
         }
 
-        private void Merge(Collection<int> ids, string link)
+        private string GetTransactionTablePrimaryKeyName()
         {
-            MergeModel model = ModelFactory.GetMergeModel(ids, this.Book, this.SubBook);
+            string key = "stock_master_id";
 
-            if (model.View == null)
+            if (this.IsNonGlTransaction())
             {
+                key = "non_gl_stock_master_id";
+            }
+            return key;
+        }
+
+        private void InitializePostBackUrls()
+        {
+            if (string.IsNullOrWhiteSpace(this.AddNewUrl))
+            {
+                this.AddNewButton.Visible = false;
                 return;
             }
 
-            if (model.View.Count.Equals(0))
-            {
-                return;
-            }
-
-            HttpContext.Current.Session["Product"] = model;
-            HttpContext.Current.Response.Redirect(link);
+            this.AddNewButton.Attributes.Add("onclick", "window.location='" + ResolveUrl(this.AddNewUrl) + "'");
         }
 
-        protected void MergeToDeliveryButton_Click(object sender, EventArgs e)
+        private bool IsNonGlTransaction()
         {
-            Collection<int> values = this.GetSelectedValues();
-
-            if (this.IsValid())
-            {
-                this.Merge(values, "~/Modules/Sales/Entry/Delivery.mix");
-            }
-        }
-
-        protected void MergeToGRNButton_Click(object sender, EventArgs e)
-        {
-            Collection<int> values = this.GetSelectedValues();
-
-            if (this.IsValid())
-            {
-                this.Merge(values, "~/Modules/Purchase/Entry/GRN.mix");
-            }
-        }
-
-        protected void ReturnButton_Click(object sender, EventArgs e)
-        {
-            Collection<int> values = this.GetSelectedValues();
-
             if (this.Book == TranBook.Sales)
             {
-                Response.Redirect("~/Modules/Sales/Entry/Return.mix?TranId=" + values[0]);
-                return;
+                switch (this.SubBook)
+                {
+                    case SubTranBook.Receipt:
+                        return true;
+
+                    case SubTranBook.Order:
+                        return true;
+
+                    case SubTranBook.Quotation:
+                        return true;
+                }
             }
 
-            Response.Redirect("~/Modules/Purchase/Entry/Return.mix?TranId=" + values[0]);
-        }
+            if (this.Book == TranBook.Purchase)
+            {
+                if (this.SubBook == SubTranBook.Order)
+                {
+                    return true;
+                }
+            }
 
-        protected void ShowButton_Click(object sender, EventArgs e)
-        {
-            this.LoadGridView();
+            return false;
         }
 
         private void LoadGridView()
@@ -259,152 +344,33 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             }
         }
 
-        private bool IsNonGlTransaction()
+        private void Merge(Collection<int> ids, string link)
         {
-            if (this.Book == TranBook.Sales)
-            {
-                switch (this.SubBook)
-                {
-                    case SubTranBook.Receipt:
-                        return true;
+            MergeModel model = ModelFactory.GetMergeModel(ids, this.Book, this.SubBook);
 
-                    case SubTranBook.Order:
-                        return true;
-
-                    case SubTranBook.Quotation:
-                        return true;
-                }
-            }
-
-            if (this.Book == TranBook.Purchase)
-            {
-                if (this.SubBook == SubTranBook.Order)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private string GetTransactionTableName()
-        {
-            string tableName = "transactions.stock_master";
-
-            if (this.IsNonGlTransaction())
-            {
-                tableName = "transactions.non_gl_stock_master";
-            }
-            return tableName;
-        }
-
-        private string GetTransactionTablePrimaryKeyName()
-        {
-            string key = "stock_master_id";
-
-            if (this.IsNonGlTransaction())
-            {
-                key = "non_gl_stock_master_id";
-            }
-            return key;
-        }
-
-        protected void ProductViewGridView_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            if (e == null)
+            if (model.View == null)
             {
                 return;
             }
-            if (e.Row.RowType == DataControlRowType.DataRow)
+
+            if (model.View.Count.Equals(0))
             {
-                string id = e.Row.Cells[2].Text;
-                //Todo: Fix 403 errors.
-                if (!string.IsNullOrWhiteSpace(id))
-                {
-                    if (!string.IsNullOrWhiteSpace(this.PreviewUrl))
-                    {
-                        string popUpQuotationPreviewUrl = this.Page.ResolveUrl(this.PreviewUrl + "?TranId=" + id);
-
-                        using (HtmlAnchor printAnchor = (HtmlAnchor)e.Row.Cells[0].FindControl("PrintAnchor"))
-                        {
-                            if (printAnchor != null)
-                            {
-                                printAnchor.Attributes.Add("onclick", "showWindow('" + popUpQuotationPreviewUrl + "');return false;");
-                            }
-                        }
-                    }
-
-                    using (HtmlAnchor checklistAnchor = (HtmlAnchor)e.Row.Cells[0].FindControl("ChecklistAnchor"))
-                    {
-                        if (!string.IsNullOrWhiteSpace(this.ChecklistUrl))
-                        {
-                            if (checklistAnchor != null)
-                            {
-                                string checkListUrl = this.Page.ResolveUrl(this.ChecklistUrl + "?TranId=" + id);
-                                checklistAnchor.HRef = checkListUrl;
-                            }
-                        }
-                    }
-                }
+                return;
             }
+
+            HttpContext.Current.Session["Product"] = model;
+            HttpContext.Current.Response.Redirect(link);
         }
 
-        protected void UpdateButton_Click(object sender, EventArgs e)
+        private void SetVisibleStates()
         {
-            int flagTypeId = Conversion.TryCastInteger(this.FlagDropDownList.SelectedValue);
-            string resource = this.GetTransactionTableName();
-            string resourceKey = this.GetTransactionTablePrimaryKeyName();
-
             if (this.SubBook == SubTranBook.Receipt)
             {
-                resource = "transactions.transaction_master";
-                resourceKey = "transaction_master_id";
+                this.PriceTypeDiv.Visible = false;
             }
-
-            Collection<int> resourceIds = this.GetSelectedValues();
-
-            int userId = SessionHelper.GetUserId();
-
-            WebControls.StockTransactionView.Helpers.Flags.CreateFlag(userId, flagTypeId, resource, resourceKey, resourceIds);
-            this.LoadGridView();
         }
 
         #region Validation
-
-        private bool IsValid()
-        {
-            Collection<int> values = this.GetSelectedValues();
-
-            if (values.Count.Equals(0))
-            {
-                this.ErrorLabel.Text = "Nothing selected.";
-                return false;
-            }
-
-            if (!this.BelongToSameParty(values))
-            {
-                return false;
-            }
-            if (this.AreAlreadyMerged(values))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        private bool BelongToSameParty(Collection<int> values)
-        {
-            bool belongToSameParty = NonGlStockTransaction.TransactionIdsBelongToSameParty(values);
-
-            if (!belongToSameParty)
-            {
-                this.ErrorLabel.Text = "Cannot merge transactions of different parties into a single batch. Please try again.";
-                return false;
-            }
-
-            return true;
-        }
 
         private bool AreAlreadyMerged(Collection<int> values)
         {
@@ -415,6 +381,20 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             if (this.AreSalesOrdersAlreadyMerged(values))
             {
                 return true;
+            }
+
+            return false;
+        }
+
+        private bool AreSalesOrdersAlreadyMerged(Collection<int> values)
+        {
+            if (this.Book == TranBook.Sales && this.SubBook == SubTranBook.Order)
+            {
+                if (NonGlStockTransaction.AreSalesOrdersAlreadyMerged(values))
+                {
+                    this.ErrorLabel.Text = "The selected transaction(s) contains item(s) which have already been merged. Please try again.";
+                    return true;
+                }
             }
 
             return false;
@@ -434,18 +414,57 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             return false;
         }
 
-        private bool AreSalesOrdersAlreadyMerged(Collection<int> values)
+        private bool BelongToSameParty(Collection<int> values)
         {
-            if (this.Book == TranBook.Sales && this.SubBook == SubTranBook.Order)
+            bool belongToSameParty = NonGlStockTransaction.TransactionIdsBelongToSameParty(values);
+
+            if (!belongToSameParty)
             {
-                if (NonGlStockTransaction.AreSalesOrdersAlreadyMerged(values))
+                this.ErrorLabel.Text = "Cannot merge transactions of different parties into a single batch. Please try again.";
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool ContainsIncompatibleTaxes(Collection<int> values)
+        {
+            if (this.Book == TranBook.Sales)
+            {
+                if (NonGlStockTransaction.ContainsIncompatibleTaxes(values))
                 {
-                    this.ErrorLabel.Text = "The selected transaction(s) contains item(s) which have already been merged. Please try again.";
+                    this.ErrorLabel.Text = "Cannot merge transactions having incompatible tax types. Please try again.";
                     return true;
                 }
             }
 
             return false;
+        }
+
+        private bool IsValid()
+        {
+            Collection<int> values = this.GetSelectedValues();
+
+            if (values.Count.Equals(0))
+            {
+                this.ErrorLabel.Text = "Nothing selected.";
+                return false;
+            }
+
+            if (!this.BelongToSameParty(values))
+            {
+                return false;
+            }
+            if (this.AreAlreadyMerged(values))
+            {
+                return false;
+            }
+            if (this.ContainsIncompatibleTaxes(values))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         #endregion Validation

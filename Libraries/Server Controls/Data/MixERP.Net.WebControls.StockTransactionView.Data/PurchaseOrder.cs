@@ -44,20 +44,20 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data
             }
 
             string sql = @"SELECT
-	                        transactions.non_gl_stock_master.value_date,
-	                        transactions.non_gl_stock_master.party_id,
-	                        core.parties.party_code,
-	                        transactions.non_gl_stock_master.price_type_id,
-	                        transactions.non_gl_stock_master.reference_number,
-	                        core.items.item_code,
-	                        core.items.item_name,
-	                        transactions.non_gl_stock_details.quantity,
-	                        core.units.unit_name,
-	                        transactions.non_gl_stock_details.price,
-	                        transactions.non_gl_stock_details.discount,
-	                        transactions.non_gl_stock_details.tax_rate,
-	                        transactions.non_gl_stock_details.tax,
-	                        transactions.non_gl_stock_master.statement_reference
+                            transactions.non_gl_stock_master.value_date,
+                            transactions.non_gl_stock_master.party_id,
+                            core.parties.party_code,
+                            transactions.non_gl_stock_master.price_type_id,
+                            transactions.non_gl_stock_master.reference_number,
+                            core.items.item_code,
+                            core.items.item_name,
+                            transactions.non_gl_stock_details.quantity,
+                            core.units.unit_name,
+                            transactions.non_gl_stock_details.price,
+                            transactions.non_gl_stock_details.discount,
+                            core.get_sales_tax_code_by_sales_tax_id(transactions.non_gl_stock_details.sales_tax_id) as tax_code,
+                            transactions.non_gl_stock_details.tax,
+                            transactions.non_gl_stock_master.statement_reference
                         FROM
                         transactions.non_gl_stock_master
                         INNER JOIN

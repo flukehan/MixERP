@@ -27,14 +27,19 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
 {
     public static class Quotation
     {
-        public static long Add(DateTime valueDate, string partyCode, int priceTypeId, Collection<StockMasterDetailModel> details, string referenceNumber, string statementReference, Collection<long> transactionIdCollection, Collection<AttachmentModel> attachments)
+        public static long Add(DateTime valueDate, string partyCode, int priceTypeId, Collection<StockMasterDetailModel> details, string referenceNumber, string statementReference, Collection<long> transactionIdCollection, Collection<AttachmentModel> attachments, bool nonTaxable, int salesPersonId, int shipperId, string shippingAddressCode, int storeId
+)
         {
             StockMasterModel stockMaster = new StockMasterModel();
 
             stockMaster.PartyCode = partyCode;
             stockMaster.PriceTypeId = priceTypeId;
+            stockMaster.SalespersonId = salesPersonId;
+            stockMaster.ShipperId = shipperId;
+            stockMaster.ShippingAddressCode = shippingAddressCode;
+            stockMaster.StoreId = storeId;
 
-            long nonGlStockMasterId = NonGlStockTransaction.Add("Sales.Quotation", valueDate, SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), referenceNumber, statementReference, stockMaster, details, transactionIdCollection, attachments);
+            long nonGlStockMasterId = NonGlStockTransaction.Add("Sales.Quotation", valueDate, SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), referenceNumber, statementReference, stockMaster, details, transactionIdCollection, attachments, nonTaxable);
             return nonGlStockMasterId;
         }
     }

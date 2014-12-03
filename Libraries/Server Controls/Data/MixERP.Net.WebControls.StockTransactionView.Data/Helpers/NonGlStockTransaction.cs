@@ -29,31 +29,99 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data.Helpers
 {
     public static class NonGlStockTransaction
     {
-        public static DataTable GetView(string book, DateTime dateFrom, DateTime dateTo, string office, string party, string priceType, string user, string referenceNumber, string statementReference)
+        public static bool AreSalesOrdersAlreadyMerged(Collection<int> ids)
         {
-            return GetView(SessionHelper.GetUserId(), book, SessionHelper.GetOfficeId(), dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference);
-        }
+            if (ids == null)
+            {
+                return false;
+            }
 
-        private static DataTable GetView(int userId, string book, int officeId, DateTime dateFrom, DateTime dateTo, string office, string party, string priceType, string user, string referenceNumber, string statementReference)
-        {
-            const string sql = "SELECT * FROM transactions.get_non_gl_product_view(@UserId, @Book, @OfficeId, @DateFrom, @DateTo, @Office, @Party, @PriceType, @User, @ReferenceNumber, @StatementReference);";
+            //Crate an array object to store the parameters.
+            var parameters = new string[ids.Count];
+
+            //Iterate through the ids and create a parameter array.
+            for (int i = 0; i < ids.Count; i++)
+            {
+                parameters[i] = "@Id" + Conversion.TryCastString(i);
+            }
+
+            string sql = @"SELECT transactions.are_sales_orders_already_merged(" + string.Join(",", parameters) + ");";
 
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@UserId", userId);
-                command.Parameters.AddWithValue("@Book", book);
-                command.Parameters.AddWithValue("@OfficeId", officeId);
-                command.Parameters.AddWithValue("@DateFrom", dateFrom);
-                command.Parameters.AddWithValue("@DateTo", dateTo);
-                command.Parameters.AddWithValue("@Office", office);
-                command.Parameters.AddWithValue("@Party", party);
-                command.Parameters.AddWithValue("@PriceType", priceType);
-                command.Parameters.AddWithValue("@User", user);
-                command.Parameters.AddWithValue("@ReferenceNumber", referenceNumber);
-                command.Parameters.AddWithValue("@StatementReference", statementReference);
+                //Iterate through the IDs and add PostgreSQL parameters.
+                for (int i = 0; i < ids.Count; i++)
+                {
+                    command.Parameters.AddWithValue("@Id" + Conversion.TryCastString(i), ids[i]);
+                }
 
-                return DbOperations.GetDataTable(command);
+                return Conversion.TryCastBoolean(DbOperations.GetScalarValue(command));
             }
+        }
+
+        public static bool AreSalesQuotationsAlreadyMerged(Collection<int> ids)
+        {
+            if (ids == null)
+            {
+                return false;
+            }
+
+            //Crate an array object to store the parameters.
+            var parameters = new string[ids.Count];
+
+            //Iterate through the ids and create a parameter array.
+            for (int i = 0; i < ids.Count; i++)
+            {
+                parameters[i] = "@Id" + Conversion.TryCastString(i);
+            }
+
+            string sql = @"SELECT transactions.are_sales_quotations_already_merged(" + string.Join(",", parameters) + ");";
+
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                //Iterate through the IDs and add PostgreSQL parameters.
+                for (int i = 0; i < ids.Count; i++)
+                {
+                    command.Parameters.AddWithValue("@Id" + Conversion.TryCastString(i), ids[i]);
+                }
+
+                return Conversion.TryCastBoolean(DbOperations.GetScalarValue(command));
+            }
+        }
+
+        public static bool ContainsIncompatibleTaxes(Collection<int> ids)
+        {
+            if (ids == null)
+            {
+                return false;
+            }
+
+            //Crate an array object to store the parameters.
+            var parameters = new string[ids.Count];
+
+            //Iterate through the ids and create a parameter array.
+            for (int i = 0; i < ids.Count; i++)
+            {
+                parameters[i] = "@Id" + Conversion.TryCastString(i);
+            }
+
+            string sql = @"SELECT transactions.contains_incompatible_taxes(" + string.Join(",", parameters) + ");";
+
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                //Iterate through the IDs and add PostgreSQL parameters.
+                for (int i = 0; i < ids.Count; i++)
+                {
+                    command.Parameters.AddWithValue("@Id" + Conversion.TryCastString(i), ids[i]);
+                }
+
+                return Conversion.TryCastBoolean(DbOperations.GetScalarValue(command));
+            }
+        }
+
+        public static DataTable GetView(string book, DateTime dateFrom, DateTime dateTo, string office, string party, string priceType, string user, string referenceNumber, string statementReference)
+        {
+            return GetView(SessionHelper.GetUserId(), book, SessionHelper.GetOfficeId(), dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference);
         }
 
         public static bool TransactionIdsBelongToSameParty(Collection<int> ids)
@@ -90,63 +158,25 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data.Helpers
             }
         }
 
-        public static bool AreSalesQuotationsAlreadyMerged(Collection<int> ids)
+        private static DataTable GetView(int userId, string book, int officeId, DateTime dateFrom, DateTime dateTo, string office, string party, string priceType, string user, string referenceNumber, string statementReference)
         {
-            if (ids == null)
-            {
-                return false;
-            }
-
-            //Crate an array object to store the parameters.
-            var parameters = new string[ids.Count];
-
-            //Iterate through the ids and create a parameter array.
-            for (int i = 0; i < ids.Count; i++)
-            {
-                parameters[i] = "@Id" + Conversion.TryCastString(i);
-            }
-
-            string sql = @"SELECT transactions.are_sales_quotations_already_merged(" + string.Join(",", parameters) + ");";
+            const string sql = "SELECT * FROM transactions.get_non_gl_product_view(@UserId, @Book, @OfficeId, @DateFrom, @DateTo, @Office, @Party, @PriceType, @User, @ReferenceNumber, @StatementReference);";
 
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                //Iterate through the IDs and add PostgreSQL parameters.
-                for (int i = 0; i < ids.Count; i++)
-                {
-                    command.Parameters.AddWithValue("@Id" + Conversion.TryCastString(i), ids[i]);
-                }
+                command.Parameters.AddWithValue("@UserId", userId);
+                command.Parameters.AddWithValue("@Book", book);
+                command.Parameters.AddWithValue("@OfficeId", officeId);
+                command.Parameters.AddWithValue("@DateFrom", dateFrom);
+                command.Parameters.AddWithValue("@DateTo", dateTo);
+                command.Parameters.AddWithValue("@Office", office);
+                command.Parameters.AddWithValue("@Party", party);
+                command.Parameters.AddWithValue("@PriceType", priceType);
+                command.Parameters.AddWithValue("@User", user);
+                command.Parameters.AddWithValue("@ReferenceNumber", referenceNumber);
+                command.Parameters.AddWithValue("@StatementReference", statementReference);
 
-                return Conversion.TryCastBoolean(DbOperations.GetScalarValue(command));
-            }
-        }
-
-        public static bool AreSalesOrdersAlreadyMerged(Collection<int> ids)
-        {
-            if (ids == null)
-            {
-                return false;
-            }
-
-            //Crate an array object to store the parameters.
-            var parameters = new string[ids.Count];
-
-            //Iterate through the ids and create a parameter array.
-            for (int i = 0; i < ids.Count; i++)
-            {
-                parameters[i] = "@Id" + Conversion.TryCastString(i);
-            }
-
-            string sql = @"SELECT transactions.are_sales_orders_already_merged(" + string.Join(",", parameters) + ");";
-
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                //Iterate through the IDs and add PostgreSQL parameters.
-                for (int i = 0; i < ids.Count; i++)
-                {
-                    command.Parameters.AddWithValue("@Id" + Conversion.TryCastString(i), ids[i]);
-                }
-
-                return Conversion.TryCastBoolean(DbOperations.GetScalarValue(command));
+                return DbOperations.GetDataTable(command);
             }
         }
     }

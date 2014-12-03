@@ -582,4 +582,7 @@
   <data name="use_tax_collecting_account_id" xml:space="preserve">
     <value>Use Tax Collecting Account Id</value>
   </data>
+  <data name="party_type_id" xml:space="preserve">
+    <value>Party Type Id</value>
+  </data>
 </root>

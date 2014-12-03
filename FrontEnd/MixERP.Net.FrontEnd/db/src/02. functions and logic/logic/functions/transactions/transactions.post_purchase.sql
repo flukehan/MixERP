@@ -60,6 +60,10 @@ $$
     DECLARE _shipping_charge                money_strict2;
     DECLARE _tax                            RECORD;
 BEGIN
+    IF(policy.can_post_transaction(_login_id, _user_id, _office_id, _book_name) = false) THEN
+        RETURN 0;
+    END IF;
+
     _party_id                               := core.get_party_id_by_party_code(_party_code);
     _default_currency_code                  := transactions.get_default_currency_code_by_office_id(_office_id);
 
@@ -114,6 +118,15 @@ BEGIN
         unit_id                     = core.get_unit_id_by_unit_name(unit_name),
         base_quantity               = core.get_base_quantity_by_unit_name(unit_name, quantity),
         base_unit_id                = core.get_base_unit_id_by_unit_name(unit_name);
+
+    IF EXISTS
+    (
+            SELECT 1 FROM temp_stock_details AS details
+            WHERE core.is_valid_unit_id(details.unit_id, details.item_id) = false
+            LIMIT 1
+    ) THEN
+        RAISE EXCEPTION 'Item/unit mismatch.';
+    END IF;
 
     FOR _tax IN SELECT * FROM temp_stock_details ORDER BY id
     LOOP

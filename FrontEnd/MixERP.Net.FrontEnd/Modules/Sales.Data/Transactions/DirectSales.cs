@@ -27,7 +27,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
 {
     public static class DirectSales
     {
-        public static long Add(DateTime valueDate, int storeId, bool isCredit, string partyCode, int agentId, int priceTypeId, Collection<StockMasterDetailModel> details, int shipperId, string shippingAddressCode, decimal shippingCharge, int cashRepositoryId, int costCenterId, string referenceNumber, string statementReference, Collection<AttachmentModel> attachments)
+        public static long Add(DateTime valueDate, int storeId, bool isCredit, string partyCode, int agentId, int priceTypeId, Collection<StockMasterDetailModel> details, int shipperId, string shippingAddressCode, decimal shippingCharge, int cashRepositoryId, int costCenterId, string referenceNumber, string statementReference, Collection<AttachmentModel> attachments, bool nonTaxable)
         {
             StockMasterModel stockMaster = new StockMasterModel();
 
@@ -41,7 +41,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
             stockMaster.CashRepositoryId = cashRepositoryId;
             stockMaster.StoreId = storeId;
 
-            long transactionMasterId = GlTransaction.Add("Sales.Direct", valueDate, SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), costCenterId, referenceNumber, statementReference, stockMaster, details, attachments);
+            long transactionMasterId = GlTransaction.Add("Sales.Direct", valueDate, SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), costCenterId, referenceNumber, statementReference, stockMaster, details, attachments, nonTaxable);
 
             TransactionGovernor.Autoverification.Autoverify.PassTransactionMasterId(transactionMasterId);
 

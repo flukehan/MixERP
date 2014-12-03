@@ -16,6 +16,7 @@ DROP FUNCTION IF EXISTS transactions.post_sales
     _shipper_id                             integer,
     _shipping_address_code                  national character varying(12),
     _store_id                               integer,
+    _is_non_taxable_sales                   boolean,
     _details                                transactions.stock_detail_type[],
     _attachments                            core.attachment_type[]
 );
@@ -38,6 +39,7 @@ CREATE FUNCTION transactions.post_sales
     _shipper_id                             integer,
     _shipping_address_code                  national character varying(12),
     _store_id                               integer,
+    _is_non_taxable_sales                   boolean,
     _details                                transactions.stock_detail_type[],
     _attachments                            core.attachment_type[]
 )
@@ -59,8 +61,12 @@ $$
     DECLARE _tran_counter                   integer;
     DECLARE _transaction_code               text;
     DECLARE _shipping_charge                money_strict2;
-    DECLARE _tax                            RECORD;
+    DECLARE this                            RECORD;
 BEGIN        
+    IF(policy.can_post_transaction(_login_id, _user_id, _office_id, _book_name) = false) THEN
+        RETURN 0;
+    END IF;
+
     _party_id                               := core.get_party_id_by_party_code(_party_code);
     _default_currency_code                  := transactions.get_default_currency_code_by_office_id(_office_id);
 
@@ -108,6 +114,7 @@ BEGIN
     SELECT store_id, item_code, quantity, unit_name, price, discount, shipping_charge, tax_form, tax
     FROM explode_array(_details);
 
+
     UPDATE temp_stock_details 
     SET
         tran_type                   = 'Cr',
@@ -117,9 +124,22 @@ BEGIN
         base_quantity               = core.get_base_quantity_by_unit_name(unit_name, quantity),
         base_unit_id                = core.get_base_unit_id_by_unit_name(unit_name);
             
+    IF EXISTS
+    (
+            SELECT 1 FROM temp_stock_details AS details
+            WHERE core.is_valid_unit_id(details.unit_id, details.item_id) = false
+            LIMIT 1
+    ) THEN
+        RAISE EXCEPTION 'Item/unit mismatch.';
+    END IF;
 
+    IF(_is_non_taxable_sales) THEN
+        IF EXISTS(SELECT * FROM temp_stock_details WHERE sales_tax_id IS NOT NULL LIMIT 1) THEN
+            RAISE EXCEPTION 'You cannot provide sales tax information for non taxable sales.';
+        END IF;
+    END IF;
 
-    FOR _tax IN SELECT * FROM temp_stock_details ORDER BY id
+    FOR this IN SELECT * FROM temp_stock_details ORDER BY id
     LOOP
         INSERT INTO temp_stock_tax_details
         (
@@ -134,7 +154,7 @@ BEGIN
             tax
         )
         SELECT 
-            _tax.id, 
+            this.id, 
             sales_tax_detail_code,
             account_id, 
             sales_tax_detail_id, 
@@ -143,13 +163,13 @@ BEGIN
             taxable_amount, 
             rate, 
             tax
-        FROM transactions.get_sales_tax('Sales', _store_id, _party_code, _shipping_address_code, _price_type_id, _tax.item_code, _tax.price, _tax.quantity, _tax.discount, _tax.shipping_charge, _tax.sales_tax_id);
+        FROM transactions.get_sales_tax('Sales', _store_id, _party_code, _shipping_address_code, _price_type_id, this.item_code, this.price, this.quantity, this.discount, this.shipping_charge, this.sales_tax_id);
     END LOOP;
 
     UPDATE temp_stock_details
     SET tax =
     (SELECT SUM(COALESCE(temp_stock_tax_details.tax, 0)) FROM temp_stock_tax_details
-    WHERE temp_stock_tax_details.temp_stock_detail_id = temp_stock_tax_details.id);
+    WHERE temp_stock_tax_details.temp_stock_detail_id = temp_stock_details.id);
 
 
     SELECT SUM(COALESCE(tax, 0))                                INTO _tax_total FROM temp_stock_tax_details;
@@ -193,7 +213,7 @@ BEGIN
     END IF;
 
     IF(_tax_total > 0) THEN
-        FOR _tax IN 
+        FOR this IN 
         SELECT 
             format('P: %s x R: %s %% = %s (%s)/', SUM(principal)::text, rate::text, SUM(tax)::text, sales_tax_detail_code) as statement_reference,
             account_id,
@@ -202,7 +222,7 @@ BEGIN
         GROUP BY account_id, rate, sales_tax_detail_code
         LOOP
             INSERT INTO temp_transaction_details(tran_type, account_id, statement_reference, currency_code, amount_in_currency, er, local_currency_code, amount_in_local_currency)
-            SELECT 'Cr', _tax.account_id, _tax.statement_reference || _statement_reference, _default_currency_code, _tax.tax, 1, _default_currency_code, _tax.tax;
+            SELECT 'Cr', this.account_id, this.statement_reference || _statement_reference, _default_currency_code, this.tax, 1, _default_currency_code, this.tax;
         END LOOP;    
     END IF;
 
@@ -245,24 +265,24 @@ BEGIN
     ORDER BY tran_type DESC;
 
 
-    INSERT INTO transactions.stock_master(value_date, stock_master_id, transaction_master_id, party_id, salesperson_id, price_type_id, is_credit, shipper_id, shipping_address_id, shipping_charge, store_id, cash_repository_id)
-    SELECT _value_date, _stock_master_id, _transaction_master_id, _party_id, _salesperson_id, _price_type_id, _is_credit, _shipper_id, _shipping_address_id, _shipping_charge, _store_id, _cash_repository_id;
+    INSERT INTO transactions.stock_master(value_date, stock_master_id, transaction_master_id, party_id, salesperson_id, price_type_id, is_credit, shipper_id, shipping_address_id, shipping_charge, store_id, cash_repository_id, non_taxable)
+    SELECT _value_date, _stock_master_id, _transaction_master_id, _party_id, _salesperson_id, _price_type_id, _is_credit, _shipper_id, _shipping_address_id, _shipping_charge, _store_id, _cash_repository_id, _is_non_taxable_sales;
             
 
-    FOR _tax IN SELECT * FROM temp_stock_details ORDER BY id
+    FOR this IN SELECT * FROM temp_stock_details ORDER BY id
     LOOP
         _stock_detail_id        := nextval(pg_get_serial_sequence('transactions.stock_details', 'stock_detail_id'));
 
-        INSERT INTO transactions.stock_details(stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, sales_tax_id, tax)
-        SELECT _stock_detail_id, _value_date, _tax.stock_master_id, _tax.tran_type, _tax.store_id, _tax.item_id, _tax.quantity, _tax.unit_id, _tax.base_quantity, _tax.base_unit_id, _tax.price, COALESCE(_tax.cost_of_goods_sold, 0), _tax.discount, _tax.sales_tax_id, COALESCE(_tax.tax, 0) 
+        INSERT INTO transactions.stock_details(stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax)
+        SELECT _stock_detail_id, _value_date, this.stock_master_id, this.tran_type, this.store_id, this.item_id, this.quantity, this.unit_id, this.base_quantity, this.base_unit_id, this.price, COALESCE(this.cost_of_goods_sold, 0), this.discount, this.shipping_charge, this.sales_tax_id, COALESCE(this.tax, 0) 
         FROM temp_stock_details
-        WHERE id = _tax.id;
+        WHERE id = this.id;
 
 
         INSERT INTO transactions.stock_tax_details(stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax)
         SELECT _stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax
         FROM temp_stock_tax_details
-        WHERE temp_stock_detail_id = _tax.id;
+        WHERE temp_stock_detail_id = this.id;
         
     END LOOP;
 
@@ -281,12 +301,12 @@ LANGUAGE plpgsql;
 
 
 
---    SELECT * FROM transactions.post_sales('Sales.Direct', 2, 1, 1, '1-1-2020', 1, 'asdf', 'Test', 1, false, 'JASMI-0002', 1, 1, 1, NULL, 1, 
---    ARRAY[
---               ROW(1, 'RMBP', 1, 'Piece',180000, 0, 200, 'None', 0)::transactions.stock_detail_type,
---               ROW(1, '13MBA', 1, 'Dozen',130000, 300, 30, 'None', 0)::transactions.stock_detail_type,
---               ROW(1, '11MBA', 1, 'Piece',110000, 5000, 50, 'None', 0)::transactions.stock_detail_type], 
---    ARRAY[NULL::core.attachment_type]);
+--      SELECT * FROM transactions.post_sales('Sales.Direct', 2, 1, 1, '1-1-2020', 1, 'asdf', 'Test', 1, false, 'JASMI-0002', 1, 1, 1, NULL, 1, false,
+--      ARRAY[
+--                 ROW(1, 'RMBP', 1, 'Piece',180000, 0, 200, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type,
+--                 ROW(1, '13MBA', 1, 'Dozen',130000, 300, 30, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type,
+--                 ROW(1, '11MBA', 1, 'Piece',110000, 5000, 50, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type], 
+--      ARRAY[NULL::core.attachment_type]);
 
 
 

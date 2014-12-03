@@ -27,7 +27,7 @@ saveButton.click(function () {
 });
 
 var save = function () {
-    var ajaxSaveOder = saveOrder(valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, cashRepositoryId, costCenterId, agentId, statementReference, transactionIds, attachments);
+    var ajaxSaveOder = saveOrder(valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, cashRepositoryId, costCenterId, statementReference, transactionIds, attachments, nonTaxable, salespersonId);
 
     ajaxSaveOder.done(function (response) {
         var id = response.d;
@@ -41,7 +41,7 @@ var save = function () {
     });
 };
 
-var saveOrder = function (valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, cashRepositoryId, costCenterId, agentId, statementReference, transactionIds, attachments) {
+var saveOrder = function (valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, cashRepositoryId, costCenterId, statementReference, transactionIds, attachments, nonTaxable, salespersonId) {
     var d = "";
     d = appendParameter(d, "valueDate", valueDate);
     d = appendParameter(d, "storeId", storeId);
@@ -52,6 +52,10 @@ var saveOrder = function (valueDate, storeId, partyCode, priceTypeId, referenceN
     d = appendParameter(d, "statementReference", statementReference);
     d = appendParameter(d, "transactionIds", transactionIds);
     d = appendParameter(d, "attachmentsJSON", attachments);
+    d = appendParameter(d, "nonTaxable", nonTaxable);
+    d = appendParameter(d, "salespersonId", salespersonId);
+    d = appendParameter(d, "shipperId", shipperId);
+    d = appendParameter(d, "shippingAddressCode", shippingAddressCode);
 
     d = getData(d);
     url = "/Modules/Sales/Services/Entry/Order.asmx/Save";

@@ -53,7 +53,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
             string detail = StockMasterDetailHelper.CreateStockMasterDetailParameter(details);
             string attachment = AttachmentHelper.CreateAttachmentModelParameter(attachments);
 
-            string sql = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM transactions.post_non_gl_transaction(@Book, @OfficeId, @UserId, @LoginId, @ValueDate, @ReferenceNumber, @StatementReference, @PartyCode, @PriceTypeId, ARRAY[{0}]::bigint[], ARRAY[{1}], ARRAY[{2}]);", tranIds, detail, attachment);
+            string sql = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM transactions.post_non_gl_transaction(@Book, @OfficeId, @UserId, @LoginId, @ValueDate, @ReferenceNumber, @StatementReference, @PartyCode, @PriceTypeId, false, @SalesPersonId, @ShipperId, @ShippingAddressCode, @StoreId,  ARRAY[{0}]::bigint[], ARRAY[{1}], ARRAY[{2}]);", tranIds, detail, attachment);
 
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
@@ -73,6 +73,35 @@ namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
                 else
                 {
                     command.Parameters.AddWithValue("@PriceTypeId", stockMaster.PriceTypeId);
+                }
+
+                if (stockMaster.SalespersonId.Equals(0))
+                {
+                    command.Parameters.AddWithValue("@SalesPersonId", DBNull.Value);
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("@SalesPersonId", stockMaster.SalespersonId);
+                }
+
+                if (stockMaster.ShipperId.Equals(0))
+                {
+                    command.Parameters.AddWithValue("@ShipperId", DBNull.Value);
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("@ShipperId", stockMaster.ShipperId);
+                }
+
+                command.Parameters.AddWithValue("@ShippingAddressCode", stockMaster.ShippingAddressCode);
+
+                if (stockMaster.StoreId.Equals(0))
+                {
+                    command.Parameters.AddWithValue("@StoreId", DBNull.Value);
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("@StoreId", stockMaster.StoreId);
                 }
 
                 command.Parameters.AddRange(ParameterHelper.AddBigintArrayParameter(transactionIdCollection, "@TranId").ToArray());

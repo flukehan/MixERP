@@ -27,7 +27,7 @@ saveButton.click(function () {
 });
 
 var save = function () {
-    var ajaxSaveQuotation = saveQuotation(valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, cashRepositoryId, costCenterId, agentId, statementReference, transactionIds, attachments);
+    var ajaxSaveQuotation = saveQuotation(valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, cashRepositoryId, costCenterId, salespersonId, statementReference, transactionIds, attachments, nonTaxable);
 
     ajaxSaveQuotation.done(function (response) {
         var id = response.d;
@@ -41,7 +41,7 @@ var save = function () {
     });
 };
 
-var saveQuotation = function (valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, cashRepositoryId, costCenterId, agentId, statementReference, transactionIds, attachments) {
+var saveQuotation = function (valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, cashRepositoryId, costCenterId, salePersonId, statementReference, transactionIds, attachments, nonTaxable) {
     var d = "";
     d = appendParameter(d, "valueDate", valueDate);
     d = appendParameter(d, "storeId", storeId);
@@ -52,6 +52,10 @@ var saveQuotation = function (valueDate, storeId, partyCode, priceTypeId, refere
     d = appendParameter(d, "statementReference", statementReference);
     d = appendParameter(d, "transactionIds", transactionIds);
     d = appendParameter(d, "attachmentsJSON", attachments);
+    d = appendParameter(d, "nonTaxable", nonTaxable);
+    d = appendParameter(d, "salespersonId", salespersonId);
+    d = appendParameter(d, "shipperId", shipperId);
+    d = appendParameter(d, "shippingAddressCode", shippingAddressCode);
 
     d = getData(d);
 

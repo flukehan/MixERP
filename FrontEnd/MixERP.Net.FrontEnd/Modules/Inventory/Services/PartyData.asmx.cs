@@ -98,7 +98,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
                 party.MiddleName = Conversion.TryCastString(table.Rows[0]["middle_name"]);
                 party.LastName = Conversion.TryCastString(table.Rows[0]["last_name"]);
                 party.PartyName = Conversion.TryCastString(table.Rows[0]["party_name"]);
-                party.POBox = Conversion.TryCastString(table.Rows[0]["po_box"]);
+                party.ZipCode = Conversion.TryCastString(table.Rows[0]["zip_code"]);
                 party.AddressLine1 = Conversion.TryCastString(table.Rows[0]["address_line_1"]);
                 party.AddressLine2 = Conversion.TryCastString(table.Rows[0]["address_line_2"]);
                 party.Street = Conversion.TryCastString(table.Rows[0]["street"]);

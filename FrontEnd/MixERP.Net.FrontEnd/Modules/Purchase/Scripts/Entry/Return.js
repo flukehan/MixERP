@@ -18,7 +18,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 /*jshint -W032*/
-/*global getAjax, getAjaxErrorMessage, getParameterByName, logError, saveButton, url:true, validateProductControl, errorLabelBottom, appendParameter, getData, valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, statementReference, agentId, shipperId, shippingAddressCode, shippingCharge, cashRepositoryId, costCenterId, transactionIds, attachments*/
+/*global getAjax, getAjaxErrorMessage, getParameterByName, logError, saveButton, url:true, validateProductControl, errorLabelBottom, appendParameter, getData, valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, statementReference, salesPersonId, shipperId, shippingAddressCode, shippingCharge, cashRepositoryId, costCenterId, transactionIds, attachments*/
 
 saveButton.click(function () {
     if (validateProductControl()) {
@@ -28,7 +28,7 @@ saveButton.click(function () {
 
 var save = function () {
     var tranId = getParameterByName("TranId");
-    var ajaxSaveOder = saveOrder(tranId, valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, cashRepositoryId, costCenterId, agentId, statementReference, transactionIds, attachments);
+    var ajaxSaveOder = saveOrder(tranId, valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, statementReference, attachments);
 
     ajaxSaveOder.done(function (response) {
         var id = response.d;
@@ -42,7 +42,7 @@ var save = function () {
     });
 };
 
-var saveOrder = function (tranId, valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, cashRepositoryId, costCenterId, agentId, statementReference, transactionIds, attachments) {
+var saveOrder = function (tranId, valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, statementReference, attachments) {
     var d = "";
     d = appendParameter(d, "tranId", tranId);
     d = appendParameter(d, "valueDate", valueDate);

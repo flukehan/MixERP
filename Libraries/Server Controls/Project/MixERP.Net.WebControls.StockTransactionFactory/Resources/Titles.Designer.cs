@@ -142,6 +142,15 @@ namespace MixERP.Net.WebControls.StockTransactionFactory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nontaxable Sales.
+        /// </summary>
+        internal static string NonTaxableSales {
+            get {
+                return ResourceManager.GetString("NonTaxableSales", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Price.
         /// </summary>
         internal static string Price {
@@ -201,6 +210,15 @@ namespace MixERP.Net.WebControls.StockTransactionFactory.Resources {
         internal static string Salesperson {
             get {
                 return ResourceManager.GetString("Salesperson", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sales Type.
+        /// </summary>
+        internal static string SalesType {
+            get {
+                return ResourceManager.GetString("SalesType", resourceCulture);
             }
         }
         
@@ -273,6 +291,15 @@ namespace MixERP.Net.WebControls.StockTransactionFactory.Resources {
         internal static string Tax {
             get {
                 return ResourceManager.GetString("Tax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Taxable Sales.
+        /// </summary>
+        internal static string TaxableSales {
+            get {
+                return ResourceManager.GetString("TaxableSales", resourceCulture);
             }
         }
         

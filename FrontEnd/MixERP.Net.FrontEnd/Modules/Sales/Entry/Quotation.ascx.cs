@@ -38,6 +38,7 @@ namespace MixERP.Net.Core.Modules.Sales.Entry
                 product.ShowShippingInformation = true;
                 product.ShowSalesAgents = true;
                 product.ShowStore = true;
+                product.ShowSalesType = true;
 
                 product.Initialize();
 

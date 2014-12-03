@@ -29,7 +29,7 @@ AS
     supplier_code           national character varying(12),
     unit_id                 integer,
     price                   decimal_strict,
-    tax_rate                decimal_strict2,
+    tax_code                national character varying(24),
     order_quantity          integer_strict
 );
 

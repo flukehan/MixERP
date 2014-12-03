@@ -1,4 +1,4 @@
-﻿<%-- 
+﻿<%--
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
 This file is part of MixERP.
@@ -88,13 +88,13 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         });
 
         reorderGrid.find("tr td:nth-child(10)").each(function () {
-            var value = $(this).parent().find("td:nth-child(16)").html();
-            $(this).css("width", "70px");
+            $(this).css("width", "120px");
             $(this).css("padding", "0");
-            $(this).html(String.format("<input type='text' data-role='tax_rate' class='integer' disabled='disabled' value={0} />", value));
+            $(this).html("<select data-role='tax' disabled='disabled' />");
         });
 
         loadParties();
+        loadTaxes();
         loadUnits();
     };
 
@@ -108,6 +108,18 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         url = "/Modules/Inventory/Services/PartyData.asmx/GetParties";
         var parties = $("[data-role='party']");
         ajaxDataBind(url, parties);
+    };
+
+    function loadTaxes() {
+        var taxSelect = $("[data-role='tax']");
+
+        if (taxSelect.length) {
+            url = "/Modules/BackOffice/Services/TaxData.asmx/GetSalesTaxes";
+            data = appendParameter("", "tranBook", "Purchase");
+            data = getData(data);
+
+            ajaxDataBind(url, taxSelect, data);
+        };
     };
 
     function loadUnits() {
@@ -131,33 +143,46 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     function ajaxDataBindCallBack(targetControl) {
         var selectedText;
 
-        if (targetControl.attr("data-role") === "party") {
-            targetControl.each(function () {
-                selectedText = $(this).parent().parent().find("td:nth-child(14)").html();
+        targetControl.each(function () {
+            var element = $(this);
 
-                $(this).find("option").filter(function () {
+            if (element.attr("data-role") === "party") {
+                element.each(function () {
+                    selectedText = $(this).parent().parent().find("td:nth-child(14)").html();
+
+                    $(this).find("option").filter(function () {
+                        return this.text === selectedText;
+                    }).attr("selected", true);
+                });
+            };
+
+            if (element.attr("data-role") === "unit") {
+                selectedText = element.parent().parent().find("td:nth-child(5)").html();
+                element.find("option").filter(function () {
                     return this.text === selectedText;
                 }).attr("selected", true);
-            });
-        };
+            };
 
-        if (targetControl.attr("data-role") === "unit") {
-            selectedText = targetControl.parent().parent().find("td:nth-child(5)").html();
-            targetControl.find("option").filter(function () {
-                return this.text === selectedText;
-            }).attr("selected", true);
-        }
+            if (element.attr("data-role") === "tax") {
+                selectedText = element.parent().parent().find("td:nth-child(16)").html();
+
+                element.find("option").filter(function () {
+                    return this.text === selectedText;
+                }).attr("selected", true);
+            };
+
+        });
     };
 
     function ReorderInputButtonClick() {
 
-        function Detail(itemId, supplierCode, unitId, orderQuantity, price, taxRate) {
+        function Detail(itemId, supplierCode, unitId, orderQuantity, price, tax) {
             this.ItemId = itemId;
             this.SupplierCode = supplierCode;
             this.UnitId = unitId;
             this.OrderQuantity = orderQuantity;
             this.Price = price;
-            this.TaxRate = taxRate;
+            this.Tax = tax;
         };
 
         if (reorderGrid) {
@@ -172,9 +197,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                     var unitId = parseInt2($(this).find("td:nth-child(7)").find("select").getSelectedValue());
                     var orderQuantity = parseFloat2($(this).find("td:nth-child(8)").find("input").val());
                     var price = parseFloat2($(this).find("td:nth-child(9)").find("input").val());
-                    var taxRate = parseFloat2($(this).find("td:nth-child(10)").find("input").val());
+                    var tax = $(this).find("td:nth-child(10)").find("input").val();
 
-                    var detail = new Detail(itemId, supplierCode, unitId, orderQuantity, price, taxRate);
+                    var detail = new Detail(itemId, supplierCode, unitId, orderQuantity, price, tax);
                     details.push(detail);
                 };
             });

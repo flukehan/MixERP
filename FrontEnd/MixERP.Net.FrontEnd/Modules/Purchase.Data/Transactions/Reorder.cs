@@ -41,7 +41,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
                     collection.Add(new NpgsqlParameter("@SupplierCode" + i, details[i].SupplierCode));
                     collection.Add(new NpgsqlParameter("@UnitId" + i, details[i].UnitId));
                     collection.Add(new NpgsqlParameter("@Price" + i, details[i].Price));
-                    collection.Add(new NpgsqlParameter("@TaxRate" + i, details[i].TaxRate));
+                    collection.Add(new NpgsqlParameter("@Tax" + i, details[i].Tax));
                     collection.Add(new NpgsqlParameter("@OrderQuantity" + i, details[i].OrderQuantity));
                 }
             }

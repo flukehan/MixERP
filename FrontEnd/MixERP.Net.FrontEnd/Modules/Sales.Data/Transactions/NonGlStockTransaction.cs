@@ -32,7 +32,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
 {
     internal static class NonGlStockTransaction
     {
-        internal static long Add(string book, DateTime valueDate, int officeId, int userId, long logOnId, string referenceNumber, string statementReference, StockMasterModel stockMaster, Collection<StockMasterDetailModel> details, Collection<long> transactionIdCollection, Collection<AttachmentModel> attachments)
+        internal static long Add(string book, DateTime valueDate, int officeId, int userId, long logOnId, string referenceNumber, string statementReference, StockMasterModel stockMaster, Collection<StockMasterDetailModel> details, Collection<long> transactionIdCollection, Collection<AttachmentModel> attachments, bool nonTaxable)
         {
             if (stockMaster == null)
             {
@@ -53,7 +53,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
             string detail = StockMasterDetailHelper.CreateStockMasterDetailParameter(details);
             string attachment = AttachmentHelper.CreateAttachmentModelParameter(attachments);
 
-            string sql = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM transactions.post_non_gl_transaction(@Book, @OfficeId, @UserId, @LoginId, @ValueDate, @ReferenceNumber, @StatementReference, @PartyCode, @PriceTypeId, ARRAY[{0}]::bigint[], ARRAY[{1}], ARRAY[{2}]);", tranIds, detail, attachment);
+            string sql = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM transactions.post_non_gl_transaction(@Book, @OfficeId, @UserId, @LoginId, @ValueDate, @ReferenceNumber, @StatementReference, @PartyCode, @PriceTypeId, @NonTaxable,@SalesPersonId, @ShipperId, @ShippingAddressCode, @StoreId, ARRAY[{0}]::bigint[], ARRAY[{1}], ARRAY[{2}]);", tranIds, detail, attachment);
 
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
@@ -74,6 +74,12 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
                 {
                     command.Parameters.AddWithValue("@PriceTypeId", stockMaster.PriceTypeId);
                 }
+
+                command.Parameters.AddWithValue("@NonTaxable", nonTaxable);
+                command.Parameters.AddWithValue("@SalesPersonId", stockMaster.SalespersonId);
+                command.Parameters.AddWithValue("@ShipperId", stockMaster.ShipperId);
+                command.Parameters.AddWithValue("@ShippingAddressCode", stockMaster.ShippingAddressCode);
+                command.Parameters.AddWithValue("@StoreId", stockMaster.StoreId);
 
                 command.Parameters.AddRange(ParameterHelper.AddBigintArrayParameter(transactionIdCollection, "@TranId").ToArray());
                 command.Parameters.AddRange(StockMasterDetailHelper.AddStockMasterDetailParameter(details).ToArray());

@@ -92,8 +92,6 @@
     <Content Include="Setup\CostCenters.ascx" />
     <Content Include="Setup\Currencies.ascx" />
     <Content Include="Setup\ProductGLMapping.ascx" />
-    <Content Include="Setup\TaxSetup.ascx" />
-    <Content Include="Setup\TaxTypes.ascx" />
     <Content Include="StandingInstructions.ascx" />
     <Content Include="TemplateTransaction.ascx" />
     <Content Include="TransactionDocumentManager.ascx" />
@@ -216,20 +214,6 @@
     </Compile>
     <Compile Include="Setup\ProductGLMapping.ascx.designer.cs">
       <DependentUpon>ProductGLMapping.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Setup\TaxSetup.ascx.cs">
-      <DependentUpon>TaxSetup.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Setup\TaxSetup.ascx.designer.cs">
-      <DependentUpon>TaxSetup.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Setup\TaxTypes.ascx.cs">
-      <DependentUpon>TaxTypes.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Setup\TaxTypes.ascx.designer.cs">
-      <DependentUpon>TaxTypes.ascx</DependentUpon>
     </Compile>
     <Compile Include="StandingInstructions.ascx.cs">
       <DependentUpon>StandingInstructions.ascx</DependentUpon>

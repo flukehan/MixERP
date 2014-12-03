@@ -26,7 +26,7 @@ BEGIN
         ON transactions.non_gl_stock_details.non_gl_stock_master_id = transactions.non_gl_stock_master.non_gl_stock_master_id
         WHERE transactions.non_gl_stock_master.office_id = $3        
         AND item_id = $1
-        AND value_date > last_received_on
+        AND transactions.non_gl_stock_details.value_date > last_received_on
         AND transactions.non_gl_stock_master.book = 'Purchase.Order';
         
 END

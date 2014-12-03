@@ -223,7 +223,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         transactions.customer_receipts.party_id,
         core.parties.party_code,
         core.parties.party_name,
-        core.append_if_not_null(core.parties.address_line_1, '&lt;br /&gt;') || core.append_if_not_null(core.parties.address_line_2, '&lt;br /&gt;') || core.append_if_not_null(core.parties.street, '&lt;br /&gt;') || core.append_if_not_null(core.parties.city, '') || '&lt;br /&gt;' || core.parties.state || '&lt;br /&gt;' || core.parties.country AS address,
+        core.append_if_not_null(core.parties.address_line_1, '&lt;br /&gt;') || core.append_if_not_null(core.parties.address_line_2, '&lt;br /&gt;') || core.append_if_not_null(core.parties.street, '&lt;br /&gt;') || core.append_if_not_null(core.parties.city, '') || '&lt;br /&gt;' || core.get_state_name_by_state_id(core.parties.state_id) || '&lt;br /&gt;' || core.get_country_name_by_country_id(core.parties.country_id) AS address,
         core.parties.pan_number,
         core.parties.sst_number,
         core.parties.cst_number,
