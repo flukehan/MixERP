@@ -1,4 +1,4 @@
-CREATE VIEW office.cash_repository_view
+CREATE VIEW office.cash_repository_scrud_view
 AS
 SELECT
     office.cash_repositories.cash_repository_id,

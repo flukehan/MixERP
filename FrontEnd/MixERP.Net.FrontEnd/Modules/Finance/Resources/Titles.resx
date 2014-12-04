@@ -279,4 +279,25 @@
   <data name="Phone" xml:space="preserve">
     <value>Phone</value>
   </data>
+  <data name="Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="Office" xml:space="preserve">
+    <value>Office</value>
+  </data>
+  <data name="PostedBy" xml:space="preserve">
+    <value>Posted By</value>
+  </data>
+  <data name="Reason" xml:space="preserve">
+    <value>Reason</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="TransactionTimestamp" xml:space="preserve">
+    <value>Transaction Timestamp</value>
+  </data>
+  <data name="VerifiedOn" xml:space="preserve">
+    <value>VerifiedOn</value>
+  </data>
 </root>

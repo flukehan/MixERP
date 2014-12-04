@@ -54,7 +54,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         <asp:Literal runat="server" Text="Return" />
     </button>
 
-    <button type="button" id="flagButton" class="ui button">
+    <button type="button" id="FlagButton" class="ui button">
         <i class="icon flag"></i>&nbsp;
         <asp:Literal runat="server" Text="Flag" />
     </button>
@@ -63,30 +63,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         <i class="icon print"></i>&nbsp;
         <asp:Literal runat="server" Text="Print" />
     </button>
-</div>
-
-<div id="flag-popunder" style="width: 300px; display: none;" class="ui segment">
-    <h3 class="panel-title">Flag This Transaction</h3>
-
-    <div>
-        You can mark this transaction with a flag, however you will not be able to see the flags created by other users.
-    </div>
-    <br />
-    <p>Select a flag</p>
-    <p>
-        <asp:DropDownList ID="FlagDropDownList" runat="server" CssClass="form-control">
-        </asp:DropDownList>
-    </p>
-    <p>
-        <asp:Button
-            ID="UpdateButton"
-            runat="server"
-            Text="Update"
-            CssClass="green small ui button"
-            OnClientClick=" return getSelectedItems(); "
-            OnClick="UpdateButton_Click" />
-        <a href="javascript:void(0);" onclick=" $('#flag-popunder').toggle(500); " class="red small ui button">Close</a>
-    </p>
 </div>
 
 <p>
@@ -148,6 +124,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         OnRowDataBound="ProductViewGridView_RowDataBound">
     </asp:GridView>
 </asp:Panel>
+
+<asp:PlaceHolder runat="server" ID="FlagPlaceholder"></asp:PlaceHolder>
 
 <asp:HiddenField ID="SelectedValuesHidden" runat="server" />
 <script src="/Scripts/UserControls/ProductViewControl.js"></script>

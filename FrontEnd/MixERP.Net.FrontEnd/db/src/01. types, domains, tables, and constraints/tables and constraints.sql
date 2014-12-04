@@ -1456,10 +1456,10 @@ ALTER TABLE core.sales_tax_exempts
 ADD FOREIGN KEY(store_id) REFERENCES office.stores(store_id);
 
 CREATE UNIQUE INDEX stores_store_code_uix
-ON office.stores(UPPER(store_code));
+ON office.stores(office_id, UPPER(store_code));
 
 CREATE UNIQUE INDEX stores_store_name_uix
-ON office.stores(UPPER(store_name));
+ON office.stores(office_id, UPPER(store_name));
 
 
 
@@ -1478,10 +1478,10 @@ CREATE TABLE office.cash_repositories
 
 
 CREATE UNIQUE INDEX cash_repositories_cash_repository_code_uix
-ON office.cash_repositories(UPPER(cash_repository_code));
+ON office.cash_repositories(office_id, UPPER(cash_repository_code));
 
 CREATE UNIQUE INDEX cash_repositories_cash_repository_name_uix
-ON office.cash_repositories(UPPER(cash_repository_name));
+ON office.cash_repositories(office_id, UPPER(cash_repository_name));
 
 
  

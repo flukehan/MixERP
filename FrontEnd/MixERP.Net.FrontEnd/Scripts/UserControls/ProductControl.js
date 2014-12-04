@@ -282,7 +282,8 @@ function ajaxUpdateValCallback(targetControls) {
 //Control Events
 
 function taxRequired() {
-    return (salesTypeSelect.length === 1 && salesTypeSelect.getSelectedValue() === "1");
+    var salesTax = (salesTypeSelect.length === 1 && salesTypeSelect.getSelectedValue() === "1");
+    return salesTax;
 };
 
 addButton.click(function () {
@@ -292,6 +293,7 @@ addButton.click(function () {
             return;
         };
     };
+
     calculateAmount();
     addRow();
 });
@@ -347,7 +349,7 @@ taxSelect.blur(function () {
 });
 
 function updateTax() {
-    if (!taxRequired()) {
+    if (!taxRequired() && taxSelect.find("option").length === 1) {
         return 0;
     };
 
@@ -402,7 +404,7 @@ function updateTax() {
 };
 
 function getDefaultSalesTax() {
-    if (!taxRequired()) {
+    if (!taxRequired() && taxSelect.find("option").length === 1) {
         return;
     };
 
@@ -422,10 +424,6 @@ function getDefaultSalesTax() {
         return;
     };
 
-    if (!priceTypeId) {
-        return;
-    };
-
     if (isNullOrWhiteSpace(itemCode)) {
         return;
     };
@@ -439,7 +437,6 @@ function getDefaultSalesTax() {
     };
 
     var ajaxGetDefaultSalesTaxId = getDefaultSalesTaxId(tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode, unitId, price);
-
     ajaxGetDefaultSalesTaxId.success(function (msg) {
         var result = parseInt2(msg.d);
 
@@ -798,6 +795,7 @@ var addRow = function () {
 
     if (tax === selectLocalized || tax === noneLocalized) {
         tax = "";
+        computedTax = 0;
     };
 
     var ajaxItemCodeExists = itemCodeExists(itemCode);

@@ -20,6 +20,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models.Transactions;
+using MixERP.Net.WebControls.Flag;
 using MixERP.Net.WebControls.StockTransactionView.Data;
 using MixERP.Net.WebControls.StockTransactionView.Data.Helpers;
 using MixERP.Net.WebControls.StockTransactionView.Data.Models;
@@ -78,6 +79,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         {
             if (!initialized)
             {
+                this.AddFlag();
                 this.SetVisibleStates();
                 this.LoadGridView();
                 this.InitializePostBackUrls();
@@ -115,11 +117,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             }
         }
 
-        protected void Page_Init()
-        {
-            this.BindFlagTypeDropDownList();
-        }
-
         protected void Page_Load(object sender, EventArgs e)
         {
             this.Initialize();
@@ -134,7 +131,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 string id = e.Row.Cells[2].Text;
-                //Todo: Fix 403 errors.
                 if (!string.IsNullOrWhiteSpace(id))
                 {
                     if (!string.IsNullOrWhiteSpace(this.PreviewUrl))
@@ -183,9 +179,25 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             this.LoadGridView();
         }
 
-        protected void UpdateButton_Click(object sender, EventArgs e)
+        private void AddFlag()
         {
-            int flagTypeId = Conversion.TryCastInteger(this.FlagDropDownList.SelectedValue);
+            using (FlagControl flag = new FlagControl())
+            {
+                flag.ID = "FlagPopUnder";
+                flag.AssociatedControlId = "FlagButton";
+                flag.OnClientClick = "return getSelectedItems();";
+                flag.CssClass = "ui segment initially hidden";
+
+                flag.Updated += Flag_Updated;
+
+                FlagPlaceholder.Controls.Add(flag);
+            }
+        }
+
+        private void Flag_Updated(object sender, FlagUpdatedEventArgs e)
+        {
+            int flagTypeId = e.FlagId;
+
             string resource = this.GetTransactionTableName();
             string resourceKey = this.GetTransactionTablePrimaryKeyName();
 
@@ -195,17 +207,11 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 resourceKey = "transaction_master_id";
             }
 
-            Collection<int> resourceIds = this.GetSelectedValues();
-
             int userId = SessionHelper.GetUserId();
 
-            WebControls.StockTransactionView.Helpers.Flags.CreateFlag(userId, flagTypeId, resource, resourceKey, resourceIds);
-            this.LoadGridView();
-        }
+            WebControls.StockTransactionView.Helpers.Flags.CreateFlag(userId, flagTypeId, resource, resourceKey, this.GetSelectedValues());
 
-        private void BindFlagTypeDropDownList()
-        {
-            Data.Helpers.DropDownListHelper.BindDropDownList(this.FlagDropDownList, "core", "flag_types", "flag_type_id", "flag_type_name", "flag_type_id");
+            this.LoadGridView();
         }
 
         private Collection<int> GetSelectedValues()

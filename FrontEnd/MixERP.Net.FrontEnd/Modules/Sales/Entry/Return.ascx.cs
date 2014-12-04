@@ -43,7 +43,7 @@ namespace MixERP.Net.Core.Modules.Sales.Entry
                 product.Text = Titles.SalesReturn;
                 product.ShowPriceTypes = true;
                 product.ShowStore = true;
-
+                product.ShowSalesType = true;
                 product.Initialize();
 
                 Placeholder1.Controls.Add(product);

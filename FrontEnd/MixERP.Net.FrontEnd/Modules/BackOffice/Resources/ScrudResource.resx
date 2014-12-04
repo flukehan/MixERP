@@ -585,4 +585,10 @@
   <data name="party_type_id" xml:space="preserve">
     <value>Party Type Id</value>
   </data>
+  <data name="cash_repositories_cash_repository_code_uix" xml:space="preserve">
+    <value>Duplicate Cash Repository Code</value>
+  </data>
+  <data name="cash_repositories_cash_repository_name_uix" xml:space="preserve">
+    <value>Duplicate Cash Repository Name</value>
+  </data>
 </root>

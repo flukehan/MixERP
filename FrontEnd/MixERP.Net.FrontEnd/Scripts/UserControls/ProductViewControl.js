@@ -20,17 +20,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 /*jshint -W098*/
 /*global createFlaggedRows, getSelectedCheckBoxItemIds, nothingSelectedLocalized, popUnder, shortcut, toogleSelection*/
 
-var flagPopunder = $("#flag-popunder");
-var flagButton = $("#flagButton");
-
 $(document).ready(function () {
-    //var filterDiv = $("#FilterDiv").width();
-
-    //var margin = 0;
-    //var width = filterDiv - margin;
-
-    //$("#GridPanel").css("width", width + "px");
-    //$("#GridPanel").css("background-color", "red");
     updateFlagColor();
 });
 
@@ -60,10 +50,6 @@ var getSelectedItems = function () {
         return false;
     }
 };
-
-flagButton.click(function () {
-    popUnder(flagPopunder, flagButton);
-});
 
 $('#ProductViewGridView tr').click(function () {
     //console.log('Grid row was clicked. Now, searching the radio button.');

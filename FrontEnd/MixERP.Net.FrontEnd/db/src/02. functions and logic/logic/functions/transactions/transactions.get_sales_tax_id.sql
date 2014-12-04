@@ -161,3 +161,4 @@ $$
 LANGUAGE plpgsql;
 
 
+--SELECT * FROM transactions.get_sales_tax_id('Purchase', 1, 'JASMI-0002', '', 1, 'RMBP', 1, 30000);

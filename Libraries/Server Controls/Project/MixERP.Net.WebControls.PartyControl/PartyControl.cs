@@ -34,7 +34,7 @@ namespace MixERP.Net.WebControls.PartyControl
         public Panel container;
         private bool disposed;
 
-        public sealed override void Dispose()
+        public override void Dispose()
         {
             if (!this.disposed)
             {

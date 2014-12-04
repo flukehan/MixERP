@@ -313,14 +313,14 @@ var addRow = function (statementReference, accountCode, account, cashRepository,
         var row = $(this);
 
         if (!isCash) {
-            if (getColumnText(row, 1) === accountCode) {
+            if (getColumnText(row, 2) === accountCode) {
                 $.notify(duplicateEntryLocalized);
                 makeDirty(accountCodeInputText);
                 return;
             }
         };
 
-        if (getColumnText(row, 3) === cashRepository) {
+        if (getColumnText(row, 4) === cashRepository) {
             $.notify(duplicateEntryLocalized);
             makeDirty(accountCodeInputText);
             return;
@@ -404,20 +404,20 @@ postButton.click(function () {
 var post = function () {
     var ajaxPostJournalTransaction = postpostJournalTransaction(valueDate, referenceNumber, data, costCenterId, attachments);
 
-    ajaxPostJournalTransaction.done(function (response) {
-        var id = response.d;
-        window.location = "/Finance/Confirmation/JournalVoucher.aspx?TranId=" + id;
+    ajaxPostJournalTransaction.success(function (msg) {
+        var id = msg.d;
+        window.location = "/Modules/Finance/Confirmation/JournalVoucher.aspx?TranId=" + id;
     });
 
-    ajaxPostJournalTransaction.fail(function (jqXHR) {
-        var errorMessage = getAjaxErrorMessage(jqXHR);
+    ajaxPostJournalTransaction.fail(function (xhr) {
+        logAjaxErrorMessage(xhr);
+
+        var errorMessage = getAjaxErrorMessage(xhr);
         errorLabelBottom.html(errorMessage);
-        logError(errorMessage);
     });
 };
 
 var postpostJournalTransaction = function (valueDate, referenceNumber, data, costCenterId, attachments) {
-    debugger;
     var d = "";
     d = appendParameter(d, "valueDate", valueDate);
     d = appendParameter(d, "referenceNumber", referenceNumber);
@@ -426,7 +426,7 @@ var postpostJournalTransaction = function (valueDate, referenceNumber, data, cos
     d = appendParameter(d, "attachmentsJSON", attachments);
     d = getData(d);
 
-    url = "/Services/Finance/JournalVoucher.asmx/Save";
+    url = "/Modules/Finance/Services/JournalVoucher.asmx/Save";
     return getAjax(url, d);
 };
 
@@ -492,7 +492,7 @@ var validate = function () {
 
     summate();
 
-    if (parseFloat2(debitTotalTextBox) !== parseFloat2(creditTotalTextBox)) {
+    if (parseFloat2(debitTotalTextBox.val()) !== parseFloat2(creditTotalTextBox.val())) {
         $.notify("Referencing sides are not equal.", "error");
         return false;
     };

@@ -30,24 +30,24 @@ CREATE FUNCTION transactions.get_product_view
  )
 RETURNS TABLE
 (
-    id                  bigint,
+    id                      bigint,
     value_date              date,
     office                  national character varying(12),
     party                   text,
     price_type              text,
     amount                  decimal(24, 4),
-    transaction_ts              TIMESTAMP WITH TIME ZONE,
+    transaction_ts          TIMESTAMP WITH TIME ZONE,
     "user"                  national character varying(50),
-    reference_number            national character varying(24),
-    statement_reference         text,
-    book                                    text,
-    salesperson                 text,
+    reference_number        national character varying(24),
+    statement_reference     text,
+    book                    text,
+    salesperson             text,
     is_credit               boolean,
     shipper                 text,
-    shipping_address_code           text,
+    shipping_address_code   text,
     store                   text,   
-    flag_background_color           text,
-    flag_foreground_color           text
+    flag_background_color   text,
+    flag_foreground_color   text
 )
 AS
 $$

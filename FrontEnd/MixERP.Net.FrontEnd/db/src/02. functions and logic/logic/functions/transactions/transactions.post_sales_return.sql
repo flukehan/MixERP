@@ -46,45 +46,142 @@ $$
     DECLARE _default_currency_code  national character varying(12);
     DECLARE _cost_of_goods_sold     money_strict2;
     DECLARE _sm_id                  bigint;
+    DECLARE _is_non_taxable_sales   boolean;
+    DECLARE this                    RECORD;
+    DECLARE _shipping_address_code  national character varying(12);
 BEGIN
+    IF(policy.can_post_transaction(_login_id, _user_id, _office_id, 'Sales.Return') = false) THEN
+        RETURN 0;
+    END IF;
     
     _party_id                       := core.get_party_id_by_party_code(_party_code);
     _default_currency_code          := transactions.get_default_currency_code_by_office_id(_office_id);
     
     SELECT cost_center_id   INTO _cost_center_id    FROM transactions.transaction_master WHERE transactions.transaction_master.transaction_master_id = _transaction_master_id;
-    SELECT is_credit        INTO _is_credit         FROM transactions.stock_master WHERE transaction_master_id = _transaction_master_id;
+
+    SELECT 
+        is_credit,
+        non_taxable,
+        core.get_shipping_address_code_by_shipping_address_id(shipping_address_id),
+        stock_master_id
+    INTO 
+        _is_credit,
+        _is_non_taxable_sales,
+        _shipping_address_code,
+        _sm_id
+    FROM transactions.stock_master 
+    WHERE transaction_master_id = _transaction_master_id;
 
     CREATE TEMPORARY TABLE temp_stock_details
     (
+        id                              SERIAL PRIMARY KEY,
         stock_master_id                 bigint, 
         tran_type                       transaction_type, 
         store_id                        integer,
-        item_code                       national character varying(12),
+        item_code                       text,
         item_id                         integer, 
         quantity                        integer_strict,
-        unit_name                       national character varying(50),
+        unit_name                       text,
         unit_id                         integer,
         base_quantity                   decimal,
         base_unit_id                    integer,                
         price                           money_strict,
         cost_of_goods_sold              money_strict2 DEFAULT(0),
         discount                        money_strict2,
-        tax_rate                        decimal_strict2,
+        shipping_charge                 money_strict2,
+        tax_form                        text,
+        sales_tax_id                    integer,
         tax                             money_strict2
     ) ON COMMIT DROP;
 
-    INSERT INTO temp_stock_details(store_id, item_code, quantity, unit_name, price, discount, tax_rate, tax)
-    SELECT store_id, item_code, quantity, unit_name, price, discount, tax_rate, tax
+    CREATE TEMPORARY TABLE temp_stock_tax_details
+    (
+        id                                      SERIAL,
+        temp_stock_detail_id                    integer REFERENCES temp_stock_details(id),
+        sales_tax_detail_code                   text,
+        stock_detail_id                         bigint,
+        sales_tax_detail_id                     integer,
+        state_sales_tax_id                      integer,
+        county_sales_tax_id                     integer,
+        account_id                              integer,
+        principal                               money_strict,
+        rate                                    decimal_strict,
+        tax                                     money_strict
+    ) ON COMMIT DROP;
+
+    INSERT INTO temp_stock_details(store_id, item_code, quantity, unit_name, price, discount, shipping_charge, tax_form, tax)
+    SELECT store_id, item_code, quantity, unit_name, price, discount, shipping_charge, tax_form, tax
     FROM explode_array(_details);
 
     UPDATE temp_stock_details 
     SET
         tran_type                   = 'Dr',
+        sales_tax_id                = core.get_sales_tax_id_by_sales_tax_code(tax_form),
         item_id                     = core.get_item_id_by_item_code(item_code),
         unit_id                     = core.get_unit_id_by_unit_name(unit_name),
         base_quantity               = core.get_base_quantity_by_unit_name(unit_name, quantity),
         base_unit_id                = core.get_base_unit_id_by_unit_name(unit_name);
+    
+    IF EXISTS
+    (
 
+        SELECT * 
+        FROM transactions.stock_details
+        INNER JOIN temp_stock_details
+        ON temp_stock_details.item_id = transactions.stock_details.item_id
+        WHERE transactions.stock_details.stock_master_id = _sm_id
+        AND COALESCE(temp_stock_details.sales_tax_id, 0) != COALESCE(transactions.stock_details.sales_tax_id, 0)
+        LIMIT 1
+    ) THEN
+        RAISE EXCEPTION 'Tax form mismatch.';
+    END IF;
+
+    IF EXISTS
+    (
+            SELECT 1 FROM temp_stock_details AS details
+            WHERE core.is_valid_unit_id(details.unit_id, details.item_id) = false
+            LIMIT 1
+    ) THEN
+        RAISE EXCEPTION 'Item/unit mismatch.';
+    END IF;
+
+    IF(_is_non_taxable_sales) THEN
+        IF EXISTS(SELECT * FROM temp_stock_details WHERE sales_tax_id IS NOT NULL LIMIT 1) THEN
+            RAISE EXCEPTION 'You cannot provide sales tax information for non taxable sales.';
+        END IF;
+    END IF;
+
+    FOR this IN SELECT * FROM temp_stock_details ORDER BY id
+    LOOP
+        INSERT INTO temp_stock_tax_details
+        (
+            temp_stock_detail_id,
+            sales_tax_detail_code,
+            account_id, 
+            sales_tax_detail_id, 
+            state_sales_tax_id, 
+            county_sales_tax_id, 
+            principal, 
+            rate, 
+            tax
+        )
+        SELECT 
+            this.id, 
+            sales_tax_detail_code,
+            account_id, 
+            sales_tax_detail_id, 
+            state_sales_tax_id, 
+            county_sales_tax_id, 
+            taxable_amount, 
+            rate, 
+            tax
+        FROM transactions.get_sales_tax('Sales', _store_id, _party_code, _shipping_address_code, _price_type_id, this.item_code, this.price, this.quantity, this.discount, this.shipping_charge, this.sales_tax_id);
+    END LOOP;
+    
+    UPDATE temp_stock_details
+    SET tax =
+    (SELECT SUM(COALESCE(temp_stock_tax_details.tax, 0)) FROM temp_stock_tax_details
+    WHERE temp_stock_tax_details.temp_stock_detail_id = temp_stock_details.id);
 
     IF(_is_credit) THEN
         _credit_account_id = core.get_account_id_by_party_code(_party_code); 
@@ -101,12 +198,11 @@ BEGIN
     INSERT INTO transactions.transaction_master(transaction_master_id, transaction_counter, transaction_code, book, value_date, user_id, login_id, office_id, cost_center_id, reference_number, statement_reference)
     SELECT _tran_master_id, _tran_counter, _tran_code, 'Sales.Return', _value_date, _user_id, _login_id, _office_id, _cost_center_id, _reference_number, _statement_reference;
         
-    SELECT      SUM(price * quantity),  SUM(discount),      SUM(tax)
-    INTO        _grand_total,           _discount_total,    _tax_total        
-    FROM        explode_array(_details);
+    SELECT SUM(COALESCE(tax, 0))                                INTO _tax_total FROM temp_stock_tax_details;
+    SELECT SUM(COALESCE(discount, 0))                           INTO _discount_total FROM temp_stock_details;
+    SELECT SUM(COALESCE(price, 0) * COALESCE(quantity, 0))      INTO _grand_total FROM temp_stock_details;
 
 
-    SELECT stock_master_id INTO _sm_id FROM transactions.stock_master WHERE transaction_master_id = _transaction_master_id;
 
     UPDATE temp_stock_details
     SET cost_of_goods_sold = transactions.get_write_off_cost_of_goods_sold(_sm_id, item_id, unit_id, quantity);
@@ -143,8 +239,8 @@ BEGIN
     SELECT _stock_master_id, _value_date, _tran_master_id, _party_id, _price_type_id, false, _store_id;
 
 
-    INSERT INTO transactions.stock_details(value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, tax_rate, tax)
-    SELECT _value_date, _stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, tax_rate, tax FROM temp_stock_details;
+    INSERT INTO transactions.stock_details(value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, sales_tax_id, tax)
+    SELECT _value_date, _stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, sales_tax_id, tax FROM temp_stock_details;
 
     INSERT INTO transactions.stock_return(transaction_master_id, return_transaction_master_id)
     SELECT _transaction_master_id, _tran_master_id;
@@ -154,16 +250,25 @@ END
 $$
 LANGUAGE plpgsql;
 
- 
- 
---  SELECT * FROM transactions.post_sales_return(5, 2, 1, 1, '1-1-2000', 1, 'MAJON-0002', 1, '1234-AD', 'Test', 
---  ARRAY[
---  ROW(1, 'RMBP', 1, 'Piece', 225000, 0, 13, 29250)::transactions.stock_detail_type--,
---  --ROW(1, 'ITP', 1, 'Piece', 1000, 0, 13, 130)::transactions.stock_detail_type
---  ],
---  ARRAY[
---  NULL::core.attachment_type
---  ]);
+
+
+
+-- CREATE TEMPORARY TABLE temp_sales_return
+-- ON COMMIT DROP
+-- AS
+-- 
+-- SELECT * FROM transactions.post_sales_return(5, 2, 2, 1, '1-1-2000', 1, 'MAJON-0002', 1, '1234-AD', 'Test', 
+-- ARRAY[
+--  ROW(1, 'RMBP', 1, 'Piece', 180000, 0, 200, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type,
+--  ROW(1, '13MBA', 1, 'Piece', 110000, 5000, 50, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type
+-- ],
+-- ARRAY[
+-- NULL::core.attachment_type
+-- ]);
+-- 
+-- SELECT  tran_type, core.get_account_name_by_account_id(account_id), amount_in_local_currency 
+-- FROM transactions.transaction_details
+-- WHERE transaction_master_id  = (SELECT * FROM temp_sales_return);
 
 
 /**************************************************************************************************************************

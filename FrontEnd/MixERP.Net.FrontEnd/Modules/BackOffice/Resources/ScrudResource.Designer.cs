@@ -196,6 +196,24 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Duplicate Cash Repository Code.
+        /// </summary>
+        internal static string cash_repositories_cash_repository_code_uix {
+            get {
+                return ResourceManager.GetString("cash_repositories_cash_repository_code_uix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duplicate Cash Repository Name.
+        /// </summary>
+        internal static string cash_repositories_cash_repository_name_uix {
+            get {
+                return ResourceManager.GetString("cash_repositories_cash_repository_name_uix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cash Repository Code.
         /// </summary>
         internal static string cash_repository_code {

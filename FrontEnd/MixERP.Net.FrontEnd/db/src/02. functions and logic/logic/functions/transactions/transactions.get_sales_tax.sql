@@ -276,7 +276,6 @@ $$
 LANGUAGE plpgsql;
 
 
---SELECT *     FROM core.sales_tax_details
 
 
 --SELECT * FROM transactions.get_sales_tax('Sales', 1, 'MAJON-0002', '', 1, 'RMBP', 1000, 2, 200, 50, 3);
