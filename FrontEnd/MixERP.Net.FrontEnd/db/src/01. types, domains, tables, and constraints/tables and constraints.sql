@@ -624,8 +624,8 @@ CREATE TABLE core.bank_accounts
 CREATE TABLE core.sales_teams
 (
     sales_team_id                           SERIAL PRIMARY KEY,
-    sales_team_code                         national character varying(12),
-    sales_team_name                         national character varying(50),
+    sales_team_code                         national character varying(12) NOT NULL,
+    sales_team_name                         national character varying(50) NOT NULL,
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
                                             DEFAULT(NOW())

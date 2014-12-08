@@ -48,7 +48,7 @@ namespace MixERP.Net.WebControls.Flag
             using (HtmlGenericControl div = new HtmlGenericControl("div"))
             {
                 div.Attributes.Add("id", this.ID);
-                div.Attributes.Add("style", "width:300px;");
+                div.Attributes.Add("style", "width:300px;z-index:2;");
                 div.Attributes.Add("class", this.CssClass);
 
                 using (HtmlGenericControl h3 = new HtmlGenericControl("h3"))

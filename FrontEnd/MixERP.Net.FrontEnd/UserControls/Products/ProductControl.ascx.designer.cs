@@ -31,24 +31,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::System.Web.UI.WebControls.Literal DateLiteral;
         
         /// <summary>
-        /// DateTextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::MixERP.Net.WebControls.Common.DateTextBox DateTextBox;
-        
-        /// <summary>
-        /// StoreDiv control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl StoreDiv;
-        
-        /// <summary>
         /// StoreSelectLabel control.
         /// </summary>
         /// <remarks>
@@ -67,24 +49,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::System.Web.UI.WebControls.Literal PartyCodeInputTextLabel;
         
         /// <summary>
-        /// PartyCodeInputText control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText PartyCodeInputText;
-        
-        /// <summary>
-        /// PriceTypeDiv control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl PriceTypeDiv;
-        
-        /// <summary>
         /// PriceTypeSelectLabel control.
         /// </summary>
         /// <remarks>
@@ -101,6 +65,42 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ReferenceNumberInputTextLabel;
+        
+        /// <summary>
+        /// DateTextBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::MixERP.Net.WebControls.Common.DateTextBox DateTextBox;
+        
+        /// <summary>
+        /// StoreSelect control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlSelect StoreSelect;
+        
+        /// <summary>
+        /// PartyCodeInputText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText PartyCodeInputText;
+        
+        /// <summary>
+        /// PriceTypeSelect control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlSelect PriceTypeSelect;
         
         /// <summary>
         /// ReferenceNumberInputText control.
@@ -182,15 +182,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlSelect SalesTypeSelect;
-        
-        /// <summary>
-        /// ProductGridView control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTable ProductGridView;
         
         /// <summary>
         /// ItemCodeInputTextLabel control.

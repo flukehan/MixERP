@@ -18,11 +18,22 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System.Globalization;
+using System.Web.UI.HtmlControls;
 
 namespace MixERP.Net.Common.Helpers
 {
     public static class HtmlControlHelper
     {
+        public static HtmlGenericControl GetField()
+        {
+            using (HtmlGenericControl field = new HtmlGenericControl("div"))
+            {
+                field.Attributes.Add("class", "field");
+
+                return field;
+            }
+        }
+
         public static string GetLabel(string text)
         {
             return string.Format(CultureInfo.InvariantCulture, "<label>{0}</label>", text);

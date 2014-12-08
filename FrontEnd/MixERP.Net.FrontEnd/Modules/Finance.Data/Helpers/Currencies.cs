@@ -18,6 +18,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.DBFactory;
+using Npgsql;
 using System.Data;
 
 namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
@@ -32,6 +33,16 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
         public static DataTable GetCurrencyDataTable()
         {
             return FormHelper.GetTable("core", "currencies", "currency_code");
+        }
+
+        public static DataTable GetExchangeCurrencies(int officeId)
+        {
+            const string sql = "SELECT currency_code, currency_symbol, currency_name, hundredth_name FROM core.currencies WHERE currency_code != core.get_currency_code_by_office_id(@OfficeId)";
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                command.Parameters.AddWithValue("@OfficeId", officeId);
+                return DbOperations.GetDataTable(command);
+            }
         }
     }
 }

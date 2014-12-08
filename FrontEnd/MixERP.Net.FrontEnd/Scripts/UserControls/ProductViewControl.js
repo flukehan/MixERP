@@ -20,6 +20,21 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 /*jshint -W098*/
 /*global createFlaggedRows, getSelectedCheckBoxItemIds, nothingSelectedLocalized, popUnder, shortcut, toogleSelection*/
 
+var printButton = $("#PrintButton");
+
+printButton.click(function () {
+    var templatePath = "/Reports/Print.html";
+    var headerPath = "/Reports/Assets/Header.aspx";
+    var title = $("h2").html();
+    var targetControlId = "ProductViewGridView";
+    var date = now;
+    var windowName = "ProductView";
+    var offsetFirst = 2;
+    var offsetLast = 2;
+
+    printGridView(templatePath, headerPath, title, targetControlId, date, user, office, windowName, offsetFirst, offsetLast);
+});
+
 $(document).ready(function () {
     updateFlagColor();
 });
@@ -52,10 +67,8 @@ var getSelectedItems = function () {
 };
 
 $('#ProductViewGridView tr').click(function () {
-    //console.log('Grid row was clicked. Now, searching the radio button.');
     var checkBox = $(this).find('td input:checkbox');
-    //console.log('The check box was found.');
-    toogleSelection(checkBox.attr("id"));
+    toogleSelection(checkBox);
 });
 
 $(document).ready(function () {

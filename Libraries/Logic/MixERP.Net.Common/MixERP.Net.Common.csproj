@@ -76,6 +76,7 @@
     <Compile Include="Helpers\DateHelper.cs" />
     <Compile Include="Helpers\DropDownListHelper.cs" />
     <Compile Include="Helpers\ExpressionHelper.cs" />
+    <Compile Include="Helpers\GridViewHelper.cs" />
     <Compile Include="Helpers\HtmlControlHelper.cs" />
     <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Helpers\JavaScriptHelper.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Helpers\WidgetHelper.cs" />
     <Compile Include="jQueryHelper\jQueryUI.cs" />
     <Compile Include="Models\Core\AttachmentModel.cs" />
+    <Compile Include="Models\Core\Currency.cs" />
     <Compile Include="Models\Core\Frequency.cs" />
     <Compile Include="Models\Core\Menu.cs" />
     <Compile Include="Models\Core\Party.cs" />

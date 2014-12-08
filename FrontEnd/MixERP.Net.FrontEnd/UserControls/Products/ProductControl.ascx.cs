@@ -181,7 +181,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         private void LoadLabels()
         {
-            this.DateLiteral.Text = HtmlControlHelper.GetLabel(this.DateTextBox.ClientID, StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ValueDate"));
+            this.DateLiteral.Text = HtmlControlHelper.GetLabel("DateTextBox", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ValueDate"));
             this.StoreSelectLabel.Text = HtmlControlHelper.GetLabel("StoreSelect", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "SelectStore"));
 
             this.PartyCodeInputTextLabel.Text = HtmlControlHelper.GetLabel("PartyCodeInputText", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "SelectParty"));
@@ -217,7 +217,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             this.SalesPersonSelectLabel.Text = HtmlControlHelper.GetLabel("SalesPersonSelect", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "Salesperson"));
             this.StatementReferenceTextAreaLabel.Text = HtmlControlHelper.GetLabel("StatementReferenceTextArea", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "StatementReference"));
 
-            this.CashTransactionLiteral.Text = HtmlControlHelper.GetLabel("CashTransactionCheckBox", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "CashTransaction"));
+            this.CashTransactionLiteral.Text = HtmlControlHelper.GetLabel(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "CashTransaction"));
         }
 
         private void LoadValuesFromSession()
@@ -257,9 +257,14 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         private void SetVisibleStates()
         {
             this.CashRepositoryDiv.Visible = this.ShowCashRepository;
-            this.StoreDiv.Visible = this.ShowStore;
+            this.StoreSelect.Visible = this.ShowStore;
+            this.StoreSelectLabel.Visible = this.ShowStore;
+
             this.CashTransactionDiv.Visible = this.ShowTransactionType;
-            this.PriceTypeDiv.Visible = this.ShowPriceTypes;
+
+            this.PriceTypeSelect.Visible = this.ShowPriceTypes;
+            this.PriceTypeSelectLabel.Visible = this.ShowPriceTypes;
+
             this.ShippingAddressDiv.Visible = this.ShowShippingInformation;
             this.ShippingAddressInfoDiv.Visible = this.ShowShippingInformation;
 

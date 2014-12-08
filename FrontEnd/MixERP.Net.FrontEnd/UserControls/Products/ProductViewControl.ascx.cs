@@ -186,7 +186,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 flag.ID = "FlagPopUnder";
                 flag.AssociatedControlId = "FlagButton";
                 flag.OnClientClick = "return getSelectedItems();";
-                flag.CssClass = "ui segment initially hidden";
+                flag.CssClass = "ui form segment initially hidden";
 
                 flag.Updated += Flag_Updated;
 
@@ -216,7 +216,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         private Collection<int> GetSelectedValues()
         {
-            //Get the comma separated selected values.
             string selectedValues = this.SelectedValuesHidden.Value;
 
             //Check if something was selected.
@@ -235,8 +234,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 //Parse the value to integer.
                 int val = Conversion.TryCastInteger(value);
 
-                //If the object "val" has a greater than zero,
-                //add it to the collection.
                 if (val > 0)
                 {
                     values.Add(val);
@@ -309,6 +306,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         private void LoadGridView()
         {
+            this.ProductViewGridView.DataBound += ProductViewGridViewOnDataBound;
             DateTime dateFrom = Conversion.TryCastDate(this.DateFromDateTextBox.Text);
             DateTime dateTo = Conversion.TryCastDate(this.DateToDateTextBox.Text);
             string office = this.OfficeTextBox.Text;
@@ -366,6 +364,11 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
             HttpContext.Current.Session["Product"] = model;
             HttpContext.Current.Response.Redirect(link);
+        }
+
+        private void ProductViewGridViewOnDataBound(object sender, EventArgs eventArgs)
+        {
+            GridViewHelper.SetHeaderRow(this.ProductViewGridView);
         }
 
         private void SetVisibleStates()

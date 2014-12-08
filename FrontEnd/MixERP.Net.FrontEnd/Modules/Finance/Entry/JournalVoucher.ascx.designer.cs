@@ -58,15 +58,6 @@ namespace MixERP.Net.Core.Modules.Finance.Entry {
         protected global::System.Web.UI.HtmlControls.HtmlInputText ReferenceNumberInputText;
         
         /// <summary>
-        /// TransactionGridView control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTable TransactionGridView;
-        
-        /// <summary>
         /// StatementReferenceLiteral control.
         /// </summary>
         /// <remarks>

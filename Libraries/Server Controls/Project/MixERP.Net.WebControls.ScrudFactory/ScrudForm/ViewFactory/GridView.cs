@@ -19,6 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
+using System;
 using System.Web.UI.WebControls;
 using FormHelper = MixERP.Net.WebControls.ScrudFactory.Data.FormHelper;
 
@@ -48,11 +49,18 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 offset = (Conversion.TryCastInteger(this.Page.Request["page"]) - 1) * limit;
             }
 
+            this.formGridView.DataBound += FormGridViewOnDataBound;
+
             using (var table = FormHelper.GetView(this.ViewSchema, this.View, this.KeyColumn, limit, offset))
             {
                 this.formGridView.DataSource = table;
                 this.formGridView.DataBind();
             }
+        }
+
+        private void FormGridViewOnDataBound(object sender, EventArgs eventArgs)
+        {
+            GridViewHelper.SetHeaderRow(this.formGridView);
         }
 
         private Unit GetGridViewWidth()
@@ -72,6 +80,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             var showAll = (Conversion.TryCastString(this.Page.Request.QueryString["show"]).Equals("all"));
 
             this.BindGridView();
+
             this.formGridView.Width = this.GetGridViewWidth();
             this.formGridView.Attributes.Add("style", "white-space: nowrap;");
 

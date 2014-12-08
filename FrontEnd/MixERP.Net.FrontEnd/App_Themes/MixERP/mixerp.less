@@ -461,44 +461,6 @@ table.borderless td {
 
 /*Semantic UI Override Start */
 
-select {
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 0.3125em;
-    box-sizing: border-box;
-    color: rgba(0, 0, 0, 0.7);
-    font-size: 1em;
-    height: 33px;
-    margin: 0;
-    outline: 0 none;
-    line-height: 1.42857;
-    padding: 6px 12px;
-    transition: background-color 0.3s ease-out 0s, box-shadow 0.2s ease 0s, border-color 0.2s ease 0s;
-    width: 100%;
-}
-
-.error select {
-    background-color: snow;
-    border-bottom-left-radius: 0;
-    border-color: #e7bebe #e7bebe #e7bebe -moz-use-text-color;
-    border-left: medium none;
-    border-top-left-radius: 0;
-    box-shadow: 0.3em 0 0 0 #d95c5c inset;
-    color: #d95c5c;
-    padding-left: 1.2em;
-}
-
-select option {
-    padding: 2px 12px;
-}
-
-.inline select {
-    display: inline-block;
-    margin-bottom: 0;
-    margin-top: 0;
-    vertical-align: middle;
-    width: auto;
-}
-
 .inline .checkbox {
     margin-top: 9px !important;
 }
@@ -551,31 +513,6 @@ select option {
 
 .block {
     display: block;
-}
-
-.inline.fields .tiny.field input,
-.inline.fields .tiny.field select {
-    width: 80px !important;
-}
-
-.inline.fields .mini.field input,
-.inline.fields .mini.field select {
-    width: 90px !important;
-}
-
-.inline.fields .small.field input,
-.inline.fields .small.field select {
-    width: 100px !important;
-}
-
-.inline.fields .compact.field input,
-.inline.fields .compact.field select {
-    width: 150px !important;
-}
-
-.inline.fields .medium.field input,
-.inline.fields .medium.field select {
-    width: 200px !important;
 }
 
 table.segment tr td a.pointer {
@@ -632,4 +569,40 @@ table.segment tr.positive td a.pointer .icon:hover {
 
 table.nowrap {
     white-space: nowrap;
+}
+
+table.ui.form td {
+    padding: 2px !important;
+}
+
+table.ui.form .tiny {
+    width: 70px !important;
+}
+
+table.ui.form .mini {
+    width: 90px !important;
+}
+
+table.ui.form .small {
+    width: 100px !important;
+}
+
+table.ui.form .compact {
+    width: 150px !important;
+}
+
+table.ui.form .medium {
+    width: 200px !important;
+}
+
+table.ui.form .normal {
+    width: 250px !important;
+}
+
+select option {
+    padding: 2px 12px;
+}
+
+.ui.form select {
+    height: 32px;
 }

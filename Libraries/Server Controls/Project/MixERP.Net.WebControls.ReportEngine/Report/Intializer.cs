@@ -18,6 +18,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.ReportEngine.Data;
 using MixERP.Net.WebControls.ReportEngine.Helpers;
 
@@ -180,6 +181,7 @@ namespace MixERP.Net.WebControls.ReportEngine
 
                         grid.DataSource = this.dataTableCollection[index];
                         grid.DataBind();
+                        GridViewHelper.SetHeaderRow(grid);
                     }
                 }
             }

@@ -16,5 +16,6 @@
     <file>/Scripts/mixerp/master-page/layout.js</file>
     <file>/Scripts/mixerp/master-page/scrud.js</file>
     <file>/Scripts/mixerp/master-page/sortable.js</file>
+    <file>/Scripts/mixerp/master-page/semantic.js</file>
   </files>
 </bundle>

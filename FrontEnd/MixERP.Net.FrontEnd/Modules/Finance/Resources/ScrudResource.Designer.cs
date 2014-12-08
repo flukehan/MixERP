@@ -133,6 +133,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Amount.
+        /// </summary>
+        internal static string amount {
+            get {
+                return ResourceManager.GetString("amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Audit Timestamp.
         /// </summary>
         internal static string audit_ts {
@@ -295,6 +304,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Discount.
+        /// </summary>
+        internal static string discount {
+            get {
+                return ResourceManager.GetString("discount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ER.
         /// </summary>
         internal static string er {
@@ -354,6 +372,24 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string is_cash {
             get {
                 return ResourceManager.GetString("is_cash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Code.
+        /// </summary>
+        internal static string item_code {
+            get {
+                return ResourceManager.GetString("item_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Name.
+        /// </summary>
+        internal static string item_name {
+            get {
+                return ResourceManager.GetString("item_name", resourceCulture);
             }
         }
         
@@ -430,6 +466,24 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Price.
+        /// </summary>
+        internal static string price {
+            get {
+                return ResourceManager.GetString("price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantity.
+        /// </summary>
+        internal static string quantity {
+            get {
+                return ResourceManager.GetString("quantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rate.
         /// </summary>
         internal static string rate {
@@ -484,11 +538,29 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sub Total.
+        /// </summary>
+        internal static string sub_total {
+            get {
+                return ResourceManager.GetString("sub_total", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sys Type.
         /// </summary>
         internal static string sys_type {
             get {
                 return ResourceManager.GetString("sys_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tax.
+        /// </summary>
+        internal static string tax {
+            get {
+                return ResourceManager.GetString("tax", resourceCulture);
             }
         }
         
@@ -552,6 +624,24 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string to_days {
             get {
                 return ResourceManager.GetString("to_days", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total.
+        /// </summary>
+        internal static string total {
+            get {
+                return ResourceManager.GetString("total", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unit Name.
+        /// </summary>
+        internal static string unit_name {
+            get {
+                return ResourceManager.GetString("unit_name", resourceCulture);
             }
         }
         

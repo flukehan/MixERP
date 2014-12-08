@@ -1,6 +1,7 @@
 ﻿using MixERP.Net.WebControls.StockAdjustmentFactory.Resources;
 using System.Globalization;
 using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 
 namespace MixERP.Net.WebControls.StockAdjustmentFactory
 {
@@ -12,10 +13,11 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
             {
                 gridPanel.Attributes.Add("style", "width: 1100px;");
 
-                using (HtmlTable table = new HtmlTable())
+                using (Table table = new Table())
                 {
                     table.ID = "TransferGridView";
-                    table.Attributes.Add("class", "ui table form segment");
+                    table.Attributes.Add("class", "ui table");
+
                     table.Rows.Add(this.GetHeaderRow());
                     table.Rows.Add(this.GetControlRow());
 
@@ -26,25 +28,9 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
             }
         }
 
-        private HtmlTableRow GetHeaderRow()
+        private TableHeaderCell GetHeaderCell(string innerText, string AssociatedControlId, bool alignRight, int width)
         {
-            using (HtmlTableRow row = new HtmlTableRow())
-            {
-                row.Cells.Add(this.GetHeaderCell(Titles.Type, "TransactionTypeSelect", false, 80));
-                row.Cells.Add(this.GetHeaderCell(Titles.Store, "StoreSelect", false, 140));
-                row.Cells.Add(this.GetHeaderCell(Titles.ItemCode, "ItemCodeInputText", false, 90));
-                row.Cells.Add(this.GetHeaderCell(Titles.ItemName, "ItemSelect", false, 0));
-                row.Cells.Add(this.GetHeaderCell(Titles.Unit, "UnitSelect", false, 120));
-                row.Cells.Add(this.GetHeaderCell(Titles.Quantity, "QuantityInputText", true, 120));
-                row.Cells.Add(this.GetHeaderCell(Titles.Action, null, false, 120));
-
-                return row;
-            }
-        }
-
-        private HtmlTableCell GetHeaderCell(string innerText, string AssociatedControlId, bool alignRight, int width)
-        {
-            using (HtmlTableCell header = new HtmlTableCell("th"))
+            using (TableHeaderCell header = new TableHeaderCell())
             {
                 if (alignRight)
                 {
@@ -58,7 +44,7 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
 
                 if (string.IsNullOrWhiteSpace(AssociatedControlId))
                 {
-                    header.InnerText = innerText;
+                    header.Text = innerText;
                 }
                 else
                 {
@@ -73,6 +59,24 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
                 }
 
                 return header;
+            }
+        }
+
+        private TableHeaderRow GetHeaderRow()
+        {
+            using (TableHeaderRow row = new TableHeaderRow())
+            {
+                row.TableSection = TableRowSection.TableHeader;
+
+                row.Cells.Add(this.GetHeaderCell(Titles.Type, "TransactionTypeSelect", false, 80));
+                row.Cells.Add(this.GetHeaderCell(Titles.Store, "StoreSelect", false, 140));
+                row.Cells.Add(this.GetHeaderCell(Titles.ItemCode, "ItemCodeInputText", false, 90));
+                row.Cells.Add(this.GetHeaderCell(Titles.ItemName, "ItemSelect", false, 0));
+                row.Cells.Add(this.GetHeaderCell(Titles.Unit, "UnitSelect", false, 120));
+                row.Cells.Add(this.GetHeaderCell(Titles.Quantity, "QuantityInputText", true, 120));
+                row.Cells.Add(this.GetHeaderCell(Titles.Action, null, false, 120));
+
+                return row;
             }
         }
     }

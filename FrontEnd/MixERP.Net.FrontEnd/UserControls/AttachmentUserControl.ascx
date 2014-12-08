@@ -36,8 +36,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 <asp:HiddenField ID="UploadedFilesHidden" runat="server" />
 
 <div id="FileUploads">
-    <table class="ui table form segment" style="width: 100%;">
-        <tbody>
+    <table class="ui table" style="width: 100%;">
+        <thead>
             <tr>
                 <th style="width: 340px;"><span>Comment</span>
                 </th>
@@ -50,6 +50,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                 <th style="width: 340px;"><span>File Path</span>
                 </th>
             </tr>
+        </thead>
+        <tbody class="ui form">
             <tr>
                 <td>
                     <input type="text" id="CommentTextBox1" class="comment" />

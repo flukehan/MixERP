@@ -2022,8 +2022,8 @@ CREATE TABLE core.bank_accounts
 CREATE TABLE core.sales_teams
 (
     sales_team_id                           SERIAL PRIMARY KEY,
-    sales_team_code                         national character varying(12),
-    sales_team_name                         national character varying(50),
+    sales_team_code                         national character varying(12) NOT NULL,
+    sales_team_name                         national character varying(50) NOT NULL,
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
                                             DEFAULT(NOW())
@@ -7125,43 +7125,29 @@ BEGIN
         transactions.transaction_master.last_verified_on AS verified_on,
         transactions.transaction_master.verification_reason AS reason,    
         transactions.transaction_master.transaction_ts,
-        core.get_flag_background_color(core.get_flag_type_id(_user_id, 'transactions.stock_master', 'stock_master_id', transactions.transaction_master.transaction_master_id)) AS flag_bg,
-        core.get_flag_foreground_color(core.get_flag_type_id(_user_id, 'transactions.stock_master', 'stock_master_id', transactions.transaction_master.transaction_master_id)) AS flag_fg
+        core.get_flag_background_color(core.get_flag_type_id(_user_id, 'transactions.transaction_master', 'transaction_master_id', transactions.transaction_master.transaction_master_id)) AS flag_bg,
+        core.get_flag_foreground_color(core.get_flag_type_id(_user_id, 'transactions.transaction_master', 'transaction_master_id', transactions.transaction_master.transaction_master_id)) AS flag_fg
     FROM transactions.transaction_master
     WHERE 1 = 1
     AND transactions.transaction_master.value_date BETWEEN _from AND _to
     AND office_id IN (SELECT office_id FROM office_cte)
     AND (_tran_id = 0 OR _tran_id  = transactions.transaction_master.transaction_master_id)
-    AND transactions.transaction_master.transaction_code LIKE '%' || lower(_tran_code) || '%' 
-    AND COALESCE(transactions.transaction_master.reference_number, '') LIKE '%' || lower(_reference_number) || '%' 
-    AND transactions.transaction_master.statement_reference LIKE '%' || lower(_statement_reference) || '%' 
-    AND COALESCE(transactions.transaction_master.verification_reason, '') LIKE '%' || lower(_reason) || '%' 
-    AND office.get_user_name_by_user_id(transactions.transaction_master.user_id) LIKE '%' || lower(_posted_by) || '%' 
-    AND office.get_office_name_by_id(transactions.transaction_master.office_id) LIKE '%' || lower(_office) || '%' 
-    AND COALESCE(core.get_verification_status_name_by_verification_status_id(transactions.transaction_master.verification_status_id), '') LIKE '%' || lower(_status) || '%' 
-    AND COALESCE(office.get_user_name_by_user_id(transactions.transaction_master.verified_by_user_id), '') LIKE '%' || lower(_verified_by) || '%'    
+    AND lower(transactions.transaction_master.transaction_code) LIKE '%' || lower(_tran_code) || '%' 
+    AND lower(transactions.transaction_master.book) LIKE '%' || lower(_book) || '%' 
+    AND COALESCE(lower(transactions.transaction_master.reference_number), '') LIKE '%' || lower(_reference_number) || '%' 
+    AND COALESCE(lower(transactions.transaction_master.statement_reference), '') LIKE '%' || lower(_statement_reference) || '%' 
+    AND COALESCE(lower(transactions.transaction_master.verification_reason), '') LIKE '%' || lower(_reason) || '%' 
+    AND lower(office.get_user_name_by_user_id(transactions.transaction_master.user_id)) LIKE '%' || lower(_posted_by) || '%' 
+    AND lower(office.get_office_name_by_id(transactions.transaction_master.office_id)) LIKE '%' || lower(_office) || '%' 
+    AND COALESCE(lower(core.get_verification_status_name_by_verification_status_id(transactions.transaction_master.verification_status_id)), '') LIKE '%' || lower(_status) || '%' 
+    AND COALESCE(lower(office.get_user_name_by_user_id(transactions.transaction_master.verified_by_user_id)), '') LIKE '%' || lower(_verified_by) || '%'    
     ORDER BY value_date ASC, verification_status_id DESC;
 END
 $$
 LANGUAGE plpgsql;
 
 
-SELECT * FROM transactions.get_journal_view
-(
-    2,
-    2,
-    '1-1-2000',
-    '1-1-2020',
-    0,
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '', ''
-);
+--SELECT * FROM transactions.get_journal_view(2,1,'1-1-2000','1-1-2020',0,'', 'Jou', '', '','', '','','', '');
 
 
 -->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_last_receipt_date.sql --<--<--

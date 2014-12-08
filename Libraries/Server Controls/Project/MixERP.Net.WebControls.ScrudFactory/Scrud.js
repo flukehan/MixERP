@@ -62,45 +62,11 @@ var scrudSelectRadioById = function (id) {
 };
 
 var scrudPrintGridView = function () {
-    //Load report template from the path.
-    $.get(reportTemplatePath, function () { }).done(function (data) {
-        //Load report header template.
-        $.get(reportHeaderPath, function () { }).done(function (header) {
-            var table = $("#" + formGridViewId).clone();
-            var user = $("#" + userIdHiddenId).val();
-            var office = $("#" + officeCodeHiddenId).val();
+    var user = $("#" + userIdHiddenId).val();
+    var office = $("#" + officeCodeHiddenId).val();
+    var title = $("#" + titleLabelId).html();
 
-            $(table).find("tr.tableFloatingHeader").remove();
-
-            $(table).find("th:first").remove();
-            $(table).find("td:first-child").remove();
-
-            table = "<table border='1' class='preview'>" + table.html() + "</table>";
-
-            data = data.replace("{Header}", header);
-            data = data.replace("{ReportHeading}", $("#" + titleLabelId).html());
-            data = data.replace("{PrintDate}", date);
-            data = data.replace("{UserName}", user);
-            data = data.replace("{OfficeCode}", office);
-            data = data.replace("{Table}", table);
-
-            //Creating and opening a new window to display the report.
-            var w = window.open('', 'ScrudReport',
-                                   + ',menubar=0'
-                                   + ',toolbar=0'
-                                   + ',status=0'
-                                   + ',scrollbars=1'
-                                   + ',resizable=0');
-            w.moveTo(0, 0);
-            w.resizeTo(screen.width, screen.height);
-
-            //Writing the report to the window.
-            w.document.writeln(data);
-            w.document.close();
-
-            //Report sent to the browser.
-        });
-    });
+    printGridView(reportTemplatePath, reportHeaderPath, title, formGridViewId, date, user, office, 'ScrudReport', 1, 0);
 };
 
 Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {

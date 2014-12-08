@@ -97,11 +97,29 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add New.
+        /// </summary>
+        internal static string AddNew {
+            get {
+                return ResourceManager.GetString("AddNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ageing Slabs.
         /// </summary>
         internal static string AgeingSlabs {
             get {
                 return ResourceManager.GetString("AgeingSlabs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Approve.
+        /// </summary>
+        internal static string Approve {
+            get {
+                return ResourceManager.GetString("Approve", resourceCulture);
             }
         }
         
@@ -331,6 +349,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Flag.
+        /// </summary>
+        internal static string Flag {
+            get {
+                return ResourceManager.GetString("Flag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to GL Advice.
         /// </summary>
         internal static string GLAdvice {
@@ -354,6 +381,24 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string Id {
             get {
                 return ResourceManager.GetString("Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice Details.
+        /// </summary>
+        internal static string InvoiceDetails {
+            get {
+                return ResourceManager.GetString("InvoiceDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to JournalVoucher.
+        /// </summary>
+        internal static string JournalVoucher {
+            get {
+                return ResourceManager.GetString("JournalVoucher", resourceCulture);
             }
         }
         
@@ -403,6 +448,24 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Other Details.
+        /// </summary>
+        internal static string OtherDetails {
+            get {
+                return ResourceManager.GetString("OtherDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Party Name.
+        /// </summary>
+        internal static string PartyName {
+            get {
+                return ResourceManager.GetString("PartyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Phone.
         /// </summary>
         internal static string Phone {
@@ -439,6 +502,24 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Price Type.
+        /// </summary>
+        internal static string PriceType {
+            get {
+                return ResourceManager.GetString("PriceType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Print.
+        /// </summary>
+        internal static string Print {
+            get {
+                return ResourceManager.GetString("Print", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reason.
         /// </summary>
         internal static string Reason {
@@ -457,11 +538,47 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reject.
+        /// </summary>
+        internal static string Reject {
+            get {
+                return ResourceManager.GetString("Reject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Running Total.
         /// </summary>
         internal static string RunningTotal {
             get {
                 return ResourceManager.GetString("RunningTotal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shipper.
+        /// </summary>
+        internal static string Shipper {
+            get {
+                return ResourceManager.GetString("Shipper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shipping Charge.
+        /// </summary>
+        internal static string ShippingCharge {
+            get {
+                return ResourceManager.GetString("ShippingCharge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show.
+        /// </summary>
+        internal static string Show {
+            get {
+                return ResourceManager.GetString("Show", resourceCulture);
             }
         }
         
@@ -480,6 +597,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string Status {
             get {
                 return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stock Transaction.
+        /// </summary>
+        internal static string StockTransaction {
+            get {
+                return ResourceManager.GetString("StockTransaction", resourceCulture);
             }
         }
         
@@ -520,6 +646,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tran Id.
+        /// </summary>
+        internal static string TranId {
+            get {
+                return ResourceManager.GetString("TranId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Transaction Date.
         /// </summary>
         internal static string TransactionDate {
@@ -552,6 +687,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string TransactionTimestamp {
             get {
                 return ResourceManager.GetString("TransactionTimestamp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transaction Type.
+        /// </summary>
+        internal static string TransactionType {
+            get {
+                return ResourceManager.GetString("TransactionType", resourceCulture);
             }
         }
         

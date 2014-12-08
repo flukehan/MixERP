@@ -24,8 +24,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 <head runat="server">
 
     <script src="//code.jquery.com/jquery-1.9.1.js" type="text/javascript"></script>
-    <link href="/Scripts/semantic-ui/css/semantic.min.css" rel="stylesheet" />
-    <script type="text/javascript" src="/Scripts/semantic-ui/javascript/semantic.min.js"></script>
+    <link href="/Scripts/semantic-ui/semantic.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="/Scripts/semantic-ui/semantic.min.js"></script>
 
     <title>Sign In</title>
 </head>

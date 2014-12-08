@@ -406,7 +406,7 @@ var post = function () {
 
     ajaxPostJournalTransaction.success(function (msg) {
         var id = msg.d;
-        window.location = "/Modules/Finance/Confirmation/JournalVoucher.aspx?TranId=" + id;
+        window.location = "/Modules/Finance/Confirmation/JournalVoucher.mix?TranId=" + id;
     });
 
     ajaxPostJournalTransaction.fail(function (xhr) {
@@ -591,7 +591,7 @@ var addShortcuts = function () {
         $('#lcCreditTextBox').focus();
     });
 
-    shortcut.add("CTRL+ENTER", function () {
-        $('#AddButton').click();
+    shortcut.add("CTRL+RETURN", function () {
+        $('#AddInputButton').click();
     });
 };

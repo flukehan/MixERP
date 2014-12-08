@@ -288,4 +288,34 @@
   <data name="user_name" xml:space="preserve">
     <value>Username</value>
   </data>
+  <data name="amount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="discount" xml:space="preserve">
+    <value>Discount</value>
+  </data>
+  <data name="item_code" xml:space="preserve">
+    <value>Item Code</value>
+  </data>
+  <data name="item_name" xml:space="preserve">
+    <value>Item Name</value>
+  </data>
+  <data name="price" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="quantity" xml:space="preserve">
+    <value>Quantity</value>
+  </data>
+  <data name="sub_total" xml:space="preserve">
+    <value>Sub Total</value>
+  </data>
+  <data name="tax" xml:space="preserve">
+    <value>Tax</value>
+  </data>
+  <data name="total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="unit_name" xml:space="preserve">
+    <value>Unit Name</value>
+  </data>
 </root>

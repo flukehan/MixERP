@@ -6,26 +6,86 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
 {
     public partial class FormView
     {
-        private HtmlTableRow GetControlRow()
+        private void AddButton(TableRow row)
         {
-            using (HtmlTableRow row = new HtmlTableRow())
+            using (TableCell cell = this.GetCell())
             {
-                row.Attributes.Add("class", "footer-row");
+                using (HtmlInputButton addButton = new HtmlInputButton())
+                {
+                    addButton.ID = "AddButton";
+                    addButton.Value = Titles.Add;
+                    addButton.Attributes.Add("class", "ui small red button");
 
-                this.AddTransactionTypeSelect(row);
-                this.AddStoreSelect(row);
-                this.AddItemCodeInputText(row);
-                this.AddItemSelect(row);
-                this.AddUnitSelect(row);
-                this.AddQuantityInputText(row);
-                this.AddButton(row);
-                return row;
+                    cell.Controls.Add(addButton);
+                }
+
+                row.Controls.Add(cell);
             }
         }
 
-        private void AddTransactionTypeSelect(HtmlTableRow row)
+        private void AddItemCodeInputText(TableRow row)
         {
-            using (HtmlTableCell cell = this.GetCell())
+            using (TableCell cell = this.GetCell())
+            {
+                using (HtmlInputText itemCodeInputText = new HtmlInputText())
+                {
+                    itemCodeInputText.ID = "ItemCodeInputText";
+
+                    cell.Controls.Add(itemCodeInputText);
+                }
+
+                row.Controls.Add(cell);
+            }
+        }
+
+        private void AddItemSelect(TableRow row)
+        {
+            using (TableCell cell = this.GetCell())
+            {
+                using (HtmlSelect itemSelect = new HtmlSelect())
+                {
+                    itemSelect.ID = "ItemSelect";
+
+                    cell.Controls.Add(itemSelect);
+                }
+
+                row.Controls.Add(cell);
+            }
+        }
+
+        private void AddQuantityInputText(TableRow row)
+        {
+            using (TableCell cell = this.GetCell())
+            {
+                using (HtmlInputText quantityInputText = new HtmlInputText())
+                {
+                    quantityInputText.ID = "QuantityInputText";
+                    quantityInputText.Attributes.Add("class", "text-right integer");
+                    cell.Controls.Add(quantityInputText);
+                }
+
+                row.Controls.Add(cell);
+            }
+        }
+
+        private void AddStoreSelect(TableRow row)
+        {
+            using (TableCell cell = this.GetCell())
+            {
+                using (HtmlSelect storeSelect = new HtmlSelect())
+                {
+                    storeSelect.ID = "StoreSelect";
+
+                    cell.Controls.Add(storeSelect);
+                }
+
+                row.Controls.Add(cell);
+            }
+        }
+
+        private void AddTransactionTypeSelect(TableRow row)
+        {
+            using (TableCell cell = this.GetCell())
             {
                 using (HtmlSelect transactionTypeSelect = new HtmlSelect())
                 {
@@ -41,54 +101,9 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
             }
         }
 
-        private void AddStoreSelect(HtmlTableRow row)
+        private void AddUnitSelect(TableRow row)
         {
-            using (HtmlTableCell cell = this.GetCell())
-            {
-                using (HtmlSelect storeSelect = new HtmlSelect())
-                {
-                    storeSelect.ID = "StoreSelect";
-
-                    cell.Controls.Add(storeSelect);
-                }
-
-                row.Controls.Add(cell);
-            }
-        }
-
-        private void AddItemCodeInputText(HtmlTableRow row)
-        {
-            using (HtmlTableCell cell = this.GetCell())
-            {
-                using (HtmlInputText itemCodeInputText = new HtmlInputText())
-                {
-                    itemCodeInputText.ID = "ItemCodeInputText";
-
-                    cell.Controls.Add(itemCodeInputText);
-                }
-
-                row.Controls.Add(cell);
-            }
-        }
-
-        private void AddItemSelect(HtmlTableRow row)
-        {
-            using (HtmlTableCell cell = this.GetCell())
-            {
-                using (HtmlSelect itemSelect = new HtmlSelect())
-                {
-                    itemSelect.ID = "ItemSelect";
-
-                    cell.Controls.Add(itemSelect);
-                }
-
-                row.Controls.Add(cell);
-            }
-        }
-
-        private void AddUnitSelect(HtmlTableRow row)
-        {
-            using (HtmlTableCell cell = this.GetCell())
+            using (TableCell cell = this.GetCell())
             {
                 using (HtmlSelect unitSelect = new HtmlSelect())
                 {
@@ -100,43 +115,28 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
             }
         }
 
-        private void AddQuantityInputText(HtmlTableRow row)
+        private TableCell GetCell()
         {
-            using (HtmlTableCell cell = this.GetCell())
-            {
-                using (HtmlInputText quantityInputText = new HtmlInputText())
-                {
-                    quantityInputText.ID = "QuantityInputText";
-                    quantityInputText.Attributes.Add("class", "text-right integer");
-                    cell.Controls.Add(quantityInputText);
-                }
-
-                row.Controls.Add(cell);
-            }
-        }
-
-        private void AddButton(HtmlTableRow row)
-        {
-            using (HtmlTableCell cell = this.GetCell())
-            {
-                using (HtmlInputButton addButton = new HtmlInputButton())
-                {
-                    addButton.ID = "AddButton";
-                    addButton.Value = Titles.Add;
-                    addButton.Attributes.Add("class", "ui small red button");
-
-                    cell.Controls.Add(addButton);
-                }
-
-                row.Controls.Add(cell);
-            }
-        }
-
-        private HtmlTableCell GetCell()
-        {
-            using (HtmlTableCell cell = new HtmlTableCell("td"))
+            using (TableCell cell = new TableCell())
             {
                 return cell;
+            }
+        }
+
+        private TableRow GetControlRow()
+        {
+            using (TableRow row = new TableRow())
+            {
+                row.Attributes.Add("class", "footer-row ui form");
+
+                this.AddTransactionTypeSelect(row);
+                this.AddStoreSelect(row);
+                this.AddItemCodeInputText(row);
+                this.AddItemSelect(row);
+                this.AddUnitSelect(row);
+                this.AddQuantityInputText(row);
+                this.AddButton(row);
+                return row;
             }
         }
     }

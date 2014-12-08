@@ -690,14 +690,6 @@ function loadUnits() {
     ajaxDataBind(url, unitSelect, data, selectedValue);
 };
 
-//GridView Data Function
-
-//var clearData = function () {
-//    var grid = productGridView;
-//    var rows = grid.find("tr:not(:first-child):not(:last-child)");
-//    rows.remove();
-//};
-
 var restoreData = function () {
     var sourceControl = productGridViewDataHidden;
 

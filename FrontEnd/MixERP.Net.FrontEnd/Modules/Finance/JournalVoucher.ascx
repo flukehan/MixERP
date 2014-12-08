@@ -18,89 +18,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="JournalVoucher.ascx.cs" Inherits="MixERP.Net.Core.Modules.Finance.JournalVoucher" %>
-<%@ Register TagPrefix="mixerp" Namespace="MixERP.Net.WebControls.Common" Assembly="MixERP.Net.WebControls.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a724a47a0879d02f" %>
 
-<h1>Journal Voucher Entry
-</h1>
-<script src="Scripts/JournalVoucher.js"></script>
-
-<div class="ui icon buttons">
-    <button type="button" id="AddNewButton" runat="server" class="ui button" onclick="window.location='Entry/JournalVoucher.mix';">
-        <i class="icon plus"></i>
-        <asp:Literal runat="server" Text="Add New" />
-    </button>
-
-    <button type="button" id="FlagButton" class="ui button">
-        <i class="icon flag"></i>&nbsp;
-        <asp:Literal runat="server" Text="Flag" />
-    </button>
-
-    <button type="button" id="ApproveButton" class="ui button">
-        <i class="icon flag"></i>&nbsp;
-        <asp:Literal runat="server" Text="Approve" />
-    </button>
-
-    <button type="button" id="RejectButton" class="ui button">
-        <i class="icon flag"></i>&nbsp;
-        <asp:Literal runat="server" Text="Reject" />
-    </button>
-
-    <button type="button" class="ui button">
-        <i class="icon print"></i>&nbsp;
-        <asp:Literal runat="server" Text="Print" />
-    </button>
-</div>
-
-<div class="ui form segment">
-    <div class="inline fields">
-        <div class="small field">
-            <mixerp:DateTextBox ID="DateFromDateTextBox" runat="server"
-                CssClass="date form-control input-sm"
-                Mode="FiscalYearStartDate"
-                Required="true" />
-            <i class="icon calendar pointer" onclick=" $('#DateFromDateTextBox').datepicker('show'); "></i>
-        </div>
-        <div class="small field">
-            <mixerp:DateTextBox ID="DateToDateTextBox" runat="server"
-                CssClass="date form-control input-sm"
-                Mode="FiscalYearEndDate"
-                Required="true" />
-            <i class="icon calendar pointer" onclick=" $('#DateToDateTextBox').datepicker('show'); "></i>
-        </div>
-        <div class="small field">
-            <input type="text" class="integer" placeholder="Tran Id" id="TranIdInputText" runat="server" />
-        </div>
-        <div class="small field">
-            <input type="text" placeholder="Tran Code" id="TranCodeInputText" runat="server" />
-        </div>
-        <div class="small field">
-            <input type="text" placeholder="Book" id="BookInputText" runat="server" />
-        </div>
-        <div class="small field">
-            <input type="text" placeholder="Reference#" id="ReferenceNumberInputText" runat="server" />
-        </div>
-        <div class="medium field">
-            <input type="text" placeholder="Statement Reference" id="StatementReferenceInputText" runat="server" />
-        </div>
-        <div class="small field">
-            <input type="text" placeholder="Posted By" id="PostedByInputText" runat="server" />
-        </div>
-        <div class="small field">
-            <input type="text" placeholder="Office" id="OfficeInputText" runat="server" />
-        </div>
-        <div class="small field">
-            <input type="text" placeholder="Status" id="StatusInputText" runat="server" />
-        </div>
-        <div class="small field">
-            <input type="text" placeholder="Veririfed By" id="VerifiedByInputText" runat="server" />
-        </div>
-        <div class="small field">
-            <input type="text" placeholder="Reason" id="ReasonInputText" runat="server" />
-        </div>
-
-        <asp:Button ID="ShowButton" runat="server" Text="Show" CssClass="blue ui button" OnClick="ShowButton_Click" />
-    </div>
-</div>
+<asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
 
 <div style="width: 1500px; overflow: auto;">
     <asp:GridView
@@ -108,27 +27,31 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         ID="TransactionGridView"
         GridLines="None"
         AutoGenerateColumns="False"
-        CssClass="ui celled table segment nowrap"
-        OnRowDataBound="TransactionGridView_RowDataBound">
-        <HeaderStyle CssClass="ui blue message"></HeaderStyle>
+        CssClass="ui table nowrap"
+        OnRowDataBound="TransactionGridView_RowDataBound"
+        OnDataBound="TransactionGridView_DataBound">
+        <Columns>
+            <asp:TemplateField HeaderText="Actions">
+                <ItemTemplate>
+                    <i class="icon list layout" onclick="showCheckList(this);"></i>
+                    <i class="icon print" onclick="showPreview(this);"></i>
+                    <i class="icon grid layout" onclick="showStockDetail(this);"></i>
+                    <i class="icon chevron circle up" onclick="window.scroll(0);"></i>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Select">
+                <ItemTemplate>
+                    <div class="ui toggle checkbox">
+                        <input type="checkbox" />
+                        <label></label>
+                    </div>
+                </ItemTemplate>
+            </asp:TemplateField>
+        </Columns>
     </asp:GridView>
 </div>
+<asp:HiddenField runat="server" ID="SelectedValuesHidden"></asp:HiddenField>
 
 <asp:PlaceHolder runat="server" ID="FlagPlaceholder"></asp:PlaceHolder>
 
-<script type="text/javascript">
-
-    $(document).ready(function () {
-        updateFlagColor();
-    });
-
-    var updateFlagColor = function () {
-        var grid = $("#TransactionGridView");
-        createFlaggedRows(grid);
-    };
-
-    var getSelectedItems = function () {
-        alert("Nothing selected.");
-        return false;
-    };
-</script>
+<script src="Scripts/JournalVoucher.js"></script>

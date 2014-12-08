@@ -75,46 +75,55 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 </h2>
 
 <div class="ui segment">
-    <div class="ui form">
-        <div class="seven inline fields">
 
-            <div class="mini field">
+    <table class="ui form">
+        <tr>
+            <td>
                 <asp:Literal ID="DateLiteral" runat="server" />
-                <mixerp:DateTextBox ID="DateTextBox" runat="server" Mode="Today" CssClass="date" />
-            </div>
-
-            <div class="small field" id="StoreDiv" runat="server">
+            </td>
+            <td>
                 <asp:Literal ID="StoreSelectLabel" runat="server" />
-                <select id="StoreSelect"></select>
-            </div>
-
-            <div class="small field">
+            </td>
+            <td>
                 <asp:Literal ID="PartyCodeInputTextLabel" runat="server" />
-                <input type="text" id="PartyCodeInputText" runat="server" title="F2" />
-            </div>
-
-            <div class="medium field">
-                <select id="PartySelect" title="F2"></select>
-            </div>
-
-            <div class="field" id="PriceTypeDiv" runat="server">
+            </td>
+            <td></td>
+            <td>
                 <asp:Literal ID="PriceTypeSelectLabel" runat="server" />
-                <select id="PriceTypeSelect"></select>
-            </div>
-
-            <div class="tiny field">
+            </td>
+            <td>
                 <asp:Literal ID="ReferenceNumberInputTextLabel" runat="server" />
-                <input type="text" id="ReferenceNumberInputText" runat="server" maxlength="24" />
-            </div>
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>
+                <mixerp:DateTextBox ID="DateTextBox" runat="server" Mode="Today" CssClass="date small" />
+            </td>
+            <td>
+                <select id="StoreSelect" class="small" runat="server"></select>
+            </td>
+            <td>
+                <input type="text" id="PartyCodeInputText" runat="server" title="F2" class="small" />
+            </td>
+            <td>
+                <select id="PartySelect" title="F2" class="normal"></select>
+            </td>
+            <td>
+                <select id="PriceTypeSelect" class="compact" runat="server"></select>
+            </td>
+            <td>
 
-            <div class="tiny field" id="CashTransactionDiv" runat="server">
-                <div class="ui toggle checkbox">
+                <input type="text" id="ReferenceNumberInputText" runat="server" maxlength="24" class="small" />
+            </td>
+            <td>
+                <div class="ui toggle checkbox" id="CashTransactionDiv" runat="server">
                     <input id="CashTransactionInputCheckBox" type="checkbox" checked="checked">
                     <asp:Literal ID="CashTransactionLiteral" runat="server" />
                 </div>
-            </div>
-        </div>
-    </div>
+            </td>
+        </tr>
+    </table>
 </div>
 
 <div id="ShippingAddressInfoDiv" runat="server" style="width: 500px;" class="ui page form">
@@ -138,8 +147,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     </div>
 </div>
 
-<table id="ProductGridView" class="ui form celled table segment" style="min-width: 1400px; max-width: 2000px;" runat="server">
-    <tbody>
+<table id="ProductGridView" class="ui table" style="min-width: 1400px; max-width: 2000px;">
+    <thead>
         <tr>
             <th>
                 <asp:Literal ID="ItemCodeInputTextLabel" runat="server" />
@@ -178,7 +187,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                 <asp:Literal runat="server" Text="Action" />
             </th>
         </tr>
-        <tr class="footer-row">
+    </thead>
+    <tbody>
+        <tr class="ui footer-row form">
             <td>
                 <input type="text" id="ItemCodeInputText" title='<asp:Literal runat="server" Text="Alt + C" />' />
             </td>

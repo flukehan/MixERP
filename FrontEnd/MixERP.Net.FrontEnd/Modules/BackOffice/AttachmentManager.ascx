@@ -100,7 +100,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
             };
 
             if (mod === 1) {
-                connectedItems += '<div class="ui five connected items">';
+                connectedItems += '<div class="ui five cards">';
             };
 
             connectedItems += LoadImageGroup(model[i]);
@@ -121,7 +121,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     function LoadImageGroup(file) {
         var imagePath = "/Modules/BackOffice/Handlers/ImageHandler.ashx?Path=" + file.FilePath + "&H=300&W=250";
 
-        var html = '<div class="item">' +
+        var html = '<div class="card">' +
                         '<div class="image">' + '<img src="' + imagePath + '" />' + '</div>' +
                         '<div class="content">' +
                             '<div class="name">' + file.OriginalFileName + '</div>' +
@@ -137,7 +137,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
     function initializeModal(filePath, originalFileName, comment, initializer) {
         $('#opener .header').html("<i class='photo icon'></i>" + originalFileName);
-        $('#opener img').attr('src', '/Modules/BackOffice/Handlers/ImageHandler.ashx?&H=538&W=956&Path=' + filePath);
+        $('#opener img').attr('src', '/Modules/BackOffice/Handlers/ImageHandler.ashx?&H=500&W=900&Path=' + filePath);
         $('#opener p').html(comment);
 
         if (initializer) {

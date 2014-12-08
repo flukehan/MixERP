@@ -77,11 +77,16 @@
     <Content Include="JournalVoucher.ascx" />
     <Content Include="Package.xml" />
     <Content Include="Reports\GLAdviceReport.ascx" />
+    <Content Include="Reports\Source\Transactions.StockTransaction.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Reports\Source\Transactions.GLEntry.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Reports\StockTransactionReport.ascx" />
     <Content Include="Scripts\Entry\JournalVoucher.js" />
     <Content Include="Scripts\JournalVoucher.js" />
+    <Content Include="Services\CurrencyData.asmx" />
     <Content Include="SQL\Menu.sql" />
     <Content Include="SQL\Module.sql" />
     <Content Include="Services\AccountData.asmx" />
@@ -144,6 +149,13 @@
     <Compile Include="Reports\GLAdviceReport.ascx.designer.cs">
       <DependentUpon>GLAdviceReport.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Reports\StockTransactionReport.ascx.cs">
+      <DependentUpon>StockTransactionReport.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\StockTransactionReport.ascx.designer.cs">
+      <DependentUpon>StockTransactionReport.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Errors.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -161,6 +173,10 @@
     </Compile>
     <Compile Include="Services\AccountData.asmx.cs">
       <DependentUpon>AccountData.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\CurrencyData.asmx.cs">
+      <DependentUpon>CurrencyData.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Services\JournalVoucher.asmx.cs">
@@ -256,6 +272,10 @@
     <Folder Include="Widgets\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.Net.TransactionGovernor\MixERP.Net.TransactionGovernor.csproj">
+      <Project>{0aacf4db-8332-4c4b-96df-2bf6aea68473}</Project>
+      <Name>MixERP.Net.TransactionGovernor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.Common\MixERP.Net.WebControls.Common.csproj">
       <Project>{2d961540-6597-4e7b-969c-974d71d820dd}</Project>
       <Name>MixERP.Net.WebControls.Common</Name>

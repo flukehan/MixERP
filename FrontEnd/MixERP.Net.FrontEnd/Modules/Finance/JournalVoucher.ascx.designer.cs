@@ -13,130 +13,13 @@ namespace MixERP.Net.Core.Modules.Finance {
     public partial class JournalVoucher {
         
         /// <summary>
-        /// AddNewButton control.
+        /// Placeholder1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton AddNewButton;
-        
-        /// <summary>
-        /// DateFromDateTextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::MixERP.Net.WebControls.Common.DateTextBox DateFromDateTextBox;
-        
-        /// <summary>
-        /// DateToDateTextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::MixERP.Net.WebControls.Common.DateTextBox DateToDateTextBox;
-        
-        /// <summary>
-        /// TranIdInputText control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText TranIdInputText;
-        
-        /// <summary>
-        /// TranCodeInputText control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText TranCodeInputText;
-        
-        /// <summary>
-        /// BookInputText control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText BookInputText;
-        
-        /// <summary>
-        /// ReferenceNumberInputText control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText ReferenceNumberInputText;
-        
-        /// <summary>
-        /// StatementReferenceInputText control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText StatementReferenceInputText;
-        
-        /// <summary>
-        /// PostedByInputText control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText PostedByInputText;
-        
-        /// <summary>
-        /// OfficeInputText control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText OfficeInputText;
-        
-        /// <summary>
-        /// StatusInputText control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText StatusInputText;
-        
-        /// <summary>
-        /// VerifiedByInputText control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText VerifiedByInputText;
-        
-        /// <summary>
-        /// ReasonInputText control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText ReasonInputText;
-        
-        /// <summary>
-        /// ShowButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ShowButton;
+        protected global::System.Web.UI.WebControls.PlaceHolder Placeholder1;
         
         /// <summary>
         /// TransactionGridView control.
@@ -146,6 +29,15 @@ namespace MixERP.Net.Core.Modules.Finance {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView TransactionGridView;
+        
+        /// <summary>
+        /// SelectedValuesHidden control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField SelectedValuesHidden;
         
         /// <summary>
         /// FlagPlaceholder control.

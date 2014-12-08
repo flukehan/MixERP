@@ -33,6 +33,11 @@ namespace MixERP.Net.Core.Modules.Finance.Confirmation
                 checklist.DisplayWithdrawButton = true;
                 checklist.DisplayPrintGlEntryButton = true;
                 checklist.DisplayAttachmentButton = true;
+                checklist.AttachmentBookName = "transaction";
+                checklist.OverridePath = this.OverridePath;
+
+                checklist.ViewPath = "~/Modules/Finance/JournalVoucher.mix";
+                checklist.AddNewPath = "~/Modules/Finance/Entry/JournalVoucher.mix";
                 checklist.GlAdvicePath = "~/Modules/Finance/Reports/GLAdviceReport.mix";
                 Placeholder1.Controls.Add(checklist);
             }

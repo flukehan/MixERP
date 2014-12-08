@@ -28,14 +28,14 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 </h2>
 
 <div class="ui tiny form segment">
-    <div class="inline fields">
-        <div class="small field">
+    <div class="two fields">
+        <div class="field">
             <label for="ValueDateTextBox">
                 <asp:Literal ID="ValueDateLiteral" runat="server" />
             </label>
             <mixerp:DateTextBox ID="ValueDateTextBox" runat="server" Mode="Today" CssClass="date" />
         </div>
-        <div class="small field">
+        <div class="field">
             <label for="ReferenceNumberInputText">
                 <asp:Literal ID="ReferenceNumberLiteral" runat="server" />
             </label>
@@ -46,8 +46,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
 <input type="hidden" id="TransactionGridViewHidden" />
 
-<table id="TransactionGridView" class="ui table form segment" runat="server">
-    <tbody>
+<table id="TransactionGridView" class="ui table">
+    <thead>
         <tr>
             <th style="width: 200px;">
                 <label for="StatementReferenceInputText">
@@ -103,7 +103,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                 <asp:Literal runat="server" ID="ActionLiteral" />
             </th>
         </tr>
-        <tr class="footer-row">
+    </thead>
+    <tbody>
+        <tr class="ui form footer-row">
             <td>
                 <input type="text" id="StatementReferenceInputText" title='Ctrl + Alt +S' />
             </td>
