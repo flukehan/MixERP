@@ -70,7 +70,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BankReconciliation.ascx" />
     <Content Include="Confirmation\JournalVoucher.ascx" />
     <Content Include="Entry\JournalVoucher.ascx" />
     <Content Include="Index.ascx" />
@@ -99,20 +98,11 @@
     <Content Include="Setup\Currencies.ascx" />
     <Content Include="Setup\ProductGLMapping.ascx" />
     <Content Include="StandingInstructions.ascx" />
-    <Content Include="TemplateTransaction.ascx" />
-    <Content Include="TransactionDocumentManager.ascx" />
     <Content Include="UpdateExchangeRates.ascx" />
     <Content Include="VoucherVerification.ascx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BankReconciliation.ascx.cs">
-      <DependentUpon>BankReconciliation.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="BankReconciliation.ascx.designer.cs">
-      <DependentUpon>BankReconciliation.ascx</DependentUpon>
-    </Compile>
     <Compile Include="Confirmation\JournalVoucher.ascx.cs">
       <DependentUpon>JournalVoucher.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -239,20 +229,6 @@
     <Compile Include="StandingInstructions.ascx.designer.cs">
       <DependentUpon>StandingInstructions.ascx</DependentUpon>
     </Compile>
-    <Compile Include="TemplateTransaction.ascx.cs">
-      <DependentUpon>TemplateTransaction.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="TemplateTransaction.ascx.designer.cs">
-      <DependentUpon>TemplateTransaction.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="TransactionDocumentManager.ascx.cs">
-      <DependentUpon>TransactionDocumentManager.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="TransactionDocumentManager.ascx.designer.cs">
-      <DependentUpon>TransactionDocumentManager.ascx</DependentUpon>
-    </Compile>
     <Compile Include="UpdateExchangeRates.ascx.cs">
       <DependentUpon>UpdateExchangeRates.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -303,6 +279,10 @@
     <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\MixERP.Net.WebControls.TransactionChecklist.csproj">
       <Project>{64490b89-b228-4188-8235-71744a94c9ae}</Project>
       <Name>MixERP.Net.WebControls.TransactionChecklist</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionViewFactory\MixERP.Net.WebControls.TransactionViewFactory.csproj">
+      <Project>{844654c8-df5b-42a6-98de-a1f43cd24804}</Project>
+      <Name>MixERP.Net.WebControls.TransactionViewFactory</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\MixERP.Net.FrontEnd.csproj">
       <Project>{ace1017d-71bc-4417-a906-72c4b9c55823}</Project>

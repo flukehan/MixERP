@@ -23,6 +23,16 @@ namespace MixERP.Net.Common.Helpers
 {
     public static class GridViewHelper
     {
+        public static void AddDataBoundControl(GridView grid, string dataField, string headerText, string dataFormatString = "")
+        {
+            BoundField field = new BoundField();
+            field.DataField = dataField;
+            field.HeaderText = headerText;
+            field.DataFormatString = dataFormatString;
+
+            grid.Columns.Add(field);
+        }
+
         public static void SetHeaderRow(GridView grid)
         {
             if (grid == null)

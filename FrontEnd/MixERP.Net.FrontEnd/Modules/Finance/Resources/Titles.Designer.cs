@@ -88,6 +88,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Actions.
+        /// </summary>
+        internal static string Actions {
+            get {
+                return ResourceManager.GetString("Actions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
         internal static string Add {
@@ -394,7 +403,7 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to JournalVoucher.
+        ///   Looks up a localized string similar to Journal Voucher.
         /// </summary>
         internal static string JournalVoucher {
             get {
@@ -552,6 +561,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string RunningTotal {
             get {
                 return ResourceManager.GetString("RunningTotal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select.
+        /// </summary>
+        internal static string Select {
+            get {
+                return ResourceManager.GetString("Select", resourceCulture);
             }
         }
         
@@ -750,6 +768,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string VerifiedOn {
             get {
                 return ResourceManager.GetString("VerifiedOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voucher Verification.
+        /// </summary>
+        internal static string VoucherVerification {
+            get {
+                return ResourceManager.GetString("VoucherVerification", resourceCulture);
             }
         }
     }

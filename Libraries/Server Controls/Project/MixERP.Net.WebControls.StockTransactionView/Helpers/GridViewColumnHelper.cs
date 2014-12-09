@@ -18,6 +18,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.WebControls.StockTransactionView.Resources;
 using System;
@@ -29,6 +30,37 @@ namespace MixERP.Net.WebControls.StockTransactionView.Helpers
 {
     public static class GridViewColumnHelper
     {
+        public static void AddColumns(GridView grid, SubTranBook book)
+        {
+            grid.Columns.Clear();
+
+            AddTemplateFields(grid);
+
+            GridViewHelper.AddDataBoundControl(grid, "id", Titles.Id, "");
+            GridViewHelper.AddDataBoundControl(grid, "value_date", Titles.ValueDate, "{0:d}");
+            GridViewHelper.AddDataBoundControl(grid, "office", Titles.Office, "");
+            GridViewHelper.AddDataBoundControl(grid, "reference_number", Titles.ReferenceNumber, "");
+            GridViewHelper.AddDataBoundControl(grid, "party", Titles.Party, "");
+
+            if (book != SubTranBook.Receipt)
+            {
+                GridViewHelper.AddDataBoundControl(grid, "price_type", Titles.PriceType, "");
+            }
+
+            GridViewHelper.AddDataBoundControl(grid, "amount", Titles.Amount, "");
+            GridViewHelper.AddDataBoundControl(grid, "transaction_ts", Titles.TransactionTimestamp, "{0:d}");
+            GridViewHelper.AddDataBoundControl(grid, "user", Titles.User, "");
+            GridViewHelper.AddDataBoundControl(grid, "statement_reference", Titles.StatementReference, "");
+
+            if (book != SubTranBook.Receipt)
+            {
+                GridViewHelper.AddDataBoundControl(grid, "book", Titles.Book, "");
+            }
+
+            GridViewHelper.AddDataBoundControl(grid, "flag_background_color", Titles.FlagBackgroundColor, "");
+            GridViewHelper.AddDataBoundControl(grid, "flag_foreground_color", Titles.FlagForegroundColor, "");
+        }
+
         private static void AddTemplateFields(GridView grid)
         {
             TemplateField actionTemplateField = new TemplateField();
@@ -44,62 +76,12 @@ namespace MixERP.Net.WebControls.StockTransactionView.Helpers
             grid.Columns.Add(checkBoxTemplateField);
         }
 
-        public class StockTransactionViewSelectTemplate : ITemplate, IDisposable
-        {
-            private bool disposed;
-            private HtmlInputCheckBox checkBox;
-
-            public void InstantiateIn(Control container)
-            {
-                using (HtmlGenericControl div = new HtmlGenericControl("div"))
-                {
-                    div.Attributes.Add("class", "ui toggle checkbox");
-                    checkBox = new HtmlInputCheckBox();
-                    checkBox.ID = "SelectCheckBox";
-                    checkBox.ClientIDMode = ClientIDMode.Predictable;
-
-                    div.Controls.Add(checkBox);
-
-                    //Added for compatibility with Semantic UI
-                    using (HtmlGenericControl label = new HtmlGenericControl("label"))
-                    {
-                        div.Controls.Add(label);
-                    }
-
-                    container.Controls.Add(div);
-                }
-            }
-
-            public void Dispose()
-            {
-                this.Dispose(true);
-                GC.SuppressFinalize(this);
-            }
-
-            protected virtual void Dispose(bool disposing)
-            {
-                if (!this.disposed)
-                {
-                    if (disposing)
-                    {
-                        if (this.checkBox != null)
-                        {
-                            this.checkBox.Dispose();
-                            this.checkBox = null;
-                        }
-                    }
-
-                    this.disposed = true;
-                }
-            }
-        }
-
         public class StockTransactionViewActionTemplate : ITemplate, IDisposable
         {
-            private bool disposed;
             private HtmlAnchor checkListAnchor;
-            private HtmlAnchor printAnchor;
+            private bool disposed;
             private HtmlAnchor goToTopAnchor;
+            private HtmlAnchor printAnchor;
 
             public void Dispose()
             {
@@ -161,45 +143,54 @@ namespace MixERP.Net.WebControls.StockTransactionView.Helpers
             }
         }
 
-        private static void AddDataBoundControl(GridView grid, string dataField, string headerText, string dataFormatString)
+        public class StockTransactionViewSelectTemplate : ITemplate, IDisposable
         {
-            BoundField field = new BoundField();
-            field.DataField = dataField;
-            field.HeaderText = headerText;
-            field.DataFormatString = dataFormatString;
+            private HtmlInputCheckBox checkBox;
+            private bool disposed;
 
-            grid.Columns.Add(field);
-        }
-
-        public static void AddColumns(GridView grid, SubTranBook book)
-        {
-            grid.Columns.Clear();
-
-            AddTemplateFields(grid);
-
-            AddDataBoundControl(grid, "id", Titles.Id, "");
-            AddDataBoundControl(grid, "value_date", Titles.ValueDate, "{0:d}");
-            AddDataBoundControl(grid, "office", Titles.Office, "");
-            AddDataBoundControl(grid, "reference_number", Titles.ReferenceNumber, "");
-            AddDataBoundControl(grid, "party", Titles.Party, "");
-
-            if (book != SubTranBook.Receipt)
+            public void Dispose()
             {
-                AddDataBoundControl(grid, "price_type", Titles.PriceType, "");
+                this.Dispose(true);
+                GC.SuppressFinalize(this);
             }
 
-            AddDataBoundControl(grid, "amount", Titles.Amount, "");
-            AddDataBoundControl(grid, "transaction_ts", Titles.TransactionTimestamp, "{0:d}");
-            AddDataBoundControl(grid, "user", Titles.User, "");
-            AddDataBoundControl(grid, "statement_reference", Titles.StatementReference, "");
-
-            if (book != SubTranBook.Receipt)
+            public void InstantiateIn(Control container)
             {
-                AddDataBoundControl(grid, "book", Titles.Book, "");
+                using (HtmlGenericControl div = new HtmlGenericControl("div"))
+                {
+                    div.Attributes.Add("class", "ui toggle checkbox");
+                    checkBox = new HtmlInputCheckBox();
+                    checkBox.ID = "SelectCheckBox";
+                    checkBox.ClientIDMode = ClientIDMode.Predictable;
+
+                    div.Controls.Add(checkBox);
+
+                    //Added for compatibility with Semantic UI
+                    using (HtmlGenericControl label = new HtmlGenericControl("label"))
+                    {
+                        div.Controls.Add(label);
+                    }
+
+                    container.Controls.Add(div);
+                }
             }
 
-            AddDataBoundControl(grid, "flag_background_color", Titles.FlagBackgroundColor, "");
-            AddDataBoundControl(grid, "flag_foreground_color", Titles.FlagForegroundColor, "");
+            protected virtual void Dispose(bool disposing)
+            {
+                if (!this.disposed)
+                {
+                    if (disposing)
+                    {
+                        if (this.checkBox != null)
+                        {
+                            this.checkBox.Dispose();
+                            this.checkBox = null;
+                        }
+                    }
+
+                    this.disposed = true;
+                }
+            }
         }
     }
 }

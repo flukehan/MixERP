@@ -4,7 +4,7 @@ var anchors = $("a.sub-menu-anchor");
 var footer = $("footer");
 var mainContent = $("#MainContent");
 var menuContainer = $("#MenuContainer");
-
+var fullWidthContainer = $(".full.width");
 ///#source 1 1 /Scripts/mixerp/master-page/js-tree.js
 $(function () {
     var tree = $("#tree");
@@ -143,6 +143,10 @@ function fixLayout() {
 
     if (mainContent) {
         mainContent.css("width", mainContent.width() + "px");
+    };
+
+    if (fullWidthContainer) {
+        fullWidthContainer.css("width", mainContent.width() + "px");
     };
 };
 ///#source 1 1 /Scripts/mixerp/master-page/scrud.js

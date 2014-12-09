@@ -17,11 +17,40 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Common.Models.Core;
+using MixERP.Net.Core.Modules.Finance.Resources;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.WebControls.TransactionViewFactory;
+using System;
 
 namespace MixERP.Net.Core.Modules.Finance
 {
     public partial class VoucherVerification : MixERPUserControl
     {
+        public override void OnControlLoad(object sender, EventArgs e)
+        {
+            using (TransactionView view = new TransactionView())
+            {
+                view.DisplayFlagButton = true;
+                view.DisplayApproveButton = true;
+                view.DisplayRejectButton = true;
+                view.DisplayPrintButton = true;
+
+                view.GridViewCssClass = "ui table nowrap";
+                view.Text = Titles.VoucherVerification;
+
+                //Default Values
+                view.DateFromFromFrequency = Frequency.Today;
+                view.DateToFrequency = Frequency.Today;
+                view.Status = "Unverified";
+
+                view.OfficeName = SessionHelper.GetOfficeName();
+
+                this.Controls.Add(view);
+            }
+
+            base.OnControlLoad(sender, e);
+        }
     }
 }

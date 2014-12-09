@@ -592,6 +592,7 @@
     <Content Include="db\src\12. plpgunit-tests\others\unit_tests.if_functions_compile.sql" />
     <Content Include="db\src\12. plpgunit-tests\others\unit_tests.if_views_compile.sql" />
     <Content Include="db\src\13. triggers\audit-all-tables.sql" />
+    <Content Include="db\src\13. triggers\transactions\transactions.check_cash_balance_trigger.sql" />
     <Content Include="db\src\14. constraints\core.sql" />
     <Content Include="db\src\14. constraints\transactions.sql" />
     <Content Include="db\src\dictionary\de-DE.dict" />

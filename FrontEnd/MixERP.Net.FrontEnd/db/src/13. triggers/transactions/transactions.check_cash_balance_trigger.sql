@@ -3,7 +3,7 @@ CREATE FUNCTION transactions.check_cash_balance_trigger()
 RETURNS TRIGGER
 AS
 $$
-    DECLARE cash_balance money_strict2;
+    DECLARE cash_balance DECIMAL(24, 4);
 BEGIN
     IF(NEW.cash_repository_id IS NOT NULL) THEN
         IF(TG_OP='UPDATE') THEN

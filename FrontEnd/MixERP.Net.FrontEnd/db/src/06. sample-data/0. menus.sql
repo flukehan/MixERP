@@ -53,12 +53,9 @@ UNION ALL SELECT 'Compound Units of Measure', '~/Modules/Inventory/Setup/CUOM.mi
 UNION ALL SELECT 'Shipper Information', '~/Modules/Inventory/Setup/Shippers.mix', 'SHI', 2, core.get_menu_id('ISM')
 UNION ALL SELECT 'Transactions & Templates', NULL, 'FTT', 1, core.get_menu_id('FI')
 UNION ALL SELECT 'Journal Voucher Entry', '~/Modules/Finance/JournalVoucher.mix', 'JVN', 2, core.get_menu_id('FTT')
-UNION ALL SELECT 'Template Transaction', '~/Modules/Finance/TemplateTransaction.mix', 'TTR', 2, core.get_menu_id('FTT')
-UNION ALL SELECT 'Standing Instructions', '~/Modules/Finance/StandingInstructions.mix', 'STN', 2, core.get_menu_id('FTT')
 UNION ALL SELECT 'Update Exchange Rates', '~/Modules/Finance/UpdateExchangeRates.mix', 'UER', 2, core.get_menu_id('FTT')
-UNION ALL SELECT 'Reconcile Bank Account', '~/Modules/Finance/BankReconciliation.mix', 'RBA', 2, core.get_menu_id('FTT')
 UNION ALL SELECT 'Voucher Verification', '~/Modules/Finance/VoucherVerification.mix', 'FVV', 2, core.get_menu_id('FTT')
-UNION ALL SELECT 'Transaction Document Manager', '~/Modules/Finance/TransactionDocumentManager.mix', 'FTDM', 2, core.get_menu_id('FTT')
+UNION ALL SELECT 'End of Day Operation', '~/Modules/Finance/EODOperation.mix', 'EOD', 2, core.get_menu_id('FTT')
 UNION ALL SELECT 'Setup & Maintenance', NULL, 'FSM', 1, core.get_menu_id('FI')
 UNION ALL SELECT 'Chart of Accounts', '~/Modules/Finance/Setup/COA.mix', 'COA', 2, core.get_menu_id('FSM')
 UNION ALL SELECT 'Currency Management', '~/Modules/Finance/Setup/Currencies.mix', 'CUR', 2, core.get_menu_id('FSM')
@@ -195,12 +192,9 @@ SELECT core.get_menu_id('CUOM'), 'fr', 'Unités composées de mesure' UNION ALL
 SELECT core.get_menu_id('SHI'), 'fr', 'Renseignements sur l''expéditeur' UNION ALL
 SELECT core.get_menu_id('FTT'), 'fr', 'Transactions et Modèles' UNION ALL
 SELECT core.get_menu_id('JVN'), 'fr', 'Journal Chèques Entrée' UNION ALL
-SELECT core.get_menu_id('TTR'), 'fr', 'Transaction modèle' UNION ALL
-SELECT core.get_menu_id('STN'), 'fr', 'Instructions permanentes' UNION ALL
 SELECT core.get_menu_id('UER'), 'fr', 'Taux de change mise à jour' UNION ALL
-SELECT core.get_menu_id('RBA'), 'fr', 'Concilier compte bancaire' UNION ALL
 SELECT core.get_menu_id('FVV'), 'fr', 'Vérification bon' UNION ALL
-SELECT core.get_menu_id('FTDM'), 'fr', 'Transaction Document Manager' UNION ALL
+SELECT core.get_menu_id('EOD'), 'fr', 'Fin de l''opération Jour' UNION ALL
 SELECT core.get_menu_id('FSM'), 'fr', 'Configuration et Maintenance' UNION ALL
 SELECT core.get_menu_id('COA'), 'fr', 'Tableau des comptes' UNION ALL
 SELECT core.get_menu_id('CUR'), 'fr', 'Gestion des devises' UNION ALL
