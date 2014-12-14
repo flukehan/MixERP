@@ -54,7 +54,9 @@ $$
     DECLARE _is_cash                        boolean;
     DECLARE _cash_account_id                bigint;
 BEGIN
-    IF(policy.can_post_transaction(_login_id, _user_id, _office_id, _book) = false) THEN
+    _value_date                             := transactions.get_value_date(_office_id);
+
+    IF(policy.can_post_transaction(_login_id, _user_id, _office_id, _book, _value_date) = false) THEN
         RETURN 0;
     END IF;
 
@@ -65,7 +67,6 @@ BEGIN
         _is_cash                        := true;
     END IF;
 
-    _value_date                             := transactions.get_value_date();
     _book                                   := 'Sales.Receipt';
     
     _party_id                               := core.get_party_id_by_party_code(_party_code);

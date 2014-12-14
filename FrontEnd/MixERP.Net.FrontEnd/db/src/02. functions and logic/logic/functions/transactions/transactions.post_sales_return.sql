@@ -50,7 +50,7 @@ $$
     DECLARE this                    RECORD;
     DECLARE _shipping_address_code  national character varying(12);
 BEGIN
-    IF(policy.can_post_transaction(_login_id, _user_id, _office_id, 'Sales.Return') = false) THEN
+    IF(policy.can_post_transaction(_login_id, _user_id, _office_id, 'Sales.Return', _value_date) = false) THEN
         RETURN 0;
     END IF;
     

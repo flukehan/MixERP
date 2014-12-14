@@ -23,7 +23,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 
-    <script src="//code.jquery.com/jquery-1.9.1.js" type="text/javascript"></script>
+    <script src="Scripts/jquery-1.9.1.js" type="text/javascript"></script>
     <link href="/Scripts/semantic-ui/semantic.min.css" rel="stylesheet" />
     <script type="text/javascript" src="/Scripts/semantic-ui/semantic.min.js"></script>
 

@@ -13,10 +13,12 @@ BEGIN
         END IF;
 
         IF(TG_OP='INSERT') THEN
-            cash_balance := transactions.get_cash_repository_balance(NEW.cash_repository_id, NEW.currency_code);
+            IF(NEW.tran_type = 'Cr' AND NEW.cash_repository_id IS NOT NULL) THEN
+                cash_balance := transactions.get_cash_repository_balance(NEW.cash_repository_id, NEW.currency_code);
 
-            IF(cash_balance < NEW.amount_in_currency) THEN
-                RAISE EXCEPTION 'Acess is denied. Posting this transaction would produce a negative cash balance.';
+                IF(cash_balance < NEW.amount_in_currency) THEN
+                    RAISE EXCEPTION 'Acess is denied. Posting this transaction would produce a negative cash balance.';
+                END IF;
             END IF;
         END IF;
     END IF;
@@ -32,4 +34,5 @@ BEFORE INSERT OR UPDATE
 ON transactions.transaction_details
 FOR EACH ROW 
 EXECUTE PROCEDURE transactions.check_cash_balance_trigger();
+
 

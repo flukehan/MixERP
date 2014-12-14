@@ -61,6 +61,7 @@
     <Content Include="..\..\..\..\mixerp.licenseheader">
       <Link>mixerp.licenseheader</Link>
     </Content>
+    <Content Include="EODOperation.ascx" />
     <Content Include="Mix Open Foundation.snk" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -116,6 +117,13 @@
     </Compile>
     <Compile Include="Entry\JournalVoucher.ascx.designer.cs">
       <DependentUpon>JournalVoucher.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="EODOperation.ascx.cs">
+      <DependentUpon>EODOperation.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EODOperation.ascx.designer.cs">
+      <DependentUpon>EODOperation.ascx</DependentUpon>
     </Compile>
     <Compile Include="Index.ascx.cs">
       <DependentUpon>Index.ascx</DependentUpon>

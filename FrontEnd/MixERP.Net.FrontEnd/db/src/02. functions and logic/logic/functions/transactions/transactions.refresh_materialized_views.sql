@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS transactions.refresh_materialized_views();
+DROP FUNCTION IF EXISTS transactions.refresh_materialized_views(_office_id integer);
 
-CREATE FUNCTION transactions.refresh_materialized_views()
+CREATE FUNCTION transactions.refresh_materialized_views(_office_id integer)
 RETURNS void
 AS
 $$
@@ -10,3 +10,6 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+
+
+SELECT transactions.create_routine('transactions.refresh_materialized_views', 1000);

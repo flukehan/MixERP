@@ -1,10 +1,13 @@
-DROP FUNCTION IF EXISTS policy.can_post_transaction(_login_id bigint, _user_id integer, _office_id integer, transaction_book text);
+DROP FUNCTION IF EXISTS policy.can_post_transaction(_login_id bigint, _user_id integer, _office_id integer, transaction_book text, _value_date date);
 
-CREATE FUNCTION policy.can_post_transaction(_login_id bigint, _user_id integer, _office_id integer, transaction_book text) --TODO
+CREATE FUNCTION policy.can_post_transaction(_login_id bigint, _user_id integer, _office_id integer, transaction_book text, _value_date date)
 RETURNS bool
 AS
 $$
 BEGIN
+
+    IF
+
     IF(audit.is_valid_login_id(_login_id) = false) THEN
         RAISE EXCEPTION 'Invalid LoginId.';
     END IF; 
@@ -13,6 +16,10 @@ BEGIN
         RAISE EXCEPTION 'Invalid OfficeId.';
     END IF; 
 
+    IF(_value_date < transactions.get_value_date(_office_id)) THEN
+        RAISE EXCEPTION 'Past dated transactions are not allowed';
+    END IF;
+    
     IF NOT EXISTS 
     (
         SELECT *

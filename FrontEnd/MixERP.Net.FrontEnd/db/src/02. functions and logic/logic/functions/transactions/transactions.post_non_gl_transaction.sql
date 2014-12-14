@@ -53,7 +53,7 @@ $$
     DECLARE _tran_type                      transaction_type;
     DECLARE this                            RECORD;
 BEGIN
-    IF(policy.can_post_transaction(_login_id, _user_id, _office_id, _book_name) = false) THEN
+    IF(policy.can_post_transaction(_login_id, _user_id, _office_id, _book_name, _value_date) = false) THEN
         RETURN 0;
     END IF;
 

@@ -3252,6 +3252,52 @@ CREATE TABLE transactions.stock_master_non_gl_relations
     non_gl_stock_master_id                  bigint NOT NULL REFERENCES transactions.non_gl_stock_master(non_gl_stock_master_id)
 );
 
+CREATE TABLE transactions.routines
+(
+    routine_id                              SERIAL NOT NULL PRIMARY KEY,
+    "order"                                 integer NOT NULL,
+    routine_name                            regproc NOT NULL UNIQUE,
+    status                                  boolean NOT NULL CONSTRAINT routines_status_df DEFAULT(true)
+);
+
+CREATE TABLE transactions.day_operation
+(
+    day_id                                  BIGSERIAL NOT NULL PRIMARY KEY,
+    office_id                               integer NOT NULL REFERENCES office.offices(office_id),
+    value_date                              date NOT NULL,
+    started_on                              TIMESTAMP WITH TIME ZONE NOT NULL,
+    completed_on                            TIMESTAMP WITH TIME ZONE NULL,
+    completed                               boolean NOT NULL 
+                                            CONSTRAINT day_operation_completed_df DEFAULT(false)
+                                            CONSTRAINT day_operation_completed_chk 
+                                            CHECK
+                                            (
+                                                (completed OR completed_on IS NOT NULL)
+                                                OR
+                                                (NOT completed OR completed_on IS NULL)
+                                            )
+);
+
+CREATE UNIQUE INDEX day_operation_value_date_uix
+ON transactions.day_operation(value_date);
+
+CREATE INDEX day_operation_completed_on_inx
+ON transactions.day_operation(completed_on);
+
+CREATE TABLE transactions.day_operation_routines
+(
+    day_operation_routine_id                BIGSERIAL NOT NULL PRIMARY KEY,
+    day_id                                  bigint NOT NULL REFERENCES transactions.day_operation(day_id),
+    routine_id                              integer NOT NULL REFERENCES transactions.routines(routine_id),
+    started_on                              TIMESTAMP WITH TIME ZONE NOT NULL,
+    completed_on                            TIMESTAMP WITH TIME ZONE NULL
+);
+
+CREATE INDEX day_operation_routines_started_on_inx
+ON transactions.day_operation_routines(started_on);
+
+CREATE INDEX day_operation_routines_completed_on_inx
+ON transactions.day_operation_routines(completed_on);
 
 CREATE TABLE crm.lead_sources
 (
@@ -5940,6 +5986,22 @@ LANGUAGE plpgsql;
 
 
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/office/office.has_child_offices.sql --<--<--
+CREATE FUNCTION office.has_child_offices(integer)
+RETURNS boolean
+AS
+$$
+BEGIN
+    IF EXISTS(SELECT 0 FROM office.offices WHERE parent_office_id=$1 LIMIT 1) THEN
+        RETURN true;
+    END IF;
+
+    RETURN false;
+END
+$$
+LANGUAGE plpgsql;
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/office/office.sign_in.sql --<--<--
 DROP FUNCTION IF EXISTS office.sign_in(office_id integer_strict, user_name text, password text, browser text, ip_address text, remote_user text, culture text);
 CREATE FUNCTION office.sign_in(office_id integer_strict, user_name text, password text, browser text, ip_address text, remote_user text, culture text)
@@ -6000,13 +6062,16 @@ LANGUAGE plpgsql;
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/policy/policy.can_post_transaction.sql --<--<--
-DROP FUNCTION IF EXISTS policy.can_post_transaction(_login_id bigint, _user_id integer, _office_id integer, transaction_book text);
+DROP FUNCTION IF EXISTS policy.can_post_transaction(_login_id bigint, _user_id integer, _office_id integer, transaction_book text, _value_date date);
 
-CREATE FUNCTION policy.can_post_transaction(_login_id bigint, _user_id integer, _office_id integer, transaction_book text) --TODO
+CREATE FUNCTION policy.can_post_transaction(_login_id bigint, _user_id integer, _office_id integer, transaction_book text, _value_date date)
 RETURNS bool
 AS
 $$
 BEGIN
+
+    IF
+
     IF(audit.is_valid_login_id(_login_id) = false) THEN
         RAISE EXCEPTION 'Invalid LoginId.';
     END IF; 
@@ -6015,6 +6080,10 @@ BEGIN
         RAISE EXCEPTION 'Invalid OfficeId.';
     END IF; 
 
+    IF(_value_date < transactions.get_value_date(_office_id)) THEN
+        RAISE EXCEPTION 'Past dated transactions are not allowed';
+    END IF;
+    
     IF NOT EXISTS 
     (
         SELECT *
@@ -6775,6 +6844,23 @@ END
 $$
 LANGUAGE plpgsql;
 
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.create_routine.sql --<--<--
+DROP FUNCTION IF EXISTS transactions.create_routine(_routine regproc, _order integer);
+
+CREATE FUNCTION transactions.create_routine(_routine regproc, _order integer)
+RETURNS void
+AS
+$$
+BEGIN
+   INSERT INTO transactions.routines(routine_name, "order")
+   SELECT $1, $2;
+   
+   RETURN;
+END
+$$
+LANGUAGE plpgsql;
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_accrued_interest-todo.sql --<--<--
@@ -8553,18 +8639,35 @@ LANGUAGE plpgsql;
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_value_date.sql --<--<--
-CREATE FUNCTION transactions.get_value_date()
+DROP FUNCTION IF EXISTS transactions.get_value_date(_office_id integer);
+
+CREATE FUNCTION transactions.get_value_date(_office_id integer)
 RETURNS date
 AS
 $$
+    DECLARE this            RECORD;
+    DECLARE _value_date     date=NOW();
 BEGIN
-        RETURN NOW()::date;
+    SELECT * FROM transactions.day_operation
+    WHERE office_id = _office_id
+    AND value_date =
+    (
+        SELECT MAX(value_date)
+        FROM transactions.day_operation
+        WHERE office_id = _office_id
+    ) INTO this;
+
+    IF(this.completed) THEN
+        _value_date  := this.value_date + interval '1' day;
+    END IF;
+
+    RETURN _value_date;
 END
 $$
 LANGUAGE plpgsql;
 
 
-
+--select transactions.get_value_date(1);
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_write_off_cost_of_goods_sold.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_write_off_cost_of_goods_sold(_stock_master_id bigint, _item_id integer, _unit_id integer, _quantity integer);
@@ -8592,6 +8695,76 @@ LANGUAGE plpgsql;
 
 
 --SELECT * FROM transactions.get_write_off_cost_of_goods_sold(7, 3, 1, 1);
+
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.perform_eod_operation.sql --<--<--
+DROP FUNCTION IF EXISTS transactions.perform_eod_operation(_office_id integer, _value_date date);
+
+CREATE FUNCTION transactions.perform_eod_operation(_office_id integer, _value_date date)
+RETURNS boolean
+AS
+$$
+    DECLARE _routine            regproc;
+    DECLARE _routine_id         integer;
+    DECLARE this                RECORD;
+    DECLARE _sql                text;
+    DECLARE _is_error           boolean=false;
+BEGIN
+    IF(_value_date != transactions.get_value_date(_office_id)) THEN
+        RAISE EXCEPTION 'Invalid value date.';
+    END IF;
+
+    IF(_value_date IS NULL) THEN
+        RAISE EXCEPTION 'Value date error.';
+    END IF;
+
+    SELECT * FROM transactions.day_operation
+    WHERE value_date=_value_date 
+    AND office_id = _office_id INTO this;
+
+    IF(this IS NULL) THEN
+        INSERT INTO transactions.day_operation(office_id, value_date, started_on)
+        SELECT _office_id, _value_date, NOW();
+    ELSE    
+        IF(this.completed OR this.completed_on IS NOT NULL) THEN
+            RAISE WARNING 'EOD operation was already performed.';
+            _is_error        := true;
+        END IF;
+    END IF;
+    
+    IF(NOT _is_error) THEN
+        FOR this IN
+        SELECT routine_id, routine_name 
+        FROM transactions.routines 
+        WHERE status 
+        ORDER BY "order" ASC
+        LOOP
+            _routine_id             := this.routine_id;
+            _routine                := this.routine_name;
+            _sql                    := format('SELECT * FROM %1$s($1);', _routine);
+
+            RAISE INFO '%', _sql;
+
+            EXECUTE _sql USING _office_id;
+        END LOOP;
+
+
+        UPDATE transactions.day_operation SET completed_on = NOW(), completed = true
+        WHERE value_date=_value_date 
+        AND office_id = _office_id;
+
+        RETURN true;
+    END IF;
+
+    RETURN false;    
+END;
+$$
+LANGUAGE plpgsql;
+
+--SELECT * FROM transactions.perform_eod_operation(1, '2014-12-14');
+
+
 
 
 
@@ -8651,7 +8824,7 @@ $$
     DECLARE _tran_type                      transaction_type;
     DECLARE this                            RECORD;
 BEGIN
-    IF(policy.can_post_transaction(_login_id, _user_id, _office_id, _book_name) = false) THEN
+    IF(policy.can_post_transaction(_login_id, _user_id, _office_id, _book_name, _value_date) = false) THEN
         RETURN 0;
     END IF;
 
@@ -8879,7 +9052,7 @@ $$
     DECLARE _shipping_charge                money_strict2;
     DECLARE _tax                            RECORD;
 BEGIN
-    IF(policy.can_post_transaction(_login_id, _user_id, _office_id, _book_name) = false) THEN
+    IF(policy.can_post_transaction(_login_id, _user_id, _office_id, _book_name, _value_date) = false) THEN
         RETURN 0;
     END IF;
 
@@ -9154,7 +9327,7 @@ $$
     DECLARE _book_name                      text='Purchase.Return';
     DECLARE _receivable                     money_strict;
 BEGIN
-    IF(policy.can_post_transaction(_login_id, _user_id, _office_id, _book_name) = false) THEN
+    IF(policy.can_post_transaction(_login_id, _user_id, _office_id, _book_name, _value_date) = false) THEN
         RETURN 0;
     END IF;
     
@@ -9605,7 +9778,9 @@ $$
     DECLARE _is_cash                        boolean;
     DECLARE _cash_account_id                bigint;
 BEGIN
-    IF(policy.can_post_transaction(_login_id, _user_id, _office_id, _book) = false) THEN
+    _value_date                             := transactions.get_value_date(_office_id);
+
+    IF(policy.can_post_transaction(_login_id, _user_id, _office_id, _book, _value_date) = false) THEN
         RETURN 0;
     END IF;
 
@@ -9616,7 +9791,6 @@ BEGIN
         _is_cash                        := true;
     END IF;
 
-    _value_date                             := transactions.get_value_date();
     _book                                   := 'Sales.Receipt';
     
     _party_id                               := core.get_party_id_by_party_code(_party_code);
@@ -9773,7 +9947,7 @@ $$
     DECLARE _shipping_charge                money_strict2;
     DECLARE this                            RECORD;
 BEGIN        
-    IF(policy.can_post_transaction(_login_id, _user_id, _office_id, _book_name) = false) THEN
+    IF(policy.can_post_transaction(_login_id, _user_id, _office_id, _book_name, _value_date) = false) THEN
         RETURN 0;
     END IF;
 
@@ -10091,7 +10265,7 @@ $$
     DECLARE this                    RECORD;
     DECLARE _shipping_address_code  national character varying(12);
 BEGIN
-    IF(policy.can_post_transaction(_login_id, _user_id, _office_id, 'Sales.Return') = false) THEN
+    IF(policy.can_post_transaction(_login_id, _user_id, _office_id, 'Sales.Return', _value_date) = false) THEN
         RETURN 0;
     END IF;
     
@@ -10474,9 +10648,9 @@ LANGUAGE plpgsql;
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.refresh_materialized_views.sql --<--<--
-DROP FUNCTION IF EXISTS transactions.refresh_materialized_views();
+DROP FUNCTION IF EXISTS transactions.refresh_materialized_views(_office_id integer);
 
-CREATE FUNCTION transactions.refresh_materialized_views()
+CREATE FUNCTION transactions.refresh_materialized_views(_office_id integer)
 RETURNS void
 AS
 $$
@@ -10486,6 +10660,9 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+
+
+SELECT transactions.create_routine('transactions.refresh_materialized_views', 1000);
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.validate_item_for_return.sql --<--<--
@@ -19543,10 +19720,12 @@ BEGIN
         END IF;
 
         IF(TG_OP='INSERT') THEN
-            cash_balance := transactions.get_cash_repository_balance(NEW.cash_repository_id, NEW.currency_code);
+            IF(NEW.tran_type = 'Cr' AND NEW.cash_repository_id IS NOT NULL) THEN
+                cash_balance := transactions.get_cash_repository_balance(NEW.cash_repository_id, NEW.currency_code);
 
-            IF(cash_balance < NEW.amount_in_currency) THEN
-                RAISE EXCEPTION 'Acess is denied. Posting this transaction would produce a negative cash balance.';
+                IF(cash_balance < NEW.amount_in_currency) THEN
+                    RAISE EXCEPTION 'Acess is denied. Posting this transaction would produce a negative cash balance.';
+                END IF;
             END IF;
         END IF;
     END IF;
@@ -19562,6 +19741,7 @@ BEFORE INSERT OR UPDATE
 ON transactions.transaction_details
 FOR EACH ROW 
 EXECUTE PROCEDURE transactions.check_cash_balance_trigger();
+
 
 
 
@@ -20158,4 +20338,4 @@ ALTER TABLE transactions.transaction_details ENABLE TRIGGER check_cash_balance_t
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/refresh-materialized-views.sql --<--<--
-SELECT * FROM transactions.refresh_materialized_views();
+SELECT * FROM transactions.refresh_materialized_views(1);

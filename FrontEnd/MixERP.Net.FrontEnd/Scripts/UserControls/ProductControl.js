@@ -404,7 +404,15 @@ function updateTax() {
 };
 
 function getDefaultSalesTax() {
-    if (!taxRequired() && taxSelect.find("option").length === 1) {
+    if (!taxRequired()) {
+        return;
+    };
+
+    if (taxSelect.find("option").length === 1) {
+        return;
+    };
+
+    if (taxSelect.getSelectedValue() !== "1") {
         return;
     };
 
