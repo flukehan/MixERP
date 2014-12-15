@@ -115,7 +115,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
         private void AddFormHeader(Panel p)
         {
             this.requiredFieldDetailsLiteral = new Literal();
-            this.requiredFieldDetailsLiteral.Text = @"<div class='form-description'>" + Titles.RequiredFieldDetails + @"</div>";
+            this.requiredFieldDetailsLiteral.Text = @"<div class='form-description'>" + Titles.RequiredFieldDetails + @"</div>";//Todo:parameterize css class
 
             p.Controls.Add(this.requiredFieldDetailsLiteral);
         }

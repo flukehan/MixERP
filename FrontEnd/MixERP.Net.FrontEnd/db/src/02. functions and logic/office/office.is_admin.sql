@@ -13,3 +13,12 @@ BEGIN
 END
 $$
 LANGUAGE PLPGSQL;
+
+ALTER TABLE office.users
+ADD CONSTRAINT users_elevated_chk
+CHECK
+(
+    (NOT office.is_admin(user_id) AND NOT elevated)
+    OR
+    (office.is_admin(user_id))
+);

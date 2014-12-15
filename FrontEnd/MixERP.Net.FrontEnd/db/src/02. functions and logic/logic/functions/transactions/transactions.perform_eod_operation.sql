@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS transactions.perform_eod_operation(_office_id integer, _value_date date);
+DROP FUNCTION IF EXISTS transactions.perform_eod_operation(_user_id integer, _office_id integer, _value_date date);
 
-CREATE FUNCTION transactions.perform_eod_operation(_office_id integer, _value_date date)
+CREATE FUNCTION transactions.perform_eod_operation(_user_id integer, _office_id integer, _value_date date)
 RETURNS boolean
 AS
 $$
@@ -10,6 +10,10 @@ $$
     DECLARE _sql                text;
     DECLARE _is_error           boolean=false;
 BEGIN
+    IF(NOT policy.is_elevated_user(_user_id)) THEN
+        RAISE EXCEPTION 'Access is denied.';
+    END IF;
+    
     IF(_value_date != transactions.get_value_date(_office_id)) THEN
         RAISE EXCEPTION 'Invalid value date.';
     END IF;
@@ -61,7 +65,7 @@ END;
 $$
 LANGUAGE plpgsql;
 
---SELECT * FROM transactions.perform_eod_operation(1, '2014-12-14');
+--SELECT * FROM transactions.perform_eod_operation(1, 1, '2014-12-14');
 
 
 

@@ -1,24 +1,34 @@
-DROP FUNCTION IF EXISTS office.can_login(user_id integer_strict, office_id integer_strict);
-CREATE FUNCTION office.can_login(user_id integer_strict, office_id integer_strict)
-RETURNS boolean
+DROP FUNCTION IF EXISTS office.can_login(user_id integer_strict, office_id integer_strict, OUT result boolean, OUT message text);
+CREATE FUNCTION office.can_login(user_id integer_strict, office_id integer_strict, OUT result boolean, OUT message text)
+RETURNS RECORD
 AS
 $$
-DECLARE _office_id integer;
+DECLARE _office_id      integer;
 BEGIN
-    _office_id:=office.get_office_id_by_user_id($1);
+    _office_id  := office.get_office_id_by_user_id($1);
+    message     := '';
 
     IF $1 = office.get_sys_user_id() THEN
-        RETURN false;
+        result = false;
     END IF;
 
     IF $2=_office_id THEN
-        RETURN true;
+        result = true;
     ELSE
         IF office.is_parent_office(_office_id,$2) THEN
-            RETURN true;
+            result = true;
         END IF;
     END IF;
-    RETURN false;
+
+    IF(result) THEN
+        IF(policy.is_restricted_mode() AND NOT policy.is_elevated_user($1)) THEN
+            result := false;
+            message := 'You need to have an elevated priviledge to login interactively during end of day operation';
+            RAISE WARNING '%', message;
+        END IF;
+    END IF;
+    
+    RETURN;
 END;
 $$
 LANGUAGE plpgsql;

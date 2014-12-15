@@ -5,9 +5,6 @@ RETURNS bool
 AS
 $$
 BEGIN
-
-    IF
-
     IF(audit.is_valid_login_id(_login_id) = false) THEN
         RAISE EXCEPTION 'Invalid LoginId.';
     END IF; 
@@ -15,6 +12,10 @@ BEGIN
     IF(office.is_valid_office_id(_office_id) = false) THEN
         RAISE EXCEPTION 'Invalid OfficeId.';
     END IF; 
+
+    IF(policy.is_restricted_mode()) THEN
+        RAISE EXCEPTION 'Cannot post transaction during end of day operation.';
+    END IF;
 
     IF(_value_date < transactions.get_value_date(_office_id)) THEN
         RAISE EXCEPTION 'Past dated transactions are not allowed';

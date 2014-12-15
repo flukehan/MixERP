@@ -21,6 +21,7 @@
     <file>/Scripts/chartjs/legend.js</file>
     <file>/Scripts/notify-combined.min.js</file>
     <file>/Scripts/semantic-ui/semantic.js</file>
+    <file>/Scripts/jquery.signalR.js</file>
     <file>/Scripts/mixerp.js</file>
   </files>
 </bundle>

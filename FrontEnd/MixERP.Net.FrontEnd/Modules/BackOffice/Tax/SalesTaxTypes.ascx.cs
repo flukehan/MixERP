@@ -32,10 +32,13 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
             using (ScrudForm scrud = new ScrudForm())
             {
                 scrud.KeyColumn = "sales_tax_type_id";
+
                 scrud.TableSchema = "core";
                 scrud.Table = "sales_tax_types";
+
                 scrud.ViewSchema = "core";
                 scrud.View = "sales_tax_types";
+
                 scrud.Text = Titles.SalesTaxTypes;
 
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof(SalesTaxTypes));

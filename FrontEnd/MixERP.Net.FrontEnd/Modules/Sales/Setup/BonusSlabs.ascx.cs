@@ -34,10 +34,13 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
             using (ScrudForm scrud = new ScrudForm())
             {
                 scrud.KeyColumn = "bonus_slab_id";
+
                 scrud.TableSchema = "core";
                 scrud.Table = "bonus_slabs";
+
                 scrud.ViewSchema = "core";
                 scrud.View = "bonus_slab_scrud_view";
+
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
                 scrud.Text = Titles.AgentBonusSlabs;

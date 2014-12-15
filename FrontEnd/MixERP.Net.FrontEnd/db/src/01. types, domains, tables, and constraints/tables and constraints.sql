@@ -33,6 +33,8 @@ CREATE TABLE office.users
     user_name                               national character varying(50) NOT NULL,
     full_name                               national character varying(100) NOT NULL,
     password                                text NOT NULL,
+    elevated                                boolean NOT NULL 
+                                            CONSTRAINT users_elevated_df DEFAULT(false),
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL 
                                             DEFAULT(NOW())

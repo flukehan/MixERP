@@ -18,11 +18,11 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.Common;
+using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Models.Office;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Data.Helpers;
 using MixERP.Net.FrontEnd.Data.Office;
-using Resources;
 using System;
 using System.Collections.ObjectModel;
 using System.Web.UI;
@@ -31,26 +31,6 @@ namespace MixERP.Net.FrontEnd
 {
     public partial class SignIn : Page
     {
-        private void CheckDbConnectivity()
-        {
-            if (!ServerConnectivity.IsDbServerAvailable())
-            {
-                this.RedirectToOfflinePage();
-            }
-        }
-
-        private void RedirectToOfflinePage()
-        {
-            this.Response.Redirect("~/Site/offline.html");
-        }
-
-        private void BindBranchDropDownList()
-        {
-            Collection<Office> offices = Offices.GetOffices();
-            this.BranchDropDownList.DataSource = offices;
-            this.BranchDropDownList.DataBind();
-        }
-
         protected void Page_Load(object sender, EventArgs e)
         {
             this.CheckDbConnectivity();
@@ -96,20 +76,22 @@ namespace MixERP.Net.FrontEnd
             }
         }
 
-        private void RedirectToDashboard()
-        {
-            this.Response.Redirect("~/Dashboard/Index.aspx", true);
-        }
-
         protected void SignInButton_Click(object sender, EventArgs e)
         {
             int officeId = Conversion.TryCastInteger(this.BranchIdHiddenField.Value);
-            bool results = Login(officeId, this.UserIdTextBox.Text, this.PasswordTextBox.Text,
-                this.LanguageDropDownList.SelectedItem.Value, this.RememberMe.Checked, this.Page);
 
-            if (!results)
+            try
             {
-                this.MessageLiteral.Text = @"<span class='big error'>" + Warnings.UserIdOrPasswordIncorrect + @"</span>";
+                bool result = Login(officeId, this.UserIdTextBox.Text, this.PasswordTextBox.Text, this.LanguageDropDownList.SelectedItem.Value, this.RememberMe.Checked, this.Page);
+
+                if (!result)
+                {
+                    this.MessageLiteral.Text = @"<span class='big error'>" + Resources.Warnings.UserIdOrPasswordIncorrect + @"</span>";
+                }
+            }
+            catch (MixERPException ex)
+            {
+                this.MessageLiteral.Text = @"<span class='big error'>" + ex.Message + @"</span>";
             }
         }
 
@@ -124,6 +106,31 @@ namespace MixERP.Net.FrontEnd
             }
 
             return results;
+        }
+
+        private void BindBranchDropDownList()
+        {
+            Collection<Office> offices = Offices.GetOffices();
+            this.BranchDropDownList.DataSource = offices;
+            this.BranchDropDownList.DataBind();
+        }
+
+        private void CheckDbConnectivity()
+        {
+            if (!ServerConnectivity.IsDbServerAvailable())
+            {
+                this.RedirectToOfflinePage();
+            }
+        }
+
+        private void RedirectToDashboard()
+        {
+            this.Response.Redirect("~/Dashboard/Index.aspx", true);
+        }
+
+        private void RedirectToOfflinePage()
+        {
+            this.Response.Redirect("~/Site/offline.html");
         }
     }
 }

@@ -17,11 +17,11 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+// General Information about an assembly is controlled through the following set of attributes.
+// Change these attribute values to modify the information associated with an assembly.
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-// General Information about an assembly is controlled through the following set of attributes.
-// Change these attribute values to modify the information associated with an assembly.
 [assembly: AssemblyTitle("MixERP.Net.Core.Modules.Finance")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
@@ -41,9 +41,9 @@ using System.Runtime.InteropServices;
 [assembly: Guid("08e9b2ed-4c10-49b4-a7fc-9f20105b8324")]
 
 // Version information for an assembly consists of the following four values:
-//
+// 
 // Major Version Minor Version Build Number Revision
-//
+// 
 // You can specify all the values or you can default the Revision and Build Numbers by using the '*'
 // as shown below:
 [assembly: AssemblyVersion("1.0.0.0")]

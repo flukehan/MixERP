@@ -18,8 +18,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.Common;
+using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models.Office;
+using MixERP.Net.Common.Models.Policy;
 using MixERP.Net.DBFactory;
 using Npgsql;
 using System;
@@ -91,30 +93,24 @@ namespace MixERP.Net.FrontEnd.Data.Office
         {
             if (page != null)
             {
-                try
-                {
-                    string remoteAddress = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
-                    string remoteUser = HttpContext.Current.Request.ServerVariables["REMOTE_USER"];
+                string remoteAddress = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+                string remoteUser = HttpContext.Current.Request.ServerVariables["REMOTE_USER"];
 
-                    long logOnId = SignIn(officeId, userName, Conversion.HashSha512(password, userName), page.Request.UserAgent, remoteAddress, remoteUser, culture);
+                SignInResult result = SignIn(officeId, userName, Conversion.HashSha512(password, userName), page.Request.UserAgent, remoteAddress, remoteUser, culture);
 
-                    if (logOnId > 0)
-                    {
-                        return true;
-                    }
-                }
-                // ReSharper disable once EmptyGeneralCatchClause
-                catch
+                if (result.LoginId == 0)
                 {
-                    //Swallow the exception here
+                    throw new MixERPException(result.Message);
                 }
             }
 
-            return false;
+            return true;
         }
 
-        private static long SignIn(int officeId, string userName, string password, string browser, string remoteAddress, string remoteUser, string culture)
+        private static SignInResult SignIn(int officeId, string userName, string password, string browser, string remoteAddress, string remoteUser, string culture)
         {
+            SignInResult result = new SignInResult();
+
             const string sql = "SELECT * FROM office.sign_in(@OfficeId, @UserName, @Password, @Browser, @IPAddress, @RemoteUser, @Culture);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
@@ -126,8 +122,17 @@ namespace MixERP.Net.FrontEnd.Data.Office
                 command.Parameters.AddWithValue("@RemoteUser", remoteUser);
                 command.Parameters.AddWithValue("@Culture", culture);
 
-                return Conversion.TryCastLong(DbOperations.GetScalarValue(command));
+                using (DataTable table = DbOperations.GetDataTable(command))
+                {
+                    if (table.Rows != null && table.Rows.Count.Equals(1))
+                    {
+                        result.LoginId = Conversion.TryCastLong(table.Rows[0]["login_id"]);
+                        result.Message = Conversion.TryCastString(table.Rows[0]["message"]);
+                    }
+                }
             }
+
+            return result;
         }
     }
 }
