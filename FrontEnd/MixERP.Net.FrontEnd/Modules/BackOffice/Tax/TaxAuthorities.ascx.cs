@@ -38,7 +38,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
                 scrud.TableSchema = "core";
                 scrud.Table = "tax_authorities";
                 scrud.ViewSchema = "core";
-                scrud.View = "tax_authorities";
+                scrud.View = "tax_authority_scrud_view";
                 scrud.Text = Titles.TaxAuthorities;
 
                 scrud.DisplayFields = GetDisplayFields();
