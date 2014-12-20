@@ -674,10 +674,20 @@ var appendItem = function (dropDownList, value, text, selected) {
 };
 
 var getAjax = function (url, data) {
+    if (data) {
+        return $.ajax({
+            type: "POST",
+            url: url,
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+        });
+    };
+
     return $.ajax({
         type: "POST",
         url: url,
-        data: data,
+        data: "{}",
         contentType: "application/json; charset=utf-8",
         dataType: "json"
     });

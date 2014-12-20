@@ -25,7 +25,7 @@ namespace MixERP.Net.FrontEnd.Data.Helpers
     {
         public static bool IsDbServerAvailable()
         {
-            return DbOperations.IsServerAvailable();
+            return DbOperation.IsServerAvailable();
         }
     }
 }

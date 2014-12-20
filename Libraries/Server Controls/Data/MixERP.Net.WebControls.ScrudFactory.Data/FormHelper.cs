@@ -126,7 +126,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
 
                 try
                 {
-                    return Conversion.TryCastLong(DbOperations.GetScalarValue(command));
+                    return Conversion.TryCastLong(DbOperation.GetScalarValue(command));
                 }
                 catch (NpgsqlException ex)
                 {
@@ -211,7 +211,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
 
                 try
                 {
-                    return DbOperations.ExecuteNonQuery(command);
+                    return DbOperation.ExecuteNonQuery(command);
                 }
                 catch (NpgsqlException ex)
                 {
@@ -235,7 +235,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
 
                 try
                 {
-                    return DbOperations.ExecuteNonQuery(command);
+                    return DbOperation.ExecuteNonQuery(command);
                 }
                 catch (NpgsqlException ex)
                 {

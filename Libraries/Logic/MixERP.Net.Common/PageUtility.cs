@@ -23,11 +23,22 @@ using System.Globalization;
 using System.Net;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 
 namespace MixERP.Net.Common
 {
     public static class PageUtility
     {
+        public static void AddMeta(Page page, string name, string content)
+        {
+            using (HtmlMeta meta = new HtmlMeta())
+            {
+                meta.Name = name;
+                meta.Content = content;
+                page.Header.Controls.Add(meta);
+            }
+        }
+
         public static void CheckInvalidAttempts(Page page)
         {
             if (page != null)

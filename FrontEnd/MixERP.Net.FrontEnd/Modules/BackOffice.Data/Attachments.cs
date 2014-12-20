@@ -17,7 +17,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data
             {
                 command.Parameters.AddWithValue("@AttachmentId", id);
 
-                return Conversion.TryCastString(DbOperations.GetScalarValue(command));
+                return Conversion.TryCastString(DbOperation.GetScalarValue(command));
             }
         }
 
@@ -32,7 +32,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data
                 command.Parameters.AddWithValue("@Book", book);
                 command.Parameters.AddWithValue("@ResourceId", id);
 
-                using (DataTable table = DbOperations.GetDataTable(command))
+                using (DataTable table = DbOperation.GetDataTable(command))
                 {
                     if (table != null && table.Rows.Count > 0)
                     {

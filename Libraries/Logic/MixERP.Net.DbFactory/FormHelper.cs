@@ -61,7 +61,7 @@ namespace MixERP.Net.DBFactory
                 sql = sql.Replace("@Offset", Conversion.TryCastString(offset));
                 command.CommandText = sql;
 
-                return DbOperations.GetDataTable(command);
+                return DbOperation.GetDataTable(command);
             }
         }
 
@@ -75,7 +75,7 @@ namespace MixERP.Net.DBFactory
                 sql = sql.Replace("@OrderBy", Sanitizer.SanitizeIdentifierName(orderBy));
                 command.CommandText = sql;
 
-                return DbOperations.GetDataTable(command);
+                return DbOperation.GetDataTable(command);
             }
         }
 
@@ -131,7 +131,7 @@ namespace MixERP.Net.DBFactory
                     counter++;
                 }
 
-                return DbOperations.GetDataTable(command);
+                return DbOperation.GetDataTable(command);
             }
         }
 
@@ -198,7 +198,7 @@ namespace MixERP.Net.DBFactory
 
                 command.Parameters.AddWithValue("@Limit", limit);
 
-                return DbOperations.GetDataTable(command);
+                return DbOperation.GetDataTable(command);
             }
         }
 
@@ -212,7 +212,7 @@ namespace MixERP.Net.DBFactory
 
                 command.CommandText = sql;
 
-                return Conversion.TryCastInteger(DbOperations.GetScalarValue(command));
+                return Conversion.TryCastInteger(DbOperation.GetScalarValue(command));
             }
         }
     }

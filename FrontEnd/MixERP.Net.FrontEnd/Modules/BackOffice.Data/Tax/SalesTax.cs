@@ -43,7 +43,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.Tax
                 command.Parameters.AddWithValue("@ShippingCharge", shippingCharge);
                 command.Parameters.AddWithValue("@SalesTaxId", salesTaxId);
 
-                return Conversion.TryCastDecimal(DbOperations.GetScalarValue(command));
+                return Conversion.TryCastDecimal(DbOperation.GetScalarValue(command));
             }
         }
 
@@ -64,7 +64,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.Tax
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
 
-                return DbOperations.GetDataTable(command);
+                return DbOperation.GetDataTable(command);
             }
         }
 
@@ -82,7 +82,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.Tax
                 command.Parameters.AddWithValue("@UnitId", unitId);
                 command.Parameters.AddWithValue("@Price", price);
 
-                return Conversion.TryCastInteger(DbOperations.GetScalarValue(command));
+                return Conversion.TryCastInteger(DbOperation.GetScalarValue(command));
             }
         }
     }

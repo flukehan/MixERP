@@ -46,7 +46,7 @@ namespace MixERP.Net.WebControls.TransactionViewFactory.Data
                 command.Parameters.AddWithValue("@VerifiedBy", verifiedBy);
                 command.Parameters.AddWithValue("@Reason", reason);
 
-                return DbOperations.GetDataTable(command);
+                return DbOperation.GetDataTable(command);
             }
         }
     }

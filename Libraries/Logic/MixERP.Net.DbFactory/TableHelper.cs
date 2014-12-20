@@ -48,7 +48,7 @@ namespace MixERP.Net.DBFactory
                         command.Parameters.AddWithValue(paramNames[i], exclusions[i].Trim());
                     }
 
-                    return DbOperations.GetDataTable(command);
+                    return DbOperation.GetDataTable(command);
                 }
             }
 
@@ -59,7 +59,7 @@ namespace MixERP.Net.DBFactory
                 command.Parameters.AddWithValue("@Schema", schema);
                 command.Parameters.AddWithValue("@TableName", tableName);
 
-                return DbOperations.GetDataTable(command);
+                return DbOperation.GetDataTable(command);
             }
         }
     }

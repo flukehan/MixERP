@@ -35,7 +35,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
                 command.Parameters.AddWithValue("@SourceCurrencyCode", sourceCurrencyCode);
                 command.Parameters.AddWithValue("@DestinationCurrencyCode", destinationCurrencyCode);
 
-                return Conversion.TryCastDecimal(DbOperations.GetScalarValue(command));
+                return Conversion.TryCastDecimal(DbOperation.GetScalarValue(command));
             }
         }
     }

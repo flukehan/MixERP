@@ -32,7 +32,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
             {
                 command.Parameters.AddWithValue("@ItemCode", itemCode);
 
-                return Conversion.TryCastBoolean(DbOperations.GetScalarValue(command));
+                return Conversion.TryCastBoolean(DbOperation.GetScalarValue(command));
             }
         }
 
@@ -44,7 +44,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
                 command.Parameters.AddWithValue("@ItemCode", itemCode);
                 command.Parameters.AddWithValue("@UnitName", unitName);
                 command.Parameters.AddWithValue("@StoreId", storeId);
-                return Conversion.TryCastDecimal(DbOperations.GetScalarValue(command));
+                return Conversion.TryCastDecimal(DbOperation.GetScalarValue(command));
             }
         }
     }

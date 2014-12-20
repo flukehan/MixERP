@@ -26,7 +26,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.Admin
     {
         public static DataTable GetDataTable(NpgsqlCommand command)
         {
-            return DBFactory.DbOperations.GetDataTable(command);
+            return DBFactory.DbOperation.GetDataTable(command);
         }
     }
 }

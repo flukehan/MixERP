@@ -30,7 +30,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.Admin
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.CommandTimeout = 3600;
-                DbOperations.ExecuteNonQuery(command);
+                DbOperation.ExecuteNonQuery(command);
             }
         }
 
@@ -40,7 +40,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.Admin
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.CommandTimeout = 3600;
-                DbOperations.ExecuteNonQuery(command);
+                DbOperation.ExecuteNonQuery(command);
             }
         }
 
@@ -50,7 +50,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.Admin
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.CommandTimeout = 3600;
-                DbOperations.ExecuteNonQuery(command);
+                DbOperation.ExecuteNonQuery(command);
             }
         }
     }

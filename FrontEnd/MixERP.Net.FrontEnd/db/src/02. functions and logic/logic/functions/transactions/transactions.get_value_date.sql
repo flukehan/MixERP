@@ -16,14 +16,18 @@ BEGIN
         WHERE office_id = _office_id
     ) INTO this;
 
-    IF(this.completed) THEN
-        _value_date  := this.value_date + interval '1' day;
+    IF(this.day_id IS NOT NULL) THEN
+        IF(this.completed) THEN
+            _value_date  := this.value_date + interval '1' day;
+        ELSE
+            _value_date  := this.value_date;    
+        END IF;
     END IF;
-
+    
     RETURN _value_date;
 END
 $$
 LANGUAGE plpgsql;
 
 
---select transactions.get_value_date(1);
+--select transactions.get_value_date(2);

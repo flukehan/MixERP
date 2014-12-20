@@ -33,7 +33,7 @@ namespace MixERP.Net.TransactionGovernor.Data.Transactions
                 command.Parameters.AddWithValue("@StockMasterId", stockMasterId);
                 command.Parameters.AddWithValue("@PartyCode", partyCode);
 
-                return Conversion.TryCastBoolean(DbOperations.GetScalarValue(command));
+                return Conversion.TryCastBoolean(DbOperation.GetScalarValue(command));
             }
         }
 
@@ -45,7 +45,7 @@ namespace MixERP.Net.TransactionGovernor.Data.Transactions
                 command.Parameters.AddWithValue("@TransactionMasterId", transactionMasterId);
                 command.Parameters.AddWithValue("@PartyCode", partyCode);
 
-                return Conversion.TryCastBoolean(DbOperations.GetScalarValue(command));
+                return Conversion.TryCastBoolean(DbOperation.GetScalarValue(command));
             }
         }
 
@@ -56,7 +56,7 @@ namespace MixERP.Net.TransactionGovernor.Data.Transactions
             {
                 command.Parameters.AddWithValue("@TransactionMasterId", transactionMasterId);
 
-                return Conversion.TryCastBoolean(DbOperations.GetScalarValue(command));
+                return Conversion.TryCastBoolean(DbOperation.GetScalarValue(command));
             }
         }
 
@@ -67,7 +67,7 @@ namespace MixERP.Net.TransactionGovernor.Data.Transactions
             {
                 command.Parameters.AddWithValue("@StockMasterId", stockMasterId);
 
-                return Conversion.TryCastBoolean(DbOperations.GetScalarValue(command));
+                return Conversion.TryCastBoolean(DbOperation.GetScalarValue(command));
             }
         }
 
@@ -83,7 +83,7 @@ namespace MixERP.Net.TransactionGovernor.Data.Transactions
                 command.Parameters.AddWithValue("@Quantity", quantity);
                 command.Parameters.AddWithValue("@Price", price);
 
-                return Conversion.TryCastBoolean(DbOperations.GetScalarValue(command));
+                return Conversion.TryCastBoolean(DbOperation.GetScalarValue(command));
             }
         }
     }

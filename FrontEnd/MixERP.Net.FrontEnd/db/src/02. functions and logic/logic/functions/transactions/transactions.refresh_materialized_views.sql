@@ -12,4 +12,4 @@ $$
 LANGUAGE plpgsql;
 
 
-SELECT transactions.create_routine('transactions.refresh_materialized_views', 1000);
+SELECT transactions.create_routine('REF-MV', 'transactions.refresh_materialized_views', 1000);

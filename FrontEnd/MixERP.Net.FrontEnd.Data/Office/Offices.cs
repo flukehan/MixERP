@@ -34,7 +34,7 @@ namespace MixERP.Net.FrontEnd.Data.Office
             const string sql = "SELECT * FROM office.get_offices();";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                return GetOffices(DbOperations.GetDataTable(command));
+                return GetOffices(DbOperation.GetDataTable(command));
             }
         }
 
@@ -48,7 +48,7 @@ namespace MixERP.Net.FrontEnd.Data.Office
                 using (NpgsqlCommand command = new NpgsqlCommand(sql))
                 {
                     command.Parameters.AddWithValue("@OfficeId", officeId);
-                    using (DataTable table = DbOperations.GetDataTable(command))
+                    using (DataTable table = DbOperation.GetDataTable(command))
                     {
                         if (table != null)
                         {

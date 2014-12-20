@@ -1860,9 +1860,13 @@ CREATE TABLE transactions.routines
 (
     routine_id                              SERIAL NOT NULL PRIMARY KEY,
     "order"                                 integer NOT NULL,
+    routine_code                            national character varying(12) NOT NULL,
     routine_name                            regproc NOT NULL UNIQUE,
     status                                  boolean NOT NULL CONSTRAINT routines_status_df DEFAULT(true)
 );
+
+CREATE UNIQUE INDEX routines_routine_code_uix
+ON transactions.routines(LOWER(routine_code));
 
 CREATE TABLE transactions.day_operation
 (
@@ -1870,7 +1874,9 @@ CREATE TABLE transactions.day_operation
     office_id                               integer NOT NULL REFERENCES office.offices(office_id),
     value_date                              date NOT NULL,
     started_on                              TIMESTAMP WITH TIME ZONE NOT NULL,
+    started_by                              integer NOT NULL REFERENCES office.users(user_id),    
     completed_on                            TIMESTAMP WITH TIME ZONE NULL,
+    completed_by                            integer NULL REFERENCES office.users(user_id),
     completed                               boolean NOT NULL 
                                             CONSTRAINT day_operation_completed_df DEFAULT(false)
                                             CONSTRAINT day_operation_completed_chk 

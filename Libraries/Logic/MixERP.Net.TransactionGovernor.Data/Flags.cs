@@ -46,7 +46,7 @@ namespace MixERP.Net.TransactionGovernor.Data
                     command.Parameters.AddWithValue("@ResourceKey", resourceKey);
                     command.Parameters.AddWithValue("@ResourceId", resourceId);
 
-                    DbOperations.ExecuteNonQuery(command);
+                    DbOperation.ExecuteNonQuery(command);
                 }
             }
         }

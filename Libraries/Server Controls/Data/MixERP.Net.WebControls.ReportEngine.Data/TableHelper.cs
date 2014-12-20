@@ -72,7 +72,7 @@ namespace MixERP.Net.WebControls.ReportEngine.Data
                 //A separate connection to database using a restricted login is established here.
                 string connectionString = DbConnection.ReportConnectionString();
 
-                return DbOperations.GetDataTable(command, connectionString);
+                return DbOperation.GetDataTable(command, connectionString);
             }
         }
     }

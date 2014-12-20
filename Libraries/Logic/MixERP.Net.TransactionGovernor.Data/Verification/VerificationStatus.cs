@@ -33,7 +33,7 @@ namespace MixERP.Net.TransactionGovernor.Data.Verification
             {
                 command.Parameters.AddWithValue("@TransactionMasterId", transactionMasterId);
 
-                using (DataTable table = DbOperations.GetDataTable(command))
+                using (DataTable table = DbOperation.GetDataTable(command))
                 {
                     if (table != null)
                     {

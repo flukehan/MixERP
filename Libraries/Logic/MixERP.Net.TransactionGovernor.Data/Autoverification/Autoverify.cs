@@ -30,7 +30,7 @@ namespace MixERP.Net.TransactionGovernor.Data.Autoverification
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@TransactionMasterId", transactionMasterId);
-                return DbOperations.ExecuteNonQuery(command);
+                return DbOperation.ExecuteNonQuery(command);
             }
         }
     }

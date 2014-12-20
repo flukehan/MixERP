@@ -145,15 +145,14 @@ namespace MixERP.Net.FrontEnd.Base
             }
         }
 
-        public static void SetAuthenticationTicket(Page page, string userName, bool rememberMe)
+        public static void SetAuthenticationTicket(Page page, long signInId, bool rememberMe)
         {
             if (page == null)
             {
                 return;
             }
 
-            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, userName, DateTime.Now,
-                DateTime.Now.AddMinutes(30), rememberMe, String.Empty, FormsAuthentication.FormsCookiePath);
+            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, signInId.ToString(CultureInfo.InvariantCulture), DateTime.Now, DateTime.Now.AddMinutes(30), rememberMe, String.Empty, FormsAuthentication.FormsCookiePath);
             string encryptedCookie = FormsAuthentication.Encrypt(ticket);
 
             HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedCookie);
@@ -161,28 +160,27 @@ namespace MixERP.Net.FrontEnd.Base
             cookie.Path = ticket.CookiePath;
 
             page.Response.Cookies.Add(cookie);
-            page.Response.Redirect(FormsAuthentication.GetRedirectUrl(userName, rememberMe));
+            page.Response.Redirect(FormsAuthentication.GetRedirectUrl(signInId.ToString(CultureInfo.InvariantCulture), rememberMe));
         }
 
-        public static bool SetSession(Page page, string user)
+        public static bool SetSession(Page page, long signInId)
         {
             if (page != null)
             {
                 try
                 {
-                    SignInView signInView = Data.Office.User.GetLastSignInView(user);
-                    long logOnId = signInView.LogOnId;
-
-                    if (logOnId.Equals(0))
+                    if (signInId.Equals(0))
                     {
                         RequestLogOnPage();
                         return false;
                     }
 
+                    SignInView signInView = Data.Office.User.GetSignInView(signInId);
+
                     page.Session["LogOnId"] = signInView.LogOnId;
                     page.Session["UserId"] = signInView.UserId;
                     page.Session["Culture"] = signInView.Culture;
-                    page.Session["UserName"] = user;
+                    page.Session["UserName"] = signInView.UserName;
                     page.Session["FullUserName"] = signInView.FullName;
                     page.Session["Role"] = signInView.Role;
                     page.Session["IsSystem"] = signInView.IsSystem;
@@ -316,7 +314,7 @@ namespace MixERP.Net.FrontEnd.Base
 
         private void SetSession()
         {
-            SetSession(this.Page, this.User.Identity.Name);
+            SetSession(this.Page, Conversion.TryCastLong(this.User.Identity.Name));
         }
     }
 }

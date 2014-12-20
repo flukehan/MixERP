@@ -32,7 +32,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
             {
                 command.Parameters.AddWithValue("@ItemCode", itemCode);
 
-                return DbOperations.GetDataTable(command);
+                return DbOperation.GetDataTable(command);
             }
         }
 
@@ -43,7 +43,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
             {
                 command.Parameters.AddWithValue("@UnitName", unitName);
 
-                var value = DbOperations.GetScalarValue(command);
+                var value = DbOperation.GetScalarValue(command);
                 if (value != null)
                 {
                     return value.ToString().Equals("1");

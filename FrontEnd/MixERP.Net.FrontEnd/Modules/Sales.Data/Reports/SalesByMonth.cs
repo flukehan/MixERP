@@ -32,7 +32,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Reports
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
 
-                return DbOperations.GetDataTable(command);
+                return DbOperation.GetDataTable(command);
             }
         }
 
@@ -41,7 +41,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Reports
             const string sql = "SELECT * FROM transactions.get_sales_by_offices(1000)";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                return DbOperations.GetDataTable(command);
+                return DbOperation.GetDataTable(command);
             }
         }
     }

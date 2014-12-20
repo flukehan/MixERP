@@ -37,7 +37,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
             {
                 command.Parameters.AddWithValue("@AccountCode", accountCode);
 
-                return DbOperations.GetDataTable(command).Rows.Count.Equals(1);
+                return DbOperation.GetDataTable(command).Rows.Count.Equals(1);
             }
         }
 
@@ -49,7 +49,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
             {
                 command.Parameters.AddWithValue("@AccountId", accountId);
 
-                return DbOperations.GetDataTable(command).Rows.Count.Equals(1);
+                return DbOperation.GetDataTable(command).Rows.Count.Equals(1);
             }
         }
 
@@ -60,7 +60,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
             {
                 command.Parameters.AddWithValue("@AccountCode", accountCode);
 
-                return DbOperations.GetDataTable(command).Rows.Count.Equals(1);
+                return DbOperation.GetDataTable(command).Rows.Count.Equals(1);
             }
         }
 

@@ -61,6 +61,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Access is denied..
+        /// </summary>
+        internal static string AccessIsDenied {
+            get {
+                return ResourceManager.GetString("AccessIsDenied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Negative value supplied..
         /// </summary>
         internal static string NegativeValueSupplied {

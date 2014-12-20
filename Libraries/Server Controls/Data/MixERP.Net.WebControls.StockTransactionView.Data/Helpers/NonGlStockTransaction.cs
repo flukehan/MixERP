@@ -55,7 +55,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data.Helpers
                     command.Parameters.AddWithValue("@Id" + Conversion.TryCastString(i), ids[i]);
                 }
 
-                return Conversion.TryCastBoolean(DbOperations.GetScalarValue(command));
+                return Conversion.TryCastBoolean(DbOperation.GetScalarValue(command));
             }
         }
 
@@ -85,7 +85,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data.Helpers
                     command.Parameters.AddWithValue("@Id" + Conversion.TryCastString(i), ids[i]);
                 }
 
-                return Conversion.TryCastBoolean(DbOperations.GetScalarValue(command));
+                return Conversion.TryCastBoolean(DbOperation.GetScalarValue(command));
             }
         }
 
@@ -115,7 +115,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data.Helpers
                     command.Parameters.AddWithValue("@Id" + Conversion.TryCastString(i), ids[i]);
                 }
 
-                return Conversion.TryCastBoolean(DbOperations.GetScalarValue(command));
+                return Conversion.TryCastBoolean(DbOperation.GetScalarValue(command));
             }
         }
 
@@ -154,7 +154,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data.Helpers
 
                 //If the transactions associated with the supplied transaction ids belong to a single part,
                 //the value should equal to 1.
-                return Conversion.TryCastInteger(DbOperations.GetScalarValue(command)).Equals(1);
+                return Conversion.TryCastInteger(DbOperation.GetScalarValue(command)).Equals(1);
             }
         }
 
@@ -176,7 +176,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data.Helpers
                 command.Parameters.AddWithValue("@ReferenceNumber", referenceNumber);
                 command.Parameters.AddWithValue("@StatementReference", statementReference);
 
-                return DbOperations.GetDataTable(command);
+                return DbOperation.GetDataTable(command);
             }
         }
     }

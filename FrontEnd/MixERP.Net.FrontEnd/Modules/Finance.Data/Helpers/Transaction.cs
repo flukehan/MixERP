@@ -45,7 +45,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
                 command.Parameters.AddWithValue("@OfficeId", officeId);
                 command.Parameters.AddWithValue("@CurrencyCode", currencyCode);
 
-                return Conversion.TryCastDecimal(DbOperations.GetScalarValue(command));
+                return Conversion.TryCastDecimal(DbOperation.GetScalarValue(command));
             }
         }
 

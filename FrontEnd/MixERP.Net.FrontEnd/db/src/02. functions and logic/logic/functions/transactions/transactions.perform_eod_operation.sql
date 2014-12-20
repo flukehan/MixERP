@@ -9,17 +9,19 @@ $$
     DECLARE this                RECORD;
     DECLARE _sql                text;
     DECLARE _is_error           boolean=false;
+    DECLARE _notice             text;
+    DECLARE _office_code        text;
 BEGIN
+    IF(_value_date IS NULL) THEN
+        RAISE EXCEPTION 'Value date error.';
+    END IF;
+
     IF(NOT policy.is_elevated_user(_user_id)) THEN
         RAISE EXCEPTION 'Access is denied.';
     END IF;
-    
+
     IF(_value_date != transactions.get_value_date(_office_id)) THEN
         RAISE EXCEPTION 'Invalid value date.';
-    END IF;
-
-    IF(_value_date IS NULL) THEN
-        RAISE EXCEPTION 'Value date error.';
     END IF;
 
     SELECT * FROM transactions.day_operation
@@ -27,8 +29,7 @@ BEGIN
     AND office_id = _office_id INTO this;
 
     IF(this IS NULL) THEN
-        INSERT INTO transactions.day_operation(office_id, value_date, started_on)
-        SELECT _office_id, _value_date, NOW();
+        RAISE EXCEPTION 'Invalid value date.';
     ELSE    
         IF(this.completed OR this.completed_on IS NOT NULL) THEN
             RAISE WARNING 'EOD operation was already performed.';
@@ -37,6 +38,10 @@ BEGIN
     END IF;
     
     IF(NOT _is_error) THEN
+        _office_code        := office.get_office_code_by_id(_office_id);
+        _notice             := 'EOD started.'::text;
+        RAISE INFO  '%', _notice;
+
         FOR this IN
         SELECT routine_id, routine_name 
         FROM transactions.routines 
@@ -47,15 +52,33 @@ BEGIN
             _routine                := this.routine_name;
             _sql                    := format('SELECT * FROM %1$s($1);', _routine);
 
-            RAISE INFO '%', _sql;
+            RAISE NOTICE '%', _sql;
 
+            _notice             := 'Performing ' || _routine::text || '.';
+            RAISE INFO '%', _notice;
+
+            PERFORM pg_sleep(5);
             EXECUTE _sql USING _office_id;
+
+            _notice             := 'Completed  ' || _routine::text || '.';
+            RAISE INFO '%', _notice;
+            
+            PERFORM pg_sleep(5);            
         END LOOP;
 
 
-        UPDATE transactions.day_operation SET completed_on = NOW(), completed = true
-        WHERE value_date=_value_date 
+        UPDATE transactions.day_operation SET 
+            completed_on = NOW(), 
+            completed_by = _user_id,
+            completed = true
+        WHERE value_date=_value_date
         AND office_id = _office_id;
+
+        _notice             := 'EOD of ' || _office_code || ' for ' || _value_date::text || ' completed without errors.'::text;
+        RAISE INFO '%', _notice;
+
+        _notice             := 'OK'::text;
+        RAISE INFO '%', _notice;
 
         RETURN true;
     END IF;
@@ -65,7 +88,28 @@ END;
 $$
 LANGUAGE plpgsql;
 
---SELECT * FROM transactions.perform_eod_operation(1, 1, '2014-12-14');
+DROP FUNCTION IF EXISTS transactions.perform_eod_operation(_login_id bigint);
 
+CREATE FUNCTION transactions.perform_eod_operation(_login_id bigint)
+RETURNS boolean
+AS
+$$
+    DECLARE _user_id    integer;
+    DECLARE _office_id integer;
+    DECLARE _value_date date;
+BEGIN
+    SELECT 
+        user_id,
+        office_id,
+        transactions.get_value_date(office_id)
+    INTO
+        _user_id,
+        _office_id,
+        _value_date
+    FROM audit.logins
+    WHERE login_id=$1;
 
-
+    RETURN transactions.perform_eod_operation(_user_id, _office_id, _value_date);
+END
+$$
+LANGUAGE plpgsql;

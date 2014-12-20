@@ -38,7 +38,7 @@ namespace MixERP.Net.WebControls.ReportEngine.Data
                 command.Parameters.AddWithValue("@Level", level);
                 command.Parameters.AddWithValue("@ParentMenuCode", parentMenuCode);
 
-                DbOperations.ExecuteNonQuery(command);
+                DbOperation.ExecuteNonQuery(command);
             }
         }
     }

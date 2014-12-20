@@ -34,7 +34,7 @@ namespace MixERP.Net.TransactionGovernor.Data.Verification
                 command.Parameters.AddWithValue("@Reason", reason);
                 command.Parameters.AddWithValue("@TransactionMasterId", transactionMasterId);
 
-                return DbOperations.ExecuteNonQuery(command);
+                return DbOperation.ExecuteNonQuery(command);
             }
         }
     }

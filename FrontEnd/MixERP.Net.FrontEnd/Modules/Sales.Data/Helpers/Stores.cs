@@ -31,7 +31,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@StoreId", storeId);
-                return DbOperations.GetDataTable(command).Rows.Count.Equals(1);
+                return DbOperation.GetDataTable(command).Rows.Count.Equals(1);
             }
         }
     }

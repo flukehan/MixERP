@@ -18,80 +18,103 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="EODOperation.ascx.cs" Inherits="MixERP.Net.Core.Modules.Finance.EODOperation" %>
 
-<h1>End of Day Operation (2013/04/06)</h1>
-<div class="ui divider"></div>
+<div>
+    <h1>End of Day Operation
+    <asp:Literal runat="server" ID="ValueDateLiteral"></asp:Literal></h1>
+    <div class="ui divider"></div>
 
-<div class="ui buttons">
-    <button class="ui blue button" id="InitializeButton" onclick="return(false);" data-popup=".initialize">
-        <i class="icon alarm"></i>
-        Initialize Day End
-    </button>
-    <button class="ui red disabled button" id="PerformEODButton" onclick="return(false);" data-popup=".eod">
-        <i class="icon wizard"></i>
-        Perform EOD Operation
-    </button>
-</div>
+    <div class="ui buttons">
+        <button
+            id="InitializeButton"
+            runat="server"
+            class="disabled"
+            onclick="return(false);"
+            data-popup=".initialize">
+            <i class="icon alarm"></i>
+            Initialize Day End
+        </button>
+        <button
+            id="PerformEODButton"
+            runat="server"
+            class="disabled"
+            onclick="return(false);"
+            data-popup=".eod">
+            <i class="icon wizard"></i>
+            Perform EOD Operation
+        </button>
+    </div>
 
-<div class="ui large popup initialize">
-    <div class="ui blue header">
-        <i class="icon alarm"></i>
+    <div class="ui large popup initialize">
+        <div class="ui blue header">
+            <i class="icon alarm"></i>
+            <div class="content">
+                About Initializing Day End
+            </div>
+        </div>
+        <div class="ui divider"></div>
         <div class="content">
-            About Initializing Day End
+            <p>
+                When you initialize day-end operation, the already logged-in application users
+            including you are logged off on 120 seconds.
+            </p>
+            <p>
+                During the day-end period, only users having elevated privilege are allowed to log-in.
+            </p>
+            <h4 class="ui horizontal red header divider">
+                <i class="warning sign icon"></i>
+                Warning
+            </h4>
+            <p class="error-message">
+                Please do not close this window or navigate away from this page during initialization.
+            </p>
+
+            <button class="ui blue loading disabled button" onclick="return false" id="StartButton">Start</button>
         </div>
     </div>
-    <div class="ui divider"></div>
-    <div class="content">
-        <p>
-            When you initialize day-end operation, the already logged-in application users including you are notified to save their work
-            and log-off within 120 seconds.
-        </p>
-        <p>
-            During the day-end period, only users having elevated privilege are allowed to log-in.
-        </p>
 
-        <button class="ui blue loading disabled button" onclick="return false" id="StartButton">Start</button>
-    </div>
-</div>
-
-<div class="ui large popup eod">
-    <div class="ui red header">
-        <i class="icon alarm"></i>
-        <div class="content">
-            Performing EOD Operation
+    <div class="ui large popup eod">
+        <div class="ui red header">
+            <i class="icon alarm"></i>
+            <div class="content">
+                Performing EOD Operation
+            </div>
         </div>
-    </div>
-    <div class="ui divider"></div>
-    <div class="content">
-        <p>
-            When you perform EOD operation for a particular date, no transaction on that date or before can be
+        <div class="ui divider"></div>
+        <div class="content">
+            <p>
+                When you perform EOD operation for a particular date, no transaction on that date or before can be
             altered, changed, or deleted.
-        </p>
-        <p>
-            During EOD operation, routine tasks such as interest calculation, settlements, and report generation are performed.
-        </p>
-        <p>
-            This process is irreversible.
-        </p>
+            </p>
+            <p>
+                During EOD operation, routine tasks such as interest calculation, settlements, and report generation are performed.
+            </p>
+            <p>
+                This process is irreversible.
+            </p>
+
+            <button type="button" id="OKButton" class="ui small red loading disabled button" onclick="return (false);">OK</button>
+        </div>
+    </div>
+
+    <div class="ui teal progress">
+        <div class="bar">
+            <div class="progress"></div>
+        </div>
+    </div>
+
+    <h2 class="ui blue header initially hidden">EOD Console</h2>
+    <div class="ui celled list">
     </div>
 </div>
-
-<br />
-<br />
-
-<div class="ui teal progress">
-    <div class="bar">
-        <div class="progress"></div>
-    </div>
-    <div class="label">Sending Termination Signal</div>
-</div>
-
 <script type="text/javascript">
     var counter = 120;
-    var start = new Date;
     var interval;
+    var url;
+    var data;
+    var start;
+    var receivingData = true;
 
     var triggers = $("[data-popup]");
-
     triggers.each(function () {
         $(this).popup({
             popup: $(this).data("popup"),
@@ -105,28 +128,113 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
     });
 
-    function terminateListener(c) {
+    $(function () {
+        //EOD Notices from PostgreSQL Server
+        $.connection.dayOperationHub.client.getNotification = function (msg) {
+            AddItem(msg);
+
+            if (msg === "OK") {
+                receivingData = false;
+            };
+        };
+    });
+
+    //Termination Signal
+    function terminateListener(counter) {
+        $("#PerformEODButton").addClass("disabled");
         $("#StartButton").addClass("disabled");
         $("#InitializeButton").addClass("disabled");
 
         $('.progress').progress({
-            percent: c
+            percent: counter
         });
-
-        if (c === 100) {
-            $("#PerformEODButton").removeClass("disabled");
-        };
-
     };
 
+    //Connection to EOD SignalR Hub was successful.
     function connectionListener() {
-        $("#StartButton").removeClass("disabled").removeClass("loading");
+        $("#StartButton").removeClass("disabled loading");
+        $("#OKButton").removeClass("disabled loading");
 
         $("#StartButton").click(function () {
-            triggers.popup('hide');
-            interval = setInterval(sendMessage, 1000);
+            $(this).addClass("disabled");
+            var ajaxInitializeEODOperation = intializeEODOperation();
 
+            ajaxInitializeEODOperation.success(function (msg) {
+                if (msg.d.toString() === "true") {
+                    triggers.popup('hide');
+
+                    start = new Date;
+
+                    interval = setInterval(sendMessage, 5000);
+                    return;
+                };
+
+                alert('Access is denied');
+            });
+
+            ajaxInitializeEODOperation.fail(function (xhr) {
+                logAjaxErrorMessage(xhr);
+            });
         });
+
+        $("#OKButton").click(function () {
+            $(this).addClass("disabled");
+            triggers.popup('hide');
+            $(".ui.blue.header").removeClass("initially hidden");
+            ShowProgress(0);
+            $.connection.dayOperationHub.server.performEOD();
+        });
+    };
+
+    var toggle = false;
+
+    function AddItem(msg) {
+        var timestamp = new Date().toISOString();
+
+        var html = "<div class='item'><i class='ui big blue settings icon'></i><div class='content'><div class='ui blue header'>{0}</div>{1}</div></div>";
+
+        html = String.format(html, timestamp, msg);
+
+        $(".ui.celled.list").append(html);
+    };
+
+    function ShowProgress(counter) {
+        if (receivingData) {
+            if (counter > 100 || counter <= 0) {
+                if (toggle === true) {
+                    toggle = false;
+                } else {
+                    toggle = true;
+                }
+            };
+
+            if (toggle) {
+                counter += 5;
+            } else {
+                counter -= 5;
+            };
+
+            $('.progress').progress({
+                percent: counter,
+                limitValues: true,
+                label: "ratio"
+            });
+
+            setTimeout(ShowProgress, 100, counter);
+
+        } else {
+            $('.progress').progress({
+                percent: 100,
+                limitValues: true,
+                label: "ratio"
+            });
+        };
+    };
+
+    function intializeEODOperation() {
+        url = "/Modules/Finance/Services/EODOperation.asmx/InitializeEODOperation";
+
+        return getAjax(url, null);
     };
 
     var sendMessage = function () {

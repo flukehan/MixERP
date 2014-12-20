@@ -41,7 +41,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
-                return DbOperations.GetDataTable(command);
+                return DbOperation.GetDataTable(command);
             }
         }
     }

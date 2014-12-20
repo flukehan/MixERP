@@ -72,7 +72,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
 
-                return DbOperations.GetDataTable(command);
+                return DbOperation.GetDataTable(command);
             }
         }
 
@@ -87,7 +87,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
                 command.Parameters.AddWithValue("@OfficeId", officeId);
                 command.Parameters.AddRange(AddPurchaseReorderTypeParameter(details).ToArray());
 
-                return DbOperations.ExecuteNonQuery(command);
+                return DbOperation.ExecuteNonQuery(command);
             }
         }
     }

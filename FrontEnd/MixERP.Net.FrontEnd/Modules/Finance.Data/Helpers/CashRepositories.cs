@@ -37,7 +37,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
             {
                 command.Parameters.AddWithValue("@CashRepositoryCode", cashRepositoryCode);
 
-                return DbOperations.GetDataTable(command).Rows.Count.Equals(1);
+                return DbOperation.GetDataTable(command).Rows.Count.Equals(1);
             }
         }
 
@@ -48,7 +48,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
             {
                 command.Parameters.AddWithValue("@CashRepositoryId", cashRepositoryId);
                 command.Parameters.AddWithValue("@CurrencyCode", currencyCode);
-                return Conversion.TryCastDecimal(DbOperations.GetScalarValue(command));
+                return Conversion.TryCastDecimal(DbOperation.GetScalarValue(command));
             }
         }
 
@@ -58,7 +58,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@CashRepositoryId", cashRepositoryId);
-                return Conversion.TryCastDecimal(DbOperations.GetScalarValue(command));
+                return Conversion.TryCastDecimal(DbOperation.GetScalarValue(command));
             }
         }
 
@@ -69,7 +69,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@CashRepositoryCode", cashRepositoryCode);
-                return Conversion.TryCastDecimal(DbOperations.GetScalarValue(command));
+                return Conversion.TryCastDecimal(DbOperation.GetScalarValue(command));
             }
         }
 
@@ -81,7 +81,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
             {
                 command.Parameters.AddWithValue("@CashRepositoryCode", cashRepositoryCode);
                 command.Parameters.AddWithValue("@CurrencyCode", currencyCode);
-                return Conversion.TryCastDecimal(DbOperations.GetScalarValue(command));
+                return Conversion.TryCastDecimal(DbOperation.GetScalarValue(command));
             }
         }
 
@@ -90,7 +90,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
             const string sql = "SELECT * FROM office.cash_repositories;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                return GetCashRepositories(DbOperations.GetDataTable(command));
+                return GetCashRepositories(DbOperation.GetDataTable(command));
             }
         }
 
@@ -100,7 +100,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
-                return GetCashRepositories(DbOperations.GetDataTable(command));
+                return GetCashRepositories(DbOperation.GetDataTable(command));
             }
         }
 
@@ -115,7 +115,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
                 {
                     command.Parameters.AddWithValue("@CashRepositoryId", cashRepositoryId);
 
-                    using (DataTable table = DbOperations.GetDataTable(command))
+                    using (DataTable table = DbOperation.GetDataTable(command))
                     {
                         if (table != null)
                         {
@@ -188,7 +188,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
                 using (NpgsqlCommand command = new NpgsqlCommand(sql))
                 {
                     command.Parameters.AddWithValue("@OfficeId", officeId);
-                    using (DataTable table = DbOperations.GetDataTable(command))
+                    using (DataTable table = DbOperation.GetDataTable(command))
                     {
                         if (table != null)
                         {

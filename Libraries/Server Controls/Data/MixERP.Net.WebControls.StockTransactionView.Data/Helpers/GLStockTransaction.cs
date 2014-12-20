@@ -50,7 +50,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data.Helpers
                 command.Parameters.AddWithValue("@ReferenceNumber", referenceNumber);
                 command.Parameters.AddWithValue("@StatementReference", statementReference);
 
-                return DbOperations.GetDataTable(command);
+                return DbOperation.GetDataTable(command);
             }
         }
     }

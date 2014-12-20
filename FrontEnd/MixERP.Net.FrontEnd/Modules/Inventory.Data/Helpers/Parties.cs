@@ -36,7 +36,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@PartyId", partyId);
-                return Conversion.TryCastString(DbOperations.GetScalarValue((command)));
+                return Conversion.TryCastString(DbOperation.GetScalarValue((command)));
             }
         }
 
@@ -81,7 +81,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@PartyCode", partyCode);
-                using (DataTable table = DbOperations.GetDataTable(command))
+                using (DataTable table = DbOperation.GetDataTable(command))
                 {
                     for (int i = 0; i < table.Rows.Count; i++)
                     {
@@ -111,7 +111,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
                 command.Parameters.AddWithValue("@OfficeId", officeId);
                 command.Parameters.AddWithValue("@PartyCode", partyCode);
 
-                return DbOperations.GetDataTable(command);
+                return DbOperation.GetDataTable(command);
             }
         }
     }

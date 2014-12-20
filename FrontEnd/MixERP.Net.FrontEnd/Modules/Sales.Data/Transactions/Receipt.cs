@@ -72,7 +72,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
                 command.Parameters.AddWithValue("@BankInstrumentCode", bankInstrumentCode);
                 command.Parameters.AddWithValue("@BankTransactionCode", bankTransactionCode);
 
-                return Conversion.TryCastLong(DBFactory.DbOperations.GetScalarValue(command));
+                return Conversion.TryCastLong(DBFactory.DbOperation.GetScalarValue(command));
             }
         }
     }

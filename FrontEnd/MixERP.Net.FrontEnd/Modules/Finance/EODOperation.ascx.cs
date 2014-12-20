@@ -1,6 +1,4 @@
-﻿using MixERP.Net.FrontEnd.Base;
-
-/********************************************************************************
+﻿/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
 This file is part of MixERP.
@@ -19,6 +17,10 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Core.Modules.Finance.Data;
+using MixERP.Net.FrontEnd.Base;
+
 using System;
 
 namespace MixERP.Net.Core.Modules.Finance
@@ -27,7 +29,30 @@ namespace MixERP.Net.Core.Modules.Finance
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
+            this.Initialize();
             base.OnControlLoad(sender, e);
+        }
+
+        private void Initialize()
+        {
+            int officeId = SessionHelper.GetOfficeId();
+
+            EODStatus status = Data.EODOperation.GetStatus(officeId);
+
+            if (status != null)
+            {
+                ValueDateLiteral.Text = @"(" + status.ValueDate.ToShortDateString() + @")";
+
+                if (status.Initialized)
+                {
+                    InitializeButton.Attributes.Add("class", "ui blue disabled button");
+                    PerformEODButton.Attributes.Add("class", "ui red button");
+                    return;
+                }
+
+                InitializeButton.Attributes.Add("class", "ui blue button");
+                PerformEODButton.Attributes.Add("class", "ui red disabled button");
+            }
         }
     }
 }

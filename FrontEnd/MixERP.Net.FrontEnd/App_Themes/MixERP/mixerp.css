@@ -47,6 +47,9 @@ body {
   background-color: #ffffff;
   margin: 0;
 }
+#MenuContainer {
+  width: 300px !important;
+}
 .sidebar,
 #SignInBody {
   background-color: #67238b;

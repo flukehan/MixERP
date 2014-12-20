@@ -33,16 +33,16 @@ namespace MixERP.Net.FrontEnd.Data.Office
 {
     public static class User
     {
-        public static SignInView GetLastSignInView(string userName)
+        public static SignInView GetSignInView(long loginId)
         {
             SignInView view = new SignInView();
 
-            const string sql = "SELECT * FROM office.sign_in_view WHERE user_name=@UserName;";
+            const string sql = "SELECT * FROM office.sign_in_view WHERE login_id=@LoginId;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@UserName", userName);
+                command.Parameters.AddWithValue("@LoginId", loginId);
 
-                using (DataTable table = DbOperations.GetDataTable(command))
+                using (DataTable table = DbOperation.GetDataTable(command))
                 {
                     if (table != null && table.Rows.Count.Equals(1))
                     {
@@ -89,7 +89,7 @@ namespace MixERP.Net.FrontEnd.Data.Office
             return view;
         }
 
-        public static bool SignIn(int officeId, string userName, string password, string culture, bool remember, Page page)
+        public static long SignIn(int officeId, string userName, string password, string culture, bool remember, Page page)
         {
             if (page != null)
             {
@@ -102,9 +102,10 @@ namespace MixERP.Net.FrontEnd.Data.Office
                 {
                     throw new MixERPException(result.Message);
                 }
+                return result.LoginId;
             }
 
-            return true;
+            return 0;
         }
 
         private static SignInResult SignIn(int officeId, string userName, string password, string browser, string remoteAddress, string remoteUser, string culture)
@@ -122,7 +123,7 @@ namespace MixERP.Net.FrontEnd.Data.Office
                 command.Parameters.AddWithValue("@RemoteUser", remoteUser);
                 command.Parameters.AddWithValue("@Culture", culture);
 
-                using (DataTable table = DbOperations.GetDataTable(command))
+                using (DataTable table = DbOperation.GetDataTable(command))
                 {
                     if (table.Rows != null && table.Rows.Count.Equals(1))
                     {

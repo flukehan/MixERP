@@ -32,7 +32,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
             {
                 command.Parameters.AddWithValue("@PartyCode", partyCode);
 
-                return DbOperations.GetDataTable(command);
+                return DbOperation.GetDataTable(command);
             }
         }
     }

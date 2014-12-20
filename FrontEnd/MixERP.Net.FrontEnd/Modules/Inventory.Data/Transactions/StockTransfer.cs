@@ -46,7 +46,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Transactions
                 command.Parameters.AddWithValue("@StatementReference", statementReference);
                 command.Parameters.AddRange(ParameterHelper.AddStockTransferModelParameter(details).ToArray());
 
-                long tranId = Conversion.TryCastLong(DbOperations.GetScalarValue(command));
+                long tranId = Conversion.TryCastLong(DbOperation.GetScalarValue(command));
                 TransactionGovernor.Autoverification.Autoverify.PassTransactionMasterId(tranId);
                 return tranId;
             }

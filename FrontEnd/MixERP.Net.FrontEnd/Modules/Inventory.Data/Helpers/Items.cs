@@ -42,7 +42,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
             {
                 command.Parameters.AddWithValue("@ItemCode", itemCode);
 
-                return DbOperations.GetScalarValue(command).ToString().Equals("1");
+                return DbOperation.GetScalarValue(command).ToString().Equals("1");
             }
         }
 
@@ -56,7 +56,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
                 command.Parameters.AddWithValue("@PriceTypeId", priceTypeId);
                 command.Parameters.AddWithValue("@UnitId", unitId);
 
-                return Conversion.TryCastDecimal(DbOperations.GetScalarValue(command));
+                return Conversion.TryCastDecimal(DbOperation.GetScalarValue(command));
             }
         }
 
@@ -69,7 +69,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
                 command.Parameters.AddWithValue("@PartyCode", partyCode);
                 command.Parameters.AddWithValue("@UnitId", unitId);
 
-                return Conversion.TryCastDecimal(DbOperations.GetScalarValue(command));
+                return Conversion.TryCastDecimal(DbOperation.GetScalarValue(command));
             }
         }
 
@@ -79,7 +79,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@ItemCode", itemCode);
-                return Conversion.TryCastDecimal(DbOperations.GetScalarValue(command));
+                return Conversion.TryCastDecimal(DbOperation.GetScalarValue(command));
             }
         }
 
@@ -91,7 +91,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
                 command.Parameters.AddWithValue("@ItemCode", itemCode);
                 command.Parameters.AddWithValue("@UnitId", unitId);
                 command.Parameters.AddWithValue("@StoreId", storeId);
-                return Conversion.TryCastDecimal(DbOperations.GetScalarValue(command));
+                return Conversion.TryCastDecimal(DbOperation.GetScalarValue(command));
             }
         }
 
@@ -103,7 +103,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
                 command.Parameters.AddWithValue("@ItemCode", itemCode);
                 command.Parameters.AddWithValue("@UnitName", unitName);
                 command.Parameters.AddWithValue("@StoreId", storeId);
-                return Conversion.TryCastDecimal(DbOperations.GetScalarValue(command));
+                return Conversion.TryCastDecimal(DbOperation.GetScalarValue(command));
             }
         }
         public static decimal CountItemInStock(string itemCode, string unitName, string storeName)
@@ -114,7 +114,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
                 command.Parameters.AddWithValue("@ItemCode", itemCode);
                 command.Parameters.AddWithValue("@UnitName", unitName);
                 command.Parameters.AddWithValue("@StoreName", storeName);
-                return Conversion.TryCastDecimal(DbOperations.GetScalarValue(command));
+                return Conversion.TryCastDecimal(DbOperation.GetScalarValue(command));
             }
         }
 
@@ -125,7 +125,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
             {
                 command.Parameters.AddWithValue("@ItemCode", itemCode);
 
-                return Conversion.TryCastBoolean(DbOperations.GetScalarValue(command));
+                return Conversion.TryCastBoolean(DbOperation.GetScalarValue(command));
             }
         }
 
@@ -136,7 +136,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
             {
                 command.Parameters.AddWithValue("@ItemId", itemId);
 
-                return Conversion.TryCastString(DbOperations.GetScalarValue(command));
+                return Conversion.TryCastString(DbOperation.GetScalarValue(command));
             }
         }
     }

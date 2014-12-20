@@ -55,14 +55,15 @@ namespace MixERP.Net.FrontEnd
             {
                 if (this.User.Identity.IsAuthenticated)
                 {
-                    string user = this.User.Identity.Name;
-                    if (!string.IsNullOrWhiteSpace(user))
+                    long signInId = Conversion.TryCastLong(this.User.Identity.Name);
+
+                    if (signInId > 0)
                     {
                         string sessionUser = Conversion.TryCastString(this.Page.Session["UserName"]);
 
                         if (string.IsNullOrWhiteSpace(sessionUser))
                         {
-                            if (MixERPWebpage.SetSession(this.Page, user))
+                            if (MixERPWebpage.SetSession(this.Page, signInId))
                             {
                                 this.RedirectToDashboard();
                             }
@@ -97,15 +98,16 @@ namespace MixERP.Net.FrontEnd
 
         private static bool Login(int officeId, string userName, string password, string culture, bool rememberMe, Page page)
         {
-            bool results = Data.Office.User.SignIn(officeId, userName, password, culture, rememberMe, page);
+            long signInId = Data.Office.User.SignIn(officeId, userName, password, culture, rememberMe, page);
 
-            if (results)
+            if (signInId > 0)
             {
-                MixERPWebpage.SetSession(page, userName);
-                MixERPWebpage.SetAuthenticationTicket(page, userName, rememberMe);
+                MixERPWebpage.SetSession(page, signInId);
+                MixERPWebpage.SetAuthenticationTicket(page, signInId, rememberMe);
+                return true;
             }
 
-            return results;
+            return false;
         }
 
         private void BindBranchDropDownList()

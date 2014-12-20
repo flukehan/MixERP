@@ -79,7 +79,7 @@ namespace MixERP.Net.Tests.PgUnitTest.Helpers
 
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                DbOperations.ExecuteNonQuery(command);
+                DbOperation.ExecuteNonQuery(command);
             }
         }
 
@@ -112,7 +112,7 @@ namespace MixERP.Net.Tests.PgUnitTest.Helpers
 
             using (NpgsqlCommand command = new NpgsqlCommand(script))
             {
-                DbOperations.ExecuteNonQuery(command);
+                DbOperation.ExecuteNonQuery(command);
             }
         }
     }

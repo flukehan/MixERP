@@ -46,7 +46,7 @@ namespace MixERP.Net.Tests.PgUnitTest.Helpers
             const string sql = "BEGIN TRANSACTION; SELECT * FROM unit_tests.begin(); ROLLBACK TRANSACTION;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                using (DataTable table = DbOperations.GetDataTable(command))
+                using (DataTable table = DbOperation.GetDataTable(command))
                 {
                     if (table != null)
                     {

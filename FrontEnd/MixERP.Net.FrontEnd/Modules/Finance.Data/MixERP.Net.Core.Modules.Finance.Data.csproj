@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EODOperation.cs" />
     <Compile Include="Helpers\Accounts.cs" />
     <Compile Include="Helpers\CashRepositories.cs" />
     <Compile Include="Helpers\CostCenters.cs" />

@@ -44,7 +44,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
             {
                 command.Parameters.AddWithValue("@TranId", tranId);
 
-                return Conversion.TryCastString(DbOperations.GetScalarValue(command));
+                return Conversion.TryCastString(DbOperation.GetScalarValue(command));
             }
         }
     }

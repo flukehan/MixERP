@@ -116,7 +116,7 @@ namespace MixERP.Net.FrontEnd.Data.Core
                 command.Parameters.AddWithValue("@Url", path);
                 command.Parameters.AddWithValue("@Level", level);
 
-                return DbOperations.GetDataTable(command);
+                return DbOperation.GetDataTable(command);
             }
         }
 
@@ -153,7 +153,7 @@ namespace MixERP.Net.FrontEnd.Data.Core
                     command.Parameters.AddWithValue("@Level", level);
                 }
 
-                return DbOperations.GetDataTable(command);
+                return DbOperation.GetDataTable(command);
             }
         }
 
@@ -210,7 +210,7 @@ namespace MixERP.Net.FrontEnd.Data.Core
                 command.Parameters.AddWithValue("@OfficeId", officeId);
                 command.Parameters.AddWithValue("@Culture", culture);
                 command.Parameters.AddWithValue("@Url", path);
-                return DbOperations.GetDataTable(command);
+                return DbOperation.GetDataTable(command);
             }
         }
     }
