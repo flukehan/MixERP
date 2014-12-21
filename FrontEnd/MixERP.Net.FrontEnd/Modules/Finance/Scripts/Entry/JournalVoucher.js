@@ -26,7 +26,7 @@ if (typeof invalidCostCenterWarningLocalized == "undefined") {
 
 //Controls
 var addInputButton = $("#AddInputButton");
-var accountCodeInputText = $("#AccountCodeInputText");
+var accountNumberInputText = $("#AccountNumberInputText");
 var accountSelect = $("#AccountSelect");
 var attachmentDiv = $("#AttachmentDiv");
 var attachmentLabel = $("#AttachmentLabel");
@@ -59,7 +59,7 @@ var transactionGridViewHidden = $("#TransactionGridViewHidden");
 var valueDateTextBox = $("#ValueDateTextBox");
 
 //Variables
-var accountCode = "";
+var accountNumber = "";
 var account = "";
 var attachments;
 
@@ -99,10 +99,10 @@ function loadAccounts() {
 };
 
 function loadCashRepositories() {
-    accountCode = accountSelect.getSelectedValue();
+    accountNumber = accountSelect.getSelectedValue();
 
-    url = "/Modules/Finance/Services/AccountData.asmx/GetCashRepositoriesByAccountCode";
-    data = appendParameter("", "accountCode", accountCode);
+    url = "/Modules/Finance/Services/AccountData.asmx/GetCashRepositoriesByAccountNumber";
+    data = appendParameter("", "accountNumber", accountNumber);
     data = getData(data);
 
     var repoAjax = getAjax(url, data);
@@ -110,7 +110,7 @@ function loadCashRepositories() {
     repoAjax.success(function (msg) {
         $.when(cashRepositorySelect.bindAjaxData(msg.d)).done(function () {
             if (cashRepositorySelect.children('option').length === 1) {
-                loadCurrenciesByAccountCode(accountSelect.getSelectedValue());
+                loadCurrenciesByAccountNumber(accountSelect.getSelectedValue());
                 return;
             };
 
@@ -134,9 +134,9 @@ function loadCurrencies() {
     ajaxDataBind(url, currencySelect);
 };
 
-function loadCurrenciesByAccountCode(accountCode) {
-    url = "/Modules/Finance/Services/AccountData.asmx/GetCurrenciesByAccountCode";
-    data = appendParameter("", "accountCode", accountCode);
+function loadCurrenciesByAccountNumber(accountNumber) {
+    url = "/Modules/Finance/Services/AccountData.asmx/GetCurrenciesByAccountNumber";
+    data = appendParameter("", "accountNumber", accountNumber);
     data = getData(data);
 
     ajaxDataBind(url, currencySelect, data);
@@ -144,7 +144,7 @@ function loadCurrenciesByAccountCode(accountCode) {
 
 //Control Events
 accountSelect.change(function () {
-    accountCodeInputText.val(accountSelect.getSelectedValue());
+    accountNumberInputText.val(accountSelect.getSelectedValue());
 });
 
 accountSelect.blur(function () {
@@ -153,7 +153,7 @@ accountSelect.blur(function () {
 
 addInputButton.click(function () {
     statementReference = statementReferenceInputText.val();
-    accountCode = accountCodeInputText.val();
+    accountNumber = accountNumberInputText.val();
     account = accountSelect.getSelectedText();
     cashRepositoryCode = cashRepositorySelect.getSelectedValue();
 
@@ -174,12 +174,12 @@ addInputButton.click(function () {
 
     removeDirty(statementReferenceInputText);
 
-    if (isNullOrWhiteSpace(accountCodeInputText.val())) {
-        makeDirty(accountCodeInputText);
+    if (isNullOrWhiteSpace(accountNumberInputText.val())) {
+        makeDirty(accountNumberInputText);
         return;
     };
 
-    removeDirty(accountCodeInputText);
+    removeDirty(accountNumberInputText);
 
     if (isNullOrWhiteSpace(accountSelect.getSelectedText())) {
         makeDirty(accountSelect);
@@ -221,13 +221,13 @@ addInputButton.click(function () {
         return;
     }
 
-    var ajaxAccountCodeExists = accountCodeExists(accountCode);
-    var ajaxIsCash = isCash(accountCode);
+    var ajaxAccountNumberExists = accountNumberExists(accountNumber);
+    var ajaxIsCash = isCash(accountNumber);
     var ajaxCashRepositoryCodeExists = cashRepositoryCodeExists(cashRepositoryCode);
 
     var ajaxHasBalance;
 
-    ajaxAccountCodeExists.error(function (xhr) {
+    ajaxAccountNumberExists.error(function (xhr) {
         logAjaxErrorMessage(xhr);
     });
 
@@ -239,12 +239,12 @@ addInputButton.click(function () {
         logAjaxErrorMessage(xhr);
     });
 
-    ajaxAccountCodeExists.success(function (ajaxAccountCodeExistsResult) {
-        var accountCodeExists = ajaxAccountCodeExistsResult.d;
+    ajaxAccountNumberExists.success(function (ajaxAccountNumberExistsResult) {
+        var accountNumberExists = ajaxAccountNumberExistsResult.d;
 
-        if (!accountCodeExists) {
-            $.notify(String.format("Account code '{0}' does not exist.", accountCode), "error");
-            makeDirty(accountCodeInputText);
+        if (!accountNumberExists) {
+            $.notify(String.format("Account Number '{0}' does not exist.", accountNumber), "error");
+            makeDirty(accountNumberInputText);
             return;
         };
 
@@ -258,7 +258,7 @@ addInputButton.click(function () {
             };
 
             if (!isCash) {
-                addRow(statementReference, accountCode, account, "", debit, credit, er, lcDebit, lcCredit);
+                addRow(statementReference, accountNumber, account, "", debit, credit, er, lcDebit, lcCredit);
                 return;
             };
 
@@ -278,7 +278,7 @@ addInputButton.click(function () {
                 };
 
                 if (debit > 0) {
-                    addRow(statementReference, accountCode, account, cashRepositoryCode, debit, credit, er, lcDebit, lcCredit, true);
+                    addRow(statementReference, accountNumber, account, cashRepositoryCode, debit, credit, er, lcDebit, lcCredit, true);
                     return;
                 };
 
@@ -297,7 +297,7 @@ addInputButton.click(function () {
                             return;
                         };
 
-                        addRow(statementReference, accountCode, account, cashRepositoryCode, debit, credit, er, lcDebit, lcCredit, true);
+                        addRow(statementReference, accountNumber, account, cashRepositoryCode, debit, credit, er, lcDebit, lcCredit, true);
                     });
                 };
             });
@@ -305,7 +305,7 @@ addInputButton.click(function () {
     });
 });
 
-var addRow = function (statementReference, accountCode, account, cashRepository, debit, credit, er, lcDebit, lcCredit, isCash) {
+var addRow = function (statementReference, accountNumber, account, cashRepository, debit, credit, er, lcDebit, lcCredit, isCash) {
     var grid = transactionGridView;
     var rows = grid.find("tr:not(:first-child):not(:last-child)");
 
@@ -313,21 +313,21 @@ var addRow = function (statementReference, accountCode, account, cashRepository,
         var row = $(this);
 
         if (!isCash) {
-            if (getColumnText(row, 2) === accountCode) {
+            if (getColumnText(row, 2) === accountNumber) {
                 $.notify(duplicateEntryLocalized);
-                makeDirty(accountCodeInputText);
+                makeDirty(accountNumberInputText);
                 return;
             }
         };
 
         if (getColumnText(row, 4) === cashRepository) {
             $.notify(duplicateEntryLocalized);
-            makeDirty(accountCodeInputText);
+            makeDirty(accountNumberInputText);
             return;
         }
     });
 
-    var html = "<tr class='grid2-row'><td>" + statementReference + "</td><td>" + accountCode + "</td><td>" + account + "</td><td>" + cashRepository + "</td><td>" + currencyCode + "</td><td class='text-right'>" + debit + "</td><td class='text-right'>" + credit + "</td>"
+    var html = "<tr class='grid2-row'><td>" + statementReference + "</td><td>" + accountNumber + "</td><td>" + account + "</td><td>" + cashRepository + "</td><td>" + currencyCode + "</td><td class='text-right'>" + debit + "</td><td class='text-right'>" + credit + "</td>"
             + "<td class='text-right'>" + er + "</td><td class='text-right'>" + lcDebit + "</td><td class='text-right'>" + lcCredit + "</td>"
             + "<td><a class='pointer' onclick='removeRow($(this));'><i class='ui delete icon'></i></a><a class='pointer' onclick='toggleDanger($(this));'><i class='ui pointer check mark icon'></a></i><a class='pointer' onclick='toggleSuccess($(this));'><i class='ui pointer thumbs up icon'></i></a></td></tr>";
     grid.find("tr:last").before(html);
@@ -438,7 +438,7 @@ var validate = function () {
     removeDirty(valueDateTextBox);
     removeDirty(referenceNumberInputText);
     removeDirty(statementReferenceInputText);
-    removeDirty(accountCodeInputText);
+    removeDirty(accountNumberInputText);
     removeDirty(accountSelect);
     removeDirty(cashRepositorySelect);
     removeDirty(lcDebitInputText);
@@ -512,9 +512,9 @@ var validate = function () {
 //GridView Manipulation
 
 //Ajax Requests
-function accountCodeExists(accountCode) {
-    url = "/Modules/Finance/Services/AccountData.asmx/AccountCodeExists";
-    data = appendParameter("", "accountCode", accountCode);
+function accountNumberExists(accountNumber) {
+    url = "/Modules/Finance/Services/AccountData.asmx/AccountNumberExists";
+    data = appendParameter("", "accountNumber", accountNumber);
     data = getData(data);
 
     return getAjax(url, data);
@@ -528,9 +528,9 @@ function cashRepositoryCodeExists(cashRepositoryCode) {
     return getAjax(url, data);
 };
 
-function isCash(accountCode) {
+function isCash(accountNumber) {
     url = "/Modules/Finance/Services/AccountData.asmx/IsCashAccount";
-    data = appendParameter("", "accountCode", accountCode);
+    data = appendParameter("", "accountNumber", accountNumber);
     data = getData(data);
 
     return getAjax(url, data);
@@ -572,7 +572,7 @@ var addShortcuts = function () {
     "use strict";
 
     shortcut.add("CTRL+ALT+T", function () {
-        $('#AccountCodeTextBox').focus();
+        $('#AccountNumberTextBox').focus();
     });
 
     shortcut.add("CTRL+ALT+A", function () {

@@ -32,7 +32,7 @@ SELECT
         pan_number,
         sst_number,
         cst_number,
-        account_code || ' (' || account_name || ')' AS account
+        account_number || ' (' || account_name || ')' AS account
 FROM core.shippers
 INNER JOIN core.accounts
 ON core.shippers.account_id = core.accounts.account_id;

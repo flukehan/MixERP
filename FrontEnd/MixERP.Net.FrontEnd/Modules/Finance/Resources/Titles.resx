@@ -120,8 +120,8 @@
   <data name="Account" xml:space="preserve">
     <value>Account</value>
   </data>
-  <data name="AccountCode" xml:space="preserve">
-    <value>Account Code</value>
+  <data name="AccountNumber" xml:space="preserve">
+    <value>Account Number</value>
   </data>
   <data name="Action" xml:space="preserve">
     <value>Action</value>

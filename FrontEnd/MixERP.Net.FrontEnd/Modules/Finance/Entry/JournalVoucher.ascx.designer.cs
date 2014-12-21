@@ -67,13 +67,13 @@ namespace MixERP.Net.Core.Modules.Finance.Entry {
         protected global::System.Web.UI.WebControls.Literal StatementReferenceLiteral;
         
         /// <summary>
-        /// AccountCodeLiteral control.
+        /// AccountNumberLiteral control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal AccountCodeLiteral;
+        protected global::System.Web.UI.WebControls.Literal AccountNumberLiteral;
         
         /// <summary>
         /// AccountLiteral control.

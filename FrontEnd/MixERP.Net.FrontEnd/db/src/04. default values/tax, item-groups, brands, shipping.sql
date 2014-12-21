@@ -171,37 +171,37 @@ INSERT INTO core.sales_tax_details
 SELECT 
     1, 'BK-NYC-STX', 'New York State Sales Tax (Brooklyn)', 1, 0,
     true, (SELECT state_sales_tax_id FROM core.state_sales_taxes WHERE state_id = core.get_state_id_by_state_code('NY')), NULL, 'P',
-    0, 1, 1, core.get_account_id_by_account_code('20710'), core.get_account_id_by_account_code('20710'),
+    0, 1, 1, core.get_account_id_by_account_number('20710'), core.get_account_id_by_account_number('20710'),
     'R', 2 
 UNION ALL
 SELECT 
     1, 'BK-36047-STX', 'Kings County Sales Tax (Brooklyn)', 1, 1,
     false, NULL, (SELECT county_sales_tax_id FROM core.county_sales_taxes WHERE county_id = core.get_county_id_by_county_code('36047')), 'P',
-    0, 1, 1, core.get_account_id_by_account_code('20710'), NULL,
+    0, 1, 1, core.get_account_id_by_account_number('20710'), NULL,
     'R', 2 
 UNION ALL
 SELECT 
     3, 'RV-CA-STX', 'California State Sales Tax (Rio Vista)', 1, 0,
     true, (SELECT state_sales_tax_id FROM core.state_sales_taxes WHERE state_id = core.get_state_id_by_state_code('CA')), NULL, 'P',
-    0, 1, 1, core.get_account_id_by_account_code('20710'), core.get_account_id_by_account_code('20710'),
+    0, 1, 1, core.get_account_id_by_account_number('20710'), core.get_account_id_by_account_number('20710'),
     'R', 2 
 UNION ALL
 SELECT 
     3, 'RV-6095-STX', 'Solano County Sales Tax (Rio Vista)', 1, 1,
     false, NULL, (SELECT county_sales_tax_id FROM core.county_sales_taxes WHERE county_id = core.get_county_id_by_county_code('6095')), 'P',
-    0, 1, 1, core.get_account_id_by_account_code('20710'), NULL,
+    0, 1, 1, core.get_account_id_by_account_number('20710'), NULL,
     'R', 2 
 UNION ALL   
 SELECT 
     3, 'RV-STX', 'Rio Vista Sales Tax', 1, 2,
     false, NULL, NULL, 'P',
-    0.75, 1, 1, core.get_account_id_by_account_code('20710'), NULL,
+    0.75, 1, 1, core.get_account_id_by_account_number('20710'), NULL,
     'R', 2
 UNION ALL   
 SELECT 
     5, 'KTM-VAT', 'Kathmandu Value Added Tax', 2, 0,
     false, NULL, NULL, 'P',
-    13, 1, 1, core.get_account_id_by_account_code('20710'), NULL,
+    13, 1, 1, core.get_account_id_by_account_number('20710'), NULL,
     'R', 2;
 
    

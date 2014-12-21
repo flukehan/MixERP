@@ -89,7 +89,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
         ///     <strong>Syntax</strong>
         ///     Comma separated list of [Fully qualified column]-->[display_column or expression]
         ///     as in
-        ///     DisplayFields="office.users.user_id-->user_name, core.accounts.account_id-->account_code + ' (' + account_name +
+        ///     DisplayFields="office.users.user_id-->user_name, core.accounts.account_id-->account_number + ' (' + account_name +
         ///     ')'"
         /// </summary>
         public string DisplayFields { get; set; }

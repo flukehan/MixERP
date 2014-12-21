@@ -559,12 +559,48 @@ CREATE UNIQUE INDEX account_master_name_uix
 ON core.account_masters(UPPER(account_master_name));
 
 
+CREATE TABLE core.cash_flow_master
+(
+    cash_flow_master_id                     integer NOT NULL PRIMARY KEY,
+    cash_flow_master_code                   national character varying(12) NOT NULL,
+    cash_flow_master_name                   national character varying(100) NOT NULL
+);
+
+CREATE UNIQUE INDEX cash_flow_master_cash_flow_master_code_uix
+ON core.cash_flow_master(UPPER(cash_flow_master_code));
+
+CREATE UNIQUE INDEX cash_flow_master_cash_flow_master_name_uix
+ON core.cash_flow_master(UPPER(cash_flow_master_name));
+
+CREATE TABLE core.cash_flow_headings
+(
+    cash_flow_heading_id                    SERIAL NOT NULL PRIMARY KEY,
+    cash_flow_master_id                     integer NOT NULL REFERENCES core.cash_flow_master(cash_flow_master_id),
+    cash_flow_heading_code                  national character varying(12) NOT NULL,
+    cash_flow_heading_name                  national character varying(100) NOT NULL,
+    is_cash                                 boolean NOT NULL CONSTRAINT cash_flow_headings_is_cash_receipt_df DEFAULT(false),
+    is_party                                boolean NOT NULL CONSTRAINT cash_flow_headings_is_party_df DEFAULT(false),
+    is_employee                             boolean NOT NULL CONSTRAINT cash_flow_heading_is_employee_df DEFAULT(false),
+    is_debit                                boolean NOT NULL CONSTRAINT cash_flow_headings_is_debit_df DEFAULT(true),
+    is_added                                boolean NOT NULL CONSTRAINT cash_flow_headings_is_added_df DEFAULT(true),
+    is_summary                              boolean NOT NULL CONSTRAINT cash_flow_heading_is_summary_df DEFAULT(true),
+    parent_cash_flow_heading_id             integer NULL REFERENCES core.cash_flow_headings(cash_flow_heading_id)
+);
+
+CREATE UNIQUE INDEX cash_flow_headings_cash_flow_heading_code_uix
+ON core.cash_flow_headings(UPPER(cash_flow_heading_code));
+
+CREATE UNIQUE INDEX cash_flow_headings_cash_flow_heading_name_uix
+ON core.cash_flow_headings(UPPER(cash_flow_heading_code));
+
+CREATE INDEX cash_flow_headings_parent_cash_flow_heading_id_inx
+ON core.cash_flow_headings(parent_cash_flow_heading_id);
 
 CREATE TABLE core.accounts
 (
     account_id                              BIGSERIAL PRIMARY KEY,
     account_master_id                       integer NOT NULL REFERENCES core.account_masters(account_master_id),
-    account_code                            national character varying(12) NOT NULL,
+    account_number                            national character varying(12) NOT NULL,
     external_code                           national character varying(12) NULL   
                                             CONSTRAINT accounts_external_code_df  
                                             DEFAULT(''),
@@ -572,6 +608,7 @@ CREATE TABLE core.accounts
                                             CONSTRAINT accounts_confidential_df  
                                             DEFAULT(false),
     currency_code                           national character varying(12) NOT NULL REFERENCES core.currencies(currency_code),
+    cash_flow_heading_id                    integer NULL REFERENCES core.cash_flow_headings(cash_flow_heading_id),
     account_name                            national character varying(100) NOT NULL,
     description                             national character varying(200) NULL,
     sys_type                                boolean NOT NULL   
@@ -580,6 +617,12 @@ CREATE TABLE core.accounts
     is_cash                                 boolean NOT NULL   
                                             CONSTRAINT accounts_is_cash_df   
                                             DEFAULT(false),
+    is_employee                             boolean NOT NULL
+                                            CONSTRAINT accounts_is_employee_df
+                                            DEFAULT(false),
+    is_party                                boolean NOT NULL
+                                            CONSTRAINT accounts_is_party_df
+                                            DEFAULT(false),
     parent_account_id                       bigint NULL REFERENCES core.accounts(account_id),
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL 
@@ -587,10 +630,10 @@ CREATE TABLE core.accounts
 );
 
 
-CREATE UNIQUE INDEX accountsCode_uix
-ON core.accounts(UPPER(account_code));
+CREATE UNIQUE INDEX accounts_account_number_uix
+ON core.accounts(UPPER(account_number));
 
-CREATE UNIQUE INDEX accounts_Name_uix
+CREATE UNIQUE INDEX accounts_name_uix
 ON core.accounts(UPPER(account_name));
 
 
@@ -615,7 +658,7 @@ CREATE TABLE core.bank_accounts
     bank_branch                             national character varying(128) NOT NULL,
     bank_contact_number                     national character varying(128) NULL,
     bank_address                            text NULL,
-    bank_account_code                       national character varying(128) NULL,
+    bank_account_number                       national character varying(128) NULL,
     bank_account_type                       national character varying(128) NULL,
     relationship_officer_name               national character varying(128) NULL,
     audit_user_id                           integer NULL REFERENCES office.users(user_id),

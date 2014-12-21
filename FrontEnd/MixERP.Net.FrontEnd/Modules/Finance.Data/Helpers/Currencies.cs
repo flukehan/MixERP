@@ -25,9 +25,9 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 {
     public static class Currencies
     {
-        public static DataTable GetCurrencyDataTable(string accountCode)
+        public static DataTable GetCurrencyDataTable(string accountNumber)
         {
-            return FormHelper.GetTable("core", "accounts", "account_code", accountCode, "account_id");
+            return FormHelper.GetTable("core", "accounts", "account_number", accountNumber, "account_id");
         }
 
         public static DataTable GetCurrencyDataTable()

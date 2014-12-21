@@ -112,8 +112,9 @@ namespace MixERP.Net.Common.Helpers
             }
             catch
             {
-                throw new InvalidOperationException("Resource could not be found for the key " + key + " on class " +
-                                                    className + " .");
+                //Todo
+                return className + "." + key + "::NotFound";
+                //throw new InvalidOperationException("Resource could not be found for the key " + key + " on class " + className + " .");
             }
         }
 
@@ -146,15 +147,15 @@ namespace MixERP.Net.Common.Helpers
 
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new InvalidOperationException("Resource could not be found for the key " + key + " on Class " +
-                                                        fullyQualifiedClassName + " on Assembly " +
-                                                        assembly.GetName().Name);
+                    //Todo
+                    return fullyQualifiedClassName + "." + key + "::NotFound";
+                    //throw new InvalidOperationException("Resource could not be found for the key " + key + " on Class " + fullyQualifiedClassName + " on Assembly " + assembly.GetName().Name);
                 }
             }
             catch (MissingManifestResourceException)
             {
-                throw new InvalidOperationException("Resource could not be found for the key " + key + " on Class " +
-                                                    fullyQualifiedClassName + " on Assembly " + assembly.GetName().Name);
+                return fullyQualifiedClassName + "." + key + "::NotFound";
+                //throw new InvalidOperationException("Resource could not be found for the key " + key + " on Class " + fullyQualifiedClassName + " on Assembly " + assembly.GetName().Name);
             }
 
             return value;

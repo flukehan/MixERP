@@ -124,7 +124,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <DataSource>
       <Query>
         SELECT
-        core.accounts.account_code,
+        core.accounts.account_number,
         core.accounts.account_name,
         office.cash_repositories.cash_repository_code || ' (' || office.cash_repositories.cash_repository_name || ')' AS repository,
         transactions.transaction_details.statement_reference,

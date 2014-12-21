@@ -81,4 +81,4 @@ SELECT 3, 'DRW2',   'Drawer 2',     'Drawer'    UNION ALL
 SELECT 3, 'VLT2',   'Vault 2',      'Vault';
 
 INSERT INTO core.shippers(company_name, account_id)
-SELECT 'Default', core.get_account_id_by_account_code('20110');
+SELECT 'Default', core.get_account_id_by_account_number('20110');

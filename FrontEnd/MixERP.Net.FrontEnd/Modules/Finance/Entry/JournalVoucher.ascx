@@ -55,8 +55,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                 </label>
             </th>
             <th scope="col" style="width: 100px;">
-                <label for="AccountCodeInputText">
-                    <asp:Literal runat="server" ID="AccountCodeLiteral" />
+                <label for="AccountNumberInputText">
+                    <asp:Literal runat="server" ID="AccountNumberLiteral" />
                 </label>
             </th>
             <th style="width: 250px;">
@@ -110,7 +110,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                 <input type="text" id="StatementReferenceInputText" title='Ctrl + Alt +S' />
             </td>
             <td>
-                <input type="text" id="AccountCodeInputText" title='Ctrl + Alt + T' />
+                <input type="text" id="AccountNumberInputText" title='Ctrl + Alt + T' />
             </td>
             <td>
                 <select id="AccountSelect" title='Ctrl + Alt + A'></select>

@@ -30,7 +30,7 @@ namespace MixERP.Net.Core.Modules.Finance.Entry
             ValueDateLiteral.Text = Resources.Titles.ValueDate;
             ReferenceNumberLiteral.Text = Resources.Titles.ReferenceNumber;
             StatementReferenceLiteral.Text = Resources.Titles.StatementReference;
-            AccountCodeLiteral.Text = Resources.Titles.AccountCode;
+            AccountNumberLiteral.Text = Resources.Titles.AccountNumber;
             AccountLiteral.Text = Resources.Titles.Account;
             CashRepositoryLiteral.Text = Resources.Titles.CashRepository;
             CurrencyLiteral.Text = Resources.Titles.Currency;

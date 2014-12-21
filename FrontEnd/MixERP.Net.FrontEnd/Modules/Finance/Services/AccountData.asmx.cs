@@ -43,11 +43,11 @@ namespace MixERP.Net.Core.Modules.Finance.Services
     public class AccountData : WebService
     {
         [WebMethod]
-        public bool AccountCodeExists(string accountCode)
+        public bool AccountNumberExists(string accountNumber)
         {
-            if (!string.IsNullOrWhiteSpace(accountCode))
+            if (!string.IsNullOrWhiteSpace(accountNumber))
             {
-                return Accounts.AccountCodeExists(accountCode);
+                return Accounts.AccountNumberExists(accountNumber);
             }
 
             return false;
@@ -113,11 +113,11 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         }
 
         [WebMethod(EnableSession = true)]
-        public Collection<ListItem> GetCashRepositoriesByAccountCode(string accountCode)
+        public Collection<ListItem> GetCashRepositoriesByAccountNumber(string accountNumber)
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            if (Accounts.IsCashAccount(accountCode))
+            if (Accounts.IsCashAccount(accountNumber))
             {
                 int officeId = SessionHelper.GetOfficeId();
                 using (DataTable table = CashRepositories.GetCashRepositoryDataTable(officeId))
@@ -181,16 +181,16 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         }
 
         [WebMethod]
-        public Collection<ListItem> GetCurrenciesByAccountCode(string accountCode)
+        public Collection<ListItem> GetCurrenciesByAccountNumber(string accountNumber)
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            if (string.IsNullOrWhiteSpace(accountCode))
+            if (string.IsNullOrWhiteSpace(accountNumber))
             {
                 return values;
             }
 
-            using (DataTable table = Currencies.GetCurrencyDataTable(accountCode))
+            using (DataTable table = Currencies.GetCurrencyDataTable(accountNumber))
             {
                 foreach (DataRow dr in table.Rows)
                 {
@@ -225,11 +225,11 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         }
 
         [WebMethod]
-        public bool IsCashAccount(string accountCode)
+        public bool IsCashAccount(string accountNumber)
         {
-            if (!string.IsNullOrWhiteSpace(accountCode))
+            if (!string.IsNullOrWhiteSpace(accountNumber))
             {
-                return Accounts.IsCashAccount(accountCode);
+                return Accounts.IsCashAccount(accountNumber);
             }
 
             return false;
@@ -241,7 +241,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
 
             foreach (DataRow dr in table.Rows)
             {
-                values.Add(new ListItem(dr["account_name"].ToString(), dr["account_code"].ToString()));
+                values.Add(new ListItem(dr["account_name"].ToString(), dr["account_number"].ToString()));
             }
 
             return values;

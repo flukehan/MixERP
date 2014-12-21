@@ -357,7 +357,7 @@
     <Content Include="db\src\02. functions and logic\core\core.count_sales.sql" />
     <Content Include="db\src\02. functions and logic\core\core.create_flag.sql" />
     <Content Include="db\src\02. functions and logic\core\core.get_account_ids.sql" />
-    <Content Include="db\src\02. functions and logic\core\core.get_account_id_by_account_code.sql" />
+    <Content Include="db\src\02. functions and logic\core\core.get_account_id_by_account_number.sql" />
     <Content Include="db\src\02. functions and logic\core\core.get_account_id_by_parameter.sql" />
     <Content Include="db\src\02. functions and logic\core\core.get_account_id_by_party_code.sql" />
     <Content Include="db\src\02. functions and logic\core\core.get_account_id_by_party_id.sql" />

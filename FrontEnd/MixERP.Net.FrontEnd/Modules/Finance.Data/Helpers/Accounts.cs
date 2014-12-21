@@ -30,12 +30,12 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
             return FormHelper.GetTable("core", "accounts", "account_id");
         }
 
-        public static bool AccountCodeExists(string accountCode)
+        public static bool AccountNumberExists(string accountNumber)
         {
-            const string sql = "SELECT 1 FROM core.accounts WHERE account_code=@AccountCode;";
+            const string sql = "SELECT 1 FROM core.accounts WHERE account_number=@AccountNumber;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@AccountCode", accountCode);
+                command.Parameters.AddWithValue("@AccountNumber", accountNumber);
 
                 return DbOperation.GetDataTable(command).Rows.Count.Equals(1);
             }
@@ -53,12 +53,12 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
             }
         }
 
-        public static bool IsCashAccount(string accountCode)
+        public static bool IsCashAccount(string accountNumber)
         {
-            const string sql = "SELECT 1 FROM core.accounts WHERE is_cash=true AND account_code=@AccountCode;";
+            const string sql = "SELECT 1 FROM core.accounts WHERE is_cash=true AND account_number=@AccountNumber;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@AccountCode", accountCode);
+                command.Parameters.AddWithValue("@AccountNumber", accountNumber);
 
                 return DbOperation.GetDataTable(command).Rows.Count.Equals(1);
             }

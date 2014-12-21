@@ -22,13 +22,14 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 <configuration>
   <appSettings>
     <add key="AccountMasterDisplayField" value="account_master_code + ' (' + account_master_name + ')'" />
-    <add key="AccountDisplayField" value="account_code + ' (' + account_name + ')'" />
+    <add key="AccountDisplayField" value="account_number + ' (' + account_name + ')'" />
     <add key="SalespersonDisplayField" value="salesperson_code + ' (' + salesperson_name + ')'" />
     <add key="SalesTeamDisplayField" value="sales_team_code + ' (' + sales_team_name + ')'" />
     <add key="BankAccountDisplayField" value="bank_name + ' (' + bank_branch + ')'" />
     <add key="BonusSlabDisplayField" value="bonus_slab_name" />
     <add key="BrandDisplayField" value="brand_code + ' (' + brand_name + ')'" />
     <add key="CashRepositoryDisplayField" value="cash_repository_code + ' (' + cash_repository_name + ')'" />
+    <add key="CashFlowHeadingField" value="cash_flow_heading_code + ' (' + cash_flow_heading_name + ')'" />
     <add key="CompoundItemDisplayField" value="compound_item_code + ' (' + compound_item_name + ')'" />
     <add key="CostCenterDisplayField" value="cost_center_code + ' (' + cost_center_name + ')'" />
     <add key="CountryDisplayField" value="country_code + ' (' + country_name + ')'" />

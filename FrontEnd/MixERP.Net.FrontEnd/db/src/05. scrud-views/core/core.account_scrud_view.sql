@@ -3,14 +3,14 @@ AS
 SELECT
     core.accounts.account_id,
     core.account_masters.account_master_code,
-    core.accounts.account_code,
+    core.accounts.account_number,
     core.accounts.external_code,
     core.accounts.account_name,
     core.accounts.confidential,
     core.accounts.description,
     core.accounts.sys_type,
     core.accounts.is_cash,
-    parent_account.account_code || ' (' || parent_account.account_name || ')' AS parent,
+    parent_account.account_number || ' (' || parent_account.account_name || ')' AS parent,
     core.has_child_accounts(core.accounts.account_id) AS has_child
 FROM core.accounts
 INNER JOIN core.account_masters

@@ -104,7 +104,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
                         foreach (JournalDetailsModel model in details)
                         {
                             sql = "INSERT INTO transactions.transaction_details(value_date, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency) " +
-                                  "SELECT @ValueDate, @TransactionMasterId, @TranType, core.get_account_id_by_account_code(@AccountCode::text), @StatementReference, office.get_cash_repository_id_by_cash_repository_code(@CashRepositoryCode), @CurrencyCode, @AmountInCurrency, transactions.get_default_currency_code_by_office_id(@OfficeId), @Er, @AmountInLocalCurrency;";
+                                  "SELECT @ValueDate, @TransactionMasterId, @TranType, core.get_account_id_by_account_number(@AccountNumber::text), @StatementReference, office.get_cash_repository_id_by_cash_repository_code(@CashRepositoryCode), @CurrencyCode, @AmountInCurrency, transactions.get_default_currency_code_by_office_id(@OfficeId), @Er, @AmountInLocalCurrency;";
 
                             if (model.Credit > 0 && model.Debit > 0)
                             {
@@ -139,7 +139,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
                                 transactionDetail.Parameters.AddWithValue("@ValueDate", valueDate);
                                 transactionDetail.Parameters.AddWithValue("@TransactionMasterId", transactionMasterId);
                                 transactionDetail.Parameters.AddWithValue("@TranType", tranType);
-                                transactionDetail.Parameters.AddWithValue("@AccountCode", model.AccountCode);
+                                transactionDetail.Parameters.AddWithValue("@AccountNumber", model.AccountNumber);
                                 transactionDetail.Parameters.AddWithValue("@StatementReference", model.StatementReference);
                                 transactionDetail.Parameters.AddWithValue("@CashRepositoryCode", model.CashRepositoryCode);
                                 transactionDetail.Parameters.AddWithValue("@CurrencyCode", model.CurrencyCode);

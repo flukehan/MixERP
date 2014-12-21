@@ -210,9 +210,9 @@ BEGIN
                 amount_in_local_currency
         )
 
-        SELECT _tran_id, 'Cr', core.get_account_id_by_account_code('TEST-ACC-001'), '', 'NPR', 12000, 'NPR', 1, 12000 UNION ALL
-        SELECT _tran_id, 'Dr', core.get_account_id_by_account_code('TEST-ACC-002'), '', 'NPR', 3000, 'NPR', 1, 3000 UNION ALL
-        SELECT _tran_id, 'Dr', core.get_account_id_by_account_code('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
+        SELECT _tran_id, 'Cr', core.get_account_id_by_account_number('TEST-ACC-001'), '', 'NPR', 12000, 'NPR', 1, 12000 UNION ALL
+        SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-002'), '', 'NPR', 3000, 'NPR', 1, 3000 UNION ALL
+        SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
 
 
         PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')));
@@ -294,9 +294,9 @@ BEGIN
                 amount_in_local_currency
         )
 
-        SELECT _tran_id, 'Cr', core.get_account_id_by_account_code('TEST-ACC-001'), '', 'NPR', 12000, 'NPR', 1, 12000 UNION ALL
-        SELECT _tran_id, 'Dr', core.get_account_id_by_account_code('TEST-ACC-002'), '', 'NPR', 3000, 'NPR', 1, 3000 UNION ALL
-        SELECT _tran_id, 'Dr', core.get_account_id_by_account_code('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
+        SELECT _tran_id, 'Cr', core.get_account_id_by_account_number('TEST-ACC-001'), '', 'NPR', 12000, 'NPR', 1, 12000 UNION ALL
+        SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-002'), '', 'NPR', 3000, 'NPR', 1, 3000 UNION ALL
+        SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
 
 
         PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')));
@@ -382,9 +382,9 @@ BEGIN
                 amount_in_local_currency
         )
 
-        SELECT _tran_id, 'Cr', core.get_account_id_by_account_code('TEST-ACC-001'), '', 'NPR', 12000, 'NPR', 1, 12000 UNION ALL
-        SELECT _tran_id, 'Dr', core.get_account_id_by_account_code('TEST-ACC-002'), '', 'NPR', 3000, 'NPR', 1, 3000 UNION ALL
-        SELECT _tran_id, 'Dr', core.get_account_id_by_account_code('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
+        SELECT _tran_id, 'Cr', core.get_account_id_by_account_number('TEST-ACC-001'), '', 'NPR', 12000, 'NPR', 1, 12000 UNION ALL
+        SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-002'), '', 'NPR', 3000, 'NPR', 1, 3000 UNION ALL
+        SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
 
 
         PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')));
@@ -466,9 +466,9 @@ BEGIN
                 amount_in_local_currency
         )
 
-        SELECT _tran_id, 'Cr', core.get_account_id_by_account_code('TEST-ACC-001'), '', 'NPR', 12000, 'NPR', 1, 12000 UNION ALL
-        SELECT _tran_id, 'Dr', core.get_account_id_by_account_code('TEST-ACC-002'), '', 'NPR', 3000, 'NPR', 1, 3000 UNION ALL
-        SELECT _tran_id, 'Dr', core.get_account_id_by_account_code('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
+        SELECT _tran_id, 'Cr', core.get_account_id_by_account_number('TEST-ACC-001'), '', 'NPR', 12000, 'NPR', 1, 12000 UNION ALL
+        SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-002'), '', 'NPR', 3000, 'NPR', 1, 3000 UNION ALL
+        SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
 
 
         PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')));
@@ -554,9 +554,9 @@ BEGIN
                 amount_in_local_currency
         )
 
-        SELECT _tran_id, 'Cr', core.get_account_id_by_account_code('TEST-ACC-001'), '', 'NPR', 12000, 'NPR', 1, 12000 UNION ALL
-        SELECT _tran_id, 'Dr', core.get_account_id_by_account_code('TEST-ACC-002'), '', 'NPR', 3000, 'NPR', 1, 3000 UNION ALL
-        SELECT _tran_id, 'Dr', core.get_account_id_by_account_code('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
+        SELECT _tran_id, 'Cr', core.get_account_id_by_account_number('TEST-ACC-001'), '', 'NPR', 12000, 'NPR', 1, 12000 UNION ALL
+        SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-002'), '', 'NPR', 3000, 'NPR', 1, 3000 UNION ALL
+        SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
 
 
         PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')));
@@ -638,9 +638,9 @@ BEGIN
                 amount_in_local_currency
         )
 
-        SELECT _tran_id, 'Cr', core.get_account_id_by_account_code('TEST-ACC-001'), '', 'NPR', 12000, 'NPR', 1, 12000 UNION ALL
-        SELECT _tran_id, 'Dr', core.get_account_id_by_account_code('TEST-ACC-002'), '', 'NPR', 3000, 'NPR', 1, 3000 UNION ALL
-        SELECT _tran_id, 'Dr', core.get_account_id_by_account_code('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
+        SELECT _tran_id, 'Cr', core.get_account_id_by_account_number('TEST-ACC-001'), '', 'NPR', 12000, 'NPR', 1, 12000 UNION ALL
+        SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-002'), '', 'NPR', 3000, 'NPR', 1, 3000 UNION ALL
+        SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
 
 
         PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')));

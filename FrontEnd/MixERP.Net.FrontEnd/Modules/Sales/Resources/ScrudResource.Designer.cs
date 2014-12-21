@@ -61,11 +61,11 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Account Code.
+        ///   Looks up a localized string similar to Account Number.
         /// </summary>
-        internal static string account_code {
+        internal static string account_number {
             get {
-                return ResourceManager.GetString("account_code", resourceCulture);
+                return ResourceManager.GetString("account_number", resourceCulture);
             }
         }
         
@@ -358,11 +358,11 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parent Account Code.
+        ///   Looks up a localized string similar to Parent Account Number.
         /// </summary>
-        internal static string parent_account_code {
+        internal static string parent_account_number {
             get {
-                return ResourceManager.GetString("parent_account_code", resourceCulture);
+                return ResourceManager.GetString("parent_account_number", resourceCulture);
             }
         }
         

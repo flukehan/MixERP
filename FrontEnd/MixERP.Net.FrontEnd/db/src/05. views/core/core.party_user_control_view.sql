@@ -13,7 +13,7 @@ SELECT
     core.parties.maximum_credit_amount,
     core.parties.charge_interest,
     core.parties.interest_rate,
-    core.accounts.account_code,
+    core.accounts.account_number,
     core.accounts.account_name,
     core.parties.zip_code,
     core.parties.address_line_1,

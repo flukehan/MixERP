@@ -1,4 +1,4 @@
-CREATE FUNCTION core.get_account_id_by_account_code(text)
+CREATE FUNCTION core.get_account_id_by_account_number(text)
 RETURNS bigint
 AS
 $$
@@ -7,7 +7,7 @@ BEGIN
     (
         SELECT account_id
         FROM core.accounts
-        WHERE account_code=$1
+        WHERE account_number=$1
     );
 END
 $$

@@ -37,7 +37,7 @@ namespace MixERP.Net.WebControls.StockTransactionFactory.Helpers
             {
                 JournalDetailsModel detail = new JournalDetailsModel();
                 detail.StatementReference = item[0];
-                detail.AccountCode = item[1];
+                detail.AccountNumber = item[1];
                 detail.Account = item[2];
                 detail.CashRepositoryCode = item[3];
                 detail.CurrencyCode = item[4];

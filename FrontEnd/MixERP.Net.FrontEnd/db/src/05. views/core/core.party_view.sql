@@ -32,8 +32,8 @@ SELECT
     core.parties.email,
     core.parties.url,
     core.accounts.account_id,
-    core.accounts.account_code,
-    core.accounts.account_code || ' (' || core.accounts.account_name || ')' AS gl_head
+    core.accounts.account_number,
+    core.accounts.account_number || ' (' || core.accounts.account_name || ')' AS gl_head
 FROM
 core.parties
 INNER JOIN

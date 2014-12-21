@@ -70,11 +70,11 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Account Code.
+        ///   Looks up a localized string similar to Account Number.
         /// </summary>
-        internal static string AccountCode {
+        internal static string AccountNumber {
             get {
-                return ResourceManager.GetString("AccountCode", resourceCulture);
+                return ResourceManager.GetString("AccountNumber", resourceCulture);
             }
         }
         

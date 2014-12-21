@@ -55,12 +55,10 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.account_masters.account_master_id",
-                ConfigurationHelper.GetDbParameter("AccountMasterDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.accounts.account_id",
-                ConfigurationHelper.GetDbParameter("AccountDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.currencies.currency_code",
-                ConfigurationHelper.GetDbParameter("CurrencyDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.account_masters.account_master_id", ConfigurationHelper.GetDbParameter("AccountMasterDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.accounts.account_id", ConfigurationHelper.GetDbParameter("AccountDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.currencies.currency_code", ConfigurationHelper.GetDbParameter("CurrencyDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.cash_flow_headings.cash_flow_heading_id", ConfigurationHelper.GetDbParameter("CashFlowHeadingField"));
             return string.Join(",", displayFields);
         }
 
@@ -70,6 +68,7 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
             ScrudHelper.AddDisplayView(displayViews, "core.account_masters.account_master_id", "core.account_master_selector_view");
             ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.account_selector_view");
             ScrudHelper.AddDisplayView(displayViews, "core.currencies.currency_code", "core.currency_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.cash_flow_headings.cash_flow_heading_id", "core.cash_flow_headings");
             return string.Join(",", displayViews);
         }
     }

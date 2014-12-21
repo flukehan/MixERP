@@ -25,7 +25,7 @@ namespace MixERP.Net.Common.Models.Transactions
 
         public long TransactionMasterId { get; set; }
 
-        public string AccountCode { get; set; }
+        public string AccountNumber { get; set; }
 
         public string CashRepositoryName { get; set; }
 

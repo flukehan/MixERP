@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="account_code" xml:space="preserve">
-    <value>Account Code</value>
+  <data name="account_number" xml:space="preserve">
+    <value>Account Number</value>
   </data>
   <data name="account_id" xml:space="preserve">
     <value>Account Id</value>
@@ -144,8 +144,8 @@
   <data name="audit_user_id" xml:space="preserve">
     <value>Audit User Id</value>
   </data>
-  <data name="bank_account_code" xml:space="preserve">
-    <value>Bank Account Code</value>
+  <data name="bank_account_number" xml:space="preserve">
+    <value>Bank Account Number</value>
   </data>
   <data name="bank_account_type" xml:space="preserve">
     <value>Bank Account Type</value>
@@ -267,8 +267,8 @@
   <data name="account_master_name" xml:space="preserve">
     <value>Account Master Name</value>
   </data>
-  <data name="parent_account_code" xml:space="preserve">
-    <value>Parent Account Code</value>
+  <data name="parent_account_number" xml:space="preserve">
+    <value>Parent Account Number</value>
   </data>
   <data name="parent_account_name" xml:space="preserve">
     <value>Parent Account Name</value>
@@ -317,5 +317,41 @@
   </data>
   <data name="unit_name" xml:space="preserve">
     <value>Unit Name</value>
+  </data>
+  <data name="cash_flow_heading_id" xml:space="preserve">
+    <value>Cash Flow Heading Id</value>
+  </data>
+  <data name="is_employee" xml:space="preserve">
+    <value>Is Employee</value>
+  </data>
+  <data name="is_party" xml:space="preserve">
+    <value>Is Party</value>
+  </data>
+  <data name="cash_flow_heading_code" xml:space="preserve">
+    <value>Cash Flow Heading Code</value>
+  </data>
+  <data name="cash_flow_heading_name" xml:space="preserve">
+    <value>Cash Flow Heading Name</value>
+  </data>
+  <data name="cash_flow_master_code" xml:space="preserve">
+    <value>Cash Flow Master Code</value>
+  </data>
+  <data name="cash_flow_master_id" xml:space="preserve">
+    <value>Cash Flow Master Id</value>
+  </data>
+  <data name="cash_flow_master_name" xml:space="preserve">
+    <value>Cash Flow Master Name</value>
+  </data>
+  <data name="is_added" xml:space="preserve">
+    <value>Is Added</value>
+  </data>
+  <data name="is_debit" xml:space="preserve">
+    <value>Is Debit</value>
+  </data>
+  <data name="is_summary" xml:space="preserve">
+    <value>Is Summary</value>
+  </data>
+  <data name="parent_cash_flow_heading_id" xml:space="preserve">
+    <value>Parent Cash Flow Heading Id</value>
   </data>
 </root>

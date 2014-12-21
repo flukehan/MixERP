@@ -25,7 +25,7 @@ namespace MixERP.Net.FrontEnd.Site.Account
 {
     public partial class SignOut : MixERPWebpage
     {
-        protected void Page_Load(object sender, EventArgs e)
+        protected void Page_Init(object sender, EventArgs e)
         {
             this.Session.Remove("UserName");
             FormsAuthentication.SignOut();

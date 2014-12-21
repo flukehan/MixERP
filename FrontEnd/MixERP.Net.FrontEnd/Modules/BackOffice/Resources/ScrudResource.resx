@@ -516,8 +516,8 @@
   <data name="tax_rate_type_name" xml:space="preserve">
     <value>Tax Rate Type Name</value>
   </data>
-  <data name="account_code" xml:space="preserve">
-    <value>Account Code</value>
+  <data name="account_number" xml:space="preserve">
+    <value>Account Number</value>
   </data>
   <data name="rounding_decimal_places" xml:space="preserve">
     <value>Roungin Decimal Places</value>
