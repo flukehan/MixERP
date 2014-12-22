@@ -36,7 +36,7 @@ namespace MixERP.Net.Core.Modules.POS.Setup
                 scrud.TableSchema = "office";
                 scrud.Table = "store_types";
                 scrud.ViewSchema = "office";
-                scrud.View = "store_types";
+                scrud.View = "store_type_scrud_view";
 
                 scrud.Text = Titles.StoreTypes;
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof(StoreTypes));

@@ -38,7 +38,7 @@ namespace MixERP.Net.Core.Modules.POS.Setup
                 scrud.TableSchema = "office";
                 scrud.Table = "stores";
                 scrud.ViewSchema = "office";
-                scrud.View = "stores";
+                scrud.View = "store_scrud_view";
 
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
