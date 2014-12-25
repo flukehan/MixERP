@@ -33,7 +33,7 @@ namespace MixERP.Net.DBFactory
             if (!string.IsNullOrWhiteSpace(exclusion))
             {
                 var exclusions = exclusion.Split(',');
-                var paramNames = exclusions.Select((s, i) => "@Paramter" + i.ToString(Thread.CurrentThread.CurrentCulture).Trim()).ToArray();
+                var paramNames = exclusions.Select((s, i) => "@Parameter" + i.ToString(Thread.CurrentThread.CurrentCulture).Trim()).ToArray();
                 var inClause = string.Join(",", paramNames);
 
                 sql = string.Format(Thread.CurrentThread.CurrentCulture, @"select * from scrud.mixerp_table_view where table_schema=@Schema AND table_name=@TableName AND column_name NOT IN({0}) ORDER BY ordinal_position ASC;", inClause);

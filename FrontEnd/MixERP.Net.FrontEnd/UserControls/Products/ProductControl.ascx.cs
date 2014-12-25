@@ -181,43 +181,44 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         private void LoadLabels()
         {
-            this.DateLiteral.Text = HtmlControlHelper.GetLabel("DateTextBox", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ValueDate"));
-            this.StoreSelectLabel.Text = HtmlControlHelper.GetLabel("StoreSelect", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "SelectStore"));
+            this.DateLiteral.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ValueDate"), "DateTextBox");
+            this.StoreSelectLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "SelectStore"), "StoreSelect");
 
-            this.PartyCodeInputTextLabel.Text = HtmlControlHelper.GetLabel("PartyCodeInputText", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "SelectParty"));
-            this.PriceTypeSelectLabel.Text = HtmlControlHelper.GetLabel("PriceTypeSelect", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "PriceType"));
-            this.ReferenceNumberInputTextLabel.Text = HtmlControlHelper.GetLabel("ReferenceNumberInputText", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ReferenceNumberAbbreviated"));
+            this.PartyCodeInputTextLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "SelectParty"), "PartyCodeInputText");
 
-            this.ItemCodeInputTextLabel.Text = HtmlControlHelper.GetLabel("ItemCodeInputText", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ItemCode"));
-            this.ItemSelectLabel.Text = HtmlControlHelper.GetLabel("ItemSelect", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ItemName"));
-            this.QuantityInputTextLabel.Text = HtmlControlHelper.GetLabel("QuantityInputText", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "QuantityAbbreviated"));
-            this.UnitSelectLabel.Text = HtmlControlHelper.GetLabel("UnitSelect", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "Unit"));
-            this.PriceInputTextLabel.Text = HtmlControlHelper.GetLabel("PriceInputText", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "Price"));
-            this.AmountInputTextLabel.Text = HtmlControlHelper.GetLabel("AmountInputText", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "Amount"));
-            this.DiscountInputTextLabel.Text = HtmlControlHelper.GetLabel("DiscountInputText", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "Discount"));
-            this.SubTotalInputTextLabel.Text = HtmlControlHelper.GetLabel("SubTotalInputText", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "SubTotal"));
-            this.TaxSelectLabel.Text = HtmlControlHelper.GetLabel("TaxSelect", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "TaxForm"));
-            this.TaxInputTextLabel.Text = HtmlControlHelper.GetLabel("TaxInputText", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "Tax"));
+            this.PriceTypeSelectLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "PriceType"), "PriceTypeSelect");
+            this.ReferenceNumberInputTextLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ReferenceNumberAbbreviated"), "ReferenceNumberInputText");
 
-            this.ShippingAddressSelectLabel.Text = HtmlControlHelper.GetLabel("ShippingAddressSelect", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ShippingAddress"));
-            this.ShippingAddressTextAreaLabel.Text = HtmlControlHelper.GetLabel("ShippingAddressTextArea", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ShippingAddress"));
-            this.ShippingCompanySelectLabel.Text = HtmlControlHelper.GetLabel("ShippingCompanySelect", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ShippingCompany"));
-            this.ShippingChargeInputTextLabel.Text = HtmlControlHelper.GetLabel("ShippingChargeInputText", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ShippingCharge"));
-            this.SalesTypeSelectLabel.Text = HtmlControlHelper.GetLabel("SalesTypeSelect", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "SalesType"));
+            this.ItemCodeInputTextLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ItemCode"), "ItemCodeInputText");
+            this.ItemSelectLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ItemName"), "ItemSelect");
+            this.QuantityInputTextLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "QuantityAbbreviated"), "QuantityInputText");
+            this.UnitSelectLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "Unit"), "UnitSelect");
+            this.PriceInputTextLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "Price"), "PriceInputText");
+            this.AmountInputTextLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "Amount"), "AmountInputText");
+            this.DiscountInputTextLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "Discount"), "DiscountInputText");
+            this.SubTotalInputTextLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "SubTotal"), "SubTotalInputText");
+            this.TaxSelectLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "TaxForm"), "TaxSelect");
+            this.TaxInputTextLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "Tax"), "TaxInputText");
+
+            this.ShippingAddressSelectLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ShippingAddress"), "ShippingAddressSelect");
+            this.ShippingAddressTextAreaLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ShippingAddress"), "ShippingAddressTextArea");
+            this.ShippingCompanySelectLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ShippingCompany"), "ShippingCompanySelect");
+            this.ShippingChargeInputTextLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ShippingCharge"), "ShippingChargeInputText");
+            this.SalesTypeSelectLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "SalesType"), "SalesTypeSelect");
 
             this.SalesTypeSelect.Items.Add(new ListItem(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "TaxableSales"), "1"));
             this.SalesTypeSelect.Items.Add(new ListItem(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "NonTaxableSales"), "0"));
 
-            this.RunningTotalInputTextLabel.Text = HtmlControlHelper.GetLabel("RunningTotalInputText", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "RunningTotal"));
-            this.TaxTotalInputTextLabel.Text = HtmlControlHelper.GetLabel("TaxTotalInputText", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "TaxTotal"));
-            this.GrandTotalInputTextInputTextLabel.Text = HtmlControlHelper.GetLabel("GrandTotalInputTextInputText", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "GrandTotal"));
-            this.CashRepositorySelectLabel.Text = HtmlControlHelper.GetLabel("CashRepositorySelect", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "CashRepository"));
-            this.CashRepositoryBalanceInputTextLabel.Text = HtmlControlHelper.GetLabel("CashRepositoryBalanceInputText", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "CashRepositoryBalance"));
-            this.CostCenterSelectLabel.Text = HtmlControlHelper.GetLabel("CostCenterSelect", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "CostCenter"));
-            this.SalesPersonSelectLabel.Text = HtmlControlHelper.GetLabel("SalesPersonSelect", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "Salesperson"));
-            this.StatementReferenceTextAreaLabel.Text = HtmlControlHelper.GetLabel("StatementReferenceTextArea", StockTransactionFactoryResourceHelper.GetResourceString("Titles", "StatementReference"));
+            this.RunningTotalInputTextLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "RunningTotal"), "RunningTotalInputText");
+            this.TaxTotalInputTextLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "TaxTotal"), "TaxTotalInputText");
+            this.GrandTotalInputTextInputTextLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "GrandTotal"), "GrandTotalInputTextInputText");
+            this.CashRepositorySelectLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "CashRepository"), "CashRepositorySelect");
+            this.CashRepositoryBalanceInputTextLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "CashRepositoryBalance"), "CashRepositoryBalanceInputText");
+            this.CostCenterSelectLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "CostCenter"), "CostCenterSelect");
+            this.SalesPersonSelectLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "Salesperson"), "SalesPersonSelect");
+            this.StatementReferenceTextAreaLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "StatementReference"), "StatementReferenceTextArea");
 
-            this.CashTransactionLiteral.Text = HtmlControlHelper.GetLabel(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "CashTransaction"));
+            this.CashTransactionLiteral.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "CashTransaction"));
         }
 
         private void LoadValuesFromSession()

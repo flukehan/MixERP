@@ -110,7 +110,12 @@
     <Content Include="Index.ascx" />
     <Content Include="JournalVoucher.ascx" />
     <Content Include="Package.xml" />
+    <Content Include="Reports\AccountStatement.ascx" />
+    <Content Include="Reports\BalanceSheet.ascx" />
+    <Content Include="Reports\CashFlow.ascx" />
     <Content Include="Reports\GLAdviceReport.ascx" />
+    <Content Include="Reports\OffBalanceSheet.ascx" />
+    <Content Include="Reports\ProfitAndLossAccount.ascx" />
     <Content Include="Reports\Source\Transactions.StockTransaction.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -118,6 +123,8 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Reports\StockTransactionReport.ascx" />
+    <Content Include="Reports\TaxRegister.ascx" />
+    <Content Include="Reports\TrialBalance.ascx" />
     <Content Include="Scripts\Entry\JournalVoucher.js" />
     <Content Include="Scripts\JournalVoucher.js" />
     <Content Include="Services\CurrencyData.asmx" />
@@ -176,6 +183,27 @@
       <DependentUpon>JournalVoucher.ascx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\AccountStatement.ascx.cs">
+      <DependentUpon>AccountStatement.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\AccountStatement.ascx.designer.cs">
+      <DependentUpon>AccountStatement.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\BalanceSheet.ascx.cs">
+      <DependentUpon>BalanceSheet.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\BalanceSheet.ascx.designer.cs">
+      <DependentUpon>BalanceSheet.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\CashFlow.ascx.cs">
+      <DependentUpon>CashFlow.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\CashFlow.ascx.designer.cs">
+      <DependentUpon>CashFlow.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Reports\GLAdviceReport.ascx.cs">
       <DependentUpon>GLAdviceReport.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -183,12 +211,40 @@
     <Compile Include="Reports\GLAdviceReport.ascx.designer.cs">
       <DependentUpon>GLAdviceReport.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Reports\OffBalanceSheet.ascx.cs">
+      <DependentUpon>OffBalanceSheet.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\OffBalanceSheet.ascx.designer.cs">
+      <DependentUpon>OffBalanceSheet.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ProfitAndLossAccount.ascx.cs">
+      <DependentUpon>ProfitAndLossAccount.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\ProfitAndLossAccount.ascx.designer.cs">
+      <DependentUpon>ProfitAndLossAccount.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Reports\StockTransactionReport.ascx.cs">
       <DependentUpon>StockTransactionReport.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Reports\StockTransactionReport.ascx.designer.cs">
       <DependentUpon>StockTransactionReport.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\TaxRegister.ascx.cs">
+      <DependentUpon>TaxRegister.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\TaxRegister.ascx.designer.cs">
+      <DependentUpon>TaxRegister.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\TrialBalance.ascx.cs">
+      <DependentUpon>TrialBalance.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\TrialBalance.ascx.designer.cs">
+      <DependentUpon>TrialBalance.ascx</DependentUpon>
     </Compile>
     <Compile Include="Resources\Errors.Designer.cs">
       <AutoGen>True</AutoGen>

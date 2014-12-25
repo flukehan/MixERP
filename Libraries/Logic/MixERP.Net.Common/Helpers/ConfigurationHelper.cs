@@ -26,48 +26,6 @@ namespace MixERP.Net.Common.Helpers
 {
     public static class ConfigurationHelper
     {
-        public static string GetDbParameter(string keyName)
-        {
-            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["DBParameterConfigFileLocation"]);
-            return GetConfigurationValues(path, keyName);
-        }
-
-        public static string GetMessagingParameter(string keyName)
-        {
-            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["MessagingParameterConfigFileLocation"]);
-            return GetConfigurationValues(path, keyName);
-        }
-
-        public static string GetTransactionChecklistParameter(string keyName)
-        {
-            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["TransactionChecklistConfigFileLocation"]);
-            return GetConfigurationValues(path, keyName);
-        }
-
-        public static string GetParameter(string keyName)
-        {
-            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["ParamterConfigFileLocation"]);
-            return GetConfigurationValues(path, keyName);
-        }
-
-        public static string GetSwitch(string keyName)
-        {
-            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["SwitchConfigFileLocation"]);
-            return GetConfigurationValues(path, keyName);
-        }
-
-        public static string GetReportParameter(string keyName)
-        {
-            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["ReportConfigFileLocation"]);
-            return GetConfigurationValues(path, keyName);
-        }
-
-        public static string GetScrudParameter(string keyName)
-        {
-            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["ScrudConfigFileLocation"]);
-            return GetConfigurationValues(path, keyName);
-        }
-
         public static string GetConfigurationValues(string configFileName, string sectionName)
         {
             ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap { ExeConfigFilename = configFileName };
@@ -83,6 +41,48 @@ namespace MixERP.Net.Common.Helpers
             }
 
             return string.Empty;
+        }
+
+        public static string GetDbParameter(string keyName)
+        {
+            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["DBParameterConfigFileLocation"]);
+            return GetConfigurationValues(path, keyName);
+        }
+
+        public static string GetMessagingParameter(string keyName)
+        {
+            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["MessagingParameterConfigFileLocation"]);
+            return GetConfigurationValues(path, keyName);
+        }
+
+        public static string GetParameter(string keyName)
+        {
+            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["ParameterConfigFileLocation"]);
+            return GetConfigurationValues(path, keyName);
+        }
+
+        public static string GetReportParameter(string keyName)
+        {
+            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["ReportConfigFileLocation"]);
+            return GetConfigurationValues(path, keyName);
+        }
+
+        public static string GetScrudParameter(string keyName)
+        {
+            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["ScrudConfigFileLocation"]);
+            return GetConfigurationValues(path, keyName);
+        }
+
+        public static string GetSwitch(string keyName)
+        {
+            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["SwitchConfigFileLocation"]);
+            return GetConfigurationValues(path, keyName);
+        }
+
+        public static string GetTransactionChecklistParameter(string keyName)
+        {
+            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["TransactionChecklistConfigFileLocation"]);
+            return GetConfigurationValues(path, keyName);
         }
 
         public static string SetConfigurationValues(string configFileName, string sectionName, string value)

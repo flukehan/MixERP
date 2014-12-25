@@ -32,9 +32,28 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
 {
     public static class FormHelper
     {
-        public static DataTable GetView(string tableSchema, string tableName, string orderBy, int limit, int offset)
+        public static bool DeleteRecord(string tableSchema, string tableName, string keyColumn, string keyColumnValue)
         {
-            return DBFactory.FormHelper.GetView(tableSchema, tableName, orderBy, limit, offset);
+            string sql = "DELETE FROM @TableSchema.@TableName WHERE @KeyColumn=@KeyValue";
+
+            using (NpgsqlCommand command = new NpgsqlCommand())
+            {
+                sql = sql.Replace("@TableSchema", DBFactory.Sanitizer.SanitizeIdentifierName(tableSchema));
+                sql = sql.Replace("@TableName", DBFactory.Sanitizer.SanitizeIdentifierName(tableName));
+                sql = sql.Replace("@KeyColumn", DBFactory.Sanitizer.SanitizeIdentifierName(keyColumn));
+                command.CommandText = sql;
+
+                command.Parameters.AddWithValue("@KeyValue", keyColumnValue);
+
+                try
+                {
+                    return DbOperation.ExecuteNonQuery(command);
+                }
+                catch (NpgsqlException ex)
+                {
+                    throw new MixERPException(ex.Message, ex);
+                }
+            }
         }
 
         public static DataTable GetTable(string tableSchema, string tableName, string orderBy)
@@ -59,6 +78,11 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
             return DBFactory.FormHelper.GetTotalRecords(tableSchema, tableName);
         }
 
+        public static DataTable GetView(string tableSchema, string tableName, string orderBy, int limit, int offset)
+        {
+            return DBFactory.FormHelper.GetView(tableSchema, tableName, orderBy, limit, offset);
+        }
+
         public static long InsertRecord(int userId, string tableSchema, string tableName, Collection<KeyValuePair<string, string>> data, string imageColumn)
         {
             if (data == null)
@@ -67,7 +91,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
             }
 
             string columns = string.Empty;
-            string columnParamters = string.Empty;
+            string columnParameters = string.Empty;
 
             int counter = 0;
 
@@ -78,16 +102,16 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
                 if (counter.Equals(1))
                 {
                     columns += DBFactory.Sanitizer.SanitizeIdentifierName(pair.Key);
-                    columnParamters += "@" + pair.Key;
+                    columnParameters += "@" + pair.Key;
                 }
                 else
                 {
                     columns += ", " + DBFactory.Sanitizer.SanitizeIdentifierName(pair.Key);
-                    columnParamters += ", @" + pair.Key;
+                    columnParameters += ", @" + pair.Key;
                 }
             }
 
-            string sql = "INSERT INTO @TableSchema.@TableName(" + columns + ", audit_user_id) SELECT " + columnParamters +
+            string sql = "INSERT INTO @TableSchema.@TableName(" + columns + ", audit_user_id) SELECT " + columnParameters +
                          ", @AuditUserId;SELECT LASTVAL();";
             using (NpgsqlCommand command = new NpgsqlCommand())
             {
@@ -216,30 +240,6 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
                 catch (NpgsqlException ex)
                 {
                     throw new MixERPException(ex.Message, ex, ex.ConstraintName);
-                }
-            }
-        }
-
-        public static bool DeleteRecord(string tableSchema, string tableName, string keyColumn, string keyColumnValue)
-        {
-            string sql = "DELETE FROM @TableSchema.@TableName WHERE @KeyColumn=@KeyValue";
-
-            using (NpgsqlCommand command = new NpgsqlCommand())
-            {
-                sql = sql.Replace("@TableSchema", DBFactory.Sanitizer.SanitizeIdentifierName(tableSchema));
-                sql = sql.Replace("@TableName", DBFactory.Sanitizer.SanitizeIdentifierName(tableName));
-                sql = sql.Replace("@KeyColumn", DBFactory.Sanitizer.SanitizeIdentifierName(keyColumn));
-                command.CommandText = sql;
-
-                command.Parameters.AddWithValue("@KeyValue", keyColumnValue);
-
-                try
-                {
-                    return DbOperation.ExecuteNonQuery(command);
-                }
-                catch (NpgsqlException ex)
-                {
-                    throw new MixERPException(ex.Message, ex);
                 }
             }
         }

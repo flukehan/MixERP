@@ -61,20 +61,20 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Account Number.
-        /// </summary>
-        internal static string account_number {
-            get {
-                return ResourceManager.GetString("account_number", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Account Id.
         /// </summary>
         internal static string account_id {
             get {
                 return ResourceManager.GetString("account_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account Number.
+        /// </summary>
+        internal static string account_number {
+            get {
+                return ResourceManager.GetString("account_number", resourceCulture);
             }
         }
         
@@ -988,7 +988,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Roungin Decimal Places.
+        ///   Looks up a localized string similar to Rounding Decimal Places.
         /// </summary>
         internal static string rounding_decimal_places {
             get {

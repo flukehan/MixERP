@@ -357,4 +357,19 @@
   <data name="VoucherVerification" xml:space="preserve">
     <value>Voucher Verification</value>
   </data>
+  <data name="AccountStatement" xml:space="preserve">
+    <value>Account Statement</value>
+  </data>
+  <data name="NewJournalEntry" xml:space="preserve">
+    <value>New Journal Entry</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="Prepare" xml:space="preserve">
+    <value>Prepare</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>To</value>
+  </data>
 </root>

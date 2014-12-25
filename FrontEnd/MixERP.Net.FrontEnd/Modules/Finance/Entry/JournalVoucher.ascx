@@ -54,7 +54,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                     <asp:Literal runat="server" ID="StatementReferenceLiteral" />
                 </label>
             </th>
-            <th scope="col" style="width: 100px;">
+            <th scope="col" style="width: 120px;">
                 <label for="AccountNumberInputText">
                     <asp:Literal runat="server" ID="AccountNumberLiteral" />
                 </label>

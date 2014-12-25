@@ -75,6 +75,7 @@
     <Content Include="Entry\Transfer.ascx" />
     <Content Include="Index.ascx" />
     <Content Include="Package.xml" />
+    <Content Include="Reports\AccountStatement.ascx" />
     <Content Include="Reports\InventoryTransferReport.ascx" />
     <Content Include="Reports\Source\Inventory.Transfer.xml">
       <SubType>Designer</SubType>
@@ -133,6 +134,13 @@
       <DependentUpon>Index.ascx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\AccountStatement.ascx.cs">
+      <DependentUpon>AccountStatement.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\AccountStatement.ascx.designer.cs">
+      <DependentUpon>AccountStatement.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Reports\InventoryTransferReport.ascx.cs">
       <DependentUpon>InventoryTransferReport.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

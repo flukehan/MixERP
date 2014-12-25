@@ -3,7 +3,6 @@ AS
 SELECT
     core.shipping_addresses.shipping_address_id,
     core.shipping_addresses.shipping_address_code,
-    core.shipping_addresses.party_id,
     core.parties.party_code || ' (' || core.parties.party_name || ')' AS party,
     core.shipping_addresses.zip_code,
     core.shipping_addresses.address_line_1,

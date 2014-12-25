@@ -34,14 +34,43 @@ namespace MixERP.Net.Common.Helpers
             }
         }
 
-        public static string GetLabel(string text)
+        public static HtmlGenericControl GetField(string cssClass)
+        {
+            using (HtmlGenericControl field = new HtmlGenericControl("div"))
+            {
+                field.Attributes.Add("class", cssClass);
+
+                return field;
+            }
+        }
+
+        public static HtmlGenericControl GetLabel(string text)
+        {
+            using (HtmlGenericControl label = new HtmlGenericControl("label"))
+            {
+                label.InnerText = text;
+                return label;
+            }
+        }
+
+        public static HtmlGenericControl GetLabel(string text, string targetControlId)
+        {
+            using (HtmlGenericControl label = new HtmlGenericControl("label"))
+            {
+                label.Attributes.Add("for", targetControlId);
+                label.InnerText = text;
+                return label;
+            }
+        }
+
+        public static string GetLabelHtml(string text)
         {
             return string.Format(CultureInfo.InvariantCulture, "<label>{0}</label>", text);
         }
 
-        public static string GetLabel(string controlId, string text)
+        public static string GetLabelHtml(string text, string targetControlId)
         {
-            return string.Format(CultureInfo.InvariantCulture, "<label for='{0}'>{1}</label>", controlId, text);
+            return string.Format(CultureInfo.InvariantCulture, "<label for='{1}'>{0}</label>", text, targetControlId);
         }
     }
 }

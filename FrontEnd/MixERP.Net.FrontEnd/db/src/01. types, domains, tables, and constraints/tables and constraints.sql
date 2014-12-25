@@ -623,6 +623,9 @@ CREATE TABLE core.accounts
     is_party                                boolean NOT NULL
                                             CONSTRAINT accounts_is_party_df
                                             DEFAULT(false),
+    normally_debit                          boolean NOT NULL
+                                            CONSTRAINT accounts_normally_debit_df
+                                            DEFAULT(false),
     parent_account_id                       bigint NULL REFERENCES core.accounts(account_id),
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL 
@@ -635,7 +638,6 @@ ON core.accounts(UPPER(account_number));
 
 CREATE UNIQUE INDEX accounts_name_uix
 ON core.accounts(UPPER(account_name));
-
 
 CREATE TABLE core.account_parameters
 (

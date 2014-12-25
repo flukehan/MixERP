@@ -79,6 +79,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account Statement.
+        /// </summary>
+        internal static string AccountStatement {
+            get {
+                return ResourceManager.GetString("AccountStatement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Action.
         /// </summary>
         internal static string Action {
@@ -367,6 +376,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to From.
+        /// </summary>
+        internal static string From {
+            get {
+                return ResourceManager.GetString("From", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to GL Advice.
         /// </summary>
         internal static string GLAdvice {
@@ -439,6 +457,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New Journal Entry.
+        /// </summary>
+        internal static string NewJournalEntry {
+            get {
+                return ResourceManager.GetString("NewJournalEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Office.
         /// </summary>
         internal static string Office {
@@ -498,6 +525,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string PostTransaction {
             get {
                 return ResourceManager.GetString("PostTransaction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prepare.
+        /// </summary>
+        internal static string Prepare {
+            get {
+                return ResourceManager.GetString("Prepare", resourceCulture);
             }
         }
         
@@ -651,6 +687,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string Tel {
             get {
                 return ResourceManager.GetString("Tel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To.
+        /// </summary>
+        internal static string To {
+            get {
+                return ResourceManager.GetString("To", resourceCulture);
             }
         }
         

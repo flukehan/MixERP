@@ -520,7 +520,7 @@
     <value>Account Number</value>
   </data>
   <data name="rounding_decimal_places" xml:space="preserve">
-    <value>Roungin Decimal Places</value>
+    <value>Rounding Decimal Places</value>
   </data>
   <data name="entity_name" xml:space="preserve">
     <value>Entity Name</value>
