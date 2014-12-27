@@ -27,106 +27,19 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
 <asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
 
-<div class="ui top attached tabular menu">
-    <a class="active item" data-tab="first">Transaction Statement</a>
-    <a class="item" data-tab="second">Account Overview</a>
-</div>
-<div class="ui bottom attached active form tab segment" data-tab="first">
-    <asp:PlaceHolder runat="server" ID="FormPlaceholder"></asp:PlaceHolder>
+<script type="text/javascript">
+    var accountNumberSelect = $("#AccountNumberSelect");
+    var accountNumberInputText = $("#AccountNumberInputText");
 
-    <div class="auto-overflow-panel">
-        <asp:GridView runat="server" ID="StatementGridView" CssClass="ui celled table nowrap" GridLines="None" BorderStyle="None">
-        </asp:GridView>
-    </div>
-</div>
-<div class="ui bottom attached tab segment" data-tab="second">
-    <h2>Liabilities</h2>
-    <div class="description">
-        Description
-    </div>
+    $(document).ready(function () {
+        loadAccounts();
+        createCascadingPair(accountNumberSelect, accountNumberInputText);
+    });
 
-    <table class="ui definition table" id="AccountOverViewGrid">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Definition</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Account Number</td>
-                <td>
-                    <asp:Literal runat="server" ID="AccountNumberLiteral"></asp:Literal>
-                </td>
-            </tr>
-            <tr>
-                <td>External Code</td>
-                <td>
-                    <asp:Literal runat="server" ID="ExternalCodeLiteral"></asp:Literal>
-                </td>
-            </tr>
-            <tr>
-                <td>Base Currency</td>
-                <td>
-                    <asp:Literal runat="server" ID="BaseCurrencyLiteral"></asp:Literal>
-                </td>
-            </tr>
-            <tr>
-                <td>Account Master</td>
-                <td>
-                    <asp:Literal runat="server" ID="AccountMasterLiteral"></asp:Literal>
-                </td>
-            </tr>
-            <tr>
-                <td>Confidential</td>
-                <td>
-                    <asp:Literal runat="server" ID="ConfidentialLiteral"></asp:Literal>
-                </td>
-            </tr>
-            <tr>
-                <td>Cashflow Heading</td>
-                <td>
-                    <asp:Literal runat="server" ID="CashFlowHeadingLiteral"></asp:Literal>
-                </td>
-            </tr>
-            <tr>
-                <td>Is System Account</td>
-                <td>
-                    <asp:Literal runat="server" ID="IsSystemAccountLiteral"></asp:Literal>
-                </td>
-            </tr>
-            <tr>
-                <td>Is Cash</td>
-                <td>
-                    <asp:Literal runat="server" ID="IsCashAccountLiteral"></asp:Literal>
-                </td>
-            </tr>
-            <tr>
-                <td>Is Employee</td>
-                <td>
-                    <asp:Literal runat="server" ID="IsEmployeeLiteral"></asp:Literal>
-                </td>
-            </tr>
-            <tr>
-                <td>Is Party</td>
-                <td>
-                    <asp:Literal runat="server" ID="IsPartyLiteral"></asp:Literal>
-                </td>
-            </tr>
-            <tr>
-                <td>Normally Debit</td>
-                <td>
-                    <asp:Literal runat="server" ID="NormallyDebitLiteral"></asp:Literal>
-                </td>
-            </tr>
-            <tr>
-                <td>Parent Account</td>
-                <td>
-                    <asp:Literal runat="server" ID="ParentAccountLiteral"></asp:Literal>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+    function loadAccounts() {
+        var selected = accountNumberInputText.val();
 
-<asp:PlaceHolder runat="server" ID="FlagPlaceholder"></asp:PlaceHolder>
+        url = "/Modules/Finance/Services/AccountData.asmx/ListAccounts";
+        ajaxDataBind(url, accountNumberSelect, null, selected, accountNumberInputText);
+    };
+</script>

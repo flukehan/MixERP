@@ -56,6 +56,7 @@
     <Compile Include="Helpers\Items.cs" />
     <Compile Include="Helpers\ParameterHelper.cs" />
     <Compile Include="Helpers\Parties.cs" />
+    <Compile Include="Helpers\PaymentTerms.cs" />
     <Compile Include="Helpers\PriceTypes.cs" />
     <Compile Include="Helpers\Shippers.cs" />
     <Compile Include="Transactions\StockTransfer.cs" />

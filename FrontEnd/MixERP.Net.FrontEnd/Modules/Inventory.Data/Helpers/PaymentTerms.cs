@@ -17,32 +17,16 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-namespace MixERP.Net.Common.Models.Transactions
+using MixERP.Net.DBFactory;
+using System.Data;
+
+namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
 {
-    public sealed class StockMasterModel
+    public static class PaymentTerms
     {
-        public int CashRepositoryId { get; set; }
-
-        public bool IsCredit { get; set; }
-
-        public string PartyCode { get; set; }
-
-        public int PaymentTermId { get; set; }
-
-        public int PriceTypeId { get; set; }
-
-        public int SalespersonId { get; set; }
-
-        public int ShipperId { get; set; }
-
-        public string ShippingAddressCode { get; set; }
-
-        public decimal ShippingCharge { get; set; }
-
-        public long StockMasterId { get; set; }
-
-        public int StoreId { get; set; }
-
-        public long TransactionMasterId { get; set; }
+        public static DataTable GetPaymentTermsDataTable()
+        {
+            return FormHelper.GetTable("core", "payment_terms", "payment_term_id");
+        }
     }
 }

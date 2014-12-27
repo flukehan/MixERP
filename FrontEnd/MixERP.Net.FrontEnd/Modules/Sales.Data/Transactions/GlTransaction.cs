@@ -52,7 +52,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
             string detail = StockMasterDetailHelper.CreateStockMasterDetailParameter(details);
             string attachment = AttachmentHelper.CreateAttachmentModelParameter(attachments);
 
-            string sql = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM transactions.post_sales(@BookName, @OfficeId, @UserId, @LoginId, @ValueDate, @CostCenterId, @ReferenceNumber, @StatementReference, @CashRepositoryId, @IsCredit, @PartyCode, @PriceTypeId, @SalespersonId, @ShipperId, @ShippingAddressCode, @StoreId, @NonTaxable, ARRAY[{0}], ARRAY[{1}])", detail, attachment);
+            string sql = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM transactions.post_sales(@BookName, @OfficeId, @UserId, @LoginId, @ValueDate, @CostCenterId, @ReferenceNumber, @StatementReference, @CashRepositoryId, @IsCredit, @PaymentTermId, @PartyCode, @PriceTypeId, @SalespersonId, @ShipperId, @ShippingAddressCode, @StoreId, @NonTaxable, ARRAY[{0}], ARRAY[{1}])", detail, attachment);
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@BookName", bookName);
@@ -74,6 +74,8 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
                 }
 
                 command.Parameters.AddWithValue("@IsCredit", stockMaster.IsCredit);
+                command.Parameters.AddWithValue("@PaymentTermId", stockMaster.PaymentTermId);
+
                 command.Parameters.AddWithValue("@PartyCode", stockMaster.PartyCode);
                 command.Parameters.AddWithValue("@PriceTypeId", stockMaster.PriceTypeId);
                 command.Parameters.AddWithValue("@SalespersonId", stockMaster.SalespersonId);

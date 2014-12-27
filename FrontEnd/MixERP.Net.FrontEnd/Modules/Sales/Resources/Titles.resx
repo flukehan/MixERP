@@ -375,4 +375,16 @@
   <data name="Phone" xml:space="preserve">
     <value>Phone</value>
   </data>
+  <data name="LateFees" xml:space="preserve">
+    <value>Late Fees</value>
+  </data>
+  <data name="PaymentTerms" xml:space="preserve">
+    <value>Payment Terms</value>
+  </data>
+  <data name="RecurringInvoices" xml:space="preserve">
+    <value>Recurring Invoices</value>
+  </data>
+  <data name="RecurringInvoiceSetup" xml:space="preserve">
+    <value>Recurring Invoice Setup</value>
+  </data>
 </root>

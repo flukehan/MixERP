@@ -43,10 +43,13 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <add key="IndustryDisplayField" value="industry_name" />
     <add key="ItemDisplayField" value="item_code + ' (' + item_name + ')'" />
     <add key="ItemGroupDisplayField" value="item_group_code + ' (' + item_group_name + ')'" />
+    <add key="LateFeeDisplayField" value="late_fee_code + ' (' + late_fee_name + ')'" />
     <add key="OfficeDisplayField" value="office_code + ' (' + office_name + ')'" />
     <add key="PartyDisplayField" value="party_code + ' (' + party_name + ')'" />
     <add key="PartyTypeDisplayField" value="party_type_code + ' (' + party_type_name + ')'" />
+    <add key="PaymentTermDisplayField" value="payment_term_code + ' (' + payment_term_name + ')'" />
     <add key="PriceTypeDisplayField" value="price_type_code + ' (' + price_type_name + ')'" />
+    <add key="RecurringInvoiceDisplayField" value="recurring_invoice_code + ' (' + recurring_invoice_name + ')'" />
     <add key="RoundingMethodCodeDisplayField" value="rounding_method_code + ' (' + rounding_method_name + ')'" />
     <add key="SalesTaxDisplayField" value="sales_tax_code + ' (' + sales_tax_name + ')'" />
     <add key="SalesTaxExemptDisplayField" value="sales_tax_exempt_code + ' (' + sales_tax_exempt_name + ')'" />

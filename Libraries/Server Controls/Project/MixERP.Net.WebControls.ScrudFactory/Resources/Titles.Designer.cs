@@ -160,7 +160,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Only numbers are allowed..
+        ///   Looks up a localized string similar to Please type a valid number..
         /// </summary>
         internal static string OnlyNumbersAllowed {
             get {

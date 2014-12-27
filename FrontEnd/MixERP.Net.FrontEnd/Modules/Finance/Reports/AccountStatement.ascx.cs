@@ -35,22 +35,219 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 {
     public partial class AccountStatement : MixERPUserControl
     {
+        private Literal accountMasterLiteral;
         private HtmlInputText accountNumberInputText;
+        private Literal accountNumberLiteral;
         private HtmlSelect accountNumberSelect;
+        private Literal baseCurrencyLiteral;
+        private Literal cashFlowHeadingLiteral;
+        private Literal confidentialLiteral;
+        private Literal descriptionLiteral;
+        private Literal externalCodeLiteral;
         private DateTextBox fromDateTextBox;
-        private Button saveButton;
+        private Literal headerLiteral;
+        private Literal isCashAccountLiteral;
+        private Literal isEmployeeLiteral;
+        private Literal isPartyLiteral;
+        private Literal isSystemAccountLiteral;
+        private Literal normallyDebitLiteral;
+        private Literal parentAccountLiteral;
+        private Button showButton;
+        private GridView statementGridView;
         private DateTextBox toDateTextBox;
+
+        #region IDisposable
+
+        private bool disposed;
+
+        public override void Dispose()
+        {
+            if (!this.disposed)
+            {
+                this.Dispose(true);
+                base.Dispose();
+            }
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    if (this.accountMasterLiteral != null)
+                    {
+                        this.accountMasterLiteral.Dispose();
+                        this.accountMasterLiteral = null;
+                    }
+
+                    if (this.accountNumberInputText != null)
+                    {
+                        this.accountNumberInputText.Dispose();
+                        this.accountNumberInputText = null;
+                    }
+
+                    if (this.accountNumberLiteral != null)
+                    {
+                        this.accountNumberLiteral.Dispose();
+                        this.accountNumberLiteral = null;
+                    }
+
+                    if (this.accountNumberSelect != null)
+                    {
+                        this.accountNumberSelect.Dispose();
+                        this.accountNumberSelect = null;
+                    }
+
+                    if (this.baseCurrencyLiteral != null)
+                    {
+                        this.baseCurrencyLiteral.Dispose();
+                        this.baseCurrencyLiteral = null;
+                    }
+
+                    if (this.cashFlowHeadingLiteral != null)
+                    {
+                        this.cashFlowHeadingLiteral.Dispose();
+                        this.cashFlowHeadingLiteral = null;
+                    }
+
+                    if (this.confidentialLiteral != null)
+                    {
+                        this.confidentialLiteral.Dispose();
+                        this.confidentialLiteral = null;
+                    }
+
+                    if (this.descriptionLiteral != null)
+                    {
+                        this.descriptionLiteral.Dispose();
+                        this.descriptionLiteral = null;
+                    }
+
+                    if (this.externalCodeLiteral != null)
+                    {
+                        this.externalCodeLiteral.Dispose();
+                        this.externalCodeLiteral = null;
+                    }
+
+                    if (this.fromDateTextBox != null)
+                    {
+                        this.fromDateTextBox.Dispose();
+                        this.fromDateTextBox = null;
+                    }
+
+                    if (this.headerLiteral != null)
+                    {
+                        this.headerLiteral.Dispose();
+                        this.headerLiteral = null;
+                    }
+
+                    if (this.isCashAccountLiteral != null)
+                    {
+                        this.isCashAccountLiteral.Dispose();
+                        this.isCashAccountLiteral = null;
+                    }
+
+                    if (this.isEmployeeLiteral != null)
+                    {
+                        this.isEmployeeLiteral.Dispose();
+                        this.isEmployeeLiteral = null;
+                    }
+
+                    if (this.isPartyLiteral != null)
+                    {
+                        this.isPartyLiteral.Dispose();
+                        this.isPartyLiteral = null;
+                    }
+
+                    if (this.isSystemAccountLiteral != null)
+                    {
+                        this.isSystemAccountLiteral.Dispose();
+                        this.isSystemAccountLiteral = null;
+                    }
+
+                    if (this.normallyDebitLiteral != null)
+                    {
+                        this.normallyDebitLiteral.Dispose();
+                        this.normallyDebitLiteral = null;
+                    }
+
+                    if (this.parentAccountLiteral != null)
+                    {
+                        this.parentAccountLiteral.Dispose();
+                        this.parentAccountLiteral = null;
+                    }
+
+                    if (this.showButton != null)
+                    {
+                        this.showButton.Dispose();
+                        this.showButton = null;
+                    }
+
+                    if (this.statementGridView != null)
+                    {
+                        this.statementGridView.Dispose();
+                        this.statementGridView = null;
+                    }
+
+                    if (this.toDateTextBox != null)
+                    {
+                        this.toDateTextBox.Dispose();
+                        this.toDateTextBox = null;
+                    }
+                }
+
+                this.disposed = true;
+            }
+        }
+
+        #endregion IDisposable
 
         public override void OnControlLoad(object sender, EventArgs e)
         {
             this.CreateHeader(this.Placeholder1);
             this.CreateTopPanel(this.Placeholder1);
-
-            this.CreateFormPanel(this.FormPlaceholder);
-
-            this.CreateFlagPanel(this.FlagPlaceholder);
-
+            this.CreateTabs(this.Placeholder1);
+            this.CreateFlagPanel(this.Placeholder1);
+            this.AutoInitialize();
             base.OnControlLoad(sender, e);
+        }
+
+        private void AutoInitialize()
+        {
+            string accountNumber = this.Request.QueryString["AccountNumber"];
+            long accountId = Conversion.TryCastLong(this.Request.QueryString["AccountId"]);
+            DateTime from = Conversion.TryCastDate(this.Request.QueryString["From"]);
+            DateTime to = Conversion.TryCastDate(this.Request.QueryString["To"]);
+
+            if (!string.IsNullOrWhiteSpace(accountNumber))
+            {
+                accountNumberInputText.Value = accountNumber;
+            }
+            else
+            {
+                if (accountId > 0)
+                {
+                    accountNumber = Data.Helpers.Accounts.GetAccountNumberByAccountId(accountId);
+
+                    accountNumberInputText.Value = accountNumber;
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            if (from != DateTime.MinValue)
+            {
+                fromDateTextBox.Text = from.Date.ToShortDateString();
+            }
+
+            if (to != DateTime.MinValue)
+            {
+                toDateTextBox.Text = to.Date.ToShortDateString();
+            }
+
+            this.BindGridView();
         }
 
         private void CreateFlagPanel(Control placeHolder)
@@ -80,6 +277,163 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
         {
             throw new NotImplementedException();
         }
+
+        #region Tabs
+
+        private void CreateTabs(Control container)
+        {
+            using (HtmlGenericControl tabMenu = new HtmlGenericControl("div"))
+            {
+                tabMenu.Attributes.Add("class", "ui top attached tabular menu");
+
+                using (HtmlAnchor transactionStatementTabMenu = new HtmlAnchor())
+                {
+                    transactionStatementTabMenu.Attributes.Add("class", "active item");
+                    transactionStatementTabMenu.Attributes.Add("data-tab", "first");
+                    transactionStatementTabMenu.InnerText = Titles.TransactionStatement;
+
+                    tabMenu.Controls.Add(transactionStatementTabMenu);
+                }
+
+                using (HtmlAnchor accountOverviewTabMenu = new HtmlAnchor())
+                {
+                    accountOverviewTabMenu.Attributes.Add("class", "item");
+                    accountOverviewTabMenu.Attributes.Add("data-tab", "second");
+                    accountOverviewTabMenu.InnerText = Titles.AccountOverview;
+
+                    tabMenu.Controls.Add(accountOverviewTabMenu);
+                }
+                container.Controls.Add(tabMenu);
+            }
+
+            using (HtmlGenericControl transactionStatementTab = new HtmlGenericControl("div"))
+            {
+                transactionStatementTab.Attributes.Add("class", "ui bottom attached active form tab segment");
+                transactionStatementTab.Attributes.Add("data-tab", "first");
+                this.CreateFormPanel(transactionStatementTab);
+                this.CreateGridPanel(transactionStatementTab);
+                container.Controls.Add(transactionStatementTab);
+            }
+
+            using (HtmlGenericControl accountOverviewTab = new HtmlGenericControl("div"))
+            {
+                accountOverviewTab.Attributes.Add("class", "ui bottom attached tab segment");
+                accountOverviewTab.Attributes.Add("data-tab", "second");
+                this.CreateAccountOverviewPanel(accountOverviewTab);
+
+                container.Controls.Add(accountOverviewTab);
+            }
+        }
+
+        #endregion Tabs
+
+        #region Account Overview Panel
+
+        private void AddBodyRow(Table table, string text, Literal control)
+        {
+            using (TableRow row = new TableRow())
+            {
+                row.TableSection = TableRowSection.TableBody;
+
+                using (TableCell definitionCell = new TableCell())
+                {
+                    definitionCell.Text = text;
+                    row.Cells.Add(definitionCell);
+                }
+
+                using (TableCell controlCell = new TableCell())
+                {
+                    if (control == null)
+                    {
+                        control = new Literal();
+                    }
+
+                    controlCell.Controls.Add(control);
+
+                    row.Cells.Add(controlCell);
+                }
+
+                table.Rows.Add(row);
+            }
+        }
+
+        private void CreateAccountOverviewHeader(Control container)
+        {
+            using (HtmlGenericControl header = new HtmlGenericControl("h2"))
+            {
+                headerLiteral = new Literal();
+                header.Controls.Add(headerLiteral);
+
+                container.Controls.Add(header);
+            }
+
+            using (HtmlGenericControl description = new HtmlGenericControl("div"))
+            {
+                description.Attributes.Add("class", "description");
+                descriptionLiteral = new Literal();
+
+                description.Controls.Add(descriptionLiteral);
+
+                container.Controls.Add(description);
+            }
+        }
+
+        private void CreateAccountOverviewPanel(HtmlGenericControl container)
+        {
+            this.CreateAccountOverviewHeader(container);
+            this.CreateAccountOverviewTable(container);
+        }
+
+        private void CreateAccountOverviewTable(Control container)
+        {
+            using (Table table = new Table())
+            {
+                table.ID = "AccountOverViewGrid";
+                table.CssClass = "ui definition table";
+                this.CreateTableHeader(table);
+                this.CreateTableBody(table);
+                container.Controls.Add(table);
+            }
+        }
+
+        private void CreateTableBody(Table table)
+        {
+            this.AddBodyRow(table, Titles.AccountNumber, this.accountNumberLiteral);
+            this.AddBodyRow(table, Titles.ExternalCode, this.externalCodeLiteral);
+            this.AddBodyRow(table, Titles.BaseCurrency, this.baseCurrencyLiteral);
+            this.AddBodyRow(table, Titles.AccountMaster, this.accountMasterLiteral);
+            this.AddBodyRow(table, Titles.Confidential, this.confidentialLiteral);
+            this.AddBodyRow(table, Titles.CashFlowHeading, this.cashFlowHeadingLiteral);
+            this.AddBodyRow(table, Titles.IsSystemAccount, this.isSystemAccountLiteral);
+            this.AddBodyRow(table, Titles.IsCash, this.isCashAccountLiteral);
+            this.AddBodyRow(table, Titles.IsEmployee, this.isEmployeeLiteral);
+            this.AddBodyRow(table, Titles.IsParty, this.isPartyLiteral);
+            this.AddBodyRow(table, Titles.NormallyDebit, this.normallyDebitLiteral);
+            this.AddBodyRow(table, Titles.ParentAccount, this.parentAccountLiteral);
+        }
+
+        private void CreateTableHeader(Table table)
+        {
+            using (TableRow header = new TableRow())
+            {
+                header.TableSection = TableRowSection.TableHeader;
+
+                using (TableHeaderCell emptyCell = new TableHeaderCell())
+                {
+                    header.Cells.Add(emptyCell);
+                }
+
+                using (TableHeaderCell definitionCell = new TableHeaderCell())
+                {
+                    definitionCell.Text = Titles.Definition;
+                    header.Cells.Add(definitionCell);
+                }
+
+                table.Rows.Add(header);
+            }
+        }
+
+        #endregion Account Overview Panel
 
         #region Form
 
@@ -137,13 +491,12 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                     field.Controls.Add(label);
                 }
 
-                saveButton = new Button();
-                saveButton.ID = "ShowButton";
-                saveButton.Attributes.Add("class", "ui positive button");
-                //saveButton.Attributes.Add("onclick", "alert('foo');");
-                saveButton.Text = Titles.Show;
-                saveButton.Click += button_Click;
-                field.Controls.Add(saveButton);
+                showButton = new Button();
+                showButton.ID = "ShowButton";
+                showButton.Attributes.Add("class", "ui positive button");
+                showButton.Text = Titles.Show;
+                showButton.Click += ShowButton_Click;
+                field.Controls.Add(showButton);
 
                 container.Controls.Add(field);
             }
@@ -161,7 +514,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             }
         }
 
-        private void button_Click(object sender, EventArgs e)
+        private void BindGridView()
         {
             DateTime from = Conversion.TryCastDate(fromDateTextBox.Text);
             DateTime to = Conversion.TryCastDate(toDateTextBox.Text);
@@ -171,13 +524,13 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
             using (DataTable table = Data.Reports.AccountStatement.GetAccountStatement(from, to, userId, accountNumber, officeId))
             {
-                StatementGridView.DataSource = table;
-                StatementGridView.DataBound += StatementGridViewDataBound;
-                StatementGridView.DataBind();
+                statementGridView.DataSource = table;
+                statementGridView.DataBound += StatementGridViewDataBound;
+                statementGridView.DataBind();
             }
         }
 
-        private void CreateFormPanel(Control container)
+        private void CreateFormPanel(HtmlGenericControl container)
         {
             using (HtmlGenericControl fields = new HtmlGenericControl("div"))
             {
@@ -221,12 +574,50 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             }
         }
 
+        private void ShowButton_Click(object sender, EventArgs e)
+        {
+            this.BindGridView();
+        }
+
         private void StatementGridViewDataBound(object sender, EventArgs eventArgs)
         {
-            StatementGridView.HeaderRow.TableSection = TableRowSection.TableHeader;
+            using (GridView grid = sender as GridView)
+            {
+                if (grid != null && grid.HeaderRow != null)
+                {
+                    grid.HeaderRow.TableSection = TableRowSection.TableHeader;
+                }
+            }
         }
 
         #endregion Form
+
+        #region GridPanel
+
+        private void CreateGridPanel(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl autoOverflowPanel = new HtmlGenericControl("div"))
+            {
+                autoOverflowPanel.Attributes.Add("class", "auto-overflow-panel");
+
+                this.CreateGridView(autoOverflowPanel);
+
+                container.Controls.Add(autoOverflowPanel);
+            }
+        }
+
+        private void CreateGridView(HtmlGenericControl container)
+        {
+            statementGridView = new GridView();
+            statementGridView.ID = "StatementGridView";
+            statementGridView.CssClass = "ui celled table nowrap";
+            statementGridView.GridLines = GridLines.None;
+            statementGridView.BorderStyle = BorderStyle.None;
+
+            container.Controls.Add(statementGridView);
+        }
+
+        #endregion GridPanel
 
         #region Top Panel
 

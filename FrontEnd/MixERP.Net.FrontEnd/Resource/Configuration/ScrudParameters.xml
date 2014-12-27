@@ -45,7 +45,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <add key="GridViewAlternateRowCssClass" value="" />
     <add key="GridViewCssClass" value="ui celled table segment" />
     <add key="GridViewDefaultWidth" value="100%" />
-    <add key="GridPanelDefaultWidth" value="100px" />
+    <add key="GridPanelDefaultWidth" value="1000px" />
     <add key="GridPanelStyle" value="padding:2px;overflow:auto;" />
 
     <add key="GridViewRowCssClass" value="gridview-row pointer" />

@@ -26,7 +26,7 @@ saveButton.click(function () {
 });
 
 var save = function () {
-    var ajaxSalesDelivery = saveSalesDelivery(valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, statementReference, transactionType, salespersonId, shipperId, shippingAddressCode, shippingCharge, cashRepositoryId, costCenterId, transactionIds, attachments, nonTaxable);
+    var ajaxSalesDelivery = saveSalesDelivery(valueDate, storeId, partyCode, priceTypeId, paymentTermId, referenceNumber, data, statementReference, transactionType, salespersonId, shipperId, shippingAddressCode, shippingCharge, cashRepositoryId, costCenterId, transactionIds, attachments, nonTaxable);
 
     ajaxSalesDelivery.done(function (response) {
         var id = response.d;
@@ -40,12 +40,13 @@ var save = function () {
     });
 };
 
-var saveSalesDelivery = function (valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, statementReference, transactionType, salespersonId, shipperId, shippingAddressCode, shippingCharge, cashRepositoryId, costCenterId, transactionIds, attachments, nonTaxable) {
+var saveSalesDelivery = function (valueDate, storeId, partyCode, priceTypeId, paymentTermId, referenceNumber, data, statementReference, transactionType, salespersonId, shipperId, shippingAddressCode, shippingCharge, cashRepositoryId, costCenterId, transactionIds, attachments, nonTaxable) {
     var d = "";
     d = appendParameter(d, "valueDate", valueDate);
     d = appendParameter(d, "storeId", storeId);
     d = appendParameter(d, "partyCode", partyCode);
     d = appendParameter(d, "priceTypeId", priceTypeId);
+    d = appendParameter(d, "paymentTermId", paymentTermId);
     d = appendParameter(d, "referenceNumber", referenceNumber);
     d = appendParameter(d, "data", data);
     d = appendParameter(d, "statementReference", statementReference);

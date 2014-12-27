@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.Common;
 using MixERP.Net.DBFactory;
 using Npgsql;
 using System.Data;
@@ -25,11 +26,6 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 {
     public static class Accounts
     {
-        public static DataTable GetAccounts()
-        {
-            return FormHelper.GetTable("core", "accounts", "account_id");
-        }
-
         public static bool AccountNumberExists(string accountNumber)
         {
             const string sql = "SELECT 1 FROM core.accounts WHERE account_number=@AccountNumber;";
@@ -39,6 +35,37 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 
                 return DbOperation.GetDataTable(command).Rows.Count.Equals(1);
             }
+        }
+
+        public static string GetAccountNumberByAccountId(long accountId)
+        {
+            const string sql = "SELECT account_number FROM core.accounts WHERE account_id=@AccountId;";
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                command.Parameters.AddWithValue("@AccountId", accountId);
+
+                return Conversion.TryCastString(DbOperation.GetScalarValue(command));
+            }
+        }
+
+        public static DataTable GetAccounts()
+        {
+            return FormHelper.GetTable("core", "accounts", "account_id");
+        }
+
+        public static DataTable GetChildAccounts()
+        {
+            return FormHelper.GetTable("core", "account_view", "has_child", "0", "account_id");
+        }
+
+        public static DataTable GetNonConfidentialAccounts()
+        {
+            return FormHelper.GetTable("core", "accounts", "confidential", "0", "account_id");
+        }
+
+        public static DataTable GetNonConfidentialChildAccounts()
+        {
+            return FormHelper.GetTable("core", "account_view", "has_child, confidential", "0, 0", "account_id");
         }
 
         public static bool IsCashAccount(int accountId)
@@ -62,21 +89,6 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 
                 return DbOperation.GetDataTable(command).Rows.Count.Equals(1);
             }
-        }
-
-        public static DataTable GetNonConfidentialAccounts()
-        {
-            return FormHelper.GetTable("core", "accounts", "confidential", "0", "account_id");
-        }
-
-        public static DataTable GetChildAccounts()
-        {
-            return FormHelper.GetTable("core", "account_view", "has_child", "0", "account_id");
-        }
-
-        public static DataTable GetNonConfidentialChildAccounts()
-        {
-            return FormHelper.GetTable("core", "account_view", "has_child, confidential", "0, 0", "account_id");
         }
     }
 }

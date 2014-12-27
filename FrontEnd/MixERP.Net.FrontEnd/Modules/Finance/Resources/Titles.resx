@@ -372,4 +372,46 @@
   <data name="To" xml:space="preserve">
     <value>To</value>
   </data>
+  <data name="Definition" xml:space="preserve">
+    <value>Definition</value>
+  </data>
+  <data name="AccountMaster" xml:space="preserve">
+    <value>Account Master</value>
+  </data>
+  <data name="BaseCurrency" xml:space="preserve">
+    <value>Base Currency</value>
+  </data>
+  <data name="CashFlowHeading" xml:space="preserve">
+    <value>CashFlow Heading</value>
+  </data>
+  <data name="Confidential" xml:space="preserve">
+    <value>Confidential</value>
+  </data>
+  <data name="ExternalCode" xml:space="preserve">
+    <value>External Code</value>
+  </data>
+  <data name="IsCash" xml:space="preserve">
+    <value>Is Cash</value>
+  </data>
+  <data name="IsEmployee" xml:space="preserve">
+    <value>Is Employee</value>
+  </data>
+  <data name="IsParty" xml:space="preserve">
+    <value>Is Party</value>
+  </data>
+  <data name="IsSystemAccount" xml:space="preserve">
+    <value>Is System Account</value>
+  </data>
+  <data name="NormallyDebit" xml:space="preserve">
+    <value>Normally Debit</value>
+  </data>
+  <data name="ParentAccount" xml:space="preserve">
+    <value>Parent Account</value>
+  </data>
+  <data name="AccountOverview" xml:space="preserve">
+    <value>Account Overview</value>
+  </data>
+  <data name="TransactionStatement" xml:space="preserve">
+    <value>TransactionStatement</value>
+  </data>
 </root>

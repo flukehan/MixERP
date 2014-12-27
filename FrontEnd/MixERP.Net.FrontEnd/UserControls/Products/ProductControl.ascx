@@ -95,6 +95,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                 <asp:Literal ID="ReferenceNumberInputTextLabel" runat="server" />
             </td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td>
@@ -121,6 +122,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                     <input id="CashTransactionInputCheckBox" type="checkbox" checked="checked">
                     <asp:Literal ID="CashTransactionLiteral" runat="server" />
                 </div>
+            </td>
+            <td>
+                <select id="PaymentTermSelect" title="F2" class="normal" runat="server"></select>
             </td>
         </tr>
     </table>
@@ -323,3 +327,5 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 </script>
 
 <script src="/Scripts/UserControls/ProductControl.js"></script>
+<script type="text/javascript">
+</script>

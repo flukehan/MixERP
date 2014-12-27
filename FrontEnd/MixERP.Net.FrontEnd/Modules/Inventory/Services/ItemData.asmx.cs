@@ -83,6 +83,25 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         }
 
         [WebMethod]
+        public Collection<ListItem> GetPaymentTerms()
+        {
+            Collection<ListItem> values = new Collection<ListItem>();
+
+            using (DataTable table = PaymentTerms.GetPaymentTermsDataTable())
+            {
+                string displayField = ConfigurationHelper.GetDbParameter("PaymentTermDisplayField");
+                table.Columns.Add("payment_term", typeof(string), displayField);
+
+                foreach (DataRow dr in table.Rows)
+                {
+                    values.Add(new ListItem(dr["payment_term"].ToString(), dr["payment_term_id"].ToString()));
+                }
+            }
+
+            return values;
+        }
+
+        [WebMethod]
         public decimal GetPrice(string tranBook, string itemCode, string partyCode, int priceTypeId, int unitId)
         {
             decimal price = 0;
@@ -120,7 +139,6 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
             return values;
         }
 
-        [WebMethod]
         public Collection<ListItem> GetShippers()
         {
             Collection<ListItem> values = new Collection<ListItem>();

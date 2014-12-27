@@ -76,6 +76,7 @@ var itemSelect = $("#ItemSelect");
 var partyIdHidden = $("#PartyIdHidden");
 var partySelect = $("#PartySelect");
 var partyCodeInputText = $("#PartyCodeInputText");
+var paymentTermSelect = $("#PaymentTermSelect");
 var productGridView = $("#ProductGridView");
 var productGridViewDataHidden = $("#ProductGridViewDataHidden");
 var priceInputText = $("#PriceInputText");
@@ -129,6 +130,7 @@ var data;
 var isCredit = false;
 
 var partyCode;
+var paymentTermId;
 var priceTypeId;
 
 var referenceNumber;
@@ -158,6 +160,12 @@ $(document).ready(function () {
         };
     });
 
+    if (cashTransactionInputCheckBox.length === 1) {
+        if (cashTransactionInputCheckBox.is(':checked')) {
+            paymentTermSelect.hide();
+        };
+    };
+
     addShortcuts();
     initializeAjaxData();
 });
@@ -167,6 +175,7 @@ function initializeAjaxData() {
 
     loadPriceTypes();
     loadParties();
+    loadPaymentTerms();
 
     partySelect.change(function () {
         partyCodeInputText.val(partySelect.getSelectedValue());
@@ -539,6 +548,11 @@ var validateProductControl = function () {
                 errorLabelBottom.html(invalidCashRepositoryWarningLocalized);
                 return false;
             };
+
+            if (parseInt2(paymentTermSelect.getSelectedValue()) === 0) {
+                makeDirty(paymentTermSelect);
+                return false;
+            };
         };
     };
 
@@ -568,6 +582,7 @@ var validateProductControl = function () {
     data = productGridViewDataHidden.val();
 
     partyCode = partySelect.getSelectedValue();
+    paymentTermId = parseInt2(paymentTermSelect.getSelectedValue());
     priceTypeId = parseInt2(priceTypeSelect.getSelectedValue());
 
     referenceNumber = referenceNumberInputText.getSelectedValue();
@@ -588,6 +603,11 @@ var validateProductControl = function () {
 
     return true;
 };
+
+cashTransactionInputCheckBox.change(function () {
+    var checked = !cashTransactionInputCheckBox.is(":checked");
+    setVisible(paymentTermSelect, checked, 500);
+});
 
 shippingAddressSelect.change(function () {
     showShippingAddress();
@@ -651,6 +671,13 @@ function loadItems() {
 function loadParties() {
     url = "/Modules/Inventory/Services/PartyData.asmx/GetParties";
     ajaxDataBind(url, partySelect, null, partyCodeInputText.val());
+};
+
+function loadPaymentTerms() {
+    if (priceTypeSelect.length) {
+        url = "/Modules/Inventory/Services/ItemData.asmx/GetPaymentTerms";
+        ajaxDataBind(url, paymentTermSelect);
+    };
 };
 
 function loadPriceTypes() {

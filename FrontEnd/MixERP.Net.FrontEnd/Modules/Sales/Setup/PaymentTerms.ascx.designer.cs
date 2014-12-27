@@ -7,18 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MixERP.Net.Core.Modules.Finance.Reports {
+namespace MixERP.Net.Core.Modules.Sales.Setup {
     
     
-    public partial class AccountStatement {
+    public partial class PaymentTerms {
         
         /// <summary>
-        /// Placeholder1 control.
+        /// ScrudPlaceholder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder Placeholder1;
+        protected global::System.Web.UI.WebControls.PlaceHolder ScrudPlaceholder;
     }
 }

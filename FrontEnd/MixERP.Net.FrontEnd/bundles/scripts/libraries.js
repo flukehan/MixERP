@@ -47178,6 +47178,10 @@ var ajaxUpdateVal = function (url, data, targetControls) {
 };
 
 var ajaxDataBind = function (url, targetControl, data, selectedValue, associatedControl) {
+    if (!targetControl) {
+        return;
+    };
+
     if (targetControl.length === 0) {
         return;
     };
@@ -47461,5 +47465,24 @@ var printGridView = function (templatePath, headerPath, reportTitle, gridViewId,
 
             //Report sent to the browser.
         });
+    });
+};
+
+function setVisible(targetControl, visible, time) {
+    if (visible) {
+        targetControl.show(time);
+        return;
+    };
+
+    targetControl.hide(time);
+};
+
+function createCascadingPair(select, input) {
+    input.blur(function () {
+        selectDropDownListByValue(this.id, select.attr("id"));
+    });
+
+    select.change(function () {
+        input.val(select.getSelectedValue());
     });
 };

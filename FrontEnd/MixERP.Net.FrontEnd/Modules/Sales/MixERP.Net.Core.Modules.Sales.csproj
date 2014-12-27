@@ -92,6 +92,10 @@
     </Content>
     <Content Include="Reports\TopSellingItems.ascx" />
     <Content Include="Reports\TopSellingItemsFrame.ascx" />
+    <Content Include="Setup\LateFees.ascx" />
+    <Content Include="Setup\PaymentTerms.ascx" />
+    <Content Include="Setup\RecurringInvoices.ascx" />
+    <Content Include="Setup\RecurringInvoiceSetup.ascx" />
     <Content Include="Setup\Teams.ascx" />
     <Content Include="Widgets\CurrentOfficeSalesByMonthWidget.ascx" />
     <Content Include="Widgets\SalesByOfficeWidget.ascx" />
@@ -461,6 +465,34 @@
     </Compile>
     <Compile Include="Setup\BonusSlabs.ascx.designer.cs">
       <DependentUpon>BonusSlabs.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Setup\LateFees.ascx.cs">
+      <DependentUpon>LateFees.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Setup\LateFees.ascx.designer.cs">
+      <DependentUpon>LateFees.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Setup\PaymentTerms.ascx.cs">
+      <DependentUpon>PaymentTerms.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Setup\PaymentTerms.ascx.designer.cs">
+      <DependentUpon>PaymentTerms.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Setup\RecurringInvoices.ascx.cs">
+      <DependentUpon>RecurringInvoices.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Setup\RecurringInvoices.ascx.designer.cs">
+      <DependentUpon>RecurringInvoices.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Setup\RecurringInvoiceSetup.ascx.cs">
+      <DependentUpon>RecurringInvoiceSetup.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Setup\RecurringInvoiceSetup.ascx.designer.cs">
+      <DependentUpon>RecurringInvoiceSetup.ascx</DependentUpon>
     </Compile>
     <Compile Include="Setup\Salespersons.ascx.cs">
       <DependentUpon>Salespersons.ascx</DependentUpon>

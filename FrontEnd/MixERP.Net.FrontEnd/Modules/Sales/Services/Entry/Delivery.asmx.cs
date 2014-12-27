@@ -35,7 +35,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
     public class Delivery : WebService
     {
         [WebMethod(EnableSession = true)]
-        public long Save(DateTime valueDate, int storeId, string partyCode, int priceTypeId, string referenceNumber, string data, string statementReference, int salespersonId, int shipperId, string shippingAddressCode, decimal shippingCharge, int costCenterId, string transactionIds, string attachmentsJSON, bool nonTaxable)
+        public long Save(DateTime valueDate, int storeId, string partyCode, int priceTypeId, int paymentTermId, string referenceNumber, string data, string statementReference, int salespersonId, int shipperId, string shippingAddressCode, decimal shippingCharge, int costCenterId, string transactionIds, string attachmentsJSON, bool nonTaxable)
         {
             Collection<StockMasterDetailModel> details = CollectionHelper.GetStockMasterDetailCollection(data, storeId);
             Collection<int> tranIds = new Collection<int>();
@@ -69,7 +69,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
                 }
             }
 
-            return Data.Transactions.Delivery.Add(valueDate, storeId, partyCode, priceTypeId, details, shipperId, shippingAddressCode, shippingCharge, costCenterId, referenceNumber, salespersonId, statementReference, tranIds, attachments, nonTaxable);
+            return Data.Transactions.Delivery.Add(valueDate, storeId, partyCode, priceTypeId, paymentTermId, details, shipperId, shippingAddressCode, shippingCharge, costCenterId, referenceNumber, salespersonId, statementReference, tranIds, attachments, nonTaxable);
         }
     }
 }

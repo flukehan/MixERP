@@ -537,7 +537,6 @@
     <Content Include="db\src\04. default values\stores-types,cost-centers.sql" />
     <Content Include="db\src\04. default values\tax, item-groups, brands, shipping.sql" />
     <Content Include="db\src\04. default values\units.sql" />
-    <Content Include="db\src\04. default values\verification-statuses, flag-types, frequencies.sql" />
     <Content Include="db\src\05. scrud-views\core\core.account_scrud_view.sql" />
     <Content Include="db\src\05. scrud-views\core\core.bonus_slab_detail_scrud_view.sql" />
     <Content Include="db\src\05. scrud-views\core\core.bonus_slab_scrud_view.sql" />

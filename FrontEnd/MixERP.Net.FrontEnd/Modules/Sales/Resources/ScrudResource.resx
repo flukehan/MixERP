@@ -276,4 +276,76 @@
   <data name="sys_type" xml:space="preserve">
     <value>Sys Type</value>
   </data>
+  <data name="due_days" xml:space="preserve">
+    <value>Due Days</value>
+  </data>
+  <data name="due_frequency_id" xml:space="preserve">
+    <value>Due Frequency Id</value>
+  </data>
+  <data name="due_on_date" xml:space="preserve">
+    <value>Due on Date</value>
+  </data>
+  <data name="grace_peiod" xml:space="preserve">
+    <value>Grace Period</value>
+  </data>
+  <data name="is_flat_amount" xml:space="preserve">
+    <value>Is Flat Amount</value>
+  </data>
+  <data name="late_fee_code" xml:space="preserve">
+    <value>Late Fee Code</value>
+  </data>
+  <data name="late_fee_id" xml:space="preserve">
+    <value>Late Fee Id</value>
+  </data>
+  <data name="late_fee_name" xml:space="preserve">
+    <value>Late Fee Name</value>
+  </data>
+  <data name="late_fee_posting_frequency_id" xml:space="preserve">
+    <value>Late Fee Posting Frequency Id</value>
+  </data>
+  <data name="payment_term_code" xml:space="preserve">
+    <value>Payment Term Code</value>
+  </data>
+  <data name="payment_term_id" xml:space="preserve">
+    <value>Payment Term Id</value>
+  </data>
+  <data name="payment_term_name" xml:space="preserve">
+    <value>Payment Term Name</value>
+  </data>
+  <data name="rate" xml:space="preserve">
+    <value>Rate</value>
+  </data>
+  <data name="recurring_invoice_code" xml:space="preserve">
+    <value>Recurring Invoice Code</value>
+  </data>
+  <data name="recurring_invoice_id" xml:space="preserve">
+    <value>Recurring Invoice Id</value>
+  </data>
+  <data name="recurring_invoice_name" xml:space="preserve">
+    <value>Recurring Invoice Name</value>
+  </data>
+  <data name="recurring_invoice_setup_id" xml:space="preserve">
+    <value>Recurring Invoice Setup Id</value>
+  </data>
+  <data name="starts_from" xml:space="preserve">
+    <value>Starts From</value>
+  </data>
+  <data name="compound_item_id" xml:space="preserve">
+    <value>Compound Item Id</value>
+  </data>
+  <data name="party_id" xml:space="preserve">
+    <value>Party Id</value>
+  </data>
+  <data name="recurring_frequency_id" xml:space="preserve">
+    <value>Recurring Frequency Id</value>
+  </data>
+  <data name="recurring_amount" xml:space="preserve">
+    <value>Recurring Amount</value>
+  </data>
+  <data name="auto_trigger_on_sales" xml:space="preserve">
+    <value>Automatically Trigger on Sales</value>
+  </data>
+  <data name="recurring_invoices_item_id_auto_trigger_on_sales_uix" xml:space="preserve">
+    <value>You cannot have more than one auto trigger on sales for this item.</value>
+  </data>
 </root>

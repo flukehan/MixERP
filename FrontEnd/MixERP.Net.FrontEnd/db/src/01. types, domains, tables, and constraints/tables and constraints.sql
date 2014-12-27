@@ -817,9 +817,6 @@ CREATE TABLE core.parties
     allow_credit                            boolean NULL,
     maximum_credit_period                   smallint NULL,
     maximum_credit_amount                   money_strict2 NULL,
-    charge_interest                         boolean NULL,
-    interest_rate                           decimal NULL,
-    interest_compounding_frequency_id       smallint NULL REFERENCES core.frequencies(frequency_id),
     account_id                              bigint NULL REFERENCES core.accounts(account_id),
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
@@ -1406,6 +1403,128 @@ CREATE TABLE core.compound_item_details
 CREATE UNIQUE INDEX compound_item_details_item_id_uix
 ON core.compound_item_details(compound_item_id, item_id);
 
+
+CREATE TABLE core.late_fee
+(
+    late_fee_id                                 SERIAL NOT NULL PRIMARY KEY,
+    late_fee_code                               national character varying(12) NOT NULL,
+    late_fee_name                               national character varying(50) NOT NULL,
+    is_flat_amount                              boolean NOT NULL CONSTRAINT late_fee_is_flat_amount_df DEFAULT(false),
+    rate                                        decimal(24, 4) NOT NULL,
+    audit_user_id                               integer NULL REFERENCES office.users(user_id),
+    audit_ts                                    TIMESTAMP WITH TIME ZONE NULL 
+                                                DEFAULT(NOW())
+);
+
+CREATE UNIQUE INDEX late_fee_late_fee_code_uix
+ON core.late_fee(UPPER(late_fee_code));
+
+CREATE UNIQUE INDEX late_fee_late_fee_name_uix
+ON core.late_fee(UPPER(late_fee_name));
+
+CREATE INDEX late_fee_is_flat_amount_inx
+ON core.late_fee(is_flat_amount);
+
+
+CREATE TABLE core.payment_terms
+(
+    payment_term_id                             SERIAL NOT NULL PRIMARY KEY,
+    payment_term_code                           national character varying(12) NOT NULL,
+    payment_term_name                           national character varying(50) NOT NULL,
+    due_on_date                                 boolean NOT NULL 
+                                                CONSTRAINT payment_terms_due_on_specific_date_df DEFAULT(false),
+    due_days                                    integer NOT NULL CONSTRAINT payment_terms_days_df DEFAULT(0),
+    due_frequency_id                            integer NULL REFERENCES core.frequencies(frequency_id)
+                                                CHECK
+                                                (
+                                                    CASE WHEN due_frequency_id IS NOT NULL THEN due_days = 0 END
+                                                ),
+    grace_peiod                                 integer NOT NULL CONSTRAINT payment_terms_grace_period_df DEFAULT(0),
+    late_fee_id                                 integer NULL REFERENCES core.late_fee(late_fee_id),
+    late_fee_posting_frequency_id               integer NULL REFERENCES core.frequencies(frequency_id)
+                                                CONSTRAINT payment_terms_late_fee_chk
+                                                CHECK
+                                                (
+                                                    (late_fee_id IS NULL)::integer + 
+                                                    (late_fee_posting_frequency_id IS NULL)::integer IN
+                                                    (
+                                                        0, 2
+                                                    )--Either every late fee information should be provided or none.
+                                                ),
+    audit_user_id                               integer NULL REFERENCES office.users(user_id),
+    audit_ts                                    TIMESTAMP WITH TIME ZONE NULL   
+                                                DEFAULT(NOW())        
+);
+
+
+CREATE UNIQUE INDEX payment_terms_payment_term_code_uix
+ON core.payment_terms(UPPER(payment_term_code));
+
+CREATE UNIQUE INDEX payment_terms_payment_term_name_uix
+ON core.payment_terms(UPPER(payment_term_name));
+
+CREATE INDEX payment_terms_due_on_date_inx
+ON core.payment_terms(due_on_date);
+
+
+CREATE INDEX payment_terms_due_frequency_id_inx
+ON core.payment_terms(due_frequency_id);
+
+
+
+CREATE TABLE core.recurring_invoices
+(
+    recurring_invoice_id                        SERIAL NOT NULL PRIMARY KEY,
+    recurring_invoice_code                      national character varying(12) NOT NULL,
+    recurring_invoice_name                      national character varying(50) NOT NULL,
+    item_id                                     integer NULL REFERENCES core.items(item_id),
+    compound_item_id                            integer NULL REFERENCES core.compound_items(compound_item_id)
+                                                CONSTRAINT recurring_invoices_item_chk
+                                                CHECK
+                                                (
+                                                    (item_id IS NULL)::integer + (compound_item_id IS NULL)::integer = 1 --Only one of these two can be NOT NULL.
+                                                ),
+    recurring_frequency_id                      integer NOT NULL REFERENCES core.frequencies(frequency_id),
+    recurring_amount                            money_strict NOT NULL 
+                                                CONSTRAINT recurring_invoices_recurring_amount_chk 
+                                                CHECK(recurring_amount > 0),
+    auto_trigger_on_sales                       boolean NOT NULL,
+    audit_user_id                               integer NULL REFERENCES office.users(user_id),
+    audit_ts                                    TIMESTAMP WITH TIME ZONE NULL 
+                                                DEFAULT(NOW())    
+);
+
+CREATE UNIQUE INDEX recurring_invoices_item_id_auto_trigger_on_sales_uix
+ON core.recurring_invoices(item_id, auto_trigger_on_sales)
+WHERE auto_trigger_on_sales = true;
+
+CREATE UNIQUE INDEX recurring_invoices_compound_item_id_auto_trigger_on_sales_uix
+ON core.recurring_invoices(compound_item_id, auto_trigger_on_sales)
+WHERE auto_trigger_on_sales = true;
+
+
+CREATE TABLE core.recurring_invoice_setup
+(
+    recurring_invoice_setup_id                  SERIAL NOT NULL PRIMARY KEY,
+    recurring_invoice_id                        integer NOT NULL REFERENCES core.recurring_invoices(recurring_invoice_id),
+    party_id                                    bigint NOT NULL REFERENCES core.parties(party_id),
+    starts_from                                 date NOT NULL,
+    ends_on                                     date NOT NULL
+                                                CONSTRAINT recurring_invoice_setup_date_chk
+                                                CHECK
+                                                (
+                                                    ends_on >= starts_from
+                                                ),
+    recurring_amount                            money_strict NOT NULL 
+                                                CONSTRAINT recurring_invoice_setup_recurring_amount_chk
+                                                CHECK(recurring_amount > 0),
+    payment_term_id                             integer NOT NULL REFERENCES core.payment_terms(payment_term_id),
+    audit_user_id                               integer NULL REFERENCES office.users(user_id),
+    audit_ts                                    TIMESTAMP WITH TIME ZONE NULL 
+                                                DEFAULT(NOW())    
+    
+);
+
 /*******************************************************************
     PLEASE NOTE :
 
@@ -1745,6 +1864,7 @@ CREATE TABLE transactions.stock_master
     is_credit                               boolean NOT NULL   
                                             CONSTRAINT stock_master_is_credit_df   
                                             DEFAULT(false),
+    payment_term_id                         integer NULL REFERENCES core.payment_terms(payment_term_id),
     shipper_id                              integer NULL REFERENCES core.shippers(shipper_id),
     shipping_address_id                     integer NULL REFERENCES core.shipping_addresses(shipping_address_id),
     shipping_charge                         money_strict2 NOT NULL   

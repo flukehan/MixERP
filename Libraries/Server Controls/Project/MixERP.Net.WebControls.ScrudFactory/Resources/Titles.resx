@@ -151,7 +151,7 @@
     <value>Nothing selected!</value>
   </data>
   <data name="OnlyNumbersAllowed" xml:space="preserve">
-    <value>Only numbers are allowed.</value>
+    <value>Please type a valid number.</value>
   </data>
   <data name="Print" xml:space="preserve">
     <value>Print</value>

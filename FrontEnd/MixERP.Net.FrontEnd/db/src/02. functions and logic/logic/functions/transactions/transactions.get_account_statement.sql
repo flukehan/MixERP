@@ -178,4 +178,4 @@ END;
 $$
 LANGUAGE plpgsql;
 
-SELECT * FROM transactions.get_account_statement('1-1-2010','1-1-2020',1,1,1);
+---SELECT * FROM transactions.get_account_statement('1-1-2010','1-1-2020',1,1,1);

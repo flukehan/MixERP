@@ -235,6 +235,23 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             return false;
         }
 
+        [WebMethod(EnableSession = true)]
+        public Collection<ListItem> ListAccounts()
+        {
+            if (SessionHelper.IsAdmin())
+            {
+                using (DataTable table = Accounts.GetAccounts())
+                {
+                    return GetValues(table);
+                }
+            }
+
+            using (DataTable table = Accounts.GetNonConfidentialAccounts())
+            {
+                return GetValues(table);
+            }
+        }
+
         private static Collection<ListItem> GetValues(DataTable table)
         {
             Collection<ListItem> values = new Collection<ListItem>();

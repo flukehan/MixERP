@@ -68,6 +68,11 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         public bool ShowCostCenter { get; set; }
 
         /// <summary>
+        /// This property when enabled will display payment terms.
+        /// </summary>
+        public bool ShowPaymentTerms { get; set; }
+
+        /// <summary>
         /// This property when set to true will display stores.
         /// </summary>
         public bool ShowPriceTypes { get; set; }
@@ -262,6 +267,8 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             this.StoreSelectLabel.Visible = this.ShowStore;
 
             this.CashTransactionDiv.Visible = this.ShowTransactionType;
+
+            this.PaymentTermSelect.Visible = this.ShowPaymentTerms;
 
             this.PriceTypeSelect.Visible = this.ShowPriceTypes;
             this.PriceTypeSelectLabel.Visible = this.ShowPriceTypes;

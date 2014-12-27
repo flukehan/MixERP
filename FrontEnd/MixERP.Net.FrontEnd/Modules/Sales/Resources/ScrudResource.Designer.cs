@@ -61,15 +61,6 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Account Number.
-        /// </summary>
-        internal static string account_number {
-            get {
-                return ResourceManager.GetString("account_number", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Account Id.
         /// </summary>
         internal static string account_id {
@@ -111,6 +102,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         internal static string account_name {
             get {
                 return ResourceManager.GetString("account_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account Number.
+        /// </summary>
+        internal static string account_number {
+            get {
+                return ResourceManager.GetString("account_number", resourceCulture);
             }
         }
         
@@ -165,6 +165,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         internal static string audit_user_id {
             get {
                 return ResourceManager.GetString("audit_user_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automatically Trigger on Sales.
+        /// </summary>
+        internal static string auto_trigger_on_sales {
+            get {
+                return ResourceManager.GetString("auto_trigger_on_sales", resourceCulture);
             }
         }
         
@@ -250,6 +259,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Compound Item Id.
+        /// </summary>
+        internal static string compound_item_id {
+            get {
+                return ResourceManager.GetString("compound_item_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Contact Number.
         /// </summary>
         internal static string contact_number {
@@ -273,6 +291,33 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         internal static string discount {
             get {
                 return ResourceManager.GetString("discount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Due Days.
+        /// </summary>
+        internal static string due_days {
+            get {
+                return ResourceManager.GetString("due_days", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Due Frequency Id.
+        /// </summary>
+        internal static string due_frequency_id {
+            get {
+                return ResourceManager.GetString("due_frequency_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Due on Date.
+        /// </summary>
+        internal static string due_on_date {
+            get {
+                return ResourceManager.GetString("due_on_date", resourceCulture);
             }
         }
         
@@ -322,11 +367,29 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Grace Period.
+        /// </summary>
+        internal static string grace_peiod {
+            get {
+                return ResourceManager.GetString("grace_peiod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Id.
         /// </summary>
         internal static string id {
             get {
                 return ResourceManager.GetString("id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Flat Amount.
+        /// </summary>
+        internal static string is_flat_amount {
+            get {
+                return ResourceManager.GetString("is_flat_amount", resourceCulture);
             }
         }
         
@@ -358,11 +421,38 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parent Account Number.
+        ///   Looks up a localized string similar to Late Fee Code.
         /// </summary>
-        internal static string parent_account_number {
+        internal static string late_fee_code {
             get {
-                return ResourceManager.GetString("parent_account_number", resourceCulture);
+                return ResourceManager.GetString("late_fee_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Late Fee Id.
+        /// </summary>
+        internal static string late_fee_id {
+            get {
+                return ResourceManager.GetString("late_fee_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Late Fee Name.
+        /// </summary>
+        internal static string late_fee_name {
+            get {
+                return ResourceManager.GetString("late_fee_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Late Fee Posting Frequency Id.
+        /// </summary>
+        internal static string late_fee_posting_frequency_id {
+            get {
+                return ResourceManager.GetString("late_fee_posting_frequency_id", resourceCulture);
             }
         }
         
@@ -385,6 +475,51 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Parent Account Number.
+        /// </summary>
+        internal static string parent_account_number {
+            get {
+                return ResourceManager.GetString("parent_account_number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Party Id.
+        /// </summary>
+        internal static string party_id {
+            get {
+                return ResourceManager.GetString("party_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Term Code.
+        /// </summary>
+        internal static string payment_term_code {
+            get {
+                return ResourceManager.GetString("payment_term_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Term Id.
+        /// </summary>
+        internal static string payment_term_id {
+            get {
+                return ResourceManager.GetString("payment_term_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Term Name.
+        /// </summary>
+        internal static string payment_term_name {
+            get {
+                return ResourceManager.GetString("payment_term_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Price.
         /// </summary>
         internal static string price {
@@ -399,6 +534,78 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         internal static string quantity {
             get {
                 return ResourceManager.GetString("quantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rate.
+        /// </summary>
+        internal static string rate {
+            get {
+                return ResourceManager.GetString("rate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recurring Amount.
+        /// </summary>
+        internal static string recurring_amount {
+            get {
+                return ResourceManager.GetString("recurring_amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recurring Frequency Id.
+        /// </summary>
+        internal static string recurring_frequency_id {
+            get {
+                return ResourceManager.GetString("recurring_frequency_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recurring Invoice Code.
+        /// </summary>
+        internal static string recurring_invoice_code {
+            get {
+                return ResourceManager.GetString("recurring_invoice_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recurring Invoice Id.
+        /// </summary>
+        internal static string recurring_invoice_id {
+            get {
+                return ResourceManager.GetString("recurring_invoice_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recurring Invoice Name.
+        /// </summary>
+        internal static string recurring_invoice_name {
+            get {
+                return ResourceManager.GetString("recurring_invoice_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recurring Invoice Setup Id.
+        /// </summary>
+        internal static string recurring_invoice_setup_id {
+            get {
+                return ResourceManager.GetString("recurring_invoice_setup_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You cannot have more than one auto trigger on sales for this item..
+        /// </summary>
+        internal static string recurring_invoices_item_id_auto_trigger_on_sales_uix {
+            get {
+                return ResourceManager.GetString("recurring_invoices_item_id_auto_trigger_on_sales_uix", resourceCulture);
             }
         }
         
@@ -480,6 +687,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         internal static string slab_name {
             get {
                 return ResourceManager.GetString("slab_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Starts From.
+        /// </summary>
+        internal static string starts_from {
+            get {
+                return ResourceManager.GetString("starts_from", resourceCulture);
             }
         }
         

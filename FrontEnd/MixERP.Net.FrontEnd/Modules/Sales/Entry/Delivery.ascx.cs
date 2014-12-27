@@ -34,6 +34,7 @@ namespace MixERP.Net.Core.Modules.Sales.Entry
                 product.Book = TranBook.Sales;
                 product.SubBook = SubTranBook.Delivery;
                 product.Text = Titles.SalesDelivery;
+                product.ShowPaymentTerms = true;
                 product.ShowPriceTypes = true;
                 product.ShowShippingInformation = true;
                 product.ShowSalesAgents = true;

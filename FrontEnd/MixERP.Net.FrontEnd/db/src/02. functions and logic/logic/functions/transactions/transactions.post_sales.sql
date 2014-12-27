@@ -10,6 +10,7 @@ DROP FUNCTION IF EXISTS transactions.post_sales
     _statement_reference                    text,
     _cash_repository_id                     integer,
     _is_credit                              boolean,
+    _payment_term_id                        integer,
     _party_code                             national character varying(12),
     _price_type_id                          integer,
     _salesperson_id                        integer,
@@ -33,6 +34,7 @@ CREATE FUNCTION transactions.post_sales
     _statement_reference                    text,
     _cash_repository_id                     integer,
     _is_credit                              boolean,
+    _payment_term_id                        integer,
     _party_code                             national character varying(12),
     _price_type_id                          integer,
     _salesperson_id                        integer,
@@ -265,8 +267,8 @@ BEGIN
     ORDER BY tran_type DESC;
 
 
-    INSERT INTO transactions.stock_master(value_date, stock_master_id, transaction_master_id, party_id, salesperson_id, price_type_id, is_credit, shipper_id, shipping_address_id, shipping_charge, store_id, cash_repository_id, non_taxable)
-    SELECT _value_date, _stock_master_id, _transaction_master_id, _party_id, _salesperson_id, _price_type_id, _is_credit, _shipper_id, _shipping_address_id, _shipping_charge, _store_id, _cash_repository_id, _is_non_taxable_sales;
+    INSERT INTO transactions.stock_master(value_date, stock_master_id, transaction_master_id, party_id, salesperson_id, price_type_id, is_credit, payment_term_id, shipper_id, shipping_address_id, shipping_charge, store_id, cash_repository_id, non_taxable)
+    SELECT _value_date, _stock_master_id, _transaction_master_id, _party_id, _salesperson_id, _price_type_id, _is_credit, _payment_term_id, _shipper_id, _shipping_address_id, _shipping_charge, _store_id, _cash_repository_id, _is_non_taxable_sales;
             
 
     FOR this IN SELECT * FROM temp_stock_details ORDER BY id

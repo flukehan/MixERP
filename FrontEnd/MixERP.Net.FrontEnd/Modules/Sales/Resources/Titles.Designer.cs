@@ -385,6 +385,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Late Fees.
+        /// </summary>
+        internal static string LateFees {
+            get {
+                return ResourceManager.GetString("LateFees", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Office.
         /// </summary>
         internal static string Office {
@@ -435,6 +444,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         internal static string PartyName {
             get {
                 return ResourceManager.GetString("PartyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Terms.
+        /// </summary>
+        internal static string PaymentTerms {
+            get {
+                return ResourceManager.GetString("PaymentTerms", resourceCulture);
             }
         }
         
@@ -507,6 +525,24 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         internal static string ReceiptCurrency {
             get {
                 return ResourceManager.GetString("ReceiptCurrency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recurring Invoices.
+        /// </summary>
+        internal static string RecurringInvoices {
+            get {
+                return ResourceManager.GetString("RecurringInvoices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recurring Invoice Setup.
+        /// </summary>
+        internal static string RecurringInvoiceSetup {
+            get {
+                return ResourceManager.GetString("RecurringInvoiceSetup", resourceCulture);
             }
         }
         

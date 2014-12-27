@@ -35,6 +35,7 @@ namespace MixERP.Net.Core.Modules.Sales.Entry
                 product.SubBook = SubTranBook.Direct;
                 product.Text = Titles.DirectSales;
                 product.ShowPriceTypes = true;
+                product.ShowPaymentTerms = true;
                 product.ShowShippingInformation = true;
                 product.ShowSalesAgents = true;
                 product.ShowCashRepository = true;
