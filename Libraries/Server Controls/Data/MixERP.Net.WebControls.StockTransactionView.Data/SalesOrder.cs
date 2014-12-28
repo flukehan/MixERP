@@ -47,7 +47,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data
     public static class SalesOrder
     {
         [CLSCompliant(false)]
-        public static NpgsqlCommand GetSalesOrderViewCommand(Collection<int> ids)
+        public static NpgsqlCommand GetSalesOrderViewCommand(Collection<long> ids)
         {
             if (ids == null)
             {

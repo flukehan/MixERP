@@ -43,7 +43,7 @@ namespace MixERP.Net.WebControls.TransactionViewFactory.Helpers
 
             TemplateField checkBoxTemplateField = new TemplateField();
             checkBoxTemplateField.HeaderText = Titles.Select;
-            checkBoxTemplateField.ItemTemplate = new JournalViewSelectTemplate();
+            checkBoxTemplateField.ItemTemplate = new GridViewHelper.GridViewSelectTemplate();
             grid.Columns.Add(checkBoxTemplateField);
         }
 
@@ -75,29 +75,6 @@ namespace MixERP.Net.WebControls.TransactionViewFactory.Helpers
                     goTopIcon.Attributes.Add("class", "icon chevron circle up");
                     goTopIcon.Attributes.Add("onclick", "window.scroll(0);");
                     container.Controls.Add(goTopIcon);
-                }
-            }
-        }
-
-        internal class JournalViewSelectTemplate : ITemplate
-        {
-            public void InstantiateIn(Control container)
-            {
-                using (HtmlGenericControl toggleCheckBox = new HtmlGenericControl("div"))
-                {
-                    toggleCheckBox.Attributes.Add("class", "ui toggle checkbox");
-
-                    using (HtmlInputCheckBox checkBox = new HtmlInputCheckBox())
-                    {
-                        toggleCheckBox.Controls.Add(checkBox);
-                    }
-
-                    using (HtmlGenericControl label = new HtmlGenericControl("label"))
-                    {
-                        toggleCheckBox.Controls.Add(label);
-                    }
-
-                    container.Controls.Add(toggleCheckBox);
                 }
             }
         }

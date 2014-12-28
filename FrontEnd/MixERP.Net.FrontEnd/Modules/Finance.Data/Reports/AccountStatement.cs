@@ -26,6 +26,18 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Reports
 {
     public static class AccountStatement
     {
+        public static DataTable GetAccountOverview(string accountNumber)
+        {
+            const string sql = "SELECT * FROM core.account_view WHERE account_number=@AccountNumber;";
+
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                command.Parameters.AddWithValue("@AccountNumber", accountNumber);
+
+                return DbOperation.GetDataTable(command);
+            }
+        }
+
         public static DataTable GetAccountStatement(DateTime from, DateTime to, int userId, string accountNumber, int officeId)
         {
             const string sql = "SELECT * FROM transactions.get_account_statement(@From::date, @To::date, @UserId, core.get_account_id_by_account_number(@AccountNumber), @OfficeId);";

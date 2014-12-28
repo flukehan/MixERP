@@ -32,7 +32,9 @@ RETURNS TABLE
     posted_on               TIMESTAMP WITH TIME ZONE,
     posted_by               text,
     approved_by             text,
-    verification_status     integer
+    verification_status     integer,
+    flag_bg                 text,
+    flag_fg                 text
 )
 AS
 $$
@@ -59,7 +61,9 @@ BEGIN
         posted_on               TIMESTAMP WITH TIME ZONE,
         posted_by               text,
         approved_by             text,
-        verification_status     integer
+        verification_status     integer,
+        flag_bg                 text,
+        flag_fg                 text
     ) ON COMMIT DROP;
 
 
@@ -168,6 +172,11 @@ BEGIN
     WHERE temp_account_statement.account_id = core.accounts.account_id;
 
 
+    UPDATE temp_account_statement SET
+        flag_bg = core.get_flag_background_color(core.get_flag_type_id(_user_id, 'account_statement', 'transaction_code', temp_account_statement.tran_code::text)),
+        flag_fg = core.get_flag_foreground_color(core.get_flag_type_id(_user_id, 'account_statement', 'transaction_code', temp_account_statement.tran_code::text));
+
+
     IF(_normally_debit) THEN
         UPDATE temp_account_statement SET balance = temp_account_statement.balance * -1;
     END IF;
@@ -178,4 +187,4 @@ END;
 $$
 LANGUAGE plpgsql;
 
----SELECT * FROM transactions.get_account_statement('1-1-2010','1-1-2020',1,1,1);
+--SELECT * FROM transactions.get_account_statement('1-1-2010','1-1-2020',1,1,1);

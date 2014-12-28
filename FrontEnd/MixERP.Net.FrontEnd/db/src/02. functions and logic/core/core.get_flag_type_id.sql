@@ -1,9 +1,9 @@
 CREATE FUNCTION core.get_flag_type_id
 (
-    user_id_ integer,
-    resource_ text,
-    resource_key_ text,
-    resource_id_ bigint
+    user_id_        integer,
+    resource_       text,
+    resource_key_   text,
+    resource_id_    text
 )
 RETURNS integer
 AS
@@ -24,9 +24,9 @@ LANGUAGE plpgsql;
 
 CREATE FUNCTION core.get_flag_type_id
 (
-    user_id_ integer,
-    resource_ text,
-    resource_id_ bigint
+    user_id_        integer,
+    resource_       text,
+    resource_id_    text
 )
 RETURNS integer
 AS
@@ -37,17 +37,3 @@ END
 $$
 LANGUAGE plpgsql;
 
-CREATE FUNCTION core.get_flag_type_id
-(
-    user_id_ integer,
-    resource_ text,
-    resource_id_ integer
-)
-RETURNS integer
-AS
-$$
-BEGIN
-    RETURN core.get_flag_type_id($1, $2, $3::text);
-END
-$$
-LANGUAGE plpgsql;

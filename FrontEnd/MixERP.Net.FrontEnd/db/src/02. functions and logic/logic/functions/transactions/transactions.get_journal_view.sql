@@ -82,8 +82,8 @@ BEGIN
         transactions.transaction_master.last_verified_on AS verified_on,
         transactions.transaction_master.verification_reason AS reason,    
         transactions.transaction_master.transaction_ts,
-        core.get_flag_background_color(core.get_flag_type_id(_user_id, 'transactions.transaction_master', 'transaction_master_id', transactions.transaction_master.transaction_master_id)) AS flag_bg,
-        core.get_flag_foreground_color(core.get_flag_type_id(_user_id, 'transactions.transaction_master', 'transaction_master_id', transactions.transaction_master.transaction_master_id)) AS flag_fg
+        core.get_flag_background_color(core.get_flag_type_id(_user_id, 'transactions.transaction_master', 'transaction_master_id', transactions.transaction_master.transaction_master_id::text)) AS flag_bg,
+        core.get_flag_foreground_color(core.get_flag_type_id(_user_id, 'transactions.transaction_master', 'transaction_master_id', transactions.transaction_master.transaction_master_id::text)) AS flag_fg
     FROM transactions.transaction_master
     WHERE 1 = 1
     AND transactions.transaction_master.value_date BETWEEN _from AND _to

@@ -53,8 +53,8 @@ BEGIN
                 transactions.customer_receipts.currency_code::text,
                 transactions.customer_receipts.amount,
         transactions.transaction_master.transaction_ts,
-        core.get_flag_background_color(core.get_flag_type_id(_user_id, 'transactions.transaction_master', 'transaction_master_id', transactions.transaction_master.transaction_master_id)) AS flag_bg,
-        core.get_flag_foreground_color(core.get_flag_type_id(_user_id, 'transactions.transaction_master', 'transaction_master_id', transactions.transaction_master.transaction_master_id)) AS flag_fg                
+        core.get_flag_background_color(core.get_flag_type_id(_user_id, 'transactions.transaction_master', 'transaction_master_id', transactions.transaction_master.transaction_master_id::text)) AS flag_bg,
+        core.get_flag_foreground_color(core.get_flag_type_id(_user_id, 'transactions.transaction_master', 'transaction_master_id', transactions.transaction_master.transaction_master_id::text)) AS flag_fg                
         FROM transactions.customer_receipts
         INNER JOIN core.parties
         ON transactions.customer_receipts.party_id = core.parties.party_id

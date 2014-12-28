@@ -27,7 +27,7 @@ namespace MixERP.Net.TransactionGovernor.Data
     public static class Flags
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flag")]
-        public static void CreateFlag(int userId, int flagTypeId, string resourceName, string resourceKey, Collection<int> resourceIds)
+        public static void CreateFlag(int userId, int flagTypeId, string resourceName, string resourceKey, Collection<string> resourceIds)
         {
             if (resourceIds == null)
             {
@@ -36,7 +36,7 @@ namespace MixERP.Net.TransactionGovernor.Data
 
             const string sql = "SELECT core.create_flag(@UserId, @FlagTypeId, @Resource, @ResourceKey, @ResourceId);";
 
-            foreach (int resourceId in resourceIds)
+            foreach (string resourceId in resourceIds)
             {
                 using (NpgsqlCommand command = new NpgsqlCommand(sql))
                 {

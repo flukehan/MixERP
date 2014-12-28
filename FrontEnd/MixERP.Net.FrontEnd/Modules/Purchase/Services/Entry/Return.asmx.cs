@@ -21,12 +21,12 @@ using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models.Core;
 using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.TransactionGovernor.Transactions;
-using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Web.Script.Serialization;
 using System.Web.Services;
+using CollectionHelper = MixERP.Net.WebControls.StockTransactionFactory.Helpers.CollectionHelper;
 
 namespace MixERP.Net.Core.Modules.Purchase.Services.Entry
 {

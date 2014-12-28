@@ -30,7 +30,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data
 {
     public static class ModelFactory
     {
-        public static MergeModel GetMergeModel(Collection<int> ids, TranBook tranBook, SubTranBook subTranBook)
+        public static MergeModel GetMergeModel(Collection<long> ids, TranBook tranBook, SubTranBook subTranBook)
         {
             int rowIndex = 0;
 
@@ -121,7 +121,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data
             return model;
         }
 
-        private static NpgsqlCommand GetViewCommand(TranBook tranBook, SubTranBook subTranBook, Collection<int> ids)
+        private static NpgsqlCommand GetViewCommand(TranBook tranBook, SubTranBook subTranBook, Collection<long> ids)
         {
             if (tranBook == TranBook.Sales)
             {

@@ -17,15 +17,23 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace MixERP.Net.WebControls.StockTransactionView.Helpers
+namespace MixERP.Net.Common.Helpers
 {
-    public static class Flags
+    public static class CollectionHelper
     {
-        public static void CreateFlag(int userId, int flagTypeId, string resource, string resourceKey, Collection<string> resourceIds)
+        public static Collection<T> ToCollection<T>(this List<T> items)
         {
-            TransactionGovernor.Flags.CreateFlag(userId, flagTypeId, resource, resourceKey, resourceIds);
+            Collection<T> collection = new Collection<T>();
+
+            foreach (T t in items)
+            {
+                collection.Add(t);
+            }
+
+            return collection;
         }
     }
 }

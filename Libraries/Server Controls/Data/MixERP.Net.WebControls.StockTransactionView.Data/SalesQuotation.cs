@@ -27,7 +27,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data
     public static class SalesQuotation
     {
         [CLSCompliant(false)]
-        public static NpgsqlCommand GetSalesQuotationViewCommand(Collection<int> ids)
+        public static NpgsqlCommand GetSalesQuotationViewCommand(Collection<long> ids)
         {
             if (ids == null)
             {

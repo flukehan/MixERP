@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 namespace MixERP.Net.Common.Helpers
@@ -51,6 +53,29 @@ namespace MixERP.Net.Common.Helpers
             }
 
             grid.HeaderRow.TableSection = TableRowSection.TableHeader;
+        }
+
+        public class GridViewSelectTemplate : ITemplate
+        {
+            public void InstantiateIn(Control container)
+            {
+                using (HtmlGenericControl toggleCheckBox = new HtmlGenericControl("div"))
+                {
+                    toggleCheckBox.Attributes.Add("class", "ui toggle checkbox");
+
+                    using (HtmlInputCheckBox checkBox = new HtmlInputCheckBox())
+                    {
+                        toggleCheckBox.Controls.Add(checkBox);
+                    }
+
+                    using (HtmlGenericControl label = new HtmlGenericControl("label"))
+                    {
+                        toggleCheckBox.Controls.Add(label);
+                    }
+
+                    container.Controls.Add(toggleCheckBox);
+                }
+            }
         }
     }
 }

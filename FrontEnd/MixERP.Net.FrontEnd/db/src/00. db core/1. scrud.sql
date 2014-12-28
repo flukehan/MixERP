@@ -1,4 +1,4 @@
-﻿DROP SCHEMA IF EXISTS scrud CASCADE;
+DROP SCHEMA IF EXISTS scrud CASCADE;
 CREATE SCHEMA scrud;
 
 COMMENT ON SCHEMA scrud IS 'Contains objects related to MixERP''s ScrudFactory project.';

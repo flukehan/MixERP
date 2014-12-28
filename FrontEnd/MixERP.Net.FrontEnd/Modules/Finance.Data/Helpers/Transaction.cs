@@ -49,6 +49,17 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
             }
         }
 
+        public static long GetTranIdByTranCode(string tranCode)
+        {
+            const string sql = "SELECT transaction_master_id FROM transactions.transaction_master WHERE transaction_code=@TranCode;";
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                command.Parameters.AddWithValue("@TranCode", tranCode);
+
+                return Conversion.TryCastLong(DbOperation.GetScalarValue(command));
+            }
+        }
+
         private static long Add(DateTime valueDate, int officeId, int userId, long logOnId, int costCenterId, string referenceNumber, Collection<JournalDetailsModel> details, Collection<Common.Models.Core.AttachmentModel> attachments)
         {
             if (details == null)

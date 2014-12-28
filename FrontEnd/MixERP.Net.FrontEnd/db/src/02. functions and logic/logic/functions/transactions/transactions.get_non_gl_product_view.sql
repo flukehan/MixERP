@@ -73,8 +73,8 @@ BEGIN
         transactions.non_gl_stock_master.reference_number,
         transactions.non_gl_stock_master.statement_reference,
         transactions.non_gl_stock_master.book::text,
-        core.get_flag_background_color(core.get_flag_type_id(user_id_, 'transactions.non_gl_stock_master', 'non_gl_stock_master_id', transactions.non_gl_stock_master.non_gl_stock_master_id)) AS flag_bg,
-        core.get_flag_foreground_color(core.get_flag_type_id(user_id_, 'transactions.non_gl_stock_master', 'non_gl_stock_master_id', transactions.non_gl_stock_master.non_gl_stock_master_id)) AS flag_fg
+        core.get_flag_background_color(core.get_flag_type_id(user_id_, 'transactions.non_gl_stock_master', 'non_gl_stock_master_id', transactions.non_gl_stock_master.non_gl_stock_master_id::text)) AS flag_bg,
+        core.get_flag_foreground_color(core.get_flag_type_id(user_id_, 'transactions.non_gl_stock_master', 'non_gl_stock_master_id', transactions.non_gl_stock_master.non_gl_stock_master_id::text)) AS flag_fg
     FROM transactions.non_gl_stock_master
     INNER JOIN transactions.non_gl_stock_details
     ON transactions.non_gl_stock_master.non_gl_stock_master_id = transactions.non_gl_stock_details.non_gl_stock_master_id

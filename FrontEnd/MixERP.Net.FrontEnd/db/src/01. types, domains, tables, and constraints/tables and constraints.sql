@@ -109,7 +109,7 @@ CREATE TABLE core.flags
     flag_type_id                            integer NOT NULL REFERENCES core.flag_types(flag_type_id),
     resource                                text, --Fully qualified resource name. Example: transactions.non_gl_stock_master.
     resource_key                            text, --The unique idenfier for lookup. Example: non_gl_stock_master_id,
-    resource_id                             integer, --The value of the unique identifier to lookup for,
+    resource_id                             text, --The value of the unique identifier to lookup for,
     flagged_on                              TIMESTAMP WITH TIME ZONE NULL 
                                             DEFAULT(NOW())
 );
@@ -195,7 +195,7 @@ CREATE TABLE core.zip_codes
 );
 
 CREATE UNIQUE INDEX flags_user_id_resource_resource_id_uix
-ON core.flags(user_id, UPPER(resource), UPPER(resource_key), resource_id);
+ON core.flags(user_id, UPPER(resource), UPPER(resource_key), UPPER(resource_id));
 
 CREATE TABLE core.attachment_lookup
 (

@@ -5,18 +5,18 @@ namespace MixERP.Net.WebControls.TransactionViewFactory
 {
     public partial class TransactionView
     {
-        private Collection<int> GetSelectedValues()
+        private Collection<string> GetSelectedValues()
         {
             string selectedValues = this.selectedValuesHidden.Value;
 
             //Check if something was selected.
             if (string.IsNullOrWhiteSpace(selectedValues))
             {
-                return new Collection<int>();
+                return new Collection<string>();
             }
 
             //Create a collection object to store the IDs.
-            Collection<int> values = new Collection<int>();
+            Collection<string> values = new Collection<string>();
 
             //Iterate through each value in the selected values
             //and determine if each value is a number.
@@ -27,7 +27,7 @@ namespace MixERP.Net.WebControls.TransactionViewFactory
 
                 if (val > 0)
                 {
-                    values.Add(val);
+                    values.Add(value);
                 }
             }
 

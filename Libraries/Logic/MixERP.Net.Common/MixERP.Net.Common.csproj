@@ -72,6 +72,7 @@
     <Compile Include="Conversion.cs" />
     <Compile Include="Events\MixERPPGEventArgs.cs" />
     <Compile Include="ExceptionManager.cs" />
+    <Compile Include="Helpers\CollectionHelper.cs" />
     <Compile Include="Helpers\ConfigurationHelper.cs" />
     <Compile Include="Helpers\DataRowHelper.cs" />
     <Compile Include="Helpers\DateHelper.cs" />

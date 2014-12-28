@@ -1,4 +1,4 @@
-﻿'Cannot calculate interest. The number of days in a year was not provided.' = 'Ne peut pas calculer les intérêts. Le nombre de jours dans l''année n''était pas fourni.'
+'Cannot calculate interest. The number of days in a year was not provided.' = 'Ne peut pas calculer les intérêts. Le nombre de jours dans l''année n''était pas fourni.'
 'No auto verification policy found for this user.' = 'Aucune politique de vérification auto trouvé pour cet utilisateur.'
 'Only one of the following columns is required : %' = 'Seule une des colonnes suivantes est requise: %'
 'Columns except the following will be ignored for this update: %' = 'Colonnes à l''exception de ce qui suit seront ignorées pour cette mise à jour: %'

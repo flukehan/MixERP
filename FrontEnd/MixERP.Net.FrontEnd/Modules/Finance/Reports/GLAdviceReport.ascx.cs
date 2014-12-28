@@ -17,12 +17,14 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.Common;
 using MixERP.Net.Core.Modules.Finance.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.ReportEngine;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Reflection;
 
 namespace MixERP.Net.Core.Modules.Finance.Reports
@@ -31,8 +33,19 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
+            string tranId = this.Page.Request["TranId"];
+            string tranCode = this.Page.Request["TranCode"];
+
+            if (Conversion.TryCastLong(tranId).Equals(0))
+            {
+                if (!string.IsNullOrWhiteSpace(tranCode))
+                {
+                    tranId = Data.Helpers.Transaction.GetTranIdByTranCode(tranCode).ToString(CultureInfo.InvariantCulture);
+                }
+            }
+
             Collection<KeyValuePair<string, string>> list = new Collection<KeyValuePair<string, string>>();
-            list.Add(new KeyValuePair<string, string>("@transaction_master_id", this.Page.Request["TranId"]));
+            list.Add(new KeyValuePair<string, string>("@transaction_master_id", tranId));
 
             using (Report report = new Report())
             {

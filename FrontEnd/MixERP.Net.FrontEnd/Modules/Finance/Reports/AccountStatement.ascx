@@ -30,10 +30,37 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 <script type="text/javascript">
     var accountNumberSelect = $("#AccountNumberSelect");
     var accountNumberInputText = $("#AccountNumberInputText");
+    var statementGridView = $("#StatementGridView");
+    var printIcon = $(".print.icon");
+
+    printIcon.click(function () {
+        var selected = $(this).parent().parent().find("td:nth-child(3)").html().trim();
+        if (!isNullOrWhiteSpace(selected)) {
+            var report = "/Modules/Finance/Reports/GLAdviceReport.mix?TranCode=" + selected;
+            showWindow(report);
+        };
+    });
+
+    function getSelectedItems() {
+        var checkBoxColumnPosition = "2";
+        var idColumnPosition = "3";
+
+        var selection = getSelectedCheckBoxItemIds(checkBoxColumnPosition, idColumnPosition, statementGridView);
+
+        if (selection.length > 0) {
+            $("#SelectedValuesHidden").val(selection.join(','));
+            return true;
+        } else {
+            $.notify(nothingSelectedLocalized, "error");
+            return false;
+        }
+
+    };
 
     $(document).ready(function () {
         loadAccounts();
         createCascadingPair(accountNumberSelect, accountNumberInputText);
+        createFlaggedRows(statementGridView);
     });
 
     function loadAccounts() {
@@ -42,4 +69,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         url = "/Modules/Finance/Services/AccountData.asmx/ListAccounts";
         ajaxDataBind(url, accountNumberSelect, null, selected, accountNumberInputText);
     };
+
+    statementGridView.find('tr').click(function () {
+        var checkBox = $(this).find('td input:checkbox');
+        toogleSelection(checkBox);
+    });
 </script>

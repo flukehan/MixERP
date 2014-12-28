@@ -21,12 +21,12 @@ using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models.Core;
 using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.Core.Modules.Finance.Data.Helpers;
-using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Web.Script.Serialization;
 using System.Web.Services;
+using CollectionHelper = MixERP.Net.WebControls.StockTransactionFactory.Helpers.CollectionHelper;
 
 namespace MixERP.Net.Core.Modules.Finance.Services
 {
@@ -36,10 +36,20 @@ namespace MixERP.Net.Core.Modules.Finance.Services
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
-    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line.
+    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the
+    // following line.
     [System.Web.Script.Services.ScriptService]
     public class JournalVoucher : WebService
     {
+        [WebMethod(EnableSession = true)]
+        public decimal GetExchangeRate(string currencyCode)
+        {
+            int officeId = SessionHelper.GetOfficeId();
+            decimal exchangeRate = Transaction.GetExchangeRate(officeId, currencyCode);
+
+            return exchangeRate;
+        }
+
         [WebMethod(EnableSession = true)]
         public long Save(DateTime valueDate, string referenceNumber, string data, int costCenterId, string attachmentsJSON)
         {
@@ -96,15 +106,6 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             }
 
             return Transaction.Add(valueDate, referenceNumber, costCenterId, details, attachments);
-        }
-
-        [WebMethod(EnableSession = true)]
-        public decimal GetExchangeRate(string currencyCode)
-        {
-            int officeId = SessionHelper.GetOfficeId();
-            decimal exchangeRate = Transaction.GetExchangeRate(officeId, currencyCode);
-
-            return exchangeRate;
         }
     }
 }

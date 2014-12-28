@@ -29,7 +29,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data.Helpers
 {
     public static class NonGlStockTransaction
     {
-        public static bool AreSalesOrdersAlreadyMerged(Collection<int> ids)
+        public static bool AreSalesOrdersAlreadyMerged(Collection<long> ids)
         {
             if (ids == null)
             {
@@ -59,7 +59,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data.Helpers
             }
         }
 
-        public static bool AreSalesQuotationsAlreadyMerged(Collection<int> ids)
+        public static bool AreSalesQuotationsAlreadyMerged(Collection<long> ids)
         {
             if (ids == null)
             {
@@ -89,7 +89,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data.Helpers
             }
         }
 
-        public static bool ContainsIncompatibleTaxes(Collection<int> ids)
+        public static bool ContainsIncompatibleTaxes(Collection<long> ids)
         {
             if (ids == null)
             {
@@ -124,7 +124,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data.Helpers
             return GetView(SessionHelper.GetUserId(), book, SessionHelper.GetOfficeId(), dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference);
         }
 
-        public static bool TransactionIdsBelongToSameParty(Collection<int> ids)
+        public static bool TransactionIdsBelongToSameParty(Collection<long> ids)
         {
             if (ids == null)
             {

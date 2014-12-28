@@ -1,4 +1,4 @@
-﻿CREATE VIEW office.store_type_scrud_view
+CREATE VIEW office.store_type_scrud_view
 AS 
 
 SELECT 

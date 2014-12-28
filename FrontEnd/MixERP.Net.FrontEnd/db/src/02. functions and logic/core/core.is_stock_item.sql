@@ -1,4 +1,4 @@
-﻿DROP FUNCTION IF EXISTS core.is_stock_item(item_id integer);
+DROP FUNCTION IF EXISTS core.is_stock_item(item_id integer);
 
 CREATE FUNCTION core.is_stock_item(item_id integer)
 RETURNS bool

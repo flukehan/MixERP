@@ -1,4 +1,4 @@
-﻿CREATE VIEW office.counter_scrud_view 
+CREATE VIEW office.counter_scrud_view 
 AS 
 SELECT counters.counter_id,
 	stores.store_code,

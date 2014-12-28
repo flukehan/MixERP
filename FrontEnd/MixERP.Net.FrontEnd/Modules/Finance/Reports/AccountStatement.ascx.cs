@@ -25,6 +25,7 @@ using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.Common;
 using MixERP.Net.WebControls.Flag;
 using System;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Globalization;
 using System.Web.UI;
@@ -52,6 +53,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
         private Literal isSystemAccountLiteral;
         private Literal normallyDebitLiteral;
         private Literal parentAccountLiteral;
+        private HiddenField selectedValuesHidden;
         private Button showButton;
         private GridView statementGridView;
         private DateTextBox toDateTextBox;
@@ -177,6 +179,12 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                         this.parentAccountLiteral = null;
                     }
 
+                    if (this.selectedValuesHidden != null)
+                    {
+                        this.selectedValuesHidden.Dispose();
+                        this.selectedValuesHidden = null;
+                    }
+
                     if (this.showButton != null)
                     {
                         this.showButton.Dispose();
@@ -221,7 +229,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
             if (!string.IsNullOrWhiteSpace(accountNumber))
             {
-                accountNumberInputText.Value = accountNumber;
+                this.accountNumberInputText.Value = accountNumber;
             }
             else
             {
@@ -229,7 +237,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 {
                     accountNumber = Data.Helpers.Accounts.GetAccountNumberByAccountId(accountId);
 
-                    accountNumberInputText.Value = accountNumber;
+                    this.accountNumberInputText.Value = accountNumber;
                 }
                 else
                 {
@@ -239,15 +247,16 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
             if (from != DateTime.MinValue)
             {
-                fromDateTextBox.Text = from.Date.ToShortDateString();
+                this.fromDateTextBox.Text = from.Date.ToShortDateString();
             }
 
             if (to != DateTime.MinValue)
             {
-                toDateTextBox.Text = to.Date.ToShortDateString();
+                this.toDateTextBox.Text = to.Date.ToShortDateString();
             }
 
             this.BindGridView();
+            this.BindOverview();
         }
 
         private void CreateFlagPanel(Control placeHolder)
@@ -258,7 +267,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 flag.AssociatedControlId = "FlagButton";
                 flag.OnClientClick = "return getSelectedItems();";
                 flag.CssClass = "ui form segment initially hidden";
-                flag.Updated += FlagUpdated;
+                flag.Updated += Flag_Updated;
 
                 placeHolder.Controls.Add(flag);
             }
@@ -273,9 +282,38 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             }
         }
 
-        private void FlagUpdated(object sender, FlagUpdatedEventArgs flagUpdatedEventArgs)
+        private void Flag_Updated(object sender, FlagUpdatedEventArgs e)
         {
-            throw new NotImplementedException();
+            int flagTypeId = e.FlagId;
+
+            const string resource = "account_statement";
+            const string resourceKey = "transaction_code";
+
+            int userId = SessionHelper.GetUserId();
+
+            TransactionGovernor.Flags.CreateFlag(userId, flagTypeId, resource, resourceKey, this.GetSelectedValues());
+
+            this.BindGridView();
+            this.BindOverview();
+        }
+
+        private Collection<string> GetSelectedValues()
+        {
+            string selectedValues = this.selectedValuesHidden.Value;
+
+            if (string.IsNullOrWhiteSpace(selectedValues))
+            {
+                return new Collection<string>();
+            }
+
+            Collection<string> values = new Collection<string>();
+
+            foreach (string value in selectedValues.Split(','))
+            {
+                values.Add(value);
+            }
+
+            return values;
         }
 
         #region Tabs
@@ -329,7 +367,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
         #region Account Overview Panel
 
-        private void AddBodyRow(Table table, string text, Literal control)
+        private void AddBodyRow(Table table, string text, ref Literal control)
         {
             using (TableRow row = new TableRow())
             {
@@ -361,8 +399,8 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
         {
             using (HtmlGenericControl header = new HtmlGenericControl("h2"))
             {
-                headerLiteral = new Literal();
-                header.Controls.Add(headerLiteral);
+                this.headerLiteral = new Literal();
+                header.Controls.Add(this.headerLiteral);
 
                 container.Controls.Add(header);
             }
@@ -370,9 +408,9 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             using (HtmlGenericControl description = new HtmlGenericControl("div"))
             {
                 description.Attributes.Add("class", "description");
-                descriptionLiteral = new Literal();
+                this.descriptionLiteral = new Literal();
 
-                description.Controls.Add(descriptionLiteral);
+                description.Controls.Add(this.descriptionLiteral);
 
                 container.Controls.Add(description);
             }
@@ -398,18 +436,18 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
         private void CreateTableBody(Table table)
         {
-            this.AddBodyRow(table, Titles.AccountNumber, this.accountNumberLiteral);
-            this.AddBodyRow(table, Titles.ExternalCode, this.externalCodeLiteral);
-            this.AddBodyRow(table, Titles.BaseCurrency, this.baseCurrencyLiteral);
-            this.AddBodyRow(table, Titles.AccountMaster, this.accountMasterLiteral);
-            this.AddBodyRow(table, Titles.Confidential, this.confidentialLiteral);
-            this.AddBodyRow(table, Titles.CashFlowHeading, this.cashFlowHeadingLiteral);
-            this.AddBodyRow(table, Titles.IsSystemAccount, this.isSystemAccountLiteral);
-            this.AddBodyRow(table, Titles.IsCash, this.isCashAccountLiteral);
-            this.AddBodyRow(table, Titles.IsEmployee, this.isEmployeeLiteral);
-            this.AddBodyRow(table, Titles.IsParty, this.isPartyLiteral);
-            this.AddBodyRow(table, Titles.NormallyDebit, this.normallyDebitLiteral);
-            this.AddBodyRow(table, Titles.ParentAccount, this.parentAccountLiteral);
+            this.AddBodyRow(table, Titles.AccountNumber, ref this.accountNumberLiteral);
+            this.AddBodyRow(table, Titles.ExternalCode, ref this.externalCodeLiteral);
+            this.AddBodyRow(table, Titles.BaseCurrency, ref this.baseCurrencyLiteral);
+            this.AddBodyRow(table, Titles.AccountMaster, ref this.accountMasterLiteral);
+            this.AddBodyRow(table, Titles.Confidential, ref this.confidentialLiteral);
+            this.AddBodyRow(table, Titles.CashFlowHeading, ref this.cashFlowHeadingLiteral);
+            this.AddBodyRow(table, Titles.IsSystemAccount, ref this.isSystemAccountLiteral);
+            this.AddBodyRow(table, Titles.IsCash, ref this.isCashAccountLiteral);
+            this.AddBodyRow(table, Titles.IsEmployee, ref this.isEmployeeLiteral);
+            this.AddBodyRow(table, Titles.IsParty, ref this.isPartyLiteral);
+            this.AddBodyRow(table, Titles.NormallyDebit, ref this.normallyDebitLiteral);
+            this.AddBodyRow(table, Titles.ParentAccount, ref this.parentAccountLiteral);
         }
 
         private void CreateTableHeader(Table table)
@@ -446,9 +484,9 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                     field.Controls.Add(label);
                 }
 
-                accountNumberInputText = new HtmlInputText();
-                accountNumberInputText.ID = "AccountNumberInputText";
-                field.Controls.Add(accountNumberInputText);
+                this.accountNumberInputText = new HtmlInputText();
+                this.accountNumberInputText.ID = "AccountNumberInputText";
+                field.Controls.Add(this.accountNumberInputText);
 
                 container.Controls.Add(field);
             }
@@ -463,20 +501,20 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                     field.Controls.Add(label);
                 }
 
-                accountNumberSelect = new HtmlSelect();
-                accountNumberSelect.ID = "AccountNumberSelect";
-                field.Controls.Add(accountNumberSelect);
+                this.accountNumberSelect = new HtmlSelect();
+                this.accountNumberSelect.ID = "AccountNumberSelect";
+                field.Controls.Add(this.accountNumberSelect);
                 container.Controls.Add(field);
             }
         }
 
         private void AddFromDateTextBox(HtmlGenericControl container)
         {
-            fromDateTextBox = new DateTextBox();
-            fromDateTextBox.ID = "FromDateTextBox";
-            fromDateTextBox.Mode = Frequency.FiscalYearStartDate;
+            this.fromDateTextBox = new DateTextBox();
+            this.fromDateTextBox.ID = "FromDateTextBox";
+            this.fromDateTextBox.Mode = Frequency.FiscalYearStartDate;
 
-            using (HtmlGenericControl field = this.GetDateField(Titles.From, fromDateTextBox))
+            using (HtmlGenericControl field = this.GetDateField(Titles.From, this.fromDateTextBox))
             {
                 container.Controls.Add(field);
             }
@@ -491,12 +529,12 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                     field.Controls.Add(label);
                 }
 
-                showButton = new Button();
-                showButton.ID = "ShowButton";
-                showButton.Attributes.Add("class", "ui positive button");
-                showButton.Text = Titles.Show;
-                showButton.Click += ShowButton_Click;
-                field.Controls.Add(showButton);
+                this.showButton = new Button();
+                this.showButton.ID = "ShowButton";
+                this.showButton.Attributes.Add("class", "ui positive button");
+                this.showButton.Text = Titles.Show;
+                this.showButton.Click += this.ShowButton_Click;
+                field.Controls.Add(this.showButton);
 
                 container.Controls.Add(field);
             }
@@ -504,11 +542,11 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
         private void AddToDateTextBox(HtmlGenericControl container)
         {
-            toDateTextBox = new DateTextBox();
-            toDateTextBox.ID = "ToDateTextBox";
-            toDateTextBox.Mode = Frequency.FiscalYearEndDate;
+            this.toDateTextBox = new DateTextBox();
+            this.toDateTextBox.ID = "ToDateTextBox";
+            this.toDateTextBox.Mode = Frequency.FiscalYearEndDate;
 
-            using (HtmlGenericControl field = this.GetDateField(Titles.To, toDateTextBox))
+            using (HtmlGenericControl field = this.GetDateField(Titles.To, this.toDateTextBox))
             {
                 container.Controls.Add(field);
             }
@@ -516,17 +554,43 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
         private void BindGridView()
         {
-            DateTime from = Conversion.TryCastDate(fromDateTextBox.Text);
-            DateTime to = Conversion.TryCastDate(toDateTextBox.Text);
+            DateTime from = Conversion.TryCastDate(this.fromDateTextBox.Text);
+            DateTime to = Conversion.TryCastDate(this.toDateTextBox.Text);
             int userId = SessionHelper.GetUserId();
-            string accountNumber = accountNumberInputText.Value;
+            string accountNumber = this.accountNumberInputText.Value;
             int officeId = SessionHelper.GetOfficeId();
 
             using (DataTable table = Data.Reports.AccountStatement.GetAccountStatement(from, to, userId, accountNumber, officeId))
             {
-                statementGridView.DataSource = table;
-                statementGridView.DataBound += StatementGridViewDataBound;
-                statementGridView.DataBind();
+                this.statementGridView.DataSource = table;
+                this.statementGridView.DataBound += this.StatementGridViewDataBound;
+                this.statementGridView.DataBind();
+            }
+        }
+
+        private void BindOverview()
+        {
+            string accountNumber = this.accountNumberInputText.Value;
+
+            using (DataTable table = Data.Reports.AccountStatement.GetAccountOverview(accountNumber))
+            {
+                if (table.Rows != null && table.Rows.Count.Equals(1) && table.Rows[0] != null)
+                {
+                    this.headerLiteral.Text = Conversion.TryCastString(table.Rows[0]["account"]);
+                    this.descriptionLiteral.Text = Conversion.TryCastString(table.Rows[0]["description"]);
+                    this.accountNumberLiteral.Text = Conversion.TryCastString(table.Rows[0]["account_number"]);
+                    this.externalCodeLiteral.Text = Conversion.TryCastString(table.Rows[0]["external_code"]);
+                    this.baseCurrencyLiteral.Text = Conversion.TryCastString(table.Rows[0]["currency_code"]);
+                    this.accountMasterLiteral.Text = Conversion.TryCastString(table.Rows[0]["account_master_code"]);
+                    this.confidentialLiteral.Text = Conversion.TryCastString(table.Rows[0]["confidential"]);
+                    this.cashFlowHeadingLiteral.Text = Conversion.TryCastString(table.Rows[0]["cash_flow_heading_code"]);
+                    this.isSystemAccountLiteral.Text = Conversion.TryCastString(table.Rows[0]["sys_type"]);
+                    this.isCashAccountLiteral.Text = Conversion.TryCastString(table.Rows[0]["is_cash"]);
+                    this.isEmployeeLiteral.Text = Conversion.TryCastString(table.Rows[0]["is_employee"]);
+                    this.isPartyLiteral.Text = Conversion.TryCastString(table.Rows[0]["is_party"]);
+                    this.normallyDebitLiteral.Text = Conversion.TryCastString(table.Rows[0]["normally_debit"]);
+                    this.parentAccountLiteral.Text = Conversion.TryCastString(table.Rows[0]["parent_account"]);
+                }
             }
         }
 
@@ -577,6 +641,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
         private void ShowButton_Click(object sender, EventArgs e)
         {
             this.BindGridView();
+            this.BindOverview();
         }
 
         private void StatementGridViewDataBound(object sender, EventArgs eventArgs)
@@ -594,6 +659,53 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
         #region GridPanel
 
+        #region Template Fields
+
+        private void AddTemplateFields()
+        {
+            TemplateField actionTemplateField = new TemplateField();
+            actionTemplateField.HeaderText = string.Empty;
+            actionTemplateField.ItemTemplate = new ActionTemplate();
+            this.statementGridView.Columns.Add(actionTemplateField);
+
+            TemplateField checkBoxTemplateField = new TemplateField();
+            checkBoxTemplateField.HeaderText = Titles.Select;
+            checkBoxTemplateField.ItemTemplate = new GridViewHelper.GridViewSelectTemplate();
+            this.statementGridView.Columns.Add(checkBoxTemplateField);
+        }
+
+        internal class ActionTemplate : ITemplate
+        {
+            public void InstantiateIn(Control container)
+            {
+                using (HtmlGenericControl previewIcon = new HtmlGenericControl("i"))
+                {
+                    previewIcon.Attributes.Add("class", "icon print");
+                    previewIcon.Attributes.Add("onclick", "showPreview(this);");
+                    container.Controls.Add(previewIcon);
+                }
+            }
+        }
+
+        #endregion Template Fields
+
+        private void CreateColumns()
+        {
+            this.AddTemplateFields();
+            GridViewHelper.AddDataBoundControl(this.statementGridView, "tran_code", Titles.TranCode);
+            GridViewHelper.AddDataBoundControl(this.statementGridView, "value_date", Titles.ValueDate, "{0:d}");
+            GridViewHelper.AddDataBoundControl(this.statementGridView, "debit", Titles.Debit);
+            GridViewHelper.AddDataBoundControl(this.statementGridView, "credit", Titles.Credit);
+            GridViewHelper.AddDataBoundControl(this.statementGridView, "balance", Titles.Balance);
+            GridViewHelper.AddDataBoundControl(this.statementGridView, "statement_reference", Titles.StatementReference);
+            GridViewHelper.AddDataBoundControl(this.statementGridView, "office", Titles.Office);
+            GridViewHelper.AddDataBoundControl(this.statementGridView, "book", Titles.Book);
+            GridViewHelper.AddDataBoundControl(this.statementGridView, "account_number", Titles.AccountNumber);
+            GridViewHelper.AddDataBoundControl(this.statementGridView, "account", Titles.Account);
+            GridViewHelper.AddDataBoundControl(this.statementGridView, "flag_bg", string.Empty);
+            GridViewHelper.AddDataBoundControl(this.statementGridView, "flag_fg", string.Empty);
+        }
+
         private void CreateGridPanel(HtmlGenericControl container)
         {
             using (HtmlGenericControl autoOverflowPanel = new HtmlGenericControl("div"))
@@ -608,13 +720,16 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
         private void CreateGridView(HtmlGenericControl container)
         {
-            statementGridView = new GridView();
-            statementGridView.ID = "StatementGridView";
-            statementGridView.CssClass = "ui celled table nowrap";
-            statementGridView.GridLines = GridLines.None;
-            statementGridView.BorderStyle = BorderStyle.None;
+            this.statementGridView = new GridView();
+            this.statementGridView.ID = "StatementGridView";
+            this.statementGridView.CssClass = "ui celled table nowrap";
+            this.statementGridView.GridLines = GridLines.None;
+            this.statementGridView.BorderStyle = BorderStyle.None;
+            this.statementGridView.AutoGenerateColumns = false;
 
-            container.Controls.Add(statementGridView);
+            this.CreateColumns();
+
+            container.Controls.Add(this.statementGridView);
         }
 
         #endregion GridPanel
@@ -631,6 +746,14 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 flagButton.InnerHtml = "<i class='icon flag'></i>" + Titles.Flag;
                 container.Controls.Add(flagButton);
             }
+        }
+
+        private void AddHiddenFields(HtmlGenericControl container)
+        {
+            this.selectedValuesHidden = new HiddenField();
+            this.selectedValuesHidden.ID = "SelectedValuesHidden";
+
+            container.Controls.Add(this.selectedValuesHidden);
         }
 
         private void AddNewButton(HtmlGenericControl container)
@@ -666,7 +789,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 this.AddNewButton(buttons);
                 this.AddFlagButton(buttons);
                 this.AddPrintButton(buttons);
-
+                this.AddHiddenFields(buttons);
                 container.Controls.Add(buttons);
             }
         }

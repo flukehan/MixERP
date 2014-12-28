@@ -338,7 +338,6 @@
     <Content Include="db\mixerp.en-US.sql" />
     <Content Include="db\mixerp.fr-FR.sql" />
     <Content Include="db\mixerp.sqlbundle" />
-    <Content Include="db\src\00. db core\0. mixerp.sql" />
     <Content Include="db\src\00. db core\1. scrud.sql" />
     <Content Include="db\src\00. db core\2. install-unit-test.sql" />
     <Content Include="db\src\00. db core\2. mixerp-db-schema.sql" />

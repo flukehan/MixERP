@@ -1,4 +1,4 @@
-﻿DROP FUNCTION IF EXISTS unit_tests.check_party_null_account_id();
+DROP FUNCTION IF EXISTS unit_tests.check_party_null_account_id();
 
 CREATE FUNCTION unit_tests.check_party_null_account_id()
 RETURNS public.test_result

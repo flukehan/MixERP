@@ -1,10 +1,10 @@
 CREATE FUNCTION core.create_flag
 (
-    user_id_    integer,
-    flag_type_id_   integer,
-    resource_   text,
-    resource_key_   text,
-    resource_id_    integer
+    user_id_            integer,
+    flag_type_id_       integer,
+    resource_           text,
+    resource_key_       text,
+    resource_id_        text
 )
 RETURNS void
 AS

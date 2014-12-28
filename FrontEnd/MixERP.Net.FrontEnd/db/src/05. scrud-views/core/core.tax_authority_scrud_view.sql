@@ -1,4 +1,4 @@
-﻿CREATE VIEW core.tax_authority_scrud_view
+CREATE VIEW core.tax_authority_scrud_view
 AS
 SELECT
 	core.tax_authorities.tax_authority_id,

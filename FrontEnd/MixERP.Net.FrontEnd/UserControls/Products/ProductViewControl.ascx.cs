@@ -27,6 +27,7 @@ using MixERP.Net.WebControls.StockTransactionView.Data.Models;
 using System;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
@@ -89,7 +90,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         protected void MergeToDeliveryButton_Click(object sender, EventArgs e)
         {
-            Collection<int> values = this.GetSelectedValues();
+            Collection<long> values = this.GetSelectedValues();
 
             if (this.IsValid())
             {
@@ -99,7 +100,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         protected void MergeToGRNButton_Click(object sender, EventArgs e)
         {
-            Collection<int> values = this.GetSelectedValues();
+            Collection<long> values = this.GetSelectedValues();
 
             if (this.IsValid())
             {
@@ -109,7 +110,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         protected void MergeToOrderButton_Click(object sender, EventArgs e)
         {
-            Collection<int> values = this.GetSelectedValues();
+            Collection<long> values = this.GetSelectedValues();
 
             if (this.IsValid())
             {
@@ -163,7 +164,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         protected void ReturnButton_Click(object sender, EventArgs e)
         {
-            Collection<int> values = this.GetSelectedValues();
+            Collection<long> values = this.GetSelectedValues();
 
             if (this.Book == TranBook.Sales)
             {
@@ -209,23 +210,23 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
             int userId = SessionHelper.GetUserId();
 
-            WebControls.StockTransactionView.Helpers.Flags.CreateFlag(userId, flagTypeId, resource, resourceKey, this.GetSelectedValues());
+            WebControls.StockTransactionView.Helpers.Flags.CreateFlag(userId, flagTypeId, resource, resourceKey, this.GetSelectedValues().Select(t => Conversion.TryCastString(t)).ToList().ToCollection());
 
             this.LoadGridView();
         }
 
-        private Collection<int> GetSelectedValues()
+        private Collection<long> GetSelectedValues()
         {
             string selectedValues = this.SelectedValuesHidden.Value;
 
             //Check if something was selected.
             if (string.IsNullOrWhiteSpace(selectedValues))
             {
-                return new Collection<int>();
+                return new Collection<long>();
             }
 
             //Create a collection object to store the IDs.
-            Collection<int> values = new Collection<int>();
+            Collection<long> values = new Collection<long>();
 
             //Iterate through each value in the selected values
             //and determine if each value is a number.
@@ -348,7 +349,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             }
         }
 
-        private void Merge(Collection<int> ids, string link)
+        private void Merge(Collection<long> ids, string link)
         {
             MergeModel model = ModelFactory.GetMergeModel(ids, this.Book, this.SubBook);
 
@@ -381,7 +382,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         #region Validation
 
-        private bool AreAlreadyMerged(Collection<int> values)
+        private bool AreAlreadyMerged(Collection<long> values)
         {
             if (this.AreSalesQuotationsAlreadyMerged(values))
             {
@@ -395,7 +396,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             return false;
         }
 
-        private bool AreSalesOrdersAlreadyMerged(Collection<int> values)
+        private bool AreSalesOrdersAlreadyMerged(Collection<long> values)
         {
             if (this.Book == TranBook.Sales && this.SubBook == SubTranBook.Order)
             {
@@ -409,7 +410,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             return false;
         }
 
-        private bool AreSalesQuotationsAlreadyMerged(Collection<int> values)
+        private bool AreSalesQuotationsAlreadyMerged(Collection<long> values)
         {
             if (this.Book == TranBook.Sales && this.SubBook == SubTranBook.Quotation)
             {
@@ -423,7 +424,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             return false;
         }
 
-        private bool BelongToSameParty(Collection<int> values)
+        private bool BelongToSameParty(Collection<long> values)
         {
             bool belongToSameParty = NonGlStockTransaction.TransactionIdsBelongToSameParty(values);
 
@@ -436,7 +437,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             return true;
         }
 
-        private bool ContainsIncompatibleTaxes(Collection<int> values)
+        private bool ContainsIncompatibleTaxes(Collection<long> values)
         {
             if (this.Book == TranBook.Sales)
             {
@@ -452,7 +453,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         private bool IsValid()
         {
-            Collection<int> values = this.GetSelectedValues();
+            Collection<long> values = this.GetSelectedValues();
 
             if (values.Count.Equals(0))
             {
