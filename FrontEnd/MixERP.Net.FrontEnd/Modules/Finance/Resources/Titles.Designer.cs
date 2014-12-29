@@ -241,6 +241,33 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Closing Balance.
+        /// </summary>
+        internal static string ClosingBalance {
+            get {
+                return ResourceManager.GetString("ClosingBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Closing Credit.
+        /// </summary>
+        internal static string ClosingCredit {
+            get {
+                return ResourceManager.GetString("ClosingCredit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Closing Debit.
+        /// </summary>
+        internal static string ClosingDebit {
+            get {
+                return ResourceManager.GetString("ClosingDebit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confidential.
         /// </summary>
         internal static string Confidential {
@@ -435,6 +462,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string ExternalCode {
             get {
                 return ResourceManager.GetString("ExternalCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Factor.
+        /// </summary>
+        internal static string Factor {
+            get {
+                return ResourceManager.GetString("Factor", resourceCulture);
             }
         }
         
@@ -682,6 +718,33 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Previous Balance.
+        /// </summary>
+        internal static string PreviousBalance {
+            get {
+                return ResourceManager.GetString("PreviousBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Previous Credit.
+        /// </summary>
+        internal static string PreviousCredit {
+            get {
+                return ResourceManager.GetString("PreviousCredit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Previous Debit.
+        /// </summary>
+        internal static string PreviousDebit {
+            get {
+                return ResourceManager.GetString("PreviousDebit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Price Type.
         /// </summary>
         internal static string PriceType {
@@ -768,6 +831,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string Show {
             get {
                 return ResourceManager.GetString("Show", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Compact.
+        /// </summary>
+        internal static string ShowCompact {
+            get {
+                return ResourceManager.GetString("ShowCompact", resourceCulture);
             }
         }
         
@@ -903,6 +975,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string TransactionType {
             get {
                 return ResourceManager.GetString("TransactionType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trial Balance.
+        /// </summary>
+        internal static string TrialBalance {
+            get {
+                return ResourceManager.GetString("TrialBalance", resourceCulture);
             }
         }
         

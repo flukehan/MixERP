@@ -17,4 +17,41 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="TrialBalance.ascx.cs" Inherits="MixERP.Net.Core.Modules.Finance.Reports.TrialBalance" %>
-<h1>Trial Balance</h1>
+<asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
+
+<style>
+    th[rowspan] {
+        border: 1px solid #D4D4D5;
+    }
+</style>
+<script type="text/javascript">
+    var grid = $("#TrialBalanceGridView");
+    var compactCheckBox = $(".ui.checkbox input");
+    var isCompactHiddenField = $("#IsCompactHiddenField");
+
+    $(document).ready(function () {
+        var html = "<tr><th></th><th></th><th colspan='3'>Previous Period</th><th colspan='3'>Current Period</th><th colspan='3'>Closing</th></tr>";
+        var thead = grid.find("thead");
+        thead.prepend(html);
+
+        var accountNumberCell = thead.find("tr:nth-child(2)").find("th:first-child");
+        var accountCell = thead.find("tr:nth-child(2)").find("th:nth-child(2)");
+
+        thead.find("tr:first-child").find("th:first-child").html(accountNumberCell.html()).attr("rowspan", "2");
+        thead.find("tr:first-child").find("th:nth-child(2)").html(accountCell.html()).attr("rowspan", "2");
+
+        accountNumberCell.remove();
+        accountCell.remove();
+
+    });
+
+    compactCheckBox.change(function () {
+        if (compactCheckBox.is(":checked")) {
+            isCompactHiddenField.val("1");
+            return;
+        };
+
+        isCompactHiddenField.val("0");
+
+    });
+</script>

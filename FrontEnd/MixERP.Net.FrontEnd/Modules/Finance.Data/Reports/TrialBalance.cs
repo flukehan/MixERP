@@ -24,35 +24,24 @@ using Npgsql;
 
 namespace MixERP.Net.Core.Modules.Finance.Data.Reports
 {
-    public static class AccountStatement
+    public static class TrialBalance
     {
-        public static DataTable GetAccountOverview(string accountNumber)
-        {
-            const string sql = "SELECT * FROM core.account_view WHERE account_number=@AccountNumber;";
-
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@AccountNumber", accountNumber);
-
-                return DbOperation.GetDataTable(command);
-            }
-        }
-
-        public static DataTable GetAccountStatement(DateTime from, DateTime to, int userId, string accountNumber, int officeId)
+        public static DataTable GetTrialBalance(DateTime from, DateTime to, int userId, int officeId, bool compact, decimal factor)
         {
             if (to < from)
             {
                 return null;
             }
 
-            const string sql = "SELECT * FROM transactions.get_account_statement(@From::date, @To::date, @UserId, core.get_account_id_by_account_number(@AccountNumber), @OfficeId) ORDER BY id;";
+            const string sql = "SELECT * FROM transactions.get_trial_balance(@From, @To, @UserId, @OfficeId, @Compact, @Factor) ORDER BY id;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@From", from);
                 command.Parameters.AddWithValue("@To", to);
                 command.Parameters.AddWithValue("@UserId", userId);
-                command.Parameters.AddWithValue("@AccountNumber", accountNumber);
                 command.Parameters.AddWithValue("@OfficeId", officeId);
+                command.Parameters.AddWithValue("@Compact", compact);
+                command.Parameters.AddWithValue("@Factor", factor);
 
                 return DbOperation.GetDataTable(command);
             }

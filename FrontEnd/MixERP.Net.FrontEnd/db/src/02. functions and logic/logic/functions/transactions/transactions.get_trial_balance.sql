@@ -4,7 +4,8 @@ DROP FUNCTION IF EXISTS transactions.get_trial_balance
     _date_to                date,
     _user_id                integer,
     _office_id              integer,
-    _compact                boolean
+    _compact                boolean,
+    _factor                 decimal(24, 4)
 );
 
 CREATE FUNCTION transactions.get_trial_balance
@@ -13,7 +14,8 @@ CREATE FUNCTION transactions.get_trial_balance
     _date_to                date,
     _user_id                integer,
     _office_id              integer,
-    _compact                boolean
+    _compact                boolean,
+    _factor                 decimal(24, 4)
 )
 RETURNS TABLE
 (
@@ -36,6 +38,10 @@ $$
 BEGIN
     IF(_date_from = 'infinity') THEN
         RAISE EXCEPTION '%', 'Invalid date.';
+    END IF;
+
+    IF(_factor = 0) THEN
+        _factor := 1;
     END IF;
 
     IF NOT EXISTS
@@ -189,6 +195,16 @@ BEGIN
 
 
     DELETE FROM temp_trial_balance2 WHERE temp_trial_balance2.closing_balance = 0;
+
+    UPDATE temp_trial_balance2 SET previous_debit   = temp_trial_balance2.previous_debit/_factor;
+    UPDATE temp_trial_balance2 SET previous_credit  = temp_trial_balance2.previous_credit/_factor;
+    UPDATE temp_trial_balance2 SET previous_balance = temp_trial_balance2.previous_balance/_factor;
+    UPDATE temp_trial_balance2 SET debit            = temp_trial_balance2.debit/_factor;
+    UPDATE temp_trial_balance2 SET credit           = temp_trial_balance2.credit/_factor;
+    UPDATE temp_trial_balance2 SET balance          = temp_trial_balance2.balance/_factor;
+    UPDATE temp_trial_balance2 SET closing_debit    = temp_trial_balance2.closing_debit/_factor;
+    UPDATE temp_trial_balance2 SET closing_credit   = temp_trial_balance2.closing_credit/_factor;
+    UPDATE temp_trial_balance2 SET closing_balance  = temp_trial_balance2.closing_balance/_factor;
    
     RETURN QUERY
     SELECT
@@ -210,4 +226,4 @@ END
 $$
 LANGUAGE plpgsql;
 
---SELECT * FROM transactions.get_trial_balance('1-1-2010','1-1-2020',1,1, TRUE);
+--SELECT * FROM transactions.get_trial_balance('1-1-2010','1-1-2020',1,1, false, 1);

@@ -420,4 +420,31 @@
   <data name="AccountName" xml:space="preserve">
     <value>Account Name</value>
   </data>
+  <data name="ShowCompact" xml:space="preserve">
+    <value>Show Compact</value>
+  </data>
+  <data name="ClosingBalance" xml:space="preserve">
+    <value>Closing Balance</value>
+  </data>
+  <data name="ClosingCredit" xml:space="preserve">
+    <value>Closing Credit</value>
+  </data>
+  <data name="ClosingDebit" xml:space="preserve">
+    <value>Closing Debit</value>
+  </data>
+  <data name="PreviousBalance" xml:space="preserve">
+    <value>Previous Balance</value>
+  </data>
+  <data name="PreviousCredit" xml:space="preserve">
+    <value>Previous Credit</value>
+  </data>
+  <data name="PreviousDebit" xml:space="preserve">
+    <value>Previous Debit</value>
+  </data>
+  <data name="TrialBalance" xml:space="preserve">
+    <value>Trial Balance</value>
+  </data>
+  <data name="Factor" xml:space="preserve">
+    <value>Factor</value>
+  </data>
 </root>

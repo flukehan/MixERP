@@ -44,6 +44,24 @@ namespace MixERP.Net.Common.Helpers
             }
         }
 
+        public static HtmlGenericControl GetFields()
+        {
+            using (HtmlGenericControl fields = new HtmlGenericControl("div"))
+            {
+                fields.Attributes.Add("class", "fields");
+
+                return fields;
+            }
+        }
+        public static HtmlGenericControl GetFields(string cssClass)
+        {
+            using (HtmlGenericControl fields = new HtmlGenericControl("div"))
+            {
+                fields.Attributes.Add("class", cssClass);
+
+                return fields;
+            }
+        }
         public static HtmlGenericControl GetLabel(string text)
         {
             using (HtmlGenericControl label = new HtmlGenericControl("label"))
