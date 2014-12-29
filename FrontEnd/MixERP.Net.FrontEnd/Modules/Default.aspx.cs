@@ -28,18 +28,17 @@ namespace MixERP.Net.FrontEnd.Modules
     {
         private MixERPUserControlBase plugin;
 
-        private void InitializeControl()
+        protected void Page_Init(object sender, EventArgs e)
         {
-            if (plugin == null)
+            if (this.plugin != null)
             {
-                if (this.RouteData.Values["path"] != null)
-                {
-                    string path = @"~/Modules/" + this.RouteData.Values["path"].ToString().Replace(".mix", "") + ".ascx";
+                this.DefaultContentPlaceholder.Controls.Add(this.plugin);
 
-                    if (File.Exists(Server.MapPath(path)))
-                    {
-                        this.plugin = this.Page.LoadControl(path) as MixERPUserControlBase;
-                    }
+                this.plugin.OnControlLoad(sender, e);
+
+                if (!string.IsNullOrWhiteSpace(this.plugin.OverridePath))
+                {
+                    this.OverridePath = this.plugin.OverridePath;
                 }
             }
         }
@@ -48,31 +47,32 @@ namespace MixERP.Net.FrontEnd.Modules
         {
             this.InitializeControl();
 
-            if (plugin != null)
+            if (this.plugin != null)
             {
-                if (!string.IsNullOrWhiteSpace(plugin.MasterPageId))
+                if (!string.IsNullOrWhiteSpace(this.plugin.MasterPageId))
                 {
-                    this.MasterPageFile = "~/" + plugin.MasterPageId;
+                    this.MasterPageFile = "~/" + this.plugin.MasterPageId;
                 }
 
-                if (plugin.RemoveTheme)
+                if (this.plugin.RemoveTheme)
                 {
                     this.Page.Theme = null;
                 }
             }
         }
 
-        protected void Page_Init(object sender, EventArgs e)
+        private void InitializeControl()
         {
-            if (plugin != null)
+            if (this.plugin == null)
             {
-                this.DefaultContentPlaceholder.Controls.Add(plugin);
-
-                plugin.OnControlLoad(sender, e);
-
-                if (!string.IsNullOrWhiteSpace(plugin.OverridePath))
+                if (this.RouteData.Values["path"] != null)
                 {
-                    this.OverridePath = plugin.OverridePath;
+                    string path = @"~/Modules/" + this.RouteData.Values["path"].ToString().Replace(".mix", "") + ".ascx";
+
+                    if (File.Exists(this.Server.MapPath(path)))
+                    {
+                        this.plugin = this.Page.LoadControl(path) as MixERPUserControlBase;
+                    }
                 }
             }
         }

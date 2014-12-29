@@ -55,7 +55,7 @@ namespace MixERP.Net.FrontEnd.General
                 return Assembly.GetAssembly(typeof(ItemSelector));
             }
 
-            return GetAssemblyByName(assembly);
+            return this.GetAssemblyByName(assembly);
         }
 
         private Assembly GetAssemblyByName(string name)

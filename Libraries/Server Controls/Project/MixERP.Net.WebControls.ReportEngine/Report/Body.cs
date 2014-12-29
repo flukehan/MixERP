@@ -52,7 +52,7 @@ namespace MixERP.Net.WebControls.ReportEngine
             this.reportBody = new Panel();
             this.reportBody.ID = "report";
 
-            if (!NoHeader)
+            if (!this.NoHeader)
             {
                 this.header = new ReportHeader();
                 this.header.ResourceAssembly = this.ResourceAssembly;

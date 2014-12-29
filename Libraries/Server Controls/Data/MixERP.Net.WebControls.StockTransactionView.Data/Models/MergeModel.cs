@@ -45,7 +45,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data.Models
 {
     public sealed class MergeModel
     {
-        private readonly Collection<int> transactionIdCollection = new Collection<int>();
+        private readonly Collection<long> transactionIdCollection = new Collection<long>();
 
         private readonly Collection<ProductDetailsModel> view = new Collection<ProductDetailsModel>();
 
@@ -73,7 +73,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data.Models
 
         public SubTranBook SubBook { get; set; }
 
-        public Collection<int> TransactionIdCollection
+        public Collection<long> TransactionIdCollection
         {
             get
             {
@@ -91,7 +91,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data.Models
             }
         }
 
-        public void AddTransactionIdToCollection(int transactionId)
+        public void AddTransactionIdToCollection(long transactionId)
         {
             this.transactionIdCollection.Add(transactionId);
         }

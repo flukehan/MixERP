@@ -155,8 +155,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         <label for="CostCenterDropDownList">
             <asp:Literal ID="CostCenterLiteral" runat="server" />
         </label>
-        <select name="CostCenterDropDownList"
-            id="CostCenterDropDownList">
+        <select id="CostCenterDropDownList">
         </select>
     </div>
     <div class="field">

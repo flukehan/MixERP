@@ -39,7 +39,7 @@ namespace MixERP.Net.Core.Modules.Finance.Confirmation
                 checklist.ViewPath = "~/Modules/Finance/JournalVoucher.mix";
                 checklist.AddNewPath = "~/Modules/Finance/Entry/JournalVoucher.mix";
                 checklist.GlAdvicePath = "~/Modules/Finance/Reports/GLAdviceReport.mix";
-                Placeholder1.Controls.Add(checklist);
+                this.Placeholder1.Controls.Add(checklist);
             }
 
             base.OnControlLoad(sender, e);

@@ -31,14 +31,14 @@ namespace MixERP.Net.WebControls.TransactionChecklist
         protected override void CreateChildControls()
         {
             this.checkListContainer = new HtmlGenericControl();
-            this.AddHeader(checkListContainer);
-            this.AddButtons(checkListContainer);
-            this.AddWidthdrawDiv(checkListContainer);
-            this.AddEmailHidden(checkListContainer);
-            this.AddMessageLabel(checkListContainer);
+            this.AddHeader(this.checkListContainer);
+            this.AddButtons(this.checkListContainer);
+            this.AddWidthdrawDiv(this.checkListContainer);
+            this.AddEmailHidden(this.checkListContainer);
+            this.AddMessageLabel(this.checkListContainer);
             this.AddScript();
 
-            this.Controls.Add(checkListContainer);
+            this.Controls.Add(this.checkListContainer);
         }
 
         protected override void RecreateChildControls()

@@ -78,7 +78,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         tabMode: 'spaces',
         tabSize: 4,
         indentUnit: 4,
-        viewportMargin: Infinity,
+        viewportMargin: Infinity
 
     });
 

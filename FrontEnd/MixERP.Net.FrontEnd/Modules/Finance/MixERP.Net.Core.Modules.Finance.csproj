@@ -111,11 +111,15 @@
     <Content Include="JournalVoucher.ascx" />
     <Content Include="Package.xml" />
     <Content Include="Reports\AccountStatement.ascx" />
+    <Content Include="Reports\AccountStatementReport.ascx" />
     <Content Include="Reports\BalanceSheet.ascx" />
     <Content Include="Reports\CashFlow.ascx" />
     <Content Include="Reports\GLAdviceReport.ascx" />
     <Content Include="Reports\OffBalanceSheet.ascx" />
     <Content Include="Reports\ProfitAndLossAccount.ascx" />
+    <Content Include="Reports\Source\Transactions.AccountStatement.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Reports\Source\Transactions.StockTransaction.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -189,6 +193,13 @@
     </Compile>
     <Compile Include="Reports\AccountStatement.ascx.designer.cs">
       <DependentUpon>AccountStatement.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\AccountStatementReport.ascx.cs">
+      <DependentUpon>AccountStatementReport.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\AccountStatementReport.ascx.designer.cs">
+      <DependentUpon>AccountStatementReport.ascx</DependentUpon>
     </Compile>
     <Compile Include="Reports\BalanceSheet.ascx.cs">
       <DependentUpon>BalanceSheet.ascx</DependentUpon>

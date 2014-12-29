@@ -50,22 +50,22 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         public bool ShowMergeToDeliveryButton
         {
-            set { MergeToDeliveryButton.Visible = value; }
+            set { this.MergeToDeliveryButton.Visible = value; }
         }
 
         public bool ShowMergeToGRNButton
         {
-            set { MergeToGRNButton.Visible = value; }
+            set { this.MergeToGRNButton.Visible = value; }
         }
 
         public bool ShowMergeToOrderButton
         {
-            set { MergeToOrderButton.Visible = value; }
+            set { this.MergeToOrderButton.Visible = value; }
         }
 
         public bool ShowReturnButton
         {
-            set { ReturnButton.Visible = value; }
+            set { this.ReturnButton.Visible = value; }
         }
 
         public SubTranBook SubBook { get; set; }
@@ -78,13 +78,13 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         public void Initialize()
         {
-            if (!initialized)
+            if (!this.initialized)
             {
                 this.AddFlag();
                 this.SetVisibleStates();
                 this.LoadGridView();
                 this.InitializePostBackUrls();
-                initialized = true;
+                this.initialized = true;
             }
         }
 
@@ -168,11 +168,11 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
             if (this.Book == TranBook.Sales)
             {
-                Response.Redirect("~/Modules/Sales/Entry/Return.mix?TranId=" + values[0]);
+                this.Response.Redirect("~/Modules/Sales/Entry/Return.mix?TranId=" + values[0]);
                 return;
             }
 
-            Response.Redirect("~/Modules/Purchase/Entry/Return.mix?TranId=" + values[0]);
+            this.Response.Redirect("~/Modules/Purchase/Entry/Return.mix?TranId=" + values[0]);
         }
 
         protected void ShowButton_Click(object sender, EventArgs e)
@@ -189,9 +189,9 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 flag.OnClientClick = "return getSelectedItems();";
                 flag.CssClass = "ui form segment initially hidden";
 
-                flag.Updated += Flag_Updated;
+                flag.Updated += this.Flag_Updated;
 
-                FlagPlaceholder.Controls.Add(flag);
+                this.FlagPlaceholder.Controls.Add(flag);
             }
         }
 
@@ -274,7 +274,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 return;
             }
 
-            this.AddNewButton.Attributes.Add("onclick", "window.location='" + ResolveUrl(this.AddNewUrl) + "'");
+            this.AddNewButton.Attributes.Add("onclick", "window.location='" + this.ResolveUrl(this.AddNewUrl) + "'");
         }
 
         private bool IsNonGlTransaction()
@@ -307,7 +307,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         private void LoadGridView()
         {
-            this.ProductViewGridView.DataBound += ProductViewGridViewOnDataBound;
+            this.ProductViewGridView.DataBound += this.ProductViewGridViewOnDataBound;
             DateTime dateFrom = Conversion.TryCastDate(this.DateFromDateTextBox.Text);
             DateTime dateTo = Conversion.TryCastDate(this.DateToDateTextBox.Text);
             string office = this.OfficeTextBox.Text;

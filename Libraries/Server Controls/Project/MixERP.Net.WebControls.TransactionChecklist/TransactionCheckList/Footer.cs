@@ -28,8 +28,8 @@ namespace MixERP.Net.WebControls.TransactionChecklist
 
         private void AddMessageLabel(HtmlGenericControl p)
         {
-            messageLabel = new Label();
-            p.Controls.Add(messageLabel);
+            this.messageLabel = new Label();
+            p.Controls.Add(this.messageLabel);
         }
     }
 }

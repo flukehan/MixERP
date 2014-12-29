@@ -19,3 +19,21 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BonusSlabs.ascx.cs"
     Inherits="MixERP.Net.Core.Modules.Sales.Setup.BonusSlabs" %>
 <asp:PlaceHolder ID="ScrudPlaceholder" runat="server" />
+
+<script type="text/javascript">
+
+    function scrudCustomValidator() {
+        var effectiveFromTextbox = $("#effective_from_textbox");
+        var endsOnTextbox = $("#ends_on_textbox");
+
+        var from = parseDate(effectiveFromTextbox.val());
+        var to = parseDate(endsOnTextbox.val());
+
+        if (to < from) {
+            displayScrudError("The end date should be greater than the start date.");
+            return false;
+        };
+
+        return true;
+    };
+</script>

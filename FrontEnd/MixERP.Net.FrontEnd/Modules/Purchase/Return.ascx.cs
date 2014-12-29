@@ -38,7 +38,7 @@ namespace MixERP.Net.Core.Modules.Purchase
                 productView.ChecklistUrl = "~/Modules/Purchase/Confirmation/Return.mix";
                 productView.Initialize();
 
-                Placeholder1.Controls.Add(productView);
+                this.Placeholder1.Controls.Add(productView);
             }
 
             base.OnControlLoad(sender, e);

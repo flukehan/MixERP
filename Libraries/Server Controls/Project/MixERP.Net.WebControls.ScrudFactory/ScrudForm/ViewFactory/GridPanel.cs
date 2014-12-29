@@ -56,7 +56,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             this.lastValueHiddenTextBox = new TextBox();
             this.lastValueHiddenTextBox.ID = "LastValueHidden";
             this.lastValueHiddenTextBox.Style.Add("display", "none;");
-            p.Controls.Add(lastValueHiddenTextBox);
+            p.Controls.Add(this.lastValueHiddenTextBox);
         }
 
         private void AddPager(Panel p)
@@ -106,18 +106,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
             this.AddLastValueHiddenField(this.gridPanel);
         }
 
-        private Unit GetGridPanelWidth()
-        {
-            if (this.GridPanelWidth.Value.Equals(0))
-            {
-                var width = Conversion.TryCastUnit(ConfigurationHelper.GetScrudParameter("GridPanelDefaultWidth"));
-
-                return width;
-            }
-
-            return this.GridPanelWidth;
-        }
-
         private string GetGridPanelStyle()
         {
             if (this.GridPanelWidth.Value.Equals(0))
@@ -128,6 +116,18 @@ namespace MixERP.Net.WebControls.ScrudFactory
             }
 
             return this.GridPanelStyle;
+        }
+
+        private Unit GetGridPanelWidth()
+        {
+            if (this.GridPanelWidth.Value.Equals(0))
+            {
+                var width = Conversion.TryCastUnit(ConfigurationHelper.GetScrudParameter("GridPanelDefaultWidth"));
+
+                return width;
+            }
+
+            return this.GridPanelWidth;
         }
     }
 }

@@ -49,7 +49,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.Tax
 
         public static DataTable GetSalesTaxes(int officeId, string tranBook)
         {
-            string sql = string.Empty;
+            string sql;
 
             if (tranBook.ToUpperInvariant().Equals("SALES"))
             {

@@ -107,41 +107,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
             }
         }
 
-        private void SaveButton_Click(object sender, EventArgs e)
-        {
-            this.Page.Validate();
-
-            if (!this.Page.IsValid)
-            {
-                return;
-            }
-
-            if (this.SaveButtonClick != null)
-            {
-                this.SaveButtonClick(sender, e);
-                return;
-            }
-
-            this.Save(false);
-        }
-
-        private void UseButton_Click(object sender, EventArgs e)
-        {
-            this.Page.Validate();
-            if (!this.Page.IsValid)
-            {
-                return;
-            }
-
-            if (this.UseButtonClick != null)
-            {
-                this.UseButtonClick(sender, e);
-                return;
-            }
-
-            this.Save(true);
-        }
-
         // ReSharper disable once UnusedParameter.Local
         private void Save(bool closeForm)
         {
@@ -154,7 +119,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             var list = this.GetFormCollection(true);
             var id = this.GetSelectedValue();
-            lastValueHiddenTextBox.Text = id;
+            this.lastValueHiddenTextBox.Text = id;
 
             var userId = Conversion.TryCastInteger(this.Page.Session[userIdSessionKey]);
 
@@ -173,7 +138,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
                         if (lastValue > 0)
                         {
-                            lastValueHiddenTextBox.Text = lastValue.ToString(CultureInfo.InvariantCulture);
+                            this.lastValueHiddenTextBox.Text = lastValue.ToString(CultureInfo.InvariantCulture);
                             //Clear the form container.
                             this.formContainer.Controls.Clear();
 
@@ -237,6 +202,41 @@ namespace MixERP.Net.WebControls.ScrudFactory
                     }
                 }
             }
+        }
+
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            this.Page.Validate();
+
+            if (!this.Page.IsValid)
+            {
+                return;
+            }
+
+            if (this.SaveButtonClick != null)
+            {
+                this.SaveButtonClick(sender, e);
+                return;
+            }
+
+            this.Save(false);
+        }
+
+        private void UseButton_Click(object sender, EventArgs e)
+        {
+            this.Page.Validate();
+            if (!this.Page.IsValid)
+            {
+                return;
+            }
+
+            if (this.UseButtonClick != null)
+            {
+                this.UseButtonClick(sender, e);
+                return;
+            }
+
+            this.Save(true);
         }
     }
 }

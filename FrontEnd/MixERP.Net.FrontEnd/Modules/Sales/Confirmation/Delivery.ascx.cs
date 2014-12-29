@@ -54,7 +54,7 @@ namespace MixERP.Net.Core.Modules.Sales.Confirmation
 
                 checklist.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(TranBook.Sales, SubTranBook.Delivery, transactionMasterId);
 
-                Placeholder1.Controls.Add(checklist);
+                this.Placeholder1.Controls.Add(checklist);
             }
 
             base.OnControlLoad(sender, e);

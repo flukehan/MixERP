@@ -43,7 +43,7 @@ namespace MixERP.Net.FrontEnd.Services
 
             foreach (var upload in uploads)
             {
-                string path = Server.MapPath(attachmentsDirectory + upload.FilePath);
+                string path = this.Server.MapPath(attachmentsDirectory + upload.FilePath);
 
                 if (System.IO.File.Exists(path))
                 {

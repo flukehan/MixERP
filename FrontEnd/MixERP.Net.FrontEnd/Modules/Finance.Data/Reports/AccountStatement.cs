@@ -17,10 +17,10 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.DBFactory;
-using Npgsql;
 using System;
 using System.Data;
+using MixERP.Net.DBFactory;
+using Npgsql;
 
 namespace MixERP.Net.Core.Modules.Finance.Data.Reports
 {
@@ -40,7 +40,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Reports
 
         public static DataTable GetAccountStatement(DateTime from, DateTime to, int userId, string accountNumber, int officeId)
         {
-            const string sql = "SELECT * FROM transactions.get_account_statement(@From::date, @To::date, @UserId, core.get_account_id_by_account_number(@AccountNumber), @OfficeId);";
+            const string sql = "SELECT * FROM transactions.get_account_statement(@From::date, @To::date, @UserId, core.get_account_id_by_account_number(@AccountNumber), @OfficeId) ORDER BY id;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@From", from);

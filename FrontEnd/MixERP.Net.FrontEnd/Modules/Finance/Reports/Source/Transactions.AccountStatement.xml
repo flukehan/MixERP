@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This file is part of MixERP.
+
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses />.
+-->
+
+<MixERPReport>
+  <Title>{Resources.Titles.AccountStatement}</Title>
+  <TopSection>
+    <table class="table horizontal">
+      <tr>
+        <td>{Resources.Titles.AccountNumber}</td>
+        <td>
+          {DataSource[0].account_number} <br />
+        </td>
+      </tr>
+      <tr>
+        <td>{Resources.Titles.AccountName}</td>
+        <td>
+          {DataSource[0].account_name} <br />
+        </td>
+      </tr>
+      <tr>
+        <td>{Resources.Titles.OfficeCode}</td>
+        <td>{DataSource[0].office_code}</td>
+      </tr>
+      <tr>
+        <td>{Resources.Titles.BaseCurrency}</td>
+        <td>{DataSource[0].currency_code}</td>
+      </tr>
+    </table>
+    <br />
+  </TopSection>
+  <Body>
+    <Content>
+      <h2>{DataSource[0].account_number} ({DataSource[0].account_name})</h2>
+    </Content>
+    <GridViews>
+      <GridView>
+        <GridViewDataSource Index="1" Style="white-space:nowrap;">
+        </GridViewDataSource>
+      </GridView>
+    </GridViews>
+  </Body>
+  <BottomSection>
+  </BottomSection>
+  <DataSources>
+    <DataSource>
+      <Query>
+        SELECT
+        account_number,
+        office.get_office_code_by_id(@OfficeId) as office_code,
+        account_name,
+        currency_code
+        FROM core.accounts
+        WHERE account_number= @AccountNumber;
+      </Query>
+      <Parameters>
+        <Parameter Name="@OfficeId" Type="Number" />
+        <Parameter Name="@AccountNumber" Type="Text" />
+      </Parameters>
+    </DataSource>
+    <DataSource>
+      <Query>
+        SELECT
+        tran_code,
+        value_date,
+        debit,
+        credit,
+        balance,
+        statement_reference,
+        office,
+        book,
+        account_number,
+        account
+        FROM transactions.get_account_statement
+        (@From::date, @To::date, @UserId, core.get_account_id_by_account_number(@AccountNumber), @OfficeId)
+        ORDER BY id;
+      </Query>
+      <Parameters>
+        <Parameter Name="@From" Type="Date" />
+        <Parameter Name="@To" Type="Date" />
+        <Parameter Name="@UserId" Type="Number" />
+        <Parameter Name="@AccountNumber" Type="Text" />
+        <Parameter Name="@OfficeId" Type="Number" />
+      </Parameters>
+      <RunningTotalTextColumnIndex>1</RunningTotalTextColumnIndex>
+      <RunningTotalFieldIndices>2, 3</RunningTotalFieldIndices>
+    </DataSource>
+  </DataSources>
+</MixERPReport>

@@ -146,7 +146,7 @@ namespace MixERP.Net.WebControls.TransactionViewFactory
             this.showButton = new Button();
             this.showButton.Text = Titles.Show;
             this.showButton.CssClass = "blue ui button";
-            this.showButton.Click += ShowButton_Click;
+            this.showButton.Click += this.ShowButton_Click;
 
             container.Controls.Add(this.showButton);
         }

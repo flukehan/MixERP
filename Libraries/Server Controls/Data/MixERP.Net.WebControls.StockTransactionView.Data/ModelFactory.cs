@@ -46,7 +46,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data
 
             MergeModel model = new MergeModel();
 
-            foreach (int tranId in ids)
+            foreach (long tranId in ids)
             {
                 model.AddTransactionIdToCollection(tranId);
             }

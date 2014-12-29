@@ -49,7 +49,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 offset = (Conversion.TryCastInteger(this.Page.Request["page"]) - 1) * limit;
             }
 
-            this.formGridView.DataBound += FormGridViewOnDataBound;
+            this.formGridView.DataBound += this.FormGridViewOnDataBound;
 
             using (var table = FormHelper.GetView(this.ViewSchema, this.View, this.KeyColumn, limit, offset))
             {

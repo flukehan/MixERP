@@ -8,27 +8,27 @@ namespace MixERP.Net.Core.Modules.Finance.Hubs
     {
         public void PerformEOD()
         {
-            if (Context == null)
+            if (this.Context == null)
             {
-                Clients.Caller.getNotification(Errors.AccessIsDenied);
+                this.Clients.Caller.getNotification(Errors.AccessIsDenied);
                 return;
             }
 
-            long loginId = Conversion.TryCastLong(Context.User.Identity.Name);
+            long loginId = Conversion.TryCastLong(this.Context.User.Identity.Name);
             if (loginId <= 0)
             {
-                Clients.Caller.getNotification(Errors.AccessIsDenied);
+                this.Clients.Caller.getNotification(Errors.AccessIsDenied);
                 return;
             }
 
             Data.EODOperation operation = new Data.EODOperation();
-            operation.NotificationReceived += EOD_NotificationReceived;
+            operation.NotificationReceived += this.EOD_NotificationReceived;
             operation.Perform(loginId);
         }
 
         private void EOD_NotificationReceived(object sender, Common.Events.MixERPPGEventArgs e)
         {
-            Clients.Caller.getNotification(e.AdditionalInformation);
+            this.Clients.Caller.getNotification(e.AdditionalInformation);
         }
     }
 }

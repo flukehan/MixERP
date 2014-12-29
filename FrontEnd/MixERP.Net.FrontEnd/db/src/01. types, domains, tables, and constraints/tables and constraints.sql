@@ -80,7 +80,7 @@ ON core.industries(UPPER(industry_name));
 
 CREATE TABLE office.departments
 (
-    department_id SERIAL                    PRIMARY KEY,
+    department_id                           SERIAL PRIMARY KEY,
     department_code                         national character varying(12) NOT NULL,
     department_name                         national character varying(50) NOT NULL,
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
@@ -757,8 +757,8 @@ CREATE TABLE core.ageing_slabs
 (
     ageing_slab_id SERIAL PRIMARY KEY,
     ageing_slab_name national character varying(24) NOT NULL,
-    from_days integer NOT NULL,
-    to_days integer NOT NULL CHECK(to_days > 0)
+    from_days   integer NOT NULL,
+    to_days     integer NOT NULL CHECK(to_days > 0)
 );
 
 CREATE UNIQUE INDEX ageing_slabs_ageing_slab_name_uix
@@ -1035,8 +1035,7 @@ CREATE TABLE core.sales_taxes
                                             DEFAULT(NOW()),
                                             CONSTRAINT taxes_is_exemption_chk
                                             CHECK
-                                            (
-                                            
+                                            (                                            
                                                 CASE WHEN is_exemption = true THEN rate = 0 END
                                             )
 );

@@ -39,7 +39,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Confirmation
                 checklist.ViewPath = "/Modules/Inventory/Transfer.mix";
                 checklist.AddNewPath = "/Modules/Inventory/Entry/Transfer.mix";
 
-                Placeholder1.Controls.Add(checklist);
+                this.Placeholder1.Controls.Add(checklist);
             }
 
             base.OnControlLoad(sender, e);

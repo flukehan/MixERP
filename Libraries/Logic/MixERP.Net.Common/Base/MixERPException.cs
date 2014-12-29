@@ -55,7 +55,7 @@ namespace MixERP.Net.Common.Base
 
         public string DBConstraintName
         {
-            get { return dbConstraintName; }
+            get { return this.dbConstraintName; }
         }
 
         [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]

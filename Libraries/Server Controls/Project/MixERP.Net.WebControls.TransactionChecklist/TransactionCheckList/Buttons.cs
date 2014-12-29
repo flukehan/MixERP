@@ -126,14 +126,14 @@ namespace MixERP.Net.WebControls.TransactionChecklist
                     return;
                 }
 
-                emailLinkButton = new LinkButton();
+                this.emailLinkButton = new LinkButton();
 
-                emailLinkButton.ID = "EmailReportLinkButton";
-                emailLinkButton.Text = @"<i class='icon mail'></i>" + this.EmailReportButtonText;
-                emailLinkButton.CausesValidation = false;
-                emailLinkButton.Attributes.Add("class", "item");
-                emailLinkButton.Click += EmailLinkButton_Click;
-                h.Controls.Add(emailLinkButton);
+                this.emailLinkButton.ID = "EmailReportLinkButton";
+                this.emailLinkButton.Text = @"<i class='icon mail'></i>" + this.EmailReportButtonText;
+                this.emailLinkButton.CausesValidation = false;
+                this.emailLinkButton.Attributes.Add("class", "item");
+                this.emailLinkButton.Click += this.EmailLinkButton_Click;
+                h.Controls.Add(this.emailLinkButton);
             }
         }
 

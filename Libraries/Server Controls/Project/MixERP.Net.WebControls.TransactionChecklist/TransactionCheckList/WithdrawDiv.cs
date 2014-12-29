@@ -29,6 +29,62 @@ namespace MixERP.Net.WebControls.TransactionChecklist
         private Button okButton;
         private TextBox reasonTextBox;
 
+        private void AddCancelButton(HtmlGenericControl p)
+        {
+            using (HtmlInputButton button = new HtmlInputButton())
+            {
+                button.ID = "CancelButton";
+                button.CausesValidation = false;
+                button.Value = Titles.Cancel;
+                button.Attributes.Add("class", "ui red small submit button");
+
+                p.Controls.Add(button);
+            }
+        }
+
+        private void AddOkButton(HtmlGenericControl p)
+        {
+            this.okButton = new Button();
+            this.okButton.CausesValidation = true;
+            this.okButton.Text = Titles.OK;
+            this.okButton.Attributes.Add("class", "ui red small submit button");
+            this.okButton.Click += this.OkButton_Click;
+
+            p.Controls.Add(this.okButton);
+        }
+
+        private void AddReasonTextBox(HtmlGenericControl p)
+        {
+            this.reasonTextBox = new TextBox();
+            this.reasonTextBox.ID = "ReasonTextBox";
+            this.reasonTextBox.ClientIDMode = ClientIDMode.Static;
+            this.reasonTextBox.TextMode = TextBoxMode.MultiLine;
+            this.reasonTextBox.Rows = 5;
+
+            p.Controls.Add(this.reasonTextBox);
+
+            using (RequiredFieldValidator reasonTextBoxRequired = new RequiredFieldValidator())
+            {
+                reasonTextBoxRequired.ID = "ReasonTextBoxRequired";
+                reasonTextBoxRequired.ControlToValidate = this.reasonTextBox.ID;
+                reasonTextBoxRequired.EnableClientScript = true;
+                reasonTextBoxRequired.ErrorMessage = Labels.ThisFieldIsRequired;
+                reasonTextBoxRequired.CssClass = "error-message";
+                reasonTextBoxRequired.Display = ValidatorDisplay.Dynamic;
+                p.Controls.Add(reasonTextBoxRequired);
+            }
+        }
+
+        private void AddSpacer(HtmlGenericControl div)
+        {
+            using (HtmlGenericControl spacer = new HtmlGenericControl("span"))
+            {
+                spacer.Attributes.Add("class", "spacer");
+                spacer.InnerHtml = "&nbsp;";
+                div.Controls.Add(spacer);
+            }
+        }
+
         private void AddWidthdrawDiv(HtmlGenericControl p)
         {
             if (this.DisplayWithdrawButton)
@@ -44,6 +100,16 @@ namespace MixERP.Net.WebControls.TransactionChecklist
                     this.AddWithdrawFooter(withdrawDiv);
                     p.Controls.Add(withdrawDiv);
                 }
+            }
+        }
+
+        private void AddWithdrawFooter(HtmlGenericControl div)
+        {
+            using (HtmlGenericControl footer = new HtmlGenericControl("div"))
+            {
+                footer.Attributes.Add("class", "ui bottom attached red info message");
+                footer.InnerHtml = @"<i class='icon help'></i>" + Questions.AreYouSure;
+                div.Controls.Add(footer);
             }
         }
 
@@ -89,72 +155,6 @@ namespace MixERP.Net.WebControls.TransactionChecklist
                 this.AddCancelButton(form);
 
                 div.Controls.Add(form);
-            }
-        }
-
-        private void AddReasonTextBox(HtmlGenericControl p)
-        {
-            reasonTextBox = new TextBox();
-            reasonTextBox.ID = "ReasonTextBox";
-            reasonTextBox.ClientIDMode = ClientIDMode.Static;
-            reasonTextBox.TextMode = TextBoxMode.MultiLine;
-            reasonTextBox.Rows = 5;
-
-            p.Controls.Add(reasonTextBox);
-
-            using (RequiredFieldValidator reasonTextBoxRequired = new RequiredFieldValidator())
-            {
-                reasonTextBoxRequired.ID = "ReasonTextBoxRequired";
-                reasonTextBoxRequired.ControlToValidate = reasonTextBox.ID;
-                reasonTextBoxRequired.EnableClientScript = true;
-                reasonTextBoxRequired.ErrorMessage = Labels.ThisFieldIsRequired;
-                reasonTextBoxRequired.CssClass = "error-message";
-                reasonTextBoxRequired.Display = ValidatorDisplay.Dynamic;
-                p.Controls.Add(reasonTextBoxRequired);
-            }
-        }
-
-        private void AddOkButton(HtmlGenericControl p)
-        {
-            okButton = new Button();
-            okButton.CausesValidation = true;
-            okButton.Text = Titles.OK;
-            okButton.Attributes.Add("class", "ui red small submit button");
-            okButton.Click += OkButton_Click;
-
-            p.Controls.Add(okButton);
-        }
-
-        private void AddCancelButton(HtmlGenericControl p)
-        {
-            using (HtmlInputButton button = new HtmlInputButton())
-            {
-                button.ID = "CancelButton";
-                button.CausesValidation = false;
-                button.Value = Titles.Cancel;
-                button.Attributes.Add("class", "ui red small submit button");
-
-                p.Controls.Add(button);
-            }
-        }
-
-        private void AddSpacer(HtmlGenericControl div)
-        {
-            using (HtmlGenericControl spacer = new HtmlGenericControl("span"))
-            {
-                spacer.Attributes.Add("class", "spacer");
-                spacer.InnerHtml = "&nbsp;";
-                div.Controls.Add(spacer);
-            }
-        }
-
-        private void AddWithdrawFooter(HtmlGenericControl div)
-        {
-            using (HtmlGenericControl footer = new HtmlGenericControl("div"))
-            {
-                footer.Attributes.Add("class", "ui bottom attached red info message");
-                footer.InnerHtml = @"<i class='icon help'></i>" + Questions.AreYouSure;
-                div.Controls.Add(footer);
             }
         }
     }

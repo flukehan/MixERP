@@ -40,7 +40,7 @@ namespace MixERP.Net.Core.Modules.Purchase
                 productView.ShowReturnButton = true;
                 productView.Initialize();
 
-                Placeholder1.Controls.Add(productView);
+                this.Placeholder1.Controls.Add(productView);
             }
             base.OnControlLoad(sender, e);
         }

@@ -66,7 +66,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
         {
             this.commandPanel = new Panel();
             this.commandPanel.Attributes.Add("role", "toolbar");
-            commandPanel.CssClass = this.CssClass;
+            this.commandPanel.CssClass = this.CssClass;
             this.AddSelectButton(this.commandPanel);
             this.AddShowCompactButton(this.commandPanel);
             this.AddShowAllButton(this.commandPanel);

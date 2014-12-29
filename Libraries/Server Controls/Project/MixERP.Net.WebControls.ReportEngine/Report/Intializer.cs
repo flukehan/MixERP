@@ -17,6 +17,16 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data;
+using System.Drawing;
+using System.Globalization;
+using System.Linq;
+using System.Reflection;
+using System.Threading;
+using System.Web.UI.WebControls;
+using System.Xml;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.ReportEngine.Data;
@@ -40,16 +50,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
-
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data;
-using System.Drawing;
-using System.Globalization;
-using System.Reflection;
-using System.Threading;
-using System.Web.UI.WebControls;
-using System.Xml;
 
 namespace MixERP.Net.WebControls.ReportEngine
 {
@@ -111,7 +111,7 @@ namespace MixERP.Net.WebControls.ReportEngine
         }
 
         /// <summary>
-        /// Initializes the literals by providing a default value if those were not provided.
+        ///     Initializes the literals by providing a default value if those were not provided.
         /// </summary>
         private void InitializeLiterals()
         {
@@ -156,10 +156,17 @@ namespace MixERP.Net.WebControls.ReportEngine
             }
         }
 
-        private void LoadGrid(string indices)
+        private void LoadGrid(string indices, string styles)
         {
+            List<string> styleList = styles.Split(',').ToList();
+            string style;
+
+            int counter = 0;
+
             foreach (string data in indices.Split(','))
             {
+                style = styleList[counter];
+
                 string ds = data.Trim();
 
                 if (!string.IsNullOrWhiteSpace(ds))
@@ -172,7 +179,6 @@ namespace MixERP.Net.WebControls.ReportEngine
 
                         grid.ID = "GridView" + ds;
                         grid.CssClass = "report";
-
                         grid.Width = Unit.Percentage(100);
                         grid.GridLines = GridLines.None;
                         grid.RowDataBound += this.GridView_RowDataBound;
@@ -182,7 +188,14 @@ namespace MixERP.Net.WebControls.ReportEngine
                         grid.DataSource = this.dataTableCollection[index];
                         grid.DataBind();
                         GridViewHelper.SetHeaderRow(grid);
+
+                        if (!string.IsNullOrWhiteSpace(style))
+                        {
+                            grid.Attributes.Add("style", style);
+                        }
                     }
+
+                    counter++;
                 }
             }
         }
@@ -190,13 +203,13 @@ namespace MixERP.Net.WebControls.ReportEngine
         private string LoadPieCharts(string xml, XmlNode node, string id, int gridViewIndex, bool hideGridView, string type, int width, int height, int titleColumnIndex, int valueColumnIndex, Color backgroundColor, Color borderColor)
         {
             string pieChart = string.Format(CultureInfo.InvariantCulture, "<div style='background-color:{0};padding:24px;maring:0 auto;border:1px solid {1};'>" +
-                                            "<canvas id='{2}' width='{3}px' height='{4}px'></canvas>" +
-                                            "<br />" +
-                                            "<div id='{2}-legend'></div></div>", ColorTranslator.ToHtml(backgroundColor), ColorTranslator.ToHtml(borderColor), id, width, height);
+                                                                          "<canvas id='{2}' width='{3}px' height='{4}px'></canvas>" +
+                                                                          "<br />" +
+                                                                          "<div id='{2}-legend'></div></div>", ColorTranslator.ToHtml(backgroundColor), ColorTranslator.ToHtml(borderColor), id, width, height);
 
             string script = string.Format(CultureInfo.InvariantCulture, "$(document).ready(function () {{" +
-                                          "preparePieChart('GridView{0}', '{1}', '{1}-legend', '{2}', {3}, {4}, {5});" +
-                                          " }});", gridViewIndex, id, type, hideGridView.ToString().ToLower(), titleColumnIndex, valueColumnIndex);
+                                                                        "preparePieChart('GridView{0}', '{1}', '{1}-legend', '{2}', {3}, {4}, {5});" +
+                                                                        " }});", gridViewIndex, id, type, hideGridView.ToString().ToLower(), titleColumnIndex, valueColumnIndex);
 
             PageUtility.RegisterJavascript(id, script, this.Page, true);
 
@@ -302,16 +315,29 @@ namespace MixERP.Net.WebControls.ReportEngine
         {
             XmlNodeList gridViewDataSource = XmlHelper.GetNodes(this.reportPath, "//GridViewDataSource");
             string indices = string.Empty;
+            string styles = string.Empty;
 
             foreach (XmlNode node in gridViewDataSource)
             {
-                if (node.Attributes != null && node.Attributes["Index"] != null)
+                if (node.Attributes != null)
                 {
-                    indices += node.Attributes["Index"].Value + ",";
+                    if (node.Attributes["Index"] != null)
+                    {
+                        indices += node.Attributes["Index"].Value + ",";
+                    }
+
+                    if (node.Attributes["Style"] != null)
+                    {
+                        styles += node.Attributes["Style"].Value + ",";
+                    }
+                    else
+                    {
+                        styles += ",";
+                    }
                 }
             }
 
-            this.LoadGrid(indices);
+            this.LoadGrid(indices, styles);
         }
 
         private string SetPieCharts(string xml)
@@ -324,20 +350,20 @@ namespace MixERP.Net.WebControls.ReportEngine
 
             foreach (XmlNode node in pieCharts)
             {
-                string id = GetAttributeValue(node, "ID");
-                int gridViewIndex = Conversion.TryCastInteger(GetAttributeValue(node, "GridViewIndex"));
+                string id = this.GetAttributeValue(node, "ID");
+                int gridViewIndex = Conversion.TryCastInteger(this.GetAttributeValue(node, "GridViewIndex"));
 
-                string pieType = GetAttributeValue(node, "Type").ToLower(CultureInfo.InvariantCulture);
+                string pieType = this.GetAttributeValue(node, "Type").ToLower(CultureInfo.InvariantCulture);
 
-                int width = Conversion.TryCastInteger(GetAttributeValue(node, "Width"));
-                int height = Conversion.TryCastInteger(GetAttributeValue(node, "Height"));
-                int titleColumnIndex = Conversion.TryCastInteger(GetAttributeValue(node, "TitleColumnIndex"));
-                int valueColumnIndex = Conversion.TryCastInteger(GetAttributeValue(node, "ValueColumnIndex"));
+                int width = Conversion.TryCastInteger(this.GetAttributeValue(node, "Width"));
+                int height = Conversion.TryCastInteger(this.GetAttributeValue(node, "Height"));
+                int titleColumnIndex = Conversion.TryCastInteger(this.GetAttributeValue(node, "TitleColumnIndex"));
+                int valueColumnIndex = Conversion.TryCastInteger(this.GetAttributeValue(node, "ValueColumnIndex"));
 
-                bool hideGridView = Conversion.TryCastBoolean(GetAttributeValue(node, "HideGridView"));
+                bool hideGridView = Conversion.TryCastBoolean(this.GetAttributeValue(node, "HideGridView"));
 
-                Color backgroundColor = ColorTranslator.FromHtml(GetAttributeValue(node, "BackgroundColor"));
-                Color borderColor = ColorTranslator.FromHtml(GetAttributeValue(node, "BorderColor"));
+                Color backgroundColor = ColorTranslator.FromHtml(this.GetAttributeValue(node, "BackgroundColor"));
+                Color borderColor = ColorTranslator.FromHtml(this.GetAttributeValue(node, "BorderColor"));
 
                 xml = this.LoadPieCharts(xml, node, id, gridViewIndex, hideGridView, pieType, width, height, titleColumnIndex, valueColumnIndex, backgroundColor, borderColor);
             }

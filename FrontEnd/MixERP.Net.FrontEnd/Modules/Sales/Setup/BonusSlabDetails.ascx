@@ -21,10 +21,19 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 <asp:PlaceHolder ID="ScrudPlaceholder" runat="server" />
 
 <script type="text/javascript">
-    var amountFromTextBox = $("#amount_from_textbox");
-    var amountToTextBox = $("#amount_from_textbox");
+    function scrudCustomValidator() {
+        var amountFromTextBox = $("#amount_from_textbox");
+        var amountToTextBox = $("#amount_to_textbox");
 
-    $("#SaveButton").click(function () {
-        
-    });
+        var from = parseFloat2(amountFromTextBox.val());
+        var to = parseFloat2(amountToTextBox.val());
+
+        if (to < from) {
+            var message = "The amount to should be greater than the amount from.";
+            displayMessage(message);
+            return false;
+        };
+
+        return true;
+    };
 </script>

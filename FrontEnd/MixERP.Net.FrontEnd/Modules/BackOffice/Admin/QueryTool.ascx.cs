@@ -32,11 +32,11 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            ExecuteButton.Text = Titles.Execute;
-            LoadButton.Text = Titles.Load;
-            ClearButton.Text = Titles.Clear;
-            SaveButton.Text = Titles.Save;
-            GoToTopButton.Text = Titles.GoToTop;
+            this.ExecuteButton.Text = Titles.Execute;
+            this.LoadButton.Text = Titles.Load;
+            this.ClearButton.Text = Titles.Clear;
+            this.SaveButton.Text = Titles.Save;
+            this.GoToTopButton.Text = Titles.GoToTop;
 
             base.OnControlLoad(sender, e);
         }

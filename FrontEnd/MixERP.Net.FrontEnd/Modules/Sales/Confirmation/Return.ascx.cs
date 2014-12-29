@@ -49,7 +49,7 @@ namespace MixERP.Net.Core.Modules.Sales.Confirmation
                 checklist.ViewPath = "~/Modules/Sales/Return.mix";
                 checklist.AddNewPath = "~/Modules/Sales/Entry/Return.mix";
 
-                Placeholder1.Controls.Add(checklist);
+                this.Placeholder1.Controls.Add(checklist);
             }
 
             base.OnControlLoad(sender, e);

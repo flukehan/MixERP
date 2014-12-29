@@ -28,6 +28,15 @@ namespace MixERP.Net.WebControls.TransactionChecklist
         private Literal titleLiteral;
         private Label verificationLabel;
 
+        private void AddBreak(HtmlGenericControl p)
+        {
+            using (HtmlGenericControl line = new HtmlGenericControl())
+            {
+                line.TagName = "br";
+                p.Controls.Add(line);
+            }
+        }
+
         private void AddHeader(HtmlGenericControl p)
         {
             this.AddTitle(p);
@@ -36,37 +45,6 @@ namespace MixERP.Net.WebControls.TransactionChecklist
             this.AddRuler(p);
             this.AddVerificationLabel(p);
             this.AddBreak(p);
-        }
-
-        private void AddTitle(HtmlGenericControl p)
-        {
-            using (HtmlGenericControl titleHeading = new HtmlGenericControl())
-            {
-                titleHeading.TagName = "h1";
-                titleLiteral = new Literal();
-                titleLiteral.Text = this.Text;
-                titleHeading.Controls.Add(titleLiteral);
-                p.Controls.Add(titleHeading);
-            }
-        }
-
-        private void AddSubtitle(HtmlGenericControl p)
-        {
-            using (HtmlGenericControl subTitleHeading = new HtmlGenericControl())
-            {
-                subTitleHeading.TagName = "h2";
-                subTitleLiteral = new Literal();
-                subTitleLiteral.Text = Resources.Labels.TransactionPostedSuccessfully;
-                subTitleHeading.Controls.Add(subTitleLiteral);
-                p.Controls.Add(subTitleHeading);
-            }
-        }
-
-        private void AddVerificationLabel(HtmlGenericControl p)
-        {
-            this.verificationLabel = new Label();
-            this.ShowVerificationStatus(this.GetTranId(), this.verificationLabel);
-            p.Controls.Add(verificationLabel);
         }
 
         private void AddRuler(HtmlGenericControl p)
@@ -78,13 +56,34 @@ namespace MixERP.Net.WebControls.TransactionChecklist
             }
         }
 
-        private void AddBreak(HtmlGenericControl p)
+        private void AddSubtitle(HtmlGenericControl p)
         {
-            using (HtmlGenericControl line = new HtmlGenericControl())
+            using (HtmlGenericControl subTitleHeading = new HtmlGenericControl())
             {
-                line.TagName = "br";
-                p.Controls.Add(line);
+                subTitleHeading.TagName = "h2";
+                this.subTitleLiteral = new Literal();
+                this.subTitleLiteral.Text = Resources.Labels.TransactionPostedSuccessfully;
+                subTitleHeading.Controls.Add(this.subTitleLiteral);
+                p.Controls.Add(subTitleHeading);
             }
+        }
+
+        private void AddTitle(HtmlGenericControl p)
+        {
+            using (HtmlGenericControl titleHeading = new HtmlGenericControl())
+            {
+                titleHeading.TagName = "h1";
+                this.titleLiteral = new Literal();
+                this.titleLiteral.Text = this.Text;
+                titleHeading.Controls.Add(this.titleLiteral);
+                p.Controls.Add(titleHeading);
+            }
+        }
+        private void AddVerificationLabel(HtmlGenericControl p)
+        {
+            this.verificationLabel = new Label();
+            this.ShowVerificationStatus(this.GetTranId(), this.verificationLabel);
+            p.Controls.Add(this.verificationLabel);
         }
     }
 }

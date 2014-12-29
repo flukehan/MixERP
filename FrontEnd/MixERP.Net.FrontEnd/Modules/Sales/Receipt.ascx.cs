@@ -39,7 +39,7 @@ namespace MixERP.Net.Core.Modules.Sales
                 productView.ChecklistUrl = "~/Modules/Sales/Confirmation/Receipt.mix";
                 productView.Initialize();
 
-                Placeholder1.Controls.Add(productView);
+                this.Placeholder1.Controls.Add(productView);
             }
 
             base.OnControlLoad(sender, e);

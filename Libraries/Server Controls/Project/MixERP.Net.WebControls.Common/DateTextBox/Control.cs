@@ -28,57 +28,9 @@ namespace MixERP.Net.WebControls.Common
     [ToolboxData("<{0}:DateTextBox runat=server></{0}:DateTextBox>")]
     public sealed partial class DateTextBox
     {
-        public TextBox textBox;
         public CompareValidator compareValidator;
         public RequiredFieldValidator requiredValidator;
-
-        protected override void Render(HtmlTextWriter w)
-        {
-            this.textBox.RenderControl(w);
-
-            if (this.EnableValidation)
-            {
-                this.requiredValidator.RenderControl(w);
-                this.compareValidator.RenderControl(w);
-            }
-        }
-
-        protected override void RecreateChildControls()
-        {
-            this.EnsureChildControls();
-            base.RecreateChildControls();
-        }
-
-        private void InitializeDate(Frequency frequency)
-        {
-            DateTime date = DateTime.Today;
-
-            if (frequency == Frequency.MonthStartDate)
-            {
-                date = date.AddDays(1 - date.Day);
-            }
-
-            if (frequency == Frequency.MonthEndDate)
-            {
-                date = new DateTime(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month));
-            }
-
-            if (frequency == Frequency.FiscalYearStartDate)
-            {
-                date = new DateTime(date.Year, 1, 1);
-            }
-
-            if (frequency == Frequency.FiscalYearEndDate)
-            {
-                date = new DateTime(date.Year, 12, DateTime.DaysInMonth(date.Year, 12));
-            }
-
-            if (this.textBox != null)
-            {
-                this.textBox.Text = date.ToShortDateString();
-            }
-        }
-
+        public TextBox textBox;
         protected override void CreateChildControls()
         {
             this.Controls.Clear();
@@ -122,8 +74,54 @@ namespace MixERP.Net.WebControls.Common
                 this.Controls.Add(this.compareValidator);
             }
 
-            Net.Common.jQueryHelper.jQueryUI.AddjQueryUIDatePicker(this.Page, textBox.ID, this.MinDate, this.MaxDate);
+            Net.Common.jQueryHelper.jQueryUI.AddjQueryUIDatePicker(this.Page, this.textBox.ID, this.MinDate, this.MaxDate);
             base.CreateChildControls();
+        }
+
+        protected override void RecreateChildControls()
+        {
+            this.EnsureChildControls();
+            base.RecreateChildControls();
+        }
+
+        protected override void Render(HtmlTextWriter w)
+        {
+            this.textBox.RenderControl(w);
+
+            if (this.EnableValidation)
+            {
+                this.requiredValidator.RenderControl(w);
+                this.compareValidator.RenderControl(w);
+            }
+        }
+        private void InitializeDate(Frequency frequency)
+        {
+            DateTime date = DateTime.Today;
+
+            if (frequency == Frequency.MonthStartDate)
+            {
+                date = date.AddDays(1 - date.Day);
+            }
+
+            if (frequency == Frequency.MonthEndDate)
+            {
+                date = new DateTime(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month));
+            }
+
+            if (frequency == Frequency.FiscalYearStartDate)
+            {
+                date = new DateTime(date.Year, 1, 1);
+            }
+
+            if (frequency == Frequency.FiscalYearEndDate)
+            {
+                date = new DateTime(date.Year, 12, DateTime.DaysInMonth(date.Year, 12));
+            }
+
+            if (this.textBox != null)
+            {
+                this.textBox.Text = date.ToShortDateString();
+            }
         }
     }
 }

@@ -148,7 +148,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         public void Initialize()
         {
-            if (!initialized)
+            if (!this.initialized)
             {
                 if (!this.IsPostBack)
                 {
@@ -161,7 +161,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
                 this.TitleLiteral.Text = this.Text;
                 this.Page.Title = this.Text;
-                initialized = true;
+                this.initialized = true;
             }
         }
 
@@ -256,7 +256,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             }
 
             this.Session[this.ID] = this.model.View;
-            TranIdCollectionHiddenField.Value = string.Join(",", this.model.TransactionIdCollection);
+            this.TranIdCollectionHiddenField.Value = string.Join(",", this.model.TransactionIdCollection);
             this.ClearSession("Product");
         }
 
@@ -281,7 +281,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 this.ShippingChargeInputText.Attributes.Add("readonly", "readonly");
             }
 
-            SalesTypeDiv.Visible = (this.Book == TranBook.Sales && this.ShowSalesType);
+            this.SalesTypeDiv.Visible = (this.Book == TranBook.Sales && this.ShowSalesType);
 
             this.CostCenterDiv.Visible = this.ShowCostCenter;
             this.SalespersonDiv.Visible = this.ShowSalesAgents;
@@ -355,7 +355,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 string data = serializer.Serialize(rowData);
 
-                ProductGridViewDataHidden.Value = data;
+                this.ProductGridViewDataHidden.Value = data;
             }
         }
 

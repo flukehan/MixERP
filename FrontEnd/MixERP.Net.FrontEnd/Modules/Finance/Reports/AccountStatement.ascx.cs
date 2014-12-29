@@ -17,13 +17,6 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Core;
-using MixERP.Net.Core.Modules.Finance.Resources;
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.Common;
-using MixERP.Net.WebControls.Flag;
 using System;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -31,6 +24,13 @@ using System.Globalization;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Common.Models.Core;
+using MixERP.Net.Core.Modules.Finance.Resources;
+using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.WebControls.Common;
+using MixERP.Net.WebControls.Flag;
 
 namespace MixERP.Net.Core.Modules.Finance.Reports
 {
@@ -57,6 +57,161 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
         private Button showButton;
         private GridView statementGridView;
         private DateTextBox toDateTextBox;
+
+        public override void OnControlLoad(object sender, EventArgs e)
+        {
+            this.CreateHeader(this.Placeholder1);
+            this.CreateTopPanel(this.Placeholder1);
+            this.CreateTabs(this.Placeholder1);
+            this.CreateFlagPanel(this.Placeholder1);
+            this.AutoInitialize();
+            base.OnControlLoad(sender, e);
+        }
+
+        private void AutoInitialize()
+        {
+            string accountNumber = this.Request.QueryString["AccountNumber"];
+            long accountId = Conversion.TryCastLong(this.Request.QueryString["AccountId"]);
+            DateTime from = Conversion.TryCastDate(this.Request.QueryString["From"]);
+            DateTime to = Conversion.TryCastDate(this.Request.QueryString["To"]);
+
+            if (!string.IsNullOrWhiteSpace(accountNumber))
+            {
+                this.accountNumberInputText.Value = accountNumber;
+            }
+            else
+            {
+                if (accountId > 0)
+                {
+                    accountNumber = Data.Helpers.Accounts.GetAccountNumberByAccountId(accountId);
+
+                    this.accountNumberInputText.Value = accountNumber;
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            if (from != DateTime.MinValue)
+            {
+                this.fromDateTextBox.Text = from.Date.ToShortDateString();
+            }
+
+            if (to != DateTime.MinValue)
+            {
+                this.toDateTextBox.Text = to.Date.ToShortDateString();
+            }
+
+            this.BindGridView();
+            this.BindOverview();
+        }
+
+        private void CreateFlagPanel(Control placeHolder)
+        {
+            using (FlagControl flag = new FlagControl())
+            {
+                flag.ID = "FlagPopUnder";
+                flag.AssociatedControlId = "FlagButton";
+                flag.OnClientClick = "return getSelectedItems();";
+                flag.CssClass = "ui form segment initially hidden";
+                flag.Updated += this.Flag_Updated;
+
+                placeHolder.Controls.Add(flag);
+            }
+        }
+
+        private void CreateHeader(Control container)
+        {
+            using (HtmlGenericControl header = new HtmlGenericControl("h2"))
+            {
+                header.InnerText = Titles.AccountStatement;
+                container.Controls.Add(header);
+            }
+        }
+
+        private void Flag_Updated(object sender, FlagUpdatedEventArgs e)
+        {
+            int flagTypeId = e.FlagId;
+
+            const string resource = "account_statement";
+            const string resourceKey = "transaction_code";
+
+            int userId = SessionHelper.GetUserId();
+
+            TransactionGovernor.Flags.CreateFlag(userId, flagTypeId, resource, resourceKey, this.GetSelectedValues());
+
+            this.BindGridView();
+            this.BindOverview();
+        }
+
+        private Collection<string> GetSelectedValues()
+        {
+            string selectedValues = this.selectedValuesHidden.Value;
+
+            if (string.IsNullOrWhiteSpace(selectedValues))
+            {
+                return new Collection<string>();
+            }
+
+            Collection<string> values = new Collection<string>();
+
+            foreach (string value in selectedValues.Split(','))
+            {
+                values.Add(value);
+            }
+
+            return values;
+        }
+
+        #region Tabs
+
+        private void CreateTabs(Control container)
+        {
+            using (HtmlGenericControl tabMenu = new HtmlGenericControl("div"))
+            {
+                tabMenu.Attributes.Add("class", "ui top attached tabular menu");
+
+                using (HtmlAnchor transactionStatementTabMenu = new HtmlAnchor())
+                {
+                    transactionStatementTabMenu.Attributes.Add("class", "active item");
+                    transactionStatementTabMenu.Attributes.Add("data-tab", "first");
+                    transactionStatementTabMenu.InnerText = Titles.TransactionStatement;
+
+                    tabMenu.Controls.Add(transactionStatementTabMenu);
+                }
+
+                using (HtmlAnchor accountOverviewTabMenu = new HtmlAnchor())
+                {
+                    accountOverviewTabMenu.Attributes.Add("class", "item");
+                    accountOverviewTabMenu.Attributes.Add("data-tab", "second");
+                    accountOverviewTabMenu.InnerText = Titles.AccountOverview;
+
+                    tabMenu.Controls.Add(accountOverviewTabMenu);
+                }
+                container.Controls.Add(tabMenu);
+            }
+
+            using (HtmlGenericControl transactionStatementTab = new HtmlGenericControl("div"))
+            {
+                transactionStatementTab.Attributes.Add("class", "ui bottom attached active form tab segment");
+                transactionStatementTab.Attributes.Add("data-tab", "first");
+                this.CreateFormPanel(transactionStatementTab);
+                this.CreateGridPanel(transactionStatementTab);
+                container.Controls.Add(transactionStatementTab);
+            }
+
+            using (HtmlGenericControl accountOverviewTab = new HtmlGenericControl("div"))
+            {
+                accountOverviewTab.Attributes.Add("class", "ui bottom attached tab segment");
+                accountOverviewTab.Attributes.Add("data-tab", "second");
+                this.CreateAccountOverviewPanel(accountOverviewTab);
+
+                container.Controls.Add(accountOverviewTab);
+            }
+        }
+
+        #endregion Tabs
 
         #region IDisposable
 
@@ -209,161 +364,6 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
         }
 
         #endregion IDisposable
-
-        public override void OnControlLoad(object sender, EventArgs e)
-        {
-            this.CreateHeader(this.Placeholder1);
-            this.CreateTopPanel(this.Placeholder1);
-            this.CreateTabs(this.Placeholder1);
-            this.CreateFlagPanel(this.Placeholder1);
-            this.AutoInitialize();
-            base.OnControlLoad(sender, e);
-        }
-
-        private void AutoInitialize()
-        {
-            string accountNumber = this.Request.QueryString["AccountNumber"];
-            long accountId = Conversion.TryCastLong(this.Request.QueryString["AccountId"]);
-            DateTime from = Conversion.TryCastDate(this.Request.QueryString["From"]);
-            DateTime to = Conversion.TryCastDate(this.Request.QueryString["To"]);
-
-            if (!string.IsNullOrWhiteSpace(accountNumber))
-            {
-                this.accountNumberInputText.Value = accountNumber;
-            }
-            else
-            {
-                if (accountId > 0)
-                {
-                    accountNumber = Data.Helpers.Accounts.GetAccountNumberByAccountId(accountId);
-
-                    this.accountNumberInputText.Value = accountNumber;
-                }
-                else
-                {
-                    return;
-                }
-            }
-
-            if (from != DateTime.MinValue)
-            {
-                this.fromDateTextBox.Text = from.Date.ToShortDateString();
-            }
-
-            if (to != DateTime.MinValue)
-            {
-                this.toDateTextBox.Text = to.Date.ToShortDateString();
-            }
-
-            this.BindGridView();
-            this.BindOverview();
-        }
-
-        private void CreateFlagPanel(Control placeHolder)
-        {
-            using (FlagControl flag = new FlagControl())
-            {
-                flag.ID = "FlagPopUnder";
-                flag.AssociatedControlId = "FlagButton";
-                flag.OnClientClick = "return getSelectedItems();";
-                flag.CssClass = "ui form segment initially hidden";
-                flag.Updated += Flag_Updated;
-
-                placeHolder.Controls.Add(flag);
-            }
-        }
-
-        private void CreateHeader(Control container)
-        {
-            using (HtmlGenericControl header = new HtmlGenericControl("h2"))
-            {
-                header.InnerText = Titles.AccountStatement;
-                container.Controls.Add(header);
-            }
-        }
-
-        private void Flag_Updated(object sender, FlagUpdatedEventArgs e)
-        {
-            int flagTypeId = e.FlagId;
-
-            const string resource = "account_statement";
-            const string resourceKey = "transaction_code";
-
-            int userId = SessionHelper.GetUserId();
-
-            TransactionGovernor.Flags.CreateFlag(userId, flagTypeId, resource, resourceKey, this.GetSelectedValues());
-
-            this.BindGridView();
-            this.BindOverview();
-        }
-
-        private Collection<string> GetSelectedValues()
-        {
-            string selectedValues = this.selectedValuesHidden.Value;
-
-            if (string.IsNullOrWhiteSpace(selectedValues))
-            {
-                return new Collection<string>();
-            }
-
-            Collection<string> values = new Collection<string>();
-
-            foreach (string value in selectedValues.Split(','))
-            {
-                values.Add(value);
-            }
-
-            return values;
-        }
-
-        #region Tabs
-
-        private void CreateTabs(Control container)
-        {
-            using (HtmlGenericControl tabMenu = new HtmlGenericControl("div"))
-            {
-                tabMenu.Attributes.Add("class", "ui top attached tabular menu");
-
-                using (HtmlAnchor transactionStatementTabMenu = new HtmlAnchor())
-                {
-                    transactionStatementTabMenu.Attributes.Add("class", "active item");
-                    transactionStatementTabMenu.Attributes.Add("data-tab", "first");
-                    transactionStatementTabMenu.InnerText = Titles.TransactionStatement;
-
-                    tabMenu.Controls.Add(transactionStatementTabMenu);
-                }
-
-                using (HtmlAnchor accountOverviewTabMenu = new HtmlAnchor())
-                {
-                    accountOverviewTabMenu.Attributes.Add("class", "item");
-                    accountOverviewTabMenu.Attributes.Add("data-tab", "second");
-                    accountOverviewTabMenu.InnerText = Titles.AccountOverview;
-
-                    tabMenu.Controls.Add(accountOverviewTabMenu);
-                }
-                container.Controls.Add(tabMenu);
-            }
-
-            using (HtmlGenericControl transactionStatementTab = new HtmlGenericControl("div"))
-            {
-                transactionStatementTab.Attributes.Add("class", "ui bottom attached active form tab segment");
-                transactionStatementTab.Attributes.Add("data-tab", "first");
-                this.CreateFormPanel(transactionStatementTab);
-                this.CreateGridPanel(transactionStatementTab);
-                container.Controls.Add(transactionStatementTab);
-            }
-
-            using (HtmlGenericControl accountOverviewTab = new HtmlGenericControl("div"))
-            {
-                accountOverviewTab.Attributes.Add("class", "ui bottom attached tab segment");
-                accountOverviewTab.Attributes.Add("data-tab", "second");
-                this.CreateAccountOverviewPanel(accountOverviewTab);
-
-                container.Controls.Add(accountOverviewTab);
-            }
-        }
-
-        #endregion Tabs
 
         #region Account Overview Panel
 

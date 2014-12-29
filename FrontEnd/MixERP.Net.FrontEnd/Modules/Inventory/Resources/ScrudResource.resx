@@ -564,4 +564,7 @@
   <data name="sales_tax_id" xml:space="preserve">
     <value>Sales Tax Id</value>
   </data>
+  <data name="compound_units_chk" xml:space="preserve">
+    <value>The base unit id cannot same as compare unit id.</value>
+  </data>
 </root>

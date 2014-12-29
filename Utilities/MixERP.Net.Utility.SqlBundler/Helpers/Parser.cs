@@ -161,7 +161,7 @@ namespace MixERP.Net.Utility.SqlBundler.Helpers
 
         private static string[] GetFiles(string sourceFolder, string filters)
         {
-            return filters.Split('|').SelectMany(filter => System.IO.Directory.GetFiles(sourceFolder, filter)).ToArray();
+            return filters.Split('|').SelectMany(filter => Directory.GetFiles(sourceFolder, filter)).ToArray();
         }
 
         private static string GetOutputDirectory(string key, string value)

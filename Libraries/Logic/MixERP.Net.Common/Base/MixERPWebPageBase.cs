@@ -30,12 +30,12 @@ namespace MixERP.Net.Common.Base
         {
             get
             {
-                if (pageStatePersister == null)
+                if (this.pageStatePersister == null)
                 {
-                    pageStatePersister = new MixERPPageStatePersister(this);
+                    this.pageStatePersister = new MixERPPageStatePersister(this);
                 }
 
-                return pageStatePersister;
+                return this.pageStatePersister;
             }
         }
 

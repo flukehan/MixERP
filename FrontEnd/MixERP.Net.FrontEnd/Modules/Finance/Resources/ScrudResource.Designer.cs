@@ -61,6 +61,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account.
+        /// </summary>
+        internal static string account {
+            get {
+                return ResourceManager.GetString("account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Account Id.
         /// </summary>
         internal static string account_id {
@@ -160,6 +169,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Balance.
+        /// </summary>
+        internal static string balance {
+            get {
+                return ResourceManager.GetString("balance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bank Account Number.
         /// </summary>
         internal static string bank_account_number {
@@ -210,6 +228,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string bank_name {
             get {
                 return ResourceManager.GetString("bank_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Book.
+        /// </summary>
+        internal static string book {
+            get {
+                return ResourceManager.GetString("book", resourceCulture);
             }
         }
         
@@ -520,6 +547,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Office.
+        /// </summary>
+        internal static string office {
+            get {
+                return ResourceManager.GetString("office", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Office Name.
         /// </summary>
         internal static string office_name {
@@ -745,6 +781,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tran Code.
+        /// </summary>
+        internal static string tran_code {
+            get {
+                return ResourceManager.GetString("tran_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unit Name.
         /// </summary>
         internal static string unit_name {
@@ -768,6 +813,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string user_name {
             get {
                 return ResourceManager.GetString("user_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value Date.
+        /// </summary>
+        internal static string value_date {
+            get {
+                return ResourceManager.GetString("value_date", resourceCulture);
             }
         }
     }

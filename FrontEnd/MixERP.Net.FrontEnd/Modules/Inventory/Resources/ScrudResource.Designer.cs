@@ -70,20 +70,20 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Account Number.
-        /// </summary>
-        internal static string account_number {
-            get {
-                return ResourceManager.GetString("account_number", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Account Id.
         /// </summary>
         internal static string account_id {
             get {
                 return ResourceManager.GetString("account_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account Number.
+        /// </summary>
+        internal static string account_number {
+            get {
+                return ResourceManager.GetString("account_number", resourceCulture);
             }
         }
         
@@ -300,6 +300,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         internal static string compound_unit_id {
             get {
                 return ResourceManager.GetString("compound_unit_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The base unit id cannot same as compare unit id..
+        /// </summary>
+        internal static string compound_units_chk {
+            get {
+                return ResourceManager.GetString("compound_units_chk", resourceCulture);
             }
         }
         

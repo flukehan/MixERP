@@ -49,7 +49,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Confirmation
                 checklist.ViewPath = "/Modules/Purchase/DirectPurchase.mix";
                 checklist.AddNewPath = "/Modules/Purchase/Entry/DirectPurchase.mix";
 
-                Placeholder1.Controls.Add(checklist);
+                this.Placeholder1.Controls.Add(checklist);
             }
 
             base.OnControlLoad(sender, e);

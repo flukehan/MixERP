@@ -33,7 +33,7 @@ namespace MixERP.Net.WebControls.TransactionChecklist
         {
             string tranId = this.GetTranId();
 
-            string emailTemplate = emailHidden.Value;
+            string emailTemplate = this.emailHidden.Value;
 
             if (string.IsNullOrWhiteSpace(tranId))
             {
@@ -52,7 +52,7 @@ namespace MixERP.Net.WebControls.TransactionChecklist
 
             EmailHelper email = new EmailHelper(emailTemplate, this.Text + " #" + tranId, this.PartyEmailAddress);
             email.SendEmail();
-            subTitleLiteral.Text = string.Format(CultureInfo.CurrentCulture, Labels.EmailSentConfirmation, this.PartyEmailAddress);
+            this.subTitleLiteral.Text = string.Format(CultureInfo.CurrentCulture, Labels.EmailSentConfirmation, this.PartyEmailAddress);
         }
 
         private void OkButton_Click(object sender, EventArgs e)
@@ -66,8 +66,8 @@ namespace MixERP.Net.WebControls.TransactionChecklist
 
             if (this.IsNonGlTransaction)
             {
-                messageLabel.Text = Labels.CannotWithdrawNotValidGLTransaction;
-                messageLabel.CssClass = "ui block message red vpad12";
+                this.messageLabel.Text = Labels.CannotWithdrawNotValidGLTransaction;
+                this.messageLabel.CssClass = "ui block message red vpad12";
                 return;
             }
 
@@ -84,17 +84,17 @@ namespace MixERP.Net.WebControls.TransactionChecklist
                 //Withdraw this transaction.
                 if (transactionMasterId > 0)
                 {
-                    if (Verification.WithdrawTransaction(transactionMasterId, SessionHelper.GetUserId(), reasonTextBox.Text))
+                    if (Verification.WithdrawTransaction(transactionMasterId, SessionHelper.GetUserId(), this.reasonTextBox.Text))
                     {
-                        messageLabel.Text = string.Format(CultureInfo.CurrentCulture, Labels.TransactionWithdrawnMessage, transactionDate.ToShortDateString());
-                        messageLabel.CssClass = "ui block message yellow vpad12";
+                        this.messageLabel.Text = string.Format(CultureInfo.CurrentCulture, Labels.TransactionWithdrawnMessage, transactionDate.ToShortDateString());
+                        this.messageLabel.CssClass = "ui block message yellow vpad12";
                     }
                 }
             }
             else
             {
-                messageLabel.Text = Labels.CannotWithdrawTransaction;
-                messageLabel.CssClass = "ui block message red vpad12";
+                this.messageLabel.Text = Labels.CannotWithdrawTransaction;
+                this.messageLabel.CssClass = "ui block message red vpad12";
             }
 
             this.ShowVerificationStatus(tranId, this.verificationLabel);

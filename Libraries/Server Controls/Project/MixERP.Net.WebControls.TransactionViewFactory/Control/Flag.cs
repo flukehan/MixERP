@@ -14,7 +14,7 @@ namespace MixERP.Net.WebControls.TransactionViewFactory
                 flag.OnClientClick = "return getSelectedItems();";
                 flag.CssClass = "ui form segment initially hidden";
 
-                flag.Updated += Flag_Updated;
+                flag.Updated += this.Flag_Updated;
 
                 container.Controls.Add(flag);
             }

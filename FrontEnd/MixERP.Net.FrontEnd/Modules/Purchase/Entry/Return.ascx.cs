@@ -33,7 +33,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Entry
             long tranId = Conversion.TryCastLong(this.Request.QueryString["TranId"]);
             if (tranId <= 0)
             {
-                Response.Redirect("~/Modules/Sales/Return.mix");
+                this.Response.Redirect("~/Modules/Sales/Return.mix");
             }
 
             using (ProductControl product = (ProductControl)this.Page.LoadControl("~/UserControls/Products/ProductControl.ascx"))
@@ -46,7 +46,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Entry
 
                 product.Initialize();
 
-                Placeholder1.Controls.Add(product);
+                this.Placeholder1.Controls.Add(product);
             }
 
             base.OnControlLoad(sender, e);

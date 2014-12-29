@@ -39,7 +39,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Entry
 
                 product.Initialize();
 
-                Placeholder1.Controls.Add(product);
+                this.Placeholder1.Controls.Add(product);
             }
 
             base.OnControlLoad(sender, e);

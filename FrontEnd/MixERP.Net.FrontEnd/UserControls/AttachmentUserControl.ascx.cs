@@ -30,8 +30,8 @@ namespace MixERP.Net.FrontEnd.UserControls
     {
         public bool ShowSaveButton
         {
-            get { return SaveButton.Visible; }
-            set { SaveButton.Visible = value; }
+            get { return this.SaveButton.Visible; }
+            set { this.SaveButton.Visible = value; }
         }
 
         public string GetAllowedExtensions()
@@ -47,13 +47,13 @@ namespace MixERP.Net.FrontEnd.UserControls
         private void CheckPermission()
         {
             var folder = ConfigurationManager.AppSettings["AttachmentsDirectory"];
-            var permission = new FileIOPermission(FileIOPermissionAccess.Write, Server.MapPath(folder));
+            var permission = new FileIOPermission(FileIOPermissionAccess.Write, this.Server.MapPath(folder));
             var permissionSet = new PermissionSet(PermissionState.None);
             permissionSet.AddPermission(permission);
 
             if (!permissionSet.IsSubsetOf(AppDomain.CurrentDomain.PermissionSet))
             {
-                WarningLabel.Text = String.Format(CultureInfo.CurrentUICulture, "The directory \"{0}\" is write protected", folder);
+                this.WarningLabel.Text = String.Format(CultureInfo.CurrentUICulture, "The directory \"{0}\" is write protected", folder);
                 //AttachmentPanel.Enabled = false;
             }
         }

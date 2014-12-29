@@ -198,14 +198,14 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                 <input type="text" id="ItemCodeInputText" title='<asp:Literal runat="server" Text="Alt + C" />' />
             </td>
             <td>
-                <select name="ItemSelect" id="ItemSelect" title='<asp:Literal runat="server" Text="Ctrl + I" />'>
+                <select id="ItemSelect" title='<asp:Literal runat="server" Text="Ctrl + I" />'>
                 </select>
             </td>
             <td>
                 <input type="text" id="QuantityInputText" class="integer text-right" title='<asp:Literal runat="server" Text="Ctrl + Q" />' value="1" />
             </td>
             <td>
-                <select name="UnitSelect" id="UnitSelect" title='<asp:Literal runat="server" Text="Ctrl + U" />'></select>
+                <select id="UnitSelect" title='<asp:Literal runat="server" Text="Ctrl + U" />'></select>
             </td>
             <td>
                 <input type="text" id="PriceInputText" class="text-right currency" title='<asp:Literal runat="server" Text="Alt + P" />' />
@@ -223,7 +223,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                 <input type="text" id="SubTotalInputText" readonly="readonly" class="text-right currency" />
             </td>
             <td>
-                <select name="TaxSelect" id="TaxSelect" title='<asp:Literal runat="server" Text="Ctrl + T" />'></select>
+                <select id="TaxSelect" title='<asp:Literal runat="server" Text="Ctrl + T" />'></select>
             </td>
             <td>
                 <input type="text" id="TaxInputText" readonly="readonly" class="text-right currency" />
@@ -320,12 +320,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 </p>
 
 <script type="text/javascript">
-    var isSales = ("<%= this.Book %>" == "Sales");
+    var isSales = ("<%= this.Book %>" === "Sales");
     var tranBook = "<%= this.GetTranBook() %>";
     var taxAfterDiscount = "<%= Switches.TaxAfterDiscount().ToString() %>";
-    var verifyStock = ("<%= this.VerifyStock %>" == "True");
+    var verifyStock = ("<%= this.VerifyStock %>" === "True");
 </script>
 
 <script src="/Scripts/UserControls/ProductControl.js"></script>
-<script type="text/javascript">
-</script>

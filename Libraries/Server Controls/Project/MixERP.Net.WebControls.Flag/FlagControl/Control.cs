@@ -83,7 +83,7 @@ namespace MixERP.Net.WebControls.Flag
                     this.updateButton.Text = Titles.Update;
                     this.updateButton.CssClass = "green small ui button";
                     this.updateButton.OnClientClick = this.OnClientClick;
-                    this.updateButton.Click += ButtonOnClick;
+                    this.updateButton.Click += this.ButtonOnClick;
 
                     buttonContainer.Controls.Add(this.updateButton);
 

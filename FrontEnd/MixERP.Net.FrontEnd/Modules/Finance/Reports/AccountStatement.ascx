@@ -32,6 +32,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     var accountNumberInputText = $("#AccountNumberInputText");
     var statementGridView = $("#StatementGridView");
     var printIcon = $(".print.icon");
+    var printButton = $("#PrintButton");
+    var fromDateTextBox = $("#FromDateTextBox");
+    var toDateTextBox = $("#ToDateTextBox");
 
     printIcon.click(function () {
         var selected = $(this).parent().parent().find("td:nth-child(3)").html().trim();
@@ -73,5 +76,15 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     statementGridView.find('tr').click(function () {
         var checkBox = $(this).find('td input:checkbox');
         toogleSelection(checkBox);
+    });
+
+    printButton.click(function () {
+        var report = "AccountStatementReport.mix?AccountNumber={0}&From={1}&To={2}";
+        var accountNumber = accountNumberInputText.val();
+        var from = parseDate(fromDateTextBox.val()).toDateString();
+        var to = parseDate(toDateTextBox.val()).toDateString();
+
+        report = String.format(report, accountNumber, from, to);
+        showWindow(report).toISOString();
     });
 </script>

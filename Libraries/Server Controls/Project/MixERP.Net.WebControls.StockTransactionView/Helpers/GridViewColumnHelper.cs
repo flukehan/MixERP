@@ -36,29 +36,29 @@ namespace MixERP.Net.WebControls.StockTransactionView.Helpers
 
             AddTemplateFields(grid);
 
-            GridViewHelper.AddDataBoundControl(grid, "id", Titles.Id, "");
+            GridViewHelper.AddDataBoundControl(grid, "id", Titles.Id);
             GridViewHelper.AddDataBoundControl(grid, "value_date", Titles.ValueDate, "{0:d}");
-            GridViewHelper.AddDataBoundControl(grid, "office", Titles.Office, "");
-            GridViewHelper.AddDataBoundControl(grid, "reference_number", Titles.ReferenceNumber, "");
-            GridViewHelper.AddDataBoundControl(grid, "party", Titles.Party, "");
+            GridViewHelper.AddDataBoundControl(grid, "office", Titles.Office);
+            GridViewHelper.AddDataBoundControl(grid, "reference_number", Titles.ReferenceNumber);
+            GridViewHelper.AddDataBoundControl(grid, "party", Titles.Party);
 
             if (book != SubTranBook.Receipt)
             {
-                GridViewHelper.AddDataBoundControl(grid, "price_type", Titles.PriceType, "");
+                GridViewHelper.AddDataBoundControl(grid, "price_type", Titles.PriceType);
             }
 
-            GridViewHelper.AddDataBoundControl(grid, "amount", Titles.Amount, "");
+            GridViewHelper.AddDataBoundControl(grid, "amount", Titles.Amount);
             GridViewHelper.AddDataBoundControl(grid, "transaction_ts", Titles.TransactionTimestamp, "{0:d}");
-            GridViewHelper.AddDataBoundControl(grid, "user", Titles.User, "");
-            GridViewHelper.AddDataBoundControl(grid, "statement_reference", Titles.StatementReference, "");
+            GridViewHelper.AddDataBoundControl(grid, "user", Titles.User);
+            GridViewHelper.AddDataBoundControl(grid, "statement_reference", Titles.StatementReference);
 
             if (book != SubTranBook.Receipt)
             {
                 GridViewHelper.AddDataBoundControl(grid, "book", Titles.Book, "");
             }
 
-            GridViewHelper.AddDataBoundControl(grid, "flag_background_color", Titles.FlagBackgroundColor, "");
-            GridViewHelper.AddDataBoundControl(grid, "flag_foreground_color", Titles.FlagForegroundColor, "");
+            GridViewHelper.AddDataBoundControl(grid, "flag_background_color", Titles.FlagBackgroundColor);
+            GridViewHelper.AddDataBoundControl(grid, "flag_foreground_color", Titles.FlagForegroundColor);
         }
 
         private static void AddTemplateFields(GridView grid)
@@ -91,26 +91,26 @@ namespace MixERP.Net.WebControls.StockTransactionView.Helpers
 
             public void InstantiateIn(Control container)
             {
-                checkListAnchor = new HtmlAnchor();
-                checkListAnchor.ID = "ChecklistAnchor";
-                checkListAnchor.ClientIDMode = ClientIDMode.Predictable;
-                checkListAnchor.Title = Labels.GoToChecklistWindow;
-                checkListAnchor.InnerHtml = "<img src='" + PageUtility.ResolveUrl("~/Resource/Icons/checklist-16.png") + "' />";//Todo: embed these icons.
+                this.checkListAnchor = new HtmlAnchor();
+                this.checkListAnchor.ID = "ChecklistAnchor";
+                this.checkListAnchor.ClientIDMode = ClientIDMode.Predictable;
+                this.checkListAnchor.Title = Labels.GoToChecklistWindow;
+                this.checkListAnchor.InnerHtml = "<img src='" + PageUtility.ResolveUrl("~/Resource/Icons/checklist-16.png") + "' />";//Todo: embed these icons.
 
-                printAnchor = new HtmlAnchor();
-                printAnchor.ID = "PrintAnchor";
-                printAnchor.ClientIDMode = ClientIDMode.Predictable;
-                printAnchor.Title = Titles.Print;
-                printAnchor.InnerHtml = "<img src='" + PageUtility.ResolveUrl("~/Resource/Icons/print-16.png") + "' />";
+                this.printAnchor = new HtmlAnchor();
+                this.printAnchor.ID = "PrintAnchor";
+                this.printAnchor.ClientIDMode = ClientIDMode.Predictable;
+                this.printAnchor.Title = Titles.Print;
+                this.printAnchor.InnerHtml = "<img src='" + PageUtility.ResolveUrl("~/Resource/Icons/print-16.png") + "' />";
 
-                goToTopAnchor = new HtmlAnchor();
-                goToTopAnchor.Title = Labels.GoToTop;
-                goToTopAnchor.Attributes.Add("onclick", "window.scroll(0);");
-                goToTopAnchor.InnerHtml = "<img src='" + PageUtility.ResolveUrl("~/Resource/Icons/top-16.png") + "' />";
+                this.goToTopAnchor = new HtmlAnchor();
+                this.goToTopAnchor.Title = Labels.GoToTop;
+                this.goToTopAnchor.Attributes.Add("onclick", "window.scroll(0);");
+                this.goToTopAnchor.InnerHtml = "<img src='" + PageUtility.ResolveUrl("~/Resource/Icons/top-16.png") + "' />";
 
-                container.Controls.Add(checkListAnchor);
-                container.Controls.Add(printAnchor);
-                container.Controls.Add(goToTopAnchor);
+                container.Controls.Add(this.checkListAnchor);
+                container.Controls.Add(this.printAnchor);
+                container.Controls.Add(this.goToTopAnchor);
             }
 
             protected virtual void Dispose(bool disposing)
@@ -159,11 +159,11 @@ namespace MixERP.Net.WebControls.StockTransactionView.Helpers
                 using (HtmlGenericControl div = new HtmlGenericControl("div"))
                 {
                     div.Attributes.Add("class", "ui toggle checkbox");
-                    checkBox = new HtmlInputCheckBox();
-                    checkBox.ID = "SelectCheckBox";
-                    checkBox.ClientIDMode = ClientIDMode.Predictable;
+                    this.checkBox = new HtmlInputCheckBox();
+                    this.checkBox.ID = "SelectCheckBox";
+                    this.checkBox.ClientIDMode = ClientIDMode.Predictable;
 
-                    div.Controls.Add(checkBox);
+                    div.Controls.Add(this.checkBox);
 
                     //Added for compatibility with Semantic UI
                     using (HtmlGenericControl label = new HtmlGenericControl("label"))

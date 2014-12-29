@@ -354,4 +354,22 @@
   <data name="parent_cash_flow_heading_id" xml:space="preserve">
     <value>Parent Cash Flow Heading Id</value>
   </data>
+  <data name="account" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="balance" xml:space="preserve">
+    <value>Balance</value>
+  </data>
+  <data name="book" xml:space="preserve">
+    <value>Book</value>
+  </data>
+  <data name="office" xml:space="preserve">
+    <value>Office</value>
+  </data>
+  <data name="tran_code" xml:space="preserve">
+    <value>Tran Code</value>
+  </data>
+  <data name="value_date" xml:space="preserve">
+    <value>Value Date</value>
+  </data>
 </root>

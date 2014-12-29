@@ -29,11 +29,11 @@ namespace MixERP.Net.WebControls.TransactionChecklist
 
         private void AddEmailHidden(HtmlGenericControl p)
         {
-            emailHidden = new HiddenField();
-            emailHidden.ID = "EmailHidden";
-            emailHidden.ClientIDMode = ClientIDMode.Static;
+            this.emailHidden = new HiddenField();
+            this.emailHidden.ID = "EmailHidden";
+            this.emailHidden.ClientIDMode = ClientIDMode.Static;
 
-            p.Controls.Add(emailHidden);
+            p.Controls.Add(this.emailHidden);
         }
     }
 }

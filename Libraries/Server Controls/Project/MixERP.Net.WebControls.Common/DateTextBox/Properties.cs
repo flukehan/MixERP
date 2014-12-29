@@ -45,19 +45,9 @@ namespace MixERP.Net.WebControls.Common
 {
     public partial class DateTextBox : CompositeControl
     {
-        public override Unit Width
-        {
-            get
-            {
-                this.EnsureChildControls();
-                return this.textBox.Width;
-            }
-            set
-            {
-                this.EnsureChildControls();
-                this.textBox.Width = value;
-            }
-        }
+        private bool enableValidation;
+
+        private Frequency mode;
 
         public override string CssClass
         {
@@ -87,23 +77,42 @@ namespace MixERP.Net.WebControls.Common
             }
         }
 
-        private bool enableValidation;
-
         public bool EnableValidation
         {
             get
             {
                 this.EnsureChildControls();
-                return enableValidation;
+                return this.enableValidation;
             }
             set
             {
                 this.EnsureChildControls();
-                enableValidation = value;
+                this.enableValidation = value;
             }
         }
 
         public override string ID { get; set; }
+
+        public DateTime? MaxDate { get; set; }
+
+        public DateTime? MinDate { get; set; }
+
+        public Frequency Mode
+        {
+            get
+            {
+                this.EnsureChildControls();
+                return this.mode;
+            }
+            set
+            {
+                this.EnsureChildControls();
+                this.mode = value;
+                this.InitializeDate(this.mode);
+            }
+        }
+
+        public bool Required { get; set; }
 
         public string Text
         {
@@ -121,26 +130,17 @@ namespace MixERP.Net.WebControls.Common
 
         public string ValidatorCssClass { get; set; }
 
-        public DateTime? MinDate { get; set; }
-
-        public DateTime? MaxDate { get; set; }
-
-        public bool Required { get; set; }
-
-        private Frequency mode;
-
-        public Frequency Mode
+        public override Unit Width
         {
             get
             {
                 this.EnsureChildControls();
-                return this.mode;
+                return this.textBox.Width;
             }
             set
             {
                 this.EnsureChildControls();
-                this.mode = value;
-                this.InitializeDate(this.mode);
+                this.textBox.Width = value;
             }
         }
     }

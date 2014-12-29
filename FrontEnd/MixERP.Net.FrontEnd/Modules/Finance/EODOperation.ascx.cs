@@ -41,17 +41,17 @@ namespace MixERP.Net.Core.Modules.Finance
 
             if (status != null)
             {
-                ValueDateLiteral.Text = @"(" + status.ValueDate.ToShortDateString() + @")";
+                this.ValueDateLiteral.Text = @"(" + status.ValueDate.ToShortDateString() + @")";
 
                 if (status.Initialized)
                 {
-                    InitializeButton.Attributes.Add("class", "ui blue disabled button");
-                    PerformEODButton.Attributes.Add("class", "ui red button");
+                    this.InitializeButton.Attributes.Add("class", "ui blue disabled button");
+                    this.PerformEODButton.Attributes.Add("class", "ui red button");
                     return;
                 }
 
-                InitializeButton.Attributes.Add("class", "ui blue button");
-                PerformEODButton.Attributes.Add("class", "ui red disabled button");
+                this.InitializeButton.Attributes.Add("class", "ui blue button");
+                this.PerformEODButton.Attributes.Add("class", "ui red disabled button");
             }
         }
     }

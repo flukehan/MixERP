@@ -112,7 +112,7 @@ namespace MixERP.Net.Messaging.Email
 
         public bool IsValidEmail(string strIn)
         {
-            invalid = false;
+            this.invalid = false;
 
             if (String.IsNullOrWhiteSpace(strIn))
             {
@@ -121,7 +121,7 @@ namespace MixERP.Net.Messaging.Email
 
             // Use IdnMapping class to convert Unicode domain names.
             strIn = Regex.Replace(strIn, @"(@)(.+)$", this.DomainMapper);
-            if (invalid)
+            if (this.invalid)
             {
                 return false;
             }
@@ -148,7 +148,7 @@ namespace MixERP.Net.Messaging.Email
             string[] addresses = sendTo.Split(',');
             foreach (string address in addresses)
             {
-                if (!IsValidEmail(address))
+                if (!this.IsValidEmail(address))
                 {
                     return;
                 }
@@ -206,7 +206,7 @@ namespace MixERP.Net.Messaging.Email
             }
             catch (ArgumentException)
             {
-                invalid = true;
+                this.invalid = true;
             }
             return match.Groups[1].Value + domainName;
         }

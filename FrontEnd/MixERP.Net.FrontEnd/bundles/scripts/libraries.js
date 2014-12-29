@@ -47101,12 +47101,12 @@ jQuery.fn.bindAjaxData = function (ajaxData, skipSelect, selectedValue) {
     targetControl.empty();
 
     if (ajaxData.length === 0) {
-        appendItem(targetControl, "", noneLocalized);
+        appendItem(targetControl, "", window.noneLocalized);
         return;
     };
 
     if (!skipSelect) {
-        appendItem(targetControl, "", selectLocalized);
+        appendItem(targetControl, "", window.selectLocalized);
     }
 
     $.each(ajaxData, function () {
@@ -47485,4 +47485,8 @@ function createCascadingPair(select, input) {
     select.change(function () {
         input.val(select.getSelectedValue());
     });
+};
+
+function parseDate(str) {
+    return new Date(Date.parse(str));
 };

@@ -417,4 +417,7 @@
   <data name="Balance" xml:space="preserve">
     <value>Balance</value>
   </data>
+  <data name="AccountName" xml:space="preserve">
+    <value>Account Name</value>
+  </data>
 </root>

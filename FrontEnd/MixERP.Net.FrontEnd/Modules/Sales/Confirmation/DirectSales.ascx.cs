@@ -54,7 +54,7 @@ namespace MixERP.Net.Core.Modules.Sales.Confirmation
                 checklist.ViewPath = "/Modules/Sales/DirectSales.mix";
                 checklist.AddNewPath = "/Modules/Sales/Entry/DirectSales.mix";
 
-                Placeholder1.Controls.Add(checklist);
+                this.Placeholder1.Controls.Add(checklist);
             }
 
             base.OnControlLoad(sender, e);

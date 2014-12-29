@@ -43,7 +43,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
                 throw new ArgumentNullException("id");
             }
 
-            return DeleteImage(Data.Attachments.DeleteReturningPath(id));
+            return this.DeleteImage(Data.Attachments.DeleteReturningPath(id));
         }
 
         [WebMethod]
@@ -89,7 +89,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
 
         private bool DeleteImage(string filePath)
         {
-            filePath = Server.MapPath("~/Resource/Static/Attachments/" + filePath);
+            filePath = this.Server.MapPath("~/Resource/Static/Attachments/" + filePath);
 
             if (File.Exists(filePath))
             {

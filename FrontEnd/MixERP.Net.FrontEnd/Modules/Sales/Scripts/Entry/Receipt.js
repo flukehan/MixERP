@@ -197,21 +197,19 @@ function updateTotal() {
 
 var toggleTransactionType = function (e) {
     if (e.attr("id") === "BankButton") {
-        if (!$("#BankFormGroup").is(":visible"));
-        {
+        if (!$("#BankFormGroup").is(":visible")) {
             $("#BankFormGroup").show(500);
             $("#CashFormGroup").hide();
             return;
-        }
+        };
     };
 
     if (e.attr("id") === "CashButton") {
-        if (!$("#CashFormGroup").is(":visible"));
-        {
+        if (!$("#CashFormGroup").is(":visible")) {
             $("#CashFormGroup").show(500);
             $("#BankFormGroup").hide();
             return;
-        }
+        };
     };
 };
 

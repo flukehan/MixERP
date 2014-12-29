@@ -30,7 +30,7 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            LoadControl();
+            this.LoadControl();
             base.OnControlLoad(sender, e);
         }
 
@@ -49,9 +49,9 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
                 scrud.SelectedValues = GetSelectedValues();
 
                 scrud.Text = Resources.Titles.SalesPersons;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (Salespersons));
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(Salespersons));
 
-                ScrudPlaceholder.Controls.Add(scrud);
+                this.ScrudPlaceholder.Controls.Add(scrud);
             }
         }
 

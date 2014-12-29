@@ -373,7 +373,7 @@ function updateTax() {
     var shippingCharge = parseFloat2(shippingChargeInputText.val());
     var salesTaxId = parseInt2(taxSelect.getSelectedValue());
 
-    if (storeId == 0) {
+    if (storeId === 0) {
         return 0;
     };
 
@@ -385,15 +385,15 @@ function updateTax() {
         return -1;
     };
 
-    if (price == 0) {
+    if (price === 0) {
         return 0;
     };
 
-    if (quantity == 0) {
+    if (quantity === 0) {
         return 0;
     };
 
-    if (salesTaxId == 0) {
+    if (salesTaxId === 0) {
         return 0;
     };
 

@@ -132,10 +132,10 @@
             var user = "<%= SessionHelper.GetUserName()%>";
             var office = "<%= SessionHelper.GetOfficeName()%>";
 
-            var shortDateFormat = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetShortDateFormat()%>";
-            var thousandSeparator = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetThousandSeparator()%>";
-            var decimalSeparator = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetDecimalSeparator()%>";
-            var currencyDecimalPlaces = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetCurrencyDecimalPlaces()%>";
+            var shortDateFormat = "<%= LocalizationHelper.GetShortDateFormat()%>";
+            var thousandSeparator = "<%= LocalizationHelper.GetThousandSeparator()%>";
+            var decimalSeparator = "<%= LocalizationHelper.GetDecimalSeparator()%>";
+            var currencyDecimalPlaces = "<%= LocalizationHelper.GetCurrencyDecimalPlaces()%>";
 
             var duplicateEntryLocalized = "<%= Resources.Warnings.DuplicateEntry%>";
             var selectLocalized = "<%= Resources.Titles.Select%>";

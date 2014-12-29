@@ -77,7 +77,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         this.saveButton = new Button();
                         this.saveButton.ID = "SaveButton";
                         this.saveButton.Text = Titles.Save;
-                        this.saveButton.OnClientClick = "scrudAdjustSpinnerSize();";
+                        this.saveButton.OnClientClick = "return(scrudClientValidation());scrudAdjustSpinnerSize();";
 
                         this.saveButton.Click += this.SaveButton_Click;
 

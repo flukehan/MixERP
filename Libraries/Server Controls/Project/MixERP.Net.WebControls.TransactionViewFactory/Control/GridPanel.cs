@@ -32,9 +32,9 @@ namespace MixERP.Net.WebControls.TransactionViewFactory
             this.transactionGridView.GridLines = GridLines.None;
             this.transactionGridView.AutoGenerateColumns = false;
             this.transactionGridView.CssClass = this.GridViewCssClass;
-            this.transactionGridView.RowDataBound += TransactionGridView_RowDataBound;
-            this.transactionGridView.DataBound += TransactionGridView_DataBound;
-            GridViewColumnHelper.AddColumns(transactionGridView);
+            this.transactionGridView.RowDataBound += this.TransactionGridView_RowDataBound;
+            this.transactionGridView.DataBound += this.TransactionGridView_DataBound;
+            GridViewColumnHelper.AddColumns(this.transactionGridView);
 
             container.Controls.Add(this.transactionGridView);
         }
@@ -55,7 +55,7 @@ namespace MixERP.Net.WebControls.TransactionViewFactory
             string office = this.officeInputText.Value;
             string status = this.statusInputText.Value;
             string verifiedBy = this.verifiedByInputText.Value;
-            string reason = reasonInputText.Value;
+            string reason = this.reasonInputText.Value;
 
             using (DataTable table = Data.Journal.GetJournalView(userId, officeId, from, to, tranId, tranCode, book, referenceNumber, statementReference, postedBy, office, status, verifiedBy, reason))
             {

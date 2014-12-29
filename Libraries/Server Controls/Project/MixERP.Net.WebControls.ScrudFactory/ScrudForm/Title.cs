@@ -62,7 +62,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 this.titleLabel.ID = "TitleLabel";
                 titleDiv.Attributes.Add("class", this.GetTitleLabelCssClass());
 
-                titleDiv.Controls.Add(titleLabel);
+                titleDiv.Controls.Add(this.titleLabel);
                 p.Controls.Add(titleDiv);
             }
         }

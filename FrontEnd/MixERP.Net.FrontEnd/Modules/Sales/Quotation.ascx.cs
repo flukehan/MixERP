@@ -41,7 +41,7 @@ namespace MixERP.Net.Core.Modules.Sales
                 productView.ShowMergeToDeliveryButton = true;
                 productView.Initialize();
 
-                Placeholder1.Controls.Add(productView);
+                this.Placeholder1.Controls.Add(productView);
             }
 
             base.OnControlLoad(sender, e);

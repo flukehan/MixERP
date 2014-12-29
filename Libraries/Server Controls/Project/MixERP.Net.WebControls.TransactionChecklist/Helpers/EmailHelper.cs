@@ -35,11 +35,12 @@ namespace MixERP.Net.WebControls.TransactionChecklist.Helpers
             this.Recipient = recipient;
         }
 
-        internal string Html { get; set; }
-        internal string Subject { get; set; }
-        internal string Recipient { get; set; }
         internal string EmailBody { get; set; }
 
+        internal string Html { get; set; }
+        internal string Recipient { get; set; }
+
+        internal string Subject { get; set; }
         internal void SendEmail()
         {
             string type = this.GetEmailImageParserType();
@@ -61,20 +62,20 @@ namespace MixERP.Net.WebControls.TransactionChecklist.Helpers
 
             serializer.Html = this.Html;
             serializer.ImageFormat = ImageHelper.GetImageFormat(extension);
-            serializer.ImageSaved += Serializer_ImageSaved;
+            serializer.ImageSaved += this.Serializer_ImageSaved;
             serializer.TempDirectory = "~/Resource/Temp/Images/";
             serializer.Serialize();
+        }
+
+        private string GetEmailImageParserType()
+        {
+            return ConfigurationHelper.GetTransactionChecklistParameter("EmailImageParserType");
         }
 
         private void Serializer_ImageSaved(object sender, ImageSavedEventArgs e)
         {
             EmailProcessor processor = new EmailProcessor();
             processor.Send(this.Recipient, this.Subject, this.EmailBody, EmailAttachment.GetAttachments(e.ImagePath));
-        }
-
-        private string GetEmailImageParserType()
-        {
-            return ConfigurationHelper.GetTransactionChecklistParameter("EmailImageParserType");
         }
     }
 }

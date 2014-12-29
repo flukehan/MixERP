@@ -46,7 +46,7 @@ namespace MixERP.Net.Core.Modules.Sales.Entry
                 product.VerifyStock = true;
                 product.Initialize();
 
-                Placeholder1.Controls.Add(product);
+                this.Placeholder1.Controls.Add(product);
             }
             base.OnControlLoad(sender, e);
         }

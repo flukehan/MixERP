@@ -25,19 +25,19 @@ namespace MixERP.Net.Core.Modules.Sales.Entry
 {
     public partial class Receipt : MixERPUserControl
     {
+        public string ExchangeRateLocalized()
+        {
+            return Resources.Titles.ExchangeRate;
+        }
+
         public override void OnControlLoad(object sender, EventArgs e)
         {
             using (PartyControl partyControl = new PartyControl())
             {
-                Placeholder1.Controls.Add(partyControl);
+                this.Placeholder1.Controls.Add(partyControl);
             }
 
             base.OnControlLoad(sender, e);
-        }
-
-        public string ExchangeRateLocalized()
-        {
-            return Resources.Titles.ExchangeRate;
         }
     }
 }

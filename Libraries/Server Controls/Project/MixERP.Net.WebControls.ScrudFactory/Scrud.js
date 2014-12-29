@@ -238,11 +238,11 @@ $(document).ready(function () {
             return;
         };
 
-        if ($("#colorbox").css("display") == "block") {
+        if ($("#colorbox").css("display") === "block") {
             return;
         };
 
-        if ($("body").attr("class") == "modal-open") {
+        if ($("body").attr("class") === "modal-open") {
             return;
         };
 
@@ -272,3 +272,11 @@ $(document).ready(function () {
         scrudPrintGridView();
     });
 });
+
+function scrudClientValidation() {
+    if (typeof scrudCustomValidator === "function") {
+        return scrudCustomValidator();
+    };
+
+    return true;
+};

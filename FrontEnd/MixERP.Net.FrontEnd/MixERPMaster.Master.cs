@@ -28,13 +28,13 @@ namespace MixERP.Net.FrontEnd
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            BranchNameLiteral.Text = SessionHelper.GetOfficeName();
-            SignOutLiteral.Text = Resources.Titles.SignOut;
-            UserGreetingLiteral.Text = String.Format(CultureInfo.CurrentCulture, Resources.Labels.UserGreeting, SessionHelper.GetUserName());
-            ChangePasswordLiteral.Text = Resources.Titles.ChangePassword;
-            ManageProfileLiteral.Text = Resources.Titles.ManageProfile;
-            MixERPDocumentationLiteral.Text = Resources.Titles.MixERPDocumentation;
-            NotificationLiteral.Text = Resources.Titles.Notifications;
+            this.BranchNameLiteral.Text = SessionHelper.GetOfficeName();
+            this.SignOutLiteral.Text = Resources.Titles.SignOut;
+            this.UserGreetingLiteral.Text = String.Format(CultureInfo.CurrentCulture, Resources.Labels.UserGreeting, SessionHelper.GetUserName());
+            this.ChangePasswordLiteral.Text = Resources.Titles.ChangePassword;
+            this.ManageProfileLiteral.Text = Resources.Titles.ManageProfile;
+            this.MixERPDocumentationLiteral.Text = Resources.Titles.MixERPDocumentation;
+            this.NotificationLiteral.Text = Resources.Titles.Notifications;
         }
     }
 }
