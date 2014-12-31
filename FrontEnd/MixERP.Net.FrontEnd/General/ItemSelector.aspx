@@ -26,7 +26,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <title>Scrud Item Selector</title>
 
     <script src="//code.jquery.com/jquery-1.9.1.js" type="text/javascript"></script>
-    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css' />
+    <%--<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css' />--%>
     <link href='/Scripts/semantic-ui/css/semantic.min.css' rel='stylesheet' type='text/css' />
 
     <style type="text/css">

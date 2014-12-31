@@ -26,11 +26,16 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 </style>
 <script type="text/javascript">
     var grid = $("#TrialBalanceGridView");
-    var compactCheckBox = $(".ui.checkbox input");
-    var isCompactHiddenField = $("#IsCompactHiddenField");
+    var compactCheckBox = $("#CompactCheckBox");
+    var zeroBalanceCheckBox = $("#ZeroBalanceCheckBox");
+    var changeSideCheckBox = $("#ChangeSideCheckBox");
+
+    var isCompactHiddenField = $("#IsCompactHidden");
+    var includeZeroBalanceAccountHidden = $("#IncludeZeroBalanceAccountHidden");
+    var changeSideWhenNegativeHidden = $("#ChangeSideWhenNegativeHidden");
 
     $(document).ready(function () {
-        var html = "<tr><th></th><th></th><th colspan='3'>Previous Period</th><th colspan='3'>Current Period</th><th colspan='3'>Closing</th></tr>";
+        var html = "<tr><th></th><th></th><th colspan='2'>Previous Period</th><th colspan='2'>Current Period</th><th colspan='2'>Closing</th></tr>";
         var thead = grid.find("thead");
         thead.prepend(html);
 
@@ -43,6 +48,20 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         accountNumberCell.remove();
         accountCell.remove();
 
+        var previousDebit = sumOfColumn(grid, 2);
+        var previousCredit = sumOfColumn(grid, 3);
+
+        var debit = sumOfColumn(grid, 4);
+        var credit = sumOfColumn(grid, 5);
+
+        var closingDebit = sumOfColumn(grid, 6);
+        var closingCredit = sumOfColumn(grid, 7);
+
+        var tfoot = "<tr class='active'><td colspan='2'>Total</td><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td></tr>";
+        tfoot = String.format(tfoot, previousDebit, previousCredit, debit, credit, closingDebit, closingCredit);
+
+        grid.append(tfoot);
+
     });
 
     compactCheckBox.change(function () {
@@ -52,6 +71,23 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         };
 
         isCompactHiddenField.val("0");
+    });
 
+    zeroBalanceCheckBox.change(function () {
+        if (zeroBalanceCheckBox.is(":checked")) {
+            includeZeroBalanceAccountHidden.val("1");
+            return;
+        };
+
+        includeZeroBalanceAccountHidden.val("0");
+    });
+
+    changeSideCheckBox.change(function () {
+        if (changeSideCheckBox.is(":checked")) {
+            changeSideWhenNegativeHidden.val("1");
+            return;
+        };
+
+        changeSideWhenNegativeHidden.val("0");
     });
 </script>

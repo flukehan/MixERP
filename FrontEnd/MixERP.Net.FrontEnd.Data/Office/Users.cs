@@ -17,6 +17,9 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System;
+using System.Data;
+using System.Web;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Helpers;
@@ -24,10 +27,6 @@ using MixERP.Net.Common.Models.Office;
 using MixERP.Net.Common.Models.Policy;
 using MixERP.Net.DBFactory;
 using Npgsql;
-using System;
-using System.Data;
-using System.Web;
-using System.Web.UI;
 
 namespace MixERP.Net.FrontEnd.Data.Office
 {
@@ -89,14 +88,14 @@ namespace MixERP.Net.FrontEnd.Data.Office
             return view;
         }
 
-        public static long SignIn(int officeId, string userName, string password, string culture, bool remember, Page page)
+        public static long SignIn(int officeId, string userName, string password, string culture, bool remember, string challenge, HttpContext context)
         {
-            if (page != null)
+            if (context != null)
             {
                 string remoteAddress = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
                 string remoteUser = HttpContext.Current.Request.ServerVariables["REMOTE_USER"];
 
-                SignInResult result = SignIn(officeId, userName, Conversion.HashSha512(password, userName), page.Request.UserAgent, remoteAddress, remoteUser, culture);
+                SignInResult result = SignIn(officeId, userName, password, context.Request.UserAgent, remoteAddress, remoteUser, culture, challenge);
 
                 if (result.LoginId == 0)
                 {
@@ -108,11 +107,11 @@ namespace MixERP.Net.FrontEnd.Data.Office
             return 0;
         }
 
-        private static SignInResult SignIn(int officeId, string userName, string password, string browser, string remoteAddress, string remoteUser, string culture)
+        private static SignInResult SignIn(int officeId, string userName, string password, string browser, string remoteAddress, string remoteUser, string culture, string challenge)
         {
             SignInResult result = new SignInResult();
 
-            const string sql = "SELECT * FROM office.sign_in(@OfficeId, @UserName, @Password, @Browser, @IPAddress, @RemoteUser, @Culture);";
+            const string sql = "SELECT * FROM office.sign_in(@OfficeId, @UserName, @Password, @Browser, @IPAddress, @RemoteUser, @Culture, @Challenge);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
@@ -122,6 +121,7 @@ namespace MixERP.Net.FrontEnd.Data.Office
                 command.Parameters.AddWithValue("@IPAddress", remoteAddress);
                 command.Parameters.AddWithValue("@RemoteUser", remoteUser);
                 command.Parameters.AddWithValue("@Culture", culture);
+                command.Parameters.AddWithValue("@Challenge", challenge);
 
                 using (DataTable table = DbOperation.GetDataTable(command))
                 {

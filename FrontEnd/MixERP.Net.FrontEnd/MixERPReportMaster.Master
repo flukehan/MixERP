@@ -21,33 +21,25 @@
             font-weight: lighter;
         }
 
-        html, body, div, table, p, h1, h2, h3, h4, h5, h6, td, th {
-            font-family: 'Segoe UI', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
-        }
+        html, body, div, table, p, h1, h2, h3, h4, h5, h6, td, th { font-family: 'Segoe UI', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important; }
 
-        .table, .report {
-            border-collapse: collapse;
-        }
+        .table, .report { border-collapse: collapse; }
 
-            .table th, .table td, .report th, .report td {
-                padding: 6px;
-            }
+        .table th, .table td, .report th, .report td { padding: 6px; }
 
-            .table td, .report td, .report th {
-                border: 1px solid black;
-            }
+        .table td, .report td, .report th { border: 1px solid black; }
 
         .legend {
             display: inline-block;
             white-space: nowrap;
         }
 
-            .legend .legend-title {
-                margin: 0.5em;
-                border-style: solid;
-                border-width: 0 0 0 1em;
-                padding: 0 0.3em;
-            }
+        .legend .legend-title {
+            margin: 0.5em;
+            border-style: solid;
+            border-width: 0 0 0 1em;
+            padding: 0 0.3em;
+        }
 
         .report-command {
             position: fixed;
@@ -60,37 +52,29 @@
             border-radius: 5px;
         }
 
-            .report-command:hover {
-                background-color: #edd8fa;
-            }
+        .report-command:hover { background-color: #edd8fa; }
 
-            .report-command input {
-                padding: 2px;
-            }
+        .report-command input { padding: 2px; }
 
-        th {
-            font-weight: bold;
-        }
+        th { font-weight: bold; }
 
         @media print {
-            .hide {
-                display: none;
-            }
+            .hide { display: none; }
         }
     </style>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
-    <form id="form1" runat="server">
-        <asp:ContentPlaceHolder ID="BodyContentPlaceholder" runat="server">
-        </asp:ContentPlaceHolder>
+<form id="form1" runat="server">
+    <asp:ContentPlaceHolder ID="BodyContentPlaceholder" runat="server">
+    </asp:ContentPlaceHolder>
 
-        <script type="text/javascript">
-            var closeWindow = function () {
-                parent.$.fn.colorbox.close();
-            };
-        </script>
-    </form>
+    <script type="text/javascript">
+        var closeWindow = function() {
+            parent.$.fn.colorbox.close();
+        };
+    </script>
+</form>
 </body>
 </html>

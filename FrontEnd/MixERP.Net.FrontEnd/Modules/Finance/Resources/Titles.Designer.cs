@@ -232,6 +232,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change Side When Negative.
+        /// </summary>
+        internal static string ChangeSideWhenNegative {
+            get {
+                return ResourceManager.GetString("ChangeSideWhenNegative", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chart of Accounts.
         /// </summary>
         internal static string ChartOfAccounts {
@@ -525,6 +534,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string Id {
             get {
                 return ResourceManager.GetString("Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include Zero Balance Accounts.
+        /// </summary>
+        internal static string IncludeZeroBalanceAccounts {
+            get {
+                return ResourceManager.GetString("IncludeZeroBalanceAccounts", resourceCulture);
             }
         }
         

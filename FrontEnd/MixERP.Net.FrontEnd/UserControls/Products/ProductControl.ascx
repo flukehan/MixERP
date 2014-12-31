@@ -54,7 +54,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     }
 
     #ProductGridView th:nth-child(8) {
-        width: 120px;
+        width: 140px;
     }
 
     #ProductGridView th:nth-child(9) {

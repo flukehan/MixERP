@@ -447,4 +447,10 @@
   <data name="Factor" xml:space="preserve">
     <value>Factor</value>
   </data>
+  <data name="ChangeSideWhenNegative" xml:space="preserve">
+    <value>Change Side When Negative</value>
+  </data>
+  <data name="IncludeZeroBalanceAccounts" xml:space="preserve">
+    <value>Include Zero Balance Accounts</value>
+  </data>
 </root>

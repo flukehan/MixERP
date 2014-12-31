@@ -22,6 +22,7 @@ using System.Configuration;
 using System.Globalization;
 using System.Net;
 using System.Web;
+using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 
@@ -43,19 +44,19 @@ namespace MixERP.Net.Common
         {
             if (page != null)
             {
-                if (InvalidPasswordAttempts(page, 0) >= Conversion.TryCastInteger(ConfigurationManager.AppSettings["MaxInvalidPasswordAttempts"]))
+                if (InvalidPasswordAttempts(page.Session, 0) >= Conversion.TryCastInteger(ConfigurationManager.AppSettings["MaxInvalidPasswordAttempts"]))
                 {
-                    page.Response.Redirect("~/Resource/Static/AcessIsDenied.html");
+                    page.Response.Redirect("~/Resource/Static/AccessIsDenied.html");
                 }
             }
         }
 
         /// <summary>
-        /// Check if the input is a valid url.
+        ///     Check if the input is a valid url.
         /// </summary>
         /// <param name="url"></param>
         /// <returns>
-        /// Returns input if it's a valid url. If the input is not a valid url, returns empty string.
+        ///     Returns input if it's a valid url. If the input is not a valid url, returns empty string.
         /// </returns>
         public static string CleanUrl(string url)
         {
@@ -153,23 +154,24 @@ namespace MixERP.Net.Common
             return string.Empty;
         }
 
-        public static int InvalidPasswordAttempts(Page page, int increment)
+        public static int InvalidPasswordAttempts(HttpSessionState session, int increment = 0)
         {
-            if (page == null)
+            if (session == null)
             {
                 return 0;
             }
 
             int retVal = 0;
-            if (page.Session["InvalidPasswordAttempts"] == null)
+
+            if (session["InvalidPasswordAttempts"] == null)
             {
                 retVal = retVal + increment;
-                page.Session.Add("InvalidPasswordAttempts", retVal);
+                session.Add("InvalidPasswordAttempts", retVal);
             }
             else
             {
-                retVal = Conversion.TryCastInteger(page.Session["InvalidPasswordAttempts"]) + increment;
-                page.Session["InvalidPasswordAttempts"] = retVal;
+                retVal = Conversion.TryCastInteger(session["InvalidPasswordAttempts"]) + increment;
+                session["InvalidPasswordAttempts"] = retVal;
             }
 
             return retVal;

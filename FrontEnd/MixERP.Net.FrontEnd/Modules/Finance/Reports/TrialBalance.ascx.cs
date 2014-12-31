@@ -64,13 +64,10 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             GridViewHelper.AddDataBoundControl(this.trialBalanceGridView, "account", Titles.Account);
             GridViewHelper.AddDataBoundControl(this.trialBalanceGridView, "previous_debit", Titles.Debit, "{0:n2}");
             GridViewHelper.AddDataBoundControl(this.trialBalanceGridView, "previous_credit", Titles.Credit, "{0:n2}");
-            GridViewHelper.AddDataBoundControl(this.trialBalanceGridView, "previous_balance", Titles.Balance, "{0:n2}");
             GridViewHelper.AddDataBoundControl(this.trialBalanceGridView, "debit", Titles.Debit, "{0:n2}");
             GridViewHelper.AddDataBoundControl(this.trialBalanceGridView, "credit", Titles.Credit, "{0:n2}");
-            GridViewHelper.AddDataBoundControl(this.trialBalanceGridView, "balance", Titles.Balance, "{0:n2}");
             GridViewHelper.AddDataBoundControl(this.trialBalanceGridView, "closing_debit", Titles.Debit, "{0:n2}");
             GridViewHelper.AddDataBoundControl(this.trialBalanceGridView, "closing_credit", Titles.Credit, "{0:n2}");
-            GridViewHelper.AddDataBoundControl(this.trialBalanceGridView, "closing_balance", Titles.Balance, "{0:n2}");
         }
 
         private void CreateGrid(Control container)
@@ -102,9 +99,11 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
         #region Form
 
+        private HiddenField changeSideWhenNegativeHidden;
         private HtmlInputText factorInputText;
         private DateTextBox fromDateTextBox;
-        private HiddenField isCompactHiddenField;
+        private HiddenField includeZeroBalanceAccountHidden;
+        private HiddenField isCompactHidden;
         private Button showButton;
         private DateTextBox toDateTextBox;
 
@@ -118,11 +117,15 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
                     using (HtmlInputCheckBox checkBox = new HtmlInputCheckBox())
                     {
-                        slider.Controls.Add(checkBox);
-                        this.isCompactHiddenField = new HiddenField();
-                        this.isCompactHiddenField.ID = "IsCompactHiddenField";
+                        checkBox.ID = "CompactCheckBox";
+                        checkBox.Checked = true;
 
-                        slider.Controls.Add(this.isCompactHiddenField);
+                        slider.Controls.Add(checkBox);
+                        this.isCompactHidden = new HiddenField();
+                        this.isCompactHidden.ID = "IsCompactHidden";
+                        this.isCompactHidden.Value = "1";
+
+                        slider.Controls.Add(this.isCompactHidden);
                     }
 
                     using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Titles.ShowCompact))
@@ -147,6 +150,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 }
                 this.factorInputText = new HtmlInputText();
                 this.factorInputText.ID = "FactorInputText";
+                this.factorInputText.Attributes.Add("class", "small input");
                 this.factorInputText.Value = "1000";
 
                 field.Controls.Add(this.factorInputText);
@@ -222,14 +226,55 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             decimal factor = Conversion.TryCastDecimal(this.factorInputText.Value);
 
             bool compact = this.ShowCompact();
+            bool changeSide = this.ChangeSideWhenNegative();
+            bool includeZeroBalanceAccounts = this.IncludeZeroBalanceAccounts();
+
             int userId = SessionHelper.GetUserId();
             int officeId = SessionHelper.GetOfficeId();
 
-            using (DataTable table = Data.Reports.TrialBalance.GetTrialBalance(from, to, userId, officeId, compact, factor))
+            using (DataTable table = Data.Reports.TrialBalance.GetTrialBalance(from, to, userId, officeId, compact, factor, changeSide, includeZeroBalanceAccounts))
             {
                 this.trialBalanceGridView.DataSource = table;
                 this.trialBalanceGridView.DataBind();
             }
+        }
+
+        private void ChangeSideCheckBoxField(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl field = HtmlControlHelper.GetField())
+            {
+                using (HtmlGenericControl slider = new HtmlGenericControl("div"))
+                {
+                    slider.Attributes.Add("class", "ui checkbox");
+
+                    using (HtmlInputCheckBox checkBox = new HtmlInputCheckBox())
+                    {
+                        checkBox.ID = "ChangeSideCheckBox";
+                        checkBox.Checked = true;
+
+                        slider.Controls.Add(checkBox);
+                        this.changeSideWhenNegativeHidden = new HiddenField();
+                        this.changeSideWhenNegativeHidden.ID = "ChangeSideWhenNegativeHidden";
+                        this.changeSideWhenNegativeHidden.Value = "1";
+
+                        slider.Controls.Add(this.changeSideWhenNegativeHidden);
+                    }
+
+                    using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Titles.ChangeSideWhenNegative))
+                    {
+                        slider.Controls.Add(label);
+                    }
+
+                    field.Controls.Add(slider);
+                }
+
+                container.Controls.Add(field);
+            }
+        }
+
+        private bool ChangeSideWhenNegative()
+        {
+            return this.changeSideWhenNegativeHidden.Value.Equals("1");
         }
 
         private void CreateForm(Control container)
@@ -244,11 +289,51 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                     this.AddToDateTextBoxField(fields);
                     this.AddFactorField(fields);
                     this.AddCompactCheckBoxField(fields);
+                    this.ChangeSideCheckBoxField(fields);
+                    this.IncludeZeroBalanceAccountsCheckBoxField(fields);
                     this.AddShowButton(fields);
                     this.AddPrintButton(fields);
                     formSegment.Controls.Add(fields);
                 }
                 container.Controls.Add(formSegment);
+            }
+        }
+
+        private bool IncludeZeroBalanceAccounts()
+        {
+            return this.includeZeroBalanceAccountHidden.Value.Equals("1");
+        }
+
+        private void IncludeZeroBalanceAccountsCheckBoxField(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl field = HtmlControlHelper.GetField())
+            {
+                using (HtmlGenericControl slider = new HtmlGenericControl("div"))
+                {
+                    slider.Attributes.Add("class", "ui checkbox");
+
+                    using (HtmlInputCheckBox checkBox = new HtmlInputCheckBox())
+                    {
+                        checkBox.ID = "ZeroBalanceCheckBox";
+                        checkBox.Checked = true;
+
+                        slider.Controls.Add(checkBox);
+                        this.includeZeroBalanceAccountHidden = new HiddenField();
+                        this.includeZeroBalanceAccountHidden.ID = "IncludeZeroBalanceAccountHidden";
+                        this.includeZeroBalanceAccountHidden.Value = "1";
+
+                        slider.Controls.Add(this.includeZeroBalanceAccountHidden);
+                    }
+
+                    using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Titles.IncludeZeroBalanceAccounts))
+                    {
+                        slider.Controls.Add(label);
+                    }
+
+                    field.Controls.Add(slider);
+                }
+
+                container.Controls.Add(field);
             }
         }
 
@@ -259,7 +344,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
         private bool ShowCompact()
         {
-            return this.isCompactHiddenField.Value.Equals("1");
+            return this.isCompactHidden.Value.Equals("1");
         }
 
         #endregion

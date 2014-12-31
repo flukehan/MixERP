@@ -17,8 +17,6 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Transactions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -33,6 +31,8 @@ using System.Web;
 using System.Web.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Common.Models.Transactions;
 using Image = System.Drawing.Image;
 
 namespace MixERP.Net.Common
@@ -235,7 +235,7 @@ namespace MixERP.Net.Common
             return MapPathReverse(physicalPath);
         }
 
-        public static string HashSha512(string password, string salt)
+        public static string HashSha512Hex(string password, string salt)
         {
             if (password == null)
             {
@@ -247,12 +247,7 @@ namespace MixERP.Net.Common
                 return null;
             }
 
-            byte[] bytes = Encoding.Unicode.GetBytes(password + salt);
-            using (SHA512CryptoServiceProvider hash = new SHA512CryptoServiceProvider())
-            {
-                byte[] inArray = hash.ComputeHash(bytes);
-                return Convert.ToBase64String(inArray);
-            }
+            return BitConverter.ToString(new SHA512CryptoServiceProvider().ComputeHash(Encoding.UTF8.GetBytes(password + salt))).Replace("-", "").ToLower();
         }
 
         public static bool IsNumeric(string value)
@@ -519,6 +514,27 @@ namespace MixERP.Net.Common
             }
 
             return Unit.Parse(value.ToString(), CultureInfo.InvariantCulture);
+        }
+
+        private static string HashSha512(string password, string salt)
+        {
+            if (password == null)
+            {
+                return null;
+            }
+
+            if (salt == null)
+            {
+                return null;
+            }
+
+            byte[] bytes = Encoding.Unicode.GetBytes(password + salt);
+
+            using (SHA512CryptoServiceProvider hash = new SHA512CryptoServiceProvider())
+            {
+                byte[] inArray = hash.ComputeHash(bytes);
+                return Convert.ToBase64String(inArray);
+            }
         }
     }
 }

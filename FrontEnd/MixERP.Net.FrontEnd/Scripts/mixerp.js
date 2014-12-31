@@ -35,7 +35,7 @@ function getDocHeight(margin) {
     return height;
 };
 
-var selectDropDownListByValue = function (textBoxId, dropDownListId) {
+var selectDropDownListByValue = function(textBoxId, dropDownListId) {
     var listControl = $("#" + dropDownListId);
     var textBox = $("#" + textBoxId);
     var selectedValue = textBox.val();
@@ -46,7 +46,7 @@ var selectDropDownListByValue = function (textBoxId, dropDownListId) {
     };
 
     if (listControl.length) {
-        listControl.find('option').each(function () {
+        listControl.find('option').each(function() {
             if (this.value === selectedValue) {
                 exists = true;
             }
@@ -62,7 +62,7 @@ var selectDropDownListByValue = function (textBoxId, dropDownListId) {
     triggerChange(dropDownListId);
 };
 
-var triggerChange = function (controlId) {
+var triggerChange = function(controlId) {
     var element = document.getElementById(controlId);
 
     if ('createEvent' in document) {
@@ -75,7 +75,7 @@ var triggerChange = function (controlId) {
     }
 };
 
-var triggerClick = function (controlId) {
+var triggerClick = function(controlId) {
     var element = document.getElementById(controlId);
 
     if ('createEvent' in document) {
@@ -101,7 +101,7 @@ var triggerClick = function (controlId) {
 //    }
 //};
 
-var parseFloat2 = function (arg) {
+var parseFloat2 = function(arg) {
     var val = parseFloat(arg || 0);
 
     if (isNaN(val)) {
@@ -111,7 +111,7 @@ var parseFloat2 = function (arg) {
     return val;
 };
 
-var parseInt2 = function (arg) {
+var parseInt2 = function(arg) {
     var val = parseInt(arg || 0);
 
     if (isNaN(val)) {
@@ -121,7 +121,7 @@ var parseInt2 = function (arg) {
     return val;
 };
 
-var confirmAction = function () {
+var confirmAction = function() {
     return confirm(areYouSureLocalized);
 };
 
@@ -129,7 +129,7 @@ var confirmAction = function () {
 DATE EXPRESSION START
 ******************************************************************************************************/
 
-var validateByControlId = function (controlId) {
+var validateByControlId = function(controlId) {
     if (typeof Page_ClientValidate === "function") {
         Page_ClientValidate(controlId);
     } else {
@@ -137,8 +137,8 @@ var validateByControlId = function (controlId) {
     }
 };
 
-$(document).ready(function () {
-    $(".date").blur(function () {
+$(document).ready(function() {
+    $(".date").blur(function() {
         if (today === "") return;
         var control = $(this);
         var value = control.val().trim().toLowerCase();
@@ -253,11 +253,11 @@ function dateAdd(dt, expression, number) {
 DATE EXPRESSION END
 ******************************************************************************************************/
 
-var showWindow = function (url) {
+var showWindow = function(url) {
     $.colorbox({ width: +$('html').width() * 0.7, height: +$('html').height() * 0.7, iframe: true, href: url });
 };
 
-$(document).ready(function () {
+$(document).ready(function() {
     setCurrencyFormat();
     setNumberFormat();
 
@@ -271,7 +271,7 @@ function Page_EndRequest() {
     setNumberFormat();
 }
 
-var setCurrencyFormat = function () {
+var setCurrencyFormat = function() {
     if (typeof currencyDecimalPlaces === "undefined" || typeof decimalSeparator === "undefined" || typeof thousandSeparator === "undefined") {
         return;
     };
@@ -279,7 +279,7 @@ var setCurrencyFormat = function () {
     $('input.currency').number(true, currencyDecimalPlaces, decimalSeparator, thousandSeparator);
 };
 
-var setNumberFormat = function () {
+var setNumberFormat = function() {
     if (typeof decimalSeparator === "undefined" || typeof thousandSeparator === "undefined") {
         return;
     };
@@ -302,7 +302,7 @@ function getFillColor(index) {
 function hexToRgb(hex) {
     // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
     var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-    hex = hex.replace(shorthandRegex, function (m, r, g, b) {
+    hex = hex.replace(shorthandRegex, function(m, r, g, b) {
         return r + r + g + g + b + b;
     });
 
@@ -323,13 +323,13 @@ function prepareChart(datasourceId, canvasId, legendId, type, log) {
     var index = 0;
 
     //Loop through the table header for labels.
-    table.find("tr:first-child th:not(:first-child)").each(function () {
+    table.find("tr:first-child th:not(:first-child)").each(function() {
         //Create labels from header row columns.
         labels.push($(this).html());
     });
 
     //Loop through each row of the table body.
-    table.find("tr").not(":first").each(function () {
+    table.find("tr").not(":first").each(function() {
         //Get an instance of the current row
         var row = $(this);
 
@@ -339,7 +339,7 @@ function prepareChart(datasourceId, canvasId, legendId, type, log) {
         //Reset the data object's value from the previous iteration.
         data = [];
         //Loop through the row columns.
-        row.find(":not(:first-child)").each(function () {
+        row.find(":not(:first-child)").each(function() {
             //Get data from this row.
             data.push(parseFloat2($(this).html()));
         });
@@ -374,15 +374,15 @@ function prepareChart(datasourceId, canvasId, legendId, type, log) {
     var ctx = document.getElementById(canvasId).getContext("2d");
 
     switch (type) {
-        case "line":
-            new Chart(ctx).Line(reportData);
-            break;
-        case "radar":
-            new Chart(ctx).Radar(reportData);
-            break;
-        default:
-            new Chart(ctx).Bar(reportData);
-            break;
+    case "line":
+        new Chart(ctx).Line(reportData);
+        break;
+    case "radar":
+        new Chart(ctx).Radar(reportData);
+        break;
+    default:
+        new Chart(ctx).Bar(reportData);
+        break;
     }
 
     legend(document.getElementById(legendId), reportData);
@@ -406,7 +406,7 @@ function preparePieChart(datasourceId, canvasId, legendId, type, hide, titleColu
     var counter = 0;
 
     //Loop through each row of the table body.
-    table.find("tr").not(":first").each(function () {
+    table.find("tr").not(":first").each(function() {
         //Get an instance of the current row
         var row = $(this);
 
@@ -430,15 +430,15 @@ function preparePieChart(datasourceId, canvasId, legendId, type, hide, titleColu
     var ctx = document.getElementById(canvasId).getContext("2d");
 
     switch (type) {
-        case "doughnut":
-            new Chart(ctx).Doughnut(data);
-            break;
-        case "polar":
-            new Chart(ctx).PolarArea(data);
-            break;
-        default:
-            new Chart(ctx).Pie(data);
-            break;
+    case "doughnut":
+        new Chart(ctx).Doughnut(data);
+        break;
+    case "polar":
+        new Chart(ctx).PolarArea(data);
+        break;
+    default:
+        new Chart(ctx).Pie(data);
+        break;
     }
 
     legend(document.getElementById(legendId), data);
@@ -451,34 +451,34 @@ function preparePieChart(datasourceId, canvasId, legendId, type, hide, titleColu
 Chart END
 ******************************************************************************************************/
 
-var parseFormattedNumber = function (input) {
+var parseFormattedNumber = function(input) {
     var result = input.replace(thousandSeparator, "");
     result = result.replace(decimalSeparator, ".");
     return result;
 };
 
-var getFormattedNumber = function (input) {
+var getFormattedNumber = function(input) {
     var result = input.replace(".", decimalSeparator);
     return result;
 };
 
-var makeDirty = function (obj) {
+var makeDirty = function(obj) {
     obj.parent().addClass("error");
     obj.focus();
 };
 
-var removeDirty = function (obj) {
+var removeDirty = function(obj) {
     obj.parent().removeClass("error");
 };
 
-var isNullOrWhiteSpace = function (obj) {
+var isNullOrWhiteSpace = function(obj) {
     return (!obj || $.trim(obj) === "");
 };
 
 if (!String.prototype.format) {
-    String.prototype.format = function () {
+    String.prototype.format = function() {
         var args = arguments;
-        return this.replace(/{(\d+)}/g, function (match, number) {
+        return this.replace(/{(\d+)}/g, function(match, number) {
             return typeof args[number] !== 'undefined'
                 ? args[number]
                 : match;
@@ -490,7 +490,7 @@ function displayMessage(a, b) {
     $.notify(a, b);
 };
 
-var logError = function (a, b) {
+var logError = function(a, b) {
     //Todo
     $.notify(a, b);
 };
@@ -507,10 +507,10 @@ function logToConsole2(message) {
     console.log(JSON.stringify(message));
 };
 
-var sumOfColumn = function (tableSelector, columnIndex) {
+var sumOfColumn = function(tableSelector, columnIndex) {
     var total = 0;
 
-    $(tableSelector).find('tr').each(function () {
+    $(tableSelector).find('tr').each(function() {
         var value = parseFloat2($('td', this).eq(columnIndex).text());
         total += value;
     });
@@ -518,34 +518,34 @@ var sumOfColumn = function (tableSelector, columnIndex) {
     return total;
 };
 
-var getColumnText = function (row, columnIndex) {
+var getColumnText = function(row, columnIndex) {
     return row.find("td:eq(" + columnIndex + ")").html();
 };
 
-var setColumnText = function (row, columnIndex, value) {
+var setColumnText = function(row, columnIndex, value) {
     row.find("td:eq(" + columnIndex + ")").html(value);
 };
 
-var fadeThis = function (selector) {
+var fadeThis = function(selector) {
     var options = {};
     var panel = $(selector);
     panel.effect("fade", options, 5000);
 };
 
-jQuery.fn.getSelectedItem = function () {
+jQuery.fn.getSelectedItem = function() {
     var listItem = $(this[0]);
     return listItem.find("option:selected");
 };
 
-jQuery.fn.getSelectedValue = function () {
+jQuery.fn.getSelectedValue = function() {
     return $(this[0]).getSelectedItem().val();
 };
 
-jQuery.fn.getSelectedText = function () {
+jQuery.fn.getSelectedText = function() {
     return $(this[0]).getSelectedItem().text();
 };
 
-var appendParameter = function (data, parameter, value) {
+var appendParameter = function(data, parameter, value) {
     if (!isNullOrWhiteSpace(data)) {
         data += ",";
     };
@@ -559,7 +559,7 @@ var appendParameter = function (data, parameter, value) {
     return data;
 };
 
-var getData = function (data) {
+var getData = function(data) {
     if (data) {
         return "{" + data + "}";
     };
@@ -567,7 +567,7 @@ var getData = function (data) {
     return null;
 };
 
-var focusNextElement = function () {
+var focusNextElement = function() {
     var $this = document.activeElement;
 
     // if we haven't stored the tabbing order
@@ -588,7 +588,7 @@ var focusNextElement = function () {
         }
 
         // sort them by tabIndex order
-        ti.sort(function (a, b) { return a.tabIndex - b.tabIndex; });
+        ti.sort(function(a, b) { return a.tabIndex - b.tabIndex; });
 
         // store the rest of the elements in order
         for (i = 0, il = els.length; i < il; i++) {
@@ -619,22 +619,22 @@ var focusNextElement = function () {
     }
 };
 
-var toggleDanger = function (cell) {
+var toggleDanger = function(cell) {
     var row = cell.closest("tr");
     row.toggleClass("negative");
 };
 
-var addDanger = function (row) {
+var addDanger = function(row) {
     row.removeClass("negative");
     row.addClass("negative");
 };
 
-var toggleSuccess = function (cell) {
+var toggleSuccess = function(cell) {
     var row = cell.closest("tr");
     row.toggleClass("positive");
 };
 
-jQuery.fn.bindAjaxData = function (ajaxData, skipSelect, selectedValue) {
+jQuery.fn.bindAjaxData = function(ajaxData, skipSelect, selectedValue) {
     "use strict";
     var selected;
     var targetControl = $(this);
@@ -649,7 +649,7 @@ jQuery.fn.bindAjaxData = function (ajaxData, skipSelect, selectedValue) {
         appendItem(targetControl, "", window.selectLocalized);
     }
 
-    $.each(ajaxData, function () {
+    $.each(ajaxData, function() {
         selected = false;
 
         if (selectedValue) {
@@ -662,7 +662,7 @@ jQuery.fn.bindAjaxData = function (ajaxData, skipSelect, selectedValue) {
     });
 };
 
-var appendItem = function (dropDownList, value, text, selected) {
+var appendItem = function(dropDownList, value, text, selected) {
     var option = $("<option></option>");
     option.val(value).html(text).trigger('change');
 
@@ -673,7 +673,7 @@ var appendItem = function (dropDownList, value, text, selected) {
     dropDownList.append(option);
 };
 
-var getAjax = function (url, data) {
+var getAjax = function(url, data) {
     if (data) {
         return $.ajax({
             type: "POST",
@@ -693,7 +693,7 @@ var getAjax = function (url, data) {
     });
 };
 
-var ajaxUpdateVal = function (url, data, targetControls) {
+var ajaxUpdateVal = function(url, data, targetControls) {
     var ajax;
 
     if (data) {
@@ -702,8 +702,8 @@ var ajaxUpdateVal = function (url, data, targetControls) {
         ajax = getAjax(url);
     };
 
-    ajax.success(function (msg) {
-        targetControls.each(function () {
+    ajax.success(function(msg) {
+        targetControls.each(function() {
             $(this).val(msg.d).trigger('change');
         });
 
@@ -712,12 +712,12 @@ var ajaxUpdateVal = function (url, data, targetControls) {
         };
     });
 
-    ajax.error(function (xhr) {
+    ajax.error(function(xhr) {
         logAjaxErrorMessage(xhr);
     });
 };
 
-var ajaxDataBind = function (url, targetControl, data, selectedValue, associatedControl) {
+var ajaxDataBind = function(url, targetControl, data, selectedValue, associatedControl) {
     if (!targetControl) {
         return;
     };
@@ -734,13 +734,13 @@ var ajaxDataBind = function (url, targetControl, data, selectedValue, associated
         ajax = new getAjax(url);
     };
 
-    ajax.success(function (msg) {
+    ajax.success(function(msg) {
         if (targetControl.length === 1) {
             targetControl.bindAjaxData(msg.d, false, selectedValue);
         };
 
         if (targetControl.length > 1) {
-            targetControl.each(function () {
+            targetControl.each(function() {
                 $(this).bindAjaxData(msg.d, false, selectedValue);
             });
         };
@@ -754,13 +754,13 @@ var ajaxDataBind = function (url, targetControl, data, selectedValue, associated
         };
     });
 
-    ajax.error(function (xhr) {
+    ajax.error(function(xhr) {
         var err = $.parseJSON(xhr.responseText);
         appendItem(targetControl, 0, err.Message);
     });
 };
 
-var getAjaxErrorMessage = function (xhr) {
+var getAjaxErrorMessage = function(xhr) {
     if (xhr) {
         var err = $.parseJSON(xhr.responseText).Message;
         return err;
@@ -769,13 +769,13 @@ var getAjaxErrorMessage = function (xhr) {
     return "";
 };
 
-var repaint = function () {
-    setTimeout(function () {
+var repaint = function() {
+    setTimeout(function() {
         $(document).trigger('resize');
     }, 1000);
 };
 
-var removeRow = function (cell) {
+var removeRow = function(cell) {
     var result = confirm(areYouSureLocalized);
 
     if (result) {
@@ -783,18 +783,18 @@ var removeRow = function (cell) {
     }
 };
 
-var tableToJSON = function (grid) {
+var tableToJSON = function(grid) {
     var colData = [];
     var rowData = [];
 
     var rows = grid.find("tr:not(:last-child)");
 
-    rows.each(function () {
+    rows.each(function() {
         var row = $(this);
 
         colData = [];
 
-        row.find("td:not(:last-child)").each(function () {
+        row.find("td:not(:last-child)").each(function() {
             colData.push($(this).html());
         });
 
@@ -832,7 +832,7 @@ function getSelectedCheckBoxItemIds(checkBoxColumnPosition, itemIdColumnPosition
     var selection = [];
 
     //Iterate through each row to investigate the selection.
-    grid.find("tr").each(function () {
+    grid.find("tr").each(function() {
         //Get an instance of the current row in this loop.
         var row = $(this);
 
@@ -857,7 +857,7 @@ function getSelectedCheckBoxItemIds(checkBoxColumnPosition, itemIdColumnPosition
     return selection;
 };
 
-var toogleSelection = function (element) {
+var toogleSelection = function(element) {
     var property = element.prop("checked");
 
     if (property) {
@@ -867,13 +867,13 @@ var toogleSelection = function (element) {
     }
 };
 
-jQuery.fn.getTotalColumns = function () {
+jQuery.fn.getTotalColumns = function() {
     var grid = $($(this).selector);
     var row = grid.find("tr").eq(1);
 
     var colCount = 0;
 
-    row.find("td").each(function () {
+    row.find("td").each(function() {
         if ($(this).attr('colspan')) {
             colCount += +$(this).attr('colspan');
         } else {
@@ -894,7 +894,7 @@ function createFlaggedRows(grid, bgColorColumnPos, fgColorColumnPos) {
     };
 
     //Iterate through all the rows of the grid.
-    grid.find("tr").each(function () {
+    grid.find("tr").each(function() {
         //Get the current row instance from the loop.
         var row = $(this);
 
@@ -907,7 +907,7 @@ function createFlaggedRows(grid, bgColorColumnPos, fgColorColumnPos) {
                 row.css("background", background);
 
                 //Iterate through all the columns of the current row.
-                row.find("td").each(function () {
+                row.find("td").each(function() {
                     //Prevent border display by unsetting the border information for each cell.
                     $(this).css("border", "none");
                 });
@@ -925,11 +925,11 @@ function createFlaggedRows(grid, bgColorColumnPos, fgColorColumnPos) {
     });
 };
 
-jQuery.fn.updateHiddenFieldOnBlur = function (associatedControl) {
+jQuery.fn.updateHiddenFieldOnBlur = function(associatedControl) {
     var element = $(this[0]);
     associatedControl.val(element.getSelectedValue()).trigger('change');
 
-    element.blur(function () {
+    element.blur(function() {
         associatedControl.val(element.getSelectedValue()).trigger('change');
     });
 };
@@ -946,7 +946,7 @@ function displaySucess() {
 };
 
 //Semantic UI Tab Support
-$(document).ready(function () {
+$(document).ready(function() {
     var tabItems = $('.tabular .item');
 
     if (tabItems && tabItems.length > 0) {
@@ -956,17 +956,17 @@ $(document).ready(function () {
     //Semantic UI Button Support
     var buttons = $(".buttons .button");
 
-    buttons.on("click", function () {
+    buttons.on("click", function() {
         buttons.removeClass("active");
         $(this).addClass("active");
     });
 });
 
-var printGridView = function (templatePath, headerPath, reportTitle, gridViewId, printedDate, user, office, windowName, offset, offsetLast) {
+var printGridView = function(templatePath, headerPath, reportTitle, gridViewId, printedDate, user, office, windowName, offset, offsetLast) {
     //Load report template from the path.
-    $.get(templatePath, function () { }).done(function (data) {
+    $.get(templatePath, function() {}).done(function(data) {
         //Load report header template.
-        $.get(headerPath, function () { }).done(function (header) {
+        $.get(headerPath, function() {}).done(function(header) {
             var table = $("#" + gridViewId).clone();
 
             table.find("tr.tableFloatingHeader").remove();
@@ -991,11 +991,11 @@ var printGridView = function (templatePath, headerPath, reportTitle, gridViewId,
 
             //Creating and opening a new window to display the report.
             var w = window.open('', windowName,
-                                   + ',menubar=0'
-                                   + ',toolbar=0'
-                                   + ',status=0'
-                                   + ',scrollbars=1'
-                                   + ',resizable=0');
+                + ',menubar=0'
+                + ',toolbar=0'
+                + ',status=0'
+                + ',scrollbars=1'
+                + ',resizable=0');
             w.moveTo(0, 0);
             w.resizeTo(screen.width, screen.height);
 
@@ -1018,11 +1018,11 @@ function setVisible(targetControl, visible, time) {
 };
 
 function createCascadingPair(select, input) {
-    input.blur(function () {
+    input.blur(function() {
         selectDropDownListByValue(this.id, select.attr("id"));
     });
 
-    select.change(function () {
+    select.change(function() {
         input.val(select.getSelectedValue());
     });
 };

@@ -41,7 +41,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <add key="LogoPath" value="~/Resource/Static/images/mixerp-logo-light.png" />
     <add key="HeaderPath" value="~/Reports/Assets/Header.html" />
     <add key="DbLoginName" value="report_user" />
-    <add key="DbPassword" value="change-on-deloyment" />
+    <add key="DbPassword" value="change-on-deployment" />
     <add key="ImageButtonCssClass" value="report-image-button" />
     <add key="EmailIcon" value="~/Resource/Icons/email-16.png" />
     <add key="PrintIcon" value="~/Resource/Icons/print-16.png" />

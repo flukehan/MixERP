@@ -25,14 +25,34 @@ SET search_path = public;
 
 DO 
 $$
-BEGIN
-   EXECUTE 'ALTER DATABASE ' || current_database() || ' SET timezone TO ''UTC''';
+BEGIN   
+    IF NOT EXISTS
+    (
+        SELECT 0 FROM pg_database 
+        WHERE datcollate::text = 'English_United States.1252' 
+        AND datctype::text = 'English_United States.1252'
+        AND datname=current_database()
+    ) THEN
+        RAISE EXCEPTION '%', 'The current server collation is not supported. Please change your database collation to "English United States".';
+    END IF;
+    
+    IF NOT EXISTS
+    (
+        SELECT 0 FROM pg_database 
+        WHERE pg_encoding_to_char(encoding)::text = 'UTF8' 
+        AND datname=current_database()
+    ) THEN
+        RAISE EXCEPTION '%', 'The current database encoding is not supported. Please change your encoding to "UTF8".';
+    END IF;
+    
+   EXECUTE 'ALTER DATABASE ' || current_database() || ' SET timezone TO ''UTC''';    
 END;
 $$
 LANGUAGE plpgsql;
 
 
 CREATE EXTENSION IF NOT EXISTS tablefunc;
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 -->-->-- /db/src/00. db core/1. scrud.sql --<--<--
 DROP SCHEMA IF EXISTS scrud CASCADE;
@@ -6233,8 +6253,32 @@ LANGUAGE plpgsql;
 
 
 -->-->-- /db/src/02. functions and logic/logic/functions/office/office.sign_in.sql --<--<--
-DROP FUNCTION IF EXISTS office.sign_in(office_id integer_strict, user_name text, password text, browser text, ip_address text, remote_user text, culture text, OUT login_id bigint, OUT message text);
-CREATE FUNCTION office.sign_in(office_id integer_strict, user_name text, password text, browser text, ip_address text, remote_user text, culture text, OUT login_id bigint, OUT message text)
+DROP FUNCTION IF EXISTS office.sign_in
+(
+    office_id       integer_strict, 
+    user_name       text, 
+    password        text, 
+    browser         text, 
+    ip_address      text, 
+    remote_user     text, 
+    culture         text, 
+    challenge       text, 
+    OUT login_id    bigint, 
+    OUT message     text
+);
+CREATE FUNCTION office.sign_in
+(
+    office_id       integer_strict, 
+    user_name       text, 
+    password        text, 
+    browser         text, 
+    ip_address      text, 
+    remote_user     text, 
+    culture         text, 
+    challenge       text, 
+    OUT login_id    bigint, 
+    OUT message     text
+)
 RETURNS RECORD
 AS
 $$
@@ -6248,12 +6292,13 @@ BEGIN
     IF _user_id IS NULL THEN
         INSERT INTO audit.failed_logins(user_name,browser,ip_address,remote_user,details)
         SELECT $2, $4, $5, $6, 'Invalid user name.';
+        message := 'Invalid login attempt.';
     ELSE
         _lock_out_till:=policy.is_locked_out_till(_user_id);
 
 
         IF NOT ((_lock_out_till IS NOT NULL) AND (_lock_out_till>NOW())) THEN
-            IF(office.validate_login($2,$3)) THEN
+            IF(office.validate_login($2,$3, $8)) THEN
 
                 SELECT * FROM office.can_login(_user_id,$1) 
                 INTO result, message;
@@ -6293,7 +6338,7 @@ $$
 LANGUAGE plpgsql;
 
 
---SELECT * FROM office.sign_in(2, 'binod', '+qJ9AMyGgrX/AOF4GmwmBa4SrA3+InlErVkJYmAopVZh+WFJD7k2ZO9dxox6XiqT38dSoM72jLoXNzwvY7JAQA==', '', '', '', '');
+SELECT * FROM office.sign_in(2, 'binod2', '4e99cb7523794ad53b4da66c91f56d0143a679e1c6d396cda9ad0c9b41ed53e90bd5c59bf98255a4f1946b216b3ba539074a8a86cedd4af8bb208a8fad748e82', 'Firefox', '0.0.0.0', 'N/A', 'en-US', 'cd0ad7446ab64801837bfd43197d19c1');
 
 
 /**************************************************************************************************************************
@@ -9315,22 +9360,26 @@ LANGUAGE plpgsql;
 -->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_trial_balance.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_trial_balance
 (
-    _date_from              date,
-    _date_to                date,
-    _user_id                integer,
-    _office_id              integer,
-    _compact                boolean,
-    _factor                 decimal(24, 4)
+    _date_from                      date,
+    _date_to                        date,
+    _user_id                        integer,
+    _office_id                      integer,
+    _compact                        boolean,
+    _factor                         decimal(24, 4),
+    _change_side_when_negative      boolean,
+    _include_zero_balance_accounts  boolean
 );
 
 CREATE FUNCTION transactions.get_trial_balance
 (
-    _date_from              date,
-    _date_to                date,
-    _user_id                integer,
-    _office_id              integer,
-    _compact                boolean,
-    _factor                 decimal(24, 4)
+    _date_from                      date,
+    _date_to                        date,
+    _user_id                        integer,
+    _office_id                      integer,
+    _compact                        boolean,
+    _factor                         decimal(24, 4),
+    _change_side_when_negative      boolean DEFAULT(true),
+    _include_zero_balance_accounts  boolean DEFAULT(true)
 )
 RETURNS TABLE
 (
@@ -9340,23 +9389,16 @@ RETURNS TABLE
     account                 text,
     previous_debit          decimal(24, 4),
     previous_credit         decimal(24, 4),
-    previous_balance        decimal(24, 4),
     debit                   decimal(24, 4),
     credit                  decimal(24, 4),
-    balance                 decimal(24, 4),
     closing_debit           decimal(24, 4),
-    closing_credit          decimal(24, 4),
-    closing_balance         decimal(24, 4)
+    closing_credit          decimal(24, 4)
 )
 AS
 $$
 BEGIN
     IF(_date_from = 'infinity') THEN
         RAISE EXCEPTION '%', 'Invalid date.';
-    END IF;
-
-    IF(_factor = 0) THEN
-        _factor := 1;
     END IF;
 
     IF NOT EXISTS
@@ -9379,15 +9421,12 @@ BEGIN
         account_id              integer,
         account_number          text,
         account                 text,
-        previous_debit          decimal(24, 4) DEFAULT(0),
-        previous_credit         decimal(24, 4) DEFAULT(0),
-        previous_balance        decimal(24, 4) DEFAULT(0),
-        debit                   decimal(24, 4) DEFAULT(0),
-        credit                  decimal(24, 4) DEFAULT(0),
-        balance                 decimal(24, 4) DEFAULT(0),
-        closing_debit           decimal(24, 4) DEFAULT(0),
-        closing_credit          decimal(24, 4) DEFAULT(0),
-        closing_balance         decimal(24, 4) DEFAULT(0),
+        previous_debit          decimal(24, 4),
+        previous_credit         decimal(24, 4),
+        debit                   decimal(24, 4),
+        credit                  decimal(24, 4),
+        closing_debit           decimal(24, 4),
+        closing_credit          decimal(24, 4),
         root_account_id         integer,
         normally_debit          boolean
     ) ON COMMIT DROP;
@@ -9401,8 +9440,6 @@ BEGIN
     WHERE value_date < _date_from
     AND office_id IN (SELECT * FROM office.get_office_ids(_office_id))
     GROUP BY verified_transaction_mat_view.account_id;
-
-
 
     IF(_date_to = 'infinity') THEN
         INSERT INTO temp_trial_balance(account_id, debit, credit)    
@@ -9441,18 +9478,16 @@ BEGIN
             ''::text as account,
             SUM(temp_trial_balance.previous_debit) AS previous_debit,
             SUM(temp_trial_balance.previous_credit) AS previous_credit,
-            0::decimal(24, 4) AS previous_balance,
             SUM(temp_trial_balance.debit) AS debit,
             SUM(temp_trial_balance.credit) as credit,
-            0::decimal(24, 4) AS balance,
             SUM(temp_trial_balance.closing_debit) AS closing_debit,
             SUM(temp_trial_balance.closing_credit) AS closing_credit,
-            0::decimal(24, 4) AS closing_balance,
             temp_trial_balance.normally_debit
         FROM temp_trial_balance
         GROUP BY 
             temp_trial_balance.root_account_id,
-            temp_trial_balance.normally_debit;
+            temp_trial_balance.normally_debit
+        ORDER BY temp_trial_balance.normally_debit;
     ELSE
         CREATE TEMPORARY TABLE temp_trial_balance2
         ON COMMIT DROP
@@ -9463,18 +9498,16 @@ BEGIN
             ''::text as account,
             SUM(temp_trial_balance.previous_debit) AS previous_debit,
             SUM(temp_trial_balance.previous_credit) AS previous_credit,
-            0::decimal(24, 4) AS previous_balance,
             SUM(temp_trial_balance.debit) AS debit,
             SUM(temp_trial_balance.credit) as credit,
-            0::decimal(24, 4) AS balance,
             SUM(temp_trial_balance.closing_debit) AS closing_debit,
             SUM(temp_trial_balance.closing_credit) AS closing_credit,
-            0::decimal(24, 4) AS closing_balance,
             temp_trial_balance.normally_debit
         FROM temp_trial_balance
         GROUP BY 
             temp_trial_balance.account_id,
-            temp_trial_balance.normally_debit;
+            temp_trial_balance.normally_debit
+        ORDER BY temp_trial_balance.normally_debit;
     END IF;
     
     UPDATE temp_trial_balance2 SET
@@ -9485,63 +9518,71 @@ BEGIN
     WHERE temp_trial_balance2.account_id = core.accounts.account_id;
 
     UPDATE temp_trial_balance2 SET 
-        previous_balance = temp_trial_balance2.previous_credit - temp_trial_balance2.previous_debit,
-        balance = temp_trial_balance2.credit - temp_trial_balance2.debit,
-        closing_debit = temp_trial_balance2.previous_debit + temp_trial_balance2.debit,
-        closing_credit = temp_trial_balance2.previous_credit + temp_trial_balance2.credit,
-        closing_balance = temp_trial_balance2.previous_credit + temp_trial_balance2.credit - (temp_trial_balance2.previous_debit + temp_trial_balance2.debit);
+        closing_debit = COALESCE(temp_trial_balance2.previous_debit, 0) + COALESCE(temp_trial_balance2.debit, 0),
+        closing_credit = COALESCE(temp_trial_balance2.previous_credit, 0) + COALESCE(temp_trial_balance2.credit, 0);
+        
 
 
-    UPDATE temp_trial_balance2 SET 
-        previous_balance = temp_trial_balance2.previous_balance * -1,
-        balance = temp_trial_balance2.balance * -1,
-        closing_balance = temp_trial_balance2.closing_balance * -1
-    WHERE normally_debit;
-
-    UPDATE temp_trial_balance2 SET previous_debit   = NULL WHERE temp_trial_balance2.previous_debit     = 0;
-    UPDATE temp_trial_balance2 SET previous_credit  = NULL WHERE temp_trial_balance2.previous_credit    = 0;
-    UPDATE temp_trial_balance2 SET previous_balance = NULL WHERE temp_trial_balance2.previous_balance   = 0;
-    UPDATE temp_trial_balance2 SET debit            = NULL WHERE temp_trial_balance2.debit              = 0;
-    UPDATE temp_trial_balance2 SET credit           = NULL WHERE temp_trial_balance2.credit             = 0;
-    UPDATE temp_trial_balance2 SET balance          = NULL WHERE temp_trial_balance2.balance            = 0;
-    UPDATE temp_trial_balance2 SET closing_debit    = NULL WHERE temp_trial_balance2.closing_debit      = 0;
-    UPDATE temp_trial_balance2 SET closing_credit   = NULL WHERE temp_trial_balance2.closing_credit     = 0;
-    UPDATE temp_trial_balance2 SET closing_balance  = NULL WHERE temp_trial_balance2.closing_balance    = 0;
+     UPDATE temp_trial_balance2 SET previous_debit = COALESCE(temp_trial_balance2.previous_debit, 0) - COALESCE(temp_trial_balance2.previous_credit, 0), previous_credit = NULL WHERE normally_debit;
+     UPDATE temp_trial_balance2 SET previous_credit = COALESCE(temp_trial_balance2.previous_credit, 0) - COALESCE(temp_trial_balance2.previous_debit, 0), previous_debit = NULL WHERE NOT normally_debit;
+ 
+     UPDATE temp_trial_balance2 SET debit = COALESCE(temp_trial_balance2.debit, 0) - COALESCE(temp_trial_balance2.credit, 0), credit = NULL WHERE normally_debit;
+     UPDATE temp_trial_balance2 SET credit = COALESCE(temp_trial_balance2.credit, 0) - COALESCE(temp_trial_balance2.debit, 0), debit = NULL WHERE NOT normally_debit;
+ 
+     UPDATE temp_trial_balance2 SET closing_debit = COALESCE(temp_trial_balance2.closing_debit, 0) - COALESCE(temp_trial_balance2.closing_credit, 0), closing_credit = NULL WHERE normally_debit;
+     UPDATE temp_trial_balance2 SET closing_credit = COALESCE(temp_trial_balance2.closing_credit, 0) - COALESCE(temp_trial_balance2.closing_debit, 0), closing_debit = NULL WHERE NOT normally_debit;
 
 
-    DELETE FROM temp_trial_balance2 WHERE temp_trial_balance2.closing_balance = 0;
+    IF(NOT _include_zero_balance_accounts) THEN
+        DELETE FROM temp_trial_balance2 WHERE COALESCE(temp_trial_balance2.closing_debit) + COALESCE(temp_trial_balance2.closing_credit) = 0;
+    END IF;
+    
+    IF(_factor > 0) THEN
+        UPDATE temp_trial_balance2 SET previous_debit   = temp_trial_balance2.previous_debit/_factor;
+        UPDATE temp_trial_balance2 SET previous_credit  = temp_trial_balance2.previous_credit/_factor;
+        UPDATE temp_trial_balance2 SET debit            = temp_trial_balance2.debit/_factor;
+        UPDATE temp_trial_balance2 SET credit           = temp_trial_balance2.credit/_factor;
+        UPDATE temp_trial_balance2 SET closing_debit    = temp_trial_balance2.closing_debit/_factor;
+        UPDATE temp_trial_balance2 SET closing_credit   = temp_trial_balance2.closing_credit/_factor;
+    END IF;
 
-    UPDATE temp_trial_balance2 SET previous_debit   = temp_trial_balance2.previous_debit/_factor;
-    UPDATE temp_trial_balance2 SET previous_credit  = temp_trial_balance2.previous_credit/_factor;
-    UPDATE temp_trial_balance2 SET previous_balance = temp_trial_balance2.previous_balance/_factor;
-    UPDATE temp_trial_balance2 SET debit            = temp_trial_balance2.debit/_factor;
-    UPDATE temp_trial_balance2 SET credit           = temp_trial_balance2.credit/_factor;
-    UPDATE temp_trial_balance2 SET balance          = temp_trial_balance2.balance/_factor;
-    UPDATE temp_trial_balance2 SET closing_debit    = temp_trial_balance2.closing_debit/_factor;
-    UPDATE temp_trial_balance2 SET closing_credit   = temp_trial_balance2.closing_credit/_factor;
-    UPDATE temp_trial_balance2 SET closing_balance  = temp_trial_balance2.closing_balance/_factor;
-   
+    --Remove Zeros
+    UPDATE temp_trial_balance2 SET previous_debit = NULL WHERE temp_trial_balance2.previous_debit = 0;
+    UPDATE temp_trial_balance2 SET previous_credit = NULL WHERE temp_trial_balance2.previous_credit = 0;
+    UPDATE temp_trial_balance2 SET debit = NULL WHERE temp_trial_balance2.debit = 0;
+    UPDATE temp_trial_balance2 SET credit = NULL WHERE temp_trial_balance2.credit = 0;
+    UPDATE temp_trial_balance2 SET closing_debit = NULL WHERE temp_trial_balance2.closing_debit = 0;
+    UPDATE temp_trial_balance2 SET closing_debit = NULL WHERE temp_trial_balance2.closing_credit = 0;
+
+    IF(_change_side_when_negative) THEN
+        UPDATE temp_trial_balance2 SET previous_debit = temp_trial_balance2.previous_credit * -1, previous_credit = NULL WHERE temp_trial_balance2.previous_credit < 0;
+        UPDATE temp_trial_balance2 SET previous_credit = temp_trial_balance2.previous_debit * -1, previous_debit = NULL WHERE temp_trial_balance2.previous_debit < 0;
+
+        UPDATE temp_trial_balance2 SET debit = temp_trial_balance2.credit * -1, credit = NULL WHERE temp_trial_balance2.credit < 0;
+        UPDATE temp_trial_balance2 SET credit = temp_trial_balance2.debit * -1, debit = NULL WHERE temp_trial_balance2.debit < 0;
+
+        UPDATE temp_trial_balance2 SET closing_debit = temp_trial_balance2.closing_credit * -1, closing_credit = NULL WHERE temp_trial_balance2.closing_credit < 0;
+        UPDATE temp_trial_balance2 SET closing_credit = temp_trial_balance2.closing_debit * -1, closing_debit = NULL WHERE temp_trial_balance2.closing_debit < 0;
+    END IF;
+    
     RETURN QUERY
     SELECT
-        row_number() OVER(ORDER BY temp_trial_balance2.account_id)::integer AS id,
+        row_number() OVER(ORDER BY temp_trial_balance2.normally_debit DESC, temp_trial_balance2.account_id)::integer AS id,
         temp_trial_balance2.account_id,
         temp_trial_balance2.account_number,
         temp_trial_balance2.account,
         temp_trial_balance2.previous_debit,
         temp_trial_balance2.previous_credit,
-        temp_trial_balance2.previous_balance,
         temp_trial_balance2.debit,
         temp_trial_balance2.credit,
-        temp_trial_balance2.balance,
         temp_trial_balance2.closing_debit,
-        temp_trial_balance2.closing_credit,
-        temp_trial_balance2.closing_balance
+        temp_trial_balance2.closing_credit
     FROM temp_trial_balance2;
 END
 $$
 LANGUAGE plpgsql;
 
---SELECT * FROM transactions.get_trial_balance('1-1-2010','1-1-2020',1,1, false);
+SELECT * FROM transactions.get_trial_balance('12-1-2014','12-31-2014',1,1, false, 1000, false, false);
 
 
 -->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_value_date.sql --<--<--
@@ -12776,21 +12817,30 @@ LANGUAGE plpgsql;
 
 
 -->-->-- /db/src/02. functions and logic/office/office.validate_login.sql --<--<--
+DROP FUNCTION IF EXISTS office.validate_login
+(
+    user_name       text,
+    password        text,
+    challenge       text
+);
+
 CREATE FUNCTION office.validate_login
 (
-    user_name text,
-    password text
+    user_name       text,
+    password        text,
+    challenge       text
 )
 RETURNS boolean
 AS
 $$
 BEGIN
+
     IF EXISTS
     (
         SELECT 1 FROM office.users 
         WHERE office.users.user_name=$1 
-        AND office.users.password=$2 
-        --The system user should not be allowed to login.
+        AND encode(digest(office.users.password || challenge, 'sha512'), 'hex')=$2
+        --The system user must never login.
         AND office.users.role_id != 
         (
             SELECT office.roles.role_id 
@@ -17190,7 +17240,7 @@ SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='SYS
 /*******************************************************************
     TODO: REMOVE THIS USER ON DEPLOYMENT
 *******************************************************************/
-SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='ADMN'),(SELECT office_id FROM office.offices WHERE office_code='MoF'),'binod','+qJ9AMyGgrX/AOF4GmwmBa4SrA3+InlErVkJYmAopVZh+WFJD7k2ZO9dxox6XiqT38dSoM72jLoXNzwvY7JAQA==','Binod Nirvan', true);
+SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='ADMN'),(SELECT office_id FROM office.offices WHERE office_code='MoF'),'binod','37c6ca5a5570ce76affa5e779036c4955d764520980d17b597ea2908e9dcc515607f12eb25c3ce26e6b5dcaa812fe2acefbb20663ac220b02da82ec2f7e1d0e9','Binod Nirvan', true);
 
 
 

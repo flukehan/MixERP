@@ -203,6 +203,10 @@
     <Compile Include="Reports\ReportViewer.aspx.designer.cs">
       <DependentUpon>ReportViewer.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Services\User.asmx.cs">
+      <DependentUpon>User.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Site\Account\UserProfile.aspx.cs">
       <DependentUpon>UserProfile.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -706,6 +710,12 @@
     <Content Include="Scripts\jquery.signalR.js" />
     <Content Include="Scripts\jquery.signalR.min.js" />
     <Content Include="Scripts\jqueryNumber\jquery.number.js" />
+    <Content Include="Scripts\jssha1.5\src\sha.js" />
+    <Content Include="Scripts\jssha1.5\src\sha1.js" />
+    <Content Include="Scripts\jssha1.5\src\sha256.js" />
+    <Content Include="Scripts\jssha1.5\src\sha512.js" />
+    <Content Include="Scripts\jssha1.5\src\sha_dev.js" />
+    <Content Include="Scripts\Pages\SignIn.aspx.js" />
     <Content Include="Scripts\mixerp.js" />
     <Content Include="bundles\scripts\parties-popup.js">
       <DependentUpon>parties-popup.js.bundle</DependentUpon>
@@ -878,6 +888,7 @@
     <Content Include="Scripts\vakata-jstree\dist\themes\default\style.min.css" />
     <Content Include="Scripts\vakata-jstree\dist\themes\default\throbber.gif" />
     <Content Include="Services\UploadHelper.asmx" />
+    <Content Include="Services\User.asmx" />
     <Content Include="Site\Account\ChangePassword.aspx" />
     <Content Include="Site\Account\SignOut.aspx" />
     <Content Include="Resource\Static\AccessIsDenied.html" />
@@ -1036,6 +1047,7 @@
     <Content Include="Scripts\semantic-ui\themes\default\assets\fonts\icons.ttf" />
     <Content Include="Scripts\semantic-ui\themes\default\assets\fonts\icons.woff" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Scripts\jssha1.5\LICENSE" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -110,6 +110,19 @@
 	$name$.Attributes.Add("class", "$ui$");&#xD;
 &#xD;
 }</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=4304AA2F9526234CB05E03AB5EEDAE85/@KeyIndexDefined">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=4304AA2F9526234CB05E03AB5EEDAE85/Applicability/=Live/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=4304AA2F9526234CB05E03AB5EEDAE85/Reformat/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=4304AA2F9526234CB05E03AB5EEDAE85/Scope/=C3001E7C0DA78E4487072B7E050D86C5/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=4304AA2F9526234CB05E03AB5EEDAE85/Scope/=C3001E7C0DA78E4487072B7E050D86C5/CustomProperties/=minimumLanguageVersion/@EntryIndexedValue">2.0</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=4304AA2F9526234CB05E03AB5EEDAE85/Scope/=C3001E7C0DA78E4487072B7E050D86C5/Type/@EntryValue">InCSharpFile</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=4304AA2F9526234CB05E03AB5EEDAE85/Shortcut/@EntryValue">fld</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=4304AA2F9526234CB05E03AB5EEDAE85/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=4304AA2F9526234CB05E03AB5EEDAE85/Text/@EntryValue">using(HtmlGenericControl field = new HtmlGenericControl("div"))&#xD;
+{&#xD;
+	field.Attributes.Add("class", "field");&#xD;
+	container.Controls.Add(field);&#xD;
+}</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=57469634E223E849937CA6B6C7119BF1/@KeyIndexDefined">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=57469634E223E849937CA6B6C7119BF1/Applicability/=Live/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=57469634E223E849937CA6B6C7119BF1/Field/=parameter1/@KeyIndexDefined">True</s:Boolean>
@@ -198,6 +211,19 @@ using(Npgsql.NpgsqlCommand command = new NpgsqlCommand(sql))&#xD;
 	command.Parameters.AddWithValue("@$Parameter4$", $parameter4$);&#xD;
 	command.Parameters.AddWithValue("@$Parameter5$", $parameter5$);&#xD;
 }</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B104DAEB4234E44CA4E6DC971A9ED0EC/@KeyIndexDefined">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B104DAEB4234E44CA4E6DC971A9ED0EC/Applicability/=Live/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B104DAEB4234E44CA4E6DC971A9ED0EC/Reformat/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B104DAEB4234E44CA4E6DC971A9ED0EC/Scope/=C3001E7C0DA78E4487072B7E050D86C5/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B104DAEB4234E44CA4E6DC971A9ED0EC/Scope/=C3001E7C0DA78E4487072B7E050D86C5/CustomProperties/=minimumLanguageVersion/@EntryIndexedValue">2.0</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B104DAEB4234E44CA4E6DC971A9ED0EC/Scope/=C3001E7C0DA78E4487072B7E050D86C5/Type/@EntryValue">InCSharpFile</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B104DAEB4234E44CA4E6DC971A9ED0EC/Shortcut/@EntryValue">lbl</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B104DAEB4234E44CA4E6DC971A9ED0EC/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B104DAEB4234E44CA4E6DC971A9ED0EC/Text/@EntryValue">using (HtmlGenericControl label = HtmlControlHelper.GetLabel("", ""))&#xD;
+{&#xD;
+    field.Controls.Add(label);&#xD;
+}&#xD;
+</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=D4F9711256371347BA7896926C9D847B/@KeyIndexDefined">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=D4F9711256371347BA7896926C9D847B/Applicability/=Live/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=D4F9711256371347BA7896926C9D847B/Field/=class/@KeyIndexDefined">True</s:Boolean>
@@ -251,4 +277,19 @@ private static string GetDisplayViews()&#xD;
     MixERP.Net.Common.Helpers.ScrudHelper.AddDisplayView(displayViews, "", "");&#xD;
     MixERP.Net.Common.Helpers.ScrudHelper.AddDisplayView(displayViews, "", "");&#xD;
     return string.Join(",", displayViews);&#xD;
+}</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=FE613BDCC390194C907E93EA6B09CDA1/@KeyIndexDefined">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=FE613BDCC390194C907E93EA6B09CDA1/Applicability/=Live/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=FE613BDCC390194C907E93EA6B09CDA1/Field/=control/@KeyIndexDefined">True</s:Boolean>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=FE613BDCC390194C907E93EA6B09CDA1/Field/=control/Order/@EntryValue">0</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=FE613BDCC390194C907E93EA6B09CDA1/Reformat/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=FE613BDCC390194C907E93EA6B09CDA1/Scope/=C3001E7C0DA78E4487072B7E050D86C5/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=FE613BDCC390194C907E93EA6B09CDA1/Scope/=C3001E7C0DA78E4487072B7E050D86C5/CustomProperties/=minimumLanguageVersion/@EntryIndexedValue">2.0</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=FE613BDCC390194C907E93EA6B09CDA1/Scope/=C3001E7C0DA78E4487072B7E050D86C5/Type/@EntryValue">InCSharpFile</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=FE613BDCC390194C907E93EA6B09CDA1/Shortcut/@EntryValue">htgc</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=FE613BDCC390194C907E93EA6B09CDA1/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=FE613BDCC390194C907E93EA6B09CDA1/Text/@EntryValue">using(HtmlGenericControl $control$ = new HtmlGenericControl("div"))&#xD;
+{&#xD;
+	$control$.Attributes.Add("class", "");&#xD;
+	container.Controls.Add($control$);&#xD;
 }</s:String></wpf:ResourceDictionary>

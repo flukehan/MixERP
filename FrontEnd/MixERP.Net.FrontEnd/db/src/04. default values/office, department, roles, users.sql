@@ -49,6 +49,6 @@ SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='SYS
 /*******************************************************************
     TODO: REMOVE THIS USER ON DEPLOYMENT
 *******************************************************************/
-SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='ADMN'),(SELECT office_id FROM office.offices WHERE office_code='MoF'),'binod','+qJ9AMyGgrX/AOF4GmwmBa4SrA3+InlErVkJYmAopVZh+WFJD7k2ZO9dxox6XiqT38dSoM72jLoXNzwvY7JAQA==','Binod Nirvan', true);
+SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='ADMN'),(SELECT office_id FROM office.offices WHERE office_code='MoF'),'binod','37c6ca5a5570ce76affa5e779036c4955d764520980d17b597ea2908e9dcc515607f12eb25c3ce26e6b5dcaa812fe2acefbb20663ac220b02da82ec2f7e1d0e9','Binod Nirvan', true);
 
 

@@ -26,14 +26,14 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Reports
 {
     public static class TrialBalance
     {
-        public static DataTable GetTrialBalance(DateTime from, DateTime to, int userId, int officeId, bool compact, decimal factor)
+        public static DataTable GetTrialBalance(DateTime from, DateTime to, int userId, int officeId, bool compact, decimal factor, bool changeSideWhenNegative, bool includeZeroBalanceAccounts)
         {
             if (to < from)
             {
                 return null;
             }
 
-            const string sql = "SELECT * FROM transactions.get_trial_balance(@From, @To, @UserId, @OfficeId, @Compact, @Factor) ORDER BY id;";
+            const string sql = "SELECT * FROM transactions.get_trial_balance(@From, @To, @UserId, @OfficeId, @Compact, @Factor, @ChangeSideWhenNegative, @IncludeZeroBalanceAccounts) ORDER BY id;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@From", from);
@@ -42,6 +42,8 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Reports
                 command.Parameters.AddWithValue("@OfficeId", officeId);
                 command.Parameters.AddWithValue("@Compact", compact);
                 command.Parameters.AddWithValue("@Factor", factor);
+                command.Parameters.AddWithValue("@ChangeSideWhenNegative", changeSideWhenNegative);
+                command.Parameters.AddWithValue("@IncludeZeroBalanceAccounts", includeZeroBalanceAccounts);
 
                 return DbOperation.GetDataTable(command);
             }

@@ -17,18 +17,18 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.Inventory.Data.Helpers;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Core.Modules.Inventory.Data.Helpers;
 
 namespace MixERP.Net.Core.Modules.Inventory.Services
 {
     /// <summary>
-    /// Summary description for ItemData
+    ///     Summary description for ItemData
     /// </summary>
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
@@ -49,7 +49,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
             using (DataTable table = Agents.GetAgentDataTable())
             {
                 string displayField = ConfigurationHelper.GetDbParameter("SalespersonDisplayField");
-                table.Columns.Add("salesperson", typeof(string), displayField);
+                table.Columns.Add("salesperson", typeof (string), displayField);
 
                 foreach (DataRow dr in table.Rows)
                 {
@@ -90,7 +90,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
             using (DataTable table = PaymentTerms.GetPaymentTermsDataTable())
             {
                 string displayField = ConfigurationHelper.GetDbParameter("PaymentTermDisplayField");
-                table.Columns.Add("payment_term", typeof(string), displayField);
+                table.Columns.Add("payment_term", typeof (string), displayField);
 
                 foreach (DataRow dr in table.Rows)
                 {
@@ -128,7 +128,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
             using (DataTable table = PriceTypes.GetPriceTypeDataTable())
             {
                 string displayField = ConfigurationHelper.GetDbParameter("PriceTypeDisplayField");
-                table.Columns.Add("price_type", typeof(string), displayField);
+                table.Columns.Add("price_type", typeof (string), displayField);
 
                 foreach (DataRow dr in table.Rows)
                 {
@@ -139,6 +139,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
             return values;
         }
 
+        [WebMethod]
         public Collection<ListItem> GetShippers()
         {
             Collection<ListItem> values = new Collection<ListItem>();
@@ -146,7 +147,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
             using (DataTable table = Shippers.GetShipperDataTable())
             {
                 string displayField = ConfigurationHelper.GetDbParameter("ShipperDisplayField");
-                table.Columns.Add("shipper", typeof(string), displayField);
+                table.Columns.Add("shipper", typeof (string), displayField);
 
                 foreach (DataRow dr in table.Rows)
                 {
@@ -166,7 +167,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
             using (DataTable table = Stores.GetStoreDataTable(officeId))
             {
                 string displayField = ConfigurationHelper.GetDbParameter("StoreDisplayField");
-                table.Columns.Add("store", typeof(string), displayField);
+                table.Columns.Add("store", typeof (string), displayField);
 
                 foreach (DataRow dr in table.Rows)
                 {

@@ -20,11 +20,31 @@ SET search_path = public;
 
 DO 
 $$
-BEGIN
-   EXECUTE 'ALTER DATABASE ' || current_database() || ' SET timezone TO ''UTC''';
+BEGIN   
+    IF NOT EXISTS
+    (
+        SELECT 0 FROM pg_database 
+        WHERE datcollate::text = 'English_United States.1252' 
+        AND datctype::text = 'English_United States.1252'
+        AND datname=current_database()
+    ) THEN
+        RAISE EXCEPTION '%', 'The current server collation is not supported. Please change your database collation to "English United States".';
+    END IF;
+    
+    IF NOT EXISTS
+    (
+        SELECT 0 FROM pg_database 
+        WHERE pg_encoding_to_char(encoding)::text = 'UTF8' 
+        AND datname=current_database()
+    ) THEN
+        RAISE EXCEPTION '%', 'The current database encoding is not supported. Please change your encoding to "UTF8".';
+    END IF;
+    
+   EXECUTE 'ALTER DATABASE ' || current_database() || ' SET timezone TO ''UTC''';    
 END;
 $$
 LANGUAGE plpgsql;
 
 
 CREATE EXTENSION IF NOT EXISTS tablefunc;
+CREATE EXTENSION IF NOT EXISTS pgcrypto;

@@ -17,23 +17,38 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System;
+using System.Collections.ObjectModel;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 using MixERP.Net.Common;
-using MixERP.Net.Common.Base;
+using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models.Office;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Data.Helpers;
 using MixERP.Net.FrontEnd.Data.Office;
-using System;
-using System.Collections.ObjectModel;
-using System.Web.UI;
+using Resources;
 
 namespace MixERP.Net.FrontEnd
 {
     public partial class SignIn : Page
     {
+        protected void Page_Init(object sender, EventArgs e)
+        {
+            this.CreateControls(this.Placeholder1);
+
+            string challenge = Guid.NewGuid().ToString().Replace("-", "");
+
+            this.Session["Challenge"] = challenge;
+
+            PageUtility.RegisterJavascript("challenge", "var challenge = '" + challenge + "';", this.Page, true);
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             this.CheckDbConnectivity();
+            PageUtility.CheckInvalidAttempts(this.Page);
 
             try
             {
@@ -49,7 +64,6 @@ namespace MixERP.Net.FrontEnd
                 return;
             }
 
-            this.UserIdTextBox.Focus();
 
             if (!this.IsPostBack)
             {
@@ -63,7 +77,7 @@ namespace MixERP.Net.FrontEnd
 
                         if (string.IsNullOrWhiteSpace(sessionUser))
                         {
-                            if (MixERPWebpage.SetSession(this.Page, signInId))
+                            if (MixERPWebpage.SetSession(this.Page.Session, signInId))
                             {
                                 this.RedirectToDashboard();
                             }
@@ -77,44 +91,11 @@ namespace MixERP.Net.FrontEnd
             }
         }
 
-        protected void SignInButton_Click(object sender, EventArgs e)
-        {
-            int officeId = Conversion.TryCastInteger(this.BranchIdHiddenField.Value);
-
-            try
-            {
-                bool result = Login(officeId, this.UserIdTextBox.Text, this.PasswordTextBox.Text, this.LanguageDropDownList.SelectedItem.Value, this.RememberMe.Checked, this.Page);
-
-                if (!result)
-                {
-                    this.MessageLiteral.Text = @"<span class='big error'>" + Resources.Warnings.UserIdOrPasswordIncorrect + @"</span>";
-                }
-            }
-            catch (MixERPException ex)
-            {
-                this.MessageLiteral.Text = @"<span class='big error'>" + ex.Message + @"</span>";
-            }
-        }
-
-        private static bool Login(int officeId, string userName, string password, string culture, bool rememberMe, Page page)
-        {
-            long signInId = Data.Office.User.SignIn(officeId, userName, password, culture, rememberMe, page);
-
-            if (signInId > 0)
-            {
-                MixERPWebpage.SetSession(page, signInId);
-                MixERPWebpage.SetAuthenticationTicket(page, signInId, rememberMe);
-                return true;
-            }
-
-            return false;
-        }
-
         private void BindBranchDropDownList()
         {
             Collection<Office> offices = Offices.GetOffices();
-            this.BranchDropDownList.DataSource = offices;
-            this.BranchDropDownList.DataBind();
+            this.branchSelect.DataSource = offices;
+            this.branchSelect.DataBind();
         }
 
         private void CheckDbConnectivity()
@@ -134,5 +115,291 @@ namespace MixERP.Net.FrontEnd
         {
             this.Response.Redirect("~/Site/offline.html");
         }
+
+        #region Controls
+
+        private HtmlSelect branchSelect;
+
+        private void CreateControls(Control container)
+        {
+            using (HtmlGenericControl signInForm = new HtmlGenericControl("div"))
+            {
+                signInForm.Attributes.Add("id", "signin-form");
+                this.CreateLogo(signInForm);
+                this.CreateForm(signInForm);
+
+                container.Controls.Add(signInForm);
+            }
+        }
+
+        private void CreateLogo(HtmlGenericControl container)
+        {
+            using (HtmlAnchor anchor = new HtmlAnchor())
+            {
+                anchor.HRef = "/SignIn.aspx";
+
+                using (HtmlImage image = new HtmlImage())
+                {
+                    image.Src = this.ResolveClientUrl("~/Resource/Static/images/mixerp-logo.png");
+                    anchor.Controls.Add(image);
+                }
+                container.Controls.Add(anchor);
+            }
+        }
+
+        #region Form
+
+        private void AddBranchField(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl field = new HtmlGenericControl("div"))
+            {
+                field.Attributes.Add("class", "field");
+
+                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Titles.SelectYourBranch, "BranchSelect"))
+                {
+                    field.Controls.Add(label);
+                }
+
+                this.branchSelect = new HtmlSelect();
+                this.branchSelect.ID = "BranchSelect";
+                this.branchSelect.DataTextField = "OfficeName";
+                this.branchSelect.DataValueField = "OfficeId";
+
+                field.Controls.Add(this.branchSelect);
+
+                container.Controls.Add(field);
+            }
+        }
+
+        private void AddCannotAccessAccountField(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl field = new HtmlGenericControl("div"))
+            {
+                field.Attributes.Add("class", "field");
+
+                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(""))
+                {
+                    field.Controls.Add(label);
+                }
+
+                using (HtmlAnchor anchor = new HtmlAnchor())
+                {
+                    anchor.HRef = "javascript:void(0);";
+                    anchor.ID = "HelpAnchor";
+                    anchor.InnerText = Questions.CannotAccessAccount;
+
+
+                    field.Controls.Add(anchor);
+                }
+
+                container.Controls.Add(field);
+            }
+        }
+
+        private void AddDivider(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl divider = new HtmlGenericControl("div"))
+            {
+                divider.Attributes.Add("class", "ui divider");
+                container.Controls.Add(divider);
+            }
+        }
+
+        private void AddExceptionField(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl exceptionField = new HtmlGenericControl("div"))
+            {
+                exceptionField.Attributes.Add("class", "exception field");
+                container.Controls.Add(exceptionField);
+            }
+        }
+
+        private void AddIconDivider(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl iconDivider = new HtmlGenericControl("div"))
+            {
+                iconDivider.Attributes.Add("class", "ui horizontal icon divider");
+
+                using (HtmlGenericControl icon = new HtmlGenericControl("i"))
+                {
+                    icon.Attributes.Add("class", "circular user icon");
+                    iconDivider.Controls.Add(icon);
+                }
+
+                container.Controls.Add(iconDivider);
+            }
+        }
+
+        private void AddLanguageField(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl field = new HtmlGenericControl("div"))
+            {
+                field.Attributes.Add("class", "field");
+
+                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Titles.SelectLanguage, "LanguageSelect"))
+                {
+                    field.Controls.Add(label);
+                }
+
+                using (HtmlSelect languageSelect = new HtmlSelect())
+                {
+                    languageSelect.ID = "LanguageSelect";
+                    languageSelect.DataTextField = "Text";
+                    languageSelect.DataValueField = "Value";
+                    languageSelect.DataSource = this.GetLanguages();
+                    languageSelect.DataBind();
+
+
+                    field.Controls.Add(languageSelect);
+                }
+                container.Controls.Add(field);
+            }
+        }
+
+        private void AddPasswordField(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl field = new HtmlGenericControl("div"))
+            {
+                field.Attributes.Add("class", "field");
+
+                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Titles.Password, "PasswordInputPassword"))
+                {
+                    field.Controls.Add(label);
+                }
+
+                using (HtmlInputPassword passwordInputPassword = new HtmlInputPassword())
+                {
+                    passwordInputPassword.ID = "PasswordInputPassword";
+                    passwordInputPassword.Attributes.Add("placeholder", Titles.Password);
+                    field.Controls.Add(passwordInputPassword);
+                }
+
+                container.Controls.Add(field);
+            }
+        }
+
+        private void AddRememberMeField(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl field = new HtmlGenericControl("div"))
+            {
+                field.Attributes.Add("class", "field");
+
+
+                using (HtmlGenericControl toggleCheckBox = new HtmlGenericControl("div"))
+                {
+                    toggleCheckBox.Attributes.Add("class", "ui toggle checkbox");
+
+
+                    using (HtmlInputCheckBox rememberInputCheckBox = new HtmlInputCheckBox())
+                    {
+                        rememberInputCheckBox.ID = "RememberInputCheckBox";
+                        toggleCheckBox.Controls.Add(rememberInputCheckBox);
+                    }
+
+                    using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Titles.RememberMe))
+                    {
+                        toggleCheckBox.Controls.Add(label);
+                    }
+
+
+                    field.Controls.Add(toggleCheckBox);
+                }
+
+                container.Controls.Add(field);
+            }
+        }
+
+        private void AddSignInButtonField(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl field = new HtmlGenericControl("div"))
+            {
+                field.Attributes.Add("class", "field");
+
+                using (HtmlInputButton signInButton = new HtmlInputButton())
+                {
+                    signInButton.ID = "SignInButton";
+                    signInButton.Value = Titles.SignIn;
+                    signInButton.Attributes.Add("class", "ui teal button");
+                    field.Controls.Add(signInButton);
+                }
+
+                container.Controls.Add(field);
+            }
+        }
+
+        private void AddUserIdField(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl field = new HtmlGenericControl("div"))
+            {
+                field.Attributes.Add("class", "field");
+
+                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Titles.UserId, "UserNameInputText"))
+                {
+                    field.Controls.Add(label);
+                }
+
+                using (HtmlInputText usernameInputText = new HtmlInputText())
+                {
+                    usernameInputText.ID = "UsernameInputText";
+                    usernameInputText.Attributes.Add("placeholder", Titles.UserId);
+                    field.Controls.Add(usernameInputText);
+
+                    container.Controls.Add(field);
+                }
+            }
+        }
+
+        private void CreateForm(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl form = new HtmlGenericControl("div"))
+            {
+                form.Attributes.Add("class", "ui form segment");
+                form.Attributes.Add("style", "padding:24px 48px;");
+
+                this.CreateHeader(form);
+                this.AddDivider(form);
+                this.AddUserIdField(form);
+                this.AddPasswordField(form);
+                this.AddRememberMeField(form);
+                this.AddIconDivider(form);
+                this.AddBranchField(form);
+                this.AddLanguageField(form);
+                this.AddExceptionField(form);
+                this.AddSignInButtonField(form);
+                this.AddCannotAccessAccountField(form);
+
+                container.Controls.Add(form);
+            }
+        }
+
+        private void CreateHeader(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl header = new HtmlGenericControl("div"))
+            {
+                header.Attributes.Add("class", "ui large header");
+                header.Attributes.Add("style", "8px 0;");
+
+                header.InnerText = Titles.SignIn;
+
+                container.Controls.Add(header);
+            }
+        }
+
+        private Collection<ListItem> GetLanguages()
+        {
+            Collection<ListItem> items = new Collection<ListItem>();
+            items.Add(new ListItem("English (United States)", "en-US"));
+            items.Add(new ListItem("English (Great Britain)", "en-GB"));
+            items.Add(new ListItem("Français (France)", "fr-FR"));
+            items.Add(new ListItem("Deutsch (Deutschland)", "de-De"));
+            items.Add(new ListItem("नेपाली (नेपाल)", "ne-NP"));
+            items.Add(new ListItem("हिन्दी (India)", "hi-IN"));
+
+            return items;
+        }
+
+        #endregion
+
+        #endregion
     }
 }

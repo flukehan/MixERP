@@ -17,9 +17,6 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common;
-using MixERP.Net.Common.Base;
-using MixERP.Net.Common.Models.Office;
 using System;
 using System.Collections.ObjectModel;
 using System.Data.Common;
@@ -27,8 +24,12 @@ using System.Globalization;
 using System.Threading;
 using System.Web;
 using System.Web.Security;
+using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Base;
+using MixERP.Net.Common.Models.Office;
 using Menu = MixERP.Net.Common.Models.Core.Menu;
 
 namespace MixERP.Net.FrontEnd.Base
@@ -36,16 +37,16 @@ namespace MixERP.Net.FrontEnd.Base
     public class MixERPWebpage : MixERPWebPageBase
     {
         /// <summary>
-        /// Since we save the menu on the database, this parameter is only used when there is no
-        /// associated record of this page's url or path in the menu table. Use this to override or
-        /// fake the page's url or path. This forces navigation menus on the left hand side to be
-        /// displayed in regards with the specified path.
+        ///     Since we save the menu on the database, this parameter is only used when there is no
+        ///     associated record of this page's url or path in the menu table. Use this to override or
+        ///     fake the page's url or path. This forces navigation menus on the left hand side to be
+        ///     displayed in regards with the specified path.
         /// </summary>
         public virtual string OverridePath { get; set; }
 
         /// <summary>
-        /// Use this parameter on the Page_Init event of member pages. This parameter ensures that
-        /// the user is not redirected to the login page even when the user is not logged in.
+        ///     Use this parameter on the Page_Init event of member pages. This parameter ensures that
+        ///     the user is not redirected to the login page even when the user is not logged in.
         /// </summary>
         public bool SkipLoginCheck { get; set; }
 
@@ -145,9 +146,9 @@ namespace MixERP.Net.FrontEnd.Base
             }
         }
 
-        public static void SetAuthenticationTicket(Page page, long signInId, bool rememberMe)
+        public static void SetAuthenticationTicket(HttpResponse response, long signInId, bool rememberMe)
         {
-            if (page == null)
+            if (response == null)
             {
                 return;
             }
@@ -159,13 +160,13 @@ namespace MixERP.Net.FrontEnd.Base
             cookie.Domain = FormsAuthentication.CookieDomain;
             cookie.Path = ticket.CookiePath;
 
-            page.Response.Cookies.Add(cookie);
-            page.Response.Redirect(FormsAuthentication.GetRedirectUrl(signInId.ToString(CultureInfo.InvariantCulture), rememberMe));
+            response.Cookies.Add(cookie);
+            //response.Redirect(FormsAuthentication.GetRedirectUrl(signInId.ToString(CultureInfo.InvariantCulture), rememberMe));
         }
 
-        public static bool SetSession(Page page, long signInId)
+        public static bool SetSession(HttpSessionState session, long signInId)
         {
-            if (page != null)
+            if (session != null)
             {
                 try
                 {
@@ -177,32 +178,32 @@ namespace MixERP.Net.FrontEnd.Base
 
                     SignInView signInView = Data.Office.User.GetSignInView(signInId);
 
-                    page.Session["LogOnId"] = signInView.LogOnId;
-                    page.Session["UserId"] = signInView.UserId;
-                    page.Session["Culture"] = signInView.Culture;
-                    page.Session["UserName"] = signInView.UserName;
-                    page.Session["FullUserName"] = signInView.FullName;
-                    page.Session["Role"] = signInView.Role;
-                    page.Session["IsSystem"] = signInView.IsSystem;
-                    page.Session["IsAdmin"] = signInView.IsAdmin;
-                    page.Session["OfficeCode"] = signInView.OfficeCode;
-                    page.Session["OfficeId"] = signInView.OfficeId;
-                    page.Session["NickName"] = signInView.Nickname;
-                    page.Session["OfficeName"] = signInView.OfficeName;
-                    page.Session["RegistrationDate"] = signInView.RegistrationDate;
-                    page.Session["RegistrationNumber"] = signInView.RegistrationNumber;
-                    page.Session["PanNumber"] = signInView.PanNumber;
-                    page.Session["AddressLine1"] = signInView.AddressLine1;
-                    page.Session["AddressLine2"] = signInView.AddressLine2;
-                    page.Session["Street"] = signInView.Street;
-                    page.Session["City"] = signInView.City;
-                    page.Session["State"] = signInView.State;
-                    page.Session["Country"] = signInView.Country;
-                    page.Session["ZipCode"] = signInView.ZipCode;
-                    page.Session["Phone"] = signInView.Phone;
-                    page.Session["Fax"] = signInView.Fax;
-                    page.Session["Email"] = signInView.Email;
-                    page.Session["Url"] = signInView.Url;
+                    session["LogOnId"] = signInView.LogOnId;
+                    session["UserId"] = signInView.UserId;
+                    session["Culture"] = signInView.Culture;
+                    session["UserName"] = signInView.UserName;
+                    session["FullUserName"] = signInView.FullName;
+                    session["Role"] = signInView.Role;
+                    session["IsSystem"] = signInView.IsSystem;
+                    session["IsAdmin"] = signInView.IsAdmin;
+                    session["OfficeCode"] = signInView.OfficeCode;
+                    session["OfficeId"] = signInView.OfficeId;
+                    session["NickName"] = signInView.Nickname;
+                    session["OfficeName"] = signInView.OfficeName;
+                    session["RegistrationDate"] = signInView.RegistrationDate;
+                    session["RegistrationNumber"] = signInView.RegistrationNumber;
+                    session["PanNumber"] = signInView.PanNumber;
+                    session["AddressLine1"] = signInView.AddressLine1;
+                    session["AddressLine2"] = signInView.AddressLine2;
+                    session["Street"] = signInView.Street;
+                    session["City"] = signInView.City;
+                    session["State"] = signInView.State;
+                    session["Country"] = signInView.Country;
+                    session["ZipCode"] = signInView.ZipCode;
+                    session["Phone"] = signInView.Phone;
+                    session["Fax"] = signInView.Fax;
+                    session["Email"] = signInView.Email;
+                    session["Url"] = signInView.Url;
 
                     return true;
                 }
@@ -314,7 +315,7 @@ namespace MixERP.Net.FrontEnd.Base
 
         private void SetSession()
         {
-            SetSession(this.Page, Conversion.TryCastLong(this.User.Identity.Name));
+            SetSession(this.Page.Session, Conversion.TryCastLong(this.User.Identity.Name));
         }
     }
 }
