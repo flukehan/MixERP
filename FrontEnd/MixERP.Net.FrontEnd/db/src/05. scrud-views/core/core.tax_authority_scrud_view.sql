@@ -1,16 +1,12 @@
-CREATE VIEW core.tax_authority_scrud_view
+﻿CREATE VIEW core.tax_authority_scrud_view
 AS
 SELECT
 	core.tax_authorities.tax_authority_id,
-	core.tax_authorities.tax_master_id,
-	core.tax_master.tax_master_code,
-	core.tax_master.tax_master_name,
+	core.tax_master.tax_master_code || '(' || core.tax_master.tax_master_name ||')' AS tax_master,
 	core.tax_authorities.tax_authority_code,
 	core.tax_authorities.tax_authority_name,
-	core.countries.country_code,
-	core.countries.country_name,
-	core.states.state_code,
-	core.states.state_name,
+	core.countries.country_code || '(' || core.countries.country_name ||')' AS country,
+	core.states.state_code || '(' || core.states.state_name ||')' AS county,
 	core.tax_authorities.zip_code,
 	core.tax_authorities.address_line_1,
 	core.tax_authorities.address_line_2,

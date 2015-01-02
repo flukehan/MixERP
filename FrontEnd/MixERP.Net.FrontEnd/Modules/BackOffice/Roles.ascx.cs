@@ -35,7 +35,7 @@ namespace MixERP.Net.Core.Modules.BackOffice
                 scrud.TableSchema = "office";
                 scrud.Table = "roles";
                 scrud.ViewSchema = "office";
-                scrud.View = "roles";
+                scrud.View = "role_scrud_view";
 
                 scrud.Text = Resources.Titles.Roles;
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof(Roles));
