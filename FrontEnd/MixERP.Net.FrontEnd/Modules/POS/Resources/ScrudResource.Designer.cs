@@ -160,6 +160,15 @@ namespace MixERP.Net.Core.Modules.POS.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Office Name.
+        /// </summary>
+        internal static string office_name {
+            get {
+                return ResourceManager.GetString("office_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rate.
         /// </summary>
         internal static string rate {
