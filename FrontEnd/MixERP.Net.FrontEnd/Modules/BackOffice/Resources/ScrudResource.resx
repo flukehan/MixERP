@@ -516,11 +516,11 @@
   <data name="tax_rate_type_name" xml:space="preserve">
     <value>Tax Rate Type Name</value>
   </data>
-  <data name="account_number" xml:space="preserve">
-    <value>Account Number</value>
+  <data name="account_code" xml:space="preserve">
+    <value>Account Code</value>
   </data>
   <data name="rounding_decimal_places" xml:space="preserve">
-    <value>Rounding Decimal Places</value>
+    <value>Roungin Decimal Places</value>
   </data>
   <data name="entity_name" xml:space="preserve">
     <value>Entity Name</value>
@@ -590,5 +590,17 @@
   </data>
   <data name="cash_repositories_cash_repository_name_uix" xml:space="preserve">
     <value>Duplicate Cash Repository Name</value>
+  </data>
+  <data name="store_code" xml:space="preserve">
+    <value>Store Code</value>
+  </data>
+  <data name="store_name" xml:space="preserve">
+    <value>Store Name</value>
+  </data>
+  <data name="county" xml:space="preserve">
+    <value>County</value>
+  </data>
+  <data name="tax_master" xml:space="preserve">
+    <value>Tax Master</value>
   </data>
 </root>
