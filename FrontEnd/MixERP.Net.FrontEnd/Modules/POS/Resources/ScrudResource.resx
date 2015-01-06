@@ -189,7 +189,4 @@
   <data name="office_code" xml:space="preserve">
     <value>Office Code</value>
   </data>
-  <data name="office_name" xml:space="preserve">
-    <value>Office Name</value>
-  </data>
 </root>

@@ -42,6 +42,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <add key="FiscalYearDisplayField" value="fiscal_year_code + ' (' + fiscal_year_name + ')'" />
     <add key="IndustryDisplayField" value="industry_name" />
     <add key="ItemDisplayField" value="item_code + ' (' + item_name + ')'" />
+    <add key="ItemTypeDisplayField" value="item_type_code + ' (' + item_type_name + ')'" />
     <add key="ItemGroupDisplayField" value="item_group_code + ' (' + item_group_name + ')'" />
     <add key="LateFeeDisplayField" value="late_fee_code + ' (' + late_fee_name + ')'" />
     <add key="OfficeDisplayField" value="office_code + ' (' + office_name + ')'" />

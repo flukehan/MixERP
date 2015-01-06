@@ -21,14 +21,9 @@ SELECT
     core.account_masters.account_master_id,
     core.account_masters.account_master_code,
     core.account_masters.account_master_name,
-    core.has_child_accounts(core.accounts.account_id) AS has_child,
-    core.cash_flow_headings.cash_flow_heading_code,
-    core.cash_flow_headings.cash_flow_heading_name
-FROM
-    core.account_masters
-    INNER JOIN core.accounts 
-    ON core.account_masters.account_master_id = core.accounts.account_master_id
-    LEFT OUTER JOIN core.accounts AS parent_accounts 
-    ON core.accounts.parent_account_id = parent_accounts.account_id
-    LEFT OUTER JOIN core.cash_flow_headings
-    ON core.accounts.cash_flow_heading_id = core.cash_flow_headings.cash_flow_heading_id;
+    core.has_child_accounts(core.accounts.account_id) AS has_child
+FROM core.account_masters
+INNER JOIN core.accounts 
+ON core.account_masters.account_master_id = core.accounts.account_master_id
+LEFT OUTER JOIN core.accounts AS parent_accounts 
+ON core.accounts.parent_account_id = parent_accounts.account_id;

@@ -225,4 +225,7 @@
   <data name="StatementReference" xml:space="preserve">
     <value>Statement Reference</value>
   </data>
+  <data name="ItemTypes" xml:space="preserve">
+    <value>Item Types</value>
+  </data>
 </root>

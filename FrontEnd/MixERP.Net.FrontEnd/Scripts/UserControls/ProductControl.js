@@ -895,13 +895,13 @@ var addRowToTable = function (itemCode, itemName, quantity, unitName, price, dis
             getColumnText(row, 3) === unitName &&
             parseFloat2(getColumnText(row, 4)) === price &&
             getColumnText(row, 9) === tax &&
-            parseFloat(getColumnText(row, 5)) / parseFloat(getColumnText(row, 6)) === amount / discount) {
-            setColumnText(row, 2, parseFloat2(getColumnText(row, 2)) + quantity);
-            setColumnText(row, 5, parseFloat2(getColumnText(row, 5)) + amount);
-            setColumnText(row, 6, parseFloat2(getColumnText(row, 6)) + discount);
-            setColumnText(row, 7, parseFloat2(getColumnText(row, 7)) + shippingCharge);
-            setColumnText(row, 8, parseFloat2(getColumnText(row, 8)) + subTotal);
-            setColumnText(row, 10, parseFloat2(getColumnText(row, 10)) + computedTax);
+            parseFloat(getColumnText(row, 5)) / parseFloat2(getColumnText(row, 6)) === amount / discount) {
+            setColumnText(row, 2, getFormattedNumber(parseInt2(getColumnText(row, 2)) + quantity, true));
+            setColumnText(row, 5, getFormattedNumber(parseFloat2(getColumnText(row, 5)) + amount));
+            setColumnText(row, 6, getFormattedNumber(parseFloat2(getColumnText(row, 6)) + discount));
+            setColumnText(row, 7, getFormattedNumber(parseFloat2(getColumnText(row, 7)) + shippingCharge));
+            setColumnText(row, 8, getFormattedNumber(parseFloat2(getColumnText(row, 8)) + subTotal));
+            setColumnText(row, 10, getFormattedNumber(parseFloat2(getColumnText(row, 10)) + computedTax));
 
             addDanger(row);
 
@@ -911,7 +911,7 @@ var addRowToTable = function (itemCode, itemName, quantity, unitName, price, dis
     });
 
     if (!match) {
-        var html = "<tr class='grid2-row'><td>" + itemCode + "</td><td>" + itemName + "</td><td class='text-right'>" + quantity + "</td><td>" + unitName + "</td><td class='text-right'>" + price + "</td><td class='text-right'>" + amount + "</td><td class='text-right'>" + discount + "</td><td class='text-right'>" + shippingCharge + "</td><td class='text-right'>" + subTotal + "</td><td>" + tax + "</td><td class='text-right'>" + computedTax
+        var html = "<tr class='grid2-row'><td>" + itemCode + "</td><td>" + itemName + "</td><td class='text-right'>" + getFormattedNumber(quantity, true) + "</td><td>" + unitName + "</td><td class='text-right'>" + getFormattedNumber(price) + "</td><td class='text-right'>" + getFormattedNumber(amount) + "</td><td class='text-right'>" + getFormattedNumber(discount) + "</td><td class='text-right'>" + getFormattedNumber(shippingCharge) + "</td><td class='text-right'>" + getFormattedNumber(subTotal) + "</td><td>" + tax + "</td><td class='text-right'>" + getFormattedNumber(computedTax)
             + "</td><td><a class='pointer' onclick='removeRow($(this));summate();'><i class='ui delete icon'></i></a><a class='pointer' onclick='toggleDanger($(this));'><i class='ui pointer check mark icon'></a></i><a class='pointer' onclick='toggleSuccess($(this));'><i class='ui pointer thumbs up icon'></i></a></td></tr>";
         grid.find("tr:last").before(html);
     };
@@ -1054,10 +1054,10 @@ var getSalesTax = function (tranBook, storeId, partyCode, shippingAddressCode, p
 
 //Logic & Validation
 var summate = function () {
-    var runningTotal = sumOfColumn("#ProductGridView", 8);
+    var runningTotal = parseFloat2(sumOfColumn("#ProductGridView", 8));
     runningTotalInputText.val(runningTotal);
 
-    var taxTotal = sumOfColumn("#ProductGridView", 10);
+    var taxTotal = parseFloat2(sumOfColumn("#ProductGridView", 10));
     taxTotalInputText.val(taxTotal);
 
     grandTotalInputText.val(runningTotal + taxTotal);

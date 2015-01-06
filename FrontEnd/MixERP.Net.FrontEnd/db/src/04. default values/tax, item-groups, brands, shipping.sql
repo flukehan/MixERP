@@ -209,9 +209,13 @@ SELECT
 INSERT INTO core.brands(brand_code, brand_name)
 SELECT 'DEF', 'Default';
 
-INSERT INTO core.item_groups(item_group_code, item_group_name, sales_tax_id)
-SELECT 'DEF', 'Default', 1;
+INSERT INTO core.item_groups(item_group_code, item_group_name, sales_tax_id, sales_account_id, sales_discount_account_id, sales_return_account_id, purchase_account_id, purchase_discount_account_id, inventory_account_id, cost_of_goods_sold_account_id)
+SELECT 'DEF', 'Default', 1, core.get_account_id_by_account_number('30100'), core.get_account_id_by_account_number('40270'), core.get_account_id_by_account_number('20701'), core.get_account_id_by_account_number('40100'), core.get_account_id_by_account_number('30700'), core.get_account_id_by_account_number('10700'), core.get_account_id_by_account_number('40200');
 
+INSERT INTO core.item_types(item_type_code, item_type_name)
+SELECT 'GEN', 'General'         UNION ALL
+SELECT 'COM', 'Component'       UNION ALL
+SELECT 'MAF', 'Manufacturing';
 
 INSERT INTO core.shipping_mail_types(shipping_mail_type_code, shipping_mail_type_name)
 SELECT 'FCM',   'First Class Mail'      UNION ALL

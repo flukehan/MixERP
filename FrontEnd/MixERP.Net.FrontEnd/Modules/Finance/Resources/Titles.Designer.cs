@@ -160,6 +160,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Amount.
+        /// </summary>
+        internal static string Amount {
+            get {
+                return ResourceManager.GetString("Amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Approve.
         /// </summary>
         internal static string Approve {
@@ -777,6 +786,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string Print {
             get {
                 return ResourceManager.GetString("Print", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profit &amp; Loss Statement.
+        /// </summary>
+        internal static string ProfitAndLossStatement {
+            get {
+                return ResourceManager.GetString("ProfitAndLossStatement", resourceCulture);
             }
         }
         

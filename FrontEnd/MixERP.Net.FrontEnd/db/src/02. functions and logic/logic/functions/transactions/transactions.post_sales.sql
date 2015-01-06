@@ -13,7 +13,7 @@ DROP FUNCTION IF EXISTS transactions.post_sales
     _payment_term_id                        integer,
     _party_code                             national character varying(12),
     _price_type_id                          integer,
-    _salesperson_id                        integer,
+    _salesperson_id                         integer,
     _shipper_id                             integer,
     _shipping_address_code                  national character varying(12),
     _store_id                               integer,
@@ -37,7 +37,7 @@ CREATE FUNCTION transactions.post_sales
     _payment_term_id                        integer,
     _party_code                             national character varying(12),
     _price_type_id                          integer,
-    _salesperson_id                        integer,
+    _salesperson_id                         integer,
     _shipper_id                             integer,
     _shipping_address_code                  national character varying(12),
     _store_id                               integer,
@@ -91,7 +91,12 @@ BEGIN
         shipping_charge                 money_strict2,
         tax_form                        text,
         sales_tax_id                    integer,
-        tax                             money_strict2
+        tax                             money_strict2,
+        sales_account_id                integer,
+        sales_discount_account_id       integer,
+        inventory_account_id            integer,
+        cost_of_goods_sold_account_id   integer
+
     ) ON COMMIT DROP;
 
 
@@ -119,12 +124,19 @@ BEGIN
 
     UPDATE temp_stock_details 
     SET
-        tran_type                   = 'Cr',
-        sales_tax_id                = core.get_sales_tax_id_by_sales_tax_code(tax_form),
-        item_id                     = core.get_item_id_by_item_code(item_code),
-        unit_id                     = core.get_unit_id_by_unit_name(unit_name),
-        base_quantity               = core.get_base_quantity_by_unit_name(unit_name, quantity),
-        base_unit_id                = core.get_base_unit_id_by_unit_name(unit_name);
+        tran_type                       = 'Cr',
+        sales_tax_id                    = core.get_sales_tax_id_by_sales_tax_code(tax_form),
+        item_id                         = core.get_item_id_by_item_code(item_code),
+        unit_id                         = core.get_unit_id_by_unit_name(unit_name),
+        base_quantity                   = core.get_base_quantity_by_unit_name(unit_name, quantity),
+        base_unit_id                    = core.get_base_unit_id_by_unit_name(unit_name);
+
+    UPDATE temp_stock_details
+    SET
+        sales_account_id                = core.get_sales_account_id(item_id),
+        sales_discount_account_id       = core.get_sales_discount_account_id(item_id),
+        inventory_account_id            = core.get_inventory_account_id(item_id),
+        cost_of_goods_sold_account_id   = core.get_cost_of_goods_sold_account_id(item_id);
             
     IF EXISTS
     (
@@ -197,7 +209,9 @@ BEGIN
 
 
     INSERT INTO temp_transaction_details(tran_type, account_id, statement_reference, currency_code, amount_in_currency, er, local_currency_code, amount_in_local_currency)
-    SELECT 'Cr', core.get_account_id_by_parameter('Sales'), _statement_reference, _default_currency_code, _grand_total, 1, _default_currency_code, _grand_total;                
+    SELECT 'Cr', sales_account_id, _statement_reference, _default_currency_code, SUM(COALESCE(price, 0) * COALESCE(quantity, 0)), 1, _default_currency_code, SUM(COALESCE(price, 0) * COALESCE(quantity, 0))
+    FROM temp_stock_details
+    GROUP BY sales_account_id;
 
     IF(_is_periodic = false) THEN
         --Perpetutal Inventory Accounting System
@@ -209,9 +223,15 @@ BEGIN
 
         IF(_cost_of_goods > 0) THEN
             INSERT INTO temp_transaction_details(tran_type, account_id, statement_reference, currency_code, amount_in_currency, er, local_currency_code, amount_in_local_currency)
-            SELECT 'Dr', core.get_account_id_by_parameter('COGS'), _statement_reference, _default_currency_code, _cost_of_goods, 1, _default_currency_code, _cost_of_goods UNION ALL
-            SELECT 'Cr', core.get_account_id_by_parameter('Inventory'), _statement_reference, _default_currency_code, _cost_of_goods, 1, _default_currency_code, _cost_of_goods;                         
-        END IF;        
+            SELECT 'Dr', cost_of_goods_sold_account_id, _statement_reference, _default_currency_code, SUM(COALESCE(cost_of_goods_sold, 0)), 1, _default_currency_code, SUM(COALESCE(cost_of_goods_sold, 0))
+            FROM temp_stock_details
+            GROUP BY cost_of_goods_sold_account_id;
+
+            INSERT INTO temp_transaction_details(tran_type, account_id, statement_reference, currency_code, amount_in_currency, er, local_currency_code, amount_in_local_currency)
+            SELECT 'Cr', inventory_account_id, _statement_reference, _default_currency_code, SUM(COALESCE(cost_of_goods_sold, 0)), 1, _default_currency_code, SUM(COALESCE(cost_of_goods_sold, 0))
+            FROM temp_stock_details
+            GROUP BY inventory_account_id;
+        END IF;
     END IF;
 
     IF(_tax_total > 0) THEN
@@ -220,7 +240,7 @@ BEGIN
             format('P: %s x R: %s %% = %s (%s)/', SUM(principal)::text, rate::text, SUM(tax)::text, sales_tax_detail_code) as statement_reference,
             account_id,
             SUM(tax) AS tax 
-        FROM temp_stock_tax_details 
+        FROM temp_stock_tax_details
         GROUP BY account_id, rate, sales_tax_detail_code
         LOOP
             INSERT INTO temp_transaction_details(tran_type, account_id, statement_reference, currency_code, amount_in_currency, er, local_currency_code, amount_in_local_currency)
@@ -236,7 +256,9 @@ BEGIN
 
     IF(_discount_total > 0) THEN
         INSERT INTO temp_transaction_details(tran_type, account_id, statement_reference, currency_code, amount_in_currency, er, local_currency_code, amount_in_local_currency)
-        SELECT 'Dr', core.get_account_id_by_parameter('Sales.Discount'), _statement_reference, _default_currency_code, _discount_total, 1, _default_currency_code, _discount_total;
+        SELECT 'Dr', sales_discount_account_id, _statement_reference, _default_currency_code, SUM(COALESCE(discount, 0)), 1, _default_currency_code, SUM(COALESCE(discount, 0))
+        FROM temp_stock_details
+        GROUP BY sales_discount_account_id;
     END IF;
 
     IF(_is_credit = true) THEN
@@ -303,12 +325,12 @@ LANGUAGE plpgsql;
 
 
 
---      SELECT * FROM transactions.post_sales('Sales.Direct', 2, 1, 1, '1-1-2020', 1, 'asdf', 'Test', 1, false, 'JASMI-0002', 1, 1, 1, NULL, 1, false,
---      ARRAY[
---                 ROW(1, 'RMBP', 1, 'Piece',180000, 0, 200, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type,
---                 ROW(1, '13MBA', 1, 'Dozen',130000, 300, 30, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type,
---                 ROW(1, '11MBA', 1, 'Piece',110000, 5000, 50, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type], 
---      ARRAY[NULL::core.attachment_type]);
+--       SELECT * FROM transactions.post_sales('Sales.Direct', 2, 2, 5, '1-1-2020', 1, 'asdf', 'Test', 1, false, NULL, 'JASMI-0002', 1, 1, 1, NULL, 1, false,
+--       ARRAY[
+--                  ROW(1, 'RMBP', 1, 'Piece',180000, 0, 200, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type,
+--                  ROW(1, '13MBA', 1, 'Dozen',130000, 300, 30, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type,
+--                  ROW(1, '11MBA', 1, 'Piece',110000, 5000, 50, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type], 
+--       ARRAY[NULL::core.attachment_type]);
 
 
 

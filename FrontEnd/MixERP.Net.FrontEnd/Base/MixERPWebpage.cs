@@ -205,6 +205,13 @@ namespace MixERP.Net.FrontEnd.Base
                     session["Email"] = signInView.Email;
                     session["Url"] = signInView.Url;
 
+                    if (signInView.LogOnId.Equals(0))
+                    {
+                        session.Remove("UserName");
+                        FormsAuthentication.SignOut();
+                        return false;
+                    }
+
                     return true;
                 }
                 catch (DbException)
@@ -234,7 +241,9 @@ namespace MixERP.Net.FrontEnd.Base
                     }
                     else
                     {
-                        if (this.Context.Session["UserId"] == null)
+                        int userId = Conversion.TryCastInteger(this.Context.Session["UserId"]);
+
+                        if (userId.Equals(0))
                         {
                             this.SetSession();
                         }
@@ -259,7 +268,7 @@ namespace MixERP.Net.FrontEnd.Base
                 this.OverridePath = this.Page.Request.Url.AbsolutePath;
             }
 
-            Literal contentMenuLiteral = ((Literal)PageUtility.FindControlIterative(this.Master, "ContentMenuLiteral"));
+            Literal contentMenuLiteral = ((Literal) PageUtility.FindControlIterative(this.Master, "ContentMenuLiteral"));
 
             string menu = "<div id=\"tree\" style='display:none;'><ul id='treeData'>";
 

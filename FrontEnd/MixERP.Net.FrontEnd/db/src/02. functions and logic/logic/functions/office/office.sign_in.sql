@@ -83,7 +83,7 @@ $$
 LANGUAGE plpgsql;
 
 
-SELECT * FROM office.sign_in(2, 'binod2', '4e99cb7523794ad53b4da66c91f56d0143a679e1c6d396cda9ad0c9b41ed53e90bd5c59bf98255a4f1946b216b3ba539074a8a86cedd4af8bb208a8fad748e82', 'Firefox', '0.0.0.0', 'N/A', 'en-US', 'cd0ad7446ab64801837bfd43197d19c1');
+--SELECT * FROM office.sign_in(2, 'binod2', '4e99cb7523794ad53b4da66c91f56d0143a679e1c6d396cda9ad0c9b41ed53e90bd5c59bf98255a4f1946b216b3ba539074a8a86cedd4af8bb208a8fad748e82', 'Firefox', '0.0.0.0', 'N/A', 'en-US', 'cd0ad7446ab64801837bfd43197d19c1');
 
 
 /**************************************************************************************************************************

@@ -74,7 +74,15 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
                 }
 
                 command.Parameters.AddWithValue("@IsCredit", stockMaster.IsCredit);
-                command.Parameters.AddWithValue("@PaymentTermId", stockMaster.PaymentTermId);
+
+                if (stockMaster.PaymentTermId.Equals(0))
+                {
+                    command.Parameters.AddWithValue("@PaymentTermId", DBNull.Value);
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("@PaymentTermId", stockMaster.PaymentTermId);
+                }
 
                 command.Parameters.AddWithValue("@PartyCode", stockMaster.PartyCode);
                 command.Parameters.AddWithValue("@PriceTypeId", stockMaster.PriceTypeId);

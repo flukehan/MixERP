@@ -82,7 +82,7 @@ var referenceNumber = "";
 var statementReference = "";
 
 //Page Load Event
-$(document).ready(function () {
+$(document).ready(function() {
     "use strict";
     addShortcuts();
     initializeAjaxData();
@@ -107,8 +107,8 @@ function loadCashRepositories() {
 
     var repoAjax = getAjax(url, data);
 
-    repoAjax.success(function (msg) {
-        $.when(cashRepositorySelect.bindAjaxData(msg.d)).done(function () {
+    repoAjax.success(function(msg) {
+        $.when(cashRepositorySelect.bindAjaxData(msg.d)).done(function() {
             if (cashRepositorySelect.children('option').length === 1) {
                 loadCurrenciesByAccountNumber(accountSelect.getSelectedValue());
                 return;
@@ -118,7 +118,7 @@ function loadCashRepositories() {
         });
     });
 
-    repoAjax.error(function (xhr) {
+    repoAjax.error(function(xhr) {
         var err = $.parseJSON(xhr.responseText);
         appendItem(cashRepositorySelect, 0, err.Message);
     });
@@ -143,15 +143,15 @@ function loadCurrenciesByAccountNumber(accountNumber) {
 };
 
 //Control Events
-accountSelect.change(function () {
+accountSelect.change(function() {
     accountNumberInputText.val(accountSelect.getSelectedValue());
 });
 
-accountSelect.blur(function () {
+accountSelect.blur(function() {
     loadCashRepositories();
 });
 
-addInputButton.click(function () {
+addInputButton.click(function() {
     statementReference = statementReferenceInputText.val();
     accountNumber = accountNumberInputText.val();
     account = accountSelect.getSelectedText();
@@ -227,19 +227,19 @@ addInputButton.click(function () {
 
     var ajaxHasBalance;
 
-    ajaxAccountNumberExists.error(function (xhr) {
+    ajaxAccountNumberExists.error(function(xhr) {
         logAjaxErrorMessage(xhr);
     });
 
-    ajaxCashRepositoryCodeExists.fail(function (xhr) {
+    ajaxCashRepositoryCodeExists.fail(function(xhr) {
         logAjaxErrorMessage(xhr);
     });
 
-    ajaxIsCash.fail(function (xhr) {
+    ajaxIsCash.fail(function(xhr) {
         logAjaxErrorMessage(xhr);
     });
 
-    ajaxAccountNumberExists.success(function (ajaxAccountNumberExistsResult) {
+    ajaxAccountNumberExists.success(function(ajaxAccountNumberExistsResult) {
         var accountNumberExists = ajaxAccountNumberExistsResult.d;
 
         if (!accountNumberExists) {
@@ -248,7 +248,7 @@ addInputButton.click(function () {
             return;
         };
 
-        ajaxIsCash.success(function (ajaxIsCashResult) {
+        ajaxIsCash.success(function(ajaxIsCashResult) {
             var isCash = ajaxIsCashResult.d;
 
             if (!isCash && !isNullOrWhiteSpace(cashRepositoryCode)) {
@@ -268,7 +268,7 @@ addInputButton.click(function () {
                 return;
             };
 
-            ajaxCashRepositoryCodeExists.success(function (ajaxCashRepositoryCodeExistsResult) {
+            ajaxCashRepositoryCodeExists.success(function(ajaxCashRepositoryCodeExistsResult) {
                 var cashRepositoryCodeExists = ajaxCashRepositoryCodeExistsResult.d;
 
                 if (!cashRepositoryCodeExists) {
@@ -284,11 +284,11 @@ addInputButton.click(function () {
 
                 if (credit > 0 && isCash) {
                     ajaxHasBalance = hasBalance(cashRepositoryCode, currencyCode, credit);
-                    ajaxHasBalance.fail(function (xhr) {
+                    ajaxHasBalance.fail(function(xhr) {
                         logAjaxErrorMessage(xhr);
                     });
 
-                    ajaxHasBalance.success(function (hasBalanceResult) {
+                    ajaxHasBalance.success(function(hasBalanceResult) {
                         var hasBalance = hasBalanceResult.d;
 
                         if (!hasBalance) {
@@ -305,11 +305,11 @@ addInputButton.click(function () {
     });
 });
 
-var addRow = function (statementReference, accountNumber, account, cashRepository, debit, credit, er, lcDebit, lcCredit, isCash) {
+var addRow = function(statementReference, accountNumber, account, cashRepository, debit, credit, er, lcDebit, lcCredit, isCash) {
     var grid = transactionGridView;
     var rows = grid.find("tr:not(:first-child):not(:last-child)");
 
-    rows.each(function () {
+    rows.each(function() {
         var row = $(this);
 
         if (!isCash) {
@@ -328,8 +328,8 @@ var addRow = function (statementReference, accountNumber, account, cashRepositor
     });
 
     var html = "<tr class='grid2-row'><td>" + statementReference + "</td><td>" + accountNumber + "</td><td>" + account + "</td><td>" + cashRepository + "</td><td>" + currencyCode + "</td><td class='text-right'>" + debit + "</td><td class='text-right'>" + credit + "</td>"
-            + "<td class='text-right'>" + er + "</td><td class='text-right'>" + lcDebit + "</td><td class='text-right'>" + lcCredit + "</td>"
-            + "<td><a class='pointer' onclick='removeRow($(this));'><i class='ui delete icon'></i></a><a class='pointer' onclick='toggleDanger($(this));'><i class='ui pointer check mark icon'></a></i><a class='pointer' onclick='toggleSuccess($(this));'><i class='ui pointer thumbs up icon'></i></a></td></tr>";
+        + "<td class='text-right'>" + er + "</td><td class='text-right'>" + lcDebit + "</td><td class='text-right'>" + lcCredit + "</td>"
+        + "<td><a class='pointer' onclick='removeRow($(this));'><i class='ui delete icon'></i></a><a class='pointer' onclick='toggleDanger($(this));'><i class='ui pointer check mark icon'></a></i><a class='pointer' onclick='toggleSuccess($(this));'><i class='ui pointer thumbs up icon'></i></a></td></tr>";
     grid.find("tr:last").before(html);
 
     summate();
@@ -345,24 +345,24 @@ var addRow = function (statementReference, accountNumber, account, cashRepositor
     statementReferenceInputText.focus();
 };
 
-attachmentLabel.on("click", function () {
+attachmentLabel.on("click", function() {
     "use strict";
     attachmentDiv.toggle(500);
 });
 
-currencySelect.blur(function () {
+currencySelect.blur(function() {
     var ajaxGetExchangeRate = getExchangeRate(currencySelect.getSelectedValue());
 
-    ajaxGetExchangeRate.done(function (msg) {
+    ajaxGetExchangeRate.done(function(msg) {
         erInputText.val(msg.d);
     });
 
-    ajaxGetExchangeRate.fail(function (xhr) {
+    ajaxGetExchangeRate.fail(function(xhr) {
         logAjaxErrorMessage(xhr);
     });
 });
 
-debitInputText.blur(function () {
+debitInputText.blur(function() {
     debit = parseFloat2(debitInputText.val());
 
     if (debit > 0) {
@@ -374,15 +374,15 @@ debitInputText.blur(function () {
     creditInputText.prop("disabled", false);
 });
 
-debitInputText.keyup(function () {
+debitInputText.keyup(function() {
     UpdateLocalCurrencies();
 });
 
-creditInputText.keyup(function () {
+creditInputText.keyup(function() {
     UpdateLocalCurrencies();
 });
 
-erInputText.keyup(function () {
+erInputText.keyup(function() {
     UpdateLocalCurrencies();
 });
 
@@ -395,21 +395,21 @@ function UpdateLocalCurrencies() {
     };
 };
 
-postButton.click(function () {
+postButton.click(function() {
     if (validate()) {
         post();
     };
 });
 
-var post = function () {
+var post = function() {
     var ajaxPostJournalTransaction = postpostJournalTransaction(valueDate, referenceNumber, data, costCenterId, attachments);
 
-    ajaxPostJournalTransaction.success(function (msg) {
+    ajaxPostJournalTransaction.success(function(msg) {
         var id = msg.d;
         window.location = "/Modules/Finance/Confirmation/JournalVoucher.mix?TranId=" + id;
     });
 
-    ajaxPostJournalTransaction.fail(function (xhr) {
+    ajaxPostJournalTransaction.fail(function(xhr) {
         logAjaxErrorMessage(xhr);
 
         var errorMessage = getAjaxErrorMessage(xhr);
@@ -417,7 +417,7 @@ var post = function () {
     });
 };
 
-var postpostJournalTransaction = function (valueDate, referenceNumber, data, costCenterId, attachments) {
+var postpostJournalTransaction = function(valueDate, referenceNumber, data, costCenterId, attachments) {
     var d = "";
     d = appendParameter(d, "valueDate", valueDate);
     d = appendParameter(d, "referenceNumber", referenceNumber);
@@ -430,7 +430,7 @@ var postpostJournalTransaction = function (valueDate, referenceNumber, data, cos
     return getAjax(url, d);
 };
 
-var validate = function () {
+var validate = function() {
     valueDate = valueDateTextBox.val();
 
     errorLabelBottom.html("");
@@ -464,7 +464,7 @@ var validate = function () {
 
     var rows = transactionGridView.find("tr:not(:first-child):not(:last-child)");
 
-    if (rows.each(function () {
+    if (rows.each(function() {
         var row = $(this);
 
         debit = parseFloat2(getColumnText(row, 8));
@@ -473,17 +473,17 @@ var validate = function () {
         if (debit > 0 && credit > 0) {
             addDanger(row);
             return false;
-    };
+        };
 
         if (debit < 0 || credit < 0) {
             addDanger(row);
             return false;
-    };
+        };
 
         if (debit === 0 && credit === 0) {
             addDanger(row);
             return false;
-    };
+        };
 
         return true;
     }) === false) {
@@ -559,39 +559,39 @@ function hasBalance(cashRepositoryCode, currencyCode, credit) {
 //Validation Helper Functions
 
 //Logic & Validation
-var summate = function () {
-    var debitTotal = sumOfColumn("#" + transactionGridView.attr("id"), 8);
-    var creditTotal = sumOfColumn("#" + transactionGridView.attr("id"), 9);
+var summate = function() {
+    var debitTotal = parseFloat2(sumOfColumn("#" + transactionGridView.attr("id"), 8));
+    var creditTotal = parseFloat2(sumOfColumn("#" + transactionGridView.attr("id"), 9));
 
     debitTotalTextBox.val(debitTotal);
     creditTotalTextBox.val(creditTotal);
 };
 
 //Utilities
-var addShortcuts = function () {
+var addShortcuts = function() {
     "use strict";
 
-    shortcut.add("CTRL+ALT+T", function () {
+    shortcut.add("CTRL+ALT+T", function() {
         $('#AccountNumberTextBox').focus();
     });
 
-    shortcut.add("CTRL+ALT+A", function () {
+    shortcut.add("CTRL+ALT+A", function() {
         $('#AccountDropDownList').focus();
     });
 
-    shortcut.add("CTRL+ALT+S", function () {
+    shortcut.add("CTRL+ALT+S", function() {
         $('#StatementReferenceTextBox').focus();
     });
 
-    shortcut.add("CTRL+ALT+D", function () {
+    shortcut.add("CTRL+ALT+D", function() {
         $('#lcDebitTextBox').focus();
     });
 
-    shortcut.add("CTRL+ALT+C", function () {
+    shortcut.add("CTRL+ALT+C", function() {
         $('#lcCreditTextBox').focus();
     });
 
-    shortcut.add("CTRL+RETURN", function () {
+    shortcut.add("CTRL+RETURN", function() {
         $('#AddInputButton').click();
     });
 };

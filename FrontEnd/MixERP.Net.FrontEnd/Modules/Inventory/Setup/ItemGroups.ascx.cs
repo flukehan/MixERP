@@ -17,13 +17,13 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System;
+using System.Collections.Generic;
+using System.Reflection;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Inventory.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.ScrudFactory;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
 
 namespace MixERP.Net.Core.Modules.Inventory.Setup
 {
@@ -42,7 +42,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
                 scrud.DisplayViews = GetDisplayViews();
 
                 scrud.Text = Titles.ItemGroups;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(ItemGroups));
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (ItemGroups));
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
 
@@ -52,17 +52,21 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.item_groups.item_group_id",
-                ConfigurationHelper.GetDbParameter("ItemGroupDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.taxes.tax_id",
-                ConfigurationHelper.GetDbParameter("TaxDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.item_groups.item_group_id", ConfigurationHelper.GetDbParameter("ItemGroupDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.sales_taxes.sales_tax_id", ConfigurationHelper.GetDbParameter("SalesTaxDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.accounts.account_id", ConfigurationHelper.GetDbParameter("AccountDisplayField"));
+
             return string.Join(",", displayFields);
         }
 
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "core.taxes.tax_id", "core.tax_selector_view");
+
+            ScrudHelper.AddDisplayView(displayViews, "core.item_groups.item_group_id", "core.item_groups");
+            ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.account_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.sales_taxes.sales_tax_id", "core.sales_tax_selector_view");
+
             return string.Join(",", displayViews);
         }
     }

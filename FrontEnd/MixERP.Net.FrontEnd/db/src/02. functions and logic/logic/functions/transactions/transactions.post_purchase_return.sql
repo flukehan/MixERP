@@ -75,7 +75,10 @@ BEGIN
         shipping_charge                 money_strict2,
         tax_form                        text,
         sales_tax_id                    integer,
-        tax                             money_strict2
+        tax                             money_strict2,
+        purchase_account_id             integer, 
+        purchase_discount_account_id    integer, 
+        inventory_account_id            integer
     ) ON COMMIT DROP;
 
     CREATE TEMPORARY TABLE temp_stock_tax_details
@@ -141,6 +144,12 @@ BEGIN
         base_quantity               = core.get_base_quantity_by_unit_name(unit_name, quantity),
         base_unit_id                = core.get_base_unit_id_by_unit_name(unit_name);
 
+    UPDATE temp_stock_details
+    SET
+        purchase_account_id             = core.get_purchase_account_id(item_id),
+        purchase_discount_account_id    = core.get_purchase_discount_account_id(item_id),
+        inventory_account_id            = core.get_inventory_account_id(item_id);
+
     IF EXISTS
     (
 
@@ -196,12 +205,7 @@ BEGIN
     (SELECT SUM(COALESCE(temp_stock_tax_details.tax, 0)) FROM temp_stock_tax_details
     WHERE temp_stock_tax_details.temp_stock_detail_id = temp_stock_details.id);
 
-    IF(_is_credit) THEN
-        _credit_account_id = core.get_account_id_by_party_code(_party_code); 
-    ELSE
-        _credit_account_id = core.get_account_id_by_parameter('purchase.Return');
-    END IF;
-
+    _credit_account_id = core.get_account_id_by_party_code(_party_code); 
 
     _tran_master_id             := nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
     _stock_master_id            := nextval(pg_get_serial_sequence('transactions.stock_master', 'stock_master_id'));
@@ -217,11 +221,15 @@ BEGIN
 
     IF(_is_periodic = true) THEN
         INSERT INTO temp_transaction_details(tran_type, account_id, statement_reference, currency_code, amount_in_currency, er, local_currency_code, amount_in_local_currency)
-        SELECT 'Cr', core.get_account_id_by_parameter('Purchase'), _statement_reference, _default_currency_code, _grand_total, 1, _default_currency_code, _grand_total;                         
+        SELECT 'Cr', purchase_account_id, _statement_reference, _default_currency_code, SUM(COALESCE(price, 0) * COALESCE(quantity, 0)), 1, _default_currency_code, SUM(COALESCE(price, 0) * COALESCE(quantity, 0))
+        FROM temp_stock_details
+        GROUP BY purchase_account_id;
     ELSE
         --Perpetutal Inventory Accounting System
         INSERT INTO temp_transaction_details(tran_type, account_id, statement_reference, currency_code, amount_in_currency, er, local_currency_code, amount_in_local_currency)
-        SELECT 'Cr', core.get_account_id_by_parameter('Inventory'), _statement_reference, _default_currency_code, _grand_total, 1, _default_currency_code, _grand_total;                         
+        SELECT 'Cr', inventory_account_id, _statement_reference, _default_currency_code, SUM(COALESCE(price, 0) * COALESCE(quantity, 0)), 1, _default_currency_code, SUM(COALESCE(price, 0) * COALESCE(quantity, 0))
+        FROM temp_stock_details
+        GROUP BY inventory_account_id;
     END IF;
 
 
@@ -240,7 +248,9 @@ BEGIN
 
     IF(_discount_total IS NOT NULL AND _discount_total > 0) THEN
         INSERT INTO temp_transaction_details(tran_type, account_id, statement_reference, currency_code, amount_in_currency, er, local_currency_code, amount_in_local_currency)
-        SELECT 'Dr', core.get_account_id_by_parameter('Purchase.Discount'), _statement_reference, _default_currency_code, _discount_total, 1, _default_currency_code, _discount_total;
+        SELECT 'Dr', purchase_discount_account_id, _statement_reference, _default_currency_code, SUM(COALESCE(discount, 0)), 1, _default_currency_code, SUM(COALESCE(discount, 0))
+        FROM temp_stock_details
+        GROUP BY purchase_discount_account_id;
     END IF;
 
     INSERT INTO temp_transaction_details(tran_type, account_id, statement_reference, currency_code, amount_in_currency, er, local_currency_code, amount_in_local_currency)

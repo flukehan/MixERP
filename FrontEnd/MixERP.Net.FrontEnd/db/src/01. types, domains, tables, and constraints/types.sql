@@ -43,3 +43,12 @@ CREATE TYPE transactions.stock_adjustment_type AS
     unit_name       national character varying(50),
     quantity        integer_strict
 );
+
+DROP TYPE IF EXISTS core.period CASCADE;
+
+CREATE TYPE core.period AS
+(
+    period_name                     text,
+    date_from                       date,
+    date_to                         date
+);

@@ -17,13 +17,13 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System;
+using System.Collections.Generic;
+using System.Reflection;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Inventory.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.ScrudFactory;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
 
 namespace MixERP.Net.Core.Modules.Inventory.Setup
 {
@@ -44,7 +44,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
                 scrud.UseDisplayViewsAsParents = true;
 
                 scrud.Text = Titles.Items;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(ItemsPopup));
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (ItemsPopup));
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
@@ -55,6 +55,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
+            ScrudHelper.AddDisplayField(displayFields, "core.item_types.item_type_id", ConfigurationHelper.GetDbParameter("ItemTypeDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.item_groups.item_group_id", ConfigurationHelper.GetDbParameter("ItemGroupDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.brands.brand_id", ConfigurationHelper.GetDbParameter("BrandDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.parties.party_id", ConfigurationHelper.GetDbParameter("PartyDisplayField"));
@@ -69,6 +70,8 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
+
+            ScrudHelper.AddDisplayView(displayViews, "core.item_types.item_type_id", "core.item_types");
             ScrudHelper.AddDisplayView(displayViews, "core.item_groups.item_group_id", "core.item_group_selector_view");
             ScrudHelper.AddDisplayView(displayViews, "core.brands.brand_id", "core.brand_selector_view");
             ScrudHelper.AddDisplayView(displayViews, "core.parties.party_id", "core.supplier_selector_view");

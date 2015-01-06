@@ -2,11 +2,12 @@ CREATE FUNCTION core.party_after_insert_trigger()
 RETURNS TRIGGER
 AS
 $$
-    DECLARE _parent_account_id bigint= core.get_account_id_by_parameter('Party.Parent.Account');
+    DECLARE _parent_account_id bigint;
     DECLARE _party_code text;
     DECLARE _account_id bigint;
 BEGIN
-    _party_code := core.get_party_code(NEW.first_name, NEW.middle_name, NEW.last_name);
+    _party_code             := core.get_party_code(NEW.first_name, NEW.middle_name, NEW.last_name);
+    _parent_account_id      := core.get_account_id_by_party_type_id(NEW.party_type_id);
 
     IF(COALESCE(NEW.party_name, '') = '') THEN
         NEW.party_name := REPLACE(TRIM(COALESCE(NEW.last_name, '') || ', ' || NEW.first_name || ' ' || COALESCE(NEW.middle_name, '')), ' ', '');
@@ -14,7 +15,6 @@ BEGIN
 
     --Create a new account
     IF(NEW.account_id IS NULL) THEN
-
         INSERT INTO core.accounts(account_master_id, account_number, currency_code, account_name, is_party, parent_account_id)
         SELECT core.get_account_master_id_by_account_id(_parent_account_id), _party_code, NEW.currency_code, _party_code || ' (' || NEW.party_name || ')', true, _parent_account_id
         RETURNING account_id INTO _account_id;

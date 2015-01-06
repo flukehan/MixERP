@@ -372,4 +372,7 @@
   <data name="value_date" xml:space="preserve">
     <value>Value Date</value>
   </data>
+  <data name="normally_debit" xml:space="preserve">
+    <value>Normally Debit</value>
+  </data>
 </root>

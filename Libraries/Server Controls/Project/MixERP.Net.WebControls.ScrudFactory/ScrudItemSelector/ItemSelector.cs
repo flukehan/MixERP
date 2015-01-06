@@ -17,10 +17,10 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.WebControls.ScrudFactory.Helpers;
-using MixERP.Net.WebControls.ScrudFactory.Resources;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.WebControls.ScrudFactory.Helpers;
+using MixERP.Net.WebControls.ScrudFactory.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
@@ -67,6 +67,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             this.searchGridView.AlternatingRowStyle.CssClass = this.GridViewAlternateRowCssClass;
             this.searchGridView.AutoGenerateColumns = true;
             this.searchGridView.RowDataBound += this.SearchGridView_RowDataBound;
+            this.searchGridView.DataBound += this.SearchGridView_DataBound;
             this.searchGridView.Columns.Add(GetSelectColumnTemplateField());
 
             gridPanel.Controls.Add(this.searchGridView);
@@ -123,27 +124,23 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         fields.Controls.Add(filterInputTextField);
                     }
 
-                    using (var buttonCell = new HtmlGenericControl("div"))
+                    this.goButton = new Button();
+                    this.goButton.ID = "GoButton";
+                    this.goButton.CssClass = this.ButtonCssClass;
+
+                    if (this.ButtonHeight.Value > 0)
                     {
-                        this.goButton = new Button();
-                        this.goButton.ID = "GoButton";
-                        this.goButton.CssClass = this.ButtonCssClass;
-
-                        if (this.ButtonHeight.Value > 0)
-                        {
-                            this.goButton.Height = this.ButtonHeight;
-                        }
-
-                        if (this.ButtonWidth.Value > 0)
-                        {
-                            this.goButton.Width = this.ButtonWidth;
-                        }
-
-                        this.goButton.Click += this.GoButton_Click;
-                        this.goButton.Text = Titles.Go;
-                        buttonCell.Controls.Add(this.goButton);
-                        fields.Controls.Add(buttonCell);
+                        this.goButton.Height = this.ButtonHeight;
                     }
+
+                    if (this.ButtonWidth.Value > 0)
+                    {
+                        this.goButton.Width = this.ButtonWidth;
+                    }
+
+                    this.goButton.Click += this.GoButton_Click;
+                    this.goButton.Text = Titles.Go;
+                    fields.Controls.Add(this.goButton);
 
                     form.Controls.Add(fields);
                     topPanel.Controls.Add(form);

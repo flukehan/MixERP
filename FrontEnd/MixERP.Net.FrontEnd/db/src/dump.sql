@@ -31,19 +31,13 @@ SELECT pg_catalog.setval('logins_login_id_seq', 5, true);
 
 SET search_path = core, pg_catalog;
 
---
--- Data for Name: fiscal_year; Type: TABLE DATA; Schema: core; Owner: postgres
---
-
-INSERT INTO fiscal_year (fiscal_year_code, fiscal_year_name, starts_from, ends_on, audit_user_id, audit_ts) VALUES ('FY1415', 'FY 2014/2015', '2014-10-01', '2015-09-30', 2, '2014-10-01 09:18:17.722+00');
-
 
 --
 -- Data for Name: flags; Type: TABLE DATA; Schema: core; Owner: postgres
 --
 
-INSERT INTO flags (flag_id, user_id, flag_type_id, resource, resource_key, resource_id, flagged_on) VALUES (1, 2, 2, 'transactions.non_gl_stock_master', 'non_gl_stock_master_id', 1, '2014-12-04 11:35:51.294+00');
-INSERT INTO flags (flag_id, user_id, flag_type_id, resource, resource_key, resource_id, flagged_on) VALUES (2, 2, 3, 'transactions.non_gl_stock_master', 'non_gl_stock_master_id', 2, '2014-12-04 11:37:07.665+00');
+INSERT INTO flags (flag_id, user_id, flag_type_id, resource, resource_key, resource_id, flagged_on) VALUES (1, 2, 2, 'transactions.non_gl_stock_master', 'non_gl_stock_master_id', '1', '2014-12-04 11:35:51.294+00');
+INSERT INTO flags (flag_id, user_id, flag_type_id, resource, resource_key, resource_id, flagged_on) VALUES (2, 2, 3, 'transactions.non_gl_stock_master', 'non_gl_stock_master_id', '2', '2014-12-04 11:37:07.665+00');
 
 
 --
@@ -52,30 +46,6 @@ INSERT INTO flags (flag_id, user_id, flag_type_id, resource, resource_key, resou
 
 SELECT pg_catalog.setval('flags_flag_id_seq', 2, true);
 
-
---
--- Data for Name: frequency_setups; Type: TABLE DATA; Schema: core; Owner: postgres
---
-
-INSERT INTO frequency_setups (frequency_setup_id, fiscal_year_code, value_date, frequency_id, audit_user_id, audit_ts) VALUES (1, 'FY1415', '2014-10-31', 2, 2, '2014-10-01 09:19:22.178+00');
-INSERT INTO frequency_setups (frequency_setup_id, fiscal_year_code, value_date, frequency_id, audit_user_id, audit_ts) VALUES (2, 'FY1415', '2014-11-30', 2, 2, '2014-10-01 09:19:34.598+00');
-INSERT INTO frequency_setups (frequency_setup_id, fiscal_year_code, value_date, frequency_id, audit_user_id, audit_ts) VALUES (3, 'FY1415', '2014-12-31', 3, 2, '2014-10-01 09:19:45.302+00');
-INSERT INTO frequency_setups (frequency_setup_id, fiscal_year_code, value_date, frequency_id, audit_user_id, audit_ts) VALUES (4, 'FY1415', '2015-01-31', 2, 2, '2014-10-01 09:19:59.272+00');
-INSERT INTO frequency_setups (frequency_setup_id, fiscal_year_code, value_date, frequency_id, audit_user_id, audit_ts) VALUES (5, 'FY1415', '2015-02-28', 2, 2, '2014-10-01 09:20:07.57+00');
-INSERT INTO frequency_setups (frequency_setup_id, fiscal_year_code, value_date, frequency_id, audit_user_id, audit_ts) VALUES (6, 'FY1415', '2015-03-31', 4, 2, '2014-10-01 09:20:25.697+00');
-INSERT INTO frequency_setups (frequency_setup_id, fiscal_year_code, value_date, frequency_id, audit_user_id, audit_ts) VALUES (7, 'FY1415', '2015-04-30', 2, 2, '2014-10-01 09:20:43.197+00');
-INSERT INTO frequency_setups (frequency_setup_id, fiscal_year_code, value_date, frequency_id, audit_user_id, audit_ts) VALUES (8, 'FY1415', '2015-05-31', 2, 2, '2014-10-01 09:20:54.711+00');
-INSERT INTO frequency_setups (frequency_setup_id, fiscal_year_code, value_date, frequency_id, audit_user_id, audit_ts) VALUES (9, 'FY1415', '2015-06-30', 3, 2, '2014-10-01 09:21:07.837+00');
-INSERT INTO frequency_setups (frequency_setup_id, fiscal_year_code, value_date, frequency_id, audit_user_id, audit_ts) VALUES (10, 'FY1415', '2015-07-31', 2, 2, '2014-10-01 09:21:25.103+00');
-INSERT INTO frequency_setups (frequency_setup_id, fiscal_year_code, value_date, frequency_id, audit_user_id, audit_ts) VALUES (11, 'FY1415', '2015-08-31', 2, 2, '2014-10-01 09:21:37.995+00');
-INSERT INTO frequency_setups (frequency_setup_id, fiscal_year_code, value_date, frequency_id, audit_user_id, audit_ts) VALUES (12, 'FY1415', '2015-09-30', 5, 2, '2014-10-01 09:21:52.293+00');
-
-
---
--- Name: frequency_setups_frequency_setup_id_seq; Type: SEQUENCE SET; Schema: core; Owner: postgres
---
-
-SELECT pg_catalog.setval('frequency_setups_frequency_setup_id_seq', 12, true);
 
 
 SET search_path = transactions, pg_catalog;

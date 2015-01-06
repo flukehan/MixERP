@@ -46562,7 +46562,7 @@ var triggerClick = function(controlId) {
 //};
 
 var parseFloat2 = function(arg) {
-    var val = parseFloat(arg || 0);
+    var val = parseFloat(parseFormattedNumber(arg.toString()) || 0);
 
     if (isNaN(val)) {
         val = 0;
@@ -46917,9 +46917,14 @@ var parseFormattedNumber = function(input) {
     return result;
 };
 
-var getFormattedNumber = function(input) {
-    var result = input.replace(".", decimalSeparator);
-    return result;
+var getFormattedNumber = function(input, isInteger) {
+    var decimalPlaces = currencyDecimalPlaces;
+
+    if (isInteger) {
+        decimalPlaces = 0;
+    };
+
+    return $.number(input, decimalPlaces, decimalSeparator, thousandSeparator);
 };
 
 var makeDirty = function(obj) {
@@ -46971,11 +46976,11 @@ var sumOfColumn = function(tableSelector, columnIndex) {
     var total = 0;
 
     $(tableSelector).find('tr').each(function() {
-        var value = parseFloat2($('td', this).eq(columnIndex).text());
-        total += value;
+        var value = parseFormattedNumber($('td', this).eq(columnIndex).text());
+        total += parseFloat2(value);
     });
 
-    return total;
+    return $.number(total, currencyDecimalPlaces, decimalSeparator, thousandSeparator);
 };
 
 var getColumnText = function(row, columnIndex) {

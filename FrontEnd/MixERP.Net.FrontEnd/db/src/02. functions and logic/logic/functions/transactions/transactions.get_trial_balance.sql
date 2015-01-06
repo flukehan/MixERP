@@ -222,4 +222,4 @@ END
 $$
 LANGUAGE plpgsql;
 
-SELECT * FROM transactions.get_trial_balance('12-1-2014','12-31-2014',1,1, false, 1000, false, false);
+--SELECT * FROM transactions.get_trial_balance('12-1-2014','12-31-2014',1,1, false, 1000, false, false);

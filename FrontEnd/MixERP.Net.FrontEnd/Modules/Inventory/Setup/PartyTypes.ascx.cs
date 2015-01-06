@@ -17,11 +17,13 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Inventory.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.ScrudFactory;
-using System;
-using System.Reflection;
 
 namespace MixERP.Net.Core.Modules.Inventory.Setup
 {
@@ -38,13 +40,31 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
                 scrud.ViewSchema = "core";
                 scrud.View = "party_types_scrud_view";
 
+                scrud.DisplayFields = GetDisplayFields();
+                scrud.DisplayViews = GetDisplayViews();
+
                 scrud.Text = Titles.PartyTypes;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(PartyTypes));
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (PartyTypes));
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
 
             base.OnControlLoad(sender, e);
+        }
+
+        private static string GetDisplayFields()
+        {
+            List<string> displayFields = new List<string>();
+            ScrudHelper.AddDisplayField(displayFields, "core.accounts.account_id", ConfigurationHelper.GetDbParameter("AccountDisplayField"));
+            return string.Join(",", displayFields);
+        }
+
+        private static string GetDisplayViews()
+        {
+            List<string> displayViews = new List<string>();
+            ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.accounts");
+
+            return string.Join(",", displayViews);
         }
     }
 }

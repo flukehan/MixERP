@@ -547,6 +547,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Normally Debit.
+        /// </summary>
+        internal static string normally_debit {
+            get {
+                return ResourceManager.GetString("normally_debit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Office.
         /// </summary>
         internal static string office {

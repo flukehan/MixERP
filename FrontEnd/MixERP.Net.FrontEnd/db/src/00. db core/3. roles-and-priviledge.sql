@@ -3,6 +3,8 @@ $$
 BEGIN
     IF NOT EXISTS (SELECT * FROM pg_catalog.pg_user WHERE  usename = 'mix_erp') THEN
         CREATE ROLE mix_erp WITH LOGIN PASSWORD 'change-on-deployment';
+    ELSE
+        ALTER ROLE mix_erp WITH PASSWORD 'change-on-deployment';    
     END IF;
 
     COMMENT ON ROLE mix_erp IS 'The default user for MixERP databases.';
@@ -69,6 +71,8 @@ $$
 BEGIN
     IF NOT EXISTS (SELECT * FROM pg_catalog.pg_user WHERE  usename = 'report_user') THEN
         CREATE ROLE report_user WITH LOGIN PASSWORD 'change-on-deployment';
+    ELSE
+        ALTER ROLE report_user WITH PASSWORD 'change-on-deployment';    
     END IF;
 
     COMMENT ON ROLE report_user IS 'This user account should be used by the Reporting Engine to run ad-hoc queries.

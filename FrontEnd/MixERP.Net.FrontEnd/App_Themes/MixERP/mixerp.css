@@ -539,4 +539,7 @@ select option {
   width: 100%;
   overflow: auto;
 }
+.strong {
+  font-weight: bold;
+}
 /*# sourceMappingURL=mixerp.css.map */

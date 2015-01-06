@@ -567,4 +567,70 @@
   <data name="compound_units_chk" xml:space="preserve">
     <value>The base unit id cannot same as compare unit id.</value>
   </data>
+  <data name="item_type_code" xml:space="preserve">
+    <value>Item Type Code</value>
+  </data>
+  <data name="item_type_id" xml:space="preserve">
+    <value>Item Type Id</value>
+  </data>
+  <data name="item_type_name" xml:space="preserve">
+    <value>Item Type Name</value>
+  </data>
+  <data name="cost_of_goods_sold_account_id" xml:space="preserve">
+    <value>COGS Account Id</value>
+  </data>
+  <data name="inventory_account_id" xml:space="preserve">
+    <value>Inventory Account Id</value>
+  </data>
+  <data name="purchase_account_id" xml:space="preserve">
+    <value>Purchase Account Id</value>
+  </data>
+  <data name="purchase_discount_account_id" xml:space="preserve">
+    <value>Purchase Discount Account Id</value>
+  </data>
+  <data name="sales_account_id" xml:space="preserve">
+    <value>Sales Account Id</value>
+  </data>
+  <data name="sales_discount_account_id" xml:space="preserve">
+    <value>Sales Discount Account Id</value>
+  </data>
+  <data name="sales_return_account_id" xml:space="preserve">
+    <value>Sales Return Account Id</value>
+  </data>
+  <data name="account_master_id" xml:space="preserve">
+    <value>Account Master Id</value>
+  </data>
+  <data name="account_name" xml:space="preserve">
+    <value>Account Name</value>
+  </data>
+  <data name="cash_flow_heading_id" xml:space="preserve">
+    <value>Cashflow Heading Id</value>
+  </data>
+  <data name="confidential" xml:space="preserve">
+    <value>Confidential</value>
+  </data>
+  <data name="description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="external_code" xml:space="preserve">
+    <value>External Code</value>
+  </data>
+  <data name="is_cash" xml:space="preserve">
+    <value>Is Cash</value>
+  </data>
+  <data name="is_employee" xml:space="preserve">
+    <value>Is Employee</value>
+  </data>
+  <data name="is_party" xml:space="preserve">
+    <value>Is Party</value>
+  </data>
+  <data name="normally_debit" xml:space="preserve">
+    <value>Normally Debit</value>
+  </data>
+  <data name="parent_account_id" xml:space="preserve">
+    <value>Parent Account Id</value>
+  </data>
+  <data name="sys_type" xml:space="preserve">
+    <value>Sys Type</value>
+  </data>
 </root>

@@ -41,7 +41,6 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
         private Literal accountNumberLiteral;
         private HtmlSelect accountNumberSelect;
         private Literal baseCurrencyLiteral;
-        private Literal cashFlowHeadingLiteral;
         private Literal confidentialLiteral;
         private Literal descriptionLiteral;
         private Literal externalCodeLiteral;
@@ -262,12 +261,6 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                         this.baseCurrencyLiteral = null;
                     }
 
-                    if (this.cashFlowHeadingLiteral != null)
-                    {
-                        this.cashFlowHeadingLiteral.Dispose();
-                        this.cashFlowHeadingLiteral = null;
-                    }
-
                     if (this.confidentialLiteral != null)
                     {
                         this.confidentialLiteral.Dispose();
@@ -441,7 +434,6 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             this.AddBodyRow(table, Titles.BaseCurrency, ref this.baseCurrencyLiteral);
             this.AddBodyRow(table, Titles.AccountMaster, ref this.accountMasterLiteral);
             this.AddBodyRow(table, Titles.Confidential, ref this.confidentialLiteral);
-            this.AddBodyRow(table, Titles.CashFlowHeading, ref this.cashFlowHeadingLiteral);
             this.AddBodyRow(table, Titles.IsSystemAccount, ref this.isSystemAccountLiteral);
             this.AddBodyRow(table, Titles.IsCash, ref this.isCashAccountLiteral);
             this.AddBodyRow(table, Titles.IsEmployee, ref this.isEmployeeLiteral);
@@ -583,7 +575,6 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                     this.baseCurrencyLiteral.Text = Conversion.TryCastString(table.Rows[0]["currency_code"]);
                     this.accountMasterLiteral.Text = Conversion.TryCastString(table.Rows[0]["account_master_code"]);
                     this.confidentialLiteral.Text = Conversion.TryCastString(table.Rows[0]["confidential"]);
-                    this.cashFlowHeadingLiteral.Text = Conversion.TryCastString(table.Rows[0]["cash_flow_heading_code"]);
                     this.isSystemAccountLiteral.Text = Conversion.TryCastString(table.Rows[0]["sys_type"]);
                     this.isCashAccountLiteral.Text = Conversion.TryCastString(table.Rows[0]["is_cash"]);
                     this.isEmployeeLiteral.Text = Conversion.TryCastString(table.Rows[0]["is_employee"]);

@@ -42,7 +42,6 @@ $$
     DECLARE _discount_total         money_strict2;
     DECLARE _tax_total              money_strict2;
     DECLARE _is_credit              boolean;
-    DECLARE _credit_account_id      bigint;
     DECLARE _default_currency_code  national character varying(12);
     DECLARE _cost_of_goods_sold     money_strict2;
     DECLARE _sm_id                  bigint;
@@ -91,7 +90,12 @@ BEGIN
         shipping_charge                 money_strict2,
         tax_form                        text,
         sales_tax_id                    integer,
-        tax                             money_strict2
+        tax                             money_strict2,
+        sales_account_id                integer,
+        sales_discount_account_id       integer,
+        sales_return_account_id         integer,
+        inventory_account_id            integer,
+        cost_of_goods_sold_account_id   integer        
     ) ON COMMIT DROP;
 
     CREATE TEMPORARY TABLE temp_stock_tax_details
@@ -121,6 +125,14 @@ BEGIN
         unit_id                     = core.get_unit_id_by_unit_name(unit_name),
         base_quantity               = core.get_base_quantity_by_unit_name(unit_name, quantity),
         base_unit_id                = core.get_base_unit_id_by_unit_name(unit_name);
+
+    UPDATE temp_stock_details
+    SET
+        sales_account_id                = core.get_sales_account_id(item_id),
+        sales_discount_account_id       = core.get_sales_discount_account_id(item_id),
+        sales_return_account_id         = core.get_sales_return_account_id(item_id),        
+        inventory_account_id            = core.get_inventory_account_id(item_id),
+        cost_of_goods_sold_account_id   = core.get_cost_of_goods_sold_account_id(item_id);
     
     IF EXISTS
     (
@@ -183,13 +195,6 @@ BEGIN
     (SELECT SUM(COALESCE(temp_stock_tax_details.tax, 0)) FROM temp_stock_tax_details
     WHERE temp_stock_tax_details.temp_stock_detail_id = temp_stock_details.id);
 
-    IF(_is_credit) THEN
-        _credit_account_id = core.get_account_id_by_party_code(_party_code); 
-    ELSE
-        _credit_account_id = core.get_account_id_by_parameter('Sales.Return');
-    END IF;
-
-
     _tran_master_id             := nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
     _stock_master_id            := nextval(pg_get_serial_sequence('transactions.stock_master', 'stock_master_id'));
     _tran_counter               := transactions.get_new_transaction_counter(_value_date);
@@ -213,26 +218,48 @@ BEGIN
 
     IF(_cost_of_goods_sold > 0) THEN
         INSERT INTO transactions.transaction_details(transaction_master_id, value_date, tran_type, account_id, statement_reference, currency_code, amount_in_currency, er, local_currency_code, amount_in_local_currency)
-        SELECT _tran_master_id, _value_date, 'Dr', core.get_account_id_by_parameter('Inventory'), _statement_reference, _default_currency_code, _cost_of_goods_sold, 1, _default_currency_code, _cost_of_goods_sold UNION ALL
-        SELECT _tran_master_id, _value_date, 'Cr', core.get_account_id_by_parameter('COGS'), _statement_reference, _default_currency_code, _cost_of_goods_sold, 1, _default_currency_code, _cost_of_goods_sold;                         
+        SELECT _tran_master_id, _value_date, 'Dr', inventory_account_id, _statement_reference, _default_currency_code, SUM(COALESCE(cost_of_goods_sold, 0)), 1, _default_currency_code, SUM(COALESCE(cost_of_goods_sold, 0))
+        FROM temp_stock_details
+        GROUP BY inventory_account_id;
+
+
+        INSERT INTO transactions.transaction_details(transaction_master_id, value_date, tran_type, account_id, statement_reference, currency_code, amount_in_currency, er, local_currency_code, amount_in_local_currency)
+        SELECT _tran_master_id, _value_date, 'Cr', cost_of_goods_sold_account_id, _statement_reference, _default_currency_code, SUM(COALESCE(cost_of_goods_sold, 0)), 1, _default_currency_code, SUM(COALESCE(cost_of_goods_sold, 0))
+        FROM temp_stock_details
+        GROUP BY cost_of_goods_sold_account_id;
     END IF;
 
 
     INSERT INTO transactions.transaction_details(transaction_master_id, value_date, tran_type, account_id, statement_reference, currency_code, amount_in_currency, local_currency_code, er,amount_in_local_currency) 
-    SELECT _tran_master_id, _value_date, 'Dr', core.get_account_id_by_parameter('Sales'), _statement_reference, _default_currency_code, _grand_total, _default_currency_code, 1, _grand_total;
+    SELECT _tran_master_id, _value_date, 'Dr', sales_account_id, _statement_reference, _default_currency_code, SUM(COALESCE(price, 0) * COALESCE(quantity, 0)), _default_currency_code, 1, SUM(COALESCE(price, 0) * COALESCE(quantity, 0))
+    FROM temp_stock_details
+    GROUP BY sales_account_id;
+
 
     IF(_tax_total IS NOT NULL AND _tax_total > 0) THEN
         INSERT INTO transactions.transaction_details(transaction_master_id, value_date, tran_type, account_id, statement_reference, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency)
-        SELECT _tran_master_id, _value_date, 'Dr', core.get_account_id_by_parameter('Sales.Tax'), _statement_reference, _default_currency_code, _tax_total, _default_currency_code, 1, _tax_total;
+        SELECT _tran_master_id, _value_date, 'Dr', temp_stock_tax_details.account_id, _statement_reference, _default_currency_code, SUM(COALESCE(tax, 0)), _default_currency_code, 1, SUM(COALESCE(tax, 0))
+        FROM temp_stock_tax_details
+        GROUP BY temp_stock_tax_details.account_id;
     END IF;
 
     IF(_discount_total IS NOT NULL AND _discount_total > 0) THEN
         INSERT INTO transactions.transaction_details(transaction_master_id, value_date, tran_type, account_id, statement_reference, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency) 
-        SELECT _tran_master_id, _value_date, 'Cr', core.get_account_id_by_parameter('Sales.Discount'), _statement_reference, _default_currency_code, _discount_total, _default_currency_code, 1, _discount_total;
+        SELECT _tran_master_id, _value_date, 'Cr', sales_discount_account_id, _statement_reference, _default_currency_code, SUM(COALESCE(discount, 0)), _default_currency_code, 1, SUM(COALESCE(discount, 0))
+        FROM temp_stock_details
+        GROUP BY sales_discount_account_id;
     END IF;
 
-    INSERT INTO transactions.transaction_details(transaction_master_id, value_date, tran_type, account_id, statement_reference, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency) 
-    SELECT _tran_master_id, _value_date, 'Cr', _credit_account_id, _statement_reference, _default_currency_code, _grand_total + _tax_total - _discount_total, _default_currency_code, 1, _grand_total + _tax_total - _discount_total;
+    IF(_is_credit) THEN
+        INSERT INTO transactions.transaction_details(transaction_master_id, value_date, tran_type, account_id, statement_reference, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency) 
+        SELECT _tran_master_id, _value_date, 'Cr',  core.get_account_id_by_party_code(_party_code), _statement_reference, _default_currency_code, _grand_total + _tax_total - _discount_total, _default_currency_code, 1, _grand_total + _tax_total - _discount_total;
+    ELSE
+        INSERT INTO transactions.transaction_details(transaction_master_id, value_date, tran_type, account_id, statement_reference, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency) 
+        SELECT _tran_master_id, _value_date, 'Cr',  sales_return_account_id, _statement_reference, _default_currency_code, SUM(COALESCE(price, 0) * COALESCE(quantity, 0)) + SUM(COALESCE(tax, 0)) - SUM(COALESCE(discount, 0)), _default_currency_code, 1, SUM(COALESCE(price, 0) * COALESCE(quantity, 0)) + SUM(COALESCE(tax, 0)) - SUM(COALESCE(discount, 0))
+        FROM temp_stock_details
+        GROUP BY sales_return_account_id;
+    END IF;
+
 
 
     INSERT INTO transactions.stock_master(stock_master_id, value_date, transaction_master_id, party_id, price_type_id, is_credit, store_id) 

@@ -4,6 +4,24 @@ SELECT 3, 'EOQ', 'End of Quarter'               UNION ALL
 SELECT 4, 'EOH', 'End of Half'                  UNION ALL
 SELECT 5, 'EOY', 'End of Year';
 
+INSERT INTO core.fiscal_year (fiscal_year_code, fiscal_year_name, starts_from, ends_on) 
+VALUES ('FY1415', 'FY 2014/2015', '7/17/2014'::date, '7/16/2015'::date);
+
+INSERT INTO core.frequency_setups (fiscal_year_code, frequency_setup_code, value_date, frequency_id) 
+SELECT 'FY1415', 'Jul-Aug', '8/16/2014'::date, 2 UNION ALL
+SELECT 'FY1415', 'Aug-Sep', '9/16/2014'::date, 2 UNION ALL
+SELECT 'FY1415', 'Sep-Oc', '10/17/2014'::date, 3 UNION ALL
+SELECT 'FY1415', 'Oct-Nov', '11/16/2014'::date, 2 UNION ALL
+SELECT 'FY1415', 'Nov-Dec', '12/15/2014'::date, 2 UNION ALL
+SELECT 'FY1415', 'Dec-Jan', '1/14/2015'::date, 4 UNION ALL
+SELECT 'FY1415', 'Jan-Feb', '2/12/2015'::date, 2 UNION ALL
+SELECT 'FY1415', 'Feb-Mar', '3/14/2015'::date, 2 UNION ALL
+SELECT 'FY1415', 'Mar-Apr', '4/13/2015'::date, 3 UNION ALL
+SELECT 'FY1415', 'Apr-May', '5/14/2015'::date, 2 UNION ALL
+SELECT 'FY1415', 'May-Jun', '6/15/2015'::date, 2 UNION ALL
+SELECT 'FY1415', 'Jun-Jul', '7/16/2015'::date, 5;
+
+
 INSERT INTO core.late_fee(late_fee_code, late_fee_name, is_flat_amount, rate)
 SELECT '9%', '9% Fine', false, 9.00; 
 

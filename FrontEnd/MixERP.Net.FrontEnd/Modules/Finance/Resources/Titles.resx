@@ -453,4 +453,10 @@
   <data name="IncludeZeroBalanceAccounts" xml:space="preserve">
     <value>Include Zero Balance Accounts</value>
   </data>
+  <data name="ProfitAndLossStatement" xml:space="preserve">
+    <value>Profit &amp; Loss Statement</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
 </root>

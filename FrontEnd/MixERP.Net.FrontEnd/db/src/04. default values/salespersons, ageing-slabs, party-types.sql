@@ -19,9 +19,9 @@ SELECT 'SLAB 4',91, 365 UNION ALL
 SELECT 'SLAB 5',366, 999999;
 
 
-INSERT INTO core.party_types(party_type_code, party_type_name) SELECT 'A', 'Agent';
-INSERT INTO core.party_types(party_type_code, party_type_name) SELECT 'C', 'Customer';
-INSERT INTO core.party_types(party_type_code, party_type_name) SELECT 'D', 'Dealer';
-INSERT INTO core.party_types(party_type_code, party_type_name, is_supplier) SELECT 'S', 'Supplier', true;
+INSERT INTO core.party_types(party_type_code, party_type_name, account_id) SELECT 'A', 'Agent', core.get_account_id_by_account_number('20100');
+INSERT INTO core.party_types(party_type_code, party_type_name, account_id) SELECT 'C', 'Customer', core.get_account_id_by_account_number('10400');
+INSERT INTO core.party_types(party_type_code, party_type_name, account_id) SELECT 'D', 'Dealer', core.get_account_id_by_account_number('10400');
+INSERT INTO core.party_types(party_type_code, party_type_name, is_supplier, account_id) SELECT 'S', 'Supplier', true, core.get_account_id_by_account_number('20100');
 
 

@@ -350,7 +350,6 @@
     <Content Include="db\src\00. db core\4.casts.sql" />
     <Content Include="db\src\01. types, domains, tables, and constraints\domains.sql" />
     <Content Include="db\src\01. types, domains, tables, and constraints\tables and constraints.sql" />
-    <Content Include="db\src\01. types, domains, tables, and constraints\tables2.sql" />
     <Content Include="db\src\01. types, domains, tables, and constraints\types.sql" />
     <Content Include="db\src\02. functions and logic\audit\audit.is_valid_login_id.sql" />
     <Content Include="db\src\02. functions and logic\core\core.append_if_not_null.sql" />

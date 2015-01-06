@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -31,7 +32,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
         public Button goButton;
         public GridView searchGridView;
         private bool disposed;
-
         public override void Dispose()
         {
             this.Dispose(true);
@@ -85,6 +85,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                     if (this.searchGridView != null)
                     {
                         this.searchGridView.RowDataBound -= this.SearchGridView_RowDataBound;
+                        this.searchGridView.DataBound -= this.SearchGridView_DataBound;
                         this.searchGridView.Dispose();
                         this.searchGridView = null;
                     }
@@ -99,6 +100,11 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
                 this.disposed = true;
             }
+        }
+
+        private void SearchGridView_DataBound(object sender, EventArgs e)
+        {
+            this.searchGridView.HeaderRow.TableSection = TableRowSection.TableHeader;
         }
     }
 }

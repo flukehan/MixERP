@@ -17,4 +17,54 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ProfitAndLossAccount.ascx.cs" Inherits="MixERP.Net.Core.Modules.Finance.Reports.ProfitAndLossAccount" %>
-<h1>Profit & Loss Account</h1>
+
+<asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
+
+<style>
+    th[rowspan] {
+        border: 1px solid #D4D4D5;
+    }
+</style>
+<script type="text/javascript">
+    var grid = $("#PLAccountGridView");
+    var compactCheckBox = $("#CompactCheckBox");
+    var isCompactHiddenField = $("#IsCompactHidden");
+
+    $(document).ready(function () {
+        grid.find("tr").each(function () {
+            var isSummation = $(this).find("td:last, th:last");
+
+            if (isSummation.find("input").is(":checked") === true) {
+                $(this).addClass("positive");
+                $(this).find("td").addClass("strong");
+            };
+
+            isSummation.remove();
+
+            var isProfit = $(this).find("td:last, th:last");
+
+            if (isProfit.find("input").is(":checked") === true) {
+                $(this).addClass("negative");
+                $(this).find("td").addClass("strong");
+            };
+            isProfit.hide();
+        });
+
+        grid.find("tr").each(function () {
+            if ($(this).is(".positive, .negative") === false) {
+                var cell = $(this).find("td:first-child");
+                cell.html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + cell.html());
+            };
+        });
+
+    });
+
+    compactCheckBox.change(function () {
+        if (compactCheckBox.is(":checked")) {
+            isCompactHiddenField.val("1");
+            return;
+        };
+
+        isCompactHiddenField.val("0");
+    });
+</script>

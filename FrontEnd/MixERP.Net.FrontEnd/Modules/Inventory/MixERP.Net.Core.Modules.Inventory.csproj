@@ -84,6 +84,7 @@
     <Content Include="Services\Entry\Transfer.asmx" />
     <Content Include="Setup\CompoundItemDetails.ascx" />
     <Content Include="Setup\CompoundItems.ascx" />
+    <Content Include="Setup\ItemTypes.ascx" />
     <Content Include="SQL\Menu.sql" />
     <Content Include="SQL\Module.sql" />
     <Content Include="Services\ItemData.asmx" />
@@ -228,6 +229,13 @@
     </Compile>
     <Compile Include="Setup\ItemsPopup.ascx.designer.cs">
       <DependentUpon>ItemsPopup.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Setup\ItemTypes.ascx.cs">
+      <DependentUpon>ItemTypes.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Setup\ItemTypes.ascx.designer.cs">
+      <DependentUpon>ItemTypes.ascx</DependentUpon>
     </Compile>
     <Compile Include="Setup\PartiesPopup.ascx.cs">
       <DependentUpon>PartiesPopup.ascx</DependentUpon>

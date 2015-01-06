@@ -160,6 +160,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Item Types.
+        /// </summary>
+        internal static string ItemTypes {
+            get {
+                return ResourceManager.GetString("ItemTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Office.
         /// </summary>
         internal static string Office {
