@@ -17,37 +17,19 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.WebControls.ScrudFactory.Resources;
 using System;
 using System.Data;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.WebControls.ScrudFactory.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 {
     internal sealed class ScrudItemSelectorSelectTemplate : ITemplate, IDisposable
     {
-        private bool disposed;
         private HtmlAnchor selectAnchor;
-
-        public void BindData(object sender, EventArgs e)
-        {
-            using (var container = (GridViewRow)this.selectAnchor.NamingContainer)
-            {
-                var rowView = container.DataItem as DataRowView;
-                if (rowView != null)
-                {
-                    this.selectAnchor.Attributes.Add("onclick", "sisUpdateValue('" + rowView[0] + "');");
-                }
-            }
-        }
-
-        public void Dispose()
-        {
-            this.Dispose(true);
-        }
 
         public void InstantiateIn(Control container)
         {
@@ -60,22 +42,47 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
             container.Controls.Add(this.selectAnchor);
         }
 
-        private void Dispose(bool disposing)
+        public void BindData(object sender, EventArgs e)
+        {
+            using (var container = (GridViewRow) this.selectAnchor.NamingContainer)
+            {
+                var rowView = container.DataItem as DataRowView;
+                if (rowView != null)
+                {
+                    this.selectAnchor.Attributes.Add("onclick", "sisUpdateValue('" + rowView[0] + "');");
+                }
+            }
+        }
+
+        #region IDisposable
+
+        private bool disposed;
+
+        public void Dispose()
         {
             if (!this.disposed)
             {
-                if (disposing)
-                {
-                    if (this.selectAnchor != null)
-                    {
-                        this.selectAnchor.DataBinding -= this.BindData;
-                        this.selectAnchor.Dispose();
-                        this.selectAnchor = null;
-                    }
-                }
-
-                this.disposed = true;
+                this.Dispose(true);
             }
         }
+
+        private void Dispose(bool disposing)
+        {
+            if (!disposing)
+            {
+                return;
+            }
+
+            if (this.selectAnchor != null)
+            {
+                this.selectAnchor.DataBinding -= this.BindData;
+                this.selectAnchor.Dispose();
+                this.selectAnchor = null;
+            }
+
+            this.disposed = true;
+        }
+
+        #endregion
     }
 }

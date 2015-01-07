@@ -26,6 +26,99 @@ namespace MixERP.Net.Common.Helpers
 {
     public static class SessionHelper
     {
+        public static void AddSessionKey(string key, object value)
+        {
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                return;
+            }
+
+            HttpSessionState session = HttpContext.Current.Session;
+            {
+                if (session != null)
+                {
+                    if (session[key] == null)
+                    {
+                        session[key] = value;
+                    }
+                    else
+                    {
+                        session.Add(key, value);
+                    }
+                }
+            }
+        }
+
+        public static string GetCity()
+        {
+            return Conversion.TryCastString(HttpContext.Current.Session["City"]);
+        }
+
+        public static string GetCountry()
+        {
+            return Conversion.TryCastString(HttpContext.Current.Session["Country"]);
+        }
+
+        public static CultureInfo GetCulture()
+        {
+            return LocalizationHelper.GetCurrentCulture();
+        }
+
+        public static string GetEmail()
+        {
+            return Conversion.TryCastString(HttpContext.Current.Session["Email"]);
+        }
+
+        public static string GetFax()
+        {
+            return Conversion.TryCastString(HttpContext.Current.Session["Fax"]);
+        }
+
+        public static long GetLogOnId()
+        {
+            return Conversion.TryCastLong(HttpContext.Current.Session["LogOnId"]);
+        }
+
+        public static string GetNickname()
+        {
+            return Conversion.TryCastString(HttpContext.Current.Session["NickName"]);
+        }
+
+        public static int GetOfficeId()
+        {
+            return Conversion.TryCastInteger(HttpContext.Current.Session["OfficeId"]);
+        }
+
+        public static string GetOfficeName()
+        {
+            return Conversion.TryCastString(HttpContext.Current.Session["OfficeName"]);
+        }
+
+        public static string GetPanNumber()
+        {
+            return Conversion.TryCastString(HttpContext.Current.Session["PanNumber"]);
+        }
+
+        public static string GetPhone()
+        {
+            return Conversion.TryCastString(HttpContext.Current.Session["Phone"]);
+        }
+
+        public static DateTime GetRegistrationDate()
+        {
+            return Conversion.TryCastDate(HttpContext.Current.Session["RegistrationDate"]);
+        }
+
+        public static string GetRegistrationNumber()
+        {
+            return Conversion.TryCastString(HttpContext.Current.Session["RegistrationNumber"]);
+        }
+
+        public static string GetRole()
+        {
+            return Conversion.TryCastString(HttpContext.Current.Session["Role"]);
+        }
+
         public static string GetSessionValueByKey(string key)
         {
             if (string.IsNullOrWhiteSpace(key))
@@ -47,9 +140,23 @@ namespace MixERP.Net.Common.Helpers
             return string.Empty;
         }
 
-        public static long GetLogOnId()
+        public static DateTime GetSignInTimestamp()
         {
-            return Conversion.TryCastLong(HttpContext.Current.Session["LogOnId"]);
+            return Conversion.TryCastDate(HttpContext.Current.Session["SignInTimestamp"]);
+        }
+        public static string GetState()
+        {
+            return Conversion.TryCastString(HttpContext.Current.Session["State"]);
+        }
+
+        public static string GetStreet()
+        {
+            return Conversion.TryCastString(HttpContext.Current.Session["Street"]);
+        }
+
+        public static string GetUrl()
+        {
+            return Conversion.TryCastString(HttpContext.Current.Session["Url"]);
         }
 
         public static int GetUserId()
@@ -62,9 +169,9 @@ namespace MixERP.Net.Common.Helpers
             return Conversion.TryCastString(HttpContext.Current.Session["UserName"]);
         }
 
-        public static string GetRole()
+        public static string GetZipCode()
         {
-            return Conversion.TryCastString(HttpContext.Current.Session["Role"]);
+            return Conversion.TryCastString(HttpContext.Current.Session["ZipCode"]);
         }
 
         public static bool IsAdmin()
@@ -75,86 +182,6 @@ namespace MixERP.Net.Common.Helpers
         public static bool IsSystem()
         {
             return Conversion.TryCastBoolean(HttpContext.Current.Session["IsSystem"]);
-        }
-
-        public static int GetOfficeId()
-        {
-            return Conversion.TryCastInteger(HttpContext.Current.Session["OfficeId"]);
-        }
-
-        public static string GetNickname()
-        {
-            return Conversion.TryCastString(HttpContext.Current.Session["NickName"]);
-        }
-
-        public static string GetOfficeName()
-        {
-            return Conversion.TryCastString(HttpContext.Current.Session["OfficeName"]);
-        }
-
-        public static DateTime GetRegistrationDate()
-        {
-            return Conversion.TryCastDate(HttpContext.Current.Session["RegistrationDate"]);
-        }
-
-        public static string GetRegistrationNumber()
-        {
-            return Conversion.TryCastString(HttpContext.Current.Session["RegistrationNumber"]);
-        }
-
-        public static string GetPanNumber()
-        {
-            return Conversion.TryCastString(HttpContext.Current.Session["PanNumber"]);
-        }
-
-        public static string GetStreet()
-        {
-            return Conversion.TryCastString(HttpContext.Current.Session["Street"]);
-        }
-
-        public static string GetCity()
-        {
-            return Conversion.TryCastString(HttpContext.Current.Session["City"]);
-        }
-
-        public static string GetState()
-        {
-            return Conversion.TryCastString(HttpContext.Current.Session["State"]);
-        }
-
-        public static string GetCountry()
-        {
-            return Conversion.TryCastString(HttpContext.Current.Session["Country"]);
-        }
-
-        public static string GetZipCode()
-        {
-            return Conversion.TryCastString(HttpContext.Current.Session["ZipCode"]);
-        }
-
-        public static string GetPhone()
-        {
-            return Conversion.TryCastString(HttpContext.Current.Session["Phone"]);
-        }
-
-        public static string GetFax()
-        {
-            return Conversion.TryCastString(HttpContext.Current.Session["Fax"]);
-        }
-
-        public static string GetEmail()
-        {
-            return Conversion.TryCastString(HttpContext.Current.Session["Email"]);
-        }
-
-        public static string GetUrl()
-        {
-            return Conversion.TryCastString(HttpContext.Current.Session["Url"]);
-        }
-
-        public static CultureInfo GetCulture()
-        {
-            return LocalizationHelper.GetCurrentCulture();
         }
     }
 }

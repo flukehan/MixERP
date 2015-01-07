@@ -21,6 +21,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Data.Common;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Web;
 using System.Web.Security;
@@ -29,6 +30,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Common.Models.Core;
 using MixERP.Net.Common.Models.Office;
 using Menu = MixERP.Net.Common.Models.Core.Menu;
 
@@ -37,16 +40,13 @@ namespace MixERP.Net.FrontEnd.Base
     public class MixERPWebpage : MixERPWebPageBase
     {
         /// <summary>
-        ///     Since we save the menu on the database, this parameter is only used when there is no
-        ///     associated record of this page's url or path in the menu table. Use this to override or
-        ///     fake the page's url or path. This forces navigation menus on the left hand side to be
-        ///     displayed in regards with the specified path.
+        ///     The pages, having no actual entry on database menu table, can have an OverridePath
+        ///     which can be set to an existing page.
         /// </summary>
         public virtual string OverridePath { get; set; }
 
         /// <summary>
-        ///     Use this parameter on the Page_Init event of member pages. This parameter ensures that
-        ///     the user is not redirected to the login page even when the user is not logged in.
+        ///     Set this to true for pages where you do not need users to be logged in.
         /// </summary>
         public bool SkipLoginCheck { get; set; }
 
@@ -178,6 +178,7 @@ namespace MixERP.Net.FrontEnd.Base
 
                     SignInView signInView = Data.Office.User.GetSignInView(signInId);
 
+                    session["SignInTimestamp"] = DateTime.Now;
                     session["LogOnId"] = signInView.LogOnId;
                     session["UserId"] = signInView.UserId;
                     session["Culture"] = signInView.Culture;
@@ -258,6 +259,7 @@ namespace MixERP.Net.FrontEnd.Base
                 }
             }
 
+            this.ForceLogOff();
             base.OnInit(e);
         }
 
@@ -320,6 +322,27 @@ namespace MixERP.Net.FrontEnd.Base
             CultureInfo culture = new CultureInfo(cultureName);
             Thread.CurrentThread.CurrentCulture = culture;
             Thread.CurrentThread.CurrentUICulture = culture;
+        }
+
+        private void ForceLogOff()
+        {
+            int officeId = SessionHelper.GetOfficeId();
+            Collection<ApplicationDateModel> applicationDates = ApplicationStateHelper.GetApplicationDates();
+
+            if (applicationDates != null)
+            {
+                ApplicationDateModel model = applicationDates.FirstOrDefault(c => c.OfficeId.Equals(officeId));
+                if (model != null)
+                {
+                    if (model.ForcedLogOffTimestamp != null)
+                    {
+                        if (model.ForcedLogOffTimestamp <= DateTime.Now && model.ForcedLogOffTimestamp >= SessionHelper.GetSignInTimestamp())
+                        {
+                            RequestLogOnPage();
+                        }
+                    }
+                }
+            }
         }
 
         private void SetSession()

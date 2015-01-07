@@ -109,33 +109,34 @@ COMMENT ON VIEW scrud.constraint_column_usage IS 'Lists all columns having const
 
 CREATE VIEW scrud.relationship_view
 AS
-SELECT
-    tc.table_schema,
-    tc.table_name,
-    kcu.column_name,
-    ccu.table_schema AS references_schema,
-    ccu.table_name AS references_table,
-    ccu.column_name AS references_field  
-FROM
-    information_schema.table_constraints tc  
-LEFT JOIN
-    information_schema.key_column_usage kcu  
-        ON tc.constraint_catalog = kcu.constraint_catalog  
-        AND tc.constraint_schema = kcu.constraint_schema  
-        AND tc.constraint_name = kcu.constraint_name  
-LEFT JOIN
-    information_schema.referential_constraints rc  
-        ON tc.constraint_catalog = rc.constraint_catalog  
-        AND tc.constraint_schema = rc.constraint_schema  
-        AND tc.constraint_name = rc.constraint_name 
-LEFT JOIN
-    scrud.constraint_column_usage ccu  
-        ON rc.unique_constraint_catalog = ccu.constraint_catalog  
-        AND rc.unique_constraint_schema = ccu.constraint_schema  
-        AND rc.unique_constraint_name = ccu.constraint_name  
-WHERE
-    lower(tc.constraint_type) in ('foreign key');
-
+SELECT 
+    o.conname                                                       AS constraint_name,
+    (SELECT nspname FROM pg_namespace WHERE oid=m.relnamespace)     AS table_schema,
+    m.relname                                                       AS table_name,
+    (SELECT a.attname FROM pg_attribute a 
+    WHERE a.attrelid = m.oid
+    AND a.attnum = o.conkey[1]
+    AND a.attisdropped = FALSE)
+                                                                    AS column_name,
+    (SELECT nspname FROM pg_namespace
+     WHERE oid=f.relnamespace) AS references_schema,
+       f.relname
+                                                                    AS references_table,
+    (SELECT a.attname FROM pg_attribute a
+     WHERE a.attrelid = f.oid
+     AND a.attnum = o.confkey[1]
+     AND a.attisdropped = FALSE)
+                                                                    AS references_field
+FROM pg_constraint o
+LEFT JOIN pg_class c ON c.oid = o.conrelid
+LEFT JOIN pg_class f ON f.oid = o.confrelid
+LEFT JOIN pg_class m ON m.oid = o.conrelid
+WHERE o.contype = 'f'
+AND o.conrelid IN
+(SELECT oid
+ FROM pg_class c
+ WHERE c.relkind = 'r');
+ 
 COMMENT ON VIEW scrud.relationship_view IS 'Lists all foreign key columns and their relation with the parent tables.';
 
 CREATE FUNCTION scrud.parse_default(text)
@@ -161,43 +162,52 @@ COMMENT ON FUNCTION scrud.parse_default(text) IS 'Parses default constraint colu
 
 CREATE VIEW scrud.mixerp_table_view
 AS
-SELECT information_schema.columns.table_schema, 
-       information_schema.columns.table_name, 
-       information_schema.columns.column_name, 
-       references_schema, 
-       references_table, 
-       references_field, 
-       ordinal_position,
-       is_nullable,
-       scrud.parse_default(column_default) AS column_default, 
-       data_type, 
-       domain_name,
-       character_maximum_length, 
-       character_octet_length, 
-       numeric_precision, 
-       numeric_precision_radix, 
-       numeric_scale, 
-       datetime_precision, 
-       udt_name 
-FROM   information_schema.columns 
-       LEFT JOIN scrud.relationship_view 
-              ON information_schema.columns.table_schema = 
-                 scrud.relationship_view.table_schema 
-                 AND information_schema.columns.table_name = 
-                     scrud.relationship_view.table_name 
-                 AND information_schema.columns.column_name = 
-                     scrud.relationship_view.column_name 
-WHERE  information_schema.columns.table_schema 
-NOT IN 
-    ( 
-        'pg_catalog', 'information_schema'
-    )
-AND        information_schema.columns.column_name 
-NOT IN
+SELECT 
+    pg_tables.schemaname                                    AS table_schema, 
+    pg_tables.tablename                                     AS table_name, 
+    pg_attribute.attname                                    AS column_name,
+    constraint_name,
+    references_schema, 
+    references_table, 
+    references_field, 
+    pg_attribute.attnum                                     AS ordinal_position,
+    CASE pg_attribute.attnotnull 
+    WHEN false THEN 'YES' 
+    ELSE 'NO' END                                           AS is_nullable, 
+    (SELECT 
+        scrud.parse_default(pg_attrdef.adsrc) 
+        FROM pg_attrdef 
+        WHERE pg_attrdef.adrelid = pg_class.oid 
+        AND pg_attrdef.adnum = pg_attribute.attnum)         AS column_default,    
+    format_type(pg_attribute.atttypid, NULL)                AS data_type, 
+    format_type(pg_attribute.atttypid, NULL)                AS domain_name, 
+    CASE pg_attribute.atttypmod
+    WHEN -1 THEN NULL 
+    ELSE pg_attribute.atttypmod - 4
+    END                                         AS character_maximum_length,    
+    pg_constraint.conname AS "key", 
+    pc2.conname AS ckey
+FROM pg_tables
+INNER JOIN pg_class 
+ON pg_class.relname = pg_tables.tablename 
+INNER JOIN pg_attribute ON pg_class.oid = pg_attribute.attrelid 
+    AND pg_attribute.attnum > 0 
+LEFT JOIN pg_constraint ON pg_constraint.contype = 'p'::"char" 
+    AND pg_constraint.conrelid = pg_class.oid AND
+    (pg_attribute.attnum = ANY (pg_constraint.conkey)) 
+LEFT JOIN pg_constraint AS pc2 ON pc2.contype = 'f'::"char" 
+    AND pc2.conrelid = pg_class.oid 
+    AND (pg_attribute.attnum = ANY (pc2.conkey))    
+LEFT JOIN scrud.relationship_view 
+ON pg_tables.schemaname = scrud.relationship_view.table_schema 
+ AND pg_tables.tablename = scrud.relationship_view.table_name 
+ AND pg_attribute.attname = scrud.relationship_view.column_name 
+WHERE pg_attribute.attname NOT IN
     (
         'audit_user_id', 'audit_ts'
     )
-;
+ORDER BY pg_attribute.attnum;
+
 
 COMMENT ON VIEW scrud.mixerp_table_view IS 'Lists all schema, table, and columns with associated types, domains, references, and constraints.';
 
@@ -4748,8 +4758,8 @@ AS
 $$
     DECLARE _start_date date;
 BEGIN
-    SELECT MAX(value_date) 
-    INTO _start_date + 1
+    SELECT MAX(value_date) + 1 
+    INTO _start_date
     FROM core.frequency_setups
     WHERE value_date < 
     (
@@ -6062,6 +6072,199 @@ IMMUTABLE STRICT;
 --------------------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------------------
 **************************************************************************************************************************/
+
+
+
+
+-->-->-- /db/src/02. functions and logic/logic/functions/core/core.dates.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_date(_office_id integer);
+
+CREATE FUNCTION core.get_date(_office_id integer)
+RETURNS date
+AS
+$$
+BEGIN
+    RETURN transactions.get_value_date($1);
+END
+$$
+LANGUAGE plpgsql;
+
+DROP FUNCTION IF EXISTS core.get_month_end_date(_office_id integer);
+
+CREATE FUNCTION core.get_month_end_date(_office_id integer)
+RETURNS date
+AS
+$$
+BEGIN
+    RETURN MIN(value_date) 
+    FROM core.frequency_setups
+    WHERE value_date >= transactions.get_value_date($1);
+END
+$$
+LANGUAGE plpgsql;
+
+DROP FUNCTION IF EXISTS core.get_month_start_date(_office_id integer);
+
+CREATE FUNCTION core.get_month_start_date(_office_id integer)
+RETURNS date
+AS
+$$
+    DECLARE _date               date;
+BEGIN
+    SELECT MAX(value_date) + 1
+    INTO _date
+    FROM core.frequency_setups
+    WHERE value_date < 
+    (
+        SELECT MIN(value_date)
+        FROM core.frequency_setups
+        WHERE value_date >= transactions.get_value_date($1)
+    );
+
+    IF(_date IS NULL) THEN
+        SELECT starts_from 
+        INTO _date
+        FROM core.fiscal_year;
+    END IF;
+
+    RETURN _date;
+END
+$$
+LANGUAGE plpgsql;
+
+DROP FUNCTION IF EXISTS core.get_quarter_end_date(_office_id integer);
+
+CREATE FUNCTION core.get_quarter_end_date(_office_id integer)
+RETURNS date
+AS
+$$
+BEGIN
+    RETURN MIN(value_date) 
+    FROM core.frequency_setups
+    WHERE value_date >= transactions.get_value_date($1)
+    AND frequency_id > 2;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+DROP FUNCTION IF EXISTS core.get_quarter_start_date(_office_id integer);
+
+CREATE FUNCTION core.get_quarter_start_date(_office_id integer)
+RETURNS date
+AS
+$$
+    DECLARE _date               date;
+BEGIN
+    SELECT MAX(value_date) + 1
+    INTO _date
+    FROM core.frequency_setups
+    WHERE value_date < 
+    (
+        SELECT MIN(value_date)
+        FROM core.frequency_setups
+        WHERE value_date >= transactions.get_value_date($1)
+    )
+    AND frequency_id > 2;
+
+    IF(_date IS NULL) THEN
+        SELECT starts_from 
+        INTO _date
+        FROM core.fiscal_year;
+    END IF;
+
+    RETURN _date;
+END
+$$
+LANGUAGE plpgsql;
+
+DROP FUNCTION IF EXISTS core.get_fiscal_half_end_date(_office_id integer);
+
+CREATE FUNCTION core.get_fiscal_half_end_date(_office_id integer)
+RETURNS date
+AS
+$$
+BEGIN
+    RETURN MIN(value_date) 
+    FROM core.frequency_setups
+    WHERE value_date >= transactions.get_value_date($1)
+    AND frequency_id > 3;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+DROP FUNCTION IF EXISTS core.get_fiscal_half_start_date(_office_id integer);
+
+CREATE FUNCTION core.get_fiscal_half_start_date(_office_id integer)
+RETURNS date
+AS
+$$
+    DECLARE _date               date;
+BEGIN
+    SELECT MAX(value_date) + 1
+    INTO _date
+    FROM core.frequency_setups
+    WHERE value_date < 
+    (
+        SELECT MIN(value_date)
+        FROM core.frequency_setups
+        WHERE value_date >= transactions.get_value_date($1)
+    )
+    AND frequency_id > 3;
+
+    IF(_date IS NULL) THEN
+        SELECT starts_from 
+        INTO _date
+        FROM core.fiscal_year;
+    END IF;
+
+    RETURN _date;
+END
+$$
+LANGUAGE plpgsql;
+
+
+DROP FUNCTION IF EXISTS core.get_fiscal_year_end_date(_office_id integer);
+
+CREATE FUNCTION core.get_fiscal_year_end_date(_office_id integer)
+RETURNS date
+AS
+$$
+BEGIN
+    RETURN MIN(value_date) 
+    FROM core.frequency_setups
+    WHERE value_date >= transactions.get_value_date($1)
+    AND frequency_id > 4;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+DROP FUNCTION IF EXISTS core.get_fiscal_year_start_date(_office_id integer);
+
+CREATE FUNCTION core.get_fiscal_year_start_date(_office_id integer)
+RETURNS date
+AS
+$$
+    DECLARE _date               date;
+BEGIN
+
+    SELECT starts_from 
+    INTO _date
+    FROM core.fiscal_year;
+
+    RETURN _date;
+END
+$$
+LANGUAGE plpgsql;
+
+--SELECT core.get_date(1), core.get_month_start_date(1),core.get_month_end_date(1), core.get_quarter_start_date(1), core.get_quarter_end_date(1), core.get_fiscal_half_start_date(1), core.get_fiscal_half_end_date(1), core.get_fiscal_year_start_date(1), core.get_fiscal_year_end_date(1);
+
+
 
 
 

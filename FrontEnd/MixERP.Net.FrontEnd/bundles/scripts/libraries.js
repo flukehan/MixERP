@@ -46592,9 +46592,7 @@ DATE EXPRESSION START
 var validateByControlId = function(controlId) {
     if (typeof Page_ClientValidate === "function") {
         Page_ClientValidate(controlId);
-    } else {
-        logToConsole("The function Page_ClientValidate was not found.");
-    }
+    };
 };
 
 $(document).ready(function() {

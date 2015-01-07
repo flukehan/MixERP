@@ -47,6 +47,7 @@ namespace MixERP.Net.FrontEnd
                 return;
             }
 
+
             if (ex is ThreadAbortException)
             {
                 return;

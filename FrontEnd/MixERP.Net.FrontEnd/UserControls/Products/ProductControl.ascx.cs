@@ -17,10 +17,6 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Transactions;
-using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
-using MixERP.Net.WebControls.StockTransactionView.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -29,111 +25,114 @@ using System.Linq;
 using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Common.Models.Transactions;
+using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
+using MixERP.Net.WebControls.StockTransactionView.Data.Models;
 
 namespace MixERP.Net.FrontEnd.UserControls.Products
 {
     /// <summary>
-    /// Todo: This class is subject to be moved to a standalone server control class library. This
-    ///       UserControl provides a common interface for all transactions that are related to stock
-    ///       and/or inventory. Everything is handled in this class, except for the Save event. The
-    ///       save event is exposed to the page containing this control and should be handled there.
+    ///     Todo: This class is subject to be moved to a standalone server control class library. This
+    ///     UserControl provides a common interface for all transactions that are related to stock
+    ///     and/or inventory. Everything is handled in this class, except for the Save event. The
+    ///     save event is exposed to the page containing this control and should be handled there.
     /// </summary>
     public partial class ProductControl : UserControl
     {
         #region Properties
 
         /// <summary>
-        /// This property is used to temporarily store pre assigned instance of transactions for
-        /// merging transactions and creating a batch transactions. Some cases: Multiple Sales
-        /// Quotations --&gt; Sales Order. Multiple Sales Quotations --&gt; Sales Delivery.
+        ///     This property is used to temporarily store pre assigned instance of transactions for
+        ///     merging transactions and creating a batch transactions. Some cases: Multiple Sales
+        ///     Quotations --&gt; Sales Order. Multiple Sales Quotations --&gt; Sales Delivery.
         /// </summary>
         private MergeModel model = new MergeModel();
 
         /// <summary>
-        /// Transaction book for products are Sales and Purchase.
+        ///     Transaction book for products are Sales and Purchase.
         /// </summary>
         public TranBook Book { get; set; }
 
         /// <summary>
-        /// This property when enabled will display cash repositories and their available balance.
-        /// Not all available cash repositories will be displayed here but those which belong to the
-        /// current (or logged in) branch office. This property must be enabled for transactions
-        /// which have affect on cash ledger, namely "Direct Purchase" and "Direct Sales".
+        ///     This property when enabled will display cash repositories and their available balance.
+        ///     Not all available cash repositories will be displayed here but those which belong to the
+        ///     current (or logged in) branch office. This property must be enabled for transactions
+        ///     which have affect on cash ledger, namely "Direct Purchase" and "Direct Sales".
         /// </summary>
         public bool ShowCashRepository { get; set; }
 
         /// <summary>
-        /// This property when enabled will display cost centers.
+        ///     This property when enabled will display cost centers.
         /// </summary>
         public bool ShowCostCenter { get; set; }
 
         /// <summary>
-        /// This property when enabled will display payment terms.
+        ///     This property when enabled will display payment terms.
         /// </summary>
         public bool ShowPaymentTerms { get; set; }
 
         /// <summary>
-        /// This property when set to true will display stores.
+        ///     This property when set to true will display stores.
         /// </summary>
         public bool ShowPriceTypes { get; set; }
 
         /// <summary>
-        /// This property when enabled will display sales agents.
+        ///     This property when enabled will display sales agents.
         /// </summary>
         public bool ShowSalesAgents { get; set; }
 
         /// <summary>
-        /// This property when set to true will display sales types, namely "Taxable" and "Nontaxable".
+        ///     This property when set to true will display sales types, namely "Taxable" and "Nontaxable".
         /// </summary>
         public bool ShowSalesType { get; set; }
 
         /// <summary>
-        /// This property when enabled will display shipping information, such as shipping address,
-        /// shipping company, and shipping costs.
+        ///     This property when enabled will display shipping information, such as shipping address,
+        ///     shipping company, and shipping costs.
         /// </summary>
         public bool ShowShippingInformation { get; set; }
 
         /// <summary>
-        /// This property when set to true will display stores.
+        ///     This property when set to true will display stores.
         /// </summary>
         public bool ShowStore { get; set; }
 
         /// <summary>
-        /// This property when set to true will display transaction types. Transaction types are
-        /// Cash and Credit.
+        ///     This property when set to true will display transaction types. Transaction types are
+        ///     Cash and Credit.
         /// </summary>
         public bool ShowTransactionType { get; set; }
 
         /// <summary>
-        /// Sub transaction books are maintained for breaking down the Purchase and Sales
-        /// transaction into smaller steps such as Quotations, Orders, Deliveries, e.t.c.
+        ///     Sub transaction books are maintained for breaking down the Purchase and Sales
+        ///     transaction into smaller steps such as Quotations, Orders, Deliveries, e.t.c.
         /// </summary>
         public SubTranBook SubBook { get; set; }
 
         /// <summary>
-        /// The title displayed in the form.
+        ///     The title displayed in the form.
         /// </summary>
         public string Text { get; set; }
 
         /// <summary>
-        /// This property when set to true will verify the stock against the credit inventory
-        /// transactions or "Sales". Since negative stock is not allowed, you will not be able to
-        /// add a product to the grid. This property must be enabled for Sales transaction which
-        /// affect the available inventory on hand. Please also note that even when this property is
-        /// enabled, the products having the switch "Maintain Stock" set to "Off" will not be
-        /// checked for stock availability. This property should be disabled or set to false for
-        /// stock transactions that do not affect stock such as "Quotations", "Orders", e.t.c.
+        ///     This property when set to true will verify the stock against the credit inventory
+        ///     transactions or "Sales". Since negative stock is not allowed, you will not be able to
+        ///     add a product to the grid. This property must be enabled for Sales transaction which
+        ///     affect the available inventory on hand. Please also note that even when this property is
+        ///     enabled, the products having the switch "Maintain Stock" set to "Off" will not be
+        ///     checked for stock availability. This property should be disabled or set to false for
+        ///     stock transactions that do not affect stock such as "Quotations", "Orders", e.t.c.
         /// </summary>
         public bool VerifyStock { get; set; }
 
         /// <summary>
-        /// This class is a representation of the controls in this UserControl.
+        ///     This class is a representation of the controls in this UserControl.
         /// </summary>
 
         #endregion Properties
 
-        #region "Page Initialization"
-
+        #region Page Initialization
         private bool initialized;
 
         public string GetTranBook()
@@ -287,7 +286,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             this.SalespersonDiv.Visible = this.ShowSalesAgents;
         }
 
-        #region "Grid Binding"
+        #region Grid Binding
 
         private static Collection<ProductDetailsModel> SummateProducts(IEnumerable<ProductDetailsModel> productCollection)
         {
@@ -366,7 +365,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             if (this.Session[this.ID] != null)
             {
                 //Get an instance of the ProductDetailsModel collection stored in session.
-                productCollection = (Collection<ProductDetailsModel>)this.Session[this.ID];
+                productCollection = (Collection<ProductDetailsModel>) this.Session[this.ID];
 
                 //Summate the collection.
                 productCollection = SummateProducts(productCollection);
@@ -378,8 +377,8 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             return productCollection;
         }
 
-        #endregion "Grid Binding"
+        #endregion Grid Binding
 
-        #endregion "Page Initialization"
+        #endregion Page Initialization
     }
 }

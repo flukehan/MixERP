@@ -17,15 +17,15 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.WebControls.ScrudFactory.Controls;
-using MixERP.Net.WebControls.ScrudFactory.Controls.ListControls;
-using MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes;
-using MixERP.Net.WebControls.ScrudFactory.Resources;
 using System.Reflection;
 using System.Threading;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.WebControls.ScrudFactory.Controls;
+using MixERP.Net.WebControls.ScrudFactory.Controls.ListControls;
+using MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes;
+using MixERP.Net.WebControls.ScrudFactory.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 {
@@ -142,6 +142,12 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
                     case "float":
                     case "real":
                     case "currency":
+                    case "money_strict":
+                    case "money_strict2":
+                    case "integer_strict":
+                    case "integer_strict2":
+                    case "decimal_strict2":
+                    case "decimal_strict":
                         ScrudDecimalTextBox.AddDecimalTextBox(htmlTable, resourceClassName, columnName, defaultValue, isNullable, maxLength, domain, errorCssClass, assembly);
                         break;
 
@@ -158,6 +164,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
                         break;
 
                     case "timestamp with time zone":
+                    case "timestamp without time zone":
                         //Do not show this field
                         break;
                 }

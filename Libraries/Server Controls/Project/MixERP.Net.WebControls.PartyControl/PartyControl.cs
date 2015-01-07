@@ -17,11 +17,11 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Helpers;
 using System.Security.Permissions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common.Helpers;
 
 [assembly: WebResource("MixERP.Net.WebControls.PartyControl.PartyControl.js", "application/x-javascript")]
 
@@ -32,16 +32,6 @@ namespace MixERP.Net.WebControls.PartyControl
     public sealed partial class PartyControl : CompositeControl
     {
         public Panel container;
-        private bool disposed;
-
-        public override void Dispose()
-        {
-            if (!this.disposed)
-            {
-                this.Dispose(true);
-                base.Dispose();
-            }
-        }
 
         protected override void CreateChildControls()
         {
@@ -71,26 +61,39 @@ namespace MixERP.Net.WebControls.PartyControl
 
         private void AddScript()
         {
-            JavaScriptHelper.AddJSReference(this.Page, "MixERP.Net.WebControls.PartyControl.PartyControl.js", "party_control", typeof(PartyControl));
+            JavaScriptHelper.AddJSReference(this.Page, "MixERP.Net.WebControls.PartyControl.PartyControl.js", "party_control", typeof (PartyControl));
             //string script = JavaScriptHelper.GetEmbeddedScript("MixERP.Net.WebControls.PartyControl.PartyControl.js", Assembly.GetExecutingAssembly());
             //PageUtility.RegisterJavascript("partyControl", script, this.Page);
         }
 
-        private void Dispose(bool disposing)
+        #region IDisposable
+
+        private bool disposed;
+
+        public override void Dispose()
         {
             if (!this.disposed)
             {
-                if (disposing)
-                {
-                    if (this.container != null)
-                    {
-                        this.container.Dispose();
-                        this.container = null;
-                    }
-                }
-
-                this.disposed = true;
+                this.Dispose(true);
+                base.Dispose();
             }
         }
+
+        private void Dispose(bool disposing)
+        {
+            if (!disposing)
+            {
+                return;
+            }
+            if (this.container != null)
+            {
+                this.container.Dispose();
+                this.container = null;
+            }
+
+            this.disposed = true;
+        }
+
+        #endregion
     }
 }

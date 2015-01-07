@@ -1047,6 +1047,7 @@
     <Content Include="Scripts\semantic-ui\themes\default\assets\fonts\icons.woff" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Scripts\jssha1.5\LICENSE" />
+    <Content Include="Services\web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

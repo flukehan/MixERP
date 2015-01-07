@@ -17,10 +17,10 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using Npgsql;
 using System.Data;
 using System.Linq;
 using System.Threading;
+using Npgsql;
 
 namespace MixERP.Net.DBFactory
 {

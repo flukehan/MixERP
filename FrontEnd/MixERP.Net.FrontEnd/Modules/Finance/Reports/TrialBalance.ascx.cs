@@ -118,12 +118,12 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                     using (HtmlInputCheckBox checkBox = new HtmlInputCheckBox())
                     {
                         checkBox.ID = "CompactCheckBox";
-                        checkBox.Checked = true;
+                        checkBox.Checked = false;
 
                         slider.Controls.Add(checkBox);
                         this.isCompactHidden = new HiddenField();
                         this.isCompactHidden.ID = "IsCompactHidden";
-                        this.isCompactHidden.Value = "1";
+                        this.isCompactHidden.Value = "0";
 
                         slider.Controls.Add(this.isCompactHidden);
                     }
@@ -169,7 +169,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 }
                 this.fromDateTextBox = new DateTextBox();
                 this.fromDateTextBox.ID = "FromDateTextBox";
-                this.fromDateTextBox.Mode = Frequency.MonthStartDate;
+                this.fromDateTextBox.Mode = Frequency.QuarterStartDate;
                 field.Controls.Add(this.fromDateTextBox);
 
                 container.Controls.Add(field);
@@ -211,7 +211,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
                 this.toDateTextBox = new DateTextBox();
                 this.toDateTextBox.ID = "ToDateTextBox";
-                this.toDateTextBox.Mode = Frequency.MonthEndDate;
+                this.toDateTextBox.Mode = Frequency.QuarterEndDate;
 
                 field.Controls.Add(this.toDateTextBox);
 

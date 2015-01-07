@@ -122,6 +122,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{0065E052-6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.WebControls.TransactionViewFactory.Data", "Libraries\Server Controls\Data\MixERP.Net.WebControls.TransactionViewFactory.Data\MixERP.Net.WebControls.TransactionViewFactory.Data.csproj", "{B4C85DAB-0500-4D83-802E-D7D4D9DCD84A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.WebControls.Common.Data", "Libraries\Server Controls\Data\MixERP.Net.WebControls.Common.Data\MixERP.Net.WebControls.Common.Data.csproj", "{8D2A81FA-579B-499F-A151-7DD49D759A91}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1146,6 +1148,30 @@ Global
 		{B4C85DAB-0500-4D83-802E-D7D4D9DCD84A}.Release-net40|Any CPU.Build.0 = Release|Any CPU
 		{B4C85DAB-0500-4D83-802E-D7D4D9DCD84A}.Release-net45|Any CPU.ActiveCfg = Release|Any CPU
 		{B4C85DAB-0500-4D83-802E-D7D4D9DCD84A}.Release-net45|Any CPU.Build.0 = Release|Any CPU
+		{8D2A81FA-579B-499F-A151-7DD49D759A91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D2A81FA-579B-499F-A151-7DD49D759A91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D2A81FA-579B-499F-A151-7DD49D759A91}.Debug-net20|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D2A81FA-579B-499F-A151-7DD49D759A91}.Debug-net20|Any CPU.Build.0 = Debug|Any CPU
+		{8D2A81FA-579B-499F-A151-7DD49D759A91}.Debug-net35|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D2A81FA-579B-499F-A151-7DD49D759A91}.Debug-net35|Any CPU.Build.0 = Debug|Any CPU
+		{8D2A81FA-579B-499F-A151-7DD49D759A91}.Debug-net40|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D2A81FA-579B-499F-A151-7DD49D759A91}.Debug-net40|Any CPU.Build.0 = Debug|Any CPU
+		{8D2A81FA-579B-499F-A151-7DD49D759A91}.Debug-net45|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D2A81FA-579B-499F-A151-7DD49D759A91}.Debug-net45|Any CPU.Build.0 = Debug|Any CPU
+		{8D2A81FA-579B-499F-A151-7DD49D759A91}.Mono-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D2A81FA-579B-499F-A151-7DD49D759A91}.Mono-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D2A81FA-579B-499F-A151-7DD49D759A91}.Mono-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D2A81FA-579B-499F-A151-7DD49D759A91}.Mono-Release|Any CPU.Build.0 = Release|Any CPU
+		{8D2A81FA-579B-499F-A151-7DD49D759A91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D2A81FA-579B-499F-A151-7DD49D759A91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D2A81FA-579B-499F-A151-7DD49D759A91}.Release-net20|Any CPU.ActiveCfg = Release|Any CPU
+		{8D2A81FA-579B-499F-A151-7DD49D759A91}.Release-net20|Any CPU.Build.0 = Release|Any CPU
+		{8D2A81FA-579B-499F-A151-7DD49D759A91}.Release-net35|Any CPU.ActiveCfg = Release|Any CPU
+		{8D2A81FA-579B-499F-A151-7DD49D759A91}.Release-net35|Any CPU.Build.0 = Release|Any CPU
+		{8D2A81FA-579B-499F-A151-7DD49D759A91}.Release-net40|Any CPU.ActiveCfg = Release|Any CPU
+		{8D2A81FA-579B-499F-A151-7DD49D759A91}.Release-net40|Any CPU.Build.0 = Release|Any CPU
+		{8D2A81FA-579B-499F-A151-7DD49D759A91}.Release-net45|Any CPU.ActiveCfg = Release|Any CPU
+		{8D2A81FA-579B-499F-A151-7DD49D759A91}.Release-net45|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1204,5 +1230,6 @@ Global
 		{844654C8-DF5B-42A6-98DE-A1F43CD24804} = {F6686C51-15FC-4E3A-A96B-E17C7F983B05}
 		{0065E052-6622-45B1-B55F-22AB1DED9B01} = {F6686C51-15FC-4E3A-A96B-E17C7F983B05}
 		{B4C85DAB-0500-4D83-802E-D7D4D9DCD84A} = {0065E052-6622-45B1-B55F-22AB1DED9B01}
+		{8D2A81FA-579B-499F-A151-7DD49D759A91} = {F882C837-D33A-43DE-8CEA-87D0CE635E9D}
 	EndGlobalSection
 EndGlobal

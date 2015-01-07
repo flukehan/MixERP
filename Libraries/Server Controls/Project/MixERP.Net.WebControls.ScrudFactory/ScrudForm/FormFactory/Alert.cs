@@ -26,20 +26,11 @@ namespace MixERP.Net.WebControls.ScrudFactory
 {
     public partial class ScrudForm
     {
-        private void DisplaySuccess()
-        {
-            this.messageLabel.CssClass = this.GetSuccessCssClass();
-            this.messageLabel.Text = Titles.TaskCompletedSuccessfully;
-            this.messageLabel.Style.Add("display", "block");
-
-            this.gridPanel.Attributes["style"] = "display:block;";
-            this.formPanel.Attributes["style"] = "display:none;";
-            this.ResetForm();
-        }
-
         private void DisplayError(MixERPException ex)
         {
             this.messageLabel.CssClass = this.GetErrorCssClass();
+            this.messageLabel.ID = "ScrudError";
+
             string message = ex.Message;
 
             if (!string.IsNullOrWhiteSpace(ex.DBConstraintName))
@@ -58,6 +49,16 @@ namespace MixERP.Net.WebControls.ScrudFactory
             this.ResetForm();
         }
 
+        private void DisplaySuccess()
+        {
+            this.messageLabel.CssClass = this.GetSuccessCssClass();
+            this.messageLabel.Text = Titles.TaskCompletedSuccessfully;
+            this.messageLabel.Style.Add("display", "block");
+
+            this.gridPanel.Attributes["style"] = "display:block;";
+            this.formPanel.Attributes["style"] = "display:none;";
+            this.ResetForm();
+        }
         private void ResetForm()
         {
             PageUtility.RegisterJavascript("resetForm", "$('#form1').each(function(){this.reset();});", this.Page, true);

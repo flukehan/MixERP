@@ -322,29 +322,5 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             return cssClass;
         }
-
-        private string GetUpdateProgressSpinnerImageCssClass()
-        {
-            string cssClass = this.UpdateProgressSpinnerImageCssClass;
-
-            if (string.IsNullOrWhiteSpace(cssClass))
-            {
-                cssClass = ConfigurationHelper.GetScrudParameter("UpdateProgressSpinnerImageCssClass");
-            }
-
-            return cssClass;
-        }
-
-        private string GetUpdateProgressTemplateCssClass()
-        {
-            string cssClass = this.UpdateProgressTemplateCssClass;
-
-            if (string.IsNullOrWhiteSpace(cssClass))
-            {
-                cssClass = ConfigurationHelper.GetScrudParameter("UpdateProgressTemplateCssClass");
-            }
-
-            return cssClass;
-        }
     }
 }

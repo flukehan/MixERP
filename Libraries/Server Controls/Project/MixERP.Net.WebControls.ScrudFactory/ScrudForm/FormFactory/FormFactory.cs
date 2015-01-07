@@ -17,10 +17,6 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common;
-using MixERP.Net.WebControls.ScrudFactory.Controls;
-using MixERP.Net.WebControls.ScrudFactory.Data;
-using MixERP.Net.WebControls.ScrudFactory.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -28,24 +24,30 @@ using System.Data;
 using System.Reflection;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common;
+using MixERP.Net.WebControls.ScrudFactory.Controls;
+using MixERP.Net.WebControls.ScrudFactory.Data;
+using MixERP.Net.WebControls.ScrudFactory.Helpers;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
     public partial class ScrudForm
     {
         /// <summary>
-        /// This function iterates through all the dynamically added controls,
-        /// checks their values, and returns a list of column and values
-        /// mapped as KeyValuePair of column_name (key) and value.
+        ///     This function iterates through all the dynamically added controls,
+        ///     checks their values, and returns a list of column and values
+        ///     mapped as KeyValuePair of column_name (key) and value.
         /// </summary>
         /// <param name="skipSerial">
-        /// Skip the PostgreSQL serial column.
-        /// There is no need to explicitly set the value for the serial column.
-        /// This value should be <strong>true</strong> if you are obtaining the form to insert the record.
-        /// Set this parameter to <b>false</b> if you want to update the form, based on the serial's columns value.
+        ///     Skip the PostgreSQL serial column.
+        ///     There is no need to explicitly set the value for the serial column.
+        ///     This value should be <strong>true</strong> if you are obtaining the form to insert the record.
+        ///     Set this parameter to <b>false</b> if you want to update the form, based on the serial's columns value.
         /// </param>
-        /// <returns>Returns a list of column and values mapped as
-        /// KeyValuePair of column_name (key) and value.</returns>
+        /// <returns>
+        ///     Returns a list of column and values mapped as
+        ///     KeyValuePair of column_name (key) and value.
+        /// </returns>
         private Collection<KeyValuePair<string, string>> GetFormCollection(bool skipSerial)
         {
             var list = new Collection<KeyValuePair<string, string>>();
@@ -92,6 +94,14 @@ namespace MixERP.Net.WebControls.ScrudFactory
                                 case "float":
                                 case "real":
                                 case "currency":
+                                case "money_strict":
+                                case "money_strict2":
+                                case "integer_strict":
+                                case "integer_strict2":
+                                case "decimal_strict2":
+                                case "decimal_strict":
+                                case "timestamp with time zone":
+                                case "timestamp without time zone":
                                 case "date":
                                     //TextBox
                                     var t = (TextBox)this.formContainer.FindControl(columnName + "_textbox");

@@ -76,7 +76,6 @@
     <Compile Include="ScrudForm\FormFactory\FormPanel.cs" />
     <Compile Include="ScrudForm\ViewFactory\GridPanel.cs" />
     <Compile Include="ScrudForm\Title.cs" />
-    <Compile Include="ScrudForm\UpdateProgress.cs" />
     <Compile Include="ScrudForm\Control.cs" />
     <Compile Include="ScrudForm\Events\GridViewEvents.cs" />
     <Compile Include="ScrudForm\Events\ScrudEvents.cs" />

@@ -76,6 +76,7 @@
     <Compile Include="Conversion.cs" />
     <Compile Include="Events\MixERPPGEventArgs.cs" />
     <Compile Include="ExceptionManager.cs" />
+    <Compile Include="Helpers\ApplicationStateHelper.cs" />
     <Compile Include="Helpers\CollectionHelper.cs" />
     <Compile Include="Helpers\ConfigurationHelper.cs" />
     <Compile Include="Helpers\DataRowHelper.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Helpers\TransactionBookHelper.cs" />
     <Compile Include="Helpers\WidgetHelper.cs" />
     <Compile Include="jQueryHelper\jQueryUI.cs" />
+    <Compile Include="Models\Core\ApplicationDateModel.cs" />
     <Compile Include="Models\Core\AttachmentModel.cs" />
     <Compile Include="Models\Core\Currency.cs" />
     <Compile Include="Models\Core\Frequency.cs" />

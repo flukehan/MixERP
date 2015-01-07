@@ -16,15 +16,15 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
-var scrudShowCompact = function () {
+var scrudShowCompact = function() {
     window.location = window.location.pathname + '?show=compact';
 };
 
-var scrudShowAll = function () {
+var scrudShowAll = function() {
     window.location = window.location.pathname + '?show=all';
 };
 
-var scrudConfirmAction = function () {
+var scrudConfirmAction = function() {
     var retVal = false;
     var selectedItemValue;
 
@@ -46,22 +46,22 @@ var scrudConfirmAction = function () {
     return retVal;
 };
 
-var scrudSelectAndClose = function () {
+var scrudSelectAndClose = function() {
     var lastValueHidden = $("#LastValueHidden");
     lastValueHidden.val(scrudGetSelectedRadioValue());
     scrudSaveAndClose();
 };
 
-var scrudGetSelectedRadioValue = function () {
+var scrudGetSelectedRadioValue = function() {
     return $('[id^="SelectRadio"]:checked').val();
 };
 
-var scrudSelectRadioById = function (id) {
+var scrudSelectRadioById = function(id) {
     $('[id^="SelectRadio"]').prop("checked", false);
     $("#" + id).prop("checked", true);
 };
 
-var scrudPrintGridView = function () {
+var scrudPrintGridView = function() {
     var user = $("#" + userIdHiddenId).val();
     var office = $("#" + officeCodeHiddenId).val();
     var title = $("#" + titleLabelId).html();
@@ -69,18 +69,18 @@ var scrudPrintGridView = function () {
     printGridView(reportTemplatePath, reportHeaderPath, title, formGridViewId, date, user, office, 'ScrudReport', 1, 0);
 };
 
-Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
+Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function() {
     //Fired on each ASP.net AJAX request.
     scrudInitialize();
 });
 
-$(document).ready(function () {
+$(document).ready(function() {
     scrudInitialize();
 });
 
-var scrudInitialize = function () {
+var scrudInitialize = function() {
     //Registering grid row click event to automatically select the radio.
-    $('#' + formGridViewId + ' tr').click(function () {
+    $('#' + formGridViewId + ' tr').click(function() {
         //Grid row was clicked. Now, searching the radio button.
         var radio = $(this).find('td input:radio');
 
@@ -90,6 +90,14 @@ var scrudInitialize = function () {
 
     scrudSaveAndClose();
     scrudLayout();
+    scrudOnServerError();
+};
+
+function scrudOnServerError() {
+    var errorField = $("#ScrudError");
+    if (errorField.length) {
+        displayForm();
+    };
 };
 
 function scrudLayout() {
@@ -151,17 +159,12 @@ function closeWindow() {
     };
 };
 
-function scrudAdjustSpinnerSize() {
-    //Adjusting AJAX Spinner Size.
-
-    $(".ajax-container").height($(document).height());
-    //Todo: Adjust spinner to page.height, not doc height
-    //and adjust the x and y coordinates depending upon the
-    //current scroll position.
+function scrudDispalyLoading() {
+    $("#FormPanel").find("div.segment").addClass("loading");
 };
 
 function scrudUpdateTableHeaders() {
-    $("div.floating-header").each(function () {
+    $("div.floating-header").each(function() {
         var originalHeaderRow = $(".tableFloatingHeaderOriginal", this);
         var floatingHeaderRow = $(".tableFloatingHeader", this);
         var offset = $(this).offset();
@@ -172,7 +175,7 @@ function scrudUpdateTableHeaders() {
             floatingHeaderRow.css("top", Math.min(scrollTop - offset.top, $(this).height() - floatingHeaderRow.height()) + "px");
 
             // Copy cell widths from original header
-            $("th", floatingHeaderRow).each(function (index) {
+            $("th", floatingHeaderRow).each(function(index) {
                 var cellWidth = $("th", originalHeaderRow).eq(index).css('width');
                 $(this).css('width', cellWidth);
             });
@@ -186,8 +189,8 @@ function scrudUpdateTableHeaders() {
     });
 };
 
-$(document).ready(function () {
-    $("table.grid").each(function () {
+$(document).ready(function() {
+    $("table.grid").each(function() {
         $(this).wrap("<div class=\"floating-header\" style=\"position:relative\"></div>");
 
         var originalHeaderRow = $("tr:first", this);
@@ -207,18 +210,17 @@ $(document).ready(function () {
     $(window).resize(scrudUpdateTableHeaders);
 });
 
-var scrudAddNew = function () {
+var scrudAddNew = function() {
     if (customFormUrl) {
         top.location = customFormUrl;
     }
 
     $('#' + formGridViewId + 'tr').find('td input:radio').prop('checked', false);
-    $('#form1').each(function () {
+    $('#form1').each(function() {
         this.reset();
     });
 
-    $('#' + gridPanelId).hide(500);
-    $('#' + formPanelId).show(500);
+    displayForm();
 
     scrudRepaint();
 
@@ -226,14 +228,19 @@ var scrudAddNew = function () {
     return false;
 };
 
-var scrudRepaint = function () {
-    setTimeout(function () {
+function displayForm() {
+    $('#' + gridPanelId).hide(500);
+    $('#' + formPanelId).show(500);
+};
+
+var scrudRepaint = function() {
+    setTimeout(function() {
         $(document).trigger('resize');
     }, 1000);
 };
 
-$(document).ready(function () {
-    shortcut.add("ESC", function () {
+$(document).ready(function() {
+    shortcut.add("ESC", function() {
         if ($('#' + formPanelId).is(':hidden')) {
             return;
         };
@@ -252,31 +259,43 @@ $(document).ready(function () {
         }
     });
 
-    shortcut.add("RETURN", function () {
+    shortcut.add("RETURN", function() {
         scrudSelectAndClose();
     });
 
-    shortcut.add("ALT+C", function () {
+    shortcut.add("CTRL+SHIFT+C", function() {
         scrudShowCompact();
     });
 
-    shortcut.add("CTRL+S", function () {
+    shortcut.add("CTRL+SHIFT+S", function() {
         scrudShowAll();
     });
 
-    shortcut.add("ALT+A", function () {
+    shortcut.add("CTRL+SHIFT+A", function() {
         return (scrudAddNew());
     });
 
-    shortcut.add("CTRL+P", function () {
+    shortcut.add("CTRL+SHIFT+E", function() {
+        $('#EditButtontop').click();
+    });
+
+    shortcut.add("CTRL+SHIFT+D", function() {
+        $('#DeleteButtontop').click();
+    });
+
+    shortcut.add("CTRL+SHIFT+P", function() {
         scrudPrintGridView();
     });
 });
 
 function scrudClientValidation() {
-    if (typeof scrudCustomValidator === "function") {
-        return scrudCustomValidator();
-    };
+    if (Page_ClientValidate("")) {
+        scrudDispalyLoading();
 
-    return true;
+        if (typeof scrudCustomValidator === "function") {
+            return scrudCustomValidator();
+        };
+
+        return true;
+    };
 };

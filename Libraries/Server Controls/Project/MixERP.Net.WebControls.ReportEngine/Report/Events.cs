@@ -80,11 +80,11 @@ namespace MixERP.Net.WebControls.ReportEngine
             }
         }
 
-        #region "GridView Events"
+        #region GridView Events
 
         private void GridView_DataBound(object sender, EventArgs e)
         {
-            GridView grid = (GridView) sender;
+            GridView grid = (GridView)sender;
 
             int arg = Conversion.TryCastInteger(grid.ID.Replace("GridView", ""));
 
@@ -161,7 +161,7 @@ namespace MixERP.Net.WebControls.ReportEngine
 
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                GridView grid = (GridView) sender;
+                GridView grid = (GridView)sender;
                 int arg = Conversion.TryCastInteger(grid.ID.Replace("GridView", ""));
 
                 //Apply formatting on decimal fields
@@ -180,6 +180,6 @@ namespace MixERP.Net.WebControls.ReportEngine
             }
         }
 
-        #endregion "GridView Events"
+        #endregion GridView Events
     }
 }

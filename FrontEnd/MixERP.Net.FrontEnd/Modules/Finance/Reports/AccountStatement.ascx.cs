@@ -227,133 +227,132 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
         private void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (!disposing)
             {
-                if (disposing)
-                {
-                    if (this.accountMasterLiteral != null)
-                    {
-                        this.accountMasterLiteral.Dispose();
-                        this.accountMasterLiteral = null;
-                    }
-
-                    if (this.accountNumberInputText != null)
-                    {
-                        this.accountNumberInputText.Dispose();
-                        this.accountNumberInputText = null;
-                    }
-
-                    if (this.accountNumberLiteral != null)
-                    {
-                        this.accountNumberLiteral.Dispose();
-                        this.accountNumberLiteral = null;
-                    }
-
-                    if (this.accountNumberSelect != null)
-                    {
-                        this.accountNumberSelect.Dispose();
-                        this.accountNumberSelect = null;
-                    }
-
-                    if (this.baseCurrencyLiteral != null)
-                    {
-                        this.baseCurrencyLiteral.Dispose();
-                        this.baseCurrencyLiteral = null;
-                    }
-
-                    if (this.confidentialLiteral != null)
-                    {
-                        this.confidentialLiteral.Dispose();
-                        this.confidentialLiteral = null;
-                    }
-
-                    if (this.descriptionLiteral != null)
-                    {
-                        this.descriptionLiteral.Dispose();
-                        this.descriptionLiteral = null;
-                    }
-
-                    if (this.externalCodeLiteral != null)
-                    {
-                        this.externalCodeLiteral.Dispose();
-                        this.externalCodeLiteral = null;
-                    }
-
-                    if (this.fromDateTextBox != null)
-                    {
-                        this.fromDateTextBox.Dispose();
-                        this.fromDateTextBox = null;
-                    }
-
-                    if (this.headerLiteral != null)
-                    {
-                        this.headerLiteral.Dispose();
-                        this.headerLiteral = null;
-                    }
-
-                    if (this.isCashAccountLiteral != null)
-                    {
-                        this.isCashAccountLiteral.Dispose();
-                        this.isCashAccountLiteral = null;
-                    }
-
-                    if (this.isEmployeeLiteral != null)
-                    {
-                        this.isEmployeeLiteral.Dispose();
-                        this.isEmployeeLiteral = null;
-                    }
-
-                    if (this.isPartyLiteral != null)
-                    {
-                        this.isPartyLiteral.Dispose();
-                        this.isPartyLiteral = null;
-                    }
-
-                    if (this.isSystemAccountLiteral != null)
-                    {
-                        this.isSystemAccountLiteral.Dispose();
-                        this.isSystemAccountLiteral = null;
-                    }
-
-                    if (this.normallyDebitLiteral != null)
-                    {
-                        this.normallyDebitLiteral.Dispose();
-                        this.normallyDebitLiteral = null;
-                    }
-
-                    if (this.parentAccountLiteral != null)
-                    {
-                        this.parentAccountLiteral.Dispose();
-                        this.parentAccountLiteral = null;
-                    }
-
-                    if (this.selectedValuesHidden != null)
-                    {
-                        this.selectedValuesHidden.Dispose();
-                        this.selectedValuesHidden = null;
-                    }
-
-                    if (this.showButton != null)
-                    {
-                        this.showButton.Dispose();
-                        this.showButton = null;
-                    }
-
-                    if (this.statementGridView != null)
-                    {
-                        this.statementGridView.Dispose();
-                        this.statementGridView = null;
-                    }
-
-                    if (this.toDateTextBox != null)
-                    {
-                        this.toDateTextBox.Dispose();
-                        this.toDateTextBox = null;
-                    }
-                }
-
-                this.disposed = true;
+                return;
             }
+            if (this.accountMasterLiteral != null)
+            {
+                this.accountMasterLiteral.Dispose();
+                this.accountMasterLiteral = null;
+            }
+
+            if (this.accountNumberInputText != null)
+            {
+                this.accountNumberInputText.Dispose();
+                this.accountNumberInputText = null;
+            }
+
+            if (this.accountNumberLiteral != null)
+            {
+                this.accountNumberLiteral.Dispose();
+                this.accountNumberLiteral = null;
+            }
+
+            if (this.accountNumberSelect != null)
+            {
+                this.accountNumberSelect.Dispose();
+                this.accountNumberSelect = null;
+            }
+
+            if (this.baseCurrencyLiteral != null)
+            {
+                this.baseCurrencyLiteral.Dispose();
+                this.baseCurrencyLiteral = null;
+            }
+
+            if (this.confidentialLiteral != null)
+            {
+                this.confidentialLiteral.Dispose();
+                this.confidentialLiteral = null;
+            }
+
+            if (this.descriptionLiteral != null)
+            {
+                this.descriptionLiteral.Dispose();
+                this.descriptionLiteral = null;
+            }
+
+            if (this.externalCodeLiteral != null)
+            {
+                this.externalCodeLiteral.Dispose();
+                this.externalCodeLiteral = null;
+            }
+
+            if (this.fromDateTextBox != null)
+            {
+                this.fromDateTextBox.Dispose();
+                this.fromDateTextBox = null;
+            }
+
+            if (this.headerLiteral != null)
+            {
+                this.headerLiteral.Dispose();
+                this.headerLiteral = null;
+            }
+
+            if (this.isCashAccountLiteral != null)
+            {
+                this.isCashAccountLiteral.Dispose();
+                this.isCashAccountLiteral = null;
+            }
+
+            if (this.isEmployeeLiteral != null)
+            {
+                this.isEmployeeLiteral.Dispose();
+                this.isEmployeeLiteral = null;
+            }
+
+            if (this.isPartyLiteral != null)
+            {
+                this.isPartyLiteral.Dispose();
+                this.isPartyLiteral = null;
+            }
+
+            if (this.isSystemAccountLiteral != null)
+            {
+                this.isSystemAccountLiteral.Dispose();
+                this.isSystemAccountLiteral = null;
+            }
+
+            if (this.normallyDebitLiteral != null)
+            {
+                this.normallyDebitLiteral.Dispose();
+                this.normallyDebitLiteral = null;
+            }
+
+            if (this.parentAccountLiteral != null)
+            {
+                this.parentAccountLiteral.Dispose();
+                this.parentAccountLiteral = null;
+            }
+
+            if (this.selectedValuesHidden != null)
+            {
+                this.selectedValuesHidden.Dispose();
+                this.selectedValuesHidden = null;
+            }
+
+            if (this.showButton != null)
+            {
+                this.showButton.Dispose();
+                this.showButton = null;
+            }
+
+            if (this.statementGridView != null)
+            {
+                this.statementGridView.Dispose();
+                this.statementGridView = null;
+            }
+
+            if (this.toDateTextBox != null)
+            {
+                this.toDateTextBox.Dispose();
+                this.toDateTextBox = null;
+            }
+
+
+            this.disposed = true;
         }
 
         #endregion IDisposable

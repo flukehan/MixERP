@@ -17,22 +17,21 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common;
-using MixERP.Net.Common.Base;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.WebControls.ScrudFactory.Resources;
 using System;
 using System.Data;
 using System.Globalization;
 using System.Threading;
-using FormHelper = MixERP.Net.WebControls.ScrudFactory.Data.FormHelper;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Base;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.WebControls.ScrudFactory.Data;
+using MixERP.Net.WebControls.ScrudFactory.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
     public partial class ScrudForm
     {
         public event EventHandler SaveButtonClick;
-
         public event EventHandler UseButtonClick;
 
         private void CancelButton_Click(object sender, EventArgs e)
@@ -112,7 +111,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
         {
             var userIdSessionKey = ConfigurationHelper.GetScrudParameter("UserIdSessionKey");
 
-            if (!(Conversion.TryCastInteger(SessionHelper.GetSessionValueByKey(userIdSessionKey)) > 0))
+            if (Conversion.TryCastInteger(SessionHelper.GetSessionValueByKey(userIdSessionKey)) <= 0)
             {
                 throw new InvalidOperationException("The user id session key is invalid or incorrectly configured.");
             }

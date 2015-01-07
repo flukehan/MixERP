@@ -60,7 +60,7 @@ namespace MixERP.Net.Common
                 return null;
             }
 
-            PropertyDescriptorCollection props = TypeDescriptor.GetProperties(typeof(T));
+            PropertyDescriptorCollection props = TypeDescriptor.GetProperties(typeof (T));
 
             using (DataTable table = new DataTable())
             {
@@ -427,6 +427,34 @@ namespace MixERP.Net.Common
             }
 
             return retVal;
+        }
+
+        public static DateTime? TryCastNullableDate(object value)
+        {
+            try
+            {
+                if (value == DBNull.Value)
+                {
+                    return null;
+                }
+
+                if (string.IsNullOrWhiteSpace(value.ToString()))
+                {
+                    return null;
+                }
+
+                return Convert.ToDateTime(value, Thread.CurrentThread.CurrentCulture);
+            }
+            catch (FormatException)
+            {
+                //swallow the exception
+            }
+            catch (InvalidCastException)
+            {
+                //swallow the exception
+            }
+
+            return null;
         }
 
         public static short TryCastShort(object value)

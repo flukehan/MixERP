@@ -64,6 +64,7 @@
       <Link>mixerp.licenseheader</Link>
     </Content>
     <Content Include="Mix Open Foundation.snk" />
+    <Content Include="Services\web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -61,6 +61,24 @@ namespace MixERP.Net.WebControls.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid Date. Must be greater than &quot;{0}&quot;..
+        /// </summary>
+        internal static string DateMustBeGreaterThan {
+            get {
+                return ResourceManager.GetString("DateMustBeGreaterThan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid Date. Must be less than &quot;{0}&quot;..
+        /// </summary>
+        internal static string DateMustBeLessThan {
+            get {
+                return ResourceManager.GetString("DateMustBeLessThan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid Date.
         /// </summary>
         internal static string InvalidDate {

@@ -63,7 +63,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <add key="ButtonCssClass" value="small ui button" />
     <add key="SaveButtonCssClass" value="small ui button" />
 
-    <add key="SuccessCssClass" value="ui compact large green message" />
+    <add key="SuccessCssClass" value="ui large green header" />
     <add key="TemplatePath" value="~/Reports/Print.html" />
     <add key="TempMediaPath" value="~/Media/Temp" />
     <add key="TitleLabelCssClass" value="title" />

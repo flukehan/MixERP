@@ -17,45 +17,20 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.ReportEngine.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.WebControls.ReportEngine.Helpers;
 
 namespace MixERP.Net.FrontEnd.Reports
 {
     public partial class ReportViewer : MixERPWebReportPage
     {
-        private bool disposed;
         private Button updateButton = new Button();
-
-        public override sealed void Dispose()
-        {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
-            base.Dispose();
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!this.disposed)
-            {
-                if (disposing)
-                {
-                    if (this.updateButton != null)
-                    {
-                        this.updateButton.Dispose();
-                        this.updateButton = null;
-                    }
-                }
-
-                this.disposed = true;
-            }
-        }
 
         protected void Page_Init(object sender, EventArgs e)
         {
@@ -175,5 +150,35 @@ namespace MixERP.Net.FrontEnd.Reports
 
             return "~/Reports/Sources/" + id;
         }
+
+        #region IDispoable
+
+        private bool disposed;
+
+        public override sealed void Dispose()
+        {
+            if (!this.disposed)
+            {
+                this.Dispose(true);
+                GC.SuppressFinalize(this);
+                base.Dispose();
+            }
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (this.updateButton != null)
+                {
+                    this.updateButton.Dispose();
+                    this.updateButton = null;
+                }
+            }
+
+            this.disposed = true;
+        }
+
+        #endregion
     }
 }

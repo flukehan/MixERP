@@ -97,6 +97,7 @@
     <Content Include="EODOperation.ascx" />
     <Content Include="Mix Open Foundation.snk" />
     <Content Include="packages.config" />
+    <Content Include="Services\web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

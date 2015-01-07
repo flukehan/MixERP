@@ -164,7 +164,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 }
                 this.fromDateTextBox = new DateTextBox();
                 this.fromDateTextBox.ID = "FromDateTextBox";
-                this.fromDateTextBox.Text = "2010/1/1";
+                this.fromDateTextBox.Mode = Frequency.FiscalYearStartDate;
                 field.Controls.Add(this.fromDateTextBox);
 
                 container.Controls.Add(field);

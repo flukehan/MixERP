@@ -17,14 +17,14 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Transactions;
-using MixERP.Net.WebControls.StockTransactionView.Resources;
 using System;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Common.Models.Transactions;
+using MixERP.Net.WebControls.StockTransactionView.Resources;
 
 namespace MixERP.Net.WebControls.StockTransactionView.Helpers
 {
@@ -79,15 +79,8 @@ namespace MixERP.Net.WebControls.StockTransactionView.Helpers
         public class StockTransactionViewActionTemplate : ITemplate, IDisposable
         {
             private HtmlAnchor checkListAnchor;
-            private bool disposed;
             private HtmlAnchor goToTopAnchor;
             private HtmlAnchor printAnchor;
-
-            public void Dispose()
-            {
-                this.Dispose(true);
-                GC.SuppressFinalize(this);
-            }
 
             public void InstantiateIn(Control container)
             {
@@ -95,7 +88,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Helpers
                 this.checkListAnchor.ID = "ChecklistAnchor";
                 this.checkListAnchor.ClientIDMode = ClientIDMode.Predictable;
                 this.checkListAnchor.Title = Labels.GoToChecklistWindow;
-                this.checkListAnchor.InnerHtml = "<img src='" + PageUtility.ResolveUrl("~/Resource/Icons/checklist-16.png") + "' />";//Todo: embed these icons.
+                this.checkListAnchor.InnerHtml = "<img src='" + PageUtility.ResolveUrl("~/Resource/Icons/checklist-16.png") + "' />"; //Todo: embed these icons.
 
                 this.printAnchor = new HtmlAnchor();
                 this.printAnchor.ID = "PrintAnchor";
@@ -111,6 +104,19 @@ namespace MixERP.Net.WebControls.StockTransactionView.Helpers
                 container.Controls.Add(this.checkListAnchor);
                 container.Controls.Add(this.printAnchor);
                 container.Controls.Add(this.goToTopAnchor);
+            }
+
+            #region IDisposable
+
+            private bool disposed;
+
+            public void Dispose()
+            {
+                if (!this.disposed)
+                {
+                    this.Dispose(true);
+                    GC.SuppressFinalize(this);
+                }
             }
 
             protected virtual void Dispose(bool disposing)
@@ -141,18 +147,13 @@ namespace MixERP.Net.WebControls.StockTransactionView.Helpers
                     this.disposed = true;
                 }
             }
+
+            #endregion
         }
 
         public class StockTransactionViewSelectTemplate : ITemplate, IDisposable
         {
             private HtmlInputCheckBox checkBox;
-            private bool disposed;
-
-            public void Dispose()
-            {
-                this.Dispose(true);
-                GC.SuppressFinalize(this);
-            }
 
             public void InstantiateIn(Control container)
             {
@@ -175,6 +176,19 @@ namespace MixERP.Net.WebControls.StockTransactionView.Helpers
                 }
             }
 
+            #region IDisposable
+
+            private bool disposed;
+
+            public void Dispose()
+            {
+                if (!this.disposed)
+                {
+                    this.Dispose(true);
+                    GC.SuppressFinalize(this);
+                }
+            }
+
             protected virtual void Dispose(bool disposing)
             {
                 if (!this.disposed)
@@ -191,6 +205,8 @@ namespace MixERP.Net.WebControls.StockTransactionView.Helpers
                     this.disposed = true;
                 }
             }
+
+            #endregion
         }
     }
 }

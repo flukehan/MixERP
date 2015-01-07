@@ -5,8 +5,8 @@ AS
 $$
     DECLARE _start_date date;
 BEGIN
-    SELECT MAX(value_date) 
-    INTO _start_date + 1
+    SELECT MAX(value_date) + 1 
+    INTO _start_date
     FROM core.frequency_setups
     WHERE value_date < 
     (

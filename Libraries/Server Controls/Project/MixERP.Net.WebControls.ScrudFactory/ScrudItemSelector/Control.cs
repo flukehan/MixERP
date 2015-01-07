@@ -31,12 +31,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
         public DropDownList filterSelect;
         public Button goButton;
         public GridView searchGridView;
-        private bool disposed;
-        public override void Dispose()
-        {
-            this.Dispose(true);
-            base.Dispose();
-        }
 
         protected override void CreateChildControls()
         {
@@ -57,54 +51,68 @@ namespace MixERP.Net.WebControls.ScrudFactory
             this.container.RenderControl(w);
         }
 
-        private void Dispose(bool disposing)
-        {
-            if (!this.disposed)
-            {
-                if (disposing)
-                {
-                    if (this.container != null)
-                    {
-                        this.container.Dispose();
-                        this.container = null;
-                    }
-
-                    if (this.filterSelect != null)
-                    {
-                        this.filterSelect.DataBound -= this.FilterSelectDataBound;
-                        this.filterSelect.Dispose();
-                        this.filterSelect = null;
-                    }
-
-                    if (this.filterInputText != null)
-                    {
-                        this.filterInputText.Dispose();
-                        this.filterInputText = null;
-                    }
-
-                    if (this.searchGridView != null)
-                    {
-                        this.searchGridView.RowDataBound -= this.SearchGridView_RowDataBound;
-                        this.searchGridView.DataBound -= this.SearchGridView_DataBound;
-                        this.searchGridView.Dispose();
-                        this.searchGridView = null;
-                    }
-
-                    if (this.goButton != null)
-                    {
-                        this.goButton.Click -= this.GoButton_Click;
-                        this.goButton.Dispose();
-                        this.goButton = null;
-                    }
-                }
-
-                this.disposed = true;
-            }
-        }
-
         private void SearchGridView_DataBound(object sender, EventArgs e)
         {
             this.searchGridView.HeaderRow.TableSection = TableRowSection.TableHeader;
         }
+
+        #region IDisposable
+
+        private bool disposed;
+
+        public override void Dispose()
+        {
+            if (!this.disposed)
+            {
+                this.Dispose(true);
+                base.Dispose();
+            }
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!disposing)
+            {
+                return;
+            }
+
+            if (this.container != null)
+            {
+                this.container.Dispose();
+                this.container = null;
+            }
+
+            if (this.filterSelect != null)
+            {
+                this.filterSelect.DataBound -= this.FilterSelectDataBound;
+                this.filterSelect.Dispose();
+                this.filterSelect = null;
+            }
+
+            if (this.filterInputText != null)
+            {
+                this.filterInputText.Dispose();
+                this.filterInputText = null;
+            }
+
+            if (this.searchGridView != null)
+            {
+                this.searchGridView.RowDataBound -= this.SearchGridView_RowDataBound;
+                this.searchGridView.DataBound -= this.SearchGridView_DataBound;
+                this.searchGridView.Dispose();
+                this.searchGridView = null;
+            }
+
+            if (this.goButton != null)
+            {
+                this.goButton.Click -= this.GoButton_Click;
+                this.goButton.Dispose();
+                this.goButton = null;
+            }
+
+            this.disposed = true;
+        }
+
+        #endregion
     }
 }

@@ -17,9 +17,9 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.WebControls.ScrudFactory.Helpers;
-using System.Web.UI.WebControls;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
@@ -33,8 +33,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private void LoadScrudContainer(Panel p)
         {
-            this.AddUpdateProgress(p);
-
             this.AddTitle(p);
 
             AddRuler(p);

@@ -17,13 +17,13 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.WebControls.ScrudFactory.Resources;
 using System.Data;
 using System.Threading;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.WebControls.ScrudFactory.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
@@ -65,7 +65,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                             this.useButton = new Button();
                             this.useButton.ID = "UseButton";
                             this.useButton.Text = Titles.Use;
-                            this.useButton.OnClientClick = "scrudAdjustSpinnerSize();";
+                            this.useButton.OnClientClick = "scrudDispalyLoading();";
 
                             this.useButton.Click += this.UseButton_Click;
 
@@ -77,7 +77,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         this.saveButton = new Button();
                         this.saveButton.ID = "SaveButton";
                         this.saveButton.Text = Titles.Save;
-                        this.saveButton.OnClientClick = "return(scrudClientValidation());scrudAdjustSpinnerSize();";
+                        this.saveButton.OnClientClick = "return(scrudClientValidation());";
 
                         this.saveButton.Click += this.SaveButton_Click;
 
@@ -115,7 +115,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
         private void AddFormHeader(Panel p)
         {
             this.requiredFieldDetailsLiteral = new Literal();
-            this.requiredFieldDetailsLiteral.Text = @"<div class='form-description'>" + Titles.RequiredFieldDetails + @"</div>";//Todo:parameterize css class
+            this.requiredFieldDetailsLiteral.Text = @"<div class='form-description'>" + Titles.RequiredFieldDetails + @"</div>"; //Todo:parameterize css class
 
             p.Controls.Add(this.requiredFieldDetailsLiteral);
         }

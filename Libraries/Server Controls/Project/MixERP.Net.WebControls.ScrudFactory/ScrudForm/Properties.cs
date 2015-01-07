@@ -124,11 +124,26 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         public string GridPanelCssClass { get; set; }
 
+        /// <summary>
+        /// Custom CSS style for grid container.
+        /// </summary>
+        public string GridPanelStyle { get; set; }
+
+        /// <summary>
+        /// The outer width of grid container.
+        /// </summary>
+        public Unit GridPanelWidth { get; set; }
+
         public string GridViewAlternateRowCssClass { get; set; }
 
         public string GridViewCssClass { get; set; }
 
         public string GridViewRowCssClass { get; set; }
+
+        /// <summary>
+        ///     The full inner width of the grid.
+        /// </summary>
+        public Unit GridViewWidth { get; set; }
 
         /// <summary>
         ///     Use this parameter to override "ItemSelectorPath" key in the configuration file.
@@ -156,16 +171,15 @@ namespace MixERP.Net.WebControls.ScrudFactory
         public string PrintButtonIconCssClass { get; set; }
 
         /// <summary>
-        ///     Use this parameter to override the "ResourceClassName" key in the configuration file.
-        ///     ResourceClassName contains localized resource strings of database table column names.
-        /// </summary>
-        public string ResourceClassName { get; set; }
-
-        /// <summary>
         ///     Assembly containing resource files.
         /// </summary>
         public Assembly ResourceAssembly { get; set; }
 
+        /// <summary>
+        ///     Use this parameter to override the "ResourceClassName" key in the configuration file.
+        ///     ResourceClassName contains localized resource strings of database table column names.
+        /// </summary>
+        public string ResourceClassName { get; set; }
         public string SaveButtonCssClass { get; set; }
 
         public string SelectButtonIconCssClass { get; set; }
@@ -198,11 +212,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
         /// </summary>
         public string TitleLabelCssClass { get; set; }
 
-        public string UpdateProgressSpinnerImageCssClass { get; set; }
-
-        public string UpdateProgressSpinnerImagePath { get; set; }
-
-        public string UpdateProgressTemplateCssClass { get; set; }
 
         /// <summary>
         ///     If the table has foreign keys, set this to override the data being populated on the
@@ -220,20 +229,5 @@ namespace MixERP.Net.WebControls.ScrudFactory
         ///     The database schema container of the "View" property of this control.
         /// </summary>
         public string ViewSchema { get; set; }
-
-        /// <summary>
-        ///     The full inner width of the grid.
-        /// </summary>
-        public Unit GridViewWidth { get; set; }
-
-        /// <summary>
-        /// The outer width of grid container.
-        /// </summary>
-        public Unit GridPanelWidth { get; set; }
-
-        /// <summary>
-        /// Custom CSS style for grid container.
-        /// </summary>
-        public string GridPanelStyle { get; set; }
     }
 }

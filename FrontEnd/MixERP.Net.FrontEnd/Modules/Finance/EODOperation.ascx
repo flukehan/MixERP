@@ -135,6 +135,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
             if (msg === "OK") {
                 receivingData = false;
+                notifyServer();
             };
         };
     });
@@ -229,6 +230,25 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                 label: "ratio"
             });
         };
+    };
+
+    function notifyServer() {
+        var ajaxStartNewDay = startNewDay();
+
+        ajaxStartNewDay.success(function () {
+            //Okay
+        });
+
+        ajaxStartNewDay.fail(function (xhr) {
+            logAjaxErrorMessage(xhr);
+        });
+
+    };
+
+    function startNewDay() {
+        url = "/Modules/Finance/Services/EODOperation.asmx/StartNewDay";
+
+        return getAjax(url, null);
     };
 
     function intializeEODOperation() {

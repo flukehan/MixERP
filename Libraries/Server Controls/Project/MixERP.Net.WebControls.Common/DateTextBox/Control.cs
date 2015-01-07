@@ -17,11 +17,12 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Models.Core;
-using MixERP.Net.WebControls.Common.Resources;
 using System;
+using System.Globalization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common.Models.Core;
+using MixERP.Net.WebControls.Common.Resources;
 
 namespace MixERP.Net.WebControls.Common
 {
@@ -29,28 +30,20 @@ namespace MixERP.Net.WebControls.Common
     public sealed partial class DateTextBox
     {
         public CompareValidator compareValidator;
+        public CompareValidator maxDateCompareValidator;
         public RequiredFieldValidator requiredValidator;
         public TextBox textBox;
+
         protected override void CreateChildControls()
         {
             this.Controls.Clear();
 
             this.textBox = new TextBox();
             this.textBox.ID = this.ID;
+            this.textBox.CssClass = "date";
 
-            this.compareValidator = new CompareValidator();
-            this.compareValidator.Display = ValidatorDisplay.Static;
-
-            this.compareValidator.ID = this.ID + "CompareValidator";
-            this.compareValidator.ControlToValidate = this.ID;
-            this.compareValidator.ValueToCompare = "1/1/1900";
-            this.compareValidator.Type = ValidationDataType.Date;
-            this.compareValidator.Operator = ValidationCompareOperator.GreaterThan;
-
-            this.compareValidator.ErrorMessage = CommonResource.InvalidDate;
-            this.compareValidator.EnableClientScript = true;
-            this.compareValidator.CssClass = this.ValidatorCssClass;
-            this.compareValidator.SetFocusOnError = true;
+            this.AddMinDateValidator();
+            this.AddMaxDateValidator();
 
             this.requiredValidator = new RequiredFieldValidator();
             this.requiredValidator.Display = ValidatorDisplay.Static;
@@ -94,29 +87,91 @@ namespace MixERP.Net.WebControls.Common
                 this.compareValidator.RenderControl(w);
             }
         }
+
+        private void AddMaxDateValidator()
+        {
+            if (this.MaxDate == null)
+            {
+                return;
+            }
+
+            this.maxDateCompareValidator = new CompareValidator();
+            this.maxDateCompareValidator.Display = ValidatorDisplay.Static;
+
+            this.maxDateCompareValidator.ID = this.ID + "MaxDateCompareValidator";
+            this.maxDateCompareValidator.ControlToValidate = this.ID;
+            this.maxDateCompareValidator.Type = ValidationDataType.Date;
+            this.maxDateCompareValidator.Operator = ValidationCompareOperator.LessThan;
+
+            this.maxDateCompareValidator.EnableClientScript = true;
+            this.maxDateCompareValidator.CssClass = this.ValidatorCssClass;
+            this.maxDateCompareValidator.SetFocusOnError = true;
+
+
+            this.maxDateCompareValidator.ValueToCompare = this.MaxDate.ToString();
+            this.maxDateCompareValidator.ErrorMessage = string.Format(CultureInfo.CurrentCulture, CommonResource.DateMustBeLessThan, this.MinDate);
+        }
+
+        private void AddMinDateValidator()
+        {
+            this.compareValidator = new CompareValidator();
+            this.compareValidator.Display = ValidatorDisplay.Static;
+
+            this.compareValidator.ID = this.ID + "CompareValidator";
+            this.compareValidator.ControlToValidate = this.ID;
+            this.compareValidator.Type = ValidationDataType.Date;
+            this.compareValidator.Operator = ValidationCompareOperator.GreaterThan;
+
+            this.compareValidator.EnableClientScript = true;
+            this.compareValidator.CssClass = this.ValidatorCssClass;
+            this.compareValidator.SetFocusOnError = true;
+
+
+            if (this.MinDate != null)
+            {
+                this.compareValidator.ValueToCompare = this.MinDate.ToString();
+                this.compareValidator.ErrorMessage = string.Format(CultureInfo.CurrentCulture, CommonResource.DateMustBeGreaterThan, this.MinDate);
+            }
+            else
+            {
+                this.compareValidator.ValueToCompare = "1/1/1900";
+                this.compareValidator.ErrorMessage = CommonResource.InvalidDate;
+            }
+        }
+
         private void InitializeDate(Frequency frequency)
         {
-            DateTime date = DateTime.Today;
+            DateTime date = Helpers.DatePersister.GetDate();
 
-            if (frequency == Frequency.MonthStartDate)
+
+            switch (frequency)
             {
-                date = date.AddDays(1 - date.Day);
+                case Frequency.MonthStartDate:
+                    date = Helpers.DatePersister.GetMonthStartDate();
+                    break;
+                case Frequency.MonthEndDate:
+                    date = Helpers.DatePersister.GetMonthEndtDate();
+                    break;
+                case Frequency.QuarterStartDate:
+                    date = Helpers.DatePersister.GetQuarterStartDate();
+                    break;
+                case Frequency.QuarterEndDate:
+                    date = Helpers.DatePersister.GetQuarterEndDate();
+                    break;
+                case Frequency.HalfStartDate:
+                    date = Helpers.DatePersister.GetFiscalHalfStartDate();
+                    break;
+                case Frequency.HalfEndDate:
+                    date = Helpers.DatePersister.GetFiscalHalfEndDate();
+                    break;
+                case Frequency.FiscalYearStartDate:
+                    date = Helpers.DatePersister.GetFiscalYearStartDate();
+                    break;
+                case Frequency.FiscalYearEndDate:
+                    date = Helpers.DatePersister.GetFiscalYearEndDate();
+                    break;
             }
 
-            if (frequency == Frequency.MonthEndDate)
-            {
-                date = new DateTime(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month));
-            }
-
-            if (frequency == Frequency.FiscalYearStartDate)
-            {
-                date = new DateTime(date.Year, 1, 1);
-            }
-
-            if (frequency == Frequency.FiscalYearEndDate)
-            {
-                date = new DateTime(date.Year, 12, DateTime.DaysInMonth(date.Year, 12));
-            }
 
             if (this.textBox != null)
             {

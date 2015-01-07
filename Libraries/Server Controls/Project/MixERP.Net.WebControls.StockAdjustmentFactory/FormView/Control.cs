@@ -14,31 +14,13 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
     public partial class FormView : CompositeControl
     {
         private HtmlGenericControl container;
-        private bool disposed;
-
         public string ItemIdQuerySericeUrl { get; set; }
-
         public string ItemPopupUrl { get; set; }
-
         public string ItemServiceUrl { get; set; }
-
         public string StoreServiceUrl { get; set; }
-
         public string Text { get; set; }
-
         public string UnitServiceUrl { get; set; }
-
         public bool ValidateSides { get; set; }
-
-        public override sealed void Dispose()
-        {
-            if (!this.disposed)
-            {
-                this.Dispose(true);
-                GC.SuppressFinalize(this);
-                base.Dispose();
-            }
-        }
 
         protected override void CreateChildControls()
         {
@@ -53,6 +35,30 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
             this.AddJavaScript();
 
             this.Controls.Add(this.container);
+        }
+
+        protected override void RecreateChildControls()
+        {
+            this.EnsureChildControls();
+        }
+
+        protected override void Render(HtmlTextWriter w)
+        {
+            this.container.RenderControl(w);
+        }
+
+        #region IDisposable
+
+        private bool disposed;
+
+        public override sealed void Dispose()
+        {
+            if (!this.disposed)
+            {
+                this.Dispose(true);
+                GC.SuppressFinalize(this);
+                base.Dispose();
+            }
         }
 
         protected virtual void Dispose(bool disposing)
@@ -72,14 +78,6 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
             }
         }
 
-        protected override void RecreateChildControls()
-        {
-            this.EnsureChildControls();
-        }
-
-        protected override void Render(HtmlTextWriter w)
-        {
-            this.container.RenderControl(w);
-        }
+        #endregion
     }
 }
