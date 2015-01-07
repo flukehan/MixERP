@@ -35,7 +35,7 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
                 scrud.TableSchema = "core";
                 scrud.Table = "late_fee";
                 scrud.ViewSchema = "core";
-                scrud.View = "late_fee";
+                scrud.View = "late_fee_scrud_view";
                 scrud.Text = Resources.Titles.LateFees;
 
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof(LateFees));
