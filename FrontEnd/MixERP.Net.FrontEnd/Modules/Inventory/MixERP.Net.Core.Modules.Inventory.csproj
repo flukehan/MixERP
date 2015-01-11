@@ -85,6 +85,8 @@
     <Content Include="Setup\CompoundItemDetails.ascx" />
     <Content Include="Setup\CompoundItems.ascx" />
     <Content Include="Setup\ItemTypes.ascx" />
+    <Content Include="Setup\Stores.ascx" />
+    <Content Include="Setup\StoreTypes.ascx" />
     <Content Include="SQL\Menu.sql" />
     <Content Include="SQL\Module.sql" />
     <Content Include="Services\ItemData.asmx" />
@@ -271,6 +273,20 @@
     </Compile>
     <Compile Include="Setup\ShippingAddresses.ascx.designer.cs">
       <DependentUpon>ShippingAddresses.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Setup\Stores.ascx.cs">
+      <DependentUpon>Stores.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Setup\Stores.ascx.designer.cs">
+      <DependentUpon>Stores.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Setup\StoreTypes.ascx.cs">
+      <DependentUpon>StoreTypes.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Setup\StoreTypes.ascx.designer.cs">
+      <DependentUpon>StoreTypes.ascx</DependentUpon>
     </Compile>
     <Compile Include="Setup\UOM.ascx.cs">
       <DependentUpon>UOM.ascx</DependentUpon>

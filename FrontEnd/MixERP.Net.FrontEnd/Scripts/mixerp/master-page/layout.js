@@ -18,11 +18,13 @@ function fixLayout() {
         };
     };
 
-    if (mainContent) {
-        mainContent.css("width", mainContent.width() + "px");
-    };
+    if (topMenu) {
+        if (mainContent) {
+            mainContent.css("width", topMenu.width() + "px");
+        };
 
-    if (fullWidthContainer) {
-        fullWidthContainer.css("width", mainContent.width() + "px");
+        if (fullWidthContainer) {
+            fullWidthContainer.css("width", topMenu.width() + "px");
+        };
     };
 };

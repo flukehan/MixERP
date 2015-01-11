@@ -62,7 +62,7 @@ body {
     background-color: @sidebar-background-color;
 }
 
-.purple {
+.theme {
     background-color: @sidebar-background-color !important;
 }
 
@@ -416,12 +416,13 @@ input[readonly], input[disabled], textarea[readonly], textarea[disabled], select
 
 a {
     outline: none;
-    color: @title-color;
+    /*color: @title-color;*/
+    color: inherit;
 }
 
 a:hover, a:active, a:focus {
     text-decoration: none !important;
-    color: @title-color-hover;
+    /*color: @title-color-hover;*/
 }
 
 #user-panel .dropdown {
@@ -536,7 +537,7 @@ table.borderless td {
     padding: 12px;
 }
 
-.text-right {
+.text-right, .text-right td, .text.right {
     text-align: right !important;
 }
 
@@ -629,10 +630,12 @@ table.ui.form .normal {
 }
 
 select option {
+    font-size: 11px;
     padding: 2px 12px;
 }
 
 .ui.form select {
+    font-size: 11px;
     height: 32px;
 }
 
@@ -643,4 +646,14 @@ select option {
 
 .strong {
     font-weight: bold;
+}
+
+.dotted.underline {
+    border-bottom: 1px dotted black;
+}
+
+.hint {
+    background-color: @soft_background_color;
+    font-weight: bold;
+    font-size: 1.1rem;
 }

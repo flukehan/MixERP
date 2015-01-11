@@ -228,4 +228,10 @@
   <data name="ItemTypes" xml:space="preserve">
     <value>Item Types</value>
   </data>
+  <data name="Stores" xml:space="preserve">
+    <value>Stores</value>
+  </data>
+  <data name="StoreTypes" xml:space="preserve">
+    <value>Store Types</value>
+  </data>
 </root>

@@ -16,5 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
-<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="OffBalanceSheet.ascx.cs" Inherits="MixERP.Net.Core.Modules.Finance.Reports.OffBalanceSheet" %>
-<h1>Off Balance Sheet Statement</h1>
+
+<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="StoreTypes.ascx.cs" Inherits="MixERP.Net.Core.Modules.Inventory.Setup.StoreTypes" %>
+<asp:PlaceHolder ID="ScrudPlaceholder" runat="server" />

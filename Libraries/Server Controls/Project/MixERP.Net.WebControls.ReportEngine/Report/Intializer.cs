@@ -159,13 +159,12 @@ namespace MixERP.Net.WebControls.ReportEngine
         private void LoadGrid(string indices, string styles)
         {
             List<string> styleList = styles.Split(',').ToList();
-            string style;
 
             int counter = 0;
 
             foreach (string data in indices.Split(','))
             {
-                style = styleList[counter];
+                string style = styleList[counter];
 
                 string ds = data.Trim();
 
@@ -182,11 +181,14 @@ namespace MixERP.Net.WebControls.ReportEngine
                         grid.Width = Unit.Percentage(100);
                         grid.GridLines = GridLines.None;
                         grid.RowDataBound += this.GridView_RowDataBound;
+                        grid.RowCreated += this.GridView1_RowCreated;
+
                         grid.DataBound += this.GridView_DataBound;
                         this.gridPlaceHolder.Controls.Add(grid);
 
                         grid.DataSource = this.dataTableCollection[index];
                         grid.DataBind();
+
                         GridViewHelper.SetHeaderRow(grid);
 
                         if (!string.IsNullOrWhiteSpace(style))

@@ -17,10 +17,10 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System.Data;
 using MixERP.Net.Common;
 using MixERP.Net.DBFactory;
 using Npgsql;
-using System.Data;
 
 namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 {
@@ -55,7 +55,11 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 
         public static DataTable GetChildAccounts()
         {
-            return FormHelper.GetTable("core", "account_view", "has_child", "0", "account_id");
+            const string sql = "SELECT account_number, account_name FROM core.accounts WHERE NOT sys_type OR is_cash;";
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                return DbOperation.GetDataTable(command);
+            }
         }
 
         public static DataTable GetNonConfidentialAccounts()
@@ -65,7 +69,11 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 
         public static DataTable GetNonConfidentialChildAccounts()
         {
-            return FormHelper.GetTable("core", "account_view", "has_child, confidential", "0, 0", "account_id");
+            const string sql = "SELECT account_number, account_name FROM core.accounts WHERE NOT confidential AND (NOT sys_type OR is_cash);";
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                return DbOperation.GetDataTable(command);
+            }
         }
 
         public static bool IsCashAccount(int accountId)

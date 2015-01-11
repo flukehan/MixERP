@@ -4,8 +4,10 @@ CREATE FUNCTION core.get_income_tax_provison_amount(_office_id integer, _profit 
 RETURNS  decimal(24, 4)
 AS
 $$
-    DECLARE _rate decimal_strict2=10.0;--TODO
+    DECLARE _rate real;
 BEGIN
+    _rate := core.get_income_tax_rate(_office_id);
+
     RETURN
     (
         (_profit * _rate/100) - _balance

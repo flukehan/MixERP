@@ -149,6 +149,7 @@ WHERE pg_attribute.attname NOT IN
     (
         'audit_user_id', 'audit_ts'
     )
+AND NOT pg_attribute.attisdropped
 ORDER BY pg_attribute.attnum;
 
 

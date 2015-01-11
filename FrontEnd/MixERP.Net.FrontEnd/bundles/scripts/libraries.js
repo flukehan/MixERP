@@ -46562,7 +46562,13 @@ var triggerClick = function(controlId) {
 //};
 
 var parseFloat2 = function(arg) {
-    var val = parseFloat(parseFormattedNumber(arg.toString()) || 0);
+    var input = arg;
+
+    if (currencySymbol) {
+        input = input.replace(currencySymbol, "");
+    };
+
+    var val = parseFloat(parseFormattedNumber(input.toString()) || 0);
 
     if (isNaN(val)) {
         val = 0;
@@ -46572,7 +46578,7 @@ var parseFloat2 = function(arg) {
 };
 
 var parseInt2 = function(arg) {
-    var val = parseInt(arg || 0);
+    var val = parseInt(parseFormattedNumber(arg.toString()) || 0);
 
     if (isNaN(val)) {
         val = 0;

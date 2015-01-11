@@ -104,7 +104,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                                 case "timestamp without time zone":
                                 case "date":
                                     //TextBox
-                                    var t = (TextBox)this.formContainer.FindControl(columnName + "_textbox");
+                                    var t = (TextBox) this.formContainer.FindControl(columnName + "_textbox");
                                     if (t != null)
                                     {
                                         list.Add(new KeyValuePair<string, string>(columnName, t.Text));
@@ -119,7 +119,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                                     break;
 
                                 case "bytea":
-                                    var f = (FileUpload)this.formContainer.FindControl(columnName + "_fileupload");
+                                    var f = (FileUpload) this.formContainer.FindControl(columnName + "_fileupload");
                                     var file = ScrudFileUpload.UploadFile(f);
                                     list.Add(new KeyValuePair<string, string>(columnName, file));
                                     this.imageColumn = columnName;
@@ -129,7 +129,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         else
                         {
                             //DropDownList
-                            var d = (DropDownList)this.formContainer.FindControl(columnName + "_dropdownlist");
+                            var d = (DropDownList) this.formContainer.FindControl(columnName + "_dropdownlist");
                             list.Add(new KeyValuePair<string, string>(columnName, d.Text));
                         }
                     }
@@ -153,7 +153,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         {
                             var columnName = Conversion.TryCastString(row["column_name"]);
                             var defaultValue = Conversion.TryCastString(row["column_default"]);
-                            //nextval('%_seq'::regclass)
                             var isSerial = defaultValue.StartsWith("nextval", StringComparison.OrdinalIgnoreCase);
                             var isNullable = Conversion.TryCastBoolean(row["is_nullable"]);
                             var dataType = Conversion.TryCastString(row["data_type"]);

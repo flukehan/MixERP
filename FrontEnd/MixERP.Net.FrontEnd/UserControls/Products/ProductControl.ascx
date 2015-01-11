@@ -26,47 +26,47 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     }
 
     #ProductGridView th:nth-child(1) {
-        width: 100px;
+        width: 7%;
     }
 
     #ProductGridView th:nth-child(2) {
-        width: 300px;
+        width: 21%;
     }
 
     #ProductGridView th:nth-child(3) {
-        width: 70px;
+        width: 5%;
     }
 
     #ProductGridView th:nth-child(4) {
-        width: 140px;
+        width: 10%;
     }
 
     #ProductGridView th:nth-child(5) {
-        width: 140px;
+        width: 10%;
     }
 
     #ProductGridView th:nth-child(6) {
-        width: 140px;
+        width: 10%;
     }
 
     #ProductGridView th:nth-child(7) {
-        width: 90px;
+        width: 6%;
     }
 
     #ProductGridView th:nth-child(8) {
-        width: 140px;
+        width: 7%;
     }
 
     #ProductGridView th:nth-child(9) {
-        width: 100px;
+        width: 7%;
     }
 
     #ProductGridView th:nth-child(10) {
-        width: 140px;
+        width: 10%;
     }
 
     #ProductGridView th:nth-child(11) {
-        width: 100px;
+        width: 7%;
     }
 </style>
 
@@ -151,7 +151,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     </div>
 </div>
 
-<table id="ProductGridView" class="ui table" style="min-width: 1400px; max-width: 2000px;">
+<table id="ProductGridView" class="ui table" style="max-width: 2000px;">
     <thead>
         <tr>
             <th>

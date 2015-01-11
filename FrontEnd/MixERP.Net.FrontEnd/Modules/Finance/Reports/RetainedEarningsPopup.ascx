@@ -1,4 +1,4 @@
-﻿/********************************************************************************
+﻿<%--
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
 This file is part of MixERP.
@@ -14,18 +14,12 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
-***********************************************************************************/
+along with MixERP.  If not, see <http://www.gnu.org/licenses />.
+--%>
+<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="RetainedEarnings.ascx.cs"
+    Inherits="MixERP.Net.Core.Modules.Finance.Reports.RetainedEarnings"
+    MasterPageId="MixERPBlankMaster.Master" %>
 
-using MixERP.Net.FrontEnd.Base;
-using System;
-
-namespace MixERP.Net.Core.Modules.Finance.Reports
-{
-    public partial class OffBalanceSheet : MixERPUserControl
-    {
-        protected void Page_Load(object sender, EventArgs e)
-        {
-        }
-    }
-}
+<div style="padding: 24px;">
+    <asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
+</div>

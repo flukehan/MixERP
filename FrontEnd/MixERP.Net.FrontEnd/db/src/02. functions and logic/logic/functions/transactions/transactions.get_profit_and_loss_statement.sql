@@ -1,4 +1,4 @@
-DROP FUNCTION IF EXISTS core.get_profit_and_loss_statement
+DROP FUNCTION IF EXISTS transactions.get_profit_and_loss_statement
 (
     _date_from                      date,
     _date_to                        date,
@@ -8,7 +8,7 @@ DROP FUNCTION IF EXISTS core.get_profit_and_loss_statement
     _compact                        boolean
 );
 
-CREATE FUNCTION core.get_profit_and_loss_statement
+CREATE FUNCTION transactions.get_profit_and_loss_statement
 (
     _date_from                      date,
     _date_to                        date,
@@ -324,20 +324,22 @@ END
 $$
 LANGUAGE plpgsql;
 
-DROP FUNCTION IF EXISTS core.get_net_profit
+DROP FUNCTION IF EXISTS transactions.get_net_profit
 (
     _date_from                      date,
     _date_to                        date,
     _office_id                      integer,
-    _factor                         integer
+    _factor                         integer,
+    _no_provison                    boolean
 );
 
-CREATE FUNCTION core.get_net_profit
+CREATE FUNCTION transactions.get_net_profit
 (
     _date_from                      date,
     _date_to                        date,
     _office_id                      integer,
-    _factor                         integer
+    _factor                         integer,
+    _no_provison                    boolean DEFAULT false
 )
 RETURNS decimal(24, 4)
 AS
@@ -369,6 +371,11 @@ BEGIN
     AND account_master_id =208;
     
     _profit_before_tax := COALESCE(_incomes, 0) - COALESCE(_expenses, 0);
+
+    IF(_no_provison) THEN
+        RETURN (_profit_before_tax - COALESCE(_tax_paid, 0)) / _factor;
+    END IF;
+    
     _tax_provison      := core.get_income_tax_provison_amount(_office_id, _profit_before_tax, COALESCE(_tax_paid, 0));
     
     RETURN (_profit_before_tax - (COALESCE(_tax_provison, 0) + COALESCE(_tax_paid, 0))) / _factor;
@@ -378,4 +385,4 @@ LANGUAGE plpgsql;
 
 
 
---SELECT core.get_profit_and_loss_statement('1-1-2000','1-15-2020', 2, 2, 1000,false), core.get_net_profit('1-1-2000','1-15-2020', 2, 1000);
+--SELECT transactions.get_profit_and_loss_statement('1-1-2000','1-15-2020', 2, 2, 1000,false), transactions.get_net_profit('1-1-2000','1-15-2020', 2, 1000);

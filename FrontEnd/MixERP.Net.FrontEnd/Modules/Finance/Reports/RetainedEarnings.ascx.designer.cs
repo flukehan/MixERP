@@ -7,18 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MixERP.Net.Core.Modules.POS.Setup {
+namespace MixERP.Net.Core.Modules.Finance.Reports {
     
     
-    public partial class StoreTypes {
+    public partial class RetainedEarnings {
         
         /// <summary>
-        /// ScrudPlaceholder control.
+        /// Placeholder1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder ScrudPlaceholder;
+        protected global::System.Web.UI.WebControls.PlaceHolder Placeholder1;
     }
 }

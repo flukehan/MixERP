@@ -41,7 +41,8 @@ SELECT 102, 'FIA', 'Fixed Assets',                      1 UNION ALL
 SELECT 103, 'OTA', 'Other Assets',                      1 UNION ALL
 SELECT 150, 'CRL', 'Current Liabilities',               1 UNION ALL
 SELECT 151, 'LTL', 'Long-Term Liabilities',             1 UNION ALL
-SELECT 152, 'SHE', 'Shareholders'' Equity',             1;
+SELECT 152, 'SHE', 'Shareholders'' Equity',             1 UNION ALL
+SELECT 153, 'RET', 'Retained Earnings',                 152;
 
 
 INSERT INTO core.account_masters(account_master_id, account_master_code, account_master_name, parent_account_master_id)
@@ -86,7 +87,7 @@ INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_typ
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '11200', 'Accrued Incomes (Assets)', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Current Assets');
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '11300', 'Other Debtors', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Current Assets');
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '11400', 'Other Current Assets', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Current Assets');
-INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '12001', 'Noncurrent Assets', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Assets');
+INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '12001', 'Noncurrent Assets', TRUE, (SELECT account_id FROM core.accounts WHERE account_name='Assets');
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '12100', 'Furniture and Fixtures', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Noncurrent Assets');
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '12200', 'Plants & Equipments', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Noncurrent Assets');
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '12300', 'Rental Property', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Noncurrent Assets');
@@ -114,7 +115,7 @@ INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_typ
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '13860', 'Accumulated Depreciation-Buildings', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Accumulated Depreciations');
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '13870', 'Accumulated Depreciation-Building Improvements', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Accumulated Depreciations');
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '13880', 'Accumulated Depreciation-Interior Decorations', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Accumulated Depreciations');
-INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '14001', 'Other Assets', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Assets');
+INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '14001', 'Other Assets', TRUE, (SELECT account_id FROM core.accounts WHERE account_name='Assets');
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '14100', 'Other Assets-Deposits', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Other Assets');
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '14200', 'Other Assets-Organization Costs', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Other Assets');
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '14300', 'Other Assets-Accumulated Amortization-Organization Costs', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Other Assets');
@@ -155,7 +156,7 @@ INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_typ
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '21220', 'Short Term Hire-purchase Payables', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Other Current Liabilities');
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '21230', 'Short Term Lease Liability', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Other Current Liabilities');
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '21240', 'Grants Repayable', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Other Current Liabilities');
-INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '24001', 'Noncurrent Liabilities', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Liabilities');
+INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '24001', 'Noncurrent Liabilities', TRUE, (SELECT account_id FROM core.accounts WHERE account_name='Liabilities');
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '24100', 'Notes Payable', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Noncurrent Liabilities');
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '24200', 'Land Payable', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Noncurrent Liabilities');
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '24300', 'Equipment Payable', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Noncurrent Liabilities');
@@ -167,7 +168,7 @@ INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_typ
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '24900', 'Deferred Revenue', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Noncurrent Liabilities');
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '25000', 'Other Long-term Liabilities', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Noncurrent Liabilities');
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '25010', 'Long Term Employee Benefit Provision', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Other Long-term Liabilities');
-INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '28001', 'Equity', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Liabilities');
+INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '28001', 'Equity', TRUE, (SELECT account_id FROM core.accounts WHERE account_name='Liabilities');
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '28100', 'Stated Capital', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Equity');
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '28110', 'Founder Capital', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Stated Capital');
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '28120', 'Promoter Capital', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Stated Capital');
@@ -180,13 +181,17 @@ INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_typ
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '28250', 'Exchange Rate Fluctuation Reserves', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Capital Surplus');
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '28260', 'Capital Reserves Arising From Merger', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Capital Surplus');
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '28270', 'Capital Reserves Arising From Acuisition', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Capital Surplus');
-INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '28300', 'Retained Surplus', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Equity');
+INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '28300', 'Retained Surplus', TRUE, (SELECT account_id FROM core.accounts WHERE account_name='Equity');
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '28310', 'Accumulated Profits', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Retained Surplus');
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '28320', 'Accumulated Losses', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Retained Surplus');
+INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '28330', 'Dividends Declared (Common Stock)', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Retained Surplus');
+INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '28340', 'Dividends Declared (Preferred Stock)', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Retained Surplus');
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '28400', 'Treasury Stock', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Equity');
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '28500', 'Current Year Surplus', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Equity');
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '28600', 'General Reserves', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Equity');
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '28700', 'Other Reserves', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Equity');
+INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '28800', 'Dividends Payable (Common Stock)', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Equity');
+INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 1, '28900', 'Dividends Payable (Preferred Stock)', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Equity');
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 2,  '30000', 'Revenues', TRUE, (SELECT account_id FROM core.accounts WHERE account_name='Profit and Loss A/C');
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 2,  '30100', 'Sales A/C', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Revenues');
 INSERT INTO core.accounts(account_master_id,account_number,account_name, sys_type, parent_account_id) SELECT 2,  '30200', 'Interest Income', FALSE, (SELECT account_id FROM core.accounts WHERE account_name='Revenues');
@@ -463,13 +468,17 @@ UPDATE core.accounts SET account_master_id=152 WHERE account_number='28240';
 UPDATE core.accounts SET account_master_id=152 WHERE account_number='28250';
 UPDATE core.accounts SET account_master_id=152 WHERE account_number='28260';
 UPDATE core.accounts SET account_master_id=152 WHERE account_number='28270';
-UPDATE core.accounts SET account_master_id=152 WHERE account_number='28300';
-UPDATE core.accounts SET account_master_id=152 WHERE account_number='28310';
-UPDATE core.accounts SET account_master_id=152 WHERE account_number='28320';
+UPDATE core.accounts SET account_master_id=153 WHERE account_number='28300';
+UPDATE core.accounts SET account_master_id=153 WHERE account_number='28310';
+UPDATE core.accounts SET account_master_id=153 WHERE account_number='28320';
+UPDATE core.accounts SET account_master_id=153 WHERE account_number='28330';
+UPDATE core.accounts SET account_master_id=153 WHERE account_number='28340';
 UPDATE core.accounts SET account_master_id=152 WHERE account_number='28400';
 UPDATE core.accounts SET account_master_id=152 WHERE account_number='28500';
 UPDATE core.accounts SET account_master_id=152 WHERE account_number='28600';
 UPDATE core.accounts SET account_master_id=152 WHERE account_number='28700';
+UPDATE core.accounts SET account_master_id=152 WHERE account_number='28800';
+UPDATE core.accounts SET account_master_id=152 WHERE account_number='28900';
 
 UPDATE core.accounts
 SET currency_code='NPR';

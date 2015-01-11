@@ -57,7 +57,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         var closingDebit = sumOfColumn(grid, 6);
         var closingCredit = sumOfColumn(grid, 7);
 
-        var tfoot = "<tr class='active'><td colspan='2'>Total</td><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td></tr>";
+        var tfoot = "<tr class='active strong text-right'><td colspan='2'>Total</td><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td></tr>";
         tfoot = String.format(tfoot, previousDebit, previousCredit, debit, credit, closingDebit, closingCredit);
 
         grid.append(tfoot);

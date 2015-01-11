@@ -16,4 +16,5 @@ FROM core.accounts
 INNER JOIN core.account_masters
 ON core.account_masters.account_master_id=core.accounts.account_master_id
 LEFT JOIN core.accounts parent_account
-ON parent_account.account_id=core.accounts.parent_account_id;
+ON parent_account.account_id=core.accounts.parent_account_id
+WHERE NOT core.accounts.sys_type;

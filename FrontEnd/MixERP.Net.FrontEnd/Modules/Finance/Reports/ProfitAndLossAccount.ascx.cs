@@ -90,6 +90,16 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 e.Row.Cells[0].Text = string.Empty;
                 e.Row.Cells[1].Text = Titles.Amount;
             }
+
+
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                for (int i = 1; i < e.Row.Cells.Count - 1; i++)
+                {
+                    e.Row.Cells[i].Text = e.Row.Cells[i].Text.ToFormattedNumber("{0:N}");
+                    e.Row.Cells[i].CssClass = "text right";
+                }
+            }
         }
 
         #endregion
@@ -145,7 +155,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 }
                 this.factorInputText = new HtmlInputText();
                 this.factorInputText.ID = "FactorInputText";
-                this.factorInputText.Attributes.Add("class", "small input");
+                this.factorInputText.Attributes.Add("class", "small input integer");
                 this.factorInputText.Value = "1";
 
                 field.Controls.Add(this.factorInputText);

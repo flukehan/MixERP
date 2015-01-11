@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MixERP.Net.Core.Modules.POS.Setup {
+namespace MixERP.Net.Core.Modules.Inventory.Setup {
     
     
-    public partial class Stores {
+    public partial class StoreTypes {
         
         /// <summary>
         /// ScrudPlaceholder control.

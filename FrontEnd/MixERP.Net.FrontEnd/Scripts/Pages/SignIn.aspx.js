@@ -5,7 +5,7 @@ var branchSelect = $("#BranchSelect");
 var languageSelect = $("#LanguageSelect");
 var signInButton = $("#SignInButton");
 
-$(document).ready(function () {
+$(document).ready(function() {
     usernameInputText.val('binod');
     passwordInputPassword.val('binod');
     $(".ui.checkbox").checkbox();
@@ -18,7 +18,7 @@ $(document).ready(function () {
     };
 });
 
-signInButton.click(function () {
+signInButton.click(function() {
     var username = usernameInputText.val();
     var rememberMe = rememberInputCheckBox.is(":checked");
     var branchId = parseInt2(branchSelect.getSelectedValue());
@@ -29,7 +29,7 @@ signInButton.click(function () {
 
     $(".form").addClass("loading");
 
-    ajaxAuthenticate.success(function (msg) {
+    ajaxAuthenticate.success(function(msg) {
         if (msg.d === "OK") {
             window.location = getRedirectUrl();
             return;
@@ -38,7 +38,7 @@ signInButton.click(function () {
         window.location = window.location.href.split('?')[0] + "?Message=" + msg.d;
     });
 
-    ajaxAuthenticate.fail(function (xhr) {
+    ajaxAuthenticate.fail(function(xhr) {
         logAjaxErrorMessage(xhr);
         makeDirty();
     });

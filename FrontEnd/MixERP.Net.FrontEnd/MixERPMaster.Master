@@ -65,7 +65,7 @@
                 </div>
                 <div class="thirteen wide column">
 
-                    <div id="TopMenu" class="ui menu inverted purple">
+                    <div id="TopMenu" class="ui menu inverted theme">
                         <a class="active item">
                             <i class="home icon"></i>
                             <asp:Literal runat="server" ID="BranchNameLiteral" />
@@ -117,7 +117,7 @@
                 </div>
             </div>
             <div class="row" id="FooterRow">
-                <footer class="twelve wide relaxed column">
+                <footer class="sixteen wide relaxed column">
                     <p>
                         Copyright (c) 2014, Mix Open Foundation. All rights reserved (r). Powered by <a href="http://mixerp.org/" target="_blank">MixERP Community Edition</a>
                     </p>
@@ -136,6 +136,7 @@
             var thousandSeparator = "<%= LocalizationHelper.GetThousandSeparator()%>";
             var decimalSeparator = "<%= LocalizationHelper.GetDecimalSeparator()%>";
             var currencyDecimalPlaces = "<%= LocalizationHelper.GetCurrencyDecimalPlaces()%>";
+            var currencySymbol = "<%= LocalizationHelper.GetCurrencySymbol()%>";
 
             var duplicateEntryLocalized = "<%= Resources.Warnings.DuplicateEntry%>";
             var selectLocalized = "<%= Resources.Titles.Select%>";

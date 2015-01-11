@@ -74,8 +74,8 @@ UNION ALL SELECT 'Reports', NULL, 'FIR', 1, core.get_menu_id('FI')
 UNION ALL SELECT 'Account Statement', '~/Modules/Finance/Reports/AccountStatement.mix', 'AS', 2, core.get_menu_id('FIR')
 UNION ALL SELECT 'Trial Balance', '~/Modules/Finance/Reports/TrialBalance.mix', 'TB', 2, core.get_menu_id('FIR')
 UNION ALL SELECT 'Profit & Loss Account', '~/Modules/Finance/Reports/ProfitAndLossAccount.mix', 'PLA', 2, core.get_menu_id('FIR')
+UNION ALL SELECT 'Retained Earnings Statement', '~/Modules/Finance/Reports/RetainedEarnings.mix', 'RET', 2, core.get_menu_id('FIR')
 UNION ALL SELECT 'Balance Sheet', '~/Modules/Finance/Reports/BalanceSheet.mix', 'BS', 2, core.get_menu_id('FIR')
-UNION ALL SELECT 'Off Balance Sheet Statement', '~/Modules/Finance/Reports/OffBalanceSheet.mix', 'OBS', 2, core.get_menu_id('FIR')
 UNION ALL SELECT 'Cash Flow', '~/Modules/Finance/Reports/CashFlow.mix', 'CF', 2, core.get_menu_id('FIR')
 UNION ALL SELECT 'Tax Register', '~/Modules/Finance/Reports/TaxRegister.mix', 'TR', 2, core.get_menu_id('FIR')
 UNION ALL SELECT 'Tax Configuration', NULL, 'BOTC', 1, core.get_menu_id('BO')
@@ -232,7 +232,7 @@ SELECT core.get_menu_id('AS'), 'fr', 'Relevé de compte' UNION ALL
 SELECT core.get_menu_id('TB'), 'fr', 'Balance de vérification' UNION ALL
 SELECT core.get_menu_id('PLA'), 'fr', 'Profit & compte de la perte' UNION ALL
 SELECT core.get_menu_id('BS'), 'fr', 'Bilan' UNION ALL
-SELECT core.get_menu_id('OBS'), 'fr', 'Hors bilan' UNION ALL
+SELECT core.get_menu_id('RET'), 'fr', 'Des Bénéfices Non Répartis' UNION ALL
 SELECT core.get_menu_id('CF'), 'fr', 'Flux de trésorerie' UNION ALL
 SELECT core.get_menu_id('TR'), 'fr', 'Registre de la taxe' UNION ALL
 SELECT core.get_menu_id('BOTC'), 'fr', 'Configuration de l''impôt' UNION ALL

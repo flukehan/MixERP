@@ -17,10 +17,10 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System;
+using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.WebControls.ScrudFactory.Resources;
-using System.Web.UI.WebControls;
 using Wuqi.Webdiyer;
 
 namespace MixERP.Net.WebControls.ScrudFactory
@@ -44,7 +44,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             this.formGridView.RowDataBound += this.FormGridView_RowDataBound;
 
             var selectField = new TemplateField();
-            selectField.HeaderText = Titles.Select;
+            selectField.HeaderText = String.Empty;
             selectField.ItemStyle.Width = 20;
             this.formGridView.Columns.Add(selectField);
 

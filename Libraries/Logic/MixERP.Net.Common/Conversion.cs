@@ -60,7 +60,7 @@ namespace MixERP.Net.Common
                 return null;
             }
 
-            PropertyDescriptorCollection props = TypeDescriptor.GetProperties(typeof (T));
+            PropertyDescriptorCollection props = TypeDescriptor.GetProperties(typeof(T));
 
             using (DataTable table = new DataTable())
             {
@@ -250,10 +250,20 @@ namespace MixERP.Net.Common
             return BitConverter.ToString(new SHA512CryptoServiceProvider().ComputeHash(Encoding.UTF8.GetBytes(password + salt))).Replace("-", "").ToLower();
         }
 
+        public static bool IsEmptyDate(DateTime date)
+        {
+            if (date.Equals(DateTime.MinValue))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public static bool IsNumeric(string value)
         {
             double number;
-            return double.TryParse(value, out number);
+            return double.TryParse(value, NumberStyles.Any, Thread.CurrentThread.CurrentCulture, out number);
         }
 
         public static string MapPathReverse(string fullServerPath)
@@ -284,6 +294,17 @@ namespace MixERP.Net.Common
             return (page).ResolveUrl(url);
         }
 
+        public static string ToFormattedNumber(this string number, string format)
+        {
+            decimal value = TryCastDecimal(number);
+
+            if (value.Equals(0))
+            {
+                return string.Empty;
+            }
+
+            return string.Format(Thread.CurrentThread.CurrentUICulture, format, value);
+        }
         public static bool TryCastBoolean(object value)
         {
             bool retVal = false;
@@ -292,12 +313,12 @@ namespace MixERP.Net.Common
             {
                 if (value is string)
                 {
-                    if (value.ToString().ToLower(Thread.CurrentThread.CurrentCulture).Equals("yes"))
+                    if (value.ToString().ToUpperInvariant().Equals("YES"))
                     {
                         return true;
                     }
 
-                    if (value.ToString().ToLower(Thread.CurrentThread.CurrentCulture).Equals("true"))
+                    if (value.ToString().ToUpperInvariant().Equals("TRUE"))
                     {
                         return true;
                     }
@@ -358,7 +379,7 @@ namespace MixERP.Net.Common
                 //string numberToParse = RemoveGroupping(value.ToString());
                 string numberToParse = value.ToString();
 
-                if (decimal.TryParse(numberToParse, out retVal))
+                if (decimal.TryParse(numberToParse, NumberStyles.Any, Thread.CurrentThread.CurrentCulture, out retVal))
                 {
                     return retVal;
                 }
@@ -376,7 +397,7 @@ namespace MixERP.Net.Common
                 //string numberToParse = RemoveGroupping(value.ToString());
                 string numberToParse = value.ToString();
 
-                if (double.TryParse(numberToParse, out retVal))
+                if (double.TryParse(numberToParse, NumberStyles.Any, Thread.CurrentThread.CurrentCulture, out retVal))
                 {
                     return retVal;
                 }
@@ -399,10 +420,9 @@ namespace MixERP.Net.Common
                     }
                 }
 
-                //string numberToParse = RemoveGroupping(value.ToString());
                 string numberToParse = value.ToString();
 
-                if (int.TryParse(numberToParse, out retVal))
+                if (int.TryParse(numberToParse, NumberStyles.Any, Thread.CurrentThread.CurrentCulture, out retVal))
                 {
                     return retVal;
                 }
@@ -417,10 +437,9 @@ namespace MixERP.Net.Common
 
             if (value != null)
             {
-                //string numberToParse = RemoveGroupping(value.ToString());
                 string numberToParse = value.ToString();
 
-                if (long.TryParse(numberToParse, out retVal))
+                if (long.TryParse(numberToParse, NumberStyles.Any, Thread.CurrentThread.CurrentCulture, out retVal))
                 {
                     return retVal;
                 }
@@ -431,30 +450,17 @@ namespace MixERP.Net.Common
 
         public static DateTime? TryCastNullableDate(object value)
         {
-            try
+            if (value == DBNull.Value)
             {
-                if (value == DBNull.Value)
-                {
-                    return null;
-                }
-
-                if (string.IsNullOrWhiteSpace(value.ToString()))
-                {
-                    return null;
-                }
-
-                return Convert.ToDateTime(value, Thread.CurrentThread.CurrentCulture);
-            }
-            catch (FormatException)
-            {
-                //swallow the exception
-            }
-            catch (InvalidCastException)
-            {
-                //swallow the exception
+                return null;
             }
 
-            return null;
+            if (string.IsNullOrWhiteSpace(value.ToString()))
+            {
+                return null;
+            }
+
+            return Convert.ToDateTime(value, Thread.CurrentThread.CurrentCulture);
         }
 
         public static short TryCastShort(object value)
@@ -466,7 +472,7 @@ namespace MixERP.Net.Common
                 //string numberToParse = RemoveGroupping(value.ToString());
                 string numberToParse = value.ToString();
 
-                if (short.TryParse(numberToParse, out retVal))
+                if (short.TryParse(numberToParse, NumberStyles.Any, Thread.CurrentThread.CurrentCulture, out retVal))
                 {
                     return retVal;
                 }
@@ -484,7 +490,7 @@ namespace MixERP.Net.Common
                 //string numberToParse = RemoveGroupping(value.ToString());
                 string numberToParse = value.ToString();
 
-                if (float.TryParse(numberToParse, out retVal))
+                if (float.TryParse(numberToParse, NumberStyles.Any, Thread.CurrentThread.CurrentCulture, out retVal))
                 {
                     return retVal;
                 }
@@ -497,38 +503,25 @@ namespace MixERP.Net.Common
         //}
         public static string TryCastString(object value)
         {
-            try
+            if (value != null)
             {
-                if (value != null)
+                if (value is bool)
                 {
-                    if (value is bool)
+                    if (Convert.ToBoolean(value, CultureInfo.InvariantCulture))
                     {
-                        if (Convert.ToBoolean(value, CultureInfo.InvariantCulture))
-                        {
-                            return "true";
-                        }
-
-                        return "false";
+                        return "true";
                     }
 
-                    if (value == DBNull.Value)
-                    {
-                        return string.Empty;
-                    }
-
-                    string retVal = value.ToString();
-                    return retVal;
+                    return "false";
                 }
 
-                return string.Empty;
-            }
-            catch (FormatException)
-            {
-                //swallow the exception
-            }
-            catch (InvalidCastException)
-            {
-                //swallow the exception
+                if (value == DBNull.Value)
+                {
+                    return string.Empty;
+                }
+
+                string retVal = value.ToString();
+                return retVal;
             }
 
             return string.Empty;
@@ -541,7 +534,7 @@ namespace MixERP.Net.Common
                 return new Unit();
             }
 
-            return Unit.Parse(value.ToString(), CultureInfo.InvariantCulture);
+            return Unit.Parse(value.ToString(), Thread.CurrentThread.CurrentCulture);
         }
 
         private static string HashSha512(string password, string salt)

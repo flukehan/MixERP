@@ -5,6 +5,7 @@ var footer = $("footer");
 var mainContent = $("#MainContent");
 var menuContainer = $("#MenuContainer");
 var fullWidthContainer = $(".full.width");
+var topMenu = $("#TopMenu");
 ///#source 1 1 /Scripts/mixerp/master-page/js-tree.js
 $(function () {
     var tree = $("#tree");
@@ -141,12 +142,14 @@ function fixLayout() {
         };
     };
 
-    if (mainContent) {
-        mainContent.css("width", mainContent.width() + "px");
-    };
+    if (topMenu) {
+        if (mainContent) {
+            mainContent.css("width", topMenu.width() + "px");
+        };
 
-    if (fullWidthContainer) {
-        fullWidthContainer.css("width", mainContent.width() + "px");
+        if (fullWidthContainer) {
+            fullWidthContainer.css("width", topMenu.width() + "px");
+        };
     };
 };
 ///#source 1 1 /Scripts/mixerp/master-page/scrud.js

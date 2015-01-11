@@ -75,8 +75,6 @@
     <Content Include="Package.xml" />
     <Content Include="SQL\Menu.sql" />
     <Content Include="SQL\Module.sql" />
-    <Content Include="Setup\Stores.ascx" />
-    <Content Include="Setup\StoreTypes.ascx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -105,25 +103,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Titles.resx</DependentUpon>
     </Compile>
-    <Compile Include="Setup\Stores.ascx.cs">
-      <DependentUpon>Stores.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Setup\Stores.ascx.designer.cs">
-      <DependentUpon>Stores.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Setup\StoreTypes.ascx.cs">
-      <DependentUpon>StoreTypes.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Setup\StoreTypes.ascx.designer.cs">
-      <DependentUpon>StoreTypes.ascx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Reports\" />
     <Folder Include="Scripts\" />
     <Folder Include="Services\" />
+    <Folder Include="Setup\" />
     <Folder Include="Widgets\" />
   </ItemGroup>
   <ItemGroup>

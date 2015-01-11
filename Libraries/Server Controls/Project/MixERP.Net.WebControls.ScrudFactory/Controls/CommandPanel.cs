@@ -28,7 +28,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
 {
     internal sealed class CommandPanel : IDisposable
     {
-        private Panel commandPanel;
+        private HtmlGenericControl commandPanel;
         public event EventHandler DeleteButtonClick;
 
         public event EventHandler EditButtonClick;
@@ -44,11 +44,11 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
         public string EditButtonIconCssClass { get; set; }
         public string PrintButtonIconCssClass { get; set; }
         public string SelectButtonIconCssClass { get; set; }
-        public Panel GetCommandPanel(string controlSuffix)
+        public HtmlGenericControl GetCommandPanel(string controlSuffix)
         {
-            this.commandPanel = new Panel();
+            this.commandPanel = new HtmlGenericControl("div");
             this.commandPanel.Attributes.Add("role", "toolbar");
-            this.commandPanel.CssClass = this.CssClass;
+            this.commandPanel.Attributes.Add("class", this.CssClass);
             this.AddSelectButton(this.commandPanel);
             this.AddShowCompactButton(this.commandPanel);
             this.AddShowAllButton(this.commandPanel);
@@ -61,13 +61,13 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
             return this.commandPanel;
         }
 
-        private void AddAddButton(Panel p)
+        private void AddAddButton(HtmlGenericControl p)
         {
             HtmlButton addButton = this.GetInputButton("CTRL + SHIFT + A", "return(scrudAddNew());", Titles.AddNew, this.ButtonCssClass, this.AddButtonIconCssClass);
             p.Controls.Add(addButton);
         }
 
-        private void AddDeleteButtonHidden(Panel p, string controlSuffix)
+        private void AddDeleteButtonHidden(HtmlGenericControl p, string controlSuffix)
         {
             this.DeleteButton = this.GetButton("CTRL + SHIFT + D", "return(scrudConfirmAction());", Titles.DeleteSelected);
             this.DeleteButton.ID = "DeleteButton" + controlSuffix;
@@ -77,13 +77,13 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
             p.Controls.Add(this.DeleteButton);
         }
 
-        private void AddDeleteButtonVisible(Panel p, string controlSuffix)
+        private void AddDeleteButtonVisible(HtmlGenericControl p, string controlSuffix)
         {
             HtmlButton deleteButton = this.GetInputButton("CTRL + SHIFT + D", "$('#DeleteButton" + controlSuffix + "').click();return false;", Titles.DeleteSelected, this.ButtonCssClass, this.DeleteButtonIconCssClass);
             p.Controls.Add(deleteButton);
         }
 
-        private void AddEditButtonHidden(Panel p, string controlSuffix)
+        private void AddEditButtonHidden(HtmlGenericControl p, string controlSuffix)
         {
             this.EditButton = this.GetButton("CTRL + SHIFT + E", "return(scrudConfirmAction());", Titles.EditSelected);
             this.EditButton.Attributes.Add("role", "edit");
@@ -93,19 +93,19 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
             p.Controls.Add(this.EditButton);
         }
 
-        private void AddEditButtonVisible(Panel p, string controlSuffix)
+        private void AddEditButtonVisible(HtmlGenericControl p, string controlSuffix)
         {
             HtmlButton editButton = this.GetInputButton("CTRL + SHIFT + E", "$('#EditButton" + controlSuffix + "').click();return false;", Titles.EditSelected, this.ButtonCssClass, this.EditButtonIconCssClass);
             p.Controls.Add(editButton);
         }
 
-        private void AddPrintButton(Panel p)
+        private void AddPrintButton(HtmlGenericControl p)
         {
             HtmlButton printButton = this.GetInputButton("CTRL + SHIFT + P", "scrudPrintGridView();", Titles.Print, this.ButtonCssClass, this.PrintButtonIconCssClass);
             p.Controls.Add(printButton);
         }
 
-        private void AddSelectButton(Panel p)
+        private void AddSelectButton(HtmlGenericControl p)
         {
             if (this.IsModal())
             {
@@ -114,61 +114,17 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
             }
         }
 
-        private void AddShowAllButton(Panel p)
+        private void AddShowAllButton(HtmlGenericControl p)
         {
             HtmlButton showAllButton = this.GetInputButton("CTRL + SHIFT + S", "scrudShowAll();", Titles.ShowAll, this.ButtonCssClass, this.AllButtonIconCssClass);
             p.Controls.Add(showAllButton);
         }
 
-        private void AddShowCompactButton(Panel p)
+        private void AddShowCompactButton(HtmlGenericControl p)
         {
             HtmlButton showCompactButton = this.GetInputButton("CTRL + SHIFT + C", "scrudShowCompact();", Titles.ShowCompact, this.ButtonCssClass, this.CompactButtonIconCssClass);
             p.Controls.Add(showCompactButton);
         }
-
-        #region IDisposable
-        private bool disposed;
-        public void Dispose()
-        {
-            if (!this.disposed)
-            {
-                this.Dispose(true);
-            }
-        }
-        private void Dispose(bool disposing)
-        {
-            if (!disposing)
-            {
-                return;
-            }
-
-            if (this.commandPanel != null)
-            {
-                this.commandPanel.Dispose();
-                this.commandPanel = null;
-            }
-
-            if (this.EditButton != null)
-            {
-                this.EditButton.Click -= this.OnEditButtonClick;
-                this.EditButtonClick = null;
-                this.EditButton.Dispose();
-                this.EditButton = null;
-            }
-
-            if (this.DeleteButton != null)
-            {
-                this.DeleteButton.Click -= this.OnDeleteButtonClick;
-                this.DeleteButtonClick = null;
-                this.DeleteButton.Dispose();
-                this.DeleteButton = null;
-            }
-
-
-            this.disposed = true;
-        }
-
-        #endregion
 
         private Button GetButton(string toolTip, string onClientClick, string text)
         {
@@ -238,5 +194,52 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
                 this.EditButtonClick(this, e);
             }
         }
+
+        #region IDisposable
+
+        private bool disposed;
+
+        public void Dispose()
+        {
+            if (!this.disposed)
+            {
+                this.Dispose(true);
+            }
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!disposing)
+            {
+                return;
+            }
+
+            if (this.commandPanel != null)
+            {
+                this.commandPanel.Dispose();
+                this.commandPanel = null;
+            }
+
+            if (this.EditButton != null)
+            {
+                this.EditButton.Click -= this.OnEditButtonClick;
+                this.EditButtonClick = null;
+                this.EditButton.Dispose();
+                this.EditButton = null;
+            }
+
+            if (this.DeleteButton != null)
+            {
+                this.DeleteButton.Click -= this.OnDeleteButtonClick;
+                this.DeleteButtonClick = null;
+                this.DeleteButton.Dispose();
+                this.DeleteButton = null;
+            }
+
+
+            this.disposed = true;
+        }
+
+        #endregion
     }
 }

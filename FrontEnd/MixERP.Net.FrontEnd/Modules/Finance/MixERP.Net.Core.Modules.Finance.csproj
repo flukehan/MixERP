@@ -97,6 +97,10 @@
     <Content Include="EODOperation.ascx" />
     <Content Include="Mix Open Foundation.snk" />
     <Content Include="packages.config" />
+    <Content Include="Reports\AccountStatementPopup.ascx" />
+    <Content Include="Reports\RetainedEarnings.ascx" />
+    <Content Include="Reports\RetainedEarningsPopup.ascx" />
+    <Content Include="Scripts\Reports\AccountStatement.js" />
     <Content Include="Services\web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -116,7 +120,6 @@
     <Content Include="Reports\BalanceSheet.ascx" />
     <Content Include="Reports\CashFlow.ascx" />
     <Content Include="Reports\GLAdviceReport.ascx" />
-    <Content Include="Reports\OffBalanceSheet.ascx" />
     <Content Include="Reports\ProfitAndLossAccount.ascx" />
     <Content Include="Reports\Source\Transactions.AccountStatement.xml">
       <SubType>Designer</SubType>
@@ -223,19 +226,26 @@
     <Compile Include="Reports\GLAdviceReport.ascx.designer.cs">
       <DependentUpon>GLAdviceReport.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Reports\OffBalanceSheet.ascx.cs">
-      <DependentUpon>OffBalanceSheet.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Reports\OffBalanceSheet.ascx.designer.cs">
-      <DependentUpon>OffBalanceSheet.ascx</DependentUpon>
-    </Compile>
     <Compile Include="Reports\ProfitAndLossAccount.ascx.cs">
       <DependentUpon>ProfitAndLossAccount.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Reports\ProfitAndLossAccount.ascx.designer.cs">
       <DependentUpon>ProfitAndLossAccount.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\RetainedEarnings.ascx.cs">
+      <DependentUpon>RetainedEarnings.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\RetainedEarnings.ascx.designer.cs">
+      <DependentUpon>RetainedEarnings.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\RetainedEarningsPopup.ascx.cs">
+      <DependentUpon>RetainedEarningsPopup.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\RetainedEarningsPopup.ascx.designer.cs">
+      <DependentUpon>RetainedEarningsPopup.ascx</DependentUpon>
     </Compile>
     <Compile Include="Reports\StockTransactionReport.ascx.cs">
       <DependentUpon>StockTransactionReport.ascx</DependentUpon>

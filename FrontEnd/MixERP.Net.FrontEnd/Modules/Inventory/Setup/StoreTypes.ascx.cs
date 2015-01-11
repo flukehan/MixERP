@@ -17,13 +17,13 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Core.Modules.POS.Resources;
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.ScrudFactory;
 using System;
 using System.Reflection;
+using MixERP.Net.Core.Modules.Inventory.Resources;
+using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.WebControls.ScrudFactory;
 
-namespace MixERP.Net.Core.Modules.POS.Setup
+namespace MixERP.Net.Core.Modules.Inventory.Setup
 {
     public partial class StoreTypes : MixERPUserControl
     {

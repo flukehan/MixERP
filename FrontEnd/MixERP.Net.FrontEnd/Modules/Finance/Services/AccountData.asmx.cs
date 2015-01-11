@@ -17,22 +17,21 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Base;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.Finance.Data.Helpers;
-using MixERP.Net.Core.Modules.Finance.Resources;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.Web.UI.WebControls;
-using SessionHelper = MixERP.Net.Common.Helpers.SessionHelper;
+using MixERP.Net.Common.Base;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Core.Modules.Finance.Data.Helpers;
+using MixERP.Net.Core.Modules.Finance.Resources;
 
 namespace MixERP.Net.Core.Modules.Finance.Services
 {
     /// <summary>
-    /// Summary description for AccountData
+    ///     Summary description for AccountData
     /// </summary>
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
@@ -102,7 +101,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             using (DataTable table = CashRepositories.GetCashRepositoryDataTable(officeId))
             {
                 string displayField = ConfigurationHelper.GetDbParameter("CashRepositoryDisplayField");
-                table.Columns.Add("cash_repository", typeof(string), displayField);
+                table.Columns.Add("cash_repository", typeof (string), displayField);
 
                 foreach (DataRow dr in table.Rows)
                 {
@@ -123,7 +122,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
                 using (DataTable table = CashRepositories.GetCashRepositoryDataTable(officeId))
                 {
                     string displayField = ConfigurationHelper.GetDbParameter("CashRepositoryDisplayField");
-                    table.Columns.Add("cash_repository", typeof(string), displayField);
+                    table.Columns.Add("cash_repository", typeof (string), displayField);
 
                     foreach (DataRow dr in table.Rows)
                     {
@@ -154,7 +153,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             using (DataTable table = CostCenters.GetCostCenterDataTable())
             {
                 string displayField = ConfigurationHelper.GetDbParameter("CostCenterDisplayField");
-                table.Columns.Add("cost_center", typeof(string), displayField);
+                table.Columns.Add("cost_center", typeof (string), displayField);
 
                 foreach (DataRow dr in table.Rows)
                 {

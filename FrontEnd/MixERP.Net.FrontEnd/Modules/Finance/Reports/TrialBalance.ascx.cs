@@ -62,12 +62,12 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
             GridViewHelper.AddDataBoundControl(this.trialBalanceGridView, "account_number", Titles.AccountNumber);
             GridViewHelper.AddDataBoundControl(this.trialBalanceGridView, "account", Titles.Account);
-            GridViewHelper.AddDataBoundControl(this.trialBalanceGridView, "previous_debit", Titles.Debit, "{0:n2}");
-            GridViewHelper.AddDataBoundControl(this.trialBalanceGridView, "previous_credit", Titles.Credit, "{0:n2}");
-            GridViewHelper.AddDataBoundControl(this.trialBalanceGridView, "debit", Titles.Debit, "{0:n2}");
-            GridViewHelper.AddDataBoundControl(this.trialBalanceGridView, "credit", Titles.Credit, "{0:n2}");
-            GridViewHelper.AddDataBoundControl(this.trialBalanceGridView, "closing_debit", Titles.Debit, "{0:n2}");
-            GridViewHelper.AddDataBoundControl(this.trialBalanceGridView, "closing_credit", Titles.Credit, "{0:n2}");
+            GridViewHelper.AddDataBoundControl(this.trialBalanceGridView, "previous_debit", Titles.Debit, "{0:N}", true);
+            GridViewHelper.AddDataBoundControl(this.trialBalanceGridView, "previous_credit", Titles.Credit, "{0:N}", true);
+            GridViewHelper.AddDataBoundControl(this.trialBalanceGridView, "debit", Titles.Debit, "{0:N}", true);
+            GridViewHelper.AddDataBoundControl(this.trialBalanceGridView, "credit", Titles.Credit, "{0:N}", true);
+            GridViewHelper.AddDataBoundControl(this.trialBalanceGridView, "closing_debit", Titles.Debit, "{0:N}", true);
+            GridViewHelper.AddDataBoundControl(this.trialBalanceGridView, "closing_credit", Titles.Credit, "{0:N}", true);
         }
 
         private void CreateGrid(Control container)
@@ -150,7 +150,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 }
                 this.factorInputText = new HtmlInputText();
                 this.factorInputText.ID = "FactorInputText";
-                this.factorInputText.Attributes.Add("class", "small input");
+                this.factorInputText.Attributes.Add("class", "small input integer");
                 this.factorInputText.Value = "1000";
 
                 field.Controls.Add(this.factorInputText);

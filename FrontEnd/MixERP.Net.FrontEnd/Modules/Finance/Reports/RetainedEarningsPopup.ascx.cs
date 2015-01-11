@@ -1,4 +1,4 @@
-﻿<%--
+﻿/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
 This file is part of MixERP.
@@ -14,7 +14,17 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with MixERP.  If not, see <http://www.gnu.org/licenses />.
---%>
-<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Stores.ascx.cs" Inherits="MixERP.Net.Core.Modules.POS.Setup.Stores" %>
-<asp:PlaceHolder ID="ScrudPlaceholder" runat="server" />
+along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
+***********************************************************************************/
+
+using System;
+
+namespace MixERP.Net.Core.Modules.Finance.Reports
+{
+    public partial class RetainedEarningsPopup : System.Web.UI.UserControl
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+        }
+    }
+}

@@ -80,6 +80,7 @@
     <Compile Include="Helpers\CollectionHelper.cs" />
     <Compile Include="Helpers\ConfigurationHelper.cs" />
     <Compile Include="Helpers\DataRowHelper.cs" />
+    <Compile Include="Helpers\DataTableHelper.cs" />
     <Compile Include="Helpers\DateHelper.cs" />
     <Compile Include="Helpers\DropDownListHelper.cs" />
     <Compile Include="Helpers\ExpressionHelper.cs" />

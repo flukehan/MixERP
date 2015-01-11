@@ -30,7 +30,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Reports
     {
         public static DataTable GetPLAccount(DateTime from, DateTime to, int userId, int officeId, bool compact, decimal factor)
         {
-            const string sql = "SELECT core.get_profit_and_loss_statement(@From::date, @To::date, @UserId, @OfficeId, @Factor, @Compact);";
+            const string sql = "SELECT transactions.get_profit_and_loss_statement(@From::date, @To::date, @UserId, @OfficeId, @Factor, @Compact);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@From", from);

@@ -32,7 +32,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <add key="DeleteButtonIconCssClass" value="" />
     <add key="PrintButtonIconCssClass" value="" />
 
-    <add key="DescriptionCssClass" value="ui large blue message" />
+    <add key="DescriptionCssClass" value="ui large purple header" />
     <add key="ErrorCssClass" value="error-message" />
     <add key="ExpressionSeparator" value="-->" />
     <add key="FailiureCssClass" value="failure" />
@@ -43,7 +43,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
     <add key="GridPanelCssClass" value="segment" />
     <add key="GridViewAlternateRowCssClass" value="" />
-    <add key="GridViewCssClass" value="ui celled table segment" />
+    <add key="GridViewCssClass" value="ui celled striped definition sortable table segment" />
     <add key="GridViewDefaultWidth" value="100%" />
     <add key="GridPanelDefaultWidth" value="1000px" />
     <add key="GridPanelStyle" value="padding:2px;overflow:auto;" />

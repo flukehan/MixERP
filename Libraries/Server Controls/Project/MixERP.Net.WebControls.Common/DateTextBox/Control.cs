@@ -79,12 +79,23 @@ namespace MixERP.Net.WebControls.Common
 
         protected override void Render(HtmlTextWriter w)
         {
-            this.textBox.RenderControl(w);
+            if (this.textBox != null)
+            {
+                this.textBox.RenderControl(w);
+            }
+
 
             if (this.EnableValidation)
             {
-                this.requiredValidator.RenderControl(w);
-                this.compareValidator.RenderControl(w);
+                if (this.requiredValidator != null)
+                {
+                    this.requiredValidator.RenderControl(w);
+                }
+
+                if (this.compareValidator != null)
+                {
+                    this.compareValidator.RenderControl(w);
+                }
             }
         }
 

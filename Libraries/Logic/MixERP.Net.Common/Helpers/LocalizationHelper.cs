@@ -53,10 +53,10 @@ namespace MixERP.Net.Common.Helpers
                         {
                             // ReSharper disable once ExpressionIsAlwaysNull
                             resources.Add(entry.Key.ToString(),
-                                ((ResXDataNode)entry.Value).GetValue(iResoulution).ToString());
+                                ((ResXDataNode) entry.Value).GetValue(iResoulution).ToString());
                         }
 
-                        ResXDataNode dataNode = (ResXDataNode)entry.Value;
+                        ResXDataNode dataNode = (ResXDataNode) entry.Value;
 
                         if (dataNode != null)
                         {
@@ -78,6 +78,12 @@ namespace MixERP.Net.Common.Helpers
         {
             CultureInfo culture = GetCurrentCulture();
             return culture.NumberFormat.CurrencyDecimalDigits;
+        }
+
+        public static string GetCurrencySymbol()
+        {
+            CultureInfo culture = GetCurrentCulture();
+            return culture.NumberFormat.CurrencySymbol;
         }
 
         public static CultureInfo GetCurrentCulture()

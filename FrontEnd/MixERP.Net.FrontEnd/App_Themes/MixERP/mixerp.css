@@ -55,7 +55,7 @@ body {
 #SignInBody {
   background-color: #67238b;
 }
-.purple {
+.theme {
   background-color: #67238b !important;
 }
 footer {
@@ -351,13 +351,14 @@ select[disabled] {
 }
 a {
   outline: none;
-  color: #98129c;
+  /*color: @title-color;*/
+  color: inherit;
 }
 a:hover,
 a:active,
 a:focus {
   text-decoration: none !important;
-  color: #7c0c80;
+  /*color: @title-color-hover;*/
 }
 #user-panel .dropdown {
   margin-top: -6px;
@@ -456,7 +457,9 @@ table.borderless td {
 #MainContent {
   padding: 12px;
 }
-.text-right {
+.text-right,
+.text-right td,
+.text.right {
   text-align: right !important;
 }
 .block {
@@ -530,9 +533,11 @@ table.ui.form .normal {
   width: 250px !important;
 }
 select option {
+  font-size: 11px;
   padding: 2px 12px;
 }
 .ui.form select {
+  font-size: 11px;
   height: 32px;
 }
 .auto-overflow-panel {
@@ -541,5 +546,13 @@ select option {
 }
 .strong {
   font-weight: bold;
+}
+.dotted.underline {
+  border-bottom: 1px dotted black;
+}
+.hint {
+  background-color: #f3f3f8;
+  font-weight: bold;
+  font-size: 1.1rem;
 }
 /*# sourceMappingURL=mixerp.css.map */

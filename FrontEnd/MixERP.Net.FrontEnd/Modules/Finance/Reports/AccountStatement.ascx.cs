@@ -684,9 +684,9 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             this.AddTemplateFields();
             GridViewHelper.AddDataBoundControl(this.statementGridView, "tran_code", Titles.TranCode);
             GridViewHelper.AddDataBoundControl(this.statementGridView, "value_date", Titles.ValueDate, "{0:d}");
-            GridViewHelper.AddDataBoundControl(this.statementGridView, "debit", Titles.Debit);
-            GridViewHelper.AddDataBoundControl(this.statementGridView, "credit", Titles.Credit);
-            GridViewHelper.AddDataBoundControl(this.statementGridView, "balance", Titles.Balance);
+            GridViewHelper.AddDataBoundControl(this.statementGridView, "debit", Titles.Debit, "{0:N}", true);
+            GridViewHelper.AddDataBoundControl(this.statementGridView, "credit", Titles.Credit, "{0:N}", true);
+            GridViewHelper.AddDataBoundControl(this.statementGridView, "balance", Titles.Balance, "{0:N}", true);
             GridViewHelper.AddDataBoundControl(this.statementGridView, "statement_reference", Titles.StatementReference);
             GridViewHelper.AddDataBoundControl(this.statementGridView, "office", Titles.Office);
             GridViewHelper.AddDataBoundControl(this.statementGridView, "book", Titles.Book);

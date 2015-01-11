@@ -11,7 +11,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 {
 
 
-    public partial class OffBalanceSheet
+    public partial class RetainedEarningsPopup
     {
     }
 }

@@ -63,19 +63,17 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (!disposing)
             {
-                if (disposing)
-                {
-                    if (this.container != null)
-                    {
-                        this.container.Dispose();
-                        this.container = null;
-                    }
-                }
-
-                this.disposed = true;
+                return;
             }
+            if (this.container != null)
+            {
+                this.container.Dispose();
+                this.container = null;
+            }
+
+            this.disposed = true;
         }
 
         #endregion

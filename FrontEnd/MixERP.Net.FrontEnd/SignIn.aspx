@@ -21,6 +21,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
 <%@ Import Namespace="System.Security.Cryptography" %>
 <%@ Import Namespace="MixERP.Net.Common" %>
+<%@ Import Namespace="MixERP.Net.Common.Helpers" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -35,6 +36,12 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
         <asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
 
+        <script type="text/javascript">
+            var shortDateFormat = "<%= LocalizationHelper.GetShortDateFormat()%>";
+            var thousandSeparator = "<%= LocalizationHelper.GetThousandSeparator()%>";
+            var decimalSeparator = "<%= LocalizationHelper.GetDecimalSeparator()%>";
+            var currencyDecimalPlaces = "<%= LocalizationHelper.GetCurrencyDecimalPlaces()%>";
+        </script>
         <script type="text/javascript" src="/bundles/scripts/libraries.min.js"></script>
         <script type="text/javascript" src="/Scripts/jssha1.5/src/sha.js"></script>
         <script type="text/javascript" src="/Scripts/Pages/SignIn.aspx.js"></script>
