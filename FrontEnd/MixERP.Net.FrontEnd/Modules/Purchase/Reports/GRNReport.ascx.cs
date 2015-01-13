@@ -17,12 +17,12 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.ReportEngine;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reflection;
+using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.WebControls.ReportEngine;
 
 namespace MixERP.Net.Core.Modules.Purchase.Reports
 {
@@ -30,15 +30,15 @@ namespace MixERP.Net.Core.Modules.Purchase.Reports
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            Collection<KeyValuePair<string, string>> list = new Collection<KeyValuePair<string, string>>();
-            list.Add(new KeyValuePair<string, string>("@transaction_master_id", this.Page.Request["TranId"]));
+            Collection<KeyValuePair<string, object>> list = new Collection<KeyValuePair<string, object>>();
+            list.Add(new KeyValuePair<string, object>("@transaction_master_id", this.Page.Request["TranId"]));
 
             using (Report report = new Report())
             {
                 report.AddParameterToCollection(list);
                 report.AddParameterToCollection(list);
                 report.AutoInitialize = true;
-                report.ResourceAssembly = Assembly.GetAssembly(typeof(DirectPurchaseInvoiceReport));
+                report.ResourceAssembly = Assembly.GetAssembly(typeof (DirectPurchaseInvoiceReport));
                 report.Path = "~/Modules/Purchase/Reports/Source/Purchase.GRN.xml";
 
                 this.Controls.Add(report);

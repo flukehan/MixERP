@@ -17,15 +17,15 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common;
-using MixERP.Net.Core.Modules.Finance.Resources;
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.ReportEngine;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Reflection;
+using MixERP.Net.Common;
+using MixERP.Net.Core.Modules.Finance.Resources;
+using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.WebControls.ReportEngine;
 
 namespace MixERP.Net.Core.Modules.Finance.Reports
 {
@@ -44,15 +44,15 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 }
             }
 
-            Collection<KeyValuePair<string, string>> list = new Collection<KeyValuePair<string, string>>();
-            list.Add(new KeyValuePair<string, string>("@transaction_master_id", tranId));
+            Collection<KeyValuePair<string, object>> list = new Collection<KeyValuePair<string, object>>();
+            list.Add(new KeyValuePair<string, object>("@transaction_master_id", tranId));
 
             using (Report report = new Report())
             {
                 report.AddParameterToCollection(list);
                 report.AddParameterToCollection(list);
                 report.RunningTotalText = Titles.RunningTotal;
-                report.ResourceAssembly = Assembly.GetAssembly(typeof(GLAdviceReport));
+                report.ResourceAssembly = Assembly.GetAssembly(typeof (GLAdviceReport));
                 report.Path = "~/Modules/Finance/Reports/Source/Transactions.GLEntry.xml";
                 report.AutoInitialize = true;
 

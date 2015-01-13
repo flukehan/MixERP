@@ -18,31 +18,33 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 /*jshint -W032*/
-/*global getAjax, getAjaxErrorMessage, getParameterByName, logError, saveButton, url:true, validateProductControl, errorLabelBottom, appendParameter, getData, valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, statementReference, agentId, shipperId, shippingAddressCode, shippingCharge, cashRepositoryId, costCenterId, transactionIds, attachments*/
+/*global getAjax, getAjaxErrorMessage, getParameterByName, logError, saveButton, url:true, validateProductControl, errorLabelBottom, appendParameter, getData, valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, statementReference, agentId, shipperId, shippingAddressCode, shippingCharge, costCenterId, transactionIds, attachments*/
 
-saveButton.click(function () {
+saveButton.click(function() {
     if (validateProductControl()) {
         save();
     };
 });
 
-var save = function () {
+var save = function() {
+    saveButton.addClass("loading");
     var tranId = getParameterByName("TranId");
-    var ajaxSaveOder = saveOrder(tranId, valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, cashRepositoryId, costCenterId, salespersonId, statementReference, transactionIds, attachments);
+    var ajaxSaveOder = saveOrder(tranId, valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, costCenterId, salespersonId, statementReference, transactionIds, attachments);
 
-    ajaxSaveOder.done(function (response) {
+    ajaxSaveOder.done(function(response) {
         var id = response.d;
         window.location = "/Modules/Sales/Confirmation/Return.mix?TranId=" + id;
     });
 
-    ajaxSaveOder.fail(function (jqXHR) {
+    ajaxSaveOder.fail(function(jqXHR) {
+        saveButton.removeClass("loading");
         var errorMessage = getAjaxErrorMessage(jqXHR);
         errorLabelBottom.html(errorMessage);
         logError(errorMessage);
     });
 };
 
-var saveOrder = function (tranId, valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, cashRepositoryId, costCenterId, salespersonId, statementReference, transactionIds, attachments) {
+var saveOrder = function(tranId, valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, costCenterId, salespersonId, statementReference, transactionIds, attachments) {
     var d = "";
     d = appendParameter(d, "tranId", tranId);
     d = appendParameter(d, "valueDate", valueDate);

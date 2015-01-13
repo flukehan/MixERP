@@ -1,4 +1,4 @@
-CREATE FUNCTION core.disable_editing_sys_type()
+CREATE OR REPLACE FUNCTION core.disable_editing_sys_type()
 RETURNS TRIGGER
 AS
 $$
@@ -8,7 +8,7 @@ BEGIN
         (
             SELECT *
             FROM core.accounts
-            WHERE (sys_type=true OR is_cash=true)
+            WHERE (sys_type=true)
             AND account_id=OLD.account_id
         ) THEN
             RAISE EXCEPTION 'You are not allowed to change system accounts.';
@@ -16,7 +16,7 @@ BEGIN
     END IF;
     
     IF TG_OP='INSERT' THEN
-        IF (NEW.sys_type=true OR NEW.is_cash=true) THEN
+        IF (NEW.sys_type=true) THEN
             RAISE EXCEPTION 'You are not allowed to add system accounts.';
         END IF;
     END IF;
@@ -29,19 +29,3 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
-
-CREATE TRIGGER restrict_delete_sys_type_trigger
-BEFORE DELETE
-ON core.accounts
-FOR EACH ROW EXECUTE PROCEDURE core.disable_editing_sys_type();
-
-CREATE TRIGGER restrict_update_sys_type_trigger
-BEFORE UPDATE
-ON core.accounts
-FOR EACH ROW EXECUTE PROCEDURE core.disable_editing_sys_type();
-
-CREATE TRIGGER restrict_insert_sys_type_trigger
-BEFORE INSERT
-ON core.accounts
-FOR EACH ROW EXECUTE PROCEDURE core.disable_editing_sys_type();
-

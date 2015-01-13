@@ -17,17 +17,17 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System;
+using System.Collections.ObjectModel;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models.Core;
 using MixERP.Net.Common.Models.Transactions;
-using System;
-using System.Collections.ObjectModel;
 
 namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
 {
     public static class DirectSales
     {
-        public static long Add(DateTime valueDate, int storeId, bool isCredit, int paymentTermId, string partyCode, int agentId, int priceTypeId, Collection<StockMasterDetailModel> details, int shipperId, string shippingAddressCode, decimal shippingCharge, int cashRepositoryId, int costCenterId, string referenceNumber, string statementReference, Collection<AttachmentModel> attachments, bool nonTaxable)
+        public static long Add(DateTime valueDate, int storeId, bool isCredit, int paymentTermId, string partyCode, int agentId, int priceTypeId, Collection<StockMasterDetailModel> details, int shipperId, string shippingAddressCode, decimal shippingCharge, int costCenterId, string referenceNumber, string statementReference, Collection<AttachmentModel> attachments, bool nonTaxable)
         {
             StockMasterModel stockMaster = new StockMasterModel();
 
@@ -39,7 +39,6 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
             stockMaster.ShippingAddressCode = shippingAddressCode;
             stockMaster.ShippingCharge = shippingCharge;
             stockMaster.SalespersonId = agentId;
-            stockMaster.CashRepositoryId = cashRepositoryId;
             stockMaster.StoreId = storeId;
 
             long transactionMasterId = GlTransaction.Add("Sales.Direct", valueDate, SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), costCenterId, referenceNumber, statementReference, stockMaster, details, attachments, nonTaxable);

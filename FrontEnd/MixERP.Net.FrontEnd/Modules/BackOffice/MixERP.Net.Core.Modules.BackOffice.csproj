@@ -72,6 +72,7 @@
     </Content>
     <Content Include="Industries.ascx" />
     <Content Include="Mix Open Foundation.snk" />
+    <Content Include="Scripts\AttachmentManager.ascx.js" />
     <Content Include="Services\web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -416,7 +417,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Reports\" />
-    <Folder Include="Scripts\" />
     <Folder Include="Widgets\" />
   </ItemGroup>
   <ItemGroup>

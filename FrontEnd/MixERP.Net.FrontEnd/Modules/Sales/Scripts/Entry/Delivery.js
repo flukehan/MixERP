@@ -26,7 +26,8 @@ saveButton.click(function () {
 });
 
 var save = function () {
-    var ajaxSalesDelivery = saveSalesDelivery(valueDate, storeId, partyCode, priceTypeId, paymentTermId, referenceNumber, data, statementReference, transactionType, salespersonId, shipperId, shippingAddressCode, shippingCharge, cashRepositoryId, costCenterId, transactionIds, attachments, nonTaxable);
+    saveButton.addClass("loading");
+    var ajaxSalesDelivery = saveSalesDelivery(valueDate, storeId, partyCode, priceTypeId, paymentTermId, referenceNumber, data, statementReference, transactionType, salespersonId, shipperId, shippingAddressCode, shippingCharge, costCenterId, transactionIds, attachments, nonTaxable);
 
     ajaxSalesDelivery.done(function (response) {
         var id = response.d;
@@ -34,13 +35,14 @@ var save = function () {
     });
 
     ajaxSalesDelivery.fail(function (jqXHR) {
+        saveButton.removeClass("loading");
         var errorMessage = getAjaxErrorMessage(jqXHR);
         errorLabelBottom.html(errorMessage);
         logError(errorMessage);
     });
 };
 
-var saveSalesDelivery = function (valueDate, storeId, partyCode, priceTypeId, paymentTermId, referenceNumber, data, statementReference, transactionType, salespersonId, shipperId, shippingAddressCode, shippingCharge, cashRepositoryId, costCenterId, transactionIds, attachments, nonTaxable) {
+var saveSalesDelivery = function (valueDate, storeId, partyCode, priceTypeId, paymentTermId, referenceNumber, data, statementReference, transactionType, salespersonId, shipperId, shippingAddressCode, shippingCharge, costCenterId, transactionIds, attachments, nonTaxable) {
     var d = "";
     d = appendParameter(d, "valueDate", valueDate);
     d = appendParameter(d, "storeId", storeId);
@@ -55,7 +57,6 @@ var saveSalesDelivery = function (valueDate, storeId, partyCode, priceTypeId, pa
     d = appendParameter(d, "shipperId", shipperId);
     d = appendParameter(d, "shippingAddressCode", shippingAddressCode);
     d = appendParameter(d, "shippingCharge", shippingCharge);
-    d = appendParameter(d, "cashRepositoryId", cashRepositoryId);
     d = appendParameter(d, "costCenterId", costCenterId);
     d = appendParameter(d, "transactionIds", transactionIds);
     d = appendParameter(d, "attachmentsJSON", attachments);

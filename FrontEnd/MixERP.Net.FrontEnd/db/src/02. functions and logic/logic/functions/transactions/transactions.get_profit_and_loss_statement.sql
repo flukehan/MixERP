@@ -74,6 +74,7 @@ BEGIN
     SELECT 9000,   'Nonoperating Incomes',         true,   NULL::integer   UNION ALL
     SELECT 10000,  'Financial Incomes',            true,   NULL::integer   UNION ALL
     SELECT 11000,  'Financial Expenses',           true,   NULL::integer   UNION ALL
+    SELECT 11100,  'Interest Expenses',            true,   11000           UNION ALL
     SELECT 12000,  'Profit Before Income Taxes',   false,  NULL::integer   UNION ALL
     SELECT 13000,  'Income Taxes',                 true,   NULL::integer   UNION ALL
     SELECT 13001,  'Income Tax Provison',          false,  13000            UNION ALL
@@ -83,14 +84,15 @@ BEGIN
     UPDATE pl_temp SET is_profit = true WHERE item_id IN(6000,8000, 12000, 14000);
     
     INSERT INTO pl_temp(item_id, account_id, item, parent_item_id, is_debit)
-    SELECT id, account_id, account_name, 1000 as parent_item_id, false as is_debit FROM core.get_account_view_by_account_master_id(201, 1000) UNION ALL--Sales Accounts
-    SELECT id, account_id, account_name, 2000 as parent_item_id, true as is_debit FROM core.get_account_view_by_account_master_id(204, 2001) UNION ALL--COGS Accounts
-    SELECT id, account_id, account_name, 5000 as parent_item_id, true as is_debit FROM core.get_account_view_by_account_master_id(205, 5000) UNION ALL--Direct Cost
-    SELECT id, account_id, account_name, 7000 as parent_item_id, true as is_debit FROM core.get_account_view_by_account_master_id(206, 7000) UNION ALL--Operating Expenses
-    SELECT id, account_id, account_name, 9000 as parent_item_id, false as is_debit FROM core.get_account_view_by_account_master_id(202, 9000) UNION ALL--Nonoperating Incomes
-    SELECT id, account_id, account_name, 10000 as parent_item_id, false as is_debit FROM core.get_account_view_by_account_master_id(203, 10000) UNION ALL--Financial Incomes
-    SELECT id, account_id, account_name, 11000 as parent_item_id, true as is_debit FROM core.get_account_view_by_account_master_id(207, 11000) UNION ALL--Financial Expenses
-    SELECT id, account_id, account_name, 13000 as parent_item_id, true as is_debit FROM core.get_account_view_by_account_master_id(208, 13001);--Income Tax Expenses
+    SELECT id, account_id, account_name, 1000 as parent_item_id, false as is_debit FROM core.get_account_view_by_account_master_id(20100, 1000) UNION ALL--Sales Accounts
+    SELECT id, account_id, account_name, 2000 as parent_item_id, true as is_debit FROM core.get_account_view_by_account_master_id(20400, 2001) UNION ALL--COGS Accounts
+    SELECT id, account_id, account_name, 5000 as parent_item_id, true as is_debit FROM core.get_account_view_by_account_master_id(20500, 5000) UNION ALL--Direct Cost
+    SELECT id, account_id, account_name, 7000 as parent_item_id, true as is_debit FROM core.get_account_view_by_account_master_id(20600, 7000) UNION ALL--Operating Expenses
+    SELECT id, account_id, account_name, 9000 as parent_item_id, false as is_debit FROM core.get_account_view_by_account_master_id(20200, 9000) UNION ALL--Nonoperating Incomes
+    SELECT id, account_id, account_name, 10000 as parent_item_id, false as is_debit FROM core.get_account_view_by_account_master_id(20300, 10000) UNION ALL--Financial Incomes
+    SELECT id, account_id, account_name, 11000 as parent_item_id, true as is_debit FROM core.get_account_view_by_account_master_id(20700, 11000) UNION ALL--Financial Expenses
+    SELECT id, account_id, account_name, 11100 as parent_item_id, true as is_debit FROM core.get_account_view_by_account_master_id(20701, 11100) UNION ALL--Interest Expenses
+    SELECT id, account_id, account_name, 13000 as parent_item_id, true as is_debit FROM core.get_account_view_by_account_master_id(20800, 13001);--Income Tax Expenses
 
     IF(NOT _is_periodic) THEN
         DELETE FROM pl_temp WHERE item_id IN(2001, 3000, 4000);
@@ -207,13 +209,13 @@ BEGIN
     || ' FROM 
     (
         SELECT
-        SUM(CASE item_id WHEN 11000 THEN amount *-1 ELSE amount END) AS amount, '
-        || array_to_string(array_agg('SUM(CASE item_id WHEN 11000 THEN "' || period_name || '"*-1  ELSE "' || period_name || '" END) AS "' || period_name || '"'), ',') ||
+        SUM(CASE WHEN item_id IN(11000, 11100) THEN amount *-1 ELSE amount END) AS amount, '
+        || array_to_string(array_agg('SUM(CASE WHEN item_id IN(11000, 11100) THEN "' || period_name || '"*-1  ELSE "' || period_name || '" END) AS "' || period_name || '"'), ',') ||
     '
          FROM pl_temp
          WHERE item_id IN
          (
-             8000, 9000, 10000, 11000
+             8000, 9000, 10000, 11000, 11100
          )
     ) 
     AS tran
@@ -354,21 +356,21 @@ BEGIN
     INTO _incomes
     FROM transactions.verified_transaction_mat_view
     WHERE value_date >= _date_from AND value_date <= _date_to
-    AND account_master_id >=201
-    AND account_master_id <= 203;
+    AND account_master_id >=20100
+    AND account_master_id <= 20300;
     
     SELECT SUM(CASE tran_type WHEN 'Dr' THEN amount_in_local_currency ELSE amount_in_local_currency * -1 END)
     INTO _expenses
     FROM transactions.verified_transaction_mat_view
     WHERE value_date >= _date_from AND value_date <= _date_to
-    AND account_master_id >=204
-    AND account_master_id <= 207;
+    AND account_master_id >=20400
+    AND account_master_id <= 20701;
     
     SELECT SUM(CASE tran_type WHEN 'Dr' THEN amount_in_local_currency ELSE amount_in_local_currency * -1 END)
     INTO _tax_paid
     FROM transactions.verified_transaction_mat_view
     WHERE value_date >= _date_from AND value_date <= _date_to
-    AND account_master_id =208;
+    AND account_master_id =20800;
     
     _profit_before_tax := COALESCE(_incomes, 0) - COALESCE(_expenses, 0);
 

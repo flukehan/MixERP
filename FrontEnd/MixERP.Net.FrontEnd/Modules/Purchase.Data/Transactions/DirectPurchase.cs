@@ -17,23 +17,22 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System;
+using System.Collections.ObjectModel;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models.Core;
 using MixERP.Net.Common.Models.Transactions;
-using System;
-using System.Collections.ObjectModel;
 
 namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
 {
     public static class DirectPurchase
     {
-        public static long Add(DateTime valueDate, int storeId, bool isCredit, string partyCode, Collection<StockMasterDetailModel> details, int cashRepositoryId, int costCenterId, string referenceNumber, string statementReference, Collection<AttachmentModel> attachments)
+        public static long Add(DateTime valueDate, int storeId, bool isCredit, string partyCode, Collection<StockMasterDetailModel> details, int costCenterId, string referenceNumber, string statementReference, Collection<AttachmentModel> attachments)
         {
             StockMasterModel stockMaster = new StockMasterModel();
 
             stockMaster.PartyCode = partyCode;
             stockMaster.StoreId = storeId;
-            stockMaster.CashRepositoryId = cashRepositoryId;
             stockMaster.IsCredit = isCredit;
 
             if (!string.IsNullOrWhiteSpace(statementReference))

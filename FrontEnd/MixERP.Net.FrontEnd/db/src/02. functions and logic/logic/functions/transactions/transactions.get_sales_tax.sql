@@ -276,6 +276,5 @@ $$
 LANGUAGE plpgsql;
 
 
+--SELECT * FROM transactions.get_sales_tax('Sales', 1, 'JASMI-0002', 'None', 1, 'RMBP', 225000, 1, 0, 0, 3);
 
-
---SELECT * FROM transactions.get_sales_tax('Sales', 1, 'MAJON-0002', '', 1, 'RMBP', 1000, 2, 200, 50, 3);

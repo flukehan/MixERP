@@ -27,6 +27,7 @@ saveButton.click(function () {
 });
 
 var save = function () {
+    saveButton.addClass("loading");
     var tranId = getParameterByName("TranId");
     var ajaxSaveOder = saveOrder(tranId, valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, statementReference, attachments);
 
@@ -36,6 +37,7 @@ var save = function () {
     });
 
     ajaxSaveOder.fail(function (jqXHR) {
+        saveButton.removeClass("loading");
         var errorMessage = getAjaxErrorMessage(jqXHR);
         errorLabelBottom.html(errorMessage);
         logError(errorMessage);

@@ -20,28 +20,30 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 /*jshint -W032*/
 /*global getAjax, getAjaxErrorMessage, logError, saveButton, url:true, validateProductControl, errorLabelBottom, appendParameter, getData, valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, statementReference, agentId, shipperId, shippingAddressCode, shippingCharge, cashRepositoryId, costCenterId, transactionIds, attachments*/
 
-saveButton.click(function () {
+saveButton.click(function() {
     if (validateProductControl()) {
         save();
     };
 });
 
-var save = function () {
+var save = function() {
+    saveButton.addClass("loading");
     var ajaxSaveQuotation = saveQuotation(valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, cashRepositoryId, costCenterId, salespersonId, statementReference, transactionIds, attachments, nonTaxable);
 
-    ajaxSaveQuotation.done(function (response) {
+    ajaxSaveQuotation.done(function(response) {
         var id = response.d;
         window.location = "/Modules/Sales/Confirmation/Quotation.mix?TranId=" + id;
     });
 
-    ajaxSaveQuotation.fail(function (jqXHR) {
+    ajaxSaveQuotation.fail(function(jqXHR) {
+        saveButton.removeClass("loading");
         var errorMessage = getAjaxErrorMessage(jqXHR);
         errorLabelBottom.html(errorMessage);
         logError(errorMessage);
     });
 };
 
-var saveQuotation = function (valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, cashRepositoryId, costCenterId, salePersonId, statementReference, transactionIds, attachments, nonTaxable) {
+var saveQuotation = function(valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, cashRepositoryId, costCenterId, salePersonId, statementReference, transactionIds, attachments, nonTaxable) {
     var d = "";
     d = appendParameter(d, "valueDate", valueDate);
     d = appendParameter(d, "storeId", storeId);

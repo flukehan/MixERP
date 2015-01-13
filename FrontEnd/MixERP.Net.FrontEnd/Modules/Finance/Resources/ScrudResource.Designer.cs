@@ -241,6 +241,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid Cashflow Heading Type. Allowed values: O, I, F..
+        /// </summary>
+        internal static string cash_flow_heading_cash_flow_heading_type_chk {
+            get {
+                return ResourceManager.GetString("cash_flow_heading_cash_flow_heading_type_chk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cash Flow Heading Code.
         /// </summary>
         internal static string cash_flow_heading_code {
@@ -268,6 +277,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cashflow Heading Type.
+        /// </summary>
+        internal static string cash_flow_heading_type {
+            get {
+                return ResourceManager.GetString("cash_flow_heading_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cash Flow Master Code.
         /// </summary>
         internal static string cash_flow_master_code {
@@ -291,6 +309,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string cash_flow_master_name {
             get {
                 return ResourceManager.GetString("cash_flow_master_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cashflow Setup Id.
+        /// </summary>
+        internal static string cash_flow_setup_id {
+            get {
+                return ResourceManager.GetString("cash_flow_setup_id", resourceCulture);
             }
         }
         
@@ -457,15 +484,6 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Is Cash.
-        /// </summary>
-        internal static string is_cash {
-            get {
-                return ResourceManager.GetString("is_cash", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Is Debit.
         /// </summary>
         internal static string is_debit {
@@ -475,20 +493,20 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Is Employee.
+        ///   Looks up a localized string similar to Is Purchase.
         /// </summary>
-        internal static string is_employee {
+        internal static string is_purchase {
             get {
-                return ResourceManager.GetString("is_employee", resourceCulture);
+                return ResourceManager.GetString("is_purchase", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Is Party.
+        ///   Looks up a localized string similar to Is Sales.
         /// </summary>
-        internal static string is_party {
+        internal static string is_sales {
             get {
-                return ResourceManager.GetString("is_party", resourceCulture);
+                return ResourceManager.GetString("is_sales", resourceCulture);
             }
         }
         
@@ -498,6 +516,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string is_summary {
             get {
                 return ResourceManager.GetString("is_summary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Transaction Node.
+        /// </summary>
+        internal static string is_transaction_node {
+            get {
+                return ResourceManager.GetString("is_transaction_node", resourceCulture);
             }
         }
         

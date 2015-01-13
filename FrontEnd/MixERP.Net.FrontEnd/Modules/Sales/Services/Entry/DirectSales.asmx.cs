@@ -24,7 +24,7 @@ using System.Web.Services;
 namespace MixERP.Net.Core.Modules.Sales.Services.Entry
 {
     /// <summary>
-    /// Summary description for DirectSales
+    ///     Summary description for DirectSales
     /// </summary>
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
@@ -35,7 +35,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
     public class DirectSales : WebService
     {
         [WebMethod(EnableSession = true)]
-        public long Save(DateTime valueDate, int storeId, string partyCode, int priceTypeId, string referenceNumber, string data, string statementReference, string transactionType, int paymentTermId, int salespersonId, int shipperId, string shippingAddressCode, decimal shippingCharge, int cashRepositoryId, int costCenterId, string transactionIds, string attachmentsJSON, bool nonTaxable)
+        public long Save(DateTime valueDate, int storeId, string partyCode, int priceTypeId, string referenceNumber, string data, string statementReference, string transactionType, int paymentTermId, int salespersonId, int shipperId, string shippingAddressCode, decimal shippingCharge, int costCenterId, string transactionIds, string attachmentsJSON, bool nonTaxable)
         {
             System.Collections.ObjectModel.Collection<Common.Models.Transactions.StockMasterDetailModel> details = WebControls.StockTransactionFactory.Helpers.CollectionHelper.GetStockMasterDetailCollection(data, storeId);
             System.Collections.ObjectModel.Collection<int> tranIds = new System.Collections.ObjectModel.Collection<int>();
@@ -52,11 +52,6 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
             }
 
             bool isCredit = transactionType != null && !transactionType.ToUpperInvariant().Equals("CASH");
-
-            if (isCredit && cashRepositoryId > 0)
-            {
-                throw new InvalidOperationException("Invalid cash repository specified in credit transaction.");
-            }
 
             if (!Data.Helpers.Stores.IsSalesAllowed(storeId))
             {
@@ -76,7 +71,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
                 }
             }
 
-            return Data.Transactions.DirectSales.Add(valueDate, storeId, isCredit, paymentTermId, partyCode, salespersonId, priceTypeId, details, shipperId, shippingAddressCode, shippingCharge, cashRepositoryId, costCenterId, referenceNumber, statementReference, attachments, nonTaxable);
+            return Data.Transactions.DirectSales.Add(valueDate, storeId, isCredit, paymentTermId, partyCode, salespersonId, priceTypeId, details, shipperId, shippingAddressCode, shippingCharge, costCenterId, referenceNumber, statementReference, attachments, nonTaxable);
         }
     }
 }

@@ -271,16 +271,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                 <input type="text" id="GrandTotalInputText" class="currency" readonly="readonly" />
             </div>
         </div>
-        <div class="two fields" id="CashRepositoryDiv" runat="server">
-            <div class="field">
-                <asp:Literal ID="CashRepositorySelectLabel" runat="server" />
-                <select id="CashRepositorySelect"></select>
-            </div>
-            <div class="field">
-                <asp:Literal ID="CashRepositoryBalanceInputTextLabel" runat="server" />
-                <input type="text" id="CashRepositoryBalanceInputText" class="currency" readonly="readonly" />
-            </div>
-        </div>
         <div class="field" id="CostCenterDiv" runat="server">
             <asp:Literal ID="CostCenterSelectLabel" runat="server" />
             <select id="CostCenterSelect"></select>

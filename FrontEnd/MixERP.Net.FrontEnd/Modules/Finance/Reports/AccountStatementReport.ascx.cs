@@ -42,16 +42,16 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             int officeId = SessionHelper.GetOfficeId();
 
 
-            Collection<KeyValuePair<string, string>> parameter1 = new Collection<KeyValuePair<string, string>>();
-            parameter1.Add(new KeyValuePair<string, string>("@OfficeId", officeId.ToString(CultureInfo.InvariantCulture)));
-            parameter1.Add(new KeyValuePair<string, string>("@AccountNumber", accountNumber));
+            Collection<KeyValuePair<string, object>> parameter1 = new Collection<KeyValuePair<string, object>>();
+            parameter1.Add(new KeyValuePair<string, object>("@OfficeId", officeId.ToString(CultureInfo.InvariantCulture)));
+            parameter1.Add(new KeyValuePair<string, object>("@AccountNumber", accountNumber));
 
-            Collection<KeyValuePair<string, string>> parameter2 = new Collection<KeyValuePair<string, string>>();
-            parameter2.Add(new KeyValuePair<string, string>("@From", from.ToString(SessionHelper.GetCulture())));
-            parameter2.Add(new KeyValuePair<string, string>("@To", to.ToString(SessionHelper.GetCulture())));
-            parameter2.Add(new KeyValuePair<string, string>("@UserId", userId.ToString(CultureInfo.InvariantCulture)));
-            parameter2.Add(new KeyValuePair<string, string>("@AccountNumber", accountNumber));
-            parameter2.Add(new KeyValuePair<string, string>("@OfficeId", officeId.ToString(CultureInfo.InvariantCulture)));
+            Collection<KeyValuePair<string, object>> parameter2 = new Collection<KeyValuePair<string, object>>();
+            parameter2.Add(new KeyValuePair<string, object>("@From", from));
+            parameter2.Add(new KeyValuePair<string, object>("@To", to));
+            parameter2.Add(new KeyValuePair<string, object>("@UserId", userId.ToString(CultureInfo.InvariantCulture)));
+            parameter2.Add(new KeyValuePair<string, object>("@AccountNumber", accountNumber));
+            parameter2.Add(new KeyValuePair<string, object>("@OfficeId", officeId.ToString(CultureInfo.InvariantCulture)));
 
             using (Report report = new Report())
             {

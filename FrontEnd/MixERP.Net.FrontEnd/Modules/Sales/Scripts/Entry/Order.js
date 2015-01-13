@@ -18,7 +18,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 /*jshint -W032*/
-/*global getAjax, getAjaxErrorMessage, logError, saveButton, url:true, validateProductControl, errorLabelBottom, appendParameter, getData, valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, statementReference, agentId, shipperId, shippingAddressCode, shippingCharge, cashRepositoryId, costCenterId, transactionIds, attachments*/
+/*global getAjax, getAjaxErrorMessage, logError, saveButton, url:true, validateProductControl, errorLabelBottom, appendParameter, getData, valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, statementReference, agentId, shipperId, shippingAddressCode, shippingCharge, costCenterId, transactionIds, attachments*/
 
 saveButton.click(function () {
     if (validateProductControl()) {
@@ -27,7 +27,8 @@ saveButton.click(function () {
 });
 
 var save = function () {
-    var ajaxSaveOder = saveOrder(valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, cashRepositoryId, costCenterId, statementReference, transactionIds, attachments, nonTaxable, salespersonId);
+    saveButton.addClass("loading");
+    var ajaxSaveOder = saveOrder(valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, costCenterId, statementReference, transactionIds, attachments, nonTaxable, salespersonId);
 
     ajaxSaveOder.done(function (response) {
         var id = response.d;
@@ -35,13 +36,14 @@ var save = function () {
     });
 
     ajaxSaveOder.fail(function (jqXHR) {
+        saveButton.removeClass("loading");
         var errorMessage = getAjaxErrorMessage(jqXHR);
         errorLabelBottom.html(errorMessage);
         logError(errorMessage);
     });
 };
 
-var saveOrder = function (valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, cashRepositoryId, costCenterId, statementReference, transactionIds, attachments, nonTaxable, salespersonId) {
+var saveOrder = function (valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, costCenterId, statementReference, transactionIds, attachments, nonTaxable, salespersonId) {
     var d = "";
     d = appendParameter(d, "valueDate", valueDate);
     d = appendParameter(d, "storeId", storeId);

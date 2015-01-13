@@ -17,16 +17,16 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System;
+using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Linq;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Models.Core;
 using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.Common.PostgresHelper;
 using MixERP.Net.DBFactory;
 using Npgsql;
-using System;
-using System.Collections.ObjectModel;
-using System.Globalization;
-using System.Linq;
 
 namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
 {
@@ -52,7 +52,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
             string detail = StockMasterDetailHelper.CreateStockMasterDetailParameter(details);
             string attachment = AttachmentHelper.CreateAttachmentModelParameter(attachments);
 
-            string sql = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM transactions.post_sales(@BookName, @OfficeId, @UserId, @LoginId, @ValueDate, @CostCenterId, @ReferenceNumber, @StatementReference, @CashRepositoryId, @IsCredit, @PaymentTermId, @PartyCode, @PriceTypeId, @SalespersonId, @ShipperId, @ShippingAddressCode, @StoreId, @NonTaxable, ARRAY[{0}], ARRAY[{1}])", detail, attachment);
+            string sql = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM transactions.post_sales(@BookName, @OfficeId, @UserId, @LoginId, @ValueDate, @CostCenterId, @ReferenceNumber, @StatementReference, @IsCredit, @PaymentTermId, @PartyCode, @PriceTypeId, @SalespersonId, @ShipperId, @ShippingAddressCode, @StoreId, @NonTaxable, ARRAY[{0}], ARRAY[{1}])", detail, attachment);
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@BookName", bookName);
@@ -63,15 +63,6 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
                 command.Parameters.AddWithValue("@CostCenterId", costCenterId);
                 command.Parameters.AddWithValue("@ReferenceNumber", referenceNumber);
                 command.Parameters.AddWithValue("@StatementReference", statementReference);
-
-                if (stockMaster.CashRepositoryId == 0)
-                {
-                    command.Parameters.AddWithValue("@CashRepositoryId", DBNull.Value);
-                }
-                else
-                {
-                    command.Parameters.AddWithValue("@CashRepositoryId", stockMaster.CashRepositoryId);
-                }
 
                 command.Parameters.AddWithValue("@IsCredit", stockMaster.IsCredit);
 

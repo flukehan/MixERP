@@ -194,8 +194,7 @@ var validateDuplicates = function () {
         }
     }
 
-    //if (duplicates == "") { //No duplicate found.
-    if (duplicates === "") { //No duplicate found.
+    if (isNullOrWhiteSpace(duplicates)) { //No duplicate found.
         warningLabel.html("");
         return true;
     } else {

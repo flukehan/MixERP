@@ -15,8 +15,8 @@ BEGIN
 
     --Create a new account
     IF(NEW.account_id IS NULL) THEN
-        INSERT INTO core.accounts(account_master_id, account_number, currency_code, account_name, is_party, parent_account_id)
-        SELECT core.get_account_master_id_by_account_id(_parent_account_id), _party_code, NEW.currency_code, _party_code || ' (' || NEW.party_name || ')', true, _parent_account_id
+        INSERT INTO core.accounts(account_master_id, account_number, currency_code, account_name, parent_account_id)
+        SELECT core.get_account_master_id_by_account_id(_parent_account_id), _party_code, NEW.currency_code, _party_code || ' (' || NEW.party_name || ')', _parent_account_id
         RETURNING account_id INTO _account_id;
     
         UPDATE core.parties

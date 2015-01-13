@@ -27,7 +27,8 @@ saveButton.click(function () {
 });
 
 var save = function () {
-    var ajaxSaveDirectPurchase = saveDirectPurchase(valueDate, storeId, partyCode, referenceNumber, data, statementReference, transactionType, cashRepositoryId, costCenterId, attachments);
+    saveButton.addClass("loading");
+    var ajaxSaveDirectPurchase = saveDirectPurchase(valueDate, storeId, partyCode, referenceNumber, data, statementReference, transactionType, costCenterId, attachments);
 
     ajaxSaveDirectPurchase.done(function (response) {
         var id = response.d;
@@ -35,13 +36,14 @@ var save = function () {
     });
 
     ajaxSaveDirectPurchase.fail(function (jqXHR) {
+        saveButton.removeClass("loading");
         var errorMessage = getAjaxErrorMessage(jqXHR);
         errorLabelBottom.html(errorMessage);
         logError(errorMessage);
     });
 };
 
-var saveDirectPurchase = function (valueDate, storeId, partyCode, referenceNumber, data, statementReference, transactionType, cashRepositoryId, costCenterId, attachments) {
+var saveDirectPurchase = function (valueDate, storeId, partyCode, referenceNumber, data, statementReference, transactionType, costCenterId, attachments) {
     var d = "";
     d = appendParameter(d, "valueDate", valueDate);
     d = appendParameter(d, "storeId", storeId);
@@ -50,7 +52,6 @@ var saveDirectPurchase = function (valueDate, storeId, partyCode, referenceNumbe
     d = appendParameter(d, "data", data);
     d = appendParameter(d, "statementReference", statementReference);
     d = appendParameter(d, "transactionType", transactionType);
-    d = appendParameter(d, "cashRepositoryId", cashRepositoryId);
     d = appendParameter(d, "costCenterId", costCenterId);
     d = appendParameter(d, "attachmentsJSON", attachments);
 

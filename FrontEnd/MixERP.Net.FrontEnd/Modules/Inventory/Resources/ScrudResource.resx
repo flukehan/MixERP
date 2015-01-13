@@ -693,4 +693,13 @@
   <data name="tax_master_id" xml:space="preserve">
     <value>Tax Master Id</value>
   </data>
+  <data name="default_cash_repository_id" xml:space="preserve">
+    <value>Default Cash Repository Id</value>
+  </data>
+  <data name="default_cash_account_id" xml:space="preserve">
+    <value>Default Cash Account Id</value>
+  </data>
+  <data name="stores_default_cash_account_id_chk" xml:space="preserve">
+    <value>Please select a valid Cash or Bank AccountId.</value>
+  </data>
 </root>

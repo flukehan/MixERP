@@ -131,12 +131,13 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Reports\StockTransactionReport.ascx" />
-    <Content Include="Reports\TaxRegister.ascx" />
     <Content Include="Reports\TrialBalance.ascx" />
     <Content Include="Scripts\Entry\JournalVoucher.js" />
     <Content Include="Scripts\JournalVoucher.js" />
     <Content Include="Services\CurrencyData.asmx" />
     <Content Include="Services\EODOperation.asmx" />
+    <Content Include="Setup\CashFlowHeadings.ascx" />
+    <Content Include="Setup\CashFlowSetup.ascx" />
     <Content Include="SQL\Menu.sql" />
     <Content Include="SQL\Module.sql" />
     <Content Include="Services\AccountData.asmx" />
@@ -254,13 +255,6 @@
     <Compile Include="Reports\StockTransactionReport.ascx.designer.cs">
       <DependentUpon>StockTransactionReport.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Reports\TaxRegister.ascx.cs">
-      <DependentUpon>TaxRegister.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Reports\TaxRegister.ascx.designer.cs">
-      <DependentUpon>TaxRegister.ascx</DependentUpon>
-    </Compile>
     <Compile Include="Reports\TrialBalance.ascx.cs">
       <DependentUpon>TrialBalance.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -319,6 +313,20 @@
     </Compile>
     <Compile Include="Setup\BudgetAndTarget.ascx.designer.cs">
       <DependentUpon>BudgetAndTarget.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Setup\CashFlowHeadings.ascx.cs">
+      <DependentUpon>CashFlowHeadings.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Setup\CashFlowHeadings.ascx.designer.cs">
+      <DependentUpon>CashFlowHeadings.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Setup\CashFlowSetup.ascx.cs">
+      <DependentUpon>CashFlowSetup.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Setup\CashFlowSetup.ascx.designer.cs">
+      <DependentUpon>CashFlowSetup.ascx</DependentUpon>
     </Compile>
     <Compile Include="Setup\COA.ascx.cs">
       <DependentUpon>COA.ascx</DependentUpon>

@@ -8,7 +8,6 @@ DROP FUNCTION IF EXISTS transactions.post_sales
     _cost_center_id                         integer,
     _reference_number                       national character varying(24),
     _statement_reference                    text,
-    _cash_repository_id                     integer,
     _is_credit                              boolean,
     _payment_term_id                        integer,
     _party_code                             national character varying(12),
@@ -32,7 +31,6 @@ CREATE FUNCTION transactions.post_sales
     _cost_center_id                         integer,
     _reference_number                       national character varying(24),
     _statement_reference                    text,
-    _cash_repository_id                     integer,
     _is_credit                              boolean,
     _payment_term_id                        integer,
     _party_code                             national character varying(12),
@@ -64,6 +62,9 @@ $$
     DECLARE _transaction_code               text;
     DECLARE _shipping_charge                money_strict2;
     DECLARE this                            RECORD;
+    DECLARE _cash_repository_id             integer;
+    DECLARE _cash_account_id                bigint;
+    DECLARE _is_cash                        boolean;
 BEGIN        
     IF(policy.can_post_transaction(_login_id, _user_id, _office_id, _book_name, _value_date) = false) THEN
         RETURN 0;
@@ -71,6 +72,13 @@ BEGIN
 
     _party_id                               := core.get_party_id_by_party_code(_party_code);
     _default_currency_code                  := transactions.get_default_currency_code_by_office_id(_office_id);
+    _cash_account_id                        := core.get_cash_account_id_by_store_id(_store_id);
+    _cash_repository_id                     := core.get_cash_repository_id_by_store_id(_store_id);
+    _is_cash                                := core.is_cash_account_id(_cash_account_id);
+
+    IF(NOT _is_cash) THEN
+        _cash_repository_id                 := NULL;
+    END IF;
 
     CREATE TEMPORARY TABLE temp_stock_details
     (
@@ -266,9 +274,8 @@ BEGIN
         SELECT 'Dr', core.get_account_id_by_party_id(_party_id), _statement_reference, _default_currency_code, _receivable, 1, _default_currency_code, _receivable;
     ELSE
         INSERT INTO temp_transaction_details(tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, er, local_currency_code, amount_in_local_currency)
-        SELECT 'Dr', core.get_cash_account_id(), _statement_reference, _cash_repository_id, _default_currency_code, _receivable, 1, _default_currency_code, _receivable;
+        SELECT 'Dr', _cash_account_id, _statement_reference, _cash_repository_id, _default_currency_code, _receivable, 1, _default_currency_code, _receivable;
     END IF;
-
 
     _transaction_master_id  := nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
     _stock_master_id        := nextval(pg_get_serial_sequence('transactions.stock_master', 'stock_master_id'));    
@@ -312,7 +319,7 @@ BEGIN
 
 
 
-    IF(_attachments != ARRAY[NULL::core.attachment_type]) THEN
+    IF(_attachments IS NOT NULL) THEN
         INSERT INTO core.attachments(user_id, resource, resource_key, resource_id, original_file_name, file_extension, file_path, comment)
         SELECT _user_id, 'transactions.transaction_master', 'transaction_master_id', _transaction_master_id, original_file_name, file_extension, file_path, comment 
         FROM explode_array(_attachments);

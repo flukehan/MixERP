@@ -46562,10 +46562,14 @@ var triggerClick = function(controlId) {
 //};
 
 var parseFloat2 = function(arg) {
+    if (typeof (arg) === "undefined") {
+        return 0;
+    };
+
     var input = arg;
 
     if (currencySymbol) {
-        input = input.replace(currencySymbol, "");
+        input = input.toString().replace(currencySymbol, "");
     };
 
     var val = parseFloat(parseFormattedNumber(input.toString()) || 0);
@@ -46578,6 +46582,10 @@ var parseFloat2 = function(arg) {
 };
 
 var parseInt2 = function(arg) {
+    if (typeof (arg) === "undefined") {
+        return 0;
+    };
+
     var val = parseInt(parseFormattedNumber(arg.toString()) || 0);
 
     if (isNaN(val)) {
@@ -47498,4 +47506,9 @@ function createCascadingPair(select, input) {
 
 function parseDate(str) {
     return new Date(Date.parse(str));
+};
+
+function parseSerializedDate(str) {
+    str = str.replace(/[^0-9 +]/g, '');
+    return new Date(parseInt(str));
 };

@@ -555,6 +555,7 @@ CREATE TABLE core.account_masters
     account_master_id                       smallint PRIMARY KEY,
     account_master_code                     national character varying(3) NOT NULL,
     account_master_name                     national character varying(40) NOT NULL,
+    normally_debit                          boolean NOT NULL CONSTRAINT account_masters_normally_debit_df DEFAULT(false),
     parent_account_master_id                smallint NULL REFERENCES core.account_masters(account_master_id)
 );
 
@@ -567,14 +568,27 @@ ON core.account_masters(UPPER(account_master_name));
 CREATE INDEX account_master_parent_account_master_id_inx
 ON core.account_masters(parent_account_master_id);
 
+
 CREATE TABLE core.cash_flow_headings
 (
-    cash_flow_heading_id                    SERIAL NOT NULL PRIMARY KEY,
+    cash_flow_heading_id                    integer NOT NULL PRIMARY KEY,
     cash_flow_heading_code                  national character varying(12) NOT NULL,
     cash_flow_heading_name                  national character varying(100) NOT NULL,
     cash_flow_heading_type                  character(1) NOT NULL
                                             CONSTRAINT cash_flow_heading_cash_flow_heading_type_chk
-                                            CHECK(cash_flow_heading_type IN('O', 'I', 'F'))
+                                            CHECK(cash_flow_heading_type IN('O', 'I', 'F')),
+    is_debit                                boolean NOT NULL
+                                            CONSTRAINT cash_flow_headings_is_debit_df
+                                            DEFAULT(false),
+    is_sales                                boolean NOT NULL
+                                            CONSTRAINT cash_flow_headings_is_sales_df
+                                            DEFAULT(false),
+    is_purchase                             boolean NOT NULL
+                                            CONSTRAINT cash_flow_headings_is_purchase_df
+                                            DEFAULT(false),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL 
+                                            DEFAULT(NOW())
 );
 
 CREATE UNIQUE INDEX cash_flow_headings_cash_flow_heading_code_uix
@@ -582,6 +596,7 @@ ON core.cash_flow_headings(UPPER(cash_flow_heading_code));
 
 CREATE UNIQUE INDEX cash_flow_headings_cash_flow_heading_name_uix
 ON core.cash_flow_headings(UPPER(cash_flow_heading_code));
+
 
 CREATE TABLE core.accounts
 (
@@ -591,26 +606,17 @@ CREATE TABLE core.accounts
     external_code                           national character varying(12) NULL   
                                             CONSTRAINT accounts_external_code_df  
                                             DEFAULT(''),
-    confidential                            boolean NOT NULL   
-                                            CONSTRAINT accounts_confidential_df  
-                                            DEFAULT(false),
     currency_code                           national character varying(12) NOT NULL REFERENCES core.currencies(currency_code),
     account_name                            national character varying(100) NOT NULL,
     description                             national character varying(200) NULL,
+    confidential                            boolean NOT NULL   
+                                            CONSTRAINT accounts_confidential_df  
+                                            DEFAULT(false),
+    is_transaction_node                     boolean NOT NULL --Non transaction nodes cannot be used in transaction.
+                                            CONSTRAINT accounts_is_transaction_node_df
+                                            DEFAULT(true),
     sys_type                                boolean NOT NULL   
                                             CONSTRAINT accounts_sys_type_df  
-                                            DEFAULT(false),
-    is_cash                                 boolean NOT NULL   
-                                            CONSTRAINT accounts_is_cash_df   
-                                            DEFAULT(false),
-    is_employee                             boolean NOT NULL
-                                            CONSTRAINT accounts_is_employee_df
-                                            DEFAULT(false),
-    is_party                                boolean NOT NULL
-                                            CONSTRAINT accounts_is_party_df
-                                            DEFAULT(false),
-    normally_debit                          boolean NOT NULL
-                                            CONSTRAINT accounts_normally_debit_df
                                             DEFAULT(false),
     parent_account_id                       bigint NULL REFERENCES core.accounts(account_id),
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
@@ -641,6 +647,40 @@ CREATE TABLE core.bank_accounts
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
                                             DEFAULT(NOW())
 );
+
+CREATE TABLE core.transaction_types
+(
+    transaction_type_id                     smallint PRIMARY KEY,
+    transaction_type_code                   national character varying(4),
+    transaction_type_name                   national character varying(100)
+);
+
+CREATE UNIQUE INDEX transaction_types_transaction_type_code_uix
+ON core.transaction_types(UPPER(transaction_type_code));
+
+CREATE UNIQUE INDEX transaction_types_transaction_type_name_uix
+ON core.transaction_types(UPPER(transaction_type_name));
+
+INSERT INTO core.transaction_types
+SELECT 1, 'Any', 'Any (Debit or Credit)' UNION ALL
+SELECT 2, 'Dr', 'Debit' UNION ALL
+SELECT 3, 'Cr', 'Credit';
+
+CREATE TABLE core.cash_flow_setup
+(
+    cash_flow_setup_id                      SERIAL PRIMARY KEY,
+    cash_flow_heading_id                    integer NOT NULL REFERENCES core.cash_flow_headings(cash_flow_heading_id),
+    account_master_id                       integer NOT NULL REFERENCES core.account_masters(account_master_id),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL 
+                                            DEFAULT(NOW())
+);
+
+CREATE INDEX cash_flow_setup_cash_flow_heading_id_inx
+ON core.cash_flow_setup(cash_flow_heading_id);
+
+CREATE INDEX cash_flow_setup_account_master_id_inx
+ON core.cash_flow_setup(account_master_id);
 
 CREATE TABLE core.sales_teams
 (
@@ -1589,40 +1629,13 @@ CREATE TABLE office.store_types
                                             DEFAULT(NOW())
 );
 
-CREATE UNIQUE INDEX store_types_Code_uix
+CREATE UNIQUE INDEX store_types_code_uix
 ON office.store_types(UPPER(store_type_code));
 
 
-CREATE UNIQUE INDEX store_types_Name_uix
+CREATE UNIQUE INDEX store_types_name_uix
 ON office.store_types(UPPER(store_type_name));
 
-
-
-
-CREATE TABLE office.stores
-(
-    store_id SERIAL                         PRIMARY KEY,
-    office_id                               integer NOT NULL REFERENCES office.offices(office_id),
-    store_code                              national character varying(12) NOT NULL,
-    store_name                              national character varying(50) NOT NULL,
-    address                                 national character varying(50) NULL,
-    store_type_id                           integer NOT NULL REFERENCES office.store_types(store_type_id),
-    allow_sales                             boolean NOT NULL   
-                                            DEFAULT(true),
-    sales_tax_id                            integer NOT NULL REFERENCES core.sales_taxes(sales_tax_id),
-    audit_user_id                           integer NULL REFERENCES office.users(user_id),
-    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
-                                            DEFAULT(NOW())
-);
-
-ALTER TABLE core.sales_tax_exempts
-ADD FOREIGN KEY(store_id) REFERENCES office.stores(store_id);
-
-CREATE UNIQUE INDEX stores_store_code_uix
-ON office.stores(office_id, UPPER(store_code));
-
-CREATE UNIQUE INDEX stores_store_name_uix
-ON office.stores(office_id, UPPER(store_name));
 
 
 
@@ -1645,6 +1658,35 @@ ON office.cash_repositories(office_id, UPPER(cash_repository_code));
 
 CREATE UNIQUE INDEX cash_repositories_cash_repository_name_uix
 ON office.cash_repositories(office_id, UPPER(cash_repository_name));
+
+
+
+CREATE TABLE office.stores
+(
+    store_id SERIAL                         PRIMARY KEY,
+    office_id                               integer NOT NULL REFERENCES office.offices(office_id),
+    store_code                              national character varying(12) NOT NULL,
+    store_name                              national character varying(50) NOT NULL,
+    address                                 national character varying(50) NULL,
+    store_type_id                           integer NOT NULL REFERENCES office.store_types(store_type_id),
+    allow_sales                             boolean NOT NULL   
+                                            DEFAULT(true),
+    sales_tax_id                            integer NOT NULL REFERENCES core.sales_taxes(sales_tax_id),
+    default_cash_account_id                 integer NOT NULL REFERENCES core.accounts(account_id),
+    default_cash_repository_id              integer NOT NULL REFERENCES office.cash_repositories(cash_repository_id),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
+);
+
+ALTER TABLE core.sales_tax_exempts
+ADD FOREIGN KEY(store_id) REFERENCES office.stores(store_id);
+
+CREATE UNIQUE INDEX stores_store_code_uix
+ON office.stores(office_id, UPPER(store_code));
+
+CREATE UNIQUE INDEX stores_store_name_uix
+ON office.stores(office_id, UPPER(store_name));
 
 
  
@@ -2230,4 +2272,3 @@ CREATE TABLE office.configuration
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
                                             DEFAULT(NOW())    
 );
-

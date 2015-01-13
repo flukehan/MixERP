@@ -601,6 +601,24 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Default Cash Account Id.
+        /// </summary>
+        internal static string default_cash_account_id {
+            get {
+                return ResourceManager.GetString("default_cash_account_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default Cash Repository Id.
+        /// </summary>
+        internal static string default_cash_repository_id {
+            get {
+                return ResourceManager.GetString("default_cash_repository_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         internal static string description {
@@ -1641,6 +1659,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         internal static string store_type_name {
             get {
                 return ResourceManager.GetString("store_type_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select a valid Cash or Bank AccountId..
+        /// </summary>
+        internal static string stores_default_cash_account_id_chk {
+            get {
+                return ResourceManager.GetString("stores_default_cash_account_id_chk", resourceCulture);
             }
         }
         

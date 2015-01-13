@@ -73,7 +73,7 @@ BEGIN
 
     SELECT array_agg(core.accounts.account_id) INTO _accounts
     FROM core.accounts
-    WHERE core.accounts.account_master_id = 153;
+    WHERE core.accounts.account_master_id BETWEEN 15300 AND 15400;
 
     INSERT INTO temp_account_statement(value_date, tran_code, statement_reference, debit, credit, office, book, account_id, posted_on, posted_by, approved_by, verification_status)
     SELECT
@@ -188,7 +188,8 @@ BEGIN
     UPDATE temp_account_statement SET credit = NULL WHERE temp_account_statement.credit = 0;
 
     RETURN QUERY
-    SELECT * FROM temp_account_statement;    
+    SELECT * FROM temp_account_statement
+    ORDER BY id;    
 END
 $$
 LANGUAGE plpgsql;

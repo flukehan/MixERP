@@ -8,6 +8,7 @@ BEGIN
         REFRESH MATERIALIZED VIEW transactions.trial_balance_view;
         REFRESH MATERIALIZED VIEW transactions.verified_stock_transaction_view;
         REFRESH MATERIALIZED VIEW transactions.verified_transaction_mat_view;
+        REFRESH MATERIALIZED VIEW transactions.verified_cash_transaction_mat_view;
 END
 $$
 LANGUAGE plpgsql;

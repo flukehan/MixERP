@@ -232,6 +232,24 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cashflow Headings.
+        /// </summary>
+        internal static string CashFlowHeadings {
+            get {
+                return ResourceManager.GetString("CashFlowHeadings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cashflow Setup.
+        /// </summary>
+        internal static string CashFlowSetup {
+            get {
+                return ResourceManager.GetString("CashFlowSetup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cash Repository.
         /// </summary>
         internal static string CashRepository {
@@ -876,6 +894,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string ShowCompact {
             get {
                 return ResourceManager.GetString("ShowCompact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Statement of Cash Flows.
+        /// </summary>
+        internal static string StatementOfCashFlows {
+            get {
+                return ResourceManager.GetString("StatementOfCashFlows", resourceCulture);
             }
         }
         

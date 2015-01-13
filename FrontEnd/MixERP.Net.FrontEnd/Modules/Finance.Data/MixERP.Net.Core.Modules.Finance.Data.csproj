@@ -61,6 +61,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\AccountStatement.cs" />
     <Compile Include="Reports\BalanceSheet.cs" />
+    <Compile Include="Reports\CashFlow.cs" />
     <Compile Include="Reports\ProfitAndLossAccount.cs" />
     <Compile Include="Reports\RetainedEarnings.cs" />
     <Compile Include="Reports\TrialBalance.cs" />

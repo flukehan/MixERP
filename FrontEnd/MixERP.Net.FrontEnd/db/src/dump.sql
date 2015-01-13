@@ -28,13 +28,15 @@ INSERT INTO logins (login_id, user_id, office_id, browser, ip_address, login_dat
 INSERT INTO logins (login_id, user_id, office_id, browser, ip_address, login_date_time, remote_user, culture) VALUES (11, 2, 2, 'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36', '::1', '2015-01-10 15:56:12.284+00', '', 'en-US');
 INSERT INTO logins (login_id, user_id, office_id, browser, ip_address, login_date_time, remote_user, culture) VALUES (12, 2, 2, 'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36', '::1', '2015-01-10 17:15:20.913+00', '', 'en-US');
 INSERT INTO logins (login_id, user_id, office_id, browser, ip_address, login_date_time, remote_user, culture) VALUES (45, 2, 2, 'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36', '::1', '2015-01-11 08:33:30.156+00', '', 'en-US');
+INSERT INTO logins (login_id, user_id, office_id, browser, ip_address, login_date_time, remote_user, culture) VALUES (46, 2, 2, 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:34.0) Gecko/20100101 Firefox/34.0', '::1', '2015-01-12 19:49:05.83+00', '', 'en-US');
+INSERT INTO logins (login_id, user_id, office_id, browser, ip_address, login_date_time, remote_user, culture) VALUES (47, 2, 2, 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:34.0) Gecko/20100101 Firefox/34.0', '::1', '2015-01-12 21:16:16.465+00', '', 'en-US');
 
 
 --
 -- Name: logins_login_id_seq; Type: SEQUENCE SET; Schema: audit; Owner: postgres
 --
 
-SELECT pg_catalog.setval('logins_login_id_seq', 45, true);
+SELECT pg_catalog.setval('logins_login_id_seq', 47, true);
 
 
 SET search_path = core, pg_catalog;
@@ -126,6 +128,8 @@ INSERT INTO transaction_master (transaction_master_id, transaction_counter, tran
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (32, 6, '6-2015-01-11-2-2-45-11-13-55', 'Purchase.Receipt', '2015-01-11', '2015-01-11 11:13:55.846+00', 45, 2, NULL, 2, 1, '', 'Being apple products received from Mr. James.', '2015-01-11 11:13:56.443+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-11 11:13:55.846+00');
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (33, 7, '7-2015-01-11-2-2-45-11-16-59', 'Purchase.Receipt', '2015-01-11', '2015-01-11 11:16:59.49+00', 45, 2, NULL, 2, 1, '', 'Being different items received from Mr. Dylan Lee.', '2015-01-11 11:17:00.059+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-11 11:16:59.49+00');
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (34, 8, '8-2015-01-11-2-2-45-11-27-30', 'Purchase.Receipt', '2015-01-11', '2015-01-11 11:27:30.749+00', 45, 2, NULL, 2, 1, '', 'Being Samsung Galaxy Tab 10.1 received from Mr. Cameron.', '2015-01-11 11:27:31.286+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-11 11:27:30.749+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (37, 1, '1-2015-01-12-2-2-46-19-49-10', 'Journal', '2015-01-12', '2015-01-12 19:49:10.224+00', 46, 2, NULL, 2, 3, '', NULL, '2015-01-12 19:49:10.358+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-12 19:49:10.224+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (38, 2, '2-2015-01-12-2-2-47-21-18-17', 'Journal', '2015-01-12', '2015-01-12 21:18:17.02+00', 47, 2, NULL, 2, 8, '', NULL, '2015-01-12 21:18:17.07+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-12 21:18:17.02+00');
 
 
 --
@@ -932,20 +936,26 @@ INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, v
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (98, 23, '2015-01-10', 'Cr', 253, 'Being cash received from Mr.Aiden.', NULL, 'NPR', 2000000.0000, 'NPR', 1, 2000000.0000, 2, '2015-01-10 16:14:04.455+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (122, 34, '2015-01-11', 'Cr', 262, 'Being Samsung Galaxy Tab 10.1 received from Mr. Cameron.', NULL, 'NPR', 30000.0000, 'NPR', 1, 30000.0000, NULL, '2015-01-11 11:27:30.749+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (100, 24, '2015-01-10', 'Cr', 271, 'Cash received from Rivera Landon.', NULL, 'NPR', 31000000.0000, 'NPR', 1, 31000000.0000, 2, '2015-01-10 16:18:13.039+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (123, 37, '2015-01-12', 'Dr', 128, 'As dividends declared and posted on "1/12/2015"', NULL, 'NPR', 50000.0000, 'NPR', 1, 50000.0000, NULL, '2015-01-12 19:49:10.224+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (124, 37, '2015-01-12', 'Dr', 129, 'As dividends declared and posted on "1/12/2015"', NULL, 'NPR', 40000.0000, 'NPR', 1, 40000.0000, NULL, '2015-01-12 19:49:10.224+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (125, 37, '2015-01-12', 'Cr', 134, 'As dividends declared and posted on "1/12/2015"', NULL, 'NPR', 50000.0000, 'NPR', 1, 50000.0000, NULL, '2015-01-12 19:49:10.224+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (126, 37, '2015-01-12', 'Cr', 135, 'As dividends declared and posted on "1/12/2015"', NULL, 'NPR', 40000.0000, 'NPR', 1, 40000.0000, NULL, '2015-01-12 19:49:10.224+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (127, 38, '2015-01-12', 'Dr', 186, 'Interest paid', NULL, 'NPR', 40000.0000, 'NPR', 1, 40000.0000, NULL, '2015-01-12 21:18:17.02+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (128, 38, '2015-01-12', 'Cr', 8, 'Interest paid', 1, 'NPR', 40000.0000, 'NPR', 1, 40000.0000, NULL, '2015-01-12 21:18:17.02+00');
 
 
 --
 -- Name: transaction_details_transaction_detail_id_seq; Type: SEQUENCE SET; Schema: transactions; Owner: postgres
 --
 
-SELECT pg_catalog.setval('transaction_details_transaction_detail_id_seq', 122, true);
+SELECT pg_catalog.setval('transaction_details_transaction_detail_id_seq', 128, true);
 
 
 --
 -- Name: transaction_master_transaction_master_id_seq; Type: SEQUENCE SET; Schema: transactions; Owner: postgres
 --
 
-SELECT pg_catalog.setval('transaction_master_transaction_master_id_seq', 34, true);
+SELECT pg_catalog.setval('transaction_master_transaction_master_id_seq', 38, true);
 
 
 --

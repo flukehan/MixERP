@@ -24,8 +24,11 @@ SELECT
     transactions.transaction_details.account_id,
     core.accounts.account_number,
     core.accounts.account_name,
-    core.accounts.normally_debit,
+    core.account_masters.normally_debit,
+    core.account_masters.account_master_code,
+    core.account_masters.account_master_name,
     core.accounts.account_master_id,
+    core.accounts.confidential,
     transactions.transaction_details.statement_reference,
     transactions.transaction_details.cash_repository_id,
     transactions.transaction_details.currency_code,
@@ -37,6 +40,8 @@ transactions.transaction_master
 INNER JOIN transactions.transaction_details
 ON transactions.transaction_master.transaction_master_id = transactions.transaction_details.transaction_master_id
 INNER JOIN core.accounts
-ON transactions.transaction_details.account_id = core.accounts.account_id;
+ON transactions.transaction_details.account_id = core.accounts.account_id
+INNER JOIN core.account_masters
+ON core.accounts.account_master_id = core.account_masters.account_master_id;
 
 

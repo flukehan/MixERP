@@ -27,6 +27,7 @@ saveButton.click(function () {
 });
 
 var save = function () {
+    saveButton.addClass("loading");
     var ajaxSaveGRN = saveGRN(valueDate, storeId, partyCode, referenceNumber, data, statementReference, costCenterId, transactionIds, attachments);
 
     ajaxSaveGRN.done(function (response) {
@@ -35,6 +36,7 @@ var save = function () {
     });
 
     ajaxSaveGRN.fail(function (jqXHR) {
+        saveButton.removeClass("loading");
         var errorMessage = getAjaxErrorMessage(jqXHR);
         errorLabelBottom.html(errorMessage);
         logError(errorMessage);

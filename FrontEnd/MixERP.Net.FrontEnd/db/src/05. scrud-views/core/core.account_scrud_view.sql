@@ -9,7 +9,6 @@ SELECT
     core.accounts.confidential,
     core.accounts.description,
     core.accounts.sys_type,
-    core.accounts.is_cash,
     parent_account.account_number || ' (' || parent_account.account_name || ')' AS parent,
     core.has_child_accounts(core.accounts.account_id) AS has_child
 FROM core.accounts

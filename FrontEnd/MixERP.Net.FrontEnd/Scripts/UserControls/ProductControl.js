@@ -18,7 +18,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 /*jshint -W032, -W098, -W020 */
-/*global addDanger, ajaxDataBind, ajaxUpdateVal, appendParameter, fadeThis, focusNextElement, getAjax, getColumnText, getData, getFormattedNumber, gridViewEmptyWarningLocalized, insufficientStockWarningLocalized, invalidCashRepositoryWarningLocalized, invalidCostCenterWarningLocalized, invalidDateWarningLocalized, invalidPartyWarningLocalized,invalidPriceTypeWarningLocalized, invalidSalesPersonWarningLocalized, invalidShippingCompanyWarningLocalized, invalidStoreWarningLocalized, isDate, isNullOrWhiteSpace, isSales, logError, makeDirty, parseFloat2, parseFormattedNumber, removeDirty, repaint, rowData, selectDropDownListByValue, setColumnText, shortcut, showWindow, sumOfColumn, tableToJSON, taxAfterDiscount, tranBook, unitId, uploadedFilesHidden, verifyStock, parseInt2 */
+/*global addDanger, ajaxDataBind, ajaxUpdateVal, appendParameter, fadeThis, focusNextElement, getAjax, getColumnText, getData, getFormattedNumber, gridViewEmptyWarningLocalized, insufficientStockWarningLocalized, invalidCostCenterWarningLocalized, invalidDateWarningLocalized, invalidPartyWarningLocalized,invalidPriceTypeWarningLocalized, invalidSalesPersonWarningLocalized, invalidShippingCompanyWarningLocalized, invalidStoreWarningLocalized, isDate, isNullOrWhiteSpace, isSales, logError, makeDirty, parseFloat2, parseFormattedNumber, removeDirty, repaint, rowData, selectDropDownListByValue, setColumnText, shortcut, showWindow, sumOfColumn, tableToJSON, taxAfterDiscount, tranBook, unitId, uploadedFilesHidden, verifyStock, parseInt2 */
 
 if (typeof insufficientStockWarningLocalized === "undefined") {
     insufficientStockWarningLocalized = "Only {0} {1} of {2} left in stock.";
@@ -40,10 +40,6 @@ if (typeof invalidShippingCompanyWarningLocalized === "undefined") {
     invalidShippingCompanyWarningLocalized = "Invalid shipping company.";
 };
 
-if (typeof invalidCashRepositoryWarningLocalized === "undefined") {
-    invalidCashRepositoryWarningLocalized = "Invalid cash repository.";
-};
-
 if (typeof invalidCostCenterWarningLocalized === "undefined") {
     invalidCostCenterWarningLocalized = "Invalid cost center.";
 };
@@ -52,12 +48,14 @@ if (typeof invalidSalesPersonWarningLocalized === "undefined") {
     invalidSalesPersonWarningLocalized = "Invalid salesperson.";
 };
 
+if (typeof invalidPaymentTermLocalized === "undefined") {
+    invalidPaymentTermLocalized = "Invalid payment term.";
+};
+
 //Controls
 var addButton = $("#AddButton");
 var amountInputText = $("#AmountInputText");
 var attachmentLabel = $("#AttachmentLabel");
-var cashRepositorySelect = $("#CashRepositorySelect");
-var cashRepositoryBalanceInputText = $("#CashRepositoryBalanceInputText");
 var cashTransactionInputCheckBox = $("#CashTransactionInputCheckBox");
 var costCenterSelect = $("#CostCenterSelect");
 
@@ -122,7 +120,6 @@ var unitNameHidden = $("#UnitNameHidden");
 var salespersonId;
 var attachments;
 
-var cashRepositoryId;
 var costCenterId;
 
 var data;
@@ -200,7 +197,6 @@ function initializeAjaxData() {
     loadCostCenters();
     loadStores();
     loadTaxes(tranBook);
-    loadCashRepositories();
     loadSalespersons();
     loadShippers();
 
@@ -318,17 +314,6 @@ attachmentLabel.click(function () {
     });
 });
 
-cashRepositorySelect.change(function () {
-    if (cashRepositorySelect.getSelectedValue()) {
-        url = "/Modules/Finance/Services/AccountData.asmx/GetCashRepositoryBalance";
-        data = appendParameter("", "cashRepositoryId", cashRepositorySelect.getSelectedValue());
-        data = appendParameter(data, "currencyCode", "");
-        data = getData(data);
-
-        ajaxUpdateVal(url, data, cashRepositoryBalanceInputText);
-    };
-});
-
 discountInputText.blur(function () {
     updateTax();
     calculateAmount();
@@ -403,7 +388,6 @@ function updateTax() {
         var tax = parseFloat2(msg.d);
         taxInputText.data("val", tax);
 
-        console.log(taxInputText.data("val"));
         taxInputText.val(tax);
     });
 
@@ -421,7 +405,7 @@ function getDefaultSalesTax() {
         return;
     };
 
-    if (taxSelect.getSelectedValue() !== "1") {
+    if (salesTypeSelect.getSelectedValue() !== "1") {
         return;
     };
 
@@ -477,7 +461,6 @@ var validateProductControl = function () {
     removeDirty(priceTypeSelect);
     removeDirty(storeSelect);
     removeDirty(shippingCompanySelect);
-    removeDirty(cashRepositorySelect);
     removeDirty(costCenterSelect);
     removeDirty(salesPersonSelect);
 
@@ -504,6 +487,16 @@ var validateProductControl = function () {
             return false;
         };
     };
+
+    if (paymentTermSelect.length) {
+        if (parseInt2(paymentTermSelect.getSelectedValue()) <= 0) {
+            makeDirty(paymentTermSelect);
+            errorLabelBottom.html(invalidPaymentTermLocalized);
+            return false;
+        };
+    };
+
+    removeDirty(paymentTermSelect);
 
     if (isNullOrWhiteSpace(partyCodeInputText.val())) {
         errorLabelBottom.html(invalidPartyWarningLocalized);
@@ -533,29 +526,6 @@ var validateProductControl = function () {
         };
     };
 
-    if (cashRepositorySelect.length) {
-        if (!isCredit) {
-            if (parseInt2(cashRepositorySelect.getSelectedValue()) <= 0) {
-                makeDirty(cashRepositorySelect);
-                errorLabelBottom.html(invalidCashRepositoryWarningLocalized);
-                return false;
-            };
-        };
-
-        if (isCredit) {
-            if (parseInt2(cashRepositorySelect.getSelectedValue()) > 0) {
-                makeDirty(cashRepositorySelect);
-                errorLabelBottom.html(invalidCashRepositoryWarningLocalized);
-                return false;
-            };
-
-            if (parseInt2(paymentTermSelect.getSelectedValue()) === 0) {
-                makeDirty(paymentTermSelect);
-                return false;
-            };
-        };
-    };
-
     if (costCenterSelect.length) {
         if (parseInt2(costCenterSelect.getSelectedValue()) <= 0) {
             makeDirty(costCenterSelect);
@@ -576,7 +546,6 @@ var validateProductControl = function () {
     salespersonId = parseInt2(salesPersonSelect.getSelectedValue());
     attachments = uploadedFilesHidden.val();
 
-    cashRepositoryId = parseInt2(cashRepositorySelect.getSelectedValue());
     costCenterId = parseInt2(costCenterSelect.getSelectedValue());
 
     data = productGridViewDataHidden.val();
@@ -648,11 +617,6 @@ function ajaxDataBindCallBack(targetControlId) {
 function loadSalespersons() {
     url = "/Modules/Inventory/Services/ItemData.asmx/GetAgents";
     ajaxDataBind(url, salesPersonSelect, null, salesPersonIdHidden.val());
-};
-
-function loadCashRepositories() {
-    url = "/Modules/Finance/Services/AccountData.asmx/GetCashRepositories";
-    ajaxDataBind(url, cashRepositorySelect);
 };
 
 function loadCostCenters() {

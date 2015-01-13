@@ -17,15 +17,15 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.DbFactory.Resources;
-using Npgsql;
 using System;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Threading;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.DbFactory.Resources;
+using Npgsql;
 
 namespace MixERP.Net.DBFactory
 {
@@ -129,7 +129,7 @@ namespace MixERP.Net.DBFactory
                         {
                             using (var dataTable = new DataTable())
                             {
-                                dataTable.Locale = CultureInfo.InvariantCulture;
+                                dataTable.Locale = Thread.CurrentThread.CurrentCulture;
                                 adapter.Fill(dataTable);
                                 return dataTable;
                             }
@@ -216,12 +216,9 @@ namespace MixERP.Net.DBFactory
                         }
                     };
 
-                    queryStart += () =>
-                    {
-                        Thread.Sleep(15000);
-                    };
+                    queryStart += () => { Thread.Sleep(15000); };
 
-                    Thread query = new Thread(queryStart) { IsBackground = true };
+                    Thread query = new Thread(queryStart) {IsBackground = true};
                     query.Start();
                 }
             }

@@ -207,9 +207,6 @@
   <data name="hundredth_name" xml:space="preserve">
     <value>Hundredth Name</value>
   </data>
-  <data name="is_cash" xml:space="preserve">
-    <value>Is Cash</value>
-  </data>
   <data name="lc_credit" xml:space="preserve">
     <value>LC Credit</value>
   </data>
@@ -321,12 +318,6 @@
   <data name="cash_flow_heading_id" xml:space="preserve">
     <value>Cash Flow Heading Id</value>
   </data>
-  <data name="is_employee" xml:space="preserve">
-    <value>Is Employee</value>
-  </data>
-  <data name="is_party" xml:space="preserve">
-    <value>Is Party</value>
-  </data>
   <data name="cash_flow_heading_code" xml:space="preserve">
     <value>Cash Flow Heading Code</value>
   </data>
@@ -374,5 +365,23 @@
   </data>
   <data name="normally_debit" xml:space="preserve">
     <value>Normally Debit</value>
+  </data>
+  <data name="cash_flow_heading_type" xml:space="preserve">
+    <value>Cashflow Heading Type</value>
+  </data>
+  <data name="cash_flow_heading_cash_flow_heading_type_chk" xml:space="preserve">
+    <value>Invalid Cashflow Heading Type. Allowed values: O, I, F.</value>
+  </data>
+  <data name="cash_flow_setup_id" xml:space="preserve">
+    <value>Cashflow Setup Id</value>
+  </data>
+  <data name="is_sales" xml:space="preserve">
+    <value>Is Sales</value>
+  </data>
+  <data name="is_purchase" xml:space="preserve">
+    <value>Is Purchase</value>
+  </data>
+  <data name="is_transaction_node" xml:space="preserve">
+    <value>Is Transaction Node</value>
   </data>
 </root>

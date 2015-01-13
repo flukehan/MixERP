@@ -7,7 +7,7 @@ BEGIN
     (
         SELECT account_id
         FROM core.accounts
-        WHERE is_cash=true
+        WHERE account_master_id = 10101
         LIMIT 1
     );
 END

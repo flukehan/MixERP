@@ -16,5 +16,5 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
-<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="TaxRegister.ascx.cs" Inherits="MixERP.Net.Core.Modules.Finance.Reports.TaxRegister" %>
-<h1>Tax Register</h1>
+<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CashFlowHeadings.ascx.cs" Inherits="MixERP.Net.Core.Modules.Finance.Setup.CashFlowHeadings" %>
+<asp:PlaceHolder runat="server" ID="ScrudPlaceholder"></asp:PlaceHolder>

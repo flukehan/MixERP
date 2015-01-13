@@ -30,15 +30,15 @@ namespace MixERP.Net.Core.Modules.Sales.Reports
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            Collection<KeyValuePair<string, string>> list = new Collection<KeyValuePair<string, string>>();
-            list.Add(new KeyValuePair<string, string>("@transaction_master_id", this.Page.Request["TranId"]));
+            Collection<KeyValuePair<string, object>> list = new Collection<KeyValuePair<string, object>>();
+            list.Add(new KeyValuePair<string, object>("@transaction_master_id", this.Page.Request["TranId"]));
 
             using (Report report = new Report())
             {
                 report.AddParameterToCollection(list);
                 report.AddParameterToCollection(list);
                 report.AutoInitialize = true;
-                report.ResourceAssembly = Assembly.GetAssembly(typeof (ReceiptReport));
+                report.ResourceAssembly = Assembly.GetAssembly(typeof(ReceiptReport));
                 report.Path = "~/Modules/Sales/Reports/Source/Sales.Receipt.xml";
 
                 this.Controls.Add(report);

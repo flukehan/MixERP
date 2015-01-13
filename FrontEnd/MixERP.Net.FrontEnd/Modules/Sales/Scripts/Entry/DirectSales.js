@@ -19,28 +19,30 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 /*jshint -W032*/
 /*global getAjax, getAjaxErrorMessage, logError, saveButton, url:true, validateProductControl, errorLabelBottom, appendParameter, getData, valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, statementReference, transactionType, agentId, shipperId, shippingAddressCode, shippingCharge, cashRepositoryId, costCenterId, transactionIds, attachments*/
-saveButton.click(function () {
+saveButton.click(function() {
     if (validateProductControl()) {
         save();
     };
 });
 
-var save = function () {
-    var ajaxsaveDirectSales = saveDirectSales(valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, statementReference, transactionType, paymentTermId, salespersonId, shipperId, shippingAddressCode, shippingCharge, cashRepositoryId, costCenterId, transactionIds, attachments, nonTaxable);
+var save = function() {
+    saveButton.addClass("loading");
+    var ajaxsaveDirectSales = saveDirectSales(valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, statementReference, transactionType, paymentTermId, salespersonId, shipperId, shippingAddressCode, shippingCharge, costCenterId, transactionIds, attachments, nonTaxable);
 
-    ajaxsaveDirectSales.done(function (response) {
+    ajaxsaveDirectSales.done(function(response) {
         var id = response.d;
         window.location = "/Modules/Sales/Confirmation/DirectSales.mix?TranId=" + id;
     });
 
-    ajaxsaveDirectSales.fail(function (jqXHR) {
+    ajaxsaveDirectSales.fail(function(jqXHR) {
+        saveButton.removeClass("loading");
         var errorMessage = getAjaxErrorMessage(jqXHR);
         errorLabelBottom.html(errorMessage);
         logError(errorMessage);
     });
 };
 
-var saveDirectSales = function (valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, statementReference, transactionType, paymentTermId, salespersonId, shipperId, shippingAddressCode, shippingCharge, cashRepositoryId, costCenterId, transactionIds, attachments, nonTaxable) {
+var saveDirectSales = function(valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, statementReference, transactionType, paymentTermId, salespersonId, shipperId, shippingAddressCode, shippingCharge, costCenterId, transactionIds, attachments, nonTaxable) {
     var d = "";
     d = appendParameter(d, "valueDate", valueDate);
     d = appendParameter(d, "storeId", storeId);
@@ -55,7 +57,6 @@ var saveDirectSales = function (valueDate, storeId, partyCode, priceTypeId, refe
     d = appendParameter(d, "shipperId", shipperId);
     d = appendParameter(d, "shippingAddressCode", shippingAddressCode);
     d = appendParameter(d, "shippingCharge", shippingCharge);
-    d = appendParameter(d, "cashRepositoryId", cashRepositoryId);
     d = appendParameter(d, "costCenterId", costCenterId);
     d = appendParameter(d, "transactionIds", transactionIds);
     d = appendParameter(d, "attachmentsJSON", attachments);

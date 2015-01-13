@@ -65,20 +65,22 @@ SELECT 'MIX',   'MixERP Community Edition',             core.get_item_group_id_b
 SELECT 'SFIX',  'SFIX Financial Edition',               core.get_item_group_id_by_item_group_code('SFT'),	1, 1,                                            1,  1, true,    1,  0,      false,   40000,     40000,  1, 0    UNION ALL
 SELECT 'SGT',   'Samsung Galaxy Tab 10.1',              core.get_item_group_id_by_item_group_code('LPT'),	1, core.get_brand_id_by_brand_code('SNG'),       6,  1, false,   1,  10,     true,    30000,     45000,  1, 20;
 
-INSERT INTO office.stores(office_id, store_code, store_name, address, store_type_id, allow_sales, sales_tax_id)
-SELECT 2, 'STORE-1', 'Store 1',     'Office', 2, true,  1     UNION ALL
-SELECT 2, 'GODOW-1', 'Godown 1',    'Office', 1, false, 1     UNION ALL
-SELECT 3, 'STORE-2', 'Store 2',     'Office', 2, true,  3     UNION ALL
-SELECT 3, 'GODOW-2', 'Godown 2',    'Office', 1, false, 3     UNION ALL
-SELECT 4, 'STORE-3', 'Store 3',     'Office', 2, true,  5     UNION ALL
-SELECT 4, 'GODOW-3', 'Godown 3',    'Office', 1, false, 5;
-
 
 INSERT INTO office.cash_repositories(office_id, cash_repository_code, cash_repository_name, description)
 SELECT 2, 'DRW1',   'Drawer 1',     'Drawer'    UNION ALL
 SELECT 2, 'VLT',    'Vault',        'Vault'     UNION ALL
 SELECT 3, 'DRW2',   'Drawer 2',     'Drawer'    UNION ALL
-SELECT 3, 'VLT2',   'Vault 2',      'Vault';
+SELECT 3, 'VLT2',   'Vault 2',      'Vault'     UNION ALL
+SELECT 3, 'DRW3',   'Drawer 3',     'Drawer'    UNION ALL
+SELECT 3, 'VLT3',   'Vault 3',      'Vault';
+
+INSERT INTO office.stores(office_id, store_code, store_name, address, store_type_id, allow_sales, sales_tax_id, default_cash_repository_id, default_cash_account_id)
+SELECT 2, 'STORE-1', 'Store 1',     'Office', 2, true,  1, 1,   core.get_account_id_by_account_number('10200')  UNION ALL
+SELECT 2, 'GODOW-1', 'Godown 1',    'Office', 1, false, 1, 2,   core.get_account_id_by_account_number('10100')  UNION ALL
+SELECT 3, 'STORE-2', 'Store 2',     'Office', 2, true,  3, 3,   core.get_account_id_by_account_number('10200')  UNION ALL
+SELECT 3, 'GODOW-2', 'Godown 2',    'Office', 1, false, 3, 4,   core.get_account_id_by_account_number('10100')  UNION ALL
+SELECT 4, 'STORE-3', 'Store 3',     'Office', 2, true,  5, 5,   core.get_account_id_by_account_number('10200')  UNION ALL
+SELECT 4, 'GODOW-3', 'Godown 3',    'Office', 1, false, 5, 6,   core.get_account_id_by_account_number('10100');
 
 INSERT INTO core.shippers(company_name, account_id)
 SELECT 'Default', core.get_account_id_by_account_number('20110');

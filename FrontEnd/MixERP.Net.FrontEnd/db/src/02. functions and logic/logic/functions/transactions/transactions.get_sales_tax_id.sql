@@ -32,6 +32,7 @@ $$
     DECLARE _item_group_id              integer;
     DECLARE _entity_id                  integer;
     DECLARE _industry_id                integer;
+    DECLARE _office_id                  integer;
 BEGIN
     IF(COALESCE(_tran_book, '') = '') THEN
         RETURN 0;
@@ -49,10 +50,11 @@ BEGIN
         RETURN 0;
     END IF;
 
+    _office_id      := office.get_office_id_by_store_id(_store_id);
     _item_id        := core.get_item_id_by_item_code(_item_code);
     _party_id       := core.get_party_id_by_party_code(_party_code);
     _party_type_id  := core.get_party_type_id_by_party_id(_party_id);
-    _value_date     := transactions.get_value_date();
+    _value_date     := transactions.get_value_date(_office_id);
     _item_group_id  := core.get_item_group_id_by_item_id(_item_id);
     _entity_id      := core.get_entity_id_by_party_id(_party_id);
     _industry_id    := core.get_industry_id_by_party_id(_party_id);

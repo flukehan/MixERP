@@ -46,7 +46,6 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
         private Literal externalCodeLiteral;
         private DateTextBox fromDateTextBox;
         private Literal headerLiteral;
-        private Literal isCashAccountLiteral;
         private Literal isEmployeeLiteral;
         private Literal isPartyLiteral;
         private Literal isSystemAccountLiteral;
@@ -291,12 +290,6 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 this.headerLiteral = null;
             }
 
-            if (this.isCashAccountLiteral != null)
-            {
-                this.isCashAccountLiteral.Dispose();
-                this.isCashAccountLiteral = null;
-            }
-
             if (this.isEmployeeLiteral != null)
             {
                 this.isEmployeeLiteral.Dispose();
@@ -434,7 +427,6 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             this.AddBodyRow(table, Titles.AccountMaster, ref this.accountMasterLiteral);
             this.AddBodyRow(table, Titles.Confidential, ref this.confidentialLiteral);
             this.AddBodyRow(table, Titles.IsSystemAccount, ref this.isSystemAccountLiteral);
-            this.AddBodyRow(table, Titles.IsCash, ref this.isCashAccountLiteral);
             this.AddBodyRow(table, Titles.IsEmployee, ref this.isEmployeeLiteral);
             this.AddBodyRow(table, Titles.IsParty, ref this.isPartyLiteral);
             this.AddBodyRow(table, Titles.NormallyDebit, ref this.normallyDebitLiteral);
@@ -575,9 +567,6 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                     this.accountMasterLiteral.Text = Conversion.TryCastString(table.Rows[0]["account_master_code"]);
                     this.confidentialLiteral.Text = Conversion.TryCastString(table.Rows[0]["confidential"]);
                     this.isSystemAccountLiteral.Text = Conversion.TryCastString(table.Rows[0]["sys_type"]);
-                    this.isCashAccountLiteral.Text = Conversion.TryCastString(table.Rows[0]["is_cash"]);
-                    this.isEmployeeLiteral.Text = Conversion.TryCastString(table.Rows[0]["is_employee"]);
-                    this.isPartyLiteral.Text = Conversion.TryCastString(table.Rows[0]["is_party"]);
                     this.normallyDebitLiteral.Text = Conversion.TryCastString(table.Rows[0]["normally_debit"]);
                     this.parentAccountLiteral.Text = Conversion.TryCastString(table.Rows[0]["parent_account"]);
                 }

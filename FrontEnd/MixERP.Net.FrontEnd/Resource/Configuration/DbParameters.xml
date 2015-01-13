@@ -29,7 +29,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <add key="BonusSlabDisplayField" value="bonus_slab_name" />
     <add key="BrandDisplayField" value="brand_code + ' (' + brand_name + ')'" />
     <add key="CashRepositoryDisplayField" value="cash_repository_code + ' (' + cash_repository_name + ')'" />
-    <add key="CashFlowHeadingField" value="cash_flow_heading_code + ' (' + cash_flow_heading_name + ')'" />
+    <add key="CashFlowHeadingDisplayField" value="cash_flow_heading_code + ' (' + cash_flow_heading_name + ')'" />
     <add key="CompoundItemDisplayField" value="compound_item_code + ' (' + compound_item_name + ')'" />
     <add key="CostCenterDisplayField" value="cost_center_code + ' (' + cost_center_name + ')'" />
     <add key="CountryDisplayField" value="country_code + ' (' + country_name + ')'" />
@@ -70,6 +70,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <add key="TaxDisplayField" value="tax_name" />
     <add key="TaxTypeDisplayField" value="tax_type_code + ' (' + tax_type_name + ')'" />
     <add key="TaxMasterDisplayField" value="tax_master_code + ' (' + tax_master_name + ')'" />
+    <add key="TransactionTypeDisplayField" value="transaction_type_code + ' (' + transaction_type_name + ')'" />
     <add key="UnitDisplayField" value="unit_name" />
     <add key="UserDisplayField" value="user_name" />
   </appSettings>

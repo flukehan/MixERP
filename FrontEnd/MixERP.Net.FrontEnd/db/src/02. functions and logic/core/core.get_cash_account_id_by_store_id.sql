@@ -1,0 +1,16 @@
+DROP FUNCTION IF EXISTS core.get_cash_account_id_by_store_id(_store_id integer);
+
+CREATE FUNCTION core.get_cash_account_id_by_store_id(_store_id integer)
+RETURNS bigint
+AS
+$$
+BEGIN
+    RETURN
+        default_cash_account_id
+    FROM
+        office.stores
+    WHERE
+        office.stores.store_id=$1;
+END
+$$
+LANGUAGE plpgsql;

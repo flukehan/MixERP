@@ -32,6 +32,10 @@ $$
 BEGIN
     _date_from := core.get_fiscal_year_start_date(_office_id);
 
+    IF(COALESCE(_factor, 0) = 0) THEN
+        _factor := 1;
+    END IF;
+
     DROP TABLE IF EXISTS bs_temp;
     CREATE TEMPORARY TABLE bs_temp
     (
@@ -48,26 +52,27 @@ BEGIN
         skip                        boolean DEFAULT(false),
         is_retained_earning         boolean DEFAULT(false)
     ) ON COMMIT DROP;
-
-    IF(COALESCE(_factor, 0) = 0) THEN
-        _factor := 1;
-    END IF;
-
     
     --BS structure setup start
     INSERT INTO bs_temp(item_id, item, parent_item_id)
-    SELECT  1,     'Assets',                               NULL::numeric    UNION ALL
-    SELECT  101,   'Current Assets',                       1                UNION ALL
-    SELECT  102,   'Fixed Assets',                         1                UNION ALL
-    SELECT  103,   'Other Assets',                         1                UNION ALL
-    SELECT  149,   'Liabilities & Shareholders'' Equity',  NULL             UNION ALL
-    SELECT  150,   'Current Liabilities',                  149              UNION ALL
-    SELECT  151,   'Long-Term Liabilities',                149              UNION ALL
-    SELECT  152,   'Shareholders'' Equity',                149              UNION ALL
-    SELECT  153,   'Retained Earnings',                    152;
+    SELECT  1,       'Assets',                              NULL::numeric   UNION ALL
+    SELECT  10100,   'Current Assets',                      1               UNION ALL
+    SELECT  10101,   'Cash A/C',                            1               UNION ALL
+    SELECT  10102,   'Bank A/C',                            1               UNION ALL
+    SELECT  10110,   'Accounts Receivable',                 10100           UNION ALL
+    SELECT  10200,   'Fixed Assets',                        1               UNION ALL
+    SELECT  10201,   'Property, Plants, and Equipments',    10201           UNION ALL
+    SELECT  10300,   'Other Assets',                        1               UNION ALL
+    SELECT  14900,   'Liabilities & Shareholders'' Equity', NULL            UNION ALL
+    SELECT  15000,   'Current Liabilities',                 14900           UNION ALL
+    SELECT  15010,   'Accounts Payable',                    15000           UNION ALL
+    SELECT  15011,   'Salary Payable',                      15000           UNION ALL
+    SELECT  15100,   'Long-Term Liabilities',               14900           UNION ALL
+    SELECT  15200,   'Shareholders'' Equity',               14900           UNION ALL
+    SELECT  15300,   'Retained Earnings',                   15200;
 
-    UPDATE bs_temp SET is_debit = true WHERE bs_temp.item_id <= 103;
-    UPDATE bs_temp SET is_retained_earning = true WHERE bs_temp.item_id = 153;
+    UPDATE bs_temp SET is_debit = true WHERE bs_temp.item_id <= 10300;
+    UPDATE bs_temp SET is_retained_earning = true WHERE bs_temp.item_id = 15300;
     
     INSERT INTO bs_temp(item_id, account_id, account_number, parent_item_id, item, is_debit, child_accounts)
     SELECT 
@@ -76,18 +81,21 @@ BEGIN
         core.accounts.account_number,
         core.accounts.account_master_id,
         core.accounts.account_name,
-        core.accounts.normally_debit,
+        core.account_masters.normally_debit,
         array_agg(agg)
-    FROM core.accounts, core.get_account_ids(core.accounts.account_id) as agg
+    FROM core.accounts
+    INNER JOIN core.account_masters
+    ON core.accounts.account_master_id = core.account_masters.account_master_id,
+    core.get_account_ids(core.accounts.account_id) as agg
     WHERE parent_account_id IN
     (
         SELECT core.accounts.account_id
         FROM core.accounts
         WHERE core.accounts.sys_type
-        AND core.accounts.account_master_id BETWEEN 101 AND 152
+        AND core.accounts.account_master_id BETWEEN 10100 AND 15200
     )
-    AND core.accounts.account_master_id BETWEEN 101 AND 152
-    GROUP BY core.accounts.account_id
+    AND core.accounts.account_master_id BETWEEN 10100 AND 15200
+    GROUP BY core.accounts.account_id, core.account_masters.normally_debit
     ORDER BY account_master_id;
 
 
@@ -133,7 +141,7 @@ BEGIN
     UPDATE bs_temp SET 
         previous_period = transactions.get_retained_earnings(_previous_period, _office_id, _factor),
         current_period = transactions.get_retained_earnings(_current_period, _office_id, _factor)
-    WHERE bs_temp.item_id = 153;
+    WHERE bs_temp.item_id = 15300;
 
     --Reversing assets to debit balance.
     UPDATE bs_temp SET 
@@ -143,13 +151,16 @@ BEGIN
 
 
 
-    FOR this IN SELECT * FROM bs_temp WHERE COALESCE(bs_temp.previous_period, 0) + COALESCE(bs_temp.current_period, 0) != 0 AND bs_temp.account_id IS NOT NULL
+    FOR this IN 
+    SELECT * FROM bs_temp 
+    WHERE COALESCE(bs_temp.previous_period, 0) + COALESCE(bs_temp.current_period, 0) != 0 
+    AND bs_temp.account_id IS NOT NULL
     LOOP
         UPDATE bs_temp SET skip = true WHERE this.account_id = ANY(bs_temp.child_accounts)
         AND bs_temp.account_id != this.account_id;
     END LOOP;
 
-    --Updating current period amount on parent item by the sum of their respective child balances.
+    --Updating current period amount on GL parent item by the sum of their respective child balances.
     WITH running_totals AS
     (
         SELECT bs_temp.parent_item_id,
@@ -172,6 +183,7 @@ BEGIN
     );
 
 
+    --Updating sum amount on parent item by the sum of their respective child balances.
     UPDATE bs_temp SET 
         previous_period = tran.previous_period,
         current_period = tran.current_period
@@ -186,8 +198,24 @@ BEGIN
     ) 
     AS tran 
     WHERE tran.parent_item_id = bs_temp.item_id
-    AND bs_temp.parent_item_id IS NULL
-    AND COALESCE(bs_temp.current_period, 0) + COALESCE(bs_temp.previous_period, 0) = 0;
+    AND tran.parent_item_id IS NOT NULL;
+
+
+    --Updating sum amount on grandparents.
+    UPDATE bs_temp SET 
+        previous_period = tran.previous_period,
+        current_period = tran.current_period
+    FROM 
+    (
+        SELECT bs_temp.parent_item_id,
+        SUM(bs_temp.previous_period) AS previous_period,
+        SUM(bs_temp.current_period) AS current_period
+        FROM bs_temp
+        WHERE bs_temp.parent_item_id IS NOT NULL
+        GROUP BY bs_temp.parent_item_id
+    ) 
+    AS tran 
+    WHERE tran.parent_item_id = bs_temp.item_id;
 
     --Removing ledgers having zero balances
     DELETE FROM bs_temp
@@ -198,8 +226,8 @@ BEGIN
     UPDATE bs_temp SET previous_period = CASE WHEN bs_temp.previous_period = 0 THEN NULL ELSE bs_temp.previous_period END;
     UPDATE bs_temp SET current_period = CASE WHEN bs_temp.current_period = 0 THEN NULL ELSE bs_temp.current_period END;
     
-    UPDATE bs_temp SET sort = bs_temp.item_id WHERE bs_temp.item_id < 154;
-    UPDATE bs_temp SET sort = bs_temp.parent_item_id WHERE bs_temp.item_id >= 154;
+    UPDATE bs_temp SET sort = bs_temp.item_id WHERE bs_temp.item_id < 15400;
+    UPDATE bs_temp SET sort = bs_temp.parent_item_id WHERE bs_temp.item_id >= 15400;
 
     RETURN QUERY
     SELECT

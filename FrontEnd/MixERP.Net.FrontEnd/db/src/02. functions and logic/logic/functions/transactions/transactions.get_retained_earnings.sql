@@ -30,7 +30,7 @@ BEGIN
         _paid_dividends
     FROM transactions.verified_transaction_mat_view
     WHERE value_date <=_date_to
-    AND account_master_id = 153
+    AND account_master_id BETWEEN 15300 AND 15400
     AND office_id IN (SELECT * FROM office.get_office_ids(_office_id));
     
     RETURN _net_profit - _paid_dividends;

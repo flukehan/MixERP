@@ -26,15 +26,15 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
 {
     public static class ParameterHelper
     {
-        public static Collection<Collection<KeyValuePair<string, string>>> BindParameters(string reportPath, Collection<KeyValuePair<string, string>> parameterCollection)
+        public static Collection<Collection<KeyValuePair<string, object>>> BindParameters(string reportPath, Collection<KeyValuePair<string, object>> parameterCollection)
         {
             if (!File.Exists(reportPath))
             {
                 return null;
             }
 
-            Collection<Collection<KeyValuePair<string, string>>> collection = new Collection<Collection<KeyValuePair<string, string>>>();
-            Collection<KeyValuePair<string, string>> parameters = new Collection<KeyValuePair<string, string>>();
+            Collection<Collection<KeyValuePair<string, object>>> collection = new Collection<Collection<KeyValuePair<string, object>>>();
+            Collection<KeyValuePair<string, object>> parameters = new Collection<KeyValuePair<string, object>>();
 
             XmlNodeList dataSources = XmlHelper.GetNodes(reportPath, "//DataSource");
 
@@ -48,7 +48,7 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
                         {
                             if (parameterNode.Attributes != null)
                             {
-                                parameters.Add(new KeyValuePair<string, string>(parameterNode.Attributes["Name"].Value, GetParameterValue(parameterNode.Attributes["Name"].Value, parameterCollection)));
+                                parameters.Add(new KeyValuePair<string, object>(parameterNode.Attributes["Name"].Value, GetParameterValue(parameterNode.Attributes["Name"].Value, parameterCollection)));
                             }
                         }
                     }
@@ -58,29 +58,6 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
             }
 
             return collection;
-        }
-
-        private static string GetParameterValue(string key, IEnumerable<KeyValuePair<string, string>> collection)
-        {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                return string.Empty;
-            }
-
-            if (collection == null)
-            {
-                return string.Empty;
-            }
-
-            foreach (KeyValuePair<string, string> item in collection)
-            {
-                if (item.Key.Equals(key))
-                {
-                    return item.Value;
-                }
-            }
-
-            return string.Empty;
         }
 
         public static Collection<KeyValuePair<string, string>> GetParameters(string reportPath)
@@ -113,6 +90,28 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
             return parameterCollection;
         }
 
+        private static object GetParameterValue(string key, IEnumerable<KeyValuePair<string, object>> collection)
+        {
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                return string.Empty;
+            }
+
+            if (collection == null)
+            {
+                return string.Empty;
+            }
+
+            foreach (KeyValuePair<string, object> item in collection)
+            {
+                if (item.Key.Equals(key))
+                {
+                    return item.Value;
+                }
+            }
+
+            return string.Empty;
+        }
         private static bool KeyExists(string key, IEnumerable<KeyValuePair<string, string>> collection)
         {
             foreach (KeyValuePair<string, string> item in collection)

@@ -170,8 +170,10 @@ BEGIN
     UPDATE temp_income_expenditure_statement2 SET
         account_number = core.accounts.account_number,
         account = core.accounts.account_name,
-        normally_debit = core.accounts.normally_debit
+        normally_debit = core.account_masters.normally_debit
     FROM core.accounts
+    INNER JOIN core.account_masters
+    ON core.accounts.account_master_id = core.account_masters.account_master_id
     WHERE temp_income_expenditure_statement2.account_id = core.accounts.account_id;
 
     UPDATE temp_income_expenditure_statement2 SET 

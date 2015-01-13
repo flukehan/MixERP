@@ -382,33 +382,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::System.Web.UI.WebControls.Literal GrandTotalInputTextInputTextLabel;
         
         /// <summary>
-        /// CashRepositoryDiv control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl CashRepositoryDiv;
-        
-        /// <summary>
-        /// CashRepositorySelectLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal CashRepositorySelectLabel;
-        
-        /// <summary>
-        /// CashRepositoryBalanceInputTextLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal CashRepositoryBalanceInputTextLabel;
-        
-        /// <summary>
         /// CostCenterDiv control.
         /// </summary>
         /// <remarks>

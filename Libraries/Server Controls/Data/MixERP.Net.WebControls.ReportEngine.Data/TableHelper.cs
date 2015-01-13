@@ -28,7 +28,7 @@ namespace MixERP.Net.WebControls.ReportEngine.Data
 {
     public static class TableHelper
     {
-        public static DataTable GetDataTable(string sql, Collection<KeyValuePair<string, string>> parameters)
+        public static DataTable GetDataTable(string sql, Collection<KeyValuePair<string, object>> parameters)
         {
             /**************************************************************************************
             A MixERP report is a developer-only feature.
@@ -63,7 +63,7 @@ namespace MixERP.Net.WebControls.ReportEngine.Data
             {
                 if (parameters != null)
                 {
-                    foreach (KeyValuePair<string, string> p in parameters)
+                    foreach (KeyValuePair<string, object> p in parameters)
                     {
                         command.Parameters.AddWithValue(p.Key, p.Value);
                     }

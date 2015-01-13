@@ -55,7 +55,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 
         public static DataTable GetChildAccounts()
         {
-            const string sql = "SELECT account_number, account_name FROM core.accounts WHERE NOT sys_type OR is_cash;";
+            const string sql = "SELECT account_number, account_name FROM core.accounts WHERE is_transaction_node AND NOT sys_type OR account_master_id IN(10101, 10102);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 return DbOperation.GetDataTable(command);
@@ -69,7 +69,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 
         public static DataTable GetNonConfidentialChildAccounts()
         {
-            const string sql = "SELECT account_number, account_name FROM core.accounts WHERE NOT confidential AND (NOT sys_type OR is_cash);";
+            const string sql = "SELECT account_number, account_name FROM core.accounts WHERE is_transaction_node AND NOT confidential AND (NOT sys_type OR account_master_id IN(10101, 10102));";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 return DbOperation.GetDataTable(command);
@@ -78,7 +78,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 
         public static bool IsCashAccount(int accountId)
         {
-            const string sql = "SELECT 1 FROM core.accounts WHERE is_cash=true AND account_id=@AccountId;";
+            const string sql = "SELECT 1 FROM core.accounts WHERE account_master_id=10101 AND account_id=@AccountId;";
 
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
@@ -90,7 +90,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 
         public static bool IsCashAccount(string accountNumber)
         {
-            const string sql = "SELECT 1 FROM core.accounts WHERE is_cash=true AND account_number=@AccountNumber;";
+            const string sql = "SELECT 1 FROM core.accounts WHERE account_master_id=10101 AND account_number=@AccountNumber;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@AccountNumber", accountNumber);

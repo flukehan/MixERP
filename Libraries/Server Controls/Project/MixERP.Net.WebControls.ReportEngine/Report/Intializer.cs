@@ -259,7 +259,7 @@ namespace MixERP.Net.WebControls.ReportEngine
                         string sql = c.InnerText;
 
                         //Initializing query parameter collection.
-                        Collection<KeyValuePair<string, string>> parameters = new Collection<KeyValuePair<string, string>>();
+                        Collection<KeyValuePair<string, object>> parameters = new Collection<KeyValuePair<string, object>>();
 
                         if (this.parameterCollection != null)
                         {

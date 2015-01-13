@@ -55,14 +55,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         public TranBook Book { get; set; }
 
         /// <summary>
-        ///     This property when enabled will display cash repositories and their available balance.
-        ///     Not all available cash repositories will be displayed here but those which belong to the
-        ///     current (or logged in) branch office. This property must be enabled for transactions
-        ///     which have affect on cash ledger, namely "Direct Purchase" and "Direct Sales".
-        /// </summary>
-        public bool ShowCashRepository { get; set; }
-
-        /// <summary>
         ///     This property when enabled will display cost centers.
         /// </summary>
         public bool ShowCostCenter { get; set; }
@@ -216,8 +208,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             this.RunningTotalInputTextLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "RunningTotal"), "RunningTotalInputText");
             this.TaxTotalInputTextLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "TaxTotal"), "TaxTotalInputText");
             this.GrandTotalInputTextInputTextLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "GrandTotal"), "GrandTotalInputTextInputText");
-            this.CashRepositorySelectLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "CashRepository"), "CashRepositorySelect");
-            this.CashRepositoryBalanceInputTextLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "CashRepositoryBalance"), "CashRepositoryBalanceInputText");
             this.CostCenterSelectLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "CostCenter"), "CostCenterSelect");
             this.SalesPersonSelectLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "Salesperson"), "SalesPersonSelect");
             this.StatementReferenceTextAreaLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "StatementReference"), "StatementReferenceTextArea");
@@ -261,7 +251,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         private void SetVisibleStates()
         {
-            this.CashRepositoryDiv.Visible = this.ShowCashRepository;
             this.StoreSelect.Visible = this.ShowStore;
             this.StoreSelectLabel.Visible = this.ShowStore;
 

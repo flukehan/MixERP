@@ -25,29 +25,22 @@ namespace MixERP.Net.WebControls.ReportEngine
 {
     public partial class Report
     {
-        public Assembly ResourceAssembly { get; set; }
-
-        public string Path { get; set; }
-
-        public bool NoHeader { get; set; }
+        private readonly Collection<Collection<KeyValuePair<string, object>>> parameterCollection = new Collection<Collection<KeyValuePair<string, object>>>();
 
         public bool AutoInitialize { get; set; }
 
-        public string ReportNotFoundErrorMessage { get; set; }
+        public string ImageButtonCssClass { get; set; }
 
         public string InvalidLocationErrorMessage { get; set; }
 
-        public string RunningTotalText { get; set; }
+        public bool NoHeader { get; set; }
 
         /// <summary>
         /// Collection of each datasources' parameter collection.
         /// The datasource parameter collection is a collection of
         /// parameters stored in KeyValuePair.
         /// </summary>
-
-        private readonly Collection<Collection<KeyValuePair<string, string>>> parameterCollection = new Collection<Collection<KeyValuePair<string, string>>>();
-
-        public Collection<Collection<KeyValuePair<string, string>>> ParameterCollection
+        public Collection<Collection<KeyValuePair<string, object>>> ParameterCollection
         {
             get
             {
@@ -55,9 +48,13 @@ namespace MixERP.Net.WebControls.ReportEngine
             }
         }
 
-        public string ImageButtonCssClass { get; set; }
+        public string Path { get; set; }
 
-        public void AddParameterToCollection(Collection<KeyValuePair<string, string>> parameter)
+        public string ReportNotFoundErrorMessage { get; set; }
+
+        public Assembly ResourceAssembly { get; set; }
+        public string RunningTotalText { get; set; }
+        public void AddParameterToCollection(Collection<KeyValuePair<string, object>> parameter)
         {
             this.parameterCollection.Add(parameter);
         }

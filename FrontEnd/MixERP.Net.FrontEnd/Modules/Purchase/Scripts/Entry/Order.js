@@ -27,6 +27,7 @@ saveButton.click(function () {
 });
 
 var save = function () {
+    saveButton.addClass("loading");
     var ajaxSavePurchaseOrder = savePurchaseOrder(valueDate, partyCode, referenceNumber, data, statementReference, attachments);
 
     ajaxSavePurchaseOrder.done(function (response) {
@@ -35,6 +36,7 @@ var save = function () {
     });
 
     ajaxSavePurchaseOrder.fail(function (jqXHR) {
+        saveButton.removeClass("loading");
         var errorMessage = getAjaxErrorMessage(jqXHR);
         errorLabelBottom.html(errorMessage);
         logError(errorMessage);

@@ -44,7 +44,7 @@ namespace MixERP.Net.FrontEnd.Reports
                 return;
             }
 
-            Collection<KeyValuePair<string, string>> list = new Collection<KeyValuePair<string, string>>();
+            Collection<KeyValuePair<string, object>> list = new Collection<KeyValuePair<string, object>>();
 
             foreach (TableRow row in this.ReportParameterTable.Rows)
             {
@@ -55,7 +55,7 @@ namespace MixERP.Net.FrontEnd.Reports
                 if (box != null)
                 {
                     TextBox textBox = box;
-                    list.Add(new KeyValuePair<string, string>("@" + textBox.ID.Replace("_text_box", ""), textBox.Text));
+                    list.Add(new KeyValuePair<string, object>("@" + textBox.ID.Replace("_text_box", ""), textBox.Text));
                 }
             }
             this.ReportViewer11.Path = this.ReportPath();

@@ -1,11 +1,3 @@
-ALTER TABLE core.items
-DROP CONSTRAINT IF EXISTS items_preferred_supplier_id_chk;
-
-ALTER TABLE core.items
-ADD CONSTRAINT items_preferred_supplier_id_chk 
-CHECK(core.is_supplier(preferred_supplier_id) = true);
-
-
 ALTER TABLE core.compound_item_details
 DROP CONSTRAINT IF EXISTS compound_item_details_unit_chk;
 
