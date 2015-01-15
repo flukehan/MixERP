@@ -72,7 +72,9 @@
     </Content>
     <Content Include="Industries.ascx" />
     <Content Include="Mix Open Foundation.snk" />
+    <Content Include="OTS\OpeningInventory.ascx" />
     <Content Include="Scripts\AttachmentManager.ascx.js" />
+    <Content Include="Scripts\OTS\OpeningInventory.js" />
     <Content Include="Services\web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -258,6 +260,13 @@
     </Compile>
     <Compile Include="Offices.ascx.designer.cs">
       <DependentUpon>Offices.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="OTS\OpeningInventory.ascx.cs">
+      <DependentUpon>OpeningInventory.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OTS\OpeningInventory.ascx.designer.cs">
+      <DependentUpon>OpeningInventory.ascx</DependentUpon>
     </Compile>
     <Compile Include="Policy\AutoVerification.ascx.cs">
       <DependentUpon>AutoVerification.ascx</DependentUpon>
