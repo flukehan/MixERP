@@ -92,7 +92,7 @@ namespace MixERP.Net.WebControls.PartyControl
                     table.Rows.Add(ControlHelper.GetNewRow("Credit Allowed", @"CreditAllowedSpan", @"span"));
                     table.Rows.Add(ControlHelper.GetNewRow("Maximum Credit Period", @"MaxCreditPeriodSpan", @"span"));
                     table.Rows.Add(ControlHelper.GetNewRow("Maximum Credit Amount", @"MaxCreditAmountSpan", @"span"));
-                    table.Rows.Add(ControlHelper.GetNewRow("Interest Applicable Span", @"InterestApplicableSpan", @"span"));
+                    table.Rows.Add(ControlHelper.GetNewRow("Interest Applicable", @"InterestApplicableSpan", @"span"));
                     table.Rows.Add(ControlHelper.GetNewRow("GL Head", @"GLHeadSpan", @"span"));
                     table.Rows.Add(ControlHelper.GetNewRow("Default Currency", @"DefaultCurrencySpan", @"span"));
                     partSummaryDiv.Controls.Add(table);

@@ -463,13 +463,35 @@ function preparePieChart(datasourceId, canvasId, legendId, type, hide, titleColu
 Chart END
 ******************************************************************************************************/
 
+
+
 var parseFormattedNumber = function (input) {
+    if (typeof window.thousandSeparator === "undefined") {
+        window.thousandSeparator = ",";
+    };
+
+    if (typeof window.decimalSeparator === "undefined") {
+        window.decimalSeparator = ".";
+    };
+
     var result = input.replace(thousandSeparator, "");
     result = result.replace(decimalSeparator, ".");
     return result;
 };
 
 var getFormattedNumber = function (input, isInteger) {
+    if (typeof window.currencyDecimalPlaces === "undefined") {
+        window.currencyDecimalPlaces = 2;
+    };
+
+    if (typeof window.thousandSeparator === "undefined") {
+        window.thousandSeparator = ",";
+    };
+
+    if (typeof window.decimalSeparator === "undefined") {
+        window.decimalSeparator = ".";
+    };
+
     var decimalPlaces = currencyDecimalPlaces;
 
     if (isInteger) {

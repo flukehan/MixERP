@@ -120,8 +120,6 @@ goButton.click(function () {
 
     ajaxGetPartyView.success(function (msg) {
         var partyView = msg.d;
-        var interestDetails = [""];
-
         partyTypeSpan.html(partyView.PartyType);
         emailAddressSpan.html(String.format("<a href='mailto:{0}'>{0}</a>", partyView.Email));
         pANNumberSpan.html(partyView.PANNumber);
@@ -130,20 +128,6 @@ goButton.click(function () {
         creditAllowedSpan.html(localizeBool(partyView.AllowCredit));
         maxCreditPeriodSpan.html(partyView.MaximumCreditPeriod + "&nbsp;" + daysLowerCaseLocalized);
         maxCreditAmountSpan.html(getFormattedCurrency(partyCurrencySymbol, partyView.MaximumCreditAmount));
-
-        interestDetails.push(localizeBool(partyView.ChargeInterest));
-
-        if (partyView.ChargeInterest && partyView.InterestRate) {
-            interestDetails.push("&nbsp", "(", partyView.InterestRate, "%");
-
-            if (partyView.InterestCompoundingFrequency) {
-                interestDetails.push(",", "&nbsp;", partyView.InterestCompoundingFrequency);
-            };
-
-            interestDetails.push(")");
-        };
-
-        interestApplicableSpan.html(interestDetails.join(""));
 
         gLHeadSpan.html(partyView.GLHead);
         addressDiv.html(getAddress(partyView.ZipCode, partyView.AddressLine1, partyView.AddressLine2, partyView.Street, partyView.City, partyView.State, partyView.Country, partyView.Phone, partyView.Cell, partyView.Fax, partyView.Url));

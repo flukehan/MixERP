@@ -49,8 +49,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 offset = (Conversion.TryCastInteger(this.Page.Request["page"]) - 1) * limit;
             }
 
-            this.formGridView.DataBound += this.FormGridViewOnDataBound;
-
             using (var table = FormHelper.GetView(this.ViewSchema, this.View, this.KeyColumn, limit, offset))
             {
                 this.formGridView.DataSource = table;
@@ -58,10 +56,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
             }
         }
 
-        private void FormGridViewOnDataBound(object sender, EventArgs eventArgs)
-        {
-            GridViewHelper.SetHeaderRow(this.formGridView);
-        }
 
         private Unit GetGridViewWidth()
         {

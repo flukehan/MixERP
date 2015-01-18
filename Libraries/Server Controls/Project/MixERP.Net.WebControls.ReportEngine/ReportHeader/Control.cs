@@ -85,7 +85,7 @@ namespace MixERP.Net.WebControls.ReportEngine
                 return this.Path;
             }
 
-            return Common.Helpers.ConfigurationHelper.GetReportParameter("HeaderPath");
+            return Net.Common.Helpers.ConfigurationHelper.GetReportParameter("HeaderPath");
         }
 
         private bool IsValid()

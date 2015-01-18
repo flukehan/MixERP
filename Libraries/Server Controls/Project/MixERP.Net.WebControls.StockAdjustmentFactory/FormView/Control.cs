@@ -4,6 +4,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.WebControls.Common;
 
 [assembly: WebResource("MixERP.Net.WebControls.StockAdjustmentFactory.FormView.js", "application/x-javascript")]
 
@@ -21,6 +22,8 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
         public string Text { get; set; }
         public string UnitServiceUrl { get; set; }
         public bool ValidateSides { get; set; }
+
+        private DateTextBox dateTextBox;
 
         protected override void CreateChildControls()
         {
@@ -71,6 +74,12 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
             {
                 this.container.Dispose();
                 this.container = null;
+            }
+
+            if (this.dateTextBox != null)
+            {
+                this.dateTextBox.Dispose();
+                this.dateTextBox = null;
             }
 
             this.disposed = true;

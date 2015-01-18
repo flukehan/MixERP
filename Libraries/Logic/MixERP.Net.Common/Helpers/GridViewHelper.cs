@@ -41,26 +41,6 @@ namespace MixERP.Net.Common.Helpers
             grid.Columns.Add(field);
         }
 
-        public static void SetHeaderRow(GridView grid)
-        {
-            if (grid == null)
-            {
-                return;
-            }
-
-            if (grid.Rows.Count.Equals(0))
-            {
-                return;
-            }
-
-            if (grid.HeaderRow == null)
-            {
-                return;
-            }
-
-            grid.HeaderRow.TableSection = TableRowSection.TableHeader;
-        }
-
         public class GridViewSelectTemplate : ITemplate
         {
             public void InstantiateIn(Control container)

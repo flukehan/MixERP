@@ -171,30 +171,6 @@ namespace MixERP.Net.FrontEnd
             }
         }
 
-        private void AddCannotAccessAccountField(HtmlGenericControl container)
-        {
-            using (HtmlGenericControl field = new HtmlGenericControl("div"))
-            {
-                field.Attributes.Add("class", "field");
-
-                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(""))
-                {
-                    field.Controls.Add(label);
-                }
-
-                using (HtmlAnchor anchor = new HtmlAnchor())
-                {
-                    anchor.HRef = "javascript:void(0);";
-                    anchor.ID = "HelpAnchor";
-                    anchor.InnerText = Questions.CannotAccessAccount;
-
-
-                    field.Controls.Add(anchor);
-                }
-
-                container.Controls.Add(field);
-            }
-        }
 
         private void AddDivider(HtmlGenericControl container)
         {
@@ -366,7 +342,6 @@ namespace MixERP.Net.FrontEnd
                 this.AddLanguageField(form);
                 this.AddExceptionField(form);
                 this.AddSignInButtonField(form);
-                this.AddCannotAccessAccountField(form);
 
                 container.Controls.Add(form);
             }

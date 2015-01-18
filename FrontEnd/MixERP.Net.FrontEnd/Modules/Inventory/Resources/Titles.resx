@@ -234,4 +234,7 @@
   <data name="StoreTypes" xml:space="preserve">
     <value>Store Types</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
 </root>

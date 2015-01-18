@@ -26,10 +26,6 @@ namespace MixERP.Net.WebControls.TransactionViewFactory
             this.BindGrid();
         }
 
-        private void TransactionGridView_DataBound(object sender, EventArgs e)
-        {
-            GridViewHelper.SetHeaderRow(this.transactionGridView);
-        }
 
         private void TransactionGridView_RowDataBound(object sender, GridViewRowEventArgs e)
         {

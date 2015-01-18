@@ -61,6 +61,7 @@
     </Compile>
     <Compile Include="Helpers\DatePersister.cs" />
     <Compile Include="Helpers\jQueryUIHelper.cs" />
+    <Compile Include="MixERPGridView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\CommonResource.Designer.cs">
       <DependentUpon>CommonResource.resx</DependentUpon>

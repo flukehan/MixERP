@@ -29,6 +29,7 @@ using System.Web.UI.WebControls;
 using System.Xml;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.WebControls.Common;
 using MixERP.Net.WebControls.ReportEngine.Data;
 using MixERP.Net.WebControls.ReportEngine.Helpers;
 
@@ -172,7 +173,7 @@ namespace MixERP.Net.WebControls.ReportEngine
                 {
                     int index = Conversion.TryCastInteger(ds);
 
-                    using (GridView grid = new GridView())
+                    using (MixERPGridView grid = new MixERPGridView())
                     {
                         grid.EnableTheming = false;
 
@@ -181,15 +182,12 @@ namespace MixERP.Net.WebControls.ReportEngine
                         grid.Width = Unit.Percentage(100);
                         grid.GridLines = GridLines.None;
                         grid.RowDataBound += this.GridView_RowDataBound;
-                        grid.RowCreated += this.GridView1_RowCreated;
 
                         grid.DataBound += this.GridView_DataBound;
                         this.gridPlaceHolder.Controls.Add(grid);
 
                         grid.DataSource = this.dataTableCollection[index];
                         grid.DataBind();
-
-                        GridViewHelper.SetHeaderRow(grid);
 
                         if (!string.IsNullOrWhiteSpace(style))
                         {

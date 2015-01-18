@@ -1,4 +1,5 @@
-﻿using MixERP.Net.Common.Models.Core;
+﻿using System;
+using MixERP.Net.Common.Models.Core;
 using MixERP.Net.WebControls.Common;
 using MixERP.Net.WebControls.StockAdjustmentFactory.Helpers;
 using MixERP.Net.WebControls.StockAdjustmentFactory.Resources;
@@ -38,12 +39,10 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
                     field.Controls.Add(label);
                 }
 
-                using (DateTextBox dateTextBox = new DateTextBox())
-                {
-                    dateTextBox.ID = "ValueDateTextBox";
-                    dateTextBox.Mode = Frequency.Today;
-                    field.Controls.Add(dateTextBox);
-                }
+                this.dateTextBox = new DateTextBox();
+                this.dateTextBox.ID = "ValueDateTextBox";
+                this.dateTextBox.Mode = Frequency.Today;
+                field.Controls.Add(this.dateTextBox);
 
                 fields.Controls.Add(field);
             }

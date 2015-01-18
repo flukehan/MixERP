@@ -21,20 +21,21 @@ using System;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.WebControls.Common;
 using Wuqi.Webdiyer;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
     public partial class ScrudForm
     {
-        private GridView formGridView;
+        private MixERPGridView formGridView;
         private Panel gridPanel;
         private TextBox lastValueHiddenTextBox;
         private AspNetPager pager;
 
         private void AddGridView(Panel p)
         {
-            this.formGridView = new GridView();
+            this.formGridView = new MixERPGridView();
             this.formGridView.ID = "FormGridView";
             this.formGridView.GridLines = GridLines.None;
             this.formGridView.CssClass = this.GetGridViewCssClass();

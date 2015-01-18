@@ -12,6 +12,7 @@ CREATE TYPE transactions.stock_detail_type AS
     tax                 money_strict2
 );
 
+
 DROP TYPE IF EXISTS core.attachment_type CASCADE;
 CREATE TYPE core.attachment_type AS
 (

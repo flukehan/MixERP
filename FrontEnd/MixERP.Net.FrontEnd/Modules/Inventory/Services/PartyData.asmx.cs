@@ -108,9 +108,6 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
                 party.AllowCredit = Conversion.TryCastBoolean(table.Rows[0]["allow_credit"]);
                 party.MaximumCreditPeriod = Conversion.TryCastInteger(table.Rows[0]["maximum_credit_period"]);
                 party.MaximumCreditAmount = Conversion.TryCastDecimal(table.Rows[0]["maximum_credit_amount"]);
-                party.ChargeInterest = Conversion.TryCastBoolean(table.Rows[0]["charge_interest"]);
-                party.InterestRate = Conversion.TryCastDecimal(table.Rows[0]["interest_rate"]);
-                party.InterestCompoundingFrequency = Conversion.TryCastString(table.Rows[0]["compounding_frequency"]);
                 party.PANNumber = Conversion.TryCastString(table.Rows[0]["pan_number"]);
                 party.SSTNumber = Conversion.TryCastString(table.Rows[0]["sst_number"]);
                 party.CSTNumber = Conversion.TryCastString(table.Rows[0]["cst_number"]);

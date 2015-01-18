@@ -34,14 +34,14 @@ function LoadImages(model) {
     var connectedItems = "";
 
     for (var i = 0; i < model.length; i++) {
-        mod = (i + 1) % 4;
+        mod = (i + 1) % 3;
 
         if (i === 0) {
             initializeModal(model[i].FilePath, "", "", true); //Initialize modal to avoid flickering animation
         };
 
         if (mod === 1) {
-            connectedItems += '<div class="ui four doubling cards">';
+            connectedItems += '<div class="ui three doubling cards">';
         };
 
         connectedItems += LoadImageGroup(model[i]);

@@ -295,7 +295,7 @@ BEGIN
         
     END LOOP;
 
-    IF(_attachments != ARRAY[NULL::core.attachment_type]) THEN
+    IF(array_length(_attachments, 1) > 0 AND _attachments != ARRAY[NULL::core.attachment_type]) THEN
         INSERT INTO core.attachments(user_id, resource, resource_key, resource_id, original_file_name, file_extension, file_path, comment)
         SELECT _user_id, 'transactions.transaction_master', 'transaction_master_id', _transaction_master_id, original_file_name, file_extension, file_path, comment 
         FROM explode_array(_attachments);

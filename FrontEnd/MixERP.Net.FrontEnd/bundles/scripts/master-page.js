@@ -230,4 +230,5 @@ $(document).ready(function () {
 ///#source 1 1 /Scripts/mixerp/master-page/semantic.js
 $(document).ready(function () {
     $('.ui.checkbox').checkbox();
+    $('.ui.dropdown').dropdown();
 });

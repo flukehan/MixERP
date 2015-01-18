@@ -29,9 +29,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     .browse {
     }
 
-    #FileUploads .browse {
-        width: 100%;
-    }
 </style>
 <asp:HiddenField ID="UploadedFilesHidden" runat="server" />
 

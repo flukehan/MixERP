@@ -369,7 +369,8 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         private void ProductViewGridViewOnDataBound(object sender, EventArgs eventArgs)
         {
-            GridViewHelper.SetHeaderRow(this.ProductViewGridView);
+            //Todo:Change this to MixERPGridView control.
+            //GridViewHelper.SetHeaderRow(this.ProductViewGridView);
         }
 
         private void SetVisibleStates()

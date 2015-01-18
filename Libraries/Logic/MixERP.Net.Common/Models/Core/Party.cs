@@ -29,8 +29,6 @@ namespace MixERP.Net.Common.Models.Core
 
         public string Cell { get; set; }
 
-        public bool ChargeInterest { get; set; }
-
         public string City { get; set; }
 
         public string Country { get; set; }
@@ -45,9 +43,6 @@ namespace MixERP.Net.Common.Models.Core
 
         public string GLHead { get; set; }
 
-        public string InterestCompoundingFrequency { get; set; }
-
-        public decimal InterestRate { get; set; }
 
         public bool IsSupplier { get; set; }
 

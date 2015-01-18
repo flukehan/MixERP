@@ -190,12 +190,12 @@ BEGIN
         
     END LOOP;
 
-    IF(_tran_ids IS NOT NULL) THEN
+    IF(array_length(_tran_ids, 1) > 0 AND _tran_ids != ARRAY[NULL::bigint]) THEN
         INSERT INTO transactions.non_gl_stock_master_relations(order_non_gl_stock_master_id, quotation_non_gl_stock_master_id)
         SELECT _non_gl_stock_master_id, explode_array(_tran_ids);
     END IF;
 
-    IF(_attachments IS NOT NULL) THEN
+    IF(array_length(_attachments, 1) > 0 AND _attachments != ARRAY[NULL::core.attachment_type]) THEN
         INSERT INTO core.attachments(user_id, resource, resource_key, resource_id, original_file_name, file_extension, file_path, comment)
         SELECT _user_id, 'transactions.non_gl_stock_master', 'non_gl_stock_master_id', _non_gl_stock_master_id, original_file_name, file_extension, file_path, comment 
         FROM explode_array(_attachments);

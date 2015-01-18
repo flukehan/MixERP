@@ -68,6 +68,27 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     #ProductGridView th:nth-child(11) {
         width: 7%;
     }
+
+    table.form {
+        width: 100%;
+    }
+
+        table.form td:nth-child(1), table.form td:nth-child(2), table.form td:nth-child(3), table.form td:nth-child(6) {
+            width: 10%;
+        }
+
+        table.form td:nth-child(5) {
+            max-width: 10%;
+        }
+
+        table.form td:nth-child(4) {
+            width: 24%;
+        }
+
+
+        table.form .ui.toggle.checkbox {
+            width: 150px;
+        }
 </style>
 
 <h2>
@@ -75,6 +96,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 </h2>
 
 <div class="ui segment">
+
+
 
     <table class="ui form">
         <tr>
@@ -99,23 +122,22 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         </tr>
         <tr>
             <td>
-                <mixerp:DateTextBox ID="DateTextBox" runat="server" Mode="Today" CssClass="date small" />
+                <mixerp:DateTextBox ID="DateTextBox" runat="server" Mode="Today" CssClass="date" />
             </td>
             <td>
-                <select id="StoreSelect" class="small" runat="server"></select>
+                <select id="StoreSelect" runat="server"></select>
             </td>
             <td>
-                <input type="text" id="PartyCodeInputText" runat="server" title="F2" class="small" />
+                <input type="text" id="PartyCodeInputText" runat="server" title="F2" />
             </td>
             <td>
-                <select id="PartySelect" title="F2" class="normal"></select>
+                <select id="PartySelect" title="F2"></select>
             </td>
             <td>
-                <select id="PriceTypeSelect" class="compact" runat="server"></select>
+                <select id="PriceTypeSelect" runat="server"></select>
             </td>
             <td>
-
-                <input type="text" id="ReferenceNumberInputText" runat="server" maxlength="24" class="small" />
+                <input type="text" id="ReferenceNumberInputText" runat="server" maxlength="24" />
             </td>
             <td>
                 <div class="ui toggle checkbox" id="CashTransactionDiv" runat="server">
@@ -124,30 +146,34 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                 </div>
             </td>
             <td>
-                <select id="PaymentTermSelect" title="F2" class="normal" runat="server"></select>
+                <select id="PaymentTermSelect" title="F2" runat="server"></select>
             </td>
         </tr>
     </table>
 </div>
 
-<div id="ShippingAddressInfoDiv" runat="server" style="width: 500px;" class="ui page form">
-    <div class="two fields">
-        <div class="field">
-            <asp:Literal ID="ShippingCompanySelectLabel" runat="server" />
-            <select id="ShippingCompanySelect"></select>
-        </div>
-        <div class="field">
-            <asp:Literal ID="ShippingAddressSelectLabel" runat="server" />
-            <select id="ShippingAddressSelect"></select>
-        </div>
-    </div>
-</div>
 
-<div id="SalesTypeDiv" runat="server" style="width: 200px;" class="ui page form">
-    <div class="field">
-        <asp:Literal ID="SalesTypeSelectLabel" runat="server" />
-        <select id="SalesTypeSelect" runat="server">
-        </select>
+<div class="ui form">
+    <div class="two fields">
+        <div id="ShippingAddressInfoDiv" runat="server" style="width: 500px;" class="field">
+            <div class="two fields">
+                <div class="field">
+                    <asp:Literal ID="ShippingCompanySelectLabel" runat="server" />
+                    <select id="ShippingCompanySelect"></select>
+                </div>
+                <div class="field">
+                    <asp:Literal ID="ShippingAddressSelectLabel" runat="server" />
+                    <select id="ShippingAddressSelect"></select>
+                </div>
+            </div>
+        </div>
+        <div id="SalesTypeDiv" runat="server" style="width: 200px;" class="field">
+            <div class="field">
+                <asp:Literal ID="SalesTypeSelectLabel" runat="server" />
+                <select id="SalesTypeSelect" runat="server">
+                </select>
+            </div>
+        </div>
     </div>
 </div>
 

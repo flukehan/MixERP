@@ -6,12 +6,13 @@ using System.Data;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.WebControls.Common;
 
 namespace MixERP.Net.WebControls.TransactionViewFactory
 {
     public partial class TransactionView
     {
-        private GridView transactionGridView;
+        private MixERPGridView transactionGridView;
 
         private void AddGridPanel(Control container)
         {
@@ -27,13 +28,12 @@ namespace MixERP.Net.WebControls.TransactionViewFactory
 
         private void AddGridView(HtmlGenericControl container)
         {
-            this.transactionGridView = new GridView();
+            this.transactionGridView = new MixERPGridView();
             this.transactionGridView.ID = "TransactionGridView";
             this.transactionGridView.GridLines = GridLines.None;
             this.transactionGridView.AutoGenerateColumns = false;
             this.transactionGridView.CssClass = this.GridViewCssClass;
             this.transactionGridView.RowDataBound += this.TransactionGridView_RowDataBound;
-            this.transactionGridView.DataBound += this.TransactionGridView_DataBound;
             GridViewColumnHelper.AddColumns(this.transactionGridView);
 
             container.Controls.Add(this.transactionGridView);

@@ -148,8 +148,8 @@ var url;
 var valueDate;
 
 //Page Load Event
-$(document).ready(function () {
-    $(".form-table td").each(function () {
+$(document).ready(function() {
+    $(".form-table td").each(function() {
         var content = $(this).html();
         if (!content.trim()) {
             $(this).html("");
@@ -174,7 +174,7 @@ function initializeAjaxData() {
     loadParties();
     loadPaymentTerms();
 
-    partySelect.change(function () {
+    partySelect.change(function() {
         partyCodeInputText.val(partySelect.getSelectedValue());
         showShippingAddress();
         loadAddresses();
@@ -184,11 +184,11 @@ function initializeAjaxData() {
 
     loadItems();
 
-    itemSelect.blur(function () {
+    itemSelect.blur(function() {
         itemSelect_OnBlur();
     });
 
-    itemSelect.change(function () {
+    itemSelect.change(function() {
         itemSelect_OnBlur();
     });
 
@@ -203,7 +203,7 @@ function initializeAjaxData() {
     restoreData();
 };
 
-itemSelect.keydown(function (event) {
+itemSelect.keydown(function(event) {
     if (event.ctrlKey) {
         if (event.key === "Enter") {
             itemSelect_OnBlur();
@@ -215,7 +215,7 @@ itemSelect.keydown(function (event) {
     return true;
 });
 
-shippingCompanySelect.blur(function () {
+shippingCompanySelect.blur(function() {
     var shippingCharge = parseFloat2(shippingChargeInputText.val());
     var shippingCompanyId = parseInt2(shippingCompanySelect.getSelectedValue());
 
@@ -271,13 +271,13 @@ function processCallBackActions() {
 
 function ajaxUpdateValCallback(targetControls) {
     if (targetControls.is(itemCodeInputText)) {
-        setTimeout(function () {
+        setTimeout(function() {
             itemSelect.val(itemCodeInputText.val()).trigger('change');
             quantityInputText.focus();
         }, 500);
     };
     if (targetControls.is(partyCodeInputText)) {
-        setTimeout(function () {
+        setTimeout(function() {
             partySelect.val(partyCodeInputText.val()).trigger('change');
             priceTypeSelect.focus();
         }, 500);
@@ -291,7 +291,7 @@ function taxRequired() {
     return salesTax;
 };
 
-addButton.click(function () {
+addButton.click(function() {
     if (updateTax() === -1) {
         if (taxRequired()) {
             logError("Please select a tax form");
@@ -303,42 +303,42 @@ addButton.click(function () {
     addRow();
 });
 
-amountInputText.blur(function () {
+amountInputText.blur(function() {
     updateTax();
     calculateAmount();
 });
 
-attachmentLabel.click(function () {
-    $('#attachment').show(500).after(function () {
+attachmentLabel.click(function() {
+    $('#attachment').show(500).after(function() {
         repaint();
     });
 });
 
-discountInputText.blur(function () {
+discountInputText.blur(function() {
     updateTax();
     calculateAmount();
     getDefaultSalesTax();
 });
 
-itemCodeInputText.blur(function () {
+itemCodeInputText.blur(function() {
     selectDropDownListByValue(this.id, 'ItemSelect');
 });
 
-partyCodeInputText.blur(function () {
+partyCodeInputText.blur(function() {
     selectDropDownListByValue(this.id, 'PartySelect');
 });
 
-priceInputText.blur(function () {
+priceInputText.blur(function() {
     updateTax();
     calculateAmount();
 });
 
-quantityInputText.blur(function () {
+quantityInputText.blur(function() {
     updateTax();
     calculateAmount();
 });
 
-taxSelect.blur(function () {
+taxSelect.blur(function() {
     updateTax();
 });
 
@@ -384,14 +384,14 @@ function updateTax() {
 
     var ajaxGetSalesTax = getSalesTax(tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode, price, quantity, discount, shippingCharge, salesTaxId);
 
-    ajaxGetSalesTax.success(function (msg) {
+    ajaxGetSalesTax.success(function(msg) {
         var tax = parseFloat2(msg.d);
         taxInputText.data("val", tax);
 
         taxInputText.val(tax);
     });
 
-    ajaxGetSalesTax.fail(function (xhr) {
+    ajaxGetSalesTax.fail(function(xhr) {
         logAjaxErrorMessage(xhr);
     });
 };
@@ -438,7 +438,7 @@ function getDefaultSalesTax() {
     };
 
     var ajaxGetDefaultSalesTaxId = getDefaultSalesTaxId(tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode, unitId, price);
-    ajaxGetDefaultSalesTaxId.success(function (msg) {
+    ajaxGetDefaultSalesTaxId.success(function(msg) {
         var result = parseInt2(msg.d);
 
         if (result) {
@@ -446,12 +446,12 @@ function getDefaultSalesTax() {
         };
     });
 
-    ajaxGetDefaultSalesTaxId.fail(function (xhr) {
+    ajaxGetDefaultSalesTaxId.fail(function(xhr) {
         logAjaxErrorMessage(xhr);
     });
 };
 
-var validateProductControl = function () {
+var validateProductControl = function() {
     valueDate = dateTextBox.val();
     errorLabelBottom.html("");
 
@@ -488,7 +488,7 @@ var validateProductControl = function () {
         };
     };
 
-    if (paymentTermSelect.length) {
+    if (paymentTermSelect.length && paymentTermSelect.is(":visible")) {
         if (parseInt2(paymentTermSelect.getSelectedValue()) <= 0) {
             makeDirty(paymentTermSelect);
             errorLabelBottom.html(invalidPaymentTermLocalized);
@@ -573,25 +573,25 @@ var validateProductControl = function () {
     return true;
 };
 
-cashTransactionInputCheckBox.change(function () {
+cashTransactionInputCheckBox.change(function() {
     var checked = !cashTransactionInputCheckBox.is(":checked");
     setVisible(paymentTermSelect, checked, 500);
 });
 
-shippingAddressSelect.change(function () {
+shippingAddressSelect.change(function() {
     showShippingAddress();
 });
 
-shippingChargeInputText.blur(function () {
+shippingChargeInputText.blur(function() {
     summate();
 });
 
-unitSelect.change(function () {
+unitSelect.change(function() {
     unitNameHidden.val($(this).getSelectedText());
     unitIdHidden.val($(this).getSelectedValue());
 });
 
-unitSelect.blur(function () {
+unitSelect.blur(function() {
     getPrice();
 });
 
@@ -689,7 +689,7 @@ function loadUnits() {
     ajaxDataBind(url, unitSelect, data, selectedValue);
 };
 
-var restoreData = function () {
+var restoreData = function() {
     var sourceControl = productGridViewDataHidden;
 
     if (isNullOrWhiteSpace(sourceControl.val())) {
@@ -715,14 +715,14 @@ var restoreData = function () {
 };
 
 //New Row Helper Function
-var calculateAmount = function () {
+var calculateAmount = function() {
     amountInputText.val(parseFloat2(quantityInputText.val()) * parseFloat2(priceInputText.val()));
 
     subTotalInputText.val(parseFloat2(amountInputText.val()) - parseFloat2(discountInputText.val()));
 };
 
 //GridView Manipulation
-var addRow = function () {
+var addRow = function() {
     if (parseInt2(taxSelect.getSelectedValue()) > 0 && typeof taxInputText.data("val") === "undefined") {
         updateTax();
         return;
@@ -794,7 +794,7 @@ var addRow = function () {
     var ajaxIsStockItem = isStockItem(itemCode);
     var ajaxCountItemInStock = countItemInStock(itemCode, unitId, storeId);
 
-    ajaxItemCodeExists.done(function (response) {
+    ajaxItemCodeExists.done(function(response) {
         var itemCodeExists = response.d;
 
         if (!itemCodeExists) {
@@ -805,7 +805,7 @@ var addRow = function () {
 
         removeDirty(itemCodeInputText);
 
-        ajaxUnitNameExists.done(function (ajaxUnitNameExistsResult) {
+        ajaxUnitNameExists.done(function(ajaxUnitNameExistsResult) {
             var unitNameExists = ajaxUnitNameExistsResult.d;
 
             if (!unitNameExists) {
@@ -821,7 +821,7 @@ var addRow = function () {
                 return;
             };
 
-            ajaxIsStockItem.done(function (ajaxIsStockItemResult) {
+            ajaxIsStockItem.done(function(ajaxIsStockItemResult) {
                 var isStockItem = ajaxIsStockItemResult.d;
 
                 if (!isStockItem) {
@@ -829,7 +829,7 @@ var addRow = function () {
                     return;
                 };
 
-                ajaxCountItemInStock.done(function (ajaxCountItemInStockResult) {
+                ajaxCountItemInStock.done(function(ajaxCountItemInStockResult) {
                     var itemInStock = parseFloat2(ajaxCountItemInStockResult.d);
 
                     if (quantity > itemInStock) {
@@ -845,14 +845,14 @@ var addRow = function () {
     });
 };
 
-var addRowToTable = function (itemCode, itemName, quantity, unitName, price, discount, shippingCharge, tax, computedTax) {
+var addRowToTable = function(itemCode, itemName, quantity, unitName, price, discount, shippingCharge, tax, computedTax) {
     var grid = productGridView;
     var rows = grid.find("tr:not(:first-child):not(:last-child)");
     var amount = price * quantity;
     var subTotal = amount - discount + shippingCharge;
     var match = false;
 
-    rows.each(function () {
+    rows.each(function() {
         var row = $(this);
         if (getColumnText(row, 0) === itemCode &&
             getColumnText(row, 1) === itemName &&
@@ -898,7 +898,7 @@ var addRowToTable = function (itemCode, itemName, quantity, unitName, price, dis
 };
 
 //Ajax Requests
-var getPrice = function () {
+var getPrice = function() {
     var itemCode = itemCodeInputText.val();
     var partyCode = partyCodeInputText.val();
     var priceTypeId = parseInt2(priceTypeSelect.val());
@@ -925,11 +925,11 @@ var getPrice = function () {
 
     var priceAjax = getAjax(url, data);
 
-    priceAjax.success(function (msg) {
+    priceAjax.success(function(msg) {
         priceInputText.val(msg.d);
     });
 
-    priceAjax.error(function (xhr) {
+    priceAjax.error(function(xhr) {
         var err = $.parseJSON(xhr.responseText);
         logError(err, "error");
     });
@@ -938,7 +938,7 @@ var getPrice = function () {
 };
 
 //Boolean Validation
-var itemCodeExists = function (itemCode) {
+var itemCodeExists = function(itemCode) {
     url = "/Modules/Inventory/Services/ItemData.asmx/ItemCodeExists";
     data = appendParameter("", "itemCode", itemCode);
     data = getData(data);
@@ -946,7 +946,7 @@ var itemCodeExists = function (itemCode) {
     return getAjax(url, data);
 };
 
-var isStockItem = function (itemCode) {
+var isStockItem = function(itemCode) {
     url = "/Modules/Inventory/Services/ItemData.asmx/IsStockItem";
     data = appendParameter("", "itemCode", itemCode);
     data = getData(data);
@@ -954,7 +954,7 @@ var isStockItem = function (itemCode) {
     return getAjax(url, data);
 };
 
-var unitNameExists = function (unitName) {
+var unitNameExists = function(unitName) {
     url = "/Modules/Inventory/Services/ItemData.asmx/UnitNameExists";
     data = appendParameter("", "unitName", unitName);
     data = getData(data);
@@ -962,7 +962,7 @@ var unitNameExists = function (unitName) {
 };
 
 //Validation Helper Functions
-var countItemInStock = function (itemCode, unitId, storeId) {
+var countItemInStock = function(itemCode, unitId, storeId) {
     url = "/Modules/Inventory/Services/ItemData.asmx/CountItemInStock";
     data = appendParameter("", "itemCode", itemCode);
     data = appendParameter(data, "unitId", unitId);
@@ -972,7 +972,7 @@ var countItemInStock = function (itemCode, unitId, storeId) {
     return getAjax(url, data);
 };
 
-var countItemInStockByUnitName = function (itemCode, unitName, storeId) {
+var countItemInStockByUnitName = function(itemCode, unitName, storeId) {
     url = "/Modules/Inventory/Services/ItemData.asmx/CountItemInStockByUnitName";
     data = appendParameter("", "itemCode", itemCode);
     data = appendParameter(data, "unitId", unitId);
@@ -982,7 +982,7 @@ var countItemInStockByUnitName = function (itemCode, unitName, storeId) {
     return getAjax(url, data);
 };
 
-var getDefaultSalesTaxId = function (tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode, unitId, price) {
+var getDefaultSalesTaxId = function(tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode, unitId, price) {
     url = "/Modules/BackOffice/Services/TaxData.asmx/GetSalesTaxId";
     data = appendParameter("", "tranBook", tranBook);
     data = appendParameter(data, "storeId", storeId);
@@ -998,7 +998,7 @@ var getDefaultSalesTaxId = function (tranBook, storeId, partyCode, shippingAddre
     return getAjax(url, data);
 };
 
-var getSalesTax = function (tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode, price, quantity, discount, shippingCharge, salesTaxId) {
+var getSalesTax = function(tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode, price, quantity, discount, shippingCharge, salesTaxId) {
     url = "/Modules/BackOffice/Services/TaxData.asmx/GetSalesTax";
     data = appendParameter("", "storeId", storeId);
     data = appendParameter(data, "tranBook", tranBook);
@@ -1017,7 +1017,7 @@ var getSalesTax = function (tranBook, storeId, partyCode, shippingAddressCode, p
 };
 
 //Logic & Validation
-var summate = function () {
+var summate = function() {
     var runningTotal = parseFloat2(sumOfColumn("#ProductGridView", 8));
     runningTotalInputText.val(runningTotal);
 
@@ -1027,51 +1027,51 @@ var summate = function () {
     grandTotalInputText.val(runningTotal + taxTotal);
 };
 
-var showShippingAddress = function () {
+var showShippingAddress = function() {
     shippingAddressTextArea.val((shippingAddressSelect.val()));
 };
 
 //Utilities
 function addShortcuts() {
-    shortcut.add("F2", function () {
+    shortcut.add("F2", function() {
         url = "/Modules/Inventory/Setup/PartiesPopup.mix?modal=1&CallBackFunctionName=initializeAjaxData&AssociatedControlId=PartyIdHidden";
         showWindow(url);
     });
 
-    shortcut.add("F4", function () {
+    shortcut.add("F4", function() {
         url = "/Modules/Inventory/Setup/ItemsPopup.mix?modal=1&CallBackFunctionName=initializeAjaxData&AssociatedControlId=ItemIdHidden";
         showWindow(url);
     });
 
-    shortcut.add("ALT+C", function () {
+    shortcut.add("ALT+C", function() {
         itemCodeInputText.focus();
     });
 
-    shortcut.add("CTRL+I", function () {
+    shortcut.add("CTRL+I", function() {
         itemSelect.focus();
     });
 
-    shortcut.add("CTRL+Q", function () {
+    shortcut.add("CTRL+Q", function() {
         quantityInputText.focus();
     });
 
-    shortcut.add("ALT+P", function () {
+    shortcut.add("ALT+P", function() {
         priceInputText.focus();
     });
 
-    shortcut.add("CTRL+D", function () {
+    shortcut.add("CTRL+D", function() {
         discountInputText.focus();
     });
 
-    shortcut.add("CTRL+R", function () {
+    shortcut.add("CTRL+R", function() {
         initializeAjaxData();
     });
 
-    shortcut.add("CTRL+T", function () {
+    shortcut.add("CTRL+T", function() {
         taxSelect.focus();
     });
 
-    shortcut.add("CTRL+U", function () {
+    shortcut.add("CTRL+U", function() {
         unitSelect.focus();
     });
 
@@ -1083,7 +1083,7 @@ function addShortcuts() {
     //    };
     //});
 
-    shortcut.add("CTRL+ENTER", function () {
+    shortcut.add("CTRL+ENTER", function() {
         if (taxSelect.is(":focus")) {
             addButton.focus();
             return;

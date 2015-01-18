@@ -86,6 +86,10 @@
       <Project>{daaad018-fcd1-4231-bb11-ef765f41463d}</Project>
       <Name>MixERP.Net.WebControls.ReportEngine.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MixERP.Net.WebControls.Common\MixERP.Net.WebControls.Common.csproj">
+      <Project>{2d961540-6597-4e7b-969c-974d71d820dd}</Project>
+      <Name>MixERP.Net.WebControls.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Scripts\ReportEngine.QRCode.js" />
