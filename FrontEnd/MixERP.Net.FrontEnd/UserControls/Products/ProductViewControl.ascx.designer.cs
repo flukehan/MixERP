@@ -175,15 +175,6 @@ namespace MixERP.Net.FrontEnd.UserControls.Products {
         protected global::System.Web.UI.WebControls.Panel GridPanel;
         
         /// <summary>
-        /// ProductViewGridView control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView ProductViewGridView;
-        
-        /// <summary>
         /// FlagPlaceholder control.
         /// </summary>
         /// <remarks>

@@ -26,6 +26,12 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     var grid = $("#grid");
     var actualInputText = $(".actual");
     var differenceInputText = $(".difference");
+    var saveButton = $("#SaveButton");
+    var referenceNumberInputText = $("#ReferenceNumberInputText");
+    var statementReferenceTextArea = $("#StatementReferenceTextArea");
+    var valueDateTextBox = $("#ValueDateTextBox");
+    var url;
+    var data;
 
     function ShowButton_ClientClick() {
         var selected = storeSelect.getSelectedValue();
@@ -97,5 +103,65 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         };
     };
 
+    var MixERP = {
+        StockAdjustmentModel: function (itemCode, itemName, quantity, storeName, transferType, unitName) {
+            this.ItemCode = itemCode;
+            this.ItemName = itemName;
+            this.Quantity = quantity;
+            this.StoreName = storeName;
+            this.TransferType = transferType;
+            this.UnitName = unitName;
+        }
+    };
 
+    saveButton.click(function () {
+        var valueDate = valueDateTextBox.val();
+        var referenceNumber = referenceNumberInputText.val();
+        var statementReference = statementReferenceTextArea.val();
+
+        var models = new Array();
+
+        grid.find("tbody tr").each(function () {
+            var itemCode = $(this).find("td:nth-child(2)").html();
+            var itemName = $(this).find("td:nth-child(3)").html();
+            var quantity = parseInt2($(this).find("td:nth-child(8)").find("input").val());
+            var storeName = storeSelect.getSelectedText();
+            var transferType = "Credit";
+            var unitName = $(this).find("td:nth-child(5)").html();
+
+            if (quantity) {
+                models.push(new MixERP.StockAdjustmentModel(itemCode, itemName, quantity, storeName, transferType, unitName));
+            };
+        });
+
+        if (models.length) {
+            var ajaxSave = save(valueDate, referenceNumber, statementReference, models);
+
+            ajaxSave.success(function (msg) {
+                var tranId = parseInt2(msg.d);
+
+                if (tranId) {
+                    window.location = "/Modules/Inventory/Confirmation/Adjustment.mix?TranId=" + tranId;
+                };
+            });
+
+            ajaxSave.fail(function (xhr) {
+                logAjaxErrorMessage(xhr);
+            });
+        };
+
+    });
+
+    function save(valueDate, referenceNumber, statementReference, models) {
+        url = "/Modules/Inventory/Services/Entry/Adjustment.asmx/Save";
+
+        data = appendParameter("", "valueDate", valueDate);
+        data = appendParameter(data, "referenceNumber", referenceNumber);
+        data = appendParameter(data, "statementReference", statementReference);
+        data = appendParameter(data, "models", models);
+
+        data = getData(data);
+
+        return getAjax(url, data);
+    };
 </script>

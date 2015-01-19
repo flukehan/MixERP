@@ -207,7 +207,7 @@ END;
 $$
 LANGUAGE plpgsql;
 
--- SELECT * FROM transactions.post_non_gl_transaction('Sales.Order', 2, 1, 1, '1-1-2020', '1', 'asdf', 'JASMI-0002', 1, true, null::bigint[],
+-- SELECT * FROM transactions.post_non_gl_transaction('Sales.Order', 2, 2, 5, '1-1-2020', '1', 'asdf', 'JASMI-0002', 1, false, 1, 1, '',  1, null::bigint[],
 -- ARRAY[
 --            ROW(1, 'RMBP', 1, 'Piece',180000, 0, 200, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type,
 --            ROW(1, '13MBA', 1, 'Dozen',130000, 300, 30, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type,

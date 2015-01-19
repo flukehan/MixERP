@@ -325,6 +325,7 @@ BEGIN
         FROM explode_array(_attachments);
     END IF;
     
+    PERFORM transactions.auto_verify(_transaction_master_id);
     RETURN _transaction_master_id;
 END
 $$

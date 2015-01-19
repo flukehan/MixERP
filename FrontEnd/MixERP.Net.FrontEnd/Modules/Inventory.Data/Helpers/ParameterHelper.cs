@@ -1,6 +1,8 @@
-﻿using MixERP.Net.Common.Models.Transactions;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Globalization;
+using MixERP.Net.Common.Models.Transactions;
 using Npgsql;
-using System.Collections.Generic;
 
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
@@ -21,9 +23,6 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System.Collections.ObjectModel;
-using System.Globalization;
-
 namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
 {
     public static class ParameterHelper
@@ -36,7 +35,13 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
             {
                 for (int i = 0; i < details.Count; i++)
                 {
-                    collection.Add(new NpgsqlParameter("@TranType" + i, details[i].TransferType));
+                    string type = "Cr";
+                    if (details[i].TransferType.Equals(TransactionType.Debit))
+                    {
+                        type = "Dr";
+                    }
+
+                    collection.Add(new NpgsqlParameter("@TranType" + i, type));
                     collection.Add(new NpgsqlParameter("@StoreName" + i, details[i].StoreName));
                     collection.Add(new NpgsqlParameter("@ItemCode" + i, details[i].ItemCode));
                     collection.Add(new NpgsqlParameter("@UnitName" + i, details[i].UnitName));

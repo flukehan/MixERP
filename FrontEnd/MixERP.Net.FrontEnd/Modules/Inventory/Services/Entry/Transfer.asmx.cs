@@ -17,11 +17,6 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common;
-using MixERP.Net.Common.Base;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Transactions;
-using MixERP.Net.Core.Modules.Inventory.Resources;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -30,6 +25,11 @@ using System.Linq;
 using System.Web.Script.Serialization;
 using System.Web.Script.Services;
 using System.Web.Services;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Base;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Common.Models.Transactions;
+using MixERP.Net.Core.Modules.Inventory.Resources;
 
 namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
 {
@@ -46,7 +46,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
 
             foreach (var model in stockTransferModels)
             {
-                if (model.TransferType.ToUpperInvariant().Equals("CR"))
+                if (model.TransferType == TransactionType.Credit)
                 {
                     decimal existingQuantity = Data.Helpers.Items.CountItemInStock(model.ItemCode, model.UnitName, model.StoreName);
 
@@ -75,8 +75,14 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
             foreach (var item in result)
             {
                 StockAdjustmentModel model = new StockAdjustmentModel();
+                TransactionType type = TransactionType.Credit;
 
-                model.TransferType = Conversion.TryCastString(item[0]);
+                if (Conversion.TryCastString(item[0]).ToString().Equals("Dr"))
+                {
+                    type = TransactionType.Debit;
+                }
+
+                model.TransferType = type;
                 model.StoreName = Conversion.TryCastString(item[1]);
                 model.ItemCode = Conversion.TryCastString(item[2]);
                 model.ItemName = Conversion.TryCastString(item[3]);
@@ -87,15 +93,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
             }
 
             var results = from rows in models
-                          group rows by new { rows.ItemCode, rows.UnitName }
-                              into aggregate
-                              select new
-                              {
-                                  aggregate.Key.ItemCode,
-                                  aggregate.Key.UnitName,
-                                  Debit = aggregate.Where(row => row.TransferType.ToUpperInvariant().Equals("DR")).Sum(row => row.Quantity),
-                                  Credit = aggregate.Where(row => row.TransferType.ToUpperInvariant().Equals("CR")).Sum(row => row.Quantity)
-                              };
+                group rows by new {rows.ItemCode, rows.UnitName}
+                into aggregate
+                select new
+                {
+                    aggregate.Key.ItemCode,
+                    aggregate.Key.UnitName,
+                    Debit = aggregate.Where(row => row.TransferType.Equals(TransactionType.Debit)).Sum(row => row.Quantity),
+                    Credit = aggregate.Where(row => row.TransferType.Equals(TransactionType.Credit)).Sum(row => row.Quantity)
+                };
 
             if ((from query in results where query.Debit != query.Credit select query).Any())
             {

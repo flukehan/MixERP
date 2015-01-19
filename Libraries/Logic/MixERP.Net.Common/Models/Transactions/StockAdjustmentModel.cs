@@ -21,11 +21,15 @@ namespace MixERP.Net.Common.Models.Transactions
 {
     public sealed class StockAdjustmentModel
     {
-        public string TransferType { get; set; }
-        public string StoreName { get; set; }
         public string ItemCode { get; set; }
+
         public string ItemName { get; set; }
-        public string UnitName { get; set; }
+
         public int Quantity { get; set; }
+
+        public string StoreName { get; set; }
+
+        public TransactionType TransferType { get; set; }
+        public string UnitName { get; set; }
     }
 }

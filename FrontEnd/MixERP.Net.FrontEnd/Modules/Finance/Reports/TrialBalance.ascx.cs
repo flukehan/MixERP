@@ -283,7 +283,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             {
                 formSegment.Attributes.Add("class", "ui form segment");
 
-                using (HtmlGenericControl fields = HtmlControlHelper.GetFields("inline fields"))
+                using (HtmlGenericControl fields = HtmlControlHelper.GetFields("eight inline fields"))
                 {
                     this.AddFromDateTextBoxField(fields);
                     this.AddToDateTextBoxField(fields);

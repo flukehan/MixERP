@@ -17,9 +17,6 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Core.Modules.Inventory.Resources;
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.StockAdjustmentFactory;
 using System;
 using System.Data;
 using System.Reflection;
@@ -28,15 +25,15 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Common.Models.Core;
+using MixERP.Net.Core.Modules.Inventory.Resources;
+using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.Common;
 
 namespace MixERP.Net.Core.Modules.Inventory
 {
-
     public partial class Adjustment : MixERPUserControl
     {
-
-
         public override void OnControlLoad(object sender, EventArgs e)
         {
             this.CreateHeader(this.Placeholder1);
@@ -46,20 +43,28 @@ namespace MixERP.Net.Core.Modules.Inventory
             base.OnControlLoad(sender, e);
         }
 
-        #region Bottom Panel
+        #region Header
 
-        private void CreateBottomPanel(Control container)
+        private void CreateHeader(Control container)
         {
-            this.CreateErrorDivBottom(container);
-            this.CreateBottomForm(container);
-
+            using (HtmlGenericControl header = new HtmlGenericControl("h2"))
+            {
+                header.InnerText = Titles.StockAdjustment;
+                container.Controls.Add(header);
+            }
         }
+
+        #endregion
+
+        #region Bottom Panel
 
         private void CreateBottomForm(Control container)
         {
             using (HtmlGenericControl form = HtmlControlHelper.GetForm())
             {
                 form.Attributes.Add("style", "width:300px;");
+
+
                 using (HtmlGenericControl field = HtmlControlHelper.GetField())
                 {
                     using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Titles.StatementReference, "StatementReferenceTextArea"))
@@ -83,16 +88,10 @@ namespace MixERP.Net.Core.Modules.Inventory
             }
         }
 
-
-        private void CreateSaveButton(HtmlGenericControl container)
+        private void CreateBottomPanel(Control container)
         {
-            using (HtmlInputButton saveButton = new HtmlInputButton())
-            {
-                saveButton.ID = "SaveButton";
-                saveButton.Value = Titles.Save;
-                saveButton.Attributes.Add("class", "ui red button");
-                container.Controls.Add(saveButton);
-            }
+            this.CreateErrorDivBottom(container);
+            this.CreateBottomForm(container);
         }
 
         private void CreateErrorDivBottom(Control container)
@@ -105,14 +104,26 @@ namespace MixERP.Net.Core.Modules.Inventory
             }
         }
 
+        private void CreateSaveButton(HtmlGenericControl container)
+        {
+            using (HtmlInputButton saveButton = new HtmlInputButton())
+            {
+                saveButton.ID = "SaveButton";
+                saveButton.Value = Titles.Save;
+                saveButton.Attributes.Add("class", "ui red button");
+                container.Controls.Add(saveButton);
+            }
+        }
+
         #endregion
 
         #region IDisposable
 
+        private bool disposed;
+        private MixERPGridView grid;
         private Button showButton;
         private HiddenField storeHiddenField;
-        private MixERPGridView grid;
-        private bool disposed;
+        private DateTextBox valueDateTextBox;
 
         public override sealed void Dispose()
         {
@@ -129,6 +140,12 @@ namespace MixERP.Net.Core.Modules.Inventory
             if (!disposing)
             {
                 return;
+            }
+
+            if (this.valueDateTextBox != null)
+            {
+                this.valueDateTextBox.Dispose();
+                this.valueDateTextBox = null;
             }
 
             if (this.storeHiddenField != null)
@@ -158,57 +175,22 @@ namespace MixERP.Net.Core.Modules.Inventory
 
         #endregion
 
-        #region Header
-
-        private void CreateHeader(Control container)
-        {
-            using (HtmlGenericControl header = new HtmlGenericControl("h2"))
-            {
-                header.InnerText = "Stock Adjustment";
-                container.Controls.Add(header);
-            }
-        }
-
-        #endregion
-
-
         #region Form
 
-        private void CreateTopFormSegment(Control container)
+        private void CreateReferenceNumberField(HtmlGenericControl container)
         {
-            using (HtmlGenericControl form = new HtmlGenericControl("div"))
+            using (HtmlGenericControl field = HtmlControlHelper.GetField())
             {
-                using (HtmlGenericControl fields = HtmlControlHelper.GetFields())
-                {
-                    form.Attributes.Add("class", "ui form segment");
-                    this.CreateStoreField(fields);
-                    this.CreateShowButton(fields);
-                    form.Controls.Add(fields);
-                }
-                container.Controls.Add(form);
-            }
-        }
-
-
-        private void CreateStoreField(HtmlGenericControl container)
-        {
-            using (HtmlGenericControl field = HtmlControlHelper.GetField("four wide column field"))
-            {
-                using (HtmlGenericControl label = HtmlControlHelper.GetLabel("Select Store", "StoreSelect"))
+                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Titles.ReferenceNumber, "ReferenceNumberInputText"))
                 {
                     field.Controls.Add(label);
                 }
 
-                using (HtmlSelect storeSelect = new HtmlSelect())
+                using (HtmlInputText referenceNumberInputText = new HtmlInputText())
                 {
-                    storeSelect.ID = "StoreSelect";
-                    storeSelect.Attributes.Add("tabindex", "0");
-                    field.Controls.Add(storeSelect);
+                    referenceNumberInputText.ID = "ReferenceNumberInputText";
+                    field.Controls.Add(referenceNumberInputText);
                 }
-
-                this.storeHiddenField = new HiddenField();
-                this.storeHiddenField.ID = "StoreHidden";
-                field.Controls.Add(this.storeHiddenField);
 
                 container.Controls.Add(field);
             }
@@ -237,6 +219,65 @@ namespace MixERP.Net.Core.Modules.Inventory
             }
         }
 
+        private void CreateStoreField(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl field = HtmlControlHelper.GetField("four wide column field"))
+            {
+                using (HtmlGenericControl label = HtmlControlHelper.GetLabel("Select Store", "StoreSelect"))
+                {
+                    field.Controls.Add(label);
+                }
+
+                using (HtmlSelect storeSelect = new HtmlSelect())
+                {
+                    storeSelect.ID = "StoreSelect";
+                    storeSelect.Attributes.Add("tabindex", "0");
+                    field.Controls.Add(storeSelect);
+                }
+
+                this.storeHiddenField = new HiddenField();
+                this.storeHiddenField.ID = "StoreHidden";
+                field.Controls.Add(this.storeHiddenField);
+
+                container.Controls.Add(field);
+            }
+        }
+
+        private void CreateTopFormSegment(Control container)
+        {
+            using (HtmlGenericControl form = new HtmlGenericControl("div"))
+            {
+                using (HtmlGenericControl fields = HtmlControlHelper.GetFields())
+                {
+                    form.Attributes.Add("class", "ui form segment");
+                    this.CreateValueDateField(fields);
+                    this.CreateReferenceNumberField(fields);
+                    this.CreateStoreField(fields);
+                    this.CreateShowButton(fields);
+                    form.Controls.Add(fields);
+                }
+                container.Controls.Add(form);
+            }
+        }
+
+        private void CreateValueDateField(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl field = HtmlControlHelper.GetField())
+            {
+                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Titles.ValueDate, "ValueDateTextBox"))
+                {
+                    field.Controls.Add(label);
+                }
+
+                this.valueDateTextBox = new DateTextBox();
+                this.valueDateTextBox.ID = "ValueDateTextBox";
+                this.valueDateTextBox.Mode = Frequency.Today;
+                field.Controls.Add(this.valueDateTextBox);
+
+                container.Controls.Add(field);
+            }
+        }
+
         private void ShowButton_Click(object sender, EventArgs e)
         {
             int storeId = Conversion.TryCastInteger(this.storeHiddenField.Value);
@@ -253,7 +294,6 @@ namespace MixERP.Net.Core.Modules.Inventory
                 this.grid.DataSource = table;
                 this.grid.DataBind();
             }
-
         }
 
         #endregion
@@ -274,11 +314,10 @@ namespace MixERP.Net.Core.Modules.Inventory
         {
             for (int i = 0; i < e.Row.Cells.Count - 2; i++)
             {
-                e.Row.Cells[i].Text = LocalizationHelper.GetResourceString(Assembly.GetAssembly(typeof(Adjustment)), "MixERP.Net.Core.Modules.Inventory.Resources.ScrudResource", e.Row.Cells[i].Text);
+                e.Row.Cells[i].Text = LocalizationHelper.GetResourceString(Assembly.GetAssembly(typeof (Adjustment)), "MixERP.Net.Core.Modules.Inventory.Resources.ScrudResource", e.Row.Cells[i].Text);
             }
         }
 
         #endregion
-
     }
 }

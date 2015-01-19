@@ -31,10 +31,16 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private void LoadGridView()
         {
-            if (string.IsNullOrWhiteSpace(this.GetSchema())) return;
-            if (string.IsNullOrWhiteSpace(this.GetView())) return;
+            if (string.IsNullOrWhiteSpace(this.GetSchema()))
+            {
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(this.GetView()))
+            {
+                return;
+            }
 
-            using (var table = FormHelper.GetTable(this.GetSchema(), this.GetView(), "", "", 10, "1"))//Todo :Verfy orderBy parameter.
+            using (var table = FormHelper.GetTable(this.GetSchema(), this.GetView(), "", "", 10, "1"))
             {
                 this.searchGridView.DataSource = table;
                 this.searchGridView.DataBind();
@@ -43,8 +49,14 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private void LoadParmeters()
         {
-            if (string.IsNullOrWhiteSpace(this.GetSchema())) return;
-            if (string.IsNullOrWhiteSpace(this.GetView())) return;
+            if (string.IsNullOrWhiteSpace(this.GetSchema()))
+            {
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(this.GetView()))
+            {
+                return;
+            }
 
             using (var table = TableHelper.GetTable(this.GetSchema(), this.GetView(), ""))
             {

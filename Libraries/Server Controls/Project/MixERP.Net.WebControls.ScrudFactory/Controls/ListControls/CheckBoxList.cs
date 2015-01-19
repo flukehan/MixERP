@@ -17,12 +17,12 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.WebControls.ScrudFactory.Helpers;
-using MixERP.Net.WebControls.ScrudFactory.Resources;
 using System.Reflection;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.WebControls.ScrudFactory.Helpers;
+using MixERP.Net.WebControls.ScrudFactory.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 {
@@ -35,9 +35,8 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 
             if (!isNullable)
             {
-                var required = ScrudFactoryHelper.GetRequiredFieldValidator(checkBoxList, errorCssClass);
-                ScrudFactoryHelper.AddRow(htmlTable, label + Titles.RequiredFieldIndicator, checkBoxList,
-                    required);
+                RequiredFieldValidator required = ScrudFactoryHelper.GetRequiredFieldValidator(checkBoxList, errorCssClass);
+                ScrudFactoryHelper.AddRow(htmlTable, label + Titles.RequiredFieldIndicator, checkBoxList, required);
                 return;
             }
 
@@ -46,7 +45,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 
         internal static CheckBoxList GetCheckBoxList(string id, string keys, string values, string selectedValues)
         {
-            using (var list = new CheckBoxList())
+            using (CheckBoxList list = new CheckBoxList())
             {
                 list.ID = id;
                 list.ClientIDMode = ClientIDMode.Static;

@@ -17,16 +17,15 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common;
-using MixERP.Net.Common.Base;
-using MixERP.Net.DBFactory;
-using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.IO;
-using System.Threading;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Base;
+using MixERP.Net.DBFactory;
+using Npgsql;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Data
 {
@@ -83,7 +82,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
             return DBFactory.FormHelper.GetView(tableSchema, tableName, orderBy, limit, offset);
         }
 
-        public static long InsertRecord(int userId, string tableSchema, string tableName, Collection<KeyValuePair<string, string>> data, string imageColumn)
+        public static long InsertRecord(int userId, string tableSchema, string tableName, Collection<KeyValuePair<string, object>> data, string imageColumn)
         {
             if (data == null)
             {
@@ -95,7 +94,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
 
             int counter = 0;
 
-            foreach (KeyValuePair<string, string> pair in data)
+            foreach (KeyValuePair<string, object> pair in data)
             {
                 counter++;
 
@@ -120,9 +119,9 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
 
                 command.CommandText = sql;
 
-                foreach (KeyValuePair<string, string> pair in data)
+                foreach (KeyValuePair<string, object> pair in data)
                 {
-                    if (string.IsNullOrWhiteSpace(pair.Value))
+                    if (pair.Value == null)
                     {
                         command.Parameters.AddWithValue("@" + pair.Key, DBNull.Value);
                     }
@@ -130,7 +129,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
                     {
                         if (pair.Key.Equals(imageColumn))
                         {
-                            using (FileStream stream = new FileStream(pair.Value, FileMode.Open, FileAccess.Read))
+                            using (FileStream stream = new FileStream(pair.Value.ToString(), FileMode.Open, FileAccess.Read))
                             {
                                 using (BinaryReader reader = new BinaryReader(new BufferedStream(stream)))
                                 {
@@ -141,7 +140,14 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
                         }
                         else
                         {
-                            command.Parameters.AddWithValue("@" + pair.Key, pair.Value);
+                            if (pair.Value == null)
+                            {
+                                command.Parameters.AddWithValue("@" + pair.Key, DBNull.Value);
+                            }
+                            else
+                            {
+                                command.Parameters.AddWithValue("@" + pair.Key, pair.Value);
+                            }
                         }
                     }
                 }
@@ -160,7 +166,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
         }
 
         public static bool UpdateRecord(int userId, string tableSchema, string tableName,
-            Collection<KeyValuePair<string, string>> data, string keyColumn, string keyColumnValue, string imageColumn)
+            Collection<KeyValuePair<string, object>> data, string keyColumn, string keyColumnValue, string imageColumn)
         {
             if (data == null)
             {
@@ -172,11 +178,10 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
             int counter = 0;
 
             //Adding the current user to the column collection.
-            KeyValuePair<string, string> auditUserId = new KeyValuePair<string, string>("audit_user_id",
-                userId.ToString(Thread.CurrentThread.CurrentCulture));
+            KeyValuePair<string, object> auditUserId = new KeyValuePair<string, object>("audit_user_id", userId);
             data.Add(auditUserId);
 
-            foreach (KeyValuePair<string, string> pair in data)
+            foreach (KeyValuePair<string, object> pair in data)
             {
                 counter++;
 
@@ -200,9 +205,9 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
 
                 command.CommandText = sql;
 
-                foreach (KeyValuePair<string, string> pair in data)
+                foreach (KeyValuePair<string, object> pair in data)
                 {
-                    if (string.IsNullOrWhiteSpace(pair.Value))
+                    if (pair.Value == null)
                     {
                         command.Parameters.AddWithValue("@" + pair.Key, DBNull.Value);
                     }
@@ -210,7 +215,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
                     {
                         if (pair.Key.Equals(imageColumn))
                         {
-                            FileStream stream = new FileStream(pair.Value, FileMode.Open, FileAccess.Read);
+                            FileStream stream = new FileStream(pair.Value.ToString(), FileMode.Open, FileAccess.Read);
                             try
                             {
                                 using (BinaryReader reader = new BinaryReader(new BufferedStream(stream)))

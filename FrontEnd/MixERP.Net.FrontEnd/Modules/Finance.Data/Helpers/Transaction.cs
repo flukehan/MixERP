@@ -33,7 +33,6 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
         public static long Add(DateTime valueDate, string referenceNumber, int costCenterId, Collection<JournalDetailsModel> details, Collection<Common.Models.Core.AttachmentModel> attachments)
         {
             long transactionMasterId = Add(valueDate, SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), costCenterId, referenceNumber, details, attachments);
-            TransactionGovernor.Autoverification.Autoverify.PassTransactionMasterId(transactionMasterId);
             return transactionMasterId;
         }
 

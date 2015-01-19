@@ -86,7 +86,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
         {
             using (HtmlGenericControl gridPanel = new HtmlGenericControl("div"))
             {
-                gridPanel.Attributes.Add("style", "width:100%;");
+                gridPanel.Attributes.Add("class", "auto-overflow-panel");
 
                 this.cashflowStatementGridView = new GridView();
                 this.cashflowStatementGridView.ID = "CashFlowStatementGridView";

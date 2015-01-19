@@ -78,8 +78,6 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
 
             long transactionMasterID = Data.Transactions.Receipt.PostTransaction(userId, officeId, loginId, partyCode, currencyCode, amount, debitExchangeRate, creditExchangeRate, referenceNumber, statementReference, costCenterId, cashRepositoryId, postedDate, bankAccountId, bankInstrumentCode, bankTransactionCode);
 
-            TransactionGovernor.Autoverification.Autoverify.PassTransactionMasterId(transactionMasterID);
-
             return transactionMasterID;
         }
     }

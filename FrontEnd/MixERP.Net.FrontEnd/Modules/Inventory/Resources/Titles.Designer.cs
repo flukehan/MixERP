@@ -331,7 +331,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TransactionStatus.
+        ///   Looks up a localized string similar to Transaction Status.
         /// </summary>
         internal static string TransactionStatus {
             get {

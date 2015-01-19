@@ -17,28 +17,31 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+
 using System;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.TransactionChecklist;
 
 namespace MixERP.Net.Core.Modules.Inventory.Confirmation
 {
-    public partial class Transfer : MixERPUserControl
+    public partial class Adjustment : MixERPUserControl
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
             using (TransactionChecklistForm checklist = new TransactionChecklistForm())
             {
                 checklist.ViewReportButtonText = Resources.Titles.ViewThisTransfer;
-                checklist.Text = Resources.Titles.StockTransferJournal;
+                checklist.Text = Resources.Titles.StockAdjustment;
                 checklist.AttachmentBookName = "transaction";
-                checklist.OverridePath = "/Modules/Inventory/Transfer.mix";
+                checklist.OverridePath = "/Modules/Inventory/Adjustment.mix";
                 checklist.DisplayWithdrawButton = true;
                 checklist.DisplayViewReportButton = true;
                 checklist.DisplayAttachmentButton = true;
-                checklist.ReportPath = "~/Modules/Inventory/Reports/InventoryTransferReport.mix";
-                checklist.ViewPath = "/Modules/Inventory/Transfer.mix";
-                checklist.AddNewPath = "/Modules/Inventory/Entry/Transfer.mix";
+                checklist.DisplayPrintGlEntryButton = true;
+                checklist.ReportPath = "~/Modules/Inventory/Reports/InventoryAdjustmentReport.mix";
+                checklist.ViewPath = "/Modules/Inventory/Adjustment.mix";
+                checklist.GlAdvicePath = "~/Modules/Finance/Reports/GLAdviceReport.mix";
+                checklist.AddNewPath = "/Modules/Inventory/Entry/Adjustment.mix";
 
                 this.Placeholder1.Controls.Add(checklist);
             }

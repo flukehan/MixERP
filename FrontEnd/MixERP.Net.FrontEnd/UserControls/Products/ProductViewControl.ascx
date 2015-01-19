@@ -120,14 +120,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 </div>
 
 <asp:Panel ID="GridPanel" runat="server" Width="100%" ScrollBars="Auto">
-    <asp:GridView
-        ID="ProductViewGridView"
-        runat="server"
-        GridLines="None"
-        CssClass="ui nowrap table"
-        AutoGenerateColumns="false"
-        OnRowDataBound="ProductViewGridView_RowDataBound">
-    </asp:GridView>
 </asp:Panel>
 
 <asp:PlaceHolder runat="server" ID="FlagPlaceholder"></asp:PlaceHolder>

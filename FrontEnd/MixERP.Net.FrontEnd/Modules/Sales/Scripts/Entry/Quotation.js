@@ -28,7 +28,7 @@ saveButton.click(function() {
 
 var save = function() {
     saveButton.addClass("loading");
-    var ajaxSaveQuotation = saveQuotation(valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, cashRepositoryId, costCenterId, salespersonId, statementReference, transactionIds, attachments, nonTaxable);
+    var ajaxSaveQuotation = saveQuotation(valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, costCenterId, salespersonId, statementReference, transactionIds, attachments, nonTaxable);
 
     ajaxSaveQuotation.done(function(response) {
         var id = response.d;
@@ -43,7 +43,7 @@ var save = function() {
     });
 };
 
-var saveQuotation = function(valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, cashRepositoryId, costCenterId, salePersonId, statementReference, transactionIds, attachments, nonTaxable) {
+var saveQuotation = function(valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, costCenterId, salePersonId, statementReference, transactionIds, attachments, nonTaxable) {
     var d = "";
     d = appendParameter(d, "valueDate", valueDate);
     d = appendParameter(d, "storeId", storeId);

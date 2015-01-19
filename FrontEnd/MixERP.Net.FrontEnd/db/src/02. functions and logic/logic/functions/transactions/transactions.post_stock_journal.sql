@@ -52,9 +52,9 @@ BEGIN
 
     IF EXISTS
     (
-        SELECT item_code, tran_type FROM temp_stock_details
-        GROUP BY item_code, tran_type
-        HAVING COUNT(store_name) <> 1
+        SELECT 1 FROM temp_stock_details
+        GROUP BY item_code, store_name
+        HAVING COUNT(item_code) <> 1
     ) THEN
         RAISE EXCEPTION 'An item can appear only once in a store.';
     END IF;
@@ -134,7 +134,7 @@ BEGIN
             nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), 
             transactions.get_new_transaction_counter(_value_date), 
             transactions.get_transaction_code(_value_date, _office_id, _user_id, _login_id),
-            'Inventory.Transfer',
+            _book_name,
             _value_date,
             _login_id,
             _user_id,

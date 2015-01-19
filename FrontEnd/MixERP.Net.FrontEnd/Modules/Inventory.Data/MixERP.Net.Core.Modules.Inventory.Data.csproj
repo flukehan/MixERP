@@ -60,6 +60,7 @@
     <Compile Include="Helpers\PriceTypes.cs" />
     <Compile Include="Helpers\Shippers.cs" />
     <Compile Include="Reports\StockItems.cs" />
+    <Compile Include="Transactions\StockAdjustment.cs" />
     <Compile Include="Transactions\StockTransfer.cs" />
     <Compile Include="Helpers\Stores.cs" />
     <Compile Include="Helpers\Units.cs" />

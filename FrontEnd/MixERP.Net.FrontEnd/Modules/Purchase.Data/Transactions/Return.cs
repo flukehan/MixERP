@@ -56,7 +56,6 @@ namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
                 command.Parameters.AddRange(AttachmentHelper.AddAttachmentParameter(attachments).ToArray());
 
                 long tranId = Conversion.TryCastLong(DbOperation.GetScalarValue(command));
-                TransactionGovernor.Autoverification.Autoverify.PassTransactionMasterId(tranId);
                 return tranId;
             }
         }

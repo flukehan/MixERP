@@ -702,4 +702,10 @@
   <data name="stores_default_cash_account_id_chk" xml:space="preserve">
     <value>Please select a valid Cash or Bank AccountId.</value>
   </data>
+  <data name="items_item_code_uix" xml:space="preserve">
+    <value>Duplicate item code.</value>
+  </data>
+  <data name="items_item_name_uix" xml:space="preserve">
+    <value>Duplicate item name.</value>
+  </data>
 </root>

@@ -43,8 +43,6 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
 
             long transactionMasterId = GlTransaction.Add("Sales.Direct", valueDate, SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), costCenterId, referenceNumber, statementReference, stockMaster, details, attachments, nonTaxable);
 
-            TransactionGovernor.Autoverification.Autoverify.PassTransactionMasterId(transactionMasterId);
-
             return transactionMasterId;
         }
     }

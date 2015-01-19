@@ -1024,6 +1024,24 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Duplicate item code..
+        /// </summary>
+        internal static string items_item_code_uix {
+            get {
+                return ResourceManager.GetString("items_item_code_uix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duplicate item name..
+        /// </summary>
+        internal static string items_item_name_uix {
+            get {
+                return ResourceManager.GetString("items_item_name_uix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The reorder quantity must be great than or equal to the reorder level..
         /// </summary>
         internal static string items_reorder_quantity_chk {

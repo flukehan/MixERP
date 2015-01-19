@@ -61,6 +61,7 @@
     <Content Include="..\..\..\..\mixerp.licenseheader">
       <Link>mixerp.licenseheader</Link>
     </Content>
+    <Content Include="Confirmation\Adjustment.ascx" />
     <Content Include="Mix Open Foundation.snk" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -76,11 +77,16 @@
     <Content Include="Index.ascx" />
     <Content Include="Package.xml" />
     <Content Include="Reports\AccountStatement.ascx" />
+    <Content Include="Reports\InventoryAdjustmentReport.ascx" />
     <Content Include="Reports\InventoryTransferReport.ascx" />
+    <Content Include="Reports\Source\Inventory.Adjustment.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Reports\Source\Inventory.Transfer.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Scripts\Setup\Parties.js" />
+    <Content Include="Services\Entry\Adjustment.asmx" />
     <Content Include="Services\Entry\Transfer.asmx" />
     <Content Include="Setup\CompoundItemDetails.ascx" />
     <Content Include="Setup\CompoundItems.ascx" />
@@ -115,6 +121,13 @@
     <Compile Include="Adjustment.ascx.designer.cs">
       <DependentUpon>Adjustment.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Confirmation\Adjustment.ascx.cs">
+      <DependentUpon>Adjustment.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Confirmation\Adjustment.ascx.designer.cs">
+      <DependentUpon>Adjustment.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Confirmation\Transfer.ascx.cs">
       <DependentUpon>Transfer.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -144,6 +157,13 @@
     <Compile Include="Reports\AccountStatement.ascx.designer.cs">
       <DependentUpon>AccountStatement.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Reports\InventoryAdjustmentReport.ascx.cs">
+      <DependentUpon>InventoryAdjustmentReport.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\InventoryAdjustmentReport.ascx.designer.cs">
+      <DependentUpon>InventoryAdjustmentReport.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Reports\InventoryTransferReport.ascx.cs">
       <DependentUpon>InventoryTransferReport.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -170,6 +190,10 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Titles.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Entry\Adjustment.asmx.cs">
+      <DependentUpon>Adjustment.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Services\Entry\Transfer.asmx.cs">
       <DependentUpon>Transfer.asmx</DependentUpon>

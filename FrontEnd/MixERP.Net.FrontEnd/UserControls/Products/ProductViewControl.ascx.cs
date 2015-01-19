@@ -17,13 +17,6 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Transactions;
-using MixERP.Net.WebControls.Flag;
-using MixERP.Net.WebControls.StockTransactionView.Data;
-using MixERP.Net.WebControls.StockTransactionView.Data.Helpers;
-using MixERP.Net.WebControls.StockTransactionView.Data.Models;
 using System;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -32,54 +25,31 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Common.Models.Transactions;
+using MixERP.Net.WebControls.Common;
+using MixERP.Net.WebControls.Flag;
+using MixERP.Net.WebControls.StockTransactionView.Data;
+using MixERP.Net.WebControls.StockTransactionView.Data.Helpers;
+using MixERP.Net.WebControls.StockTransactionView.Data.Models;
 
 namespace MixERP.Net.FrontEnd.UserControls.Products
 {
     /// This class is subject to be moved to a standalone server control class library.
     public partial class ProductViewControl : UserControl
     {
-        private bool initialized;
+        #region IDispoable
 
-        public string AddNewUrl { get; set; }
+        private MixERPGridView productViewGridView;
 
-        public TranBook Book { get; set; }
-
-        public string ChecklistUrl { get; set; }
-
-        public string PreviewUrl { get; set; }
-
-        public bool ShowMergeToDeliveryButton
-        {
-            set { this.MergeToDeliveryButton.Visible = value; }
-        }
-
-        public bool ShowMergeToGRNButton
-        {
-            set { this.MergeToGRNButton.Visible = value; }
-        }
-
-        public bool ShowMergeToOrderButton
-        {
-            set { this.MergeToOrderButton.Visible = value; }
-        }
-
-        public bool ShowReturnButton
-        {
-            set { this.ReturnButton.Visible = value; }
-        }
-
-        public SubTranBook SubBook { get; set; }
-
-        public string Text
-        {
-            get { return this.TitleLiteral.Text; }
-            set { this.TitleLiteral.Text = value; }
-        }
+        #endregion
 
         public void Initialize()
         {
             if (!this.initialized)
             {
+                this.AddGridView();
                 this.AddFlag();
                 this.SetVisibleStates();
                 this.LoadGridView();
@@ -118,6 +88,10 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             }
         }
 
+        protected void Page_Init(object sender, EventArgs e)
+        {
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             this.Initialize();
@@ -138,7 +112,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                     {
                         string popUpQuotationPreviewUrl = this.Page.ResolveUrl(this.PreviewUrl + "?TranId=" + id);
 
-                        using (HtmlAnchor printAnchor = (HtmlAnchor)e.Row.Cells[0].FindControl("PrintAnchor"))
+                        using (HtmlAnchor printAnchor = (HtmlAnchor) e.Row.Cells[0].FindControl("PrintAnchor"))
                         {
                             if (printAnchor != null)
                             {
@@ -147,7 +121,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                         }
                     }
 
-                    using (HtmlAnchor checklistAnchor = (HtmlAnchor)e.Row.Cells[0].FindControl("ChecklistAnchor"))
+                    using (HtmlAnchor checklistAnchor = (HtmlAnchor) e.Row.Cells[0].FindControl("ChecklistAnchor"))
                     {
                         if (!string.IsNullOrWhiteSpace(this.ChecklistUrl))
                         {
@@ -177,6 +151,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         protected void ShowButton_Click(object sender, EventArgs e)
         {
+
             this.LoadGridView();
         }
 
@@ -193,6 +168,17 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
                 this.FlagPlaceholder.Controls.Add(flag);
             }
+        }
+
+        private void AddGridView()
+        {
+            this.productViewGridView = new MixERPGridView();
+            this.productViewGridView.ID = "ProductViewGridView";
+            this.productViewGridView.GridLines = GridLines.None;
+            this.productViewGridView.CssClass = "ui nowrap table";
+            this.productViewGridView.AutoGenerateColumns = false;
+            this.productViewGridView.RowDataBound += this.ProductViewGridView_RowDataBound;
+            this.GridPanel.Controls.Add(this.productViewGridView);
         }
 
         private void Flag_Updated(object sender, FlagUpdatedEventArgs e)
@@ -307,7 +293,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         private void LoadGridView()
         {
-            this.ProductViewGridView.DataBound += this.ProductViewGridViewOnDataBound;
+            this.productViewGridView.DataBound += this.ProductViewGridViewOnDataBound;
             DateTime dateFrom = Conversion.TryCastDate(this.DateFromDateTextBox.Text);
             DateTime dateTo = Conversion.TryCastDate(this.DateToDateTextBox.Text);
             string office = this.OfficeTextBox.Text;
@@ -321,7 +307,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             int userId = SessionHelper.GetUserId();
             int officeId = SessionHelper.GetOfficeId();
 
-            WebControls.StockTransactionView.Helpers.GridViewColumnHelper.AddColumns(this.ProductViewGridView, this.SubBook);
+            WebControls.StockTransactionView.Helpers.GridViewColumnHelper.AddColumns(this.productViewGridView, this.SubBook);
 
             if (this.IsNonGlTransaction())
             {
@@ -329,23 +315,23 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 {
                     using (DataTable table = CustomerReceipts.GetView(userId, officeId, dateFrom, dateTo, office, party, user, referenceNumber, statementReference))
                     {
-                        this.ProductViewGridView.DataSource = table;
-                        this.ProductViewGridView.DataBind();
+                        this.productViewGridView.DataSource = table;
+                        this.productViewGridView.DataBind();
                         return;
                     }
                 }
                 using (DataTable table = NonGlStockTransaction.GetView(bookName, dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference))
                 {
-                    this.ProductViewGridView.DataSource = table;
-                    this.ProductViewGridView.DataBind();
+                    this.productViewGridView.DataSource = table;
+                    this.productViewGridView.DataBind();
                     return;
                 }
             }
 
             using (DataTable table = GLStockTransaction.GetView(bookName, dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference))
             {
-                this.ProductViewGridView.DataSource = table;
-                this.ProductViewGridView.DataBind();
+                this.productViewGridView.DataSource = table;
+                this.productViewGridView.DataBind();
             }
         }
 
@@ -380,6 +366,48 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 this.PriceTypeDiv.Visible = false;
             }
         }
+
+        #region Properties
+
+        private bool initialized;
+
+        public string AddNewUrl { get; set; }
+
+        public TranBook Book { get; set; }
+
+        public string ChecklistUrl { get; set; }
+
+        public string PreviewUrl { get; set; }
+
+        public bool ShowMergeToDeliveryButton
+        {
+            set { this.MergeToDeliveryButton.Visible = value; }
+        }
+
+        public bool ShowMergeToGRNButton
+        {
+            set { this.MergeToGRNButton.Visible = value; }
+        }
+
+        public bool ShowMergeToOrderButton
+        {
+            set { this.MergeToOrderButton.Visible = value; }
+        }
+
+        public bool ShowReturnButton
+        {
+            set { this.ReturnButton.Visible = value; }
+        }
+
+        public SubTranBook SubBook { get; set; }
+
+        public string Text
+        {
+            get { return this.TitleLiteral.Text; }
+            set { this.TitleLiteral.Text = value; }
+        }
+
+        #endregion
 
         #region Validation
 

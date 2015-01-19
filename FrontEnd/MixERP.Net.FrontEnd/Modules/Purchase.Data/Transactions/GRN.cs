@@ -41,7 +41,6 @@ namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
             }
 
             long transactionMasterId = GlTransaction.Add(valueDate, "Purchase.Receipt", SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), costCenterId, referenceNumber, statementReference, stockMaster, details, transactionIdCollection, attachments);
-            TransactionGovernor.Autoverification.Autoverify.PassTransactionMasterId(transactionMasterId);
             return transactionMasterId;
         }
     }

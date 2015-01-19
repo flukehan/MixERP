@@ -302,7 +302,7 @@ BEGIN
     END IF;
     
     RETURN _transaction_master_id;
-
+    PERFORM transactions.auto_verify(_transaction_master_id);
     RETURN _tran_master_id;
 END
 $$

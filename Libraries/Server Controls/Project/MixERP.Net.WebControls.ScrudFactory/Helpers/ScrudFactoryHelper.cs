@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Web.UI;
@@ -45,7 +46,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 
             using (var labelCell = new HtmlTableCell())
             {
-                using (var controlCell = new HtmlTableCell())
+                using (var controlContainer = new HtmlTableCell())
                 {
                     using (var labelLiteral = new Literal())
                     {
@@ -53,46 +54,46 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
                         labelCell.Attributes.Add("class", "label-cell");
 
                         labelCell.Controls.Add(labelLiteral);
-                        controlCell.Attributes.Add("class", "control-cell");
+                        controlContainer.Attributes.Add("class", "control-cell");
 
-                        using (HtmlTable t = new HtmlTable())
+                        using (HtmlTable controlTable = new HtmlTable())
                         {
                             using (HtmlTableRow row = new HtmlTableRow())
                             {
-                                using (HtmlTableCell cell1 = new HtmlTableCell())
+                                using (HtmlTableCell controlCell = new HtmlTableCell())
                                 {
-                                    cell1.Controls.Add(dropDownList);
+                                    controlCell.Controls.Add(dropDownList);
 
                                     if (required != null)
                                     {
-                                        cell1.Controls.Add(required);
+                                        controlCell.Controls.Add(required);
                                     }
 
-                                    row.Cells.Add(cell1);
+                                    row.Cells.Add(controlCell);
                                 }
 
-                                using (HtmlTableCell cell2 = new HtmlTableCell())
+                                using (HtmlTableCell itemSelectorCell = new HtmlTableCell())
                                 {
                                     if (itemSelectorAnchor != null)
                                     {
-                                        cell2.Controls.Add(itemSelectorAnchor);
-                                        cell2.Style.Add("width", "24px");
+                                        itemSelectorCell.Controls.Add(itemSelectorAnchor);
+                                        itemSelectorCell.Style.Add("width", "24px");
                                     }
 
-                                    row.Cells.Add(cell2);
+                                    row.Cells.Add(itemSelectorCell);
                                 }
 
-                                t.Style.Add("width", "100%");
-                                t.Style.Add("border-collapse", "collapse");
-                                t.Rows.Add(row);
-                                t.Attributes.Add("role", "item-selector-table");
+                                controlTable.Style.Add("width", "100%");
+                                controlTable.Style.Add("border-collapse", "collapse");
+                                controlTable.Rows.Add(row);
+                                controlTable.Attributes.Add("role", "item-selector-table");
 
-                                controlCell.Controls.Add(t);
+                                controlContainer.Controls.Add(controlTable);
 
                                 using (var newRow = new HtmlTableRow())
                                 {
                                     newRow.Cells.Add(labelCell);
-                                    newRow.Cells.Add(controlCell);
+                                    newRow.Cells.Add(controlContainer);
                                     htmlTable.Rows.Add(newRow);
                                 }
                             }
@@ -116,62 +117,38 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 
             if (string.IsNullOrWhiteSpace(parentTableColumn))
             {
-                switch (dataType)
+                if (ScrudTypes.Strings.Contains(dataType))
                 {
-                    case "national character varying":
-                    case "character varying":
-                    case "national character":
-                    case "character":
-                    case "char":
-                    case "varchar":
-                    case "nvarchar":
-                    case "text":
-                        ScrudTextBox.AddTextBox(htmlTable, resourceClassName, columnName, defaultValue, isNullable, maxLength, errorCssClass, assembly);
-                        break;
+                    ScrudTextBox.AddTextBox(htmlTable, resourceClassName, columnName, defaultValue, isNullable, maxLength, errorCssClass, assembly);
+                }
 
-                    case "smallint":
-                    case "integer":
-                    case "bigint":
-                        ScrudNumberTextBox.AddNumberTextBox(htmlTable, resourceClassName, columnName, defaultValue, isSerial, isNullable, maxLength, domain, errorCssClass, assembly);
-                        break;
+                if (ScrudTypes.Shorts.Contains(dataType) || ScrudTypes.Integers.Contains(dataType) || ScrudTypes.Longs.Contains(dataType))
+                {
+                    ScrudNumberTextBox.AddNumberTextBox(htmlTable, resourceClassName, columnName, defaultValue, isSerial, isNullable, maxLength, domain, errorCssClass, assembly);
+                }
 
-                    case "numeric":
-                    case "money":
-                    case "double":
-                    case "double precision":
-                    case "float":
-                    case "real":
-                    case "currency":
-                    case "money_strict":
-                    case "money_strict2":
-                    case "integer_strict":
-                    case "integer_strict2":
-                    case "decimal_strict2":
-                    case "decimal_strict":
-                        ScrudDecimalTextBox.AddDecimalTextBox(htmlTable, resourceClassName, columnName, defaultValue, isNullable, maxLength, domain, errorCssClass, assembly);
-                        break;
+                if (ScrudTypes.Decimals.Contains(dataType))
+                {
+                    ScrudDecimalTextBox.AddDecimalTextBox(htmlTable, resourceClassName, columnName, defaultValue, isNullable, maxLength, domain, errorCssClass, assembly);
+                }
 
-                    case "boolean":
-                        ScrudRadioButtonList.AddRadioButtonList(htmlTable, resourceClassName, columnName, isNullable, Titles.YesNo, "true,false", defaultValue, errorCssClass, assembly);
-                        break;
+                if (ScrudTypes.Bools.Contains(dataType))
+                {
+                    ScrudRadioButtonList.AddRadioButtonList(htmlTable, resourceClassName, columnName, isNullable, Titles.YesNo, "true,false", defaultValue, errorCssClass, assembly);
+                }
 
-                    case "date":
-                        ScrudDateTextBox.AddDateTextBox(htmlTable, resourceClassName, columnName, defaultValue, isNullable, errorCssClass, assembly);
-                        break;
+                if (ScrudTypes.Dates.Contains(dataType))
+                {
+                    ScrudDateTextBox.AddDateTextBox(htmlTable, resourceClassName, columnName, defaultValue, isNullable, errorCssClass, assembly);
+                }
 
-                    case "bytea":
-                        ScrudFileUpload.AddFileUpload(htmlTable, resourceClassName, columnName, isNullable, errorCssClass, assembly);
-                        break;
-
-                    case "timestamp with time zone":
-                    case "timestamp without time zone":
-                        //Do not show this field
-                        break;
+                if (ScrudTypes.Files.Contains(dataType))
+                {
+                    ScrudFileUpload.AddFileUpload(htmlTable, resourceClassName, columnName, isNullable, errorCssClass, assembly);
                 }
             }
             else
             {
-                //Todo: Add an implementation of overriding the behavior of the parent table data being populated into the list.
                 ScrudDropDownList.AddDropDownList(htmlTable, resourceClassName, itemSelectorPath, columnName, isNullable, parentTableSchema, parentTable, parentTableColumn, defaultValue, displayFields, displayViews, useDisplayFieldAsParent, selectedValues, errorCssClass, assembly);
             }
         }

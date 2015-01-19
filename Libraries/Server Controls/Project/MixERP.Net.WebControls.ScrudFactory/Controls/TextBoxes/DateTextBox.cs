@@ -21,9 +21,11 @@ using MixERP.Net.WebControls.ScrudFactory.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Resources;
 using System;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 {
@@ -49,7 +51,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 
                 var label = ScrudLocalizationHelper.GetResourceString(assembly, resourceClassName, columnName);
 
-                textBox.Text = defaultValue;
+                textBox.Text = GetLocalizedDate(defaultValue);
 
                 using (CompareValidator dateValidator = GetDateValidator(textBox, validatorCssClass))
                 {
@@ -65,6 +67,23 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
                     ScrudFactoryHelper.AddRow(htmlTable, label, textBox, dateValidator);
                 }
             }
+        }
+
+        public static string GetLocalizedDate(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return string.Empty;
+            }
+
+            DateTime date = Conversion.TryCastDate(value);
+
+            if (date.Date == date)
+            {
+                return date.ToString("d");
+            }
+
+            return date.ToString("f");
         }
 
         private static CompareValidator GetDateValidator(Control controlToValidate, string cssClass)

@@ -205,7 +205,7 @@
     <value>Transaction Date</value>
   </data>
   <data name="TransactionStatus" xml:space="preserve">
-    <value>TransactionStatus</value>
+    <value>Transaction Status</value>
   </data>
   <data name="TransferDetails" xml:space="preserve">
     <value>Transfer Details</value>

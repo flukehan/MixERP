@@ -18,29 +18,30 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Reflection;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.TransactionChecklist;
+using MixERP.Net.WebControls.ReportEngine;
 
-namespace MixERP.Net.Core.Modules.Inventory.Confirmation
+namespace MixERP.Net.Core.Modules.Inventory.Reports
 {
-    public partial class Transfer : MixERPUserControl
+    public partial class InventoryAdjustmentReport : MixERPUserControl
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            using (TransactionChecklistForm checklist = new TransactionChecklistForm())
-            {
-                checklist.ViewReportButtonText = Resources.Titles.ViewThisTransfer;
-                checklist.Text = Resources.Titles.StockTransferJournal;
-                checklist.AttachmentBookName = "transaction";
-                checklist.OverridePath = "/Modules/Inventory/Transfer.mix";
-                checklist.DisplayWithdrawButton = true;
-                checklist.DisplayViewReportButton = true;
-                checklist.DisplayAttachmentButton = true;
-                checklist.ReportPath = "~/Modules/Inventory/Reports/InventoryTransferReport.mix";
-                checklist.ViewPath = "/Modules/Inventory/Transfer.mix";
-                checklist.AddNewPath = "/Modules/Inventory/Entry/Transfer.mix";
+            Collection<KeyValuePair<string, object>> list = new Collection<KeyValuePair<string, object>>();
+            list.Add(new KeyValuePair<string, object>("@transaction_master_id", this.Page.Request["TranId"]));
 
-                this.Placeholder1.Controls.Add(checklist);
+            using (Report report = new Report())
+            {
+                report.AddParameterToCollection(list);
+                report.AddParameterToCollection(list);
+                report.AutoInitialize = true;
+                report.ResourceAssembly = Assembly.GetAssembly(typeof (InventoryTransferReport));
+                report.Path = "~/Modules/Inventory/Reports/Source/Inventory.Adjustment.xml";
+
+                this.Controls.Add(report);
             }
 
             base.OnControlLoad(sender, e);

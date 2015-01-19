@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Linq;
 using System.Reflection;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -48,9 +49,9 @@ namespace MixERP.Net.WebControls.ScrudFactory
         ///     Returns a list of column and values mapped as
         ///     KeyValuePair of column_name (key) and value.
         /// </returns>
-        private Collection<KeyValuePair<string, string>> GetFormCollection(bool skipSerial)
+        private Collection<KeyValuePair<string, object>> GetFormCollection(bool skipSerial)
         {
-            var list = new Collection<KeyValuePair<string, string>>();
+            var list = new Collection<KeyValuePair<string, object>>();
 
             using (var table = TableHelper.GetTable(this.TableSchema, this.Table, this.Exclude))
             {
@@ -74,63 +75,55 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
                         if (string.IsNullOrWhiteSpace(parentTableColumn))
                         {
-                            switch (dataType)
+                            if (ScrudTypes.TextBoxTypes.Contains(dataType))
                             {
-                                case "national character varying":
-                                case "character varying":
-                                case "national character":
-                                case "character":
-                                case "char":
-                                case "varchar":
-                                case "nvarchar":
-                                case "text":
-                                case "smallint":
-                                case "integer":
-                                case "bigint":
-                                case "numeric":
-                                case "money":
-                                case "double":
-                                case "double precision":
-                                case "float":
-                                case "real":
-                                case "currency":
-                                case "money_strict":
-                                case "money_strict2":
-                                case "integer_strict":
-                                case "integer_strict2":
-                                case "decimal_strict2":
-                                case "decimal_strict":
-                                case "timestamp with time zone":
-                                case "timestamp without time zone":
-                                case "date":
-                                    //TextBox
-                                    var t = (TextBox) this.formContainer.FindControl(columnName + "_textbox");
-                                    if (t != null)
+                                using (TextBox textBox = this.formContainer.FindControl(columnName + "_textbox") as TextBox)
+                                {
+                                    if (textBox != null)
                                     {
-                                        list.Add(new KeyValuePair<string, string>(columnName, t.Text));
+                                        list.Add(new KeyValuePair<string, object>(columnName, ScrudParser.ParseValue(textBox.Text, dataType)));
                                     }
-                                    break;
+                                }
+                            }
 
-                                case "boolean":
-                                    var r =
-                                        (RadioButtonList)
-                                            this.formContainer.FindControl(columnName + "_radiobuttonlist");
-                                    list.Add(new KeyValuePair<string, string>(columnName, r.Text));
-                                    break;
+                            if (ScrudTypes.Bools.Contains(dataType))
+                            {
+                                using (RadioButtonList radioButtonList = this.formContainer.FindControl(columnName + "_radiobuttonlist") as RadioButtonList)
+                                {
+                                    if (radioButtonList != null)
+                                    {
+                                        list.Add(new KeyValuePair<string, object>(columnName, ScrudParser.ParseValue(radioButtonList.Text, dataType)));
+                                    }
+                                }
+                            }
 
-                                case "bytea":
-                                    var f = (FileUpload) this.formContainer.FindControl(columnName + "_fileupload");
-                                    var file = ScrudFileUpload.UploadFile(f);
-                                    list.Add(new KeyValuePair<string, string>(columnName, file));
-                                    this.imageColumn = columnName;
-                                    break;
+                            if (dataType.Equals("bytea"))
+                            {
+                                using (FileUpload fileUpload = this.formContainer.FindControl(columnName + "_fileupload") as FileUpload)
+                                {
+                                    if (fileUpload != null)
+                                    {
+                                        var file = ScrudFileUpload.UploadFile(fileUpload);
+                                        list.Add(new KeyValuePair<string, object>(columnName, file));
+                                        this.imageColumn = columnName;
+                                    }
+                                }
                             }
                         }
                         else
                         {
                             //DropDownList
-                            var d = (DropDownList) this.formContainer.FindControl(columnName + "_dropdownlist");
-                            list.Add(new KeyValuePair<string, string>(columnName, d.Text));
+                            using (var dropDownList = this.formContainer.FindControl(columnName + "_dropdownlist") as DropDownList)
+                            {
+                                object value = null;
+
+                                if (dropDownList != null && !string.IsNullOrWhiteSpace(dropDownList.Text))
+                                {
+                                    value = dropDownList.SelectedValue;
+                                }
+
+                                list.Add(new KeyValuePair<string, object>(columnName, value));
+                            }
                         }
                     }
                 }
