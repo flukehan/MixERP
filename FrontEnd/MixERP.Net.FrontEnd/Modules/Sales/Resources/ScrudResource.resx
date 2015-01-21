@@ -348,4 +348,10 @@
   <data name="recurring_invoices_item_id_auto_trigger_on_sales_uix" xml:space="preserve">
     <value>You cannot have more than one auto trigger on sales for this item.</value>
   </data>
+  <data name="due_frequency" xml:space="preserve">
+    <value>Due Frequency</value>
+  </data>
+  <data name="late_fee_posting_frequency" xml:space="preserve">
+    <value>Late Fee Posting Frequency</value>
+  </data>
 </root>
