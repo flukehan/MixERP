@@ -591,4 +591,10 @@
   <data name="cash_repositories_cash_repository_name_uix" xml:space="preserve">
     <value>Duplicate Cash Repository Name</value>
   </data>
+  <data name="county" xml:space="preserve">
+    <value>County</value>
+  </data>
+  <data name="tax_master" xml:space="preserve">
+    <value>Tax Master</value>
+  </data>
 </root>
