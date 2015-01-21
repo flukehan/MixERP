@@ -1,9 +1,4 @@
-﻿using MixERP.Net.Common;
-using MixERP.Net.Common.Events;
-using MixERP.Net.DBFactory;
-using Npgsql;
-
-/********************************************************************************
+﻿/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
 This file is part of MixERP.
@@ -24,6 +19,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Data;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Events;
+using MixERP.Net.DBFactory;
+using Npgsql;
 
 namespace MixERP.Net.Core.Modules.Finance.Data
 {

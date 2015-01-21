@@ -162,6 +162,9 @@ function closeWindow() {
 function scrudDispalyLoading() {
     $("#FormPanel").find("div.segment").addClass("loading");
 };
+function scrudRemoveLoading() {
+    $("#FormPanel").find("div.segment").removeClass("loading");
+};
 
 function scrudUpdateTableHeaders() {
     $("div.floating-header").each(function () {
@@ -293,7 +296,13 @@ function scrudClientValidation() {
         scrudDispalyLoading();
 
         if (typeof scrudCustomValidator === "function") {
-            return scrudCustomValidator();
+            var isValid = scrudCustomValidator();
+
+            if (!isValid) {
+                scrudRemoveLoading();
+            };
+
+            return isValid;
         };
 
         return true;

@@ -192,7 +192,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     function AddItem(msg) {
         var timestamp = new Date().toISOString();
 
-        var html = "<div class='item'><i class='ui big blue settings icon'></i><div class='content'><div class='ui blue header'>{0}</div>{1}</div></div>";
+        var html = "<div class='item'><i class='ui big blue loading settings icon'></i><div class='content'><div class='ui blue header'>{0}</div>{1}</div></div>";
 
         html = String.format(html, timestamp, msg);
 

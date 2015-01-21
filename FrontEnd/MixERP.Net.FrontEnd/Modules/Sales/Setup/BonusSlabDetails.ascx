@@ -29,8 +29,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         var to = parseFloat2(amountToTextBox.val());
 
         if (to < from) {
-            var message = "The amount to should be greater than the amount from.";
-            displayMessage(message);
+            displayMessage(window.compareAmountErrorMessageLocalized);
             return false;
         };
 

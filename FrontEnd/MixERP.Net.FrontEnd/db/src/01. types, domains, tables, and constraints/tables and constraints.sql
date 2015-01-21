@@ -32,6 +32,7 @@ CREATE TABLE office.users
     office_id                               integer NOT NULL,
     user_name                               national character varying(50) NOT NULL,
     full_name                               national character varying(100) NOT NULL,
+    can_change_password                     boolean NOT NULL DEFAULT(true),
     password                                text NOT NULL,
     elevated                                boolean NOT NULL 
                                             CONSTRAINT users_elevated_df DEFAULT(false),

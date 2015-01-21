@@ -61,7 +61,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
                 return Conversion.TryCastSingle(value);
             }
 
-            if (ScrudTypes.Timestamps.Contains(dataType))
+            if (ScrudTypes.Dates.Contains(dataType))
             {
                 return Conversion.TryCastDate(value);
             }

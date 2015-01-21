@@ -21,23 +21,23 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
 <div class="four wide column widget widget">
     <div class="ui segment">
-        <h2>MixERP Links (Todo)
+        <h2>MixERP Links
         </h2>
         <ul>
             <li>
-                <a href="#">Documentation</a>
+                <a href="http://docs.mixerp.org" target="_blank">Documentation</a>
             </li>
             <li>
-                <a href="#">Download Source Code</a>
+                <a href="https://github.com/mixerp/mixerp" target="_blank">Download Source Code</a>
             </li>
             <li>
-                <a href="#">Submit Bugs</a>
+                <a href="https://github.com/mixerp/mixerp/issues" target="_blank">Submit Bugs</a>
             </li>
             <li>
-                <a href="#">Forum</a>
+                <a href="http://mixerp.org/forum/" target="_blank">Forum</a>
             </li>
             <li>
-                <a href="#">Discussions</a>
+                <a href="https://www.facebook.com/mixerp.official" target="_blank">MixERP on Facebook</a>
             </li>
         </ul>
     </div>

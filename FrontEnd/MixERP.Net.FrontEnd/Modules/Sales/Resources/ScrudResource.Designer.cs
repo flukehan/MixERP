@@ -304,6 +304,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Due Frequency.
+        /// </summary>
+        internal static string due_frequency {
+            get {
+                return ResourceManager.GetString("due_frequency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Due Frequency Id.
         /// </summary>
         internal static string due_frequency_id {
@@ -444,6 +453,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         internal static string late_fee_name {
             get {
                 return ResourceManager.GetString("late_fee_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Late Fee Posting Frequency.
+        /// </summary>
+        internal static string late_fee_posting_frequency {
+            get {
+                return ResourceManager.GetString("late_fee_posting_frequency", resourceCulture);
             }
         }
         

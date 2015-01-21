@@ -1,8 +1,8 @@
-﻿-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/00. db core/0. verbosity.sql --<--<--
+-->-->-- /db/src/00. db core/0. verbosity.sql --<--<--
 SET CLIENT_MIN_MESSAGES TO WARNING;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/00. db core/1. mixerp.sql --<--<--
+-->-->-- /db/src/00. db core/1. mixerp.sql --<--<--
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
@@ -54,7 +54,7 @@ LANGUAGE plpgsql;
 CREATE EXTENSION IF NOT EXISTS tablefunc;
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/00. db core/1. scrud.sql --<--<--
+-->-->-- /db/src/00. db core/1. scrud.sql --<--<--
 DROP SCHEMA IF EXISTS scrud CASCADE;
 CREATE SCHEMA scrud;
 
@@ -212,7 +212,7 @@ ORDER BY pg_attribute.attnum;
 
 COMMENT ON VIEW scrud.mixerp_table_view IS 'Lists all schema, table, and columns with associated types, domains, references, and constraints.';
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/00. db core/2. install-unit-test.sql --<--<--
+-->-->-- /db/src/00. db core/2. install-unit-test.sql --<--<--
 /********************************************************************************
 The PostgreSQL License
 
@@ -870,7 +870,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/00. db core/2. mixerp-db-schema.sql --<--<--
+-->-->-- /db/src/00. db core/2. mixerp-db-schema.sql --<--<--
 DROP SCHEMA IF EXISTS audit CASCADE;
 DROP SCHEMA IF EXISTS core CASCADE;
 DROP SCHEMA IF EXISTS office CASCADE;
@@ -902,7 +902,7 @@ CREATE SCHEMA mrp;
 COMMENT ON SCHEMA office IS 'Contains objects related to material resource planning.';
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/00. db core/2nd-quadrant-audit-trigger.sql --<--<--
+-->-->-- /db/src/00. db core/2nd-quadrant-audit-trigger.sql --<--<--
 -- An audit history is important on most tables. Provide an audit trigger that logs to
 -- a dedicated audit table for the major relations.
 --
@@ -1160,7 +1160,7 @@ Add auditing support to the given table. Row-level changes will be logged with f
 $body$;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/00. db core/3. roles-and-priviledge.sql --<--<--
+-->-->-- /db/src/00. db core/3. roles-and-priviledge.sql --<--<--
 DO
 $$
 BEGIN
@@ -1171,6 +1171,7 @@ BEGIN
     END IF;
 
     COMMENT ON ROLE mix_erp IS 'The default user for MixERP databases.';
+    alter database mixerp owner to mix_erp;
 
     REVOKE ALL ON SCHEMA audit FROM public;
     REVOKE ALL ON SCHEMA core FROM public;
@@ -1179,6 +1180,7 @@ BEGIN
     REVOKE ALL ON SCHEMA transactions FROM public;
     REVOKE ALL ON SCHEMA crm FROM public;
     REVOKE ALL ON SCHEMA mrp FROM public;
+    REVOKE ALL ON SCHEMA scrud FROM public;
     
     GRANT USAGE ON SCHEMA public TO mix_erp;
     GRANT USAGE ON SCHEMA information_schema TO mix_erp;
@@ -1189,6 +1191,7 @@ BEGIN
     GRANT USAGE ON SCHEMA transactions TO mix_erp;
     GRANT USAGE ON SCHEMA crm TO mix_erp;
     GRANT USAGE ON SCHEMA mrp TO mix_erp;
+    GRANT USAGE ON SCHEMA scrud TO mix_erp;
 
     ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
     ALTER DEFAULT PRIVILEGES IN SCHEMA information_schema GRANT SELECT ON TABLES TO mix_erp;
@@ -1199,6 +1202,9 @@ BEGIN
     ALTER DEFAULT PRIVILEGES IN SCHEMA transactions GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
     ALTER DEFAULT PRIVILEGES IN SCHEMA crm GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
     ALTER DEFAULT PRIVILEGES IN SCHEMA mrp GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
+    GRANT SELECT ON ALL TABLES IN SCHEMA scrud TO mix_erp;
+    GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA scrud TO mix_erp;
+    
 
     ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO mix_erp;
     ALTER DEFAULT PRIVILEGES IN SCHEMA audit GRANT ALL ON SEQUENCES TO mix_erp;
@@ -1277,7 +1283,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/00. db core/4.casts.sql --<--<--
+-->-->-- /db/src/00. db core/4.casts.sql --<--<--
 DROP FUNCTION IF EXISTS pg_catalog.text(unknown) CASCADE;
 CREATE FUNCTION pg_catalog.text(unknown) 
 RETURNS text 
@@ -1344,7 +1350,7 @@ CREATE FUNCTION pg_catalog.text(numeric) RETURNS text STRICT IMMUTABLE LANGUAGE 
 CREATE CAST (numeric AS text) WITH FUNCTION pg_catalog.text(numeric) AS IMPLICIT;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/01. types, domains, tables, and constraints/domains.sql --<--<--
+-->-->-- /db/src/01. types, domains, tables, and constraints/domains.sql --<--<--
 DROP DOMAIN IF EXISTS transaction_type CASCADE;
 CREATE DOMAIN transaction_type
 AS char(2)
@@ -1434,7 +1440,7 @@ CREATE DOMAIN color
 AS text;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/01. types, domains, tables, and constraints/tables and constraints.sql --<--<--
+-->-->-- /db/src/01. types, domains, tables, and constraints/tables and constraints.sql --<--<--
 --Todo: Indexing has not been properly thought of, as of now.
 
 CREATE TABLE core.verification_statuses
@@ -1469,6 +1475,7 @@ CREATE TABLE office.users
     office_id                               integer NOT NULL,
     user_name                               national character varying(50) NOT NULL,
     full_name                               national character varying(100) NOT NULL,
+    can_change_password                     boolean NOT NULL DEFAULT(true),
     password                                text NOT NULL,
     elevated                                boolean NOT NULL 
                                             CONSTRAINT users_elevated_df DEFAULT(false),
@@ -3711,7 +3718,7 @@ CREATE TABLE office.configuration
 );
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/01. types, domains, tables, and constraints/types.sql --<--<--
+-->-->-- /db/src/01. types, domains, tables, and constraints/types.sql --<--<--
 DROP TYPE IF EXISTS transactions.stock_detail_type CASCADE;
 CREATE TYPE transactions.stock_detail_type AS
 (
@@ -3768,7 +3775,7 @@ CREATE TYPE core.period AS
     date_to                         date
 );
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/audit/audit.is_valid_login_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/audit/audit.is_valid_login_id.sql --<--<--
 DROP FUNCTION IF EXISTS audit.is_valid_login_id(bigint);
 
 CREATE FUNCTION audit.is_valid_login_id(bigint)
@@ -3786,7 +3793,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.append_if_not_null.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.append_if_not_null.sql --<--<--
 CREATE FUNCTION core.append_if_not_null(text, text)
 RETURNS text
 AS
@@ -3804,7 +3811,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.convert_unit.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.convert_unit.sql --<--<--
 DROP FUNCTION IF EXISTS core.convert_unit(from_unit integer, to_unit integer);
 
 CREATE FUNCTION core.convert_unit(from_unit integer, to_unit integer)
@@ -3862,7 +3869,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.count_item_in_stock.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.count_item_in_stock.sql --<--<--
 DROP FUNCTION IF EXISTS core.count_item_in_stock(_item_id integer, _unit_id integer, _store_id integer);
 
 CREATE FUNCTION core.count_item_in_stock(_item_id integer, _unit_id integer, _store_id integer)
@@ -3885,7 +3892,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.count_purchases.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.count_purchases.sql --<--<--
 DROP FUNCTION IF EXISTS core.count_purchases(_item_id integer, _unit_id integer, _store_id integer);
 
 CREATE FUNCTION core.count_purchases(_item_id integer, _unit_id integer, _store_id integer)
@@ -3923,7 +3930,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.count_sales.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.count_sales.sql --<--<--
 DROP FUNCTION IF EXISTS core.count_sales(_item_id integer, _unit_id integer, _store_id integer);
 CREATE FUNCTION core.count_sales(_item_id integer, _unit_id integer, _store_id integer)
 RETURNS decimal
@@ -3960,7 +3967,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.create_flag.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.create_flag.sql --<--<--
 CREATE FUNCTION core.create_flag
 (
     user_id_            integer,
@@ -3995,7 +4002,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_account_id_by_account_number.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_account_id_by_account_number.sql --<--<--
 CREATE FUNCTION core.get_account_id_by_account_number(text)
 RETURNS bigint
 AS
@@ -4012,10 +4019,10 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_account_id_by_parameter.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_account_id_by_parameter.sql --<--<--
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_account_id_by_party_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_account_id_by_party_code.sql --<--<--
 CREATE FUNCTION core.get_account_id_by_party_code(party_code text)
 RETURNS bigint
 AS
@@ -4032,7 +4039,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_account_id_by_party_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_account_id_by_party_id.sql --<--<--
 CREATE FUNCTION core.get_account_id_by_party_id(party_id bigint)
 RETURNS bigint
 AS
@@ -4049,7 +4056,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_account_id_by_party_type_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_account_id_by_party_type_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_account_id_by_party_type_id(_party_type_id integer);
 
 CREATE FUNCTION core.get_account_id_by_party_type_id(_party_type_id integer)
@@ -4064,7 +4071,7 @@ END;
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_account_id_by_shipper_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_account_id_by_shipper_id.sql --<--<--
 CREATE FUNCTION core.get_account_id_by_shipper_id(integer)
 RETURNS bigint
 AS
@@ -4084,7 +4091,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_account_ids.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_account_ids.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_account_ids(root_account_id bigint);
 
 CREATE FUNCTION core.get_account_ids(root_account_id bigint)
@@ -4109,7 +4116,7 @@ BEGIN
 END
 $$LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_account_master_id_by_account_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_account_master_id_by_account_id.sql --<--<--
 CREATE FUNCTION core.get_account_master_id_by_account_id(bigint)
 RETURNS integer
 AS
@@ -4128,7 +4135,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_account_master_id_by_account_master_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_account_master_id_by_account_master_code.sql --<--<--
 CREATE FUNCTION core.get_account_master_id_by_account_master_code(text)
 RETURNS integer
 AS
@@ -4145,7 +4152,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_account_name.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_account_name.sql --<--<--
 --Todo:Rename to core.get_account_name_by_account_id
 CREATE FUNCTION core.get_account_name(bigint)
 RETURNS text
@@ -4166,7 +4173,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_account_name_by_account_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_account_name_by_account_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_account_name_by_account_id(bigint);
 
 CREATE FUNCTION core.get_account_name_by_account_id(bigint)
@@ -4186,7 +4193,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_associated_units.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_associated_units.sql --<--<--
 CREATE FUNCTION core.get_associated_units(integer)
 RETURNS TABLE(unit_id integer, unit_code text, unit_name text)
 AS
@@ -4249,7 +4256,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_associated_units_from_item_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_associated_units_from_item_code.sql --<--<--
 CREATE FUNCTION core.get_associated_units_from_item_code(text)
 RETURNS TABLE(unit_id integer, unit_code text, unit_name text)
 AS
@@ -4269,7 +4276,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_associated_units_from_item_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_associated_units_from_item_id.sql --<--<--
 CREATE FUNCTION core.get_associated_units_from_item_id(integer)
 RETURNS TABLE(unit_id integer, unit_code text, unit_name text)
 AS
@@ -4289,7 +4296,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_attachment_lookup_info.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_attachment_lookup_info.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_attachment_lookup_info(national character varying(50));
 
 CREATE FUNCTION core.get_attachment_lookup_info(national character varying(50))
@@ -4310,7 +4317,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_base_quantity_by_unit_name.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_base_quantity_by_unit_name.sql --<--<--
 CREATE FUNCTION core.get_base_quantity_by_unit_name(text, integer)
 RETURNS decimal
 AS
@@ -4329,7 +4336,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_base_unit_id_by_unit_name.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_base_unit_id_by_unit_name.sql --<--<--
 CREATE FUNCTION core.get_base_unit_id_by_unit_name(text)
 RETURNS integer
 AS
@@ -4347,7 +4354,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_brand_code_by_brand_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_brand_code_by_brand_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_brand_code_by_brand_id(integer);
 
 CREATE FUNCTION core.get_brand_code_by_brand_id(integer)
@@ -4364,7 +4371,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_brand_id_by_brand_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_brand_id_by_brand_code.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_brand_id_by_brand_code(text);
 
 CREATE FUNCTION core.get_brand_id_by_brand_code(text)
@@ -4381,7 +4388,7 @@ LANGUAGE plpgsql;
 
 --SELECT * FROM core.get_brand_id_by_brand_code('DEF');
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_brand_id_by_brand_name.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_brand_id_by_brand_name.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_brand_id_by_brand_name(text);
 
 CREATE FUNCTION core.get_brand_id_by_brand_name(text)
@@ -4398,7 +4405,7 @@ LANGUAGE plpgsql;
 
 --SELECT * FROM core.get_brand_id_by_brand_name('DEF');
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_brand_name_by_brand_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_brand_name_by_brand_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_brand_name_by_brand_id(integer);
 
 CREATE FUNCTION core.get_brand_name_by_brand_id(integer)
@@ -4415,7 +4422,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_cash_account_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_cash_account_id.sql --<--<--
 CREATE FUNCTION core.get_cash_account_id()
 RETURNS bigint
 AS
@@ -4433,7 +4440,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_cash_account_id_by_store_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_cash_account_id_by_store_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_cash_account_id_by_store_id(_store_id integer);
 
 CREATE FUNCTION core.get_cash_account_id_by_store_id(_store_id integer)
@@ -4452,7 +4459,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_cash_flow_heading_id_by_cash_flow_heading_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_cash_flow_heading_id_by_cash_flow_heading_code.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_cash_flow_heading_id_by_cash_flow_heading_code(_cash_flow_heading_code national character varying(12));
 
 CREATE FUNCTION core.get_cash_flow_heading_id_by_cash_flow_heading_code(_cash_flow_heading_code national character varying(12))
@@ -4470,7 +4477,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_cash_repository_id_by_store_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_cash_repository_id_by_store_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_cash_repository_id_by_store_id(_store_id integer);
 
 CREATE FUNCTION core.get_cash_repository_id_by_store_id(_store_id integer)
@@ -4491,7 +4498,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_cost_of_goods_sold_account_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_cost_of_goods_sold_account_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_cost_of_goods_sold_account_id(_item_id integer);
 
 CREATE FUNCTION core.get_cost_of_goods_sold_account_id(_item_id integer)
@@ -4509,7 +4516,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_country_id_by_country_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_country_id_by_country_code.sql --<--<--
 CREATE FUNCTION core.get_country_id_by_country_code(national character varying(12))
 RETURNS integer
 AS
@@ -4525,7 +4532,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_country_name_by_country_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_country_name_by_country_id.sql --<--<--
 CREATE FUNCTION core.get_country_name_by_country_id(integer)
 RETURNS text
 AS
@@ -4541,7 +4548,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_county_id_by_county_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_county_id_by_county_code.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_county_id_by_county_code(national character varying(12));
 
 CREATE FUNCTION core.get_county_id_by_county_code(national character varying(12))
@@ -4559,7 +4566,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_county_id_by_county_name.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_county_id_by_county_name.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_county_id_by_county_name(text);
 
 CREATE FUNCTION core.get_county_id_by_county_name(text)
@@ -4575,7 +4582,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_county_sales_tax_rate.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_county_sales_tax_rate.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_county_sales_tax_rate(_county_sales_tax_id integer);
 
 CREATE FUNCTION core.get_county_sales_tax_rate(_county_sales_tax_id integer)
@@ -4595,7 +4602,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_currency_code_by_office_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_currency_code_by_office_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_currency_code_by_office_id(integer);
 
 CREATE FUNCTION core.get_currency_code_by_office_id(office_id integer)
@@ -4615,7 +4622,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_currency_code_by_party_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_currency_code_by_party_code.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_currency_code_by_party_code(national character varying(12));
 
 CREATE FUNCTION core.get_currency_code_by_party_code(_party_code national character varying(12))
@@ -4637,7 +4644,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_currency_code_by_party_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_currency_code_by_party_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_currency_code_by_party_id(bigint);
 
 CREATE FUNCTION core.get_currency_code_by_party_id(party_id bigint)
@@ -4658,7 +4665,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_current_year.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_current_year.sql --<--<--
 
 DROP FUNCTION IF EXISTS core.get_current_year();
 CREATE FUNCTION core.get_current_year()
@@ -4673,7 +4680,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_email_address_by_party_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_email_address_by_party_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_email_address_by_party_id(bigint);
 
 CREATE FUNCTION core.get_email_address_by_party_id(bigint)
@@ -4689,7 +4696,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_entity_id_by_party_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_entity_id_by_party_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_entity_id_by_party_id(_party_id bigint);
 
 CREATE FUNCTION core.get_entity_id_by_party_id(_party_id bigint)
@@ -4706,7 +4713,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_flag_background_color.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_flag_background_color.sql --<--<--
 CREATE FUNCTION core.get_flag_background_color(flag_type_id_ integer)
 RETURNS text
 AS
@@ -4723,7 +4730,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_flag_foreground_color.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_flag_foreground_color.sql --<--<--
 CREATE FUNCTION core.get_flag_foreground_color(flag_type_id_ integer)
 RETURNS text
 AS
@@ -4740,7 +4747,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_flag_type_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_flag_type_id.sql --<--<--
 CREATE FUNCTION core.get_flag_type_id
 (
     user_id_        integer,
@@ -4782,7 +4789,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_frequency_code_by_frequency_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_frequency_code_by_frequency_id.sql --<--<--
 CREATE FUNCTION core.get_frequency_code_by_frequency_id(integer)
 RETURNS text
 AS
@@ -4799,7 +4806,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_frequency_setup_code_by_frequency_setup_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_frequency_setup_code_by_frequency_setup_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_frequency_setup_code_by_frequency_setup_id(_frequency_setup_id integer);
 
 CREATE FUNCTION core.get_frequency_setup_code_by_frequency_setup_id(_frequency_setup_id integer)
@@ -4816,7 +4823,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_frequency_setup_end_date_frequency_setup_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_frequency_setup_end_date_frequency_setup_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_frequency_setup_end_date_frequency_setup_id(_frequency_setup_id integer);
 CREATE FUNCTION core.get_frequency_setup_end_date_frequency_setup_id(_frequency_setup_id integer)
 RETURNS date
@@ -4833,7 +4840,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_frequency_setup_start_date_frequency_setup_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_frequency_setup_start_date_frequency_setup_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_frequency_setup_start_date_frequency_setup_id(_frequency_setup_id integer);
 CREATE FUNCTION core.get_frequency_setup_start_date_frequency_setup_id(_frequency_setup_id integer)
 RETURNS date
@@ -4863,7 +4870,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_industry_id_by_party_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_industry_id_by_party_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_industry_id_by_party_id(_party_id bigint);
 
 CREATE FUNCTION core.get_industry_id_by_party_id(_party_id bigint)
@@ -4880,7 +4887,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_inventory_account_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_inventory_account_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_inventory_account_id(_item_id integer);
 
 CREATE FUNCTION core.get_inventory_account_id(_item_id integer)
@@ -4898,7 +4905,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_item_code_by_item_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_item_code_by_item_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_item_code_by_item_id(integer);
 
 CREATE FUNCTION core.get_item_code_by_item_id(integer)
@@ -4917,7 +4924,7 @@ LANGUAGE plpgsql;
 
 --SELECT core.get_item_code_by_item_id(1);
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_item_cost_price.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_item_cost_price.sql --<--<--
 CREATE FUNCTION core.get_item_cost_price(item_id_ integer, unit_id_ integer, party_id_ bigint)
 RETURNS money_strict2
 AS
@@ -4991,7 +4998,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_item_group_code_by_item_group_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_item_group_code_by_item_group_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_item_group_code_by_item_group_id(integer);
 
 CREATE FUNCTION core.get_item_group_code_by_item_group_id(integer)
@@ -5008,7 +5015,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_item_group_id_by_item_group_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_item_group_id_by_item_group_code.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_item_group_id_by_item_group_code(text);
 
 CREATE FUNCTION core.get_item_group_id_by_item_group_code(text)
@@ -5025,7 +5032,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_item_group_id_by_item_group_name.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_item_group_id_by_item_group_name.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_item_group_id_by_item_group_name(text);
 
 CREATE FUNCTION core.get_item_group_id_by_item_group_name(text)
@@ -5042,7 +5049,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_item_group_id_by_item_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_item_group_id_by_item_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_item_group_id_by_item_id(integer);
 
 CREATE FUNCTION core.get_item_group_id_by_item_id(integer)
@@ -5059,7 +5066,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_item_group_name_by_item_group_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_item_group_name_by_item_group_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_item_group_name_by_item_group_id(integer);
 
 CREATE FUNCTION core.get_item_group_name_by_item_group_id(integer)
@@ -5076,7 +5083,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_item_id_by_item_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_item_id_by_item_code.sql --<--<--
 CREATE FUNCTION core.get_item_id_by_item_code(text)
 RETURNS integer
 AS
@@ -5096,7 +5103,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_item_name_by_item_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_item_name_by_item_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_item_name_by_item_id(integer);
 
 CREATE FUNCTION core.get_item_name_by_item_id(integer)
@@ -5115,7 +5122,7 @@ LANGUAGE plpgsql;
 
 --SELECT core.get_item_name_by_item_id(1);
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_menu_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_menu_id.sql --<--<--
 CREATE FUNCTION core.get_menu_id(menu_code text)
 RETURNS INTEGER
 AS
@@ -5132,7 +5139,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_office_id_by_sales_tax_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_office_id_by_sales_tax_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_office_id_by_sales_tax_id(_sales_tax_id integer);
 
 CREATE FUNCTION core.get_office_id_by_sales_tax_id(_sales_tax_id integer)
@@ -5151,7 +5158,7 @@ ALTER TABLE office.stores
 ADD CONSTRAINT stores_sales_tax_id_chk
 CHECK(core.get_office_id_by_sales_tax_id(sales_tax_id) = office_id);
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_party_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_party_code.sql --<--<--
 
 
 /*******************************************************************
@@ -5218,7 +5225,7 @@ LANGUAGE 'plpgsql';
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_party_id_by_party_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_party_id_by_party_code.sql --<--<--
 CREATE FUNCTION core.get_party_id_by_party_code(text)
 RETURNS bigint
 AS
@@ -5238,7 +5245,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_party_type_id_by_party_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_party_type_id_by_party_code.sql --<--<--
 CREATE FUNCTION core.get_party_type_id_by_party_code(text)
 RETURNS smallint
 AS
@@ -5258,7 +5265,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_party_type_id_by_party_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_party_type_id_by_party_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_party_type_id_by_party_id(_party_id bigint);
 
 CREATE FUNCTION core.get_party_type_id_by_party_id(_party_id bigint)
@@ -5275,7 +5282,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_price_type_name_by_price_type_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_price_type_name_by_price_type_id.sql --<--<--
 CREATE FUNCTION core.get_price_type_name_by_price_type_id(integer)
 RETURNS text
 AS
@@ -5292,7 +5299,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_purchase_account_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_purchase_account_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_purchase_account_id(_item_id integer);
 
 CREATE FUNCTION core.get_purchase_account_id(_item_id integer)
@@ -5310,7 +5317,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_purchase_discount_account_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_purchase_discount_account_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_purchase_discount_account_id(_item_id integer);
 
 CREATE FUNCTION core.get_purchase_discount_account_id(_item_id integer)
@@ -5328,7 +5335,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_recurring_amount_by_recurring_invoice_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_recurring_amount_by_recurring_invoice_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_recurring_amount_by_recurring_invoice_id(_recurring_invoice_id integer);
 
 CREATE FUNCTION core.get_recurring_amount_by_recurring_invoice_id(_recurring_invoice_id integer)
@@ -5346,7 +5353,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_root_parent_menu_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_root_parent_menu_id.sql --<--<--
 CREATE FUNCTION core.get_root_parent_menu_id(text)
 RETURNS integer
 AS
@@ -5380,7 +5387,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_root_unit_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_root_unit_id.sql --<--<--
 CREATE FUNCTION core.get_root_unit_id(integer)
 RETURNS integer
 AS
@@ -5401,7 +5408,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_sales_account_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_sales_account_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_sales_account_id(_item_id integer);
 
 CREATE FUNCTION core.get_sales_account_id(_item_id integer)
@@ -5419,7 +5426,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_sales_discount_account_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_sales_discount_account_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_sales_discount_account_id(_item_id integer);
 
 CREATE FUNCTION core.get_sales_discount_account_id(_item_id integer)
@@ -5437,7 +5444,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_sales_return_account_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_sales_return_account_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_sales_return_account_id(_item_id integer);
 
 CREATE FUNCTION core.get_sales_return_account_id(_item_id integer)
@@ -5455,7 +5462,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_sales_tax_code_by_sales_tax_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_sales_tax_code_by_sales_tax_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_sales_tax_code_by_sales_tax_id(_sales_tax_id integer);
 
 
@@ -5475,7 +5482,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_sales_tax_id_by_sales_tax_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_sales_tax_id_by_sales_tax_code.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_sales_tax_id_by_sales_tax_code(_sales_tax_code national character varying(24));
 
 
@@ -5494,7 +5501,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_sales_tax_name_by_sales_tax_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_sales_tax_name_by_sales_tax_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_sales_tax_name_by_sales_tax_id(_sales_tax_id integer);
 
 
@@ -5514,7 +5521,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_salesperson_name_by_salesperson_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_salesperson_name_by_salesperson_id.sql --<--<--
 CREATE FUNCTION core.get_salesperson_name_by_salesperson_id(integer)
 RETURNS text
 AS
@@ -5531,7 +5538,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_second_root_account_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_second_root_account_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_second_root_account_id(integer, integer);
 
 CREATE FUNCTION core.get_second_root_account_id(_account_id integer, _parent integer default 0)
@@ -5556,7 +5563,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_shipper_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_shipper_code.sql --<--<--
 
 /*******************************************************************
     GET UNIQUE EIGHT-TO-TEN DIGIT shipper CODE
@@ -5607,7 +5614,7 @@ LANGUAGE 'plpgsql';
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_shipper_name_by_shipper_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_shipper_name_by_shipper_id.sql --<--<--
 CREATE FUNCTION core.get_shipper_name_by_shipper_id(integer)
 RETURNS text
 AS
@@ -5624,7 +5631,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_shipping_address_by_shipping_address_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_shipping_address_by_shipping_address_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_shipping_address_by_shipping_address_id(integer);
 
 CREATE FUNCTION core.get_shipping_address_by_shipping_address_id(integer)
@@ -5656,7 +5663,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_shipping_address_code_by_shipping_address_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_shipping_address_code_by_shipping_address_id.sql --<--<--
 CREATE FUNCTION core.get_shipping_address_code_by_shipping_address_id(integer)
 RETURNS text
 AS
@@ -5676,7 +5683,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_shipping_address_id_by_shipping_address_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_shipping_address_id_by_shipping_address_code.sql --<--<--
 
 CREATE FUNCTION core.get_shipping_address_id_by_shipping_address_code(text, bigint)
 RETURNS smallint
@@ -5699,7 +5706,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_state_id_by_shipping_address_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_state_id_by_shipping_address_code.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_state_id_by_shipping_address_code(text, bigint);
 
 CREATE FUNCTION core.get_state_id_by_shipping_address_code(text, bigint)
@@ -5723,7 +5730,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_state_id_by_state_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_state_id_by_state_code.sql --<--<--
 CREATE FUNCTION core.get_state_id_by_state_code(national character varying(12))
 RETURNS integer
 AS
@@ -5739,7 +5746,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_state_id_by_state_name.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_state_id_by_state_name.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_state_id_by_state_name(text);
 
 CREATE FUNCTION core.get_state_id_by_state_name(text)
@@ -5755,7 +5762,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_state_name_by_state_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_state_name_by_state_id.sql --<--<--
 CREATE FUNCTION core.get_state_name_by_state_id(integer)
 RETURNS text
 AS
@@ -5771,7 +5778,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_state_sales_tax_rate.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_state_sales_tax_rate.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_state_sales_tax_rate(_state_sales_tax_id integer);
 
 CREATE FUNCTION core.get_state_sales_tax_rate(_state_sales_tax_id integer)
@@ -5788,7 +5795,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_unit_code_by_unit_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_unit_code_by_unit_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_unit_code_by_unit_id(integer);
 
 CREATE FUNCTION core.get_unit_code_by_unit_id(integer)
@@ -5807,7 +5814,7 @@ LANGUAGE plpgsql;
 
 --SELECT core.get_unit_code_by_unit_id(1);
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_unit_id_by_unit_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_unit_id_by_unit_code.sql --<--<--
 CREATE FUNCTION core.get_unit_id_by_unit_code(text)
 RETURNS smallint
 AS
@@ -5828,7 +5835,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_unit_id_by_unit_name.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_unit_id_by_unit_name.sql --<--<--
 CREATE FUNCTION core.get_unit_id_by_unit_name(text)
 RETURNS integer
 AS
@@ -5848,7 +5855,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_unit_name_by_unit_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_unit_name_by_unit_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_unit_name_by_unit_id(integer);
 
 CREATE FUNCTION core.get_unit_name_by_unit_id(integer)
@@ -5867,7 +5874,7 @@ LANGUAGE plpgsql;
 
 --SELECT core.get_unit_name_by_unit_id(1);
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_verification_status_name_by_verification_status_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.get_verification_status_name_by_verification_status_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_verification_status_name_by_verification_status_id(integer);
 
 CREATE FUNCTION core.get_verification_status_name_by_verification_status_id(integer)
@@ -5883,7 +5890,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.has_child_accounts.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.has_child_accounts.sql --<--<--
 CREATE FUNCTION core.has_child_accounts(bigint)
 RETURNS boolean
 AS
@@ -5899,7 +5906,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.is_leap_year.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.is_leap_year.sql --<--<--
 DROP FUNCTION IF EXISTS core.is_leap_year(integer);
 CREATE FUNCTION core.is_leap_year(integer)
 RETURNS boolean
@@ -5926,7 +5933,7 @@ LANGUAGE plpgsql
 IMMUTABLE STRICT;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.is_parent_unit.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.is_parent_unit.sql --<--<--
 CREATE FUNCTION core.is_parent_unit(parent integer, child integer)
 RETURNS boolean
 AS
@@ -5959,7 +5966,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.is_stock_item.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.is_stock_item.sql --<--<--
 DROP FUNCTION IF EXISTS core.is_stock_item(item_id integer);
 
 CREATE FUNCTION core.is_stock_item(item_id integer)
@@ -5999,7 +6006,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.is_supplier.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.is_supplier.sql --<--<--
 CREATE FUNCTION core.is_supplier(bigint)
 RETURNS boolean
 AS
@@ -6023,7 +6030,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.is_valid_item_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.is_valid_item_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.is_valid_item_id(integer);
 
 CREATE FUNCTION core.is_valid_item_id(integer)
@@ -6040,7 +6047,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.is_valid_unit.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.is_valid_unit.sql --<--<--
 DROP FUNCTION IF EXISTS core.is_valid_unit(_item_id integer, _unit_id integer);
 
 CREATE FUNCTION core.is_valid_unit(_item_id integer, _unit_id integer)
@@ -6062,7 +6069,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.is_valid_unit_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/core/core.is_valid_unit_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.is_valid_unit_id(integer);
 
 CREATE FUNCTION core.is_valid_unit_id(integer)
@@ -6101,7 +6108,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/core/core.calculate_interest.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/core/core.calculate_interest.sql --<--<--
 DROP FUNCTION IF EXISTS core.calculate_interest(principal numeric, rate numeric, days integer, num_of_days_in_year integer, round_up integer);
 CREATE FUNCTION core.calculate_interest(principal numeric, rate numeric, days integer, round_up integer, num_of_days_in_year integer)
 RETURNS numeric
@@ -6159,7 +6166,7 @@ IMMUTABLE STRICT;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/core/core.dates.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/core/core.dates.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_date(_office_id integer);
 
 CREATE FUNCTION core.get_date(_office_id integer)
@@ -6352,7 +6359,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/core/core.get_account_view_by_account_master_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/core/core.get_account_view_by_account_master_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_account_view_by_account_master_id
 (
     _account_master_id      integer,
@@ -6402,7 +6409,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/core/core.get_base_quantity_by_unit_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/core/core.get_base_quantity_by_unit_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_base_quantity_by_unit_id(integer, integer);
 
 CREATE FUNCTION core.get_base_quantity_by_unit_id(integer, integer)
@@ -6482,7 +6489,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/core/core.get_field.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/core/core.get_field.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_field(this HSTORE, _column_name text);
 
 CREATE FUNCTION core.get_field(this HSTORE, _column_name text)
@@ -6498,7 +6505,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/core/core.get_income_tax_provison_amount.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/core/core.get_income_tax_provison_amount.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_income_tax_provison_amount(_office_id integer, _profit  decimal(24, 4), _balance  decimal(24, 4));
 
 CREATE FUNCTION core.get_income_tax_provison_amount(_office_id integer, _profit decimal(24, 4), _balance decimal(24, 4))
@@ -6518,7 +6525,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/core/core.get_income_tax_rate.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/core/core.get_income_tax_rate.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_income_tax_rate(_office_id integer);
 
 CREATE FUNCTION core.get_income_tax_rate(_office_id integer)
@@ -6534,7 +6541,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/core/core.get_item_cost_price.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/core/core.get_item_cost_price.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_item_cost_price(item_id_ integer, party_id_ bigint, unit_id_ integer);
 CREATE FUNCTION core.get_item_cost_price(item_id_ integer, party_id_ bigint, unit_id_ integer)
 RETURNS money_strict2
@@ -6628,7 +6635,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/core/core.get_item_selling_price.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/core/core.get_item_selling_price.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_item_selling_price(item_id_ integer, party_type_id_ integer, price_type_id_ integer, unit_id_ integer);
 CREATE FUNCTION core.get_item_selling_price(item_id_ integer, party_type_id_ integer, price_type_id_ integer, unit_id_ integer)
 RETURNS money_strict2
@@ -6725,7 +6732,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/core/core.get_ordered_quantity.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/core/core.get_ordered_quantity.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_ordered_quantity(_item_id integer, _unit_id integer, _office_id integer);
 
 CREATE FUNCTION core.get_ordered_quantity(_item_id integer, _unit_id integer, _office_id integer)
@@ -6766,7 +6773,7 @@ LANGUAGE plpgsql;
 --SELECT core.get_ordered_quantity(17, 1, 2);
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/core/core.get_periods.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/core/core.get_periods.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_periods
 (
     _date_from                      date,
@@ -6799,7 +6806,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/core/core.is_cash_account_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/core/core.is_cash_account_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.is_cash_account_id(_account_id bigint);
 
 CREATE FUNCTION core.is_cash_account_id(_account_id bigint)
@@ -6820,7 +6827,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/core/core.is_cash_equivalent.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/core/core.is_cash_equivalent.sql --<--<--
 DROP FUNCTION IF EXISTS core.is_cash_equivalent(_account_id integer);
 
 CREATE FUNCTION core.is_cash_equivalent(_account_id integer)
@@ -6845,7 +6852,7 @@ ADD CONSTRAINT stores_default_cash_account_id_chk
 CHECK(core.is_cash_equivalent(default_cash_account_id));
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/office/office.can_login.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/office/office.can_login.sql --<--<--
 DROP FUNCTION IF EXISTS office.can_login(user_id integer_strict, office_id integer_strict, OUT result boolean, OUT message text);
 CREATE FUNCTION office.can_login(user_id integer_strict, office_id integer_strict, OUT result boolean, OUT message text)
 RETURNS RECORD
@@ -6902,7 +6909,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/office/office.has_child_offices.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/office/office.has_child_offices.sql --<--<--
 CREATE FUNCTION office.has_child_offices(integer)
 RETURNS boolean
 AS
@@ -6918,7 +6925,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/office/office.sign_in.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/office/office.sign_in.sql --<--<--
 DROP FUNCTION IF EXISTS office.sign_in
 (
     office_id       integer_strict, 
@@ -7025,7 +7032,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/policy/policy.can_post_transaction.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/policy/policy.can_post_transaction.sql --<--<--
 DROP FUNCTION IF EXISTS policy.can_post_transaction(_login_id bigint, _user_id integer, _office_id integer, transaction_book text, _value_date date);
 
 CREATE FUNCTION policy.can_post_transaction(_login_id bigint, _user_id integer, _office_id integer, transaction_book text, _value_date date)
@@ -7087,7 +7094,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/policy/policy.get_menu.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/policy/policy.get_menu.sql --<--<--
 DROP FUNCTION IF EXISTS policy.get_menu(user_id_ integer, office_id_ integer, culture_ text);
 CREATE FUNCTION policy.get_menu(user_id_ integer, office_id_ integer, culture_ text)
 RETURNS TABLE
@@ -7145,7 +7152,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.auto_verify.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.auto_verify.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.auto_verify(bigint) CASCADE;
 
 CREATE FUNCTION transactions.auto_verify(bigint)
@@ -7811,7 +7818,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.create_routine.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.create_routine.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.create_routine(_routine_code national character varying(12), _routine regproc, _order integer);
 
 CREATE FUNCTION transactions.create_routine(_routine_code national character varying(12), _routine regproc, _order integer)
@@ -7828,7 +7835,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_account_statement.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_account_statement.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_account_statement
 (
     _value_date_from        date,
@@ -8021,7 +8028,7 @@ LANGUAGE plpgsql;
 --SELECT * FROM transactions.get_account_statement('1-1-2010','1-1-2020',1,1,1);
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_accrued_interest-todo.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_accrued_interest-todo.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_accrued_interest(office_id integer, party_id bigint);
 
 CREATE FUNCTION transactions.get_accrued_interest(office_id integer, party_id bigint)
@@ -8035,7 +8042,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_average_party_transaction.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_average_party_transaction.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_average_party_transaction(party_id bigint);
 
 
@@ -8125,7 +8132,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_balance_sheet.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_balance_sheet.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_balance_sheet
 (
     _previous_period                date,
@@ -8373,7 +8380,7 @@ LANGUAGE plpgsql;
 
 --SELECT * FROM transactions.get_balance_sheet('7/17/2014', '7/16/2015', 2, 2, 1000);
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_cash_flow_statement.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_cash_flow_statement.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_cash_flow_statement
 (
     _date_from                      date,
@@ -8651,7 +8658,7 @@ LANGUAGE plpgsql;
 
 --SELECT transactions.get_cash_flow_statement('1-1-2000','1-15-2020', 2, 2, 1)
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_cash_repository_balance.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_cash_repository_balance.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_cash_repository_balance(_cash_repository_id integer, _currency_code national character varying(12));
 CREATE FUNCTION transactions.get_cash_repository_balance(_cash_repository_id integer, _currency_code national character varying(12))
 RETURNS money_strict2
@@ -8707,7 +8714,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_closing_stock.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_closing_stock.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_closing_stock
 (
     _on_date            date,
@@ -8728,7 +8735,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_cost_of_goods_sold.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_cost_of_goods_sold.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_cost_of_goods_sold(_item_id integer, _unit_id integer, _store_id integer, _quantity integer);
 
 CREATE FUNCTION transactions.get_cost_of_goods_sold(_item_id integer, _unit_id integer, _store_id integer, _quantity integer)
@@ -8831,7 +8838,7 @@ LANGUAGE PLPGSQL;
 --SELECT * FROM transactions.get_cost_of_goods_sold(1, 7, 1, 1);
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_income_expenditure_statement.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_income_expenditure_statement.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_income_expenditure_statement
 (
     _date_from              date,
@@ -9060,7 +9067,7 @@ LANGUAGE plpgsql;
 --SELECT * FROM transactions.get_income_expenditure_statement('1-1-2010','1-1-2020',1,1, true);
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_journal_view.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_journal_view.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_journal_view
 (
     _user_id                        integer,
@@ -9170,7 +9177,7 @@ LANGUAGE plpgsql;
 --SELECT * FROM transactions.get_journal_view(2,1,'1-1-2000','1-1-2020',0,'', 'Jou', '', '','', '','','', '');
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_last_receipt_date.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_last_receipt_date.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_last_receipt_date(office_id integer, party_id bigint);
 CREATE FUNCTION transactions.get_last_receipt_date(office_id integer, party_id bigint)
 RETURNS date
@@ -9193,7 +9200,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_mavcogs.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_mavcogs.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_mavcogs(_item_id integer, _store_id integer, _base_quantity decimal, _factor decimal(24, 4));
 
 CREATE FUNCTION transactions.get_mavcogs(_item_id integer, _store_id integer, _base_quantity decimal, _factor decimal(24, 4))
@@ -9261,7 +9268,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_non_gl_product_view.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_non_gl_product_view.sql --<--<--
 
 DROP FUNCTION IF EXISTS transactions.get_non_gl_product_view
 (   
@@ -9406,7 +9413,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_party_transaction_summary.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_party_transaction_summary.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_party_transaction_summary
 (
     office_id integer, 
@@ -9457,7 +9464,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_product_view.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_product_view.sql --<--<--
 
 DROP FUNCTION IF EXISTS transactions.get_product_view
 (   
@@ -9615,7 +9622,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_profit_and_loss_statement.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_profit_and_loss_statement.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_profit_and_loss_statement
 (
     _date_from                      date,
@@ -10007,7 +10014,7 @@ LANGUAGE plpgsql;
 
 --SELECT transactions.get_profit_and_loss_statement('1-1-2000','1-15-2020', 2, 2, 1000,false), transactions.get_net_profit('1-1-2000','1-15-2020', 2, 1000);
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_purchase.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_purchase.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_purchase
 (
     _date_from          date,
@@ -10032,7 +10039,7 @@ LANGUAGE plpgsql;
 
 SELECT transactions.get_purchase('2-3-30', '1-1-10', 2);
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_receipt_view.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_receipt_view.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_receipt_view
 (
     _user_id                integer,
@@ -10138,7 +10145,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_reorder_view_function.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_reorder_view_function.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_reorder_view_function(office_id integer);
 
 CREATE FUNCTION transactions.get_reorder_view_function(office_id integer)
@@ -10196,7 +10203,7 @@ LANGUAGE plpgsql;
 --SELECT * FROM transactions.get_reorder_view_function(2);
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_retained_earnings.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_retained_earnings.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_retained_earnings
 (
     _date_to                        date,
@@ -10237,7 +10244,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_retained_earnings_statement.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_retained_earnings_statement.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_retained_earnings_statement
 (
     _date_to                        date,
@@ -10441,7 +10448,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_sales_by_offices.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_sales_by_offices.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_sales_by_offices(office_id integer, divide_by integer);
 
 CREATE FUNCTION transactions.get_sales_by_offices(office_id integer, divide_by integer)
@@ -10548,7 +10555,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_sales_tax.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_sales_tax.sql --<--<--
 DROP TYPE IF EXISTS transactions.sales_tax_type CASCADE;
 
 CREATE TYPE transactions.sales_tax_type AS
@@ -10831,7 +10838,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_sales_tax_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_sales_tax_id.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_sales_tax_id
 (
     _tran_book                  national character varying(12),
@@ -10999,7 +11006,7 @@ LANGUAGE plpgsql;
 
 --SELECT * FROM transactions.get_sales_tax_id('Purchase', 1, 'JASMI-0002', '', 1, 'RMBP', 1, 30000);
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_top_selling_products_by_office.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_top_selling_products_by_office.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_top_selling_products_by_office(_office_id integer, top integer);
 
 CREATE FUNCTION transactions.get_top_selling_products_by_office(_office_id integer, top integer)
@@ -11108,7 +11115,7 @@ LANGUAGE plpgsql;
 --SELECT  id, office_code, item_name, total_sales FROM transactions.get_top_selling_products_by_office()
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_top_selling_products_of_all_time.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_top_selling_products_of_all_time.sql --<--<--
 
 DROP FUNCTION IF EXISTS transactions.get_top_selling_products_of_all_time(top int);
 
@@ -11185,7 +11192,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_total_due.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_total_due.sql --<--<--
 CREATE FUNCTION transactions.get_total_due(office_id integer, party_id bigint)
 RETURNS DECIMAL(24, 4)
 AS
@@ -11235,7 +11242,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_trial_balance.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_trial_balance.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_trial_balance
 (
     _date_from                      date,
@@ -11465,7 +11472,7 @@ LANGUAGE plpgsql;
 --SELECT * FROM transactions.get_trial_balance('12-1-2014','12-31-2014',1,1, false, 1000, false, false);
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_value_date.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_value_date.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_value_date(_office_id integer);
 
 CREATE FUNCTION transactions.get_value_date(_office_id integer)
@@ -11500,7 +11507,7 @@ LANGUAGE plpgsql;
 
 --select transactions.get_value_date(2);
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_write_off_cost_of_goods_sold.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.get_write_off_cost_of_goods_sold.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_write_off_cost_of_goods_sold(_stock_master_id bigint, _item_id integer, _unit_id integer, _quantity integer);
 
 CREATE FUNCTION transactions.get_write_off_cost_of_goods_sold(_stock_master_id bigint, _item_id integer, _unit_id integer, _quantity integer)
@@ -11529,7 +11536,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.initialize_eod_operation.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.initialize_eod_operation.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.initialize_eod_operation(_user_id integer, _office_id integer, _value_date date);
 
 CREATE FUNCTION transactions.initialize_eod_operation(_user_id integer, _office_id integer, _value_date date)
@@ -11566,7 +11573,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.is_eod_initialized.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.is_eod_initialized.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.is_eod_initialized(_office_id integer, _value_date date);
 
 CREATE FUNCTION transactions.is_eod_initialized(_office_id integer, _value_date date)
@@ -11590,7 +11597,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.list_closing_stock.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.list_closing_stock.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.list_closing_stock
 (
     _store_id               integer
@@ -11668,7 +11675,7 @@ IS 'Lists stock items, their respective base units, and closing stock quantity.'
 
 --SELECT * FROM transactions.list_closing_stock(1);
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.perform_eod_operation.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.perform_eod_operation.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.perform_eod_operation(_user_id integer, _office_id integer, _value_date date);
 
 CREATE FUNCTION transactions.perform_eod_operation(_user_id integer, _office_id integer, _value_date date)
@@ -11785,7 +11792,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.post_non_gl_transaction.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.post_non_gl_transaction.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_non_gl_transaction
 (
     _book_name                              national character varying(12),
@@ -12003,7 +12010,7 @@ LANGUAGE plpgsql;
 -- ARRAY[NULL::core.attachment_type]);
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.post_purchase.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.post_purchase.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_purchase
 (
     _book_name                              national character varying(12),
@@ -12306,7 +12313,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.post_purchase_return.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.post_purchase_return.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_purchase_return
 (
     _transaction_master_id          bigint,
@@ -12656,7 +12663,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.post_purhcase_reorder.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.post_purhcase_reorder.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_purhcase_reorder
 (
         _value_date                             date,
@@ -12766,7 +12773,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.post_receipt_function.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.post_receipt_function.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_receipt_function
 (
     _user_id                integer, 
@@ -12927,7 +12934,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.post_sales.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.post_sales.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_sales
 (
     _book_name                              national character varying(12),
@@ -13290,7 +13297,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.post_sales_return.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.post_sales_return.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_sales_return
 (
     _transaction_master_id          bigint,
@@ -13610,7 +13617,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.post_stock_adjustment.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.post_stock_adjustment.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_stock_adjustment
 (
         _office_id                              integer,
@@ -13832,7 +13839,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.post_stock_journal.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.post_stock_journal.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_stock_journal
 (
         _office_id                              integer,
@@ -14009,7 +14016,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.refresh_materialized_views.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.refresh_materialized_views.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.refresh_materialized_views(_office_id integer);
 
 CREATE FUNCTION transactions.refresh_materialized_views(_office_id integer)
@@ -14029,7 +14036,7 @@ LANGUAGE plpgsql;
 SELECT transactions.create_routine('REF-MV', 'transactions.refresh_materialized_views', 1000);
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.validate_item_for_return.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/functions/transactions/transactions.validate_item_for_return.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.validate_item_for_return(_transaction_master_id bigint, _store_id integer, _item_code national character varying(12), _unit_name national character varying(50), _quantity integer, _price money_strict);
 
 CREATE FUNCTION transactions.validate_item_for_return(_transaction_master_id bigint, _store_id integer, _item_code national character varying(12), _unit_name national character varying(50), _quantity integer, _price money_strict)
@@ -14183,7 +14190,7 @@ LANGUAGE plpgsql;
 --SELECT * FROM transactions.validate_item_for_return(9, 1, 'RMBP', 'Piece', 1, 180000);
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/triggers/policy.check_menu_policy_trigger.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/triggers/policy.check_menu_policy_trigger.sql --<--<--
 DROP FUNCTION IF EXISTS policy.check_menu_policy_trigger() CASCADE;
 
 
@@ -14220,7 +14227,7 @@ ON policy.menu_policy
 FOR EACH ROW EXECUTE PROCEDURE policy.check_menu_policy_trigger();
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/triggers/transactions.verification_trigger.sql --<--<--
+-->-->-- /db/src/02. functions and logic/logic/triggers/transactions.verification_trigger.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.verification_trigger() CASCADE;
 CREATE FUNCTION transactions.verification_trigger()
 RETURNS TRIGGER
@@ -14446,7 +14453,7 @@ FOR EACH ROW
 EXECUTE PROCEDURE transactions.verification_trigger();
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.count_item_in_stock.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.count_item_in_stock.sql --<--<--
 CREATE FUNCTION office.count_item_in_stock(item_id_ integer, unit_id_ integer, office_id_ integer)
 RETURNS decimal
 AS
@@ -14505,7 +14512,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.create_user.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.create_user.sql --<--<--
 CREATE FUNCTION office.create_user
 (
     role_id integer_strict,
@@ -14527,7 +14534,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_cash_repository_id_by_cash_repository_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_cash_repository_id_by_cash_repository_code.sql --<--<--
 CREATE FUNCTION office.get_cash_repository_id_by_cash_repository_code(text)
 RETURNS integer
 AS
@@ -14544,7 +14551,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_cash_repository_id_by_cash_repository_name.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_cash_repository_id_by_cash_repository_name.sql --<--<--
 CREATE FUNCTION office.get_cash_repository_id_by_cash_repository_name(text)
 RETURNS integer
 AS
@@ -14562,7 +14569,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_cost_of_good_method.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_cost_of_good_method.sql --<--<--
 DROP FUNCTION IF EXISTS office.get_cost_of_good_method(_office_id integer);
 
 CREATE FUNCTION office.get_cost_of_good_method(_office_id integer)
@@ -14580,7 +14587,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_logged_in_culture.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_logged_in_culture.sql --<--<--
 CREATE FUNCTION office.get_logged_in_culture(_user_id integer)
 RETURNS text
 AS
@@ -14603,7 +14610,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_logged_in_office_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_logged_in_office_id.sql --<--<--
 CREATE FUNCTION office.get_logged_in_office_id(_user_id integer)
 RETURNS integer
 AS
@@ -14626,7 +14633,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_login_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_login_id.sql --<--<--
 CREATE FUNCTION office.get_login_id(_user_id integer)
 RETURNS bigint
 AS
@@ -14649,7 +14656,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_office_code_by_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_office_code_by_id.sql --<--<--
 CREATE FUNCTION office.get_office_code_by_id(office_id integer_strict)
 RETURNS text
 AS
@@ -14665,7 +14672,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_office_id_by_cash_repository_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_office_id_by_cash_repository_id.sql --<--<--
 DROP FUNCTION IF EXISTS office.get_office_id_by_cash_repository_id(integer);
 
 CREATE FUNCTION office.get_office_id_by_cash_repository_id(integer)
@@ -14684,7 +14691,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_office_id_by_office_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_office_id_by_office_code.sql --<--<--
 CREATE FUNCTION office.get_office_id_by_office_code(office_code text)
 RETURNS integer
 AS
@@ -14700,7 +14707,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_office_id_by_store_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_office_id_by_store_id.sql --<--<--
 DROP FUNCTION IF EXISTS office.get_office_id_by_store_id(integer);
 
 CREATE FUNCTION office.get_office_id_by_store_id(integer)
@@ -14718,7 +14725,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_office_id_by_user_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_office_id_by_user_id.sql --<--<--
 CREATE FUNCTION office.get_office_id_by_user_id(user_id integer_strict)
 RETURNS integer
 AS
@@ -14734,7 +14741,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_office_ids.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_office_ids.sql --<--<--
 DROP FUNCTION IF EXISTS office.get_office_ids(root_office_id integer);
 
 CREATE FUNCTION office.get_office_ids(root_office_id integer)
@@ -14759,7 +14766,7 @@ BEGIN
 END
 $$LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_office_name_by_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_office_name_by_id.sql --<--<--
 CREATE FUNCTION office.get_office_name_by_id(office_id integer_strict)
 RETURNS text
 AS
@@ -14775,7 +14782,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_offices.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_offices.sql --<--<--
 CREATE TYPE office.office_type AS
 (
     office_id               integer_strict,
@@ -14808,7 +14815,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_role_code_by_user_name.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_role_code_by_user_name.sql --<--<--
 CREATE FUNCTION office.get_role_code_by_user_name(user_name text)
 RETURNS text
 AS
@@ -14825,7 +14832,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_role_id_by_role_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_role_id_by_role_code.sql --<--<--
 DROP FUNCTION IF EXISTS office.get_role_id_by_role_code(text);
 
 CREATE FUNCTION office.get_role_id_by_role_code(text)
@@ -14842,7 +14849,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_role_id_by_role_name.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_role_id_by_role_name.sql --<--<--
 DROP FUNCTION IF EXISTS office.get_role_id_by_role_name(text);
 
 CREATE FUNCTION office.get_role_id_by_role_name(text)
@@ -14859,7 +14866,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_role_id_by_use_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_role_id_by_use_id.sql --<--<--
 CREATE FUNCTION office.get_role_id_by_use_id(user_id integer_strict)
 RETURNS integer
 AS
@@ -14876,7 +14883,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_store_id_by_store_name.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_store_id_by_store_name.sql --<--<--
 CREATE FUNCTION office.get_store_id_by_store_name(text)
 RETURNS integer
 AS
@@ -14893,7 +14900,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_store_name_by_store_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_store_name_by_store_id.sql --<--<--
 CREATE FUNCTION office.get_store_name_by_store_id(integer)
 RETURNS text
 AS
@@ -14910,7 +14917,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_sys_user_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_sys_user_id.sql --<--<--
 CREATE FUNCTION office.get_sys_user_id()
 RETURNS integer
 AS
@@ -14928,7 +14935,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_user_id_by_user_name.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_user_id_by_user_name.sql --<--<--
 CREATE FUNCTION office.get_user_id_by_user_name(user_name text)
 RETURNS integer
 AS
@@ -14944,7 +14951,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_user_name_by_user_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.get_user_name_by_user_id.sql --<--<--
 CREATE FUNCTION office.get_user_name_by_user_id(user_id integer)
 RETURNS text
 AS
@@ -14960,7 +14967,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.is_admin.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.is_admin.sql --<--<--
 CREATE FUNCTION office.is_admin(integer)
 RETURNS boolean
 AS
@@ -14986,7 +14993,7 @@ CHECK
     (office.is_admin(user_id))
 );
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.is_parent_office.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.is_parent_office.sql --<--<--
 
 CREATE FUNCTION office.is_parent_office(parent integer_strict, child integer_strict)
 RETURNS boolean
@@ -15031,7 +15038,7 @@ ADD CONSTRAINT offices_check_if_parent_chk
         );
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.is_periodic_inventory.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.is_periodic_inventory.sql --<--<--
 DROP FUNCTION IF EXISTS office.is_periodic_inventory(_office_id integer);
 
 CREATE FUNCTION office.is_periodic_inventory(_office_id integer)
@@ -15054,7 +15061,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.is_sys.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.is_sys.sql --<--<--
 CREATE FUNCTION office.is_sys(integer)
 RETURNS boolean
 AS
@@ -15075,7 +15082,7 @@ LANGUAGE PLPGSQL;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.is_sys_user.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.is_sys_user.sql --<--<--
 CREATE FUNCTION office.is_sys_user(integer)
 RETURNS boolean
 AS
@@ -15100,7 +15107,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.is_valid_office_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.is_valid_office_id.sql --<--<--
 DROP FUNCTION IF EXISTS office.is_valid_office_id(integer);
 
 CREATE FUNCTION office.is_valid_office_id(integer)
@@ -15118,7 +15125,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.validate_login.sql --<--<--
+-->-->-- /db/src/02. functions and logic/office/office.validate_login.sql --<--<--
 DROP FUNCTION IF EXISTS office.validate_login
 (
     user_name       text,
@@ -15158,7 +15165,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/policy/policy.is_elevated_user.sql --<--<--
+-->-->-- /db/src/02. functions and logic/policy/policy.is_elevated_user.sql --<--<--
 DROP FUNCTION IF EXISTS policy.is_elevated_user(_user_id integer);
 
 CREATE FUNCTION policy.is_elevated_user(_user_id integer)
@@ -15196,7 +15203,7 @@ LANGUAGE plpgsql;
 --------------------------------------------------------------------------------------------------------------------------
 **************************************************************************************************************************/
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/policy/policy.is_locked_out_till.sql --<--<--
+-->-->-- /db/src/02. functions and logic/policy/policy.is_locked_out_till.sql --<--<--
 CREATE FUNCTION policy.is_locked_out_till(user_id integer_strict)
 RETURNS TIMESTAMP
 AS
@@ -15213,7 +15220,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/policy/policy.is_restricted_mode.sql --<--<--
+-->-->-- /db/src/02. functions and logic/policy/policy.is_restricted_mode.sql --<--<--
 DROP FUNCTION IF EXISTS policy.is_restricted_mode();
 
 CREATE FUNCTION policy.is_restricted_mode()
@@ -15251,7 +15258,7 @@ LANGUAGE plpgsql;
 --------------------------------------------------------------------------------------------------------------------------
 **************************************************************************************************************************/
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/public/explode_array.sql --<--<--
+-->-->-- /db/src/02. functions and logic/public/explode_array.sql --<--<--
 DROP FUNCTION IF EXISTS explode_array(in_array anyarray);
 
 CREATE FUNCTION explode_array(in_array anyarray) 
@@ -15264,7 +15271,7 @@ IMMUTABLE;
 
 --select * from explode_array(ARRAY[ROW(1, 1)::FOO_TYPE,ROW(1, 1)::FOO_TYPE])
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.are_sales_orders_already_merged.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.are_sales_orders_already_merged.sql --<--<--
 CREATE FUNCTION transactions.are_sales_orders_already_merged(VARIADIC arr bigint[])
 RETURNS boolean
 AS
@@ -15287,7 +15294,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.are_sales_quotations_already_merged.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.are_sales_quotations_already_merged.sql --<--<--
 CREATE FUNCTION transactions.are_sales_quotations_already_merged(VARIADIC arr bigint[])
 RETURNS boolean
 AS
@@ -15320,7 +15327,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.contains_incompatible_taxes.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.contains_incompatible_taxes.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.contains_incompatible_taxes(VARIADIC arr bigint[]);
 
 
@@ -15346,7 +15353,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.get_default_currency_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.get_default_currency_code.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_default_currency_code(cash_repository_id integer);
 
 CREATE FUNCTION transactions.get_default_currency_code(cash_repository_id integer)
@@ -15368,7 +15375,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.get_default_currency_code_by_office_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.get_default_currency_code_by_office_id.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_default_currency_code_by_office_id(office_id integer);
 
 CREATE FUNCTION transactions.get_default_currency_code_by_office_id(office_id integer)
@@ -15388,7 +15395,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.get_exchange_rate.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.get_exchange_rate.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_exchange_rate(office_id integer, currency_code national character varying(12));
 
 CREATE FUNCTION transactions.get_exchange_rate(office_id integer, currency_code national character varying(12))
@@ -15450,7 +15457,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.get_invoice_amount.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.get_invoice_amount.sql --<--<--
 
 CREATE FUNCTION transactions.get_invoice_amount(transaction_master_id_ bigint)
 RETURNS money_strict2
@@ -15479,7 +15486,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.get_new_transaction_counter.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.get_new_transaction_counter.sql --<--<--
 
 /*******************************************************************
     THIS FUNCTION RETURNS A NEW INCREMENTAL COUNTER SUBJECT 
@@ -15507,7 +15514,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.get_stock_master_id_by_transaction_master_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.get_stock_master_id_by_transaction_master_id.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_stock_master_id_by_transaction_master_id(_stock_master_id bigint);
 
 CREATE FUNCTION transactions.get_stock_master_id_by_transaction_master_id(_stock_master_id bigint)
@@ -15525,7 +15532,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.get_transaction_code.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.get_transaction_code.sql --<--<--
 CREATE FUNCTION transactions.get_transaction_code(value_date date, office_id integer, user_id integer, login_id bigint)
 RETURNS text
 AS
@@ -15542,7 +15549,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.get_transaction_master_id_by_stock_master_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.get_transaction_master_id_by_stock_master_id.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_transaction_master_id_by_stock_master_id(_stock_master_id bigint);
 
 CREATE FUNCTION transactions.get_transaction_master_id_by_stock_master_id(_stock_master_id bigint)
@@ -15560,7 +15567,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.has_nexus.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.has_nexus.sql --<--<--
 CREATE FUNCTION transactions.has_nexus(_state_id integer)
 RETURNS boolean
 AS
@@ -15571,7 +15578,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.is_normally_debit.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.is_normally_debit.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.is_normally_debit(_account_id bigint);
 
 CREATE FUNCTION transactions.is_normally_debit(_account_id bigint)
@@ -15589,7 +15596,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.is_purchase.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.is_purchase.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.is_purchase(_transaction_master_id bigint);
 
 CREATE FUNCTION transactions.is_purchase(_transaction_master_id bigint)
@@ -15613,7 +15620,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.is_valid_party_by_stock_master_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.is_valid_party_by_stock_master_id.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.is_valid_party_by_stock_master_id(_stock_master_id bigint, _party_id bigint);
 
 CREATE FUNCTION transactions.is_valid_party_by_stock_master_id(_stock_master_id bigint, _party_id bigint)
@@ -15631,7 +15638,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.is_valid_party_by_transaction_master_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.is_valid_party_by_transaction_master_id.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.is_valid_party_by_transaction_master_id(_transaction_master_id bigint, _party_id bigint);
 
 CREATE FUNCTION transactions.is_valid_party_by_transaction_master_id(_transaction_master_id bigint, _party_id bigint)
@@ -15649,7 +15656,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.is_valid_stock_transaction_by_stock_master_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.is_valid_stock_transaction_by_stock_master_id.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.is_valid_stock_transaction_by_stock_master_id(_stock_master_id bigint);
 
 CREATE FUNCTION transactions.is_valid_stock_transaction_by_stock_master_id(_stock_master_id bigint)
@@ -15667,7 +15674,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/transactions/transactions.is_valid_stock_transaction_by_transaction_master_id.sql --<--<--
+-->-->-- /db/src/02. functions and logic/transactions/transactions.is_valid_stock_transaction_by_transaction_master_id.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.is_valid_stock_transaction_by_transaction_master_id(_transaction_master_id bigint);
 
 CREATE FUNCTION transactions.is_valid_stock_transaction_by_transaction_master_id(_transaction_master_id bigint)
@@ -15685,7 +15692,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/00. currency, accounts, account-parameters.sql --<--<--
+-->-->-- /db/src/04. default values/00. currency, accounts, account-parameters.sql --<--<--
 ALTER TABLE core.accounts
 ALTER column currency_code DROP NOT NULL;
 
@@ -16218,7 +16225,7 @@ ALTER column currency_code SET NOT NULL;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/00.countries,states,cities.sql --<--<--
+-->-->-- /db/src/04. default values/00.countries,states,cities.sql --<--<--
 INSERT INTO core.countries(country_code, country_name)
 SELECT 'AF', 'Afghanistan' UNION ALL 
 SELECT 'AX', 'Åland Islands' UNION ALL 
@@ -19678,7 +19685,7 @@ INSERT INTO core.counties(county_code, county_name, state_id) VALUES
 ('56043', 'Washakie County', core.get_state_id_by_state_name('Wyoming')),
 ('56045', 'Weston County', core.get_state_id_by_state_name('Wyoming'));
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/01. frequencies, payment-terms, late-fee.sql --<--<--
+-->-->-- /db/src/04. default values/01. frequencies, payment-terms, late-fee.sql --<--<--
 INSERT INTO core.frequencies
 SELECT 2, 'EOM', 'End of Month'                 UNION ALL
 SELECT 3, 'EOQ', 'End of Quarter'               UNION ALL
@@ -19717,7 +19724,7 @@ SELECT 'D-EOY', 'Due in the next fiscal year end',      false,  0,  5,          
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/crm.lead-sources, lead-statuses, opportunity-stages.sql --<--<--
+-->-->-- /db/src/04. default values/crm.lead-sources, lead-statuses, opportunity-stages.sql --<--<--
 INSERT INTO crm.lead_sources(lead_source_code, lead_source_name)
 SELECT 'AG', 'Agent'                UNION ALL
 SELECT 'CC', 'Cold Call'            UNION ALL
@@ -19744,7 +19751,7 @@ SELECT 'CLW', 'Closed Won'          UNION ALL
 SELECT 'CLL', 'Closed Lost';
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/office, department, roles, users.sql --<--<--
+-->-->-- /db/src/04. default values/office, department, roles, users.sql --<--<--
 
 
 /*******************************************************************
@@ -19801,7 +19808,7 @@ SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='ADM
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/policy, config.sql --<--<--
+-->-->-- /db/src/04. default values/policy, config.sql --<--<--
 INSERT INTO policy.auto_verification_policy
 SELECT 2, true, 0, true, 0, true, 0, '1-1-2010', '1-1-2020', true;
 
@@ -19824,7 +19831,7 @@ WHERE parent_office_id IS NOT NULL;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/salespersons, ageing-slabs, party-types.sql --<--<--
+-->-->-- /db/src/04. default values/salespersons, ageing-slabs, party-types.sql --<--<--
 INSERT INTO core.sales_teams(sales_team_code, sales_team_name)
 SELECT 'DEF', 'Default'                 UNION ALL
 SELECT 'CST', 'Corporate Sales Team'    UNION ALL
@@ -19854,7 +19861,7 @@ INSERT INTO core.party_types(party_type_code, party_type_name, is_supplier, acco
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/stores-types,cost-centers.sql --<--<--
+-->-->-- /db/src/04. default values/stores-types,cost-centers.sql --<--<--
 INSERT INTO office.store_types(store_type_code,store_type_name)
 SELECT 'GOD', 'Godown'                              UNION ALL
 SELECT 'SAL', 'Sales Center'                        UNION ALL
@@ -19873,7 +19880,7 @@ SELECT 'FIN', 'Finance & Accounting';
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/tax, item-groups, brands, shipping.sql --<--<--
+-->-->-- /db/src/04. default values/tax, item-groups, brands, shipping.sql --<--<--
 INSERT INTO core.entities(entity_name)
 SELECT 'Federal Government'                         UNION
 SELECT 'Sole Proprietorship'                        UNION
@@ -20108,7 +20115,7 @@ SELECT 'IRR',   false,  'Irregular Packaging';
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/units.sql --<--<--
+-->-->-- /db/src/04. default values/units.sql --<--<--
 INSERT INTO core.units(unit_code, unit_name)
 SELECT 'PC', 'Piece'        UNION ALL
 SELECT 'FT', 'Feet'         UNION ALL
@@ -20127,7 +20134,7 @@ SELECT core.get_unit_id_by_unit_code('GM'), core.get_unit_id_by_unit_code('KG'),
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/verification-statuses, flag-types.sql --<--<--
+-->-->-- /db/src/04. default values/verification-statuses, flag-types.sql --<--<--
 --These are hardcoded values and therefore the meanings should always remain intact
 --regardless of the language.
 INSERT INTO core.verification_statuses
@@ -20150,7 +20157,7 @@ SELECT 'OK',            '#D0F5A9', '#000000';
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.account_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.account_scrud_view.sql --<--<--
 CREATE VIEW core.account_scrud_view
 AS
 SELECT
@@ -20171,7 +20178,7 @@ LEFT JOIN core.accounts parent_account
 ON parent_account.account_id=core.accounts.parent_account_id
 WHERE NOT core.accounts.sys_type;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.bonus_slab_detail_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.bonus_slab_detail_scrud_view.sql --<--<--
 CREATE VIEW core.bonus_slab_detail_scrud_view
 AS
 SELECT
@@ -20188,7 +20195,7 @@ WHERE
     core.bonus_slab_details.bonus_slab_id = core.bonus_slabs.bonus_slab_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.bonus_slab_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.bonus_slab_scrud_view.sql --<--<--
 CREATE VIEW core.bonus_slab_scrud_view
 AS
 SELECT
@@ -20203,7 +20210,7 @@ WHERE
 core.bonus_slabs.checking_frequency_id = core.frequencies.frequency_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.brands_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.brands_scrud_view.sql --<--<--
 CREATE VIEW core.brands_scrud_view
 AS
 SELECT 
@@ -20212,7 +20219,7 @@ SELECT
         brand_name
 FROM core.brands;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.compound_item_detail_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.compound_item_detail_scrud_view.sql --<--<--
 CREATE VIEW core.compound_item_detail_scrud_view
 AS
 SELECT
@@ -20229,7 +20236,7 @@ INNER JOIN core.compound_items
 ON core.compound_item_details.compound_item_id = core.compound_items.compound_item_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.compound_items_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.compound_items_scrud_view.sql --<--<--
 CREATE VIEW core.compound_items_scrud_view
 AS
 SELECT 
@@ -20238,7 +20245,7 @@ SELECT
         compound_item_name
 FROM core.compound_items;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.compound_unit_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.compound_unit_scrud_view.sql --<--<--
 CREATE VIEW core.compound_unit_scrud_view
 AS
 SELECT
@@ -20257,7 +20264,7 @@ AND
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.currency_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.currency_scrud_view.sql --<--<--
 CREATE VIEW core.currency_scrud_view
 AS
 SELECT 
@@ -20269,7 +20276,7 @@ FROM
   core.currencies;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.frequency_setup_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.frequency_setup_scrud_view.sql --<--<--
 CREATE VIEW core.frequency_setup_scrud_view
 AS
 SELECT 
@@ -20279,7 +20286,7 @@ SELECT
         core.get_frequency_code_by_frequency_id(frequency_id) AS frequency_code
 FROM core.frequency_setups;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.item_cost_price_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.item_cost_price_scrud_view.sql --<--<--
 DROP VIEW IF EXISTS core.item_cost_price_scrud_view;
 
 CREATE VIEW core.item_cost_price_scrud_view
@@ -20303,7 +20310,7 @@ ON core.item_cost_prices.party_id = core.parties.party_id;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.item_group_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.item_group_scrud_view.sql --<--<--
 CREATE VIEW core.item_group_scrud_view
 AS
 SELECT 
@@ -20321,7 +20328,7 @@ LEFT JOIN core.item_groups AS parent_item_group
 ON core.item_groups.parent_item_group_id = parent_item_group.item_group_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.item_selling_price_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.item_selling_price_scrud_view.sql --<--<--
 DROP VIEW IF EXISTS core.item_selling_price_scrud_view;
 
 CREATE VIEW core.item_selling_price_scrud_view
@@ -20347,7 +20354,7 @@ ON  core.item_selling_prices.party_type_id = core.party_types.party_type_id;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.items_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.items_scrud_view.sql --<--<--
 DROP VIEW IF EXISTS core.items_scrud_view;
 
 CREATE VIEW core.items_scrud_view
@@ -20397,7 +20404,7 @@ LEFT JOIN core.shipping_package_shapes
 ON core.items.shipping_package_shape_id = core.shipping_package_shapes.shipping_package_shape_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.late_fee_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.late_fee_scrud_view.sql --<--<--
 CREATE VIEW core.late_fee_scrud_view
 AS
 SELECT 
@@ -20410,7 +20417,7 @@ FROM
   core.late_fee;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.party_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.party_scrud_view.sql --<--<--
 CREATE VIEW core.party_scrud_view
 AS
 SELECT
@@ -20453,7 +20460,7 @@ INNER JOIN core.accounts
 ON core.parties.account_id=core.accounts.account_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.party_types_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.party_types_scrud_view.sql --<--<--
 CREATE VIEW core.party_types_scrud_view
 AS
 SELECT 
@@ -20463,7 +20470,7 @@ SELECT
         is_supplier
 FROM core.party_types;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.payment_term_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.payment_term_scrud_view.sql --<--<--
 CREATE VIEW core.payment_term_scrud_view
 AS
 SELECT
@@ -20488,7 +20495,7 @@ ON core.payment_terms.late_fee_id=core.late_fee.late_fee_id;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.sales_teams_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.sales_teams_scrud_view.sql --<--<--
 CREATE VIEW core.sales_teams_scrud_view
 AS
 SELECT 
@@ -20497,7 +20504,7 @@ SELECT
         sales_team_name
 FROM core.sales_teams;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.salesperson_bonus_setup_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.salesperson_bonus_setup_scrud_view.sql --<--<--
 CREATE VIEW core.salesperson_bonus_setup_scrud_view
 AS
 SELECT
@@ -20514,7 +20521,7 @@ AND
     core.salesperson_bonus_setups.bonus_slab_id = core.bonus_slabs.bonus_slab_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.salesperson_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.salesperson_scrud_view.sql --<--<--
 CREATE VIEW core.salesperson_scrud_view
 AS
 SELECT
@@ -20532,7 +20539,7 @@ WHERE
     core.salespersons.account_id = core.accounts.account_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.shippers_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.shippers_scrud_view.sql --<--<--
 CREATE VIEW core.shippers_scrud_view
 AS
 SELECT
@@ -20574,7 +20581,7 @@ ON core.shippers.account_id = core.accounts.account_id;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.shipping_address_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.shipping_address_scrud_view.sql --<--<--
 CREATE VIEW core.shipping_address_scrud_view
 AS
 SELECT
@@ -20593,20 +20600,16 @@ INNER JOIN core.parties
 ON core.shipping_addresses.party_id=core.parties.party_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.tax_authority_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.tax_authority_scrud_view.sql --<--<--
 CREATE VIEW core.tax_authority_scrud_view
 AS
 SELECT
 	core.tax_authorities.tax_authority_id,
-	core.tax_authorities.tax_master_id,
-	core.tax_master.tax_master_code,
-	core.tax_master.tax_master_name,
+	core.tax_master.tax_master_code || '(' || core.tax_master.tax_master_name ||')' AS tax_master,
 	core.tax_authorities.tax_authority_code,
 	core.tax_authorities.tax_authority_name,
-	core.countries.country_code,
-	core.countries.country_name,
-	core.states.state_code,
-	core.states.state_name,
+	core.countries.country_code || '(' || core.countries.country_name ||')' AS country,
+	core.states.state_code || '(' || core.states.state_name ||')' AS county,
 	core.tax_authorities.zip_code,
 	core.tax_authorities.address_line_1,
 	core.tax_authorities.address_line_2,
@@ -20625,7 +20628,8 @@ ON core.tax_authorities.country_id = core.countries.country_id
 LEFT JOIN core.states
 ON core.tax_authorities.state_id = core.states.state_id;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.tax_master_scrud_view.sql --<--<--
+
+-->-->-- /db/src/05. scrud-views/core/core.tax_master_scrud_view.sql --<--<--
 CREATE VIEW core.tax_master_scrud_view
 AS
 SELECT 
@@ -20636,7 +20640,7 @@ FROM
   core.tax_master;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.units_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/core/core.units_scrud_view.sql --<--<--
 CREATE VIEW core.units_scrud_view
 AS
 SELECT
@@ -20645,7 +20649,7 @@ SELECT
         unit_name
 FROM core.units;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/office/office.cash_repository_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/office/office.cash_repository_scrud_view.sql --<--<--
 CREATE VIEW office.cash_repository_scrud_view
 AS
 SELECT
@@ -20663,7 +20667,7 @@ ON
     office.cash_repositories.parent_cash_repository_id=parent_cash_repositories.cash_repository_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/office/office.cost_center_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/office/office.cost_center_scrud_view.sql --<--<--
 CREATE VIEW office.cost_center_scrud_view
 AS
 SELECT
@@ -20674,7 +20678,7 @@ FROM
     office.cost_centers;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/office/office.counter_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/office/office.counter_scrud_view.sql --<--<--
 CREATE VIEW office.counter_scrud_view 
 AS 
 SELECT counters.counter_id,
@@ -20689,7 +20693,7 @@ SELECT counters.counter_id,
    INNER JOIN office.cash_repositories ON counters.cash_repository_id = cash_repositories.cash_repository_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/office/office.department_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/office/office.department_scrud_view.sql --<--<--
 CREATE VIEW office.department_scrud_view
 AS
 SELECT 
@@ -20699,7 +20703,7 @@ SELECT
 FROM office.departments;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/office/office.role_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/office/office.role_scrud_view.sql --<--<--
 CREATE VIEW office.role_scrud_view
 AS
 SELECT 
@@ -20712,12 +20716,12 @@ FROM
   office.roles;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/office/office.store_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/office/office.store_scrud_view.sql --<--<--
 CREATE VIEW office.store_scrud_view
 AS 
 SELECT * FROM office.stores;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/office/office.store_type_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/office/office.store_type_scrud_view.sql --<--<--
 CREATE VIEW office.store_type_scrud_view
 AS 
 
@@ -20729,7 +20733,7 @@ FROM
   office.store_types;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/policy/policy.auto_verification_policy_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/policy/policy.auto_verification_policy_scrud_view.sql --<--<--
 CREATE VIEW policy.auto_verification_policy_scrud_view
 AS
 SELECT
@@ -20750,7 +20754,7 @@ ON policy.auto_verification_policy.user_id=office.users.user_id;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/policy/policy.voucher_verification_policy_scrud_view.sql --<--<--
+-->-->-- /db/src/05. scrud-views/policy/policy.voucher_verification_policy_scrud_view.sql --<--<--
 CREATE VIEW policy.voucher_verification_policy_scrud_view
 AS
 SELECT
@@ -20774,14 +20778,14 @@ ON policy.voucher_verification_policy.user_id=office.users.user_id;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.account_master_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.account_master_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.account_master_selector_view;
 
 CREATE VIEW core.account_master_selector_view
 AS
 SELECT * FROM core.account_masters;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.account_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.account_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.account_selector_view;
 
 CREATE VIEW core.account_selector_view
@@ -20806,42 +20810,42 @@ FROM
     ON core.accounts.parent_account_id = parent_accounts.account_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.bonus_slab_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.bonus_slab_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.bonus_slab_selector_view;
 
 CREATE VIEW core.bonus_slab_selector_view
 AS
 SELECT * FROM core.bonus_slabs;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.brand_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.brand_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.brand_selector_view;
 
 CREATE VIEW core.brand_selector_view
 AS
 SELECT * FROM core.brands;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.compound_item_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.compound_item_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.compound_item_selector_view;
 
 CREATE VIEW core.compound_item_selector_view
 AS
 SELECT * FROM core.compound_items;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.currency_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.currency_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.currency_selector_view;
 
 CREATE VIEW core.currency_selector_view
 AS
 SELECT * FROM core.currencies;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.fiscal_year_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.fiscal_year_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.fiscal_year_selector_view;
 
 CREATE VIEW core.fiscal_year_selector_view
 AS
 SELECT * FROM core.fiscal_year;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.frequency_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.frequency_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.frequency_selector_view;
 
 CREATE VIEW core.frequency_selector_view
@@ -20849,21 +20853,21 @@ AS
 SELECT * FROM core.frequencies;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.item_group_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.item_group_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.item_group_selector_view;
 
 CREATE VIEW core.item_group_selector_view
 AS
 SELECT * FROM core.item_groups;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.item_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.item_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.item_selector_view;
 
 CREATE VIEW core.item_selector_view
 AS
 SELECT * FROM core.items;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.party_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.party_selector_view.sql --<--<--
 CREATE VIEW core.party_selector_view
 AS
 SELECT
@@ -20906,21 +20910,21 @@ INNER JOIN core.accounts
 ON core.parties.account_id=core.accounts.account_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.party_type_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.party_type_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.party_type_selector_view;
 
 CREATE VIEW core.party_type_selector_view
 AS
 SELECT * FROM core.party_types;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.price_type_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.price_type_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.price_type_selector_view;
 
 CREATE VIEW core.price_type_selector_view
 AS
 SELECT * FROM core.price_types;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.sales_tax_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.sales_tax_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.sales_tax_selector_view;
 
 CREATE VIEW core.sales_tax_selector_view
@@ -20928,7 +20932,7 @@ AS
 SELECT * FROM core.sales_taxes;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.sales_team_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.sales_team_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.sales_team_selector_view;
 
 CREATE VIEW core.sales_team_selector_view
@@ -20936,7 +20940,7 @@ AS
 SELECT * FROM core.sales_teams;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.salesperson_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.salesperson_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.salesperson_selector_view;
 
 CREATE VIEW core.salesperson_selector_view
@@ -20957,21 +20961,21 @@ WHERE
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.shipping_mail_type_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.shipping_mail_type_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.shipping_mail_type_selector_view;
 
 CREATE VIEW core.shipping_mail_type_selector_view
 AS
 SELECT * FROM core.shipping_mail_types;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.shipping_package_shape_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.shipping_package_shape_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.shipping_package_shape_selector_view;
 
 CREATE VIEW core.shipping_package_shape_selector_view
 AS
 SELECT * FROM core.shipping_package_shapes;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.supplier_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.supplier_selector_view.sql --<--<--
 CREATE VIEW core.supplier_selector_view
 AS
 SELECT * FROM core.parties
@@ -20982,14 +20986,14 @@ WHERE party_type_id IN
 );
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/core/core.unit_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/core/core.unit_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.unit_selector_view;
 
 CREATE VIEW core.unit_selector_view
 AS
 SELECT * FROM core.units;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/office/office.cash_repository_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/office/office.cash_repository_selector_view.sql --<--<--
 DROP VIEW IF EXISTS office.cash_repository_selector_view;
 
 CREATE VIEW office.cash_repository_selector_view
@@ -21010,7 +21014,7 @@ ON
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/office/office.office_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/office/office.office_selector_view.sql --<--<--
 DROP VIEW IF EXISTS office.office_selector_view;
 
 CREATE VIEW office.office_selector_view
@@ -21018,7 +21022,7 @@ AS
 SELECT * FROM office.offices;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/office/office.store_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/office/office.store_selector_view.sql --<--<--
 DROP VIEW IF EXISTS office.store_selector_view;
 
 CREATE VIEW office.store_selector_view
@@ -21027,7 +21031,7 @@ SELECT * FROM office.stores;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/office/office.store_type_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/office/office.store_type_selector_view.sql --<--<--
 DROP VIEW IF EXISTS office.store_type_selector_view;
 
 CREATE VIEW office.store_type_selector_view
@@ -21036,7 +21040,7 @@ SELECT * FROM office.store_types;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. selector-views/office/office.user_selector_view.sql --<--<--
+-->-->-- /db/src/05. selector-views/office/office.user_selector_view.sql --<--<--
 DROP VIEW IF EXISTS office.user_selector_view;
 
 CREATE VIEW office.user_selector_view
@@ -21055,7 +21059,7 @@ INNER JOIN office.offices
 ON office.users.office_id = office.offices.office_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/core/core.account_view.sql --<--<--
+-->-->-- /db/src/05. views/core/core.account_view.sql --<--<--
 CREATE VIEW core.account_view
 AS
 SELECT
@@ -21084,7 +21088,7 @@ ON core.account_masters.account_master_id = core.accounts.account_master_id
 LEFT OUTER JOIN core.accounts AS parent_accounts 
 ON core.accounts.parent_account_id = parent_accounts.account_id;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/core/core.bank_account_view.sql --<--<--
+-->-->-- /db/src/05. views/core/core.bank_account_view.sql --<--<--
 CREATE VIEW core.bank_account_view
 AS
 SELECT
@@ -21106,14 +21110,14 @@ INNER JOIN office.users ON core.bank_accounts.maintained_by_user_id = office.use
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/core/core.item_view.sql --<--<--
+-->-->-- /db/src/05. views/core/core.item_view.sql --<--<--
 --TODO
 CREATE VIEW core.item_view
 AS
 SELECT * FROM core.items;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/core/core.party_user_control_view.sql --<--<--
+-->-->-- /db/src/05. views/core/core.party_user_control_view.sql --<--<--
 CREATE VIEW core.party_user_control_view
 AS
 SELECT
@@ -21143,7 +21147,7 @@ ON core.parties.account_id = core.accounts.account_id;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/core/core.party_view.sql --<--<--
+-->-->-- /db/src/05. views/core/core.party_view.sql --<--<--
 CREATE VIEW core.party_view
 AS
 SELECT
@@ -21186,7 +21190,7 @@ INNER JOIN core.accounts
 ON core.parties.account_id=core.accounts.account_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/core/core.shipping_address_view.sql --<--<--
+-->-->-- /db/src/05. views/core/core.shipping_address_view.sql --<--<--
 CREATE VIEW core.shipping_address_view
 AS
 SELECT
@@ -21207,7 +21211,7 @@ ON core.shipping_addresses.party_id=core.parties.party_id;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/core/core.supplier_view.sql --<--<--
+-->-->-- /db/src/05. views/core/core.supplier_view.sql --<--<--
 CREATE VIEW core.supplier_view
 AS
 SELECT * FROM core.parties
@@ -21217,7 +21221,7 @@ WHERE party_type_id IN
         WHERE is_supplier=true
 );
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/core/core.unit_view.sql --<--<--
+-->-->-- /db/src/05. views/core/core.unit_view.sql --<--<--
 --TODO
 CREATE VIEW core.unit_view
 AS
@@ -21225,14 +21229,14 @@ SELECT * FROM core.units;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/office/office.office_view.sql --<--<--
+-->-->-- /db/src/05. views/office/office.office_view.sql --<--<--
 --TODO
 CREATE VIEW office.office_view
 AS
 SELECT * FROM office.offices;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/office/office.role_view.sql --<--<--
+-->-->-- /db/src/05. views/office/office.role_view.sql --<--<--
 CREATE OR REPLACE VIEW office.role_view
 AS
 SELECT 
@@ -21243,7 +21247,7 @@ FROM
   office.roles;
    
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/office/office.sign_in_view.sql --<--<--
+-->-->-- /db/src/05. views/office/office.sign_in_view.sql --<--<--
 CREATE VIEW office.sign_in_view
 AS
 SELECT 
@@ -21294,14 +21298,14 @@ WHERE
   logins.office_id = offices.office_id AND
   users.role_id = roles.role_id;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/office/office.store_view.sql --<--<--
+-->-->-- /db/src/05. views/office/office.store_view.sql --<--<--
 --TODO
 CREATE VIEW office.store_view
 AS
 SELECT * FROM office.stores;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/office/office.user_view.sql --<--<--
+-->-->-- /db/src/05. views/office/office.user_view.sql --<--<--
 CREATE VIEW office.user_view
 AS
 SELECT
@@ -21319,7 +21323,7 @@ ON office.users.office_id = office.offices.office_id;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/office/office.work_center_view.sql --<--<--
+-->-->-- /db/src/05. views/office/office.work_center_view.sql --<--<--
 CREATE VIEW office.work_center_view
 AS
 SELECT
@@ -21332,7 +21336,7 @@ INNER JOIN office.offices
 ON office.work_centers.office_id = office.offices.office_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/public.dbstat.sql --<--<--
+-->-->-- /db/src/05. views/public.dbstat.sql --<--<--
 DROP VIEW IF EXISTS db_stat;
 
 CREATE VIEW db_stat
@@ -21351,7 +21355,7 @@ FROM
    pg_stat_user_tables;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/transactions/1. transactions.transaction_view.sql --<--<--
+-->-->-- /db/src/05. views/transactions/1. transactions.transaction_view.sql --<--<--
 DROP VIEW IF EXISTS transactions.transaction_view;
 CREATE VIEW transactions.transaction_view
 AS
@@ -21401,7 +21405,7 @@ ON core.accounts.account_master_id = core.account_masters.account_master_id;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/transactions/2. transactions.verified_transaction_view.sql --<--<--
+-->-->-- /db/src/05. views/transactions/2. transactions.verified_transaction_view.sql --<--<--
 DROP VIEW IF EXISTS transactions.verified_transaction_view CASCADE;
 
 CREATE VIEW transactions.verified_transaction_view
@@ -21410,7 +21414,7 @@ SELECT * FROM transactions.transaction_view
 WHERE verification_status_id > 0;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/transactions/3. transactions.trial_balance_view.sql --<--<--
+-->-->-- /db/src/05. views/transactions/3. transactions.trial_balance_view.sql --<--<--
 DROP MATERIALIZED VIEW IF EXISTS transactions.trial_balance_view;
 CREATE MATERIALIZED VIEW transactions.trial_balance_view
 AS
@@ -21421,14 +21425,14 @@ FROM transactions.verified_transaction_view
 GROUP BY account_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/transactions/3. transactions.verified_transaction_mat_view.sql --<--<--
+-->-->-- /db/src/05. views/transactions/3. transactions.verified_transaction_mat_view.sql --<--<--
 DROP MATERIALIZED VIEW IF EXISTS transactions.verified_transaction_mat_view CASCADE;
 
 CREATE MATERIALIZED VIEW transactions.verified_transaction_mat_view
 AS
 SELECT * FROM transactions.verified_transaction_view;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/transactions/4. transactions.stock_transaction_view.sql --<--<--
+-->-->-- /db/src/05. views/transactions/4. transactions.stock_transaction_view.sql --<--<--
 DROP VIEW IF EXISTS transactions.stock_transaction_view;
 
 CREATE VIEW transactions.stock_transaction_view
@@ -21481,7 +21485,7 @@ ON transactions.transaction_master.transaction_master_id = transactions.stock_ma
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/transactions/5. transactions.verified_stock_transaction_view.sql --<--<--
+-->-->-- /db/src/05. views/transactions/5. transactions.verified_stock_transaction_view.sql --<--<--
 DROP MATERIALIZED VIEW IF EXISTS transactions.verified_stock_transaction_view;
 
 CREATE MATERIALIZED VIEW transactions.verified_stock_transaction_view
@@ -21490,7 +21494,7 @@ SELECT * FROM transactions.stock_transaction_view
 WHERE verification_status_id > 0;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/transactions/6. transactions.verified_cash_transaction_mat_view.sql --<--<--
+-->-->-- /db/src/05. views/transactions/6. transactions.verified_cash_transaction_mat_view.sql --<--<--
 CREATE MATERIALIZED VIEW transactions.verified_cash_transaction_mat_view
 AS
 SELECT * FROM transactions.verified_transaction_mat_view
@@ -21504,7 +21508,7 @@ IN
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/transactions/transactions.verified_stock_details_view.sql --<--<--
+-->-->-- /db/src/05. views/transactions/transactions.verified_stock_details_view.sql --<--<--
 DROP VIEW IF EXISTS transactions.verified_stock_details_view;
 
 CREATE VIEW transactions.verified_stock_details_view
@@ -21519,7 +21523,7 @@ AND transactions.transaction_master.verification_status_id > 0;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/06. sample-data/0. menus.sql --<--<--
+-->-->-- /db/src/06. sample-data/0. menus.sql --<--<--
 INSERT INTO core.menus(menu_text, url, menu_code, level)
 SELECT 'Sales', '~/Modules/Sales/Index.mix', 'SA', 0 UNION ALL
 SELECT 'Purchase', '~/Modules/Purchase/Index.mix', 'PU', 0 UNION ALL
@@ -21803,7 +21807,7 @@ SELECT core.get_menu_id('OTS'), 'fr', 'Un réglage de l''heure' UNION ALL
 SELECT core.get_menu_id('OTSI'), 'fr', 'Stock d''ouverture';
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/06. sample-data/exchange-rates.sql --<--<--
+-->-->-- /db/src/06. sample-data/exchange-rates.sql --<--<--
 INSERT INTO core.exchange_rates(office_id)
 SELECT 1;
 
@@ -21833,7 +21837,7 @@ SELECT 3, 'NPR', 'INR', 1, 1.6;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/06. sample-data/price-types.sql --<--<--
+-->-->-- /db/src/06. sample-data/price-types.sql --<--<--
 
 INSERT INTO core.price_types(price_type_code, price_type_name)
 SELECT 'RET', 'Retail'      UNION ALL
@@ -21841,7 +21845,7 @@ SELECT 'WHO', 'Wholesale';
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/10. triggers/core/core.disable_editing_sys_type.sql --<--<--
+-->-->-- /db/src/10. triggers/core/core.disable_editing_sys_type.sql --<--<--
 CREATE OR REPLACE FUNCTION core.disable_editing_sys_type()
 RETURNS TRIGGER
 AS
@@ -21875,7 +21879,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/10. triggers/core/core.items_unit_check_trigger.sql --<--<--
+-->-->-- /db/src/10. triggers/core/core.items_unit_check_trigger.sql --<--<--
 DROP FUNCTION IF EXISTS core.items_unit_check_trigger() CASCADE;
 
 CREATE FUNCTION core.items_unit_check_trigger()
@@ -21896,7 +21900,7 @@ AFTER INSERT OR UPDATE
 ON core.items
 FOR EACH ROW EXECUTE PROCEDURE core.items_unit_check_trigger();
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/10. triggers/core/core.party_after_insert_trigger.sql --<--<--
+-->-->-- /db/src/10. triggers/core/core.party_after_insert_trigger.sql --<--<--
 CREATE FUNCTION core.party_after_insert_trigger()
 RETURNS TRIGGER
 AS
@@ -21942,7 +21946,7 @@ AFTER INSERT
 ON core.parties
 FOR EACH ROW EXECUTE PROCEDURE core.party_after_insert_trigger();
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/10. triggers/core/core.party_before_update_trigger.sql --<--<--
+-->-->-- /db/src/10. triggers/core/core.party_before_update_trigger.sql --<--<--
 CREATE FUNCTION core.party_before_update_trigger()
 RETURNS TRIGGER
 AS
@@ -21974,7 +21978,7 @@ FOR EACH ROW EXECUTE PROCEDURE core.party_before_update_trigger();
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/10. triggers/core/core.shippers_after_insert_trigger.sql --<--<--
+-->-->-- /db/src/10. triggers/core/core.shippers_after_insert_trigger.sql --<--<--
 CREATE FUNCTION core.shippers_after_insert_trigger()
 RETURNS trigger
 AS
@@ -21996,7 +22000,7 @@ ON core.shippers
 FOR EACH ROW EXECUTE PROCEDURE core.shippers_after_insert_trigger();
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/10. triggers/core/core.update_shipping_address_code_trigger.sql --<--<--
+-->-->-- /db/src/10. triggers/core/core.update_shipping_address_code_trigger.sql --<--<--
 CREATE FUNCTION core.update_shipping_address_code_trigger()
 RETURNS TRIGGER
 AS
@@ -22026,7 +22030,7 @@ FOR EACH ROW EXECUTE PROCEDURE core.update_shipping_address_code_trigger();
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/10. triggers/policy/policy.perform_lock_out.sql --<--<--
+-->-->-- /db/src/10. triggers/policy/policy.perform_lock_out.sql --<--<--
 --TODO: Create a lockout policy.
 CREATE FUNCTION policy.perform_lock_out()
 RETURNS TRIGGER
@@ -22055,7 +22059,7 @@ FOR EACH ROW EXECUTE PROCEDURE policy.perform_lock_out();
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/10. triggers/transactions/transactions.restrict_delete_trigger.sql --<--<--
+-->-->-- /db/src/10. triggers/transactions/transactions.restrict_delete_trigger.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.restrict_delete_trigger() CASCADE;
 CREATE FUNCTION transactions.restrict_delete_trigger()
 RETURNS TRIGGER
@@ -22092,7 +22096,7 @@ EXECUTE PROCEDURE transactions.restrict_delete_trigger();
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/10. triggers/transactions/transactions.verify_stock_master_integrity_trigger.sql --<--<--
+-->-->-- /db/src/10. triggers/transactions/transactions.verify_stock_master_integrity_trigger.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.verify_stock_master_integrity_trigger() CASCADE;
 
 CREATE FUNCTION transactions.verify_stock_master_integrity_trigger()
@@ -22137,7 +22141,7 @@ EXECUTE PROCEDURE transactions.verify_stock_master_integrity_trigger();
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/11. sample-data/party-sample.sql --<--<--
+-->-->-- /db/src/11. sample-data/party-sample.sql --<--<--
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
@@ -23252,7 +23256,7 @@ SET
 WHERE core.parties.party_id=party_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/11. sample-data/sample-data.sql --<--<--
+-->-->-- /db/src/11. sample-data/sample-data.sql --<--<--
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
@@ -23340,7 +23344,7 @@ SELECT 4, 'GODOW-3', 'Godown 3',    'Office', 1, false, 5, 6,   core.get_account
 INSERT INTO core.shippers(company_name, account_id)
 SELECT 'Default', core.get_account_id_by_account_number('20110');
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/12. plpgunit-tests/core/parties/unit_tests.check_party_currency_code_mismatch.sql --<--<--
+-->-->-- /db/src/12. plpgunit-tests/core/parties/unit_tests.check_party_currency_code_mismatch.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.check_party_currency_code_mismatch();
 
 CREATE FUNCTION unit_tests.check_party_currency_code_mismatch()
@@ -23369,7 +23373,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/12. plpgunit-tests/core/parties/unit_tests.check_party_null_account_id.sql --<--<--
+-->-->-- /db/src/12. plpgunit-tests/core/parties/unit_tests.check_party_null_account_id.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.check_party_null_account_id();
 
 CREATE FUNCTION unit_tests.check_party_null_account_id()
@@ -23396,7 +23400,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/12. plpgunit-tests/core/parties/unit_tests.test_transactions_post_receipt_function.sql --<--<--
+-->-->-- /db/src/12. plpgunit-tests/core/parties/unit_tests.test_transactions_post_receipt_function.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.test_transactions_post_receipt_function();
 
 CREATE FUNCTION unit_tests.test_transactions_post_receipt_function()
@@ -23477,7 +23481,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/12. plpgunit-tests/others/unit_tests.if_functions_compile.sql --<--<--
+-->-->-- /db/src/12. plpgunit-tests/others/unit_tests.if_functions_compile.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.if_functions_compile();
 
 CREATE FUNCTION unit_tests.if_functions_compile()
@@ -23511,7 +23515,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/12. plpgunit-tests/others/unit_tests.if_views_compile.sql --<--<--
+-->-->-- /db/src/12. plpgunit-tests/others/unit_tests.if_views_compile.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.if_views_compile();
 
 CREATE FUNCTION unit_tests.if_views_compile()
@@ -23546,7 +23550,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/12. plpgunit-tests-mock/unit_tests.create_dummy_accounts.sql --<--<--
+-->-->-- /db/src/12. plpgunit-tests-mock/unit_tests.create_dummy_accounts.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.create_dummy_accounts();
 
 CREATE FUNCTION unit_tests.create_dummy_accounts()
@@ -23584,7 +23588,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/12. plpgunit-tests-mock/unit_tests.create_dummy_auto_verification_policy.sql --<--<--
+-->-->-- /db/src/12. plpgunit-tests-mock/unit_tests.create_dummy_auto_verification_policy.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.create_dummy_auto_verification_policy
 (
         _user_id integer, 
@@ -23639,7 +23643,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/12. plpgunit-tests-mock/unit_tests.create_dummy_office.sql --<--<--
+-->-->-- /db/src/12. plpgunit-tests-mock/unit_tests.create_dummy_office.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.create_dummy_office();
 
 CREATE FUNCTION unit_tests.create_dummy_office()
@@ -23659,7 +23663,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/12. plpgunit-tests-mock/unit_tests.create_dummy_users.sql --<--<--
+-->-->-- /db/src/12. plpgunit-tests-mock/unit_tests.create_dummy_users.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.create_dummy_users();
 
 CREATE FUNCTION unit_tests.create_dummy_users()
@@ -23676,7 +23680,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/13. triggers/audit-all-tables.sql --<--<--
+-->-->-- /db/src/13. triggers/audit-all-tables.sql --<--<--
 DO
 $$
         DECLARE sql text;
@@ -23698,7 +23702,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/13. triggers/transactions/transactions.check_cash_balance_trigger.sql --<--<--
+-->-->-- /db/src/13. triggers/transactions/transactions.check_cash_balance_trigger.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.check_cash_balance_trigger() CASCADE;
 CREATE FUNCTION transactions.check_cash_balance_trigger()
 RETURNS TRIGGER
@@ -23739,7 +23743,7 @@ EXECUTE PROCEDURE transactions.check_cash_balance_trigger();
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/14. constraints/core.sql --<--<--
+-->-->-- /db/src/14. constraints/core.sql --<--<--
 ALTER TABLE core.compound_item_details
 DROP CONSTRAINT IF EXISTS compound_item_details_unit_chk;
 
@@ -23781,7 +23785,7 @@ core.convert_unit(reorder_unit_id, unit_id) * reorder_quantity >= reorder_level
 );
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/14. constraints/transactions.sql --<--<--
+-->-->-- /db/src/14. constraints/transactions.sql --<--<--
 
 ALTER TABLE transactions.stock_details
 DROP CONSTRAINT IF EXISTS stock_details_unit_chk;
@@ -23806,11 +23810,11 @@ ADD CONSTRAINT transaction_master_sys_user_id_chk
 CHECK(sys_user_id IS NULL OR office.is_sys_user(sys_user_id)=true);
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/disable-triggers.sql --<--<--
+-->-->-- /db/src/disable-triggers.sql --<--<--
 ALTER TABLE transactions.transaction_details DISABLE TRIGGER check_cash_balance_trigger;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/dump.sql --<--<--
+-->-->-- /db/src/dump.sql --<--<--
 --
 -- PostgreSQL database dump
 --
@@ -23843,13 +23847,15 @@ INSERT INTO logins (login_id, user_id, office_id, browser, ip_address, login_dat
 INSERT INTO logins (login_id, user_id, office_id, browser, ip_address, login_date_time, remote_user, culture) VALUES (45, 2, 2, 'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36', '::1', '2015-01-11 08:33:30.156+00', '', 'en-US');
 INSERT INTO logins (login_id, user_id, office_id, browser, ip_address, login_date_time, remote_user, culture) VALUES (46, 2, 2, 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:34.0) Gecko/20100101 Firefox/34.0', '::1', '2015-01-12 19:49:05.83+00', '', 'en-US');
 INSERT INTO logins (login_id, user_id, office_id, browser, ip_address, login_date_time, remote_user, culture) VALUES (47, 2, 2, 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:34.0) Gecko/20100101 Firefox/34.0', '::1', '2015-01-12 21:16:16.465+00', '', 'en-US');
+INSERT INTO logins (login_id, user_id, office_id, browser, ip_address, login_date_time, remote_user, culture) VALUES (48, 2, 2, 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:35.0) Gecko/20100101 Firefox/35.0', '::1', '2015-01-19 07:18:53.605+00', '', 'en-US');
+INSERT INTO logins (login_id, user_id, office_id, browser, ip_address, login_date_time, remote_user, culture) VALUES (49, 2, 3, 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:35.0) Gecko/20100101 Firefox/35.0', '::1', '2015-01-19 08:26:58.833+00', '', 'en-US');
 
 
 --
 -- Name: logins_login_id_seq; Type: SEQUENCE SET; Schema: audit; Owner: postgres
 --
 
-SELECT pg_catalog.setval('logins_login_id_seq', 47, true);
+SELECT pg_catalog.setval('logins_login_id_seq', 49, true);
 
 
 SET search_path = core, pg_catalog;
@@ -23884,44 +23890,108 @@ INSERT INTO transaction_master (transaction_master_id, transaction_counter, tran
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (7, 4, '4-2014-12-04-2-2-5-11-31-11', 'Sales.Direct', '2014-12-04', '2014-12-04 11:31:11.132+00', 5, 2, NULL, 2, 1, '', 'Macbook Pro Late 2013 model, sold to Mr. James.', '2014-12-04 11:42:21.342+00', 1, 2, 'Automatically verified by workflow.', NULL, '2014-12-04 11:31:11.132+00');
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (8, 5, '5-2014-12-04-2-2-5-11-32-11', 'Sales.Direct', '2014-12-04', '2014-12-04 11:32:11.287+00', 5, 2, NULL, 2, 1, '', 'Macbook Pro Late 2013 model, sold to Mr. Wilson.', '2014-12-04 11:43:04.222+00', 1, 2, 'Automatically verified by workflow.', NULL, '2014-12-04 11:32:11.287+00');
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (9, 6, '6-2014-12-04-2-2-5-11-33-27', 'Sales.Direct', '2014-12-04', '2014-12-04 11:33:27.3+00', 5, 2, NULL, 2, 1, '', 'MixNP Classifieds sold to Mr. Martinez. #software', '2014-12-04 11:43:26.764+00', 1, 2, 'Automatically verified by workflow.', NULL, '2014-12-04 11:33:27.3+00');
-INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (11, 8, '8-2014-12-04-2-2-5-11-44-27', 'Sales.Delivery', '2014-12-04', '2014-12-04 11:44:27.437+00', 5, 2, NULL, 2, 7, '', 'Delivery. PO received from Mr. Green. Quotation of various Apple products sent to Ms. Green. #review.
-
-
-
-
-
-
-
-(SQ# 2)
-
-
-
-
-
-
-
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (11, 8, '8-2014-12-04-2-2-5-11-44-27', 'Sales.Delivery', '2014-12-04', '2014-12-04 11:44:27.437+00', 5, 2, NULL, 2, 7, '', 'Delivery. PO received from Mr. Green. Quotation of various Apple products sent to Ms. Green. #review.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(SQ# 2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (SO# 8)', '2014-12-04 11:44:27.812+00', 1, 2, 'Automatically verified by workflow.', NULL, '2014-12-04 11:44:27.437+00');
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (14, 2, '2-2015-01-08-2-2-6-10-53-59', 'Purchase.Direct', '2015-01-08', '2015-01-08 10:53:59.268+00', 6, 2, NULL, 2, 8, '', 'Being Macbook items purchased from Justin Adams in cash', '2015-01-08 10:53:59.846+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-08 10:53:59.268+00');
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (17, 5, '5-2015-01-08-2-2-6-11-13-24', 'Sales.Direct', '2015-01-08', '2015-01-08 11:13:24.333+00', 6, 2, NULL, 2, 5, '', 'Being Microsoft item sold to Noah Lewis in cash.', '2015-01-08 11:13:24.854+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-08 11:13:24.333+00');
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (16, 4, '4-2015-01-08-2-2-6-11-10-51', 'Purchase.Direct', '2015-01-08', '2015-01-08 11:10:51.833+00', 6, 2, NULL, 2, 5, '', 'Being microsoft office premium edition purchased from  Mr Landon Rivera in cash.', '2015-01-08 11:10:52.593+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-08 11:10:51.833+00');
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (13, 1, '1-2015-01-08-2-2-6-10-45-23', 'Sales.Direct', '2015-01-08', '2015-01-08 10:45:23.388+00', 6, 2, NULL, 2, 2, '', 'Being different items sold to David White.', '2015-01-08 10:45:36.391+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-08 10:45:23.388+00');
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (15, 3, '3-2015-01-08-2-2-6-11-00-41', 'Sales.Direct', '2015-01-08', '2015-01-08 11:00:41.908+00', 6, 2, NULL, 2, 7, '', 'Being Apple items sold to Mr. Diego Cooper in cash.', '2015-01-08 11:00:42.611+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-08 11:00:41.908+00');
-INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (10, 7, '7-2014-12-04-2-2-5-11-43-54', 'Sales.Delivery', '2014-12-04', '2014-12-04 11:43:54.291+00', 5, 2, NULL, 2, 6, '', 'Delivery. PO. Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.
-
-
-
-
-
-
-
-(SQ# 4)
-
-
-
-
-
-
-
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (10, 7, '7-2014-12-04-2-2-5-11-43-54', 'Sales.Delivery', '2014-12-04', '2014-12-04 11:43:54.291+00', 5, 2, NULL, 2, 6, '', 'Delivery. PO. Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(SQ# 4)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (SO# 9)', '2015-01-08 15:08:41.22+00', 1, 2, 'Automatically verified by workflow.', NULL, '2014-12-04 11:43:54.291+00');
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (18, 6, '6-2015-01-08-2-2-9-17-36-56', 'Sales.Delivery', '2015-01-08', '2015-01-08 17:36:56.817+00', 9, 2, NULL, 2, 2, '', 'Delivery. PO received from Mr. Aidan. Quotation of various products sent to Mr. Aidan.', '2015-01-08 17:37:03.614+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-08 17:36:56.817+00');
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (22, 4, '4-2015-01-10-2-2-11-16-10-18', 'Sales.Delivery', '2015-01-10', '2015-01-10 16:10:18.217+00', 11, 2, NULL, 2, 5, '', 'Delivery of quotation of Samsung and SFIX, sent to Mr. Anthony.', '2015-01-10 16:10:18.842+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-10 16:10:18.217+00');
@@ -23933,6 +24003,7 @@ INSERT INTO transaction_master (transaction_master_id, transaction_counter, tran
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (25, 7, '7-2015-01-10-2-2-11-16-21-04', 'Sales.Receipt', '2015-01-10', '2015-01-10 16:21:04.35+00', 11, 2, NULL, 2, 5, '', 'Being payment received from Mr. Tyler in cash.', '2015-01-10 16:21:04.572+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-10 16:21:04.35+00');
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (26, 8, '8-2015-01-10-2-2-11-16-23-24', 'Sales.Receipt', '2015-01-10', '2015-01-10 16:23:24.286+00', 11, 2, NULL, 2, 5, '', 'Being payment received from Mr. Anthony in cash.', '2015-01-10 16:23:24.464+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-10 16:23:24.286+00');
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (27, 1, '1-2015-01-11-2-2-45-09-59-21', 'Purchase.Direct', '2015-01-11', '2015-01-11 09:59:21.484+00', 45, 2, NULL, 2, 3, '', 'Being Microsoft Office Premium Edition and Samsung Galaxy Tab 10.1
+
 in cash from Mr.  Daniel for Human Resources', '2015-01-11 09:59:22.89+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-11 09:59:21.484+00');
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (28, 2, '2-2015-01-11-2-2-45-10-21-20', 'Purchase.Direct', '2015-01-11', '2015-01-11 10:21:20.842+00', 45, 2, NULL, 2, 2, '', 'Being different apple products purchased from Mr. John in cash for General Administration.', '2015-01-11 10:21:21.486+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-11 10:21:20.842+00');
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (29, 3, '3-2015-01-11-2-2-45-10-26-56', 'Purchase.Direct', '2015-01-11', '2015-01-11 10:26:56.655+00', 45, 2, NULL, 2, 3, '', 'Being various iPad Products purchased from Mr. Evan.', '2015-01-11 10:26:57.228+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-11 10:26:56.655+00');
@@ -23943,6 +24014,31 @@ INSERT INTO transaction_master (transaction_master_id, transaction_counter, tran
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (34, 8, '8-2015-01-11-2-2-45-11-27-30', 'Purchase.Receipt', '2015-01-11', '2015-01-11 11:27:30.749+00', 45, 2, NULL, 2, 1, '', 'Being Samsung Galaxy Tab 10.1 received from Mr. Cameron.', '2015-01-11 11:27:31.286+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-11 11:27:30.749+00');
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (37, 1, '1-2015-01-12-2-2-46-19-49-10', 'Journal', '2015-01-12', '2015-01-12 19:49:10.224+00', 46, 2, NULL, 2, 3, '', NULL, '2015-01-12 19:49:10.358+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-12 19:49:10.224+00');
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (38, 2, '2-2015-01-12-2-2-47-21-18-17', 'Journal', '2015-01-12', '2015-01-12 21:18:17.02+00', 47, 2, NULL, 2, 8, '', NULL, '2015-01-12 21:18:17.07+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-12 21:18:17.02+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (39, 1, '1-2015-01-19-2-2-48-08-21-45', 'Sales.Direct', '2015-01-19', '2015-01-19 08:21:45.767+00', 48, 2, NULL, 2, 1, '', 'Being Macbook Pro 15" Retina sold.', '2015-01-19 08:21:46.509+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-19 08:21:45.767+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (40, 2, '2-2015-01-19-3-2-49-08-31-35', 'Journal', '2015-01-19', '2015-01-19 08:31:35.209+00', 49, 2, NULL, 3, 2, '', NULL, '2015-01-19 08:31:35.432+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-19 08:31:35.209+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (41, 3, '3-2015-01-19-3-2-49-08-33-19', 'Purchase.Direct', '2015-01-19', '2015-01-19 08:33:19.506+00', 49, 2, NULL, 3, 1, '', 'Being apple products purchased from Mr. Ethan in cash.', '2015-01-19 08:33:20.196+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-19 08:33:19.506+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (50, 11, '11-2015-01-19-3-2-49-10-12-22', 'Purchase.Receipt', '2015-01-19', '2015-01-19 10:12:22.027+00', 49, 2, NULL, 3, 4, '', 'Being apple products received from Mr. Christian.', '2015-01-19 10:12:22.609+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-19 10:12:22.027+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (42, 4, '4-2015-01-19-3-2-49-08-37-02', 'Purchase.Direct', '2015-01-19', '2015-01-19 08:37:02.335+00', 49, 2, NULL, 3, 7, '', 'Being different products purchased from Mr. Christopher.', '2015-01-19 08:37:02.99+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-19 08:37:02.335+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (43, 5, '5-2015-01-19-3-2-49-08-52-00', 'Purchase.Direct', '2015-01-19', '2015-01-19 08:52:00.508+00', 49, 2, NULL, 3, 4, '', 'Different products purchased from Mr. William in cash.', '2015-01-19 08:52:01.358+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-19 08:52:00.508+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (56, 17, '17-2015-01-19-3-2-49-10-31-02', 'Sales.Direct', '2015-01-19', '2015-01-19 10:31:02.62+00', 49, 2, NULL, 3, 8, '', 'Being  products sold to Mr. David through office.', '2015-01-19 10:31:03.207+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-19 10:31:02.62+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (44, 6, '6-2015-01-19-3-2-49-09-04-50', 'Purchase.Direct', '2015-01-19', '2015-01-19 09:04:50.541+00', 49, 2, NULL, 3, 4, '', 'Being different products purchased from Mr. David.', '2015-01-19 09:04:51.252+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-19 09:04:50.541+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (51, 12, '12-2015-01-19-3-2-49-10-14-10', 'Purchase.Receipt', '2015-01-19', '2015-01-19 10:14:10.7+00', 49, 2, NULL, 3, 8, '', 'Purchase order(#29) .Received from Mr Hunter.', '2015-01-19 10:14:11.227+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-19 10:14:10.7+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (45, 7, '7-2015-01-19-3-2-49-09-12-50', 'Purchase.Direct', '2015-01-19', '2015-01-19 09:12:50.055+00', 49, 2, NULL, 3, 2, '', 'Purchase of products from Mr. Benjamin in cash.', '2015-01-19 09:12:50.731+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-19 09:12:50.055+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (46, 8, '8-2015-01-19-3-2-49-09-17-34', 'Purchase.Direct', '2015-01-19', '2015-01-19 09:17:34.742+00', 49, 2, NULL, 3, 5, '', 'Different products purchase for Guest Accomodation & Entertainment.', '2015-01-19 09:17:35.449+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-19 09:17:34.742+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (48, 9, '9-2015-01-19-3-2-49-09-50-53', 'Purchase.Direct', '2015-01-19', '2015-01-19 09:50:53.988+00', 49, 2, NULL, 3, 6, '', 'Being different products purchased on cash.', '2015-01-19 09:50:54.58+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-19 09:50:53.988+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (52, 13, '13-2015-01-19-3-2-49-10-16-01', 'Purchase.Receipt', '2015-01-19', '2015-01-19 10:16:01.997+00', 49, 2, NULL, 3, 5, '', 'Being different products received from Mr. Thomas.', '2015-01-19 10:16:02.711+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-19 10:16:01.997+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (49, 10, '10-2015-01-19-3-2-49-10-10-18', 'Purchase.Receipt', '2015-01-19', '2015-01-19 10:10:18.295+00', 49, 2, NULL, 3, 2, '', 'Being products received from Mr. Joshua for the purchase order(#16).', '2015-01-19 10:10:18.874+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-19 10:10:18.295+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (60, 21, '21-2015-01-19-3-2-49-10-57-39', 'Sales.Delivery', '2015-01-19', '2015-01-19 10:57:39.505+00', 49, 2, NULL, 3, 4, '', 'Being products delivered to Mr. Anthony for the sales order.', '2015-01-19 10:57:40.149+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-19 10:57:39.505+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (53, 14, '14-2015-01-19-3-2-49-10-17-29', 'Purchase.Receipt', '2015-01-19', '2015-01-19 10:17:29.303+00', 49, 2, NULL, 3, 6, '', 'Products received from Mr. Gavin.', '2015-01-19 10:17:29.781+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-19 10:17:29.303+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (57, 18, '18-2015-01-19-3-2-49-10-32-32', 'Purchase.Direct', '2015-01-19', '2015-01-19 10:32:32.846+00', 49, 2, NULL, 3, 7, '', 'Being iPhone purchased for Sales & Billing.', '2015-01-19 10:32:33.386+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-19 10:32:32.846+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (54, 15, '15-2015-01-19-3-2-49-10-22-31', 'Sales.Direct', '2015-01-19', '2015-01-19 10:22:31.439+00', 49, 2, NULL, 3, 1, '', 'Being apple products sent to Mr. Joseph in cash.', '2015-01-19 10:22:32.201+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-19 10:22:31.439+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (55, 16, '16-2015-01-19-3-2-49-10-24-58', 'Sales.Direct', '2015-01-19', '2015-01-19 10:24:58.798+00', 49, 2, NULL, 3, 3, '', 'Being apple products sold to Mr. Ryan though Mr.Philipe Jones.', '2015-01-19 10:24:59.563+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-19 10:24:58.798+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (58, 19, '19-2015-01-19-3-2-49-10-33-53', 'Sales.Direct', '2015-01-19', '2015-01-19 10:33:53.827+00', 49, 2, NULL, 3, 4, '', 'Being iPhone sold to Mr. Ryan.', '2015-01-19 10:33:54.449+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-19 10:33:53.827+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (59, 20, '20-2015-01-19-3-2-49-10-36-41', 'Sales.Direct', '2015-01-19', '2015-01-19 10:36:41.376+00', 49, 2, NULL, 3, 3, '', 'Being products sold to Mr. Jonathan.', '2015-01-19 10:36:42.169+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-19 10:36:41.376+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (61, 22, '22-2015-01-19-3-2-49-11-06-21', 'Sales.Delivery', '2015-01-19', '2015-01-19 11:06:21.732+00', 49, 2, NULL, 3, 1, '', 'Being products delivered to Mr. Ethan.', '2015-01-19 11:06:22.479+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-19 11:06:21.732+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (63, 24, '24-2015-01-19-3-2-49-11-10-55', 'Sales.Delivery', '2015-01-19', '2015-01-19 11:10:55.581+00', 49, 2, NULL, 3, 5, '', 'Products delivered.', '2015-01-19 11:10:56.269+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-19 11:10:55.581+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (62, 23, '23-2015-01-19-3-2-49-11-08-34', 'Sales.Delivery', '2015-01-19', '2015-01-19 11:08:34.291+00', 49, 2, NULL, 3, 8, '', 'Product delivered to Mr. Ryan.', '2015-01-19 11:08:34.968+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-19 11:08:34.291+00');
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (64, 25, '25-2015-01-19-3-2-49-11-12-34', 'Sales.Delivery', '2015-01-19', '2015-01-19 11:12:34.819+00', 49, 2, NULL, 3, 7, '', 'Being apple products delivered to Mr. Tyler.', '2015-01-19 11:12:35.418+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-19 11:12:34.819+00');
 
 
 --
@@ -23999,32 +24095,80 @@ INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party
 INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (4, '2014-12-04', 'Sales.Quotation', 16, 1, '2014-12-04 11:39:24.535+00', 5, 2, 2, '', 'Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.', false, 4, 1, NULL, 0.0000, 1, NULL, '2014-12-04 11:39:24.535+00');
 INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (5, '2014-12-04', 'Sales.Quotation', 47, 1, '2014-12-04 11:40:32.362+00', 5, 2, 2, '', 'Quotation sent to Mr. Parker. #schintowski', false, 2, 1, NULL, 0.0000, 1, NULL, '2014-12-04 11:40:32.362+00');
 INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (6, '2014-12-04', 'Sales.Quotation', 23, 1, '2014-12-04 11:41:49.449+00', 5, 2, 2, '', 'Quotation to Ms. Lewis via Phillipe Jones.', false, 3, 1, NULL, 0.0000, 1, NULL, '2014-12-04 11:41:49.449+00');
-INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (7, '2014-12-04', 'Sales.Order', 5, 2, '2014-12-04 11:42:21.248+00', 5, 2, 2, '', 'Being quotation sent to Mr. Brown. #followup #important
-
-
-
-
-
-
-
+INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (7, '2014-12-04', 'Sales.Order', 5, 2, '2014-12-04 11:42:21.248+00', 5, 2, 2, '', 'Being quotation sent to Mr. Brown. #followup #important
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (SQ# 1)', false, 1, 1, NULL, 0.0000, 1, NULL, '2014-12-04 11:42:21.248+00');
-INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (8, '2014-12-04', 'Sales.Order', 35, 1, '2014-12-04 11:43:04.003+00', 5, 2, 2, '', 'PO received from Mr. Green. Quotation of various Apple products sent to Ms. Green. #review.
-
-
-
-
-
-
-
+INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (8, '2014-12-04', 'Sales.Order', 35, 1, '2014-12-04 11:43:04.003+00', 5, 2, 2, '', 'PO received from Mr. Green. Quotation of various Apple products sent to Ms. Green. #review.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (SQ# 2)', true, 5, 1, NULL, 0.0000, 1, NULL, '2014-12-04 11:43:04.003+00');
-INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (9, '2014-12-04', 'Sales.Order', 16, 1, '2014-12-04 11:43:26.717+00', 5, 2, 2, '', 'PO. Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.
-
-
-
-
-
-
-
+INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (9, '2014-12-04', 'Sales.Order', 16, 1, '2014-12-04 11:43:26.717+00', 5, 2, 2, '', 'PO. Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (SQ# 4)', false, 4, 1, NULL, 0.0000, 1, NULL, '2014-12-04 11:43:26.717+00');
 INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (10, '2015-01-08', 'Sales.Quotation', 161, 1, '2015-01-08 15:08:40.892+00', 8, 2, 2, '', 'Being quotation sent to Mr. Peter Perkins.', false, 3, 1, NULL, 200.0000, 1, NULL, '2015-01-08 15:08:40.892+00');
 INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (43, '2015-01-08', 'Sales.Quotation', 404, 2, '2015-01-08 16:53:16.945+00', 9, 2, 2, '', 'Quotation of different items sent to Mr. Eddie.', true, 2, 1, NULL, 800.0000, 2, NULL, '2015-01-08 16:53:16.945+00');
@@ -24039,6 +24183,16 @@ INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party
 INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (52, '2015-01-11', 'Purchase.Order', 57, NULL, '2015-01-11 10:40:37.318+00', 45, 2, 2, '', 'Purchase order sent to Mr. Aaron for the tab and the laptop.', false, NULL, NULL, NULL, 0.0000, NULL, NULL, '2015-01-11 10:40:37.318+00');
 INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (53, '2015-01-11', 'Purchase.Order', 14, NULL, '2015-01-11 10:47:18.186+00', 45, 2, 2, '', 'Being purchase order sent to Mr. David for the iPad and Index Mouse .', false, NULL, NULL, NULL, 0.0000, NULL, NULL, '2015-01-11 10:47:18.186+00');
 INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (54, '2015-01-11', 'Purchase.Order', 59, NULL, '2015-01-11 10:49:13.257+00', 45, 2, 2, '', 'Being purchase order sent to Luis Murphy.', false, NULL, NULL, NULL, 0.0000, NULL, NULL, '2015-01-11 10:49:13.257+00');
+INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (55, '2015-01-19', 'Purchase.Order', 12, NULL, '2015-01-19 09:54:32.778+00', 49, 2, 3, '', 'Being purchase order sent to Mr. Alexander for apple products.', false, NULL, NULL, NULL, 0.0000, NULL, NULL, '2015-01-19 09:54:32.778+00');
+INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (56, '2015-01-19', 'Purchase.Order', 10, NULL, '2015-01-19 09:56:48.188+00', 49, 2, 3, '', 'Purchase order sent to Mr. Joseph for the apple products.', false, NULL, NULL, NULL, 0.0000, NULL, NULL, '2015-01-19 09:56:48.188+00');
+INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (57, '2015-01-19', 'Purchase.Order', 18, NULL, '2015-01-19 10:00:47.905+00', 49, 2, 3, '', 'Being purchase order for different products sent to Mr. John.', false, NULL, NULL, NULL, 0.0000, NULL, NULL, '2015-01-19 10:00:47.905+00');
+INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (58, '2015-01-19', 'Purchase.Order', 46, NULL, '2015-01-19 10:02:57.255+00', 49, 2, 3, '', 'Purchase order sent to Mr. Jordan for apple products.', false, NULL, NULL, NULL, 0.0000, NULL, NULL, '2015-01-19 10:02:57.255+00');
+INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (59, '2015-01-19', 'Purchase.Order', 21, NULL, '2015-01-19 10:06:49.919+00', 49, 2, 3, '', 'Being purchase order sent to Mr. Samuel.', false, NULL, NULL, NULL, 0.0000, NULL, NULL, '2015-01-19 10:06:49.919+00');
+INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (60, '2015-01-19', 'Sales.Order', 13, 1, '2015-01-19 10:46:33.765+00', 49, 2, 3, '', 'Being sales order received from Mr. Ryan.', false, 1, 1, NULL, 0.0000, 3, NULL, '2015-01-19 10:46:33.765+00');
+INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (61, '2015-01-19', 'Sales.Order', 15, 1, '2015-01-19 10:49:38.814+00', 49, 2, 3, '', 'Being sales order received.', true, 2, 1, NULL, 0.0000, 3, NULL, '2015-01-19 10:49:38.814+00');
+INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (62, '2015-01-19', 'Sales.Order', 64, 1, '2015-01-19 10:51:16.521+00', 49, 2, 3, '', 'Being sales order received from Mr. Adam.', false, 4, 1, NULL, 0.0000, 3, NULL, '2015-01-19 10:51:16.521+00');
+INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (63, '2015-01-19', 'Sales.Order', 41, 1, '2015-01-19 10:53:06.018+00', 49, 2, 3, '', 'Being sales order received from Mr. Luke.', false, 2, 1, NULL, 0.0000, 3, NULL, '2015-01-19 10:53:06.018+00');
+INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (64, '2015-01-19', 'Sales.Order', 10, 1, '2015-01-19 10:54:47.886+00', 49, 2, 3, '', 'Being sales order received.', false, 1, 1, NULL, 0.0000, 3, NULL, '2015-01-19 10:54:47.886+00');
 
 
 --
@@ -24136,20 +24290,56 @@ INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id
 INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (120, 54, '2015-01-11', 17, 7, 1, 7.00, 1, 30000.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-11 10:49:13.257+00');
 INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (121, 54, '2015-01-11', 13, 5, 1, 5.00, 1, 30000.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-11 10:49:13.257+00');
 INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (122, 54, '2015-01-11', 11, 5, 1, 5.00, 1, 40000.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-11 10:49:13.257+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (123, 55, '2015-01-19', 1, 20, 1, 20.00, 1, 180000.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 09:54:32.778+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (124, 55, '2015-01-19', 2, 15, 1, 15.00, 1, 130000.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 09:54:32.778+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (125, 55, '2015-01-19', 3, 15, 1, 15.00, 1, 110000.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 09:54:32.778+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (126, 56, '2015-01-19', 4, 20, 1, 20.00, 1, 53000.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 09:56:48.188+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (127, 56, '2015-01-19', 5, 1, 7, 12, 1, 756000.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 09:56:48.188+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (128, 56, '2015-01-19', 6, 1, 8, 1200, 1, 39600000.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 09:56:48.188+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (129, 56, '2015-01-19', 7, 1, 7, 12, 1, 636000.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 09:56:48.188+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (130, 57, '2015-01-19', 10, 1, 7, 12, 1, 960000.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:00:47.905+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (131, 57, '2015-01-19', 11, 1, 7, 12, 1, 480000.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:00:47.905+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (132, 57, '2015-01-19', 12, 1, 8, 1200, 1, 240000.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:00:47.905+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (133, 57, '2015-01-19', 13, 12, 1, 12.00, 1, 30000.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:00:47.905+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (134, 57, '2015-01-19', 17, 5, 1, 5.00, 1, 30000.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:00:47.905+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (135, 58, '2015-01-19', 4, 12, 1, 12.00, 1, 53000.0000, 50000.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:02:57.255+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (136, 58, '2015-01-19', 5, 15, 1, 15.00, 1, 63000.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:02:57.255+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (137, 58, '2015-01-19', 6, 13, 1, 13.00, 1, 33000.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:02:57.255+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (138, 58, '2015-01-19', 7, 10, 1, 10.00, 1, 53000.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:02:57.255+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (139, 59, '2015-01-19', 17, 15, 1, 15.00, 1, 30000.0000, 4000.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:06:49.919+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (140, 59, '2015-01-19', 13, 5, 1, 5.00, 1, 30000.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:06:49.919+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (141, 59, '2015-01-19', 12, 1, 8, 1200, 1, 240000.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:06:49.919+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (142, 60, '2015-01-19', 1, 2, 1, 2.00, 1, 225000.0000, 0.0000, 0.0000, 3, 37687.5000, NULL, '2015-01-19 10:46:33.765+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (143, 60, '2015-01-19', 2, 1, 1, 1.00, 1, 155000.0000, 0.0000, 0.0000, 3, 12981.2500, NULL, '2015-01-19 10:46:33.765+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (144, 60, '2015-01-19', 3, 2, 1, 2.00, 1, 135000.0000, 0.0000, 0.0000, 3, 22612.5000, NULL, '2015-01-19 10:46:33.765+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (145, 61, '2015-01-19', 4, 4, 1, 4.00, 1, 70000.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:49:38.814+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (146, 61, '2015-01-19', 5, 5, 1, 5.00, 1, 80000.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:49:38.814+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (147, 61, '2015-01-19', 6, 3, 1, 3.00, 1, 50000.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:49:38.814+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (148, 61, '2015-01-19', 7, 4, 1, 4.00, 1, 70000.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:49:38.814+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (149, 62, '2015-01-19', 8, 5, 1, 5.00, 1, 105000.0000, 0.0000, 0.0000, 3, 43968.7500, NULL, '2015-01-19 10:51:16.521+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (150, 62, '2015-01-19', 9, 5, 1, 5.00, 1, 115000.0000, 0.0000, 0.0000, 3, 48156.2500, NULL, '2015-01-19 10:51:16.521+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (151, 63, '2015-01-19', 10, 5, 1, 5.00, 1, 125000.0000, 0.0000, 0.0000, 3, 52343.7500, NULL, '2015-01-19 10:53:06.018+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (152, 63, '2015-01-19', 11, 5, 1, 5.00, 1, 65000.0000, 0.0000, 0.0000, 3, 27218.7500, NULL, '2015-01-19 10:53:06.018+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (153, 63, '2015-01-19', 12, 25, 1, 25.00, 1, 350.0000, 0.0000, 0.0000, 3, 732.8200, NULL, '2015-01-19 10:53:06.018+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (154, 63, '2015-01-19', 13, 1, 1, 1.00, 1, 35000.0000, 0.0000, 0.0000, 3, 2931.2500, NULL, '2015-01-19 10:53:06.018+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (155, 64, '2015-01-19', 13, 1, 1, 1.00, 1, 35000.0000, 0.0000, 0.0000, 3, 2931.2500, NULL, '2015-01-19 10:54:47.886+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (156, 64, '2015-01-19', 14, 2, 1, 2.00, 1, 150000.0000, 0.0000, 0.0000, 3, 25125.0000, NULL, '2015-01-19 10:54:47.886+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (157, 64, '2015-01-19', 15, 5, 1, 5.00, 1, 40000.0000, 0.0000, 0.0000, 3, 16750.0000, NULL, '2015-01-19 10:54:47.886+00');
+INSERT INTO non_gl_stock_details (non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (158, 64, '2015-01-19', 16, 2, 1, 2.00, 1, 40000.0000, 0.0000, 0.0000, 3, 6700.0000, NULL, '2015-01-19 10:54:47.886+00');
 
 
 --
 -- Name: non_gl_stock_details_non_gl_stock_detail_id_seq; Type: SEQUENCE SET; Schema: transactions; Owner: postgres
 --
 
-SELECT pg_catalog.setval('non_gl_stock_details_non_gl_stock_detail_id_seq', 122, true);
+SELECT pg_catalog.setval('non_gl_stock_details_non_gl_stock_detail_id_seq', 158, true);
 
 
 --
 -- Name: non_gl_stock_master_non_gl_stock_master_id_seq; Type: SEQUENCE SET; Schema: transactions; Owner: postgres
 --
 
-SELECT pg_catalog.setval('non_gl_stock_master_non_gl_stock_master_id_seq', 54, true);
+SELECT pg_catalog.setval('non_gl_stock_master_non_gl_stock_master_id_seq', 64, true);
 
 
 --
@@ -24267,6 +24457,45 @@ INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_i
 INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (102, 2, NULL, 1, 10492000.0000, 4.875, 511485.0000);
 INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (103, 1, 30, NULL, 77977000.0000, 4, 3119080.0000);
 INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (103, 2, NULL, 1, 77977000.0000, 4.875, 3801378.7500);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (142, 3, 4, NULL, 450000.0000, 7.5, 33750.0000);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (142, 4, NULL, 2, 450000.0000, 0.125, 562.5000);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (142, 5, NULL, NULL, 450000.0000, 0.75, 3375.0000);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (143, 3, 4, NULL, 155000.0000, 7.5, 11625.0000);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (143, 4, NULL, 2, 155000.0000, 0.125, 193.7500);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (143, 5, NULL, NULL, 155000.0000, 0.75, 1162.5000);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (144, 3, 4, NULL, 270000.0000, 7.5, 20250.0000);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (144, 4, NULL, 2, 270000.0000, 0.125, 337.5000);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (144, 5, NULL, NULL, 270000.0000, 0.75, 2025.0000);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (149, 3, 4, NULL, 525000.0000, 7.5, 39375.0000);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (149, 4, NULL, 2, 525000.0000, 0.125, 656.2500);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (149, 5, NULL, NULL, 525000.0000, 0.75, 3937.5000);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (150, 3, 4, NULL, 575000.0000, 7.5, 43125.0000);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (150, 4, NULL, 2, 575000.0000, 0.125, 718.7500);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (150, 5, NULL, NULL, 575000.0000, 0.75, 4312.5000);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (151, 3, 4, NULL, 625000.0000, 7.5, 46875.0000);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (151, 4, NULL, 2, 625000.0000, 0.125, 781.2500);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (151, 5, NULL, NULL, 625000.0000, 0.75, 4687.5000);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (152, 3, 4, NULL, 325000.0000, 7.5, 24375.0000);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (152, 4, NULL, 2, 325000.0000, 0.125, 406.2500);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (152, 5, NULL, NULL, 325000.0000, 0.75, 2437.5000);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (153, 3, 4, NULL, 8750.0000, 7.5, 656.2500);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (153, 4, NULL, 2, 8750.0000, 0.125, 10.9400);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (153, 5, NULL, NULL, 8750.0000, 0.75, 65.6300);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (154, 3, 4, NULL, 35000.0000, 7.5, 2625.0000);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (154, 4, NULL, 2, 35000.0000, 0.125, 43.7500);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (154, 5, NULL, NULL, 35000.0000, 0.75, 262.5000);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (155, 3, 4, NULL, 35000.0000, 7.5, 2625.0000);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (155, 4, NULL, 2, 35000.0000, 0.125, 43.7500);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (155, 5, NULL, NULL, 35000.0000, 0.75, 262.5000);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (156, 3, 4, NULL, 300000.0000, 7.5, 22500.0000);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (156, 4, NULL, 2, 300000.0000, 0.125, 375.0000);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (156, 5, NULL, NULL, 300000.0000, 0.75, 2250.0000);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (157, 3, 4, NULL, 200000.0000, 7.5, 15000.0000);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (157, 4, NULL, 2, 200000.0000, 0.125, 250.0000);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (157, 5, NULL, NULL, 200000.0000, 0.75, 1500.0000);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (158, 3, 4, NULL, 80000.0000, 7.5, 6000.0000);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (158, 4, NULL, 2, 80000.0000, 0.125, 100.0000);
+INSERT INTO non_gl_stock_tax_details (non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (158, 5, NULL, NULL, 80000.0000, 0.75, 600.0000);
 
 
 --
@@ -24306,6 +24535,30 @@ INSERT INTO stock_master (stock_master_id, transaction_master_id, value_date, pa
 INSERT INTO stock_master (stock_master_id, transaction_master_id, value_date, party_id, salesperson_id, price_type_id, is_credit, payment_term_id, shipper_id, shipping_address_id, shipping_charge, store_id, non_taxable, cash_repository_id, audit_user_id, audit_ts) VALUES (24, 32, '2015-01-11', 17, NULL, NULL, true, NULL, NULL, NULL, 0.0000, 2, false, NULL, NULL, '2015-01-11 11:13:55.846+00');
 INSERT INTO stock_master (stock_master_id, transaction_master_id, value_date, party_id, salesperson_id, price_type_id, is_credit, payment_term_id, shipper_id, shipping_address_id, shipping_charge, store_id, non_taxable, cash_repository_id, audit_user_id, audit_ts) VALUES (25, 33, '2015-01-11', 24, NULL, NULL, true, NULL, NULL, NULL, 0.0000, 1, false, NULL, NULL, '2015-01-11 11:16:59.49+00');
 INSERT INTO stock_master (stock_master_id, transaction_master_id, value_date, party_id, salesperson_id, price_type_id, is_credit, payment_term_id, shipper_id, shipping_address_id, shipping_charge, store_id, non_taxable, cash_repository_id, audit_user_id, audit_ts) VALUES (26, 34, '2015-01-11', 52, NULL, NULL, true, NULL, NULL, NULL, 0.0000, 1, false, NULL, NULL, '2015-01-11 11:27:30.749+00');
+INSERT INTO stock_master (stock_master_id, transaction_master_id, value_date, party_id, salesperson_id, price_type_id, is_credit, payment_term_id, shipper_id, shipping_address_id, shipping_charge, store_id, non_taxable, cash_repository_id, audit_user_id, audit_ts) VALUES (27, 39, '2015-01-19', 1, 1, 1, false, NULL, 1, NULL, 0.0000, 1, false, 1, NULL, '2015-01-19 08:21:45.767+00');
+INSERT INTO stock_master (stock_master_id, transaction_master_id, value_date, party_id, salesperson_id, price_type_id, is_credit, payment_term_id, shipper_id, shipping_address_id, shipping_charge, store_id, non_taxable, cash_repository_id, audit_user_id, audit_ts) VALUES (28, 41, '2015-01-19', 5, NULL, NULL, false, NULL, NULL, NULL, 0.0000, 3, false, 3, NULL, '2015-01-19 08:33:19.506+00');
+INSERT INTO stock_master (stock_master_id, transaction_master_id, value_date, party_id, salesperson_id, price_type_id, is_credit, payment_term_id, shipper_id, shipping_address_id, shipping_charge, store_id, non_taxable, cash_repository_id, audit_user_id, audit_ts) VALUES (29, 42, '2015-01-19', 9, NULL, NULL, false, NULL, NULL, NULL, 0.0000, 4, false, NULL, NULL, '2015-01-19 08:37:02.335+00');
+INSERT INTO stock_master (stock_master_id, transaction_master_id, value_date, party_id, salesperson_id, price_type_id, is_credit, payment_term_id, shipper_id, shipping_address_id, shipping_charge, store_id, non_taxable, cash_repository_id, audit_user_id, audit_ts) VALUES (30, 43, '2015-01-19', 11, NULL, NULL, false, NULL, NULL, NULL, 0.0000, 3, false, 3, NULL, '2015-01-19 08:52:00.508+00');
+INSERT INTO stock_master (stock_master_id, transaction_master_id, value_date, party_id, salesperson_id, price_type_id, is_credit, payment_term_id, shipper_id, shipping_address_id, shipping_charge, store_id, non_taxable, cash_repository_id, audit_user_id, audit_ts) VALUES (31, 44, '2015-01-19', 14, NULL, NULL, false, NULL, NULL, NULL, 0.0000, 3, false, 3, NULL, '2015-01-19 09:04:50.541+00');
+INSERT INTO stock_master (stock_master_id, transaction_master_id, value_date, party_id, salesperson_id, price_type_id, is_credit, payment_term_id, shipper_id, shipping_address_id, shipping_charge, store_id, non_taxable, cash_repository_id, audit_user_id, audit_ts) VALUES (32, 45, '2015-01-19', 25, NULL, NULL, false, NULL, NULL, NULL, 0.0000, 4, false, NULL, NULL, '2015-01-19 09:12:50.055+00');
+INSERT INTO stock_master (stock_master_id, transaction_master_id, value_date, party_id, salesperson_id, price_type_id, is_credit, payment_term_id, shipper_id, shipping_address_id, shipping_charge, store_id, non_taxable, cash_repository_id, audit_user_id, audit_ts) VALUES (33, 46, '2015-01-19', 16, NULL, NULL, false, NULL, NULL, NULL, 0.0000, 4, false, NULL, NULL, '2015-01-19 09:17:34.742+00');
+INSERT INTO stock_master (stock_master_id, transaction_master_id, value_date, party_id, salesperson_id, price_type_id, is_credit, payment_term_id, shipper_id, shipping_address_id, shipping_charge, store_id, non_taxable, cash_repository_id, audit_user_id, audit_ts) VALUES (35, 48, '2015-01-19', 6, NULL, NULL, false, NULL, NULL, NULL, 0.0000, 3, false, 3, NULL, '2015-01-19 09:50:53.988+00');
+INSERT INTO stock_master (stock_master_id, transaction_master_id, value_date, party_id, salesperson_id, price_type_id, is_credit, payment_term_id, shipper_id, shipping_address_id, shipping_charge, store_id, non_taxable, cash_repository_id, audit_user_id, audit_ts) VALUES (36, 49, '2015-01-19', 3, NULL, NULL, true, NULL, NULL, NULL, 0.0000, 3, false, 3, NULL, '2015-01-19 10:10:18.295+00');
+INSERT INTO stock_master (stock_master_id, transaction_master_id, value_date, party_id, salesperson_id, price_type_id, is_credit, payment_term_id, shipper_id, shipping_address_id, shipping_charge, store_id, non_taxable, cash_repository_id, audit_user_id, audit_ts) VALUES (37, 50, '2015-01-19', 22, NULL, NULL, true, NULL, NULL, NULL, 0.0000, 3, false, 3, NULL, '2015-01-19 10:12:22.027+00');
+INSERT INTO stock_master (stock_master_id, transaction_master_id, value_date, party_id, salesperson_id, price_type_id, is_credit, payment_term_id, shipper_id, shipping_address_id, shipping_charge, store_id, non_taxable, cash_repository_id, audit_user_id, audit_ts) VALUES (38, 51, '2015-01-19', 53, NULL, NULL, true, NULL, NULL, NULL, 0.0000, 4, false, NULL, NULL, '2015-01-19 10:14:10.7+00');
+INSERT INTO stock_master (stock_master_id, transaction_master_id, value_date, party_id, salesperson_id, price_type_id, is_credit, payment_term_id, shipper_id, shipping_address_id, shipping_charge, store_id, non_taxable, cash_repository_id, audit_user_id, audit_ts) VALUES (39, 52, '2015-01-19', 40, NULL, NULL, true, NULL, NULL, NULL, 0.0000, 4, false, NULL, NULL, '2015-01-19 10:16:01.997+00');
+INSERT INTO stock_master (stock_master_id, transaction_master_id, value_date, party_id, salesperson_id, price_type_id, is_credit, payment_term_id, shipper_id, shipping_address_id, shipping_charge, store_id, non_taxable, cash_repository_id, audit_user_id, audit_ts) VALUES (40, 53, '2015-01-19', 47, NULL, NULL, true, NULL, NULL, NULL, 0.0000, 3, false, 3, NULL, '2015-01-19 10:17:29.303+00');
+INSERT INTO stock_master (stock_master_id, transaction_master_id, value_date, party_id, salesperson_id, price_type_id, is_credit, payment_term_id, shipper_id, shipping_address_id, shipping_charge, store_id, non_taxable, cash_repository_id, audit_user_id, audit_ts) VALUES (41, 54, '2015-01-19', 10, 1, 1, false, NULL, 1, NULL, 0.0000, 3, false, 3, NULL, '2015-01-19 10:22:31.439+00');
+INSERT INTO stock_master (stock_master_id, transaction_master_id, value_date, party_id, salesperson_id, price_type_id, is_credit, payment_term_id, shipper_id, shipping_address_id, shipping_charge, store_id, non_taxable, cash_repository_id, audit_user_id, audit_ts) VALUES (42, 55, '2015-01-19', 13, 3, 1, false, NULL, 1, NULL, 0.0000, 3, true, 3, NULL, '2015-01-19 10:24:58.798+00');
+INSERT INTO stock_master (stock_master_id, transaction_master_id, value_date, party_id, salesperson_id, price_type_id, is_credit, payment_term_id, shipper_id, shipping_address_id, shipping_charge, store_id, non_taxable, cash_repository_id, audit_user_id, audit_ts) VALUES (43, 56, '2015-01-19', 14, 1, 2, false, NULL, 1, NULL, 0.0000, 3, false, 3, NULL, '2015-01-19 10:31:02.62+00');
+INSERT INTO stock_master (stock_master_id, transaction_master_id, value_date, party_id, salesperson_id, price_type_id, is_credit, payment_term_id, shipper_id, shipping_address_id, shipping_charge, store_id, non_taxable, cash_repository_id, audit_user_id, audit_ts) VALUES (44, 57, '2015-01-19', 3, NULL, NULL, false, NULL, NULL, NULL, 0.0000, 3, false, 3, NULL, '2015-01-19 10:32:32.846+00');
+INSERT INTO stock_master (stock_master_id, transaction_master_id, value_date, party_id, salesperson_id, price_type_id, is_credit, payment_term_id, shipper_id, shipping_address_id, shipping_charge, store_id, non_taxable, cash_repository_id, audit_user_id, audit_ts) VALUES (45, 58, '2015-01-19', 13, 3, 1, false, NULL, 1, NULL, 0.0000, 3, false, 3, NULL, '2015-01-19 10:33:53.827+00');
+INSERT INTO stock_master (stock_master_id, transaction_master_id, value_date, party_id, salesperson_id, price_type_id, is_credit, payment_term_id, shipper_id, shipping_address_id, shipping_charge, store_id, non_taxable, cash_repository_id, audit_user_id, audit_ts) VALUES (46, 59, '2015-01-19', 19, 2, 1, false, NULL, 1, NULL, 0.0000, 3, false, 3, NULL, '2015-01-19 10:36:41.376+00');
+INSERT INTO stock_master (stock_master_id, transaction_master_id, value_date, party_id, salesperson_id, price_type_id, is_credit, payment_term_id, shipper_id, shipping_address_id, shipping_charge, store_id, non_taxable, cash_repository_id, audit_user_id, audit_ts) VALUES (47, 60, '2015-01-19', 8, 3, 1, true, 1, 1, NULL, 0.0000, 3, false, 3, NULL, '2015-01-19 10:57:39.505+00');
+INSERT INTO stock_master (stock_master_id, transaction_master_id, value_date, party_id, salesperson_id, price_type_id, is_credit, payment_term_id, shipper_id, shipping_address_id, shipping_charge, store_id, non_taxable, cash_repository_id, audit_user_id, audit_ts) VALUES (48, 61, '2015-01-19', 5, 4, 1, true, 2, 1, NULL, 0.0000, 3, false, 3, NULL, '2015-01-19 11:06:21.732+00');
+INSERT INTO stock_master (stock_master_id, transaction_master_id, value_date, party_id, salesperson_id, price_type_id, is_credit, payment_term_id, shipper_id, shipping_address_id, shipping_charge, store_id, non_taxable, cash_repository_id, audit_user_id, audit_ts) VALUES (49, 62, '2015-01-19', 13, 2, 2, true, 4, 1, NULL, 0.0000, 3, false, 3, NULL, '2015-01-19 11:08:34.291+00');
+INSERT INTO stock_master (stock_master_id, transaction_master_id, value_date, party_id, salesperson_id, price_type_id, is_credit, payment_term_id, shipper_id, shipping_address_id, shipping_charge, store_id, non_taxable, cash_repository_id, audit_user_id, audit_ts) VALUES (50, 63, '2015-01-19', 4, 2, 1, true, 3, 1, NULL, 0.0000, 3, true, 3, NULL, '2015-01-19 11:10:55.581+00');
+INSERT INTO stock_master (stock_master_id, transaction_master_id, value_date, party_id, salesperson_id, price_type_id, is_credit, payment_term_id, shipper_id, shipping_address_id, shipping_charge, store_id, non_taxable, cash_repository_id, audit_user_id, audit_ts) VALUES (51, 64, '2015-01-19', 16, 5, 1, true, 4, 1, NULL, 0.0000, 3, false, 3, NULL, '2015-01-19 11:12:34.819+00');
 
 
 --
@@ -24390,13 +24643,86 @@ INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_ty
 INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (76, '2015-01-11', 25, 'Dr', 1, 10, 1, 8, 1200, 1, 96000000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-11 11:16:59.49+00');
 INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (77, '2015-01-11', 25, 'Dr', 1, 12, 1, 8, 1200, 1, 240000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-11 11:16:59.49+00');
 INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (78, '2015-01-11', 26, 'Dr', 1, 17, 1, 1, 1.00, 1, 30000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-11 11:27:30.749+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (79, '2015-01-19', 27, 'Cr', 1, 1, 1, 1, 1.00, 1, 225000.0000, 180000.0000, 0.0000, 0.0000, 1, 19968.7500, NULL, '2015-01-19 08:21:45.767+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (80, '2015-01-19', 28, 'Dr', 3, 1, 1, 1, 1.00, 1, 180000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 08:33:19.506+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (81, '2015-01-19', 28, 'Dr', 3, 2, 1, 1, 1.00, 1, 130000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 08:33:19.506+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (82, '2015-01-19', 28, 'Dr', 3, 3, 1, 1, 1.00, 1, 110000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 08:33:19.506+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (83, '2015-01-19', 29, 'Dr', 4, 17, 2, 1, 2.00, 1, 30000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 08:37:02.335+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (84, '2015-01-19', 29, 'Dr', 4, 13, 2, 1, 2.00, 1, 30000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 08:37:02.335+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (85, '2015-01-19', 29, 'Dr', 4, 12, 20, 1, 20.00, 1, 200.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 08:37:02.335+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (86, '2015-01-19', 30, 'Dr', 3, 4, 4, 1, 4.00, 1, 53000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 08:52:00.508+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (87, '2015-01-19', 30, 'Dr', 3, 5, 3, 1, 3.00, 1, 63000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 08:52:00.508+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (88, '2015-01-19', 30, 'Dr', 3, 6, 1, 1, 1.00, 1, 33000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 08:52:00.508+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (89, '2015-01-19', 30, 'Dr', 3, 7, 1, 1, 1.00, 1, 53000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 08:52:00.508+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (90, '2015-01-19', 31, 'Dr', 3, 1, 25, 1, 25.00, 1, 180000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 09:04:50.541+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (91, '2015-01-19', 31, 'Dr', 3, 2, 15, 1, 15.00, 1, 130000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 09:04:50.541+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (92, '2015-01-19', 31, 'Dr', 3, 3, 15, 1, 15.00, 1, 110000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 09:04:50.541+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (93, '2015-01-19', 32, 'Dr', 4, 12, 1, 8, 1200, 1, 240000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 09:12:50.055+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (94, '2015-01-19', 32, 'Dr', 4, 17, 1, 7, 12, 1, 360000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 09:12:50.055+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (95, '2015-01-19', 32, 'Dr', 4, 13, 1, 7, 12, 1, 360000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 09:12:50.055+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (96, '2015-01-19', 32, 'Dr', 4, 11, 25, 1, 25.00, 1, 40000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 09:12:50.055+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (97, '2015-01-19', 33, 'Dr', 4, 4, 1, 7, 12, 1, 636000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 09:17:34.742+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (98, '2015-01-19', 33, 'Dr', 4, 5, 1, 7, 12, 1, 756000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 09:17:34.742+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (99, '2015-01-19', 33, 'Dr', 4, 6, 1, 7, 12, 1, 396000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 09:17:34.742+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (100, '2015-01-19', 33, 'Dr', 4, 7, 1, 7, 12, 1, 636000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 09:17:34.742+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (101, '2015-01-19', 35, 'Dr', 3, 13, 1, 7, 12, 1, 360000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 09:50:53.988+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (102, '2015-01-19', 35, 'Dr', 3, 12, 1, 8, 1200, 1, 240000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 09:50:53.988+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (103, '2015-01-19', 35, 'Dr', 3, 11, 1, 7, 12, 1, 480000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 09:50:53.988+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (104, '2015-01-19', 35, 'Dr', 3, 17, 1, 7, 12, 1, 360000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 09:50:53.988+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (105, '2015-01-19', 36, 'Dr', 3, 1, 15, 1, 15.00, 1, 180000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:10:18.295+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (106, '2015-01-19', 36, 'Dr', 3, 2, 12, 1, 12.00, 1, 130000.0000, 0.0000, 2000.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:10:18.295+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (107, '2015-01-19', 36, 'Dr', 3, 3, 10, 1, 10.00, 1, 110000.0000, 0.0000, 5000.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:10:18.295+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (108, '2015-01-19', 37, 'Dr', 3, 4, 12, 1, 12.00, 1, 53000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:12:22.027+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (109, '2015-01-19', 37, 'Dr', 3, 5, 15, 1, 15.00, 1, 63000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:12:22.027+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (110, '2015-01-19', 37, 'Dr', 3, 6, 16, 1, 16.00, 1, 33000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:12:22.027+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (111, '2015-01-19', 37, 'Dr', 3, 7, 12, 1, 12.00, 1, 53000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:12:22.027+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (112, '2015-01-19', 38, 'Dr', 4, 8, 11, 1, 11.00, 1, 93000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:14:10.7+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (113, '2015-01-19', 38, 'Dr', 4, 9, 12, 1, 12.00, 1, 103000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:14:10.7+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (114, '2015-01-19', 39, 'Dr', 4, 10, 8, 1, 8.00, 1, 80000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:16:01.997+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (115, '2015-01-19', 39, 'Dr', 4, 11, 12, 1, 12.00, 1, 40000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:16:01.997+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (116, '2015-01-19', 39, 'Dr', 4, 12, 1, 7, 12, 1, 2400.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:16:01.997+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (117, '2015-01-19', 39, 'Dr', 4, 13, 1, 1, 1.00, 1, 30000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:16:01.997+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (118, '2015-01-19', 40, 'Dr', 3, 17, 15, 1, 15.00, 1, 30000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:17:29.303+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (119, '2015-01-19', 40, 'Dr', 3, 13, 10, 1, 10.00, 1, 30000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:17:29.303+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (120, '2015-01-19', 40, 'Dr', 3, 12, 1, 8, 1200, 1, 240000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:17:29.303+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (121, '2015-01-19', 41, 'Cr', 3, 1, 5, 1, 5.00, 1, 225000.0000, 900000.0000, 200.0000, 0.0000, 3, 94202.0000, NULL, '2015-01-19 10:22:31.439+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (122, '2015-01-19', 41, 'Cr', 3, 2, 4, 1, 4.00, 1, 155000.0000, 520000.0000, 0.0000, 0.0000, 3, 51925.0000, NULL, '2015-01-19 10:22:31.439+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (123, '2015-01-19', 41, 'Cr', 3, 3, 4, 1, 4.00, 1, 135000.0000, 440000.0000, 0.0000, 0.0000, 3, 45225.0000, NULL, '2015-01-19 10:22:31.439+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (124, '2015-01-19', 42, 'Cr', 3, 4, 10, 1, 10.00, 1, 70000.0000, 530000.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:24:58.798+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (125, '2015-01-19', 42, 'Cr', 3, 5, 8, 1, 8.00, 1, 80000.0000, 504000.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:24:58.798+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (126, '2015-01-19', 42, 'Cr', 3, 6, 7, 1, 7.00, 1, 50000.0000, 231000.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:24:58.798+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (127, '2015-01-19', 42, 'Cr', 3, 7, 6, 1, 6.00, 1, 70000.0000, 318000.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:24:58.798+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (128, '2015-01-19', 43, 'Cr', 3, 11, 5, 1, 5.00, 1, 65000.0000, 200000.0000, 0.0000, 0.0000, 3, 27218.7500, NULL, '2015-01-19 10:31:02.62+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (129, '2015-01-19', 43, 'Cr', 3, 12, 20, 1, 20.00, 1, 350.0000, 4000.0000, 0.0000, 0.0000, 3, 586.2500, NULL, '2015-01-19 10:31:02.62+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (130, '2015-01-19', 44, 'Dr', 3, 8, 55, 1, 55.00, 1, 93000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:32:32.846+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (131, '2015-01-19', 44, 'Dr', 3, 9, 60, 1, 60.00, 1, 103000.0000, 0.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 10:32:32.846+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (132, '2015-01-19', 45, 'Cr', 3, 8, 5, 1, 5.00, 1, 105000.0000, 465000.0000, 0.0000, 0.0000, 3, 43968.7500, NULL, '2015-01-19 10:33:53.827+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (133, '2015-01-19', 45, 'Cr', 3, 9, 4, 1, 4.00, 1, 115000.0000, 412000.0000, 0.0000, 0.0000, 3, 38525.0000, NULL, '2015-01-19 10:33:53.827+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (134, '2015-01-19', 46, 'Cr', 3, 11, 1, 1, 1.00, 1, 65000.0000, 40000.0000, 0.0000, 0.0000, 3, 5443.7500, NULL, '2015-01-19 10:36:41.376+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (135, '2015-01-19', 46, 'Cr', 3, 12, 22, 1, 22.00, 1, 350.0000, 4400.0000, 0.0000, 0.0000, 3, 644.8800, NULL, '2015-01-19 10:36:41.376+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (136, '2015-01-19', 46, 'Cr', 3, 13, 1, 1, 1.00, 1, 35000.0000, 30000.0000, 0.0000, 0.0000, 3, 2931.2500, NULL, '2015-01-19 10:36:41.376+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (137, '2015-01-19', 47, 'Cr', 3, 1, 5, 1, 5.00, 1, 225000.0000, 900000.0000, 0.0000, 0.0000, 3, 94218.7500, NULL, '2015-01-19 10:57:39.505+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (138, '2015-01-19', 47, 'Cr', 3, 2, 3, 1, 3.00, 1, 155000.0000, 390000.0000, 0.0000, 0.0000, 3, 38943.7500, NULL, '2015-01-19 10:57:39.505+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (139, '2015-01-19', 47, 'Cr', 3, 3, 2, 1, 2.00, 1, 135000.0000, 220000.0000, 0.0000, 0.0000, 3, 22612.5000, NULL, '2015-01-19 10:57:39.505+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (140, '2015-01-19', 48, 'Cr', 3, 4, 5, 1, 5.00, 1, 70000.0000, 265000.0000, 0.0000, 0.0000, 3, 29312.5000, NULL, '2015-01-19 11:06:21.732+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (141, '2015-01-19', 48, 'Cr', 3, 5, 4, 1, 4.00, 1, 80000.0000, 252000.0000, 0.0000, 0.0000, 3, 26800.0000, NULL, '2015-01-19 11:06:21.732+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (142, '2015-01-19', 48, 'Cr', 3, 6, 4, 1, 4.00, 1, 50000.0000, 132000.0000, 0.0000, 0.0000, 3, 16750.0000, NULL, '2015-01-19 11:06:21.732+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (143, '2015-01-19', 48, 'Cr', 3, 7, 5, 1, 5.00, 1, 70000.0000, 265000.0000, 0.0000, 0.0000, 3, 29312.5000, NULL, '2015-01-19 11:06:21.732+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (144, '2015-01-19', 49, 'Cr', 3, 17, 5, 1, 5.00, 1, 45000.0000, 150000.0000, 0.0000, 0.0000, 3, 18843.7500, NULL, '2015-01-19 11:08:34.291+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (145, '2015-01-19', 49, 'Cr', 3, 16, 2, 1, 2.00, 1, 40000.0000, 0.0000, 0.0000, 0.0000, 3, 6700.0000, NULL, '2015-01-19 11:08:34.291+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (146, '2015-01-19', 49, 'Cr', 3, 15, 3, 1, 3.00, 1, 40000.0000, 0.0000, 0.0000, 0.0000, 3, 10050.0000, NULL, '2015-01-19 11:08:34.291+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (147, '2015-01-19', 50, 'Cr', 3, 13, 1, 1, 1.00, 1, 35000.0000, 30000.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 11:10:55.581+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (148, '2015-01-19', 50, 'Cr', 3, 12, 25, 1, 25.00, 1, 350.0000, 5000.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 11:10:55.581+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (149, '2015-01-19', 50, 'Cr', 3, 11, 5, 1, 5.00, 1, 65000.0000, 200000.0000, 0.0000, 0.0000, NULL, 0.0000, NULL, '2015-01-19 11:10:55.581+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (150, '2015-01-19', 51, 'Cr', 3, 8, 5, 1, 5.00, 1, 105000.0000, 465000.0000, 0.0000, 0.0000, 3, 43968.7500, NULL, '2015-01-19 11:12:34.819+00');
+INSERT INTO stock_details (stock_detail_id, value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price, cost_of_goods_sold, discount, shipping_charge, sales_tax_id, tax, audit_user_id, audit_ts) VALUES (151, '2015-01-19', 51, 'Cr', 3, 9, 4, 1, 4.00, 1, 115000.0000, 412000.0000, 0.0000, 0.0000, 3, 38525.0000, NULL, '2015-01-19 11:12:34.819+00');
 
 
 --
 -- Name: stock_details_stock_detail_id_seq; Type: SEQUENCE SET; Schema: transactions; Owner: postgres
 --
 
-SELECT pg_catalog.setval('stock_details_stock_detail_id_seq', 78, true);
+SELECT pg_catalog.setval('stock_details_stock_detail_id_seq', 151, true);
 
 
 --
@@ -24416,7 +24742,7 @@ SELECT pg_catalog.setval('stock_master_non_gl_relations_stock_master_non_gl_rela
 -- Name: stock_master_stock_master_id_seq; Type: SEQUENCE SET; Schema: transactions; Owner: postgres
 --
 
-SELECT pg_catalog.setval('stock_master_stock_master_id_seq', 26, true);
+SELECT pg_catalog.setval('stock_master_stock_master_id_seq', 51, true);
 
 
 --
@@ -24460,6 +24786,74 @@ INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales
 INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (54, 2, NULL, 1, 675000.0000, 4.875, 32906.2500);
 INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (55, 1, 30, NULL, 40000.0000, 4, 1600.0000);
 INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (55, 2, NULL, 1, 40000.0000, 4.875, 1950.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (79, 1, 30, NULL, 225000.0000, 4, 9000.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (79, 2, NULL, 1, 225000.0000, 4.875, 10968.7500);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (121, 3, 4, NULL, 1124800.0000, 7.5, 84360.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (121, 4, NULL, 2, 1124800.0000, 0.125, 1406.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (121, 5, NULL, NULL, 1124800.0000, 0.75, 8436.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (122, 3, 4, NULL, 620000.0000, 7.5, 46500.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (122, 4, NULL, 2, 620000.0000, 0.125, 775.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (122, 5, NULL, NULL, 620000.0000, 0.75, 4650.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (123, 3, 4, NULL, 540000.0000, 7.5, 40500.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (123, 4, NULL, 2, 540000.0000, 0.125, 675.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (123, 5, NULL, NULL, 540000.0000, 0.75, 4050.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (128, 3, 4, NULL, 325000.0000, 7.5, 24375.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (128, 4, NULL, 2, 325000.0000, 0.125, 406.2500);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (128, 5, NULL, NULL, 325000.0000, 0.75, 2437.5000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (129, 3, 4, NULL, 7000.0000, 7.5, 525.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (129, 4, NULL, 2, 7000.0000, 0.125, 8.7500);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (129, 5, NULL, NULL, 7000.0000, 0.75, 52.5000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (132, 3, 4, NULL, 525000.0000, 7.5, 39375.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (132, 4, NULL, 2, 525000.0000, 0.125, 656.2500);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (132, 5, NULL, NULL, 525000.0000, 0.75, 3937.5000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (133, 3, 4, NULL, 460000.0000, 7.5, 34500.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (133, 4, NULL, 2, 460000.0000, 0.125, 575.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (133, 5, NULL, NULL, 460000.0000, 0.75, 3450.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (134, 3, 4, NULL, 65000.0000, 7.5, 4875.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (134, 4, NULL, 2, 65000.0000, 0.125, 81.2500);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (134, 5, NULL, NULL, 65000.0000, 0.75, 487.5000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (135, 3, 4, NULL, 7700.0000, 7.5, 577.5000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (135, 4, NULL, 2, 7700.0000, 0.125, 9.6300);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (135, 5, NULL, NULL, 7700.0000, 0.75, 57.7500);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (136, 3, 4, NULL, 35000.0000, 7.5, 2625.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (136, 4, NULL, 2, 35000.0000, 0.125, 43.7500);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (136, 5, NULL, NULL, 35000.0000, 0.75, 262.5000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (137, 3, 4, NULL, 1125000.0000, 7.5, 84375.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (137, 4, NULL, 2, 1125000.0000, 0.125, 1406.2500);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (137, 5, NULL, NULL, 1125000.0000, 0.75, 8437.5000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (138, 3, 4, NULL, 465000.0000, 7.5, 34875.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (138, 4, NULL, 2, 465000.0000, 0.125, 581.2500);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (138, 5, NULL, NULL, 465000.0000, 0.75, 3487.5000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (139, 3, 4, NULL, 270000.0000, 7.5, 20250.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (139, 4, NULL, 2, 270000.0000, 0.125, 337.5000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (139, 5, NULL, NULL, 270000.0000, 0.75, 2025.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (140, 3, 4, NULL, 350000.0000, 7.5, 26250.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (140, 4, NULL, 2, 350000.0000, 0.125, 437.5000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (140, 5, NULL, NULL, 350000.0000, 0.75, 2625.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (141, 3, 4, NULL, 320000.0000, 7.5, 24000.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (141, 4, NULL, 2, 320000.0000, 0.125, 400.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (141, 5, NULL, NULL, 320000.0000, 0.75, 2400.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (142, 3, 4, NULL, 200000.0000, 7.5, 15000.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (142, 4, NULL, 2, 200000.0000, 0.125, 250.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (142, 5, NULL, NULL, 200000.0000, 0.75, 1500.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (143, 3, 4, NULL, 350000.0000, 7.5, 26250.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (143, 4, NULL, 2, 350000.0000, 0.125, 437.5000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (143, 5, NULL, NULL, 350000.0000, 0.75, 2625.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (144, 3, 4, NULL, 225000.0000, 7.5, 16875.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (144, 4, NULL, 2, 225000.0000, 0.125, 281.2500);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (144, 5, NULL, NULL, 225000.0000, 0.75, 1687.5000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (145, 3, 4, NULL, 80000.0000, 7.5, 6000.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (145, 4, NULL, 2, 80000.0000, 0.125, 100.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (145, 5, NULL, NULL, 80000.0000, 0.75, 600.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (146, 3, 4, NULL, 120000.0000, 7.5, 9000.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (146, 4, NULL, 2, 120000.0000, 0.125, 150.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (146, 5, NULL, NULL, 120000.0000, 0.75, 900.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (150, 3, 4, NULL, 525000.0000, 7.5, 39375.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (150, 4, NULL, 2, 525000.0000, 0.125, 656.2500);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (150, 5, NULL, NULL, 525000.0000, 0.75, 3937.5000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (151, 3, 4, NULL, 460000.0000, 7.5, 34500.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (151, 4, NULL, 2, 460000.0000, 0.125, 575.0000);
+INSERT INTO stock_tax_details (stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax) VALUES (151, 5, NULL, NULL, 460000.0000, 0.75, 3450.0000);
 
 
 --
@@ -24490,147 +24884,403 @@ INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, v
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (33, 8, '2014-12-04', 'Cr', 19, 'Macbook Pro Late 2013 model, sold to Mr. Wilson.', NULL, 'NPR', 180000.0000, 'NPR', 1, 180000.0000, NULL, '2014-12-04 11:32:11.287+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (34, 8, '2014-12-04', 'Cr', 69, 'Macbook Pro Late 2013 model, sold to Mr. Wilson.', NULL, 'NPR', 200.0000, 'NPR', 1, 200.0000, NULL, '2014-12-04 11:32:11.287+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (35, 9, '2014-12-04', 'Dr', 8, 'MixNP Classifieds sold to Mr. Martinez. #software', 1, 'NPR', 150000.0000, 'NPR', 1, 150000.0000, NULL, '2014-12-04 11:33:27.3+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (40, 10, '2014-12-04', 'Cr', 19, 'Delivery. PO. Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.
-
-
-
-
-
-
-
-(SQ# 4)
-
-
-
-
-
-
-
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (40, 10, '2014-12-04', 'Cr', 19, 'Delivery. PO. Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(SQ# 4)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (SO# 9)', NULL, 'NPR', 80000.0000, 'NPR', 1, 80000.0000, NULL, '2014-12-04 11:43:54.291+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (41, 10, '2014-12-04', 'Cr', 77, 'P: 125000.0000 x R: 4 % = 5000.0000 (BK-NYC-STX)/Delivery. PO. Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.
-
-
-
-
-
-
-
-(SQ# 4)
-
-
-
-
-
-
-
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (41, 10, '2014-12-04', 'Cr', 77, 'P: 125000.0000 x R: 4 % = 5000.0000 (BK-NYC-STX)/Delivery. PO. Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(SQ# 4)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (SO# 9)', NULL, 'NPR', 5000.0000, 'NPR', 1, 5000.0000, NULL, '2014-12-04 11:43:54.291+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (42, 10, '2014-12-04', 'Cr', 77, 'P: 125000.0000 x R: 4.875 % = 6093.7500 (BK-36047-STX)/Delivery. PO. Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.
-
-
-
-
-
-
-
-(SQ# 4)
-
-
-
-
-
-
-
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (42, 10, '2014-12-04', 'Cr', 77, 'P: 125000.0000 x R: 4.875 % = 6093.7500 (BK-36047-STX)/Delivery. PO. Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(SQ# 4)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (SO# 9)', NULL, 'NPR', 6093.7500, 'NPR', 1, 6093.7500, NULL, '2014-12-04 11:43:54.291+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (46, 11, '2014-12-04', 'Cr', 19, 'Delivery. PO received from Mr. Green. Quotation of various Apple products sent to Ms. Green. #review.
-
-
-
-
-
-
-
-(SQ# 2)
-
-
-
-
-
-
-
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (46, 11, '2014-12-04', 'Cr', 19, 'Delivery. PO received from Mr. Green. Quotation of various Apple products sent to Ms. Green. #review.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(SQ# 2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (SO# 8)', NULL, 'NPR', 818000.0000, 'NPR', 1, 818000.0000, NULL, '2014-12-04 11:44:27.437+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (47, 12, '2014-12-04', 'Dr', 8, 'Cash received from Mr. Green.', 1, 'NPR', 1000000.0000, 'NPR', 1, 1000000.0000, 2, '2014-12-04 11:45:47.669+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (8, 5, '2014-12-04', 'Dr', 146, 'Being apple products sold to Smith.', NULL, 'NPR', 473000.0000, 'NPR', 1, 473000.0000, NULL, '2014-12-04 11:28:55.685+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (14, 6, '2014-12-04', 'Dr', 146, 'Being IPhone 6 Plus purchased by Mr. Jacob.', NULL, 'NPR', 103000.0000, 'NPR', 1, 103000.0000, NULL, '2014-12-04 11:30:05.163+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (21, 7, '2014-12-04', 'Dr', 146, 'Macbook Pro Late 2013 model, sold to Mr. James.', NULL, 'NPR', 180000.0000, 'NPR', 1, 180000.0000, NULL, '2014-12-04 11:31:11.132+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (29, 8, '2014-12-04', 'Dr', 146, 'Macbook Pro Late 2013 model, sold to Mr. Wilson.', NULL, 'NPR', 180000.0000, 'NPR', 1, 180000.0000, NULL, '2014-12-04 11:32:11.287+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (37, 10, '2014-12-04', 'Dr', 146, 'Delivery. PO. Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.
-
-
-
-
-
-
-
-(SQ# 4)
-
-
-
-
-
-
-
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (37, 10, '2014-12-04', 'Dr', 146, 'Delivery. PO. Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(SQ# 4)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (SO# 9)', NULL, 'NPR', 80000.0000, 'NPR', 1, 80000.0000, NULL, '2014-12-04 11:43:54.291+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (43, 11, '2014-12-04', 'Dr', 146, 'Delivery. PO received from Mr. Green. Quotation of various Apple products sent to Ms. Green. #review.
-
-
-
-
-
-
-
-(SQ# 2)
-
-
-
-
-
-
-
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (43, 11, '2014-12-04', 'Dr', 146, 'Delivery. PO received from Mr. Green. Quotation of various Apple products sent to Ms. Green. #review.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(SQ# 2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (SO# 8)', NULL, 'NPR', 818000.0000, 'NPR', 1, 818000.0000, NULL, '2014-12-04 11:44:27.437+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (22, 7, '2014-12-04', 'Dr', 160, 'Macbook Pro Late 2013 model, sold to Mr. James.', NULL, 'NPR', 100.0000, 'NPR', 1, 100.0000, NULL, '2014-12-04 11:31:11.132+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (38, 10, '2014-12-04', 'Dr', 226, 'Delivery. PO. Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.
-
-
-
-
-
-
-
-(SQ# 4)
-
-
-
-
-
-
-
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (38, 10, '2014-12-04', 'Dr', 226, 'Delivery. PO. Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(SQ# 4)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (SO# 9)', NULL, 'NPR', 136093.7500, 'NPR', 1, 136093.7500, NULL, '2014-12-04 11:43:54.291+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (44, 11, '2014-12-04', 'Dr', 245, 'Delivery. PO received from Mr. Green. Quotation of various Apple products sent to Ms. Green. #review.
-
-
-
-
-
-
-
-(SQ# 2)
-
-
-
-
-
-
-
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (44, 11, '2014-12-04', 'Dr', 245, 'Delivery. PO received from Mr. Green. Quotation of various Apple products sent to Ms. Green. #review.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(SQ# 2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (SO# 8)', NULL, 'NPR', 1005000.0000, 'NPR', 1, 1005000.0000, NULL, '2014-12-04 11:44:27.437+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (48, 12, '2014-12-04', 'Cr', 245, 'Cash received from Mr. Green.', NULL, 'NPR', 1000000.0000, 'NPR', 1, 1000000.0000, 2, '2014-12-04 11:45:47.669+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (55, 14, '2015-01-08', 'Dr', 19, 'Being Macbook items purchased from Justin Adams in cash', NULL, 'NPR', 31570000.0000, 'NPR', 1, 31570000.0000, NULL, '2015-01-08 10:53:59.268+00');
@@ -24678,8 +25328,10 @@ INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, v
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (101, 25, '2015-01-10', 'Dr', 8, 'Being payment received from Mr. Tyler in cash.', 1, 'HKD', 100000.0000, 'NPR', 28, 2800000.0000, 2, '2015-01-10 16:21:04.35+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (103, 26, '2015-01-10', 'Dr', 8, 'Being payment received from Mr. Anthony in cash.', 3, 'EUR', 525000.0000, 'NPR', 98, 51450000.0000, 2, '2015-01-10 16:23:24.286+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (105, 27, '2015-01-11', 'Dr', 19, 'Being Microsoft Office Premium Edition and Samsung Galaxy Tab 10.1
+
 in cash from Mr.  Daniel for Human Resources', NULL, 'NPR', 1110000.0000, 'NPR', 1, 1110000.0000, NULL, '2015-01-11 09:59:21.484+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (106, 27, '2015-01-11', 'Cr', 8, 'Being Microsoft Office Premium Edition and Samsung Galaxy Tab 10.1
+
 in cash from Mr.  Daniel for Human Resources', 1, 'NPR', 1110000.0000, 'NPR', 1, 1110000.0000, NULL, '2015-01-11 09:59:21.484+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (107, 28, '2015-01-11', 'Dr', 19, 'Being different apple products purchased from Mr. John in cash for General Administration.', NULL, 'NPR', 3520000.0000, 'NPR', 1, 3520000.0000, NULL, '2015-01-11 10:21:20.842+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (109, 28, '2015-01-11', 'Cr', 8, 'Being different apple products purchased from Mr. John in cash for General Administration.', 1, 'NPR', 3519800.0000, 'NPR', 1, 3519800.0000, NULL, '2015-01-11 10:21:20.842+00');
@@ -24695,39 +25347,103 @@ INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, v
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (24, 7, '2014-12-04', 'Cr', 137, 'Macbook Pro Late 2013 model, sold to Mr. James.', NULL, 'NPR', 225000.0000, 'NPR', 1, 225000.0000, NULL, '2014-12-04 11:31:11.132+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (32, 8, '2014-12-04', 'Cr', 137, 'Macbook Pro Late 2013 model, sold to Mr. Wilson.', NULL, 'NPR', 225000.0000, 'NPR', 1, 225000.0000, NULL, '2014-12-04 11:32:11.287+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (36, 9, '2014-12-04', 'Cr', 137, 'MixNP Classifieds sold to Mr. Martinez. #software', NULL, 'NPR', 150000.0000, 'NPR', 1, 150000.0000, NULL, '2014-12-04 11:33:27.3+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (39, 10, '2014-12-04', 'Cr', 137, 'Delivery. PO. Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.
-
-
-
-
-
-
-
-(SQ# 4)
-
-
-
-
-
-
-
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (39, 10, '2014-12-04', 'Cr', 137, 'Delivery. PO. Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(SQ# 4)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (SO# 9)', NULL, 'NPR', 125000.0000, 'NPR', 1, 125000.0000, NULL, '2014-12-04 11:43:54.291+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (45, 11, '2014-12-04', 'Cr', 137, 'Delivery. PO received from Mr. Green. Quotation of various Apple products sent to Ms. Green. #review.
-
-
-
-
-
-
-
-(SQ# 2)
-
-
-
-
-
-
-
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (45, 11, '2014-12-04', 'Cr', 137, 'Delivery. PO received from Mr. Green. Quotation of various Apple products sent to Ms. Green. #review.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(SQ# 2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (SO# 8)', NULL, 'NPR', 1005000.0000, 'NPR', 1, 1005000.0000, NULL, '2014-12-04 11:44:27.437+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (61, 15, '2015-01-08', 'Cr', 137, 'Being Apple items sold to Mr.Diego Cooper in cash.', NULL, 'NPR', 1860000.0000, 'NPR', 1, 1860000.0000, NULL, '2015-01-08 11:00:41.908+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (72, 17, '2015-01-08', 'Cr', 137, 'Being Microsoft item sold to Noah Lewis in cash.', NULL, 'NPR', 35000.0000, 'NPR', 1, 35000.0000, NULL, '2015-01-08 11:13:24.333+00');
@@ -24755,20 +25471,120 @@ INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, v
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (126, 37, '2015-01-12', 'Cr', 135, 'As dividends declared and posted on "1/12/2015"', NULL, 'NPR', 40000.0000, 'NPR', 1, 40000.0000, NULL, '2015-01-12 19:49:10.224+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (127, 38, '2015-01-12', 'Dr', 186, 'Interest paid', NULL, 'NPR', 40000.0000, 'NPR', 1, 40000.0000, NULL, '2015-01-12 21:18:17.02+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (128, 38, '2015-01-12', 'Cr', 8, 'Interest paid', 1, 'NPR', 40000.0000, 'NPR', 1, 40000.0000, NULL, '2015-01-12 21:18:17.02+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (129, 39, '2015-01-19', 'Dr', 146, 'Being Macbook Pro 15" Retina sold.', NULL, 'NPR', 180000.0000, 'NPR', 1, 180000.0000, NULL, '2015-01-19 08:21:45.767+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (130, 39, '2015-01-19', 'Dr', 8, 'Being Macbook Pro 15" Retina sold.', 1, 'NPR', 244968.7500, 'NPR', 1, 244968.7500, NULL, '2015-01-19 08:21:45.767+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (131, 39, '2015-01-19', 'Cr', 137, 'Being Macbook Pro 15" Retina sold.', NULL, 'NPR', 225000.0000, 'NPR', 1, 225000.0000, NULL, '2015-01-19 08:21:45.767+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (132, 39, '2015-01-19', 'Cr', 19, 'Being Macbook Pro 15" Retina sold.', NULL, 'NPR', 180000.0000, 'NPR', 1, 180000.0000, NULL, '2015-01-19 08:21:45.767+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (133, 39, '2015-01-19', 'Cr', 77, 'P: 225000.0000 x R: 4 % = 9000.0000 (BK-NYC-STX)/Being Macbook Pro 15" Retina sold.', NULL, 'NPR', 9000.0000, 'NPR', 1, 9000.0000, NULL, '2015-01-19 08:21:45.767+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (134, 39, '2015-01-19', 'Cr', 77, 'P: 225000.0000 x R: 4.875 % = 10968.7500 (BK-36047-STX)/Being Macbook Pro 15" Retina sold.', NULL, 'NPR', 10968.7500, 'NPR', 1, 10968.7500, NULL, '2015-01-19 08:21:45.767+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (135, 40, '2015-01-19', 'Dr', 8, 'Being payment received from Mr. Jacob.', 3, 'NPR', 20000000.0000, 'NPR', 1, 20000000.0000, NULL, '2015-01-19 08:31:35.209+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (136, 40, '2015-01-19', 'Cr', 211, 'Being payment received from Mr. Jacob.', NULL, 'NPR', 20000000.0000, 'NPR', 1, 20000000.0000, NULL, '2015-01-19 08:31:35.209+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (137, 41, '2015-01-19', 'Dr', 19, 'Being apple products purchased from Mr. Ethan in cash.', NULL, 'NPR', 420000.0000, 'NPR', 1, 420000.0000, NULL, '2015-01-19 08:33:19.506+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (138, 41, '2015-01-19', 'Cr', 8, 'Being apple products purchased from Mr. Ethan in cash.', 3, 'NPR', 420000.0000, 'NPR', 1, 420000.0000, NULL, '2015-01-19 08:33:19.506+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (139, 42, '2015-01-19', 'Dr', 19, 'Being different products purchased from Mr. Christopher.', NULL, 'NPR', 124000.0000, 'NPR', 1, 124000.0000, NULL, '2015-01-19 08:37:02.335+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (140, 42, '2015-01-19', 'Cr', 3, 'Being different products purchased from Mr. Christopher.', NULL, 'NPR', 124000.0000, 'NPR', 1, 124000.0000, NULL, '2015-01-19 08:37:02.335+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (141, 43, '2015-01-19', 'Dr', 19, 'Different products purchased from Mr. William in cash.', NULL, 'NPR', 487000.0000, 'NPR', 1, 487000.0000, NULL, '2015-01-19 08:52:00.508+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (142, 43, '2015-01-19', 'Cr', 8, 'Different products purchased from Mr. William in cash.', 3, 'NPR', 487000.0000, 'NPR', 1, 487000.0000, NULL, '2015-01-19 08:52:00.508+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (143, 44, '2015-01-19', 'Dr', 19, 'Being different products purchased from Mr. David.', NULL, 'NPR', 8100000.0000, 'NPR', 1, 8100000.0000, NULL, '2015-01-19 09:04:50.541+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (144, 44, '2015-01-19', 'Cr', 8, 'Being different products purchased from Mr. David.', 3, 'NPR', 8100000.0000, 'NPR', 1, 8100000.0000, NULL, '2015-01-19 09:04:50.541+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (145, 45, '2015-01-19', 'Dr', 19, 'Purchase of products from Mr. Benjamin in cash.', NULL, 'NPR', 1960000.0000, 'NPR', 1, 1960000.0000, NULL, '2015-01-19 09:12:50.055+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (146, 45, '2015-01-19', 'Cr', 3, 'Purchase of products from Mr. Benjamin in cash.', NULL, 'NPR', 1960000.0000, 'NPR', 1, 1960000.0000, NULL, '2015-01-19 09:12:50.055+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (147, 46, '2015-01-19', 'Dr', 19, 'Different products purchase for Guest Accomodation & Entertainment.', NULL, 'NPR', 2424000.0000, 'NPR', 1, 2424000.0000, NULL, '2015-01-19 09:17:34.742+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (148, 46, '2015-01-19', 'Cr', 3, 'Different products purchase for Guest Accomodation & Entertainment.', NULL, 'NPR', 2424000.0000, 'NPR', 1, 2424000.0000, NULL, '2015-01-19 09:17:34.742+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (151, 48, '2015-01-19', 'Dr', 19, 'Being different products purchased on cash.', NULL, 'NPR', 1440000.0000, 'NPR', 1, 1440000.0000, NULL, '2015-01-19 09:50:53.988+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (152, 48, '2015-01-19', 'Cr', 8, 'Being different products purchased on cash.', 3, 'NPR', 1440000.0000, 'NPR', 1, 1440000.0000, NULL, '2015-01-19 09:50:53.988+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (153, 49, '2015-01-19', 'Dr', 19, 'Being products received from Mr. Joshua for the purchase order(#16).', NULL, 'NPR', 5360000.0000, 'NPR', 1, 5360000.0000, NULL, '2015-01-19 10:10:18.295+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (154, 49, '2015-01-19', 'Cr', 143, 'Being products received from Mr. Joshua for the purchase order(#16).', NULL, 'NPR', 7000.0000, 'NPR', 1, 7000.0000, NULL, '2015-01-19 10:10:18.295+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (155, 49, '2015-01-19', 'Cr', 213, 'Being products received from Mr. Joshua for the purchase order(#16).', NULL, 'NPR', 5353000.0000, 'NPR', 1, 5353000.0000, NULL, '2015-01-19 10:10:18.295+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (156, 50, '2015-01-19', 'Dr', 19, 'Being apple products received from Mr. Christian.', NULL, 'NPR', 2745000.0000, 'NPR', 1, 2745000.0000, NULL, '2015-01-19 10:12:22.027+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (157, 50, '2015-01-19', 'Cr', 232, 'Being apple products received from Mr. Christian.', NULL, 'NPR', 2745000.0000, 'NPR', 1, 2745000.0000, NULL, '2015-01-19 10:12:22.027+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (158, 51, '2015-01-19', 'Dr', 19, 'Purchase order(#29) .Received from Mr Hunter.', NULL, 'NPR', 2259000.0000, 'NPR', 1, 2259000.0000, NULL, '2015-01-19 10:14:10.7+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (159, 51, '2015-01-19', 'Cr', 263, 'Purchase order(#29) .Received from Mr Hunter.', NULL, 'NPR', 2259000.0000, 'NPR', 1, 2259000.0000, NULL, '2015-01-19 10:14:10.7+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (160, 52, '2015-01-19', 'Dr', 19, 'Being different products received from Mr. Thomas.', NULL, 'NPR', 1152400.0000, 'NPR', 1, 1152400.0000, NULL, '2015-01-19 10:16:01.997+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (161, 52, '2015-01-19', 'Cr', 250, 'Being different products received from Mr. Thomas.', NULL, 'NPR', 1152400.0000, 'NPR', 1, 1152400.0000, NULL, '2015-01-19 10:16:01.997+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (162, 53, '2015-01-19', 'Dr', 19, 'Products received from Mr. Gavin.', NULL, 'NPR', 990000.0000, 'NPR', 1, 990000.0000, NULL, '2015-01-19 10:17:29.303+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (163, 53, '2015-01-19', 'Cr', 257, 'Products received from Mr. Gavin.', NULL, 'NPR', 990000.0000, 'NPR', 1, 990000.0000, NULL, '2015-01-19 10:17:29.303+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (164, 54, '2015-01-19', 'Dr', 146, 'Being apple products sent to Mr. Joseph in cash.', NULL, 'NPR', 1860000.0000, 'NPR', 1, 1860000.0000, NULL, '2015-01-19 10:22:31.439+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (165, 54, '2015-01-19', 'Dr', 160, 'Being apple products sent to Mr. Joseph in cash.', NULL, 'NPR', 200.0000, 'NPR', 1, 200.0000, NULL, '2015-01-19 10:22:31.439+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (166, 54, '2015-01-19', 'Dr', 8, 'Being apple products sent to Mr. Joseph in cash.', 3, 'NPR', 2476152.0000, 'NPR', 1, 2476152.0000, NULL, '2015-01-19 10:22:31.439+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (167, 54, '2015-01-19', 'Cr', 137, 'Being apple products sent to Mr. Joseph in cash.', NULL, 'NPR', 2285000.0000, 'NPR', 1, 2285000.0000, NULL, '2015-01-19 10:22:31.439+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (168, 54, '2015-01-19', 'Cr', 77, 'P: 2284800.0000 x R: 0.75 % = 17136.0000 (RV-STX)/Being apple products sent to Mr. Joseph in cash.', NULL, 'NPR', 17136.0000, 'NPR', 1, 17136.0000, NULL, '2015-01-19 10:22:31.439+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (169, 54, '2015-01-19', 'Cr', 77, 'P: 2284800.0000 x R: 7.5 % = 171360.0000 (RV-CA-STX)/Being apple products sent to Mr. Joseph in cash.', NULL, 'NPR', 171360.0000, 'NPR', 1, 171360.0000, NULL, '2015-01-19 10:22:31.439+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (170, 54, '2015-01-19', 'Cr', 19, 'Being apple products sent to Mr. Joseph in cash.', NULL, 'NPR', 1860000.0000, 'NPR', 1, 1860000.0000, NULL, '2015-01-19 10:22:31.439+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (171, 54, '2015-01-19', 'Cr', 77, 'P: 2284800.0000 x R: 0.125 % = 2856.0000 (RV-6095-STX)/Being apple products sent to Mr. Joseph in cash.', NULL, 'NPR', 2856.0000, 'NPR', 1, 2856.0000, NULL, '2015-01-19 10:22:31.439+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (172, 55, '2015-01-19', 'Dr', 146, 'Being apple products sold to Mr. Ryan though Mr.Philipe Jones.', NULL, 'NPR', 1583000.0000, 'NPR', 1, 1583000.0000, NULL, '2015-01-19 10:24:58.798+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (173, 55, '2015-01-19', 'Dr', 8, 'Being apple products sold to Mr. Ryan though Mr.Philipe Jones.', 3, 'NPR', 2110000.0000, 'NPR', 1, 2110000.0000, NULL, '2015-01-19 10:24:58.798+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (174, 55, '2015-01-19', 'Cr', 137, 'Being apple products sold to Mr. Ryan though Mr.Philipe Jones.', NULL, 'NPR', 2110000.0000, 'NPR', 1, 2110000.0000, NULL, '2015-01-19 10:24:58.798+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (175, 55, '2015-01-19', 'Cr', 19, 'Being apple products sold to Mr. Ryan though Mr.Philipe Jones.', NULL, 'NPR', 1583000.0000, 'NPR', 1, 1583000.0000, NULL, '2015-01-19 10:24:58.798+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (176, 56, '2015-01-19', 'Dr', 146, 'Being  products sold to Mr. David through office.', NULL, 'NPR', 204000.0000, 'NPR', 1, 204000.0000, NULL, '2015-01-19 10:31:02.62+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (177, 56, '2015-01-19', 'Dr', 8, 'Being  products sold to Mr. David through office.', 3, 'NPR', 359805.0000, 'NPR', 1, 359805.0000, NULL, '2015-01-19 10:31:02.62+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (178, 56, '2015-01-19', 'Cr', 137, 'Being  products sold to Mr. David through office.', NULL, 'NPR', 332000.0000, 'NPR', 1, 332000.0000, NULL, '2015-01-19 10:31:02.62+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (179, 56, '2015-01-19', 'Cr', 77, 'P: 332000.0000 x R: 7.5 % = 24900.0000 (RV-CA-STX)/Being  products sold to Mr. David through office.', NULL, 'NPR', 24900.0000, 'NPR', 1, 24900.0000, NULL, '2015-01-19 10:31:02.62+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (180, 56, '2015-01-19', 'Cr', 77, 'P: 332000.0000 x R: 0.75 % = 2490.0000 (RV-STX)/Being  products sold to Mr. David through office.', NULL, 'NPR', 2490.0000, 'NPR', 1, 2490.0000, NULL, '2015-01-19 10:31:02.62+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (181, 56, '2015-01-19', 'Cr', 77, 'P: 332000.0000 x R: 0.125 % = 415.0000 (RV-6095-STX)/Being  products sold to Mr. David through office.', NULL, 'NPR', 415.0000, 'NPR', 1, 415.0000, NULL, '2015-01-19 10:31:02.62+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (182, 56, '2015-01-19', 'Cr', 19, 'Being  products sold to Mr. David through office.', NULL, 'NPR', 204000.0000, 'NPR', 1, 204000.0000, NULL, '2015-01-19 10:31:02.62+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (183, 57, '2015-01-19', 'Dr', 19, 'Being iPhone purchased for Sales & Billing.', NULL, 'NPR', 11295000.0000, 'NPR', 1, 11295000.0000, NULL, '2015-01-19 10:32:32.846+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (184, 57, '2015-01-19', 'Cr', 8, 'Being iPhone purchased for Sales & Billing.', 3, 'NPR', 11295000.0000, 'NPR', 1, 11295000.0000, NULL, '2015-01-19 10:32:32.846+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (185, 58, '2015-01-19', 'Dr', 146, 'Being iPhone sold to Mr. Ryan.', NULL, 'NPR', 877000.0000, 'NPR', 1, 877000.0000, NULL, '2015-01-19 10:33:53.827+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (186, 58, '2015-01-19', 'Dr', 8, 'Being iPhone sold to Mr. Ryan.', 3, 'NPR', 1067493.7500, 'NPR', 1, 1067493.7500, NULL, '2015-01-19 10:33:53.827+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (187, 58, '2015-01-19', 'Cr', 137, 'Being iPhone sold to Mr. Ryan.', NULL, 'NPR', 985000.0000, 'NPR', 1, 985000.0000, NULL, '2015-01-19 10:33:53.827+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (188, 58, '2015-01-19', 'Cr', 77, 'P: 985000.0000 x R: 7.5 % = 73875.0000 (RV-CA-STX)/Being iPhone sold to Mr. Ryan.', NULL, 'NPR', 73875.0000, 'NPR', 1, 73875.0000, NULL, '2015-01-19 10:33:53.827+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (189, 58, '2015-01-19', 'Cr', 77, 'P: 985000.0000 x R: 0.75 % = 7387.5000 (RV-STX)/Being iPhone sold to Mr. Ryan.', NULL, 'NPR', 7387.5000, 'NPR', 1, 7387.5000, NULL, '2015-01-19 10:33:53.827+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (190, 58, '2015-01-19', 'Cr', 77, 'P: 985000.0000 x R: 0.125 % = 1231.2500 (RV-6095-STX)/Being iPhone sold to Mr. Ryan.', NULL, 'NPR', 1231.2500, 'NPR', 1, 1231.2500, NULL, '2015-01-19 10:33:53.827+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (191, 58, '2015-01-19', 'Cr', 19, 'Being iPhone sold to Mr. Ryan.', NULL, 'NPR', 877000.0000, 'NPR', 1, 877000.0000, NULL, '2015-01-19 10:33:53.827+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (192, 59, '2015-01-19', 'Dr', 146, 'Being products sold to Mr. Jonathan.', NULL, 'NPR', 74400.0000, 'NPR', 1, 74400.0000, NULL, '2015-01-19 10:36:41.376+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (193, 59, '2015-01-19', 'Dr', 8, 'Being products sold to Mr. Jonathan.', 3, 'NPR', 116719.8800, 'NPR', 1, 116719.8800, NULL, '2015-01-19 10:36:41.376+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (194, 59, '2015-01-19', 'Cr', 137, 'Being products sold to Mr. Jonathan.', NULL, 'NPR', 107700.0000, 'NPR', 1, 107700.0000, NULL, '2015-01-19 10:36:41.376+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (195, 59, '2015-01-19', 'Cr', 77, 'P: 107700.0000 x R: 7.5 % = 8077.5000 (RV-CA-STX)/Being products sold to Mr. Jonathan.', NULL, 'NPR', 8077.5000, 'NPR', 1, 8077.5000, NULL, '2015-01-19 10:36:41.376+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (196, 59, '2015-01-19', 'Cr', 77, 'P: 107700.0000 x R: 0.75 % = 807.7500 (RV-STX)/Being products sold to Mr. Jonathan.', NULL, 'NPR', 807.7500, 'NPR', 1, 807.7500, NULL, '2015-01-19 10:36:41.376+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (197, 59, '2015-01-19', 'Cr', 77, 'P: 107700.0000 x R: 0.125 % = 134.6300 (RV-6095-STX)/Being products sold to Mr. Jonathan.', NULL, 'NPR', 134.6300, 'NPR', 1, 134.6300, NULL, '2015-01-19 10:36:41.376+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (198, 59, '2015-01-19', 'Cr', 19, 'Being products sold to Mr. Jonathan.', NULL, 'NPR', 74400.0000, 'NPR', 1, 74400.0000, NULL, '2015-01-19 10:36:41.376+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (199, 60, '2015-01-19', 'Dr', 146, 'Being products delivered to Mr. Anthony for the sales order.', NULL, 'NPR', 1510000.0000, 'NPR', 1, 1510000.0000, NULL, '2015-01-19 10:57:39.505+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (200, 60, '2015-01-19', 'Dr', 218, 'Being products delivered to Mr. Anthony for the sales order.', NULL, 'NPR', 2015775.0000, 'NPR', 1, 2015775.0000, NULL, '2015-01-19 10:57:39.505+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (201, 60, '2015-01-19', 'Cr', 137, 'Being products delivered to Mr. Anthony for the sales order.', NULL, 'NPR', 1860000.0000, 'NPR', 1, 1860000.0000, NULL, '2015-01-19 10:57:39.505+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (202, 60, '2015-01-19', 'Cr', 77, 'P: 1860000.0000 x R: 7.5 % = 139500.0000 (RV-CA-STX)/Being products delivered to Mr. Anthony for the sales order.', NULL, 'NPR', 139500.0000, 'NPR', 1, 139500.0000, NULL, '2015-01-19 10:57:39.505+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (203, 60, '2015-01-19', 'Cr', 77, 'P: 1860000.0000 x R: 0.75 % = 13950.0000 (RV-STX)/Being products delivered to Mr. Anthony for the sales order.', NULL, 'NPR', 13950.0000, 'NPR', 1, 13950.0000, NULL, '2015-01-19 10:57:39.505+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (204, 60, '2015-01-19', 'Cr', 77, 'P: 1860000.0000 x R: 0.125 % = 2325.0000 (RV-6095-STX)/Being products delivered to Mr. Anthony for the sales order.', NULL, 'NPR', 2325.0000, 'NPR', 1, 2325.0000, NULL, '2015-01-19 10:57:39.505+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (205, 60, '2015-01-19', 'Cr', 19, 'Being products delivered to Mr. Anthony for the sales order.', NULL, 'NPR', 1510000.0000, 'NPR', 1, 1510000.0000, NULL, '2015-01-19 10:57:39.505+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (206, 61, '2015-01-19', 'Dr', 146, 'Being products delivered to Mr. Ethan.', NULL, 'NPR', 914000.0000, 'NPR', 1, 914000.0000, NULL, '2015-01-19 11:06:21.732+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (207, 61, '2015-01-19', 'Dr', 215, 'Being products delivered to Mr. Ethan.', NULL, 'NPR', 1322175.0000, 'NPR', 1, 1322175.0000, NULL, '2015-01-19 11:06:21.732+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (208, 61, '2015-01-19', 'Cr', 137, 'Being products delivered to Mr. Ethan.', NULL, 'NPR', 1220000.0000, 'NPR', 1, 1220000.0000, NULL, '2015-01-19 11:06:21.732+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (209, 61, '2015-01-19', 'Cr', 77, 'P: 1220000.0000 x R: 7.5 % = 91500.0000 (RV-CA-STX)/Being products delivered to Mr. Ethan.', NULL, 'NPR', 91500.0000, 'NPR', 1, 91500.0000, NULL, '2015-01-19 11:06:21.732+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (210, 61, '2015-01-19', 'Cr', 77, 'P: 1220000.0000 x R: 0.75 % = 9150.0000 (RV-STX)/Being products delivered to Mr. Ethan.', NULL, 'NPR', 9150.0000, 'NPR', 1, 9150.0000, NULL, '2015-01-19 11:06:21.732+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (211, 61, '2015-01-19', 'Cr', 77, 'P: 1220000.0000 x R: 0.125 % = 1525.0000 (RV-6095-STX)/Being products delivered to Mr. Ethan.', NULL, 'NPR', 1525.0000, 'NPR', 1, 1525.0000, NULL, '2015-01-19 11:06:21.732+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (212, 61, '2015-01-19', 'Cr', 19, 'Being products delivered to Mr. Ethan.', NULL, 'NPR', 914000.0000, 'NPR', 1, 914000.0000, NULL, '2015-01-19 11:06:21.732+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (213, 62, '2015-01-19', 'Dr', 146, 'Product delivered to Mr. Ryan.', NULL, 'NPR', 150000.0000, 'NPR', 1, 150000.0000, NULL, '2015-01-19 11:08:34.291+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (214, 62, '2015-01-19', 'Dr', 223, 'Product delivered to Mr. Ryan.', NULL, 'NPR', 460593.7500, 'NPR', 1, 460593.7500, NULL, '2015-01-19 11:08:34.291+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (215, 62, '2015-01-19', 'Cr', 137, 'Product delivered to Mr. Ryan.', NULL, 'NPR', 425000.0000, 'NPR', 1, 425000.0000, NULL, '2015-01-19 11:08:34.291+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (216, 62, '2015-01-19', 'Cr', 77, 'P: 425000.0000 x R: 7.5 % = 31875.0000 (RV-CA-STX)/Product delivered to Mr. Ryan.', NULL, 'NPR', 31875.0000, 'NPR', 1, 31875.0000, NULL, '2015-01-19 11:08:34.291+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (217, 62, '2015-01-19', 'Cr', 77, 'P: 425000.0000 x R: 0.75 % = 3187.5000 (RV-STX)/Product delivered to Mr. Ryan.', NULL, 'NPR', 3187.5000, 'NPR', 1, 3187.5000, NULL, '2015-01-19 11:08:34.291+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (218, 62, '2015-01-19', 'Cr', 77, 'P: 425000.0000 x R: 0.125 % = 531.2500 (RV-6095-STX)/Product delivered to Mr. Ryan.', NULL, 'NPR', 531.2500, 'NPR', 1, 531.2500, NULL, '2015-01-19 11:08:34.291+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (219, 62, '2015-01-19', 'Cr', 19, 'Product delivered to Mr. Ryan.', NULL, 'NPR', 150000.0000, 'NPR', 1, 150000.0000, NULL, '2015-01-19 11:08:34.291+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (220, 63, '2015-01-19', 'Dr', 146, 'Products delivered.', NULL, 'NPR', 235000.0000, 'NPR', 1, 235000.0000, NULL, '2015-01-19 11:10:55.581+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (221, 63, '2015-01-19', 'Dr', 214, 'Products delivered.', NULL, 'NPR', 368750.0000, 'NPR', 1, 368750.0000, NULL, '2015-01-19 11:10:55.581+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (222, 63, '2015-01-19', 'Cr', 137, 'Products delivered.', NULL, 'NPR', 368750.0000, 'NPR', 1, 368750.0000, NULL, '2015-01-19 11:10:55.581+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (223, 63, '2015-01-19', 'Cr', 19, 'Products delivered.', NULL, 'NPR', 235000.0000, 'NPR', 1, 235000.0000, NULL, '2015-01-19 11:10:55.581+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (224, 64, '2015-01-19', 'Dr', 146, 'Being apple products delivered to Mr. Tyler.', NULL, 'NPR', 877000.0000, 'NPR', 1, 877000.0000, NULL, '2015-01-19 11:12:34.819+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (225, 64, '2015-01-19', 'Dr', 226, 'Being apple products delivered to Mr. Tyler.', NULL, 'NPR', 1067493.7500, 'NPR', 1, 1067493.7500, NULL, '2015-01-19 11:12:34.819+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (226, 64, '2015-01-19', 'Cr', 137, 'Being apple products delivered to Mr. Tyler.', NULL, 'NPR', 985000.0000, 'NPR', 1, 985000.0000, NULL, '2015-01-19 11:12:34.819+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (227, 64, '2015-01-19', 'Cr', 77, 'P: 985000.0000 x R: 7.5 % = 73875.0000 (RV-CA-STX)/Being apple products delivered to Mr. Tyler.', NULL, 'NPR', 73875.0000, 'NPR', 1, 73875.0000, NULL, '2015-01-19 11:12:34.819+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (228, 64, '2015-01-19', 'Cr', 77, 'P: 985000.0000 x R: 0.75 % = 7387.5000 (RV-STX)/Being apple products delivered to Mr. Tyler.', NULL, 'NPR', 7387.5000, 'NPR', 1, 7387.5000, NULL, '2015-01-19 11:12:34.819+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (229, 64, '2015-01-19', 'Cr', 77, 'P: 985000.0000 x R: 0.125 % = 1231.2500 (RV-6095-STX)/Being apple products delivered to Mr. Tyler.', NULL, 'NPR', 1231.2500, 'NPR', 1, 1231.2500, NULL, '2015-01-19 11:12:34.819+00');
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (230, 64, '2015-01-19', 'Cr', 19, 'Being apple products delivered to Mr. Tyler.', NULL, 'NPR', 877000.0000, 'NPR', 1, 877000.0000, NULL, '2015-01-19 11:12:34.819+00');
 
 
 --
 -- Name: transaction_details_transaction_detail_id_seq; Type: SEQUENCE SET; Schema: transactions; Owner: postgres
 --
 
-SELECT pg_catalog.setval('transaction_details_transaction_detail_id_seq', 128, true);
+SELECT pg_catalog.setval('transaction_details_transaction_detail_id_seq', 230, true);
 
 
 --
 -- Name: transaction_master_transaction_master_id_seq; Type: SEQUENCE SET; Schema: transactions; Owner: postgres
 --
 
-SELECT pg_catalog.setval('transaction_master_transaction_master_id_seq', 38, true);
+SELECT pg_catalog.setval('transaction_master_transaction_master_id_seq', 64, true);
 
 
 --
@@ -24777,9 +25593,9 @@ SELECT pg_catalog.setval('transaction_master_transaction_master_id_seq', 38, tru
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/enable-triggers.sql --<--<--
+-->-->-- /db/src/enable-triggers.sql --<--<--
 ALTER TABLE transactions.transaction_details ENABLE TRIGGER check_cash_balance_trigger;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/refresh-materialized-views.sql --<--<--
+-->-->-- /db/src/refresh-materialized-views.sql --<--<--
 SELECT * FROM transactions.refresh_materialized_views(1);

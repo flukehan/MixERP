@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MixERP.Net.HtmlParser</RootNamespace>
     <AssemblyName>MixERP.Net.HtmlParser</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>Mono</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,9 +41,6 @@
   <ItemGroup>
     <Reference Include="HtmlRenderer">
       <HintPath>..\..\..\Dependencies\HtmlRenderer\HtmlRenderer.dll</HintPath>
-    </Reference>
-    <Reference Include="HtmlRenderer.PdfSharp">
-      <HintPath>..\..\..\Dependencies\HtmlRenderer\HtmlRenderer.PdfSharp.dll</HintPath>
     </Reference>
     <Reference Include="HtmlRenderer.WinForms">
       <HintPath>..\..\..\Dependencies\HtmlRenderer\HtmlRenderer.WinForms.dll</HintPath>

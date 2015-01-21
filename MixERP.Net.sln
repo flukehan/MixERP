@@ -124,6 +124,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.WebControls.Tran
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.WebControls.Common.Data", "Libraries\Server Controls\Data\MixERP.Net.WebControls.Common.Data\MixERP.Net.WebControls.Common.Data.csproj", "{8D2A81FA-579B-499F-A151-7DD49D759A91}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{9F33DC90-A033-466A-8C9E-05EE52BEF7D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

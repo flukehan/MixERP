@@ -61,6 +61,24 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Click here to download..
+        /// </summary>
+        internal static string ClickHereToDownload {
+            get {
+                return ResourceManager.GetString("ClickHereToDownload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The database backup was successful..
+        /// </summary>
+        internal static string DatabaseBackupSuccessful {
+            get {
+                return ResourceManager.GetString("DatabaseBackupSuccessful", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} rows affected..
         /// </summary>
         internal static string NumRowsAffected {

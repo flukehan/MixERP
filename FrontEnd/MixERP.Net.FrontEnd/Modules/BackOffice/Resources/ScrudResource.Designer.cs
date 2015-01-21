@@ -349,6 +349,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to County.
+        /// </summary>
+        internal static string county {
+            get {
+                return ResourceManager.GetString("county", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to County Code.
         /// </summary>
         internal static string county_code {
@@ -1326,6 +1335,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string tax_exempt_type_name {
             get {
                 return ResourceManager.GetString("tax_exempt_type_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tax Master.
+        /// </summary>
+        internal static string tax_master {
+            get {
+                return ResourceManager.GetString("tax_master", resourceCulture);
             }
         }
         

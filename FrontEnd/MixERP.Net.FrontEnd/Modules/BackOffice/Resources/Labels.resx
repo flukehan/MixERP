@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ClickHereToDownload" xml:space="preserve">
+    <value>Click here to download.</value>
+  </data>
+  <data name="DatabaseBackupSuccessful" xml:space="preserve">
+    <value>The database backup was successful.</value>
+  </data>
   <data name="NumRowsAffected" xml:space="preserve">
     <value>{0} rows affected.</value>
   </data>

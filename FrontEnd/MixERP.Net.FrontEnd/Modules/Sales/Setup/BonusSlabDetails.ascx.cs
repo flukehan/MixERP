@@ -24,6 +24,8 @@ using MixERP.Net.WebControls.ScrudFactory;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Security.AccessControl;
 
 namespace MixERP.Net.Core.Modules.Sales.Setup
 {
@@ -43,10 +45,18 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
                 scrud.Text = Titles.BonusSlabDetails;
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof(BonusSlabDetails));
 
+                this.AddScrudCustomValidatorMessages();
+
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
 
             base.OnControlLoad(sender, e);
+        }
+
+        private void AddScrudCustomValidatorMessages()
+        {
+            string javascript = "var compareAmountErrorMessageLocalized='" + Resources.Warnings.CompareAmountErrorMessage + "';";
+            Common.PageUtility.RegisterJavascript("BonusSlabDetails_CustomValidatorMessages", javascript, this.Page, true);
         }
 
         private static string GetDisplayFields()

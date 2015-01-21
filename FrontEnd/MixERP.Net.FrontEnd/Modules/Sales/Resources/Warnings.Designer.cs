@@ -70,6 +70,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The amount to should be greater than the amount from..
+        /// </summary>
+        internal static string CompareAmountErrorMessage {
+            get {
+                return ResourceManager.GetString("CompareAmountErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Only {0} {1} of {2} left in stock..
         /// </summary>
         internal static string InsufficientStockWarning {
