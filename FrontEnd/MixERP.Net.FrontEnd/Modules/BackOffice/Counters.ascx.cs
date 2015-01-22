@@ -38,7 +38,7 @@ namespace MixERP.Net.Core.Modules.BackOffice
                 scrud.TableSchema = "office";
                 scrud.Table = "counters";
                 scrud.ViewSchema = "office";
-                scrud.View = "counters";
+                scrud.View = "counter_scrud_view";
 
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();

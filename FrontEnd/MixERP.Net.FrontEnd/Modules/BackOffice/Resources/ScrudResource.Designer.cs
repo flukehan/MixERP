@@ -214,6 +214,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cash Repository.
+        /// </summary>
+        internal static string cash_repository {
+            get {
+                return ResourceManager.GetString("cash_repository", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cash Repository Code.
         /// </summary>
         internal static string cash_repository_code {
@@ -1245,6 +1254,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string state_sales_tax_name {
             get {
                 return ResourceManager.GetString("state_sales_tax_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Store.
+        /// </summary>
+        internal static string store {
+            get {
+                return ResourceManager.GetString("store", resourceCulture);
             }
         }
         
