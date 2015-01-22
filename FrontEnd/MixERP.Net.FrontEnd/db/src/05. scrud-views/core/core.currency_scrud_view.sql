@@ -1,9 +1,10 @@
-﻿CREATE VIEW core.currency_scrud_view
+﻿DROP VIEW IF EXISTS core.currency_scrud_view;
+CREATE VIEW core.currency_scrud_view
 AS
 SELECT 
-  currencies.currency_code, 
-  currencies.currency_symbol, 
-  currencies.currency_name, 
-  currencies.hundredth_name
+  core.currencies.currency_code, 
+  core.currencies.currency_symbol, 
+  core.currencies.currency_name, 
+  core.currencies.hundredth_name
 FROM 
   core.currencies;

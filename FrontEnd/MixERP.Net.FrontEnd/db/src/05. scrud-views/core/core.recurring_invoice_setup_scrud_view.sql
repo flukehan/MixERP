@@ -9,7 +9,7 @@ SELECT
   office.stores.address, 
   office.store_types.store_type_code || '('|| office.store_types.store_type_name||')' AS store_type, 
   office.stores.allow_sales, 
-  core.sales_taxes.sales_tax_code || '('|| core.sales_taxes.sales_tax_name||')' AS sales_tax,
+  core.sales_taxes.sales_tax_code || '('|| core.sales_taxes.sales_tax_name||')' AS sale_tax,
   core.accounts.account_number || '('|| core.accounts.account_name||')' AS account,
   office.cash_repositories.cash_repository_code || '('|| office.cash_repositories.cash_repository_name||')' AS cash_repository 
 FROM 

@@ -597,4 +597,10 @@
   <data name="tax_master" xml:space="preserve">
     <value>Tax Master</value>
   </data>
+  <data name="cash_repository" xml:space="preserve">
+    <value>Cash Repository</value>
+  </data>
+  <data name="store" xml:space="preserve">
+    <value>Store</value>
+  </data>
 </root>
