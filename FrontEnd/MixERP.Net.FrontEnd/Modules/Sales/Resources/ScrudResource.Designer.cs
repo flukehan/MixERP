@@ -259,6 +259,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Compound Item.
+        /// </summary>
+        internal static string compound_item {
+            get {
+                return ResourceManager.GetString("compound_item", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Compound Item Id.
         /// </summary>
         internal static string compound_item_id {
@@ -399,6 +408,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         internal static string is_flat_amount {
             get {
                 return ResourceManager.GetString("is_flat_amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item.
+        /// </summary>
+        internal static string item {
+            get {
+                return ResourceManager.GetString("item", resourceCulture);
             }
         }
         
@@ -570,6 +588,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         internal static string recurring_amount {
             get {
                 return ResourceManager.GetString("recurring_amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recurring Frequency.
+        /// </summary>
+        internal static string recurring_frequency {
+            get {
+                return ResourceManager.GetString("recurring_frequency", resourceCulture);
             }
         }
         

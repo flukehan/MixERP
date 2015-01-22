@@ -354,4 +354,13 @@
   <data name="late_fee_posting_frequency" xml:space="preserve">
     <value>Late Fee Posting Frequency</value>
   </data>
+  <data name="compound_item" xml:space="preserve">
+    <value>Compound Item</value>
+  </data>
+  <data name="item" xml:space="preserve">
+    <value>Item</value>
+  </data>
+  <data name="recurring_frequency" xml:space="preserve">
+    <value>Recurring Frequency</value>
+  </data>
 </root>
