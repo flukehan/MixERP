@@ -1,7 +1,16 @@
-DROP FUNCTION IF EXISTS transactions.auto_verify(bigint) CASCADE;
+DROP FUNCTION IF EXISTS transactions.auto_verify
+(
+    _tran_id        bigint,
+    _office_id      integer
+) CASCADE;
 
-CREATE FUNCTION transactions.auto_verify(bigint)
+CREATE FUNCTION transactions.auto_verify
+(
+    _tran_id        bigint,
+    _office_id      integer
+)
 RETURNS VOID
+VOLATILE
 AS
 $$
     DECLARE _transaction_master_id bigint;
@@ -25,19 +34,26 @@ $$
     DECLARE _posted_amount money_strict2;
     DECLARE _auto_verification boolean=true;
     DECLARE _has_policy boolean=false;
+    DECLARE _voucher_date date;
+    DECLARE _value_date date=transactions.get_value_date(_office_id);
 BEGIN
     _transaction_master_id := $1;
 
     SELECT
         transactions.transaction_master.book,
+        transactions.transaction_master.value_date,
         transactions.transaction_master.user_id
     INTO
         _book,
+        _voucher_date,
         _transaction_posted_by  
     FROM
     transactions.transaction_master
     WHERE transactions.transaction_master.transaction_master_id=_transaction_master_id;
     
+    IF(_voucher_date <> _value_date) THEN
+        RAISE EXCEPTION 'Access is denied. You cannot verify past or futuer dated transaction.';
+    END IF;
 
     _verifier := office.get_sys_user_id();
     _status := 2;

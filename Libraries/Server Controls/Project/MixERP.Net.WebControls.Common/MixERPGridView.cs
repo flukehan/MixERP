@@ -76,6 +76,7 @@ namespace MixERP.Net.WebControls.Common
 
                     if (field != null)
                     {
+
                         field.HeaderStyle.CssClass = "text left";
 
                         switch (field.DataType.FullName)
@@ -88,6 +89,7 @@ namespace MixERP.Net.WebControls.Common
                             case "System.Single":
                                 cell.CssClass = "text right";
                                 field.HeaderStyle.CssClass = "text right";
+
                                 if (e.Row.RowType == DataControlRowType.DataRow)
                                 {
                                     decimal value = Conversion.TryCastDecimal(cell.Text);
@@ -115,6 +117,7 @@ namespace MixERP.Net.WebControls.Common
 
                                 break;
                         }
+
                     }
                 }
             }

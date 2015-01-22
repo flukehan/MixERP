@@ -171,7 +171,15 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 {
                     try
                     {
-                        if (FormHelper.UpdateRecord(userId, this.TableSchema, this.Table, list, this.KeyColumn, id, this.imageColumn, this.ExcludeEdit.Split(',').Select(x => x.Trim().ToUpperInvariant()).ToArray()))
+                        string[] exclusion = {""};
+
+                        if (!string.IsNullOrWhiteSpace(this.ExcludeEdit))
+                        {
+                            exclusion = this.ExcludeEdit.Split(',').Select(x => x.Trim().ToUpperInvariant()).ToArray();
+                        }
+
+
+                        if (FormHelper.UpdateRecord(userId, this.TableSchema, this.Table, list, this.KeyColumn, id, this.imageColumn, exclusion))
                         {
                             //Clear the form container.
                             this.formContainer.Controls.Clear();

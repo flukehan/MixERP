@@ -372,4 +372,7 @@
   <data name="recurring_invoice" xml:space="preserve">
     <value>Recurring Invoice</value>
   </data>
+  <data name="late_fee" xml:space="preserve">
+    <value>Late Fee</value>
+  </data>
 </root>

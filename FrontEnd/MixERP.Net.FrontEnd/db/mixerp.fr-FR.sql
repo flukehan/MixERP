@@ -20263,13 +20263,14 @@ AND
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.currency_scrud_view.sql --<--<--
+DROP VIEW IF EXISTS core.currency_scrud_view;
 CREATE VIEW core.currency_scrud_view
 AS
 SELECT 
-  currencies.currency_code, 
-  currencies.currency_symbol, 
-  currencies.currency_name, 
-  currencies.hundredth_name
+  core.currencies.currency_code, 
+  core.currencies.currency_symbol, 
+  core.currencies.currency_name, 
+  core.currencies.hundredth_name
 FROM 
   core.currencies;
 
@@ -20350,6 +20351,18 @@ ON core.item_selling_prices.price_type_id = core.price_types.price_type_id
 LEFT JOIN core.party_types
 ON  core.item_selling_prices.party_type_id = core.party_types.party_type_id;
 
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.item_type_scrud_view.sql --<--<--
+DROP VIEW IF EXISTS core.item_type_scrud_view;
+CREATE VIEW core.item_type_scrud_view
+AS
+SELECT 
+  core.item_types.item_type_id, 
+  core.item_types.item_type_code, 
+  core.item_types.item_type_name
+FROM 
+  core.item_types;
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.items_scrud_view.sql --<--<--
@@ -20490,6 +20503,57 @@ LEFT JOIN core.late_fee
 ON core.payment_terms.late_fee_id=core.late_fee.late_fee_id;
 
 
+
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.recurring_invoice_scrud_view.sql --<--<--
+CREATE VIEW core.recurring_invoice_scrud_view
+AS
+SELECT 
+  core.recurring_invoices.recurring_invoice_id, 
+  core.recurring_invoices.recurring_invoice_code, 
+  core.recurring_invoices.recurring_invoice_name,
+  core.items.item_code || '('|| core.items.item_name||')' AS item,
+  core.compound_items.compound_item_code || ' (' || core.compound_items.compound_item_name || ')' AS compound_item,
+  core.frequencies.frequency_code || '('|| core.frequencies.frequency_name||')' AS recurring_frequency,
+  core.recurring_invoices.recurring_amount, 
+  core.recurring_invoices.auto_trigger_on_sales
+FROM 
+  core.recurring_invoices
+LEFT JOIN core.items 
+ON core.recurring_invoices.item_id = core.items.item_id
+INNER JOIN core.frequencies
+ON core.recurring_invoices.recurring_frequency_id = core.frequencies.frequency_id
+LEFT JOIN core.compound_items
+ON core.recurring_invoices.compound_item_id=core.compound_items.compound_item_id;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.recurring_invoice_setup_scrud_view.sql --<--<--
+DROP VIEW IF EXISTS office.store_scrud_view;
+CREATE VIEW office.store_scrud_view
+AS
+SELECT 
+  office.stores.store_id, 
+  office.offices.office_code || '('|| office.offices.office_name||')' AS office, 
+  office.stores.store_code, 
+  office.stores.store_name, 
+  office.stores.address, 
+  office.store_types.store_type_code || '('|| office.store_types.store_type_name||')' AS store_type, 
+  office.stores.allow_sales, 
+  core.sales_taxes.sales_tax_code || '('|| core.sales_taxes.sales_tax_name||')' AS sale_tax,
+  core.accounts.account_number || '('|| core.accounts.account_name||')' AS account,
+  office.cash_repositories.cash_repository_code || '('|| office.cash_repositories.cash_repository_name||')' AS cash_repository 
+FROM 
+  office.stores
+INNER JOIN office.offices
+ON office.stores.office_id = office.offices.office_id
+INNER JOIN office.store_types
+ON office.stores.store_type_id = office.store_types.store_type_id
+INNER JOIN core.sales_taxes
+ON office.stores.sales_tax_id = core.sales_taxes.sales_tax_id
+INNER JOIN core.accounts
+ON office.stores.default_cash_account_id = core.accounts.account_id
+INNER JOIN office.cash_repositories
+ON office.stores.default_cash_repository_id = office.cash_repositories.cash_repository_id;
 
 
 
@@ -20677,18 +20741,23 @@ FROM
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/office/office.counter_scrud_view.sql --<--<--
-CREATE VIEW office.counter_scrud_view 
-AS 
-SELECT counters.counter_id,
-	stores.store_code,
-	stores.store_name,
-	cash_repositories.cash_repository_code,
-	cash_repositories.cash_repository_name,
-	counters.counter_code,
-	counters.counter_name
-   FROM office.counters
-   INNER JOIN office.stores ON counters.store_id = stores.store_id
-   INNER JOIN office.cash_repositories ON counters.cash_repository_id = cash_repositories.cash_repository_id;
+DROP VIEW IF EXISTS office.counter_scrud_view;
+CREATE VIEW office.counter_scrud_view
+AS
+SELECT 
+  office.counters.counter_id, 
+  office.stores.store_code || '('|| office.stores.store_name||')' AS store,
+  office.cash_repositories.cash_repository_code || '('|| office.cash_repositories.cash_repository_name||')' AS cash_repository,
+  office.counters.counter_code,
+  office.counters.counter_name
+FROM 
+  office.counters
+INNER JOIN office.cash_repositories
+ON office.counters.cash_repository_id = office.cash_repositories.cash_repository_id 
+INNER JOIN office.stores
+ON office.counters.store_id = office.stores.store_id;
+
+
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/office/office.department_scrud_view.sql --<--<--
@@ -20715,9 +20784,34 @@ FROM
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/office/office.store_scrud_view.sql --<--<--
+DROP VIEW IF EXISTS office.store_scrud_view;
 CREATE VIEW office.store_scrud_view
-AS 
-SELECT * FROM office.stores;
+AS
+SELECT 
+  office.stores.store_id, 
+  office.offices.office_code || '('|| office.offices.office_name||')' AS office, 
+  office.stores.store_code, 
+  office.stores.store_name, 
+  office.stores.address, 
+  office.store_types.store_type_code || '('|| office.store_types.store_type_name||')' AS store_type, 
+  office.stores.allow_sales, 
+  core.sales_taxes.sales_tax_code || '('|| core.sales_taxes.sales_tax_name||')' AS sales_tax,
+  core.accounts.account_number || '('|| core.accounts.account_name||')' AS account,
+  office.cash_repositories.cash_repository_code || '('|| office.cash_repositories.cash_repository_name||')' AS cash_repository 
+FROM 
+  office.stores
+INNER JOIN office.offices
+ON office.stores.office_id = office.offices.office_id
+INNER JOIN office.store_types
+ON office.stores.store_type_id = office.store_types.store_type_id
+INNER JOIN core.sales_taxes
+ON office.stores.sales_tax_id = core.sales_taxes.sales_tax_id
+INNER JOIN core.accounts
+ON office.stores.default_cash_account_id = core.accounts.account_id
+INNER JOIN office.cash_repositories
+ON office.stores.default_cash_repository_id = office.cash_repositories.cash_repository_id;
+
+
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/office/office.store_type_scrud_view.sql --<--<--
 CREATE VIEW office.store_type_scrud_view
