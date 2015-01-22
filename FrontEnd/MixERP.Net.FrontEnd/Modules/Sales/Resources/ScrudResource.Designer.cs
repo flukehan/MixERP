@@ -520,11 +520,29 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Party.
+        /// </summary>
+        internal static string party {
+            get {
+                return ResourceManager.GetString("party", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Party Id.
         /// </summary>
         internal static string party_id {
             get {
                 return ResourceManager.GetString("party_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Term.
+        /// </summary>
+        internal static string payment_term {
+            get {
+                return ResourceManager.GetString("payment_term", resourceCulture);
             }
         }
         
@@ -606,6 +624,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         internal static string recurring_frequency_id {
             get {
                 return ResourceManager.GetString("recurring_frequency_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recurring Invoice.
+        /// </summary>
+        internal static string recurring_invoice {
+            get {
+                return ResourceManager.GetString("recurring_invoice", resourceCulture);
             }
         }
         

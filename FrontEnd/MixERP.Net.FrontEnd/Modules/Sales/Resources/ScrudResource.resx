@@ -360,7 +360,16 @@
   <data name="item" xml:space="preserve">
     <value>Item</value>
   </data>
+  <data name="party" xml:space="preserve">
+    <value>Party</value>
+  </data>
+  <data name="payment_term" xml:space="preserve">
+    <value>Payment Term</value>
+  </data>
   <data name="recurring_frequency" xml:space="preserve">
     <value>Recurring Frequency</value>
+  </data>
+  <data name="recurring_invoice" xml:space="preserve">
+    <value>Recurring Invoice</value>
   </data>
 </root>
