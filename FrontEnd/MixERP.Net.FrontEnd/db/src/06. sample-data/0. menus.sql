@@ -116,7 +116,7 @@ UNION ALL SELECT 'Switches', '~/Modules/BackOffice/Policy/Switches.mix', 'SWI', 
 UNION ALL SELECT 'Admin Tools', NULL, 'SAT', 1, core.get_menu_id('BO')
 UNION ALL SELECT 'SQL Query Tool', '~/Modules/BackOffice/Admin/Query.mix', 'SQL', 2, core.get_menu_id('SAT')
 UNION ALL SELECT 'Database Statistics', '~/Modules/BackOffice/Admin/DatabaseStatistics.mix', 'DBSTAT', 2, core.get_menu_id('SAT')
-UNION ALL SELECT 'Backup Database', '~/Modules/BackOffice/Admin/Backup.mix', 'BAK', 2, core.get_menu_id('SAT')
+UNION ALL SELECT 'Backup Database', '~/Modules/BackOffice/Admin/DatabaseBackup.mix', 'BAK', 2, core.get_menu_id('SAT')
 UNION ALL SELECT 'Restore Database', '~/Modules/BackOffice/Admin/Restore.mix', 'RES', 2, core.get_menu_id('SAT')
 UNION ALL SELECT 'Change User Password', '~/Modules/BackOffice/Admin/ChangePassword.mix', 'PWD', 2, core.get_menu_id('SAT')
 UNION ALL SELECT 'New Company', '~/Modules/BackOffice/Admin/NewCompany.mix', 'NEW', 2, core.get_menu_id('SAT')

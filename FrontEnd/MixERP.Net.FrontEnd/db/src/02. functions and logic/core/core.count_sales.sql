@@ -1,6 +1,7 @@
 DROP FUNCTION IF EXISTS core.count_sales(_item_id integer, _unit_id integer, _store_id integer);
 CREATE FUNCTION core.count_sales(_item_id integer, _unit_id integer, _store_id integer)
 RETURNS decimal
+STABLE
 AS
 $$
         DECLARE _base_unit_id integer;

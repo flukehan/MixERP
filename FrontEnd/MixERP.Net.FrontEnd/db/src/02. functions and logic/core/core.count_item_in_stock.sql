@@ -2,6 +2,7 @@ DROP FUNCTION IF EXISTS core.count_item_in_stock(_item_id integer, _unit_id inte
 
 CREATE FUNCTION core.count_item_in_stock(_item_id integer, _unit_id integer, _store_id integer)
 RETURNS decimal
+STABLE
 AS
 $$
     DECLARE _debit decimal;

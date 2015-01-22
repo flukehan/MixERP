@@ -2,6 +2,7 @@ DROP FUNCTION IF EXISTS core.get_account_id_by_party_type_id(_party_type_id inte
 
 CREATE FUNCTION core.get_account_id_by_party_type_id(_party_type_id integer)
 RETURNS integer
+STABLE
 AS
 $$
 BEGIN

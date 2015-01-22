@@ -2,6 +2,7 @@ DROP FUNCTION IF EXISTS core.convert_unit(from_unit integer, to_unit integer);
 
 CREATE FUNCTION core.convert_unit(from_unit integer, to_unit integer)
 RETURNS decimal
+STABLE
 AS
 $$
     DECLARE _factor decimal;

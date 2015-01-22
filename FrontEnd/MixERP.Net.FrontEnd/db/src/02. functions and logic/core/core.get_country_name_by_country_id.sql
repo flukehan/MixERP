@@ -1,5 +1,6 @@
 CREATE FUNCTION core.get_country_name_by_country_id(integer)
 RETURNS text
+STABLE
 AS
 $$
 BEGIN

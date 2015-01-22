@@ -27,7 +27,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
             <label for="label">
                 Enter Backup Name
             </label>
-            <input type="text" />
+            <input type="text" id="BackupNameInputText" runat="server" />
         </div>
         <input type="button" class="ui red button disabled loading" value="Backup Now" id="BackupButton" />
         <input type="button" class="ui green button" value="View Backups" />
@@ -53,6 +53,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     var backupButton = $("#BackupButton");
     var counter = 0;
     var header = $(".ui.blue.header");
+    var backupNameInputText = $("#BackupNameInputText");
+
 
     function AddItem(msg, cls) {
         if (!cls) {
@@ -82,15 +84,28 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         backupButton.removeClass("disabled loading");
 
         backupButton.click(function () {
+            var backupName = backupNameInputText.val();
+
+            if (!isValidFileName(backupName)) {
+                makeDirty(backupNameInputText);
+                return;
+            };
+
+            removeDirty(backupNameInputText);
+
             $(this).addClass("disabled loading");
             header.removeClass("initially hidden");
             InitializeMessage();
-            $.connection.dbHub.server.backupDatabase('foo');
+            $.connection.dbHub.server.backupDatabase(backupName);
         });
+    };
 
+    function isValidFileName(fileName) {
+        if (isNullOrWhiteSpace(fileName)) {
+            return false;
+        };
 
-
-
+        return true;
     };
 
     $(function () {

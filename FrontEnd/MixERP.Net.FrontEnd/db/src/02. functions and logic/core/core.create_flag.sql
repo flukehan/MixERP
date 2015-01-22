@@ -7,6 +7,7 @@ CREATE FUNCTION core.create_flag
     resource_id_        text
 )
 RETURNS void
+VOLATILE
 AS
 $$
 BEGIN

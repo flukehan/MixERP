@@ -2,15 +2,13 @@ DROP FUNCTION IF EXISTS core.get_attachment_lookup_info(national character varyi
 
 CREATE FUNCTION core.get_attachment_lookup_info(national character varying(50))
 RETURNS text
+STABLE
 AS
 $$
 BEGIN
-        RETURN
-        (
-                SELECT resource || resource_key
-                FROM core.attachment_lookup
-                WHERE book=$1
-        );
+    RETURN resource || resource_key
+    FROM core.attachment_lookup
+    WHERE book=$1;
 END
 $$
 LANGUAGE plpgsql;

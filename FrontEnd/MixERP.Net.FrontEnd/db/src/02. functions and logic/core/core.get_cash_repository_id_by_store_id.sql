@@ -2,6 +2,7 @@ DROP FUNCTION IF EXISTS core.get_cash_repository_id_by_store_id(_store_id intege
 
 CREATE FUNCTION core.get_cash_repository_id_by_store_id(_store_id integer)
 RETURNS bigint
+STABLE
 AS
 $$
 BEGIN

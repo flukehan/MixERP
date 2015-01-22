@@ -2,6 +2,7 @@ DROP FUNCTION IF EXISTS core.get_frequency_setup_code_by_frequency_setup_id(_fre
 
 CREATE FUNCTION core.get_frequency_setup_code_by_frequency_setup_id(_frequency_setup_id integer)
 RETURNS text
+STABLE
 AS
 $$
 BEGIN

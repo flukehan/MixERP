@@ -23,11 +23,17 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Web.Hosting;
+using MixERP.Net.Common.Helpers;
 using MixERP.Net.FrontEnd.Base;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Admin
 {
     public partial class DatabaseBackup : MixERPUserControl
     {
+        public override void OnControlLoad(object sender, EventArgs e)
+        {
+            this.BackupNameInputText.Value = string.Format(CultureInfo.InvariantCulture, "{0}.{1}.{2}", SessionHelper.GetOfficeId(), SessionHelper.GetUserName(), DateTime.Now.ToFileTime());
+            base.OnControlLoad(sender, e);
+        }
     }
 }

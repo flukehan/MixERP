@@ -2,6 +2,7 @@ DROP FUNCTION IF EXISTS core.get_cost_of_goods_sold_account_id(_item_id integer)
 
 CREATE FUNCTION core.get_cost_of_goods_sold_account_id(_item_id integer)
 RETURNS integer
+STABLE
 AS
 $$
 BEGIN

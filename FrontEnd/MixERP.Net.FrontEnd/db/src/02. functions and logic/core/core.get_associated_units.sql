@@ -1,9 +1,17 @@
 CREATE FUNCTION core.get_associated_units(integer)
-RETURNS TABLE(unit_id integer, unit_code text, unit_name text)
+RETURNS TABLE
+(
+    unit_id integer, 
+    unit_code text, 
+    unit_name text
+)
+STABLE
 AS
 $$
     DECLARE root_unit_id integer;
 BEGIN
+    --This function is marked STABLE because it does not change database.
+    --If it does in the future, make this function VOLATILE.
     CREATE TEMPORARY TABLE IF NOT EXISTS temp_unit(unit_id integer) ON COMMIT DROP; 
     
     SELECT core.get_root_unit_id($1) INTO root_unit_id;

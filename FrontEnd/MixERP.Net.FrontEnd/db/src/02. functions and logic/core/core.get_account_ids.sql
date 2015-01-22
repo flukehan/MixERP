@@ -2,6 +2,7 @@ DROP FUNCTION IF EXISTS core.get_account_ids(root_account_id bigint);
 
 CREATE FUNCTION core.get_account_ids(root_account_id bigint)
 RETURNS SETOF bigint
+STABLE
 AS
 $$
 BEGIN
