@@ -241,6 +241,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cash Repository.
+        /// </summary>
+        internal static string cash_repository {
+            get {
+                return ResourceManager.GetString("cash_repository", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cash Repository Id.
         /// </summary>
         internal static string cash_repository_id {
@@ -1141,6 +1150,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Office.
+        /// </summary>
+        internal static string office {
+            get {
+                return ResourceManager.GetString("office", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Office Code.
         /// </summary>
         internal static string office_code {
@@ -1650,6 +1668,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         internal static string store_name {
             get {
                 return ResourceManager.GetString("store_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Store Type.
+        /// </summary>
+        internal static string store_type {
+            get {
+                return ResourceManager.GetString("store_type", resourceCulture);
             }
         }
         

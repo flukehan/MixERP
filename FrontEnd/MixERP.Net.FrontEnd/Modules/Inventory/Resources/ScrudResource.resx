@@ -708,4 +708,13 @@
   <data name="items_item_name_uix" xml:space="preserve">
     <value>Duplicate item name.</value>
   </data>
+  <data name="cash_repository" xml:space="preserve">
+    <value>Cash Repository</value>
+  </data>
+  <data name="office" xml:space="preserve">
+    <value>Office</value>
+  </data>
+  <data name="store_type" xml:space="preserve">
+    <value>Store Type</value>
+  </data>
 </root>
