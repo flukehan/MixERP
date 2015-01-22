@@ -35,7 +35,7 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
                 scrud.TableSchema = "core";
                 scrud.Table = "currencies";
                 scrud.ViewSchema = "core";
-                scrud.View = "currencies";
+                scrud.View = "currency_scrud_view";
 
                 scrud.Text = Titles.Currencies;
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof(Currencies));
