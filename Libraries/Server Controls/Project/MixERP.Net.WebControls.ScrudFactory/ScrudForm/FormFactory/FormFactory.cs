@@ -51,19 +51,19 @@ namespace MixERP.Net.WebControls.ScrudFactory
         /// </returns>
         private Collection<KeyValuePair<string, object>> GetFormCollection(bool skipSerial)
         {
-            var list = new Collection<KeyValuePair<string, object>>();
+            Collection<KeyValuePair<string, object>> list = new Collection<KeyValuePair<string, object>>();
 
-            using (var table = TableHelper.GetTable(this.TableSchema, this.Table, this.Exclude))
+            using (DataTable table = TableHelper.GetTable(this.TableSchema, this.Table, this.Exclude))
             {
                 if (table.Rows.Count > 0)
                 {
                     foreach (DataRow row in table.Rows)
                     {
-                        var columnName = Conversion.TryCastString(row["column_name"]);
-                        var defaultValue = Conversion.TryCastString(row["column_default"]);
-                        var isSerial = defaultValue.StartsWith("nextval", StringComparison.OrdinalIgnoreCase);
-                        var parentTableColumn = Conversion.TryCastString(row["references_field"]);
-                        var dataType = Conversion.TryCastString(row["data_type"]);
+                        string columnName = Conversion.TryCastString(row["column_name"]);
+                        string defaultValue = Conversion.TryCastString(row["column_default"]);
+                        bool isSerial = defaultValue.StartsWith("nextval", StringComparison.OrdinalIgnoreCase);
+                        string parentTableColumn = Conversion.TryCastString(row["references_field"]);
+                        string dataType = Conversion.TryCastString(row["data_type"]);
 
                         if (skipSerial)
                         {
@@ -113,7 +113,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         else
                         {
                             //DropDownList
-                            using (var dropDownList = this.formContainer.FindControl(columnName + "_dropdownlist") as DropDownList)
+                            using (DropDownList dropDownList = this.formContainer.FindControl(columnName + "_dropdownlist") as DropDownList)
                             {
                                 object value = null;
 
@@ -132,40 +132,54 @@ namespace MixERP.Net.WebControls.ScrudFactory
             return list;
         }
 
-        private void LoadForm(Panel container, DataTable values, Assembly assembly)
+        private void LoadForm(Panel container, DataTable values, Assembly assembly, bool editing = false)
         {
-            using (var htmlTable = new HtmlTable())
+            using (HtmlTable htmlTable = new HtmlTable())
             {
                 htmlTable.Attributes.Add("role", "scrud");
 
-                using (var table = TableHelper.GetTable(this.TableSchema, this.Table, this.Exclude))
+                using (DataTable table = TableHelper.GetTable(this.TableSchema, this.Table, this.Exclude))
                 {
                     if (table.Rows.Count > 0)
                     {
                         foreach (DataRow row in table.Rows)
                         {
-                            var columnName = Conversion.TryCastString(row["column_name"]);
-                            var defaultValue = Conversion.TryCastString(row["column_default"]);
-                            var isSerial = defaultValue.StartsWith("nextval", StringComparison.OrdinalIgnoreCase);
-                            var isNullable = Conversion.TryCastBoolean(row["is_nullable"]);
-                            var dataType = Conversion.TryCastString(row["data_type"]);
-                            var domain = Conversion.TryCastString(row["domain_name"]);
-                            var maxLength = Conversion.TryCastInteger(row["character_maximum_length"]);
+                            string columnName = Conversion.TryCastString(row["column_name"]);
+                            string defaultValue = Conversion.TryCastString(row["column_default"]);
+                            bool isSerial = defaultValue.StartsWith("nextval", StringComparison.OrdinalIgnoreCase);
+                            bool isNullable = Conversion.TryCastBoolean(row["is_nullable"]);
+                            string dataType = Conversion.TryCastString(row["data_type"]);
+                            string domain = Conversion.TryCastString(row["domain_name"]);
+                            int maxLength = Conversion.TryCastInteger(row["character_maximum_length"]);
 
-                            var parentTableSchema = Conversion.TryCastString(row["references_schema"]);
-                            var parentTable = Conversion.TryCastString(row["references_table"]);
-                            var parentTableColumn = Conversion.TryCastString(row["references_field"]);
+                            string parentTableSchema = Conversion.TryCastString(row["references_schema"]);
+                            string parentTable = Conversion.TryCastString(row["references_table"]);
+                            string parentTableColumn = Conversion.TryCastString(row["references_field"]);
 
                             if (values.Rows.Count.Equals(1))
                             {
                                 defaultValue = Conversion.TryCastString(values.Rows[0][columnName]);
                             }
 
+                            bool disabled = false;
+
+                            if (editing)
+                            {
+                                if (!string.IsNullOrWhiteSpace(this.ExcludeEdit))
+                                {
+                                    if (this.ExcludeEdit.Split(',').Any(column => column.Trim().ToUpperInvariant().Equals(columnName.ToUpperInvariant())))
+                                    {
+                                        disabled = true;
+                                    }
+                                }
+                            }
+
+
                             ScrudFactoryHelper.AddField(htmlTable, this.GetResourceClassName(),
                                 this.GetItemSelectorPath(), columnName, defaultValue, isSerial, isNullable, dataType,
                                 domain, maxLength, parentTableSchema, parentTable, parentTableColumn, this.DisplayFields,
                                 this.DisplayViews, this.UseDisplayViewsAsParents, this.SelectedValues,
-                                this.GetErrorCssClass(), assembly);
+                                this.GetErrorCssClass(), assembly, disabled);
                         }
                     }
                 }

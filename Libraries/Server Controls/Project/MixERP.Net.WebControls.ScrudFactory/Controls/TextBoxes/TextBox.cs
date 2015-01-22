@@ -28,7 +28,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 {
     internal static class ScrudTextBox
     {
-        internal static void AddTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isNullable, int maxLength, string errorCssClass, Assembly assembly)
+        internal static void AddTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isNullable, int maxLength, string errorCssClass, Assembly assembly, bool disabled)
         {
             if (htmlTable == null)
             {
@@ -40,17 +40,20 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
                 return;
             }
 
-            using (var textBox = GetTextBox(columnName + "_textbox", maxLength))
+            using (TextBox textBox = GetTextBox(columnName + "_textbox", maxLength))
             {
-                var label = ScrudLocalizationHelper.GetResourceString(assembly, resourceClassName, columnName);
+                string label = ScrudLocalizationHelper.GetResourceString(assembly, resourceClassName, columnName);
 
                 textBox.Text = defaultValue;
+                textBox.ReadOnly = disabled;
 
                 if (!isNullable)
                 {
-                    var required = ScrudFactoryHelper.GetRequiredFieldValidator(textBox, errorCssClass);
-                    ScrudFactoryHelper.AddRow(htmlTable, label + Titles.RequiredFieldIndicator, textBox, required);
-                    return;
+                    using (RequiredFieldValidator required = ScrudFactoryHelper.GetRequiredFieldValidator(textBox, errorCssClass))
+                    {
+                        ScrudFactoryHelper.AddRow(htmlTable, label + Titles.RequiredFieldIndicator, textBox, required);
+                        return;
+                    }
                 }
 
                 ScrudFactoryHelper.AddRow(htmlTable, label, textBox);
@@ -64,16 +67,16 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
                 return null;
             }
 
-            using (var textBox = new TextBox())
+            using (TextBox textBox = new TextBox())
             {
                 textBox.ID = id;
+                textBox.ClientIDMode = ClientIDMode.Static;
 
                 if (maxLength > 0)
                 {
                     textBox.MaxLength = maxLength;
                 }
 
-                textBox.ClientIDMode = ClientIDMode.Static;
 
                 return textBox;
             }

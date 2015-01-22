@@ -35,6 +35,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <form id="form1" runat="server">
 
         <asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
+        
 
         <script type="text/javascript">
             var shortDateFormat = "<%= LocalizationHelper.GetShortDateFormat()%>";

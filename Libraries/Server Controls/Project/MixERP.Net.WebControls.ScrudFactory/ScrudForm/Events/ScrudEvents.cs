@@ -20,6 +20,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Data;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
@@ -99,7 +100,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
                     //Load the form again in the container with values
                     //retrieved from database.
-                    this.LoadForm(this.formContainer, table, this.ResourceAssembly);
+                    this.LoadForm(this.formContainer, table, this.ResourceAssembly, true);
                     this.gridPanel.Attributes["style"] = "display:none;";
                     this.formPanel.Attributes["style"] = "display:block;";
                 }
@@ -170,8 +171,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 {
                     try
                     {
-                        if (FormHelper.UpdateRecord(userId, this.TableSchema, this.Table, list, this.KeyColumn, id,
-                            this.imageColumn))
+                        if (FormHelper.UpdateRecord(userId, this.TableSchema, this.Table, list, this.KeyColumn, id, this.imageColumn, this.ExcludeEdit.Split(',').Select(x => x.Trim().ToUpperInvariant()).ToArray()))
                         {
                             //Clear the form container.
                             this.formContainer.Controls.Clear();

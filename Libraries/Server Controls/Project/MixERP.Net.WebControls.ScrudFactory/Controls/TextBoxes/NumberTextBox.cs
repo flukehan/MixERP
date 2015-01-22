@@ -29,7 +29,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 {
     internal static class ScrudNumberTextBox
     {
-        internal static void AddNumberTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isSerial, bool isNullable, int maxLength, string domain, string errorCssClass, Assembly assembly)
+        internal static void AddNumberTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isSerial, bool isNullable, int maxLength, string domain, string errorCssClass, Assembly assembly, bool disabled)
         {
             if (htmlTable == null)
             {
@@ -41,46 +41,46 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
                 return;
             }
 
-            var textBox = GetNumberTextBox(columnName + "_textbox", maxLength);
-            var numberValidator = GetNumberValidator(textBox, domain, errorCssClass);
-            var label = ScrudLocalizationHelper.GetResourceString(assembly, resourceClassName, columnName);
-
-            if (!string.IsNullOrWhiteSpace(defaultValue))
+            using (TextBox textBox = ScrudTextBox.GetTextBox(columnName + "_textbox", maxLength))
             {
-                if (!defaultValue.StartsWith("nextVal", StringComparison.OrdinalIgnoreCase))
+                using (CompareValidator numberValidator = GetNumberValidator(textBox, domain, errorCssClass))
                 {
-                    textBox.Text = defaultValue;
+                    string label = ScrudLocalizationHelper.GetResourceString(assembly, resourceClassName, columnName);
+
+                    if (!string.IsNullOrWhiteSpace(defaultValue))
+                    {
+                        if (!defaultValue.StartsWith("nextVal", StringComparison.OrdinalIgnoreCase))
+                        {
+                            textBox.Text = defaultValue;
+                        }
+                    }
+
+                    if (isSerial)
+                    {
+                        textBox.ReadOnly = true;
+                    }
+                    else
+                    {
+                        if (!isNullable)
+                        {
+                            using (RequiredFieldValidator required = ScrudFactoryHelper.GetRequiredFieldValidator(textBox, errorCssClass))
+                            {
+                                ScrudFactoryHelper.AddRow(htmlTable, label + Titles.RequiredFieldIndicator, textBox, numberValidator, required);
+                                return;
+                            }
+                        }
+                    }
+
+                    textBox.ReadOnly = disabled;
+                    ScrudFactoryHelper.AddRow(htmlTable, label, textBox, numberValidator);
                 }
             }
-
-            if (isSerial)
-            {
-                textBox.ReadOnly = true;
-            }
-            else
-            {
-                if (!isNullable)
-                {
-                    var required = ScrudFactoryHelper.GetRequiredFieldValidator(textBox, errorCssClass);
-                    ScrudFactoryHelper.AddRow(htmlTable, label + Titles.RequiredFieldIndicator, textBox,
-                        numberValidator, required);
-                    return;
-                }
-            }
-
-            ScrudFactoryHelper.AddRow(htmlTable, label, textBox, numberValidator);
         }
 
-        private static TextBox GetNumberTextBox(string id, int maxLength)
-        {
-            var textBox = ScrudTextBox.GetTextBox(id, maxLength);
-            //textBox.Attributes["type"] = "number";
-            return textBox;
-        }
 
         private static CompareValidator GetNumberValidator(Control controlToValidate, string domain, string cssClass)
         {
-            using (var validator = new CompareValidator())
+            using (CompareValidator validator = new CompareValidator())
             {
                 validator.ID = controlToValidate.ID + "NumberValidator";
                 validator.ErrorMessage = @"<br/>" + Titles.OnlyNumbersAllowed;

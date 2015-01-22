@@ -13,12 +13,12 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin {
     public partial class DatabaseBackup {
         
         /// <summary>
-        /// BackupNameInputText control.
+        /// Placeholder1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText BackupNameInputText;
+        protected global::System.Web.UI.WebControls.PlaceHolder Placeholder1;
     }
 }

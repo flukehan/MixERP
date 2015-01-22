@@ -42,6 +42,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
                 scrud.UseDisplayViewsAsParents = true;
+                scrud.ExcludeEdit = "item_code, maintain_stock, item_group_id";
 
                 scrud.Text = Titles.Items;
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof (ItemsPopup));

@@ -31,7 +31,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 {
     internal static class ScrudDateTextBox
     {
-        internal static void AddDateTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isNullable, string validatorCssClass, Assembly assembly)
+        internal static void AddDateTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isNullable, string validatorCssClass, Assembly assembly, bool disabled)
         {
             if (htmlTable == null)
             {
@@ -45,13 +45,14 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 
             string id = columnName + "_textbox";
 
-            using (var textBox = ScrudTextBox.GetTextBox(id, 100))
+            using (TextBox textBox = ScrudTextBox.GetTextBox(id, 100))
             {
                 Net.Common.jQueryHelper.jQueryUI.AddjQueryUIDatePicker(null, id, null, null);
 
-                var label = ScrudLocalizationHelper.GetResourceString(assembly, resourceClassName, columnName);
+                string label = ScrudLocalizationHelper.GetResourceString(assembly, resourceClassName, columnName);
 
                 textBox.Text = GetLocalizedDate(defaultValue);
+                textBox.ReadOnly = disabled;
 
                 using (CompareValidator dateValidator = GetDateValidator(textBox, validatorCssClass))
                 {
@@ -93,7 +94,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
                 return null;
             }
 
-            using (var validator = new CompareValidator())
+            using (CompareValidator validator = new CompareValidator())
             {
                 validator.ID = controlToValidate.ID + "CompareValidator";
                 validator.ErrorMessage = @"<br/>" + Titles.InvalidDate;

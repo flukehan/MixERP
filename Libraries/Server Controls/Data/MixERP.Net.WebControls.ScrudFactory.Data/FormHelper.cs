@@ -22,6 +22,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.IO;
+using System.IO.Ports;
+using System.Linq;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using MixERP.Net.DBFactory;
@@ -165,8 +167,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
             }
         }
 
-        public static bool UpdateRecord(int userId, string tableSchema, string tableName,
-            Collection<KeyValuePair<string, object>> data, string keyColumn, string keyColumnValue, string imageColumn)
+        public static bool UpdateRecord(int userId, string tableSchema, string tableName, Collection<KeyValuePair<string, object>> data, string keyColumn, string keyColumnValue, string imageColumn, string[] exclusion)
         {
             if (data == null)
             {
@@ -181,17 +182,21 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
             KeyValuePair<string, object> auditUserId = new KeyValuePair<string, object>("audit_user_id", userId);
             data.Add(auditUserId);
 
+
             foreach (KeyValuePair<string, object> pair in data)
             {
-                counter++;
+                if (!exclusion.Contains(pair.Key.ToUpperInvariant()))
+                {
+                    counter++;
 
-                if (counter.Equals(1))
-                {
-                    columns += DBFactory.Sanitizer.SanitizeIdentifierName(pair.Key) + "=@" + pair.Key;
-                }
-                else
-                {
-                    columns += ", " + DBFactory.Sanitizer.SanitizeIdentifierName(pair.Key) + "=@" + pair.Key;
+                    if (counter.Equals(1))
+                    {
+                        columns += DBFactory.Sanitizer.SanitizeIdentifierName(pair.Key) + "=@" + pair.Key;
+                    }
+                    else
+                    {
+                        columns += ", " + DBFactory.Sanitizer.SanitizeIdentifierName(pair.Key) + "=@" + pair.Key;
+                    }
                 }
             }
 
@@ -207,31 +212,34 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
 
                 foreach (KeyValuePair<string, object> pair in data)
                 {
-                    if (pair.Value == null)
+                    if (!exclusion.Contains(pair.Key.ToUpperInvariant()))
                     {
-                        command.Parameters.AddWithValue("@" + pair.Key, DBNull.Value);
-                    }
-                    else
-                    {
-                        if (pair.Key.Equals(imageColumn))
+                        if (pair.Value == null)
                         {
-                            FileStream stream = new FileStream(pair.Value.ToString(), FileMode.Open, FileAccess.Read);
-                            try
-                            {
-                                using (BinaryReader reader = new BinaryReader(new BufferedStream(stream)))
-                                {
-                                    byte[] byteArray = reader.ReadBytes(Convert.ToInt32(stream.Length));
-                                    command.Parameters.AddWithValue("@" + pair.Key, byteArray);
-                                }
-                            }
-                            finally
-                            {
-                                stream.Close();
-                            }
+                            command.Parameters.AddWithValue("@" + pair.Key, DBNull.Value);
                         }
                         else
                         {
-                            command.Parameters.AddWithValue("@" + pair.Key, pair.Value);
+                            if (pair.Key.Equals(imageColumn))
+                            {
+                                FileStream stream = new FileStream(pair.Value.ToString(), FileMode.Open, FileAccess.Read);
+                                try
+                                {
+                                    using (BinaryReader reader = new BinaryReader(new BufferedStream(stream)))
+                                    {
+                                        byte[] byteArray = reader.ReadBytes(Convert.ToInt32(stream.Length));
+                                        command.Parameters.AddWithValue("@" + pair.Key, byteArray);
+                                    }
+                                }
+                                finally
+                                {
+                                    stream.Close();
+                                }
+                            }
+                            else
+                            {
+                                command.Parameters.AddWithValue("@" + pair.Key, pair.Value);
+                            }
                         }
                     }
                 }

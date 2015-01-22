@@ -28,23 +28,24 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 {
     internal static class ScrudRadioButtonList
     {
-        internal static void AddRadioButtonList(HtmlTable htmlTable, string resourceClassName, string columnName, bool isNullable, string keys, string values, string selectedValue, string errorCssClass, Assembly assembly)
+        internal static void AddRadioButtonList(HtmlTable htmlTable, string resourceClassName, string columnName, bool isNullable, string keys, string values, string selectedValue, string errorCssClass, Assembly assembly, bool disabled)
         {
             if (htmlTable == null)
             {
                 return;
             }
 
-            using (var radioButtonList = GetRadioButtonList(columnName + "_radiobuttonlist", keys, values, selectedValue))
+            using (RadioButtonList radioButtonList = GetRadioButtonList(columnName + "_radiobuttonlist", keys, values, selectedValue))
             {
-                var label = ScrudLocalizationHelper.GetResourceString(assembly, resourceClassName, columnName);
+                string label = ScrudLocalizationHelper.GetResourceString(assembly, resourceClassName, columnName);
+
+                radioButtonList.Enabled = !disabled;
 
                 if (!isNullable)
                 {
-                    using (var required = ScrudFactoryHelper.GetRequiredFieldValidator(radioButtonList, errorCssClass))
+                    using (RequiredFieldValidator required = ScrudFactoryHelper.GetRequiredFieldValidator(radioButtonList, errorCssClass))
                     {
-                        ScrudFactoryHelper.AddRow(htmlTable, label + Titles.RequiredFieldIndicator,
-                            radioButtonList, required);
+                        ScrudFactoryHelper.AddRow(htmlTable, label + Titles.RequiredFieldIndicator, radioButtonList, required);
                         return;
                     }
                 }
@@ -60,13 +61,14 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
                 return null;
             }
 
-            using (var list = new RadioButtonList())
+            using (RadioButtonList list = new RadioButtonList())
             {
                 list.ID = id;
                 list.ClientIDMode = ClientIDMode.Static;
-
                 list.RepeatDirection = RepeatDirection.Horizontal;
+
                 Helper.AddListItems(list, keys, values, selectedValues);
+                
                 return list;
             }
         }

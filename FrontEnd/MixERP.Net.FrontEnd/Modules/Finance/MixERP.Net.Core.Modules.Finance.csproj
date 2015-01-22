@@ -241,13 +241,6 @@
     <Compile Include="Reports\RetainedEarnings.ascx.designer.cs">
       <DependentUpon>RetainedEarnings.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Reports\RetainedEarningsPopup.ascx.cs">
-      <DependentUpon>RetainedEarningsPopup.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Reports\RetainedEarningsPopup.ascx.designer.cs">
-      <DependentUpon>RetainedEarningsPopup.ascx</DependentUpon>
-    </Compile>
     <Compile Include="Reports\StockTransactionReport.ascx.cs">
       <DependentUpon>StockTransactionReport.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

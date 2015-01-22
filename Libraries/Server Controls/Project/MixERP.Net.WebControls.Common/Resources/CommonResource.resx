@@ -118,13 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="DateMustBeGreaterThan" xml:space="preserve">
-    <value>Invalid Date. Must be greater than "{0}".</value>
+    <value>Invalid date. Must be greater than "{0}".</value>
   </data>
   <data name="DateMustBeLessThan" xml:space="preserve">
-    <value>Invalid Date. Must be less than "{0}".</value>
+    <value>Invalid date. Must be less than "{0}".</value>
   </data>
   <data name="InvalidDate" xml:space="preserve">
-    <value>Invalid Date</value>
+    <value>Invalid date.</value>
+  </data>
+  <data name="NoRecordFound" xml:space="preserve">
+    <value>Sorry, no record found.</value>
   </data>
   <data name="RequiredField" xml:space="preserve">
     <value>This is a required field.</value>

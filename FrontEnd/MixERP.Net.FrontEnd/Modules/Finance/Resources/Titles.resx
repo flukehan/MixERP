@@ -468,4 +468,22 @@
   <data name="StatementOfCashFlows" xml:space="preserve">
     <value>Statement of Cash Flows</value>
   </data>
+  <data name="AccountId" xml:space="preserve">
+    <value>Account Id</value>
+  </data>
+  <data name="BalanceSheet" xml:space="preserve">
+    <value>Balance Sheet</value>
+  </data>
+  <data name="CurrentPeriod" xml:space="preserve">
+    <value>Current Period</value>
+  </data>
+  <data name="PreviousPeriod" xml:space="preserve">
+    <value>Previous Period  </value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="RetainedEarnings" xml:space="preserve">
+    <value>Retained Earnings</value>
+  </data>
 </root>

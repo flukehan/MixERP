@@ -63,7 +63,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Hubs
 
             if (backupDirectory != null)
             {
-                string path = Path.Combine(backupDirectory, fileName + ".bakup");
+                string path = Path.Combine(backupDirectory, fileName + ".backup");
                 var result=this.BackupDatabase(pgdumpPath, server, path);
 
                 if (result)
@@ -72,7 +72,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Hubs
                     message.Append(Labels.DatabaseBackupSuccessful);
                     message.Append("&nbsp;");
                     message.Append("<a href='");
-                    message.Append(PageUtility.ResolveUrl(Path.Combine(server.DatabaseBackupDirectory, fileName + ".bakup")));
+                    message.Append(PageUtility.ResolveUrl(Path.Combine(server.DatabaseBackupDirectory, fileName + ".backup")));
                     message.Append("'");
                     message.Append(" target='_blank'>");
                     message.Append(Labels.ClickHereToDownload);

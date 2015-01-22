@@ -237,4 +237,25 @@
   <data name="States" xml:space="preserve">
     <value>States</value>
   </data>
+  <data name="BackupDatabase" xml:space="preserve">
+    <value>Backup Database</value>
+  </data>
+  <data name="BackupNow" xml:space="preserve">
+    <value>Backup Now</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="DatabaseBackups" xml:space="preserve">
+    <value>Database Backups</value>
+  </data>
+  <data name="EnterBackupName" xml:space="preserve">
+    <value>Enter Backup Name</value>
+  </data>
+  <data name="ViewBackups" xml:space="preserve">
+    <value>View Backups</value>
+  </data>
+  <data name="BackupConsole" xml:space="preserve">
+    <value>Backup Console</value>
+  </data>
 </root>

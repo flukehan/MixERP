@@ -294,17 +294,6 @@ namespace MixERP.Net.Common
             return (page).ResolveUrl(url);
         }
 
-        public static string ToFormattedNumber(this string number, string format)
-        {
-            decimal value = TryCastDecimal(number);
-
-            if (value.Equals(0))
-            {
-                return string.Empty;
-            }
-
-            return string.Format(Thread.CurrentThread.CurrentUICulture, format, value);
-        }
         public static bool TryCastBoolean(object value)
         {
             bool retVal = false;

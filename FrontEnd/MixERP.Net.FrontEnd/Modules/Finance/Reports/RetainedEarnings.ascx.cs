@@ -26,6 +26,7 @@ using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models.Core;
+using MixERP.Net.Core.Modules.Finance.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.Common;
 
@@ -126,14 +127,14 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
         {
             this.grid.AutoGenerateColumns = false;
 
-            GridViewHelper.AddDataBoundControl(this.grid, "value_date", "Value Date", "{0:d}");
-            GridViewHelper.AddDataBoundControl(this.grid, "tran_code", "Tran Code");
-            GridViewHelper.AddDataBoundControl(this.grid, "statement_reference", "Statement Reference");
-            GridViewHelper.AddDataBoundControl(this.grid, "debit", "Debit", "{0:N}", true);
-            GridViewHelper.AddDataBoundControl(this.grid, "credit", "Credit", "{0:N}", true);
-            GridViewHelper.AddDataBoundControl(this.grid, "balance", "Balance", "{0:N}", true);
-            GridViewHelper.AddDataBoundControl(this.grid, "office", "Office");
-            GridViewHelper.AddDataBoundControl(this.grid, "account", "Account");
+            GridViewHelper.AddDataBoundControl(this.grid, "value_date", Titles.ValueDate, "{0:d}");
+            GridViewHelper.AddDataBoundControl(this.grid, "tran_code", Titles.TranCode);
+            GridViewHelper.AddDataBoundControl(this.grid, "statement_reference", Titles.StatementReference);
+            GridViewHelper.AddDataBoundControl(this.grid, "debit", Titles.Debit, "{0:N}", true);
+            GridViewHelper.AddDataBoundControl(this.grid, "credit", Titles.Credit, "{0:N}", true);
+            GridViewHelper.AddDataBoundControl(this.grid, "balance", Titles.Balance, "{0:N}", true);
+            GridViewHelper.AddDataBoundControl(this.grid, "office", Titles.Office);
+            GridViewHelper.AddDataBoundControl(this.grid, "account", Titles.Account);
         }
 
         private void CreateGridPanel(Control container)
@@ -175,7 +176,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
         {
             using (HtmlGenericControl header = new HtmlGenericControl("h2"))
             {
-                header.InnerText = "Retained Earnings";
+                header.InnerText = Titles.RetainedEarnings;
                 container.Controls.Add(header);
             }
 
@@ -189,7 +190,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
         {
             using (HtmlGenericControl field = HtmlControlHelper.GetField())
             {
-                using (HtmlGenericControl label = HtmlControlHelper.GetLabel("Date", "DateTextBox"))
+                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Titles.Date, "DateTextBox"))
                 {
                     field.Controls.Add(label);
                 }
@@ -207,7 +208,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
         {
             using (HtmlGenericControl field = HtmlControlHelper.GetField())
             {
-                using (HtmlGenericControl label = HtmlControlHelper.GetLabel("Factor", "FactorInputText"))
+                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Titles.Factor, "FactorInputText"))
                 {
                     field.Controls.Add(label);
                 }
@@ -227,7 +228,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             this.printButton = new HtmlInputButton();
             this.printButton.ID = "PrintButton";
             this.printButton.Attributes.Add("class", "ui orange button");
-            this.printButton.Value = "Print";
+            this.printButton.Value = Titles.Print;
 
             container.Controls.Add(this.printButton);
         }
@@ -237,7 +238,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             this.showButton = new Button();
             this.showButton.ID = "ShowButton";
             this.showButton.CssClass = "ui green button";
-            this.showButton.Text = "Show";
+            this.showButton.Text = Titles.Show;
             this.showButton.Click += this.ShowButton_Click;
             container.Controls.Add(this.showButton);
         }
@@ -248,7 +249,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             int factor = Conversion.TryCastInteger(this.factorInputText.Value);
             int officeId = SessionHelper.GetOfficeId();
 
-            using (DataTable table = MixERP.Net.Core.Modules.Finance.Data.Reports.RetainedEarnings.GetRetainedEarningStatementDataTable(date, officeId, factor))
+            using (DataTable table = Data.Reports.RetainedEarnings.GetRetainedEarningStatementDataTable(date, officeId, factor))
             {
                 this.grid.DataSource = table;
                 this.grid.DataBind();

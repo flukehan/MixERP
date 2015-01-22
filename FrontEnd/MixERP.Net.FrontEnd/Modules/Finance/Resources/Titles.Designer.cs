@@ -70,6 +70,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account Id.
+        /// </summary>
+        internal static string AccountId {
+            get {
+                return ResourceManager.GetString("AccountId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Account Master.
         /// </summary>
         internal static string AccountMaster {
@@ -192,6 +201,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string Balance {
             get {
                 return ResourceManager.GetString("Balance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Balance Sheet.
+        /// </summary>
+        internal static string BalanceSheet {
+            get {
+                return ResourceManager.GetString("BalanceSheet", resourceCulture);
             }
         }
         
@@ -435,6 +453,24 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string Currency {
             get {
                 return ResourceManager.GetString("Currency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Period.
+        /// </summary>
+        internal static string CurrentPeriod {
+            get {
+                return ResourceManager.GetString("CurrentPeriod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        internal static string Date {
+            get {
+                return ResourceManager.GetString("Date", resourceCulture);
             }
         }
         
@@ -790,6 +826,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Previous Period  .
+        /// </summary>
+        internal static string PreviousPeriod {
+            get {
+                return ResourceManager.GetString("PreviousPeriod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Price Type.
         /// </summary>
         internal static string PriceType {
@@ -840,6 +885,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string Reject {
             get {
                 return ResourceManager.GetString("Reject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retained Earnings.
+        /// </summary>
+        internal static string RetainedEarnings {
+            get {
+                return ResourceManager.GetString("RetainedEarnings", resourceCulture);
             }
         }
         

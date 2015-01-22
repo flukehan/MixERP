@@ -112,9 +112,14 @@ namespace MixERP.Net.WebControls.ScrudFactory
         public string ErrorCssClass { get; set; }
 
         /// <summary>
-        ///     Exclude a comma separated list of columns for CRUD operation.
+        /// Comma separated list of columns to exclude for CRUD operation.
         /// </summary>
         public string Exclude { get; set; }
+
+        /// <summary>
+        /// Comma separated list of columns to exclude during the edit operation.
+        /// </summary>
+        public string ExcludeEdit { get; set; }
 
         public string FailureCssClass { get; set; }
 

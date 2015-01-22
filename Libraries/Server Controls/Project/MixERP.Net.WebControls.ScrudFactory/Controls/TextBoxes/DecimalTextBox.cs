@@ -28,27 +28,32 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 {
     internal static class ScrudDecimalTextBox
     {
-        internal static void AddDecimalTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isNullable, int maxLength, string domain, string errorCssClass, Assembly assembly)
+        internal static void AddDecimalTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isNullable, int maxLength, string domain, string errorCssClass, Assembly assembly, bool disabled)
         {
-            var textBox = ScrudTextBox.GetTextBox(columnName + "_textbox", maxLength);
-            var label = ScrudLocalizationHelper.GetResourceString(assembly, resourceClassName, columnName);
-
-            var validator = GetDecimalValidator(textBox, domain, errorCssClass);
-            textBox.Text = defaultValue;
-
-            if (!isNullable)
+            using (TextBox textBox = ScrudTextBox.GetTextBox(columnName + "_textbox", maxLength))
             {
-                var required = ScrudFactoryHelper.GetRequiredFieldValidator(textBox, errorCssClass);
-                ScrudFactoryHelper.AddRow(htmlTable, label + Titles.RequiredFieldIndicator, textBox, validator, required);
-                return;
-            }
+                string label = ScrudLocalizationHelper.GetResourceString(assembly, resourceClassName, columnName);
 
-            ScrudFactoryHelper.AddRow(htmlTable, label, textBox, validator);
+                using (CompareValidator validator = GetDecimalValidator(textBox, domain, errorCssClass))
+                {
+                    textBox.Text = defaultValue;
+                    textBox.ReadOnly = disabled;
+
+                    if (!isNullable)
+                    {
+                        RequiredFieldValidator required = ScrudFactoryHelper.GetRequiredFieldValidator(textBox, errorCssClass);
+                        ScrudFactoryHelper.AddRow(htmlTable, label + Titles.RequiredFieldIndicator, textBox, validator, required);
+                        return;
+                    }
+
+                    ScrudFactoryHelper.AddRow(htmlTable, label, textBox, validator);
+                }
+            }
         }
 
         private static CompareValidator GetDecimalValidator(Control controlToValidate, string domain, string cssClass)
         {
-            using (var validator = new CompareValidator())
+            using (CompareValidator validator = new CompareValidator())
             {
                 validator.ID = controlToValidate.ID + "DecimalValidator";
                 validator.ErrorMessage = @"<br/>" + Titles.OnlyNumbersAllowed;
@@ -60,7 +65,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
                 validator.Type = ValidationDataType.Double;
 
                 //MixERP strict data type
-                if (domain.Contains("strict") && !domain.Contains("strict2"))
+                if (domain.Contains("strict"))
                 {
                     validator.Operator = ValidationCompareOperator.GreaterThan;
                 }

@@ -16,15 +16,42 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
-
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace MixERP.Net.Core.Modules.Finance.Reports
+namespace MixERP.Net.Common.Extensions
 {
-    public partial class RetainedEarningsPopup : System.Web.UI.UserControl
+    public static class StringExtension
     {
-        protected void Page_Load(object sender, EventArgs e)
+        public static bool AnyNullOrWhitespace(this string[] items)
         {
+            foreach (string item in items)
+            {
+                if (string.IsNullOrWhiteSpace(item))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
+
+        public static string ToFormattedNumber(this string number, string format)
+        {
+            decimal value = Conversion.TryCastDecimal(number);
+
+            if (value.Equals(0))
+            {
+                return string.Empty;
+            }
+
+            return string.Format(Thread.CurrentThread.CurrentUICulture, format, value);
+        }
+
+
     }
 }

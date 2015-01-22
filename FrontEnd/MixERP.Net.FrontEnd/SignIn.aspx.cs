@@ -366,7 +366,7 @@ namespace MixERP.Net.FrontEnd
             items.Add(new ListItem("English (United States)", "en-US"));
             items.Add(new ListItem("English (Great Britain)", "en-GB"));
             items.Add(new ListItem("Français (France)", "fr-FR"));
-            items.Add(new ListItem("Deutsch (Deutschland)", "de-De"));
+            items.Add(new ListItem("Deutsch (Deutschland)", "de-DE"));
             items.Add(new ListItem("नेपाली (नेपाल)", "ne-NP"));
             items.Add(new ListItem("हिन्दी (India)", "hi-IN"));
 

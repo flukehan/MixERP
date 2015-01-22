@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MixERP.Net.WebControls.Common.Resources {
+namespace MixERP.Net.WebControls.ScrudFactory.Resources {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace MixERP.Net.WebControls.Common.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class CommonResource {
+    internal class Errors {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal CommonResource() {
+        internal Errors() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace MixERP.Net.WebControls.Common.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MixERP.Net.WebControls.Common.Resources.CommonResource", typeof(CommonResource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MixERP.Net.WebControls.ScrudFactory.Resources.Errors", typeof(Errors).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,47 +61,11 @@ namespace MixERP.Net.WebControls.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid date. Must be greater than &quot;{0}&quot;..
+        ///   Looks up a localized string similar to There is a mismatching count of key/value items in this ListControl..
         /// </summary>
-        internal static string DateMustBeGreaterThan {
+        internal static string KeyValueMismatch {
             get {
-                return ResourceManager.GetString("DateMustBeGreaterThan", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid date. Must be less than &quot;{0}&quot;..
-        /// </summary>
-        internal static string DateMustBeLessThan {
-            get {
-                return ResourceManager.GetString("DateMustBeLessThan", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid date..
-        /// </summary>
-        internal static string InvalidDate {
-            get {
-                return ResourceManager.GetString("InvalidDate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sorry, no record found..
-        /// </summary>
-        internal static string NoRecordFound {
-            get {
-                return ResourceManager.GetString("NoRecordFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This is a required field..
-        /// </summary>
-        internal static string RequiredField {
-            get {
-                return ResourceManager.GetString("RequiredField", resourceCulture);
+                return ResourceManager.GetString("KeyValueMismatch", resourceCulture);
             }
         }
     }

@@ -8,6 +8,15 @@ var signInButton = $("#SignInButton");
 $(document).ready(function() {
     usernameInputText.val('binod');
     passwordInputPassword.val('binod');
+
+    var languageSelect = $("#LanguageSelect");
+
+    var userLang = navigator.language || navigator.userLanguage;
+
+    if (languageSelect.find('option[value=' + userLang + ']').length) {
+        languageSelect.val(userLang);
+    };
+
     $(".ui.checkbox").checkbox();
 
     var message = getParameterByName("Message");

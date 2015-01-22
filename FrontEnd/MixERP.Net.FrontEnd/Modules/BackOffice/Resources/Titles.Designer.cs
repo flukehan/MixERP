@@ -79,6 +79,33 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Backup Console.
+        /// </summary>
+        internal static string BackupConsole {
+            get {
+                return ResourceManager.GetString("BackupConsole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Backup Database.
+        /// </summary>
+        internal static string BackupDatabase {
+            get {
+                return ResourceManager.GetString("BackupDatabase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Backup Now.
+        /// </summary>
+        internal static string BackupNow {
+            get {
+                return ResourceManager.GetString("BackupNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cash Repositories.
         /// </summary>
         internal static string CashRepositories {
@@ -93,6 +120,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string Clear {
             get {
                 return ResourceManager.GetString("Clear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        internal static string Close {
+            get {
+                return ResourceManager.GetString("Close", resourceCulture);
             }
         }
         
@@ -133,6 +169,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Database Backups.
+        /// </summary>
+        internal static string DatabaseBackups {
+            get {
+                return ResourceManager.GetString("DatabaseBackups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Database Statistics.
         /// </summary>
         internal static string DatabaseStatistics {
@@ -156,6 +201,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string Email {
             get {
                 return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter Backup Name.
+        /// </summary>
+        internal static string EnterBackupName {
+            get {
+                return ResourceManager.GetString("EnterBackupName", resourceCulture);
             }
         }
         
@@ -408,6 +462,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string VacuumFullDatabase {
             get {
                 return ResourceManager.GetString("VacuumFullDatabase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View Backups.
+        /// </summary>
+        internal static string ViewBackups {
+            get {
+                return ResourceManager.GetString("ViewBackups", resourceCulture);
             }
         }
         

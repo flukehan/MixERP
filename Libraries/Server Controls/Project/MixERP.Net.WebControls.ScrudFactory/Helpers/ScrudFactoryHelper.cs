@@ -19,6 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
@@ -46,9 +47,9 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 
             using (var labelCell = new HtmlTableCell())
             {
-                using (var controlContainer = new HtmlTableCell())
+                using (HtmlTableCell controlContainer = new HtmlTableCell())
                 {
-                    using (var labelLiteral = new Literal())
+                    using (Literal labelLiteral = new Literal())
                     {
                         labelLiteral.Text = string.Format(Thread.CurrentThread.CurrentCulture, "<label for='{0}'>{1}</label>", dropDownList.ID, label);
                         labelCell.Attributes.Add("class", "label-cell");
@@ -90,7 +91,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 
                                 controlContainer.Controls.Add(controlTable);
 
-                                using (var newRow = new HtmlTableRow())
+                                using (HtmlTableRow newRow = new HtmlTableRow())
                                 {
                                     newRow.Cells.Add(labelCell);
                                     newRow.Cells.Add(controlContainer);
@@ -103,8 +104,13 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
             }
         }
 
-        internal static void AddField(HtmlTable htmlTable, string resourceClassName, string itemSelectorPath, string columnName, string defaultValue, bool isSerial, bool isNullable, string dataType, string domain, int maxLength, string parentTableSchema, string parentTable, string parentTableColumn, string displayFields, string displayViews, bool useDisplayFieldAsParent, string selectedValues, string errorCssClass, Assembly assembly)
+        internal static void AddField(HtmlTable htmlTable, string resourceClassName, string itemSelectorPath, string columnName, string defaultValue, bool isSerial, bool isNullable, string dataType, string domain, int maxLength, string parentTableSchema, string parentTable, string parentTableColumn, string displayFields, string displayViews, bool useDisplayFieldAsParent, string selectedValues, string errorCssClass, Assembly assembly, bool disabled)
         {
+            if (isSerial)
+            {
+                disabled = true;
+            }
+
             if (htmlTable == null)
             {
                 return;
@@ -119,27 +125,27 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
             {
                 if (ScrudTypes.Strings.Contains(dataType))
                 {
-                    ScrudTextBox.AddTextBox(htmlTable, resourceClassName, columnName, defaultValue, isNullable, maxLength, errorCssClass, assembly);
+                    ScrudTextBox.AddTextBox(htmlTable, resourceClassName, columnName, defaultValue, isNullable, maxLength, errorCssClass, assembly, disabled);
                 }
 
                 if (ScrudTypes.Shorts.Contains(dataType) || ScrudTypes.Integers.Contains(dataType) || ScrudTypes.Longs.Contains(dataType))
                 {
-                    ScrudNumberTextBox.AddNumberTextBox(htmlTable, resourceClassName, columnName, defaultValue, isSerial, isNullable, maxLength, domain, errorCssClass, assembly);
+                    ScrudNumberTextBox.AddNumberTextBox(htmlTable, resourceClassName, columnName, defaultValue, isSerial, isNullable, maxLength, domain, errorCssClass, assembly, disabled);
                 }
 
                 if (ScrudTypes.Decimals.Contains(dataType))
                 {
-                    ScrudDecimalTextBox.AddDecimalTextBox(htmlTable, resourceClassName, columnName, defaultValue, isNullable, maxLength, domain, errorCssClass, assembly);
+                    ScrudDecimalTextBox.AddDecimalTextBox(htmlTable, resourceClassName, columnName, defaultValue, isNullable, maxLength, domain, errorCssClass, assembly, disabled);
                 }
 
                 if (ScrudTypes.Bools.Contains(dataType))
                 {
-                    ScrudRadioButtonList.AddRadioButtonList(htmlTable, resourceClassName, columnName, isNullable, Titles.YesNo, "true,false", defaultValue, errorCssClass, assembly);
+                    ScrudRadioButtonList.AddRadioButtonList(htmlTable, resourceClassName, columnName, isNullable, Titles.YesNo, "true,false", defaultValue, errorCssClass, assembly, disabled);
                 }
 
                 if (ScrudTypes.Dates.Contains(dataType))
                 {
-                    ScrudDateTextBox.AddDateTextBox(htmlTable, resourceClassName, columnName, defaultValue, isNullable, errorCssClass, assembly);
+                    ScrudDateTextBox.AddDateTextBox(htmlTable, resourceClassName, columnName, defaultValue, isNullable, errorCssClass, assembly, disabled);
                 }
 
                 if (ScrudTypes.Files.Contains(dataType))
@@ -149,7 +155,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
             }
             else
             {
-                ScrudDropDownList.AddDropDownList(htmlTable, resourceClassName, itemSelectorPath, columnName, isNullable, parentTableSchema, parentTable, parentTableColumn, defaultValue, displayFields, displayViews, useDisplayFieldAsParent, selectedValues, errorCssClass, assembly);
+                ScrudDropDownList.AddDropDownList(htmlTable, resourceClassName, itemSelectorPath, columnName, isNullable, parentTableSchema, parentTable, parentTableColumn, defaultValue, displayFields, displayViews, useDisplayFieldAsParent, selectedValues, errorCssClass, assembly, disabled);
             }
         }
 
@@ -170,11 +176,11 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
                 return;
             }
 
-            using (var labelCell = new HtmlTableCell())
+            using (HtmlTableCell labelCell = new HtmlTableCell())
             {
-                using (var controlCell = new HtmlTableCell())
+                using (HtmlTableCell controlCell = new HtmlTableCell())
                 {
-                    using (var labelLiteral = new Literal())
+                    using (Literal labelLiteral = new Literal())
                     {
                         labelLiteral.Text = string.Format(Thread.CurrentThread.CurrentCulture, "<label for='{0}'>{1}</label>", controls[0].ID, label);
                         labelCell.Attributes.Add("class", "label-cell");
@@ -182,7 +188,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
                         labelCell.Controls.Add(labelLiteral);
                         controlCell.Attributes.Add("class", "control-cell");
 
-                        foreach (var control in controls)
+                        foreach (Control control in controls)
                         {
                             if (control != null)
                             {
@@ -200,7 +206,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
                             }
                         }
 
-                        using (var newRow = new HtmlTableRow())
+                        using (HtmlTableRow newRow = new HtmlTableRow())
                         {
                             newRow.Cells.Add(labelCell);
                             newRow.Cells.Add(controlCell);
@@ -218,7 +224,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
                 return null;
             }
 
-            using (var validator = new RequiredFieldValidator())
+            using (RequiredFieldValidator validator = new RequiredFieldValidator())
             {
                 validator.ID = controlToValidate.ID + "RequiredValidator";
                 validator.ErrorMessage = @"<br/>" + Titles.RequiredField;

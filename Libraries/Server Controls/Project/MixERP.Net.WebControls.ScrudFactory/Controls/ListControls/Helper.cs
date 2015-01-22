@@ -19,7 +19,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Linq;
+using System.Web.Configuration;
 using System.Web.UI.WebControls;
+using MixERP.Net.WebControls.ScrudFactory.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 {
@@ -42,28 +44,27 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
                 return;
             }
 
-            var key = keys.Split(',');
-            var value = values.Split(',');
+            string[] key = keys.Split(',');
+            string[] value = values.Split(',');
 
             if (key.Count() != value.Count())
             {
-                throw new InvalidOperationException("Key or value count mismatch. Cannot add items to " + control.ID);
+                throw new InvalidOperationException(Errors.KeyValueMismatch);
             }
 
-            for (var i = 0; i < key.Length; i++)
+            for (int i = 0; i < key.Length; i++)
             {
-                var item = new ListItem(key[i].Trim(), value[i].Trim());
+                ListItem item = new ListItem(key[i].Trim(), value[i].Trim());
                 control.Items.Add(item);
             }
 
             foreach (ListItem item in control.Items)
             {
-                //Checkbox list allows multiple selection.
                 if (control is CheckBoxList)
                 {
                     if (!string.IsNullOrWhiteSpace(selectedValues))
                     {
-                        foreach (var selectedValue in selectedValues.Split(','))
+                        foreach (string selectedValue in selectedValues.Split(','))
                         {
                             if (item.Value.Trim().Equals(selectedValue.Trim()))
                             {
