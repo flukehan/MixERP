@@ -40,10 +40,20 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
 
                 scrud.Text = Titles.AgeingSlabs;
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof(AgeingSlabs));
+
+                this.AddScrudCustomValidatorErrorMessages();
+
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
 
             base.OnControlLoad(sender, e);
+        }
+
+        private void AddScrudCustomValidatorErrorMessages()
+        {
+            string javascript = "var compareDaysErrorMessageLocalized= '" + Errors.CompareDaysErrorMessage + "';";
+            Common.PageUtility.RegisterJavascript("AgeingSlabs_ScrudCustomValidatorErrorMessages", javascript, this.Page, true);
+
         }
     }
 }

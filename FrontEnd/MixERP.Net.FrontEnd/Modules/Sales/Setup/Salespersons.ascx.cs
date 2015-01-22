@@ -18,6 +18,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Core.Modules.Sales.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.ScrudFactory;
 using System;
@@ -51,9 +52,11 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
                 scrud.Text = Resources.Titles.SalesPersons;
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof(Salespersons));
 
+
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
         }
+
 
         private static string GetDisplayFields()
         {

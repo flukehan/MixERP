@@ -79,6 +79,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Effective from should not be greater than the ends on..
+        /// </summary>
+        internal static string DateErrorMessage {
+            get {
+                return ResourceManager.GetString("DateErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Only {0} {1} of {2} left in stock..
         /// </summary>
         internal static string InsufficientStockWarning {

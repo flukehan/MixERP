@@ -120,6 +120,9 @@
   <data name="AccessIsDenied" xml:space="preserve">
     <value>Access is denied.</value>
   </data>
+  <data name="CompareDaysErrorMessage" xml:space="preserve">
+    <value>From days should not be greater than the to days.</value>
+  </data>
   <data name="NegativeValueSupplied" xml:space="preserve">
     <value>Negative value supplied.</value>
   </data>
