@@ -37,7 +37,7 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
                 scrud.TableSchema = "core";
                 scrud.Table = "recurring_invoices";
                 scrud.ViewSchema = "core";
-                scrud.View = "recurring_invoices";
+                scrud.View = "recurring_invoice_scrud_view";
                 scrud.Text = Titles.RecurringInvoices;
 
                 scrud.DisplayFields = GetDisplayFields();
