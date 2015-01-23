@@ -19,3 +19,18 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="AgeingSlabs.ascx.cs" Inherits="MixERP.Net.Core.Modules.Finance.Setup.AgeingSlabs" %>
 <asp:PlaceHolder ID="ScrudPlaceholder" runat="server" />
+<script type="text/javascript">
+    function scrudCustomValidator() {
+        var fromDaysTextbox = $("#from_days_textbox");
+        var toDaysTextbox = $("#to_days_textbox");
+
+        var fromDays = parseInt2(fromDaysTextbox.val());
+        var toDays = parseInt2(toDaysTextbox.val());
+
+        if (toDays < fromDays) {
+            displayMessage(window.compareDaysErrorMessageLocalized);
+            return false;
+        };
+        return true;
+    };
+</script>

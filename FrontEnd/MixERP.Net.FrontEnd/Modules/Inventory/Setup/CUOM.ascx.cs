@@ -46,10 +46,19 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
                 scrud.Text = Titles.CompoundUnitsOfMeasure;
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof (CUOM));
 
+                this.AddScrudCustomValidatorErrorMessages();
+
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
 
             base.OnControlLoad(sender, e);
+        }
+
+        private void AddScrudCustomValidatorErrorMessages()
+        {
+            string javascript = "var compareCompoundUnitOfMeasureErrorMessageLocalized= '" + Errors.CompoundUnitOfMeasureErrorMessage + "';";
+            Common.PageUtility.RegisterJavascript("CompoundUnit_ScrudCustomValidatorErrorMessages", javascript, this.Page, true);
+
         }
 
         private static string GetDisplayFields()

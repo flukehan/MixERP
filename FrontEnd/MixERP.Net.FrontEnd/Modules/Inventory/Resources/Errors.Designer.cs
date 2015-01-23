@@ -61,6 +61,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The base unit and compare unit cannot be same..
+        /// </summary>
+        internal static string CompoundUnitOfMeasureErrorMessage {
+            get {
+                return ResourceManager.GetString("CompoundUnitOfMeasureErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Only {0} {1} of {2} left in stock..
         /// </summary>
         internal static string InsufficientStockWarning {

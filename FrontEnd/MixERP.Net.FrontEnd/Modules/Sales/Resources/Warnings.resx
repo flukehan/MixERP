@@ -123,6 +123,9 @@
   <data name="CompareAmountErrorMessage" xml:space="preserve">
     <value>The amount to should be greater than the amount from.</value>
   </data>
+  <data name="DateErrorMessage" xml:space="preserve">
+    <value>Effective from should not be greater than the ends on.</value>
+  </data>
   <data name="InsufficientStockWarning" xml:space="preserve">
     <value>Only {0} {1} of {2} left in stock.</value>
     <comment>Only {Qty} {Unit} of {ItemName} left in stock.</comment>

@@ -45,10 +45,20 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
                 scrud.DisplayViews = GetDisplayViews();
                 scrud.Text = Titles.AgentBonusSlabs;
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof(BonusSlabs));
+
+                this.AddScrudCustomValidatorErrorMessages();
+                
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
 
             base.OnControlLoad(sender, e);
+        }
+
+        private void AddScrudCustomValidatorErrorMessages()
+        {
+            string javascript = "var dateErrorMessageLocalized= '" + Warnings.DateErrorMessage + "';";
+            Common.PageUtility.RegisterJavascript("SalesPerson_ScrudCustomValidatorMessages", javascript, this.Page, true);
+
         }
 
         private static string GetDisplayFields()

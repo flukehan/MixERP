@@ -24,16 +24,15 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
     function scrudCustomValidator() {
         var effectiveFromTextbox = $("#effective_from_textbox");
-        var endsOnTextbox = $("#ends_on_textbox");
+        var endsOnTextbox = $("$ends_on_textbox");
 
-        var from = parseDate(effectiveFromTextbox.val());
-        var to = parseDate(endsOnTextbox.val());
+        var effectiveFrom = parseDate(effectiveFromTextbox.val());
+        var endsOn = parseDate(endsOnTextbox.val());
 
-        if (to < from) {
-            displayScrudError("The end date should be greater than the start date.");
+        if (endsOn < effectiveFrom) {
+            displayMessage(window.dateErrorMessageLocalized);
             return false;
         };
-
         return true;
     };
 </script>
