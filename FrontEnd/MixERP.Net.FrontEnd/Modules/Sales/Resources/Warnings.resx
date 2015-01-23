@@ -124,7 +124,10 @@
     <value>The amount to should be greater than the amount from.</value>
   </data>
   <data name="DateErrorMessage" xml:space="preserve">
-    <value>Effective from should not be greater than the ends on.</value>
+    <value>Effective from  date should not be greater than the ends on.</value>
+  </data>
+  <data name="DueFrequencyErrorMessage" xml:space="preserve">
+    <value>Due days can only be 0 if due frequency id is selected.</value>
   </data>
   <data name="InsufficientStockWarning" xml:space="preserve">
     <value>Only {0} {1} of {2} left in stock.</value>
@@ -135,5 +138,14 @@
   </data>
   <data name="InvalidStockTransaction" xml:space="preserve">
     <value>Invalid stock transaction Id.</value>
+  </data>
+  <data name="ItemErrorMessage" xml:space="preserve">
+    <value>You have to select either item id or  compound id.</value>
+  </data>
+  <data name="LateFeeErrorMessage" xml:space="preserve">
+    <value>TODO</value>
+  </data>
+  <data name="RecurringAmountErrorMessage" xml:space="preserve">
+    <value>Recurring amount should not be less than or equal to 0</value>
   </data>
 </root>

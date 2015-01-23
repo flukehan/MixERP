@@ -18,3 +18,24 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="RecurringInvoices.ascx.cs" Inherits="MixERP.Net.Core.Modules.Sales.Setup.RecurringInvoices" %>
 <asp:PlaceHolder runat="server" ID="ScrudPlaceholder" />
+<script type="text/javascript">
+    function scrudCustomValidator() {
+        var itemIdDropdownlist = $("#item_id_dropdownlist");
+        var compoundItemIdDropdownlist = $("#compound_item_id_dropdownlist");
+        var recurringAmountTextbox = $("#recurring_amount_textbox");
+
+        var itemId = parseInt2(itemIdDropdownlist.getSelectedValue());
+        var compoundItemId = parseInt2(compoundItemIdDropdownlist.getSelectedValue());
+        var recurringAmount = parseFloat2(recurringAmountTextbox.val());
+
+        if (!itemId  && ! compoundItemId || itemId && compoundItemId) {
+            displayMessage(window.itemErrorMessageLocalized);
+            return false;
+        };
+        if (recurringAmount <= 0) {
+            displayMessage(window.recurringAmountErrorMessageLocalized);
+            return false;
+        };
+        return true;
+    };
+</script>
