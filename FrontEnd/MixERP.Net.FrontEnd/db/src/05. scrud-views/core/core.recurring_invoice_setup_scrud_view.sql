@@ -1,27 +1,19 @@
-﻿DROP VIEW IF EXISTS office.store_scrud_view;
-CREATE VIEW office.store_scrud_view
+﻿DROP VIEW IF EXISTS core.recurring_invoice_setup_scrud_view;
+CREATE VIEW core.recurring_invoice_setup_scrud_view
 AS
 SELECT 
-  office.stores.store_id, 
-  office.offices.office_code || '('|| office.offices.office_name||')' AS office, 
-  office.stores.store_code, 
-  office.stores.store_name, 
-  office.stores.address, 
-  office.store_types.store_type_code || '('|| office.store_types.store_type_name||')' AS store_type, 
-  office.stores.allow_sales, 
-  core.sales_taxes.sales_tax_code || '('|| core.sales_taxes.sales_tax_name||')' AS sale_tax,
-  core.accounts.account_number || '('|| core.accounts.account_name||')' AS account,
-  office.cash_repositories.cash_repository_code || '('|| office.cash_repositories.cash_repository_name||')' AS cash_repository 
+  core.recurring_invoice_setup.recurring_invoice_setup_id, 
+  core.recurring_invoices.recurring_invoice_code || ' (' || core.recurring_invoices.recurring_invoice_name || ')' AS recurring_invoice,
+  core.parties.party_code || ' (' || core.parties.party_name || ')' AS party,
+  core.recurring_invoice_setup.starts_from, 
+  core.recurring_invoice_setup.ends_on, 
+  core.recurring_invoice_setup.recurring_amount, 
+  core.payment_terms.payment_term_code || ' (' || core.payment_terms.payment_term_name || ')' AS payment_term
 FROM 
-  office.stores
-INNER JOIN office.offices
-ON office.stores.office_id = office.offices.office_id
-INNER JOIN office.store_types
-ON office.stores.store_type_id = office.store_types.store_type_id
-INNER JOIN core.sales_taxes
-ON office.stores.sales_tax_id = core.sales_taxes.sales_tax_id
-INNER JOIN core.accounts
-ON office.stores.default_cash_account_id = core.accounts.account_id
-INNER JOIN office.cash_repositories
-ON office.stores.default_cash_repository_id = office.cash_repositories.cash_repository_id;
-
+  core.recurring_invoice_setup
+INNER JOIN core.recurring_invoices
+ON core.recurring_invoice_setup.recurring_invoice_id = core.recurring_invoices.recurring_invoice_id
+INNER JOIN core.parties ON 
+core.recurring_invoice_setup.party_id = core.parties.party_id
+INNER JOIN core.payment_terms ON 
+core.recurring_invoice_setup.payment_term_id = core.payment_terms.payment_term_id;

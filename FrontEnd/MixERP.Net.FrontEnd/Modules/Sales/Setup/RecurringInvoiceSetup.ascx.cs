@@ -49,6 +49,7 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
         }
 
         private static string GetDisplayFields()
+
         {
             List<string> displayFields = new List<string>();
             ScrudHelper.AddDisplayField(displayFields, "core.recurring_invoices.recurring_invoice_id", ConfigurationHelper.GetDbParameter("RecurringInvoiceDisplayField"));
