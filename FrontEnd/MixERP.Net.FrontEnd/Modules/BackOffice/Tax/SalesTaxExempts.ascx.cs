@@ -44,8 +44,19 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
                 scrud.DisplayViews = GetDisplayViews();
 
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof(SalesTaxExempts));
+
+                this.AddScrudCustomValidatorErrorMessages();
+                
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
+        }
+
+        private void AddScrudCustomValidatorErrorMessages()
+        {
+            string javascript = "var dateErrorMessageLocalized= '" + Warnings.DateErrorMessage + "';" +
+                    "var comparePriceErrorMessageLocalized= '" + Warnings.ComparePriceErrorMessage + "';";
+            Common.PageUtility.RegisterJavascript("SalesTaxExempts_ScrudCustomValidatorErrorMessages", javascript, this.Page, true);
+
         }
 
         private static string GetDisplayFields()

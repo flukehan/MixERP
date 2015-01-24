@@ -18,3 +18,29 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="PaymentTerms.ascx.cs" Inherits="MixERP.Net.Core.Modules.Sales.Setup.PaymentTerms" %>
 <asp:PlaceHolder runat="server" ID="ScrudPlaceholder" />
+<script type="text/javascript">
+    function scrudCustomValidator() {
+        var dueDaysTextbox = $("#due_days_textbox");
+        var dueFrequencyIdDropdownlist = $("#due_frequency_id_dropdownlist");
+        var lateFeeIdDropdownlist = $("#late_fee_id_dropdownlist");
+        var lateFeePostingFrequencyIdDropdownlist = $("#late_fee_posting_frequency_id_dropdownlist");
+
+
+        var dueDays = parseInt2(dueDaysTextbox.val());
+        var dueFrequency = parseInt2(dueFrequencyIdDropdownlist.getSelectedValue());
+        var lateFee = parseInt2(lateFeeIdDropdownlist.getSelectedValue());
+        var lateFeePostingFrequency = parseInt2(lateFeePostingFrequencyIdDropdownlist.getSelectedValue());
+
+
+        if (!dueFrequency && dueDays === 0 || dueFrequency && dueDays > 0) {
+            displayMessage(window.dueFrequencyErrorMessageLocalized);
+            return false;
+        };
+        
+        if (!lateFee && lateFeePostingFrequency || lateFee && !lateFeePostingFrequency) {
+           displayMessage(window.lateFeeErrorMessageLocalized);
+           return false;
+       };
+        return true;
+    };
+</script>   

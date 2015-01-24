@@ -124,7 +124,7 @@
     <value>The amount to should be greater than the amount from.</value>
   </data>
   <data name="DateErrorMessage" xml:space="preserve">
-    <value>Effective from  date should not be greater than the ends on.</value>
+    <value>Selected date is out of range.</value>
   </data>
   <data name="DueFrequencyErrorMessage" xml:space="preserve">
     <value>Due days can only be 0 if due frequency id is selected.</value>
@@ -143,7 +143,7 @@
     <value>You have to select either item id or  compound id.</value>
   </data>
   <data name="LateFeeErrorMessage" xml:space="preserve">
-    <value>TODO</value>
+    <value>Late fee id and late fee posting frequency id both should be either selected or not.</value>
   </data>
   <data name="RecurringAmountErrorMessage" xml:space="preserve">
     <value>Recurring amount should not be less than or equal to 0</value>

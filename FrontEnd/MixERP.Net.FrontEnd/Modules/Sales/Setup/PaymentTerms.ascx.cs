@@ -44,8 +44,19 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
                 scrud.DisplayViews = GetDisplayViews();
 
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof(PaymentTerms));
+
+                this.AddScrudCustomValidatorErrorMessages();
+                
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
+        }
+
+        private void AddScrudCustomValidatorErrorMessages()
+        {
+            string javascript = "var dueFrequencyErrorMessageLocalized= '" + Warnings.DueFrequencyErrorMessage + "';" +
+                    "var lateFeeErrorMessageLocalized= '" + Warnings.LateFeeErrorMessage + "';";
+            Common.PageUtility.RegisterJavascript("PaymentTerm_ScrudCustomValidatorErrorMessages", javascript, this.Page, true);
+
         }
 
         private static string GetDisplayFields()

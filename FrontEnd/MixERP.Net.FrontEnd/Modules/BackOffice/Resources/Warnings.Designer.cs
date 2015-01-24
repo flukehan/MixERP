@@ -70,11 +70,29 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Price from should be less than price to..
+        /// </summary>
+        internal static string ComparePriceErrorMessage {
+            get {
+                return ResourceManager.GetString("ComparePriceErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot continue the task. Please correct configuration issues..
         /// </summary>
         internal static string ConfigurationError {
             get {
                 return ResourceManager.GetString("ConfigurationError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected date is out of range..
+        /// </summary>
+        internal static string DateErrorMessage {
+            get {
+                return ResourceManager.GetString("DateErrorMessage", resourceCulture);
             }
         }
         
