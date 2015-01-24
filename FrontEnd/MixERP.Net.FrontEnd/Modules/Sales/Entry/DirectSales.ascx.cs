@@ -29,6 +29,9 @@ namespace MixERP.Net.Core.Modules.Sales.Entry
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-GB");
+            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-GB");
+
             using (ProductControl product = (ProductControl) this.Page.LoadControl("~/UserControls/Products/ProductControl.ascx"))
             {
                 product.Book = TranBook.Sales;

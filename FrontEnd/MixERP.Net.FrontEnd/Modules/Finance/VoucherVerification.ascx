@@ -18,3 +18,4 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="VoucherVerification.ascx.cs" Inherits="MixERP.Net.Core.Modules.Finance.VoucherVerification" %>
+<script src="/Modules/Finance/Scripts/VoucherVerification.ascx.js"></script>

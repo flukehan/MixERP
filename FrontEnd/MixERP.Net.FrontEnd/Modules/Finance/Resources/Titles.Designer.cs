@@ -187,6 +187,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Approve This Transaction.
+        /// </summary>
+        internal static string ApproveThisTransaction {
+            get {
+                return ResourceManager.GetString("ApproveThisTransaction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Attachments (+).
         /// </summary>
         internal static string AttachmentsPlus {
@@ -237,6 +246,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string Book {
             get {
                 return ResourceManager.GetString("Book", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        internal static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
             }
         }
         
@@ -889,6 +907,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reject This Transaction.
+        /// </summary>
+        internal static string RejectThisTransaction {
+            get {
+                return ResourceManager.GetString("RejectThisTransaction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Retained Earnings.
         /// </summary>
         internal static string RetainedEarnings {
@@ -1042,6 +1069,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to TranId: #{0}.
+        /// </summary>
+        internal static string TranIdParameter {
+            get {
+                return ResourceManager.GetString("TranIdParameter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Transaction Date.
         /// </summary>
         internal static string TransactionDate {
@@ -1155,6 +1191,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string VerifiedOn {
             get {
                 return ResourceManager.GetString("VerifiedOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verify.
+        /// </summary>
+        internal static string Verify {
+            get {
+                return ResourceManager.GetString("Verify", resourceCulture);
             }
         }
         

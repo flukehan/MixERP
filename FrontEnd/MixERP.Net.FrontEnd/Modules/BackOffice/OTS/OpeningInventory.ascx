@@ -36,4 +36,4 @@
 <asp:PlaceHolder ID="Placeholder1" runat="server" />
 
 
-<script src="../Scripts/OTS/OpeningInventory.js"></script>
+<script src="../Scripts/OTS/OpeningInventory.ascx.js"></script>

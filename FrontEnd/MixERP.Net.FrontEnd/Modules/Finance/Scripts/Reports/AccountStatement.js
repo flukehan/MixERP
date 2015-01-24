@@ -71,8 +71,8 @@ statementGridView.find('tr').click(function() {
 printButton.click(function() {
     var report = "AccountStatementReport.mix?AccountNumber={0}&From={1}&To={2}";
     var accountNumber = accountNumberInputText.val();
-    var from = parseDate(fromDateTextBox.val()).toDateString();
-    var to = parseDate(toDateTextBox.val()).toDateString();
+    var from = Date.parseExact(fromDateTextBox.val(), window.shortDateFormat).toDateString();
+    var to = Date.parseExact(toDateTextBox.val(), window.shortDateFormat).toDateString();
 
     report = String.format(report, accountNumber, from, to);
     showWindow(report).toISOString();

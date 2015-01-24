@@ -2,6 +2,7 @@
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
+using MixERP.Net.Common.Helpers;
 using MixERP.Net.FrontEnd.Base;
 
 namespace MixERP.Net.Core.Modules.BackOffice.OTS
@@ -10,10 +11,28 @@ namespace MixERP.Net.Core.Modules.BackOffice.OTS
     {
 
         public override void OnControlLoad(object sender, EventArgs e)
-        {
+        {            
             this.CreateHeader(this.Placeholder1);
+
+            if (Data.OpeningInventory.Exists(SessionHelper.GetOfficeId()))
+            {
+                this.CreateMessage(this.Placeholder1);
+                return;
+            }
+
             this.CreateGridView(this.Placeholder1);
             this.CreateSaveButton(this.Placeholder1);
+        }
+
+        private void CreateMessage(Control container)
+        {
+            using (HtmlGenericControl message = new HtmlGenericControl("div"))
+            {
+                message.Attributes.Add("class", "ui positive message");
+                message.InnerText = "Opening inventory has already been entered for this office.";
+
+                container.Controls.Add(message);
+            }
         }
 
         private void CreateHeader(Control container)

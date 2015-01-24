@@ -33,8 +33,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         var factorInputText = $("#FactorInputText");
         var printButton = $("#PrintButton");
 
-        var previousPeriod = previousPeriodDateTextBox.val();
-        var currentPeriod = currentPeriodDateTextBox.val();
+        var previousPeriod = Date.parseExact(previousPeriodDateTextBox.val(), window.shortDateFormat);
+        var currentPeriod = Date.parseExact(currentPeriodDateTextBox.val(), window.shortDateFormat);
         var factor = parseInt2(factorInputText.val());
 
         var url;

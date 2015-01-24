@@ -56,6 +56,7 @@
     <Compile Include="Admin\DatabaseStatistics.cs" />
     <Compile Include="Admin\QueryTool.cs" />
     <Compile Include="Attachments.cs" />
+    <Compile Include="OpeningInventory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tax\SalesTax.cs" />
   </ItemGroup>

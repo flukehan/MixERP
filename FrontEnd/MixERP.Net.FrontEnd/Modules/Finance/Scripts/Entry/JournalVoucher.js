@@ -327,8 +327,8 @@ var addRow = function(statementReference, accountNumber, account, cashRepository
         }
     });
 
-    var html = "<tr class='grid2-row'><td>" + statementReference + "</td><td>" + accountNumber + "</td><td>" + account + "</td><td>" + cashRepository + "</td><td>" + currencyCode + "</td><td class='text-right'>" + debit + "</td><td class='text-right'>" + credit + "</td>"
-        + "<td class='text-right'>" + er + "</td><td class='text-right'>" + lcDebit + "</td><td class='text-right'>" + lcCredit + "</td>"
+    var html = "<tr class='grid2-row'><td>" + statementReference + "</td><td>" + accountNumber + "</td><td>" + account + "</td><td>" + cashRepository + "</td><td>" + currencyCode + "</td><td class='text-right'>" + getFormattedNumber(debit) + "</td><td class='text-right'>" + getFormattedNumber(credit) + "</td>"
+        + "<td class='text-right'>" + getFormattedNumber(er) + "</td><td class='text-right'>" + getFormattedNumber(lcDebit) + "</td><td class='text-right'>" + getFormattedNumber(lcCredit) + "</td>"
         + "<td><a class='pointer' onclick='removeRow($(this));'><i class='ui delete icon'></i></a><a class='pointer' onclick='toggleDanger($(this));'><i class='ui pointer check mark icon'></a></i><a class='pointer' onclick='toggleSuccess($(this));'><i class='ui pointer thumbs up icon'></i></a></td></tr>";
     grid.find("tr:last").before(html);
 
@@ -431,7 +431,7 @@ var postpostJournalTransaction = function(valueDate, referenceNumber, data, cost
 };
 
 var validate = function() {
-    valueDate = valueDateTextBox.val();
+    valueDate = Date.parseExact(valueDateTextBox.val(), window.shortDateFormat);
 
     errorLabelBottom.html("");
 

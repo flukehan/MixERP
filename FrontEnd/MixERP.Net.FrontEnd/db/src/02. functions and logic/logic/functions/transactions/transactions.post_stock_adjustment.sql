@@ -199,7 +199,7 @@ BEGIN
     SELECT _stock_master_id, _value_date, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price
     FROM temp_stock_details;
 
-    PERFORM transactions.auto_verify(_transaction_master_id);
+    PERFORM transactions.auto_verify(_transaction_master_id, _office_id);
     
     RETURN _transaction_master_id;
 END

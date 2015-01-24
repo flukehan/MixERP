@@ -100,6 +100,7 @@
     <Content Include="Reports\AccountStatementPopup.ascx" />
     <Content Include="Reports\RetainedEarnings.ascx" />
     <Content Include="Reports\RetainedEarningsPopup.ascx" />
+    <Content Include="Scripts\VoucherVerification.ascx.js" />
     <Content Include="Scripts\Reports\AccountStatement.js" />
     <Content Include="Services\web.config" />
     <None Include="Web.Debug.config">
@@ -133,7 +134,7 @@
     <Content Include="Reports\StockTransactionReport.ascx" />
     <Content Include="Reports\TrialBalance.ascx" />
     <Content Include="Scripts\Entry\JournalVoucher.js" />
-    <Content Include="Scripts\JournalVoucher.js" />
+    <Content Include="Scripts\JournalVoucher.ascx.js" />
     <Content Include="Services\CurrencyData.asmx" />
     <Content Include="Services\EODOperation.asmx" />
     <Content Include="Setup\CashFlowHeadings.ascx" />

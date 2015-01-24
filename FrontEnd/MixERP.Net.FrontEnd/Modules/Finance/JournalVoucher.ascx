@@ -21,4 +21,4 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
 <asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
 
-<script src="Scripts/JournalVoucher.js"></script>
+<script src="Scripts/JournalVoucher.ascx.js"></script>

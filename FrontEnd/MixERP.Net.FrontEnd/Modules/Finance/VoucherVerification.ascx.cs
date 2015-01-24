@@ -23,6 +23,7 @@ using MixERP.Net.Core.Modules.Finance.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.TransactionViewFactory;
 using System;
+using System.Web.UI.HtmlControls;
 
 namespace MixERP.Net.Core.Modules.Finance
 {
@@ -50,7 +51,112 @@ namespace MixERP.Net.Core.Modules.Finance
                 this.Controls.Add(view);
             }
 
+            this.AddModal();
             base.OnControlLoad(sender, e);
+        }
+
+        #region Modal
+        private void AddModal()
+        {
+            using (HtmlGenericControl modal = HtmlControlHelper.GetModal())
+            {
+                this.AddHeader(modal);
+                this.AddContent(modal);
+                this.AddActions(modal);
+                this.AddLocalizedVariables();
+
+                this.Controls.Add(modal);
+            }
+        }
+
+        private void AddHeader(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl header = new HtmlGenericControl("div"))
+            {
+                header.Attributes.Add("class", "ui massive red header");
+                container.Controls.Add(header);
+            }
+        }
+
+        private void AddContent(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl content = new HtmlGenericControl("div"))
+            {
+                content.Attributes.Add("class", "ui inverted red content");
+
+                using (HtmlGenericControl form = HtmlControlHelper.GetForm())
+                {
+                    using (HtmlGenericControl header = new HtmlGenericControl("div"))
+                    {
+                        header.Attributes.Add("class", "ui blue large dividing header");
+                        form.Controls.Add(header);
+                    }
+
+                    using (HtmlGenericControl field = HtmlControlHelper.GetField())
+                    {
+                        using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Titles.VerificationReason, "ReasonTextArea"))
+                        {
+                            field.Controls.Add(label);
+                        }
+
+                        using (HtmlTextArea textArea = new HtmlTextArea())
+                        {
+                            textArea.ID = "ReasonTextArea";
+                            field.Controls.Add(textArea);
+                        }
+                        form.Controls.Add(field);
+                    }
+
+                    content.Controls.Add(form);
+                }
+
+                container.Controls.Add(content);
+            }
+        }
+
+
+        private void AddActions(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl actions = new HtmlGenericControl("div"))
+            {
+                actions.Attributes.Add("class", "actions");
+
+                using (HtmlGenericControl buttons = new HtmlGenericControl("div"))
+                {
+                    buttons.Attributes.Add("class", "ui buttons");
+
+                    using (HtmlInputButton cancelButton = new HtmlInputButton())
+                    {
+                        cancelButton.Attributes.Add("class", "ui red button");
+                        cancelButton.Value = Titles.Cancel;
+
+                        buttons.Controls.Add(cancelButton);
+                    }
+
+                    using (HtmlInputButton verifyButton = new HtmlInputButton())
+                    {
+                        verifyButton.ID = "VerifyButton";
+                        verifyButton.Attributes.Add("class", "ui green button");
+                        verifyButton.Value = Titles.Verify;
+                        verifyButton.Attributes.Add("title", "CTRL + RETURN");
+                        buttons.Controls.Add(verifyButton);
+                    }
+
+                    actions.Controls.Add(buttons);
+                }
+
+                container.Controls.Add(actions);
+            }
+        }
+
+        #endregion
+
+        private void AddLocalizedVariables()
+        {
+            string javascript = "var approvedLocalized='{0}';var rejectLocalized='{1}';var tranIdLocalized = '{2}';";
+            javascript = string.Format(javascript, Titles.ApproveThisTransaction, Titles.RejectThisTransaction, Titles.TranIdParameter);
+
+            Common.PageUtility.RegisterJavascript("VoucherVerification_LocalizedVariables", javascript, this.Page, true);
         }
     }
 }

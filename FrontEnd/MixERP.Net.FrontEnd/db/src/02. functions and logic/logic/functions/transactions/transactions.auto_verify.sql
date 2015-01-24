@@ -231,7 +231,7 @@ BEGIN
         SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
 
 
-        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')));
+        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), office.get_office_id_by_office_code('dummy-off01'));
 
         SELECT verification_status_id
         INTO _verification_status_id
@@ -315,7 +315,7 @@ BEGIN
         SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
 
 
-        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')));
+        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), office.get_office_id_by_office_code('dummy-off01'));
 
         SELECT verification_status_id
         INTO _verification_status_id
@@ -403,7 +403,7 @@ BEGIN
         SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
 
 
-        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')));
+        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), office.get_office_id_by_office_code('dummy-off01'));
 
         SELECT verification_status_id
         INTO _verification_status_id
@@ -487,7 +487,7 @@ BEGIN
         SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
 
 
-        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')));
+        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), office.get_office_id_by_office_code('dummy-off01'));
 
         SELECT verification_status_id
         INTO _verification_status_id
@@ -575,7 +575,7 @@ BEGIN
         SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
 
 
-        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')));
+        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), office.get_office_id_by_office_code('dummy-off01'));
 
         SELECT verification_status_id
         INTO _verification_status_id
@@ -659,7 +659,7 @@ BEGIN
         SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
 
 
-        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')));
+        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), office.get_office_id_by_office_code('dummy-off01'));
 
         SELECT verification_status_id
         INTO _verification_status_id

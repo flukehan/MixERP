@@ -40,12 +40,14 @@ function connectionListener() {
             return;
         };
 
+
         removeDirty(backupNameInputText);
 
         $(this).addClass("disabled loading");
         header.removeClass("initially hidden");
         InitializeMessage();
         $.connection.dbHub.server.backupDatabase(backupName);
+
     });
 };
 

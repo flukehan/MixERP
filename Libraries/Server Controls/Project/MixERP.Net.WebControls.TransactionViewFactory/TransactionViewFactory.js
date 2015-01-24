@@ -32,7 +32,10 @@ var updatePreviewButtons = function () {
         var book = row.find("td:nth-child(5)").html();
         var icon = row.find("td:first-child").find(".icon.grid.layout");
 
-        if (!(book.substring(0, 5).toLowerCase() === "sales" || book.substring(0, 8).toLowerCase() === "purchase")) {
+        if (!
+            (book.substring(0, 5).toLowerCase() === "sales"
+                || book.substring(0, 8).toLowerCase() === "purchase" || book.toLowerCase() === "opening.inventory"
+            )) {
             icon.hide();
         };
     });

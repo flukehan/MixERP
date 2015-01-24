@@ -452,7 +452,7 @@ function getDefaultSalesTax() {
 };
 
 var validateProductControl = function() {
-    valueDate = dateTextBox.val();
+    valueDate = Date.parseExact(dateTextBox.val(), window.shortDateFormat);
     errorLabelBottom.html("");
 
     removeDirty(dateTextBox);
@@ -847,19 +847,26 @@ var addRow = function() {
 
 var addRowToTable = function(itemCode, itemName, quantity, unitName, price, discount, shippingCharge, tax, computedTax) {
     var grid = productGridView;
-    var rows = grid.find("tr:not(:first-child):not(:last-child)");
+    var rows = grid.find("tbody tr:not(:last-child)");
     var amount = price * quantity;
     var subTotal = amount - discount + shippingCharge;
     var match = false;
 
     rows.each(function() {
         var row = $(this);
+
+        console.log(getColumnText(row, 0) === itemCode);
+        console.log(getColumnText(row, 1) === itemName);
+        console.log(getColumnText(row, 3) === unitName);
+        console.log(parseFloat2(getColumnText(row, 4)) === price);
+        console.log(getColumnText(row, 9) === tax);
+
         if (getColumnText(row, 0) === itemCode &&
-            getColumnText(row, 1) === itemName &&
-            getColumnText(row, 3) === unitName &&
-            parseFloat2(getColumnText(row, 4)) === price &&
-            getColumnText(row, 9) === tax &&
-            parseFloat(getColumnText(row, 5)) / parseFloat2(getColumnText(row, 6)) === amount / discount) {
+            getColumnText(row, 1) === itemName && //Same Item
+            getColumnText(row, 3) === unitName && //Same Unit
+            parseFloat2(getColumnText(row, 4)) === price &&//Same Price
+            getColumnText(row, 9) === tax //Same Tax
+            ) {
             setColumnText(row, 2, getFormattedNumber(parseInt2(getColumnText(row, 2)) + quantity, true));
             setColumnText(row, 5, getFormattedNumber(parseFloat2(getColumnText(row, 5)) + amount));
             setColumnText(row, 6, getFormattedNumber(parseFloat2(getColumnText(row, 6)) + discount));

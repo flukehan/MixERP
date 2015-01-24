@@ -73,6 +73,16 @@ namespace MixERP.Net.Common.Helpers
             }
         }
 
+        public static HtmlGenericControl GetModal()
+        {
+            using (HtmlGenericControl field = new HtmlGenericControl("div"))
+            {
+                field.Attributes.Add("class", "ui modal");
+
+                return field;
+            }
+        }
+
         public static HtmlGenericControl GetFormSegment()
         {
             using (HtmlGenericControl field = new HtmlGenericControl("div"))

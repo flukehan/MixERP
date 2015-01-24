@@ -87,7 +87,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
                 using (HtmlInputText backupNameInputText = new HtmlInputText())
                 {
                     this.server.Validate();
-
+                    backupNameInputText.ID = "BackupNameInputText";
                     if (this.server.IsValid)
                     {
                         backupNameInputText.Value = string.Format(CultureInfo.InvariantCulture, "{0}.{1}.{2}.{3}", this.server.DatabaseName, SessionHelper.GetOfficeId(), SessionHelper.GetUserName(), DateTime.Now.ToFileTime());

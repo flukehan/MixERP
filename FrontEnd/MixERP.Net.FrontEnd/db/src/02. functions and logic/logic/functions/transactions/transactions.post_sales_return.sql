@@ -272,7 +272,7 @@ BEGIN
     INSERT INTO transactions.stock_return(transaction_master_id, return_transaction_master_id)
     SELECT _transaction_master_id, _tran_master_id;
 
-    PERFORM transactions.auto_verify(_transaction_master_id);
+    PERFORM transactions.auto_verify(_transaction_master_id, _office_id);
     RETURN _tran_master_id;
 END
 $$

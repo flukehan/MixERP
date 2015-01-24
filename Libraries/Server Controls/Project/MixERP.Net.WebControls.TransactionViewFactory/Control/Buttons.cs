@@ -32,6 +32,7 @@ namespace MixERP.Net.WebControls.TransactionViewFactory
                 {
                     button.Attributes.Add("type", "button");
                     button.Attributes.Add("id", "ApproveButton");
+                    button.Attributes.Add("title", "CTRL + K");
                     button.Attributes.Add("class", "ui positive button");
                     button.InnerText = Titles.Approve;
 
@@ -94,6 +95,7 @@ namespace MixERP.Net.WebControls.TransactionViewFactory
                 {
                     button.Attributes.Add("type", "button");
                     button.Attributes.Add("id", "RejectButton");
+                    button.Attributes.Add("title", "CTRL + SHIFT + K");
                     button.Attributes.Add("class", "ui negative button");
                     button.InnerText = Titles.Reject;
                     container.Controls.Add(button);

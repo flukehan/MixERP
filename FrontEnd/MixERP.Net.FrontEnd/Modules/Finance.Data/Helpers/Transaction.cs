@@ -202,5 +202,21 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
                 }
             }
         }
+
+        public static void Verify(long tranId, int officeId, int userId, long loginId, short verificationStatusId, string reason)
+        {
+            const string sql = "SELECT * FROM transactions.verify_transaction(@TranId::bigint, @OfficeId, @UserId, @LoginId::bigint, @VerificationStatusId::smallint, @Reason);";
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                command.Parameters.AddWithValue("@TranId", tranId);
+                command.Parameters.AddWithValue("@OfficeId", officeId);
+                command.Parameters.AddWithValue("@UserId", userId);
+                command.Parameters.AddWithValue("@LoginId", loginId);
+                command.Parameters.AddWithValue("@VerificationStatusId", verificationStatusId);
+                command.Parameters.AddWithValue("@Reason", reason);
+
+                DbOperation.ExecuteNonQuery(command);
+            }
+        }
     }
 }

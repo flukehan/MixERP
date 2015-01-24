@@ -45,6 +45,16 @@ CREATE TYPE transactions.stock_adjustment_type AS
     quantity        integer_strict
 );
 
+DROP TYPE IF EXISTS transactions.opening_stock_type CASCADE;
+CREATE TYPE transactions.opening_stock_type AS
+(
+    store_name      national character varying(50),
+    item_code       national character varying(12),
+    quantity        integer_strict,
+    unit_name       national character varying(50),
+    amount          money_strict
+);
+
 DROP TYPE IF EXISTS core.period CASCADE;
 
 CREATE TYPE core.period AS

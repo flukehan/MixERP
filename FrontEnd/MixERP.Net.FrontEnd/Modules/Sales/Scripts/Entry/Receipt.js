@@ -103,7 +103,7 @@ saveButton.click(function () {
     var statementReference = statementReferenceTextArea.val();
     var costCenterId = parseInt2(costCenterSelect.getSelectedValue());
     var cashRepositoryId = parseInt2(cashRepositorySelect.getSelectedValue());
-    var postedDate = postedDateTextBox.val();
+    var postedDate = Date.parseExact(postedDateTextBox.val(), window.shortDateFormat);
     var bankAccountId = parseInt2(bankSelect.getSelectedValue());
     var bankInstrumentCode = instrumentCodeInputText.val();
     var bankTransactionCode = transactionCodeInputText.val();

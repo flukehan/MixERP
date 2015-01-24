@@ -173,6 +173,12 @@ namespace MixERP.Net.Common.Helpers
             return culture.DateTimeFormat.ShortDatePattern;
         }
 
+        public static string GetLongDateFormat()
+        {
+            CultureInfo culture = GetCurrentCulture();
+            return culture.DateTimeFormat.LongDatePattern;
+        }
+
         public static string GetThousandSeparator()
         {
             CultureInfo culture = GetCurrentCulture();

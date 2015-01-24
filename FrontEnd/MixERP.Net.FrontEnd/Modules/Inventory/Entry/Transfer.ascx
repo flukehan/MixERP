@@ -23,7 +23,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
 <script type="text/javascript">
     function StockAdjustmentFactory_FormvView_SaveButton_Callback() {
-        var valueDate = valueDateTextBox.val();
+        var valueDate = Date.parseExact(valueDateTextBox.val(), window.shortDateFormat);
         var referenceNumber = referenceNumberInputText.val();
         var statementReference = statementReferenceTextArea.val();
         var tableData = tableToJSON(transferGridView);

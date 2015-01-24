@@ -18,6 +18,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ProductControl.ascx.cs" Inherits="MixERP.Net.FrontEnd.UserControls.Products.ProductControl" %>
+<%@ Import Namespace="System.Threading" %>
 <%@ Import Namespace="MixERP.Net.Common.Helpers" %>
 
 <style type="text/css">
@@ -96,9 +97,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 </h2>
 
 <div class="ui segment">
-
-
-
     <table class="ui form">
         <tr>
             <td>

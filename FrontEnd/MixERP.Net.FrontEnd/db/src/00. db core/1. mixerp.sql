@@ -24,8 +24,8 @@ BEGIN
     IF NOT EXISTS
     (
         SELECT 0 FROM pg_database 
-        WHERE datcollate::text = 'English_United States.1252' 
-        AND datctype::text = 'English_United States.1252'
+        WHERE datcollate::text IN('English_United States.1252', 'en-US.UTF8')
+        AND datctype::text IN('English_United States.1252', 'en-US.UTF8')
         AND datname=current_database()
     ) THEN
         RAISE EXCEPTION '%', 'The current server collation is not supported. Please change your database collation to "English United States".';

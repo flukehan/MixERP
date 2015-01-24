@@ -29,8 +29,8 @@ BEGIN
     IF NOT EXISTS
     (
         SELECT 0 FROM pg_database 
-        WHERE datcollate::text = 'English_United States.1252' 
-        AND datctype::text = 'English_United States.1252'
+        WHERE datcollate::text IN('English_United States.1252', 'en-US.UTF8')
+        AND datctype::text IN('English_United States.1252', 'en-US.UTF8')
         AND datname=current_database()
     ) THEN
         RAISE EXCEPTION '%', 'The current server collation is not supported. Please change your database collation to "English United States".';
@@ -3764,6 +3764,16 @@ CREATE TYPE transactions.stock_adjustment_type AS
     quantity        integer_strict
 );
 
+DROP TYPE IF EXISTS transactions.opening_stock_type CASCADE;
+CREATE TYPE transactions.opening_stock_type AS
+(
+    store_name      national character varying(50),
+    item_code       national character varying(12),
+    quantity        integer_strict,
+    unit_name       national character varying(50),
+    amount          money_strict
+);
+
 DROP TYPE IF EXISTS core.period CASCADE;
 
 CREATE TYPE core.period AS
@@ -4184,6 +4194,8 @@ LANGUAGE plpgsql;
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_associated_units.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_associated_units(integer);
+
 CREATE FUNCTION core.get_associated_units(integer)
 RETURNS TABLE
 (
@@ -4191,13 +4203,11 @@ RETURNS TABLE
     unit_code text, 
     unit_name text
 )
-STABLE
+VOLATILE
 AS
 $$
     DECLARE root_unit_id integer;
 BEGIN
-    --This function is marked STABLE because it does not change database.
-    --If it does in the future, make this function VOLATILE.
     CREATE TEMPORARY TABLE IF NOT EXISTS temp_unit(unit_id integer) ON COMMIT DROP; 
     
     SELECT core.get_root_unit_id($1) INTO root_unit_id;
@@ -4282,8 +4292,6 @@ AS
 $$
 DECLARE _unit_id integer;
 BEGIN
-    --This function depends on function core.get_associated_units(_unit_id)
-    --and therefore this should be marked with the same volatility of the former.
     SELECT core.items.unit_id INTO _unit_id
     FROM core.items
     WHERE core.items.item_id=$1;
@@ -7381,7 +7389,7 @@ BEGIN
         SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
 
 
-        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')));
+        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), office.get_office_id_by_office_code('dummy-off01'));
 
         SELECT verification_status_id
         INTO _verification_status_id
@@ -7465,7 +7473,7 @@ BEGIN
         SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
 
 
-        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')));
+        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), office.get_office_id_by_office_code('dummy-off01'));
 
         SELECT verification_status_id
         INTO _verification_status_id
@@ -7553,7 +7561,7 @@ BEGIN
         SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
 
 
-        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')));
+        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), office.get_office_id_by_office_code('dummy-off01'));
 
         SELECT verification_status_id
         INTO _verification_status_id
@@ -7637,7 +7645,7 @@ BEGIN
         SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
 
 
-        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')));
+        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), office.get_office_id_by_office_code('dummy-off01'));
 
         SELECT verification_status_id
         INTO _verification_status_id
@@ -7725,7 +7733,7 @@ BEGIN
         SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
 
 
-        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')));
+        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), office.get_office_id_by_office_code('dummy-off01'));
 
         SELECT verification_status_id
         INTO _verification_status_id
@@ -7809,7 +7817,7 @@ BEGIN
         SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
 
 
-        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')));
+        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), office.get_office_id_by_office_code('dummy-off01'));
 
         SELECT verification_status_id
         INTO _verification_status_id
@@ -11686,6 +11694,36 @@ IS 'Lists stock items, their respective base units, and closing stock quantity.'
 
 --SELECT * FROM transactions.list_closing_stock(1);
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.opening_inventory_exists.sql --<--<--
+DROP FUNCTION IF EXISTS transactions.opening_inventory_exists
+(
+    _office_id          integer
+);
+
+CREATE FUNCTION transactions.opening_inventory_exists
+(
+    _office_id          integer
+)
+RETURNS boolean
+STABLE
+AS
+$$
+BEGIN
+    IF EXISTS
+    (
+        SELECT 1
+        FROM transactions.transaction_master
+        WHERE book = 'Opening.Inventory'
+        AND office_id = _office_id
+    ) THEN
+        RETURN true;
+    END IF;
+
+    RETURN false;
+END
+$$
+LANGUAGE plpgsql;
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.perform_eod_operation.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.perform_eod_operation(_user_id integer, _office_id integer, _value_date date);
 
@@ -12021,6 +12059,129 @@ LANGUAGE plpgsql;
 -- ARRAY[NULL::core.attachment_type]);
 
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.post_opening_inventory.sql --<--<--
+DROP FUNCTION IF EXISTS transactions.post_opening_inventory
+(
+    _office_id                              integer,
+    _user_id                                integer,
+    _login_id                               bigint,
+    _value_date                             date,
+    _reference_number                       national character varying(24),
+    _statement_reference                    text,
+    _details                                transactions.opening_stock_type[]    
+);
+
+CREATE FUNCTION transactions.post_opening_inventory
+(
+    _office_id                              integer,
+    _user_id                                integer,
+    _login_id                               bigint,
+    _value_date                             date,
+    _reference_number                       national character varying(24),
+    _statement_reference                    text,
+    _details                                transactions.opening_stock_type[]    
+)
+RETURNS bigint
+VOLATILE
+AS
+$$
+    DECLARE _book_name                      text = 'Opening.Inventory';
+    DECLARE _transaction_master_id          bigint;
+    DECLARE _stock_master_id                bigint;
+    DECLARE _tran_counter                   integer;
+    DECLARE _transaction_code               text;
+BEGIN
+    IF(policy.can_post_transaction(_login_id, _user_id, _office_id, _book_name, _value_date) = false) THEN
+        RETURN 0;
+    END IF;
+
+    DROP TABLE IF EXISTS temp_stock_details;
+    
+    CREATE TEMPORARY TABLE temp_stock_details
+    (
+        id                              SERIAL PRIMARY KEY,
+        tran_type                       transaction_type,
+        store_name                      text, 
+        store_id                        integer,
+        item_code                       text,
+        item_id                         integer, 
+        quantity                        integer_strict,
+        unit_name                       text,
+        unit_id                         integer,
+        base_quantity                   decimal,
+        base_unit_id                    integer,                
+        price                           money_strict
+    ) ON COMMIT DROP;
+
+    INSERT INTO temp_stock_details(store_name, item_code, quantity, unit_name, price)
+    SELECT store_name, item_code, quantity, unit_name, amount
+    FROM explode_array(_details);
+
+    UPDATE temp_stock_details 
+    SET
+        tran_type                       = 'Dr',
+        store_id                        = office.get_store_id_by_store_name(store_name),
+        item_id                         = core.get_item_id_by_item_code(item_code),
+        unit_id                         = core.get_unit_id_by_unit_name(unit_name),
+        base_quantity                   = core.get_base_quantity_by_unit_name(unit_name, quantity),
+        base_unit_id                    = core.get_base_unit_id_by_unit_name(unit_name);
+
+    IF EXISTS
+    (
+        SELECT * FROM temp_stock_details
+        WHERE store_id IS NULL
+        OR item_id IS NULL
+        OR unit_id IS NULL
+    ) THEN
+        RAISE EXCEPTION 'Access is denied. Invalid values supplied.';
+    END IF;
+
+    IF EXISTS
+    (
+            SELECT 1 FROM temp_stock_details AS details
+            WHERE core.is_valid_unit_id(details.unit_id, details.item_id) = false
+            LIMIT 1
+    ) THEN
+        RAISE EXCEPTION 'Item/unit mismatch.';
+    END IF;
+
+    
+    _transaction_master_id  := nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
+    _stock_master_id        := nextval(pg_get_serial_sequence('transactions.stock_master', 'stock_master_id'));
+    _tran_counter           := transactions.get_new_transaction_counter(_value_date);
+    _transaction_code       := transactions.get_transaction_code(_value_date, _office_id, _user_id, _login_id);
+
+    INSERT INTO transactions.transaction_master(transaction_master_id, transaction_counter, transaction_code, book, value_date, user_id, login_id, office_id, reference_number, statement_reference) 
+    SELECT _transaction_master_id, _tran_counter, _transaction_code, _book_name, _value_date, _user_id, _login_id, _office_id, _reference_number, _statement_reference;
+
+    INSERT INTO transactions.stock_master(value_date, stock_master_id, transaction_master_id)
+    SELECT _value_date, _stock_master_id, _transaction_master_id;
+
+    INSERT INTO transactions.stock_details(value_date, stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price)
+    SELECT _value_date, _stock_master_id, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price
+    FROM temp_stock_details;
+    
+    PERFORM transactions.auto_verify(_transaction_master_id, _office_id);    
+    RETURN _transaction_master_id;
+END;
+$$
+LANGUAGE plpgsql;
+
+
+-- SELECT * FROM transactions.post_opening_inventory
+-- (
+--     2,
+--     2,
+--     5,
+--     transactions.get_value_date(2),
+--     '3424',
+--     'ASDF',
+--     ARRAY[
+--          ROW('Store 1', 'RMBP', 1, 'Box',180000)::transactions.opening_stock_type,
+--          ROW('Store 1', '13MBA', 1, 'Dozen',130000)::transactions.opening_stock_type,
+--          ROW('Store 1', '11MBA', 1, 'Piece',110000)::transactions.opening_stock_type]);
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.post_purchase.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_purchase
 (
@@ -12315,7 +12476,7 @@ BEGIN
         FROM explode_array(_attachments);
     END IF;
     
-    PERFORM transactions.auto_verify(_transaction_master_id);
+    PERFORM transactions.auto_verify(_transaction_master_id, _office_id);
     RETURN _transaction_master_id;
 END
 $$
@@ -12629,7 +12790,7 @@ BEGIN
     END IF;
     
     RETURN _transaction_master_id;
-    PERFORM transactions.auto_verify(_transaction_master_id);
+    PERFORM transactions.auto_verify(_transaction_master_id, _office_id);
     RETURN _tran_master_id;
 END
 $$
@@ -12918,7 +13079,7 @@ _transaction_master_id := currval(pg_get_serial_sequence('transactions.transacti
     INSERT INTO transactions.customer_receipts(transaction_master_id, party_id, currency_code, amount, er_debit, er_credit, cash_repository_id, posted_date, bank_account_id, bank_instrument_code, bank_tran_code)
     SELECT _transaction_master_id, _party_id, _currency_code, _amount,  _exchange_rate_debit, _exchange_rate_credit, _cash_repository_id, _posted_date, _bank_account_id, _bank_instrument_code, _bank_tran_code;
 
-    PERFORM transactions.auto_verify(_transaction_master_id);
+    PERFORM transactions.auto_verify(_transaction_master_id, _office_id);
     ------------TODO-----------------
     RETURN _transaction_master_id;
 END
@@ -13273,7 +13434,7 @@ BEGIN
         FROM explode_array(_attachments);
     END IF;
     
-    PERFORM transactions.auto_verify(_transaction_master_id);
+    PERFORM transactions.auto_verify(_transaction_master_id, _office_id);
     RETURN _transaction_master_id;
 END
 $$
@@ -13583,7 +13744,7 @@ BEGIN
     INSERT INTO transactions.stock_return(transaction_master_id, return_transaction_master_id)
     SELECT _transaction_master_id, _tran_master_id;
 
-    PERFORM transactions.auto_verify(_transaction_master_id);
+    PERFORM transactions.auto_verify(_transaction_master_id, _office_id);
     RETURN _tran_master_id;
 END
 $$
@@ -13830,7 +13991,7 @@ BEGIN
     SELECT _stock_master_id, _value_date, tran_type, store_id, item_id, quantity, unit_id, base_quantity, base_unit_id, price
     FROM temp_stock_details;
 
-    PERFORM transactions.auto_verify(_transaction_master_id);
+    PERFORM transactions.auto_verify(_transaction_master_id, _office_id);
     
     RETURN _transaction_master_id;
 END
@@ -20712,34 +20873,25 @@ LEFT JOIN core.compound_items
 ON core.recurring_invoices.compound_item_id=core.compound_items.compound_item_id;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.recurring_invoice_setup_scrud_view.sql --<--<--
-DROP VIEW IF EXISTS office.store_scrud_view;
-CREATE VIEW office.store_scrud_view
+DROP VIEW IF EXISTS core.recurring_invoice_setup_scrud_view;
+CREATE VIEW core.recurring_invoice_setup_scrud_view
 AS
 SELECT 
-  office.stores.store_id, 
-  office.offices.office_code || '('|| office.offices.office_name||')' AS office, 
-  office.stores.store_code, 
-  office.stores.store_name, 
-  office.stores.address, 
-  office.store_types.store_type_code || '('|| office.store_types.store_type_name||')' AS store_type, 
-  office.stores.allow_sales, 
-  core.sales_taxes.sales_tax_code || '('|| core.sales_taxes.sales_tax_name||')' AS sale_tax,
-  core.accounts.account_number || '('|| core.accounts.account_name||')' AS account,
-  office.cash_repositories.cash_repository_code || '('|| office.cash_repositories.cash_repository_name||')' AS cash_repository 
+  core.recurring_invoice_setup.recurring_invoice_setup_id, 
+  core.recurring_invoices.recurring_invoice_code || ' (' || core.recurring_invoices.recurring_invoice_name || ')' AS recurring_invoice,
+  core.parties.party_code || ' (' || core.parties.party_name || ')' AS party,
+  core.recurring_invoice_setup.starts_from, 
+  core.recurring_invoice_setup.ends_on, 
+  core.recurring_invoice_setup.recurring_amount, 
+  core.payment_terms.payment_term_code || ' (' || core.payment_terms.payment_term_name || ')' AS payment_term
 FROM 
-  office.stores
-INNER JOIN office.offices
-ON office.stores.office_id = office.offices.office_id
-INNER JOIN office.store_types
-ON office.stores.store_type_id = office.store_types.store_type_id
-INNER JOIN core.sales_taxes
-ON office.stores.sales_tax_id = core.sales_taxes.sales_tax_id
-INNER JOIN core.accounts
-ON office.stores.default_cash_account_id = core.accounts.account_id
-INNER JOIN office.cash_repositories
-ON office.stores.default_cash_repository_id = office.cash_repositories.cash_repository_id;
-
-
+  core.recurring_invoice_setup
+INNER JOIN core.recurring_invoices
+ON core.recurring_invoice_setup.recurring_invoice_id = core.recurring_invoices.recurring_invoice_id
+INNER JOIN core.parties ON 
+core.recurring_invoice_setup.party_id = core.parties.party_id
+INNER JOIN core.payment_terms ON 
+core.recurring_invoice_setup.payment_term_id = core.payment_terms.payment_term_id;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.sales_teams_scrud_view.sql --<--<--
 CREATE VIEW core.sales_teams_scrud_view

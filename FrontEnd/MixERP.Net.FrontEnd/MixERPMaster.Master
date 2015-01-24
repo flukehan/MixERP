@@ -133,6 +133,7 @@
             var office = "<%= SessionHelper.GetOfficeName()%>";
 
             var shortDateFormat = "<%= LocalizationHelper.GetShortDateFormat()%>";
+            var longDateFormat = "<%= LocalizationHelper.GetLongDateFormat()%>";
             var thousandSeparator = "<%= LocalizationHelper.GetThousandSeparator()%>";
             var decimalSeparator = "<%= LocalizationHelper.GetDecimalSeparator()%>";
             var currencyDecimalPlaces = "<%= LocalizationHelper.GetCurrencyDecimalPlaces()%>";

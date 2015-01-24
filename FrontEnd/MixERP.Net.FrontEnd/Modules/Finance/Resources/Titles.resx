@@ -486,4 +486,20 @@
   <data name="RetainedEarnings" xml:space="preserve">
     <value>Retained Earnings</value>
   </data>
+  <data name="ApproveThisTransaction" xml:space="preserve">
+    <value>Approve This Transaction</value>
+  </data>
+  <data name="RejectThisTransaction" xml:space="preserve">
+    <value>Reject This Transaction</value>
+  </data>
+  <data name="TranIdParameter" xml:space="preserve">
+    <value>TranId: #{0}</value>
+    <comment>TranId: #1001</comment>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Verify" xml:space="preserve">
+    <value>Verify</value>
+  </data>
 </root>

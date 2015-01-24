@@ -1,0 +1,302 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D474BBBB-DF8A-4625-B3BD-60E64790BFCB}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MixERP.Net.Utility.LocalizationManager.Web</RootNamespace>
+    <AssemblyName>MixERP.Net.Utility.LocalizationManager.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\semantic-ui\themes\basic\assets\fonts\icons.eot" />
+    <Content Include="Scripts\semantic-ui\themes\basic\assets\fonts\icons.ttf" />
+    <Content Include="Scripts\semantic-ui\themes\basic\assets\fonts\icons.woff" />
+    <Content Include="Scripts\semantic-ui\themes\default\assets\fonts\icons.eot" />
+    <Content Include="Scripts\semantic-ui\themes\default\assets\fonts\icons.otf" />
+    <Content Include="Scripts\semantic-ui\themes\default\assets\fonts\icons.ttf" />
+    <Content Include="Scripts\semantic-ui\themes\default\assets\fonts\icons.woff" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Global.asax" />
+    <Content Include="Prototype.aspx" />
+    <Content Include="Scripts\jquery-1.9.1.js" />
+    <Content Include="Scripts\semantic-ui\components\accordion.css" />
+    <Content Include="Scripts\semantic-ui\components\accordion.js" />
+    <Content Include="Scripts\semantic-ui\components\accordion.min.css" />
+    <Content Include="Scripts\semantic-ui\components\accordion.min.js" />
+    <Content Include="Scripts\semantic-ui\components\ad.css" />
+    <Content Include="Scripts\semantic-ui\components\ad.min.css" />
+    <Content Include="Scripts\semantic-ui\components\api.js" />
+    <Content Include="Scripts\semantic-ui\components\api.min.js" />
+    <Content Include="Scripts\semantic-ui\components\breadcrumb.css" />
+    <Content Include="Scripts\semantic-ui\components\breadcrumb.min.css" />
+    <Content Include="Scripts\semantic-ui\components\button.css" />
+    <Content Include="Scripts\semantic-ui\components\button.min.css" />
+    <Content Include="Scripts\semantic-ui\components\card.css" />
+    <Content Include="Scripts\semantic-ui\components\card.min.css" />
+    <Content Include="Scripts\semantic-ui\components\checkbox.css" />
+    <Content Include="Scripts\semantic-ui\components\checkbox.js" />
+    <Content Include="Scripts\semantic-ui\components\checkbox.min.css" />
+    <Content Include="Scripts\semantic-ui\components\checkbox.min.js" />
+    <Content Include="Scripts\semantic-ui\components\colorize.js" />
+    <Content Include="Scripts\semantic-ui\components\colorize.min.js" />
+    <Content Include="Scripts\semantic-ui\components\comment.css" />
+    <Content Include="Scripts\semantic-ui\components\comment.min.css" />
+    <Content Include="Scripts\semantic-ui\components\dimmer.css" />
+    <Content Include="Scripts\semantic-ui\components\dimmer.js" />
+    <Content Include="Scripts\semantic-ui\components\dimmer.min.css" />
+    <Content Include="Scripts\semantic-ui\components\dimmer.min.js" />
+    <Content Include="Scripts\semantic-ui\components\divider.css" />
+    <Content Include="Scripts\semantic-ui\components\divider.min.css" />
+    <Content Include="Scripts\semantic-ui\components\dropdown.css" />
+    <Content Include="Scripts\semantic-ui\components\dropdown.js" />
+    <Content Include="Scripts\semantic-ui\components\dropdown.min.css" />
+    <Content Include="Scripts\semantic-ui\components\dropdown.min.js" />
+    <Content Include="Scripts\semantic-ui\components\feed.css" />
+    <Content Include="Scripts\semantic-ui\components\feed.min.css" />
+    <Content Include="Scripts\semantic-ui\components\flag.css" />
+    <Content Include="Scripts\semantic-ui\components\flag.min.css" />
+    <Content Include="Scripts\semantic-ui\components\form.css" />
+    <Content Include="Scripts\semantic-ui\components\form.js" />
+    <Content Include="Scripts\semantic-ui\components\form.min.css" />
+    <Content Include="Scripts\semantic-ui\components\form.min.js" />
+    <Content Include="Scripts\semantic-ui\components\grid.css" />
+    <Content Include="Scripts\semantic-ui\components\grid.min.css" />
+    <Content Include="Scripts\semantic-ui\components\header.css" />
+    <Content Include="Scripts\semantic-ui\components\header.min.css" />
+    <Content Include="Scripts\semantic-ui\components\icon.css" />
+    <Content Include="Scripts\semantic-ui\components\icon.min.css" />
+    <Content Include="Scripts\semantic-ui\components\image.css" />
+    <Content Include="Scripts\semantic-ui\components\image.min.css" />
+    <Content Include="Scripts\semantic-ui\components\input.css" />
+    <Content Include="Scripts\semantic-ui\components\input.min.css" />
+    <Content Include="Scripts\semantic-ui\components\item.css" />
+    <Content Include="Scripts\semantic-ui\components\item.min.css" />
+    <Content Include="Scripts\semantic-ui\components\label.css" />
+    <Content Include="Scripts\semantic-ui\components\label.min.css" />
+    <Content Include="Scripts\semantic-ui\components\list.css" />
+    <Content Include="Scripts\semantic-ui\components\list.min.css" />
+    <Content Include="Scripts\semantic-ui\components\loader.css" />
+    <Content Include="Scripts\semantic-ui\components\loader.min.css" />
+    <Content Include="Scripts\semantic-ui\components\menu.css" />
+    <Content Include="Scripts\semantic-ui\components\menu.min.css" />
+    <Content Include="Scripts\semantic-ui\components\message.css" />
+    <Content Include="Scripts\semantic-ui\components\message.min.css" />
+    <Content Include="Scripts\semantic-ui\components\modal.css" />
+    <Content Include="Scripts\semantic-ui\components\modal.js" />
+    <Content Include="Scripts\semantic-ui\components\modal.min.css" />
+    <Content Include="Scripts\semantic-ui\components\modal.min.js" />
+    <Content Include="Scripts\semantic-ui\components\nag.css" />
+    <Content Include="Scripts\semantic-ui\components\nag.js" />
+    <Content Include="Scripts\semantic-ui\components\nag.min.css" />
+    <Content Include="Scripts\semantic-ui\components\nag.min.js" />
+    <Content Include="Scripts\semantic-ui\components\popup.css" />
+    <Content Include="Scripts\semantic-ui\components\popup.js" />
+    <Content Include="Scripts\semantic-ui\components\popup.min.css" />
+    <Content Include="Scripts\semantic-ui\components\popup.min.js" />
+    <Content Include="Scripts\semantic-ui\components\progress.css" />
+    <Content Include="Scripts\semantic-ui\components\progress.js" />
+    <Content Include="Scripts\semantic-ui\components\progress.min.css" />
+    <Content Include="Scripts\semantic-ui\components\progress.min.js" />
+    <Content Include="Scripts\semantic-ui\components\rail.css" />
+    <Content Include="Scripts\semantic-ui\components\rail.min.css" />
+    <Content Include="Scripts\semantic-ui\components\rating.css" />
+    <Content Include="Scripts\semantic-ui\components\rating.js" />
+    <Content Include="Scripts\semantic-ui\components\rating.min.css" />
+    <Content Include="Scripts\semantic-ui\components\rating.min.js" />
+    <Content Include="Scripts\semantic-ui\components\reset.css" />
+    <Content Include="Scripts\semantic-ui\components\reset.min.css" />
+    <Content Include="Scripts\semantic-ui\components\reveal.css" />
+    <Content Include="Scripts\semantic-ui\components\reveal.min.css" />
+    <Content Include="Scripts\semantic-ui\components\search.css" />
+    <Content Include="Scripts\semantic-ui\components\search.js" />
+    <Content Include="Scripts\semantic-ui\components\search.min.css" />
+    <Content Include="Scripts\semantic-ui\components\search.min.js" />
+    <Content Include="Scripts\semantic-ui\components\segment.css" />
+    <Content Include="Scripts\semantic-ui\components\segment.min.css" />
+    <Content Include="Scripts\semantic-ui\components\shape.css" />
+    <Content Include="Scripts\semantic-ui\components\shape.js" />
+    <Content Include="Scripts\semantic-ui\components\shape.min.css" />
+    <Content Include="Scripts\semantic-ui\components\shape.min.js" />
+    <Content Include="Scripts\semantic-ui\components\sidebar.css" />
+    <Content Include="Scripts\semantic-ui\components\sidebar.js" />
+    <Content Include="Scripts\semantic-ui\components\sidebar.min.css" />
+    <Content Include="Scripts\semantic-ui\components\sidebar.min.js" />
+    <Content Include="Scripts\semantic-ui\components\site.css" />
+    <Content Include="Scripts\semantic-ui\components\site.js" />
+    <Content Include="Scripts\semantic-ui\components\site.min.css" />
+    <Content Include="Scripts\semantic-ui\components\site.min.js" />
+    <Content Include="Scripts\semantic-ui\components\state.js" />
+    <Content Include="Scripts\semantic-ui\components\state.min.js" />
+    <Content Include="Scripts\semantic-ui\components\statistic.css" />
+    <Content Include="Scripts\semantic-ui\components\statistic.min.css" />
+    <Content Include="Scripts\semantic-ui\components\step.css" />
+    <Content Include="Scripts\semantic-ui\components\step.min.css" />
+    <Content Include="Scripts\semantic-ui\components\sticky.css" />
+    <Content Include="Scripts\semantic-ui\components\sticky.js" />
+    <Content Include="Scripts\semantic-ui\components\sticky.min.css" />
+    <Content Include="Scripts\semantic-ui\components\sticky.min.js" />
+    <Content Include="Scripts\semantic-ui\components\tab.css" />
+    <Content Include="Scripts\semantic-ui\components\tab.js" />
+    <Content Include="Scripts\semantic-ui\components\tab.min.css" />
+    <Content Include="Scripts\semantic-ui\components\tab.min.js" />
+    <Content Include="Scripts\semantic-ui\components\table.css" />
+    <Content Include="Scripts\semantic-ui\components\table.min.css" />
+    <Content Include="Scripts\semantic-ui\components\transition.css" />
+    <Content Include="Scripts\semantic-ui\components\transition.js" />
+    <Content Include="Scripts\semantic-ui\components\transition.min.css" />
+    <Content Include="Scripts\semantic-ui\components\transition.min.js" />
+    <Content Include="Scripts\semantic-ui\components\video.css" />
+    <Content Include="Scripts\semantic-ui\components\video.js" />
+    <Content Include="Scripts\semantic-ui\components\video.min.css" />
+    <Content Include="Scripts\semantic-ui\components\video.min.js" />
+    <Content Include="Scripts\semantic-ui\components\visibility.js" />
+    <Content Include="Scripts\semantic-ui\components\visibility.min.js" />
+    <Content Include="Scripts\semantic-ui\components\visit.js" />
+    <Content Include="Scripts\semantic-ui\components\visit.min.js" />
+    <Content Include="Scripts\semantic-ui\semantic.css" />
+    <Content Include="Scripts\semantic-ui\semantic.js" />
+    <Content Include="Scripts\semantic-ui\semantic.min.css" />
+    <Content Include="Scripts\semantic-ui\semantic.min.js" />
+    <Content Include="Scripts\semantic-ui\themes\basic\assets\fonts\icons.svg" />
+    <Content Include="Scripts\semantic-ui\themes\default\assets\fonts\icons.svg" />
+    <Content Include="Scripts\semantic-ui\themes\default\assets\images\flags.png" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_GlobalResources\Errors.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Errors.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Messages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Messages.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Titles.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Titles.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Prototype.aspx.cs">
+      <DependentUpon>Prototype.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Prototype.aspx.designer.cs">
+      <DependentUpon>Prototype.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\Titles.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Titles.Designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\Messages.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\Errors.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Errors.Designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>55364</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:55364/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

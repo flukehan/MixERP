@@ -26,18 +26,14 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Web.Script.Serialization;
 using System.Web.Services;
+using System.Web.Util;
 using CollectionHelper = MixERP.Net.WebControls.StockTransactionFactory.Helpers.CollectionHelper;
 
 namespace MixERP.Net.Core.Modules.Finance.Services
 {
-    /// <summary>
-    /// Summary description for JournalVoucher
-    /// </summary>
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
-    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the
-    // following line.
     [System.Web.Script.Services.ScriptService]
     public class JournalVoucher : WebService
     {
@@ -106,6 +102,28 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             }
 
             return Transaction.Add(valueDate, referenceNumber, costCenterId, details, attachments);
+        }
+
+        [WebMethod(EnableSession = true)]
+        public void Approve(long tranId, string reason)
+        {
+            int officeId = SessionHelper.GetOfficeId();
+            int userId = SessionHelper.GetUserId();
+            long loginId = SessionHelper.GetLogOnId();
+            const int verificationStatusId = 2;
+
+            Transaction.Verify(tranId, officeId, userId, loginId, verificationStatusId, reason);
+        }
+
+        [WebMethod(EnableSession = true)]
+        public void Reject(long tranId, string reason)
+        {
+            int officeId = SessionHelper.GetOfficeId();
+            int userId = SessionHelper.GetUserId();
+            long loginId = SessionHelper.GetLogOnId();
+            const int verificationStatusId = -3;
+
+            Transaction.Verify(tranId, officeId, userId, loginId, verificationStatusId, reason);
         }
     }
 }
