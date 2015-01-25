@@ -37,7 +37,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
                 scrud.Table = "sales_tax_types";
 
                 scrud.ViewSchema = "core";
-                scrud.View = "sales_tax_types";
+                scrud.View = "sales_tax_type_scrud_view";
 
                 scrud.Text = Titles.SalesTaxTypes;
 
