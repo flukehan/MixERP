@@ -790,6 +790,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Office.
+        /// </summary>
+        internal static string office {
+            get {
+                return ResourceManager.GetString("office", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Office Code.
         /// </summary>
         internal static string office_code {
@@ -1425,6 +1434,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string tax_authority_name {
             get {
                 return ResourceManager.GetString("tax_authority_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tax Base Amount.
+        /// </summary>
+        internal static string tax_base_amount {
+            get {
+                return ResourceManager.GetString("tax_base_amount", resourceCulture);
             }
         }
         

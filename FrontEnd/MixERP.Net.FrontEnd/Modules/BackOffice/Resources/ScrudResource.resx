@@ -648,6 +648,12 @@
   <data name="use_tax_collecting_account" xml:space="preserve">
     <value>Use Tax Collecting Account</value>
   </data>
+  <data name="office" xml:space="preserve">
+    <value>Office</value>
+  </data>
+  <data name="tax_base_amount" xml:space="preserve">
+    <value>Tax Base Amount</value>
+  </data>
   <data name="tax_exempt_type" xml:space="preserve">
     <value>Tax Exempt Type</value>
   </data>
