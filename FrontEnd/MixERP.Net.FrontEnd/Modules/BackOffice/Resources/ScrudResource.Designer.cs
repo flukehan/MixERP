@@ -1447,6 +1447,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tax Exempt Type.
+        /// </summary>
+        internal static string tax_exempt_type {
+            get {
+                return ResourceManager.GetString("tax_exempt_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tax Exempt Type Code.
         /// </summary>
         internal static string tax_exempt_type_code {
