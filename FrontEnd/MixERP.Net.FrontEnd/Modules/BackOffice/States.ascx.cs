@@ -37,7 +37,7 @@ namespace MixERP.Net.Core.Modules.BackOffice
                 scrud.TableSchema = "core";
                 scrud.Table = "states";
                 scrud.ViewSchema = "core";
-                scrud.View = "states";
+                scrud.View = "state_scrud_view";
                 scrud.Text = Titles.States;
 
                 scrud.DisplayFields = GetDisplayFields();
