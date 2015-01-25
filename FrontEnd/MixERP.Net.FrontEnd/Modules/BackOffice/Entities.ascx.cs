@@ -35,7 +35,7 @@ namespace MixERP.Net.Core.Modules.BackOffice
                 scrud.TableSchema = "core";
                 scrud.Table = "entities";
                 scrud.ViewSchema = "core";
-                scrud.View = "entities";
+                scrud.View = "entity_scrud_view";
                 scrud.Text = Titles.Entities;
 
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof(Entities));
