@@ -709,6 +709,24 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Item.
+        /// </summary>
+        internal static string item {
+            get {
+                return ResourceManager.GetString("item", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Group.
+        /// </summary>
+        internal static string item_group {
+            get {
+                return ResourceManager.GetString("item_group", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Item Group Id.
         /// </summary>
         internal static string item_group_id {
@@ -853,11 +871,29 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Party.
+        /// </summary>
+        internal static string party {
+            get {
+                return ResourceManager.GetString("party", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Party Id.
         /// </summary>
         internal static string party_id {
             get {
                 return ResourceManager.GetString("party_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Party Type.
+        /// </summary>
+        internal static string party_type {
+            get {
+                return ResourceManager.GetString("party_type", resourceCulture);
             }
         }
         
@@ -1128,6 +1164,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string sales_tax_details_rate_chk {
             get {
                 return ResourceManager.GetString("sales_tax_details_rate_chk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sales Tax Exempt.
+        /// </summary>
+        internal static string sales_tax_exempt {
+            get {
+                return ResourceManager.GetString("sales_tax_exempt", resourceCulture);
             }
         }
         

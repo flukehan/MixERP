@@ -612,6 +612,18 @@
   <data name="county_sales_tax" xml:space="preserve">
     <value>County Sales Tax</value>
   </data>
+  <data name="item" xml:space="preserve">
+    <value>Item</value>
+  </data>
+  <data name="item_group" xml:space="preserve">
+    <value>Item Group</value>
+  </data>
+  <data name="party" xml:space="preserve">
+    <value>Party</value>
+  </data>
+  <data name="party_type" xml:space="preserve">
+    <value>Party Type</value>
+  </data>
   <data name="reporting_tax_authority" xml:space="preserve">
     <value>Reporting Tax Authority</value>
   </data>
@@ -620,6 +632,9 @@
   </data>
   <data name="sales_tax" xml:space="preserve">
     <value>Sales Tax</value>
+  </data>
+  <data name="sales_tax_exempt" xml:space="preserve">
+    <value>Sales Tax Exempt</value>
   </data>
   <data name="sales_tax_type" xml:space="preserve">
     <value>Sales Tax Type</value>
