@@ -277,11 +277,29 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Collecting Amount.
+        /// </summary>
+        internal static string collecting_account {
+            get {
+                return ResourceManager.GetString("collecting_account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Collecting Account Id.
         /// </summary>
         internal static string collecting_account_id {
             get {
                 return ResourceManager.GetString("collecting_account_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Collecting Tax Authority.
+        /// </summary>
+        internal static string collecting_tax_authority {
+            get {
+                return ResourceManager.GetString("collecting_tax_authority", resourceCulture);
             }
         }
         
@@ -390,6 +408,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string county_name {
             get {
                 return ResourceManager.GetString("county_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to County Sales Tax.
+        /// </summary>
+        internal static string county_sales_tax {
+            get {
+                return ResourceManager.GetString("county_sales_tax", resourceCulture);
             }
         }
         
@@ -943,6 +970,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reporting Tax Authority.
+        /// </summary>
+        internal static string reporting_tax_authority {
+            get {
+                return ResourceManager.GetString("reporting_tax_authority", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reporting Tax Authority Id.
         /// </summary>
         internal static string reporting_tax_authority_id {
@@ -1015,6 +1051,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rounding Method.
+        /// </summary>
+        internal static string rounding_method {
+            get {
+                return ResourceManager.GetString("rounding_method", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rounding Method Code.
         /// </summary>
         internal static string rounding_method_code {
@@ -1029,6 +1074,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string rounding_method_name {
             get {
                 return ResourceManager.GetString("rounding_method_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sales Tax.
+        /// </summary>
+        internal static string sales_tax {
+            get {
+                return ResourceManager.GetString("sales_tax", resourceCulture);
             }
         }
         
@@ -1132,6 +1186,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sales Tax Type.
+        /// </summary>
+        internal static string sales_tax_type {
+            get {
+                return ResourceManager.GetString("sales_tax_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sales Tax Type Code.
         /// </summary>
         internal static string sales_tax_type_code {
@@ -1227,6 +1290,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string state_name {
             get {
                 return ResourceManager.GetString("state_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to State Sales Tax.
+        /// </summary>
+        internal static string state_sales_tax {
+            get {
+                return ResourceManager.GetString("state_sales_tax", resourceCulture);
             }
         }
         
@@ -1393,6 +1465,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tax Rate Type.
+        /// </summary>
+        internal static string tax_rate_type {
+            get {
+                return ResourceManager.GetString("tax_rate_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tax Rate Type Code.
         /// </summary>
         internal static string tax_rate_type_code {
@@ -1416,6 +1497,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string url {
             get {
                 return ResourceManager.GetString("url", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Tax Collecting Account.
+        /// </summary>
+        internal static string use_tax_collecting_account {
+            get {
+                return ResourceManager.GetString("use_tax_collecting_account", resourceCulture);
             }
         }
         

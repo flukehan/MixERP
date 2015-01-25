@@ -603,4 +603,34 @@
   <data name="store" xml:space="preserve">
     <value>Store</value>
   </data>
+  <data name="collecting_account" xml:space="preserve">
+    <value>Collecting Amount</value>
+  </data>
+  <data name="collecting_tax_authority" xml:space="preserve">
+    <value>Collecting Tax Authority</value>
+  </data>
+  <data name="county_sales_tax" xml:space="preserve">
+    <value>County Sales Tax</value>
+  </data>
+  <data name="reporting_tax_authority" xml:space="preserve">
+    <value>Reporting Tax Authority</value>
+  </data>
+  <data name="rounding_method" xml:space="preserve">
+    <value>Rounding Method</value>
+  </data>
+  <data name="sales_tax" xml:space="preserve">
+    <value>Sales Tax</value>
+  </data>
+  <data name="sales_tax_type" xml:space="preserve">
+    <value>Sales Tax Type</value>
+  </data>
+  <data name="state_sales_tax" xml:space="preserve">
+    <value>State Sales Tax</value>
+  </data>
+  <data name="tax_rate_type" xml:space="preserve">
+    <value>Tax Rate Type</value>
+  </data>
+  <data name="use_tax_collecting_account" xml:space="preserve">
+    <value>Use Tax Collecting Account</value>
+  </data>
 </root>
