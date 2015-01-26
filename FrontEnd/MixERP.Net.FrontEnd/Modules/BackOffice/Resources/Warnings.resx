@@ -120,8 +120,14 @@
   <data name="CannotCreateABackup" xml:space="preserve">
     <value>Sorry, cannot create a database backup at this time.</value>
   </data>
+  <data name="ComparePriceErrorMessage" xml:space="preserve">
+    <value>Price from should be less than price to.</value>
+  </data>
   <data name="ConfigurationError" xml:space="preserve">
     <value>Cannot continue the task. Please correct configuration issues.</value>
+  </data>
+  <data name="DateErrorMessage" xml:space="preserve">
+    <value>Selected date is out of range.</value>
   </data>
   <data name="NoFileSpecified" xml:space="preserve">
     <value>No file specified.</value>

@@ -18,3 +18,18 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="RecurringInvoiceSetup.ascx.cs" Inherits="MixERP.Net.Core.Modules.Sales.Setup.RecurringInvoiceSetup" %>
 <asp:PlaceHolder runat="server" ID="ScrudPlaceholder" />
+<script type="text/javascript">
+    function scrudCustomValidator() {
+        var startFromTextbox = $("#starts_from_textbox");
+        var endsOnTextbox = $("#ends_on_textbox");
+
+        var startForm = parseDate(startFromTextbox.val());
+        var endsOn = parseDate(endsOnTextbox.val());
+
+        if (endsOn < startForm) {
+            displayMessage(window.dateErrorMessageLocalized);
+            return false;
+        };
+        return true;
+    };
+</script>

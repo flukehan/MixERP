@@ -79,7 +79,7 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Effective from  date should not be greater than the ends on..
+        ///   Looks up a localized string similar to Selected date is out of range..
         /// </summary>
         internal static string DateErrorMessage {
             get {
@@ -133,7 +133,7 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TODO.
+        ///   Looks up a localized string similar to Late fee id and late fee posting frequency id both should be either selected or not..
         /// </summary>
         internal static string LateFeeErrorMessage {
             get {

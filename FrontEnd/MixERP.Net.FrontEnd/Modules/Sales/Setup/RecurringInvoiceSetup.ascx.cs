@@ -44,8 +44,17 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
                 scrud.DisplayViews = GetDisplayViews();
 
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof(RecurringInvoiceSetup));
+
+                this.AddScrudCustomValidatorErrorMessages();
+
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
+        }
+
+        private void AddScrudCustomValidatorErrorMessages()
+        {
+            string javascript = "var dateErrorMessageLocalized= '" + Warnings.DateErrorMessage + "';";
+            Common.PageUtility.RegisterJavascript("RecurringInvoiceSetup_ScrudCustomValidatorErrorMessages",javascript,this.Page,true);
         }
 
         private static string GetDisplayFields()
