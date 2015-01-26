@@ -384,4 +384,10 @@
   <data name="is_transaction_node" xml:space="preserve">
     <value>Is Transaction Node</value>
   </data>
+  <data name="account_master" xml:space="preserve">
+    <value>Account Master</value>
+  </data>
+  <data name="cash_flow_heading" xml:space="preserve">
+    <value>Cash Flow Heading</value>
+  </data>
 </root>

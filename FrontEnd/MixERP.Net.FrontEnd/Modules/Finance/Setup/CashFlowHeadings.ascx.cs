@@ -41,7 +41,7 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
                 scrud.TableSchema = "core";
                 scrud.Table = "cash_flow_headings";
                 scrud.ViewSchema = "core";
-                scrud.View = "cash_flow_headings";
+                scrud.View = "cash_flow_heading_scrud_view";
                 scrud.Text = Titles.CashFlowHeadings;
 
 

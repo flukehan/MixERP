@@ -603,4 +603,10 @@
   <data name="store" xml:space="preserve">
     <value>Store</value>
   </data>
+  <data name="currency" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="parent_office" xml:space="preserve">
+    <value>Parent Office</value>
+  </data>
 </root>

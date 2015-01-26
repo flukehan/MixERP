@@ -34,7 +34,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
                 scrud.TableSchema = "core";
                 scrud.Table = "tax_master";
                 scrud.ViewSchema = "core";
-                scrud.View = "tax_master";
+                scrud.View = "tax_master_scrud_view";
                 scrud.Text = Resources.Titles.TaxMaster;
 
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof(TaxMaster));

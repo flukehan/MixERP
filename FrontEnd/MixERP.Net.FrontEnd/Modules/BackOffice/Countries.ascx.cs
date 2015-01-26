@@ -35,7 +35,7 @@ namespace MixERP.Net.Core.Modules.BackOffice
                 scrud.TableSchema = "core";
                 scrud.Table = "countries";
                 scrud.ViewSchema = "core";
-                scrud.View = "countries";
+                scrud.View = "country_scrud_view";
                 scrud.Text = Titles.Countries;
 
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof(Countries));

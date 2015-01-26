@@ -36,7 +36,7 @@ namespace MixERP.Net.Core.Modules.BackOffice
                 scrud.TableSchema = "core";
                 scrud.Table = "fiscal_year";
                 scrud.ViewSchema = "core";
-                scrud.View = "fiscal_year";
+                scrud.View = "fiscal_year_scrud_view";
 
                 scrud.Text = Titles.FiscalYear;
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof(FiscalYear));
