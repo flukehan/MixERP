@@ -1469,7 +1469,7 @@ Remember:
 CREATE TABLE office.users
 (
     user_id                                 SERIAL PRIMARY KEY,
-    role_id                                 smallint NOT NULL,
+    role_id                                 integer NOT NULL,
     office_id                               integer NOT NULL,
     user_name                               national character varying(50) NOT NULL,
     full_name                               national character varying(100) NOT NULL,
@@ -1767,7 +1767,7 @@ ON office.departments(UPPER(department_name));
 
 CREATE TABLE office.roles
 (
-    role_id SERIAL                          PRIMARY KEY,
+    role_id                                 SERIAL PRIMARY KEY,
     role_code                               national character varying(12) NOT NULL,
     role_name                               national character varying(50) NOT NULL,
     is_admin                                boolean NOT NULL   
@@ -1838,7 +1838,7 @@ CREATE TABLE policy.lock_outs
 
 CREATE TABLE core.price_types
 (
-    price_type_id                           SERIAL  PRIMARY KEY,
+    price_type_id                           SERIAL PRIMARY KEY,
     price_type_code                         national character varying(12) NOT NULL,
     price_type_name                         national character varying(50) NOT NULL,
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
@@ -2044,7 +2044,7 @@ CREATE TABLE core.accounts
 (
     account_id                              BIGSERIAL PRIMARY KEY,
     account_master_id                       smallint NOT NULL REFERENCES core.account_masters(account_master_id),
-    account_number                            national character varying(12) NOT NULL,
+    account_number                          national character varying(12) NOT NULL,
     external_code                           national character varying(12) NULL   
                                             CONSTRAINT accounts_external_code_df  
                                             DEFAULT(''),
@@ -2112,7 +2112,7 @@ CREATE TABLE core.cash_flow_setup
 (
     cash_flow_setup_id                      SERIAL PRIMARY KEY,
     cash_flow_heading_id                    integer NOT NULL REFERENCES core.cash_flow_headings(cash_flow_heading_id),
-    account_master_id                       integer NOT NULL REFERENCES core.account_masters(account_master_id),
+    account_master_id                       smallint NOT NULL REFERENCES core.account_masters(account_master_id),
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL 
                                             DEFAULT(NOW())
@@ -2229,7 +2229,7 @@ CREATE TABLE core.party_types
     is_supplier                             boolean NOT NULL   
                                             CONSTRAINT party_types_is_supplier_df   
                                             DEFAULT(false),
-    account_id                              integer NOT NULL REFERENCES core.accounts(account_id),--When a new party is added, this becomes the parent account.
+    account_id                              bigint NOT NULL REFERENCES core.accounts(account_id),--When a new party is added, this becomes the parent account.
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL 
                                               
@@ -2246,7 +2246,7 @@ ON core.party_types(UPPER(party_type_name));
 CREATE TABLE core.parties
 (
     party_id BIGSERIAL                      PRIMARY KEY,
-    party_type_id                           smallint NOT NULL REFERENCES core.party_types(party_type_id),
+    party_type_id                           integer NOT NULL REFERENCES core.party_types(party_type_id),
     party_code                              national character varying(12) NULL,
     first_name                              national character varying(50) NOT NULL,
     middle_name                             national character varying(50) NULL,
@@ -2368,7 +2368,7 @@ ON core.income_tax_setup(office_id);
 
 CREATE TABLE core.sales_tax_types
 (
-    sales_tax_type_id                       SERIAL  PRIMARY KEY,
+    sales_tax_type_id                       SERIAL PRIMARY KEY,
     sales_tax_type_code                     national character varying(12) NOT NULL,
     sales_tax_type_name                     national character varying(50) NOT NULL,
     is_vat                                  boolean NOT NULL DEFAULT(false),
@@ -2522,7 +2522,7 @@ CREATE TABLE core.sales_tax_details
 (
     sales_tax_detail_id                     SERIAL PRIMARY KEY,
     sales_tax_id                            integer NOT NULL REFERENCES core.sales_taxes(sales_tax_id),
-    sales_tax_type_id                       smallint NOT NULL REFERENCES core.sales_tax_types(sales_tax_type_id),
+    sales_tax_type_id                       integer NOT NULL REFERENCES core.sales_tax_types(sales_tax_type_id),
     priority                                smallint NOT NULL DEFAULT(0),
     sales_tax_detail_code                   national character varying(24) NOT NULL,
     sales_tax_detail_name                   national character varying(50) NOT NULL,
@@ -2552,8 +2552,8 @@ CREATE TABLE core.sales_tax_details
                                             ),
     reporting_tax_authority_id              integer NOT NULL REFERENCES core.tax_authorities(tax_authority_id),
     collecting_tax_authority_id             integer NOT NULL REFERENCES core.tax_authorities(tax_authority_id),
-    collecting_account_id                   integer NOT NULL REFERENCES core.accounts(account_id),
-    use_tax_collecting_account_id           integer NULL REFERENCES core.accounts(account_id),
+    collecting_account_id                   bigint NOT NULL REFERENCES core.accounts(account_id),
+    use_tax_collecting_account_id           bigint NULL REFERENCES core.accounts(account_id),
     rounding_method_code                    national character varying(4) NULL REFERENCES core.rounding_methods(rounding_method_code),
     rounding_decimal_places                 integer_strict2 NOT NULL DEFAULT(2),
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
@@ -2621,7 +2621,7 @@ CREATE TABLE core.sales_tax_exempt_details
     sales_tax_exempt_id                     integer REFERENCES core.sales_tax_exempts(sales_tax_exempt_id),
     entity_id                               integer NULL REFERENCES core.entities(entity_id),
     industry_id                             integer NULL REFERENCES core.industries(industry_id),    
-    party_id                                integer NULL REFERENCES core.parties(party_id),
+    party_id                                bigint NULL REFERENCES core.parties(party_id),
     party_type_id                           integer NULL REFERENCES core.party_types(party_type_id),
     item_id                                 integer NULL /*REFERENCES core.items(item_id)*/,
     item_group_id                           integer NULL /*REFERENCES core.item_groups(item_group_id)*/, --Create trigger to disallow adding item group which is not allowed in sales.
@@ -2722,13 +2722,13 @@ CREATE TABLE core.item_groups
                                             CONSTRAINT item_groups_exclude_from_sales_df   
                                             DEFAULT(false),
     sales_tax_id                            integer NOT NULL REFERENCES core.sales_taxes(sales_tax_id),
-    sales_account_id                        integer NOT NULL REFERENCES core.accounts(account_id),
-    sales_discount_account_id               integer NOT NULL REFERENCES core.accounts(account_id),
-    sales_return_account_id                 integer NOT NULL REFERENCES core.accounts(account_id),
-    purchase_account_id                     integer NOT NULL REFERENCES core.accounts(account_id),
-    purchase_discount_account_id            integer NOT NULL REFERENCES core.accounts(account_id),
-    inventory_account_id                    integer NOT NULL REFERENCES core.accounts(account_id),
-    cost_of_goods_sold_account_id           integer NOT NULL REFERENCES core.accounts(account_id),    
+    sales_account_id                        bigint NOT NULL REFERENCES core.accounts(account_id),
+    sales_discount_account_id               bigint NOT NULL REFERENCES core.accounts(account_id),
+    sales_return_account_id                 bigint NOT NULL REFERENCES core.accounts(account_id),
+    purchase_account_id                     bigint NOT NULL REFERENCES core.accounts(account_id),
+    purchase_discount_account_id            bigint NOT NULL REFERENCES core.accounts(account_id),
+    inventory_account_id                    bigint NOT NULL REFERENCES core.accounts(account_id),
+    cost_of_goods_sold_account_id           bigint NOT NULL REFERENCES core.accounts(account_id),    
     parent_item_group_id                    integer NULL REFERENCES core.item_groups(item_group_id),
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
@@ -3026,8 +3026,8 @@ CREATE TABLE core.item_selling_prices
     item_selling_price_id                   BIGSERIAL PRIMARY KEY,
     item_id                                 integer NOT NULL REFERENCES core.items(item_id),
     unit_id                                 integer NOT NULL REFERENCES core.units(unit_id),
-    party_type_id                           smallint NULL REFERENCES core.party_types(party_type_id), 
-    price_type_id                           smallint NULL REFERENCES core.price_types(price_type_id),
+    party_type_id                           integer NULL REFERENCES core.party_types(party_type_id), 
+    price_type_id                           integer NULL REFERENCES core.price_types(price_type_id),
     includes_tax                            boolean NOT NULL   
                                             CONSTRAINT item_selling_prices_includes_tax_df   
                                             DEFAULT('No'),
@@ -3083,7 +3083,7 @@ ON office.store_types(UPPER(store_type_name));
 
 CREATE TABLE office.cash_repositories
 (
-    cash_repository_id                      BIGSERIAL PRIMARY KEY,
+    cash_repository_id                      SERIAL PRIMARY KEY,
     office_id                               integer NOT NULL REFERENCES office.offices(office_id),
     cash_repository_code                    national character varying(12) NOT NULL,
     cash_repository_name                    national character varying(50) NOT NULL,
@@ -3105,7 +3105,7 @@ ON office.cash_repositories(office_id, UPPER(cash_repository_name));
 
 CREATE TABLE office.stores
 (
-    store_id SERIAL                         PRIMARY KEY,
+    store_id                                SERIAL PRIMARY KEY,
     office_id                               integer NOT NULL REFERENCES office.offices(office_id),
     store_code                              national character varying(12) NOT NULL,
     store_name                              national character varying(50) NOT NULL,
@@ -3114,7 +3114,7 @@ CREATE TABLE office.stores
     allow_sales                             boolean NOT NULL   
                                             DEFAULT(true),
     sales_tax_id                            integer NOT NULL REFERENCES core.sales_taxes(sales_tax_id),
-    default_cash_account_id                 integer NOT NULL REFERENCES core.accounts(account_id),
+    default_cash_account_id                 bigint NOT NULL REFERENCES core.accounts(account_id),
     default_cash_repository_id              integer NOT NULL REFERENCES office.cash_repositories(cash_repository_id),
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
@@ -3135,7 +3135,7 @@ ON office.stores(office_id, UPPER(store_name));
 CREATE TABLE office.counters
 (
     counter_id                              SERIAL PRIMARY KEY,
-    store_id                                smallint NOT NULL REFERENCES office.stores(store_id),
+    store_id                                integer NOT NULL REFERENCES office.stores(store_id),
     cash_repository_id                      integer NOT NULL REFERENCES office.cash_repositories(cash_repository_id),
     counter_code                            national character varying(12) NOT NULL,
     counter_name                            national character varying(50) NOT NULL,
@@ -3201,9 +3201,9 @@ CREATE TABLE policy.store_policies
 CREATE TABLE policy.store_policy_details
 (
     store_policy_detail_id                  BIGSERIAL PRIMARY KEY,
-    store_policy_id                         integer NOT NULL REFERENCES policy.store_policies(store_policy_id),
+    store_policy_id                         bigint NOT NULL REFERENCES policy.store_policies(store_policy_id),
     user_id                                 integer NOT NULL REFERENCES office.users(user_id),
-    store_id                                smallint NOT NULL REFERENCES office.stores(store_id),
+    store_id                                integer NOT NULL REFERENCES office.stores(store_id),
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
                                             DEFAULT(NOW())
@@ -3215,7 +3215,7 @@ CREATE TABLE core.item_opening_inventory
     item_opening_inventory_id               BIGSERIAL PRIMARY KEY,
     entry_ts                                TIMESTAMP WITH TIME ZONE NOT NULL,
     item_id                                 integer NOT NULL REFERENCES core.items(item_id),
-    store_id                                smallint NOT NULL REFERENCES office.stores(store_id),
+    store_id                                integer NOT NULL REFERENCES office.stores(store_id),
     unit_id                                 integer NOT NULL REFERENCES core.units(unit_id),
     quantity                                integer NOT NULL,
     amount                                  money_strict NOT NULL,
@@ -3346,8 +3346,8 @@ CREATE TABLE transactions.stock_master
                                             CONSTRAINT stock_master_is_credit_df   
                                             DEFAULT(false),
     payment_term_id                         integer NULL REFERENCES core.payment_terms(payment_term_id),
-    shipper_id                              integer NULL REFERENCES core.shippers(shipper_id),
-    shipping_address_id                     integer NULL REFERENCES core.shipping_addresses(shipping_address_id),
+    shipper_id                              bigint NULL REFERENCES core.shippers(shipper_id),
+    shipping_address_id                     bigint NULL REFERENCES core.shipping_addresses(shipping_address_id),
     shipping_charge                         money_strict2 NOT NULL   
                                             CONSTRAINT stock_master_shipping_charge_df   
                                             DEFAULT(0),
@@ -3429,8 +3429,8 @@ CREATE TABLE transactions.non_gl_stock_master
     statement_reference                     text NULL,
     non_taxable                             boolean NOT NULL DEFAULT(false),
     salesperson_id                          integer NULL REFERENCES core.salespersons(salesperson_id),
-    shipper_id                              integer NULL REFERENCES core.shippers(shipper_id),
-    shipping_address_id                     integer NULL REFERENCES core.shipping_addresses(shipping_address_id),
+    shipper_id                              bigint NULL REFERENCES core.shippers(shipper_id),
+    shipping_address_id                     bigint NULL REFERENCES core.shipping_addresses(shipping_address_id),
     shipping_charge                         money_strict2 NOT NULL   
                                             CONSTRAINT stock_master_shipping_charge_df   
                                             DEFAULT(0),
@@ -5544,11 +5544,11 @@ LANGUAGE plpgsql;
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_second_root_account_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_second_root_account_id(integer, integer);
 
-CREATE FUNCTION core.get_second_root_account_id(_account_id integer, _parent integer default 0)
+CREATE FUNCTION core.get_second_root_account_id(_account_id bigint, _parent bigint default 0)
 RETURNS integer
 AS
 $$
-    DECLARE _parent_account_id integer;
+    DECLARE _parent_account_id bigint;
 BEGIN
     SELECT 
         parent_account_id
@@ -6831,9 +6831,9 @@ LANGUAGE plpgsql;
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/core/core.is_cash_equivalent.sql --<--<--
-DROP FUNCTION IF EXISTS core.is_cash_equivalent(_account_id integer);
+DROP FUNCTION IF EXISTS core.is_cash_equivalent(_account_id bigint);
 
-CREATE FUNCTION core.is_cash_equivalent(_account_id integer)
+CREATE FUNCTION core.is_cash_equivalent(_account_id bigint)
 RETURNS boolean
 AS
 $$
@@ -20562,6 +20562,37 @@ SELECT
         brand_name
 FROM core.brands;
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.cash_flow_heading_scrud_view.sql --<--<--
+CREATE VIEW core.cash_flow_heading_scrud_view
+AS
+SELECT 
+  core.cash_flow_headings.cash_flow_heading_id, 
+  core.cash_flow_headings.cash_flow_heading_code, 
+  core.cash_flow_headings.cash_flow_heading_name, 
+  core.cash_flow_headings.cash_flow_heading_type, 
+  core.cash_flow_headings.is_debit, 
+  core.cash_flow_headings.is_sales, 
+  core.cash_flow_headings.is_purchase
+FROM 
+  core.cash_flow_headings;
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.cash_flow_setup_scrud_view.sql --<--<--
+CREATE VIEW core.cash_flow_setup_scrud_view
+AS
+SELECT 
+ core.cash_flow_setup.cash_flow_setup_id, 
+ core.cash_flow_headings.cash_flow_heading_code || '('|| core.cash_flow_headings.cash_flow_heading_name||')' AS cash_flow_heading, 
+ core.account_masters.account_master_code || '('|| core.account_masters.account_master_name||')' AS account_master
+FROM 
+core.cash_flow_setup
+INNER JOIN core.cash_flow_headings
+ON  core.cash_flow_setup.cash_flow_heading_id =core.cash_flow_headings.cash_flow_heading_id
+INNER JOIN core.account_masters
+ON core.cash_flow_setup.account_master_id = core.account_masters.account_master_id;
+
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.compound_item_detail_scrud_view.sql --<--<--
 CREATE VIEW core.compound_item_detail_scrud_view
 AS
@@ -20607,6 +20638,33 @@ AND
 
 
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.country_scrud_view.sql --<--<--
+CREATE VIEW core.country_scrud_view
+AS
+SELECT 
+  core.countries.country_id, 
+  core.countries.country_code, 
+  core.countries.country_name
+FROM 
+  core.countries;
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.county_scrud_view.sql --<--<--
+CREATE VIEW core.county_scrud_view
+AS
+SELECT 
+  core.counties.county_id, 
+  core.counties.county_code, 
+  core.counties.county_name, 
+  core.states.state_code || '('|| core.states.state_name||')' AS state
+FROM 
+  core.counties
+INNER JOIN  core.states
+ON core.counties.state_id = core.states.state_id;
+
+
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.currency_scrud_view.sql --<--<--
 DROP VIEW IF EXISTS core.currency_scrud_view;
 CREATE VIEW core.currency_scrud_view
@@ -20618,6 +20676,27 @@ SELECT
   core.currencies.hundredth_name
 FROM 
   core.currencies;
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.entity_scrud_view.sql --<--<--
+CREATE VIEW core.entity_scrud_view
+AS
+SELECT
+core.entities.entity_id,
+core.entities.entity_name
+FROM
+core.entities; 
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.fiscal_year_scrud_view.sql --<--<--
+CREATE VIEW core.fiscal_year_scrud_view
+AS
+SELECT 
+  core.fiscal_year.fiscal_year_code, 
+  core.fiscal_year.fiscal_year_name, 
+  core.fiscal_year.starts_from, 
+  core.fiscal_year.ends_on
+FROM 
+  core.fiscal_year;
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.frequency_setup_scrud_view.sql --<--<--
@@ -20893,6 +20972,151 @@ core.recurring_invoice_setup.party_id = core.parties.party_id
 INNER JOIN core.payment_terms ON 
 core.recurring_invoice_setup.payment_term_id = core.payment_terms.payment_term_id;
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.sales_tax_detail_scrud_view.sql --<--<--
+CREATE VIEW core.sales_tax_detail_scrud_view
+AS
+SELECT 
+  core.sales_tax_details.sales_tax_detail_id, 
+  core.sales_taxes.sales_tax_code || ' ('|| core.sales_taxes.sales_tax_name||')' AS sales_tax,
+  core.sales_tax_types.sales_tax_type_code || ' ('|| core.sales_tax_types.sales_tax_type_name||')' AS sales_tax_type, 
+  core.sales_tax_details.priority,
+  core.sales_tax_details.sales_tax_detail_code, 
+  core.sales_tax_details.sales_tax_detail_name, 
+  core.sales_tax_details.based_on_shipping_address, 
+  core.sales_tax_details.check_nexus, 
+  core.sales_tax_details.applied_on_shipping_charge, 
+  core.state_sales_taxes.state_sales_tax_code || ' ('|| core.state_sales_taxes.state_sales_tax_name||')' AS state_sales_tax, 
+  core.county_sales_taxes.county_sales_tax_code || ' (' || core.county_sales_taxes.county_sales_tax_name||')' AS county_sales_tax, 
+  core.tax_rate_types.tax_rate_type_code || '('|| core.tax_rate_types.tax_rate_type_name||')' AS tax_rate_type,  
+  core.sales_tax_details.rate,
+  reporting_tax_authority.tax_authority_code || ' (' || reporting_tax_authority.tax_authority_name||')' AS reporting_tax_authority, 
+  collecting_tax_authority.tax_authority_code || ' (' || collecting_tax_authority.tax_authority_name||')' AS collecting_tax_authority,
+  collecting_account.account_number || '  ('|| collecting_account.account_name||')' AS collecting_account,
+  use_tax_collecting_account.account_number || '  ('|| use_tax_collecting_account.account_name||')' AS use_tax_collecting_account,
+  core.rounding_methods.rounding_method_code || '('|| core.rounding_methods.rounding_method_name||')' AS rounding_method,
+  core.sales_tax_details.rounding_decimal_places
+
+FROM 
+   core.sales_tax_details
+INNER JOIN core.sales_taxes
+ON core.sales_tax_details.sales_tax_id = core.sales_taxes.sales_tax_id 
+INNER JOIN core.sales_tax_types
+ON core.sales_tax_details.sales_tax_type_id = core.sales_tax_types.sales_tax_type_id
+LEFT JOIN core.state_sales_taxes
+ON core.sales_tax_details.state_sales_tax_id = core.state_sales_taxes.state_sales_tax_id
+LEFT JOIN core.county_sales_taxes
+ON core.sales_tax_details.county_sales_tax_id = core.county_sales_taxes.county_sales_tax_id
+INNER JOIN core.tax_rate_types
+ON  core.sales_tax_details.tax_rate_type_code  = core.tax_rate_types.tax_rate_type_code
+INNER JOIN core.tax_authorities AS reporting_tax_authority
+ON core.sales_tax_details.reporting_tax_authority_id = reporting_tax_authority.tax_authority_id
+INNER JOIN core.tax_authorities AS collecting_tax_authority
+ON core.sales_tax_details.collecting_tax_authority_id = collecting_tax_authority.tax_authority_id
+INNER JOIN core.accounts AS collecting_account
+ON core.sales_tax_details.collecting_account_id = collecting_account.account_id
+LEFT JOIN core.accounts AS use_tax_collecting_account
+ON core.sales_tax_details.use_tax_collecting_account_id = use_tax_collecting_account.account_id
+LEFT JOIN core.rounding_methods
+ON core.sales_tax_details.rounding_method_code = core.rounding_methods.rounding_method_code;
+
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.sales_tax_exempt_detail_scrud_view.sql --<--<--
+CREATE VIEW core.sales_tax_exempt_detail_scrud_view
+AS
+SELECT 
+  core.sales_tax_exempt_details.sales_tax_exempt_detail_id, 
+  core.sales_tax_exempts.sales_tax_exempt_code || '('|| core.sales_tax_exempts.sales_tax_exempt_name ||')' AS sales_tax_exempt,  
+  core.entities.entity_name, 
+  core.industries.industry_name, 
+  core.parties.party_code || '(' || core.parties.party_name ||')' AS party, 
+  core.party_types.party_type_code || '('|| core.party_types.party_type_name ||')' AS party_type, 
+  core.items.item_code || '('|| core.items.item_name ||')' AS item, 
+  core.item_groups.item_group_code || '('|| core.item_groups.item_group_name ||')' AS item_group
+FROM 
+  core.sales_tax_exempt_details
+LEFT JOIN core.sales_tax_exempts
+ON core.sales_tax_exempt_details.sales_tax_exempt_id = core.sales_tax_exempts.sales_tax_exempt_id
+LEFT JOIN core.entities
+ON core.sales_tax_exempt_details.entity_id = core.entities.entity_id
+LEFT JOIN core.industries
+ON core.sales_tax_exempt_details.industry_id = core.industries.industry_id
+LEFT JOIN  core.parties
+ON core.sales_tax_exempt_details.party_id = core.parties.party_id
+LEFT JOIN core.party_types
+ON core.sales_tax_exempt_details.party_type_id = core.party_types.party_type_id
+LEFT JOIN core.items
+ON core.sales_tax_exempt_details.item_id = core.items.item_id
+LEFT JOIN core.item_groups
+ON core.sales_tax_exempt_details.item_group_id = core.item_groups.item_group_id;
+
+
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.sales_tax_exempt_scrud_view.sql --<--<--
+CREATE VIEW core.sales_tax_exempt_scrud_view
+AS 
+SELECT 
+  core.sales_tax_exempts.sales_tax_exempt_id, 
+  core.tax_master.tax_master_code || '('|| core.tax_master.tax_master_name||')' AS tax_master, 
+  core.sales_tax_exempts.sales_tax_exempt_code, 
+  core.sales_tax_exempts.sales_tax_exempt_name, 
+  core.tax_exempt_types.tax_exempt_type_code || '('|| core.tax_exempt_types.tax_exempt_type_name||')' AS tax_exempt_type,
+  office.stores.store_code || '('|| office.stores.store_name||')' AS store,
+  core.sales_taxes.sales_tax_code || '('|| core.sales_taxes.sales_tax_name||')' AS sales_tax, 
+  core.sales_tax_exempts.valid_from, 
+  core.sales_tax_exempts.valid_till, 
+  core.sales_tax_exempts.price_from, 
+  core.sales_tax_exempts.price_to
+FROM 
+  core.sales_tax_exempts
+INNER JOIN core.tax_master
+ON core.sales_tax_exempts.tax_master_id = core.tax_master.tax_master_id
+INNER JOIN core.tax_exempt_types
+ON core.sales_tax_exempts.tax_exempt_type_id = core.tax_exempt_types.tax_exempt_type_id
+INNER JOIN office.stores
+ON core.sales_tax_exempts.store_id = office.stores.store_id
+INNER JOIN core.sales_taxes
+ON core.sales_tax_exempts.sales_tax_id = core.sales_taxes.sales_tax_id;
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.sales_tax_scrud_view.sql --<--<--
+CREATE VIEW core.sales_tax_scrud_view
+AS
+SELECT 
+  core.sales_taxes.sales_tax_id, 
+  core.tax_master.tax_master_code || ' (' || core.tax_master.tax_master_name||')' AS tax_master, 
+  office.offices.office_code || ' (' || offices.office_name||')' AS office, 
+  core.sales_taxes.sales_tax_code, 
+  core.sales_taxes.sales_tax_name, 
+  core.sales_taxes.is_exemption, 
+  core.tax_base_amount_types.tax_base_amount_type_code || '('|| core.tax_base_amount_types.tax_base_amount_type_name||')' AS tax_base_amount,
+  core.sales_taxes.rate
+FROM 
+  core.sales_taxes 
+INNER JOIN core.tax_master
+ON sales_taxes.tax_master_id = tax_master.tax_master_id
+INNER JOIN office.offices
+ON  sales_taxes.office_id = offices.office_id 
+INNER JOIN core.tax_base_amount_types 
+ON sales_taxes.tax_base_amount_type_code = tax_base_amount_types.tax_base_amount_type_code;
+
+
+
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.sales_tax_type_scrud_view.sql --<--<--
+CREATE VIEW core.sales_tax_type_scrud_view
+AS
+SELECT 
+  core.sales_tax_types.sales_tax_type_id, 
+  core.sales_tax_types.sales_tax_type_code, 
+  core.sales_tax_types.sales_tax_type_name, 
+  core.sales_tax_types.is_vat
+FROM 
+  core.sales_tax_types;
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.sales_teams_scrud_view.sql --<--<--
 CREATE VIEW core.sales_teams_scrud_view
 AS
@@ -20996,6 +21220,24 @@ SELECT
 FROM core.shipping_addresses
 INNER JOIN core.parties
 ON core.shipping_addresses.party_id=core.parties.party_id;
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.state_scrud_view.sql --<--<--
+CREATE VIEW core.state_scrud_view
+AS
+SELECT 
+  core.states.state_id, 
+  core.countries.country_code || '('|| core.countries.country_name||')' AS country_name, 
+  core.states.state_code, 
+  core.states.state_name
+FROM 
+  core.states
+INNER JOIN core.countries
+ON core.states.country_id = core.countries.country_id; 
+
+
+
+
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.tax_authority_scrud_view.sql --<--<--
@@ -21104,6 +21346,39 @@ SELECT
 	departments.department_code,
 	departments.department_name
 FROM office.departments;
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/office/office.office_scrud_view.sql --<--<--
+CREATE VIEW office.office_scrud_view
+AS
+SELECT 
+  office.offices.office_id, 
+  office.offices.office_code, 
+  office.offices.office_name, 
+  office.offices.nick_name, 
+  office.offices.registration_date, 
+  core.currencies.currency_code || '('|| core.currencies.currency_name||')' AS currency, 
+  office.offices.po_box, 
+  office.offices.address_line_1, 
+  office.offices.address_line_2, 
+  office.offices.street, 
+  office.offices.city, 
+  office.offices.state, 
+  office.offices.zip_code, 
+  office.offices.country, 
+  office.offices.phone, 
+  office.offices.fax, 
+  office.offices.email, 
+  office.offices.url, 
+  office.offices.registration_number, 
+  parent_office.office_code || '('|| parent_office.office_name||')' AS parent_office
+FROM 
+  office.offices
+INNER JOIN core.currencies
+ON office.offices.currency_code = core.currencies.currency_code
+LEFT JOIN office.offices AS parent_office
+ON  office.offices.parent_office_id = parent_office.parent_office_id;
+
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/office/office.role_scrud_view.sql --<--<--

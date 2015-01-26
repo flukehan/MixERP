@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS core.is_cash_equivalent(_account_id integer);
+DROP FUNCTION IF EXISTS core.is_cash_equivalent(_account_id bigint);
 
-CREATE FUNCTION core.is_cash_equivalent(_account_id integer)
+CREATE FUNCTION core.is_cash_equivalent(_account_id bigint)
 RETURNS boolean
 AS
 $$

@@ -1,6 +1,7 @@
 
 CREATE FUNCTION core.get_shipping_address_id_by_shipping_address_code(text, bigint)
-RETURNS smallint
+RETURNS integer
+STABLE
 AS
 $$
 BEGIN

@@ -1,5 +1,5 @@
 CREATE FUNCTION core.get_unit_id_by_unit_code(text)
-RETURNS smallint
+RETURNS integer
 AS
 $$
 BEGIN

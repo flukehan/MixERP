@@ -1,5 +1,5 @@
 CREATE FUNCTION core.get_party_type_id_by_party_code(text)
-RETURNS smallint
+RETURNS integer
 AS
 $$
 BEGIN

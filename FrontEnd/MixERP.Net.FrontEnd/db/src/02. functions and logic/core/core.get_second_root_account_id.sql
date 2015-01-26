@@ -1,10 +1,10 @@
 DROP FUNCTION IF EXISTS core.get_second_root_account_id(integer, integer);
 
-CREATE FUNCTION core.get_second_root_account_id(_account_id integer, _parent integer default 0)
+CREATE FUNCTION core.get_second_root_account_id(_account_id bigint, _parent bigint default 0)
 RETURNS integer
 AS
 $$
-    DECLARE _parent_account_id integer;
+    DECLARE _parent_account_id bigint;
 BEGIN
     SELECT 
         parent_account_id
