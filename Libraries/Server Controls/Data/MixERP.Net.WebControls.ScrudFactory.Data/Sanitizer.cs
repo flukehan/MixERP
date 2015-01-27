@@ -34,7 +34,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
         /// </returns>
         public static string SanitizeIdentifierName(string identifier)
         {
-            return DBFactory.Sanitizer.SanitizeIdentifierName(identifier);
+            return DbFactory.Sanitizer.SanitizeIdentifierName(identifier);
         }
     }
 }

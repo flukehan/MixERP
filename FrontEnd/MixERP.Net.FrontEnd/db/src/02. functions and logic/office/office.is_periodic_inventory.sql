@@ -6,7 +6,7 @@ AS
 $$
         DECLARE config boolean;
 BEGIN
-        SELECT configuration = 'Periodic' INTO config
+        SELECT value = 'Periodic' INTO config
         FROM office.configuration
         WHERE config_id=1
         AND office_id=$1;

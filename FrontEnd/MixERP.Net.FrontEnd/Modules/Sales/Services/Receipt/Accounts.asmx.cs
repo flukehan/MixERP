@@ -21,9 +21,13 @@ using MixERP.Net.Common.Helpers;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
+using System.Globalization;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.Web.UI.WebControls;
+using MixERP.Net.Entities.Core;
+using MixERP.Net.Entities.Office;
+
 
 namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
 {
@@ -38,16 +42,12 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = Data.Helpers.Accounts.GetCashRepositories())
-            {
-                string displayField = ConfigurationHelper.GetDbParameter("CashRepositoryDisplayField");
-                table.Columns.Add("cash_repository", typeof(string), displayField);
 
-                foreach (DataRow dr in table.Rows)
-                {
-                    values.Add(new ListItem(dr["cash_repository"].ToString(), dr["cash_repository_id"].ToString()));
-                }
+            foreach (CashRepository cashRepository in Data.Helpers.Accounts.GetCashRepositories())
+            {
+                values.Add(new ListItem(cashRepository.CashRepositoryName, cashRepository.CashRepositoryId.ToString(CultureInfo.InvariantCulture)));
             }
+
             return values;
         }
 
@@ -56,15 +56,12 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = Data.Helpers.Accounts.GetFlags())
+            foreach (FlagType flagType in Data.Helpers.Accounts.GetFlagTypes())
             {
-                foreach (DataRow dr in table.Rows)
-                {
-                    values.Add(new ListItem(dr["flag_type_name"].ToString(), dr["flag_type_id"].ToString()));
-                }
-
-                return values;
+                values.Add(new ListItem(flagType.FlagTypeName, flagType.FlagTypeId.ToString(CultureInfo.InvariantCulture)));
             }
+
+            return values;
         }
 
         [WebMethod]
@@ -72,16 +69,12 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = Data.Helpers.Accounts.GetCostCenters())
-            {
-                string displayField = ConfigurationHelper.GetDbParameter("CostCenterDisplayField");
-                table.Columns.Add("cost_center", typeof(string), displayField);
 
-                foreach (DataRow dr in table.Rows)
-                {
-                    values.Add(new ListItem(dr["cost_center"].ToString(), dr["cost_center_id"].ToString()));
-                }
+            foreach (CostCenter costCenter in Data.Helpers.Accounts.GetCostCenters())
+            {
+                values.Add(new ListItem(costCenter.CostCenterName, costCenter.CostCenterId.ToString(CultureInfo.InvariantCulture)));
             }
+
             return values;
         }
 
@@ -90,16 +83,11 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = Data.Helpers.Accounts.GetBankAccounts())
+            foreach (BankAccount bankAccount in Data.Helpers.Accounts.GetBankAccounts())
             {
-                string displayField = ConfigurationHelper.GetDbParameter("BankAccountDisplayField");
-                table.Columns.Add("bank_account", typeof(string), displayField);
-
-                foreach (DataRow dr in table.Rows)
-                {
-                    values.Add(new ListItem(dr["bank_account"].ToString(), dr["account_id"].ToString()));
-                }
+                values.Add(new ListItem(bankAccount.BankAccountNumber + " (" + bankAccount.BankAccountNumber + ")", bankAccount.AccountId.ToString(CultureInfo.InvariantCulture)));
             }
+
             return values;
         }
     }

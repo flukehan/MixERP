@@ -32,7 +32,6 @@ using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models.Core;
-using MixERP.Net.Common.Models.Office;
 using Menu = MixERP.Net.Common.Models.Core.Menu;
 
 namespace MixERP.Net.FrontEnd.Base
@@ -176,10 +175,10 @@ namespace MixERP.Net.FrontEnd.Base
                         return false;
                     }
 
-                    SignInView signInView = Data.Office.User.GetSignInView(signInId);
+                    Entities.Office.SignInView signInView = Data.Office.User.GetSignInView(signInId);
 
                     session["SignInTimestamp"] = DateTime.Now;
-                    session["LogOnId"] = signInView.LogOnId;
+                    session["LogOnId"] = signInView.LoginId;
                     session["UserId"] = signInView.UserId;
                     session["Culture"] = signInView.Culture;
                     session["UserName"] = signInView.UserName;
@@ -189,7 +188,7 @@ namespace MixERP.Net.FrontEnd.Base
                     session["IsAdmin"] = signInView.IsAdmin;
                     session["OfficeCode"] = signInView.OfficeCode;
                     session["OfficeId"] = signInView.OfficeId;
-                    session["NickName"] = signInView.Nickname;
+                    session["NickName"] = signInView.NickName;
                     session["OfficeName"] = signInView.OfficeName;
                     session["RegistrationDate"] = signInView.RegistrationDate;
                     session["RegistrationNumber"] = signInView.RegistrationNumber;
@@ -208,7 +207,7 @@ namespace MixERP.Net.FrontEnd.Base
 
                     SetCulture();
 
-                    if (signInView.LogOnId.Equals(0))
+                    if (signInView.LoginId == null)
                     {
                         session.Remove("UserName");
                         FormsAuthentication.SignOut();

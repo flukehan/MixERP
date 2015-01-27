@@ -18,13 +18,15 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Office;
+using MixERP.Net.Entities.Core;
+using MixERP.Net.Entities.Office;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Data.Helpers;
 using MixERP.Net.FrontEnd.Data.Office;
@@ -47,6 +49,7 @@ namespace MixERP.Net.FrontEnd
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
             this.CheckDbConnectivity();
             PageUtility.CheckInvalidAttempts(this.Page);
 
@@ -93,7 +96,7 @@ namespace MixERP.Net.FrontEnd
 
         private void BindBranchDropDownList()
         {
-            Collection<Office> offices = Offices.GetOffices();
+            IEnumerable<OfficeType> offices = Offices.GetOffices();
             this.branchSelect.DataSource = offices;
             this.branchSelect.DataBind();
         }

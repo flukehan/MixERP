@@ -25,7 +25,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
     {
         public static DataTable GetTable(string schema, string tableName, string exclusion)
         {
-            return DBFactory.TableHelper.GetTable(schema, tableName, exclusion);
+            return DbFactory.TableHelper.GetTable(schema, tableName, exclusion);
         }
     }
 }

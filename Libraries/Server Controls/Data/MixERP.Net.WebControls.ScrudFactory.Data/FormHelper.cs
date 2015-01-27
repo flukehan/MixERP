@@ -24,9 +24,10 @@ using System.Data;
 using System.IO;
 using System.IO.Ports;
 using System.Linq;
+using System.Threading;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
-using MixERP.Net.DBFactory;
+using MixERP.Net.DbFactory;
 using Npgsql;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Data
@@ -39,9 +40,9 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
 
             using (NpgsqlCommand command = new NpgsqlCommand())
             {
-                sql = sql.Replace("@TableSchema", DBFactory.Sanitizer.SanitizeIdentifierName(tableSchema));
-                sql = sql.Replace("@TableName", DBFactory.Sanitizer.SanitizeIdentifierName(tableName));
-                sql = sql.Replace("@KeyColumn", DBFactory.Sanitizer.SanitizeIdentifierName(keyColumn));
+                sql = sql.Replace("@TableSchema", DbFactory.Sanitizer.SanitizeIdentifierName(tableSchema));
+                sql = sql.Replace("@TableName", DbFactory.Sanitizer.SanitizeIdentifierName(tableName));
+                sql = sql.Replace("@KeyColumn", DbFactory.Sanitizer.SanitizeIdentifierName(keyColumn));
                 command.CommandText = sql;
 
                 command.Parameters.AddWithValue("@KeyValue", keyColumnValue);
@@ -59,29 +60,149 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
 
         public static DataTable GetTable(string tableSchema, string tableName, string orderBy)
         {
-            return DBFactory.FormHelper.GetTable(tableSchema, tableName, orderBy);
+            var sql = "SELECT * FROM @TableSchema.@TableName ORDER BY @OrderBy ASC;";
+            using (var command = new NpgsqlCommand())
+            {
+                sql = sql.Replace("@TableSchema", DbFactory.Sanitizer.SanitizeIdentifierName(tableSchema));
+                sql = sql.Replace("@TableName", DbFactory.Sanitizer.SanitizeIdentifierName(tableName));
+                sql = sql.Replace("@OrderBy", DbFactory.Sanitizer.SanitizeIdentifierName(orderBy));
+                command.CommandText = sql;
+
+                return DbOperation.GetDataTable(command);
+            }
         }
 
-        public static DataTable GetTable(string tableSchema, string tableName, string columnNames, string columnValues,
-            string orderBy)
+        public static DataTable GetTable(string tableSchema, string tableName, string columnNames, string columnValues, string orderBy)
         {
-            return DBFactory.FormHelper.GetTable(tableSchema, tableName, columnNames, columnValues, orderBy);
+            if (string.IsNullOrWhiteSpace(columnNames))
+            {
+                return null;
+            }
+
+            if (string.IsNullOrWhiteSpace(columnValues))
+            {
+                return null;
+            }
+
+            var columns = columnNames.Split(',');
+            var values = columnValues.Split(',');
+
+            if (!columns.Length.Equals(values.Length))
+            {
+                return null;
+            }
+
+            var counter = 0;
+            var sql = "SELECT * FROM @TableSchema.@TableName WHERE ";
+
+            foreach (var column in columns)
+            {
+                if (!counter.Equals(0))
+                {
+                    sql += " AND ";
+                }
+
+                sql += DbFactory.Sanitizer.SanitizeIdentifierName(column.Trim()) + " = @" + DbFactory.Sanitizer.SanitizeIdentifierName(column.Trim());
+
+                counter++;
+            }
+
+            sql += " ORDER BY @OrderBy ASC;";
+
+            using (var command = new NpgsqlCommand())
+            {
+                sql = sql.Replace("@TableSchema", DbFactory.Sanitizer.SanitizeIdentifierName(tableSchema));
+                sql = sql.Replace("@TableName", DbFactory.Sanitizer.SanitizeIdentifierName(tableName));
+                sql = sql.Replace("@OrderBy", DbFactory.Sanitizer.SanitizeIdentifierName(orderBy));
+
+                command.CommandText = sql;
+
+                counter = 0;
+                foreach (var column in columns)
+                {
+                    command.Parameters.AddWithValue("@" + DbFactory.Sanitizer.SanitizeIdentifierName(column.Trim()), values[counter]);
+                    counter++;
+                }
+
+                return DbOperation.GetDataTable(command);
+            }
         }
 
-        public static DataTable GetTable(string tableSchema, string tableName, string columnNames,
-            string columnValuesLike, int limit, string orderBy)
+        public static DataTable GetTable(string tableSchema, string tableName, string columnNames, string columnValuesLike, int limit, string orderBy)
         {
-            return DBFactory.FormHelper.GetTable(tableSchema, tableName, columnNames, columnValuesLike, limit, orderBy);
+            if (columnNames == null)
+            {
+                columnNames = string.Empty;
+            }
+
+            if (columnValuesLike == null)
+            {
+                columnValuesLike = string.Empty;
+            }
+
+            var columns = columnNames.Split(',');
+            var values = columnValuesLike.Split(',');
+
+            if (!columns.Length.Equals(values.Length))
+            {
+                return null;
+            }
+
+            var counter = 0;
+            var sql = "SELECT * FROM @TableSchema.@TableName ";
+
+            foreach (var column in columns)
+            {
+                if (!string.IsNullOrWhiteSpace(column))
+                {
+                    if (counter.Equals(0))
+                    {
+                        sql += " WHERE ";
+                    }
+                    else
+                    {
+                        sql += " AND ";
+                    }
+
+                    sql += " lower(" + DbFactory.Sanitizer.SanitizeIdentifierName(column.Trim()) + "::text) LIKE @" + DbFactory.Sanitizer.SanitizeIdentifierName(column.Trim());
+                    counter++;
+                }
+            }
+
+            sql += " ORDER BY @OrderBy ASC LIMIT @Limit;";
+
+            using (var command = new NpgsqlCommand())
+            {
+                sql = sql.Replace("@TableSchema", DbFactory.Sanitizer.SanitizeIdentifierName(tableSchema));
+                sql = sql.Replace("@TableName", DbFactory.Sanitizer.SanitizeIdentifierName(tableName));
+                sql = sql.Replace("@OrderBy", DbFactory.Sanitizer.SanitizeIdentifierName(orderBy));
+
+                command.CommandText = sql;
+
+                counter = 0;
+                foreach (var column in columns)
+                {
+                    if (!string.IsNullOrWhiteSpace(column))
+                    {
+                        command.Parameters.AddWithValue("@" + DbFactory.Sanitizer.SanitizeIdentifierName(column.Trim()), "%" + values[counter].ToLower(Thread.CurrentThread.CurrentCulture) + "%");
+                        counter++;
+                    }
+                }
+
+                command.Parameters.AddWithValue("@Limit", limit);
+
+                return DbOperation.GetDataTable(command);
+            }
         }
 
         public static int GetTotalRecords(string tableSchema, string tableName)
         {
-            return DBFactory.FormHelper.GetTotalRecords(tableSchema, tableName);
+            return DbFactory.FormHelper.GetTotalRecords(tableSchema, tableName);
         }
 
         public static DataTable GetView(string tableSchema, string tableName, string orderBy, int limit, int offset)
         {
-            return DBFactory.FormHelper.GetView(tableSchema, tableName, orderBy, limit, offset);
+            return DbFactory.FormHelper.GetView(tableSchema, tableName, orderBy, limit, offset);
         }
 
         public static long InsertRecord(int userId, string tableSchema, string tableName, Collection<KeyValuePair<string, object>> data, string imageColumn)
@@ -102,12 +223,12 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
 
                 if (counter.Equals(1))
                 {
-                    columns += DBFactory.Sanitizer.SanitizeIdentifierName(pair.Key);
+                    columns += DbFactory.Sanitizer.SanitizeIdentifierName(pair.Key);
                     columnParameters += "@" + pair.Key;
                 }
                 else
                 {
-                    columns += ", " + DBFactory.Sanitizer.SanitizeIdentifierName(pair.Key);
+                    columns += ", " + DbFactory.Sanitizer.SanitizeIdentifierName(pair.Key);
                     columnParameters += ", @" + pair.Key;
                 }
             }
@@ -116,8 +237,8 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
                          ", @AuditUserId;SELECT LASTVAL();";
             using (NpgsqlCommand command = new NpgsqlCommand())
             {
-                sql = sql.Replace("@TableSchema", DBFactory.Sanitizer.SanitizeIdentifierName(tableSchema));
-                sql = sql.Replace("@TableName", DBFactory.Sanitizer.SanitizeIdentifierName(tableName));
+                sql = sql.Replace("@TableSchema", DbFactory.Sanitizer.SanitizeIdentifierName(tableSchema));
+                sql = sql.Replace("@TableName", DbFactory.Sanitizer.SanitizeIdentifierName(tableName));
 
                 command.CommandText = sql;
 
@@ -191,11 +312,11 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
 
                     if (counter.Equals(1))
                     {
-                        columns += DBFactory.Sanitizer.SanitizeIdentifierName(pair.Key) + "=@" + pair.Key;
+                        columns += DbFactory.Sanitizer.SanitizeIdentifierName(pair.Key) + "=@" + pair.Key;
                     }
                     else
                     {
-                        columns += ", " + DBFactory.Sanitizer.SanitizeIdentifierName(pair.Key) + "=@" + pair.Key;
+                        columns += ", " + DbFactory.Sanitizer.SanitizeIdentifierName(pair.Key) + "=@" + pair.Key;
                     }
                 }
             }
@@ -204,9 +325,9 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
 
             using (NpgsqlCommand command = new NpgsqlCommand())
             {
-                sql = sql.Replace("@TableSchema", DBFactory.Sanitizer.SanitizeIdentifierName(tableSchema));
-                sql = sql.Replace("@TableName", DBFactory.Sanitizer.SanitizeIdentifierName(tableName));
-                sql = sql.Replace("@KeyColumn", DBFactory.Sanitizer.SanitizeIdentifierName(keyColumn));
+                sql = sql.Replace("@TableSchema", DbFactory.Sanitizer.SanitizeIdentifierName(tableSchema));
+                sql = sql.Replace("@TableName", DbFactory.Sanitizer.SanitizeIdentifierName(tableName));
+                sql = sql.Replace("@KeyColumn", DbFactory.Sanitizer.SanitizeIdentifierName(keyColumn));
 
                 command.CommandText = sql;
 

@@ -64,6 +64,7 @@
     <None Include="..\..\..\..\mixerp.licenseheader">
       <Link>mixerp.licenseheader</Link>
     </None>
+    <None Include="app.config" />
     <None Include="Mix Open Foundation.snk" />
   </ItemGroup>
   <ItemGroup>
@@ -71,9 +72,13 @@
       <Project>{D5A09C22-8F48-4FB2-A14D-C62C8C8FCEC0}</Project>
       <Name>MixERP.Net.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.Net.DbFactory\MixERP.Net.DBFactory.csproj">
+    <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.Net.DbFactory\MixERP.Net.DbFactory.csproj">
       <Project>{8fd9661c-2473-4581-8722-18b08d4db252}</Project>
-      <Name>MixERP.Net.DBFactory</Name>
+      <Name>MixERP.Net.DbFactory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.Net.Entities\MixERP.Net.Entities.csproj">
+      <Project>{bde918b1-dd9b-41c9-a41f-f3ddec18b6d8}</Project>
+      <Name>MixERP.Net.Entities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

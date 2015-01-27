@@ -20,7 +20,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
-using MixERP.Net.DBFactory;
+using MixERP.Net.DbFactory;
 using Npgsql;
 using DbConnection = MixERP.Net.WebControls.ReportEngine.Data.Connection.DbConnection;
 

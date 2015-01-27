@@ -36,7 +36,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
             System.Collections.ObjectModel.Collection<int> tranIds = new System.Collections.ObjectModel.Collection<int>();
 
             System.Web.Script.Serialization.JavaScriptSerializer js = new System.Web.Script.Serialization.JavaScriptSerializer();
-            System.Collections.ObjectModel.Collection<Common.Models.Core.AttachmentModel> attachments = js.Deserialize<System.Collections.ObjectModel.Collection<Common.Models.Core.AttachmentModel>>(attachmentsJSON);
+            System.Collections.ObjectModel.Collection<Common.Models.Core.PostgresqlAttachmentModel> attachments = js.Deserialize<System.Collections.ObjectModel.Collection<Common.Models.Core.PostgresqlAttachmentModel>>(attachmentsJSON);
 
             if (!string.IsNullOrWhiteSpace(transactionIds))
             {

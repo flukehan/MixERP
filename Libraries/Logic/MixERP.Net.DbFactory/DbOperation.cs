@@ -27,7 +27,7 @@ using MixERP.Net.Common.Helpers;
 using MixERP.Net.DbFactory.Resources;
 using Npgsql;
 
-namespace MixERP.Net.DBFactory
+namespace MixERP.Net.DbFactory
 {
     public class DbOperation
     {
@@ -53,6 +53,8 @@ namespace MixERP.Net.DBFactory
 
             return false;
         }
+
+
 
         [CLSCompliant(false)]
         public static NpgsqlDataAdapter GetDataAdapter(NpgsqlCommand command)

@@ -17,13 +17,18 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System.Collections;
+using System.Collections.Generic;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models.Core;
-using MixERP.Net.DBFactory;
+using MixERP.Net.DbFactory;
 using Npgsql;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Linq;
+using MixERP.Net.Entities;
+using MixERP.Net.Entities.Core;
 
 namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
 {
@@ -31,18 +36,19 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
     {
         public static string GetPartyCodeByPartyId(int partyId)
         {
-            const string sql = "SELECT party_code FROM core.parties WHERE party_id=@PartyId;";
+            Party party = Factory.Get<Party>("SELECT party_code FROM core.parties WHERE party_id=@0;", partyId).FirstOrDefault();
 
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            if (party != null)
             {
-                command.Parameters.AddWithValue("@PartyId", partyId);
-                return Conversion.TryCastString(DbOperation.GetScalarValue((command)));
+                return party.PartyCode;
             }
+
+            return string.Empty;
         }
 
-        public static DataTable GetPartyDataTable()
+        public static IEnumerable<Party> GetParties()
         {
-            return FormHelper.GetTable("core", "parties", "party_id");
+            return Factory.Get<Party>("SELECT * FROM core.parties ORDER BY party_id;");
         }
 
         public static PartyDueModel GetPartyDue(string partyCode)
@@ -68,44 +74,19 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
             return model;
         }
 
-        public static DataTable GetPartyViewDataTable(string partyCode)
+        public static PartyView GetPartyView(string partyCode)
         {
-            return FormHelper.GetTable("core", "party_view", "party_code", partyCode, "party_id");
+            return Factory.Get<PartyView>("SELECT * FROM core.party_view WHERE party_code=@PartyCode ORDER BY party_id").FirstOrDefault();
         }
 
-        public static Collection<PartyShippingAddress> GetShippingAddresses(string partyCode)
+        public static IEnumerable<ShippingAddress> GetShippingAddresses(string partyCode)
         {
-            Collection<PartyShippingAddress> addresses = new Collection<PartyShippingAddress>();
-
-            const string sql = "SELECT * FROM core.shipping_addresses WHERE party_id=core.get_party_id_by_party_code(@PartyCode);";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@PartyCode", partyCode);
-                using (DataTable table = DbOperation.GetDataTable(command))
-                {
-                    for (int i = 0; i < table.Rows.Count; i++)
-                    {
-                        PartyShippingAddress address = new PartyShippingAddress();
-                        address.POBox = Conversion.TryCastString(table.Rows[i]["po_box"]);
-                        address.AddressLine1 = Conversion.TryCastString(table.Rows[i]["address_line_1"]);
-                        address.AddressLine2 = Conversion.TryCastString(table.Rows[i]["address_line_2"]);
-                        address.Street = Conversion.TryCastString(table.Rows[i]["street"]);
-                        address.City = Conversion.TryCastString(table.Rows[i]["city"]);
-                        address.State = Conversion.TryCastString(table.Rows[i]["state"]);
-                        address.Country = Conversion.TryCastString(table.Rows[i]["country"]);
-
-                        addresses.Add(address);
-                    }
-                }
-            }
-
-            return addresses;
+            return Factory.Get<ShippingAddress>("SELECT * FROM core.shipping_addresses WHERE party_id=core.get_party_id_by_party_code(@0);", partyCode);
         }
 
         private static DataTable GetPartyDue(int officeId, string partyCode)
         {
-            const string sql =
-                "SELECT * FROM transactions.get_party_transaction_summary(@OfficeId, core.get_party_id_by_party_code(@PartyCode));";
+            const string sql = "SELECT * FROM transactions.get_party_transaction_summary(@OfficeId, core.get_party_id_by_party_code(@PartyCode));";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);

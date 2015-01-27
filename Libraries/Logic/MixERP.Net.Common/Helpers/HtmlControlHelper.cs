@@ -83,6 +83,16 @@ namespace MixERP.Net.Common.Helpers
             }
         }
 
+        public static HtmlGenericControl GetSegment()
+        {
+            using (HtmlGenericControl field = new HtmlGenericControl("div"))
+            {
+                field.Attributes.Add("class", "ui segment");
+
+                return field;
+            }
+        }
+
         public static HtmlGenericControl GetFormSegment()
         {
             using (HtmlGenericControl field = new HtmlGenericControl("div"))
@@ -129,6 +139,16 @@ namespace MixERP.Net.Common.Helpers
         public static string GetLabelHtml(string text, string targetControlId)
         {
             return string.Format(CultureInfo.InvariantCulture, "<label for='{1}'>{0}</label>", text, targetControlId);
+        }
+
+        public static HtmlGenericControl GetToggleCheckBox()
+        {
+            using (HtmlGenericControl toggleCheckBox = new HtmlGenericControl("div"))
+            {
+                toggleCheckBox.Attributes.Add("class", "ui toggle checkbox");
+
+                return toggleCheckBox;
+            }
         }
     }
 }

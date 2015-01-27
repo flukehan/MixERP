@@ -96,84 +96,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <asp:Literal ID="TitleLiteral" runat="server" />
 </h2>
 
-<div class="ui segment">
-    <table class="ui form">
-        <tr>
-            <td>
-                <asp:Literal ID="DateLiteral" runat="server" />
-            </td>
-            <td>
-                <asp:Literal ID="StoreSelectLabel" runat="server" />
-            </td>
-            <td>
-                <asp:Literal ID="PartyCodeInputTextLabel" runat="server" />
-            </td>
-            <td></td>
-            <td>
-                <asp:Literal ID="PriceTypeSelectLabel" runat="server" />
-            </td>
-            <td>
-                <asp:Literal ID="ReferenceNumberInputTextLabel" runat="server" />
-            </td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>
-                <mixerp:DateTextBox ID="DateTextBox" runat="server" Mode="Today" CssClass="date" />
-            </td>
-            <td>
-                <select id="StoreSelect" runat="server"></select>
-            </td>
-            <td>
-                <input type="text" id="PartyCodeInputText" runat="server" title="F2" />
-            </td>
-            <td>
-                <select id="PartySelect" title="F2"></select>
-            </td>
-            <td>
-                <select id="PriceTypeSelect" runat="server"></select>
-            </td>
-            <td>
-                <input type="text" id="ReferenceNumberInputText" runat="server" maxlength="24" />
-            </td>
-            <td>
-                <div class="ui toggle checkbox" id="CashTransactionDiv" runat="server">
-                    <input id="CashTransactionInputCheckBox" type="checkbox" checked="checked">
-                    <asp:Literal ID="CashTransactionLiteral" runat="server" />
-                </div>
-            </td>
-            <td>
-                <select id="PaymentTermSelect" title="F2" runat="server"></select>
-            </td>
-        </tr>
-    </table>
-</div>
-
-
-<div class="ui form">
-    <div class="two fields">
-        <div id="ShippingAddressInfoDiv" runat="server" style="width: 500px;" class="field">
-            <div class="two fields">
-                <div class="field">
-                    <asp:Literal ID="ShippingCompanySelectLabel" runat="server" />
-                    <select id="ShippingCompanySelect"></select>
-                </div>
-                <div class="field">
-                    <asp:Literal ID="ShippingAddressSelectLabel" runat="server" />
-                    <select id="ShippingAddressSelect"></select>
-                </div>
-            </div>
-        </div>
-        <div id="SalesTypeDiv" runat="server" style="width: 200px;" class="field">
-            <div class="field">
-                <asp:Literal ID="SalesTypeSelectLabel" runat="server" />
-                <select id="SalesTypeSelect" runat="server">
-                </select>
-            </div>
-        </div>
-    </div>
-</div>
+<asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
 
 <table id="ProductGridView" class="ui table" style="max-width: 2000px;">
     <thead>
@@ -263,55 +186,21 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     </tbody>
 </table>
 
-<asp:Panel ID="FormPanel" runat="server" Enabled="false">
-    <asp:Label ID="ErrorLabel" runat="server" CssClass="big error" />
-</asp:Panel>
 
-<h4>
+<asp:Label ID="ErrorLabel" runat="server" CssClass="big error" />
+
+<h2>
     <asp:Label ID="AttachmentLabel" runat="server" Text=" Attachments (+)" CssClass="" />
-</h4>
+</h2>
 
-<div id="attachment" class="shade" style="display: none; padding-left: 24px;">
-    <mixerp:Attachment ID="Attachment1" runat="server" />
+<div id="attachment" class="ui segment initially hidden">
+    <mixerp:Attachment ID="Attachment1" runat="server"/>
 </div>
 
-<div class="" style="width: 500px;">
-    <div class="ui page form segment">
-        <div class="field" id="ShippingAddressDiv" runat="server">
-            <asp:Literal ID="ShippingAddressTextAreaLabel" runat="server" />
-            <textarea id="ShippingAddressTextArea" readonly="readonly"></textarea>
-        </div>
-        <div class="three fields">
-            <div class="field">
-                <asp:Literal ID="RunningTotalInputTextLabel" runat="server" />
-                <input type="text" id="RunningTotalInputText" class="currency" readonly="readonly" />
-            </div>
-            <div class="field">
-                <asp:Literal ID="TaxTotalInputTextLabel" runat="server" />
-                <input type="text" id="TaxTotalInputText" class="currency" readonly="readonly" />
-            </div>
-            <div class="field">
-                <asp:Literal ID="GrandTotalInputTextInputTextLabel" runat="server" />
-                <input type="text" id="GrandTotalInputText" class="currency" readonly="readonly" />
-            </div>
-        </div>
-        <div class="field" id="CostCenterDiv" runat="server">
-            <asp:Literal ID="CostCenterSelectLabel" runat="server" />
-            <select id="CostCenterSelect"></select>
-        </div>
-        <div class="field" id="SalespersonDiv" runat="server">
-            <asp:Literal ID="SalesPersonSelectLabel" runat="server" />
-            <select id="SalesPersonSelect" runat="server"></select>
-        </div>
-        <div class="field">
-            <asp:Literal ID="StatementReferenceTextAreaLabel" runat="server" />
-            <textarea id="StatementReferenceTextArea" runat="server"></textarea>
-        </div>
-        <button type="button" id="SaveButton" class="small ui button red">
-            <asp:Literal runat="server" Text=" Save" />
-        </button>
-    </div>
-</div>
+
+<asp:PlaceHolder runat="server" ID="Placeholder2"></asp:PlaceHolder>
+
+
 
 <asp:HiddenField ID="ItemCodeHidden" runat="server"></asp:HiddenField>
 <asp:HiddenField ID="ItemIdHidden" runat="server"></asp:HiddenField>

@@ -166,23 +166,23 @@ CREATE TABLE core.counties
 CREATE TABLE core.zip_code_types
 (
     zip_code_type_id                        SERIAL PRIMARY KEY,
-    zip_code_type                           national character varying(12),
+    type                                    national character varying(12),
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL 
                                             DEFAULT(NOW())
 );
 
 CREATE UNIQUE INDEX zip_code_types_zip_code_type_uix
-ON core.zip_code_types(UPPER(zip_code_type));
+ON core.zip_code_types(UPPER(type));
 
-INSERT INTO core.zip_code_types(zip_code_type) VALUES('Standard'),('PO Box'),('Unique');
+INSERT INTO core.zip_code_types(type) VALUES('Standard'),('PO Box'),('Unique');
 
 
 CREATE TABLE core.zip_codes
 (
     zip_code_id                             BIGSERIAL PRIMARY KEY,
     state_id                                integer NOT NULL REFERENCES core.states(state_id),
-    zip_code                                national character varying(12) NOT NULL,
+    code                                    national character varying(12) NOT NULL,
     zip_code_type_id                        integer NOT NULL REFERENCES core.zip_code_types(zip_code_type_id),
     city                                    national character varying(100) NOT NULL,
     lat                                     decimal,
@@ -1210,7 +1210,7 @@ ON core.brands(UPPER(brand_name));
 
 CREATE TABLE core.shippers
 (
-    shipper_id                              BIGSERIAL PRIMARY KEY,
+    shipper_id                              SERIAL PRIMARY KEY,
     shipper_code                            national character varying(12) NULL,
     company_name                            national character varying(128) NOT NULL,
     shipper_name                            national character varying(150) NULL,
@@ -1905,7 +1905,7 @@ CREATE TABLE transactions.stock_master
                                             CONSTRAINT stock_master_is_credit_df   
                                             DEFAULT(false),
     payment_term_id                         integer NULL REFERENCES core.payment_terms(payment_term_id),
-    shipper_id                              bigint NULL REFERENCES core.shippers(shipper_id),
+    shipper_id                              integer NULL REFERENCES core.shippers(shipper_id),
     shipping_address_id                     bigint NULL REFERENCES core.shipping_addresses(shipping_address_id),
     shipping_charge                         money_strict2 NOT NULL   
                                             CONSTRAINT stock_master_shipping_charge_df   
@@ -1988,7 +1988,7 @@ CREATE TABLE transactions.non_gl_stock_master
     statement_reference                     text NULL,
     non_taxable                             boolean NOT NULL DEFAULT(false),
     salesperson_id                          integer NULL REFERENCES core.salespersons(salesperson_id),
-    shipper_id                              bigint NULL REFERENCES core.shippers(shipper_id),
+    shipper_id                              integer NULL REFERENCES core.shippers(shipper_id),
     shipping_address_id                     bigint NULL REFERENCES core.shipping_addresses(shipping_address_id),
     shipping_charge                         money_strict2 NOT NULL   
                                             CONSTRAINT stock_master_shipping_charge_df   
@@ -2267,7 +2267,7 @@ CREATE TABLE office.configuration
     configuration_id                        SERIAL PRIMARY KEY,
     config_id                               integer REFERENCES core.config(config_id),
     office_id                               integer NOT NULL,
-    configuration                           text NOT NULL,
+    value                                   text NOT NULL,
     configuration_details                   text NOT NULL,
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL   

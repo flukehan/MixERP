@@ -21,7 +21,7 @@ using System;
 using System.Data;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.DBFactory;
+using MixERP.Net.DbFactory;
 using Npgsql;
 
 namespace MixERP.Net.Core.Modules.Finance.Data.Reports

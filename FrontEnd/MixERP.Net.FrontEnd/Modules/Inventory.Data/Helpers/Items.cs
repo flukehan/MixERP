@@ -17,127 +17,71 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System.Collections.Generic;
+using System.Linq;
 using MixERP.Net.Common;
-using MixERP.Net.DBFactory;
+using MixERP.Net.DbFactory;
+using MixERP.Net.Entities;
+using MixERP.Net.Entities.Core;
 using Npgsql;
 
 namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
 {
     public static class Items
     {
-        public static System.Data.DataTable GetItemDataTable()
+        public static IEnumerable<Item> GetItems()
         {
-            return FormHelper.GetTable("core", "items", "item_id");
+            return Factory.Get<Item>("SELECT * FROM core.items ORDER BY item_id");
         }
 
-        public static System.Data.DataTable GetStockItemDataTable()
+        public static IEnumerable<Item> GetStockItems()
         {
-            return FormHelper.GetTable("core", "items", "maintain_stock", "true", "item_id");
+            return Factory.Get<Item>("SELECT * FROM core.items WHERE maintain_stock ORDER BY item_id");
         }
 
         public static bool ItemExistsByCode(string itemCode)
         {
-            const string sql = "SELECT 1 FROM core.items WHERE core.items.item_code=@ItemCode;";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@ItemCode", itemCode);
-
-                return DbOperation.GetScalarValue(command).ToString().Equals("1");
-            }
+            return Factory.Get<Item>("SELECT * FROM core.items WHERE core.items.item_code=@0;", itemCode).Count().Equals(1);
         }
 
         public static decimal GetItemSellingPrice(string itemCode, string partyCode, int priceTypeId, int unitId)
         {
-            const string sql = "SELECT core.get_item_selling_price(core.get_item_id_by_item_code(@ItemCode), core.get_party_type_id_by_party_code(@PartyCode), @PriceTypeId, @UnitId);";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@ItemCode", itemCode);
-                command.Parameters.AddWithValue("@PartyCode", partyCode);
-                command.Parameters.AddWithValue("@PriceTypeId", priceTypeId);
-                command.Parameters.AddWithValue("@UnitId", unitId);
-
-                return Conversion.TryCastDecimal(DbOperation.GetScalarValue(command));
-            }
+            return Factory.Scalar<decimal>("SELECT core.get_item_selling_price(core.get_item_id_by_item_code(@0), core.get_party_type_id_by_party_code(@1), @2, @3);", itemCode, partyCode, priceTypeId, unitId);
         }
 
         public static decimal GetItemCostPrice(string itemCode, string partyCode, int unitId)
         {
-            const string sql = "SELECT core.get_item_cost_price(core.get_item_id_by_item_code(@ItemCode), core.get_party_id_by_party_code(@PartyCode), @UnitId);";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@ItemCode", itemCode);
-                command.Parameters.AddWithValue("@PartyCode", partyCode);
-                command.Parameters.AddWithValue("@UnitId", unitId);
-
-                return Conversion.TryCastDecimal(DbOperation.GetScalarValue(command));
-            }
+            return Factory.Scalar<decimal>("SELECT core.get_item_cost_price(core.get_item_id_by_item_code(@0), core.get_party_id_by_party_code(@1), @2);", itemCode, partyCode, unitId);
         }
 
         public static decimal GetTaxRate(string itemCode)
         {
-            const string sql = "SELECT core.get_item_tax_rate(core.get_item_id_by_item_code(@ItemCode));";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@ItemCode", itemCode);
-                return Conversion.TryCastDecimal(DbOperation.GetScalarValue(command));
-            }
+            return Factory.Scalar<decimal>("SELECT core.get_item_tax_rate(core.get_item_id_by_item_code(@0));", itemCode);
         }
 
         public static decimal CountItemInStock(string itemCode, int unitId, int storeId)
         {
-            const string sql = "SELECT core.count_item_in_stock(core.get_item_id_by_item_code(@ItemCode), @UnitId, @StoreId);";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@ItemCode", itemCode);
-                command.Parameters.AddWithValue("@UnitId", unitId);
-                command.Parameters.AddWithValue("@StoreId", storeId);
-                return Conversion.TryCastDecimal(DbOperation.GetScalarValue(command));
-            }
+            return Factory.Scalar<decimal>("SELECT core.count_item_in_stock(core.get_item_id_by_item_code(@0), @1, @2);", itemCode, unitId, storeId);
         }
 
         public static decimal CountItemInStock(string itemCode, string unitName, int storeId)
         {
-            const string sql = "SELECT core.count_item_in_stock(core.get_item_id_by_item_code(@ItemCode), core.get_unit_id_by_unit_name(@UnitName), @StoreId);";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@ItemCode", itemCode);
-                command.Parameters.AddWithValue("@UnitName", unitName);
-                command.Parameters.AddWithValue("@StoreId", storeId);
-                return Conversion.TryCastDecimal(DbOperation.GetScalarValue(command));
-            }
+            return Factory.Scalar<decimal>("SELECT core.count_item_in_stock(core.get_item_id_by_item_code(@0), core.get_unit_id_by_unit_name(@1), @2);", itemCode, unitName, storeId);
         }
+
         public static decimal CountItemInStock(string itemCode, string unitName, string storeName)
         {
-            const string sql = "SELECT core.count_item_in_stock(core.get_item_id_by_item_code(@ItemCode), core.get_unit_id_by_unit_name(@UnitName), office.get_store_id_by_store_name(@StoreName));";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@ItemCode", itemCode);
-                command.Parameters.AddWithValue("@UnitName", unitName);
-                command.Parameters.AddWithValue("@StoreName", storeName);
-                return Conversion.TryCastDecimal(DbOperation.GetScalarValue(command));
-            }
+            return Factory.Scalar<decimal>("SELECT core.count_item_in_stock(core.get_item_id_by_item_code(@0), core.get_unit_id_by_unit_name(@1), office.get_store_id_by_store_name(@2));", itemCode, unitName, storeName);            
         }
 
         public static bool IsStockItem(string itemCode)
         {
-            const string sql = "SELECT core.is_stock_item(@ItemCode);";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@ItemCode", itemCode);
-
-                return Conversion.TryCastBoolean(DbOperation.GetScalarValue(command));
-            }
+            return Factory.Scalar<bool>("SELECT core.is_stock_item(@0);", itemCode);
         }
 
         public static string GetItemCodeByItemId(int itemId)
         {
-            const string sql = "SELECT item_code FROM core.items WHERE item_id=@ItemId;";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@ItemId", itemId);
-
-                return Conversion.TryCastString(DbOperation.GetScalarValue(command));
-            }
+            return Factory.Scalar<string>("SELECT item_code FROM core.items WHERE item_id=@0;", itemId);
         }
     }
 }

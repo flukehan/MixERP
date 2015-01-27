@@ -42,8 +42,9 @@
     <AssemblyOriginatorKeyFile>Mix Open Foundation.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Npgsql, Version=2.1.0.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -99,17 +100,11 @@
     <Compile Include="Helpers\WidgetHelper.cs" />
     <Compile Include="jQueryHelper\jQueryUI.cs" />
     <Compile Include="Models\Core\ApplicationDateModel.cs" />
-    <Compile Include="Models\Core\AttachmentModel.cs" />
-    <Compile Include="Models\Core\Currency.cs" />
+    <Compile Include="Models\Core\PostgreSqlAttachmentModel.cs" />
     <Compile Include="Models\Core\Frequency.cs" />
     <Compile Include="Models\Core\Menu.cs" />
-    <Compile Include="Models\Core\Party.cs" />
     <Compile Include="Models\Core\PartyDueModel.cs" />
     <Compile Include="Models\Core\ProductControlModel.cs" />
-    <Compile Include="Models\Core\ShippingAddress.cs" />
-    <Compile Include="Models\Office\CashRepository.cs" />
-    <Compile Include="Models\Office\Office.cs" />
-    <Compile Include="Models\Office\SignInView.cs" />
     <Compile Include="Models\Policy\SignInResult.cs" />
     <Compile Include="Models\PostgreSQLServer.cs" />
     <Compile Include="Models\Transactions\JournalDetailsModel.cs" />

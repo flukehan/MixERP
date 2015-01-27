@@ -22,7 +22,7 @@ using System.Linq;
 using System.Threading;
 using Npgsql;
 
-namespace MixERP.Net.DBFactory
+namespace MixERP.Net.DbFactory
 {
     public static class TableHelper
     {

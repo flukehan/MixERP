@@ -17,9 +17,10 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System.Collections.Generic;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Core;
+using MixERP.Net.Entities.Core;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Web.Script.Services;
@@ -34,24 +35,11 @@ namespace MixERP.Net.Core.Modules.Finance.Services
     public class CurrencyData : System.Web.Services.WebService
     {
         [WebMethod(EnableSession = true)]
-        public Collection<Currency> GetExchangeCurrencies()
+        public IEnumerable<Currency> GetExchangeCurrencies()
         {
             int officeId = SessionHelper.GetOfficeId();
+            return Data.Helpers.Currencies.GetExchangeCurrencies(officeId);
 
-            Collection<Currency> currencies = new Collection<Currency>();
-
-            using (DataTable table = Data.Helpers.Currencies.GetExchangeCurrencies(officeId))
-            {
-                if (table != null && table.Rows.Count > 0)
-                {
-                    foreach (DataRow row in table.Rows)
-                    {
-                        currencies.Add(new Currency(Conversion.TryCastString(row["currency_code"]), Conversion.TryCastString(row["currency_symbol"]), Conversion.TryCastString(row["currency_name"]), Conversion.TryCastString(row["hundredth_name"])));
-                    }
-                }
-            }
-
-            return currencies;
         }
     }
 }

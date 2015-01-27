@@ -17,27 +17,26 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System.Collections.Generic;
+using System.Linq;
 using MixERP.Net.Common;
-using MixERP.Net.DBFactory;
+using MixERP.Net.DbFactory;
+using MixERP.Net.Entities;
+using MixERP.Net.Entities.Core;
 using Npgsql;
 
 namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
 {
     public static class Currencies
     {
-        public static System.Data.DataTable GetCurrencyDataTable()
+        public static IEnumerable<Currency> GetCurrencies()
         {
-            return FormHelper.GetTable("core", "currencies", "currency_code");
+            return Factory.Get<Currency>("SELECT * FROM core.currencies ORDER BY currency_code");
         }
 
         public static string GetHomeCurrency(int officeId)
         {
-            const string sql = "SELECT core.get_currency_code_by_office_id(@OfficeId);";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@OfficeId", officeId);
-                return Conversion.TryCastString(DbOperation.GetScalarValue(command));
-            }
+            return Factory.Scalar<string>("SELECT core.get_currency_code_by_office_id(@0);", officeId);
         }
     }
 }

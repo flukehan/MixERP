@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System.Collections.Generic;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models.Core;
@@ -26,6 +27,7 @@ using System.Data;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.Web.UI.WebControls;
+using MixERP.Net.Entities.Core;
 
 namespace MixERP.Net.Core.Modules.Inventory.Services
 {
@@ -58,16 +60,10 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = Parties.GetPartyDataTable())
+            foreach (Party party in Parties.GetParties())
             {
-                string displayField = ConfigurationHelper.GetDbParameter("PartyDisplayField");
-                table.Columns.Add("party", typeof(string), displayField);
-                foreach (DataRow dr in table.Rows)
-                {
-                    values.Add(new ListItem(dr["party"].ToString(), dr["party_code"].ToString()));
-                }
+                values.Add(new ListItem(party.PartyName, party.PartyCode));
             }
-
             return values;
         }
 
@@ -84,46 +80,13 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         }
 
         [WebMethod]
-        public Party GetPartyView(string partyCode)
+        public PartyView GetPartyView(string partyCode)
         {
-            Party party = new Party();
-            using (DataTable table = Parties.GetPartyViewDataTable(partyCode))
-            {
-                party.PartyId = Conversion.TryCastInteger(table.Rows[0]["party_id"]);
-                party.PartyTypeId = Conversion.TryCastInteger(table.Rows[0]["party_type_id"]);
-                party.IsSupplier = Conversion.TryCastBoolean(table.Rows[0]["is_supplier"]);
-                party.PartyType = Conversion.TryCastString(table.Rows[0]["party_type"]);
-                party.PartyCode = Conversion.TryCastString(table.Rows[0]["party_code"]);
-                party.FirstName = Conversion.TryCastString(table.Rows[0]["first_name"]);
-                party.MiddleName = Conversion.TryCastString(table.Rows[0]["middle_name"]);
-                party.LastName = Conversion.TryCastString(table.Rows[0]["last_name"]);
-                party.PartyName = Conversion.TryCastString(table.Rows[0]["party_name"]);
-                party.ZipCode = Conversion.TryCastString(table.Rows[0]["zip_code"]);
-                party.AddressLine1 = Conversion.TryCastString(table.Rows[0]["address_line_1"]);
-                party.AddressLine2 = Conversion.TryCastString(table.Rows[0]["address_line_2"]);
-                party.Street = Conversion.TryCastString(table.Rows[0]["street"]);
-                party.City = Conversion.TryCastString(table.Rows[0]["city"]);
-                party.State = Conversion.TryCastString(table.Rows[0]["state"]);
-                party.Country = Conversion.TryCastString(table.Rows[0]["country"]);
-                party.AllowCredit = Conversion.TryCastBoolean(table.Rows[0]["allow_credit"]);
-                party.MaximumCreditPeriod = Conversion.TryCastInteger(table.Rows[0]["maximum_credit_period"]);
-                party.MaximumCreditAmount = Conversion.TryCastDecimal(table.Rows[0]["maximum_credit_amount"]);
-                party.PANNumber = Conversion.TryCastString(table.Rows[0]["pan_number"]);
-                party.SSTNumber = Conversion.TryCastString(table.Rows[0]["sst_number"]);
-                party.CSTNumber = Conversion.TryCastString(table.Rows[0]["cst_number"]);
-                party.Phone = Conversion.TryCastString(table.Rows[0]["phone"]);
-                party.Fax = Conversion.TryCastString(table.Rows[0]["fax"]);
-                party.Cell = Conversion.TryCastString(table.Rows[0]["cell"]);
-                party.Email = Conversion.TryCastString(table.Rows[0]["email"]);
-                party.Url = Conversion.TryCastString(table.Rows[0]["url"]);
-                party.GLHead = Conversion.TryCastString(table.Rows[0]["gl_head"]);
-            }
-
-            return party;
+            return Parties.GetPartyView(partyCode);
         }
 
         [WebMethod]
-        public Collection<PartyShippingAddress> GetShippingAddresses(string partyCode)
+        public IEnumerable<ShippingAddress> GetShippingAddresses(string partyCode)
         {
             return Parties.GetShippingAddresses(partyCode);
         }

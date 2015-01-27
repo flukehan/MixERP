@@ -27,7 +27,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
 {
     public static class DirectPurchase
     {
-        public static long Add(DateTime valueDate, int storeId, bool isCredit, string partyCode, Collection<StockMasterDetailModel> details, int costCenterId, string referenceNumber, string statementReference, Collection<AttachmentModel> attachments)
+        public static long Add(DateTime valueDate, int storeId, bool isCredit, string partyCode, Collection<StockMasterDetailModel> details, int costCenterId, string referenceNumber, string statementReference, Collection<PostgresqlAttachmentModel> attachments)
         {
             StockMasterModel stockMaster = new StockMasterModel();
 

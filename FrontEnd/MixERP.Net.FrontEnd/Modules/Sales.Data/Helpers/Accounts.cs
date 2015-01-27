@@ -17,31 +17,35 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.DBFactory;
+using System.Collections.Generic;
+using MixERP.Net.DbFactory;
 using System.Data;
+using MixERP.Net.Entities;
+using MixERP.Net.Entities.Core;
+using MixERP.Net.Entities.Office;
 
 namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
 {
     public static class Accounts
     {
-        public static DataTable GetBankAccounts()
+        public static IEnumerable<BankAccount> GetBankAccounts()
         {
-            return FormHelper.GetTable("core", "bank_accounts", "account_id");
+            return Factory.Get<BankAccount>("SELECT * FROM core.bank_accounts ORDER BY account_id;");
         }
 
-        public static DataTable GetCashRepositories()
+        public static IEnumerable<CashRepository> GetCashRepositories()
         {
-            return FormHelper.GetTable("office", "cash_repositories", "cash_repository_id");
+            return Factory.Get<CashRepository>("SELECT * FROM office.cash_repositories ORDER BY cash_repository_id;");
         }
 
-        public static DataTable GetCostCenters()
+        public static IEnumerable<CostCenter> GetCostCenters()
         {
-            return FormHelper.GetTable("office", "cost_centers", "cost_center_id");
+            return Factory.Get<CostCenter>("SELECT * FROM office.cost_center ORDER BY cost_center_id;");
         }
 
-        public static DataTable GetFlags()
+        public static IEnumerable<FlagType> GetFlagTypes()
         {
-            return FormHelper.GetTable("core", "flag_types", "flag_type_id");
+            return Factory.Get<FlagType>("SELECT * FROM core.flag_types ORDER BY flag_type_id;");
         }
     }
 }

@@ -25,14 +25,14 @@ using MixERP.Net.Common;
 using MixERP.Net.Common.Models.Core;
 using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.Common.PostgresHelper;
-using MixERP.Net.DBFactory;
+using MixERP.Net.DbFactory;
 using Npgsql;
 
 namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
 {
     internal static class GlTransaction
     {
-        public static long Add(string bookName, DateTime valueDate, int officeId, int userId, long logOnId, int costCenterId, string referenceNumber, string statementReference, StockMasterModel stockMaster, Collection<StockMasterDetailModel> details, Collection<AttachmentModel> attachments, bool nonTaxable)
+        public static long Add(string bookName, DateTime valueDate, int officeId, int userId, long logOnId, int costCenterId, string referenceNumber, string statementReference, StockMasterModel stockMaster, Collection<StockMasterDetailModel> details, Collection<PostgresqlAttachmentModel> attachments, bool nonTaxable)
         {
             if (stockMaster == null)
             {

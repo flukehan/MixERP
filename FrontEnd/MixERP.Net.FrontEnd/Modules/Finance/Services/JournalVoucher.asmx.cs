@@ -52,7 +52,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             Collection<JournalDetailsModel> details = CollectionHelper.GetJournalDetailCollection(data);
 
             JavaScriptSerializer js = new JavaScriptSerializer();
-            Collection<AttachmentModel> attachments = js.Deserialize<Collection<AttachmentModel>>(attachmentsJSON);
+            Collection<PostgresqlAttachmentModel> attachments = js.Deserialize<Collection<PostgresqlAttachmentModel>>(attachmentsJSON);
 
             foreach (JournalDetailsModel model in details)
             {
@@ -71,14 +71,14 @@ namespace MixERP.Net.Core.Modules.Finance.Services
                     throw new InvalidOperationException("Invalid data");
                 }
 
-                if (!Accounts.AccountNumberExists(model.AccountNumber))
+                if (!AccountHelper.AccountNumberExists(model.AccountNumber))
                 {
                     throw new InvalidOperationException("Invalid account " + model.AccountNumber);
                 }
 
                 if (model.Credit > 0)
                 {
-                    if (Accounts.IsCashAccount(model.AccountNumber))
+                    if (AccountHelper.IsCashAccount(model.AccountNumber))
                     {
                         if (!CashRepositories.CashRepositoryCodeExists(model.CashRepositoryCode))
                         {

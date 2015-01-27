@@ -17,16 +17,20 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.DBFactory;
+using System.Collections;
+using System.Collections.Generic;
+using MixERP.Net.DbFactory;
 using System.Data;
+using MixERP.Net.Entities;
+using MixERP.Net.Entities.Office;
 
 namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 {
     public static class CostCenters
     {
-        public static DataTable GetCostCenterDataTable()
+        public static IEnumerable<CostCenter> GetCostCenters()
         {
-            return FormHelper.GetTable("office", "cost_centers", "cost_center_id");
+            return Factory.Get<CostCenter>("SELECT * FROM office.cost_centers ORDER BY cost_center_id");
         }
     }
 }

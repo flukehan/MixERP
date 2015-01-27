@@ -41,7 +41,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
             Collection<int> tranIds = new Collection<int>();
 
             JavaScriptSerializer js = new JavaScriptSerializer();
-            Collection<AttachmentModel> attachments = js.Deserialize<Collection<AttachmentModel>>(attachmentsJSON);
+            Collection<PostgresqlAttachmentModel> attachments = js.Deserialize<Collection<PostgresqlAttachmentModel>>(attachmentsJSON);
 
             if (!Data.Helpers.Stores.IsSalesAllowed(storeId))
             {

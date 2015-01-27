@@ -1607,23 +1607,23 @@ CREATE TABLE core.counties
 CREATE TABLE core.zip_code_types
 (
     zip_code_type_id                        SERIAL PRIMARY KEY,
-    zip_code_type                           national character varying(12),
+    type                                    national character varying(12),
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL 
                                             DEFAULT(NOW())
 );
 
 CREATE UNIQUE INDEX zip_code_types_zip_code_type_uix
-ON core.zip_code_types(UPPER(zip_code_type));
+ON core.zip_code_types(UPPER(type));
 
-INSERT INTO core.zip_code_types(zip_code_type) VALUES('Standard'),('PO Box'),('Unique');
+INSERT INTO core.zip_code_types(type) VALUES('Standard'),('PO Box'),('Unique');
 
 
 CREATE TABLE core.zip_codes
 (
     zip_code_id                             BIGSERIAL PRIMARY KEY,
     state_id                                integer NOT NULL REFERENCES core.states(state_id),
-    zip_code                                national character varying(12) NOT NULL,
+    code                                    national character varying(12) NOT NULL,
     zip_code_type_id                        integer NOT NULL REFERENCES core.zip_code_types(zip_code_type_id),
     city                                    national character varying(100) NOT NULL,
     lat                                     decimal,
@@ -2245,7 +2245,7 @@ ON core.party_types(UPPER(party_type_name));
 
 CREATE TABLE core.parties
 (
-    party_id BIGSERIAL                      PRIMARY KEY,
+    party_id                                BIGSERIAL PRIMARY KEY,
     party_type_id                           integer NOT NULL REFERENCES core.party_types(party_type_id),
     party_code                              national character varying(12) NULL,
     first_name                              national character varying(50) NOT NULL,
@@ -2651,7 +2651,7 @@ ON core.brands(UPPER(brand_name));
 
 CREATE TABLE core.shippers
 (
-    shipper_id                              BIGSERIAL PRIMARY KEY,
+    shipper_id                              SERIAL PRIMARY KEY,
     shipper_code                            national character varying(12) NULL,
     company_name                            national character varying(128) NOT NULL,
     shipper_name                            national character varying(150) NULL,
@@ -3346,7 +3346,7 @@ CREATE TABLE transactions.stock_master
                                             CONSTRAINT stock_master_is_credit_df   
                                             DEFAULT(false),
     payment_term_id                         integer NULL REFERENCES core.payment_terms(payment_term_id),
-    shipper_id                              bigint NULL REFERENCES core.shippers(shipper_id),
+    shipper_id                              integer NULL REFERENCES core.shippers(shipper_id),
     shipping_address_id                     bigint NULL REFERENCES core.shipping_addresses(shipping_address_id),
     shipping_charge                         money_strict2 NOT NULL   
                                             CONSTRAINT stock_master_shipping_charge_df   
@@ -3429,7 +3429,7 @@ CREATE TABLE transactions.non_gl_stock_master
     statement_reference                     text NULL,
     non_taxable                             boolean NOT NULL DEFAULT(false),
     salesperson_id                          integer NULL REFERENCES core.salespersons(salesperson_id),
-    shipper_id                              bigint NULL REFERENCES core.shippers(shipper_id),
+    shipper_id                              integer NULL REFERENCES core.shippers(shipper_id),
     shipping_address_id                     bigint NULL REFERENCES core.shipping_addresses(shipping_address_id),
     shipping_charge                         money_strict2 NOT NULL   
                                             CONSTRAINT stock_master_shipping_charge_df   
@@ -3708,7 +3708,7 @@ CREATE TABLE office.configuration
     configuration_id                        SERIAL PRIMARY KEY,
     config_id                               integer REFERENCES core.config(config_id),
     office_id                               integer NOT NULL,
-    configuration                           text NOT NULL,
+    value                                   text NOT NULL,
     configuration_details                   text NOT NULL,
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
@@ -5250,7 +5250,7 @@ LANGUAGE plpgsql;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_party_type_id_by_party_code.sql --<--<--
 CREATE FUNCTION core.get_party_type_id_by_party_code(text)
-RETURNS smallint
+RETURNS integer
 AS
 $$
 BEGIN
@@ -5667,7 +5667,9 @@ LANGUAGE plpgsql;
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_shipping_address_code_by_shipping_address_id.sql --<--<--
-CREATE FUNCTION core.get_shipping_address_code_by_shipping_address_id(integer)
+DROP FUNCTION IF EXISTS core.get_shipping_address_code_by_shipping_address_id(bigint);
+
+CREATE FUNCTION core.get_shipping_address_code_by_shipping_address_id(bigint)
 RETURNS text
 AS
 $$
@@ -5689,7 +5691,8 @@ LANGUAGE plpgsql;
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_shipping_address_id_by_shipping_address_code.sql --<--<--
 
 CREATE FUNCTION core.get_shipping_address_id_by_shipping_address_code(text, bigint)
-RETURNS smallint
+RETURNS integer
+STABLE
 AS
 $$
 BEGIN
@@ -5819,7 +5822,7 @@ LANGUAGE plpgsql;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/core/core.get_unit_id_by_unit_code.sql --<--<--
 CREATE FUNCTION core.get_unit_id_by_unit_code(text)
-RETURNS smallint
+RETURNS integer
 AS
 $$
 BEGIN
@@ -8844,7 +8847,7 @@ $$
 LANGUAGE PLPGSQL;
 
 -- UPDATE office.configuration
--- SET configuration = 'MAVCO'
+-- SET value = 'MAVCO'
 -- WHERE config_id = 2;
 -- 
 -- 
@@ -14920,7 +14923,7 @@ RETURNS text
 AS
 $$
 BEGIN
-        RETURN configuration
+        RETURN value
         FROM office.configuration
         WHERE office_id=$1
         AND config_id=2;
@@ -15390,7 +15393,7 @@ AS
 $$
         DECLARE config boolean;
 BEGIN
-        SELECT configuration = 'Periodic' INTO config
+        SELECT value = 'Periodic' INTO config
         FROM office.configuration
         WHERE config_id=1
         AND office_id=$1;
@@ -20159,13 +20162,13 @@ INSERT INTO core.config
 SELECT 1, 'Inventory System' UNION ALL
 SELECT 2, 'COGS Calculation Method';
 
-INSERT INTO office.configuration(config_id, office_id, configuration, configuration_details)
+INSERT INTO office.configuration(config_id, office_id, value, configuration_details)
 SELECT 1, office_id, 'Perpetual', ''
 FROM office.offices
 WHERE parent_office_id IS NOT NULL;
 
 
-INSERT INTO office.configuration(config_id, office_id, configuration, configuration_details)
+INSERT INTO office.configuration(config_id, office_id, value, configuration_details)
 SELECT 2, office_id, 'LIFO', ''
 FROM office.offices
 WHERE parent_office_id IS NOT NULL;

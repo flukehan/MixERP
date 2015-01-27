@@ -21,7 +21,7 @@ using MixERP.Net.Common;
 using MixERP.Net.Common.Models.Core;
 using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.Common.PostgresHelper;
-using MixERP.Net.DBFactory;
+using MixERP.Net.DbFactory;
 using Npgsql;
 using System;
 using System.Collections.ObjectModel;
@@ -32,7 +32,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
 {
     internal static class NonGlStockTransaction
     {
-        internal static long Add(string book, DateTime valueDate, int officeId, int userId, long logOnId, string referenceNumber, string statementReference, StockMasterModel stockMaster, Collection<StockMasterDetailModel> details, Collection<long> transactionIdCollection, Collection<AttachmentModel> attachments, bool nonTaxable)
+        internal static long Add(string book, DateTime valueDate, int officeId, int userId, long logOnId, string referenceNumber, string statementReference, StockMasterModel stockMaster, Collection<StockMasterDetailModel> details, Collection<long> transactionIdCollection, Collection<PostgresqlAttachmentModel> attachments, bool nonTaxable)
         {
             if (stockMaster == null)
             {

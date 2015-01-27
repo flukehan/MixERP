@@ -17,9 +17,12 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
+using System.Globalization;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.Web.UI.WebControls;
@@ -27,6 +30,9 @@ using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Finance.Data.Helpers;
 using MixERP.Net.Core.Modules.Finance.Resources;
+using MixERP.Net.Entities.Core;
+using MixERP.Net.Entities.Office;
+
 
 namespace MixERP.Net.Core.Modules.Finance.Services
 {
@@ -46,7 +52,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         {
             if (!string.IsNullOrWhiteSpace(accountNumber))
             {
-                return Accounts.AccountNumberExists(accountNumber);
+                return AccountHelper.AccountNumberExists(accountNumber);
             }
 
             return false;
@@ -65,30 +71,19 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             {
                 if (SessionHelper.IsAdmin())
                 {
-                    using (DataTable table = Accounts.GetAccounts())
-                    {
-                        return GetValues(table);
-                    }
+                    return GetValues(AccountHelper.GetAccounts());
                 }
 
-                using (DataTable table = Accounts.GetNonConfidentialAccounts())
-                {
-                    return GetValues(table);
-                }
+
+                return GetValues(AccountHelper.GetNonConfidentialAccounts());
             }
 
             if (SessionHelper.IsAdmin())
             {
-                using (DataTable table = Accounts.GetChildAccounts())
-                {
-                    return GetValues(table);
-                }
+                return GetValues(AccountHelper.GetChildAccounts());
             }
 
-            using (DataTable table = Accounts.GetNonConfidentialChildAccounts())
-            {
-                return GetValues(table);
-            }
+            return GetValues(AccountHelper.GetNonConfidentialChildAccounts());
         }
 
         [WebMethod(EnableSession = true)]
@@ -98,15 +93,9 @@ namespace MixERP.Net.Core.Modules.Finance.Services
 
             int officeId = SessionHelper.GetOfficeId();
 
-            using (DataTable table = CashRepositories.GetCashRepositoryDataTable(officeId))
+            foreach (CashRepository cashRepository in CashRepositories.GetCashRepositories(officeId))
             {
-                string displayField = ConfigurationHelper.GetDbParameter("CashRepositoryDisplayField");
-                table.Columns.Add("cash_repository", typeof (string), displayField);
-
-                foreach (DataRow dr in table.Rows)
-                {
-                    values.Add(new ListItem(dr["cash_repository"].ToString(), dr["cash_repository_id"].ToString()));
-                }
+                values.Add(new ListItem(cashRepository.CashRepositoryName, cashRepository.CashRepositoryId.ToString(CultureInfo.InvariantCulture)));
             }
             return values;
         }
@@ -116,18 +105,12 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            if (Accounts.IsCashAccount(accountNumber))
+            if (AccountHelper.IsCashAccount(accountNumber))
             {
                 int officeId = SessionHelper.GetOfficeId();
-                using (DataTable table = CashRepositories.GetCashRepositoryDataTable(officeId))
+                foreach (CashRepository cashRepository in CashRepositories.GetCashRepositories(officeId))
                 {
-                    string displayField = ConfigurationHelper.GetDbParameter("CashRepositoryDisplayField");
-                    table.Columns.Add("cash_repository", typeof (string), displayField);
-
-                    foreach (DataRow dr in table.Rows)
-                    {
-                        values.Add(new ListItem(dr["cash_repository"].ToString(), dr["cash_repository_code"].ToString()));
-                    }
+                    values.Add(new ListItem(cashRepository.CashRepositoryName, cashRepository.CashRepositoryCode));
                 }
             }
 
@@ -150,15 +133,11 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = CostCenters.GetCostCenterDataTable())
-            {
-                string displayField = ConfigurationHelper.GetDbParameter("CostCenterDisplayField");
-                table.Columns.Add("cost_center", typeof (string), displayField);
 
-                foreach (DataRow dr in table.Rows)
-                {
-                    values.Add(new ListItem(dr["cost_center"].ToString(), dr["cost_center_id"].ToString()));
-                }
+
+            foreach (CostCenter costCenter in CostCenters.GetCostCenters())
+            {
+                values.Add(new ListItem(costCenter.CostCenterName, costCenter.CostCenterId.ToString(CultureInfo.InvariantCulture)));
             }
 
             return values;
@@ -169,13 +148,11 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = Currencies.GetCurrencyDataTable())
-            {
-                foreach (DataRow dr in table.Rows)
+            foreach (Currency currency in Currencies.GetCurrencies())
                 {
-                    values.Add(new ListItem(dr["currency_code"].ToString(), dr["currency_code"].ToString()));
+                    values.Add(new ListItem(currency.CurrencyCode, currency.CurrencyCode));
                 }
-            }
+
             return values;
         }
 
@@ -189,13 +166,9 @@ namespace MixERP.Net.Core.Modules.Finance.Services
                 return values;
             }
 
-            using (DataTable table = Currencies.GetCurrencyDataTable(accountNumber))
-            {
-                foreach (DataRow dr in table.Rows)
-                {
-                    values.Add(new ListItem(dr["currency_code"].ToString(), dr["currency_code"].ToString()));
-                }
-            }
+            string currencyCode = Currencies.GetCurrencyCode(accountNumber);
+
+            values.Add(new ListItem(currencyCode, currencyCode));
 
             return values;
         }
@@ -228,7 +201,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         {
             if (!string.IsNullOrWhiteSpace(accountNumber))
             {
-                return Accounts.IsCashAccount(accountNumber);
+                return AccountHelper.IsCashAccount(accountNumber);
             }
 
             return false;
@@ -239,25 +212,19 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         {
             if (SessionHelper.IsAdmin())
             {
-                using (DataTable table = Accounts.GetAccounts())
-                {
-                    return GetValues(table);
-                }
+                return GetValues(AccountHelper.GetAccounts());
             }
 
-            using (DataTable table = Accounts.GetNonConfidentialAccounts())
-            {
-                return GetValues(table);
-            }
+            return GetValues(AccountHelper.GetNonConfidentialAccounts());
         }
 
-        private static Collection<ListItem> GetValues(DataTable table)
+        private static Collection<ListItem> GetValues(IEnumerable<Account> accounts)
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            foreach (DataRow dr in table.Rows)
+            foreach (Account account in accounts)
             {
-                values.Add(new ListItem(dr["account_name"].ToString(), dr["account_number"].ToString()));
+                values.Add(new ListItem(account.AccountName, account.AccountNumber));
             }
 
             return values;

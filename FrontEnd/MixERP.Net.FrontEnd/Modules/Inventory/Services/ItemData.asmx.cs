@@ -17,13 +17,17 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Globalization;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Inventory.Data.Helpers;
+using MixERP.Net.Entities.Core;
+using MixERP.Net.Entities.Office;
 
 namespace MixERP.Net.Core.Modules.Inventory.Services
 {
@@ -46,18 +50,13 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = Agents.GetAgentDataTable())
+
+            foreach (Salesperson salesperson in Salespersons.GetSalespersons())
             {
-                string displayField = ConfigurationHelper.GetDbParameter("SalespersonDisplayField");
-                table.Columns.Add("salesperson", typeof (string), displayField);
-
-                foreach (DataRow dr in table.Rows)
-                {
-                    values.Add(new ListItem(dr["salesperson"].ToString(), dr["salesperson_id"].ToString()));
-                }
-
-                return values;
+                values.Add(new ListItem(salesperson.SalespersonName, salesperson.SalespersonId.ToString(DateTimeFormatInfo.InvariantInfo)));
             }
+
+            return values;
         }
 
         [WebMethod]
@@ -87,15 +86,9 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = PaymentTerms.GetPaymentTermsDataTable())
+            foreach (PaymentTerm paymentTerm in PaymentTerms.GetPaymentTerms())
             {
-                string displayField = ConfigurationHelper.GetDbParameter("PaymentTermDisplayField");
-                table.Columns.Add("payment_term", typeof (string), displayField);
-
-                foreach (DataRow dr in table.Rows)
-                {
-                    values.Add(new ListItem(dr["payment_term"].ToString(), dr["payment_term_id"].ToString()));
-                }
+                values.Add(new ListItem(paymentTerm.PaymentTermName, paymentTerm.PaymentTermId.ToString(CultureInfo.InvariantCulture)));
             }
 
             return values;
@@ -125,15 +118,10 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = PriceTypes.GetPriceTypeDataTable())
-            {
-                string displayField = ConfigurationHelper.GetDbParameter("PriceTypeDisplayField");
-                table.Columns.Add("price_type", typeof (string), displayField);
 
-                foreach (DataRow dr in table.Rows)
-                {
-                    values.Add(new ListItem(dr["price_type"].ToString(), dr["price_type_id"].ToString()));
-                }
+            foreach (PriceType priceType in PriceTypes.GetPriceTypes())
+            {
+                values.Add(new ListItem(priceType.PriceTypeName, priceType.PriceTypeId.ToString(CultureInfo.InvariantCulture)));
             }
 
             return values;
@@ -144,18 +132,13 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = Shippers.GetShipperDataTable())
+            foreach (Shipper shipper in Shippers.GetShippers())
             {
-                string displayField = ConfigurationHelper.GetDbParameter("ShipperDisplayField");
-                table.Columns.Add("shipper", typeof (string), displayField);
-
-                foreach (DataRow dr in table.Rows)
-                {
-                    values.Add(new ListItem(dr["shipper"].ToString(), dr["shipper_id"].ToString()));
-                }
-
-                return values;
+                values.Add(new ListItem(shipper.CompanyName, shipper.ShipperId.ToString(CultureInfo.InvariantCulture)));
             }
+
+            return values;
+
         }
 
         [WebMethod(EnableSession = true)]
@@ -164,18 +147,14 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
             int officeId = SessionHelper.GetOfficeId();
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = Stores.GetStoreDataTable(officeId))
+            IEnumerable<Store> stores = Stores.GetStores(officeId);
+
+            foreach (Store store in stores)
             {
-                string displayField = ConfigurationHelper.GetDbParameter("StoreDisplayField");
-                table.Columns.Add("store", typeof (string), displayField);
-
-                foreach (DataRow dr in table.Rows)
-                {
-                    values.Add(new ListItem(dr["store"].ToString(), dr["store_id"].ToString()));
-                }
-
-                return values;
+                values.Add(new ListItem(store.StoreName, store.StoreId.ToString(CultureInfo.InvariantCulture)));
             }
+
+            return values;
         }
 
         [WebMethod]
@@ -222,30 +201,24 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = Items.GetItemDataTable())
+            foreach (Item item in Items.GetItems())
             {
-                foreach (DataRow dr in table.Rows)
-                {
-                    values.Add(new ListItem(dr["item_name"].ToString(), dr["item_code"].ToString()));
-                }
-
-                return values;
+                values.Add(new ListItem(item.ItemName, item.ItemCode));
             }
+
+            return values;
         }
 
         private static Collection<ListItem> GetStockItems()
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = Items.GetStockItemDataTable())
+            foreach (Item item in Items.GetStockItems())
             {
-                foreach (DataRow dr in table.Rows)
-                {
-                    values.Add(new ListItem(dr["item_name"].ToString(), dr["item_code"].ToString()));
-                }
-
-                return values;
+                values.Add(new ListItem(item.ItemName, item.ItemCode));
             }
+
+            return values;
         }
     }
 }

@@ -19,7 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Text.RegularExpressions;
 
-namespace MixERP.Net.DBFactory
+namespace MixERP.Net.DbFactory
 {
     public static class Sanitizer
     {
@@ -47,5 +47,6 @@ namespace MixERP.Net.DBFactory
             //Only alphabets [a-zA-Z], numbers, and an underscore is allowed.
             return Regex.Replace(identifier, @"[^a-zA-Z0-9_]", "");
         }
+
     }
 }

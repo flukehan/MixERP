@@ -18,17 +18,24 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
 using System.Web.Script.Serialization;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Common.Models.Core;
 using MixERP.Net.Common.Models.Transactions;
+using MixERP.Net.WebControls.Common;
 using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
 using MixERP.Net.WebControls.StockTransactionView.Data.Models;
+using Resources;
 
 namespace MixERP.Net.FrontEnd.UserControls.Products
 {
@@ -124,6 +131,14 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         #endregion Properties
 
+        #region IDisposable
+        private DateTextBox dateTextBox;
+
+        private HtmlInputText partyCodeInputText;
+        private HtmlInputText referenceNumberInputText;
+
+        #endregion
+
         #region Page Initialization
         private bool initialized;
 
@@ -139,8 +154,11 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         public void Initialize()
         {
+
             if (!this.initialized)
             {
+                this.CreateTopFormPanel(this.Placeholder1);
+                this.CreateBottomFormPanel(this.Placeholder2);
                 if (!this.IsPostBack)
                 {
                     this.ClearSession(this.ID);
@@ -155,6 +173,579 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 this.initialized = true;
             }
         }
+
+        #region Top Form Panel
+        private void CreateTopFormPanel(Control container)
+        {
+            using (HtmlGenericControl segment = HtmlControlHelper.GetSegment())
+            {
+                using (HtmlTable table = new HtmlTable())
+                {
+                    table.Attributes.Add("class", "ui form");
+
+                    this.AddTopFormLabels(table);
+                    this.AddTopFormControls(table);
+                    segment.Controls.Add(table);
+                }
+
+                container.Controls.Add(segment);
+            }
+
+
+            using (HtmlGenericControl form = HtmlControlHelper.GetForm())
+            {
+
+                using (HtmlGenericControl fields = HtmlControlHelper.GetFields("two fields"))
+                {
+                    if (this.ShowShippingInformation)
+                    {
+                        this.AddShippingAddressCompositeField(fields);
+                    }
+
+                    if (this.Book == TranBook.Sales && this.ShowSalesType)
+                    {
+                        this.AddSalesTypeField(fields);
+                    }
+
+                    form.Controls.Add(fields);
+                }
+
+                container.Controls.Add(form);
+            }
+        }
+
+        #region Shipping Address Composite Field
+        private void AddShippingAddressCompositeField(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl shippingAddressInfoDiv = HtmlControlHelper.GetField())
+            {
+                shippingAddressInfoDiv.ID = "ShippingAddressInfoDiv";
+                shippingAddressInfoDiv.Attributes.Add("style", "width:500px;");
+
+                using (HtmlGenericControl fields = HtmlControlHelper.GetFields("two fields"))
+                {
+                    this.AddShippingCompanyField(fields);
+                    this.AddShippingAddressField(fields);
+
+                    shippingAddressInfoDiv.Controls.Add(fields);
+                }
+
+
+                container.Controls.Add(shippingAddressInfoDiv);
+            }
+        }
+
+        private void AddShippingCompanyField(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl field = HtmlControlHelper.GetField())
+            {
+                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ShippingCompany"), "ShippingCompanySelect"))
+                {
+                    field.Controls.Add(label);
+                }
+                using (HtmlSelect shippingCompanySelect = new HtmlSelect())
+                {
+                    shippingCompanySelect.ID = "ShippingCompanySelect";
+                    field.Controls.Add(shippingCompanySelect);
+                }
+
+                container.Controls.Add(field);
+            }
+        }
+
+        private void AddShippingAddressField(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl field = HtmlControlHelper.GetField())
+            {
+                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ShippingAddress"), "ShippingAddressSelect"))
+                {
+                    field.Controls.Add(label);
+                }
+                using (HtmlSelect shippingAddressSelect = new HtmlSelect())
+                {
+                    shippingAddressSelect.ID = "ShippingAddressSelect";
+                    field.Controls.Add(shippingAddressSelect);
+                }
+
+                container.Controls.Add(field);
+            }
+
+        }
+
+        #endregion
+
+        #region Sales Types
+        private void AddSalesTypeField(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl salesTypeDiv = HtmlControlHelper.GetField())
+            {
+                salesTypeDiv.ID = "SalesTypeDiv";
+                salesTypeDiv.Attributes.Add("style", "width:200px");
+
+                using (HtmlGenericControl field = HtmlControlHelper.GetField())
+                {
+                    using (HtmlGenericControl label = HtmlControlHelper.GetLabel(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "SalesType"), "SalesTypeSelect"))
+                    {
+                        field.Controls.Add(label);
+                    }
+
+                    using (HtmlSelect salesTypeSelect = new HtmlSelect())
+                    {
+                        salesTypeSelect.ID = "SalesTypeSelect";
+                        salesTypeSelect.DataSource = this.GetSalesTypes();
+                        salesTypeSelect.DataTextField = "Text";
+                        salesTypeSelect.DataValueField = "Value";
+                        salesTypeSelect.DataBind();
+
+                        field.Controls.Add(salesTypeSelect);
+                    }
+
+                    salesTypeDiv.Controls.Add(field);
+                }
+
+                container.Controls.Add(salesTypeDiv);
+            }
+        }
+
+        private IEnumerable<ListItem> GetSalesTypes()
+        {
+            Collection<ListItem> items = new Collection<ListItem>();
+
+            items.Add(new ListItem(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "TaxableSales"), "1"));
+            items.Add(new ListItem(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "NonTaxableSales"), "0"));
+
+
+            if (this.model.NonTaxableSales)
+            {
+                items[1].Selected = true;
+            }
+
+            return items;
+        }
+
+        #endregion
+
+        private void AddTopFormLabels(HtmlTable table)
+        {
+            using (HtmlTableRow header = new HtmlTableRow())
+            {
+                this.AddCell(header, HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ValueDate"), "DateTextBox"));
+                
+                if (this.ShowStore)
+                {
+                    this.AddCell(header, HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "SelectStore"), "StoreSelect"));
+                }
+
+                this.AddCell(header, HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "SelectParty"), "PartyCodeInputText"));
+                this.AddCell(header, string.Empty);
+
+                if (this.ShowPriceTypes)
+                {
+                    this.AddCell(header, HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "PriceType"), "PriceTypeSelect"));
+                }
+
+                this.AddCell(header, HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ReferenceNumberAbbreviated"), "ReferenceNumberInputText"));
+                this.AddCell(header, string.Empty);
+                this.AddCell(header, string.Empty);
+
+                table.Rows.Add(header);
+            }
+        }
+
+        private void AddCell(HtmlTableRow row, string text)
+        {
+            using (HtmlTableCell cell = new HtmlTableCell())
+            {
+                cell.InnerHtml = text;
+
+                row.Cells.Add(cell);
+            }
+        }
+
+        private void AddTopFormControls(HtmlTable table)
+        {
+            using (HtmlTableRow row = new HtmlTableRow())
+            {
+                this.AddDateTextBoxCell(row);
+
+                if (this.ShowStore)
+                {
+                    this.AddStoreSelectCell(row);
+                }
+
+                this.AddPartyCodeInputTextCell(row);
+                this.AddPartySelectCell(row);
+
+                if (this.ShowPriceTypes)
+                {
+                    this.AddPriceTypeSelectCell(row);
+                }
+
+                this.AddReferenceNumberInputTextCell(row);
+                this.AddCashTransactionDivCell(row);
+                this.AddPaymentTermSelectCell(row);
+
+                table.Controls.Add(row);
+            }
+        }
+
+        private HtmlTableCell GetFieldCell()
+        {
+            using (HtmlTableCell cell = new HtmlTableCell())
+            {
+                cell.Attributes.Add("class", "ui field");
+                return cell;
+            }
+        }
+
+        private void AddDateTextBoxCell(HtmlTableRow row)
+        {
+            using (HtmlTableCell cell = this.GetFieldCell())
+            {
+                this.dateTextBox = new DateTextBox();
+
+                this.dateTextBox.ID = "DateTextBox";
+                this.dateTextBox.Mode = Frequency.Today;
+                this.dateTextBox.CssClass = "date";
+
+                cell.Controls.Add(this.dateTextBox);
+
+                row.Cells.Add(cell);
+            }
+        }
+
+        private void AddStoreSelectCell(HtmlTableRow row)
+        {
+            using (HtmlTableCell cell = this.GetFieldCell())
+            {
+                using (HtmlSelect storeSelect = new HtmlSelect())
+                {
+                    storeSelect.ID = "StoreSelect";
+                    cell.Controls.Add(storeSelect);
+                }
+
+                row.Cells.Add(cell);
+            }
+        }
+
+        private void AddPartyCodeInputTextCell(HtmlTableRow row)
+        {
+            using (HtmlTableCell cell = this.GetFieldCell())
+            {
+                this.partyCodeInputText = new HtmlInputText();
+                this.partyCodeInputText.ID = "PartyCodeInputText";
+                this.partyCodeInputText.Attributes.Add("title", "F2");
+
+                cell.Controls.Add(partyCodeInputText);
+
+                row.Cells.Add(cell);
+            }
+        }
+
+        private void AddPartySelectCell(HtmlTableRow row)
+        {
+            using (HtmlTableCell cell = this.GetFieldCell())
+            {
+                using (HtmlSelect partySelect = new HtmlSelect())
+                {
+                    partySelect.ID = "PartySelect";
+                    partySelect.Attributes.Add("title", "F2");
+
+                    cell.Controls.Add(partySelect);
+                }
+                row.Cells.Add(cell);
+            }
+        }
+
+        private void AddPriceTypeSelectCell(HtmlTableRow row)
+        {
+            using (HtmlTableCell cell = this.GetFieldCell())
+            {
+                using (HtmlSelect priceTypeSelect = new HtmlSelect())
+                {
+                    priceTypeSelect.ID = "PriceTypeSelect";
+                    cell.Controls.Add(priceTypeSelect);
+                }
+
+                row.Cells.Add(cell);
+            }
+        }
+
+        private void AddReferenceNumberInputTextCell(HtmlTableRow row)
+        {
+            using (HtmlTableCell cell = this.GetFieldCell())
+            {
+                this.referenceNumberInputText = new HtmlInputText();
+                this.referenceNumberInputText.ID = "ReferenceNumberInputText";
+                this.referenceNumberInputText.MaxLength = 24;
+
+                cell.Controls.Add(this.referenceNumberInputText);
+                row.Cells.Add(cell);
+            }
+        }
+
+        private void AddCashTransactionDivCell(HtmlTableRow row)
+        {
+            using (HtmlTableCell cell = this.GetFieldCell())
+            {
+                if (this.ShowTransactionType)
+                {
+                    using (HtmlGenericControl toggleCheckBox = HtmlControlHelper.GetToggleCheckBox())
+                    {
+                        toggleCheckBox.ID = "CashTransactionDiv";
+                        using (HtmlInputCheckBox cashTransactionInputCheckBox = new HtmlInputCheckBox())
+                        {
+                            cashTransactionInputCheckBox.ID = "CashTransactionInputCheckBox";
+                            cashTransactionInputCheckBox.Attributes.Add("checked", "checked");
+                            toggleCheckBox.Controls.Add(cashTransactionInputCheckBox);
+                        }
+
+                        using (HtmlGenericControl label = HtmlControlHelper.GetLabel(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "CashTransaction")))
+                        {
+                            toggleCheckBox.Controls.Add(label);
+                        }
+
+                        cell.Controls.Add(toggleCheckBox);
+                    }
+                }
+
+                row.Cells.Add(cell);
+            }
+        }
+
+        private void AddPaymentTermSelectCell(HtmlTableRow row)
+        {
+            using (HtmlTableCell cell = this.GetFieldCell())
+            {
+                if (this.ShowPaymentTerms)
+                {
+                    using (HtmlSelect paymentTermSelect = new HtmlSelect())
+                    {
+                        paymentTermSelect.ID = "PaymentTermSelect";
+                        cell.Controls.Add(paymentTermSelect);
+                    }
+                }
+
+                row.Cells.Add(cell);
+            }
+        }
+
+        #endregion
+
+        #region Bottom Form Panel
+
+        private void CreateBottomFormPanel(Control container)
+        {
+            using (HtmlGenericControl formContainer = new HtmlGenericControl("div"))
+            {
+                formContainer.Attributes.Add("style", "width:500px");
+
+                using (HtmlGenericControl formSegment = HtmlControlHelper.GetFormSegment())//ui page form segment
+                {
+                    if (this.ShowShippingInformation)
+                    {
+                        this.AddShippingAddressTextAreaField(formSegment);
+                    }
+
+                    this.AddTotalFields(formSegment);
+
+                    if (this.ShowCostCenter)
+                    {
+                        this.AddCostCenterField(formSegment);
+                    }
+
+                    if (this.ShowSalesAgents)
+                    {
+                        this.AddSalespersonField(formSegment);
+                    }
+                    
+                    this.AddStatementReferenceField(formSegment);
+                    this.AddSaveButton(formSegment);
+
+                    formContainer.Controls.Add(formSegment);
+                }
+                container.Controls.Add(formContainer);
+            }
+        }
+
+        private void AddShippingAddressTextAreaField(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl shippingAddressDiv = HtmlControlHelper.GetField())
+            {
+                shippingAddressDiv.ID = "ShippingAddressDiv";
+
+                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ShippingAddress"), "ShippingAddressTextArea"))
+                {
+                    shippingAddressDiv.Controls.Add(label);
+                }
+
+                using (HtmlTextArea shippingAddressTextArea = new HtmlTextArea())
+                {
+                    shippingAddressTextArea.ID = "ShippingAddressTextArea";
+                    shippingAddressTextArea.Attributes.Add("readonly", "readonly");
+
+                    shippingAddressDiv.Controls.Add(shippingAddressTextArea);
+                }
+
+                container.Controls.Add(shippingAddressDiv);
+            }
+        }
+
+        #region Total Fields
+        private void AddTotalFields(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl fields = HtmlControlHelper.GetFields("three fields"))
+            {
+                this.AddRunningTotalField(fields);
+                this.AddTaxTotalField(fields);
+                this.AddGrandTotalField(fields);
+
+                container.Controls.Add(fields);
+            }
+        }
+
+
+        private void AddRunningTotalField(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl field = HtmlControlHelper.GetField())
+            {
+                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "RunningTotal"), "RunningTotalInputText"))
+                {
+                    field.Controls.Add(label);
+                }
+
+                using (HtmlInputText runningTotalInputText = new HtmlInputText())
+                {
+                    runningTotalInputText.ID = "RunningTotalInputText";
+                    runningTotalInputText.Attributes.Add("class", "currency");
+                    runningTotalInputText.Attributes.Add("readonly", "readonly");
+                    field.Controls.Add(runningTotalInputText);
+                }
+
+                container.Controls.Add(field);
+            }
+        }
+        private void AddTaxTotalField(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl field = HtmlControlHelper.GetField())
+            {
+                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "TaxTotal"), "TaxTotalInputText"))
+                {
+                    field.Controls.Add(label);
+                }
+
+                using (HtmlInputText taxTotalInputText = new HtmlInputText())
+                {
+                    taxTotalInputText.ID = "TaxTotalInputText";
+                    taxTotalInputText.Attributes.Add("class", "currency");
+                    taxTotalInputText.Attributes.Add("readonly", "readonly");
+                    field.Controls.Add(taxTotalInputText);
+                }
+
+                container.Controls.Add(field);
+            }
+        }
+        private void AddGrandTotalField(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl field = HtmlControlHelper.GetField())
+            {
+                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "GrandTotal"), "GrandTotalInputTextInputText"))
+                {
+                    field.Controls.Add(label);
+                }
+
+                using (HtmlInputText grandTotalInputTextInputText = new HtmlInputText())
+                {
+                    grandTotalInputTextInputText.ID = "GrandTotalInputText";
+                    grandTotalInputTextInputText.Attributes.Add("class", "currency");
+                    grandTotalInputTextInputText.Attributes.Add("readonly", "readonly");
+                    field.Controls.Add(grandTotalInputTextInputText);
+                }
+
+                container.Controls.Add(field);
+            }
+        }
+
+        #endregion
+
+        private void AddCostCenterField(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl costCenterDiv = HtmlControlHelper.GetField())
+            {
+                costCenterDiv.ID = "CostCenterDiv";
+
+                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "CostCenter"), "CostCenterSelect"))
+                {
+                    costCenterDiv.Controls.Add(label);
+                }
+
+                using (HtmlSelect costCenterSelect = new HtmlSelect())
+                {
+                    costCenterSelect.ID = "CostCenterSelect";
+                    costCenterDiv.Controls.Add(costCenterSelect);
+                }
+
+                container.Controls.Add(costCenterDiv);
+            }
+        }
+
+        private void AddSalespersonField(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl salespersonDiv = HtmlControlHelper.GetField())
+            {
+                salespersonDiv.ID = "SalespersonDiv";
+
+                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "Salesperson"), "SalesPersonSelect"))
+                {
+                    salespersonDiv.Controls.Add(label);
+                }
+
+                using (HtmlSelect salesPersonSelect = new HtmlSelect())
+                {
+                    salesPersonSelect.ID = "SalesPersonSelect";
+                    salespersonDiv.Controls.Add(salesPersonSelect);
+                }
+
+
+                container.Controls.Add(salespersonDiv);
+            }
+        }
+
+        private void AddStatementReferenceField(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl field = HtmlControlHelper.GetField())
+            {
+                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "StatementReference"), "StatementReferenceTextArea"))
+                {
+                    field.Controls.Add(label);
+                }
+
+                using (HtmlTextArea statementReferenceTextArea = new HtmlTextArea())
+                {
+                    statementReferenceTextArea.ID = "StatementReferenceTextArea";
+
+                    statementReferenceTextArea.Value = this.model.StatementReference; 
+                    
+                    field.Controls.Add(statementReferenceTextArea);
+                }
+
+                container.Controls.Add(field);
+            }
+        }
+
+        private void AddSaveButton(HtmlGenericControl container)
+        {
+            using (HtmlInputButton saveButton = new HtmlInputButton())
+            {
+                saveButton.ID = "SaveButton";
+                saveButton.Attributes.Add("class", "small ui red button");
+                saveButton.Value = StockTransactionFactoryResourceHelper.GetResourceString("Titles", "Save");
+
+                container.Controls.Add(saveButton);
+            }
+        }
+
+        #endregion
 
         protected void Page_Init(object sender, EventArgs e)
         {
@@ -177,13 +768,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         private void LoadLabels()
         {
-            this.DateLiteral.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ValueDate"), "DateTextBox");
-            this.StoreSelectLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "SelectStore"), "StoreSelect");
 
-            this.PartyCodeInputTextLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "SelectParty"), "PartyCodeInputText");
-
-            this.PriceTypeSelectLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "PriceType"), "PriceTypeSelect");
-            this.ReferenceNumberInputTextLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ReferenceNumberAbbreviated"), "ReferenceNumberInputText");
 
             this.ItemCodeInputTextLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ItemCode"), "ItemCodeInputText");
             this.ItemSelectLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ItemName"), "ItemSelect");
@@ -196,23 +781,8 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             this.TaxSelectLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "TaxForm"), "TaxSelect");
             this.TaxInputTextLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "Tax"), "TaxInputText");
 
-            this.ShippingAddressSelectLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ShippingAddress"), "ShippingAddressSelect");
-            this.ShippingAddressTextAreaLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ShippingAddress"), "ShippingAddressTextArea");
-            this.ShippingCompanySelectLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ShippingCompany"), "ShippingCompanySelect");
             this.ShippingChargeInputTextLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "ShippingCharge"), "ShippingChargeInputText");
-            this.SalesTypeSelectLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "SalesType"), "SalesTypeSelect");
 
-            this.SalesTypeSelect.Items.Add(new ListItem(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "TaxableSales"), "1"));
-            this.SalesTypeSelect.Items.Add(new ListItem(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "NonTaxableSales"), "0"));
-
-            this.RunningTotalInputTextLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "RunningTotal"), "RunningTotalInputText");
-            this.TaxTotalInputTextLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "TaxTotal"), "TaxTotalInputText");
-            this.GrandTotalInputTextInputTextLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "GrandTotal"), "GrandTotalInputTextInputText");
-            this.CostCenterSelectLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "CostCenter"), "CostCenterSelect");
-            this.SalesPersonSelectLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "Salesperson"), "SalesPersonSelect");
-            this.StatementReferenceTextAreaLabel.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "StatementReference"), "StatementReferenceTextArea");
-
-            this.CashTransactionLiteral.Text = HtmlControlHelper.GetLabelHtml(StockTransactionFactoryResourceHelper.GetResourceString("Titles", "CashTransaction"));
         }
 
         private void LoadValuesFromSession()
@@ -230,19 +800,14 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             }
 
             this.PartyCodeHidden.Value = this.model.PartyCode.ToString(CultureInfo.InvariantCulture);
-            this.PartyCodeInputText.Value = this.model.PartyCode.ToString(CultureInfo.InvariantCulture);
+            this.partyCodeInputText.Value = this.model.PartyCode.ToString(CultureInfo.InvariantCulture);
             this.PriceTypeIdHidden.Value = this.model.PriceTypeId.ToString(CultureInfo.InvariantCulture);
             this.StoreIdHidden.Value = this.model.StoreId.ToString(CultureInfo.InvariantCulture);
             this.ShipperIdHidden.Value = this.model.ShippingCompanyId.ToString(CultureInfo.InvariantCulture);
             this.ShippingAddressCodeHidden.Value = this.model.ShippingAddressCode.ToString(CultureInfo.InvariantCulture);
             this.SalesPersonIdHidden.Value = this.model.SalesPersonId.ToString(CultureInfo.InvariantCulture);
 
-            this.ReferenceNumberInputText.Value = this.model.ReferenceNumber;
-            this.StatementReferenceTextArea.Value = this.model.StatementReference;
-            if (this.model.NonTaxableSales)
-            {
-                this.SalesTypeSelect.SelectedIndex = 1;
-            }
+            this.referenceNumberInputText.Value = this.model.ReferenceNumber;
 
             this.Session[this.ID] = this.model.View;
             this.TranIdCollectionHiddenField.Value = string.Join(",", this.model.TransactionIdCollection);
@@ -251,28 +816,14 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         private void SetVisibleStates()
         {
-            this.StoreSelect.Visible = this.ShowStore;
-            this.StoreSelectLabel.Visible = this.ShowStore;
 
-            this.CashTransactionDiv.Visible = this.ShowTransactionType;
-
-            this.PaymentTermSelect.Visible = this.ShowPaymentTerms;
-
-            this.PriceTypeSelect.Visible = this.ShowPriceTypes;
-            this.PriceTypeSelectLabel.Visible = this.ShowPriceTypes;
-
-            this.ShippingAddressDiv.Visible = this.ShowShippingInformation;
-            this.ShippingAddressInfoDiv.Visible = this.ShowShippingInformation;
 
             if (!this.ShowShippingInformation)
             {
                 this.ShippingChargeInputText.Attributes.Add("readonly", "readonly");
             }
 
-            this.SalesTypeDiv.Visible = (this.Book == TranBook.Sales && this.ShowSalesType);
 
-            this.CostCenterDiv.Visible = this.ShowCostCenter;
-            this.SalespersonDiv.Visible = this.ShowSalesAgents;
         }
 
         #region Grid Binding

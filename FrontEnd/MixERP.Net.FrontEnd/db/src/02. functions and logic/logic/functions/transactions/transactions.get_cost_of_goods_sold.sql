@@ -87,7 +87,7 @@ $$
 LANGUAGE PLPGSQL;
 
 -- UPDATE office.configuration
--- SET configuration = 'MAVCO'
+-- SET value = 'MAVCO'
 -- WHERE config_id = 2;
 -- 
 -- 

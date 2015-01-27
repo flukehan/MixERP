@@ -27,7 +27,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
 {
     public static class GRN
     {
-        public static long Add(DateTime valueDate, int storeId, string partyCode, Collection<StockMasterDetailModel> details, int costCenterId, string referenceNumber, string statementReference, Collection<long> transactionIdCollection, Collection<AttachmentModel> attachments)
+        public static long Add(DateTime valueDate, int storeId, string partyCode, Collection<StockMasterDetailModel> details, int costCenterId, string referenceNumber, string statementReference, Collection<long> transactionIdCollection, Collection<PostgresqlAttachmentModel> attachments)
         {
             StockMasterModel stockMaster = new StockMasterModel();
 

@@ -27,7 +27,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
 {
     public static class Delivery
     {
-        public static long Add(DateTime valueDate, int storeId, string partyCode, int priceTypeId, int paymentTermId, Collection<StockMasterDetailModel> details, int shipperId, string shippingAddressCode, decimal shippingCharge, int costCenterId, string referenceNumber, int agentId, string statementReference, Collection<int> transactionIdCollection, Collection<AttachmentModel> attachments, bool nonTaxable)
+        public static long Add(DateTime valueDate, int storeId, string partyCode, int priceTypeId, int paymentTermId, Collection<StockMasterDetailModel> details, int shipperId, string shippingAddressCode, decimal shippingCharge, int costCenterId, string referenceNumber, int agentId, string statementReference, Collection<int> transactionIdCollection, Collection<PostgresqlAttachmentModel> attachments, bool nonTaxable)
         {
             StockMasterModel stockMaster = new StockMasterModel();
 

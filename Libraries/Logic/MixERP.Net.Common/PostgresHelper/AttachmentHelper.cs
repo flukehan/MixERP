@@ -29,7 +29,7 @@ namespace MixERP.Net.Common.PostgresHelper
 {
     public static class AttachmentHelper
     {
-        public static IEnumerable<NpgsqlParameter> AddAttachmentParameter(Collection<AttachmentModel> attachments)
+        public static IEnumerable<NpgsqlParameter> AddAttachmentParameter(Collection<PostgresqlAttachmentModel> attachments)
         {
             Collection<NpgsqlParameter> collection = new Collection<NpgsqlParameter>();
 
@@ -47,7 +47,7 @@ namespace MixERP.Net.Common.PostgresHelper
             return collection;
         }
 
-        public static string CreateAttachmentModelParameter(Collection<AttachmentModel> attachments)
+        public static string CreateAttachmentModelParameter(Collection<PostgresqlAttachmentModel> attachments)
         {
             if (attachments == null)
             {

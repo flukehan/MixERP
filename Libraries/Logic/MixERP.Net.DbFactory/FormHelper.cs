@@ -40,9 +40,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System.Data;
-using System.Threading;
 
-namespace MixERP.Net.DBFactory
+namespace MixERP.Net.DbFactory
 {
     public static class FormHelper
     {
@@ -60,143 +59,6 @@ namespace MixERP.Net.DBFactory
                 sql = sql.Replace("@Limit", Conversion.TryCastString(limit));
                 sql = sql.Replace("@Offset", Conversion.TryCastString(offset));
                 command.CommandText = sql;
-
-                return DbOperation.GetDataTable(command);
-            }
-        }
-
-        public static DataTable GetTable(string tableSchema, string tableName, string orderBy)
-        {
-            var sql = "SELECT * FROM @TableSchema.@TableName ORDER BY @OrderBy ASC;";
-            using (var command = new NpgsqlCommand())
-            {
-                sql = sql.Replace("@TableSchema", Sanitizer.SanitizeIdentifierName(tableSchema));
-                sql = sql.Replace("@TableName", Sanitizer.SanitizeIdentifierName(tableName));
-                sql = sql.Replace("@OrderBy", Sanitizer.SanitizeIdentifierName(orderBy));
-                command.CommandText = sql;
-
-                return DbOperation.GetDataTable(command);
-            }
-        }
-
-        public static DataTable GetTable(string tableSchema, string tableName, string columnNames, string columnValues, string orderBy)
-        {
-            if (string.IsNullOrWhiteSpace(columnNames))
-            {
-                return null;
-            }
-
-            if (string.IsNullOrWhiteSpace(columnValues))
-            {
-                return null;
-            }
-
-            var columns = columnNames.Split(',');
-            var values = columnValues.Split(',');
-
-            if (!columns.Length.Equals(values.Length))
-            {
-                return null;
-            }
-
-            var counter = 0;
-            var sql = "SELECT * FROM @TableSchema.@TableName WHERE ";
-
-            foreach (var column in columns)
-            {
-                if (!counter.Equals(0))
-                {
-                    sql += " AND ";
-                }
-
-                sql += Sanitizer.SanitizeIdentifierName(column.Trim()) + " = @" + Sanitizer.SanitizeIdentifierName(column.Trim());
-
-                counter++;
-            }
-
-            sql += " ORDER BY @OrderBy ASC;";
-
-            using (var command = new NpgsqlCommand())
-            {
-                sql = sql.Replace("@TableSchema", Sanitizer.SanitizeIdentifierName(tableSchema));
-                sql = sql.Replace("@TableName", Sanitizer.SanitizeIdentifierName(tableName));
-                sql = sql.Replace("@OrderBy", Sanitizer.SanitizeIdentifierName(orderBy));
-
-                command.CommandText = sql;
-
-                counter = 0;
-                foreach (var column in columns)
-                {
-                    command.Parameters.AddWithValue("@" + Sanitizer.SanitizeIdentifierName(column.Trim()), values[counter]);
-                    counter++;
-                }
-
-                return DbOperation.GetDataTable(command);
-            }
-        }
-
-        public static DataTable GetTable(string tableSchema, string tableName, string columnNames, string columnValuesLike, int limit, string orderBy)
-        {
-            if (columnNames == null)
-            {
-                columnNames = string.Empty;
-            }
-
-            if (columnValuesLike == null)
-            {
-                columnValuesLike = string.Empty;
-            }
-
-            var columns = columnNames.Split(',');
-            var values = columnValuesLike.Split(',');
-
-            if (!columns.Length.Equals(values.Length))
-            {
-                return null;
-            }
-
-            var counter = 0;
-            var sql = "SELECT * FROM @TableSchema.@TableName ";
-
-            foreach (var column in columns)
-            {
-                if (!string.IsNullOrWhiteSpace(column))
-                {
-                    if (counter.Equals(0))
-                    {
-                        sql += " WHERE ";
-                    }
-                    else
-                    {
-                        sql += " AND ";
-                    }
-
-                    sql += " lower(" + Sanitizer.SanitizeIdentifierName(column.Trim()) + "::text) LIKE @" + Sanitizer.SanitizeIdentifierName(column.Trim());
-                    counter++;
-                }
-            }
-
-            sql += " ORDER BY @OrderBy ASC LIMIT @Limit;";
-
-            using (var command = new NpgsqlCommand())
-            {
-                sql = sql.Replace("@TableSchema", Sanitizer.SanitizeIdentifierName(tableSchema));
-                sql = sql.Replace("@TableName", Sanitizer.SanitizeIdentifierName(tableName));
-                sql = sql.Replace("@OrderBy", Sanitizer.SanitizeIdentifierName(orderBy));
-
-                command.CommandText = sql;
-
-                counter = 0;
-                foreach (var column in columns)
-                {
-                    if (!string.IsNullOrWhiteSpace(column))
-                    {
-                        command.Parameters.AddWithValue("@" + Sanitizer.SanitizeIdentifierName(column.Trim()), "%" + values[counter].ToLower(Thread.CurrentThread.CurrentCulture) + "%");
-                        counter++;
-                    }
-                }
-
-                command.Parameters.AddWithValue("@Limit", limit);
 
                 return DbOperation.GetDataTable(command);
             }

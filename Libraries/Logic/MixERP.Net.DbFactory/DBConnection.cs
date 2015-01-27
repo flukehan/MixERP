@@ -23,7 +23,7 @@ using System.Security.Cryptography;
 using System.Web.Security;
 using Npgsql;
 
-namespace MixERP.Net.DBFactory
+namespace MixERP.Net.DbFactory
 {
     public static class DbConnection
     {

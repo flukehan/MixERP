@@ -122,7 +122,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         core.parties.party_code,
         core.parties.party_name,
         core.parties.pan_number,
-        core.shipping_addresses.address_line_1 || '&lt;br /&gt;' || core.shipping_addresses.address_line_2 || '&lt;br /&gt;' || core.shipping_addresses.street || '&lt;br /&gt;' || core.shipping_addresses.city || '&lt;br /&gt;' || core.shipping_addresses.state || '&lt;br /&gt;' || core.shipping_addresses.country AS shipping_address,
+        core.shipping_addresses.address_line_1 || '&lt;br /&gt;' || core.shipping_addresses.address_line_2 || '&lt;br /&gt;' || core.shipping_addresses.street || '&lt;br /&gt;' || core.shipping_addresses.city || '&lt;br /&gt;' || core.get_state_name_by_state_id(core.shipping_addresses.state_id) || '&lt;br /&gt;' || core.get_country_name_by_country_id(core.shipping_addresses.country_id) AS shipping_address,
         core.shippers.shipper_name,
         transactions.stock_master.shipping_charge,
         transactions.get_invoice_amount(transactions.transaction_master.transaction_master_id) AS invoice_amount

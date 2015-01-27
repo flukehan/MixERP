@@ -213,4 +213,7 @@
   <data name="TaxableSales" xml:space="preserve">
     <value>Taxable Sales</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
 </root>

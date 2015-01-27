@@ -24,7 +24,7 @@ using System.Linq;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.Core.Modules.Inventory.Data.Helpers;
-using MixERP.Net.DBFactory;
+using MixERP.Net.DbFactory;
 using Npgsql;
 
 namespace MixERP.Net.Core.Modules.Inventory.Data.Transactions

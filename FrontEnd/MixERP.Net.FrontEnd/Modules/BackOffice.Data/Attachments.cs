@@ -1,10 +1,13 @@
-﻿using MixERP.Net.Common;
+﻿using System.Collections.Generic;
+using MixERP.Net.Common;
 using MixERP.Net.Common.Models.Core;
-using MixERP.Net.DBFactory;
+using MixERP.Net.DbFactory;
 using Npgsql;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.IO;
+using MixERP.Net.Entities;
+using MixERP.Net.Entities.Core;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Data
 {
@@ -21,44 +24,12 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data
             }
         }
 
-        public static Collection<AttachmentModel> GetAttachments(string attachmentDirectory, string book, long id)
+        public static IEnumerable<Attachment> GetAttachments(string attachmentDirectory, string book, long id)
         {
-            Collection<AttachmentModel> collection = new Collection<AttachmentModel>();
-
-            const string sql = "SELECT attachment_id, comment, @AttachmentDirectory || file_path as file_path, original_file_name, added_on FROM core.attachments WHERE resource || resource_key=core.get_attachment_lookup_info(@Book) AND resource_id=@ResourceId;";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@AttachmentDirectory", attachmentDirectory);
-                command.Parameters.AddWithValue("@Book", book);
-                command.Parameters.AddWithValue("@ResourceId", id);
-
-                using (DataTable table = DbOperation.GetDataTable(command))
-                {
-                    if (table != null && table.Rows.Count > 0)
-                    {
-                        foreach (DataRow row in table.Rows)
-                        {
-                            if (row != null)
-                            {
-                                AttachmentModel model = new AttachmentModel();
-
-                                model.Id = Conversion.TryCastLong(row["attachment_id"]);
-                                model.Comment = Conversion.TryCastString(row["comment"]);
-                                model.OriginalFileName = Conversion.TryCastString(row["original_file_name"]);
-                                model.FilePath = Conversion.TryCastString(row["file_path"]);
-                                model.AddedOn = Conversion.TryCastDate(row["added_on"]);
-
-                                collection.Add(model);
-                            }
-                        }
-                    }
-                }
-            }
-
-            return collection;
+           return Factory.Get<Attachment>("SELECT attachment_id, user_id, resource, resource_key, resource_id, original_file_name, file_extension, @0 || file_path as file_path, comment, added_on FROM core.attachments WHERE resource || resource_key=core.get_attachment_lookup_info(@1) AND resource_id=@2;", attachmentDirectory, book, id);
         }
 
-        public static bool Save(int userId, string book, long id, Collection<AttachmentModel> attachments)
+        public static bool Save(int userId, string book, long id, Collection<PostgresqlAttachmentModel> attachments)
         {
             using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString()))
             {
@@ -70,7 +41,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data
                     {
                         try
                         {
-                            foreach (AttachmentModel attachment in attachments)
+                            foreach (PostgresqlAttachmentModel attachment in attachments)
                             {
                                 const string sql =
                                     "INSERT INTO core.attachments(user_id, resource, resource_key, resource_id, original_file_name, file_extension, file_path, comment) " +

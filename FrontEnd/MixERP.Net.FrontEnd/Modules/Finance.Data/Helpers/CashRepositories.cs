@@ -19,12 +19,16 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Office;
-using MixERP.Net.DBFactory;
+using MixERP.Net.DbFactory;
 using Npgsql;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Linq;
+using MixERP.Net.Entities;
+using MixERP.Net.Entities.Office;
+using CashRepository = MixERP.Net.Entities.Office.CashRepository;
 
 namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 {
@@ -32,207 +36,48 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
     {
         public static bool CashRepositoryCodeExists(string cashRepositoryCode)
         {
-            const string sql = "SELECT 1 FROM office.cash_repositories WHERE cash_repository_code=@CashRepositoryCode;";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@CashRepositoryCode", cashRepositoryCode);
-
-                return DbOperation.GetDataTable(command).Rows.Count.Equals(1);
-            }
+            return Factory.Get<CashRepository>("SELECT * FROM office.cash_repositories WHERE cash_repository_code=@0;", cashRepositoryCode).Count().Equals(1);
         }
 
         public static decimal GetBalance(int cashRepositoryId, string currencyCode)
         {
-            const string sql = "SELECT transactions.get_cash_repository_balance(@CashRepositoryId, @CurrencyCode);";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@CashRepositoryId", cashRepositoryId);
-                command.Parameters.AddWithValue("@CurrencyCode", currencyCode);
-                return Conversion.TryCastDecimal(DbOperation.GetScalarValue(command));
-            }
+            return Factory.Scalar<decimal>("SELECT transactions.get_cash_repository_balance(@0, @1);", cashRepositoryId, currencyCode);
         }
 
         public static decimal GetBalance(int cashRepositoryId)
         {
-            const string sql = "SELECT transactions.get_cash_repository_balance(@CashRepositoryId);";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@CashRepositoryId", cashRepositoryId);
-                return Conversion.TryCastDecimal(DbOperation.GetScalarValue(command));
-            }
+            return Factory.Scalar<decimal>("SELECT transactions.get_cash_repository_balance(@0);", cashRepositoryId);
         }
 
         public static decimal GetBalance(string cashRepositoryCode)
         {
-            const string sql =
-                "SELECT transactions.get_cash_repository_balance(office.get_cash_repository_id_by_cash_repository_code(@CashRepositoryCode));";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@CashRepositoryCode", cashRepositoryCode);
-                return Conversion.TryCastDecimal(DbOperation.GetScalarValue(command));
-            }
+            return Factory.Scalar<decimal>("SELECT transactions.get_cash_repository_balance(office.get_cash_repository_id_by_cash_repository_code(@0));", cashRepositoryCode);
         }
 
         public static decimal GetBalance(string cashRepositoryCode, string currencyCode)
         {
-            const string sql =
-                "SELECT transactions.get_cash_repository_balance(office.get_cash_repository_id_by_cash_repository_code(@CashRepositoryCode), @CurrencyCode);";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@CashRepositoryCode", cashRepositoryCode);
-                command.Parameters.AddWithValue("@CurrencyCode", currencyCode);
-                return Conversion.TryCastDecimal(DbOperation.GetScalarValue(command));
-            }
+            return Factory.Scalar<decimal>("SELECT transactions.get_cash_repository_balance(office.get_cash_repository_id_by_cash_repository_code(@0), @1);", cashRepositoryCode, currencyCode);
         }
 
-        public static Collection<CashRepository> GetCashRepositories()
+        public static IEnumerable<CashRepository> GetCashRepositories()
         {
-            const string sql = "SELECT * FROM office.cash_repositories;";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                return GetCashRepositories(DbOperation.GetDataTable(command));
-            }
+            return Factory.Get<CashRepository>("SELECT * FROM office.cash_repositories ORDER BY cash_repository_id;");
         }
 
-        public static Collection<CashRepository> GetCashRepositories(int officeId)
+        public static IEnumerable<CashRepository> GetCashRepositories(int officeId)
         {
-            const string sql = "SELECT * FROM office.cash_repositories WHERE office_id=@OfficeId;";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@OfficeId", officeId);
-                return GetCashRepositories(DbOperation.GetDataTable(command));
-            }
+            return Factory.Get<CashRepository>("SELECT * FROM office.cash_repositories WHERE office_id=@0 ORDER BY cash_repository_id;", officeId);
         }
 
         public static CashRepository GetCashRepository(int? cashRepositoryId)
         {
-            CashRepository cashRepository = new CashRepository();
-
-            if (cashRepositoryId != null && cashRepositoryId != 0)
-            {
-                const string sql = "SELECT * FROM office.cash_repositories WHERE cash_repository_id=@CashRepositoryId;";
-                using (NpgsqlCommand command = new NpgsqlCommand(sql))
-                {
-                    command.Parameters.AddWithValue("@CashRepositoryId", cashRepositoryId);
-
-                    using (DataTable table = DbOperation.GetDataTable(command))
-                    {
-                        if (table != null)
-                        {
-                            if (table.Rows.Count.Equals(1))
-                            {
-                                cashRepository = GetCashRepository(table.Rows[0]);
-                            }
-                        }
-                    }
-                }
-            }
-
-            return cashRepository;
-        }
-
-        public static DataTable GetCashRepositoryDataTable(int officeId)
-        {
-            return FormHelper.GetTable("office", "cash_repositories", "office_id", Conversion.TryCastString(officeId), "cash_repository_id");
-        }
-
-        private static Collection<CashRepository> GetCashRepositories(DataTable table)
-        {
-            Collection<CashRepository> cashRepositoryCollection = new Collection<CashRepository>();
-
-            if (table == null || table.Rows.Count.Equals(0))
-            {
-                return cashRepositoryCollection;
-            }
-
-            foreach (DataRow row in table.Rows)
-            {
-                if (row != null)
-                {
-                    CashRepository cashRepository = GetCashRepository(row);
-
-                    cashRepositoryCollection.Add(cashRepository);
-                }
-            }
-
-            return cashRepositoryCollection;
-        }
-
-        private static CashRepository GetCashRepository(DataRow row)
-        {
-            CashRepository cashRepository = new CashRepository();
-
-            cashRepository.CashRepositoryId =
-                Conversion.TryCastInteger(DataRowHelper.GetColumnValue(row, "cash_repository_id"));
-            cashRepository.OfficeId = Conversion.TryCastInteger(DataRowHelper.GetColumnValue(row, "office_id"));
-            cashRepository.Office = GetOffice(cashRepository.OfficeId);
-            cashRepository.CashRepositoryCode =
-                Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "cash_repository_code"));
-            cashRepository.CashRepositoryName =
-                Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "cash_repository_name"));
-            cashRepository.ParentCashRepositoryId =
-                Conversion.TryCastInteger(DataRowHelper.GetColumnValue(row, "parent_cash_repository_id"));
-            cashRepository.ParentCashRepository = GetCashRepository(cashRepository.ParentCashRepositoryId);
-            cashRepository.Description = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "description"));
-
-            return cashRepository;
+            return Factory.Get<CashRepository>("SELECT * FROM office.cash_repositories WHERE cash_repository_id=@0;", cashRepositoryId).FirstOrDefault();
         }
 
         private static Office GetOffice(int? officeId)
         {
-            Office office = new Office();
-
-            if (officeId != null && officeId != 0)
-            {
-                const string sql = "SELECT * FROM office.offices WHERE office_id=@OfficeId;";
-                using (NpgsqlCommand command = new NpgsqlCommand(sql))
-                {
-                    command.Parameters.AddWithValue("@OfficeId", officeId);
-                    using (DataTable table = DbOperation.GetDataTable(command))
-                    {
-                        if (table != null)
-                        {
-                            if (table.Rows.Count.Equals(1))
-                            {
-                                office = GetOffice(table.Rows[0]);
-                            }
-                        }
-                    }
-                }
-            }
-
-            return office;
+            return Factory.Get<Office>("SELECT * FROM office.offices WHERE office_id=@0;", officeId).FirstOrDefault();
         }
 
-        private static Office GetOffice(DataRow row)
-        {
-            Office office = new Office();
-
-            office.OfficeId = Conversion.TryCastInteger(DataRowHelper.GetColumnValue(row, "office_id"));
-            office.OfficeCode = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "office_code"));
-            office.OfficeName = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "office_name"));
-            office.Nickname = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "nick_name"));
-            office.RegistrationDate = Conversion.TryCastDate(DataRowHelper.GetColumnValue(row, "registration_date"));
-            office.CurrencyCode = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "currency_code"));
-            office.AddressLine1 = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "address_line_1"));
-            office.AddressLine2 = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "address_line_2"));
-            office.Street = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "street"));
-            office.City = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "city"));
-            office.State = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "state"));
-            office.ZipCode = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "zip_code"));
-            office.Country = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "country"));
-            office.Phone = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "phone"));
-            office.Fax = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "fax"));
-            office.Email = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "email"));
-            office.Url = new Uri(Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "url")),
-                UriKind.RelativeOrAbsolute);
-            office.RegistrationNumber =
-                Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "registration_number"));
-            office.PanNumber = Conversion.TryCastString(DataRowHelper.GetColumnValue(row, "pan_number"));
-            office.ParentOfficeId = Conversion.TryCastInteger(DataRowHelper.GetColumnValue(row, "parent_office_id"));
-            office.ParentOffice = GetOffice(office.ParentOfficeId);
-
-            return office;
-        }
     }
 }

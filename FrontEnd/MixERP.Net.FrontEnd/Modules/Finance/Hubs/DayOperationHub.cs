@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNet.SignalR;
+﻿using System;
+using Microsoft.AspNet.SignalR;
 using MixERP.Net.Common;
 using MixERP.Net.Core.Modules.Finance.Resources;
 
 namespace MixERP.Net.Core.Modules.Finance.Hubs
 {
+    [CLSCompliant(false)]
     public class DayOperationHub : Hub
     {
         public void PerformEOD()

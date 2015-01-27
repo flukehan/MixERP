@@ -27,7 +27,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
 {
     public static class Order
     {
-        public static long Add(string book, DateTime valueDate, string partyCode, int priceTypeId, Collection<StockMasterDetailModel> details, string referenceNumber, string statementReference, Collection<long> transactionIdCollection, Collection<AttachmentModel> attachments)
+        public static long Add(string book, DateTime valueDate, string partyCode, int priceTypeId, Collection<StockMasterDetailModel> details, string referenceNumber, string statementReference, Collection<long> transactionIdCollection, Collection<PostgresqlAttachmentModel> attachments)
         {
             StockMasterModel stockMaster = new StockMasterModel();
 

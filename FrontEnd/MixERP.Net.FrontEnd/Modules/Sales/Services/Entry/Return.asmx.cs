@@ -59,7 +59,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
             }
 
             JavaScriptSerializer js = new JavaScriptSerializer();
-            Collection<AttachmentModel> attachments = js.Deserialize<Collection<AttachmentModel>>(attachmentsJSON);
+            Collection<PostgresqlAttachmentModel> attachments = js.Deserialize<Collection<PostgresqlAttachmentModel>>(attachmentsJSON);
 
             int officeId = SessionHelper.GetOfficeId();
             int userId = SessionHelper.GetUserId();

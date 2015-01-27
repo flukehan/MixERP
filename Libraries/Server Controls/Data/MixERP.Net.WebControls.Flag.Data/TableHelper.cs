@@ -1,4 +1,4 @@
-﻿using MixERP.Net.DBFactory;
+﻿using MixERP.Net.DbFactory;
 using Npgsql;
 using System.Data;
 

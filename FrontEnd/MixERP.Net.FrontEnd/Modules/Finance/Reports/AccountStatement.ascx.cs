@@ -81,7 +81,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             {
                 if (accountId > 0)
                 {
-                    accountNumber = Data.Helpers.Accounts.GetAccountNumberByAccountId(accountId);
+                    accountNumber = Data.Helpers.AccountHelper.GetAccountNumberByAccountId(accountId);
 
                     this.accountNumberInputText.Value = accountNumber;
                 }

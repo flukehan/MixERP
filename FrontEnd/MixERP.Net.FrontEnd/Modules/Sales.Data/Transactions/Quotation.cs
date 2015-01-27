@@ -27,7 +27,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
 {
     public static class Quotation
     {
-        public static long Add(DateTime valueDate, string partyCode, int priceTypeId, Collection<StockMasterDetailModel> details, string referenceNumber, string statementReference, Collection<long> transactionIdCollection, Collection<AttachmentModel> attachments, bool nonTaxable, int salesPersonId, int shipperId, string shippingAddressCode, int storeId
+        public static long Add(DateTime valueDate, string partyCode, int priceTypeId, Collection<StockMasterDetailModel> details, string referenceNumber, string statementReference, Collection<long> transactionIdCollection, Collection<PostgresqlAttachmentModel> attachments, bool nonTaxable, int salesPersonId, int shipperId, string shippingAddressCode, int storeId
 )
         {
             StockMasterModel stockMaster = new StockMasterModel();

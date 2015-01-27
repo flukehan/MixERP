@@ -17,32 +17,39 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.DBFactory;
+using System.Collections;
+using System.Collections.Generic;
+using MixERP.Net.DbFactory;
 using Npgsql;
 using System.Data;
+using System.Linq;
+using MixERP.Net.Entities;
+using MixERP.Net.Entities.Core;
 
 namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 {
     public static class Currencies
     {
-        public static DataTable GetCurrencyDataTable(string accountNumber)
+        public static string GetCurrencyCode(string accountNumber)
         {
-            return FormHelper.GetTable("core", "accounts", "account_number", accountNumber, "account_id");
-        }
+            Account account = Factory.Get<Account>("SELECT currency_code FROM core.accounts WHERE account_number=@0", accountNumber).FirstOrDefault();
 
-        public static DataTable GetCurrencyDataTable()
-        {
-            return FormHelper.GetTable("core", "currencies", "currency_code");
-        }
-
-        public static DataTable GetExchangeCurrencies(int officeId)
-        {
-            const string sql = "SELECT currency_code, currency_symbol, currency_name, hundredth_name FROM core.currencies WHERE currency_code != core.get_currency_code_by_office_id(@OfficeId)";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            if (account != null)
             {
-                command.Parameters.AddWithValue("@OfficeId", officeId);
-                return DbOperation.GetDataTable(command);
+                return account.CurrencyCode;
             }
+
+            return string.Empty;
+        }
+
+        public static IEnumerable<Currency> GetCurrencies()
+        {
+            return Factory.Get<Currency>("SELECT * FROM core.currencies ORDER BY currency_code;");
+        }
+
+        public static IEnumerable<Currency> GetExchangeCurrencies(int officeId)
+        {
+            return Factory.Get<Currency>("SELECT currency_code, currency_symbol, currency_name, hundredth_name FROM core.currencies WHERE currency_code != core.get_currency_code_by_office_id(@0);", officeId);
         }
     }
 }

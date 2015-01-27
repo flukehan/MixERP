@@ -37,11 +37,11 @@ namespace MixERP.Net.FrontEnd.Services
         public bool UndoUpload(string uploadedFilesJson)
         {
             JavaScriptSerializer js = new JavaScriptSerializer();
-            AttachmentModel[] uploads = js.Deserialize<AttachmentModel[]>(uploadedFilesJson);
+            PostgresqlAttachmentModel[] uploads = js.Deserialize<PostgresqlAttachmentModel[]>(uploadedFilesJson);
 
             string attachmentsDirectory = ConfigurationManager.AppSettings["AttachmentsDirectory"];
 
-            foreach (var upload in uploads)
+            foreach (PostgresqlAttachmentModel upload in uploads)
             {
                 string path = this.Server.MapPath(attachmentsDirectory + upload.FilePath);
 

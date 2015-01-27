@@ -5,7 +5,7 @@ RETURNS text
 AS
 $$
 BEGIN
-        RETURN configuration
+        RETURN value
         FROM office.configuration
         WHERE office_id=$1
         AND config_id=2;

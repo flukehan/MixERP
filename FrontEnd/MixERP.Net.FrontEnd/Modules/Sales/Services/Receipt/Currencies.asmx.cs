@@ -18,6 +18,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System.Web.Services;
+using MixERP.Net.Entities.Core;
 
 namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
 {
@@ -37,13 +38,11 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
         {
             System.Collections.ObjectModel.Collection<System.Web.UI.WebControls.ListItem> values = new System.Collections.ObjectModel.Collection<System.Web.UI.WebControls.ListItem>();
 
-            using (System.Data.DataTable table = Data.Helpers.Currencies.GetCurrencyDataTable())
+            foreach (Currency currency in Data.Helpers.Currencies.GetCurrencies())
             {
-                foreach (System.Data.DataRow dr in table.Rows)
-                {
-                    values.Add(new System.Web.UI.WebControls.ListItem(dr["currency_code"].ToString(), dr["currency_code"].ToString()));
-                }
+                values.Add(new System.Web.UI.WebControls.ListItem(currency.CurrencyCode, currency.CurrencyCode));
             }
+
             return values;
         }
 

@@ -20,12 +20,14 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models.Core;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Web.Script.Serialization;
 using System.Web.Script.Services;
 using System.Web.Services;
+using MixERP.Net.Entities.Core;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Services
 {
@@ -47,7 +49,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
         }
 
         [WebMethod]
-        public Collection<AttachmentModel> GetAttachments(string book, long id)
+        public IEnumerable<Attachment> GetAttachments(string book, long id)
         {
             if (string.IsNullOrWhiteSpace(book))
             {
@@ -81,7 +83,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
             }
 
             JavaScriptSerializer js = new JavaScriptSerializer();
-            Collection<AttachmentModel> attachments = js.Deserialize<Collection<AttachmentModel>>(attachmentsJSON);
+            Collection<PostgresqlAttachmentModel> attachments = js.Deserialize<Collection<PostgresqlAttachmentModel>>(attachmentsJSON);
             int userId = SessionHelper.GetUserId();
 
             return Data.Attachments.Save(userId, book, id, attachments);
