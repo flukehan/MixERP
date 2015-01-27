@@ -609,4 +609,10 @@
   <data name="parent_office" xml:space="preserve">
     <value>Parent Office</value>
   </data>
+  <data name="sales_tax" xml:space="preserve">
+    <value>Sales Tax</value>
+  </data>
+  <data name="tax_exempt_type" xml:space="preserve">
+    <value>Tax Exempt Type</value>
+  </data>
 </root>
