@@ -615,4 +615,19 @@
   <data name="tax_exempt_type" xml:space="preserve">
     <value>Tax Exempt Type</value>
   </data>
+  <data name="item" xml:space="preserve">
+    <value>Item</value>
+  </data>
+  <data name="item_group" xml:space="preserve">
+    <value>Item Group</value>
+  </data>
+  <data name="party" xml:space="preserve">
+    <value>Party</value>
+  </data>
+  <data name="party_type" xml:space="preserve">
+    <value>Party Type</value>
+  </data>
+  <data name="sales_tax_exempt" xml:space="preserve">
+    <value>Sales Tax Exempt</value>
+  </data>
 </root>
