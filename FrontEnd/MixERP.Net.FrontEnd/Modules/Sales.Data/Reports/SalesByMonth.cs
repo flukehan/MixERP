@@ -25,14 +25,14 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Reports
 {
     public static class SalesByMonth
     {
-        public static IEnumerable<GetSalesByOffice> GetSalesByOffice(int officeId)
+        public static IEnumerable<DbGetSalesByOfficesResult> GetSalesByOffice(int officeId)
         {
-            return Factory.Get<GetSalesByOffice>("SELECT * FROM transactions.get_sales_by_offices(@0, 1000)", officeId);
+            return Factory.Get<DbGetSalesByOfficesResult>("SELECT * FROM transactions.get_sales_by_offices(@0, 1000)", officeId);
         }
 
-        public static IEnumerable<GetSalesByOffice> GetSalesByOffice()
+        public static IEnumerable<DbGetSalesByOfficesResult> GetSalesByOffice()
         {
-            return Factory.Get<GetSalesByOffice>("SELECT * FROM transactions.get_sales_by_offices(1000)");
+            return Factory.Get<DbGetSalesByOfficesResult>("SELECT * FROM transactions.get_sales_by_offices(1000)");
         }
     }
 }

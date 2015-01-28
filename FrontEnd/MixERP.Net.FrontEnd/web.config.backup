@@ -30,11 +30,6 @@
         </authentication>
         <pages theme="MixERP" enableViewState="false" enableEventValidation="false" enableViewStateMac="false" clientIDMode="Static" controlRenderingCompatibilityVersion="4.0">
             <controls>
-                <add tagPrefix="webdiyer" namespace="Wuqi.Webdiyer" assembly="AspNetPager" />
-                <add tagPrefix="pes" tagName="Form" src="~/UserControls/Forms/FormControl.ascx" />
-                <add tagPrefix="pes" tagName="Product" src="~/UserControls/Products/ProductControl.ascx" />
-                <add tagPrefix="pes" tagName="DateTextBox" src="~/UserControls/DateTextBox.ascx" />
-                <add tagPrefix="ajaxToolkit" assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" />
             </controls>
         </pages>
         <membership>

@@ -25,10 +25,9 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Reports
 {
     public static class StockItems
     {
-        public static IEnumerable<ListClosingStock> ListClosingStock(int storeId)
+        public static IEnumerable<DbListClosingStockResult> ListClosingStock(int storeId)
         {
-            IEnumerable<ListClosingStock> closingStockList = Factory.Get<ListClosingStock>("SELECT * FROM transactions.list_closing_stock(@0);", storeId);
-            return closingStockList;
+            return Factory.Get<DbListClosingStockResult>("SELECT * FROM transactions.list_closing_stock(@0);", storeId);
         }
     }
 }

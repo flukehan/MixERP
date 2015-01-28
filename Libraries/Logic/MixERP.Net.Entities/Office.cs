@@ -91,7 +91,7 @@ namespace MixERP.Net.Entities.Office
     }
     
 
-    
+
     [TableName("cash_repository_scrud_view")]
     [ExplicitColumns]
     public class CashRepositoryScrudView : PetaPocoDB.Record<CashRepositoryScrudView> 
@@ -115,7 +115,7 @@ namespace MixERP.Net.Entities.Office
         public string Description { get; set; }
 
     }
-    
+
     [TableName("cost_center_scrud_view")]
     [ExplicitColumns]
     public class CostCenterScrudView : PetaPocoDB.Record<CostCenterScrudView> 
@@ -130,7 +130,7 @@ namespace MixERP.Net.Entities.Office
         public string CostCenterName { get; set; }
 
     }
-    
+
     [TableName("counter_scrud_view")]
     [ExplicitColumns]
     public class CounterScrudView : PetaPocoDB.Record<CounterScrudView> 
@@ -151,7 +151,7 @@ namespace MixERP.Net.Entities.Office
         public string CounterName { get; set; }
 
     }
-    
+
     [TableName("department_scrud_view")]
     [ExplicitColumns]
     public class DepartmentScrudView : PetaPocoDB.Record<DepartmentScrudView> 
@@ -166,7 +166,7 @@ namespace MixERP.Net.Entities.Office
         public string DepartmentName { get; set; }
 
     }
-    
+
     [TableName("office_scrud_view")]
     [ExplicitColumns]
     public class OfficeScrudView : PetaPocoDB.Record<OfficeScrudView> 
@@ -232,7 +232,7 @@ namespace MixERP.Net.Entities.Office
         public string ParentOffice { get; set; }
 
     }
-    
+
     [TableName("role_scrud_view")]
     [ExplicitColumns]
     public class RoleScrudView : PetaPocoDB.Record<RoleScrudView> 
@@ -253,7 +253,7 @@ namespace MixERP.Net.Entities.Office
         public bool? IsSystem { get; set; }
 
     }
-    
+
     [TableName("store_scrud_view")]
     [ExplicitColumns]
     public class StoreScrudView : PetaPocoDB.Record<StoreScrudView> 
@@ -289,7 +289,7 @@ namespace MixERP.Net.Entities.Office
         public string CashRepository { get; set; }
 
     }
-    
+
     [TableName("store_type_scrud_view")]
     [ExplicitColumns]
     public class StoreTypeScrudView : PetaPocoDB.Record<StoreTypeScrudView> 
@@ -304,7 +304,7 @@ namespace MixERP.Net.Entities.Office
         public string StoreTypeName { get; set; }
 
     }
-    
+
     [TableName("cash_repository_selector_view")]
     [ExplicitColumns]
     public class CashRepositorySelectorView : PetaPocoDB.Record<CashRepositorySelectorView> 
@@ -328,7 +328,7 @@ namespace MixERP.Net.Entities.Office
         public string Description { get; set; }
 
     }
-    
+
     [TableName("office_selector_view")]
     [ExplicitColumns]
     public class OfficeSelectorView : PetaPocoDB.Record<OfficeSelectorView> 
@@ -403,7 +403,7 @@ namespace MixERP.Net.Entities.Office
         public int? ParentOfficeId { get; set; }
 
     }
-    
+
     [TableName("store_selector_view")]
     [ExplicitColumns]
     public class StoreSelectorView : PetaPocoDB.Record<StoreSelectorView> 
@@ -445,7 +445,7 @@ namespace MixERP.Net.Entities.Office
         public DateTime? AuditTs { get; set; }
 
     }
-    
+
     [TableName("store_type_selector_view")]
     [ExplicitColumns]
     public class StoreTypeSelectorView : PetaPocoDB.Record<StoreTypeSelectorView> 
@@ -466,7 +466,7 @@ namespace MixERP.Net.Entities.Office
         public DateTime? AuditTs { get; set; }
 
     }
-    
+
     [TableName("user_selector_view")]
     [ExplicitColumns]
     public class UserSelectorView : PetaPocoDB.Record<UserSelectorView> 
@@ -487,7 +487,7 @@ namespace MixERP.Net.Entities.Office
         public string OfficeName { get; set; }
 
     }
-    
+
     [TableName("office_view")]
     [ExplicitColumns]
     public class OfficeView : PetaPocoDB.Record<OfficeView> 
@@ -562,7 +562,7 @@ namespace MixERP.Net.Entities.Office
         public int? ParentOfficeId { get; set; }
 
     }
-    
+
     [TableName("role_view")]
     [ExplicitColumns]
     public class RoleView : PetaPocoDB.Record<RoleView> 
@@ -577,7 +577,7 @@ namespace MixERP.Net.Entities.Office
         public string RoleName { get; set; }
 
     }
-    
+
     [TableName("sign_in_view")]
     [ExplicitColumns]
     public class SignInView : PetaPocoDB.Record<SignInView> 
@@ -694,7 +694,7 @@ namespace MixERP.Net.Entities.Office
         public string PanNumber { get; set; }
 
     }
-    
+
     [TableName("store_view")]
     [ExplicitColumns]
     public class StoreView : PetaPocoDB.Record<StoreView> 
@@ -736,7 +736,7 @@ namespace MixERP.Net.Entities.Office
         public DateTime? AuditTs { get; set; }
 
     }
-    
+
     [TableName("user_view")]
     [ExplicitColumns]
     public class UserView : PetaPocoDB.Record<UserView> 
@@ -757,7 +757,7 @@ namespace MixERP.Net.Entities.Office
         public string OfficeName { get; set; }
 
     }
-    
+
     [TableName("work_center_view")]
     [ExplicitColumns]
     public class WorkCenterView : PetaPocoDB.Record<WorkCenterView> 
@@ -775,7 +775,7 @@ namespace MixERP.Net.Entities.Office
         public string WorkCenterName { get; set; }
 
     }
-    
+
     [TableName("configuration")]
     [PrimaryKey("configuration_id")]
     [ExplicitColumns]
@@ -803,7 +803,7 @@ namespace MixERP.Net.Entities.Office
         public DateTime? AuditTs { get; set; }
 
     }
-    
+
     [TableName("roles")]
     [PrimaryKey("role_id")]
     [ExplicitColumns]
@@ -831,7 +831,7 @@ namespace MixERP.Net.Entities.Office
         public DateTime? AuditTs { get; set; }
 
     }
-    
+
     [TableName("store_types")]
     [PrimaryKey("store_type_id")]
     [ExplicitColumns]
@@ -853,7 +853,7 @@ namespace MixERP.Net.Entities.Office
         public DateTime? AuditTs { get; set; }
 
     }
-    
+
     [TableName("counters")]
     [PrimaryKey("counter_id")]
     [ExplicitColumns]
@@ -881,7 +881,7 @@ namespace MixERP.Net.Entities.Office
         public DateTime? AuditTs { get; set; }
 
     }
-    
+
     [TableName("cashiers")]
     [PrimaryKey("cashier_id")]
     [ExplicitColumns]
@@ -906,7 +906,7 @@ namespace MixERP.Net.Entities.Office
         public bool Closed { get; set; }
 
     }
-    
+
     [TableName("cost_centers")]
     [PrimaryKey("cost_center_id")]
     [ExplicitColumns]
@@ -928,7 +928,7 @@ namespace MixERP.Net.Entities.Office
         public DateTime? AuditTs { get; set; }
 
     }
-    
+
     [TableName("cash_repositories")]
     [PrimaryKey("cash_repository_id")]
     [ExplicitColumns]
@@ -959,7 +959,7 @@ namespace MixERP.Net.Entities.Office
         public DateTime? AuditTs { get; set; }
 
     }
-    
+
     [TableName("work_centers")]
     [PrimaryKey("work_center_id")]
     [ExplicitColumns]
@@ -984,7 +984,7 @@ namespace MixERP.Net.Entities.Office
         public DateTime? AuditTs { get; set; }
 
     }
-    
+
     [TableName("departments")]
     [PrimaryKey("department_id")]
     [ExplicitColumns]
@@ -1006,7 +1006,7 @@ namespace MixERP.Net.Entities.Office
         public DateTime? AuditTs { get; set; }
 
     }
-    
+
     [TableName("stores")]
     [PrimaryKey("store_id")]
     [ExplicitColumns]
@@ -1049,7 +1049,7 @@ namespace MixERP.Net.Entities.Office
         public DateTime? AuditTs { get; set; }
 
     }
-    
+
     [TableName("users")]
     [PrimaryKey("user_id")]
     [ExplicitColumns]
@@ -1086,7 +1086,7 @@ namespace MixERP.Net.Entities.Office
         public DateTime? AuditTs { get; set; }
 
     }
-    
+
     [TableName("offices")]
     [PrimaryKey("office_id")]
     [ExplicitColumns]
@@ -1160,6 +1160,48 @@ namespace MixERP.Net.Entities.Office
 
         [Column("parent_office_id")] 
         public int? ParentOfficeId { get; set; }
+
+    }
+
+    [FunctionName("get_offices")]
+    [ExplicitColumns]
+    public class DbGetOfficesResult : PetaPocoDB.Record<DbGetOfficesResult> 
+    {
+        [Column("office_id")] 
+        public string OfficeId { get; set; }
+
+        [Column("office_code")] 
+        public string OfficeCode { get; set; }
+
+        [Column("office_name")] 
+        public string OfficeName { get; set; }
+
+        [Column("address")] 
+        public string Address { get; set; }
+
+    }
+
+    [FunctionName("sign_in")]
+    [ExplicitColumns]
+    public class DbSignInResult : PetaPocoDB.Record<DbSignInResult> 
+    {
+        [Column("login_id")] 
+        public string LoginId { get; set; }
+
+        [Column("message")] 
+        public string Message { get; set; }
+
+    }
+
+    [FunctionName("can_login")]
+    [ExplicitColumns]
+    public class DbCanLoginResult : PetaPocoDB.Record<DbCanLoginResult> 
+    {
+        [Column("result")] 
+        public string Result { get; set; }
+
+        [Column("message")] 
+        public string Message { get; set; }
 
     }
 }

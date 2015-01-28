@@ -112,7 +112,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                     {
                         string popUpQuotationPreviewUrl = this.Page.ResolveUrl(this.PreviewUrl + "?TranId=" + id);
 
-                        using (HtmlAnchor printAnchor = (HtmlAnchor) e.Row.Cells[0].FindControl("PrintAnchor"))
+                        using (HtmlAnchor printAnchor = (HtmlAnchor)e.Row.Cells[0].FindControl("PrintAnchor"))
                         {
                             if (printAnchor != null)
                             {
@@ -121,7 +121,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                         }
                     }
 
-                    using (HtmlAnchor checklistAnchor = (HtmlAnchor) e.Row.Cells[0].FindControl("ChecklistAnchor"))
+                    using (HtmlAnchor checklistAnchor = (HtmlAnchor)e.Row.Cells[0].FindControl("ChecklistAnchor"))
                     {
                         if (!string.IsNullOrWhiteSpace(this.ChecklistUrl))
                         {
@@ -301,7 +301,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             string user = this.UserTextBox.Text;
             string referenceNumber = this.ReferenceNumberTextBox.Text;
             string statementReference = this.StatementReferenceTextBox.Text;
-            string bookName = TransactionBookHelper.GetTransactionBookName(this.Book, this.SubBook);
+            string bookName = TransactionBookHelper.GetInvariantTransactionBookName(this.Book, this.SubBook);
 
             int userId = SessionHelper.GetUserId();
             int officeId = SessionHelper.GetOfficeId();

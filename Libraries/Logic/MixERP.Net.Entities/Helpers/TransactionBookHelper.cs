@@ -1,6 +1,5 @@
 ﻿using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Entities.Models.Transactions;
 using MixERP.Net.Entities.Resources;
 
 namespace MixERP.Net.Entities.Helpers
@@ -79,7 +78,7 @@ namespace MixERP.Net.Entities.Helpers
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        public static string GetTransactionBookName(TranBook book, SubTranBook subBook)
+        public static string GetInvariantTransactionBookName(TranBook book, SubTranBook subBook)
         {
             string bookName = string.Empty;
 

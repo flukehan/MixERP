@@ -26,10 +26,10 @@ namespace MixERP.Net.WebControls.TransactionViewFactory.Data
 {
     public static class Journal
     {
-        public static IEnumerable<GetJournalView> GetJournalView(int userId, int officeId, DateTime from, DateTime to, long tranId, string tranCode, string book, string referenceNumber, string statementReference, string postedBy, string office, string status, string verifiedBy, string reason)
+        public static IEnumerable<DbGetJournalViewResult> GetJournalView(int userId, int officeId, DateTime from, DateTime to, long tranId, string tranCode, string book, string referenceNumber, string statementReference, string postedBy, string office, string status, string verifiedBy, string reason)
         {
             const string sql = "SELECT * FROM transactions.get_journal_view(@0, @1, @2, @3, @4, @5, @6, @7, @8, @9, @10, @11, @12, @13);";
-            return Factory.Get<GetJournalView>(sql, userId, officeId, from, to, tranId, tranCode, book, referenceNumber, statementReference, postedBy, office, status, verifiedBy, reason);
+            return Factory.Get<DbGetJournalViewResult>(sql, userId, officeId, from, to, tranId, tranCode, book, referenceNumber, statementReference, postedBy, office, status, verifiedBy, reason);
         }
     }
 }

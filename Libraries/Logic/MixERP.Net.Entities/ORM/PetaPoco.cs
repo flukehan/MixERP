@@ -73,6 +73,18 @@ namespace PetaPoco
         public string Value { get; private set; }
     }
 
+    // Specify the function name of a poco
+    [AttributeUsage(AttributeTargets.Class)]
+    public class FunctionNameAttribute : Attribute
+    {
+        public FunctionNameAttribute(string functionName)
+        {
+            Value = functionName;
+        }
+        public string Value { get; private set; }
+    }
+
+
     // Specific the primary key of a poco class (and optional sequence name for Oracle)
     [AttributeUsage(AttributeTargets.Class)]
     public class PrimaryKeyAttribute : Attribute

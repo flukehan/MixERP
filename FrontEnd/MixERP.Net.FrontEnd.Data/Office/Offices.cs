@@ -19,15 +19,15 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
 using MixERP.Net.Entities;
-using MixERP.Net.Entities.Models.Core;
+using MixERP.Net.Entities.Office;
 
 namespace MixERP.Net.FrontEnd.Data.Office
 {
     public static class Offices
     {
-        public static IEnumerable<OfficeType> GetOffices()
+        public static IEnumerable<DbGetOfficesResult> GetOffices()
         {
-            return Factory.Get<OfficeType>("SELECT * FROM office.get_offices();");
+            return Factory.Get<DbGetOfficesResult>("SELECT * FROM office.get_offices();");
         }
     }
 }

@@ -22,7 +22,7 @@ using System.Linq;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Core;
-using MixERP.Net.Entities.Models.Core;
+using MixERP.Net.Entities.Transactions;
 
 namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
 {
@@ -45,7 +45,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
             return string.Empty;
         }
 
-        public static PartyDueModel GetPartyDue(string partyCode)
+        public static DbGetPartyTransactionSummaryResult GetPartyDue(string partyCode)
         {
             int officeId = SessionHelper.GetOfficeId();
             return GetPartyDue(officeId, partyCode);
@@ -61,9 +61,9 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
             return Factory.Get<ShippingAddress>("SELECT * FROM core.shipping_addresses WHERE party_id=core.get_party_id_by_party_code(@0);", partyCode);
         }
 
-        private static PartyDueModel GetPartyDue(int officeId, string partyCode)
+        private static DbGetPartyTransactionSummaryResult GetPartyDue(int officeId, string partyCode)
         {
-            return Factory.Get<PartyDueModel>("SELECT * FROM transactions.get_party_transaction_summary(@0, core.get_party_id_by_party_code(@1));", officeId, partyCode).FirstOrDefault();
+            return Factory.Get<DbGetPartyTransactionSummaryResult>("SELECT * FROM transactions.get_party_transaction_summary(@0, core.get_party_id_by_party_code(@1));", officeId, partyCode).FirstOrDefault();
         }
     }
 }

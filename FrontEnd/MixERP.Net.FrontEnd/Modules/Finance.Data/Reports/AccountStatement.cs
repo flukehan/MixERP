@@ -19,13 +19,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using MixERP.Net.DbFactory;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Transactions;
-using Npgsql;
 
 namespace MixERP.Net.Core.Modules.Finance.Data.Reports
 {
@@ -36,7 +33,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Reports
             return Factory.Get<AccountView>("SELECT * FROM core.account_view WHERE account_number=@0;", accountNumber).FirstOrDefault();
         }
 
-        public static IEnumerable<GetAccountStatement> GetAccountStatement(DateTime from, DateTime to, int userId, string accountNumber, int officeId)
+        public static IEnumerable<DbGetAccountStatementResult> GetAccountStatement(DateTime from, DateTime to, int userId, string accountNumber, int officeId)
         {
             if (to < from)
             {
@@ -44,7 +41,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Reports
             }
 
             const string sql = "SELECT * FROM transactions.get_account_statement(@0::date, @1::date, @2, core.get_account_id_by_account_number(@3), @4) ORDER BY id;";
-            return Factory.Get<GetAccountStatement>(sql, from, to, userId, accountNumber, officeId);
+            return Factory.Get<DbGetAccountStatementResult>(sql, from, to, userId, accountNumber, officeId);
         }
     }
 }

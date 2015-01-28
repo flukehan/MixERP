@@ -26,7 +26,7 @@ using System.Web.Services;
 using System.Web.UI.WebControls;
 using MixERP.Net.Core.Modules.Inventory.Data.Helpers;
 using MixERP.Net.Entities.Core;
-using MixERP.Net.Entities.Models.Core;
+using MixERP.Net.Entities.Transactions;
 
 namespace MixERP.Net.Core.Modules.Inventory.Services
 {
@@ -69,7 +69,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         }
 
         [WebMethod(EnableSession = true)]
-        public PartyDueModel GetPartyDue(string partyCode)
+        public DbGetPartyTransactionSummaryResult GetPartyDue(string partyCode)
         {
             return Parties.GetPartyDue(partyCode);
         }

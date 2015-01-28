@@ -134,8 +134,12 @@ namespace <#=Namespace #>
 foreach(Table tbl in from t in tables where !t.Ignore select t)
 {
 #>
-    
+
+<# if(tbl.IsFunction) { #>
+    [FunctionName("<#=tbl.Name#>")]
+<# } else { #>
     [TableName("<#=tbl.Name#>")]
+<# }#>
 <# if (tbl.PK!=null && tbl.PK.IsAutoIncrement) { #>
 <# if (tbl.SequenceName==null) { #>
     [PrimaryKey("<#=tbl.PK.Name#>")]

@@ -21,7 +21,7 @@ using System;
 
 namespace MixERP.Net.Entities.Models.Transactions
 {
-    public sealed class TransactionMasterModel
+    public sealed class TransactionMaster
     {
         public string Book { get; set; }
         public int CostCenterId { get; set; }

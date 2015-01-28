@@ -25,7 +25,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Entities.Models.Core;
+using MixERP.Net.Entities.Office;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Data.Helpers;
 using MixERP.Net.FrontEnd.Data.Office;
@@ -94,7 +94,7 @@ namespace MixERP.Net.FrontEnd
 
         private void BindBranchDropDownList()
         {
-            IEnumerable<OfficeType> offices = Offices.GetOffices();
+            IEnumerable<DbGetOfficesResult> offices = Offices.GetOffices();
             this.branchSelect.DataSource = offices;
             this.branchSelect.DataBind();
         }

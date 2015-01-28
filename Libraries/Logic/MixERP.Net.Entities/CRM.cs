@@ -91,7 +91,7 @@ namespace MixERP.Net.Entities.CRM
     }
     
 
-    
+
     [TableName("lead_sources")]
     [PrimaryKey("lead_source_id")]
     [ExplicitColumns]
@@ -113,7 +113,7 @@ namespace MixERP.Net.Entities.CRM
         public DateTime? AuditTs { get; set; }
 
     }
-    
+
     [TableName("opportunity_stages")]
     [PrimaryKey("opportunity_stage_id")]
     [ExplicitColumns]
@@ -135,7 +135,7 @@ namespace MixERP.Net.Entities.CRM
         public DateTime? AuditTs { get; set; }
 
     }
-    
+
     [TableName("lead_statuses")]
     [PrimaryKey("lead_status_id")]
     [ExplicitColumns]

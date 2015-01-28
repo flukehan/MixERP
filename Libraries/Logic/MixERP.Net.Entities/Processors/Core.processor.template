@@ -50,11 +50,13 @@ bool GenerateCommon = true;
 bool GeneratePocos = true;
 bool TrackModifiedColumns = false;
 
+
 public class Table
 {
     public List<Column> Columns;    
     public string Name;
     public string Schema;
+    public bool IsFunction;
     public bool IsView;
     public string CleanName;
     public string ClassName;
@@ -395,6 +397,7 @@ class PostGreSqlSchemaReader : SchemaReader
                 result += value[i];
         }
 
+
         return result;
     }
 
@@ -426,8 +429,15 @@ class PostGreSqlSchemaReader : SchemaReader
                     Table tbl=new Table();
                     tbl.Name=rdr["table_name"].ToString();
                     tbl.Schema=rdr["table_schema"].ToString();
-                    tbl.IsView=string.Compare(rdr["table_type"].ToString(), "View", true)==0;
+                    tbl.IsView=string.Compare(rdr["table_type"].ToString().ToUpperInvariant(), "VIEW", true)==0;
+                    tbl.IsFunction=string.Compare(rdr["table_type"].ToString().ToUpperInvariant(), "FUNCTION", true)==0;
                     tbl.CleanName=ToPascalCase(CleanUp(tbl.Name));
+
+                    if(tbl.IsFunction)
+                    {
+                        tbl.CleanName= "Db" + tbl.CleanName + "Result";						
+                    }
+
                     tbl.ClassName=Inflector.MakeSingular(tbl.CleanName);
 
                     result.Add(tbl);
@@ -575,11 +585,13 @@ class PostGreSqlSchemaReader : SchemaReader
             WHERE (table_type='BASE TABLE' OR table_type='VIEW')
             AND table_schema = @schemaname
             UNION ALL
-            SELECT DISTINCT nspname::text, proname::text, 'VIEW' AS table_type
+            SELECT DISTINCT nspname::text, proname::text, 'FUNCTION' AS table_type
             FROM pg_proc
             INNER JOIN pg_namespace
             ON pg_proc.pronamespace = pg_namespace.oid
-            WHERE proretset
+            INNER JOIN pg_type
+            ON pg_proc.prorettype=pg_type.oid
+            WHERE ('t' = ANY(pg_proc.proargmodes) OR 'o' = ANY(pg_proc.proargmodes) OR pg_type.typtype = 'c')
             AND nspname = @schemaname;";
 
     const string COLUMN_SQL=@"SELECT * FROM public.poco_get_table_function_definition(@schemaname, @tableName);";

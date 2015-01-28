@@ -91,7 +91,7 @@ namespace MixERP.Net.Entities.Audit
     }
     
 
-    
+
     [TableName("logged_actions")]
     [PrimaryKey("event_id")]
     [ExplicitColumns]
@@ -152,7 +152,7 @@ namespace MixERP.Net.Entities.Audit
         public bool StatementOnly { get; set; }
 
     }
-    
+
     [TableName("logins")]
     [PrimaryKey("login_id")]
     [ExplicitColumns]
@@ -183,7 +183,7 @@ namespace MixERP.Net.Entities.Audit
         public string Culture { get; set; }
 
     }
-    
+
     [TableName("failed_logins")]
     [PrimaryKey("failed_login_id")]
     [ExplicitColumns]

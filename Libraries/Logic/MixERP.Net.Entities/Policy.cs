@@ -91,7 +91,7 @@ namespace MixERP.Net.Entities.Policy
     }
     
 
-    
+
     [TableName("auto_verification_policy_scrud_view")]
     [ExplicitColumns]
     public class AutoVerificationPolicyScrudView : PetaPocoDB.Record<AutoVerificationPolicyScrudView> 
@@ -130,7 +130,7 @@ namespace MixERP.Net.Entities.Policy
         public bool? IsActive { get; set; }
 
     }
-    
+
     [TableName("voucher_verification_policy_scrud_view")]
     [ExplicitColumns]
     public class VoucherVerificationPolicyScrudView : PetaPocoDB.Record<VoucherVerificationPolicyScrudView> 
@@ -175,7 +175,7 @@ namespace MixERP.Net.Entities.Policy
         public bool? IsActive { get; set; }
 
     }
-    
+
     [TableName("store_policy_details")]
     [PrimaryKey("store_policy_detail_id")]
     [ExplicitColumns]
@@ -200,7 +200,7 @@ namespace MixERP.Net.Entities.Policy
         public DateTime? AuditTs { get; set; }
 
     }
-    
+
     [TableName("store_policies")]
     [PrimaryKey("store_policy_id")]
     [ExplicitColumns]
@@ -222,7 +222,7 @@ namespace MixERP.Net.Entities.Policy
         public DateTime? AuditTs { get; set; }
 
     }
-    
+
     [TableName("menu_policy")]
     [PrimaryKey("policy_id")]
     [ExplicitColumns]
@@ -250,7 +250,7 @@ namespace MixERP.Net.Entities.Policy
         public string Scope { get; set; }
 
     }
-    
+
     [TableName("menu_access")]
     [PrimaryKey("access_id")]
     [ExplicitColumns]
@@ -269,7 +269,7 @@ namespace MixERP.Net.Entities.Policy
         public int? UserId { get; set; }
 
     }
-    
+
     [TableName("voucher_verification_policy")]
     [PrimaryKey("user_id", autoIncrement=false)]
     [ExplicitColumns]
@@ -318,7 +318,7 @@ namespace MixERP.Net.Entities.Policy
         public DateTime? AuditTs { get; set; }
 
     }
-    
+
     [TableName("lock_outs")]
     [PrimaryKey("lock_out_id")]
     [ExplicitColumns]
@@ -337,7 +337,7 @@ namespace MixERP.Net.Entities.Policy
         public DateTime LockOutTill { get; set; }
 
     }
-    
+
     [TableName("auto_verification_policy")]
     [PrimaryKey("user_id", autoIncrement=false)]
     [ExplicitColumns]
@@ -380,10 +380,10 @@ namespace MixERP.Net.Entities.Policy
         public DateTime? AuditTs { get; set; }
 
     }
-    
-    [TableName("get_menu")]
+
+    [FunctionName("get_menu")]
     [ExplicitColumns]
-    public class GetMenu : PetaPocoDB.Record<GetMenu> 
+    public class DbGetMenuResult : PetaPocoDB.Record<DbGetMenuResult> 
     {
         [Column("menu_id")] 
         public string MenuId { get; set; }

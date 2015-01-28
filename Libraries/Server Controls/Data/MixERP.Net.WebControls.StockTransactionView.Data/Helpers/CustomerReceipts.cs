@@ -26,9 +26,9 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data.Helpers
 {
     public static class CustomerReceipts
     {
-        public static IEnumerable<GetReceiptView> GetView(int userId, int officeId, DateTime dateFrom, DateTime dateTo, string office, string party, string user, string referenceNumber, string statementReference)
+        public static IEnumerable<DbGetReceiptViewResult> GetView(int userId, int officeId, DateTime dateFrom, DateTime dateTo, string office, string party, string user, string referenceNumber, string statementReference)
         {
-            return Factory.Get<GetReceiptView>("SELECT * FROM transactions.get_receipt_view(@0, @1, @2, @3, @4, @5, @6, @7, @8);", userId, officeId, dateFrom, dateTo, office, party, user, referenceNumber, statementReference);
+            return Factory.Get<DbGetReceiptViewResult>("SELECT * FROM transactions.get_receipt_view(@0, @1, @2, @3, @4, @5, @6, @7, @8);", userId, officeId, dateFrom, dateTo, office, party, user, referenceNumber, statementReference);
         }
     }
 }

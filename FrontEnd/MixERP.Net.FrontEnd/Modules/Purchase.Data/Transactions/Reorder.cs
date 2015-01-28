@@ -66,9 +66,9 @@ namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
             return string.Join(",", detailCollection);
         }
 
-        public static IEnumerable<GetReorderViewFunction> GetReorderView(int officeId)
+        public static IEnumerable<DbGetReorderViewFunctionResult> GetReorderView(int officeId)
         {
-            return Factory.Get<GetReorderViewFunction>("SELECT * FROM transactions.get_reorder_view_function(@0);", officeId);
+            return Factory.Get<DbGetReorderViewFunctionResult>("SELECT * FROM transactions.get_reorder_view_function(@0);", officeId);
         }
 
         public static bool Save(long loginId, int userId, int officeId, Collection<Models.Reorder> details)

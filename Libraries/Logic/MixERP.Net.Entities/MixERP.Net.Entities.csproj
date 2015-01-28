@@ -61,8 +61,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Enums\FrequencyType.cs" />
-    <Compile Include="Models\Core\OfficeType.cs" />
-    <Compile Include="Models\Core\PartyDueModel.cs" />
     <Compile Include="CRM.cs">
       <DependentUpon>CRM.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -117,6 +115,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Processors\Transactions.processor.template" />
     <None Include="Transactions.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -131,7 +130,6 @@
       <LastGenOutput>Audit.cs</LastGenOutput>
     </None>
     <None Include="Mix Open Foundation.snk" />
-    <None Include="packages.config" />
     <None Include="Policy.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Policy.cs</LastGenOutput>
