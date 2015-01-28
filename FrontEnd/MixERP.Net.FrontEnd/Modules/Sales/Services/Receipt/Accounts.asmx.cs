@@ -17,17 +17,14 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Helpers;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Data;
 using System.Globalization;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.Web.UI.WebControls;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Office;
-
 
 namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
 {
@@ -38,6 +35,19 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
     public class Accounts : WebService
     {
         [WebMethod]
+        public Collection<ListItem> GetBankAccounts()
+        {
+            Collection<ListItem> values = new Collection<ListItem>();
+
+            foreach (BankAccount bankAccount in Data.Helpers.Accounts.GetBankAccounts())
+            {
+                values.Add(new ListItem(bankAccount.BankAccountNumber + " (" + bankAccount.BankAccountNumber + ")", bankAccount.AccountId.ToString(CultureInfo.InvariantCulture)));
+            }
+
+            return values;
+        }
+
+        [WebMethod]
         public Collection<ListItem> GetCashRepositories()
         {
             Collection<ListItem> values = new Collection<ListItem>();
@@ -46,19 +56,6 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
             foreach (CashRepository cashRepository in Data.Helpers.Accounts.GetCashRepositories())
             {
                 values.Add(new ListItem(cashRepository.CashRepositoryName, cashRepository.CashRepositoryId.ToString(CultureInfo.InvariantCulture)));
-            }
-
-            return values;
-        }
-
-        [WebMethod]
-        public Collection<ListItem> GetFlags()
-        {
-            Collection<ListItem> values = new Collection<ListItem>();
-
-            foreach (FlagType flagType in Data.Helpers.Accounts.GetFlagTypes())
-            {
-                values.Add(new ListItem(flagType.FlagTypeName, flagType.FlagTypeId.ToString(CultureInfo.InvariantCulture)));
             }
 
             return values;
@@ -79,13 +76,13 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
         }
 
         [WebMethod]
-        public Collection<ListItem> GetBankAccounts()
+        public Collection<ListItem> GetFlags()
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            foreach (BankAccount bankAccount in Data.Helpers.Accounts.GetBankAccounts())
+            foreach (FlagType flagType in Data.Helpers.Accounts.GetFlagTypes())
             {
-                values.Add(new ListItem(bankAccount.BankAccountNumber + " (" + bankAccount.BankAccountNumber + ")", bankAccount.AccountId.ToString(CultureInfo.InvariantCulture)));
+                values.Add(new ListItem(flagType.FlagTypeName, flagType.FlagTypeId.ToString(CultureInfo.InvariantCulture)));
             }
 
             return values;

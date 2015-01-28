@@ -1,8 +1,8 @@
-﻿using MixERP.Net.Common.Helpers;
-using MixERP.Net.WebControls.TransactionViewFactory.Resources;
-using System.Web.UI;
+﻿using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.WebControls.TransactionViewFactory.Resources;
 
 namespace MixERP.Net.WebControls.TransactionViewFactory.Helpers
 {
@@ -14,23 +14,23 @@ namespace MixERP.Net.WebControls.TransactionViewFactory.Helpers
 
             AddTemplateFields(grid);
 
-            GridViewHelper.AddDataBoundControl(grid, "transaction_master_id", Titles.Id);
-            GridViewHelper.AddDataBoundControl(grid, "transaction_code", Titles.TranCode);
-            GridViewHelper.AddDataBoundControl(grid, "book", Titles.Book);
-            GridViewHelper.AddDataBoundControl(grid, "value_date", Titles.ValueDate, "{0:d}");
-            GridViewHelper.AddDataBoundControl(grid, "reference_number", Titles.ReferenceNumber);
-            GridViewHelper.AddDataBoundControl(grid, "statement_reference", Titles.StatementReference);
+            GridViewHelper.AddDataBoundControl(grid, "TransactionMasterId", Titles.Id);
+            GridViewHelper.AddDataBoundControl(grid, "TransactionCode", Titles.TranCode);
+            GridViewHelper.AddDataBoundControl(grid, "Book", Titles.Book);
+            GridViewHelper.AddDataBoundControl(grid, "ValueDate", Titles.ValueDate, "{0:d}");
+            GridViewHelper.AddDataBoundControl(grid, "ReferenceNumber", Titles.ReferenceNumber);
+            GridViewHelper.AddDataBoundControl(grid, "StatementReference", Titles.StatementReference);
 
-            GridViewHelper.AddDataBoundControl(grid, "posted_by", Titles.PostedBy);
-            GridViewHelper.AddDataBoundControl(grid, "office", Titles.Office);
+            GridViewHelper.AddDataBoundControl(grid, "PostedBy", Titles.PostedBy);
+            GridViewHelper.AddDataBoundControl(grid, "Office", Titles.Office);
 
-            GridViewHelper.AddDataBoundControl(grid, "status", Titles.Status);
-            GridViewHelper.AddDataBoundControl(grid, "verified_by", Titles.VerifiedBy);
-            GridViewHelper.AddDataBoundControl(grid, "verified_on", Titles.VerifiedOn, "{0:g}");
-            GridViewHelper.AddDataBoundControl(grid, "reason", Titles.Reason);
-            GridViewHelper.AddDataBoundControl(grid, "transaction_ts", Titles.TransactionTimestamp, "{0:g}");
-            GridViewHelper.AddDataBoundControl(grid, "flag_bg", "flag_bg");
-            GridViewHelper.AddDataBoundControl(grid, "flag_fg", "flag_fg");
+            GridViewHelper.AddDataBoundControl(grid, "Status", Titles.Status);
+            GridViewHelper.AddDataBoundControl(grid, "VerifiedBy", Titles.VerifiedBy);
+            GridViewHelper.AddDataBoundControl(grid, "VerifiedOn", Titles.VerifiedOn, "{0:g}");
+            GridViewHelper.AddDataBoundControl(grid, "Reason", Titles.Reason);
+            GridViewHelper.AddDataBoundControl(grid, "TransactionTs", Titles.TransactionTimestamp, "{0:g}");
+            GridViewHelper.AddDataBoundControl(grid, "FlagBg", "FlagBg");
+            GridViewHelper.AddDataBoundControl(grid, "FlagFg", "FlagFg");
         }
 
         private static void AddTemplateFields(GridView grid)

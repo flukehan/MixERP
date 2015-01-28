@@ -17,13 +17,12 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.Sales.Resources;
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.ScrudFactory;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.WebControls.ScrudFactory;
 
 namespace MixERP.Net.Core.Modules.Sales.Setup
 {
@@ -50,13 +49,12 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
                 scrud.SelectedValues = GetSelectedValues();
 
                 scrud.Text = Resources.Titles.SalesPersons;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(Salespersons));
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (Salespersons));
 
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
         }
-
 
         private static string GetDisplayFields()
         {

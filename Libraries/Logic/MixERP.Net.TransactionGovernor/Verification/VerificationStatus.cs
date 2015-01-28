@@ -17,31 +17,18 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common;
-using MixERP.Net.Common.Models.Transactions;
-using System.Data;
-
 namespace MixERP.Net.TransactionGovernor.Verification
 {
     public static class VerificationStatus
     {
-        public static VerificationModel GetVerificationStatus(long transactionMasterId)
+        public static Entities.Models.Transactions.Verification GetVerificationStatus(long transactionMasterId)
         {
             if (transactionMasterId <= 0)
             {
                 return null;
             }
 
-            VerificationModel model = new VerificationModel();
-            DataRow row = Data.Verification.VerificationStatus.GetVerificationStatusDataRow(transactionMasterId);
-
-            model.Verification = Conversion.TryCastShort(row["verification_status_id"]);
-            model.VerifierUserId = Conversion.TryCastInteger(row["verified_by_user_id"]);
-            model.VerifierName = Conversion.TryCastString(row["verified_by_user_name"]);
-            model.VerifiedDate = Conversion.TryCastDate(row["last_verified_on"]);
-            model.VerificationReason = Conversion.TryCastString(row["verification_reason"]);
-
-            return model;
+            return Data.Verification.VerificationStatus.GetVerificationStatus(transactionMasterId);
         }
     }
 }

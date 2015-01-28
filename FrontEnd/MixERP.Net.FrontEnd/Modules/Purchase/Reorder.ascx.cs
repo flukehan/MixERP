@@ -17,13 +17,12 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Purchase.Resources;
 using MixERP.Net.FrontEnd.Base;
-using System;
-using System.Data;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
 
 namespace MixERP.Net.Core.Modules.Purchase
 {
@@ -73,16 +72,13 @@ namespace MixERP.Net.Core.Modules.Purchase
 
             using (GridView grid = new GridView())
             {
-                using (DataTable table = Data.Transactions.Reorder.GetReorderView(officeId))
-                {
-                    grid.GridLines = GridLines.None;
-                    this.CreateColumns(grid);
-                    grid.DataSource = table;
-                    grid.ID = "ReorderGrid";
-                    grid.AutoGenerateColumns = false;
-                    grid.DataBind();
-                    this.Placeholder1.Controls.Add(grid);
-                }
+                grid.GridLines = GridLines.None;
+                this.CreateColumns(grid);
+                grid.DataSource = Data.Transactions.Reorder.GetReorderView(officeId);
+                grid.ID = "ReorderGrid";
+                grid.AutoGenerateColumns = false;
+                grid.DataBind();
+                this.Placeholder1.Controls.Add(grid);
             }
         }
 
@@ -117,21 +113,21 @@ namespace MixERP.Net.Core.Modules.Purchase
         private void CreateColumns(GridView grid)
         {
             this.AddTemplateField(grid, Titles.Check);
-            this.AddBoundField(grid, Titles.ItemId, "item_id");
-            this.AddBoundField(grid, Titles.ItemCode, "item_code");
-            this.AddBoundField(grid, Titles.ItemName, "item_name");
-            this.AddBoundField(grid, Titles.Unit, "unit");
+            this.AddBoundField(grid, Titles.ItemId, "ItemId");
+            this.AddBoundField(grid, Titles.ItemCode, "ItemCode");
+            this.AddBoundField(grid, Titles.ItemName, "ItemName");
+            this.AddBoundField(grid, Titles.Unit, "Unit");
             this.AddTemplateField(grid, Titles.SelectSupplier);
             this.AddTemplateField(grid, Titles.SelectUnit);
             this.AddTemplateField(grid, Titles.ReorderQuantityAbbreviated);
             this.AddTemplateField(grid, Titles.Price);
             this.AddTemplateField(grid, Titles.TaxRate);
-            this.AddBoundField(grid, Titles.QuantityOnHandAbbreviated, "quantity_on_hand");
-            this.AddBoundField(grid, Titles.ReorderLevel, "reorder_level");
-            this.AddBoundField(grid, Titles.DefaultReorderQuantityAbbreviated, "reorder_quantity");
-            this.AddBoundField(grid, Titles.PreferredSupplier, "preferred_supplier");
-            this.AddBoundField(grid, Titles.Price, "price");
-            this.AddBoundField(grid, Titles.Tax, "tax");
+            this.AddBoundField(grid, Titles.QuantityOnHandAbbreviated, "QuantityOnHand");
+            this.AddBoundField(grid, Titles.ReorderLevel, "ReorderLevel");
+            this.AddBoundField(grid, Titles.DefaultReorderQuantityAbbreviated, "ReorderQuantity");
+            this.AddBoundField(grid, Titles.PreferredSupplier, "PreferredSupplier");
+            this.AddBoundField(grid, Titles.Price, "Price");
+            this.AddBoundField(grid, Titles.Tax, "Tax");
         }
     }
 }

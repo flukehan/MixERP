@@ -17,32 +17,22 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.DbFactory;
-using Npgsql;
-using System.Data;
+using System.Collections.Generic;
+using MixERP.Net.Entities;
+using MixERP.Net.Entities.Transactions;
 
 namespace MixERP.Net.Core.Modules.Sales.Data.Reports
 {
     public static class SalesByMonth
     {
-        public static DataTable GetSalesByOffice(int officeId)
+        public static IEnumerable<GetSalesByOffice> GetSalesByOffice(int officeId)
         {
-            const string sql = "SELECT * FROM transactions.get_sales_by_offices(@OfficeId, 1000)";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@OfficeId", officeId);
-
-                return DbOperation.GetDataTable(command);
-            }
+            return Factory.Get<GetSalesByOffice>("SELECT * FROM transactions.get_sales_by_offices(@0, 1000)", officeId);
         }
 
-        public static DataTable GetSalesByOffice()
+        public static IEnumerable<GetSalesByOffice> GetSalesByOffice()
         {
-            const string sql = "SELECT * FROM transactions.get_sales_by_offices(1000)";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                return DbOperation.GetDataTable(command);
-            }
+            return Factory.Get<GetSalesByOffice>("SELECT * FROM transactions.get_sales_by_offices(1000)");
         }
     }
 }

@@ -19,15 +19,15 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.ObjectModel;
-using System.Data;
 using System.Globalization;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Core;
 using MixERP.Net.Core.Modules.Finance.Resources;
+using MixERP.Net.Entities;
+using MixERP.Net.Entities.Core;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.Common;
 using MixERP.Net.WebControls.Flag;
@@ -495,7 +495,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
         {
             this.fromDateTextBox = new DateTextBox();
             this.fromDateTextBox.ID = "FromDateTextBox";
-            this.fromDateTextBox.Mode = Frequency.FiscalYearStartDate;
+            this.fromDateTextBox.Mode = FrequencyType.FiscalYearStartDate;
 
             using (HtmlGenericControl field = this.GetDateField(Titles.From, this.fromDateTextBox))
             {
@@ -527,7 +527,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
         {
             this.toDateTextBox = new DateTextBox();
             this.toDateTextBox.ID = "ToDateTextBox";
-            this.toDateTextBox.Mode = Frequency.FiscalYearEndDate;
+            this.toDateTextBox.Mode = FrequencyType.FiscalYearEndDate;
 
             using (HtmlGenericControl field = this.GetDateField(Titles.To, this.toDateTextBox))
             {
@@ -543,33 +543,30 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             string accountNumber = this.accountNumberInputText.Value;
             int officeId = SessionHelper.GetOfficeId();
 
-            using (DataTable table = Data.Reports.AccountStatement.GetAccountStatement(from, to, userId, accountNumber, officeId))
-            {
-                this.statementGridView.DataSource = table;
-                this.statementGridView.DataBound += this.StatementGridViewDataBound;
-                this.statementGridView.DataBind();
-            }
+            this.statementGridView.DataSource = Data.Reports.AccountStatement.GetAccountStatement(from, to, userId, accountNumber, officeId);
+            this.statementGridView.DataBound += this.StatementGridViewDataBound;
+            this.statementGridView.DataBind();
         }
 
         private void BindOverview()
         {
             string accountNumber = this.accountNumberInputText.Value;
+            AccountView view = Data.Reports.AccountStatement.GetAccountOverview(accountNumber);
 
-            using (DataTable table = Data.Reports.AccountStatement.GetAccountOverview(accountNumber))
+            if (view != null)
             {
-                if (table.Rows != null && table.Rows.Count.Equals(1) && table.Rows[0] != null)
-                {
-                    this.headerLiteral.Text = Conversion.TryCastString(table.Rows[0]["account"]);
-                    this.descriptionLiteral.Text = Conversion.TryCastString(table.Rows[0]["description"]);
-                    this.accountNumberLiteral.Text = Conversion.TryCastString(table.Rows[0]["account_number"]);
-                    this.externalCodeLiteral.Text = Conversion.TryCastString(table.Rows[0]["external_code"]);
-                    this.baseCurrencyLiteral.Text = Conversion.TryCastString(table.Rows[0]["currency_code"]);
-                    this.accountMasterLiteral.Text = Conversion.TryCastString(table.Rows[0]["account_master_code"]);
-                    this.confidentialLiteral.Text = Conversion.TryCastString(table.Rows[0]["confidential"]);
-                    this.isSystemAccountLiteral.Text = Conversion.TryCastString(table.Rows[0]["sys_type"]);
-                    this.normallyDebitLiteral.Text = Conversion.TryCastString(table.Rows[0]["normally_debit"]);
-                    this.parentAccountLiteral.Text = Conversion.TryCastString(table.Rows[0]["parent_account"]);
-                }
+                this.headerLiteral.Text = view.Account;
+                this.descriptionLiteral.Text = view.Description;
+                this.accountNumberLiteral.Text = view.AccountNumber;
+                this.externalCodeLiteral.Text = view.ExternalCode;
+                this.baseCurrencyLiteral.Text = view.CurrencyCode;
+                this.accountMasterLiteral.Text = view.AccountMasterCode;
+
+                this.confidentialLiteral.Text = Conversion.TryCastString(view.Confidential);
+                this.isSystemAccountLiteral.Text = Conversion.TryCastString(view.SysType);
+                this.normallyDebitLiteral.Text = Conversion.TryCastString(view.NormallyDebit);
+
+                this.parentAccountLiteral.Text = view.ParentAccount;
             }
         }
 
@@ -671,18 +668,18 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
         private void CreateColumns()
         {
             this.AddTemplateFields();
-            GridViewHelper.AddDataBoundControl(this.statementGridView, "tran_code", Titles.TranCode);
-            GridViewHelper.AddDataBoundControl(this.statementGridView, "value_date", Titles.ValueDate, "{0:d}");
-            GridViewHelper.AddDataBoundControl(this.statementGridView, "debit", Titles.Debit, "{0:N}", true);
-            GridViewHelper.AddDataBoundControl(this.statementGridView, "credit", Titles.Credit, "{0:N}", true);
-            GridViewHelper.AddDataBoundControl(this.statementGridView, "balance", Titles.Balance, "{0:N}", true);
-            GridViewHelper.AddDataBoundControl(this.statementGridView, "statement_reference", Titles.StatementReference);
-            GridViewHelper.AddDataBoundControl(this.statementGridView, "office", Titles.Office);
-            GridViewHelper.AddDataBoundControl(this.statementGridView, "book", Titles.Book);
-            GridViewHelper.AddDataBoundControl(this.statementGridView, "account_number", Titles.AccountNumber);
-            GridViewHelper.AddDataBoundControl(this.statementGridView, "account", Titles.Account);
-            GridViewHelper.AddDataBoundControl(this.statementGridView, "flag_bg", string.Empty);
-            GridViewHelper.AddDataBoundControl(this.statementGridView, "flag_fg", string.Empty);
+            GridViewHelper.AddDataBoundControl(this.statementGridView, "TranCode", Titles.TranCode);
+            GridViewHelper.AddDataBoundControl(this.statementGridView, "ValueDate", Titles.ValueDate, "{0:d}");
+            GridViewHelper.AddDataBoundControl(this.statementGridView, "Debit", Titles.Debit, "{0:N}", true);
+            GridViewHelper.AddDataBoundControl(this.statementGridView, "Credit", Titles.Credit, "{0:N}", true);
+            GridViewHelper.AddDataBoundControl(this.statementGridView, "Balance", Titles.Balance, "{0:N}", true);
+            GridViewHelper.AddDataBoundControl(this.statementGridView, "StatementReference", Titles.StatementReference);
+            GridViewHelper.AddDataBoundControl(this.statementGridView, "Office", Titles.Office);
+            GridViewHelper.AddDataBoundControl(this.statementGridView, "Book", Titles.Book);
+            GridViewHelper.AddDataBoundControl(this.statementGridView, "AccountNumber", Titles.AccountNumber);
+            GridViewHelper.AddDataBoundControl(this.statementGridView, "Account", Titles.Account);
+            GridViewHelper.AddDataBoundControl(this.statementGridView, "FlagBg", string.Empty);
+            GridViewHelper.AddDataBoundControl(this.statementGridView, "FlagFg", string.Empty);
         }
 
         private void CreateGridPanel(HtmlGenericControl container)

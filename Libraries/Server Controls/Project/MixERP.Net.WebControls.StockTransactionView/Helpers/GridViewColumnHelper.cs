@@ -23,7 +23,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Transactions;
+using MixERP.Net.Entities;
 using MixERP.Net.WebControls.StockTransactionView.Resources;
 
 namespace MixERP.Net.WebControls.StockTransactionView.Helpers
@@ -36,29 +36,29 @@ namespace MixERP.Net.WebControls.StockTransactionView.Helpers
 
             AddTemplateFields(grid);
 
-            GridViewHelper.AddDataBoundControl(grid, "id", Titles.Id);
-            GridViewHelper.AddDataBoundControl(grid, "value_date", Titles.ValueDate, "{0:d}");
-            GridViewHelper.AddDataBoundControl(grid, "office", Titles.Office);
-            GridViewHelper.AddDataBoundControl(grid, "reference_number", Titles.ReferenceNumber);
-            GridViewHelper.AddDataBoundControl(grid, "party", Titles.Party);
+            GridViewHelper.AddDataBoundControl(grid, "Id", Titles.Id);
+            GridViewHelper.AddDataBoundControl(grid, "ValueDate", Titles.ValueDate, "{0:d}");
+            GridViewHelper.AddDataBoundControl(grid, "Office", Titles.Office);
+            GridViewHelper.AddDataBoundControl(grid, "ReferenceNumber", Titles.ReferenceNumber);
+            GridViewHelper.AddDataBoundControl(grid, "Party", Titles.Party);
 
             if (book != SubTranBook.Receipt)
             {
-                GridViewHelper.AddDataBoundControl(grid, "price_type", Titles.PriceType);
+                GridViewHelper.AddDataBoundControl(grid, "PriceType", Titles.PriceType);
             }
 
-            GridViewHelper.AddDataBoundControl(grid, "amount", Titles.Amount);
-            GridViewHelper.AddDataBoundControl(grid, "transaction_ts", Titles.TransactionTimestamp, "{0:d}");
-            GridViewHelper.AddDataBoundControl(grid, "user", Titles.User);
-            GridViewHelper.AddDataBoundControl(grid, "statement_reference", Titles.StatementReference);
+            GridViewHelper.AddDataBoundControl(grid, "Amount", Titles.Amount);
+            GridViewHelper.AddDataBoundControl(grid, "TransactionTs", Titles.TransactionTimestamp, "{0:d}");
+            GridViewHelper.AddDataBoundControl(grid, "User", Titles.User);
+            GridViewHelper.AddDataBoundControl(grid, "StatementReference", Titles.StatementReference);
 
             if (book != SubTranBook.Receipt)
             {
-                GridViewHelper.AddDataBoundControl(grid, "book", Titles.Book, "");
+                GridViewHelper.AddDataBoundControl(grid, "book", Titles.Book);
             }
 
-            GridViewHelper.AddDataBoundControl(grid, "flag_background_color", Titles.FlagBackgroundColor);
-            GridViewHelper.AddDataBoundControl(grid, "flag_foreground_color", Titles.FlagForegroundColor);
+            GridViewHelper.AddDataBoundControl(grid, "FlagBackgroundColor", Titles.FlagBackgroundColor);
+            GridViewHelper.AddDataBoundControl(grid, "FlagForegroundColor", Titles.FlagForegroundColor);
         }
 
         private static void AddTemplateFields(GridView grid)

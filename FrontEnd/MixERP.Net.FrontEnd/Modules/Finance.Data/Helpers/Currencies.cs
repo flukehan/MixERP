@@ -17,11 +17,7 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System.Collections;
 using System.Collections.Generic;
-using MixERP.Net.DbFactory;
-using Npgsql;
-using System.Data;
 using System.Linq;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Core;
@@ -30,6 +26,11 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 {
     public static class Currencies
     {
+        public static IEnumerable<Currency> GetCurrencies()
+        {
+            return Factory.Get<Currency>("SELECT * FROM core.currencies ORDER BY currency_code;");
+        }
+
         public static string GetCurrencyCode(string accountNumber)
         {
             Account account = Factory.Get<Account>("SELECT currency_code FROM core.accounts WHERE account_number=@0", accountNumber).FirstOrDefault();
@@ -40,11 +41,6 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
             }
 
             return string.Empty;
-        }
-
-        public static IEnumerable<Currency> GetCurrencies()
-        {
-            return Factory.Get<Currency>("SELECT * FROM core.currencies ORDER BY currency_code;");
         }
 
         public static IEnumerable<Currency> GetExchangeCurrencies(int officeId)

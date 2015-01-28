@@ -17,22 +17,22 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common;
-using MixERP.Net.Common.Models.Core;
-using MixERP.Net.Common.Models.Transactions;
-using MixERP.Net.Common.PostgresHelper;
-using MixERP.Net.DbFactory;
-using Npgsql;
 using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
+using MixERP.Net.Common;
+using MixERP.Net.Core.Modules.Sales.Data;
+using MixERP.Net.DbFactory;
+using MixERP.Net.Entities.Core;
+using MixERP.Net.Entities.Models.Transactions;
+using Npgsql;
 
 namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
 {
     public static class Return
     {
-        public static long PostTransaction(long transactionMasterId, DateTime valueDate, int officeId, int userId, long loginId, int storeId, string partyCode, int priceTypeId, string referenceNumber, string statementReference, Collection<StockMasterDetailModel> details, Collection<PostgresqlAttachmentModel> attachments)
+        public static long PostTransaction(long transactionMasterId, DateTime valueDate, int officeId, int userId, long loginId, int storeId, string partyCode, int priceTypeId, string referenceNumber, string statementReference, Collection<StockDetail> details, Collection<Attachment> attachments)
         {
             string detail = StockMasterDetailHelper.CreateStockMasterDetailParameter(details);
             string attachment = AttachmentHelper.CreateAttachmentModelParameter(attachments);

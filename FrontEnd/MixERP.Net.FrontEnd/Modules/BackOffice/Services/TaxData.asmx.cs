@@ -17,12 +17,13 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Helpers;
 using System.Collections.ObjectModel;
-using System.Data;
+using System.Globalization;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Core.Modules.BackOffice.Data.Tax;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Services
 {
@@ -35,7 +36,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
         [WebMethod]
         public decimal GetSalesTax(string tranBook, int storeId, string partyCode, string shippingAddressCode, int priceTypeId, string itemCode, decimal price, int quantity, decimal discount, decimal shippingCharge, int salesTaxId)
         {
-            return Data.Tax.SalesTax.GetSalesTax(tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode, price, quantity, discount, shippingCharge, salesTaxId);
+            return SalesTax.GetSalesTax(tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode, price, quantity, discount, shippingCharge, salesTaxId);
         }
 
         [WebMethod(EnableSession = true)]
@@ -45,15 +46,12 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
 
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = Data.Tax.SalesTax.GetSalesTaxes(officeId, tranBook))
+            foreach (Net.Entities.Core.SalesTax salesTax in Data.Tax.SalesTax.GetSalesTaxes(officeId, tranBook))
             {
-                foreach (DataRow dr in table.Rows)
-                {
-                    values.Add(new ListItem(dr["sales_tax_code"].ToString(), dr["sales_tax_id"].ToString()));
-                }
-
-                return values;
+                values.Add(new ListItem(salesTax.SalesTaxCode, salesTax.SalesTaxId.ToString(CultureInfo.InvariantCulture)));
             }
+
+            return values;
         }
 
         [WebMethod]

@@ -17,31 +17,18 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using Npgsql;
 using System;
-using System.Data;
+using System.Collections.Generic;
+using MixERP.Net.Entities;
+using MixERP.Net.Entities.Transactions;
 
 namespace MixERP.Net.WebControls.StockTransactionView.Data.Helpers
 {
     public static class CustomerReceipts
     {
-        public static DataTable GetView(int userId, int officeId, DateTime dateFrom, DateTime dateTo, string office, string party, string user, string referenceNumber, string statementReference)
+        public static IEnumerable<GetReceiptView> GetView(int userId, int officeId, DateTime dateFrom, DateTime dateTo, string office, string party, string user, string referenceNumber, string statementReference)
         {
-            const string sql = "SELECT * FROM transactions.get_receipt_view(@UserId, @OfficeId, @DateFrom, @DateTo, @Office, @Party, @User, @ReferenceNumber, @StatementReference);";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@UserId", userId);
-                command.Parameters.AddWithValue("@OfficeId", officeId);
-                command.Parameters.AddWithValue("@DateFrom", dateFrom);
-                command.Parameters.AddWithValue("@DateTo", dateTo);
-                command.Parameters.AddWithValue("@Office", office);
-                command.Parameters.AddWithValue("@Party", party);
-                command.Parameters.AddWithValue("@User", user);
-                command.Parameters.AddWithValue("@ReferenceNumber", referenceNumber);
-                command.Parameters.AddWithValue("@StatementReference", statementReference);
-
-                return DbFactory.DbOperation.GetDataTable(command);
-            }
+            return Factory.Get<GetReceiptView>("SELECT * FROM transactions.get_receipt_view(@0, @1, @2, @3, @4, @5, @6, @7, @8);", userId, officeId, dateFrom, dateTo, office, party, user, referenceNumber, statementReference);
         }
     }
 }

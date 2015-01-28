@@ -22,7 +22,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.IO;
-using System.IO.Ports;
 using System.Linq;
 using System.Threading;
 using MixERP.Net.Common;
@@ -197,12 +196,35 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
 
         public static int GetTotalRecords(string tableSchema, string tableName)
         {
-            return DbFactory.FormHelper.GetTotalRecords(tableSchema, tableName);
+            var sql = "SELECT COUNT(*) FROM @TableSchema.@TableName";
+            using (var command = new NpgsqlCommand())
+            {
+                sql = sql.Replace("@TableSchema", DbFactory.Sanitizer.SanitizeIdentifierName(tableSchema));
+                sql = sql.Replace("@TableName", DbFactory.Sanitizer.SanitizeIdentifierName(tableName));
+
+                command.CommandText = sql;
+
+                return Conversion.TryCastInteger(DbOperation.GetScalarValue(command));
+            }
         }
 
         public static DataTable GetView(string tableSchema, string tableName, string orderBy, int limit, int offset)
         {
-            return DbFactory.FormHelper.GetView(tableSchema, tableName, orderBy, limit, offset);
+            var sql = "SELECT * FROM @TableSchema.@TableName ORDER BY @OrderBy ASC LIMIT @Limit OFFSET @Offset;";
+
+            using (var command = new NpgsqlCommand())
+            {
+                //We are 100% sure that the following parameters do not come from user input.
+                //Having said that, it is nice to sanitize the objects before sending it to the database server.
+                sql = sql.Replace("@TableSchema", DbFactory.Sanitizer.SanitizeIdentifierName(tableSchema));
+                sql = sql.Replace("@TableName", DbFactory.Sanitizer.SanitizeIdentifierName(tableName));
+                sql = sql.Replace("@OrderBy", DbFactory.Sanitizer.SanitizeIdentifierName(orderBy));
+                sql = sql.Replace("@Limit", Conversion.TryCastString(limit));
+                sql = sql.Replace("@Offset", Conversion.TryCastString(offset));
+                command.CommandText = sql;
+
+                return DbOperation.GetDataTable(command);
+            }
         }
 
         public static long InsertRecord(int userId, string tableSchema, string tableName, Collection<KeyValuePair<string, object>> data, string imageColumn)

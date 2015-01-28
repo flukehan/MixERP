@@ -17,18 +17,17 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Models.Core;
-using MixERP.Net.Common.Models.Transactions;
-using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
 using System;
 using System.Collections.ObjectModel;
-using System.Web.Script.Serialization;
 using System.Web.Services;
+using MixERP.Net.Entities.Core;
+using MixERP.Net.Entities.Models.Transactions;
+using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
 
 namespace MixERP.Net.Core.Modules.Purchase.Services
 {
     /// <summary>
-    /// Summary description for PurchaseOrder
+    ///     Summary description for PurchaseOrder
     /// </summary>
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
@@ -41,10 +40,9 @@ namespace MixERP.Net.Core.Modules.Purchase.Services
         [WebMethod(EnableSession = true)]
         public long Save(DateTime valueDate, string partyCode, string referenceNumber, string data, string statementReference, string attachmentsJSON)
         {
-            Collection<StockMasterDetailModel> details = CollectionHelper.GetStockMasterDetailCollection(data, 0);
+            Collection<StockDetail> details = CollectionHelper.GetStockMasterDetailCollection(data, 0);
 
-            JavaScriptSerializer js = new JavaScriptSerializer();
-            Collection<PostgresqlAttachmentModel> attachments = js.Deserialize<Collection<PostgresqlAttachmentModel>>(attachmentsJSON);
+            Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
 
             return Data.Transactions.Order.Add("Purchase.Order", valueDate, partyCode, 0, details, referenceNumber, statementReference, null, attachments);
         }

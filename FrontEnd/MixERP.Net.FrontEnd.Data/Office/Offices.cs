@@ -17,17 +17,9 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.DbFactory;
-using Npgsql;
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data;
-using System.Linq;
 using MixERP.Net.Entities;
-using MixERP.Net.Entities.Core;
+using MixERP.Net.Entities.Models.Core;
 
 namespace MixERP.Net.FrontEnd.Data.Office
 {
@@ -36,11 +28,6 @@ namespace MixERP.Net.FrontEnd.Data.Office
         public static IEnumerable<OfficeType> GetOffices()
         {
             return Factory.Get<OfficeType>("SELECT * FROM office.get_offices();");
-        }
-
-        private static Entities.Office.Office GetOffice(int? officeId)
-        {
-            return Factory.Get<Entities.Office.Office>("SELECT * FROM office.offices WHERE office_id=@0", officeId).FirstOrDefault();
         }
     }
 }

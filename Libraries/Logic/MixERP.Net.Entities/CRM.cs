@@ -89,7 +89,7 @@ namespace MixERP.Net.Entities.CRM
             public static IEnumerable<T> Query(Sql sql) { return repo.Query<T>(sql); }
         }
     }
-	
+    
 
     
     [TableName("lead_sources")]

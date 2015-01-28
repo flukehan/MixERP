@@ -17,17 +17,16 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Models.Core;
+using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Web.Script.Serialization;
 using System.Web.Script.Services;
 using System.Web.Services;
+using MixERP.Net.Entities.Core;
+using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
 
 namespace MixERP.Net.FrontEnd.Services
 {
-    /// <summary>
-    /// Summary description for UploadHelper
-    /// </summary>
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [ScriptService]
@@ -37,11 +36,12 @@ namespace MixERP.Net.FrontEnd.Services
         public bool UndoUpload(string uploadedFilesJson)
         {
             JavaScriptSerializer js = new JavaScriptSerializer();
-            PostgresqlAttachmentModel[] uploads = js.Deserialize<PostgresqlAttachmentModel[]>(uploadedFilesJson);
+            Collection<Attachment> uploads = CollectionHelper.GetAttachmentCollection(uploadedFilesJson);
+
 
             string attachmentsDirectory = ConfigurationManager.AppSettings["AttachmentsDirectory"];
 
-            foreach (PostgresqlAttachmentModel upload in uploads)
+            foreach (Attachment upload in uploads)
             {
                 string path = this.Server.MapPath(attachmentsDirectory + upload.FilePath);
 

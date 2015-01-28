@@ -120,49 +120,4 @@
   <data name="CouldNotRegisterJavaScript" xml:space="preserve">
     <value>Could not register JavaScript on this page because the page instance was invalid or empty.</value>
   </data>
-  <data name="InvalidSubTranBookInventoryDelivery" xml:space="preserve">
-    <value>Invalid SubTranBook "Inventory Delivery"</value>
-  </data>
-  <data name="InvalidSubTranBookInventoryDirect" xml:space="preserve">
-    <value>Invalid SubTranBook "Inventory Direct"</value>
-  </data>
-  <data name="InvalidSubTranBookInventoryInvoice" xml:space="preserve">
-    <value>Invalid SubTranBook "Inventory Invoice"</value>
-  </data>
-  <data name="InvalidSubTranBookInventoryOrder" xml:space="preserve">
-    <value>Invalid SubTranBook "Inventory Order"</value>
-  </data>
-  <data name="InvalidSubTranBookInventoryPayment" xml:space="preserve">
-    <value>Invalid SubTranBook "Inventory Payment"</value>
-  </data>
-  <data name="InvalidSubTranBookInventoryQuotation" xml:space="preserve">
-    <value>Invalid SubTranBook "Inventory Quotation"</value>
-  </data>
-  <data name="InvalidSubTranBookInventoryReceipt" xml:space="preserve">
-    <value>Invalid SubTranBook "Inventory Receipt"</value>
-  </data>
-  <data name="InvalidSubTranBookInventoryReturn" xml:space="preserve">
-    <value>Invalid SubTranBook "Inventory Return"</value>
-  </data>
-  <data name="InvalidSubTranBookPurchaseDelivery" xml:space="preserve">
-    <value>Invalid SubTranBook "Purchase Delivery"</value>
-  </data>
-  <data name="InvalidSubTranBookPurchaseQuotation" xml:space="preserve">
-    <value>Invalid SubTranBook "Purchase Quotation"</value>
-  </data>
-  <data name="InvalidSubTranBookPurchaseSuspense" xml:space="preserve">
-    <value>Invalid SubTranBook "Purchase Suspense"</value>
-  </data>
-  <data name="InvalidSubTranBookPurchaseTransfer" xml:space="preserve">
-    <value>Invalid SubTranBook "Purchase Transfer"</value>
-  </data>
-  <data name="InvalidSubTranBookSalesPayment" xml:space="preserve">
-    <value>Invalid SubTranBook "Sales Payment"</value>
-  </data>
-  <data name="InvalidSubTranBookSalesSuspense" xml:space="preserve">
-    <value>Invalid SubTranBook "Sales Suspense"</value>
-  </data>
-  <data name="InvalidSubTranBookSalesTransfer" xml:space="preserve">
-    <value>Invalid SubTranBook "Sales Transfer"</value>
-  </data>
 </root>

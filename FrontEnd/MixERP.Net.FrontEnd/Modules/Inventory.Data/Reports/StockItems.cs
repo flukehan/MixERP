@@ -16,29 +16,19 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
-using System;
+
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MixERP.Net.DbFactory;
-using Npgsql;
+using MixERP.Net.Entities;
+using MixERP.Net.Entities.Transactions;
 
 namespace MixERP.Net.Core.Modules.Inventory.Data.Reports
 {
-   public static class StockItems
+    public static class StockItems
     {
-
-       public static DataTable ListClosingStock(int storeId)
-       {
-           const string sql = "SELECT * FROM transactions.list_closing_stock(@StoreId);";
-           using (NpgsqlCommand command = new NpgsqlCommand(sql))
-           {
-               command.Parameters.AddWithValue("@StoreId", storeId);
-
-               return DbOperation.GetDataTable(command);
-           }
-       }
+        public static IEnumerable<ListClosingStock> ListClosingStock(int storeId)
+        {
+            IEnumerable<ListClosingStock> closingStockList = Factory.Get<ListClosingStock>("SELECT * FROM transactions.list_closing_stock(@0);", storeId);
+            return closingStockList;
+        }
     }
 }

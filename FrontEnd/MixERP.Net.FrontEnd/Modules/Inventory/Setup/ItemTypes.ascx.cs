@@ -16,14 +16,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Inventory.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.ScrudFactory;
@@ -44,10 +39,9 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
                 scrud.Text = Titles.ItemTypes;
 
 
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(ItemTypes));
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (ItemTypes));
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
         }
-
     }
 }

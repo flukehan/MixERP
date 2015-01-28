@@ -18,15 +18,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DatabaseBackup.ascx.cs" Inherits="MixERP.Net.Core.Modules.BackOffice.Admin.DatabaseBackup" %>
-<%@ Import Namespace="System.Collections.ObjectModel" %>
-<%@ Import Namespace="System.Globalization" %>
-<%@ Import Namespace="System.IO" %>
-<%@ Import Namespace="MixERP.Net.Common.Helpers" %>
-<%@ Import Namespace="MixERP.Net.Common.Models" %>
-<%@ Import Namespace="MixERP.Net.WebControls.Common" %>
-<%@ Import Namespace="System.Web.Hosting" %>
 <asp:PlaceHolder runat="server" ID="Placeholder1" />
 
-
 <script src="/Modules/BackOffice/Scripts/Admin/DatabaseBackup.ascx.js"></script>
-

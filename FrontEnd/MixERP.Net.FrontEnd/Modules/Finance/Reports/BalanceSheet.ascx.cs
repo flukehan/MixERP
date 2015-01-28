@@ -25,8 +25,8 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Core;
 using MixERP.Net.Core.Modules.Finance.Resources;
+using MixERP.Net.Entities;
 using MixERP.Net.WebControls.Common;
 
 namespace MixERP.Net.Core.Modules.Finance.Reports
@@ -43,15 +43,13 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
         #region IDispoable
 
-        private DateTextBox previousPeriodDateTextBox;
         private DateTextBox currentPeriodDateTextBox;
-        private HtmlInputText factorInputText;
-        private Button showButton;
-        private HtmlInputButton printButton;
-        private GridView grid;
-
         private bool disposed;
-
+        private HtmlInputText factorInputText;
+        private GridView grid;
+        private DateTextBox previousPeriodDateTextBox;
+        private HtmlInputButton printButton;
+        private Button showButton;
         public override sealed void Dispose()
         {
             if (!this.disposed)
@@ -176,43 +174,6 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
         #region Form Segment
 
-        private void CreateForm(Control container)
-        {
-            using (HtmlGenericControl formSegment = HtmlControlHelper.GetFormSegment())
-            {
-                using (HtmlGenericControl inlineFields = HtmlControlHelper.GetInlineFields())
-                {
-                    this.AddPreviousPeriodField(inlineFields);
-                    this.AddCurrentPeriodField(inlineFields);
-                    this.AddFactorField(inlineFields);
-                    this.AddShowButton(inlineFields);
-                    this.AddPrintButton(inlineFields);
-
-                    formSegment.Controls.Add(inlineFields);
-                }
-
-                container.Controls.Add(formSegment);
-            }
-        }
-
-        private void AddPreviousPeriodField(HtmlGenericControl container)
-        {
-            using (HtmlGenericControl field = HtmlControlHelper.GetField())
-            {
-                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Titles.PreviousPeriod, "PreviousPeriodDateTextBox"))
-                {
-                    field.Controls.Add(label);
-                }
-
-                this.previousPeriodDateTextBox = new DateTextBox();
-                this.previousPeriodDateTextBox.ID = "PreviousPeriodDateTextBox";
-                this.previousPeriodDateTextBox.Mode = Frequency.FiscalYearStartDate;
-                field.Controls.Add(this.previousPeriodDateTextBox);
-
-                container.Controls.Add(field);
-            }
-        }
-
         private void AddCurrentPeriodField(HtmlGenericControl container)
         {
             using (HtmlGenericControl field = HtmlControlHelper.GetField())
@@ -224,7 +185,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
                 this.currentPeriodDateTextBox = new DateTextBox();
                 this.currentPeriodDateTextBox.ID = "CurrentPeriodDateTextBox";
-                this.currentPeriodDateTextBox.Mode = Frequency.FiscalYearEndDate;
+                this.currentPeriodDateTextBox.Mode = FrequencyType.FiscalYearEndDate;
                 field.Controls.Add(this.currentPeriodDateTextBox);
 
                 container.Controls.Add(field);
@@ -250,6 +211,34 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             }
         }
 
+        private void AddPreviousPeriodField(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl field = HtmlControlHelper.GetField())
+            {
+                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Titles.PreviousPeriod, "PreviousPeriodDateTextBox"))
+                {
+                    field.Controls.Add(label);
+                }
+
+                this.previousPeriodDateTextBox = new DateTextBox();
+                this.previousPeriodDateTextBox.ID = "PreviousPeriodDateTextBox";
+                this.previousPeriodDateTextBox.Mode = FrequencyType.FiscalYearStartDate;
+                field.Controls.Add(this.previousPeriodDateTextBox);
+
+                container.Controls.Add(field);
+            }
+        }
+
+        private void AddPrintButton(HtmlGenericControl container)
+        {
+            this.printButton = new HtmlInputButton();
+            this.printButton.ID = "PrintButton";
+            this.printButton.Attributes.Add("class", "ui orange button");
+            this.printButton.Value = Titles.Print;
+
+            container.Controls.Add(this.printButton);
+        }
+
         private void AddShowButton(HtmlGenericControl container)
         {
             this.showButton = new Button();
@@ -258,11 +247,6 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             this.showButton.Text = Titles.Show;
             this.showButton.Click += this.ShowButton_Click;
             container.Controls.Add(this.showButton);
-        }
-
-        private void ShowButton_Click(object sender, EventArgs eventArgs)
-        {
-            this.BindGrid();
         }
 
         private void BindGrid()
@@ -280,16 +264,28 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             }
         }
 
-        private void AddPrintButton(HtmlGenericControl container)
+        private void CreateForm(Control container)
         {
-            this.printButton = new HtmlInputButton();
-            this.printButton.ID = "PrintButton";
-            this.printButton.Attributes.Add("class", "ui orange button");
-            this.printButton.Value = Titles.Print;
+            using (HtmlGenericControl formSegment = HtmlControlHelper.GetFormSegment())
+            {
+                using (HtmlGenericControl inlineFields = HtmlControlHelper.GetInlineFields())
+                {
+                    this.AddPreviousPeriodField(inlineFields);
+                    this.AddCurrentPeriodField(inlineFields);
+                    this.AddFactorField(inlineFields);
+                    this.AddShowButton(inlineFields);
+                    this.AddPrintButton(inlineFields);
 
-            container.Controls.Add(this.printButton);
+                    formSegment.Controls.Add(inlineFields);
+                }
+
+                container.Controls.Add(formSegment);
+            }
         }
-
+        private void ShowButton_Click(object sender, EventArgs eventArgs)
+        {
+            this.BindGrid();
+        }
         #endregion
 
         #endregion

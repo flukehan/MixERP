@@ -24,8 +24,8 @@ using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Core;
 using MixERP.Net.Core.Modules.Finance.Resources;
+using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.Common;
 
@@ -175,7 +175,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 }
                 this.fromDateTextBox = new DateTextBox();
                 this.fromDateTextBox.ID = "FromDateTextBox";
-                this.fromDateTextBox.Mode = Frequency.FiscalYearStartDate;
+                this.fromDateTextBox.Mode = FrequencyType.FiscalYearStartDate;
                 field.Controls.Add(this.fromDateTextBox);
 
                 container.Controls.Add(field);
@@ -217,7 +217,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
                 this.toDateTextBox = new DateTextBox();
                 this.toDateTextBox.ID = "ToDateTextBox";
-                this.toDateTextBox.Mode = Frequency.FiscalYearEndDate;
+                this.toDateTextBox.Mode = FrequencyType.FiscalYearEndDate;
 
                 field.Controls.Add(this.toDateTextBox);
 

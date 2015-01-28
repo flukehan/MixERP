@@ -17,11 +17,9 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Data;
 using System.Globalization;
 using System.Web.Script.Services;
 using System.Web.Services;
@@ -32,7 +30,6 @@ using MixERP.Net.Core.Modules.Finance.Data.Helpers;
 using MixERP.Net.Core.Modules.Finance.Resources;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Office;
-
 
 namespace MixERP.Net.Core.Modules.Finance.Services
 {
@@ -134,7 +131,6 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             Collection<ListItem> values = new Collection<ListItem>();
 
 
-
             foreach (CostCenter costCenter in CostCenters.GetCostCenters())
             {
                 values.Add(new ListItem(costCenter.CostCenterName, costCenter.CostCenterId.ToString(CultureInfo.InvariantCulture)));
@@ -149,9 +145,9 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             Collection<ListItem> values = new Collection<ListItem>();
 
             foreach (Currency currency in Currencies.GetCurrencies())
-                {
-                    values.Add(new ListItem(currency.CurrencyCode, currency.CurrencyCode));
-                }
+            {
+                values.Add(new ListItem(currency.CurrencyCode, currency.CurrencyCode));
+            }
 
             return values;
         }

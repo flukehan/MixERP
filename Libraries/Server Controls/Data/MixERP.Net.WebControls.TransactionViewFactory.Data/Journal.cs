@@ -17,37 +17,19 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.DbFactory;
-using Npgsql;
 using System;
-using System.Data;
+using System.Collections.Generic;
+using MixERP.Net.Entities;
+using MixERP.Net.Entities.Transactions;
 
 namespace MixERP.Net.WebControls.TransactionViewFactory.Data
 {
     public static class Journal
     {
-        public static DataTable GetJournalView(int userId, int officeId, DateTime from, DateTime to, long tranId, string tranCode, string book, string referenceNumber, string statementReference, string postedBy, string office, string status, string verifiedBy, string reason)
+        public static IEnumerable<GetJournalView> GetJournalView(int userId, int officeId, DateTime from, DateTime to, long tranId, string tranCode, string book, string referenceNumber, string statementReference, string postedBy, string office, string status, string verifiedBy, string reason)
         {
-            const string sql = "SELECT * FROM transactions.get_journal_view(@UserId, @OfficeId, @From, @To, @TranId, @TranCode, @Book, @ReferenceNumber, @StatementReference, @PostedBy, @Office, @Status, @VerifiedBy, @Reason);";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@UserId", userId);
-                command.Parameters.AddWithValue("@OfficeId", officeId);
-                command.Parameters.AddWithValue("@From", from);
-                command.Parameters.AddWithValue("@To", to);
-                command.Parameters.AddWithValue("@TranId", tranId);
-                command.Parameters.AddWithValue("@TranCode", tranCode);
-                command.Parameters.AddWithValue("@Book", book);
-                command.Parameters.AddWithValue("@ReferenceNumber", referenceNumber);
-                command.Parameters.AddWithValue("@StatementReference", statementReference);
-                command.Parameters.AddWithValue("@PostedBy", postedBy);
-                command.Parameters.AddWithValue("@Office", office);
-                command.Parameters.AddWithValue("@Status", status);
-                command.Parameters.AddWithValue("@VerifiedBy", verifiedBy);
-                command.Parameters.AddWithValue("@Reason", reason);
-
-                return DbOperation.GetDataTable(command);
-            }
+            const string sql = "SELECT * FROM transactions.get_journal_view(@0, @1, @2, @3, @4, @5, @6, @7, @8, @9, @10, @11, @12, @13);";
+            return Factory.Get<GetJournalView>(sql, userId, officeId, from, to, tranId, tranCode, book, referenceNumber, statementReference, postedBy, office, status, verifiedBy, reason);
         }
     }
 }

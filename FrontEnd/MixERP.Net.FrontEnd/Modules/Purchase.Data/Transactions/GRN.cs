@@ -17,19 +17,19 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Core;
-using MixERP.Net.Common.Models.Transactions;
 using System;
 using System.Collections.ObjectModel;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Entities.Core;
+using MixERP.Net.Entities.Models.Transactions;
 
 namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
 {
     public static class GRN
     {
-        public static long Add(DateTime valueDate, int storeId, string partyCode, Collection<StockMasterDetailModel> details, int costCenterId, string referenceNumber, string statementReference, Collection<long> transactionIdCollection, Collection<PostgresqlAttachmentModel> attachments)
+        public static long Add(DateTime valueDate, int storeId, string partyCode, Collection<StockDetail> details, int costCenterId, string referenceNumber, string statementReference, Collection<long> transactionIdCollection, Collection<Attachment> attachments)
         {
-            StockMasterModel stockMaster = new StockMasterModel();
+            StockMaster stockMaster = new StockMaster();
 
             stockMaster.PartyCode = partyCode;
             stockMaster.StoreId = storeId;

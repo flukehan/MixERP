@@ -18,44 +18,33 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using MixERP.Net.DbFactory;
+using MixERP.Net.Entities;
+using MixERP.Net.Entities.Core;
+using MixERP.Net.Entities.Transactions;
 using Npgsql;
 
 namespace MixERP.Net.Core.Modules.Finance.Data.Reports
 {
     public static class AccountStatement
     {
-        public static DataTable GetAccountOverview(string accountNumber)
+        public static AccountView GetAccountOverview(string accountNumber)
         {
-            const string sql = "SELECT * FROM core.account_view WHERE account_number=@AccountNumber;";
-
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@AccountNumber", accountNumber);
-
-                return DbOperation.GetDataTable(command);
-            }
+            return Factory.Get<AccountView>("SELECT * FROM core.account_view WHERE account_number=@0;", accountNumber).FirstOrDefault();
         }
 
-        public static DataTable GetAccountStatement(DateTime from, DateTime to, int userId, string accountNumber, int officeId)
+        public static IEnumerable<GetAccountStatement> GetAccountStatement(DateTime from, DateTime to, int userId, string accountNumber, int officeId)
         {
             if (to < from)
             {
                 return null;
             }
 
-            const string sql = "SELECT * FROM transactions.get_account_statement(@From::date, @To::date, @UserId, core.get_account_id_by_account_number(@AccountNumber), @OfficeId) ORDER BY id;";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@From", from);
-                command.Parameters.AddWithValue("@To", to);
-                command.Parameters.AddWithValue("@UserId", userId);
-                command.Parameters.AddWithValue("@AccountNumber", accountNumber);
-                command.Parameters.AddWithValue("@OfficeId", officeId);
-
-                return DbOperation.GetDataTable(command);
-            }
+            const string sql = "SELECT * FROM transactions.get_account_statement(@0::date, @1::date, @2, core.get_account_id_by_account_number(@3), @4) ORDER BY id;";
+            return Factory.Get<GetAccountStatement>(sql, from, to, userId, accountNumber, officeId);
         }
     }
 }

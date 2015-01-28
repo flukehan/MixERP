@@ -1,5 +1,4 @@
-﻿
-/********************************************************************************
+﻿/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
 This file is part of MixERP.
@@ -19,8 +18,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System.Configuration;
-using System.Security.Cryptography;
-using System.Web.Security;
 using Npgsql;
 
 namespace MixERP.Net.DbFactory
@@ -38,7 +35,7 @@ namespace MixERP.Net.DbFactory
             connectionStringBuilder.Pooling = true;
             connectionStringBuilder.SSL = true;
             connectionStringBuilder.SslMode = SslMode.Prefer;
-            
+
             //connectionStringBuilder.ApplicationName = "MixERP";
             return connectionStringBuilder.ConnectionString;
         }

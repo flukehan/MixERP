@@ -17,14 +17,13 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Models.Core;
-using MixERP.Net.Common.Models.Transactions;
-using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
 using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Web.Script.Serialization;
 using System.Web.Services;
+using MixERP.Net.Entities.Core;
+using MixERP.Net.Entities.Models.Transactions;
+using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
 
 namespace MixERP.Net.Core.Modules.Sales.Services.Entry
 {
@@ -37,18 +36,17 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
         [WebMethod(EnableSession = true)]
         public long Save(DateTime valueDate, int storeId, string partyCode, int priceTypeId, int paymentTermId, string referenceNumber, string data, string statementReference, int salespersonId, int shipperId, string shippingAddressCode, decimal shippingCharge, int costCenterId, string transactionIds, string attachmentsJSON, bool nonTaxable)
         {
-            Collection<StockMasterDetailModel> details = CollectionHelper.GetStockMasterDetailCollection(data, storeId);
+            Collection<StockDetail> details = CollectionHelper.GetStockMasterDetailCollection(data, storeId);
             Collection<int> tranIds = new Collection<int>();
 
-            JavaScriptSerializer js = new JavaScriptSerializer();
-            Collection<PostgresqlAttachmentModel> attachments = js.Deserialize<Collection<PostgresqlAttachmentModel>>(attachmentsJSON);
+            Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
 
             if (!Data.Helpers.Stores.IsSalesAllowed(storeId))
             {
                 throw new InvalidOperationException("Sales is not allowed here.");
             }
 
-            foreach (StockMasterDetailModel model in details)
+            foreach (StockDetail model in details)
             {
                 if (Data.Helpers.Items.IsStockItem(model.ItemCode))
                 {

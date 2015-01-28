@@ -16,16 +16,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
+
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Configuration;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Web;
 using System.Web.Hosting;
 using Microsoft.AspNet.SignalR;
 using MixERP.Net.Common;
@@ -65,7 +62,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Hubs
             if (backupDirectory != null)
             {
                 string path = Path.Combine(backupDirectory, fileName + ".backup");
-                var result=this.BackupDatabase(pgdumpPath, server, path);
+                var result = this.BackupDatabase(pgdumpPath, server, path);
 
                 if (result)
                 {
@@ -89,12 +86,10 @@ namespace MixERP.Net.Core.Modules.BackOffice.Hubs
 
         private bool BackupDatabase(string pgDumpPath, PostgreSQLServer server, string fileName)
         {
-
             var batchFile = this.CreateBatchFile(server, pgDumpPath, fileName);
 
             try
             {
-
                 using (Process process = new Process())
                 {
                     process.StartInfo.FileName = batchFile;
@@ -117,12 +112,40 @@ namespace MixERP.Net.Core.Modules.BackOffice.Hubs
 
                     process.WaitForExit();
                     return true;
-
                 }
             }
             finally
             {
                 this.RemoveFile(batchFile);
+            }
+        }
+
+        private void Completed(object sender, EventArgs e)
+        {
+            this.Clients.Caller.backupCompleted(string.Empty);
+        }
+
+        private string CreateBatchFile(PostgreSQLServer server, string pgDumpPath, string fileName)
+        {
+            Collection<string> commands = new Collection<string>();
+            commands.Add("@echo off");
+            commands.Add("SET PGPASSWORD=" + server.Password);
+            string command = @"""{0}"" --host ""{1}"" --port {2} --username ""{3}"" --format custom --blobs --verbose --file ""{4}"" ""{5}""";
+            command = string.Format(CultureInfo.InvariantCulture, command, pgDumpPath, server.HostName, server.PortNumber, server.UserId, fileName, server.DatabaseName);
+            commands.Add(command);
+            commands.Add("exit");
+
+            string batchFilePath = fileName + ".bat";
+
+            File.WriteAllText(batchFilePath, string.Join(Environment.NewLine, commands));
+            return batchFilePath;
+        }
+
+        private void Data_Received(object sender, DataReceivedEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(e.Data))
+            {
+                this.Clients.Caller.getNotification(e.Data);
             }
         }
 
@@ -140,39 +163,5 @@ namespace MixERP.Net.Core.Modules.BackOffice.Hubs
                 //Yeah! Ignore the exception.
             }
         }
-
-        private string CreateBatchFile(PostgreSQLServer server, string pgDumpPath, string fileName)
-        {
-            Collection<string> commands = new Collection<string>();
-            commands.Add("@echo off");
-            commands.Add("SET PGPASSWORD=" + server.Password);            
-            string command = @"""{0}"" --host ""{1}"" --port {2} --username ""{3}"" --format custom --blobs --verbose --file ""{4}"" ""{5}""";
-            command = string.Format(CultureInfo.InvariantCulture, command, pgDumpPath, server.HostName, server.PortNumber, server.UserId, fileName, server.DatabaseName);
-            commands.Add(command);
-            commands.Add("exit");
-
-            string batchFilePath = fileName + ".bat";
-
-            File.WriteAllText(batchFilePath, string.Join(Environment.NewLine, commands));
-            return batchFilePath;
-        }
-
-        private void Completed(object sender, EventArgs e)
-        {
-            this.Clients.Caller.backupCompleted(string.Empty);
-        }
-
-        private void Data_Received(object sender, DataReceivedEventArgs e)
-        {
-            if (!string.IsNullOrWhiteSpace(e.Data))
-            {
-                this.Clients.Caller.getNotification(e.Data);
-            }
-        }
-
-
-
-
-
     }
 }

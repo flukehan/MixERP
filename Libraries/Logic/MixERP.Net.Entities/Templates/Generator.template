@@ -96,7 +96,7 @@ namespace <#=Namespace #>
             public static Page<T> Page(long page, long itemsPerPage, Sql sql) { return repo.Page<T>(page, itemsPerPage, sql); }
             public static IEnumerable<T> Query(string sql, params object[] args) { return repo.Query<T>(sql, args); }
             public static IEnumerable<T> Query(Sql sql) { return repo.Query<T>(sql); }
-<# if (TrackModifiedColumns) { #>			
+<# if (TrackModifiedColumns) { #>            
             private Dictionary<string,bool> ModifiedColumns;
             private void OnLoaded()
             {
@@ -127,7 +127,7 @@ namespace <#=Namespace #>
         }
 <# } #>
     }
-<# } #>	
+<# } #>    
 
 <# if (GeneratePocos) { #>
 <#

@@ -17,17 +17,16 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System;
 using System.Collections.Generic;
-using MixERP.Net.Common;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Core;
-using MixERP.Net.Core.Modules.Inventory.Data.Helpers;
 using System.Collections.ObjectModel;
-using System.Data;
+using System.Globalization;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.Web.UI.WebControls;
+using MixERP.Net.Core.Modules.Inventory.Data.Helpers;
 using MixERP.Net.Entities.Core;
+using MixERP.Net.Entities.Models.Core;
 
 namespace MixERP.Net.Core.Modules.Inventory.Services
 {
@@ -41,15 +40,11 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = ShippingAddresses.GetShippingAddressView(partyCode))
+            foreach (ShippingAddressView view in ShippingAddresses.GetShippingAddressView(partyCode))
             {
-                string displayField = ConfigurationHelper.GetDbParameter("ShippingAddressDisplayField");
-                table.Columns.Add("shipping_address", typeof(string), displayField);
+                string address = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{1}{3}{4}{5}{1}{6}{4}{7}", view.AddressLine1, Environment.NewLine, view.AddressLine2, view.Street, ", ", view.City, view.State, view.Country);
 
-                foreach (DataRow dr in table.Rows)
-                {
-                    values.Add(new ListItem(dr["shipping_address_code"].ToString(), dr["shipping_address"].ToString()));
-                }
+                values.Add(new ListItem(view.ShippingAddressCode, address));
             }
 
             return values;

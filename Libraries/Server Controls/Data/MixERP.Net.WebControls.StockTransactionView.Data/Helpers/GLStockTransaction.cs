@@ -17,41 +17,24 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.DbFactory;
-using Npgsql;
 using System;
-using System.Data;
+using System.Collections.Generic;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Entities;
+using MixERP.Net.Entities.Transactions;
 
 namespace MixERP.Net.WebControls.StockTransactionView.Data.Helpers
 {
     public static class GLStockTransaction
     {
-        public static DataTable GetView(string book, DateTime dateFrom, DateTime dateTo, string office, string party, string priceType, string user, string referenceNumber, string statementReference)
+        public static IEnumerable<GetProductView> GetView(string book, DateTime dateFrom, DateTime dateTo, string office, string party, string priceType, string user, string referenceNumber, string statementReference)
         {
             return GetView(SessionHelper.GetUserId(), book, SessionHelper.GetOfficeId(), dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference);
         }
 
-        private static DataTable GetView(int userId, string book, int officeId, DateTime dateFrom, DateTime dateTo, string office, string party, string priceType, string user, string referenceNumber, string statementReference)
+        private static IEnumerable<GetProductView> GetView(int userId, string book, int officeId, DateTime dateFrom, DateTime dateTo, string office, string party, string priceType, string user, string referenceNumber, string statementReference)
         {
-            const string sql = "SELECT * FROM transactions.get_product_view(@UserId, @Book, @OfficeId, @DateFrom, @DateTo, @Office, @Party, @PriceType, @User, @ReferenceNumber, @StatementReference);";
-
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@UserId", userId);
-                command.Parameters.AddWithValue("@Book", book);
-                command.Parameters.AddWithValue("@OfficeId", officeId);
-                command.Parameters.AddWithValue("@DateFrom", dateFrom);
-                command.Parameters.AddWithValue("@DateTo", dateTo);
-                command.Parameters.AddWithValue("@Office", office);
-                command.Parameters.AddWithValue("@Party", party);
-                command.Parameters.AddWithValue("@PriceType", priceType);
-                command.Parameters.AddWithValue("@User", user);
-                command.Parameters.AddWithValue("@ReferenceNumber", referenceNumber);
-                command.Parameters.AddWithValue("@StatementReference", statementReference);
-
-                return DbOperation.GetDataTable(command);
-            }
+            return Factory.Get<GetProductView>("SELECT * FROM transactions.get_product_view(@0, @1, @2, @3, @4, @5, @6, @7, @8, @9, @10);", userId, book, officeId, dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference);
         }
     }
 }

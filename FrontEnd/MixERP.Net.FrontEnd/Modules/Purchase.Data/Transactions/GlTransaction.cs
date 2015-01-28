@@ -22,17 +22,18 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using MixERP.Net.Common;
-using MixERP.Net.Common.Models.Core;
-using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.Common.PostgresHelper;
+using MixERP.Net.Core.Modules.Sales.Data;
 using MixERP.Net.DbFactory;
+using MixERP.Net.Entities.Core;
+using MixERP.Net.Entities.Models.Transactions;
 using Npgsql;
 
 namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
 {
     internal static class GlTransaction
     {
-        internal static long Add(DateTime valueDate, string book, int officeId, int userId, long logOnId, int costCenterId, string referenceNumber, string statementReference, StockMasterModel stockMaster, Collection<StockMasterDetailModel> details, Collection<long> transactionIdCollection, Collection<PostgresqlAttachmentModel> attachments)
+        internal static long Add(DateTime valueDate, string book, int officeId, int userId, long logOnId, int costCenterId, string referenceNumber, string statementReference, StockMaster stockMaster, Collection<StockDetail> details, Collection<long> transactionIdCollection, Collection<Attachment> attachments)
         {
             if (stockMaster == null)
             {

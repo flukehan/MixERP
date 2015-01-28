@@ -17,21 +17,21 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common;
-using MixERP.Net.Common.Models.Transactions;
-using MixERP.Net.Core.Modules.Inventory.Data.Helpers;
-using MixERP.Net.DbFactory;
-using Npgsql;
 using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
+using MixERP.Net.Common;
+using MixERP.Net.Core.Modules.Inventory.Data.Helpers;
+using MixERP.Net.DbFactory;
+using MixERP.Net.Entities.Models.Transactions;
+using Npgsql;
 
 namespace MixERP.Net.Core.Modules.Inventory.Data.Transactions
 {
     public static class StockTransfer
     {
-        public static long Add(int officeId, int userId, long loginId, DateTime valueDate, string referenceNumber, string statementReference, Collection<StockAdjustmentModel> details)
+        public static long Add(int officeId, int userId, long loginId, DateTime valueDate, string referenceNumber, string statementReference, Collection<StockAdjustmentDetail> details)
         {
             string detailParameter = ParameterHelper.CreateStockTransferModelParameter(details);
             string sql = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM transactions.post_stock_journal(@OfficeId, @UserId, @LoginId, @ValueDate, @ReferenceNumber, @StatementReference, ARRAY[{0}]);", detailParameter);

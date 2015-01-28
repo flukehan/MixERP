@@ -17,14 +17,15 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common;
-using MixERP.Net.Common.Models.Transactions;
-using MixERP.Net.DbFactory;
-using MixERP.Net.WebControls.StockTransactionView.Data.Models;
-using Npgsql;
 using System;
 using System.Collections.ObjectModel;
 using System.Data;
+using MixERP.Net.Common;
+using MixERP.Net.DbFactory;
+using MixERP.Net.Entities;
+using MixERP.Net.Entities.Models.Transactions;
+using MixERP.Net.WebControls.StockTransactionView.Data.Models;
+using Npgsql;
 
 namespace MixERP.Net.WebControls.StockTransactionView.Data
 {
@@ -83,7 +84,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data
                             model.StatementReference = Conversion.TryCastString(reader["statement_reference"]);
                         }
 
-                        ProductDetailsModel product = new ProductDetailsModel();
+                        ProductDetail product = new ProductDetail();
 
                         product.ItemCode = Conversion.TryCastString(reader["item_code"]);
                         product.ItemName = Conversion.TryCastString(reader["item_name"]);
@@ -91,7 +92,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data
 
                         product.Quantity = Conversion.TryCastInteger(reader["quantity"]);
                         product.Price = Conversion.TryCastDecimal(reader["price"]);
-                        product.Amount = product.Quantity * product.Price;
+                        product.Amount = product.Quantity*product.Price;
 
                         product.Discount = Conversion.TryCastDecimal(reader["discount"]);
                         product.ShippingCharge = Conversion.TryCastDecimal(reader["shipping_charge"]);
@@ -115,7 +116,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data
                     model.StatementReference += Environment.NewLine;
                 }
 
-                model.StatementReference += "(" + Conversion.GetBookAcronym(tranBook, subTranBook) + "# " + string.Join(",", ids) + ")";
+                model.StatementReference += "(" + Entities.Helpers.TransactionBookHelper.GetBookAcronym(tranBook, subTranBook) + "# " + string.Join(",", ids) + ")";
             }
 
             return model;

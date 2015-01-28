@@ -18,12 +18,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System.Collections.Generic;
-using System.Linq;
-using MixERP.Net.Common;
-using MixERP.Net.DbFactory;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Core;
-using Npgsql;
 
 namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
 {

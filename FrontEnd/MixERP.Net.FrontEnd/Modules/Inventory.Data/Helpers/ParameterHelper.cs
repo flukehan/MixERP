@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using MixERP.Net.Common.Models.Transactions;
+using MixERP.Net.Entities;
+using MixERP.Net.Entities.Models.Transactions;
 using Npgsql;
 
 /********************************************************************************
@@ -27,7 +28,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
 {
     public static class ParameterHelper
     {
-        public static IEnumerable<NpgsqlParameter> AddStockTransferModelParameter(Collection<StockAdjustmentModel> details)
+        public static IEnumerable<NpgsqlParameter> AddStockTransferModelParameter(Collection<StockAdjustmentDetail> details)
         {
             Collection<NpgsqlParameter> collection = new Collection<NpgsqlParameter>();
 
@@ -52,7 +53,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
             return collection;
         }
 
-        public static string CreateStockTransferModelParameter(Collection<StockAdjustmentModel> details)
+        public static string CreateStockTransferModelParameter(Collection<StockAdjustmentDetail> details)
         {
             if (details == null)
             {

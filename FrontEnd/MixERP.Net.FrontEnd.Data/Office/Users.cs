@@ -17,18 +17,16 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
 using System.Data;
 using System.Linq;
 using System.Web;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Policy;
 using MixERP.Net.DbFactory;
 using MixERP.Net.Entities;
+using MixERP.Net.Entities.Models.Policy;
+using MixERP.Net.Entities.Office;
 using Npgsql;
-using SignInView = MixERP.Net.Entities.Office.SignInView;
 
 namespace MixERP.Net.FrontEnd.Data.Office
 {

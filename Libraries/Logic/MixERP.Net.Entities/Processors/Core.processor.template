@@ -50,10 +50,9 @@ bool GenerateCommon = true;
 bool GeneratePocos = true;
 bool TrackModifiedColumns = false;
 
-
 public class Table
 {
-    public List<Column> Columns;	
+    public List<Column> Columns;    
     public string Name;
     public string Schema;
     public bool IsView;
@@ -183,8 +182,8 @@ string GetConnectionString(ref string connectionStringName, out string providerN
         }
     }
 
-//	if (String.IsNullOrEmpty(providerName))
-//		providerName="System.Data.SqlClient";
+//    if (String.IsNullOrEmpty(providerName))
+//        providerName="System.Data.SqlClient";
     
     return result;
 }
@@ -314,7 +313,7 @@ Tables LoadTables()
             reader=new PostGreSqlSchemaReader();
 
             reader.outer=this;
-            result=reader.ReadSchema(conn, _factory);
+            result=reader.ReadSchema(conn, _factory, SchemaName);
 
             // Remove unrequired tables/views
             for (int i=result.Count-1; i>=0; i--)
@@ -368,7 +367,7 @@ Tables LoadTables()
 
 abstract class SchemaReader
 {
-    public abstract Tables ReadSchema(DbConnection connection, DbProviderFactory factory);
+    public abstract Tables ReadSchema(DbConnection connection, DbProviderFactory factory, string schemaName);
     public GeneratedTextTransformation outer;
     public void WriteLine(string o)
     {
@@ -400,7 +399,7 @@ class PostGreSqlSchemaReader : SchemaReader
     }
 
     // SchemaReader.ReadSchema
-    public override Tables ReadSchema(DbConnection connection, DbProviderFactory factory)
+    public override Tables ReadSchema(DbConnection connection, DbProviderFactory factory, string schemaName)
     {
         var result=new Tables();
         
@@ -411,6 +410,11 @@ class PostGreSqlSchemaReader : SchemaReader
         cmd.Connection=connection;
         cmd.CommandText=TABLE_SQL;
 
+        var p2 = cmd.CreateParameter();
+        p2.ParameterName = "@schemaname";
+        p2.Value=schemaName;
+        cmd.Parameters.Add(p2);
+
         //pull the tables in a reader
         using(cmd)
         {
@@ -418,12 +422,14 @@ class PostGreSqlSchemaReader : SchemaReader
             {
                 while(rdr.Read())
                 {
+
                     Table tbl=new Table();
                     tbl.Name=rdr["table_name"].ToString();
                     tbl.Schema=rdr["table_schema"].ToString();
                     tbl.IsView=string.Compare(rdr["table_type"].ToString(), "View", true)==0;
                     tbl.CleanName=ToPascalCase(CleanUp(tbl.Name));
                     tbl.ClassName=Inflector.MakeSingular(tbl.CleanName);
+
                     result.Add(tbl);
                 }
             }
@@ -461,6 +467,12 @@ class PostGreSqlSchemaReader : SchemaReader
             p.Value=tbl.Name;
             cmd.Parameters.Add(p);
 
+            var p2 = cmd.CreateParameter();
+            p2.ParameterName = "@schemaname";
+            p2.Value=tbl.Schema;
+            cmd.Parameters.Add(p2);
+
+
             var result=new List<Column>();
             using (IDataReader rdr=cmd.ExecuteReader())
             {
@@ -480,6 +492,8 @@ class PostGreSqlSchemaReader : SchemaReader
         }
     }
 
+
+    
     string GetPK(string table){
         
         string sql=@"SELECT kcu.column_name 
@@ -503,7 +517,7 @@ class PostGreSqlSchemaReader : SchemaReader
 
             if(result!=null)
                 return result.ToString();    
-        }	         
+        }             
         
         return "";
     }
@@ -513,39 +527,39 @@ class PostGreSqlSchemaReader : SchemaReader
         switch (sqlType)
         {
             case "int8":
-            case "serial8":	
+            case "serial8":    
                 return "long";
 
-            case "bool":	
+            case "bool":    
                 return "bool";
 
-            case "bytea	":	
+            case "bytea":    
                 return "byte[]";
 
-            case "float8":	
+            case "float8":    
                 return "double";
 
-            case "int4":	
-            case "serial4":	
+            case "int4":    
+            case "serial4":    
                 return "int";
 
-            case "money	":	
+            case "money":    
                 return "decimal";
 
-            case "numeric":	
+            case "numeric":    
                 return "decimal";
 
-            case "float4":	
+            case "float4":    
                 return "float";
 
-            case "int2":	
+            case "int2":    
                 return "short";
 
             case "time":
             case "timetz":
             case "timestamp":
-            case "timestamptz":	
-            case "date":	
+            case "timestamptz":    
+            case "date":    
                 return "DateTime";
 
             default:
@@ -556,17 +570,19 @@ class PostGreSqlSchemaReader : SchemaReader
 
 
     const string TABLE_SQL=@"
-            SELECT table_name, table_schema, table_type
+            SELECT table_schema, table_name, table_type
             FROM information_schema.tables 
             WHERE (table_type='BASE TABLE' OR table_type='VIEW')
-                AND table_schema NOT IN ('pg_catalog', 'information_schema');
-            ";
+            AND table_schema = @schemaname
+            UNION ALL
+            SELECT DISTINCT nspname::text, proname::text, 'VIEW' AS table_type
+            FROM pg_proc
+            INNER JOIN pg_namespace
+            ON pg_proc.pronamespace = pg_namespace.oid
+            WHERE proretset
+            AND nspname = @schemaname;";
 
-    const string COLUMN_SQL=@"
-            SELECT column_name, is_nullable, udt_name, column_default
-            FROM information_schema.columns 
-            WHERE table_name=@tableName;
-            ";
+    const string COLUMN_SQL=@"SELECT * FROM public.poco_get_table_function_definition(@schemaname, @tableName);";
     
 }
 
@@ -772,7 +788,7 @@ public static class Inflector {
     /// </summary>
     /// <param name="str">The string to evaluated for numeric conversion</param>
     /// <returns>
-    /// 	<c>true</c> if the string can be converted to a number; otherwise, <c>false</c>.
+    ///     <c>true</c> if the string can be converted to a number; otherwise, <c>false</c>.
     /// </returns>
     public static bool IsStringNumeric(string str) {
         double result;

@@ -18,12 +18,12 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Core;
 using MixERP.Net.Core.Modules.Finance.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.TransactionViewFactory;
 using System;
 using System.Web.UI.HtmlControls;
+using MixERP.Net.Entities;
 
 namespace MixERP.Net.Core.Modules.Finance
 {
@@ -42,8 +42,8 @@ namespace MixERP.Net.Core.Modules.Finance
                 view.Text = Titles.VoucherVerification;
 
                 //Default Values
-                view.DateFromFromFrequency = Frequency.Today;
-                view.DateToFrequency = Frequency.Today;
+                view.DateFromFromFrequencyType = FrequencyType.Today;
+                view.DateToFrequencyType = FrequencyType.Today;
                 view.Status = "Unverified";
 
                 view.OfficeName = SessionHelper.GetOfficeName();
@@ -56,25 +56,37 @@ namespace MixERP.Net.Core.Modules.Finance
         }
 
         #region Modal
-        private void AddModal()
+        private void AddActions(HtmlGenericControl container)
         {
-            using (HtmlGenericControl modal = HtmlControlHelper.GetModal())
+            using (HtmlGenericControl actions = new HtmlGenericControl("div"))
             {
-                this.AddHeader(modal);
-                this.AddContent(modal);
-                this.AddActions(modal);
-                this.AddLocalizedVariables();
+                actions.Attributes.Add("class", "actions");
 
-                this.Controls.Add(modal);
-            }
-        }
+                using (HtmlGenericControl buttons = new HtmlGenericControl("div"))
+                {
+                    buttons.Attributes.Add("class", "ui buttons");
 
-        private void AddHeader(HtmlGenericControl container)
-        {
-            using (HtmlGenericControl header = new HtmlGenericControl("div"))
-            {
-                header.Attributes.Add("class", "ui massive red header");
-                container.Controls.Add(header);
+                    using (HtmlInputButton cancelButton = new HtmlInputButton())
+                    {
+                        cancelButton.Attributes.Add("class", "ui red button");
+                        cancelButton.Value = Titles.Cancel;
+
+                        buttons.Controls.Add(cancelButton);
+                    }
+
+                    using (HtmlInputButton verifyButton = new HtmlInputButton())
+                    {
+                        verifyButton.ID = "VerifyButton";
+                        verifyButton.Attributes.Add("class", "ui green button");
+                        verifyButton.Value = Titles.Verify;
+                        verifyButton.Attributes.Add("title", "CTRL + RETURN");
+                        buttons.Controls.Add(verifyButton);
+                    }
+
+                    actions.Controls.Add(buttons);
+                }
+
+                container.Controls.Add(actions);
             }
         }
 
@@ -114,41 +126,27 @@ namespace MixERP.Net.Core.Modules.Finance
             }
         }
 
-
-        private void AddActions(HtmlGenericControl container)
+        private void AddHeader(HtmlGenericControl container)
         {
-            using (HtmlGenericControl actions = new HtmlGenericControl("div"))
+            using (HtmlGenericControl header = new HtmlGenericControl("div"))
             {
-                actions.Attributes.Add("class", "actions");
-
-                using (HtmlGenericControl buttons = new HtmlGenericControl("div"))
-                {
-                    buttons.Attributes.Add("class", "ui buttons");
-
-                    using (HtmlInputButton cancelButton = new HtmlInputButton())
-                    {
-                        cancelButton.Attributes.Add("class", "ui red button");
-                        cancelButton.Value = Titles.Cancel;
-
-                        buttons.Controls.Add(cancelButton);
-                    }
-
-                    using (HtmlInputButton verifyButton = new HtmlInputButton())
-                    {
-                        verifyButton.ID = "VerifyButton";
-                        verifyButton.Attributes.Add("class", "ui green button");
-                        verifyButton.Value = Titles.Verify;
-                        verifyButton.Attributes.Add("title", "CTRL + RETURN");
-                        buttons.Controls.Add(verifyButton);
-                    }
-
-                    actions.Controls.Add(buttons);
-                }
-
-                container.Controls.Add(actions);
+                header.Attributes.Add("class", "ui massive red header");
+                container.Controls.Add(header);
             }
         }
 
+        private void AddModal()
+        {
+            using (HtmlGenericControl modal = HtmlControlHelper.GetModal())
+            {
+                this.AddHeader(modal);
+                this.AddContent(modal);
+                this.AddActions(modal);
+                this.AddLocalizedVariables();
+
+                this.Controls.Add(modal);
+            }
+        }
         #endregion
 
         private void AddLocalizedVariables()

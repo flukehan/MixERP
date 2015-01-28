@@ -1,12 +1,11 @@
-﻿using MixERP.Net.Common;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.WebControls.TransactionViewFactory.Helpers;
-using System;
-using System.Data;
+﻿using System;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.Common;
+using MixERP.Net.WebControls.TransactionViewFactory.Helpers;
 
 namespace MixERP.Net.WebControls.TransactionViewFactory
 {
@@ -57,11 +56,8 @@ namespace MixERP.Net.WebControls.TransactionViewFactory
             string verifiedBy = this.verifiedByInputText.Value;
             string reason = this.reasonInputText.Value;
 
-            using (DataTable table = Data.Journal.GetJournalView(userId, officeId, from, to, tranId, tranCode, book, referenceNumber, statementReference, postedBy, office, status, verifiedBy, reason))
-            {
-                this.transactionGridView.DataSource = table;
-                this.transactionGridView.DataBind();
-            }
+            this.transactionGridView.DataSource = Data.Journal.GetJournalView(userId, officeId, from, to, tranId, tranCode, book, referenceNumber, statementReference, postedBy, office, status, verifiedBy, reason);
+            this.transactionGridView.DataBind();
         }
     }
 }

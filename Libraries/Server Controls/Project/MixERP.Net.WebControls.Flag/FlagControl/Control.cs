@@ -1,10 +1,9 @@
-﻿using MixERP.Net.WebControls.Flag.Resources;
-using System.Data;
-using System.Security.Permissions;
+﻿using System.Security.Permissions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.WebControls.Flag.Resources;
 
 namespace MixERP.Net.WebControls.Flag
 {
@@ -34,13 +33,10 @@ namespace MixERP.Net.WebControls.Flag
 
         private void BindFlagTypeDropDownList()
         {
-            using (DataTable table = Data.TableHelper.GetFlags())
-            {
-                this.flagDropDownlist.DataSource = table;
-                this.flagDropDownlist.DataTextField = "flag_type_name";
-                this.flagDropDownlist.DataValueField = "flag_type_id";
-                this.flagDropDownlist.DataBind();
-            }
+            this.flagDropDownlist.DataSource = Data.FlagType.GetFlagTypes();
+            this.flagDropDownlist.DataTextField = "FlagTypeName";
+            this.flagDropDownlist.DataValueField = "FlagTypeId";
+            this.flagDropDownlist.DataBind();
         }
 
         private void Initialize()

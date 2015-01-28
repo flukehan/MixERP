@@ -17,11 +17,14 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System;
 using MixERP.Net.Common;
-using MixERP.Net.Common.Models.Transactions;
+using MixERP.Net.Core.Modules.Purchase.Data.Helpers;
+using MixERP.Net.Core.Modules.Purchase.Resources;
+using MixERP.Net.Entities;
+using MixERP.Net.Entities.Models.Transactions;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.TransactionChecklist;
-using System;
 
 namespace MixERP.Net.Core.Modules.Purchase.Confirmation
 {
@@ -33,10 +36,10 @@ namespace MixERP.Net.Core.Modules.Purchase.Confirmation
 
             using (TransactionChecklistForm checklist = new TransactionChecklistForm())
             {
-                checklist.Text = Resources.Titles.GoodsReceiptNote;
-                checklist.ViewReportButtonText = Resources.Titles.ViewThisNote;
-                checklist.EmailReportButtonText = Resources.Titles.EmailThisNote;
-                checklist.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(TranBook.Purchase, SubTranBook.Receipt, transactionMasterId);
+                checklist.Text = Titles.GoodsReceiptNote;
+                checklist.ViewReportButtonText = Titles.ViewThisNote;
+                checklist.EmailReportButtonText = Titles.EmailThisNote;
+                checklist.PartyEmailAddress = Parties.GetEmailAddress(TranBook.Purchase, SubTranBook.Receipt, transactionMasterId);
 
                 checklist.AttachmentBookName = "transaction";
                 checklist.OverridePath = "/Modules/Purchase/GRN.mix";

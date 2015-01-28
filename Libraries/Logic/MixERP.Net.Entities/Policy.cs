@@ -89,7 +89,7 @@ namespace MixERP.Net.Entities.Policy
             public static IEnumerable<T> Query(Sql sql) { return repo.Query<T>(sql); }
         }
     }
-	
+    
 
     
     [TableName("auto_verification_policy_scrud_view")]
@@ -378,6 +378,30 @@ namespace MixERP.Net.Entities.Policy
 
         [Column("audit_ts")] 
         public DateTime? AuditTs { get; set; }
+
+    }
+    
+    [TableName("get_menu")]
+    [ExplicitColumns]
+    public class GetMenu : PetaPocoDB.Record<GetMenu> 
+    {
+        [Column("menu_id")] 
+        public string MenuId { get; set; }
+
+        [Column("menu_text")] 
+        public string MenuText { get; set; }
+
+        [Column("url")] 
+        public string Url { get; set; }
+
+        [Column("menu_code")] 
+        public string MenuCode { get; set; }
+
+        [Column("level")] 
+        public string Level { get; set; }
+
+        [Column("parent_menu_id")] 
+        public string ParentMenuId { get; set; }
 
     }
 }

@@ -103,6 +103,10 @@
       <Project>{D5A09C22-8F48-4FB2-A14D-C62C8C8FCEC0}</Project>
       <Name>MixERP.Net.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Logic\MixERP.Net.Entities\MixERP.Net.Entities.csproj">
+      <Project>{BDE918B1-DD9B-41C9-A41F-F3DDEC18B6D8}</Project>
+      <Name>MixERP.Net.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Logic\MixERP.Net.HtmlParser\MixERP.Net.HtmlParser.csproj">
       <Project>{0ef8a910-9603-477e-9ef7-aae9aea46160}</Project>
       <Name>MixERP.Net.HtmlParser</Name>

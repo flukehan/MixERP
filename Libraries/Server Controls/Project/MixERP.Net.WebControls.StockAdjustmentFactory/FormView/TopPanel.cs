@@ -1,32 +1,13 @@
-﻿using System;
-using MixERP.Net.Common.Models.Core;
+﻿using System.Web.UI.HtmlControls;
+using MixERP.Net.Entities;
 using MixERP.Net.WebControls.Common;
 using MixERP.Net.WebControls.StockAdjustmentFactory.Helpers;
 using MixERP.Net.WebControls.StockAdjustmentFactory.Resources;
-using System.Web.UI.HtmlControls;
 
 namespace MixERP.Net.WebControls.StockAdjustmentFactory
 {
     public partial class FormView
     {
-        private void CreateTopPanel()
-        {
-            using (HtmlGenericControl form = new HtmlGenericControl())
-            {
-                form.TagName = "div";
-                form.Attributes.Add("class", "ui form");
-
-                using (HtmlGenericControl fields = FormHelper.GetFields())
-                {
-                    this.AddDateTextBox(fields);
-                    this.AddReferenceNumberTextBox(fields);
-
-                    form.Controls.Add(fields);
-                }
-                this.container.Controls.Add(form);
-            }
-        }
-
         private void AddDateTextBox(HtmlGenericControl fields)
         {
             using (HtmlGenericControl field = FormHelper.GetField())
@@ -41,7 +22,7 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
 
                 this.dateTextBox = new DateTextBox();
                 this.dateTextBox.ID = "ValueDateTextBox";
-                this.dateTextBox.Mode = Frequency.Today;
+                this.dateTextBox.Mode = FrequencyType.Today;
                 field.Controls.Add(this.dateTextBox);
 
                 fields.Controls.Add(field);
@@ -68,6 +49,24 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
                     field.Controls.Add(referenceNumberInputText);
                 }
                 fields.Controls.Add(field);
+            }
+        }
+
+        private void CreateTopPanel()
+        {
+            using (HtmlGenericControl form = new HtmlGenericControl())
+            {
+                form.TagName = "div";
+                form.Attributes.Add("class", "ui form");
+
+                using (HtmlGenericControl fields = FormHelper.GetFields())
+                {
+                    this.AddDateTextBox(fields);
+                    this.AddReferenceNumberTextBox(fields);
+
+                    form.Controls.Add(fields);
+                }
+                this.container.Controls.Add(form);
             }
         }
     }

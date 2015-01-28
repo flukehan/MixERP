@@ -17,20 +17,21 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Transactions;
-using MixERP.Net.DbFactory;
-using Npgsql;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.DbFactory;
+using MixERP.Net.Entities.Core;
+using MixERP.Net.Entities.Models.Transactions;
+using Npgsql;
 
 namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 {
     public static class Transaction
     {
-        public static long Add(DateTime valueDate, string referenceNumber, int costCenterId, Collection<JournalDetailsModel> details, Collection<Common.Models.Core.PostgresqlAttachmentModel> attachments)
+        public static long Add(DateTime valueDate, string referenceNumber, int costCenterId, Collection<JournalDetail> details, Collection<Attachment> attachments)
         {
             long transactionMasterId = Add(valueDate, SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), costCenterId, referenceNumber, details, attachments);
             return transactionMasterId;
@@ -59,7 +60,23 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
             }
         }
 
-        private static long Add(DateTime valueDate, int officeId, int userId, long logOnId, int costCenterId, string referenceNumber, Collection<JournalDetailsModel> details, Collection<Common.Models.Core.PostgresqlAttachmentModel> attachments)
+        public static void Verify(long tranId, int officeId, int userId, long loginId, short verificationStatusId, string reason)
+        {
+            const string sql = "SELECT * FROM transactions.verify_transaction(@TranId::bigint, @OfficeId, @UserId, @LoginId::bigint, @VerificationStatusId::smallint, @Reason);";
+            using (NpgsqlCommand command = new NpgsqlCommand(sql))
+            {
+                command.Parameters.AddWithValue("@TranId", tranId);
+                command.Parameters.AddWithValue("@OfficeId", officeId);
+                command.Parameters.AddWithValue("@UserId", userId);
+                command.Parameters.AddWithValue("@LoginId", loginId);
+                command.Parameters.AddWithValue("@VerificationStatusId", verificationStatusId);
+                command.Parameters.AddWithValue("@Reason", reason);
+
+                DbOperation.ExecuteNonQuery(command);
+            }
+        }
+
+        private static long Add(DateTime valueDate, int officeId, int userId, long logOnId, int costCenterId, string referenceNumber, Collection<JournalDetail> details, Collection<Attachment> attachments)
         {
             if (details == null)
             {
@@ -111,7 +128,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
                             transactionMasterId = Conversion.TryCastLong(master.ExecuteScalar());
                         }
 
-                        foreach (JournalDetailsModel model in details)
+                        foreach (JournalDetail model in details)
                         {
                             sql = "INSERT INTO transactions.transaction_details(value_date, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency) " +
                                   "SELECT @ValueDate, @TransactionMasterId, @TranType, core.get_account_id_by_account_number(@AccountNumber::text), @StatementReference, office.get_cash_repository_id_by_cash_repository_code(@CashRepositoryCode), @CurrencyCode, @AmountInCurrency, transactions.get_default_currency_code_by_office_id(@OfficeId), @Er, @AmountInLocalCurrency;";
@@ -165,7 +182,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 
                         if (attachments != null && attachments.Count > 0)
                         {
-                            foreach (Common.Models.Core.PostgresqlAttachmentModel attachment in attachments)
+                            foreach (Attachment attachment in attachments)
                             {
                                 sql = "INSERT INTO core.attachments(user_id, resource, resource_key, resource_id, original_file_name, file_extension, file_path, comment) SELECT @UserId, @Resource, @ResourceKey, @ResourceId, @OriginalFileName, @FileExtension, @FilePath, @Comment;";
                                 using (NpgsqlCommand attachmentCommand = new NpgsqlCommand(sql, connection))
@@ -200,22 +217,6 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
                         throw;
                     }
                 }
-            }
-        }
-
-        public static void Verify(long tranId, int officeId, int userId, long loginId, short verificationStatusId, string reason)
-        {
-            const string sql = "SELECT * FROM transactions.verify_transaction(@TranId::bigint, @OfficeId, @UserId, @LoginId::bigint, @VerificationStatusId::smallint, @Reason);";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@TranId", tranId);
-                command.Parameters.AddWithValue("@OfficeId", officeId);
-                command.Parameters.AddWithValue("@UserId", userId);
-                command.Parameters.AddWithValue("@LoginId", loginId);
-                command.Parameters.AddWithValue("@VerificationStatusId", verificationStatusId);
-                command.Parameters.AddWithValue("@Reason", reason);
-
-                DbOperation.ExecuteNonQuery(command);
             }
         }
     }

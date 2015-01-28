@@ -17,11 +17,12 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Models.Transactions;
+using System;
 using MixERP.Net.Core.Modules.Purchase.Resources;
+using MixERP.Net.Entities;
+using MixERP.Net.Entities.Models.Transactions;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.UserControls.Products;
-using System;
 
 namespace MixERP.Net.Core.Modules.Purchase.Entry
 {
@@ -29,7 +30,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Entry
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            using (ProductControl product = (ProductControl)this.Page.LoadControl("~/UserControls/Products/ProductControl.ascx"))
+            using (ProductControl product = (ProductControl) this.Page.LoadControl("~/UserControls/Products/ProductControl.ascx"))
             {
                 product.Book = TranBook.Purchase;
                 product.SubBook = SubTranBook.Order;

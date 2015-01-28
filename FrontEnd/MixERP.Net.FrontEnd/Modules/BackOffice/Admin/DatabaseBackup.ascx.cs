@@ -19,8 +19,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.ObjectModel;
-using System.Configuration;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Web.Hosting;
@@ -36,12 +34,13 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
 {
     public partial class DatabaseBackup : MixERPUserControl
     {
+        private readonly PostgreSQLServer server = new PostgreSQLServer();
+
         public override void OnControlLoad(object sender, EventArgs e)
         {
             this.CreateHeader(this.Placeholder1);
             this.CreateFormSegment(this.Placeholder1);
             this.CreateGridModal(this.Placeholder1);
-
 
 
             base.OnControlLoad(sender, e);
@@ -57,48 +56,6 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
         }
 
         #region Form Segment
-        private void CreateFormSegment(Control container)
-        {
-            using (HtmlGenericControl formSegment = HtmlControlHelper.GetFormSegment())
-            {
-                using (HtmlGenericControl inlineFields = HtmlControlHelper.GetInlineFields())
-                {
-                    this.CreateBackupNameField(inlineFields);
-                    this.CreateBackupButton(inlineFields);
-                    this.CreateViewBackupButton(inlineFields);
-
-                    formSegment.Controls.Add(inlineFields);
-                }
-
-                this.CreateBackupConsole(formSegment);
-                container.Controls.Add(formSegment);
-            }
-        }
-
-        private void CreateBackupNameField(HtmlGenericControl container)
-        {
-            using (HtmlGenericControl field = HtmlControlHelper.GetField())
-            {
-                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Titles.EnterBackupName, "BackupNameInputText"))
-                {
-                    field.Controls.Add(label);
-                }
-
-                using (HtmlInputText backupNameInputText = new HtmlInputText())
-                {
-                    this.server.Validate();
-                    backupNameInputText.ID = "BackupNameInputText";
-                    if (this.server.IsValid)
-                    {
-                        backupNameInputText.Value = string.Format(CultureInfo.InvariantCulture, "{0}.{1}.{2}.{3}", this.server.DatabaseName, SessionHelper.GetOfficeId(), SessionHelper.GetUserName(), DateTime.Now.ToFileTime());
-                    }
-
-                    field.Controls.Add(backupNameInputText);
-                }
-
-                container.Controls.Add(field);
-            }
-        }
 
         private void CreateBackupButton(HtmlGenericControl container)
         {
@@ -107,17 +64,6 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
                 backupButton.Attributes.Add("class", "ui red button disabled loading");
                 backupButton.Value = Titles.BackupNow;
                 backupButton.ID = "BackupButton";
-                container.Controls.Add(backupButton);
-            }
-        }
-
-        private void CreateViewBackupButton(HtmlGenericControl container)
-        {
-            using (HtmlInputButton backupButton = new HtmlInputButton())
-            {
-                backupButton.Attributes.Add("class", "ui green button");
-                backupButton.Attributes.Add("onclick", "$('.modal').modal('show');");
-                backupButton.Value = Titles.ViewBackups;
                 container.Controls.Add(backupButton);
             }
         }
@@ -146,81 +92,63 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
             }
         }
 
+        private void CreateBackupNameField(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl field = HtmlControlHelper.GetField())
+            {
+                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Titles.EnterBackupName, "BackupNameInputText"))
+                {
+                    field.Controls.Add(label);
+                }
+
+                using (HtmlInputText backupNameInputText = new HtmlInputText())
+                {
+                    this.server.Validate();
+                    backupNameInputText.ID = "BackupNameInputText";
+                    if (this.server.IsValid)
+                    {
+                        backupNameInputText.Value = string.Format(CultureInfo.InvariantCulture, "{0}.{1}.{2}.{3}", this.server.DatabaseName, SessionHelper.GetOfficeId(), SessionHelper.GetUserName(), DateTime.Now.ToFileTime());
+                    }
+
+                    field.Controls.Add(backupNameInputText);
+                }
+
+                container.Controls.Add(field);
+            }
+        }
+
+        private void CreateFormSegment(Control container)
+        {
+            using (HtmlGenericControl formSegment = HtmlControlHelper.GetFormSegment())
+            {
+                using (HtmlGenericControl inlineFields = HtmlControlHelper.GetInlineFields())
+                {
+                    this.CreateBackupNameField(inlineFields);
+                    this.CreateBackupButton(inlineFields);
+                    this.CreateViewBackupButton(inlineFields);
+
+                    formSegment.Controls.Add(inlineFields);
+                }
+
+                this.CreateBackupConsole(formSegment);
+                container.Controls.Add(formSegment);
+            }
+        }
+
+        private void CreateViewBackupButton(HtmlGenericControl container)
+        {
+            using (HtmlInputButton backupButton = new HtmlInputButton())
+            {
+                backupButton.Attributes.Add("class", "ui green button");
+                backupButton.Attributes.Add("onclick", "$('.modal').modal('show');");
+                backupButton.Value = Titles.ViewBackups;
+                container.Controls.Add(backupButton);
+            }
+        }
+
         #endregion
 
         #region GridPanel
-        private void CreateGridModal(Control container)
-        {
-            using (HtmlGenericControl largeModal = new HtmlGenericControl("div"))
-            {
-                largeModal.Attributes.Add("class", "ui large modal");
-
-                this.CreateCloseIcon(largeModal);
-                this.CreateModalHeader(largeModal);
-                this.CreateModalContent(largeModal);
-                this.CreateModalActions(largeModal);
-
-                container.Controls.Add(largeModal);
-            }
-        }
-
-
-        private void CreateCloseIcon(HtmlGenericControl container)
-        {
-            using (HtmlGenericControl closeIcon = new HtmlGenericControl("i"))
-            {
-                closeIcon.Attributes.Add("class", "close icon");
-                container.Controls.Add(closeIcon);
-            }
-        }
-
-        private void CreateModalHeader(HtmlGenericControl container)
-        {
-            using (HtmlGenericControl header = new HtmlGenericControl("div"))
-            {
-                header.Attributes.Add("class", "header");
-
-                using (HtmlGenericControl databaseIcon = new HtmlGenericControl("i"))
-                {
-                    databaseIcon.Attributes.Add("class", "database icon");
-                    header.Controls.Add(databaseIcon);
-                }
-
-                header.InnerText = Titles.DatabaseBackups;
-                container.Controls.Add(header);
-            }
-        }
-
-        private void CreateModalContent(HtmlGenericControl container)
-        {
-            using (HtmlGenericControl content = new HtmlGenericControl("div"))
-            {
-                content.Attributes.Add("class", "content");
-
-                this.grid = new MixERPGridView(false);
-                this.grid.CssClass += "relaxed";
-                this.BindGridView();
-
-                content.Controls.Add(this.grid);
-                container.Controls.Add(content);
-            }
-        }
-
-        private void CreateModalActions(HtmlGenericControl container)
-        {
-            using (HtmlGenericControl actions = new HtmlGenericControl("div"))
-            {
-                actions.Attributes.Add("class", "actions");
-                using (HtmlGenericControl closeButton = new HtmlGenericControl("div"))
-                {
-                    closeButton.Attributes.Add("class", "ui black button");
-                    closeButton.InnerText = Titles.Close;
-                    actions.Controls.Add(closeButton);
-                }
-
-                container.Controls.Add(actions);
-            }
-        }
 
         private void BindGridView()
         {
@@ -254,25 +182,92 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
             }
         }
 
-        internal class BackupFile
+        private void CreateCloseIcon(HtmlGenericControl container)
         {
-            public string Name { get; set; }
-            public DateTime CreatedOn { get; set; }
-            public DateTime LastWrittenOn { get; set; }
-            public DateTime LastAccessedOn { get; set; }
+            using (HtmlGenericControl closeIcon = new HtmlGenericControl("i"))
+            {
+                closeIcon.Attributes.Add("class", "close icon");
+                container.Controls.Add(closeIcon);
+            }
         }
 
+        private void CreateGridModal(Control container)
+        {
+            using (HtmlGenericControl largeModal = new HtmlGenericControl("div"))
+            {
+                largeModal.Attributes.Add("class", "ui large modal");
+
+                this.CreateCloseIcon(largeModal);
+                this.CreateModalHeader(largeModal);
+                this.CreateModalContent(largeModal);
+                this.CreateModalActions(largeModal);
+
+                container.Controls.Add(largeModal);
+            }
+        }
+
+        private void CreateModalActions(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl actions = new HtmlGenericControl("div"))
+            {
+                actions.Attributes.Add("class", "actions");
+                using (HtmlGenericControl closeButton = new HtmlGenericControl("div"))
+                {
+                    closeButton.Attributes.Add("class", "ui black button");
+                    closeButton.InnerText = Titles.Close;
+                    actions.Controls.Add(closeButton);
+                }
+
+                container.Controls.Add(actions);
+            }
+        }
+
+        private void CreateModalContent(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl content = new HtmlGenericControl("div"))
+            {
+                content.Attributes.Add("class", "content");
+
+                this.grid = new MixERPGridView(false);
+                this.grid.CssClass += "relaxed";
+                this.BindGridView();
+
+                content.Controls.Add(this.grid);
+                container.Controls.Add(content);
+            }
+        }
+
+        private void CreateModalHeader(HtmlGenericControl container)
+        {
+            using (HtmlGenericControl header = new HtmlGenericControl("div"))
+            {
+                header.Attributes.Add("class", "header");
+
+                using (HtmlGenericControl databaseIcon = new HtmlGenericControl("i"))
+                {
+                    databaseIcon.Attributes.Add("class", "database icon");
+                    header.Controls.Add(databaseIcon);
+                }
+
+                header.InnerText = Titles.DatabaseBackups;
+                container.Controls.Add(header);
+            }
+        }
+
+        internal class BackupFile
+        {
+            public DateTime CreatedOn { get; set; }
+            public DateTime LastAccessedOn { get; set; }
+            public DateTime LastWrittenOn { get; set; }
+            public string Name { get; set; }
+        }
 
         #endregion
 
-
-        readonly PostgreSQLServer server = new PostgreSQLServer();
-
         #region IDisposable
 
-        private MixERPGridView grid;
-
         private bool disposed;
+        private MixERPGridView grid;
 
         public override sealed void Dispose()
         {
@@ -301,9 +296,5 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
         }
 
         #endregion
-
-
-
-
     }
 }

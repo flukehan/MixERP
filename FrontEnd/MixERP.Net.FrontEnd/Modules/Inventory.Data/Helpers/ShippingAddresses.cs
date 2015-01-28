@@ -17,23 +17,17 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.DbFactory;
-using Npgsql;
-using System.Data;
+using System.Collections.Generic;
+using MixERP.Net.Entities;
+using MixERP.Net.Entities.Core;
 
 namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
 {
     public static class ShippingAddresses
     {
-        public static DataTable GetShippingAddressView(string partyCode)
+        public static IEnumerable<ShippingAddressView> GetShippingAddressView(string partyCode)
         {
-            const string sql = "SELECT * FROM core.shipping_address_view WHERE party_id = core.get_party_id_by_party_code(@PartyCode);";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@PartyCode", partyCode);
-
-                return DbOperation.GetDataTable(command);
-            }
+            return Factory.Get<ShippingAddressView>("SELECT * FROM core.shipping_address_view WHERE party_id = core.get_party_id_by_party_code(@0);", partyCode);
         }
     }
 }

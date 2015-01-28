@@ -19,7 +19,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Linq;
-using System.Web.Configuration;
 using System.Web.UI.WebControls;
 using MixERP.Net.WebControls.ScrudFactory.Resources;
 

@@ -18,11 +18,11 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Core;
 using MixERP.Net.Core.Modules.Finance.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.TransactionViewFactory;
 using System;
+using MixERP.Net.Entities;
 
 namespace MixERP.Net.Core.Modules.Finance
 {
@@ -40,8 +40,8 @@ namespace MixERP.Net.Core.Modules.Finance
                 view.Text = Titles.JournalVoucher;
 
                 //Default Values
-                view.DateFromFromFrequency = Frequency.FiscalYearStartDate;
-                view.DateToFrequency = Frequency.FiscalYearEndDate;
+                view.DateFromFromFrequencyType = FrequencyType.FiscalYearStartDate;
+                view.DateToFrequencyType = FrequencyType.FiscalYearEndDate;
 
                 view.Book = "Journal";
                 view.PostedBy = SessionHelper.GetUserName();

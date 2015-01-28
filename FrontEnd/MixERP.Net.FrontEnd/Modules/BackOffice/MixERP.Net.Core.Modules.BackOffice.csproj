@@ -488,6 +488,10 @@
       <Project>{D5A09C22-8F48-4FB2-A14D-C62C8C8FCEC0}</Project>
       <Name>MixERP.Net.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\MixERP.Net.WebControls.StockTransactionFactory.csproj">
+      <Project>{1C84E528-87ED-4B69-BFC3-81D675CB153E}</Project>
+      <Name>MixERP.Net.WebControls.StockTransactionFactory</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\MixERP.Net.FrontEnd.csproj">
       <Project>{ACE1017D-71BC-4417-A906-72C4B9C55823}</Project>
       <Name>MixERP.Net.FrontEnd</Name>

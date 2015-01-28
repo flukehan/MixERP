@@ -54,7 +54,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\Accounts.cs" />
+    <Compile Include="Helpers\AttachmentHelper.cs" />
     <Compile Include="Helpers\Currencies.cs" />
+    <Compile Include="Helpers\StockMasterDetailHelper.cs" />
     <Compile Include="Transactions\Delivery.cs" />
     <Compile Include="Transactions\DirectSales.cs" />
     <Compile Include="Helpers\Items.cs" />

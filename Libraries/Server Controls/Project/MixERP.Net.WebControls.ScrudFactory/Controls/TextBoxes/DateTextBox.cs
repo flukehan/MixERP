@@ -17,20 +17,36 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.WebControls.ScrudFactory.Helpers;
-using MixERP.Net.WebControls.ScrudFactory.Resources;
 using System;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
+using MixERP.Net.WebControls.ScrudFactory.Helpers;
+using MixERP.Net.WebControls.ScrudFactory.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 {
     internal static class ScrudDateTextBox
     {
+        public static string GetLocalizedDate(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return string.Empty;
+            }
+
+            DateTime date = Conversion.TryCastDate(value);
+
+            if (date.Date == date)
+            {
+                return date.ToString("d");
+            }
+
+            return date.ToString("f");
+        }
+
         internal static void AddDateTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isNullable, string validatorCssClass, Assembly assembly, bool disabled)
         {
             if (htmlTable == null)
@@ -68,23 +84,6 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
                     ScrudFactoryHelper.AddRow(htmlTable, label, textBox, dateValidator);
                 }
             }
-        }
-
-        public static string GetLocalizedDate(string value)
-        {
-            if (string.IsNullOrWhiteSpace(value))
-            {
-                return string.Empty;
-            }
-
-            DateTime date = Conversion.TryCastDate(value);
-
-            if (date.Date == date)
-            {
-                return date.ToString("d");
-            }
-
-            return date.ToString("f");
         }
 
         private static CompareValidator GetDateValidator(Control controlToValidate, string cssClass)

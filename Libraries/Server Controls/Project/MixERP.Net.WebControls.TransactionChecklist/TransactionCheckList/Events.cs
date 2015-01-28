@@ -17,13 +17,12 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Transactions;
-using MixERP.Net.WebControls.TransactionChecklist.Helpers;
-using MixERP.Net.WebControls.TransactionChecklist.Resources;
 using System;
 using System.Globalization;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.WebControls.TransactionChecklist.Helpers;
+using MixERP.Net.WebControls.TransactionChecklist.Resources;
 
 namespace MixERP.Net.WebControls.TransactionChecklist
 {
@@ -74,11 +73,11 @@ namespace MixERP.Net.WebControls.TransactionChecklist
             DateTime transactionDate = DateTime.Now;
             long transactionMasterId = Conversion.TryCastLong(tranId);
 
-            VerificationModel model = Verification.GetVerificationStatus(transactionMasterId);
+            Entities.Models.Transactions.Verification model = Verification.GetVerificationStatus(transactionMasterId);
             if (
-                model.Verification.Equals(0) //Awaiting verification
+                model.VerificationStatusId.Equals(0) //Awaiting verification
                 ||
-                model.Verification.Equals(2) //Automatically Approved by Workflow
+                model.VerificationStatusId.Equals(2) //Automatically Approved by Workflow
                 )
             {
                 //Withdraw this transaction.

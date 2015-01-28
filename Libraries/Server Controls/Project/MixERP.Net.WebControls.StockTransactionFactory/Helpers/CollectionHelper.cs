@@ -17,25 +17,49 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common;
-using MixERP.Net.Common.Models.Transactions;
 using System.Collections.ObjectModel;
 using System.Web.Script.Serialization;
+using MixERP.Net.Common;
+using MixERP.Net.Entities.Core;
+using MixERP.Net.Entities.Models.Transactions;
 
 namespace MixERP.Net.WebControls.StockTransactionFactory.Helpers
 {
     public static class CollectionHelper
     {
-        public static Collection<JournalDetailsModel> GetJournalDetailCollection(string json)
+        public static Collection<Attachment> GetAttachmentCollection(string json)
         {
-            Collection<JournalDetailsModel> details = new Collection<JournalDetailsModel>();
+            Collection<Attachment> details = new Collection<Attachment>();
+            var jss = new JavaScriptSerializer();
+
+            dynamic result = jss.Deserialize<dynamic>(json);
+
+            if (result != null)
+            {
+                foreach (dynamic item in result)
+                {
+                    Attachment detail = new Attachment();
+                    detail.Comment = item["Comment"];
+                    detail.FilePath = item["FilePath"];
+                    detail.OriginalFileName = item["OriginalFileName"];
+
+                    details.Add(detail);
+                }
+            }
+
+            return details;
+        }
+
+        public static Collection<JournalDetail> GetJournalDetailCollection(string json)
+        {
+            Collection<JournalDetail> details = new Collection<JournalDetail>();
             var jss = new JavaScriptSerializer();
 
             dynamic result = jss.Deserialize<dynamic>(json);
 
             foreach (var item in result)
             {
-                JournalDetailsModel detail = new JournalDetailsModel();
+                JournalDetail detail = new JournalDetail();
                 detail.StatementReference = item[0];
                 detail.AccountNumber = item[1];
                 detail.Account = item[2];
@@ -52,16 +76,16 @@ namespace MixERP.Net.WebControls.StockTransactionFactory.Helpers
             return details;
         }
 
-        public static Collection<StockMasterDetailModel> GetStockMasterDetailCollection(string json, int storeId)
+        public static Collection<StockDetail> GetStockMasterDetailCollection(string json, int storeId)
         {
-            Collection<StockMasterDetailModel> details = new Collection<StockMasterDetailModel>();
+            Collection<StockDetail> details = new Collection<StockDetail>();
             var jss = new JavaScriptSerializer();
 
             dynamic result = jss.Deserialize<dynamic>(json);
 
             foreach (var item in result)
             {
-                StockMasterDetailModel detail = new StockMasterDetailModel();
+                StockDetail detail = new StockDetail();
                 detail.ItemCode = item[0];
                 detail.Quantity = Conversion.TryCastInteger(item[2]);
                 detail.UnitName = item[3];

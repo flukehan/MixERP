@@ -18,15 +18,14 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
-using System.Data;
 using System.Reflection;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Core;
 using MixERP.Net.Core.Modules.Inventory.Resources;
+using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.Common;
 
@@ -40,7 +39,14 @@ namespace MixERP.Net.Core.Modules.Inventory
             this.CreateTopFormSegment(this.Placeholder1);
             this.CreateGridView(this.Placeholder1);
             this.CreateBottomPanel(this.Placeholder1);
+            this.RegisterJavascript();
             base.OnControlLoad(sender, e);
+        }
+
+        private void RegisterJavascript()
+        {
+            string javascript = string.Format("var actualLocalized='{0}';var differenceLocalized='{1}';", Titles.Actual, Titles.Difference);
+            PageUtility.RegisterJavascript("Adjustment_Localized", javascript, this.Page, true);
         }
 
         #region Header
@@ -177,6 +183,13 @@ namespace MixERP.Net.Core.Modules.Inventory
 
         #region Form
 
+        private void AddTemplateField(GridView g, string headerText)
+        {
+            TemplateField field = new TemplateField();
+            field.HeaderText = headerText;
+            g.Columns.Add(field);
+        }
+
         private void CreateReferenceNumberField(HtmlGenericControl container)
         {
             using (HtmlGenericControl field = HtmlControlHelper.GetField())
@@ -200,7 +213,7 @@ namespace MixERP.Net.Core.Modules.Inventory
         {
             using (HtmlGenericControl field = HtmlControlHelper.GetField("field"))
             {
-                using (HtmlGenericControl label = HtmlControlHelper.GetLabel("List Items", "ShowButton"))
+                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Titles.ListItems, "ShowButton"))
                 {
                     field.Controls.Add(label);
                 }
@@ -209,7 +222,7 @@ namespace MixERP.Net.Core.Modules.Inventory
                 this.showButton.ID = "ShowButton";
                 this.showButton.TabIndex = 0;
                 this.showButton.CssClass = "ui small positive button";
-                this.showButton.Text = "Show";
+                this.showButton.Text = Titles.Show;
                 this.showButton.OnClientClick = "return ShowButton_ClientClick();";
                 this.showButton.Click += this.ShowButton_Click;
 
@@ -271,7 +284,7 @@ namespace MixERP.Net.Core.Modules.Inventory
 
                 this.valueDateTextBox = new DateTextBox();
                 this.valueDateTextBox.ID = "ValueDateTextBox";
-                this.valueDateTextBox.Mode = Frequency.Today;
+                this.valueDateTextBox.Mode = FrequencyType.Today;
                 field.Controls.Add(this.valueDateTextBox);
 
                 container.Controls.Add(field);
@@ -287,13 +300,9 @@ namespace MixERP.Net.Core.Modules.Inventory
                 return;
             }
 
-            using (DataTable table = MixERP.Net.Core.Modules.Inventory.Data.Reports.StockItems.ListClosingStock(storeId))
-            {
-                table.Columns.Add("Actual");
-                table.Columns.Add("Difference");
-                this.grid.DataSource = table;
-                this.grid.DataBind();
-            }
+
+            this.grid.DataSource = Data.Reports.StockItems.ListClosingStock(storeId);
+            this.grid.DataBind();
         }
 
         #endregion
@@ -314,7 +323,7 @@ namespace MixERP.Net.Core.Modules.Inventory
         {
             for (int i = 0; i < e.Row.Cells.Count - 2; i++)
             {
-                e.Row.Cells[i].Text = LocalizationHelper.GetResourceString(Assembly.GetAssembly(typeof (Adjustment)), "MixERP.Net.Core.Modules.Inventory.Resources.ScrudResource", e.Row.Cells[i].Text);
+                e.Row.Cells[i].Text = LocalizationHelper.GetResourceString(Assembly.GetAssembly(typeof (Adjustment)), "MixERP.Net.Core.Modules.Inventory.Resources.Titles", e.Row.Cells[i].Text);
             }
         }
 

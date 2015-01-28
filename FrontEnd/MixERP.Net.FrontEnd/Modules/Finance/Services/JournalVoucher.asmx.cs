@@ -17,16 +17,14 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Core;
-using MixERP.Net.Common.Models.Transactions;
-using MixERP.Net.Core.Modules.Finance.Data.Helpers;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Web.Script.Serialization;
 using System.Web.Services;
-using System.Web.Util;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Core.Modules.Finance.Data.Helpers;
+using MixERP.Net.Entities.Core;
+using MixERP.Net.Entities.Models.Transactions;
 using CollectionHelper = MixERP.Net.WebControls.StockTransactionFactory.Helpers.CollectionHelper;
 
 namespace MixERP.Net.Core.Modules.Finance.Services
@@ -38,6 +36,17 @@ namespace MixERP.Net.Core.Modules.Finance.Services
     public class JournalVoucher : WebService
     {
         [WebMethod(EnableSession = true)]
+        public void Approve(long tranId, string reason)
+        {
+            int officeId = SessionHelper.GetOfficeId();
+            int userId = SessionHelper.GetUserId();
+            long loginId = SessionHelper.GetLogOnId();
+            const int verificationStatusId = 2;
+
+            Transaction.Verify(tranId, officeId, userId, loginId, verificationStatusId, reason);
+        }
+
+        [WebMethod(EnableSession = true)]
         public decimal GetExchangeRate(string currencyCode)
         {
             int officeId = SessionHelper.GetOfficeId();
@@ -47,14 +56,24 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         }
 
         [WebMethod(EnableSession = true)]
+        public void Reject(long tranId, string reason)
+        {
+            int officeId = SessionHelper.GetOfficeId();
+            int userId = SessionHelper.GetUserId();
+            long loginId = SessionHelper.GetLogOnId();
+            const int verificationStatusId = -3;
+
+            Transaction.Verify(tranId, officeId, userId, loginId, verificationStatusId, reason);
+        }
+
+        [WebMethod(EnableSession = true)]
         public long Save(DateTime valueDate, string referenceNumber, string data, int costCenterId, string attachmentsJSON)
         {
-            Collection<JournalDetailsModel> details = CollectionHelper.GetJournalDetailCollection(data);
+            Collection<JournalDetail> details = CollectionHelper.GetJournalDetailCollection(data);
 
-            JavaScriptSerializer js = new JavaScriptSerializer();
-            Collection<PostgresqlAttachmentModel> attachments = js.Deserialize<Collection<PostgresqlAttachmentModel>>(attachmentsJSON);
+            Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
 
-            foreach (JournalDetailsModel model in details)
+            foreach (JournalDetail model in details)
             {
                 if (model.Debit > 0 && model.Credit > 0)
                 {
@@ -102,28 +121,6 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             }
 
             return Transaction.Add(valueDate, referenceNumber, costCenterId, details, attachments);
-        }
-
-        [WebMethod(EnableSession = true)]
-        public void Approve(long tranId, string reason)
-        {
-            int officeId = SessionHelper.GetOfficeId();
-            int userId = SessionHelper.GetUserId();
-            long loginId = SessionHelper.GetLogOnId();
-            const int verificationStatusId = 2;
-
-            Transaction.Verify(tranId, officeId, userId, loginId, verificationStatusId, reason);
-        }
-
-        [WebMethod(EnableSession = true)]
-        public void Reject(long tranId, string reason)
-        {
-            int officeId = SessionHelper.GetOfficeId();
-            int userId = SessionHelper.GetUserId();
-            long loginId = SessionHelper.GetLogOnId();
-            const int verificationStatusId = -3;
-
-            Transaction.Verify(tranId, officeId, userId, loginId, verificationStatusId, reason);
         }
     }
 }

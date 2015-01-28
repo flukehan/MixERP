@@ -17,17 +17,16 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Core;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.Web.Script.Serialization;
 using System.Web.Script.Services;
 using System.Web.Services;
+using MixERP.Net.Common.Helpers;
 using MixERP.Net.Entities.Core;
+using CollectionHelper = MixERP.Net.WebControls.StockTransactionFactory.Helpers.CollectionHelper;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Services
 {
@@ -82,8 +81,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
                 throw new ArgumentNullException("attachmentsJSON");
             }
 
-            JavaScriptSerializer js = new JavaScriptSerializer();
-            Collection<PostgresqlAttachmentModel> attachments = js.Deserialize<Collection<PostgresqlAttachmentModel>>(attachmentsJSON);
+            Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
             int userId = SessionHelper.GetUserId();
 
             return Data.Attachments.Save(userId, book, id, attachments);
@@ -100,7 +98,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
                     File.Delete(filePath);
                     return true;
                 }
-                // ReSharper disable once EmptyGeneralCatchClause
+                    // ReSharper disable once EmptyGeneralCatchClause
                 catch (IOException)
                 {
                     //Swallow

@@ -18,6 +18,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Common;
 using System.Globalization;
@@ -31,8 +32,7 @@ using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Core;
-using Menu = MixERP.Net.Common.Models.Core.Menu;
+using MixERP.Net.Common.Models;
 
 namespace MixERP.Net.FrontEnd.Base
 {
@@ -53,60 +53,51 @@ namespace MixERP.Net.FrontEnd.Base
         {
             if (page != null)
             {
-                string menu = string.Empty;
                 string relativePath = Conversion.GetRelativePath(path);
-                Collection<Menu> rootMenus = Data.Core.Menu.GetRootMenuCollection(relativePath);
+                IEnumerable<Entities.Core.Menu> rootMenus = Data.Core.Menu.GetRootMenuCollection(relativePath);
 
-                if (rootMenus == null)
+                string menu = "<ul>";
+
+                foreach (Entities.Core.Menu rootMenu in rootMenus)
                 {
-                    return string.Empty;
-                }
+                    string anchor = string.Format(Thread.CurrentThread.CurrentCulture, "<a href=\"javascript:void(0);\">{0}</a>", rootMenu.MenuText);
 
-                if (rootMenus.Count > 0)
-                {
-                    menu = "<ul>";
+                    IEnumerable<Entities.Core.Menu> childMenus = Data.Core.Menu.GetMenuCollection(rootMenu.MenuId, 2);
 
-                    foreach (Menu rootMenu in rootMenus)
+                    if (childMenus != null)
                     {
-                        string anchor = string.Format(Thread.CurrentThread.CurrentCulture,
-                            "<a href=\"javascript:void(0);\">{0}</a>", rootMenu.MenuText);
+                        menu += "<li>";
+                        menu += anchor;
+                        menu += "<ul>";
 
-                        Collection<Menu> childMenus = Data.Core.Menu.GetMenuCollection(rootMenu.MenuId, 2);
-
-                        if (childMenus.Count > 0)
+                        foreach (Entities.Core.Menu childMenu in childMenus)
                         {
-                            menu += "<li>";
-                            menu += anchor;
-                            menu += "<ul>";
+                            string id = Conversion.TryCastString(childMenu.MenuId);
 
-                            foreach (Menu childMenu in childMenus)
+                            if (childMenu.Url.Equals(currentPage))
                             {
-                                string id = Conversion.TryCastString(childMenu.MenuId);
-
-                                if (childMenu.Url.Equals(currentPage))
-                                {
-                                    menu += string.Format(Thread.CurrentThread.CurrentCulture,
-                                        "<li id='node{0}' class='expanded' data-selected='true' data-menucode='{1}' data-jstree='{{\"type\":\"active\"}}'><a id='anchorNode{0}' href='{2}' title='{3}'>{3}</a></li>",
-                                        id, childMenu.MenuCode, page.ResolveUrl(childMenu.Url), childMenu.MenuText);
-                                }
-                                else
-                                {
-                                    menu += string.Format(Thread.CurrentThread.CurrentCulture,
-                                        "<li id='item{0}' data-menucode='{1}' data-jstree='{{\"type\":\"file\"}}'><a href='{2}' title='{3}'>{3}</a></li>",
-                                        id, childMenu.MenuCode, page.ResolveUrl(childMenu.Url), childMenu.MenuText);
-                                }
+                                menu += string.Format(Thread.CurrentThread.CurrentCulture,
+                                    "<li id='node{0}' class='expanded' data-selected='true' data-menucode='{1}' data-jstree='{{\"type\":\"active\"}}'><a id='anchorNode{0}' href='{2}' title='{3}'>{3}</a></li>",
+                                    id, childMenu.MenuCode, page.ResolveUrl(childMenu.Url), childMenu.MenuText);
                             }
+                            else
+                            {
+                                menu += string.Format(Thread.CurrentThread.CurrentCulture,
+                                    "<li id='item{0}' data-menucode='{1}' data-jstree='{{\"type\":\"file\"}}'><a href='{2}' title='{3}'>{3}</a></li>",
+                                    id, childMenu.MenuCode, page.ResolveUrl(childMenu.Url), childMenu.MenuText);
+                            }
+                        }
 
-                            menu += "</ul>";
-                        }
-                        else
-                        {
-                            menu += "<li data-jstree='{\"type\":\"file\"}'>" + anchor;
-                        }
+                        menu += "</ul>";
                     }
-
-                    menu += "</li></ul>";
+                    else
+                    {
+                        menu += "<li data-jstree='{\"type\":\"file\"}'>" + anchor;
+                    }
                 }
+
+                menu += "</li></ul>";
+
 
                 return menu;
             }
@@ -271,36 +262,34 @@ namespace MixERP.Net.FrontEnd.Base
                 this.OverridePath = this.Page.Request.Url.AbsolutePath;
             }
 
-            Literal contentMenuLiteral = ((Literal)PageUtility.FindControlIterative(this.Master, "ContentMenuLiteral"));
+            Literal contentMenuLiteral = ((Literal) PageUtility.FindControlIterative(this.Master, "ContentMenuLiteral"));
 
             string menu = "<div id=\"tree\" style='display:none;'><ul id='treeData'>";
 
-            Collection<Menu> collection = Data.Core.Menu.GetMenuCollection(0, 0);
+            IEnumerable<Entities.Core.Menu> collection = Data.Core.Menu.GetMenuCollection(0, 0);
 
             if (collection == null)
             {
                 return;
             }
 
-            if (collection.Count > 0)
+            foreach (Entities.Core.Menu model in collection)
             {
-                foreach (Menu model in collection)
-                {
-                    string menuText = model.MenuText;
-                    string url = model.Url;
-                    string id = Conversion.TryCastString(model.MenuId);
+                string menuText = model.MenuText;
+                string url = model.Url;
+                string id = Conversion.TryCastString(model.MenuId);
 
-                    string subMenu = GetContentPageMenu(this.Page, url, this.OverridePath);
-                    menu += string.Format(Thread.CurrentThread.CurrentCulture,
-                        "<li id='node{0}'>" +
-                        "<a id='anchorNode{0}' href='javascript:void(0);' title='{1}'>{1}</a>" +
-                        "{2}" +
-                        "</li>",
-                        id,
-                        menuText,
-                        subMenu);
-                }
+                string subMenu = GetContentPageMenu(this.Page, url, this.OverridePath);
+                menu += string.Format(Thread.CurrentThread.CurrentCulture,
+                    "<li id='node{0}'>" +
+                    "<a id='anchorNode{0}' href='javascript:void(0);' title='{1}'>{1}</a>" +
+                    "{2}" +
+                    "</li>",
+                    id,
+                    menuText,
+                    subMenu);
             }
+
 
             menu += "</ul></div>";
 

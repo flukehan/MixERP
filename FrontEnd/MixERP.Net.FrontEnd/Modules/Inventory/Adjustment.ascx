@@ -85,14 +85,18 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     });
 
     function createControls() {
-        var actual = "<input type='text' tabindex='{0}' class='actual' />";
-        var difference = "<input type='text' tabindex='{0}' class='difference' />";
+        var header = String.format("<th>{0}</th><th>{1}</th>", top.actualLocalized, top.differenceLocalized);
+        grid.find("thead tr").append(header);
 
         var rows = grid.find("tbody tr");
+
+        var actual = "<td><input type='text' tabindex='{0}' class='actual' /></td>";
+        var difference = "<td><input type='text' tabindex='{0}' class='difference' /></td>";
+
         rows.each(function () {
 
-            $(this).find("td:nth-last-child(2)").html(String.format(actual, $(this).index() + 1));
-            $(this).find("td:nth-last-child(1)").html(String.format(difference, $(this).index() + rows.length + 1));
+            $(this).append(String.format(actual, $(this).index() + 1));
+            $(this).append(String.format(difference, $(this).index() + rows.length + 1));
         });
     };
 

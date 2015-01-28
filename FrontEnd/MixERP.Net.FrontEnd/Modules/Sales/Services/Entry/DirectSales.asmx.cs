@@ -18,8 +18,12 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Web.Services;
+using MixERP.Net.Entities.Core;
+using MixERP.Net.Entities.Models.Transactions;
+using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
 
 namespace MixERP.Net.Core.Modules.Sales.Services.Entry
 {
@@ -32,11 +36,11 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
         [WebMethod(EnableSession = true)]
         public long Save(DateTime valueDate, int storeId, string partyCode, int priceTypeId, string referenceNumber, string data, string statementReference, string transactionType, int paymentTermId, int salespersonId, int shipperId, string shippingAddressCode, decimal shippingCharge, int costCenterId, string transactionIds, string attachmentsJSON, bool nonTaxable)
         {
-            System.Collections.ObjectModel.Collection<Common.Models.Transactions.StockMasterDetailModel> details = WebControls.StockTransactionFactory.Helpers.CollectionHelper.GetStockMasterDetailCollection(data, storeId);
-            System.Collections.ObjectModel.Collection<int> tranIds = new System.Collections.ObjectModel.Collection<int>();
+            Collection<StockDetail> details = CollectionHelper.GetStockMasterDetailCollection(data, storeId);
+            Collection<int> tranIds = new Collection<int>();
 
             System.Web.Script.Serialization.JavaScriptSerializer js = new System.Web.Script.Serialization.JavaScriptSerializer();
-            System.Collections.ObjectModel.Collection<Common.Models.Core.PostgresqlAttachmentModel> attachments = js.Deserialize<System.Collections.ObjectModel.Collection<Common.Models.Core.PostgresqlAttachmentModel>>(attachmentsJSON);
+            Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
 
             if (!string.IsNullOrWhiteSpace(transactionIds))
             {
@@ -53,7 +57,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
                 throw new InvalidOperationException("Sales is not allowed here.");
             }
 
-            foreach (Common.Models.Transactions.StockMasterDetailModel model in details)
+            foreach (StockDetail model in details)
             {
                 if (Data.Helpers.Items.IsStockItem(model.ItemCode))
                 {

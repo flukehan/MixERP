@@ -20,11 +20,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Web.Script.Serialization;
 using System.Web.Script.Services;
 using System.Web.Services;
-using MixERP.Net.Common.Models.Core;
-using MixERP.Net.Common.Models.Transactions;
+using MixERP.Net.Entities.Core;
+using MixERP.Net.Entities.Models.Transactions;
 using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
 
 namespace MixERP.Net.Core.Modules.Purchase.Services
@@ -41,10 +40,9 @@ namespace MixERP.Net.Core.Modules.Purchase.Services
         [WebMethod(EnableSession = true)]
         public long Save(DateTime valueDate, int storeId, string partyCode, string referenceNumber, string data, string statementReference, string transactionType, int costCenterId, string attachmentsJSON)
         {
-            Collection<StockMasterDetailModel> details = CollectionHelper.GetStockMasterDetailCollection(data, storeId);
+            Collection<StockDetail> details = CollectionHelper.GetStockMasterDetailCollection(data, storeId);
 
-            JavaScriptSerializer js = new JavaScriptSerializer();
-            Collection<PostgresqlAttachmentModel> attachments = js.Deserialize<Collection<PostgresqlAttachmentModel>>(attachmentsJSON);
+            Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
 
             bool isCredit = !string.IsNullOrWhiteSpace(transactionType) && !transactionType.ToUpperInvariant().Equals("CASH");
 

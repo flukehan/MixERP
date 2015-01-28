@@ -19,7 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Collections.ObjectModel;
 using System.Web;
-using MixERP.Net.Common.Models.Core;
+using MixERP.Net.Common.Models;
 
 namespace MixERP.Net.Common.Helpers
 {

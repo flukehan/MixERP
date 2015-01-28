@@ -18,9 +18,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
@@ -32,7 +29,6 @@ using System.Web.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Transactions;
 using Image = System.Drawing.Image;
 
 namespace MixERP.Net.Common
@@ -50,37 +46,6 @@ namespace MixERP.Net.Common
             {
                 imageToConvert.Save(ms, formatOfImage);
                 return ms.ToArray();
-            }
-        }
-
-        public static DataTable ConvertListToDataTable<T>(IList<T> list)
-        {
-            if (list == null)
-            {
-                return null;
-            }
-
-            PropertyDescriptorCollection props = TypeDescriptor.GetProperties(typeof(T));
-
-            using (DataTable table = new DataTable())
-            {
-                table.Locale = Thread.CurrentThread.CurrentCulture;
-
-                for (int i = 0; i < props.Count; i++)
-                {
-                    PropertyDescriptor prop = props[i];
-                    table.Columns.Add(prop.Name, prop.PropertyType);
-                }
-                object[] values = new object[props.Count];
-                foreach (T item in list)
-                {
-                    for (int i = 0; i < values.Length; i++)
-                    {
-                        values[i] = props[i].GetValue(item);
-                    }
-                    table.Rows.Add(values);
-                }
-                return table;
             }
         }
 
@@ -137,77 +102,6 @@ namespace MixERP.Net.Common
                 }
             }
             return new Uri("", UriKind.Relative);
-        }
-
-        public static string GetBookAcronym(TranBook book, SubTranBook subBook)
-        {
-            if (book == TranBook.Sales)
-            {
-                if (subBook == SubTranBook.Delivery)
-                {
-                    return ConfigurationHelper.GetParameter("SalesDeliveryAcronym");
-                }
-
-                if (subBook == SubTranBook.Direct)
-                {
-                    return ConfigurationHelper.GetParameter("SalesDirectAcronym");
-                }
-
-                if (subBook == SubTranBook.Invoice)
-                {
-                    return ConfigurationHelper.GetParameter("SalesInvoiceAcronym");
-                }
-
-                if (subBook == SubTranBook.Order)
-                {
-                    return ConfigurationHelper.GetParameter("SalesOrderAcronym");
-                }
-
-                if (subBook == SubTranBook.Quotation)
-                {
-                    return ConfigurationHelper.GetParameter("SalesQuotationAcronym");
-                }
-
-                if (subBook == SubTranBook.Receipt)
-                {
-                    return ConfigurationHelper.GetParameter("SalesReceiptAcronym");
-                }
-
-                if (subBook == SubTranBook.Return)
-                {
-                    return ConfigurationHelper.GetParameter("SaleReturnAcronym");
-                }
-            }
-
-            if (book == TranBook.Purchase)
-            {
-                if (subBook == SubTranBook.Direct)
-                {
-                    return ConfigurationHelper.GetParameter("PurchaseDirectAcronym");
-                }
-
-                if (subBook == SubTranBook.Order)
-                {
-                    return ConfigurationHelper.GetParameter("PurchaseOrderAcronym");
-                }
-
-                if (subBook == SubTranBook.Payment)
-                {
-                    return ConfigurationHelper.GetParameter("PurchasePaymentAcronym");
-                }
-
-                if (subBook == SubTranBook.Receipt)
-                {
-                    return ConfigurationHelper.GetParameter("PurchaseGRNAcronym");
-                }
-
-                if (subBook == SubTranBook.Return)
-                {
-                    return ConfigurationHelper.GetParameter("PurchaseReturnAcronym");
-                }
-            }
-
-            return string.Empty;
         }
 
         public static DateTime GetLocalDateTime(string timeZone, DateTime utc)
@@ -524,27 +418,6 @@ namespace MixERP.Net.Common
             }
 
             return Unit.Parse(value.ToString(), Thread.CurrentThread.CurrentCulture);
-        }
-
-        private static string HashSha512(string password, string salt)
-        {
-            if (password == null)
-            {
-                return null;
-            }
-
-            if (salt == null)
-            {
-                return null;
-            }
-
-            byte[] bytes = Encoding.Unicode.GetBytes(password + salt);
-
-            using (SHA512CryptoServiceProvider hash = new SHA512CryptoServiceProvider())
-            {
-                byte[] inArray = hash.ComputeHash(bytes);
-                return Convert.ToBase64String(inArray);
-            }
         }
     }
 }

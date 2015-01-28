@@ -17,13 +17,14 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.DbFactory;
-using Npgsql;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data;
 using System.Globalization;
 using System.Linq;
+using MixERP.Net.DbFactory;
+using MixERP.Net.Entities;
+using MixERP.Net.Entities.Transactions;
+using Npgsql;
 
 namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
 {
@@ -65,15 +66,9 @@ namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
             return string.Join(",", detailCollection);
         }
 
-        public static DataTable GetReorderView(int officeId)
+        public static IEnumerable<GetReorderViewFunction> GetReorderView(int officeId)
         {
-            const string sql = "SELECT * FROM transactions.get_reorder_view_function(@OfficeId);";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@OfficeId", officeId);
-
-                return DbOperation.GetDataTable(command);
-            }
+            return Factory.Get<GetReorderViewFunction>("SELECT * FROM transactions.get_reorder_view_function(@0);", officeId);
         }
 
         public static bool Save(long loginId, int userId, int officeId, Collection<Models.Reorder> details)

@@ -21,7 +21,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Core;
+using MixERP.Net.Common.Models;
 
 namespace MixERP.Net.WebControls.Common.Helpers
 {

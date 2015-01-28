@@ -120,7 +120,6 @@ namespace MixERP.Net.Core.Modules.Finance.Data
     public class EODStatus
     {
         public Boolean Initialized { get; set; }
-
         public DateTime ValueDate { get; set; }
     }
 }

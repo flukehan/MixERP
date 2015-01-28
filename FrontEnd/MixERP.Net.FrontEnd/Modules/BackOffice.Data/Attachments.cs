@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
-using MixERP.Net.Common;
-using MixERP.Net.Common.Models.Core;
-using MixERP.Net.DbFactory;
-using Npgsql;
 using System.Collections.ObjectModel;
-using System.Data;
 using System.IO;
+using MixERP.Net.Common;
+using MixERP.Net.DbFactory;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Core;
+using Npgsql;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Data
 {
@@ -26,10 +24,10 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data
 
         public static IEnumerable<Attachment> GetAttachments(string attachmentDirectory, string book, long id)
         {
-           return Factory.Get<Attachment>("SELECT attachment_id, user_id, resource, resource_key, resource_id, original_file_name, file_extension, @0 || file_path as file_path, comment, added_on FROM core.attachments WHERE resource || resource_key=core.get_attachment_lookup_info(@1) AND resource_id=@2;", attachmentDirectory, book, id);
+            return Factory.Get<Attachment>("SELECT attachment_id, user_id, resource, resource_key, resource_id, original_file_name, file_extension, @0 || file_path as file_path, comment, added_on FROM core.attachments WHERE resource || resource_key=core.get_attachment_lookup_info(@1) AND resource_id=@2;", attachmentDirectory, book, id);
         }
 
-        public static bool Save(int userId, string book, long id, Collection<PostgresqlAttachmentModel> attachments)
+        public static bool Save(int userId, string book, long id, Collection<Attachment> attachments)
         {
             using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString()))
             {
@@ -41,7 +39,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data
                     {
                         try
                         {
-                            foreach (PostgresqlAttachmentModel attachment in attachments)
+                            foreach (Attachment attachment in attachments)
                             {
                                 const string sql =
                                     "INSERT INTO core.attachments(user_id, resource, resource_key, resource_id, original_file_name, file_extension, file_path, comment) " +

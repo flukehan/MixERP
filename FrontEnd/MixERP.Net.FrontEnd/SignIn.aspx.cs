@@ -25,8 +25,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Entities.Core;
-using MixERP.Net.Entities.Office;
+using MixERP.Net.Entities.Models.Core;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Data.Helpers;
 using MixERP.Net.FrontEnd.Data.Office;
@@ -49,7 +48,6 @@ namespace MixERP.Net.FrontEnd
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
             this.CheckDbConnectivity();
             PageUtility.CheckInvalidAttempts(this.Page);
 

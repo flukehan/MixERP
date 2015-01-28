@@ -89,7 +89,7 @@ namespace MixERP.Net.Entities.Office
             public static IEnumerable<T> Query(Sql sql) { return repo.Query<T>(sql); }
         }
     }
-	
+    
 
     
     [TableName("cash_repository_scrud_view")]

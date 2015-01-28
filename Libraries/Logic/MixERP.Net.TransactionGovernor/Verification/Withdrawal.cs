@@ -17,8 +17,7 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Domains.Transactions;
-using MixERP.Net.Common.Models.Transactions;
+using MixERP.Net.Entities;
 
 namespace MixERP.Net.TransactionGovernor.Verification
 {
@@ -26,7 +25,7 @@ namespace MixERP.Net.TransactionGovernor.Verification
     {
         public static bool WithdrawTransaction(long transactionMasterId, int userId, string reason)
         {
-            short status = VerificationDomain.GetVerification(VerificationType.Withdrawn);
+            const short status = (short)VerificationType.Withdrawn;
 
             return Data.Verification.Withdrawal.WithdrawTransaction(transactionMasterId, userId, reason, status);
         }

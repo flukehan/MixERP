@@ -19,8 +19,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SignIn.aspx.cs" Inherits="MixERP.Net.FrontEnd.SignIn" %>
 
-<%@ Import Namespace="System.Security.Cryptography" %>
-<%@ Import Namespace="MixERP.Net.Common" %>
 <%@ Import Namespace="MixERP.Net.Common.Helpers" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -35,7 +33,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <form id="form1" runat="server">
 
         <asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
-        
 
         <script type="text/javascript">
             var shortDateFormat = "<%= LocalizationHelper.GetShortDateFormat()%>";

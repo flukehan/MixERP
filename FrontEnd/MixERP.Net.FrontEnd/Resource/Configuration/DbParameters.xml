@@ -56,7 +56,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <add key="SalesTaxExemptDisplayField" value="sales_tax_exempt_code + ' (' + sales_tax_exempt_name + ')'" />
     <add key="SalesTaxTypeDisplayField" value="sales_tax_type_code + ' (' + sales_tax_type_name + ')'" />
     <add key="StateSalesTaxDisplayField" value="state_sales_tax_code + ' (' + state_sales_tax_name + ')'" />
-    <add key="ShippingAddressDisplayField" value="address_line_1 + convert(13,System.Char) + address_line_2 + convert(13,System.Char) + street + ', ' + city + convert(13,System.Char) + state + ', ' + country" />
     <add key="ShipperDisplayField" value="company_name" />
     <add key="ShippingMailTypeDisplayField" value="shipping_mail_type_code + ' (' + shipping_mail_type_name + ')'" />
     <add key="ShippingPackageShapeDisplayField" value="shipping_package_shape_code + ' (' + shipping_package_shape_name + ')'" />

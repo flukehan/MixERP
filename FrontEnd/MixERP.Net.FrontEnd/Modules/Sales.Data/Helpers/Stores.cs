@@ -17,8 +17,9 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.DbFactory;
-using Npgsql;
+using System.Linq;
+using MixERP.Net.Entities;
+using MixERP.Net.Entities.Office;
 
 namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
 {
@@ -26,13 +27,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
     {
         public static bool IsSalesAllowed(int storeId)
         {
-            const string sql = "SELECT 1 FROM office.stores WHERE store_id=@StoreId and allow_sales='yes';";
-
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@StoreId", storeId);
-                return DbOperation.GetDataTable(command).Rows.Count.Equals(1);
-            }
+            return Factory.Get<Store>("SELECT * FROM office.stores WHERE store_id=@0 and allow_sales;", storeId).Count().Equals(1);
         }
     }
 }

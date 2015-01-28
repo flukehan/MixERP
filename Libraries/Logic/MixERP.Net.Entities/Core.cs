@@ -89,7 +89,7 @@ namespace MixERP.Net.Entities.Core
             public static IEnumerable<T> Query(Sql sql) { return repo.Query<T>(sql); }
         }
     }
-	
+    
 
     
     [TableName("account_scrud_view")]
@@ -4703,6 +4703,72 @@ namespace MixERP.Net.Entities.Core
 
         [Column("audit_ts")] 
         public DateTime? AuditTs { get; set; }
+
+    }
+    
+    [TableName("get_account_view_by_account_master_id")]
+    [ExplicitColumns]
+    public class GetAccountViewByAccountMasterId : PetaPocoDB.Record<GetAccountViewByAccountMasterId> 
+    {
+        [Column("id")] 
+        public string Id { get; set; }
+
+        [Column("account_id")] 
+        public string AccountId { get; set; }
+
+        [Column("account_name")] 
+        public string AccountName { get; set; }
+
+    }
+    
+    [TableName("get_account_ids")]
+    [ExplicitColumns]
+    public class GetAccountId : PetaPocoDB.Record<GetAccountId> 
+    {
+    }
+    
+    [TableName("get_associated_units_from_item_code")]
+    [ExplicitColumns]
+    public class GetAssociatedUnitsFromItemCode : PetaPocoDB.Record<GetAssociatedUnitsFromItemCode> 
+    {
+        [Column("unit_id")] 
+        public string UnitId { get; set; }
+
+        [Column("unit_code")] 
+        public string UnitCode { get; set; }
+
+        [Column("unit_name")] 
+        public string UnitName { get; set; }
+
+    }
+    
+    [TableName("get_associated_units")]
+    [ExplicitColumns]
+    public class GetAssociatedUnit : PetaPocoDB.Record<GetAssociatedUnit> 
+    {
+        [Column("unit_id")] 
+        public string UnitId { get; set; }
+
+        [Column("unit_code")] 
+        public string UnitCode { get; set; }
+
+        [Column("unit_name")] 
+        public string UnitName { get; set; }
+
+    }
+    
+    [TableName("get_associated_units_from_item_id")]
+    [ExplicitColumns]
+    public class GetAssociatedUnitsFromItemId : PetaPocoDB.Record<GetAssociatedUnitsFromItemId> 
+    {
+        [Column("unit_id")] 
+        public string UnitId { get; set; }
+
+        [Column("unit_code")] 
+        public string UnitCode { get; set; }
+
+        [Column("unit_name")] 
+        public string UnitName { get; set; }
 
     }
 }

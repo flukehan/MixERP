@@ -17,10 +17,8 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common;
-using MixERP.Net.DbFactory;
-using Npgsql;
-using System.Data;
+using System.Collections.Generic;
+using MixERP.Net.Entities;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Data.Tax
 {
@@ -28,62 +26,36 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.Tax
     {
         public static decimal GetSalesTax(string tranBook, int storeId, string partyCode, string shippingAddressCode, int priceTypeId, string itemCode, decimal price, int quantity, decimal discount, decimal shippingCharge, int salesTaxId)
         {
-            const string sql = "SELECT SUM(tax) FROM transactions.get_sales_tax(@TranBook, @StoreId, @PartyCode, @ShippingAddressCode, @PriceTypeId, @ItemCode, @Price, @Quantity, @Discount, @ShippingCharge, @SalesTaxId);";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@TranBook", tranBook);
-                command.Parameters.AddWithValue("@StoreId", storeId);
-                command.Parameters.AddWithValue("@PartyCode", partyCode);
-                command.Parameters.AddWithValue("@ShippingAddressCode", shippingAddressCode);
-                command.Parameters.AddWithValue("@PriceTypeId", priceTypeId);
-                command.Parameters.AddWithValue("@ItemCode", itemCode);
-                command.Parameters.AddWithValue("@Price", price);
-                command.Parameters.AddWithValue("@Quantity", quantity);
-                command.Parameters.AddWithValue("@Discount", discount);
-                command.Parameters.AddWithValue("@ShippingCharge", shippingCharge);
-                command.Parameters.AddWithValue("@SalesTaxId", salesTaxId);
-
-                return Conversion.TryCastDecimal(DbOperation.GetScalarValue(command));
-            }
+            const string sql = "SELECT SUM(tax) FROM transactions.get_sales_tax(@0,@1,@2,@3,@4,@5,@6,@7,@8,@9,@10);";
+            return Factory.Scalar<decimal>(sql, tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode, price, quantity, discount, shippingCharge, salesTaxId);
         }
 
-        public static DataTable GetSalesTaxes(int officeId, string tranBook)
+        public static IEnumerable<Entities.Core.SalesTax> GetSalesTaxes(int officeId, string tranBook)
         {
-            string sql;
-
             if (tranBook.ToUpperInvariant().Equals("SALES"))
             {
-                sql = "SELECT * FROM core.sales_taxes WHERE office_id=@OfficeId;";
-            }
-            else
-            {
-                sql = "SELECT * FROM core.sales_taxes WHERE sales_tax_id IN (SELECT sales_tax_id FROM core.sales_tax_details INNER JOIN core.sales_tax_types ON core.sales_tax_details.sales_tax_type_id = core.sales_tax_types.sales_tax_type_id AND core.sales_tax_types.is_vat=true) AND office_id=@OfficeId;";
+                return Factory.Get<Entities.Core.SalesTax>("SELECT * FROM core.sales_taxes WHERE office_id=@0;", officeId);
             }
 
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@OfficeId", officeId);
 
-                return DbOperation.GetDataTable(command);
-            }
+            const string sql = "SELECT * FROM core.sales_taxes " +
+                               "WHERE sales_tax_id IN " +
+                               "(" +
+                               "SELECT sales_tax_id " +
+                               "FROM core.sales_tax_details " +
+                               "INNER JOIN core.sales_tax_types " +
+                               "ON core.sales_tax_details.sales_tax_type_id = core.sales_tax_types.sales_tax_type_id " +
+                               "AND core.sales_tax_types.is_vat=true" +
+                               ") " +
+                               "AND office_id=@0;";
+
+            return Factory.Get<Entities.Core.SalesTax>(sql, officeId);
         }
 
         public static int GetSalesTaxId(string tranBook, int storeId, string partyCode, string shippingAddressCode, int priceTypeId, string itemCode, int unitId, decimal price)
         {
-            const string sql = "SELECT transactions.get_sales_tax_id(@TranBook, @StoreId, @PartyCode, @ShippingAddressCode, @PriceTypeId, @ItemCode, @UnitId, @Price);";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@TranBook", tranBook);
-                command.Parameters.AddWithValue("@StoreId", storeId);
-                command.Parameters.AddWithValue("@PartyCode", partyCode);
-                command.Parameters.AddWithValue("@ShippingAddressCode", shippingAddressCode);
-                command.Parameters.AddWithValue("@PriceTypeId", priceTypeId);
-                command.Parameters.AddWithValue("@ItemCode", itemCode);
-                command.Parameters.AddWithValue("@UnitId", unitId);
-                command.Parameters.AddWithValue("@Price", price);
-
-                return Conversion.TryCastInteger(DbOperation.GetScalarValue(command));
-            }
+            const string sql = "SELECT transactions.get_sales_tax_id(@0, @1, @2, @3, @4, @5, @6, @7);";
+            return Factory.Scalar<int>(sql, tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode, unitId, price);
         }
     }
 }

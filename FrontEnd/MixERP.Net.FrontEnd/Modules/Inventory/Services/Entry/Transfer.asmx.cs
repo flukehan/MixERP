@@ -28,8 +28,9 @@ using System.Web.Services;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.Core.Modules.Inventory.Resources;
+using MixERP.Net.Entities;
+using MixERP.Net.Entities.Models.Transactions;
 
 namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
 {
@@ -42,7 +43,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
         [WebMethod(EnableSession = true)]
         public long Save(DateTime valueDate, string referenceNumber, string statementReference, string data)
         {
-            Collection<StockAdjustmentModel> stockTransferModels = GetModels(data);
+            Collection<StockAdjustmentDetail> stockTransferModels = GetModels(data);
 
             foreach (var model in stockTransferModels)
             {
@@ -65,16 +66,16 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
         }
 
         // ReSharper disable once ReturnTypeCanBeEnumerable.Local
-        private static Collection<StockAdjustmentModel> GetModels(string json)
+        private static Collection<StockAdjustmentDetail> GetModels(string json)
         {
-            Collection<StockAdjustmentModel> models = new Collection<StockAdjustmentModel>();
+            Collection<StockAdjustmentDetail> models = new Collection<StockAdjustmentDetail>();
 
             JavaScriptSerializer jss = new JavaScriptSerializer();
             dynamic result = jss.Deserialize<dynamic>(json);
 
             foreach (var item in result)
             {
-                StockAdjustmentModel model = new StockAdjustmentModel();
+                StockAdjustmentDetail detail = new StockAdjustmentDetail();
                 TransactionType type = TransactionType.Credit;
 
                 if (Conversion.TryCastString(item[0]).ToString().Equals("Dr"))
@@ -82,14 +83,14 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
                     type = TransactionType.Debit;
                 }
 
-                model.TransferType = type;
-                model.StoreName = Conversion.TryCastString(item[1]);
-                model.ItemCode = Conversion.TryCastString(item[2]);
-                model.ItemName = Conversion.TryCastString(item[3]);
-                model.UnitName = Conversion.TryCastString(item[4]);
-                model.Quantity = Conversion.TryCastInteger(item[5]);
+                detail.TransferType = type;
+                detail.StoreName = Conversion.TryCastString(item[1]);
+                detail.ItemCode = Conversion.TryCastString(item[2]);
+                detail.ItemName = Conversion.TryCastString(item[3]);
+                detail.UnitName = Conversion.TryCastString(item[4]);
+                detail.Quantity = Conversion.TryCastInteger(item[5]);
 
-                models.Add(model);
+                models.Add(detail);
             }
 
             var results = from rows in models

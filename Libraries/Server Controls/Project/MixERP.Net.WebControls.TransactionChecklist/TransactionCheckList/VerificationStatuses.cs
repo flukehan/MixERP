@@ -17,12 +17,11 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Transactions;
-using MixERP.Net.WebControls.TransactionChecklist.Resources;
 using System.Globalization;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.WebControls.TransactionChecklist.Resources;
 
 namespace MixERP.Net.WebControls.TransactionChecklist
 {
@@ -42,9 +41,9 @@ namespace MixERP.Net.WebControls.TransactionChecklist
                 return;
             }
 
-            VerificationModel model = Verification.GetVerificationStatus(transactionMasterId);
+            Entities.Models.Transactions.Verification model = Verification.GetVerificationStatus(transactionMasterId);
 
-            switch (model.Verification)
+            switch (model.VerificationStatusId)
             {
                 case -3:
                     label.CssClass = "ui block message red";

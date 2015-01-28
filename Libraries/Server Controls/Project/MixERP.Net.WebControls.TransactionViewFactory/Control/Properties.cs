@@ -1,4 +1,4 @@
-﻿using MixERP.Net.Common.Models.Core;
+﻿using MixERP.Net.Entities;
 
 namespace MixERP.Net.WebControls.TransactionViewFactory
 {
@@ -8,9 +8,9 @@ namespace MixERP.Net.WebControls.TransactionViewFactory
 
         public string Book { get; set; }
 
-        public Frequency DateFromFromFrequency { get; set; } //= Frequency.FiscalYearStartDate;
+        public FrequencyType DateFromFromFrequencyType { get; set; } //= Frequency.FiscalYearStartDate;
 
-        public Frequency DateToFrequency { get; set; } //= Frequency.FiscalYearEndDate;
+        public FrequencyType DateToFrequencyType { get; set; } //= Frequency.FiscalYearEndDate;
 
         public bool DisplayAddButton { get; set; }
 

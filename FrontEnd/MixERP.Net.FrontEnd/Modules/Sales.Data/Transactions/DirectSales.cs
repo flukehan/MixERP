@@ -20,16 +20,16 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.ObjectModel;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Core;
-using MixERP.Net.Common.Models.Transactions;
+using MixERP.Net.Entities.Core;
+using MixERP.Net.Entities.Models.Transactions;
 
 namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
 {
     public static class DirectSales
     {
-        public static long Add(DateTime valueDate, int storeId, bool isCredit, int paymentTermId, string partyCode, int agentId, int priceTypeId, Collection<StockMasterDetailModel> details, int shipperId, string shippingAddressCode, decimal shippingCharge, int costCenterId, string referenceNumber, string statementReference, Collection<PostgresqlAttachmentModel> attachments, bool nonTaxable)
+        public static long Add(DateTime valueDate, int storeId, bool isCredit, int paymentTermId, string partyCode, int agentId, int priceTypeId, Collection<StockDetail> details, int shipperId, string shippingAddressCode, decimal shippingCharge, int costCenterId, string referenceNumber, string statementReference, Collection<Attachment> attachments, bool nonTaxable)
         {
-            StockMasterModel stockMaster = new StockMasterModel();
+            StockMaster stockMaster = new StockMaster();
 
             stockMaster.PartyCode = partyCode;
             stockMaster.IsCredit = isCredit;

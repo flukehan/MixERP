@@ -17,25 +17,12 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 using System.Configuration;
-using System.Web.Hosting;
 
 namespace MixERP.Net.Common.Models
 {
     public sealed class PostgreSQLServer
     {
-        public int PortNumber { get; set; }
-        public string HostName { get; set; }
-        public string DatabaseName { get; set; }
-        public string UserId { get; set; }
-        public string Password { get; set; }
-        public string BinDirectory { get; set; }
-        public string DatabaseBackupDirectory { get; set; }
-
         private bool isValid;
-        public bool IsValid
-        {
-            get { return this.isValid; }
-        }
 
         public PostgreSQLServer()
         {
@@ -48,6 +35,33 @@ namespace MixERP.Net.Common.Models
             this.Password = ConfigurationManager.AppSettings["Password"];
         }
 
+        public PostgreSQLServer(int portNumber, string hostName, string databaseName, string userId, string password, string binDirectory)
+        {
+            this.PortNumber = portNumber;
+            this.HostName = hostName;
+            this.DatabaseName = databaseName;
+            this.UserId = userId;
+            this.Password = password;
+            this.BinDirectory = binDirectory;
+        }
+
+        public string BinDirectory { get; set; }
+
+        public string DatabaseBackupDirectory { get; set; }
+
+        public string DatabaseName { get; set; }
+
+        public string HostName { get; set; }
+
+        public bool IsValid
+        {
+            get { return this.isValid; }
+        }
+
+        public string Password { get; set; }
+
+        public int PortNumber { get; set; }
+        public string UserId { get; set; }
         public void Validate()
         {
             this.isValid = true;
@@ -81,16 +95,6 @@ namespace MixERP.Net.Common.Models
                 this.isValid = false;
             }
 
-        }
-
-        public PostgreSQLServer(int portNumber, string hostName, string databaseName, string userId, string password, string binDirectory)
-        {
-            this.PortNumber = portNumber;
-            this.HostName = hostName;
-            this.DatabaseName = databaseName;
-            this.UserId = userId;
-            this.Password = password;
-            this.BinDirectory = binDirectory;
         }
     }
 }

@@ -18,13 +18,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System.Collections.Generic;
-using MixERP.Net.Common;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Entities.Core;
-using System.Collections.ObjectModel;
-using System.Data;
 using System.Web.Script.Services;
 using System.Web.Services;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Entities.Core;
 
 namespace MixERP.Net.Core.Modules.Finance.Services
 {
@@ -39,7 +36,6 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         {
             int officeId = SessionHelper.GetOfficeId();
             return Data.Helpers.Currencies.GetExchangeCurrencies(officeId);
-
         }
     }
 }

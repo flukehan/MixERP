@@ -17,17 +17,16 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Core;
-using MixERP.Net.Common.Models.Transactions;
-using MixERP.Net.TransactionGovernor.Transactions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Web.Script.Serialization;
 using System.Web.Script.Services;
 using System.Web.Services;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Entities.Core;
+using MixERP.Net.Entities.Models.Transactions;
+using MixERP.Net.TransactionGovernor.Transactions;
 using CollectionHelper = MixERP.Net.WebControls.StockTransactionFactory.Helpers.CollectionHelper;
 
 namespace MixERP.Net.Core.Modules.Sales.Services.Entry
@@ -51,15 +50,14 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
                 throw new InvalidOperationException(Resources.Warnings.InvalidParty);
             }
 
-            Collection<StockMasterDetailModel> details = CollectionHelper.GetStockMasterDetailCollection(data, storeId);
+            Collection<StockDetail> details = CollectionHelper.GetStockMasterDetailCollection(data, storeId);
 
             if (!this.ValidateDetails(details, tranId))
             {
                 return 0;
             }
 
-            JavaScriptSerializer js = new JavaScriptSerializer();
-            Collection<PostgresqlAttachmentModel> attachments = js.Deserialize<Collection<PostgresqlAttachmentModel>>(attachmentsJSON);
+            Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
 
             int officeId = SessionHelper.GetOfficeId();
             int userId = SessionHelper.GetUserId();
@@ -68,7 +66,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
             return Data.Transactions.Return.PostTransaction(tranId, valueDate, officeId, userId, loginId, storeId, partyCode, priceTypeId, referenceNumber, statementReference, details, attachments);
         }
 
-        private bool ValidateDetails(IEnumerable<StockMasterDetailModel> details, long stockMasterId)
+        private bool ValidateDetails(IEnumerable<StockDetail> details, long stockMasterId)
         {
             foreach (var model in details)
             {

@@ -17,15 +17,13 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System;
+using System.Collections.Generic;
+using System.Reflection;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Sales.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.ScrudFactory;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security.AccessControl;
 
 namespace MixERP.Net.Core.Modules.Sales.Setup
 {
@@ -53,12 +51,6 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
             base.OnControlLoad(sender, e);
         }
 
-        private void AddScrudCustomValidatorMessages()
-        {
-            string javascript = "var compareAmountErrorMessageLocalized='" + Resources.Warnings.CompareAmountErrorMessage + "';";
-            Common.PageUtility.RegisterJavascript("BonusSlabDetails_CustomValidatorMessages", javascript, this.Page, true);
-        }
-
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
@@ -72,6 +64,12 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
             List<string> displayViews = new List<string>();
             ScrudHelper.AddDisplayView(displayViews, "core.bonus_slabs.bonus_slab_id", "core.bonus_slab_selector_view");
             return string.Join(",", displayViews);
+        }
+
+        private void AddScrudCustomValidatorMessages()
+        {
+            string javascript = "var compareAmountErrorMessageLocalized='" + Warnings.CompareAmountErrorMessage + "';";
+            Common.PageUtility.RegisterJavascript("BonusSlabDetails_CustomValidatorMessages", javascript, this.Page, true);
         }
     }
 }

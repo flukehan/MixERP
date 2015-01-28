@@ -18,7 +18,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ProductControl.ascx.cs" Inherits="MixERP.Net.FrontEnd.UserControls.Products.ProductControl" %>
-<%@ Import Namespace="System.Threading" %>
 <%@ Import Namespace="MixERP.Net.Common.Helpers" %>
 
 <style type="text/css">
@@ -85,7 +84,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         table.form td:nth-child(4) {
             width: 24%;
         }
-
 
         table.form .ui.toggle.checkbox {
             width: 150px;
@@ -186,7 +184,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     </tbody>
 </table>
 
-
 <asp:Label ID="ErrorLabel" runat="server" CssClass="big error" />
 
 <h2>
@@ -194,13 +191,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 </h2>
 
 <div id="attachment" class="ui segment initially hidden">
-    <mixerp:Attachment ID="Attachment1" runat="server"/>
+    <mixerp:Attachment ID="Attachment1" runat="server" />
 </div>
 
-
 <asp:PlaceHolder runat="server" ID="Placeholder2"></asp:PlaceHolder>
-
-
 
 <asp:HiddenField ID="ItemCodeHidden" runat="server"></asp:HiddenField>
 <asp:HiddenField ID="ItemIdHidden" runat="server"></asp:HiddenField>

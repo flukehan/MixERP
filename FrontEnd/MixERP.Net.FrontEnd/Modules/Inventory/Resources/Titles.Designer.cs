@@ -61,6 +61,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Actual.
+        /// </summary>
+        internal static string Actual {
+            get {
+                return ResourceManager.GetString("Actual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Brands.
         /// </summary>
         internal static string Brands {
@@ -97,6 +106,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Difference.
+        /// </summary>
+        internal static string Difference {
+            get {
+                return ResourceManager.GetString("Difference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
         internal static string Email {
@@ -124,6 +142,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Item Code.
+        /// </summary>
+        internal static string ItemCode {
+            get {
+                return ResourceManager.GetString("ItemCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Item Cost Prices.
         /// </summary>
         internal static string ItemCostPrices {
@@ -138,6 +165,24 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         internal static string ItemGroups {
             get {
                 return ResourceManager.GetString("ItemGroups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Id.
+        /// </summary>
+        internal static string ItemId {
+            get {
+                return ResourceManager.GetString("ItemId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Name.
+        /// </summary>
+        internal static string ItemName {
+            get {
+                return ResourceManager.GetString("ItemName", resourceCulture);
             }
         }
         
@@ -165,6 +210,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         internal static string ItemTypes {
             get {
                 return ResourceManager.GetString("ItemTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List Items.
+        /// </summary>
+        internal static string ListItems {
+            get {
+                return ResourceManager.GetString("ListItems", resourceCulture);
             }
         }
         
@@ -255,6 +309,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         internal static string ShippingAddressMaintenance {
             get {
                 return ResourceManager.GetString("ShippingAddressMaintenance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show.
+        /// </summary>
+        internal static string Show {
+            get {
+                return ResourceManager.GetString("Show", resourceCulture);
             }
         }
         
@@ -354,6 +417,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         internal static string Type {
             get {
                 return ResourceManager.GetString("Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unit Id.
+        /// </summary>
+        internal static string UnitId {
+            get {
+                return ResourceManager.GetString("UnitId", resourceCulture);
             }
         }
         

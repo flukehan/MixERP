@@ -75,6 +75,10 @@
       <Project>{8FD9661C-2473-4581-8722-18B08D4DB252}</Project>
       <Name>MixERP.Net.DbFactory</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MixERP.Net.Entities\MixERP.Net.Entities.csproj">
+      <Project>{bde918b1-dd9b-41c9-a41f-f3ddec18b6d8}</Project>
+      <Name>MixERP.Net.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

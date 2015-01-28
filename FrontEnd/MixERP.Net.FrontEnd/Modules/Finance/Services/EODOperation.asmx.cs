@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Web.Script.Services;
-using System.Web.Services;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Core;
-
-/********************************************************************************
+﻿/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
 This file is part of MixERP.
@@ -24,6 +16,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Web.Script.Services;
+using System.Web.Services;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Common.Models;
 
 namespace MixERP.Net.Core.Modules.Finance.Services
 {

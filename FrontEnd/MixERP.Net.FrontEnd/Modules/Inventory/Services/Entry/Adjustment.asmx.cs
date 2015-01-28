@@ -25,8 +25,9 @@ using System.Web.Services;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models.Transactions;
 using MixERP.Net.Core.Modules.Inventory.Resources;
+using MixERP.Net.Entities;
+using MixERP.Net.Entities.Models.Transactions;
 
 namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
 {
@@ -37,7 +38,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
     public class Adjustment : WebService
     {
         [WebMethod(EnableSession = true)]
-        public long Save(DateTime valueDate, string referenceNumber, string statementReference, List<StockAdjustmentModel> models)
+        public long Save(DateTime valueDate, string referenceNumber, string statementReference, List<StockAdjustmentDetail> models)
         {
             foreach (var model in models)
             {

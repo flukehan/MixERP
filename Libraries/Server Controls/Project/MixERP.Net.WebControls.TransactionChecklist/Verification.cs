@@ -17,13 +17,11 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Models.Transactions;
-
 namespace MixERP.Net.WebControls.TransactionChecklist
 {
     public static class Verification
     {
-        public static VerificationModel GetVerificationStatus(long transactionMasterId)
+        public static Entities.Models.Transactions.Verification GetVerificationStatus(long transactionMasterId)
         {
             return TransactionGovernor.Verification.VerificationStatus.GetVerificationStatus(transactionMasterId);
         }
