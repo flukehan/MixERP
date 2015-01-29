@@ -15,6 +15,8 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
     public partial class FormView : CompositeControl
     {
         private HtmlGenericControl container;
+        private DateTextBox dateTextBox;
+
         public string ItemIdQuerySericeUrl { get; set; }
         public string ItemPopupUrl { get; set; }
         public string ItemServiceUrl { get; set; }
@@ -22,9 +24,6 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
         public string Text { get; set; }
         public string UnitServiceUrl { get; set; }
         public bool ValidateSides { get; set; }
-
-        private DateTextBox dateTextBox;
-
         protected override void CreateChildControls()
         {
             this.container = new HtmlGenericControl();
@@ -35,7 +34,7 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
             this.AddErrorLabelBottom();
             this.CreateBottomPanel();
             this.AddInlineScript();
-            this.AddJavaScript();
+            this.AddJavascript();
 
             this.Controls.Add(this.container);
         }

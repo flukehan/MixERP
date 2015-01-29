@@ -30,6 +30,7 @@ using System.Text.RegularExpressions;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Linq.Expressions;
+using Npgsql;
 
 
 namespace PetaPoco
@@ -154,62 +155,12 @@ namespace PetaPoco
     // Database class ... this is where most of the action happens
     public class Database : IDisposable
     {
-        public Database(IDbConnection connection)
-        {
-            _sharedConnection = connection;
-            _connectionString = connection.ConnectionString;
-            _sharedConnectionDepth = 2;		// Prevent closing external connection
-            CommonConstruct();
-        }
 
-        public Database(string connectionString, string providerName)
+        public Database(string connectionString)
         {
             _connectionString = connectionString;
-            _providerName = providerName;
             CommonConstruct();
         }
-
-        public Database(string connectionString, DbProviderFactory provider)
-        {
-            _connectionString = connectionString;
-            _factory = provider;
-            CommonConstruct();
-        }
-
-        public Database(string connectionStringName)
-        {
-            // Use first?
-            if (connectionStringName == "")
-                connectionStringName = ConfigurationManager.ConnectionStrings[0].Name;
-
-            // Work out connection string and provider name
-            var providerName = "System.Data.SqlClient";
-            if (ConfigurationManager.ConnectionStrings[connectionStringName] != null)
-            {
-                if (!string.IsNullOrEmpty(ConfigurationManager.ConnectionStrings[connectionStringName].ProviderName))
-                    providerName = ConfigurationManager.ConnectionStrings[connectionStringName].ProviderName;
-            }
-            else
-            {
-                throw new InvalidOperationException("Can't find a connection string with the name '" + connectionStringName + "'");
-            }
-
-            // Store factory and connection string
-            _connectionString = ConfigurationManager.ConnectionStrings[connectionStringName].ConnectionString;
-            _providerName = providerName;
-            CommonConstruct();
-        }
-
-        enum DBType
-        {
-            SqlServer,
-            SqlServerCE,
-            MySql,
-            PostgreSQL,
-            Oracle,
-            SQLite
-        }
-        DBType _dbType = DBType.SqlServer;
 
         // Common initialization
         private void CommonConstruct()
@@ -219,29 +170,8 @@ namespace PetaPoco
             EnableNamedParams = true;
             ForceDateTimesToUtc = true;
 
-            if (_providerName != null)
-                _factory = DbProviderFactories.GetFactory(_providerName);
 
-            string dbtype = (_factory == null ? _sharedConnection.GetType() : _factory.GetType()).Name;
-
-            // Try using type name first (more reliable)
-            if (dbtype.StartsWith("MySql")) _dbType = DBType.MySql;
-            else if (dbtype.StartsWith("SqlCe")) _dbType = DBType.SqlServerCE;
-            else if (dbtype.StartsWith("Npgsql")) _dbType = DBType.PostgreSQL;
-            else if (dbtype.StartsWith("Oracle")) _dbType = DBType.Oracle;
-            else if (dbtype.StartsWith("SQLite")) _dbType = DBType.SQLite;
-            else if (dbtype.StartsWith("System.Data.SqlClient.")) _dbType = DBType.SqlServer;
-            // else try with provider name
-            else if (_providerName.IndexOf("MySql", StringComparison.InvariantCultureIgnoreCase) >= 0) _dbType = DBType.MySql;
-            else if (_providerName.IndexOf("SqlServerCe", StringComparison.InvariantCultureIgnoreCase) >= 0) _dbType = DBType.SqlServerCE;
-            else if (_providerName.IndexOf("Npgsql", StringComparison.InvariantCultureIgnoreCase) >= 0) _dbType = DBType.PostgreSQL;
-            else if (_providerName.IndexOf("Oracle", StringComparison.InvariantCultureIgnoreCase) >= 0) _dbType = DBType.Oracle;
-            else if (_providerName.IndexOf("SQLite", StringComparison.InvariantCultureIgnoreCase) >= 0) _dbType = DBType.SQLite;
-
-            if (_dbType == DBType.MySql && _connectionString != null && _connectionString.IndexOf("Allow User Variables=true") >= 0)
-                _paramPrefix = "?";
-            if (_dbType == DBType.Oracle)
-                _paramPrefix = ":";
+            _paramPrefix = "@";
         }
 
         // Automatically close one open shared connection
@@ -260,7 +190,7 @@ namespace PetaPoco
         {
             if (_sharedConnectionDepth == 0)
             {
-                _sharedConnection = _factory.CreateConnection();
+                _sharedConnection = new NpgsqlConnection();
                 _sharedConnection.ConnectionString = _connectionString;
                 _sharedConnection.Open();
 
@@ -462,10 +392,6 @@ namespace PetaPoco
                     p.Value = (item as AnsiString).Value;
                     p.DbType = DbType.AnsiString;
                 }
-                else if (t == typeof(bool) && _dbType != DBType.PostgreSQL)
-                {
-                    p.Value = ((bool)item) ? 1 : 0;
-                }
                 else if (item.GetType().Name == "SqlGeography") //SqlGeography is a CLR Type
                 {
                     p.GetType().GetProperty("UdtTypeName").SetValue(p, "geography", null); //geography is the equivalent SQL Server Type
@@ -513,11 +439,6 @@ namespace PetaPoco
                 AddParam(cmd, item, _paramPrefix);
             }
 
-            if (_dbType == DBType.Oracle)
-            {
-                cmd.GetType().GetProperty("BindByName").SetValue(cmd, true, null);
-            }
-
             if (!String.IsNullOrEmpty(sql))
                 DoPreExecute(cmd);
 
@@ -532,7 +453,7 @@ namespace PetaPoco
         }
 
         // Override this to log commands, or modify command before execution
-        public virtual IDbConnection OnConnectionOpened(IDbConnection conn) { return conn; }
+        public virtual NpgsqlConnection OnConnectionOpened(NpgsqlConnection conn) { return conn; }
         public virtual void OnConnectionClosing(IDbConnection conn) { }
         public virtual void OnExecutingCommand(IDbCommand cmd) { }
         public virtual void OnExecutedCommand(IDbCommand cmd) { }
@@ -686,31 +607,9 @@ namespace PetaPoco
             string sqlSelectRemoved, sqlOrderBy;
             if (!SplitSqlForPaging(sql, out sqlCount, out sqlSelectRemoved, out sqlOrderBy))
                 throw new Exception("Unable to parse SQL statement for paged query");
-            if (_dbType == DBType.Oracle && sqlSelectRemoved.StartsWith("*"))
-                throw new Exception("Query must alias '*' when performing a paged query.\neg. select t.* from table t order by t.id");
 
-            // Build the SQL for the actual final result
-            if (_dbType == DBType.SqlServer || _dbType == DBType.Oracle)
-            {
-                sqlSelectRemoved = rxOrderBy.Replace(sqlSelectRemoved, "");
-                if (rxDistinct.IsMatch(sqlSelectRemoved))
-                {
-                    sqlSelectRemoved = "peta_inner.* FROM (SELECT " + sqlSelectRemoved + ") peta_inner";
-                }
-                sqlPage = string.Format("SELECT * FROM (SELECT ROW_NUMBER() OVER ({0}) peta_rn, {1}) peta_paged WHERE peta_rn>@{2} AND peta_rn<=@{3}",
-                                        sqlOrderBy == null ? "ORDER BY (SELECT NULL)" : sqlOrderBy, sqlSelectRemoved, args.Length, args.Length + 1);
-                args = args.Concat(new object[] { skip, skip + take }).ToArray();
-            }
-            else if (_dbType == DBType.SqlServerCE)
-            {
-                sqlPage = string.Format("{0}\nOFFSET @{1} ROWS FETCH NEXT @{2} ROWS ONLY", sql, args.Length, args.Length + 1);
-                args = args.Concat(new object[] { skip, take }).ToArray();
-            }
-            else
-            {
-                sqlPage = string.Format("{0}\nLIMIT @{1} OFFSET @{2}", sql, args.Length, args.Length + 1);
-                args = args.Concat(new object[] { take, skip }).ToArray();
-            }
+            sqlPage = string.Format("{0}\nLIMIT @{1} OFFSET @{2}", sql, args.Length, args.Length + 1);
+            args = args.Concat(new object[] { take, skip }).ToArray();
 
         }
 
@@ -1186,20 +1085,7 @@ namespace PetaPoco
         }
         public string EscapeSqlIdentifier(string str)
         {
-            switch (_dbType)
-            {
-                case DBType.MySql:
-                    return string.Format("`{0}`", str);
-
-                case DBType.PostgreSQL:
-                    return string.Format("\"{0}\"", str);
-
-                case DBType.Oracle:
-                    return string.Format("\"{0}\"", str.ToUpperInvariant());
-
-                default:
-                    return string.Format("[{0}]", str);
-            }
+            return string.Format("\"{0}\"", str);
         }
 
         public object Insert(string tableName, string primaryKeyName, object poco)
@@ -1232,11 +1118,6 @@ namespace PetaPoco
                             // Don't insert the primary key (except under oracle where we need bring in the next sequence value)
                             if (autoIncrement && primaryKeyName != null && string.Compare(i.Key, primaryKeyName, true) == 0)
                             {
-                                if (_dbType == DBType.Oracle && !string.IsNullOrEmpty(pd.TableInfo.SequenceName))
-                                {
-                                    names.Add(i.Key);
-                                    values.Add(string.Format("{0}.nextval", pd.TableInfo.SequenceName));
-                                }
                                 continue;
                             }
 
@@ -1261,79 +1142,20 @@ namespace PetaPoco
 
 
                         object id;
-                        switch (_dbType)
+
+                        if (primaryKeyName != null)
                         {
-                            case DBType.SqlServerCE:
-                                DoPreExecute(cmd);
-                                cmd.ExecuteNonQuery();
-                                OnExecutedCommand(cmd);
-                                id = ExecuteScalar<object>("SELECT @@@IDENTITY AS NewID;");
-                                break;
-                            case DBType.SqlServer:
-                                cmd.CommandText += ";\nSELECT SCOPE_IDENTITY() AS NewID;";
-                                DoPreExecute(cmd);
-                                id = cmd.ExecuteScalar();
-                                OnExecutedCommand(cmd);
-                                break;
-                            case DBType.PostgreSQL:
-                                if (primaryKeyName != null)
-                                {
-                                    cmd.CommandText += string.Format("returning {0} as NewID", EscapeSqlIdentifier(primaryKeyName));
-                                    DoPreExecute(cmd);
-                                    id = cmd.ExecuteScalar();
-                                }
-                                else
-                                {
-                                    id = -1;
-                                    DoPreExecute(cmd);
-                                    cmd.ExecuteNonQuery();
-                                }
-                                OnExecutedCommand(cmd);
-                                break;
-                            case DBType.Oracle:
-                                if (primaryKeyName != null)
-                                {
-                                    cmd.CommandText += string.Format(" returning {0} into :newid", EscapeSqlIdentifier(primaryKeyName));
-                                    var param = cmd.CreateParameter();
-                                    param.ParameterName = ":newid";
-                                    param.Value = DBNull.Value;
-                                    param.Direction = ParameterDirection.ReturnValue;
-                                    param.DbType = DbType.Int64;
-                                    cmd.Parameters.Add(param);
-                                    DoPreExecute(cmd);
-                                    cmd.ExecuteNonQuery();
-                                    id = param.Value;
-                                }
-                                else
-                                {
-                                    id = -1;
-                                    DoPreExecute(cmd);
-                                    cmd.ExecuteNonQuery();
-                                }
-                                OnExecutedCommand(cmd);
-                                break;
-                            case DBType.SQLite:
-                                if (primaryKeyName != null)
-                                {
-                                    cmd.CommandText += ";\nSELECT last_insert_rowid();";
-                                    DoPreExecute(cmd);
-                                    id = cmd.ExecuteScalar();
-                                }
-                                else
-                                {
-                                    id = -1;
-                                    DoPreExecute(cmd);
-                                    cmd.ExecuteNonQuery();
-                                }
-                                OnExecutedCommand(cmd);
-                                break;
-                            default:
-                                cmd.CommandText += ";\nSELECT @@IDENTITY AS NewID;";
-                                DoPreExecute(cmd);
-                                id = cmd.ExecuteScalar();
-                                OnExecutedCommand(cmd);
-                                break;
+                            cmd.CommandText += string.Format("returning {0} as NewID", EscapeSqlIdentifier(primaryKeyName));
+                            DoPreExecute(cmd);
+                            id = cmd.ExecuteScalar();
                         }
+                        else
+                        {
+                            id = -1;
+                            DoPreExecute(cmd);
+                            cmd.ExecuteNonQuery();
+                        }
+                        OnExecutedCommand(cmd);
 
 
                         // Assign the ID back to the primary key property
@@ -2161,9 +1983,8 @@ namespace PetaPoco
 
         // Member variables
         string _connectionString;
-        string _providerName;
         DbProviderFactory _factory;
-        IDbConnection _sharedConnection;
+        NpgsqlConnection _sharedConnection;
         IDbTransaction _transaction;
         int _sharedConnectionDepth;
         int _transactionDepth;

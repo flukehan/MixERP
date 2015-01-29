@@ -47,8 +47,10 @@ SELECT 'CUST', 'Customer Service';
 SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='SYST'),(SELECT office_id FROM office.offices WHERE office_code='MoF'),'sys','','System');
 
 /*******************************************************************
-    TODO: REMOVE THIS USER ON DEPLOYMENT
+    TODO: REMOVE THESE USERS ON DEPLOYMENT
 *******************************************************************/
-SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='ADMN'),(SELECT office_id FROM office.offices WHERE office_code='MoF'),'binod','37c6ca5a5570ce76affa5e779036c4955d764520980d17b597ea2908e9dcc515607f12eb25c3ce26e6b5dcaa812fe2acefbb20663ac220b02da82ec2f7e1d0e9','Binod Nirvan', true);
+SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='USER'),(SELECT office_id FROM office.offices WHERE office_code='MoF'),'binod','37c6ca5a5570ce76affa5e779036c4955d764520980d17b597ea2908e9dcc515607f12eb25c3ce26e6b5dcaa812fe2acefbb20663ac220b02da82ec2f7e1d0e9','Binod Nirvan', false);
+SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='ADMN'),(SELECT office_id FROM office.offices WHERE office_code='MoF'),'nirvan','c75c521057da3ff26f6732c8b4b8710ed9aede9d7eb5a64b2a1bf9f42deef89f1e666ca21927ce1ccef5860764cf3690164432fde2c4a0db69260aaa20b47bcf','Binod Nirvan', true);
 
-
+UPDATE office.users SET can_change_password=false
+WHERE user_name='binod';

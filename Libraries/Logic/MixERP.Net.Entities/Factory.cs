@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using Npgsql;
 using PetaPoco;
 
@@ -16,7 +11,7 @@ namespace MixERP.Net.Entities
 
         public static IEnumerable<T> Get<T>(string sql, params object[] args)
         {
-            using (Database db = new Database(GetConnectionString(), ProviderName))
+            using (Database db = new Database(GetConnectionString()))
             {
                 return db.Query<T>(sql, args);
             }
@@ -24,12 +19,11 @@ namespace MixERP.Net.Entities
 
         public static T Scalar<T>(string sql, params object[] args)
         {
-            using (Database db = new Database(GetConnectionString(), ProviderName))
+            using (Database db = new Database(GetConnectionString()))
             {
                 return db.ExecuteScalar<T>(sql, args);
             }
         }
-
 
         private static string GetConnectionString()
         {
@@ -46,6 +40,5 @@ namespace MixERP.Net.Entities
             //connectionStringBuilder.ApplicationName = "MixERP";
             return connectionStringBuilder.ConnectionString;
         }
-
     }
 }

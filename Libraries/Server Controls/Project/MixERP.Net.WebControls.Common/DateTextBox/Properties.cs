@@ -23,7 +23,7 @@ using MixERP.Net.Entities;
 
 namespace MixERP.Net.WebControls.Common
 {
-    public partial class DateTextBox : CompositeControl
+    public partial class DateTextBox
     {
         private bool enableValidation;
 

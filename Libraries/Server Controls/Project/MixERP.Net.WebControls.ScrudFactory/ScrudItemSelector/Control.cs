@@ -35,7 +35,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
         protected override void CreateChildControls()
         {
             this.container = new Panel();
-            this.AddJavaScript();
+            this.AddJavascript();
             this.LoadItemSelector(this.container);
             this.Initialize();
             this.Controls.Add(this.container);

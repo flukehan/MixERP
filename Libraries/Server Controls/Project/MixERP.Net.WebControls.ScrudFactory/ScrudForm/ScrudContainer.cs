@@ -27,7 +27,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
     {
         private void AddScrudScript()
         {
-            var script = ScrudJavaScriptHelper.GetScript(this.KeyColumn, this.CustomFormUrl, this.formGridView.ID, this.gridPanel.ID, this.userIdHidden.ID, this.officeCodeHidden.ID, this.titleLabel.ID, this.formPanel.ID, this.cancelButton.ID);
+            var script = ScrudJavascriptHelper.GetScript(this.KeyColumn, this.CustomFormUrl, this.formGridView.ID, this.gridPanel.ID, this.userIdHidden.ID, this.officeCodeHidden.ID, this.titleLabel.ID, this.formPanel.ID, this.cancelButton.ID);
             PageUtility.RegisterJavascript("scrudScript", script, this.Page, true);
         }
 

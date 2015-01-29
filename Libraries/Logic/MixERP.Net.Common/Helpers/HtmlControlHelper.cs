@@ -24,6 +24,16 @@ namespace MixERP.Net.Common.Helpers
 {
     public static class HtmlControlHelper
     {
+        public static HtmlGenericControl GetDivider()
+        {
+            using (HtmlGenericControl field = new HtmlGenericControl("div"))
+            {
+                field.Attributes.Add("class", "ui divider");
+
+                return field;
+            }
+        }
+
         public static HtmlGenericControl GetField()
         {
             using (HtmlGenericControl field = new HtmlGenericControl("div"))
@@ -53,6 +63,7 @@ namespace MixERP.Net.Common.Helpers
                 return fields;
             }
         }
+
         public static HtmlGenericControl GetFields(string cssClass)
         {
             using (HtmlGenericControl fields = new HtmlGenericControl("div"))
@@ -73,31 +84,31 @@ namespace MixERP.Net.Common.Helpers
             }
         }
 
-        public static HtmlGenericControl GetModal()
-        {
-            using (HtmlGenericControl field = new HtmlGenericControl("div"))
-            {
-                field.Attributes.Add("class", "ui modal");
-
-                return field;
-            }
-        }
-
-        public static HtmlGenericControl GetSegment()
-        {
-            using (HtmlGenericControl field = new HtmlGenericControl("div"))
-            {
-                field.Attributes.Add("class", "ui segment");
-
-                return field;
-            }
-        }
-
         public static HtmlGenericControl GetFormSegment()
         {
             using (HtmlGenericControl field = new HtmlGenericControl("div"))
             {
                 field.Attributes.Add("class", "ui form segment");
+
+                return field;
+            }
+        }
+
+        public static HtmlGenericControl GetFormSegment(string cssClass)
+        {
+            using (HtmlGenericControl field = new HtmlGenericControl("div"))
+            {
+                field.Attributes.Add("class", cssClass);
+
+                return field;
+            }
+        }
+
+        public static HtmlGenericControl GetIcon(string cssClass)
+        {
+            using (HtmlGenericControl field = new HtmlGenericControl("i"))
+            {
+                field.Attributes.Add("class", cssClass);
 
                 return field;
             }
@@ -112,6 +123,7 @@ namespace MixERP.Net.Common.Helpers
                 return fields;
             }
         }
+
         public static HtmlGenericControl GetLabel(string text)
         {
             using (HtmlGenericControl label = new HtmlGenericControl("label"))
@@ -139,6 +151,35 @@ namespace MixERP.Net.Common.Helpers
         public static string GetLabelHtml(string text, string targetControlId)
         {
             return string.Format(CultureInfo.InvariantCulture, "<label for='{1}'>{0}</label>", text, targetControlId);
+        }
+
+        public static HtmlGenericControl GetLeftIconInput()
+        {
+            using (HtmlGenericControl field = new HtmlGenericControl("div"))
+            {
+                field.Attributes.Add("class", "ui left icon input");
+
+                return field;
+            }
+        }
+        public static HtmlGenericControl GetModal()
+        {
+            using (HtmlGenericControl field = new HtmlGenericControl("div"))
+            {
+                field.Attributes.Add("class", "ui modal");
+
+                return field;
+            }
+        }
+
+        public static HtmlGenericControl GetSegment()
+        {
+            using (HtmlGenericControl field = new HtmlGenericControl("div"))
+            {
+                field.Attributes.Add("class", "ui segment");
+
+                return field;
+            }
         }
 
         public static HtmlGenericControl GetToggleCheckBox()

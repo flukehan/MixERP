@@ -86,5 +86,14 @@ namespace Resources {
                 return ResourceManager.GetString("UserGreeting", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your password was changed..
+        /// </summary>
+        internal static string YourPasswordWasChanged {
+            get {
+                return ResourceManager.GetString("YourPasswordWasChanged", resourceCulture);
+            }
+        }
     }
 }

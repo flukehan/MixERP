@@ -55,7 +55,7 @@ if (typeof invalidPaymentTermLocalized === "undefined") {
 //Controls
 var addButton = $("#AddButton");
 var amountInputText = $("#AmountInputText");
-var attachmentLabel = $("#AttachmentLabel");
+var attachmentToggler = $("#attachmentToggler");
 var cashTransactionInputCheckBox = $("#CashTransactionInputCheckBox");
 var costCenterSelect = $("#CostCenterSelect");
 
@@ -308,7 +308,7 @@ amountInputText.blur(function() {
     calculateAmount();
 });
 
-attachmentLabel.click(function() {
+attachmentToggler.click(function() {
     $('#attachment').show(500).after(function() {
         repaint();
     });

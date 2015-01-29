@@ -27,7 +27,7 @@ namespace MixERP.Net.WebControls.TransactionViewFactory
 
             this.SetDefaultValues();
             this.BindGrid();
-            this.AddJavaScript();
+            this.AddJavascript();
 
             this.Controls.Add(this.panel);
         }

@@ -7100,6 +7100,104 @@ LANGUAGE plpgsql;
 
 
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/policy/policy.change_password.sql --<--<--
+DROP FUNCTION IF EXISTS policy.change_password
+(
+    _user_name          text,
+    _current_password   text,
+    _new_password       text
+);
+
+CREATE FUNCTION policy.change_password
+(
+    _user_name          text,
+    _current_password   text,
+    _new_password       text
+)
+RETURNS boolean
+VOLATILE
+AS
+$$
+BEGIN
+    IF(COALESCE($1, '') = '') THEN
+        RAISE EXCEPTION 'Invalid user name.';
+    END IF;
+
+    IF(COALESCE($2, '') = '' OR COALESCE($3, '') = '') THEN
+        RAISE EXCEPTION 'Password cannot be empty.';
+    END IF;
+
+    IF($2=$3) THEN
+        RAISE EXCEPTION 'Please provide a new password.';
+    END IF;
+
+    IF NOT EXISTS
+    (
+        SELECT * FROM office.users
+        WHERE user_name = $1
+        AND can_change_password
+        AND role_id NOT IN
+        (
+            SELECT role_id FROM office.roles
+            WHERE is_system
+        )
+    ) THEN
+        RAISE EXCEPTION 'Access is denied.';
+    END IF;
+
+    IF NOT EXISTS
+    (
+        SELECT * FROM office.users 
+        WHERE office.users.user_name=$1
+        AND encode(digest($1 || $2, 'sha512'), 'hex') = office.users.password 
+    ) THEN
+        RAISE EXCEPTION 'Your current password is incorrect.';
+    END IF;
+
+    UPDATE office.users
+    SET password = encode(digest($1 || $3, 'sha512'), 'hex')
+    WHERE office.users.user_name=$1;
+    
+
+    RETURN true;
+END
+$$
+LANGUAGE plpgsql;
+
+
+DROP FUNCTION IF EXISTS policy.change_password
+(
+    user_name           text,
+    new_password        text
+);
+
+CREATE FUNCTION policy.change_password
+(
+    user_name           text,
+    new_password        text
+)
+RETURNS boolean
+VOLATILE
+AS
+$$
+BEGIN
+    IF(COALESCE($1, '') = '') THEN
+        RAISE EXCEPTION 'Invalid user name.';
+    END IF;
+
+    IF(COALESCE($2, '') = '') THEN
+        RAISE EXCEPTION 'Password cannot be empty.';
+    END IF;
+
+    UPDATE office.users
+    SET password = encode(digest($1 || $2, 'sha512'), 'hex')
+    WHERE office.users.user_name=$1;
+    
+    RETURN true;
+END
+$$
+LANGUAGE plpgsql;
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/policy/policy.get_menu.sql --<--<--
 DROP FUNCTION IF EXISTS policy.get_menu(user_id_ integer, office_id_ integer, culture_ text);
 CREATE FUNCTION policy.get_menu(user_id_ integer, office_id_ integer, culture_ text)
@@ -7156,6 +7254,105 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/public/poco_get_table_definition.sql --<--<--
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/public/poco_get_table_function_definition.sql --<--<--
+DROP FUNCTION IF EXISTS public.poco_get_table_function_definition
+(
+    _schema         text,
+    _name           text
+);
+
+CREATE FUNCTION public.poco_get_table_function_definition
+(
+    _schema                 text,
+    _name                   text
+)
+RETURNS TABLE
+(
+    column_name             text,
+    is_nullable             text,
+    udt_name                text,
+    column_default          text
+)
+STABLE
+AS
+$$
+    DECLARE _oid            oid;
+    DECLARE _typoid         oid;
+BEGIN
+    SELECT 
+        pg_proc.oid,
+        pg_proc.prorettype
+    INTO 
+        _oid,
+        _typoid
+    FROM pg_proc
+    INNER JOIN pg_namespace
+    ON pg_proc.pronamespace = pg_namespace.oid
+    WHERE pg_proc.proname=_name
+    AND pg_namespace.nspname=_schema
+    LIMIT 1;
+
+    IF(_oid IS NULL) THEN
+        RETURN QUERY
+        SELECT 
+            information_schema.columns.column_name::text, 
+            information_schema.columns.is_nullable::text, 
+            information_schema.columns.udt_name::text, 
+            information_schema.columns.column_default::text
+        FROM information_schema.columns 
+        WHERE table_schema=_schema 
+        AND table_name=_name;
+    END IF;
+
+    IF EXISTS(SELECT * FROM pg_type WHERE oid = _typoid AND typtype='c') THEN
+        --Composite Type
+        RETURN QUERY
+        SELECT 
+            attname::text               AS column_name,
+            'NO'::text                  AS is_nullable, 
+            format_type(t.oid,NULL)     AS udt_name,
+            ''::text                    AS column_default
+        FROM pg_attribute att
+        JOIN pg_type t ON t.oid=atttypid
+        JOIN pg_namespace nsp ON t.typnamespace=nsp.oid
+        LEFT OUTER JOIN pg_type b ON t.typelem=b.oid
+        LEFT OUTER JOIN pg_collation c ON att.attcollation=c.oid
+        LEFT OUTER JOIN pg_namespace nspc ON c.collnamespace=nspc.oid
+        WHERE att.attrelid=(SELECT typrelid FROM pg_type WHERE pg_type.oid = _typoid)
+        ORDER by attnum;    
+    END IF;
+
+    RETURN QUERY
+    WITH procs
+    AS
+    (
+        SELECT 
+        explode_array(proargnames) as column_name,
+        explode_array(proargmodes) as column_mode,
+        explode_array(proallargtypes) as argument_type
+        FROM pg_proc
+        WHERE oid = _oid
+    )
+    SELECT 
+        procs.column_name::text,
+        'NO'::text AS is_nullable, 
+        format_type(procs.argument_type, null) as udt_name,
+        ''::text AS column_default
+    FROM procs
+    WHERE column_mode=ANY(ARRAY['t', 'o']);
+
+END
+$$
+LANGUAGE plpgsql;
+
+
+--SELECT * from public.poco_get_table_function_definition('office', 'get_offices');
+
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.auto_verify.sql --<--<--
@@ -20147,11 +20344,13 @@ SELECT 'CUST', 'Customer Service';
 SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='SYST'),(SELECT office_id FROM office.offices WHERE office_code='MoF'),'sys','','System');
 
 /*******************************************************************
-    TODO: REMOVE THIS USER ON DEPLOYMENT
+    TODO: REMOVE THESE USERS ON DEPLOYMENT
 *******************************************************************/
-SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='ADMN'),(SELECT office_id FROM office.offices WHERE office_code='MoF'),'binod','37c6ca5a5570ce76affa5e779036c4955d764520980d17b597ea2908e9dcc515607f12eb25c3ce26e6b5dcaa812fe2acefbb20663ac220b02da82ec2f7e1d0e9','Binod Nirvan', true);
+SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='USER'),(SELECT office_id FROM office.offices WHERE office_code='MoF'),'binod','37c6ca5a5570ce76affa5e779036c4955d764520980d17b597ea2908e9dcc515607f12eb25c3ce26e6b5dcaa812fe2acefbb20663ac220b02da82ec2f7e1d0e9','Binod Nirvan', false);
+SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='ADMN'),(SELECT office_id FROM office.offices WHERE office_code='MoF'),'nirvan','c75c521057da3ff26f6732c8b4b8710ed9aede9d7eb5a64b2a1bf9f42deef89f1e666ca21927ce1ccef5860764cf3690164432fde2c4a0db69260aaa20b47bcf','Binod Nirvan', true);
 
-
+UPDATE office.users SET can_change_password=false
+WHERE user_name='binod';
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/policy, config.sql --<--<--
@@ -22366,6 +22565,18 @@ FROM core.menus
 
 UNION ALL
 SELECT office.get_office_id_by_office_code('MoF-NP-KTM'), core.menus.menu_id, office.get_user_id_by_user_name('binod')
+FROM core.menus
+
+UNION ALL
+SELECT office.get_office_id_by_office_code('MoF-NY-BK'), core.menus.menu_id, office.get_user_id_by_user_name('nirvan')
+FROM core.menus
+
+UNION ALL
+SELECT office.get_office_id_by_office_code('MoF-NY-RV'), core.menus.menu_id, office.get_user_id_by_user_name('nirvan')
+FROM core.menus
+
+UNION ALL
+SELECT office.get_office_id_by_office_code('MoF-NP-KTM'), core.menus.menu_id, office.get_user_id_by_user_name('nirvan')
 FROM core.menus;
 
 

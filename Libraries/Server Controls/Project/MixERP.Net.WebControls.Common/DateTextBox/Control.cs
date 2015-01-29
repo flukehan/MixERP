@@ -27,7 +27,7 @@ using MixERP.Net.WebControls.Common.Resources;
 namespace MixERP.Net.WebControls.Common
 {
     [ToolboxData("<{0}:DateTextBox runat=server></{0}:DateTextBox>")]
-    public sealed partial class DateTextBox
+    public sealed partial class DateTextBox : CompositeControl
     {
         public CompareValidator compareValidator;
         public CompareValidator maxDateCompareValidator;

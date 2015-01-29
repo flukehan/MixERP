@@ -32,6 +32,18 @@ namespace MixERP.Net.FrontEnd.Data.Office
 {
     public static class User
     {
+        public static bool ChangePassword(string userName, string currentPassword, string newPassword)
+        {
+            try
+            {
+                return Factory.Scalar<bool>("SELECT * FROM policy.change_password(@0, @1, @2);", userName, currentPassword, newPassword);
+            }
+            catch (NpgsqlException ex)
+            {
+                throw new MixERPException(ex.Message, ex);
+            }
+        }
+
         public static SignInView GetSignInView(long loginId)
         {
             return Factory.Get<SignInView>("SELECT * FROM office.sign_in_view WHERE login_id=@0;", loginId).FirstOrDefault();

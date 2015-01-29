@@ -61,6 +61,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The confirmation password does not match with the new password..
+        /// </summary>
+        internal static string ConfirmationPasswordDoesNotMatch {
+            get {
+                return ResourceManager.GetString("ConfirmationPasswordDoesNotMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Duplicate entry..
         /// </summary>
         internal static string DuplicateEntry {
@@ -97,11 +106,38 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New password can not be old password..
+        /// </summary>
+        internal static string NewPasswordCannotBeOldPassword {
+            get {
+                return ResourceManager.GetString("NewPasswordCannotBeOldPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nothing selected..
         /// </summary>
         internal static string NothingSelected {
             get {
                 return ResourceManager.GetString("NothingSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter your current password..
+        /// </summary>
+        internal static string PleaseEnterCurrentPassword {
+            get {
+                return ResourceManager.GetString("PleaseEnterCurrentPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter a new password..
+        /// </summary>
+        internal static string PleaseEnterNewPassword {
+            get {
+                return ResourceManager.GetString("PleaseEnterNewPassword", resourceCulture);
             }
         }
         

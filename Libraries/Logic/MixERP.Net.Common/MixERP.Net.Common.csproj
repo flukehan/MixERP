@@ -88,6 +88,7 @@
     <Compile Include="Helpers\DateHelper.cs" />
     <Compile Include="Helpers\DropDownListHelper.cs" />
     <Compile Include="Helpers\ExpressionHelper.cs" />
+    <Compile Include="Helpers\FileSystemHelper.cs" />
     <Compile Include="Helpers\GridViewHelper.cs" />
     <Compile Include="Helpers\HtmlControlHelper.cs" />
     <Compile Include="Helpers\ImageHelper.cs" />

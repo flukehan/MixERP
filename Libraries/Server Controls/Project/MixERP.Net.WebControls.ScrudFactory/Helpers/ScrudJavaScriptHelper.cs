@@ -28,11 +28,11 @@ using System.Web;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 {
-    internal static class ScrudJavaScriptHelper
+    internal static class ScrudJavascriptHelper
     {
         internal static string GetScript(string keyColumn, string customFormUrl, string formGridViewId, string gridPanelId, string userIdHiddenId, string officeCodeHiddenId, string titleLabelId, string formPanelId, string cancelButtonId)
         {
-            var resource = JavaScriptHelper.GetEmbeddedScript("MixERP.Net.WebControls.ScrudFactory.Scrud.js", Assembly.GetExecutingAssembly());
+            var resource = JavascriptHelper.GetEmbeddedScript("MixERP.Net.WebControls.ScrudFactory.Scrud.js", Assembly.GetExecutingAssembly());
             var script = new StringBuilder();
 
             script.Append(CreateVariable("formGridViewId", formGridViewId));

@@ -218,7 +218,7 @@ namespace MixERP.Net.Common
 
             if (page == null)
             {
-                throw new InvalidOperationException(Resources.Warnings.CouldNotRegisterJavaScript);
+                throw new InvalidOperationException(Resources.Warnings.CouldNotRegisterJavascript);
             }
 
             ScriptManager.RegisterStartupScript(page, typeof(Page), key, javaScript, addScriptTags);

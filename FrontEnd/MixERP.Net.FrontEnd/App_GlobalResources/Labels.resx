@@ -127,4 +127,7 @@
     <value>Hi {0}!</value>
     <comment>Hi binod!</comment>
   </data>
+  <data name="YourPasswordWasChanged" xml:space="preserve">
+    <value>Your password was changed.</value>
+  </data>
 </root>

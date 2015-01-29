@@ -130,6 +130,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{233426
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.Entities", "Libraries\Logic\MixERP.Net.Entities\MixERP.Net.Entities.csproj", "{BDE918B1-DD9B-41C9-A41F-F3DDEC18B6D8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.WebControls.AttachmentFactory", "Libraries\Server Controls\Project\MixERP.Net.WebControls.AttachmentFactory\MixERP.Net.WebControls.AttachmentFactory.csproj", "{403F308D-10E7-4C70-9360-1027EE541495}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1202,6 +1204,30 @@ Global
 		{BDE918B1-DD9B-41C9-A41F-F3DDEC18B6D8}.Release-net40|Any CPU.Build.0 = Release|Any CPU
 		{BDE918B1-DD9B-41C9-A41F-F3DDEC18B6D8}.Release-net45|Any CPU.ActiveCfg = Release|Any CPU
 		{BDE918B1-DD9B-41C9-A41F-F3DDEC18B6D8}.Release-net45|Any CPU.Build.0 = Release|Any CPU
+		{403F308D-10E7-4C70-9360-1027EE541495}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{403F308D-10E7-4C70-9360-1027EE541495}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{403F308D-10E7-4C70-9360-1027EE541495}.Debug-net20|Any CPU.ActiveCfg = Debug|Any CPU
+		{403F308D-10E7-4C70-9360-1027EE541495}.Debug-net20|Any CPU.Build.0 = Debug|Any CPU
+		{403F308D-10E7-4C70-9360-1027EE541495}.Debug-net35|Any CPU.ActiveCfg = Debug|Any CPU
+		{403F308D-10E7-4C70-9360-1027EE541495}.Debug-net35|Any CPU.Build.0 = Debug|Any CPU
+		{403F308D-10E7-4C70-9360-1027EE541495}.Debug-net40|Any CPU.ActiveCfg = Debug|Any CPU
+		{403F308D-10E7-4C70-9360-1027EE541495}.Debug-net40|Any CPU.Build.0 = Debug|Any CPU
+		{403F308D-10E7-4C70-9360-1027EE541495}.Debug-net45|Any CPU.ActiveCfg = Debug|Any CPU
+		{403F308D-10E7-4C70-9360-1027EE541495}.Debug-net45|Any CPU.Build.0 = Debug|Any CPU
+		{403F308D-10E7-4C70-9360-1027EE541495}.Mono-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{403F308D-10E7-4C70-9360-1027EE541495}.Mono-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{403F308D-10E7-4C70-9360-1027EE541495}.Mono-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{403F308D-10E7-4C70-9360-1027EE541495}.Mono-Release|Any CPU.Build.0 = Release|Any CPU
+		{403F308D-10E7-4C70-9360-1027EE541495}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{403F308D-10E7-4C70-9360-1027EE541495}.Release|Any CPU.Build.0 = Release|Any CPU
+		{403F308D-10E7-4C70-9360-1027EE541495}.Release-net20|Any CPU.ActiveCfg = Release|Any CPU
+		{403F308D-10E7-4C70-9360-1027EE541495}.Release-net20|Any CPU.Build.0 = Release|Any CPU
+		{403F308D-10E7-4C70-9360-1027EE541495}.Release-net35|Any CPU.ActiveCfg = Release|Any CPU
+		{403F308D-10E7-4C70-9360-1027EE541495}.Release-net35|Any CPU.Build.0 = Release|Any CPU
+		{403F308D-10E7-4C70-9360-1027EE541495}.Release-net40|Any CPU.ActiveCfg = Release|Any CPU
+		{403F308D-10E7-4C70-9360-1027EE541495}.Release-net40|Any CPU.Build.0 = Release|Any CPU
+		{403F308D-10E7-4C70-9360-1027EE541495}.Release-net45|Any CPU.ActiveCfg = Release|Any CPU
+		{403F308D-10E7-4C70-9360-1027EE541495}.Release-net45|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1263,5 +1289,6 @@ Global
 		{8D2A81FA-579B-499F-A151-7DD49D759A91} = {F882C837-D33A-43DE-8CEA-87D0CE635E9D}
 		{233426C2-5C7A-499E-A7F2-FB9AE5A267EF} = {C832E6A8-B906-4DFC-8458-72C965C0C957}
 		{BDE918B1-DD9B-41C9-A41F-F3DDEC18B6D8} = {233426C2-5C7A-499E-A7F2-FB9AE5A267EF}
+		{403F308D-10E7-4C70-9360-1027EE541495} = {8BE8E894-6613-4FB0-A196-E737C777E51A}
 	EndGlobalSection
 EndGlobal

@@ -727,6 +727,7 @@
     <Content Include="Scripts\mixerp\master-page\semantic.js" />
     <Content Include="Scripts\mixerp\master-page\sortable.js" />
     <Content Include="Scripts\notify-combined.min.js" />
+    <Content Include="Scripts\Pages\Site\Account\ChangePassword.aspx.js" />
     <Content Include="Scripts\semantic-ui\components\accordion.css" />
     <Content Include="Scripts\semantic-ui\components\accordion.js" />
     <Content Include="Scripts\semantic-ui\components\accordion.min.css" />
@@ -1078,6 +1079,10 @@
     <ProjectReference Include="..\..\Libraries\Logic\MixERP.Net.Messaging\MixERP.Net.Messaging.csproj">
       <Project>{d29b7b60-76b2-4a00-a8fa-7654519afcd4}</Project>
       <Name>MixERP.Net.Messaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.AttachmentFactory\MixERP.Net.WebControls.AttachmentFactory.csproj">
+      <Project>{403f308d-10e7-4c70-9360-1027ee541495}</Project>
+      <Name>MixERP.Net.WebControls.AttachmentFactory</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.Common\MixERP.Net.WebControls.Common.csproj">
       <Project>{2d961540-6597-4e7b-969c-974d71d820dd}</Project>

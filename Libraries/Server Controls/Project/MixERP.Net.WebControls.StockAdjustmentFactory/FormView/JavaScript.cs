@@ -21,9 +21,9 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
             Net.Common.PageUtility.RegisterJavascript("StockAdjustmentFormViewInlineScript", inline.ToString(), this.Page, true);
         }
 
-        private void AddJavaScript()
+        private void AddJavascript()
         {
-            JavaScriptHelper.AddJSReference(this.Page, "MixERP.Net.WebControls.StockAdjustmentFactory.FormView.js", "party_control", typeof(FormView));
+            JavascriptHelper.AddJSReference(this.Page, "MixERP.Net.WebControls.StockAdjustmentFactory.FormView.js", "party_control", typeof(FormView));
         }
     }
 }

@@ -13,30 +13,12 @@ namespace MixERP.Net.FrontEnd.UserControls {
     public partial class AttachmentUserControl {
         
         /// <summary>
-        /// UploadedFilesHidden control.
+        /// Placeholder1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField UploadedFilesHidden;
-        
-        /// <summary>
-        /// SaveButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputButton SaveButton;
-        
-        /// <summary>
-        /// WarningLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label WarningLabel;
+        protected global::System.Web.UI.WebControls.PlaceHolder Placeholder1;
     }
 }

@@ -134,6 +134,18 @@ FROM core.menus
 
 UNION ALL
 SELECT office.get_office_id_by_office_code('MoF-NP-KTM'), core.menus.menu_id, office.get_user_id_by_user_name('binod')
+FROM core.menus
+
+UNION ALL
+SELECT office.get_office_id_by_office_code('MoF-NY-BK'), core.menus.menu_id, office.get_user_id_by_user_name('nirvan')
+FROM core.menus
+
+UNION ALL
+SELECT office.get_office_id_by_office_code('MoF-NY-RV'), core.menus.menu_id, office.get_user_id_by_user_name('nirvan')
+FROM core.menus
+
+UNION ALL
+SELECT office.get_office_id_by_office_code('MoF-NP-KTM'), core.menus.menu_id, office.get_user_id_by_user_name('nirvan')
 FROM core.menus;
 
 

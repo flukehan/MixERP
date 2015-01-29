@@ -4,9 +4,9 @@ namespace MixERP.Net.WebControls.TransactionViewFactory
 {
     public partial class TransactionView
     {
-        private void AddJavaScript()
+        private void AddJavascript()
         {
-            JavaScriptHelper.AddJSReference(this.Page, "MixERP.Net.WebControls.TransactionViewFactory.TransactionViewFactory.js", "transaction_view", typeof(TransactionView));
+            JavascriptHelper.AddJSReference(this.Page, "MixERP.Net.WebControls.TransactionViewFactory.TransactionViewFactory.js", "transaction_view", typeof(TransactionView));
         }
     }
 }

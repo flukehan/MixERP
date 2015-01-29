@@ -38,7 +38,7 @@ signInButton.click(function() {
 
     $(".form").addClass("loading");
 
-    ajaxAuthenticate.success(function(msg) {
+    ajaxAuthenticate.success(function (msg) {
         if (msg.d === "OK") {
             window.location = getRedirectUrl();
             return;
