@@ -17,27 +17,22 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.FrontEnd.Base;
 using System;
-using MixERP.Net.Common.Domains;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace MixERP.Net.Core.Modules.Sales.Widgets
+namespace MixERP.Net.Common.Domains
 {
-    public partial class TopSellingProductOfAllTimeCurrentWidget : MixERPWidget
+    /// <summary>
+    /// MixERP User Control Interface
+    /// </summary>
+    public interface IControl
     {
-        public override void OnControlLoad(object sender, EventArgs e)
-        {
-            this.TopSellingProductsLiteral.Text = Resources.Titles.TopSellingProductsOfAllTime;
-
-            this.TopSellingProductsOfAllTimeGridView.Attributes.Add("style", "display:none;");
-            this.TopSellingProductsOfAllTimeGridView.DataSource = Data.Reports.TopSellingProducts.GetTopSellingProductsOfAllTime();
-            this.TopSellingProductsOfAllTimeGridView.DataBind();
-            base.OnControlLoad(sender, e);
-        }
-
-        public override AccessLevel AccessLevel
-        {
-            get { return AccessLevel.PolicyBased; }
-        }
+        string MasterPageId { get; set; }
+        bool RemoveTheme { get; set; }
+        string OverridePath { get; set; }
+        void OnControlLoad(object sender, EventArgs e);
     }
 }

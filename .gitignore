@@ -3,5 +3,6 @@ obj
 *.pdb
 FrontEnd/MixERP.Net.FrontEnd/Resource/Static/Attachments
 FrontEnd/MixERP.Net.FrontEnd/Resource/Static/Emails
+FrontEnd/MixERP.Net.FrontEnd/Resource/Backups
 FrontEnd/MixERP.Net.FrontEnd/Resource/Temp
 

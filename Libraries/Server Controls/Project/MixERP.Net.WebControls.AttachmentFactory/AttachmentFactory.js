@@ -35,10 +35,6 @@ if (typeof uploadedFilesDeletedLocalized == "undefined") {
     uploadedFilesDeletedLocalized = "The uploaded files were successfully deleted.";
 };
 
-var undoUploadUrl = "/Services/UploadHelper.asmx/UndoUpload";
-//var uploadHandlerUrl = "/Handlers/FileUpload.ashx";
-var uploadHandlerUrl = "/FileUploadHanlder.ashx";
-
 var undoButton = $("#UndoButton");
 var uploadedFilesHidden = $("#UploadedFilesHidden");
 var uploadButton = $("#UploadButton");
@@ -95,26 +91,22 @@ $.fn.enable = function () {
 
 undoButton.on("click", function () {
     $(".browse").prop('disabled', false);
-
     if (uploadedFilesHidden.val() !== "") {
         if (confirm(areYouSureLocalized)) {
-            var url = undoUploadUrl;
-            var data = appendParameter("", "uploadedFilesJson", uploadedFilesHidden.val());
-            data = getData(data);
+            $.post(undoUploadServiceUrl, {
+                uploadedFilesJson: uploadedFilesHidden.val()
+            }, function (data) {
+                var result = $(data).find("boolean").text();
 
-            var undoUploadAjax = getAjax(url, data);
-
-            undoUploadAjax.success(function () {
-                resetAttachmentForm();
-                $.notify(uploadedFilesDeletedLocalized, "success");
+                if (result) {
+                    resetAttachmentForm();
+                    $.notify(uploadedFilesDeletedLocalized, "success");
+                };
             });
-
-            undoUploadAjax.error(function (xhr) {
-                $.notify(xhr.error, "error");
-            });
-        }
-    }
+        };
+    };
 });
+
 
 function resetAttachmentForm() {
     var paragraphs = $(".path");

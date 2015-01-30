@@ -18,7 +18,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="AttachmentManager.ascx.cs" Inherits="MixERP.Net.Core.Modules.BackOffice.AttachmentManager" %>
-<%@ Register TagPrefix="mixerp" TagName="Attachment" Src="~/UserControls/AttachmentUserControl.ascx" %>
 <style>
     @media screen and (min-width: 768px) {
         .modal-wide .modal-dialog {
@@ -29,7 +28,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
 <div class="ui massive teal header">Upload Attachments</div>
 
-<mixerp:Attachment runat="server" ID="AttachmentUserControl" ShowSaveButton="true" />
+<asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
 
 <div class="ui massive teal header">View Attachments</div>
 

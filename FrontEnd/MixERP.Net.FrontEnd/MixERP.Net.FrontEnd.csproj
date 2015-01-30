@@ -144,9 +144,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Handlers\FileUpload.ashx.cs">
-      <DependentUpon>FileUpload.ashx</DependentUpon>
-    </Compile>
     <Compile Include="Hubs\BaseHub.cs" />
     <Compile Include="Hubs\Startup.cs" />
     <Compile Include="MixERPBlankMaster.Master.cs">
@@ -217,10 +214,6 @@
     <Compile Include="Site\RuntimeError.aspx.designer.cs">
       <DependentUpon>RuntimeError.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Services\UploadHelper.asmx.cs">
-      <DependentUpon>UploadHelper.asmx</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="SignIn.aspx.cs">
       <DependentUpon>SignIn.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -241,13 +234,6 @@
     </Compile>
     <Compile Include="Site\Account\SignOut.aspx.designer.cs">
       <DependentUpon>SignOut.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\AttachmentUserControl.ascx.cs">
-      <DependentUpon>AttachmentUserControl.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserControls\AttachmentUserControl.ascx.designer.cs">
-      <DependentUpon>AttachmentUserControl.ascx</DependentUpon>
     </Compile>
     <Compile Include="UserControls\CurrencyExtender.ascx.cs">
       <DependentUpon>CurrencyExtender.ascx</DependentUpon>
@@ -637,6 +623,9 @@
     <Content Include="db\src\dump.sql" />
     <Content Include="db\src\refresh-materialized-views.sql" />
     <Content Include="Modules\Default.aspx" />
+    <Content Include="Resource\Configuration\AttachmentFactoryParameters.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Resource\Configuration\MessagingParameters.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -884,7 +873,6 @@
     <Content Include="Scripts\vakata-jstree\dist\themes\default\style.css" />
     <Content Include="Scripts\vakata-jstree\dist\themes\default\style.min.css" />
     <Content Include="Scripts\vakata-jstree\dist\themes\default\throbber.gif" />
-    <Content Include="Services\UploadHelper.asmx" />
     <Content Include="Services\User.asmx" />
     <Content Include="Site\Account\ChangePassword.aspx" />
     <Content Include="Site\Account\SignOut.aspx" />
@@ -977,7 +965,6 @@
     <Content Include="Stylesheets\report.min.css">
       <DependentUpon>report.css</DependentUpon>
     </Content>
-    <Content Include="UserControls\AttachmentUserControl.ascx" />
     <Content Include="UserControls\CurrencyExtender.ascx" />
   </ItemGroup>
   <ItemGroup>
@@ -996,13 +983,14 @@
     <Content Include="Mix Open Foundation.snk" />
     <Content Include="MixERPReportMaster.Master" />
     <Content Include="MixERPBlankMaster.Master" />
-    <Content Include="Handlers\FileUpload.ashx" />
     <Content Include="App_Themes\MixERP\mixerp.less" />
     <Content Include="App_Themes\MixERP\mixerp.css.map">
       <DependentUpon>mixerp.css</DependentUpon>
     </Content>
     <Content Include="Reports\Assets\ReadMe.txt" />
-    <Content Include="Resource\Configuration\Switches.xml" />
+    <Content Include="Resource\Configuration\Switches.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Resource\Configuration\Parameters.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -1067,6 +1055,7 @@
   <ItemGroup>
     <Folder Include="db\src\000. mixerp\" />
     <Folder Include="db\src\05. views\policy\" />
+    <Folder Include="Handlers\" />
     <Folder Include="Resource\DatabaseBackups\" />
     <Folder Include="Resource\Frameworks\" />
     <Folder Include="Resource\Logo\" />

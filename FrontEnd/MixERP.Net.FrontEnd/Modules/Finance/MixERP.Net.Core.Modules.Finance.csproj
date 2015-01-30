@@ -384,6 +384,10 @@
       <Project>{0aacf4db-8332-4c4b-96df-2bf6aea68473}</Project>
       <Name>MixERP.Net.TransactionGovernor</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.AttachmentFactory\MixERP.Net.WebControls.AttachmentFactory.csproj">
+      <Project>{403f308d-10e7-4c70-9360-1027ee541495}</Project>
+      <Name>MixERP.Net.WebControls.AttachmentFactory</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.Common\MixERP.Net.WebControls.Common.csproj">
       <Project>{2d961540-6597-4e7b-969c-974d71d820dd}</Project>
       <Name>MixERP.Net.WebControls.Common</Name>

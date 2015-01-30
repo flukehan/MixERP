@@ -19,6 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using MixERP.Net.FrontEnd.Base;
 using System;
+using MixERP.Net.WebControls.AttachmentFactory;
 
 namespace MixERP.Net.Core.Modules.BackOffice
 {
@@ -26,6 +27,12 @@ namespace MixERP.Net.Core.Modules.BackOffice
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
+            using (Attachment attachment = new Attachment())
+            {
+                attachment.ShowSaveButton = true;
+                this.Placeholder1.Controls.Add(attachment);
+            }
+
             this.SetOverridePath();
             base.OnControlLoad(sender, e);
         }

@@ -19,21 +19,20 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Web.UI;
+using MixERP.Net.Common.Domains;
 
 namespace MixERP.Net.Common.Base
 {
-    public class MixERPUserControlBase : UserControl
+    public abstract class MixERPUserControlBase : UserControl, IControl
     {
-        public string MasterPageId { get; set; }
-
-        public string OverridePath { get; set; }
+        public virtual string MasterPageId { get; set; }
 
         public bool RemoveTheme { get; set; }
 
-        public string TargetContentPlaceHolder { get; set; }
+        public virtual string OverridePath { get; set; }
 
-        public virtual void OnControlLoad(object sender, EventArgs e)
-        {
-        }
+        public virtual string TargetContentPlaceHolder { get; set; }
+
+        public virtual void OnControlLoad(object sender, EventArgs e) { }
     }
 }

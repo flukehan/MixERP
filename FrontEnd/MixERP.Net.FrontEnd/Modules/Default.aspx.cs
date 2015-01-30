@@ -21,18 +21,20 @@ using MixERP.Net.Common.Base;
 using MixERP.Net.FrontEnd.Base;
 using System;
 using System.IO;
+using System.Web.UI;
+using MixERP.Net.Common.Domains;
 
 namespace MixERP.Net.FrontEnd.Modules
 {
     public partial class Default : MixERPWebpage
     {
-        private MixERPUserControlBase plugin;
+        private IControl plugin;
 
         protected void Page_Init(object sender, EventArgs e)
         {
             if (this.plugin != null)
             {
-                this.DefaultContentPlaceholder.Controls.Add(this.plugin);
+                this.DefaultContentPlaceholder.Controls.Add((Control) this.plugin);
 
                 this.plugin.OnControlLoad(sender, e);
 
@@ -71,7 +73,7 @@ namespace MixERP.Net.FrontEnd.Modules
 
                     if (File.Exists(this.Server.MapPath(path)))
                     {
-                        this.plugin = this.Page.LoadControl(path) as MixERPUserControlBase;
+                        this.plugin = this.Page.LoadControl(path) as IControl;
                     }
                 }
             }

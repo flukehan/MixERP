@@ -21,7 +21,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     Inherits="MixERP.Net.Core.Modules.Finance.Entry.JournalVoucher"
     OverridePath="/Modules/Finance/JournalVoucher.mix" %>
 <%@ Register TagPrefix="mixerp" Namespace="MixERP.Net.WebControls.Common" Assembly="MixERP.Net.WebControls.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a724a47a0879d02f" %>
-<%@ Register TagPrefix="mixerp" TagName="Attachment" Src="~/UserControls/AttachmentUserControl.ascx" %>
 
 <h2>
     <asp:Label ID="TitleLabel" runat="server" />
@@ -147,7 +146,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <asp:Label ID="AttachmentLabel" runat="server" Text="Attachments" />
 </h4>
 <div id="AttachmentDiv" class="grey" style="display: none; padding-left: 24px;">
-    <mixerp:Attachment ID="Attachment1" runat="server" />
+<asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
 </div>
 
 <div class="ui tiny form segment">

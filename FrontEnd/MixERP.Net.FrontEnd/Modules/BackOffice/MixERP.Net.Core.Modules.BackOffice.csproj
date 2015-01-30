@@ -462,6 +462,10 @@
       <Project>{bde918b1-dd9b-41c9-a41f-f3ddec18b6d8}</Project>
       <Name>MixERP.Net.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.AttachmentFactory\MixERP.Net.WebControls.AttachmentFactory.csproj">
+      <Project>{403f308d-10e7-4c70-9360-1027ee541495}</Project>
+      <Name>MixERP.Net.WebControls.AttachmentFactory</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.Common\MixERP.Net.WebControls.Common.csproj">
       <Project>{2D961540-6597-4E7B-969C-974D71D820DD}</Project>
       <Name>MixERP.Net.WebControls.Common</Name>
@@ -491,6 +495,7 @@
     <EmbeddedResource Include="Resources\Labels.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Labels.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Questions.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -503,6 +508,7 @@
     <EmbeddedResource Include="Resources\Titles.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Warnings.resx">
       <Generator>ResXFileCodeGenerator</Generator>

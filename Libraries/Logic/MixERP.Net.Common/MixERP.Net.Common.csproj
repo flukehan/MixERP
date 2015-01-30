@@ -79,6 +79,9 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Conversion.cs" />
+    <Compile Include="Domains\AccessLevel.cs" />
+    <Compile Include="Domains\IControl.cs" />
+    <Compile Include="Domains\IWidget.cs" />
     <Compile Include="Events\MixERPPGEventArgs.cs" />
     <Compile Include="ExceptionManager.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
@@ -126,9 +129,7 @@
     <None Include="Mix Open Foundation.snk" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Domains\Transactions\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

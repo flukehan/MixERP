@@ -27,7 +27,7 @@ namespace MixERP.Net.WebControls.AttachmentFactory
 
         public void ProcessRequest(HttpContext context)
         {
-            string attachmentsDirectory = ConfigurationManager.AppSettings["AttachmentsDirectory"];
+            string attachmentsDirectory = Helpers.ConfigurationHelper.GetAttachmentsDirectory();
             Collection<string> uploadedFiles = new Collection<string>();
 
             if (context.Request.Files.Count > 0)
@@ -55,7 +55,7 @@ namespace MixERP.Net.WebControls.AttachmentFactory
 
         private List<string> GetAllowedExtensions()
         {
-            return ConfigurationManager.AppSettings["AllowedExtensions"].Split(',').ToList();
+            return Helpers.ConfigurationHelper.GetAllowedExtensions().Split(',').ToList();
         }
 
         private int RandomNumber()

@@ -32,6 +32,11 @@ namespace MixERP.Net.Common.Helpers
 
         public static bool IsDirectoryWritable(string directory, bool isVirtualPath = false)
         {
+            if (string.IsNullOrWhiteSpace(directory))
+            {
+                return false;
+            }
+
             FileIOPermission permission = new FileIOPermission(FileIOPermissionAccess.Write, HostingEnvironment.MapPath(directory));
             PermissionSet permissionSet = new PermissionSet(PermissionState.None);
             permissionSet.AddPermission(permission);

@@ -39,6 +39,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using MixERP.Net.Common.Domains;
 
 namespace MixERP.Net.FrontEnd.UserControls.Widgets
 {
@@ -46,6 +47,12 @@ namespace MixERP.Net.FrontEnd.UserControls.Widgets
     {
         protected void Page_Init(object sender, EventArgs e)
         {
+        }
+
+        private AccessLevel accessLevel;
+        public override AccessLevel AccessLevel
+        {
+            get { return AccessLevel.Everyone; }
         }
     }
 }

@@ -19,6 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using MixERP.Net.FrontEnd.Base;
 using System;
+using MixERP.Net.WebControls.AttachmentFactory;
 
 namespace MixERP.Net.Core.Modules.Finance.Entry
 {
@@ -45,6 +46,13 @@ namespace MixERP.Net.Core.Modules.Finance.Entry
             this.CreditTotalLiteral.Text = Resources.Titles.CreditTotal;
             this.PostTransactionLiteral.Text = Resources.Titles.PostTransaction;
             this.AddInputButton.Value = Resources.Titles.Add;
+
+
+
+            using (Attachment attachment = new Attachment())
+            {
+                this.Placeholder1.Controls.Add(attachment);
+            }
 
             base.OnControlLoad(sender, e);
         }

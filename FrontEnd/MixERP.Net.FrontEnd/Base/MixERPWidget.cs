@@ -18,10 +18,12 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.Common.Base;
+using MixERP.Net.Common.Domains;
 
 namespace MixERP.Net.FrontEnd.Base
 {
-    public class MixERPWidget : MixERPWidgetBase
+    public abstract class MixERPWidget : MixERPWidgetBase, IWidget
     {
+        public abstract AccessLevel AccessLevel { get; }
     }
 }

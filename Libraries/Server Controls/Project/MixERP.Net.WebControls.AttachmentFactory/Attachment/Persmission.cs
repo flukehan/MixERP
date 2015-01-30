@@ -9,7 +9,7 @@ namespace MixERP.Net.WebControls.AttachmentFactory
     {
         private void CheckPermission()
         {
-            var folder = ConfigurationManager.AppSettings["AttachmentsDirectory"];
+            var folder = Helpers.ConfigurationHelper.GetAttachmentsDirectory();
             var writable = FileSystemHelper.IsDirectoryWritable(folder, true);
 
             if (!writable)

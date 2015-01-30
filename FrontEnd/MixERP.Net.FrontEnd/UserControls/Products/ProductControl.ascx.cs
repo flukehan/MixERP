@@ -224,10 +224,10 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         private void RegisterJavascriptVariables(Control container)
         {
-            string javascript = "var isSales={0};var tranBook='{1}';var taxAfterDiscount='{2}';var verifyStock={3};";
+            string javascript = "var isSales={0};var tranBook='{1}';var taxAfterDiscount={2};var verifyStock={3};";
             string isSales = (this.Book.Equals(TranBook.Sales)) ? "true" : "false";
             string tranBook = this.GetTranBook();
-            string taxAfterDiscount = Switches.TaxAfterDiscount().ToString();
+            string taxAfterDiscount = Switches.TaxAfterDiscount().ToString().ToUpperInvariant().Equals("TRUE")?"true":"false";
             string verifyStock = (this.VerifyStock) ? "true" : "false";
 
             javascript = string.Format(CultureInfo.InvariantCulture, javascript, isSales, tranBook, taxAfterDiscount, verifyStock);

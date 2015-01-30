@@ -175,13 +175,13 @@ namespace MixERP.Net.Core.Modules.Finance.Entry {
         protected global::System.Web.UI.WebControls.Label AttachmentLabel;
         
         /// <summary>
-        /// Attachment1 control.
+        /// Placeholder1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::MixERP.Net.FrontEnd.UserControls.AttachmentUserControl Attachment1;
+        protected global::System.Web.UI.WebControls.PlaceHolder Placeholder1;
         
         /// <summary>
         /// CostCenterLiteral control.
