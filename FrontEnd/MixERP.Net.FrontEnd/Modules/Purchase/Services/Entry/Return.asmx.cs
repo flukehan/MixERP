@@ -57,9 +57,9 @@ namespace MixERP.Net.Core.Modules.Purchase.Services.Entry
 
             Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
 
-            int officeId = SessionHelper.GetOfficeId();
-            int userId = SessionHelper.GetUserId();
-            long loginId = SessionHelper.GetLogOnId();
+            int officeId = CurrentSession.GetOfficeId();
+            int userId = CurrentSession.GetUserId();
+            long loginId = CurrentSession.GetLogOnId();
 
             return Data.Transactions.Return.PostTransaction(tranId, valueDate, officeId, userId, loginId, storeId, partyCode, priceTypeId, referenceNumber, statementReference, details, attachments);
         }

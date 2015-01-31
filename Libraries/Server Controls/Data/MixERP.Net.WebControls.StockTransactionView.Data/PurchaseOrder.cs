@@ -22,7 +22,7 @@ using Npgsql;
 using System;
 using System.Collections.ObjectModel;
 
-namespace MixERP.Net.WebControls.StockTransactionView.Data
+namespace MixERP.Net.WebControls.StockTransactionViewFactory.Data
 {
     public static class PurchaseOrder
     {

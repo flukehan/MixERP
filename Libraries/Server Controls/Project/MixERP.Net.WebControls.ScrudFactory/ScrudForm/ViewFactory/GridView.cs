@@ -92,8 +92,8 @@ namespace MixERP.Net.WebControls.ScrudFactory
             var userNameSessionKey = ConfigurationHelper.GetScrudParameter("UserNameSessionKey");
             var officeCodeSessionKey = ConfigurationHelper.GetScrudParameter("OfficeCodeSessionKey");
 
-            this.userIdHidden.Value = SessionHelper.GetSessionValueByKey(userNameSessionKey);
-            this.officeCodeHidden.Value = SessionHelper.GetSessionValueByKey(officeCodeSessionKey);
+            this.userIdHidden.Value = CurrentSession.GetSessionValueByKey(userNameSessionKey);
+            this.officeCodeHidden.Value = CurrentSession.GetSessionValueByKey(officeCodeSessionKey);
         }
     }
 }

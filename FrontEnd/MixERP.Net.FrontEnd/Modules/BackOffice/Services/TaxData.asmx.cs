@@ -42,7 +42,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
         [WebMethod(EnableSession = true)]
         public Collection<ListItem> GetSalesTaxes(string tranBook)
         {
-            int officeId = SessionHelper.GetOfficeId();
+            int officeId = CurrentSession.GetOfficeId();
 
             Collection<ListItem> values = new Collection<ListItem>();
 

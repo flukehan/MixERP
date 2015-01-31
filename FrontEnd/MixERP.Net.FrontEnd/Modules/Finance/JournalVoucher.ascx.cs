@@ -44,8 +44,8 @@ namespace MixERP.Net.Core.Modules.Finance
                 view.DateToFrequencyType = FrequencyType.FiscalYearEndDate;
 
                 view.Book = "Journal";
-                view.PostedBy = SessionHelper.GetUserName();
-                view.OfficeName = SessionHelper.GetOfficeName();
+                view.PostedBy = CurrentSession.GetUserName();
+                view.OfficeName = CurrentSession.GetOfficeName();
                 view.Status = "Approved";
 
                 this.Controls.Add(view);

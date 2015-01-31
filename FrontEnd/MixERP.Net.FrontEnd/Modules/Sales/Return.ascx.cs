@@ -20,9 +20,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using MixERP.Net.Core.Modules.Sales.Resources;
 using MixERP.Net.Entities;
-using MixERP.Net.Entities.Models.Transactions;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.UserControls.Products;
+using MixERP.Net.WebControls.StockTransactionViewFactory;
 
 namespace MixERP.Net.Core.Modules.Sales
 {
@@ -30,18 +29,21 @@ namespace MixERP.Net.Core.Modules.Sales
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            using (ProductViewControl productView = (ProductViewControl)this.Page.LoadControl("~/UserControls/Products/ProductViewControl.ascx"))
-            {
-                productView.Text = Titles.SalesReturn;
-                productView.Book = TranBook.Sales;
-                productView.SubBook = SubTranBook.Return;
-                productView.PreviewUrl = "~/Modules/Sales/Reports/SalesReturnReport.mix";
-                productView.ChecklistUrl = "~/Modules/Sales/Confirmation/Return.mix";
-                productView.ShowReturnButton = false;
-                productView.Initialize();
 
-                this.Placeholder1.Controls.Add(productView);
+            using (StockTransactionView view = new StockTransactionView())
+            {
+                view.Text = Titles.SalesReturn;
+                view.Book = TranBook.Sales;
+                view.SubBook = SubTranBook.Return;
+                view.PreviewUrl = "~/Modules/Sales/Reports/SalesReturnReport.mix";
+                view.ChecklistUrl = "~/Modules/Sales/Confirmation/Return.mix";
+
+                view.DbTableName = "transactions.stock_master";
+                view.PrimaryKey = "stock_master_id";
+
+                this.Placeholder1.Controls.Add(view);
             }
+
 
             base.OnControlLoad(sender, e);
         }

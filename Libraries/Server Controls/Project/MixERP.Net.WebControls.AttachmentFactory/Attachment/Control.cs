@@ -16,6 +16,8 @@ namespace MixERP.Net.WebControls.AttachmentFactory
             this.RegisterJavascript();
             this.AddJavascript();
             this.CheckPermission();
+            
+            this.Controls.Add(this.placeHolder);
         }
 
         protected override void RecreateChildControls()
@@ -25,6 +27,7 @@ namespace MixERP.Net.WebControls.AttachmentFactory
 
         protected override void Render(HtmlTextWriter w)
         {
+            this.EnsureChildControls();
             this.placeHolder.RenderControl(w);
         }
     }

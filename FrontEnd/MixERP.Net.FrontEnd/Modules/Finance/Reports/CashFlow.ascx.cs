@@ -196,8 +196,8 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             DateTime to = Conversion.TryCastDate(this.toDateTextBox.Text);
             decimal factor = Conversion.TryCastDecimal(this.factorInputText.Value);
 
-            int userId = SessionHelper.GetUserId();
-            int officeId = SessionHelper.GetOfficeId();
+            int userId = CurrentSession.GetUserId();
+            int officeId = CurrentSession.GetOfficeId();
 
             this.cashflowStatementGridView.DataSource = Data.Reports.CashFlow.GetDirectCashFlowStatement(from, to, userId, officeId, factor);
             this.cashflowStatementGridView.DataBind();

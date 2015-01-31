@@ -46,7 +46,7 @@ namespace MixERP.Net.Core.Modules.Finance
                 view.DateToFrequencyType = FrequencyType.Today;
                 view.Status = "Unverified";
 
-                view.OfficeName = SessionHelper.GetOfficeName();
+                view.OfficeName = CurrentSession.GetOfficeName();
 
                 this.Controls.Add(view);
             }

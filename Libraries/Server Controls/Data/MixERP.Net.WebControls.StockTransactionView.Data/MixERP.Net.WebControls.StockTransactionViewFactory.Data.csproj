@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F8499D93-CED5-4A3D-A22B-CF21171EDE6B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MixERP.Net.WebControls.StockTransactionViewFactory.Data</RootNamespace>
+    <AssemblyName>MixERP.Net.WebControls.StockTransactionViewFactory.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\..\..\..\MixERP.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+    <NoWarn>1685</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Mix Open Foundation.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\..\..\packages\Npgsql.2.2.3\lib\net45\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql, Version=2.2.3.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\..\..\packages\Npgsql.2.2.3\lib\net45\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Helpers\CustomerReceipts.cs" />
+    <Compile Include="Helpers\GLStockTransaction.cs" />
+    <Compile Include="Helpers\NonGlStockTransaction.cs" />
+    <Compile Include="Models\MergeModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PurchaseOrder.cs" />
+    <Compile Include="Resources\Errors.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Errors.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SalesOrder.cs" />
+    <Compile Include="SalesQuotation.cs" />
+    <Compile Include="ModelFactory.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Logic\MixERP.net.Common\MixERP.Net.Common.csproj">
+      <Project>{d5a09c22-8f48-4fb2-a14d-c62c8c8fcec0}</Project>
+      <Name>MixERP.Net.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Logic\MixERP.Net.DbFactory\MixERP.Net.DbFactory.csproj">
+      <Project>{8fd9661c-2473-4581-8722-18b08d4db252}</Project>
+      <Name>MixERP.Net.DbFactory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Logic\MixERP.Net.Entities\MixERP.Net.Entities.csproj">
+      <Project>{BDE918B1-DD9B-41C9-A41F-F3DDEC18B6D8}</Project>
+      <Name>MixERP.Net.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\mixerp.licenseheader">
+      <Link>mixerp.licenseheader</Link>
+    </None>
+    <None Include="app.config" />
+    <None Include="Mix Open Foundation.snk" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Errors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Errors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

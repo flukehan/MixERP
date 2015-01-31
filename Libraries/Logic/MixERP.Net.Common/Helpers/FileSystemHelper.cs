@@ -30,7 +30,7 @@ namespace MixERP.Net.Common.Helpers
     public static class FileSystemHelper
     {
 
-        public static bool IsDirectoryWritable(string directory, bool isVirtualPath = false)
+        public static bool IsDirectoryWritable(string directory)
         {
             if (string.IsNullOrWhiteSpace(directory))
             {

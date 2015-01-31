@@ -129,8 +129,8 @@
             var searchInput = $('#SearchInput');
             var today = "<%= DateTime.Now.ToShortDateString()%>";
             var now = "<%= DateTime.Now.ToString(CultureInfo.InvariantCulture)%>";
-            var user = "<%= SessionHelper.GetUserName()%>";
-            var office = "<%= SessionHelper.GetOfficeName()%>";
+            var user = "<%= CurrentSession.GetUserName()%>";
+            var office = "<%= CurrentSession.GetOfficeName()%>";
 
             var shortDateFormat = "<%= LocalizationHelper.GetShortDateFormat()%>";
             var longDateFormat = "<%= LocalizationHelper.GetLongDateFormat()%>";

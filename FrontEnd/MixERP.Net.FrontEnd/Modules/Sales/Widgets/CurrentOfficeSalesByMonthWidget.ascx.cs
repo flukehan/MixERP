@@ -28,7 +28,7 @@ namespace MixERP.Net.Core.Modules.Sales.Widgets
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            int officeId = SessionHelper.GetOfficeId();
+            int officeId = CurrentSession.GetOfficeId();
 
             this.TitleLiteral.Text = Resources.Titles.SalesByMonthInThousands;
 

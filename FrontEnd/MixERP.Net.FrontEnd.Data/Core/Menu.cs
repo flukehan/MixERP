@@ -29,9 +29,9 @@ namespace MixERP.Net.FrontEnd.Data.Core
         public static IEnumerable<Entities.Core.Menu> GetMenuCollection(string path, short level)
         {
             string relativePath = Conversion.GetRelativePath(path);
-            int userId = SessionHelper.GetUserId();
-            int officeId = SessionHelper.GetOfficeId();
-            string culture = SessionHelper.GetCulture().TwoLetterISOLanguageName;
+            int userId = CurrentSession.GetUserId();
+            int officeId = CurrentSession.GetOfficeId();
+            string culture = CurrentSession.GetCulture().TwoLetterISOLanguageName;
 
 
             return Factory.Get<Entities.Core.Menu>("SELECT * FROM policy.get_menu(@0, @1, @2) WHERE parent_menu_id=(SELECT menu_id FROM core.menus WHERE url=@3) AND level=@4 ORDER BY menu_id;", userId, officeId, culture, relativePath, level);
@@ -39,9 +39,9 @@ namespace MixERP.Net.FrontEnd.Data.Core
 
         public static IEnumerable<Entities.Core.Menu> GetMenuCollection(int parentMenuId, short level)
         {
-            int userId = SessionHelper.GetUserId();
-            int officeId = SessionHelper.GetOfficeId();
-            string culture = SessionHelper.GetCulture().TwoLetterISOLanguageName;
+            int userId = CurrentSession.GetUserId();
+            int officeId = CurrentSession.GetOfficeId();
+            string culture = CurrentSession.GetCulture().TwoLetterISOLanguageName;
 
             if (parentMenuId > 0)
             {
@@ -53,9 +53,9 @@ namespace MixERP.Net.FrontEnd.Data.Core
 
         public static IEnumerable<Entities.Core.Menu> GetRootMenuCollection(string path)
         {
-            int userId = SessionHelper.GetUserId();
-            int officeId = SessionHelper.GetOfficeId();
-            string culture = SessionHelper.GetCulture().TwoLetterISOLanguageName;
+            int userId = CurrentSession.GetUserId();
+            int officeId = CurrentSession.GetOfficeId();
+            string culture = CurrentSession.GetCulture().TwoLetterISOLanguageName;
 
             return Factory.Get<Entities.Core.Menu>("SELECT * FROM policy.get_menu(@0, @1, @2) WHERE parent_menu_id=core.get_root_parent_menu_id(@3) ORDER BY menu_id;", userId, officeId, culture, path);
         }

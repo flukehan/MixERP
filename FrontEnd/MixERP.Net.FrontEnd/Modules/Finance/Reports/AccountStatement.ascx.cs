@@ -135,7 +135,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             const string resource = "account_statement";
             const string resourceKey = "transaction_code";
 
-            int userId = SessionHelper.GetUserId();
+            int userId = CurrentSession.GetUserId();
 
             TransactionGovernor.Flags.CreateFlag(userId, flagTypeId, resource, resourceKey, this.GetSelectedValues());
 
@@ -539,9 +539,9 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
         {
             DateTime from = Conversion.TryCastDate(this.fromDateTextBox.Text);
             DateTime to = Conversion.TryCastDate(this.toDateTextBox.Text);
-            int userId = SessionHelper.GetUserId();
+            int userId = CurrentSession.GetUserId();
             string accountNumber = this.accountNumberInputText.Value;
-            int officeId = SessionHelper.GetOfficeId();
+            int officeId = CurrentSession.GetOfficeId();
 
             this.statementGridView.DataSource = Data.Reports.AccountStatement.GetAccountStatement(from, to, userId, accountNumber, officeId);
             this.statementGridView.DataBound += this.StatementGridViewDataBound;

@@ -233,8 +233,8 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
             bool compact = this.ShowCompact();
 
-            int userId = SessionHelper.GetUserId();
-            int officeId = SessionHelper.GetOfficeId();
+            int userId = CurrentSession.GetUserId();
+            int officeId = CurrentSession.GetOfficeId();
 
             this.plAccountGridView.DataSource = Data.Reports.ProfitAndLossAccount.GetPLAccount(from, to, userId, officeId, compact, factor);
             this.plAccountGridView.DataBind();

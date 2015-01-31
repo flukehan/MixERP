@@ -40,8 +40,8 @@ namespace MixERP.Net.WebControls.TransactionViewFactory
 
         private void BindGrid()
         {
-            int userId = SessionHelper.GetUserId();
-            int officeId = SessionHelper.GetOfficeId();
+            int userId = CurrentSession.GetUserId();
+            int officeId = CurrentSession.GetOfficeId();
 
             DateTime from = Conversion.TryCastDate(this.dateFromDateTextBox.Text);
             DateTime to = Conversion.TryCastDate(this.dateToDateTextBox.Text);

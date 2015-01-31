@@ -353,6 +353,10 @@
       <Project>{935fbcef-5f6b-4bd3-b6f3-0c65fea66a15}</Project>
       <Name>MixERP.Net.WebControls.StockAdjustmentFactory</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\MixERP.Net.WebControls.StockTransactionViewFactory.csproj">
+      <Project>{e82752da-f0d2-4987-b011-6b2623937dea}</Project>
+      <Name>MixERP.Net.WebControls.StockTransactionViewFactory</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\MixERP.Net.WebControls.TransactionChecklist.csproj">
       <Project>{64490B89-B228-4188-8235-71744A94C9AE}</Project>
       <Name>MixERP.Net.WebControls.TransactionChecklist</Name>

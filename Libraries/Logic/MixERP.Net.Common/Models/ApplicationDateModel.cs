@@ -27,7 +27,22 @@ namespace MixERP.Net.Common.Models
         {
         }
 
-        public ApplicationDateModel(int officeId, DateTime today, DateTime monthStartDate, DateTime monthEndDate, DateTime quarterStartDate, DateTime quarterEndDate, DateTime fiscalHalfStartDate, DateTime fiscalHalfEndDate, DateTime fiscalYearStartDate, DateTime fiscalYearEndDate, bool newDayStarted, DateTime? forcedLogOffTimestamp = null)
+        public ApplicationDateModel(int officeId, DateTime today, DateTime monthStartDate, DateTime monthEndDate, DateTime quarterStartDate, DateTime quarterEndDate, DateTime fiscalHalfStartDate, DateTime fiscalHalfEndDate, DateTime fiscalYearStartDate, DateTime fiscalYearEndDate, bool newDayStarted)
+        {
+            this.OfficeId = officeId;
+            this.Today = today;
+            this.MonthStartDate = monthStartDate;
+            this.MonthEndDate = monthEndDate;
+            this.QuarterStartDate = quarterStartDate;
+            this.QuarterEndDate = quarterEndDate;
+            this.FiscalHalfStartDate = fiscalHalfStartDate;
+            this.FiscalHalfEndDate = fiscalHalfEndDate;
+            this.FiscalYearStartDate = fiscalYearStartDate;
+            this.FiscalYearEndDate = fiscalYearEndDate;
+            this.NewDayStarted = newDayStarted;
+        }
+
+        public ApplicationDateModel(int officeId, DateTime today, DateTime monthStartDate, DateTime monthEndDate, DateTime quarterStartDate, DateTime quarterEndDate, DateTime fiscalHalfStartDate, DateTime fiscalHalfEndDate, DateTime fiscalYearStartDate, DateTime fiscalYearEndDate, bool newDayStarted, DateTime forcedLogOffTimestamp)
         {
             this.OfficeId = officeId;
             this.Today = today;

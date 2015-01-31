@@ -35,7 +35,7 @@ namespace MixERP.Net.Core.Modules.Finance
 
         private void Initialize()
         {
-            int officeId = SessionHelper.GetOfficeId();
+            int officeId = CurrentSession.GetOfficeId();
 
             EODStatus status = Data.EODOperation.GetStatus(officeId);
 

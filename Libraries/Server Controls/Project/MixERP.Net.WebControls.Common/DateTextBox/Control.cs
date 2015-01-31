@@ -79,6 +79,7 @@ namespace MixERP.Net.WebControls.Common
 
         protected override void Render(HtmlTextWriter w)
         {
+            this.EnsureChildControls();
             if (this.textBox != null)
             {
                 this.textBox.RenderControl(w);

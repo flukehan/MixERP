@@ -40,9 +40,9 @@ namespace MixERP.Net.Core.Modules.Purchase.Services
                 throw new ArgumentNullException("details");
             }
 
-            long loginId = SessionHelper.GetLogOnId();
-            int userId = SessionHelper.GetUserId();
-            int officeId = SessionHelper.GetOfficeId();
+            long loginId = CurrentSession.GetLogOnId();
+            int userId = CurrentSession.GetUserId();
+            int officeId = CurrentSession.GetOfficeId();
 
             return Data.Transactions.Reorder.Save(loginId, userId, officeId, details);
         }

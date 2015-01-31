@@ -38,8 +38,8 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             DateTime from = Conversion.TryCastDate(this.Page.Request["From"]);
             DateTime to = Conversion.TryCastDate(this.Page.Request["To"]);
 
-            int userId = SessionHelper.GetUserId();
-            int officeId = SessionHelper.GetOfficeId();
+            int userId = CurrentSession.GetUserId();
+            int officeId = CurrentSession.GetOfficeId();
 
 
             Collection<KeyValuePair<string, object>> parameter1 = new Collection<KeyValuePair<string, object>>();

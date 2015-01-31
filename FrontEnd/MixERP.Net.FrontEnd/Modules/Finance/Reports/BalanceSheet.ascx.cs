@@ -254,8 +254,8 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             DateTime previousTerm = Conversion.TryCastDate(this.previousPeriodDateTextBox.Text);
             DateTime currentTerm = Conversion.TryCastDate(this.currentPeriodDateTextBox.Text);
             int factor = Conversion.TryCastInteger(this.factorInputText.Value);
-            int userId = SessionHelper.GetUserId();
-            int officeId = SessionHelper.GetOfficeId();
+            int userId = CurrentSession.GetUserId();
+            int officeId = CurrentSession.GetOfficeId();
 
             using (DataTable table = Data.Reports.BalanceSheet.GetBalanceSheet(previousTerm, currentTerm, userId, officeId, factor))
             {

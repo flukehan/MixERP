@@ -34,7 +34,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         [WebMethod(EnableSession = true)]
         public IEnumerable<Currency> GetExchangeCurrencies()
         {
-            int officeId = SessionHelper.GetOfficeId();
+            int officeId = CurrentSession.GetOfficeId();
             return Data.Helpers.Currencies.GetExchangeCurrencies(officeId);
         }
     }

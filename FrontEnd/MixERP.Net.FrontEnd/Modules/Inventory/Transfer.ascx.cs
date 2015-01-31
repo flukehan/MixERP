@@ -20,9 +20,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using MixERP.Net.Core.Modules.Inventory.Resources;
 using MixERP.Net.Entities;
-using MixERP.Net.Entities.Models.Transactions;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.UserControls.Products;
+using MixERP.Net.WebControls.StockTransactionViewFactory;
 
 namespace MixERP.Net.Core.Modules.Inventory
 {
@@ -30,7 +29,7 @@ namespace MixERP.Net.Core.Modules.Inventory
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            using (ProductViewControl productView = (ProductViewControl) this.Page.LoadControl("~/UserControls/Products/ProductViewControl.ascx"))
+            using (StockTransactionView productView = new StockTransactionView())
             {
                 productView.Text = Titles.StockTransferJournal;
                 productView.Book = TranBook.Inventory;
@@ -38,7 +37,6 @@ namespace MixERP.Net.Core.Modules.Inventory
                 productView.AddNewUrl = "~/Modules/Inventory/Entry/Transfer.mix";
                 productView.PreviewUrl = "~/Modules/Inventory/Reports/InventoryTransferReport.mix";
                 productView.ChecklistUrl = "~/Modules/Inventory/Confirmation/Transfer.mix";
-                productView.Initialize();
 
                 this.Placeholder1.Controls.Add(productView);
             }

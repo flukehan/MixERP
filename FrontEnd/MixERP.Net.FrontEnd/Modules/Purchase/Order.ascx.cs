@@ -20,9 +20,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using MixERP.Net.Core.Modules.Purchase.Resources;
 using MixERP.Net.Entities;
-using MixERP.Net.Entities.Models.Transactions;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.UserControls.Products;
+using MixERP.Net.WebControls.StockTransactionViewFactory;
 
 namespace MixERP.Net.Core.Modules.Purchase
 {
@@ -30,17 +29,22 @@ namespace MixERP.Net.Core.Modules.Purchase
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            using (ProductViewControl productView = (ProductViewControl) this.Page.LoadControl("~/UserControls/Products/ProductViewControl.ascx"))
+            using (StockTransactionView view = new StockTransactionView())
             {
-                productView.Text = Titles.PurchaseOrder;
-                productView.Book = TranBook.Purchase;
-                productView.SubBook = SubTranBook.Order;
-                productView.AddNewUrl = "~/Modules/Purchase/Entry/Order.mix";
-                productView.PreviewUrl = "~/Modules/Purchase/Reports/PurchaseOrderReport.mix";
-                productView.ChecklistUrl = "~/Modules/Purchase/Confirmation/Order.mix";
-                productView.Initialize();
+                view.Text = Titles.PurchaseOrder;
+                view.Book = TranBook.Purchase;
+                view.SubBook = SubTranBook.Order;
+                view.AddNewUrl = "~/Modules/Purchase/Entry/Order.mix";
+                view.PreviewUrl = "~/Modules/Purchase/Reports/PurchaseOrderReport.mix";
+                view.ChecklistUrl = "~/Modules/Purchase/Confirmation/Order.mix";
 
-                this.Placeholder1.Controls.Add(productView);
+                view.IsNonGlTransaction = true;
+
+                view.DbTableName = "transactions.non_gl_stock_master";
+                view.PrimaryKey = "non_gl_stock_master_id";
+
+
+                this.Placeholder1.Controls.Add(view);
             }
 
             base.OnControlLoad(sender, e);

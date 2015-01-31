@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MixERP.Net.WebControls.StockTransactionView.Resources {
+namespace MixERP.Net.WebControls.StockTransactionViewFactory.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MixERP.Net.WebControls.StockTransactionView.Resources.Titles", typeof(Titles).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MixERP.Net.WebControls.StockTransactionViewFactory.Resources.Titles", typeof(Titles).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -70,6 +70,15 @@ namespace MixERP.Net.WebControls.StockTransactionView.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add New.
+        /// </summary>
+        internal static string AddNew {
+            get {
+                return ResourceManager.GetString("AddNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Amount.
         /// </summary>
         internal static string Amount {
@@ -84,6 +93,15 @@ namespace MixERP.Net.WebControls.StockTransactionView.Resources {
         internal static string Book {
             get {
                 return ResourceManager.GetString("Book", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Flag.
+        /// </summary>
+        internal static string Flag {
+            get {
+                return ResourceManager.GetString("Flag", resourceCulture);
             }
         }
         
@@ -111,6 +129,33 @@ namespace MixERP.Net.WebControls.StockTransactionView.Resources {
         internal static string Id {
             get {
                 return ResourceManager.GetString("Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Merge Batch to GRN.
+        /// </summary>
+        internal static string MergeBatchToGRN {
+            get {
+                return ResourceManager.GetString("MergeBatchToGRN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Merge Batch to Sales Delivery.
+        /// </summary>
+        internal static string MergeBatchToSalesDelivery {
+            get {
+                return ResourceManager.GetString("MergeBatchToSalesDelivery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Merge Batch to Sales Order.
+        /// </summary>
+        internal static string MergeBatchToSalesOrder {
+            get {
+                return ResourceManager.GetString("MergeBatchToSalesOrder", resourceCulture);
             }
         }
         
@@ -169,11 +214,29 @@ namespace MixERP.Net.WebControls.StockTransactionView.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Return.
+        /// </summary>
+        internal static string Return {
+            get {
+                return ResourceManager.GetString("Return", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select.
         /// </summary>
         internal static string Select {
             get {
                 return ResourceManager.GetString("Select", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show.
+        /// </summary>
+        internal static string Show {
+            get {
+                return ResourceManager.GetString("Show", resourceCulture);
             }
         }
         

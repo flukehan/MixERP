@@ -27,7 +27,7 @@ namespace MixERP.Net.Core.Modules.Finance
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            this.OfficeInputText.Value = SessionHelper.GetOfficeName();
+            this.OfficeInputText.Value = CurrentSession.GetOfficeName();
             this.CurrencyInputText.Value = "NPR";//Todo
 
             base.OnControlLoad(sender, e);

@@ -53,9 +53,9 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
                 }
             }
 
-            int officeId = SessionHelper.GetOfficeId();
-            int userId = SessionHelper.GetUserId();
-            long loginId = SessionHelper.GetLogOnId();
+            int officeId = CurrentSession.GetOfficeId();
+            int userId = CurrentSession.GetUserId();
+            long loginId = CurrentSession.GetLogOnId();
 
             return Data.Transactions.StockAdjustment.Add(officeId, userId, loginId, valueDate, referenceNumber, statementReference, models.ToCollection());
         }

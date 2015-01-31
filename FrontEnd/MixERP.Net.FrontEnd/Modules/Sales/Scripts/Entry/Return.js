@@ -20,6 +20,12 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 /*jshint -W032*/
 /*global getAjax, getAjaxErrorMessage, getParameterByName, logError, saveButton, url:true, validateProductControl, errorLabelBottom, appendParameter, getData, valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, statementReference, agentId, shipperId, shippingAddressCode, shippingCharge, costCenterId, transactionIds, attachments*/
 
+
+if (typeof (saveButton) === "undefined") {
+    saveButton = $("#SaveButton");
+};
+
+
 saveButton.click(function() {
     if (validateProductControl()) {
         save();
@@ -29,14 +35,14 @@ saveButton.click(function() {
 var save = function() {
     saveButton.addClass("loading");
     var tranId = getParameterByName("TranId");
-    var ajaxSaveOder = saveOrder(tranId, valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, costCenterId, salespersonId, statementReference, transactionIds, attachments);
+    var ajaxSaveReturn = saveReturn(tranId, valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, costCenterId, salespersonId, statementReference, transactionIds, attachments);
 
-    ajaxSaveOder.done(function(response) {
+    ajaxSaveReturn.done(function (response) {
         var id = response.d;
         window.location = "/Modules/Sales/Confirmation/Return.mix?TranId=" + id;
     });
 
-    ajaxSaveOder.fail(function(jqXHR) {
+    ajaxSaveReturn.fail(function (jqXHR) {
         saveButton.removeClass("loading");
         var errorMessage = getAjaxErrorMessage(jqXHR);
         errorLabelBottom.html(errorMessage);
@@ -44,7 +50,7 @@ var save = function() {
     });
 };
 
-var saveOrder = function(tranId, valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, costCenterId, salespersonId, statementReference, transactionIds, attachments) {
+var saveReturn = function(tranId, valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, shippingAddressCode, shipperId, shippingCharge, costCenterId, salespersonId, statementReference, transactionIds, attachments) {
     var d = "";
     d = appendParameter(d, "tranId", tranId);
     d = appendParameter(d, "valueDate", valueDate);

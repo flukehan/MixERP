@@ -24,9 +24,9 @@ using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Entities;
-using MixERP.Net.WebControls.StockTransactionView.Resources;
+using MixERP.Net.WebControls.StockTransactionViewFactory.Resources;
 
-namespace MixERP.Net.WebControls.StockTransactionView.Helpers
+namespace MixERP.Net.WebControls.StockTransactionViewFactory.Helpers
 {
     public static class GridViewColumnHelper
     {

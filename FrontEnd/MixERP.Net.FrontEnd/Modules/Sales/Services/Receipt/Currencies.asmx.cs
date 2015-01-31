@@ -64,7 +64,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
                 return 1;
             }
 
-            int officeId = Common.Helpers.SessionHelper.GetOfficeId();
+            int officeId = Common.Helpers.CurrentSession.GetOfficeId();
 
             decimal exchangeRate = Data.Helpers.Transaction.GetExchangeRate(officeId, sourceCurrencyCode, destinationCurrencyCode);
 
@@ -74,7 +74,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
         [WebMethod(EnableSession = true)]
         public string GetHomeCurrency()
         {
-            int officeId = Common.Helpers.SessionHelper.GetOfficeId();
+            int officeId = Common.Helpers.CurrentSession.GetOfficeId();
             return Data.Helpers.Currencies.GetHomeCurrency(officeId);
         }
     }

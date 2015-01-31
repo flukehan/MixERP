@@ -20,9 +20,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using MixERP.Net.Core.Modules.Purchase.Resources;
 using MixERP.Net.Entities;
-using MixERP.Net.Entities.Models.Transactions;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.UserControls.Products;
+using MixERP.Net.WebControls.StockTransactionViewFactory;
 
 namespace MixERP.Net.Core.Modules.Purchase
 {
@@ -30,18 +29,22 @@ namespace MixERP.Net.Core.Modules.Purchase
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            using (ProductViewControl productView = (ProductViewControl) this.Page.LoadControl("~/UserControls/Products/ProductViewControl.ascx"))
+            using (StockTransactionView view = new StockTransactionView())
             {
-                productView.Text = Titles.GoodsReceiptNote;
-                productView.Book = TranBook.Purchase;
-                productView.SubBook = SubTranBook.Receipt;
-                productView.AddNewUrl = "~/Modules/Purchase/Entry/GRN.mix";
-                productView.PreviewUrl = "~/Modules/Purchase/Reports/GRNReport.mix";
-                productView.ChecklistUrl = "~/Modules/Purchase/Confirmation/GRN.mix";
-                productView.ShowReturnButton = true;
-                productView.Initialize();
+                view.Text = Titles.GoodsReceiptNote;
+                view.Book = TranBook.Purchase;
+                view.SubBook = SubTranBook.Receipt;
+                view.AddNewUrl = "~/Modules/Purchase/Entry/GRN.mix";
+                view.PreviewUrl = "~/Modules/Purchase/Reports/GRNReport.mix";
+                view.ChecklistUrl = "~/Modules/Purchase/Confirmation/GRN.mix";
 
-                this.Placeholder1.Controls.Add(productView);
+                view.ShowReturnButton = true;
+                view.ReturnButtonUrl = "~/Modules/Purchase/Entry/Return.mix";
+
+                view.DbTableName = "transactions.stock_master";
+                view.PrimaryKey = "stock_master_id";
+
+                this.Placeholder1.Controls.Add(view);
             }
             base.OnControlLoad(sender, e);
         }

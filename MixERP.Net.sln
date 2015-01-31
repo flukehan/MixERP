@@ -28,7 +28,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.WebControls.Repo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.WebControls.TransactionChecklist", "Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\MixERP.Net.WebControls.TransactionChecklist.csproj", "{64490B89-B228-4188-8235-71744A94C9AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.WebControls.StockTransactionView", "Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\MixERP.Net.WebControls.StockTransactionView.csproj", "{E82752DA-F0D2-4987-B011-6B2623937DEA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.WebControls.StockTransactionViewFactory", "Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\MixERP.Net.WebControls.StockTransactionViewFactory.csproj", "{E82752DA-F0D2-4987-B011-6B2623937DEA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{F882C837-D33A-43DE-8CEA-87D0CE635E9D}"
 EndProject
@@ -50,7 +50,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.Tests.PgUnitTest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.WebControls.TransactionChecklist.Data", "Libraries\Server Controls\Data\MixERP.Net.WebControls.TransactionChecklist.Data\MixERP.Net.WebControls.TransactionChecklist.Data.csproj", "{3E6AA330-1D6A-450C-9917-3ABC2222EC74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.WebControls.StockTransactionView.Data", "Libraries\Server Controls\Data\MixERP.Net.WebControls.StockTransactionView.Data\MixERP.Net.WebControls.StockTransactionView.Data.csproj", "{F8499D93-CED5-4A3D-A22B-CF21171EDE6B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.WebControls.StockTransactionViewFactory.Data", "Libraries\Server Controls\Data\MixERP.Net.WebControls.StockTransactionView.Data\MixERP.Net.WebControls.StockTransactionViewFactory.Data.csproj", "{F8499D93-CED5-4A3D-A22B-CF21171EDE6B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{02145AA0-9F04-4AB8-A626-2E9952EA99E6}"
 EndProject
@@ -1253,7 +1253,7 @@ Global
 		{ABD09714-F452-4D9F-A209-06508B04A316} = {B331910C-E400-4F2D-AAD1-14D73811E81C}
 		{F1476541-9AAC-4049-ADC5-C522C29B258D} = {ABD09714-F452-4D9F-A209-06508B04A316}
 		{3E6AA330-1D6A-450C-9917-3ABC2222EC74} = {F882C837-D33A-43DE-8CEA-87D0CE635E9D}
-		{F8499D93-CED5-4A3D-A22B-CF21171EDE6B} = {F882C837-D33A-43DE-8CEA-87D0CE635E9D}
+		{F8499D93-CED5-4A3D-A22B-CF21171EDE6B} = {0065E052-6622-45B1-B55F-22AB1DED9B01}
 		{5A14E96A-3807-4109-B0C7-4B23D151FD14} = {02145AA0-9F04-4AB8-A626-2E9952EA99E6}
 		{E566553C-218F-460D-B1A9-C441F01F8FDE} = {8BE8E894-6613-4FB0-A196-E737C777E51A}
 		{1D592C04-FCF8-4955-AEFB-43B33A58FAA1} = {EE97E3B1-0DD0-453B-A0AA-4AF12099B0CA}

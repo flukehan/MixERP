@@ -66,7 +66,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         {
             if (Switches.AllowParentAccountInGlTransaction())
             {
-                if (SessionHelper.IsAdmin())
+                if (CurrentSession.IsAdmin())
                 {
                     return GetValues(AccountHelper.GetAccounts());
                 }
@@ -75,7 +75,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
                 return GetValues(AccountHelper.GetNonConfidentialAccounts());
             }
 
-            if (SessionHelper.IsAdmin())
+            if (CurrentSession.IsAdmin())
             {
                 return GetValues(AccountHelper.GetChildAccounts());
             }
@@ -88,7 +88,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            int officeId = SessionHelper.GetOfficeId();
+            int officeId = CurrentSession.GetOfficeId();
 
             foreach (CashRepository cashRepository in CashRepositories.GetCashRepositories(officeId))
             {
@@ -104,7 +104,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
 
             if (AccountHelper.IsCashAccount(accountNumber))
             {
-                int officeId = SessionHelper.GetOfficeId();
+                int officeId = CurrentSession.GetOfficeId();
                 foreach (CashRepository cashRepository in CashRepositories.GetCashRepositories(officeId))
                 {
                     values.Add(new ListItem(cashRepository.CashRepositoryName, cashRepository.CashRepositoryCode));
@@ -206,7 +206,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         [WebMethod(EnableSession = true)]
         public Collection<ListItem> ListAccounts()
         {
-            if (SessionHelper.IsAdmin())
+            if (CurrentSession.IsAdmin())
             {
                 return GetValues(AccountHelper.GetAccounts());
             }

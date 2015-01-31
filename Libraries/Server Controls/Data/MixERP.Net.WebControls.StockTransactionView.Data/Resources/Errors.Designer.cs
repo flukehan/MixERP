@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MixERP.Net.WebControls.StockTransactionView.Data.Resources {
+namespace MixERP.Net.WebControls.StockTransactionViewFactory.Data.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace MixERP.Net.WebControls.StockTransactionView.Data.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MixERP.Net.WebControls.StockTransactionView.Data.Resources.Errors", typeof(Errors).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MixERP.Net.WebControls.StockTransactionViewFactory.Data.Resources.Errors", typeof(Errors).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

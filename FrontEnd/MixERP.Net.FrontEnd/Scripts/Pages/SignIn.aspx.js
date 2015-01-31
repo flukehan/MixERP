@@ -60,8 +60,10 @@ function getRedirectUrl() {
         url = "/";
     };
 
+
     return url;
 };
+
 
 function makeDirty() {
     $(".field").addClass("error");

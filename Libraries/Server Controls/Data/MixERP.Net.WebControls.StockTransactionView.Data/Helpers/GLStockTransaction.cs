@@ -23,13 +23,13 @@ using MixERP.Net.Common.Helpers;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Transactions;
 
-namespace MixERP.Net.WebControls.StockTransactionView.Data.Helpers
+namespace MixERP.Net.WebControls.StockTransactionViewFactory.Data.Helpers
 {
     public static class GLStockTransaction
     {
         public static IEnumerable<DbGetProductViewResult> GetView(string book, DateTime dateFrom, DateTime dateTo, string office, string party, string priceType, string user, string referenceNumber, string statementReference)
         {
-            return GetView(SessionHelper.GetUserId(), book, SessionHelper.GetOfficeId(), dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference);
+            return GetView(CurrentSession.GetUserId(), book, CurrentSession.GetOfficeId(), dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference);
         }
 
         private static IEnumerable<DbGetProductViewResult> GetView(int userId, string book, int officeId, DateTime dateFrom, DateTime dateTo, string office, string party, string priceType, string user, string referenceNumber, string statementReference)

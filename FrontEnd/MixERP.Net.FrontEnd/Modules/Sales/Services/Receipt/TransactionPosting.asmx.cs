@@ -72,9 +72,9 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
 
         private long PostTransaction(string partyCode, string currencyCode, decimal amount, decimal debitExchangeRate, decimal creditExchangeRate, string referenceNumber, string statementReference, int costCenterId, int cashRepositoryId, DateTime? postedDate, int bankAccountId, string bankInstrumentCode, string bankTransactionCode)
         {
-            int userId = SessionHelper.GetUserId();
-            int officeId = SessionHelper.GetOfficeId();
-            long loginId = SessionHelper.GetLogOnId();
+            int userId = CurrentSession.GetUserId();
+            int officeId = CurrentSession.GetOfficeId();
+            long loginId = CurrentSession.GetLogOnId();
 
             long transactionMasterID = Data.Transactions.Receipt.PostTransaction(userId, officeId, loginId, partyCode, currencyCode, amount, debitExchangeRate, creditExchangeRate, referenceNumber, statementReference, costCenterId, cashRepositoryId, postedDate, bankAccountId, bankInstrumentCode, bankTransactionCode);
 

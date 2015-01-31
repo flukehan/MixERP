@@ -17,12 +17,11 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System;
 using MixERP.Net.Core.Modules.Sales.Resources;
 using MixERP.Net.Entities;
-using MixERP.Net.Entities.Models.Transactions;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.UserControls.Products;
-using System;
+using MixERP.Net.WebControls.StockTransactionViewFactory;
 
 namespace MixERP.Net.Core.Modules.Sales
 {
@@ -30,19 +29,25 @@ namespace MixERP.Net.Core.Modules.Sales
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            using (ProductViewControl productView = (ProductViewControl)this.Page.LoadControl("~/UserControls/Products/ProductViewControl.ascx"))
+            using (StockTransactionView view = new StockTransactionView())
             {
-                productView.Text = Titles.SalesOrder;
-                productView.Book = TranBook.Sales;
-                productView.SubBook = SubTranBook.Order;
-                productView.AddNewUrl = "~/Modules/Sales/Entry/Order.mix";
-                productView.PreviewUrl = "~/Modules/Sales/Reports/SalesOrderReport.mix";
-                productView.ChecklistUrl = "~/Modules/Sales/Confirmation/Order.mix";
-                productView.ShowMergeToDeliveryButton = true;
-                productView.Initialize();
+                view.Text = Titles.SalesOrder;
+                view.Book = TranBook.Sales;
+                view.SubBook = SubTranBook.Order;
+                view.AddNewUrl = "~/Modules/Sales/Entry/Order.mix";
+                view.PreviewUrl = "~/Modules/Sales/Reports/SalesOrderReport.mix";
+                view.ChecklistUrl = "~/Modules/Sales/Confirmation/Order.mix";
+                view.ShowMergeToDeliveryButton = true;
+                view.MergeToDeliveryButtonUrl = "~/Modules/Sales/Entry/Delivery.mix";
 
-                this.Placeholder1.Controls.Add(productView);
+                view.DbTableName = "transactions.non_gl_stock_master";
+                view.PrimaryKey = "non_gl_stock_master_id";
+
+                view.IsNonGlTransaction = true;
+
+                this.Placeholder1.Controls.Add(view);
             }
+
 
             base.OnControlLoad(sender, e);
         }

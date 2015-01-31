@@ -235,34 +235,6 @@
     <Compile Include="Site\Account\SignOut.aspx.designer.cs">
       <DependentUpon>SignOut.aspx</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\CurrencyExtender.ascx.cs">
-      <DependentUpon>CurrencyExtender.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserControls\CurrencyExtender.ascx.designer.cs">
-      <DependentUpon>CurrencyExtender.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\PartyControl.ascx.cs">
-      <DependentUpon>PartyControl.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserControls\PartyControl.ascx.designer.cs">
-      <DependentUpon>PartyControl.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Products\ProductControl.ascx.cs">
-      <DependentUpon>ProductControl.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserControls\Products\ProductControl.ascx.designer.cs">
-      <DependentUpon>ProductControl.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Products\ProductViewControl.ascx.cs">
-      <DependentUpon>ProductViewControl.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserControls\Products\ProductViewControl.ascx.designer.cs">
-      <DependentUpon>ProductViewControl.ascx</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\Widgets\AlertsWidget.ascx.cs">
       <DependentUpon>AlertsWidget.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -858,9 +830,6 @@
     <Content Include="Scripts\semantic-ui\themes\basic\assets\fonts\icons.svg" />
     <Content Include="Scripts\semantic-ui\themes\default\assets\fonts\icons.svg" />
     <Content Include="Scripts\semantic-ui\themes\default\assets\images\flags.png" />
-    <Content Include="Scripts\UserControls\AttachmentUserControl.js" />
-    <Content Include="Scripts\UserControls\ProductControl.js" />
-    <Content Include="Scripts\UserControls\ProductViewControl.js" />
     <Content Include="Scripts\vakata-jstree\dist\jstree.js" />
     <Content Include="Scripts\vakata-jstree\dist\jstree.min.js" />
     <Content Include="Scripts\vakata-jstree\dist\themes\default-dark\32px.png" />
@@ -965,14 +934,10 @@
     <Content Include="Stylesheets\report.min.css">
       <DependentUpon>report.css</DependentUpon>
     </Content>
-    <Content Include="UserControls\CurrencyExtender.ascx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Themes\MixERP\Skin1.skin" />
     <Content Include="MixERPMaster.Master" />
-    <Content Include="UserControls\PartyControl.ascx" />
-    <Content Include="UserControls\Products\ProductControl.ascx" />
-    <Content Include="UserControls\Products\ProductViewControl.ascx" />
     <Content Include="UserControls\Widgets\AlertsWidget.ascx" />
     <Content Include="UserControls\Widgets\LinksWidget.ascx" />
     <Content Include="UserControls\Widgets\OfficeInformationWidget.ascx" />
@@ -1093,9 +1058,9 @@
       <Project>{1c84e528-87ed-4b69-bfc3-81d675cb153e}</Project>
       <Name>MixERP.Net.WebControls.StockTransactionFactory</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Server Controls\Data\MixERP.Net.WebControls.StockTransactionView.Data\MixERP.Net.WebControls.StockTransactionView.Data.csproj">
+    <ProjectReference Include="..\..\Libraries\Server Controls\Data\MixERP.Net.WebControls.StockTransactionView.Data\MixERP.Net.WebControls.StockTransactionViewFactory.Data.csproj">
       <Project>{f8499d93-ced5-4a3d-a22b-cf21171ede6b}</Project>
-      <Name>MixERP.Net.WebControls.StockTransactionView.Data</Name>
+      <Name>MixERP.Net.WebControls.StockTransactionViewFactory.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Logic\MixERP.net.Common\MixERP.Net.Common.csproj">
       <Project>{d5a09c22-8f48-4fb2-a14d-c62c8c8fcec0}</Project>
@@ -1105,9 +1070,9 @@
       <Project>{e566553c-218f-460d-b1a9-c441f01f8fde}</Project>
       <Name>MixERP.Net.WebControls.PartyControl</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\MixERP.Net.WebControls.StockTransactionView.csproj">
+    <ProjectReference Include="..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\MixERP.Net.WebControls.StockTransactionViewFactory.csproj">
       <Project>{e82752da-f0d2-4987-b011-6b2623937dea}</Project>
-      <Name>MixERP.Net.WebControls.StockTransactionView</Name>
+      <Name>MixERP.Net.WebControls.StockTransactionViewFactory</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\MixERP.Net.WebControls.TransactionChecklist.csproj">
       <Project>{64490b89-b228-4188-8235-71744a94c9ae}</Project>

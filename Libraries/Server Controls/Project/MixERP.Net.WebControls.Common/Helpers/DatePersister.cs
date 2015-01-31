@@ -84,7 +84,7 @@ namespace MixERP.Net.WebControls.Common.Helpers
 
         private static ApplicationDateModel GetApplicationDates()
         {
-            int officeId = SessionHelper.GetOfficeId();
+            int officeId = CurrentSession.GetOfficeId();
             Collection<ApplicationDateModel> applicationDates = ApplicationStateHelper.GetApplicationDates();
             bool persist = false;
 

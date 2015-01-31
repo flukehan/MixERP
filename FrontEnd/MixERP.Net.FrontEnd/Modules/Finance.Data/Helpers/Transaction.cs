@@ -33,7 +33,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
     {
         public static long Add(DateTime valueDate, string referenceNumber, int costCenterId, Collection<JournalDetail> details, Collection<Attachment> attachments)
         {
-            long transactionMasterId = Add(valueDate, SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), costCenterId, referenceNumber, details, attachments);
+            long transactionMasterId = Add(valueDate, CurrentSession.GetOfficeId(), CurrentSession.GetUserId(), CurrentSession.GetLogOnId(), costCenterId, referenceNumber, details, attachments);
             return transactionMasterId;
         }
 

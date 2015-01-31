@@ -144,7 +144,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         [WebMethod(EnableSession = true)]
         public Collection<ListItem> GetStores()
         {
-            int officeId = SessionHelper.GetOfficeId();
+            int officeId = CurrentSession.GetOfficeId();
             Collection<ListItem> values = new Collection<ListItem>();
 
             IEnumerable<Store> stores = Stores.GetStores(officeId);

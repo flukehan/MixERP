@@ -38,9 +38,9 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         [WebMethod(EnableSession = true)]
         public void Approve(long tranId, string reason)
         {
-            int officeId = SessionHelper.GetOfficeId();
-            int userId = SessionHelper.GetUserId();
-            long loginId = SessionHelper.GetLogOnId();
+            int officeId = CurrentSession.GetOfficeId();
+            int userId = CurrentSession.GetUserId();
+            long loginId = CurrentSession.GetLogOnId();
             const int verificationStatusId = 2;
 
             Transaction.Verify(tranId, officeId, userId, loginId, verificationStatusId, reason);
@@ -49,7 +49,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         [WebMethod(EnableSession = true)]
         public decimal GetExchangeRate(string currencyCode)
         {
-            int officeId = SessionHelper.GetOfficeId();
+            int officeId = CurrentSession.GetOfficeId();
             decimal exchangeRate = Transaction.GetExchangeRate(officeId, currencyCode);
 
             return exchangeRate;
@@ -58,9 +58,9 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         [WebMethod(EnableSession = true)]
         public void Reject(long tranId, string reason)
         {
-            int officeId = SessionHelper.GetOfficeId();
-            int userId = SessionHelper.GetUserId();
-            long loginId = SessionHelper.GetLogOnId();
+            int officeId = CurrentSession.GetOfficeId();
+            int userId = CurrentSession.GetUserId();
+            long loginId = CurrentSession.GetLogOnId();
             const int verificationStatusId = -3;
 
             Transaction.Verify(tranId, officeId, userId, loginId, verificationStatusId, reason);

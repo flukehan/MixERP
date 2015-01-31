@@ -33,9 +33,9 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
         {
             using (ScrudForm scrud = new ScrudForm())
             {
-                scrud.DenyAdd = !SessionHelper.IsAdmin();
-                scrud.DenyEdit = !SessionHelper.IsAdmin();
-                scrud.DenyDelete = !SessionHelper.IsAdmin();
+                scrud.DenyAdd = !CurrentSession.IsAdmin();
+                scrud.DenyEdit = !CurrentSession.IsAdmin();
+                scrud.DenyDelete = !CurrentSession.IsAdmin();
 
                 scrud.KeyColumn = "user_id";
 

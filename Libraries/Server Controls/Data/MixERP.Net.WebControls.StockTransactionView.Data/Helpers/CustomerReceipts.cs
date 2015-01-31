@@ -22,7 +22,7 @@ using System.Collections.Generic;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Transactions;
 
-namespace MixERP.Net.WebControls.StockTransactionView.Data.Helpers
+namespace MixERP.Net.WebControls.StockTransactionViewFactory.Data.Helpers
 {
     public static class CustomerReceipts
     {

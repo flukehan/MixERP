@@ -24,10 +24,10 @@ using MixERP.Net.Common;
 using MixERP.Net.DbFactory;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Models.Transactions;
-using MixERP.Net.WebControls.StockTransactionView.Data.Models;
+using MixERP.Net.WebControls.StockTransactionViewFactory.Data.Models;
 using Npgsql;
 
-namespace MixERP.Net.WebControls.StockTransactionView.Data
+namespace MixERP.Net.WebControls.StockTransactionViewFactory.Data
 {
     public static class ModelFactory
     {

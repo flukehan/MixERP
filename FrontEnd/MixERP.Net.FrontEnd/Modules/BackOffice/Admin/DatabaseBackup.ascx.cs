@@ -107,7 +107,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
                     backupNameInputText.ID = "BackupNameInputText";
                     if (this.server.IsValid)
                     {
-                        backupNameInputText.Value = string.Format(CultureInfo.InvariantCulture, "{0}.{1}.{2}.{3}", this.server.DatabaseName, SessionHelper.GetOfficeId(), SessionHelper.GetUserName(), DateTime.Now.ToFileTime());
+                        backupNameInputText.Value = string.Format(CultureInfo.InvariantCulture, "{0}.{1}.{2}.{3}", this.server.DatabaseName, CurrentSession.GetOfficeId(), CurrentSession.GetUserName(), DateTime.Now.ToFileTime());
                     }
 
                     field.Controls.Add(backupNameInputText);

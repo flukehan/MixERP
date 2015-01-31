@@ -129,6 +129,7 @@ namespace MixERP.Net.Common
             return MapPathReverse(physicalPath);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         public static string HashSha512Hex(string password, string salt)
         {
             if (password == null)
@@ -141,7 +142,10 @@ namespace MixERP.Net.Common
                 return null;
             }
 
-            return BitConverter.ToString(new SHA512CryptoServiceProvider().ComputeHash(Encoding.UTF8.GetBytes(password + salt))).Replace("-", "").ToLower();
+            using (SHA512CryptoServiceProvider provider = new SHA512CryptoServiceProvider())
+            {
+                return BitConverter.ToString(provider.ComputeHash(Encoding.UTF8.GetBytes(password + salt))).Replace("-", "").ToLower(CultureInfo.InvariantCulture);
+            }
         }
 
         public static bool IsEmptyDate(DateTime date)
@@ -333,7 +337,7 @@ namespace MixERP.Net.Common
 
         public static DateTime? TryCastNullableDate(object value)
         {
-            if (value == DBNull.Value)
+            if (value == null || value == DBNull.Value)
             {
                 return null;
             }

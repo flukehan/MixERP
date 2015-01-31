@@ -100,6 +100,7 @@
     <Compile Include="Helpers\LocalizationHelper.cs" />
     <Compile Include="Helpers\Parameters.cs" />
     <Compile Include="Helpers\ScrudHelper.cs" />
+    <Compile Include="Helpers\CurrentSession.cs" />
     <Compile Include="Helpers\SessionHelper.cs" />
     <Compile Include="Helpers\Switches.cs" />
     <Compile Include="Helpers\WidgetHelper.cs" />

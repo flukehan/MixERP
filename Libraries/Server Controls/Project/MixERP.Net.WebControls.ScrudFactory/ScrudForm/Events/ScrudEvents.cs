@@ -112,7 +112,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
         {
             var userIdSessionKey = ConfigurationHelper.GetScrudParameter("UserIdSessionKey");
 
-            if (Conversion.TryCastInteger(SessionHelper.GetSessionValueByKey(userIdSessionKey)) <= 0)
+            if (Conversion.TryCastInteger(CurrentSession.GetSessionValueByKey(userIdSessionKey)) <= 0)
             {
                 throw new InvalidOperationException("The user id session key is invalid or incorrectly configured.");
             }

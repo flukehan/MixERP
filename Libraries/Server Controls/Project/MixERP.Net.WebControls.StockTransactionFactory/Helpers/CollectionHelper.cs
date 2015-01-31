@@ -50,6 +50,7 @@ namespace MixERP.Net.WebControls.StockTransactionFactory.Helpers
             return details;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public static Collection<JournalDetail> GetJournalDetailCollection(string json)
         {
             Collection<JournalDetail> details = new Collection<JournalDetail>();

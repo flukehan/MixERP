@@ -168,6 +168,13 @@ namespace MixERP.Net.FrontEnd.Base
 
                     Entities.Office.SignInView signInView = Data.Office.User.GetSignInView(signInId);
 
+                    if (signInView == null || signInView.LoginId == null)
+                    {
+                        session.Remove("UserName");
+                        FormsAuthentication.SignOut();
+                        return false;
+                    }
+
                     session["SignInTimestamp"] = DateTime.Now;
                     session["LogOnId"] = signInView.LoginId;
                     session["UserId"] = signInView.UserId;
@@ -198,12 +205,6 @@ namespace MixERP.Net.FrontEnd.Base
 
                     SetCulture();
 
-                    if (signInView.LoginId == null)
-                    {
-                        session.Remove("UserName");
-                        FormsAuthentication.SignOut();
-                        return false;
-                    }
 
                     return true;
                 }
@@ -259,7 +260,7 @@ namespace MixERP.Net.FrontEnd.Base
         {
             if (string.IsNullOrWhiteSpace(this.OverridePath))
             {
-                this.OverridePath = this.Page.Request.Url.AbsolutePath;
+                this.OverridePath = @"~" + this.Page.Request.Url.AbsolutePath;
             }
 
             Literal contentMenuLiteral = ((Literal) PageUtility.FindControlIterative(this.Master, "ContentMenuLiteral"));
@@ -303,12 +304,13 @@ namespace MixERP.Net.FrontEnd.Base
 
         private static void SetCulture()
         {
-            if (HttpContext.Current.Session["Culture"] == null)
+            if (SessionHelper.GetSessionKey("Culture") == null)
             {
                 return;
             }
 
-            string cultureName = HttpContext.Current.Session["Culture"].ToString();
+            string cultureName = Conversion.TryCastString(SessionHelper.GetSessionKey("Culture"));
+
             CultureInfo culture = new CultureInfo(cultureName);
             Thread.CurrentThread.CurrentCulture = culture;
             Thread.CurrentThread.CurrentUICulture = culture;
@@ -316,7 +318,7 @@ namespace MixERP.Net.FrontEnd.Base
 
         private void ForceLogOff()
         {
-            int officeId = SessionHelper.GetOfficeId();
+            int officeId = CurrentSession.GetOfficeId();
             Collection<ApplicationDateModel> applicationDates = ApplicationStateHelper.GetApplicationDates();
 
             if (applicationDates != null)
@@ -326,7 +328,7 @@ namespace MixERP.Net.FrontEnd.Base
                 {
                     if (model.ForcedLogOffTimestamp != null)
                     {
-                        if (model.ForcedLogOffTimestamp <= DateTime.Now && model.ForcedLogOffTimestamp >= SessionHelper.GetSignInTimestamp())
+                        if (model.ForcedLogOffTimestamp <= DateTime.Now && model.ForcedLogOffTimestamp >= CurrentSession.GetSignInTimestamp())
                         {
                             RequestLogOnPage();
                         }

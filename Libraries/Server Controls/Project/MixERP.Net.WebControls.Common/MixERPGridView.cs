@@ -66,6 +66,11 @@ namespace MixERP.Net.WebControls.Common
 
         protected override void OnRowDataBound(GridViewRowEventArgs e)
         {
+            if (e == null)
+            {
+                return;
+            }
+
             foreach (TableCell cell in e.Row.Cells)
             {
                 DataControlFieldCell dataControlField = cell as DataControlFieldCell;

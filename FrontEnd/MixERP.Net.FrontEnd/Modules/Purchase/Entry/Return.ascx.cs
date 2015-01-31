@@ -21,9 +21,8 @@ using System;
 using MixERP.Net.Common;
 using MixERP.Net.Core.Modules.Purchase.Resources;
 using MixERP.Net.Entities;
-using MixERP.Net.Entities.Models.Transactions;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.UserControls.Products;
+using MixERP.Net.WebControls.StockTransactionFactory;
 
 namespace MixERP.Net.Core.Modules.Purchase.Entry
 {
@@ -37,15 +36,13 @@ namespace MixERP.Net.Core.Modules.Purchase.Entry
                 this.Response.Redirect("~/Modules/Sales/Return.mix");
             }
 
-            using (ProductControl product = (ProductControl)this.Page.LoadControl("~/UserControls/Products/ProductControl.ascx"))
+            using (StockTransactionForm product = new StockTransactionForm())
             {
                 product.Book = TranBook.Purchase;
                 product.SubBook = SubTranBook.Return;
                 product.Text = Titles.PurchaseReturn;
                 product.ShowPriceTypes = true;
                 product.ShowStore = true;
-
-                product.Initialize();
 
                 this.Placeholder1.Controls.Add(product);
             }

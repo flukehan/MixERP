@@ -1983,7 +1983,6 @@ namespace PetaPoco
 
         // Member variables
         string _connectionString;
-        DbProviderFactory _factory;
         NpgsqlConnection _sharedConnection;
         IDbTransaction _transaction;
         int _sharedConnectionDepth;

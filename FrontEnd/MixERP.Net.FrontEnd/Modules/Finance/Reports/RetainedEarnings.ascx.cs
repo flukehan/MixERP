@@ -247,7 +247,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
         {
             DateTime date = Conversion.TryCastDate(this.dateTextBox.Text);
             int factor = Conversion.TryCastInteger(this.factorInputText.Value);
-            int officeId = SessionHelper.GetOfficeId();
+            int officeId = CurrentSession.GetOfficeId();
 
             using (DataTable table = Data.Reports.RetainedEarnings.GetRetainedEarningStatementDataTable(date, officeId, factor))
             {

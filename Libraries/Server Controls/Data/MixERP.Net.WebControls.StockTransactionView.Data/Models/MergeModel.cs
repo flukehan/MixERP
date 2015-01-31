@@ -22,7 +22,7 @@ using System.Collections.ObjectModel;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Models.Transactions;
 
-namespace MixERP.Net.WebControls.StockTransactionView.Data.Models
+namespace MixERP.Net.WebControls.StockTransactionViewFactory.Data.Models
 {
     public sealed class MergeModel
     {

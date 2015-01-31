@@ -19,7 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Collections.ObjectModel;
 
-namespace MixERP.Net.WebControls.StockTransactionView.Helpers
+namespace MixERP.Net.WebControls.StockTransactionViewFactory.Helpers
 {
     public static class Flags
     {

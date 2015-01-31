@@ -159,6 +159,7 @@
     <EmbeddedResource Include="Resources\Titles.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Warnings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -581,6 +582,10 @@
     <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.net.Common\MixERP.Net.Common.csproj">
       <Project>{D5A09C22-8F48-4FB2-A14D-C62C8C8FCEC0}</Project>
       <Name>MixERP.Net.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\MixERP.Net.WebControls.StockTransactionViewFactory.csproj">
+      <Project>{e82752da-f0d2-4987-b011-6b2623937dea}</Project>
+      <Name>MixERP.Net.WebControls.StockTransactionViewFactory</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\MixERP.Net.WebControls.TransactionChecklist.csproj">
       <Project>{64490b89-b228-4188-8235-71744a94c9ae}</Project>

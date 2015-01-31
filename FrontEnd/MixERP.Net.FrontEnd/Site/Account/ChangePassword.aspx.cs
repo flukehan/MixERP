@@ -75,7 +75,7 @@ namespace MixERP.Net.FrontEnd.Site.Account
 
         public void ChangePasswordButton_Click(object sender, EventArgs e)
         {
-            string userName = SessionHelper.GetUserName();
+            string userName = CurrentSession.GetUserName();
             string currentPassword = this.passwordInputPassword.Value;
             string newPassword = this.newPasswordInputPassword.Value;
             string confirmPassword = this.confirmPasswordInputPassword.Value;
@@ -253,7 +253,7 @@ namespace MixERP.Net.FrontEnd.Site.Account
                     {
                         userNameInputText.ID = "UserNameInputText";
                         userNameInputText.Attributes.Add("readonly", "readonly");
-                        userNameInputText.Value = SessionHelper.GetUserName();
+                        userNameInputText.Value = CurrentSession.GetUserName();
 
                         iconInput.Controls.Add(userNameInputText);
                     }

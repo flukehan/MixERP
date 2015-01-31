@@ -32,18 +32,6 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
 {
     public static class ReportParser
     {
-        public static string GetSessionValue(string key)
-        {
-            var val = HttpContext.Current.Session[key];
-
-            if (val != null)
-            {
-                return val.ToString();
-            }
-
-            return string.Empty;
-        }
-
         public static string ParseDataSource(string expression, Collection<DataTable> table)
         {
             if (string.IsNullOrWhiteSpace(expression))
@@ -102,7 +90,10 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
                     string sessionKey = RemoveBraces(word);
                     sessionKey = sessionKey.Replace("Session.", "");
                     sessionKey = sessionKey.Trim();
-                    expression = expression.Replace(word, GetSessionValue(sessionKey));
+
+                    string value = Conversion.TryCastString(SessionHelper.GetSessionKey(sessionKey));
+
+                    expression = expression.Replace(word, value);
                 }
                 else if (word.StartsWith("{Resources.", StringComparison.OrdinalIgnoreCase))
                 {

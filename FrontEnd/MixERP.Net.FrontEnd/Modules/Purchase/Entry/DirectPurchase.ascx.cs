@@ -20,9 +20,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using MixERP.Net.Core.Modules.Purchase.Resources;
 using MixERP.Net.Entities;
-using MixERP.Net.Entities.Models.Transactions;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.UserControls.Products;
+using MixERP.Net.WebControls.StockTransactionFactory;
 
 namespace MixERP.Net.Core.Modules.Purchase.Entry
 {
@@ -30,7 +29,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Entry
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            using (ProductControl product = (ProductControl) this.Page.LoadControl("~/UserControls/Products/ProductControl.ascx"))
+            using (StockTransactionForm product = new StockTransactionForm())
             {
                 product.Book = TranBook.Purchase;
                 product.SubBook = SubTranBook.Direct;
@@ -39,7 +38,6 @@ namespace MixERP.Net.Core.Modules.Purchase.Entry
                 product.ShowStore = true;
                 product.ShowCostCenter = true;
 
-                product.Initialize();
 
                 this.Placeholder1.Controls.Add(product);
             }

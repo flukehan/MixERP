@@ -68,7 +68,7 @@ namespace MixERP.Net.Core.Modules.Purchase
 
         private void AddGridView()
         {
-            int officeId = SessionHelper.GetOfficeId();
+            int officeId = CurrentSession.GetOfficeId();
 
             using (GridView grid = new GridView())
             {

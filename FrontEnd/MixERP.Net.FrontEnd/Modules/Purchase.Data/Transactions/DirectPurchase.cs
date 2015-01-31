@@ -40,7 +40,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
                 statementReference = statementReference.Replace("&nbsp;", " ").Trim();
             }
 
-            long transactionMasterId = GlTransaction.Add(valueDate, "Purchase.Direct", SessionHelper.GetOfficeId(), SessionHelper.GetUserId(), SessionHelper.GetLogOnId(), costCenterId, referenceNumber, statementReference, stockMaster, details, new Collection<long>(), attachments);
+            long transactionMasterId = GlTransaction.Add(valueDate, "Purchase.Direct", CurrentSession.GetOfficeId(), CurrentSession.GetUserId(), CurrentSession.GetLogOnId(), costCenterId, referenceNumber, statementReference, stockMaster, details, new Collection<long>(), attachments);
             return transactionMasterId;
         }
     }

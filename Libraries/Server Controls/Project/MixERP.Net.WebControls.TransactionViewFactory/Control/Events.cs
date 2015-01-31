@@ -14,7 +14,7 @@ namespace MixERP.Net.WebControls.TransactionViewFactory
             const string resource = "transactions.transaction_master";
             const string resourceKey = "transaction_master_id";
 
-            int userId = SessionHelper.GetUserId();
+            int userId = CurrentSession.GetUserId();
 
             TransactionGovernor.Flags.CreateFlag(userId, flagTypeId, resource, resourceKey, this.GetSelectedValues());
 

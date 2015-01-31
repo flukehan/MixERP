@@ -14,7 +14,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.OTS
         {            
             this.CreateHeader(this.Placeholder1);
 
-            if (Data.OpeningInventory.Exists(SessionHelper.GetOfficeId()))
+            if (Data.OpeningInventory.Exists(CurrentSession.GetOfficeId()))
             {
                 this.CreateMessage(this.Placeholder1);
                 return;

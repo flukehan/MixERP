@@ -42,7 +42,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Collections.ObjectModel;
 
-namespace MixERP.Net.WebControls.StockTransactionView.Data
+namespace MixERP.Net.WebControls.StockTransactionViewFactory.Data
 {
     public static class SalesOrder
     {

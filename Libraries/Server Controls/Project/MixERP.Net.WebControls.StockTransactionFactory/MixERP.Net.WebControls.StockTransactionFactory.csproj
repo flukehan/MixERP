@@ -80,14 +80,57 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Control\Form\Bottom Form\StatementReference.cs" />
+    <Compile Include="Control\Form\Bottom Form\Summation.cs" />
+    <Compile Include="Control\Form\Bottom Form\CostCenter.cs" />
+    <Compile Include="Control\Form\Bottom Form\SaveButton.cs" />
+    <Compile Include="Control\Form\Bottom Form\ShippingAddress.cs" />
+    <Compile Include="Control\Form\Bottom Form\Salesperson.cs" />
+    <Compile Include="Control\Form\BottomForm.cs" />
+    <Compile Include="Control\Form\GridView\FooterRow.cs" />
+    <Compile Include="Control\Form\GridView\FooterRow\Amount.cs" />
+    <Compile Include="Control\Form\GridView\FooterRow\Action.cs" />
+    <Compile Include="Control\Form\GridView\FooterRow\Discount.cs" />
+    <Compile Include="Control\Form\GridView\FooterRow\SubTotal.cs" />
+    <Compile Include="Control\Form\GridView\FooterRow\Unit.cs" />
+    <Compile Include="Control\Form\GridView\FooterRow\Tax.cs" />
+    <Compile Include="Control\Form\GridView\FooterRow\ShippingCharge.cs" />
+    <Compile Include="Control\Form\GridView\FooterRow\Quantity.cs" />
+    <Compile Include="Control\Form\GridView\FooterRow\PriceType.cs" />
+    <Compile Include="Control\Form\GridView\FooterRow\Item.cs" />
+    <Compile Include="Control\Form\GridView\HeaderRow.cs" />
+    <Compile Include="Control\Form\GridView.cs" />
+    <Compile Include="Control\Form\Top Form\Controls\ReferenceNumber.cs" />
+    <Compile Include="Control\Form\Top Form\Controls\Store.cs" />
+    <Compile Include="Control\Form\Top Form\Controls\PriceType.cs" />
+    <Compile Include="Control\Form\Top Form\Controls\PaymentTerm.cs" />
+    <Compile Include="Control\Form\Top Form\Controls\ShippingAddress.cs" />
+    <Compile Include="Control\Form\Top Form\Controls\SalesType.cs" />
+    <Compile Include="Control\Form\Top Form\Controls.cs" />
+    <Compile Include="Control\Form\Top Form\Controls\DateTextBox.cs" />
+    <Compile Include="Control\Form\Top Form\Controls\Party.cs" />
+    <Compile Include="Control\Form\Top Form\Controls\CashTransaction.cs" />
+    <Compile Include="Control\Form\Top Form\Labels.cs" />
+    <Compile Include="Control\Form\TopForm.cs" />
+    <Compile Include="Control\IDisposable.cs" />
+    <Compile Include="Control\Form\HiddenFields.cs" />
+    <Compile Include="Control\Form\Attachment.cs" />
+    <Compile Include="Control\Form\ErrorLabels.cs" />
+    <Compile Include="Control\Form\Title.cs" />
+    <Compile Include="Control\Stylesheet.cs" />
+    <Compile Include="Control\Javascript.cs" />
+    <Compile Include="Control\Session.cs" />
+    <Compile Include="Control\Properties.cs" />
     <Compile Include="Helpers\CollectionHelper.cs" />
-    <Compile Include="Helpers\StockTransactionFactoryResourceHelper.cs" />
+    <Compile Include="Helpers\ControlHelper.cs" />
+    <Compile Include="Helpers\TableHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Titles.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Titles.resx</DependentUpon>
     </Compile>
+    <Compile Include="Control\Control.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\mixerp.licenseheader">
@@ -103,6 +146,18 @@
     <ProjectReference Include="..\..\..\Logic\MixERP.Net.Entities\MixERP.Net.Entities.csproj">
       <Project>{BDE918B1-DD9B-41C9-A41F-F3DDEC18B6D8}</Project>
       <Name>MixERP.Net.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Data\MixERP.Net.WebControls.StockTransactionView.Data\MixERP.Net.WebControls.StockTransactionViewFactory.Data.csproj">
+      <Project>{F8499D93-CED5-4A3D-A22B-CF21171EDE6B}</Project>
+      <Name>MixERP.Net.WebControls.StockTransactionViewFactory.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MixERP.Net.WebControls.AttachmentFactory\MixERP.Net.WebControls.AttachmentFactory.csproj">
+      <Project>{403F308D-10E7-4C70-9360-1027EE541495}</Project>
+      <Name>MixERP.Net.WebControls.AttachmentFactory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MixERP.Net.WebControls.Common\MixERP.Net.WebControls.Common.csproj">
+      <Project>{2D961540-6597-4E7B-969C-974D71D820DD}</Project>
+      <Name>MixERP.Net.WebControls.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -127,6 +182,11 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Includes\Script\src\variables.js" />
+    <EmbeddedResource Include="Includes\Style\StockTransactionFactory.css" />
+    <EmbeddedResource Include="Includes\Script\StockTransactionForm.js" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

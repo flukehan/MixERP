@@ -20,6 +20,11 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 /*jshint -W032*/
 /*global getAjax, getAjaxErrorMessage, logError, saveButton, url:true, validateProductControl, errorLabelBottom, appendParameter, getData, valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, statementReference, agentId, shipperId, shippingAddressCode, shippingCharge, costCenterId, transactionIds, attachments*/
 
+if (typeof (saveButton) === "undefined") {
+    saveButton = $("#SaveButton");
+};
+
+
 saveButton.click(function () {
     if (validateProductControl()) {
         save();

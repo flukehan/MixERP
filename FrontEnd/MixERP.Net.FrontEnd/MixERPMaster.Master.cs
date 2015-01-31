@@ -28,9 +28,9 @@ namespace MixERP.Net.FrontEnd
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.BranchNameLiteral.Text = SessionHelper.GetOfficeName();
+            this.BranchNameLiteral.Text = CurrentSession.GetOfficeName();
             this.SignOutLiteral.Text = Resources.Titles.SignOut;
-            this.UserGreetingLiteral.Text = String.Format(CultureInfo.CurrentCulture, Resources.Labels.UserGreeting, SessionHelper.GetUserName());
+            this.UserGreetingLiteral.Text = String.Format(CultureInfo.CurrentCulture, Resources.Labels.UserGreeting, CurrentSession.GetUserName());
             this.ChangePasswordLiteral.Text = Resources.Titles.ChangePassword;
             this.ManageProfileLiteral.Text = Resources.Titles.ManageProfile;
             this.MixERPDocumentationLiteral.Text = Resources.Titles.MixERPDocumentation;

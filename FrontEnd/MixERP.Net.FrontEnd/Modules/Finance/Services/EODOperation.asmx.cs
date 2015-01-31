@@ -35,13 +35,13 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         [WebMethod(EnableSession = true)]
         public bool InitializeEODOperation()
         {
-            if (!SessionHelper.IsAdmin())
+            if (!CurrentSession.IsAdmin())
             {
                 return false;
             }
 
-            int userId = SessionHelper.GetUserId();
-            int officeId = SessionHelper.GetOfficeId();
+            int userId = CurrentSession.GetUserId();
+            int officeId = CurrentSession.GetOfficeId();
 
             Data.EODOperation.Initialize(userId, officeId);
 
@@ -77,7 +77,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
 
         private void SuggestDateReload()
         {
-            int officeId = SessionHelper.GetOfficeId();
+            int officeId = CurrentSession.GetOfficeId();
             Collection<ApplicationDateModel> applicationDates = ApplicationStateHelper.GetApplicationDates();
 
             if (applicationDates != null)

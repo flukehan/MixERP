@@ -83,7 +83,7 @@ namespace MixERP.Net.WebControls.TransactionChecklist
                 //Withdraw this transaction.
                 if (transactionMasterId > 0)
                 {
-                    if (Verification.WithdrawTransaction(transactionMasterId, SessionHelper.GetUserId(), this.reasonTextBox.Text))
+                    if (Verification.WithdrawTransaction(transactionMasterId, CurrentSession.GetUserId(), this.reasonTextBox.Text))
                     {
                         this.messageLabel.Text = string.Format(CultureInfo.CurrentCulture, Labels.TransactionWithdrawnMessage, transactionDate.ToShortDateString());
                         this.messageLabel.CssClass = "ui block message yellow vpad12";

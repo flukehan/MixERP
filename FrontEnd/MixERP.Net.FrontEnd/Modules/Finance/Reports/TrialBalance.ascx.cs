@@ -229,8 +229,8 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             bool changeSide = this.ChangeSideWhenNegative();
             bool includeZeroBalanceAccounts = this.IncludeZeroBalanceAccounts();
 
-            int userId = SessionHelper.GetUserId();
-            int officeId = SessionHelper.GetOfficeId();
+            int userId = CurrentSession.GetUserId();
+            int officeId = CurrentSession.GetOfficeId();
 
             using (DataTable table = Data.Reports.TrialBalance.GetTrialBalance(from, to, userId, officeId, compact, factor, changeSide, includeZeroBalanceAccounts))
             {

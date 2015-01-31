@@ -72,11 +72,11 @@ namespace MixERP.Net.WebControls.ScrudFactory
             //Bottom command panel.
             this.userIdHidden = new HiddenField();
             this.userIdHidden.ID = "UserIdHidden";
-            this.userIdHidden.Value = SessionHelper.GetUserName();
+            this.userIdHidden.Value = CurrentSession.GetUserName();
 
             this.officeCodeHidden = new HiddenField();
             this.officeCodeHidden.ID = "OfficeCodeHidden";
-            this.officeCodeHidden.Value = SessionHelper.GetOfficeName();
+            this.officeCodeHidden.Value = CurrentSession.GetOfficeName();
 
             this.updatePanel.ContentTemplateContainer.Controls.Add(this.userIdHidden);
             this.updatePanel.ContentTemplateContainer.Controls.Add(this.officeCodeHidden);

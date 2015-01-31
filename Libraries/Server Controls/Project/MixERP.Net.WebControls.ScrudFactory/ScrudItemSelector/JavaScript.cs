@@ -28,7 +28,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 {
     public partial class ScrudItemSelector
     {
-        [AspNetHostingPermission(SecurityAction.LinkDemand, Level = AspNetHostingPermissionLevel.Minimal)]
+        [AspNetHostingPermission(SecurityAction.Demand, Level = AspNetHostingPermissionLevel.Minimal)]
         private void AddJavascript()
         {
             JavascriptHelper.AddJSReference(this.Page, "MixERP.Net.WebControls.ScrudFactory.ScrudItemSelector.js", "scrud_item_selector", this.GetType());

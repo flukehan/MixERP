@@ -82,7 +82,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
             }
 
             Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
-            int userId = SessionHelper.GetUserId();
+            int userId = CurrentSession.GetUserId();
 
             return Data.Attachments.Save(userId, book, id, attachments);
         }
