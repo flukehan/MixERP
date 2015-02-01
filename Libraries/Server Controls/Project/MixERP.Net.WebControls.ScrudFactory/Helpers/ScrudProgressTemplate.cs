@@ -37,11 +37,11 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 
         public void InstantiateIn(Control container)
         {
-            using (var ajaxProgressDiv = new HtmlGenericControl("div"))
+            using (HtmlGenericControl ajaxProgressDiv = new HtmlGenericControl("div"))
             {
                 ajaxProgressDiv.Attributes.Add("class", this.cssClass);
 
-                using (var ajaxImage = new HtmlGenericControl("img"))
+                using (HtmlGenericControl ajaxImage = new HtmlGenericControl("img"))
                 {
                     ajaxImage.Attributes.Add("src", this.spinnerImagePath);
                     ajaxImage.Attributes.Add("class", this.spinnerImageCssClass);

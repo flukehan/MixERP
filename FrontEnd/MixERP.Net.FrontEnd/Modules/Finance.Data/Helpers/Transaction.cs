@@ -203,6 +203,19 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 
                         #endregion Attachment
 
+                        #region Auto Verification
+
+                        sql = "SELECT * FROM transactions.auto_verify(@TranId, @OfficeId);";
+                        using (NpgsqlCommand command = new NpgsqlCommand(sql, connection))
+                        {
+                            command.Parameters.AddWithValue("@TranId", transactionMasterId);
+                            command.Parameters.AddWithValue("@OfficeId", officeId);
+
+                            command.ExecuteNonQuery();
+                        }
+
+                        #endregion
+
                         transaction.Commit();
                         return transactionMasterId;
                     }

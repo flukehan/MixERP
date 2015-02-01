@@ -2,6 +2,7 @@
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
+using MixERP.Net.Common.Domains;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.FrontEnd.Base;
 
@@ -9,6 +10,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.OTS
 {
     public partial class OpeningInventory : MixERPUserControl
     {
+
+        public override AccessLevel AccessLevel
+        {
+            get
+            {
+                return AccessLevel.AdminOnly;
+            }
+        }
+
 
         public override void OnControlLoad(object sender, EventArgs e)
         {            

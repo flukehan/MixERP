@@ -201,6 +201,16 @@ namespace MixERP.Net.Common
             return false;
         }
 
+        public static bool IsLocalhost(Page page)
+        {
+            if (page == null)
+            {
+                return false;
+            }
+
+            return page.Request.IsLocal;
+        }
+
         public static void RefreshPage(Page page)
         {
             if (page != null)

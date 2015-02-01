@@ -57,7 +57,7 @@ $(function () {
         var fileName = $(this).val();
 
         if (fileName) {
-            if (validate(fileName)) {
+            if (validateFileName(fileName)) {
                 $(filePathSelector).html(fileName);
                 $(filePathSelector).removeClass("big error");
                 return;
@@ -70,7 +70,7 @@ $(function () {
     });
 });
 
-var validate = function (fileName) {
+function validateFileName(fileName) {
     var ext = fileName.split('.').pop();
 
     var index = $.inArray(ext, allowedExtensions);

@@ -1,4 +1,4 @@
-﻿/********************************************************************************
+﻿<%-- 
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
 This file is part of MixERP.
@@ -15,6 +15,16 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
-***********************************************************************************/
+--%>
 
-/*jshint -W032 */
+<%@ Page Title="" Language="C#" MasterPageFile="~/MixERPMaster.Master" AutoEventWireup="true" CodeBehind="AccessIsDenied.aspx.cs" Inherits="MixERP.Net.FrontEnd.Site.AccessIsDenied" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceholder" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceholder" runat="server">
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceholder" runat="server">
+    <asp:Placeholder runat="server" ID="Placeholder1" />
+</asp:Content>
+<asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceholder" runat="server">
+</asp:Content>

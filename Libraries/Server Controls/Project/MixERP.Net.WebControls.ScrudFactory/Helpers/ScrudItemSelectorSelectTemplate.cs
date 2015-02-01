@@ -44,9 +44,9 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 
         public void BindData(object sender, EventArgs e)
         {
-            using (var container = (GridViewRow) this.selectAnchor.NamingContainer)
+            using (GridViewRow container = (GridViewRow) this.selectAnchor.NamingContainer)
             {
-                var rowView = container.DataItem as DataRowView;
+                DataRowView rowView = container.DataItem as DataRowView;
                 if (rowView != null)
                 {
                     this.selectAnchor.Attributes.Add("onclick", "sisUpdateValue('" + rowView[0] + "');");

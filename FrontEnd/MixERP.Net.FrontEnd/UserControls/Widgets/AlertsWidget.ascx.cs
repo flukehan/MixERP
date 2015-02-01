@@ -17,8 +17,8 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System;
 using MixERP.Net.FrontEnd.Base;
-
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
@@ -38,20 +38,12 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using MixERP.Net.Common.Domains;
-
 namespace MixERP.Net.FrontEnd.UserControls.Widgets
 {
     public partial class AlertsWidget : MixERPWidget
     {
         protected void Page_Init(object sender, EventArgs e)
         {
-        }
-
-        public override AccessLevel AccessLevel
-        {
-            get { return AccessLevel.Everyone; }
         }
     }
 }

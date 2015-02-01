@@ -138,7 +138,7 @@ foreach(Table tbl in from t in tables where !t.Ignore select t)
 <# if(tbl.IsFunction) { #>
     [FunctionName("<#=tbl.Name#>")]
 <# } else { #>
-    [TableName("<#=tbl.Name#>")]
+    [TableName("<#=tbl.Schema#>.<#=tbl.Name#>")]
 <# }#>
 <# if (tbl.PK!=null && tbl.PK.IsAutoIncrement) { #>
 <# if (tbl.SequenceName==null) { #>

@@ -207,6 +207,13 @@
     <Compile Include="Site\Account\UserProfile.aspx.designer.cs">
       <DependentUpon>UserProfile.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Site\AccessIsDenied.aspx.cs">
+      <DependentUpon>AccessIsDenied.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Site\AccessIsDenied.aspx.designer.cs">
+      <DependentUpon>AccessIsDenied.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Site\RuntimeError.aspx.cs">
       <DependentUpon>RuntimeError.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -595,6 +602,7 @@
     <Content Include="db\src\dump.sql" />
     <Content Include="db\src\refresh-materialized-views.sql" />
     <Content Include="Modules\Default.aspx" />
+    <Content Include="Resource\Backups\index.html" />
     <Content Include="Resource\Configuration\AttachmentFactoryParameters.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -886,6 +894,7 @@
     <Content Include="Resource\Icons\top-16.png" />
     <Content Include="Resource\Icons\word-16.png" />
     <Content Include="Resource\Temp\index.html" />
+    <Content Include="Site\AccessIsDenied.aspx" />
     <Content Include="Site\RuntimeError.aspx" />
     <Content Include="Scripts\chartjs\Chart.min.js" />
     <Content Include="Scripts\chartjs\legend.js" />
@@ -1021,7 +1030,6 @@
     <Folder Include="db\src\000. mixerp\" />
     <Folder Include="db\src\05. views\policy\" />
     <Folder Include="Handlers\" />
-    <Folder Include="Resource\DatabaseBackups\" />
     <Folder Include="Resource\Frameworks\" />
     <Folder Include="Resource\Logo\" />
   </ItemGroup>

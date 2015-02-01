@@ -20,7 +20,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Web.Script.Serialization;
 using System.Web.Services;
+using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Finance.Data.Helpers;
 using MixERP.Net.Entities.Core;
@@ -69,7 +71,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         [WebMethod(EnableSession = true)]
         public long Save(DateTime valueDate, string referenceNumber, string data, int costCenterId, string attachmentsJSON)
         {
-            Collection<JournalDetail> details = CollectionHelper.GetJournalDetailCollection(data);
+            Collection<JournalDetail> details = GetJournalDetailCollection(data);
 
             Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
 
@@ -122,5 +124,33 @@ namespace MixERP.Net.Core.Modules.Finance.Services
 
             return Transaction.Add(valueDate, referenceNumber, costCenterId, details, attachments);
         }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        private static Collection<JournalDetail> GetJournalDetailCollection(string json)
+        {
+            Collection<JournalDetail> details = new Collection<JournalDetail>();
+            var jss = new JavaScriptSerializer();
+
+            dynamic result = jss.Deserialize<dynamic>(json);
+
+            foreach (var item in result)
+            {
+                JournalDetail detail = new JournalDetail();
+                detail.StatementReference = item[0];
+                detail.AccountNumber = item[1];
+                detail.Account = item[2];
+                detail.CashRepositoryCode = item[3];
+                detail.CurrencyCode = item[4];
+                detail.Debit = Conversion.TryCastDecimal(item[5]);
+                detail.Credit = Conversion.TryCastDecimal(item[6]);
+                detail.ExchangeRate = Conversion.TryCastDecimal(item[7]);
+                detail.LocalCurrencyDebit = Conversion.TryCastDecimal(item[8]);
+                detail.LocalCurrencyCredit = Conversion.TryCastDecimal(item[9]);
+                details.Add(detail);
+            }
+
+            return details;
+        }
+
     }
 }

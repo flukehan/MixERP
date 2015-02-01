@@ -23,6 +23,7 @@ using System.Collections.ObjectModel;
 using System.Data.Common;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Web;
 using System.Web.Security;
@@ -53,8 +54,7 @@ namespace MixERP.Net.FrontEnd.Base
         {
             if (page != null)
             {
-                string relativePath = Conversion.GetRelativePath(path);
-                IEnumerable<Entities.Core.Menu> rootMenus = Data.Core.Menu.GetRootMenuCollection(relativePath);
+                IEnumerable<Entities.Core.Menu> rootMenus = Data.Core.Menu.GetRootMenuCollection(path);
 
                 string menu = "<ul>";
 
@@ -74,7 +74,7 @@ namespace MixERP.Net.FrontEnd.Base
                         {
                             string id = Conversion.TryCastString(childMenu.MenuId);
 
-                            if (childMenu.Url.Equals(currentPage))
+                            if (childMenu.Url.Replace("~", "").Equals(currentPage))
                             {
                                 menu += string.Format(Thread.CurrentThread.CurrentCulture,
                                     "<li id='node{0}' class='expanded' data-selected='true' data-menucode='{1}' data-jstree='{{\"type\":\"active\"}}'><a id='anchorNode{0}' href='{2}' title='{3}'>{3}</a></li>",
@@ -260,7 +260,7 @@ namespace MixERP.Net.FrontEnd.Base
         {
             if (string.IsNullOrWhiteSpace(this.OverridePath))
             {
-                this.OverridePath = @"~" + this.Page.Request.Url.AbsolutePath;
+                this.OverridePath = this.Page.Request.Url.AbsolutePath;
             }
 
             Literal contentMenuLiteral = ((Literal) PageUtility.FindControlIterative(this.Master, "ContentMenuLiteral"));
@@ -281,6 +281,7 @@ namespace MixERP.Net.FrontEnd.Base
                 string id = Conversion.TryCastString(model.MenuId);
 
                 string subMenu = GetContentPageMenu(this.Page, url, this.OverridePath);
+
                 menu += string.Format(Thread.CurrentThread.CurrentCulture,
                     "<li id='node{0}'>" +
                     "<a id='anchorNode{0}' href='javascript:void(0);' title='{1}'>{1}</a>" +

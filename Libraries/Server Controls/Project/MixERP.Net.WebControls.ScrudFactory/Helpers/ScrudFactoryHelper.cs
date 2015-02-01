@@ -44,7 +44,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
                 return;
             }
 
-            using (var labelCell = new HtmlTableCell())
+            using (HtmlTableCell labelCell = new HtmlTableCell())
             {
                 using (HtmlTableCell controlContainer = new HtmlTableCell())
                 {

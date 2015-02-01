@@ -123,7 +123,22 @@
   <data name="CompareDaysErrorMessage" xml:space="preserve">
     <value>From days should not be greater than the to days.</value>
   </data>
+  <data name="InsufficientBalanceInCashRepository" xml:space="preserve">
+    <value>There is no sufficient balance in the cash repository to process this transaction.</value>
+  </data>
+  <data name="InvalidAccount" xml:space="preserve">
+    <value>Invalid account.</value>
+  </data>
+  <data name="InvalidCashRepository" xml:space="preserve">
+    <value>Invalid cash repository.</value>
+  </data>
+  <data name="InvalidData" xml:space="preserve">
+    <value>Invalid data.</value>
+  </data>
   <data name="NegativeValueSupplied" xml:space="preserve">
     <value>Negative value supplied.</value>
+  </data>
+  <data name="ReferencingSidesNotEqual" xml:space="preserve">
+    <value>The referencing sides are not equal.</value>
   </data>
 </root>

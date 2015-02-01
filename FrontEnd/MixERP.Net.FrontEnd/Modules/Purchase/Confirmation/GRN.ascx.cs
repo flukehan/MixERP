@@ -22,7 +22,6 @@ using MixERP.Net.Common;
 using MixERP.Net.Core.Modules.Purchase.Data.Helpers;
 using MixERP.Net.Core.Modules.Purchase.Resources;
 using MixERP.Net.Entities;
-using MixERP.Net.Entities.Models.Transactions;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.TransactionChecklist;
 

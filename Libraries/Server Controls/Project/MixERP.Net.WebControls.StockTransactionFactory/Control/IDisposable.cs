@@ -31,7 +31,7 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
         private bool disposed;
         private HiddenField itemCodeHidden;
         private HiddenField itemIdHidden;
-        private HiddenField modeHiddenField;
+        private HiddenField modeHidden;
         private HiddenField partyCodeHidden;
         private HtmlInputText partyCodeInputText;
         private HiddenField partyIdHidden;
@@ -43,11 +43,11 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
         private HiddenField shippingAddressCodeHidden;
         private HiddenField storeIdHidden;
         private HtmlGenericControl title;
-        private HiddenField tranIdCollectionHiddenField;
+        private HiddenField tranIdCollectionHidden;
         private HiddenField unitIdHidden;
         private HiddenField unitNameHidden;
+        private HtmlTextArea statementReferenceTextArea;
         private PlaceHolder placeHolder;
-
         
         public sealed override void Dispose()
         {
@@ -84,10 +84,10 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
                 this.itemIdHidden = null;
             }
 
-            if (this.modeHiddenField != null)
+            if (this.modeHidden != null)
             {
-                this.modeHiddenField.Dispose();
-                this.modeHiddenField = null;
+                this.modeHidden.Dispose();
+                this.modeHidden = null;
             }
 
             if (this.partyCodeHidden != null)
@@ -126,6 +126,12 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
                 this.referenceNumberInputText = null;
             }
 
+            if (this.statementReferenceTextArea != null)
+            {
+                this.statementReferenceTextArea.Dispose();
+                this.statementReferenceTextArea = null;
+            }
+
             if (this.salesPersonIdHidden != null)
             {
                 this.salesPersonIdHidden.Dispose();
@@ -156,10 +162,10 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
                 this.title = null;
             }
 
-            if (this.tranIdCollectionHiddenField != null)
+            if (this.tranIdCollectionHidden != null)
             {
-                this.tranIdCollectionHiddenField.Dispose();
-                this.tranIdCollectionHiddenField = null;
+                this.tranIdCollectionHidden.Dispose();
+                this.tranIdCollectionHidden = null;
             }
 
             if (this.unitIdHidden != null)

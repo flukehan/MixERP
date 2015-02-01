@@ -33,14 +33,12 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 
         public static string GetAccountNumberByAccountId(long accountId)
         {
-            Account firstOrDefault = Factory.Get<Account>("SELECT account_number FROM core.accounts WHERE account_id=@0;", accountId).FirstOrDefault();
+            return Factory.Scalar<string>("SELECT account_number FROM core.accounts WHERE account_id=@0;", accountId);
+        }
 
-            if (firstOrDefault != null)
-            {
-                return firstOrDefault.AccountNumber;
-            }
-
-            return string.Empty;
+        public static long GetAccountIdByAccountNumber(string accountNumber)
+        {
+            return Factory.Scalar<long>("SELECT account_id FROM core.accounts WHERE account_number=@0;", accountNumber);
         }
 
         public static IEnumerable<Account> GetAccounts()
@@ -63,7 +61,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
             return Factory.Get<Account>("SELECT * FROM core.accounts WHERE is_transaction_node AND NOT confidential AND (NOT sys_type OR account_master_id IN(10101, 10102));");
         }
 
-        public static bool IsCashAccount(int accountId)
+        public static bool IsCashAccount(long accountId)
         {
             return Factory.Get<Account>("SELECT * FROM core.accounts WHERE account_master_id=10101 AND account_id=@0;", accountId).Count().Equals(1);
         }

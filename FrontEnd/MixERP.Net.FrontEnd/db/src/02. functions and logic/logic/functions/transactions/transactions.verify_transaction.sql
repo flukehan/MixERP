@@ -144,7 +144,7 @@ BEGIN
             RAISE NOTICE 'Done.';
         END IF;
     ELSE
-        RAISE NOTICE 'No verification policy found for this user.';
+        RAISE EXCEPTION 'No verification policy found for this user.';
     END IF;
     RETURN;
 END
@@ -152,6 +152,7 @@ $$
 LANGUAGE plpgsql;
 
 
+--SELECT * FROM transactions.verify_transaction(65::bigint, 2, 2, 51::bigint, -3::smallint, '');
 
 /**************************************************************************************************************************
 --------------------------------------------------------------------------------------------------------------------------

@@ -630,4 +630,10 @@
   <data name="sales_tax_exempt" xml:space="preserve">
     <value>Sales Tax Exempt</value>
   </data>
+  <data name="can_change_password" xml:space="preserve">
+    <value>Can Change Password</value>
+  </data>
+  <data name="elevated" xml:space="preserve">
+    <value>Elevated</value>
+  </data>
 </root>

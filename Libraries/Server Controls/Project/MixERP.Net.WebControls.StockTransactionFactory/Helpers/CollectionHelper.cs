@@ -21,7 +21,8 @@ using System.Collections.ObjectModel;
 using System.Web.Script.Serialization;
 using MixERP.Net.Common;
 using MixERP.Net.Entities.Core;
-using MixERP.Net.Entities.Models.Transactions;
+using MixERP.Net.Entities.Transactions;
+using StockDetail = MixERP.Net.Entities.Models.Transactions.StockDetail;
 
 namespace MixERP.Net.WebControls.StockTransactionFactory.Helpers
 {
@@ -50,32 +51,6 @@ namespace MixERP.Net.WebControls.StockTransactionFactory.Helpers
             return details;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        public static Collection<JournalDetail> GetJournalDetailCollection(string json)
-        {
-            Collection<JournalDetail> details = new Collection<JournalDetail>();
-            var jss = new JavaScriptSerializer();
-
-            dynamic result = jss.Deserialize<dynamic>(json);
-
-            foreach (var item in result)
-            {
-                JournalDetail detail = new JournalDetail();
-                detail.StatementReference = item[0];
-                detail.AccountNumber = item[1];
-                detail.Account = item[2];
-                detail.CashRepositoryCode = item[3];
-                detail.CurrencyCode = item[4];
-                detail.Debit = Conversion.TryCastDecimal(item[5]);
-                detail.Credit = Conversion.TryCastDecimal(item[6]);
-                detail.ExchangeRate = Conversion.TryCastDecimal(item[7]);
-                detail.LocalCurrencyDebit = Conversion.TryCastDecimal(item[8]);
-                detail.LocalCurrencyCredit = Conversion.TryCastDecimal(item[9]);
-                details.Add(detail);
-            }
-
-            return details;
-        }
 
         public static Collection<StockDetail> GetStockMasterDetailCollection(string json, int storeId)
         {

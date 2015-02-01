@@ -61,6 +61,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Access is denied..
+        /// </summary>
+        internal static string AccessIsDenied {
+            get {
+                return ResourceManager.GetString("AccessIsDenied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sorry, cannot create a database backup at this time..
         /// </summary>
         internal static string CannotCreateABackup {
@@ -97,11 +106,29 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid user..
+        /// </summary>
+        internal static string InvalidUser {
+            get {
+                return ResourceManager.GetString("InvalidUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No file specified..
         /// </summary>
         internal static string NoFileSpecified {
             get {
                 return ResourceManager.GetString("NoFileSpecified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password cannot be empty..
+        /// </summary>
+        internal static string PasswordCannotBeEmpty {
+            get {
+                return ResourceManager.GetString("PasswordCannotBeEmpty", resourceCulture);
             }
         }
     }

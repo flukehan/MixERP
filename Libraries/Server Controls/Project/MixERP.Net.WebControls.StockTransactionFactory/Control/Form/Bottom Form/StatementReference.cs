@@ -36,14 +36,11 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
                     field.Controls.Add(label);
                 }
 
-                using (HtmlTextArea statementReferenceTextArea = new HtmlTextArea())
-                {
-                    statementReferenceTextArea.ID = "StatementReferenceTextArea";
+                this.statementReferenceTextArea = new HtmlTextArea();
+                this.statementReferenceTextArea.ID = "StatementReferenceTextArea";
+                this.statementReferenceTextArea.Value = this.model.StatementReference;
 
-                    statementReferenceTextArea.Value = this.model.StatementReference;
-
-                    field.Controls.Add(statementReferenceTextArea);
-                }
+                field.Controls.Add(this.statementReferenceTextArea);
 
                 container.Controls.Add(field);
             }

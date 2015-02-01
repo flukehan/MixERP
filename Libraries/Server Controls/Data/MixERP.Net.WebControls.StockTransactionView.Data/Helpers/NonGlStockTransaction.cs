@@ -20,6 +20,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Entities;
@@ -36,16 +37,7 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory.Data.Helpers
                 return false;
             }
 
-            //Crate an array object to store the parameters.
-            var parameters = new string[ids.Count];
-
-            //Iterate through the ids and create a parameter array.
-            for (int i = 0; i < ids.Count; i++)
-            {
-                parameters[i] = "@" + Conversion.TryCastString(i);
-            }
-
-            string sql = @"SELECT transactions.are_sales_orders_already_merged(" + string.Join(",", parameters) + ");";
+            const string sql = @"SELECT transactions.are_sales_orders_already_merged(@0);";
             return Factory.Scalar<bool>(sql, ids);
         }
 
@@ -55,17 +47,7 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory.Data.Helpers
             {
                 return false;
             }
-
-            //Crate an array object to store the parameters.
-            var parameters = new string[ids.Count];
-
-            //Iterate through the ids and create a parameter array.
-            for (int i = 0; i < ids.Count; i++)
-            {
-                parameters[i] = "@" + Conversion.TryCastString(i);
-            }
-
-            string sql = @"SELECT transactions.are_sales_quotations_already_merged(" + string.Join(",", parameters) + ");";
+            const string sql = @"SELECT transactions.are_sales_quotations_already_merged(@0);";
             return Factory.Scalar<bool>(sql, ids);
         }
 
@@ -76,16 +58,7 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory.Data.Helpers
                 return false;
             }
 
-            //Crate an array object to store the parameters.
-            var parameters = new string[ids.Count];
-
-            //Iterate through the ids and create a parameter array.
-            for (int i = 0; i < ids.Count; i++)
-            {
-                parameters[i] = "@" + Conversion.TryCastString(i);
-            }
-
-            string sql = @"SELECT transactions.contains_incompatible_taxes(" + string.Join(",", parameters) + ");";
+            const string sql = @"SELECT transactions.contains_incompatible_taxes(@0);";
             return Factory.Scalar<bool>(sql, ids);
         }
 
@@ -101,17 +74,8 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory.Data.Helpers
                 return false;
             }
 
-            //Crate an array object to store the parameters.
-            var parameters = new string[ids.Count];
-
-            //Iterate through the ids and create a parameter array.
-            for (int i = 0; i < ids.Count; i++)
-            {
-                parameters[i] = "@" + Conversion.TryCastString(i);
-            }
-
             //Get the count of distinct number of parties associated with the transaction id.
-            string sql = "SELECT COUNT(DISTINCT party_id) FROM transactions.non_gl_stock_master WHERE non_gl_stock_master_id IN(" + string.Join(",", parameters) + ");";
+            const string sql = "SELECT COUNT(DISTINCT party_id) FROM transactions.non_gl_stock_master WHERE non_gl_stock_master_id IN(@0);";
             return Factory.Scalar<int>(sql, ids).Equals(1);
         }
 

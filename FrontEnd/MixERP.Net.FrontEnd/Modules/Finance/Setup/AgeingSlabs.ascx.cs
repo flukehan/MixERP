@@ -51,7 +51,7 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
 
         private void AddScrudCustomValidatorErrorMessages()
         {
-            string javascript = "var compareDaysErrorMessageLocalized= '" + Errors.CompareDaysErrorMessage + "';";
+            string javascript = "var compareDaysErrorMessageLocalized= '" + Warnings.CompareDaysErrorMessage + "';";
             Common.PageUtility.RegisterJavascript("AgeingSlabs_ScrudCustomValidatorErrorMessages", javascript, this.Page, true);
 
         }

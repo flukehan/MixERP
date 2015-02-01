@@ -34,5 +34,7 @@ namespace MixERP.Net.Common.Base
         public virtual string TargetContentPlaceHolder { get; set; }
 
         public virtual void OnControlLoad(object sender, EventArgs e) { }
+
+        public abstract AccessLevel AccessLevel { get; }
     }
 }

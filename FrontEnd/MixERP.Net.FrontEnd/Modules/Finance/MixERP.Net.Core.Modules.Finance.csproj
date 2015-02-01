@@ -134,7 +134,6 @@
     <Content Include="Reports\StockTransactionReport.ascx" />
     <Content Include="Reports\TrialBalance.ascx" />
     <Content Include="Scripts\Entry\JournalVoucher.js" />
-    <Content Include="Scripts\JournalVoucher.ascx.js" />
     <Content Include="Services\CurrencyData.asmx" />
     <Content Include="Services\EODOperation.asmx" />
     <Content Include="Setup\CashFlowHeadings.ascx" />
@@ -256,10 +255,10 @@
     <Compile Include="Reports\TrialBalance.ascx.designer.cs">
       <DependentUpon>TrialBalance.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\Errors.Designer.cs">
+    <Compile Include="Resources\Warnings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Errors.resx</DependentUpon>
+      <DependentUpon>Warnings.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\ScrudResource.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -430,9 +429,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Errors.resx">
+    <EmbeddedResource Include="Resources\Warnings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Errors.Designer.cs</LastGenOutput>
+      <LastGenOutput>Warnings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\ScrudResource.resx">
       <Generator>ResXFileCodeGenerator</Generator>

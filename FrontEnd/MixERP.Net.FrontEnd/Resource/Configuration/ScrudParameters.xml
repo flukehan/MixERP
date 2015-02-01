@@ -35,7 +35,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <add key="DescriptionCssClass" value="ui large purple header" />
     <add key="ErrorCssClass" value="error-message" />
     <add key="ExpressionSeparator" value="-->" />
-    <add key="FailiureCssClass" value="failure" />
+    <add key="FailiureCssClass" value="big error" />
 
     <add key="FormCssClass" value="form-panel ui segment" />
 

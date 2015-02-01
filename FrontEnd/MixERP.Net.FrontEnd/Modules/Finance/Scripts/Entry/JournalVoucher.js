@@ -188,6 +188,14 @@ addInputButton.click(function() {
 
     removeDirty(accountSelect);
 
+
+    if (er<=0) {
+        makeDirty(erInputText);
+        return;
+    };
+
+    removeDirty(erInputText);
+
     if ((debit > 0 && credit > 0) || (debit === 0 && credit === 0)) {
         makeDirty(debitInputText);
         makeDirty(creditInputText);
@@ -456,6 +464,7 @@ var validate = function() {
         errorLabelBottom.html(invalidCostCenterWarningLocalized);
         return false;
     };
+
 
     if (transactionGridView.find("tr").length === 2) {
         errorLabelBottom.html(gridViewEmptyWarningLocalized);

@@ -21,20 +21,4 @@ using System;
 
 namespace MixERP.Net.Entities.Models.Transactions
 {
-    public sealed class TransactionMaster
-    {
-        public string Book { get; set; }
-        public int CostCenterId { get; set; }
-        public long LogOnId { get; set; }
-        public int OfficeId { get; set; }
-        public string ReferenceNumber { get; set; }
-        public string StatementReference { get; set; }
-        public int SysUserId { get; set; }
-        public string TransactionCode { get; set; }
-        public int TransactionCounter { get; set; }
-        public long TransactionMasterId { get; set; }
-        public DateTime TransactionTimestamp { get; set; }
-        public DateTime ValueDate { get; set; }
-        public VerificationType Verification { get; set; }
-    }
 }

@@ -1659,9 +1659,9 @@ CREATE TABLE core.attachments
     attachment_id                           BIGSERIAL PRIMARY KEY,
     user_id                                 integer NOT NULL 
                                             REFERENCES office.users(user_id),
-    resource                                text, --Fully qualified resource name. Example: transactions.non_gl_stock_master.
-    resource_key                            text, --The unique idenfier for lookup. Example: non_gl_stock_master_id,
-    resource_id                             integer, --The value of the unique identifier to lookup for,
+    resource                                text NOT NULL, --Fully qualified resource name. Example: transactions.non_gl_stock_master.
+    resource_key                            text NOT NULL, --The unique idenfier for lookup. Example: non_gl_stock_master_id,
+    resource_id                             bigint NOT NULL, --The value of the unique identifier to lookup for,
     original_file_name                      text NOT NULL,
     file_extension                          national character varying(12) NOT NULL,
     file_path                               text NOT NULL,
@@ -7176,7 +7176,7 @@ CREATE FUNCTION policy.change_password
     user_name           text,
     new_password        text
 )
-RETURNS boolean
+RETURNS void
 VOLATILE
 AS
 $$
@@ -7191,9 +7191,7 @@ BEGIN
 
     UPDATE office.users
     SET password = encode(digest($1 || $2, 'sha512'), 'hex')
-    WHERE office.users.user_name=$1;
-    
-    RETURN true;
+    WHERE office.users.user_name=$1;    
 END
 $$
 LANGUAGE plpgsql;
@@ -14709,7 +14707,7 @@ BEGIN
             RAISE NOTICE 'Done.';
         END IF;
     ELSE
-        RAISE NOTICE 'No verification policy found for this user.';
+        RAISE EXCEPTION 'No verification policy found for this user.';
     END IF;
     RETURN;
 END
@@ -14717,6 +14715,7 @@ $$
 LANGUAGE plpgsql;
 
 
+--SELECT * FROM transactions.verify_transaction(65::bigint, 2, 2, 51::bigint, -3::smallint, '');
 
 /**************************************************************************************************************************
 --------------------------------------------------------------------------------------------------------------------------
@@ -20346,11 +20345,14 @@ SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='SYS
 /*******************************************************************
     TODO: REMOVE THESE USERS ON DEPLOYMENT
 *******************************************************************/
-SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='USER'),(SELECT office_id FROM office.offices WHERE office_code='MoF'),'binod','37c6ca5a5570ce76affa5e779036c4955d764520980d17b597ea2908e9dcc515607f12eb25c3ce26e6b5dcaa812fe2acefbb20663ac220b02da82ec2f7e1d0e9','Binod Nirvan', false);
-SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='ADMN'),(SELECT office_id FROM office.offices WHERE office_code='MoF'),'nirvan','c75c521057da3ff26f6732c8b4b8710ed9aede9d7eb5a64b2a1bf9f42deef89f1e666ca21927ce1ccef5860764cf3690164432fde2c4a0db69260aaa20b47bcf','Binod Nirvan', true);
+SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='ADMN'),(SELECT office_id FROM office.offices WHERE office_code='MoF'),'binod','37c6ca5a5570ce76affa5e779036c4955d764520980d17b597ea2908e9dcc515607f12eb25c3ce26e6b5dcaa812fe2acefbb20663ac220b02da82ec2f7e1d0e9','Binod', false);
+SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='USER'),(SELECT office_id FROM office.offices WHERE office_code='MoF'),'demo','339d611a358910b5b0fa62a9c7c7bf625a8e993a41539a59f9eedeb443e474584da6a545f518283b155c7bc0d42dd747f06606eb75aca8adf623bf0e1fe4a9f0','Demo User', false);
+SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='ADMN'),(SELECT office_id FROM office.offices WHERE office_code='MoF'),'nirvan','c75c521057da3ff26f6732c8b4b8710ed9aede9d7eb5a64b2a1bf9f42deef89f1e666ca21927ce1ccef5860764cf3690164432fde2c4a0db69260aaa20b47bcf','Nirvan', true);
+
 
 UPDATE office.users SET can_change_password=false
 WHERE user_name='binod';
+
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/04. default values/policy, config.sql --<--<--
@@ -22548,7 +22550,6 @@ UNION ALL SELECT 'Admin Tools', NULL, 'SAT', 1, core.get_menu_id('BO')
 UNION ALL SELECT 'SQL Query Tool', '~/Modules/BackOffice/Admin/Query.mix', 'SQL', 2, core.get_menu_id('SAT')
 UNION ALL SELECT 'Database Statistics', '~/Modules/BackOffice/Admin/DatabaseStatistics.mix', 'DBSTAT', 2, core.get_menu_id('SAT')
 UNION ALL SELECT 'Backup Database', '~/Modules/BackOffice/Admin/DatabaseBackup.mix', 'BAK', 2, core.get_menu_id('SAT')
-UNION ALL SELECT 'Restore Database', '~/Modules/BackOffice/Admin/Restore.mix', 'RES', 2, core.get_menu_id('SAT')
 UNION ALL SELECT 'Change User Password', '~/Modules/BackOffice/Admin/ChangePassword.mix', 'PWD', 2, core.get_menu_id('SAT')
 UNION ALL SELECT 'New Company', '~/Modules/BackOffice/Admin/NewCompany.mix', 'NEW', 2, core.get_menu_id('SAT')
 UNION ALL SELECT 'One Time Setup', NULL, 'OTS', 1, core.get_menu_id('BO')
@@ -22577,6 +22578,19 @@ FROM core.menus
 
 UNION ALL
 SELECT office.get_office_id_by_office_code('MoF-NP-KTM'), core.menus.menu_id, office.get_user_id_by_user_name('nirvan')
+FROM core.menus
+
+UNION ALL
+
+SELECT office.get_office_id_by_office_code('MoF-NY-BK'), core.menus.menu_id, office.get_user_id_by_user_name('demo')
+FROM core.menus
+
+UNION ALL
+SELECT office.get_office_id_by_office_code('MoF-NY-RV'), core.menus.menu_id, office.get_user_id_by_user_name('demo')
+FROM core.menus
+
+UNION ALL
+SELECT office.get_office_id_by_office_code('MoF-NP-KTM'), core.menus.menu_id, office.get_user_id_by_user_name('demo')
 FROM core.menus;
 
 
@@ -22717,7 +22731,6 @@ SELECT core.get_menu_id('SAT'), 'fr', 'Outils d''administration' UNION ALL
 SELECT core.get_menu_id('SQL'), 'fr', 'Outils d''administration' UNION ALL
 SELECT core.get_menu_id('DBSTAT'), 'fr', 'Outil de requête SQL' UNION ALL
 SELECT core.get_menu_id('BAK'), 'fr', 'Sauvegarde base de données' UNION ALL
-SELECT core.get_menu_id('RES'), 'fr', 'Restaurer base de données' UNION ALL
 SELECT core.get_menu_id('PWD'), 'fr', 'Changer mot de passe utilisateur' UNION ALL
 SELECT core.get_menu_id('NEW'), 'fr', 'Nouvelle société' UNION ALL
 SELECT core.get_menu_id('OTS'), 'fr', 'Un réglage de l''heure' UNION ALL
@@ -22944,6 +22957,55 @@ CREATE TRIGGER update_shipping_address_code_trigger
 BEFORE INSERT
 ON core.shipping_addresses
 FOR EACH ROW EXECUTE PROCEDURE core.update_shipping_address_code_trigger();
+
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/10. triggers/office/office.hash_password.sql --<--<--
+DROP FUNCTION IF EXISTS office.hash_password() CASCADE;
+
+CREATE FUNCTION office.hash_password()
+RETURNS trigger
+AS
+$$
+    DECLARE _password text;
+BEGIN
+    _password := encode(digest(NEW.user_name || NEW.password, 'sha512'), 'hex');
+
+    UPDATE office.users
+    SET password = _password
+    WHERE office.users.user_name=NEW.user_name;
+
+    RETURN new;
+END
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER hash_password
+AFTER INSERT ON office.users
+FOR EACH ROW
+EXECUTE PROCEDURE office.hash_password();
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/10. triggers/office/office.user_trigger.sql --<--<--
+DROP FUNCTION IF EXISTS office.user_trigger() CASCADE;
+
+CREATE FUNCTION office.user_trigger()
+RETURNS trigger
+AS
+$$
+BEGIN
+    IF(office.is_sys(NEW.user_id) AND NEW.password != '') THEN
+        RAISE EXCEPTION 'A sys user cannot have a password.';
+    END IF; 
+
+    RETURN new;
+END
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER user_trigger
+AFTER INSERT OR UPDATE ON office.users
+FOR EACH ROW
+EXECUTE PROCEDURE office.user_trigger();
 
 
 

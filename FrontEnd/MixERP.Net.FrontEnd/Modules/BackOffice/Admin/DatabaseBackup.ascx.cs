@@ -24,6 +24,7 @@ using System.IO;
 using System.Web.Hosting;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
+using MixERP.Net.Common.Domains;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models;
 using MixERP.Net.Core.Modules.BackOffice.Resources;
@@ -35,6 +36,11 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
     public partial class DatabaseBackup : MixERPUserControl
     {
         private readonly PostgreSQLServer server = new PostgreSQLServer();
+
+        public override AccessLevel AccessLevel
+        {
+            get { return AccessLevel.AdminOnly; }
+        }
 
         public override void OnControlLoad(object sender, EventArgs e)
         {

@@ -73,7 +73,7 @@ CREATE FUNCTION policy.change_password
     user_name           text,
     new_password        text
 )
-RETURNS boolean
+RETURNS void
 VOLATILE
 AS
 $$
@@ -88,9 +88,7 @@ BEGIN
 
     UPDATE office.users
     SET password = encode(digest($1 || $2, 'sha512'), 'hex')
-    WHERE office.users.user_name=$1;
-    
-    RETURN true;
+    WHERE office.users.user_name=$1;    
 END
 $$
 LANGUAGE plpgsql;

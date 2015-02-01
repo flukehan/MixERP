@@ -31,7 +31,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
             return Factory.Get<CashRepository>("SELECT * FROM office.cash_repositories WHERE cash_repository_code=@0;", cashRepositoryCode).Count().Equals(1);
         }
 
-        public static decimal GetBalance(int cashRepositoryId, string currencyCode)
+        public static decimal GetBalance(int? cashRepositoryId, string currencyCode)
         {
             return Factory.Scalar<decimal>("SELECT transactions.get_cash_repository_balance(@0, @1);", cashRepositoryId, currencyCode);
         }
@@ -60,10 +60,15 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
         {
             return Factory.Get<CashRepository>("SELECT * FROM office.cash_repositories WHERE office_id=@0 ORDER BY cash_repository_id;", officeId);
         }
-
+        
         public static CashRepository GetCashRepository(int? cashRepositoryId)
         {
             return Factory.Get<CashRepository>("SELECT * FROM office.cash_repositories WHERE cash_repository_id=@0;", cashRepositoryId).FirstOrDefault();
+        }
+
+        public static int GetCashRepositoryIdByCashRepositoryCode(string cashRepositoryCode)
+        {
+            return Factory.Scalar<int>("SELECT cash_repository_id FROM office.cash_repositories WHERE cash_repository_code=@0;", cashRepositoryCode);
         }
     }
 }

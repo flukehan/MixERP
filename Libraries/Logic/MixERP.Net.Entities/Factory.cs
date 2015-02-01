@@ -25,6 +25,14 @@ namespace MixERP.Net.Entities
             }
         }
 
+        public static void NonQuery(string sql, params object[] args)
+        {
+            using (Database db = new Database(GetConnectionString()))
+            {
+                db.Execute(sql, args);
+            }
+        }
+
         private static string GetConnectionString()
         {
             var connectionStringBuilder = new NpgsqlConnectionStringBuilder();

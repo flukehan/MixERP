@@ -18,13 +18,19 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using MixERP.Net.Common.Domains;
+using MixERP.Net.FrontEnd.Base;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Policy
 {
-    public partial class GLAccess : System.Web.UI.UserControl
+    public partial class GLAccess : MixERPUserControl
     {
-        protected void Page_Load(object sender, EventArgs e)
+        public override AccessLevel AccessLevel
         {
+            get
+            {
+                return AccessLevel.AdminOnly;
+            }
         }
     }
 }

@@ -49,10 +49,5 @@ namespace MixERP.Net.FrontEnd.UserControls.Widgets
         {
         }
 
-        private AccessLevel accessLevel;
-        public override AccessLevel AccessLevel
-        {
-            get { return AccessLevel.Everyone; }
-        }
     }
 }

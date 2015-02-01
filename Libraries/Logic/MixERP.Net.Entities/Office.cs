@@ -92,7 +92,7 @@ namespace MixERP.Net.Entities.Office
     
 
 
-    [TableName("cash_repository_scrud_view")]
+    [TableName("office.cash_repository_scrud_view")]
     [ExplicitColumns]
     public class CashRepositoryScrudView : PetaPocoDB.Record<CashRepositoryScrudView> 
     {
@@ -116,7 +116,7 @@ namespace MixERP.Net.Entities.Office
 
     }
 
-    [TableName("cost_center_scrud_view")]
+    [TableName("office.cost_center_scrud_view")]
     [ExplicitColumns]
     public class CostCenterScrudView : PetaPocoDB.Record<CostCenterScrudView> 
     {
@@ -131,7 +131,7 @@ namespace MixERP.Net.Entities.Office
 
     }
 
-    [TableName("counter_scrud_view")]
+    [TableName("office.counter_scrud_view")]
     [ExplicitColumns]
     public class CounterScrudView : PetaPocoDB.Record<CounterScrudView> 
     {
@@ -152,7 +152,7 @@ namespace MixERP.Net.Entities.Office
 
     }
 
-    [TableName("department_scrud_view")]
+    [TableName("office.department_scrud_view")]
     [ExplicitColumns]
     public class DepartmentScrudView : PetaPocoDB.Record<DepartmentScrudView> 
     {
@@ -167,7 +167,7 @@ namespace MixERP.Net.Entities.Office
 
     }
 
-    [TableName("office_scrud_view")]
+    [TableName("office.office_scrud_view")]
     [ExplicitColumns]
     public class OfficeScrudView : PetaPocoDB.Record<OfficeScrudView> 
     {
@@ -233,7 +233,7 @@ namespace MixERP.Net.Entities.Office
 
     }
 
-    [TableName("role_scrud_view")]
+    [TableName("office.role_scrud_view")]
     [ExplicitColumns]
     public class RoleScrudView : PetaPocoDB.Record<RoleScrudView> 
     {
@@ -254,7 +254,7 @@ namespace MixERP.Net.Entities.Office
 
     }
 
-    [TableName("store_scrud_view")]
+    [TableName("office.store_scrud_view")]
     [ExplicitColumns]
     public class StoreScrudView : PetaPocoDB.Record<StoreScrudView> 
     {
@@ -290,7 +290,7 @@ namespace MixERP.Net.Entities.Office
 
     }
 
-    [TableName("store_type_scrud_view")]
+    [TableName("office.store_type_scrud_view")]
     [ExplicitColumns]
     public class StoreTypeScrudView : PetaPocoDB.Record<StoreTypeScrudView> 
     {
@@ -305,7 +305,7 @@ namespace MixERP.Net.Entities.Office
 
     }
 
-    [TableName("cash_repository_selector_view")]
+    [TableName("office.cash_repository_selector_view")]
     [ExplicitColumns]
     public class CashRepositorySelectorView : PetaPocoDB.Record<CashRepositorySelectorView> 
     {
@@ -329,7 +329,7 @@ namespace MixERP.Net.Entities.Office
 
     }
 
-    [TableName("office_selector_view")]
+    [TableName("office.office_selector_view")]
     [ExplicitColumns]
     public class OfficeSelectorView : PetaPocoDB.Record<OfficeSelectorView> 
     {
@@ -404,7 +404,7 @@ namespace MixERP.Net.Entities.Office
 
     }
 
-    [TableName("store_selector_view")]
+    [TableName("office.store_selector_view")]
     [ExplicitColumns]
     public class StoreSelectorView : PetaPocoDB.Record<StoreSelectorView> 
     {
@@ -446,7 +446,7 @@ namespace MixERP.Net.Entities.Office
 
     }
 
-    [TableName("store_type_selector_view")]
+    [TableName("office.store_type_selector_view")]
     [ExplicitColumns]
     public class StoreTypeSelectorView : PetaPocoDB.Record<StoreTypeSelectorView> 
     {
@@ -467,7 +467,7 @@ namespace MixERP.Net.Entities.Office
 
     }
 
-    [TableName("user_selector_view")]
+    [TableName("office.user_selector_view")]
     [ExplicitColumns]
     public class UserSelectorView : PetaPocoDB.Record<UserSelectorView> 
     {
@@ -488,7 +488,7 @@ namespace MixERP.Net.Entities.Office
 
     }
 
-    [TableName("office_view")]
+    [TableName("office.office_view")]
     [ExplicitColumns]
     public class OfficeView : PetaPocoDB.Record<OfficeView> 
     {
@@ -563,7 +563,7 @@ namespace MixERP.Net.Entities.Office
 
     }
 
-    [TableName("role_view")]
+    [TableName("office.role_view")]
     [ExplicitColumns]
     public class RoleView : PetaPocoDB.Record<RoleView> 
     {
@@ -578,7 +578,7 @@ namespace MixERP.Net.Entities.Office
 
     }
 
-    [TableName("sign_in_view")]
+    [TableName("office.sign_in_view")]
     [ExplicitColumns]
     public class SignInView : PetaPocoDB.Record<SignInView> 
     {
@@ -695,7 +695,7 @@ namespace MixERP.Net.Entities.Office
 
     }
 
-    [TableName("store_view")]
+    [TableName("office.store_view")]
     [ExplicitColumns]
     public class StoreView : PetaPocoDB.Record<StoreView> 
     {
@@ -737,7 +737,7 @@ namespace MixERP.Net.Entities.Office
 
     }
 
-    [TableName("user_view")]
+    [TableName("office.user_view")]
     [ExplicitColumns]
     public class UserView : PetaPocoDB.Record<UserView> 
     {
@@ -758,7 +758,7 @@ namespace MixERP.Net.Entities.Office
 
     }
 
-    [TableName("work_center_view")]
+    [TableName("office.work_center_view")]
     [ExplicitColumns]
     public class WorkCenterView : PetaPocoDB.Record<WorkCenterView> 
     {
@@ -776,7 +776,7 @@ namespace MixERP.Net.Entities.Office
 
     }
 
-    [TableName("configuration")]
+    [TableName("office.configuration")]
     [PrimaryKey("configuration_id")]
     [ExplicitColumns]
     public class Configuration : PetaPocoDB.Record<Configuration> 
@@ -804,7 +804,7 @@ namespace MixERP.Net.Entities.Office
 
     }
 
-    [TableName("roles")]
+    [TableName("office.roles")]
     [PrimaryKey("role_id")]
     [ExplicitColumns]
     public class Role : PetaPocoDB.Record<Role> 
@@ -832,7 +832,7 @@ namespace MixERP.Net.Entities.Office
 
     }
 
-    [TableName("store_types")]
+    [TableName("office.store_types")]
     [PrimaryKey("store_type_id")]
     [ExplicitColumns]
     public class StoreType : PetaPocoDB.Record<StoreType> 
@@ -854,7 +854,7 @@ namespace MixERP.Net.Entities.Office
 
     }
 
-    [TableName("counters")]
+    [TableName("office.counters")]
     [PrimaryKey("counter_id")]
     [ExplicitColumns]
     public class Counter : PetaPocoDB.Record<Counter> 
@@ -882,7 +882,7 @@ namespace MixERP.Net.Entities.Office
 
     }
 
-    [TableName("cashiers")]
+    [TableName("office.cashiers")]
     [PrimaryKey("cashier_id")]
     [ExplicitColumns]
     public class Cashier : PetaPocoDB.Record<Cashier> 
@@ -907,7 +907,7 @@ namespace MixERP.Net.Entities.Office
 
     }
 
-    [TableName("cost_centers")]
+    [TableName("office.cost_centers")]
     [PrimaryKey("cost_center_id")]
     [ExplicitColumns]
     public class CostCenter : PetaPocoDB.Record<CostCenter> 
@@ -929,7 +929,7 @@ namespace MixERP.Net.Entities.Office
 
     }
 
-    [TableName("cash_repositories")]
+    [TableName("office.cash_repositories")]
     [PrimaryKey("cash_repository_id")]
     [ExplicitColumns]
     public class CashRepository : PetaPocoDB.Record<CashRepository> 
@@ -960,7 +960,7 @@ namespace MixERP.Net.Entities.Office
 
     }
 
-    [TableName("work_centers")]
+    [TableName("office.work_centers")]
     [PrimaryKey("work_center_id")]
     [ExplicitColumns]
     public class WorkCenter : PetaPocoDB.Record<WorkCenter> 
@@ -985,7 +985,7 @@ namespace MixERP.Net.Entities.Office
 
     }
 
-    [TableName("departments")]
+    [TableName("office.departments")]
     [PrimaryKey("department_id")]
     [ExplicitColumns]
     public class Department : PetaPocoDB.Record<Department> 
@@ -1007,7 +1007,7 @@ namespace MixERP.Net.Entities.Office
 
     }
 
-    [TableName("stores")]
+    [TableName("office.stores")]
     [PrimaryKey("store_id")]
     [ExplicitColumns]
     public class Store : PetaPocoDB.Record<Store> 
@@ -1050,44 +1050,7 @@ namespace MixERP.Net.Entities.Office
 
     }
 
-    [TableName("users")]
-    [PrimaryKey("user_id")]
-    [ExplicitColumns]
-    public class User : PetaPocoDB.Record<User> 
-    {
-        [Column("user_id")] 
-        public int UserId { get; set; }
-
-        [Column("role_id")] 
-        public int RoleId { get; set; }
-
-        [Column("office_id")] 
-        public int OfficeId { get; set; }
-
-        [Column("user_name")] 
-        public string UserName { get; set; }
-
-        [Column("full_name")] 
-        public string FullName { get; set; }
-
-        [Column("can_change_password")] 
-        public bool CanChangePassword { get; set; }
-
-        [Column("password")] 
-        public string Password { get; set; }
-
-        [Column("elevated")] 
-        public bool Elevated { get; set; }
-
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
-
-    }
-
-    [TableName("offices")]
+    [TableName("office.offices")]
     [PrimaryKey("office_id")]
     [ExplicitColumns]
     public class Office : PetaPocoDB.Record<Office> 
@@ -1160,6 +1123,43 @@ namespace MixERP.Net.Entities.Office
 
         [Column("parent_office_id")] 
         public int? ParentOfficeId { get; set; }
+
+    }
+
+    [TableName("office.users")]
+    [PrimaryKey("user_id")]
+    [ExplicitColumns]
+    public class User : PetaPocoDB.Record<User> 
+    {
+        [Column("user_id")] 
+        public int UserId { get; set; }
+
+        [Column("role_id")] 
+        public int RoleId { get; set; }
+
+        [Column("office_id")] 
+        public int OfficeId { get; set; }
+
+        [Column("user_name")] 
+        public string UserName { get; set; }
+
+        [Column("full_name")] 
+        public string FullName { get; set; }
+
+        [Column("can_change_password")] 
+        public bool CanChangePassword { get; set; }
+
+        [Column("password")] 
+        public string Password { get; set; }
+
+        [Column("elevated")] 
+        public bool Elevated { get; set; }
+
+        [Column("audit_user_id")] 
+        public int? AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime? AuditTs { get; set; }
 
     }
 

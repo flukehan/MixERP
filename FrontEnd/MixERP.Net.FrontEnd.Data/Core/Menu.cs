@@ -28,7 +28,7 @@ namespace MixERP.Net.FrontEnd.Data.Core
     {
         public static IEnumerable<Entities.Core.Menu> GetMenuCollection(string path, short level)
         {
-            string relativePath = Conversion.GetRelativePath(path);
+            string relativePath = path;
             int userId = CurrentSession.GetUserId();
             int officeId = CurrentSession.GetOfficeId();
             string culture = CurrentSession.GetCulture().TwoLetterISOLanguageName;

@@ -258,4 +258,19 @@
   <data name="BackupConsole" xml:space="preserve">
     <value>Backup Console</value>
   </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Change Password</value>
+  </data>
+  <data name="EnterNewPassword" xml:space="preserve">
+    <value>Enter a New Password</value>
+  </data>
+  <data name="PasswordUpdated" xml:space="preserve">
+    <value>Password was updated.</value>
+  </data>
+  <data name="SelectUser" xml:space="preserve">
+    <value>Select User</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
 </root>

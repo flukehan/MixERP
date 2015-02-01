@@ -22,14 +22,14 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Errors {
+    internal class Warnings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Errors() {
+        internal Warnings() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MixERP.Net.Core.Modules.Finance.Resources.Errors", typeof(Errors).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MixERP.Net.Core.Modules.Finance.Resources.Warnings", typeof(Warnings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -79,11 +79,56 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There is no sufficient balance in the cash repository to process this transaction..
+        /// </summary>
+        internal static string InsufficientBalanceInCashRepository {
+            get {
+                return ResourceManager.GetString("InsufficientBalanceInCashRepository", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid account..
+        /// </summary>
+        internal static string InvalidAccount {
+            get {
+                return ResourceManager.GetString("InvalidAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid cash repository..
+        /// </summary>
+        internal static string InvalidCashRepository {
+            get {
+                return ResourceManager.GetString("InvalidCashRepository", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid data..
+        /// </summary>
+        internal static string InvalidData {
+            get {
+                return ResourceManager.GetString("InvalidData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Negative value supplied..
         /// </summary>
         internal static string NegativeValueSupplied {
             get {
                 return ResourceManager.GetString("NegativeValueSupplied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The referencing sides are not equal..
+        /// </summary>
+        internal static string ReferencingSidesNotEqual {
+            get {
+                return ResourceManager.GetString("ReferencingSidesNotEqual", resourceCulture);
             }
         }
     }

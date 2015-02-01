@@ -149,7 +149,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("FailureCssClass");
+                cssClass = ConfigurationHelper.GetScrudParameter("FailiureCssClass");
             }
 
             return cssClass;

@@ -179,7 +179,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
 
             if (credit < 0)
             {
-                throw new MixERPException(Errors.NegativeValueSupplied);
+                throw new MixERPException(Warnings.NegativeValueSupplied);
             }
 
             decimal balance = CashRepositories.GetBalance(cashRepositoryCode, currencyCode);

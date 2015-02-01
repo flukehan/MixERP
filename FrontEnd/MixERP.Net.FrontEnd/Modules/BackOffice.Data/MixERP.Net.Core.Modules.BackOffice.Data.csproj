@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Admin\DatabaseStatistics.cs" />
     <Compile Include="Admin\QueryTool.cs" />
+    <Compile Include="Admin\User.cs" />
     <Compile Include="Attachments.cs" />
     <Compile Include="OpeningInventory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

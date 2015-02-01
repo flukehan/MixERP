@@ -18,10 +18,13 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
+using System.Web.UI;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Helpers;
@@ -44,7 +47,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             this.ClearSelectedValue();
 
             //Load the form again.
-            using (var table = new DataTable())
+            using (DataTable table = new DataTable())
             {
                 table.Locale = Thread.CurrentThread.CurrentCulture;
                 this.LoadForm(this.formContainer, table, this.ResourceAssembly);
@@ -53,21 +56,19 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private void DeleteButton_Click(object sender, EventArgs e)
         {
-            var id = this.GetSelectedValue();
+            string id = this.GetSelectedValue();
             if (string.IsNullOrWhiteSpace(id))
             {
                 return;
             }
 
-            if (this.DenyDelete)
-            {
-                this.messageLabel.CssClass = this.GetFailureCssClass();
-                this.messageLabel.Text = Titles.AccessDenied;
-                return;
-            }
-
             try
             {
+                if (this.DenyDelete)
+                {
+                    throw new MixERPException(Titles.AccessDenied);
+                }
+
                 if (FormHelper.DeleteRecord(this.TableSchema, this.Table, this.KeyColumn, id))
                 {
                     //Refresh the grid.
@@ -85,13 +86,13 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private void EditButton_Click(object sender, EventArgs e)
         {
-            var id = this.GetSelectedValue();
+            string id = this.GetSelectedValue();
             if (string.IsNullOrWhiteSpace(id))
             {
                 return;
             }
 
-            using (var table = FormHelper.GetTable(this.TableSchema, this.Table, this.KeyColumn, id, this.KeyColumn))
+            using (DataTable table = FormHelper.GetTable(this.TableSchema, this.Table, this.KeyColumn, id, this.KeyColumn))
             {
                 if (table.Rows.Count.Equals(1))
                 {
@@ -110,103 +111,97 @@ namespace MixERP.Net.WebControls.ScrudFactory
         // ReSharper disable once UnusedParameter.Local
         private void Save(bool closeForm)
         {
-            var userIdSessionKey = ConfigurationHelper.GetScrudParameter("UserIdSessionKey");
+            string userIdSessionKey = ConfigurationHelper.GetScrudParameter("UserIdSessionKey");
 
             if (Conversion.TryCastInteger(CurrentSession.GetSessionValueByKey(userIdSessionKey)) <= 0)
             {
                 throw new InvalidOperationException("The user id session key is invalid or incorrectly configured.");
             }
 
-            var list = this.GetFormCollection(true);
-            var id = this.GetSelectedValue();
+            Collection<KeyValuePair<string, object>> list = this.GetFormCollection(true);
+            string id = this.GetSelectedValue();
             this.lastValueHiddenTextBox.Text = id;
 
-            var userId = Conversion.TryCastInteger(this.Page.Session[userIdSessionKey]);
+            int userId = Conversion.TryCastInteger(this.Page.Session[userIdSessionKey]);
 
             if (string.IsNullOrWhiteSpace(id))
             {
-                if (this.DenyAdd)
+                try
                 {
-                    this.messageLabel.CssClass = this.GetFailureCssClass();
-                    this.messageLabel.Text = Titles.AccessDenied;
-                }
-                else
-                {
-                    try
+                    if (this.DenyAdd)
                     {
-                        var lastValue = FormHelper.InsertRecord(userId, this.TableSchema, this.Table, list, this.imageColumn);
+                        throw new MixERPException(Titles.AccessDenied);
+                    }
 
-                        if (lastValue > 0)
+                    long lastValue = FormHelper.InsertRecord(userId, this.TableSchema, this.Table, list, this.imageColumn);
+
+                    if (lastValue > 0)
+                    {
+                        this.lastValueHiddenTextBox.Text = lastValue.ToString(CultureInfo.InvariantCulture);
+                        //Clear the form container.
+                        this.formContainer.Controls.Clear();
+
+                        using (DataTable table = new DataTable())
                         {
-                            this.lastValueHiddenTextBox.Text = lastValue.ToString(CultureInfo.InvariantCulture);
-                            //Clear the form container.
-                            this.formContainer.Controls.Clear();
-
-                            using (var table = new DataTable())
-                            {
-                                //Load the form again.
-                                this.LoadForm(this.formContainer, table, this.ResourceAssembly);
-                            }
-
-                            //Refresh the grid.
-                            this.BindGridView();
-                            this.DisplaySuccess();
+                            //Load the form again.
+                            this.LoadForm(this.formContainer, table, this.ResourceAssembly);
                         }
-                    }
-                    catch (MixERPException ex)
-                    {
-                        this.DisplayError(ex);
-                        //Swallow
+
+                        //Refresh the grid.
+                        this.BindGridView();
+                        this.DisplaySuccess();
                     }
                 }
+                catch (MixERPException ex)
+                {
+                    this.DisplayError(ex);
+                    //Swallow
+                }
+
             }
             else
             {
-                if (this.DenyEdit)
+                try
                 {
-                    this.messageLabel.CssClass = this.GetFailureCssClass();
-                    this.messageLabel.Text = Titles.AccessDenied;
+                    if (this.DenyEdit)
+                    {
+                        throw new MixERPException(Titles.AccessDenied);
+                    }
+
+                    string[] exclusion = { "" };
+
+                    if (!string.IsNullOrWhiteSpace(this.ExcludeEdit))
+                    {
+                        exclusion = this.ExcludeEdit.Split(',').Select(x => x.Trim().ToUpperInvariant()).ToArray();
+                    }
+
+
+                    if (FormHelper.UpdateRecord(userId, this.TableSchema, this.Table, list, this.KeyColumn, id, this.imageColumn, exclusion))
+                    {
+                        //Clear the form container.
+                        this.formContainer.Controls.Clear();
+
+                        //Load the form again.
+                        using (DataTable table = new DataTable())
+                        {
+                            table.Locale = Thread.CurrentThread.CurrentCulture;
+
+                            this.LoadForm(this.formContainer, table, this.ResourceAssembly);
+                        }
+
+                        //Refresh the grid.
+                        this.BindGridView();
+
+                        this.DisplaySuccess();
+                    }
+                    else
+                    {
+                        this.DisplayError(new MixERPException(Titles.UnknownError));
+                    }
                 }
-                else
+                catch (MixERPException ex)
                 {
-                    try
-                    {
-                        string[] exclusion = {""};
-
-                        if (!string.IsNullOrWhiteSpace(this.ExcludeEdit))
-                        {
-                            exclusion = this.ExcludeEdit.Split(',').Select(x => x.Trim().ToUpperInvariant()).ToArray();
-                        }
-
-
-                        if (FormHelper.UpdateRecord(userId, this.TableSchema, this.Table, list, this.KeyColumn, id, this.imageColumn, exclusion))
-                        {
-                            //Clear the form container.
-                            this.formContainer.Controls.Clear();
-
-                            //Load the form again.
-                            using (var table = new DataTable())
-                            {
-                                table.Locale = Thread.CurrentThread.CurrentCulture;
-
-                                this.LoadForm(this.formContainer, table, this.ResourceAssembly);
-                            }
-
-                            //Refresh the grid.
-                            this.BindGridView();
-
-                            this.DisplaySuccess();
-                        }
-                        else
-                        {
-                            this.DisplayError(new MixERPException(Titles.UnknownError));
-                        }
-                    }
-                    catch (MixERPException ex)
-                    {
-                        this.DisplayError(ex);
-                        //Swallow
-                    }
+                    this.DisplayError(ex);
                 }
             }
         }

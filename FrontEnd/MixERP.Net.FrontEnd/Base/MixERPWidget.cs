@@ -24,6 +24,9 @@ namespace MixERP.Net.FrontEnd.Base
 {
     public abstract class MixERPWidget : MixERPWidgetBase, IWidget
     {
-        public abstract AccessLevel AccessLevel { get; }
+        public override AccessLevel AccessLevel
+        {
+            get { return AccessLevel.PolicyBased; }
+        }
     }
 }

@@ -92,7 +92,7 @@ namespace MixERP.Net.Entities.CRM
     
 
 
-    [TableName("lead_sources")]
+    [TableName("crm.lead_sources")]
     [PrimaryKey("lead_source_id")]
     [ExplicitColumns]
     public class LeadSource : PetaPocoDB.Record<LeadSource> 
@@ -114,7 +114,7 @@ namespace MixERP.Net.Entities.CRM
 
     }
 
-    [TableName("opportunity_stages")]
+    [TableName("crm.opportunity_stages")]
     [PrimaryKey("opportunity_stage_id")]
     [ExplicitColumns]
     public class OpportunityStage : PetaPocoDB.Record<OpportunityStage> 
@@ -136,7 +136,7 @@ namespace MixERP.Net.Entities.CRM
 
     }
 
-    [TableName("lead_statuses")]
+    [TableName("crm.lead_statuses")]
     [PrimaryKey("lead_status_id")]
     [ExplicitColumns]
     public class LeadStatus : PetaPocoDB.Record<LeadStatus> 

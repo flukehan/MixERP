@@ -25,6 +25,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using MixERP.Net.Common.Domains;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Tax
 {

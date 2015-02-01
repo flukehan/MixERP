@@ -92,7 +92,7 @@ namespace MixERP.Net.Entities.Audit
     
 
 
-    [TableName("logged_actions")]
+    [TableName("audit.logged_actions")]
     [PrimaryKey("event_id")]
     [ExplicitColumns]
     public class LoggedAction : PetaPocoDB.Record<LoggedAction> 
@@ -153,7 +153,7 @@ namespace MixERP.Net.Entities.Audit
 
     }
 
-    [TableName("logins")]
+    [TableName("audit.logins")]
     [PrimaryKey("login_id")]
     [ExplicitColumns]
     public class Login : PetaPocoDB.Record<Login> 
@@ -184,7 +184,7 @@ namespace MixERP.Net.Entities.Audit
 
     }
 
-    [TableName("failed_logins")]
+    [TableName("audit.failed_logins")]
     [PrimaryKey("failed_login_id")]
     [ExplicitColumns]
     public class FailedLogin : PetaPocoDB.Record<FailedLogin> 

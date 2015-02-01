@@ -343,7 +343,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
                 }
             }
 
-            string sql = "UPDATE @TableSchema.@TableName SET " + columns + " WHERE @KeyColumn=@KeyValue;";
+            string sql = "UPDATE @TableSchema.@TableName SET " + columns + ", audit_ts=NOW() WHERE @KeyColumn=@KeyValue;";
 
             using (NpgsqlCommand command = new NpgsqlCommand())
             {

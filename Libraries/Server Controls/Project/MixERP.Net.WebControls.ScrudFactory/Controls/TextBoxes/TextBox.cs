@@ -30,6 +30,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
     {
         internal static void AddTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isNullable, int maxLength, string errorCssClass, Assembly assembly, bool disabled)
         {
+
             if (htmlTable == null)
             {
                 return;
@@ -40,12 +41,29 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
                 return;
             }
 
+            bool isPasswordField = columnName.ToUpperInvariant().Equals("PASSWORD");
+
+            if (isPasswordField && disabled)
+            {
+                defaultValue = "fake-password";
+            }
+
             using (TextBox textBox = GetTextBox(columnName + "_textbox", maxLength))
             {
                 string label = ScrudLocalizationHelper.GetResourceString(assembly, resourceClassName, columnName);
 
+                if (isPasswordField)
+                {
+                    textBox.Attributes.Add("type", "password");
+                }
+
+                if (disabled && !isPasswordField)
+                {
+                    textBox.ReadOnly = true;
+                }
+
                 textBox.Text = defaultValue;
-                textBox.ReadOnly = disabled;
+
 
                 if (!isNullable)
                 {

@@ -18,3 +18,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Users.ascx.cs" Inherits="MixERP.Net.Core.Modules.BackOffice.Users" %>
+<%@ Import Namespace="System.Reflection" %>
+<%@ Import Namespace="MixERP.Net.Common.Helpers" %>
+<%@ Import Namespace="MixERP.Net.WebControls.ScrudFactory" %>
+<%@ Import Namespace="MixERP.Net.Core.Modules.BackOffice" %>
+
+<asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
+

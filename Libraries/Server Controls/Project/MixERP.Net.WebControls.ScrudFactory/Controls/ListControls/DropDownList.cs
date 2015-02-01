@@ -66,7 +66,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
                         }
                         else
                         {
-                            var required = ScrudFactoryHelper.GetRequiredFieldValidator(dropDownList, errorCssClass);
+                            RequiredFieldValidator required = ScrudFactoryHelper.GetRequiredFieldValidator(dropDownList, errorCssClass);
                             ScrudFactoryHelper.AddDropDownList(htmlTable, label + Titles.RequiredFieldIndicator, dropDownList, itemSelectorAnchor, required);
                         }
                     }

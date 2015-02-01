@@ -61,6 +61,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Access is denied..
+        /// </summary>
+        internal static string AccessIsDenied {
+            get {
+                return ResourceManager.GetString("AccessIsDenied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The confirmation password does not match with the new password..
         /// </summary>
         internal static string ConfirmationPasswordDoesNotMatch {
@@ -111,6 +120,15 @@ namespace Resources {
         internal static string NewPasswordCannotBeOldPassword {
             get {
                 return ResourceManager.GetString("NewPasswordCannotBeOldPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are not authorized to access this resources at this time..
+        /// </summary>
+        internal static string NotAuthorized {
+            get {
+                return ResourceManager.GetString("NotAuthorized", resourceCulture);
             }
         }
         

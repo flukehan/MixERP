@@ -17,9 +17,6 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.WebControls.ScrudFactory.Helpers;
-using MixERP.Net.WebControls.ScrudFactory.Resources;
 using System;
 using System.IO;
 using System.Reflection;
@@ -27,6 +24,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.WebControls.ScrudFactory.Helpers;
+using MixERP.Net.WebControls.ScrudFactory.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls
 {
@@ -34,9 +34,9 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
     {
         public static void AddFileUpload(HtmlTable htmlTable, string resourceClassName, string columnName, bool isNullable, string errorCssClass, Assembly assembly)
         {
-            var label = ScrudLocalizationHelper.GetResourceString(assembly, resourceClassName, columnName);
-            var fileUpload = GetFileUpload(columnName + "_fileupload");
-            var validator = GetImageValidator(fileUpload, errorCssClass);
+            string label = ScrudLocalizationHelper.GetResourceString(assembly, resourceClassName, columnName);
+            FileUpload fileUpload = GetFileUpload(columnName + "_fileupload");
+            RegularExpressionValidator validator = GetImageValidator(fileUpload, errorCssClass);
 
             //Todo: One of the following:
             //1. Ask the script manager to do a synchronous postback on save button click event.
@@ -44,7 +44,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
 
             if (!isNullable)
             {
-                var required = ScrudFactoryHelper.GetRequiredFieldValidator(fileUpload, errorCssClass);
+                RequiredFieldValidator required = ScrudFactoryHelper.GetRequiredFieldValidator(fileUpload, errorCssClass);
                 ScrudFactoryHelper.AddRow(htmlTable, label + Titles.RequiredFieldIndicator, fileUpload, required,
                     validator);
                 return;
@@ -60,15 +60,15 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
                 return string.Empty;
             }
 
-            var tempMediaPath = ConfigurationHelper.GetScrudParameter("TempMediaPath");
-            var uploadDirectory = HttpContext.Current.Server.MapPath(tempMediaPath);
+            string tempMediaPath = ConfigurationHelper.GetScrudParameter("TempMediaPath");
+            string uploadDirectory = HttpContext.Current.Server.MapPath(tempMediaPath);
 
             if (!Directory.Exists(uploadDirectory))
             {
                 Directory.CreateDirectory(uploadDirectory);
             }
 
-            var id = Guid.NewGuid().ToString();
+            string id = Guid.NewGuid().ToString();
 
             if (fileUpload.HasFile)
             {
@@ -83,7 +83,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
 
         private static FileUpload GetFileUpload(string id)
         {
-            using (var fileUpload = new FileUpload())
+            using (FileUpload fileUpload = new FileUpload())
             {
                 fileUpload.ID = id;
 
@@ -93,7 +93,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
 
         private static RegularExpressionValidator GetImageValidator(Control controlToValidate, string cssClass)
         {
-            using (var validator = new RegularExpressionValidator())
+            using (RegularExpressionValidator validator = new RegularExpressionValidator())
             {
                 validator.ID = controlToValidate.ID + "RegexValidator";
                 validator.ErrorMessage = @"<br/>" + Titles.InvalidImage;

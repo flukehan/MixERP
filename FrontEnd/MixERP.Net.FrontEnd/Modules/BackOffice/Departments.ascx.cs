@@ -22,6 +22,7 @@ using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.ScrudFactory;
 using System;
 using System.Reflection;
+using MixERP.Net.Common.Domains;
 
 namespace MixERP.Net.Core.Modules.BackOffice
 {

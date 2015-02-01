@@ -92,7 +92,32 @@ namespace MixERP.Net.Entities.Policy
     
 
 
-    [TableName("auto_verification_policy_scrud_view")]
+    [TableName("policy.store_policy_details")]
+    [PrimaryKey("store_policy_detail_id")]
+    [ExplicitColumns]
+    public class StorePolicyDetail : PetaPocoDB.Record<StorePolicyDetail> 
+    {
+        [Column("store_policy_detail_id")] 
+        public long StorePolicyDetailId { get; set; }
+
+        [Column("store_policy_id")] 
+        public long StorePolicyId { get; set; }
+
+        [Column("user_id")] 
+        public int UserId { get; set; }
+
+        [Column("store_id")] 
+        public int StoreId { get; set; }
+
+        [Column("audit_user_id")] 
+        public int? AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime? AuditTs { get; set; }
+
+    }
+
+    [TableName("policy.auto_verification_policy_scrud_view")]
     [ExplicitColumns]
     public class AutoVerificationPolicyScrudView : PetaPocoDB.Record<AutoVerificationPolicyScrudView> 
     {
@@ -131,7 +156,7 @@ namespace MixERP.Net.Entities.Policy
 
     }
 
-    [TableName("voucher_verification_policy_scrud_view")]
+    [TableName("policy.voucher_verification_policy_scrud_view")]
     [ExplicitColumns]
     public class VoucherVerificationPolicyScrudView : PetaPocoDB.Record<VoucherVerificationPolicyScrudView> 
     {
@@ -176,32 +201,7 @@ namespace MixERP.Net.Entities.Policy
 
     }
 
-    [TableName("store_policy_details")]
-    [PrimaryKey("store_policy_detail_id")]
-    [ExplicitColumns]
-    public class StorePolicyDetail : PetaPocoDB.Record<StorePolicyDetail> 
-    {
-        [Column("store_policy_detail_id")] 
-        public long StorePolicyDetailId { get; set; }
-
-        [Column("store_policy_id")] 
-        public long StorePolicyId { get; set; }
-
-        [Column("user_id")] 
-        public int UserId { get; set; }
-
-        [Column("store_id")] 
-        public int StoreId { get; set; }
-
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
-
-    }
-
-    [TableName("store_policies")]
+    [TableName("policy.store_policies")]
     [PrimaryKey("store_policy_id")]
     [ExplicitColumns]
     public class StorePolicy : PetaPocoDB.Record<StorePolicy> 
@@ -223,7 +223,26 @@ namespace MixERP.Net.Entities.Policy
 
     }
 
-    [TableName("menu_policy")]
+    [TableName("policy.lock_outs")]
+    [PrimaryKey("lock_out_id")]
+    [ExplicitColumns]
+    public class LockOut : PetaPocoDB.Record<LockOut> 
+    {
+        [Column("lock_out_id")] 
+        public long LockOutId { get; set; }
+
+        [Column("user_id")] 
+        public int UserId { get; set; }
+
+        [Column("lock_out_time")] 
+        public DateTime LockOutTime { get; set; }
+
+        [Column("lock_out_till")] 
+        public DateTime LockOutTill { get; set; }
+
+    }
+
+    [TableName("policy.menu_policy")]
     [PrimaryKey("policy_id")]
     [ExplicitColumns]
     public class MenuPolicy : PetaPocoDB.Record<MenuPolicy> 
@@ -251,7 +270,7 @@ namespace MixERP.Net.Entities.Policy
 
     }
 
-    [TableName("menu_access")]
+    [TableName("policy.menu_access")]
     [PrimaryKey("access_id")]
     [ExplicitColumns]
     public class MenuAccess : PetaPocoDB.Record<MenuAccess> 
@@ -270,7 +289,7 @@ namespace MixERP.Net.Entities.Policy
 
     }
 
-    [TableName("voucher_verification_policy")]
+    [TableName("policy.voucher_verification_policy")]
     [PrimaryKey("user_id", autoIncrement=false)]
     [ExplicitColumns]
     public class VoucherVerificationPolicy : PetaPocoDB.Record<VoucherVerificationPolicy> 
@@ -319,26 +338,7 @@ namespace MixERP.Net.Entities.Policy
 
     }
 
-    [TableName("lock_outs")]
-    [PrimaryKey("lock_out_id")]
-    [ExplicitColumns]
-    public class LockOut : PetaPocoDB.Record<LockOut> 
-    {
-        [Column("lock_out_id")] 
-        public long LockOutId { get; set; }
-
-        [Column("user_id")] 
-        public int UserId { get; set; }
-
-        [Column("lock_out_time")] 
-        public DateTime LockOutTime { get; set; }
-
-        [Column("lock_out_till")] 
-        public DateTime LockOutTill { get; set; }
-
-    }
-
-    [TableName("auto_verification_policy")]
+    [TableName("policy.auto_verification_policy")]
     [PrimaryKey("user_id", autoIncrement=false)]
     [ExplicitColumns]
     public class AutoVerificationPolicy : PetaPocoDB.Record<AutoVerificationPolicy> 

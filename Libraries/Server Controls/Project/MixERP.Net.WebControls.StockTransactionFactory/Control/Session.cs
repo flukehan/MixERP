@@ -30,15 +30,16 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
     public partial class StockTransactionForm
     {
         private const string sessionKey = "StockTransactionFactory";
+        private const string mergeModelSessionKey = "Product";
 
         private void LoadValuesFromSession()
         {
-            if (this.Page == null || this.Page.Session[sessionKey] == null)
+            if (this.Page == null || this.Page.Session[mergeModelSessionKey] == null)
             {
                 return;
             }
 
-            this.model = this.Page.Session[sessionKey] as MergeModel;
+            this.model = this.Page.Session[mergeModelSessionKey] as MergeModel;
 
             if (this.model == null)
             {
@@ -54,10 +55,11 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
             this.salesPersonIdHidden.Value = this.model.SalesPersonId.ToString(CultureInfo.InvariantCulture);
 
             this.referenceNumberInputText.Value = this.model.ReferenceNumber;
+            this.statementReferenceTextArea.Value = this.model.StatementReference;
 
             this.Page.Session[this.ID] = this.model.View;
-            this.tranIdCollectionHiddenField.Value = string.Join(",", this.model.TransactionIdCollection);
-            SessionHelper.RemoveSessionKey(sessionKey);
+            this.tranIdCollectionHidden.Value = string.Join(",", this.model.TransactionIdCollection);
+            SessionHelper.RemoveSessionKey(mergeModelSessionKey);
         }
 
         private Collection<ProductDetail> GetTable()

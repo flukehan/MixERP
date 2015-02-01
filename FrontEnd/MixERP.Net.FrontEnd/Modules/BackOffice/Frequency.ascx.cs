@@ -24,11 +24,20 @@ using MixERP.Net.WebControls.ScrudFactory;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using MixERP.Net.Common.Domains;
 
 namespace MixERP.Net.Core.Modules.BackOffice
 {
     public partial class Frequency : MixERPUserControl
     {
+        public override AccessLevel AccessLevel
+        {
+            get
+            {
+                return AccessLevel.AdminOnly;
+            }
+        }
+
         public override void OnControlLoad(object sender, EventArgs e)
         {
             using (ScrudForm scrud = new ScrudForm())

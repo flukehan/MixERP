@@ -16,32 +16,34 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
+using System;
+using System.Collections.Generic;
+using System.Data.Common;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using MixERP.Net.Common.Base;
+using MixERP.Net.Entities;
 
-using System.Web.UI;
-using System.Web.UI.WebControls;
-
-namespace MixERP.Net.WebControls.StockTransactionFactory.Helpers
+namespace MixERP.Net.Core.Modules.BackOffice.Data.Admin
 {
-    internal static class ControlHelper
+    public static class User
     {
-        internal static void AddHiddenField(Control container, HiddenField hidden, string id)
+        public static IEnumerable<Entities.Office.User> GetUsers()
         {
-            if (hidden == null)
-            {
-                hidden = new HiddenField();
-            }
+            return Factory.Get<Entities.Office.User>("SELECT * FROM office.users ORDER BY user_name;");
+        }
 
+        public static void ChangePassword(string userName, string password)
+        {
             try
             {
-                hidden.ID = id;
-                container.Controls.Add(hidden);
+                Factory.NonQuery("SELECT * FROM policy.change_password(@0, @1);", userName, password);
             }
-            finally
-            {
-                hidden.Dispose();
-                hidden = null;
+            catch (DbException ex)
+            {                
+                throw new MixERPException(ex.Message, ex);
             }
-
         }
     }
 }

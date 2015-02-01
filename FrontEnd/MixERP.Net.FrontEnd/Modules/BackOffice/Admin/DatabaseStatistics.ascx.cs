@@ -22,11 +22,20 @@ using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.ScrudFactory;
 using System;
 using System.Reflection;
+using MixERP.Net.Common.Domains;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Admin
 {
     public partial class DatabaseStatistics : MixERPUserControl
     {
+        public override AccessLevel AccessLevel
+        {
+            get
+            {
+                return AccessLevel.AdminOnly;
+            }
+        }
+
         public override void OnControlLoad(object sender, EventArgs e)
         {
             this.VacuumButton.OnClientClick = "return(confirm('" + Questions.ConfirmVacuum + "'));";

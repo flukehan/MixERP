@@ -117,17 +117,6 @@ namespace MixERP.Net.Common
             return String.Format(LocalizationHelper.GetCurrentCulture(), "{0} {1} {2}", time.ToLongDateString(), time.ToLongTimeString(), zone.DisplayName);
         }
 
-        public static string GetRelativePath(string absolutePath)
-        {
-            if (string.IsNullOrWhiteSpace(absolutePath))
-            {
-                return null;
-            }
-
-            string physicalPath = HttpContext.Current.Request.MapPath(absolutePath);
-
-            return MapPathReverse(physicalPath);
-        }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         public static string HashSha512Hex(string password, string salt)

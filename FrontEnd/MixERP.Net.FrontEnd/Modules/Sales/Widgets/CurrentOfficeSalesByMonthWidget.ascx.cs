@@ -17,10 +17,9 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.FrontEnd.Base;
-using System;
-using MixERP.Net.Common.Domains;
 
 namespace MixERP.Net.Core.Modules.Sales.Widgets
 {
@@ -36,11 +35,6 @@ namespace MixERP.Net.Core.Modules.Sales.Widgets
             this.SalesByMonthGridView.DataSource = Data.Reports.SalesByMonth.GetSalesByOffice(officeId);
             this.SalesByMonthGridView.DataBind();
             base.OnControlLoad(sender, e);
-        }
-
-        public override AccessLevel AccessLevel
-        {
-            get { return AccessLevel.PolicyBased; }
         }
     }
 }

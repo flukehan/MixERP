@@ -218,9 +218,9 @@ CREATE TABLE core.attachments
     attachment_id                           BIGSERIAL PRIMARY KEY,
     user_id                                 integer NOT NULL 
                                             REFERENCES office.users(user_id),
-    resource                                text, --Fully qualified resource name. Example: transactions.non_gl_stock_master.
-    resource_key                            text, --The unique idenfier for lookup. Example: non_gl_stock_master_id,
-    resource_id                             integer, --The value of the unique identifier to lookup for,
+    resource                                text NOT NULL, --Fully qualified resource name. Example: transactions.non_gl_stock_master.
+    resource_key                            text NOT NULL, --The unique idenfier for lookup. Example: non_gl_stock_master_id,
+    resource_id                             bigint NOT NULL, --The value of the unique identifier to lookup for,
     original_file_name                      text NOT NULL,
     file_extension                          national character varying(12) NOT NULL,
     file_path                               text NOT NULL,

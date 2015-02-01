@@ -17,9 +17,12 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using System.Web.UI;
+using MixERP.Net.Common.Domains;
+using MixERP.Net.Common.Helpers;
 
 namespace MixERP.Net.FrontEnd.Base
 {
@@ -29,11 +32,38 @@ namespace MixERP.Net.FrontEnd.Base
         {
             if (page != null)
             {
-                string relativePath = Conversion.GetRelativePath(this.Page.Request.Url.AbsolutePath);
+                string relativePath = this.Page.Request.Url.AbsolutePath;
                 return MixERPWebpage.GetContentPageMenu(this.Page, relativePath, relativePath);
             }
 
             return null;
         }
+
+        public override void OnControlLoad(object sender, EventArgs e)
+        {
+            if (this.AccessLevel.Equals(AccessLevel.AdminOnly) && !CurrentSession.IsAdmin())
+            {
+                this.Page.Server.Transfer("~/Site/AccessIsDenied.aspx");
+            }
+
+            bool isLocalHost = PageUtility.IsLocalhost(this.Page);
+
+            if (this.AccessLevel.Equals(AccessLevel.LocalhostAdmin) && !isLocalHost)
+            {
+                this.Page.Server.Transfer("~/Site/AccessIsDenied.aspx");
+            }
+
+
+            base.OnControlLoad(sender, e);
+        }
+
+        
+
+        public override AccessLevel AccessLevel
+        {
+            get { return AccessLevel.PolicyBased; }
+        }
+
+
     }
 }

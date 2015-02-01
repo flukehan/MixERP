@@ -43,6 +43,11 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
             return string.Empty;
         }
 
+        public static string GetLocalCurrencyCode(int officeId)
+        {
+            return Factory.Scalar<string>("SELECT * FROM transactions.get_default_currency_code_by_office_id(@0)", officeId);
+        }
+
         public static IEnumerable<Currency> GetExchangeCurrencies(int officeId)
         {
             return Factory.Get<Currency>("SELECT currency_code, currency_symbol, currency_name, hundredth_name FROM core.currencies WHERE currency_code != core.get_currency_code_by_office_id(@0);", officeId);

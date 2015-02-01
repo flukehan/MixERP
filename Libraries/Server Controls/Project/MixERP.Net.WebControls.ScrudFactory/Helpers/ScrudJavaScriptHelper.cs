@@ -32,8 +32,8 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
     {
         internal static string GetScript(string keyColumn, string customFormUrl, string formGridViewId, string gridPanelId, string userIdHiddenId, string officeCodeHiddenId, string titleLabelId, string formPanelId, string cancelButtonId)
         {
-            var resource = JavascriptHelper.GetEmbeddedScript("MixERP.Net.WebControls.ScrudFactory.Scrud.js", Assembly.GetExecutingAssembly());
-            var script = new StringBuilder();
+            string resource = JavascriptHelper.GetEmbeddedScript("MixERP.Net.WebControls.ScrudFactory.Scrud.js", Assembly.GetExecutingAssembly());
+            StringBuilder script = new StringBuilder();
 
             script.Append(CreateVariable("formGridViewId", formGridViewId));
             script.Append(CreateVariable("gridPanelId", gridPanelId));
@@ -57,7 +57,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 
         private static string CreateVariable(string variableName, string initialValue)
         {
-            var variable = new StringBuilder();
+            StringBuilder variable = new StringBuilder();
             variable.Append("var ");
             variable.Append(variableName);
             variable.Append("='");

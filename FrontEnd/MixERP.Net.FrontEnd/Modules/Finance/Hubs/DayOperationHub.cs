@@ -12,14 +12,14 @@ namespace MixERP.Net.Core.Modules.Finance.Hubs
         {
             if (this.Context == null)
             {
-                this.Clients.Caller.getNotification(Errors.AccessIsDenied);
+                this.Clients.Caller.getNotification(Warnings.AccessIsDenied);
                 return;
             }
 
             long loginId = Conversion.TryCastLong(this.Context.User.Identity.Name);
             if (loginId <= 0)
             {
-                this.Clients.Caller.getNotification(Errors.AccessIsDenied);
+                this.Clients.Caller.getNotification(Warnings.AccessIsDenied);
                 return;
             }
 
