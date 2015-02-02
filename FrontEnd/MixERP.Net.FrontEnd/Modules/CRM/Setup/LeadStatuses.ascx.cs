@@ -43,7 +43,7 @@ namespace MixERP.Net.Core.Modules.CRM.Setup
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
 
-            base.OnControlLoad(sender, e);
+            
         }
     }
 }

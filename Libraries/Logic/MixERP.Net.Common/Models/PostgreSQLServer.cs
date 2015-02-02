@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 using System.Configuration;
+using MixERP.Net.Common.Helpers;
 
 namespace MixERP.Net.Common.Models
 {
@@ -26,13 +27,13 @@ namespace MixERP.Net.Common.Models
 
         public PostgreSQLServer()
         {
-            this.BinDirectory = ConfigurationManager.AppSettings["PostgreSQLBinDirectory"];
-            this.DatabaseBackupDirectory = ConfigurationManager.AppSettings["DatabaseBackupDirectory"];
-            this.PortNumber = Conversion.TryCastInteger(ConfigurationManager.AppSettings["Port"]);
-            this.HostName = ConfigurationManager.AppSettings["Server"];
-            this.DatabaseName = ConfigurationManager.AppSettings["Database"];
-            this.UserId = ConfigurationManager.AppSettings["UserId"];
-            this.Password = ConfigurationManager.AppSettings["Password"];
+            this.BinDirectory = ConfigurationHelper.GetDbServerParameter("PostgreSQLBinDirectory");
+            this.DatabaseBackupDirectory = ConfigurationHelper.GetDbServerParameter("DatabaseBackupDirectory");
+            this.PortNumber = Conversion.TryCastInteger(ConfigurationHelper.GetDbServerParameter("Port"));
+            this.HostName = ConfigurationHelper.GetDbServerParameter("Server");
+            this.DatabaseName = ConfigurationHelper.GetDbServerParameter("Database");
+            this.UserId = ConfigurationHelper.GetDbServerParameter("UserId");
+            this.Password = ConfigurationHelper.GetDbServerParameter("Password");
         }
 
         public PostgreSQLServer(int portNumber, string hostName, string databaseName, string userId, string password, string binDirectory)

@@ -67,12 +67,12 @@ SELECT 'SGT',   'Samsung Galaxy Tab 10.1',              core.get_item_group_id_b
 
 
 INSERT INTO office.cash_repositories(office_id, cash_repository_code, cash_repository_name, description)
-SELECT 2, 'DRW1',   'Drawer 1',     'Drawer'    UNION ALL
-SELECT 2, 'VLT',    'Vault',        'Vault'     UNION ALL
-SELECT 3, 'DRW2',   'Drawer 2',     'Drawer'    UNION ALL
-SELECT 3, 'VLT2',   'Vault 2',      'Vault'     UNION ALL
-SELECT 3, 'DRW3',   'Drawer 3',     'Drawer'    UNION ALL
-SELECT 3, 'VLT3',   'Vault 3',      'Vault';
+SELECT	2,	'DRW-BK',	'Drawer (BK)',	'Cash in Drawer'	UNION ALL
+SELECT	2,	'VLT-BK',	'Vault (BK)',	'Cash in Vault'     UNION ALL
+SELECT	3,	'DRW-RV',	'Drawer (RV)',	'Cash in Drawer'    UNION ALL
+SELECT	3,	'VLT-RV',	'Vault (RV)',	'Cash in Vault'     UNION ALL
+SELECT	4,	'DRW-KTM',	'Drawer (KTM)',	'Cash in Drawer'    UNION ALL
+SELECT	4,	'VLT-KTM',	'Vault (KTM)',	'Cash in Vault';
 
 INSERT INTO office.stores(office_id, store_code, store_name, address, store_type_id, allow_sales, sales_tax_id, default_cash_repository_id, default_cash_account_id)
 SELECT 2, 'STORE-1', 'Store 1',     'Office', 2, true,  1, 1,   core.get_account_id_by_account_number('10200')  UNION ALL

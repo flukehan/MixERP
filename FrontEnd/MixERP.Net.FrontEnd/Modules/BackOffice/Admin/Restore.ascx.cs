@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System;
 using MixERP.Net.Common.Domains;
 using MixERP.Net.FrontEnd.Base;
 
@@ -24,6 +25,10 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
 {
     public partial class Restore : MixERPUserControl
     {
+        public override void OnControlLoad(object sender, EventArgs e)
+        {
+        }
+
         public override AccessLevel AccessLevel
         {
             get

@@ -54,7 +54,7 @@ namespace MixERP.Net.Core.Modules.Finance.Entry
                 this.Placeholder1.Controls.Add(attachment);
             }
 
-            base.OnControlLoad(sender, e);
+            
         }
     }
 }

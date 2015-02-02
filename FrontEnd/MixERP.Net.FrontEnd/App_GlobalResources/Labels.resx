@@ -120,6 +120,9 @@
   <data name="DaysLowerCase" xml:space="preserve">
     <value>days</value>
   </data>
+  <data name="JustAMomentPlease" xml:space="preserve">
+    <value>Just a moment, please!</value>
+  </data>
   <data name="TaskCompletedSuccessfully" xml:space="preserve">
     <value>Task completed successfully.</value>
   </data>

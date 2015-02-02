@@ -68,7 +68,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 
         public static bool IsCashAccount(string accountNumber)
         {
-            return Factory.Get<Account>("SELECT * FROM core.accounts WHERE account_master_id=10101 AND account_id=@0;", accountNumber).Count().Equals(1);
+            return Factory.Get<Account>("SELECT * FROM core.accounts WHERE account_master_id=10101 AND account_number=@0;", accountNumber).Count().Equals(1);
         }
     }
 }

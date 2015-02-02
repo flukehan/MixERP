@@ -3121,6 +3121,7 @@ CREATE TABLE office.stores
                                             DEFAULT(NOW())
 );
 
+
 ALTER TABLE core.sales_tax_exempts
 ADD FOREIGN KEY(store_id) REFERENCES office.stores(store_id);
 
@@ -12681,6 +12682,13 @@ $$
 LANGUAGE plpgsql;
 
 
+-- 
+-- SELECT * FROM transactions.post_purchase('Purchase.Direct', 2, 2, 56, '2/2/2015', 1, '', '', false, 'JASMI-0002', NULL, NULL, 1, ARRAY[]::bigint[], 
+--       ARRAY[
+--                  ROW(1, 'RMBP', 1, 'Stück',180000, 0, 200, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type,
+--                  ROW(1, '13MBA', 1, 'Dutzend',130000, 300, 30, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type,
+--                  ROW(1, '11MBA', 1, 'Stück',110000, 5000, 50, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type], 
+--       ARRAY[NULL::core.attachment_type]);
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.post_purchase_return.sql --<--<--
@@ -15230,7 +15238,9 @@ $$
 LANGUAGE plpgsql;
 
 
-
+ALTER TABLE office.stores
+ADD CONSTRAINT store_default_cash_repository_chk
+CHECK(office.get_office_id_by_cash_repository_id(default_cash_repository_id) = office_id);
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_office_id_by_office_code.sql --<--<--
@@ -22551,7 +22561,6 @@ UNION ALL SELECT 'SQL Query Tool', '~/Modules/BackOffice/Admin/Query.mix', 'SQL'
 UNION ALL SELECT 'Database Statistics', '~/Modules/BackOffice/Admin/DatabaseStatistics.mix', 'DBSTAT', 2, core.get_menu_id('SAT')
 UNION ALL SELECT 'Backup Database', '~/Modules/BackOffice/Admin/DatabaseBackup.mix', 'BAK', 2, core.get_menu_id('SAT')
 UNION ALL SELECT 'Change User Password', '~/Modules/BackOffice/Admin/ChangePassword.mix', 'PWD', 2, core.get_menu_id('SAT')
-UNION ALL SELECT 'New Company', '~/Modules/BackOffice/Admin/NewCompany.mix', 'NEW', 2, core.get_menu_id('SAT')
 UNION ALL SELECT 'One Time Setup', NULL, 'OTS', 1, core.get_menu_id('BO')
 UNION ALL SELECT 'Opening Inventory', '~/Modules/BackOffice/OTS/OpeningInventory.mix', 'OTSI', 2, core.get_menu_id('OTS');
 
@@ -22732,7 +22741,6 @@ SELECT core.get_menu_id('SQL'), 'fr', 'Outils d''administration' UNION ALL
 SELECT core.get_menu_id('DBSTAT'), 'fr', 'Outil de requête SQL' UNION ALL
 SELECT core.get_menu_id('BAK'), 'fr', 'Sauvegarde base de données' UNION ALL
 SELECT core.get_menu_id('PWD'), 'fr', 'Changer mot de passe utilisateur' UNION ALL
-SELECT core.get_menu_id('NEW'), 'fr', 'Nouvelle société' UNION ALL
 SELECT core.get_menu_id('OTS'), 'fr', 'Un réglage de l''heure' UNION ALL
 SELECT core.get_menu_id('OTSI'), 'fr', 'Stock d''ouverture';
 
@@ -24305,12 +24313,12 @@ SELECT 'SGT',   'Samsung Galaxy Tab 10.1',              core.get_item_group_id_b
 
 
 INSERT INTO office.cash_repositories(office_id, cash_repository_code, cash_repository_name, description)
-SELECT 2, 'DRW1',   'Drawer 1',     'Drawer'    UNION ALL
-SELECT 2, 'VLT',    'Vault',        'Vault'     UNION ALL
-SELECT 3, 'DRW2',   'Drawer 2',     'Drawer'    UNION ALL
-SELECT 3, 'VLT2',   'Vault 2',      'Vault'     UNION ALL
-SELECT 3, 'DRW3',   'Drawer 3',     'Drawer'    UNION ALL
-SELECT 3, 'VLT3',   'Vault 3',      'Vault';
+SELECT	2,	'DRW-BK',	'Drawer (BK)',	'Cash in Drawer'	UNION ALL
+SELECT	2,	'VLT-BK',	'Vault (BK)',	'Cash in Vault'     UNION ALL
+SELECT	3,	'DRW-RV',	'Drawer (RV)',	'Cash in Drawer'    UNION ALL
+SELECT	3,	'VLT-RV',	'Vault (RV)',	'Cash in Vault'     UNION ALL
+SELECT	4,	'DRW-KTM',	'Drawer (KTM)',	'Cash in Drawer'    UNION ALL
+SELECT	4,	'VLT-KTM',	'Vault (KTM)',	'Cash in Vault';
 
 INSERT INTO office.stores(office_id, store_code, store_name, address, store_type_id, allow_sales, sales_tax_id, default_cash_repository_id, default_cash_account_id)
 SELECT 2, 'STORE-1', 'Store 1',     'Office', 2, true,  1, 1,   core.get_account_id_by_account_number('10200')  UNION ALL

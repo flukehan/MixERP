@@ -42,8 +42,6 @@ namespace MixERP.Net.Core.Modules.Sales.Reports
                 report.Path = "~/Modules/Sales/Reports/Source/Sales.CustomerDeliveryNote.xml";
                 this.Controls.Add(report);
             }
-
-            base.OnControlLoad(sender, e);
         }
     }
 }

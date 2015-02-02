@@ -64,7 +64,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
 
-            base.OnControlLoad(sender, e);
+            
         }
 
         private static string GetDisplayFields()

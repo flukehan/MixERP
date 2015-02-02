@@ -63,7 +63,6 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             this.CreateTabs(this.Placeholder1);
             this.CreateFlagPanel(this.Placeholder1);
             this.AutoInitialize();
-            base.OnControlLoad(sender, e);
         }
 
         private void AutoInitialize()

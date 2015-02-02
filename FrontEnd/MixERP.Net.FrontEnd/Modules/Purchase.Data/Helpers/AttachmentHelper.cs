@@ -48,7 +48,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Data
 
         public static string CreateAttachmentModelParameter(Collection<Attachment> attachments)
         {
-            if (attachments == null)
+            if (attachments == null || attachments.Count.Equals(0))
             {
                 return "NULL::core.attachment_type";
             }

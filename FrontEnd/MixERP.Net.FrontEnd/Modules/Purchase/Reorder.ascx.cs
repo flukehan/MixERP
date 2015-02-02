@@ -34,7 +34,6 @@ namespace MixERP.Net.Core.Modules.Purchase
             this.AddRuler();
             this.AddButton();
             this.AddGridView();
-            base.OnControlLoad(sender, e);
         }
 
         protected void ReorderButton_Click(object sender, EventArgs e)

@@ -34,7 +34,6 @@ namespace MixERP.Net.Core.Modules.Sales.Widgets
             //this.SalesByMonthGridView.Attributes.Add("style", "display:none;");
             this.SalesByMonthGridView.DataSource = Data.Reports.SalesByMonth.GetSalesByOffice(officeId);
             this.SalesByMonthGridView.DataBind();
-            base.OnControlLoad(sender, e);
         }
     }
 }

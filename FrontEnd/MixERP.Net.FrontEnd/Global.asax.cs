@@ -22,6 +22,7 @@ using System.Threading;
 using System.Web;
 using System.Web.Routing;
 using MixERP.Net.Common;
+using MixERP.Net.Common.Base;
 
 namespace MixERP.Net.FrontEnd
 {
@@ -53,7 +54,16 @@ namespace MixERP.Net.FrontEnd
                 return;
             }
 
-            MixERPExceptionManager.HandleException(ex);
+
+            MixERPException exception = ex as MixERPException;
+
+            if (exception != null)
+            {
+                MixERPExceptionManager.HandleException(exception);
+                return;
+            }
+
+            throw ex;
         }
 
         private void Application_Start(object sender, EventArgs e)

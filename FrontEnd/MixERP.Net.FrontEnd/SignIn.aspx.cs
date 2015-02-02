@@ -38,12 +38,65 @@ namespace MixERP.Net.FrontEnd
         protected void Page_Init(object sender, EventArgs e)
         {
             this.CreateControls(this.Placeholder1);
+            this.CreateDimmer(this.Placeholder1);
 
             string challenge = Guid.NewGuid().ToString().Replace("-", "");
 
             this.Session["Challenge"] = challenge;
 
             PageUtility.RegisterJavascript("challenge", "var challenge = '" + challenge + "';", this.Page, true);
+        }
+
+        private void CreateDimmer(Control container)
+        {
+            using (HtmlGenericControl pageDimmer = new HtmlGenericControl("div"))
+            {
+                pageDimmer.Attributes.Add("class", "ui page dimmer");
+
+                using (HtmlGenericControl content = new HtmlGenericControl("div"))
+                {
+                    content.Attributes.Add("class", "content");
+
+                    using (HtmlGenericControl center = new HtmlGenericControl("div"))
+                    {
+                        center.Attributes.Add("class", "center");
+
+                        using (HtmlGenericControl header = new HtmlGenericControl("div"))
+                        {
+                            header.Attributes.Add("class", "ui yellow huge icon header");
+
+                            using (HtmlGenericControl icon = new HtmlGenericControl("i"))
+                            {
+                                icon.Attributes.Add("class", "ui inverted yellow setting loading icon");
+
+                                header.Controls.Add(icon);
+                            }
+
+                            using (Literal literal = new Literal())
+                            {
+                                literal.Text = Resources.Titles.SigningIn;
+                                header.Controls.Add(literal);
+                            }
+
+                            using (HtmlGenericControl subHeader = new HtmlGenericControl("div"))
+                            {
+                                subHeader.Attributes.Add("class", "ui yellow sub header");
+                                subHeader.InnerText = Resources.Labels.JustAMomentPlease;
+                                header.Controls.Add(subHeader);
+                            }
+
+
+                            center.Controls.Add(header);
+                        }
+
+                        content.Controls.Add(center);
+                    }
+
+                    pageDimmer.Controls.Add(content);
+                }
+
+                container.Controls.Add(pageDimmer);
+            }
         }
 
         protected void Page_Load(object sender, EventArgs e)

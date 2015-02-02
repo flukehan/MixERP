@@ -19,28 +19,22 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Web;
+using MixERP.Net.Common.Base;
 
 namespace MixERP.Net.Common
 {
     public static class MixERPExceptionManager
     {
-        public static void HandleException(Exception ex)
+        public static void HandleException(MixERPException ex)
         {
             if (ex == null)
             {
                 return;
             }
 
-            var exception = ex;
-
-            if (ex.InnerException != null)
-            {
-                exception = ex.InnerException;
-            }
-
             if (HttpContext.Current.Session != null)
             {
-                HttpContext.Current.Session["ex"] = exception;
+                HttpContext.Current.Session["ex"] = ex;
                 HttpContext.Current.Server.TransferRequest("~/Site/RuntimeError.aspx", true);
             }
         }

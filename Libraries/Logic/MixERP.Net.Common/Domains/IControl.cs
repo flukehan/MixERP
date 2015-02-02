@@ -33,6 +33,5 @@ namespace MixERP.Net.Common.Domains
         string MasterPageId { get; set; }
         bool RemoveTheme { get; set; }
         string OverridePath { get; set; }
-        void OnControlLoad(object sender, EventArgs e);
     }
 }

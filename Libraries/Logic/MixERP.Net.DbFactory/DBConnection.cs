@@ -18,6 +18,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System.Configuration;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
 using Npgsql;
 
 namespace MixERP.Net.DbFactory
@@ -26,17 +28,22 @@ namespace MixERP.Net.DbFactory
     {
         public static string ConnectionString()
         {
-            var connectionStringBuilder = new NpgsqlConnectionStringBuilder();
-            connectionStringBuilder.Host = ConfigurationManager.AppSettings["Server"];
-            connectionStringBuilder.Database = ConfigurationManager.AppSettings["Database"];
-            connectionStringBuilder.UserName = ConfigurationManager.AppSettings["UserId"];
-            connectionStringBuilder.Password = ConfigurationManager.AppSettings["Password"];
-            connectionStringBuilder.SyncNotification = true;
-            connectionStringBuilder.Pooling = true;
-            connectionStringBuilder.SSL = true;
-            connectionStringBuilder.SslMode = SslMode.Prefer;
-
-            //connectionStringBuilder.ApplicationName = "MixERP";
+            var connectionStringBuilder = new NpgsqlConnectionStringBuilder
+            {
+                Host = ConfigurationHelper.GetDbServerParameter("Server"),
+                Database = ConfigurationHelper.GetDbServerParameter("Database"),
+                UserName = ConfigurationHelper.GetDbServerParameter("UserId"),
+                Password = ConfigurationHelper.GetDbServerParameter("Password"),
+                Port = Conversion.TryCastInteger(ConfigurationHelper.GetDbServerParameter("Port")),
+                SyncNotification = true,
+                Pooling = true,
+                SSL = true,
+                SslMode = SslMode.Prefer,
+                MinPoolSize = 10,
+                MaxPoolSize = 100,
+                ApplicationName = "MixERP"
+            };
+  
             return connectionStringBuilder.ConnectionString;
         }
     }

@@ -18,30 +18,30 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using System.Web.UI;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
-using System.Web.UI;
 using MixERP.Net.Common.Domains;
 using MixERP.Net.Common.Helpers;
 
 namespace MixERP.Net.FrontEnd.Base
 {
-    public class MixERPUserControl : MixERPUserControlBase
+    public abstract class MixERPUserControl : MixERPUserControlBase
     {
-        public string GetPageMenu(Page page)
+        public override AccessLevel AccessLevel
         {
-            if (page != null)
-            {
-                string relativePath = this.Page.Request.Url.AbsolutePath;
-                return MixERPWebpage.GetContentPageMenu(this.Page, relativePath, relativePath);
-            }
-
-            return null;
+            get { return AccessLevel.PolicyBased; }
         }
 
-        public override void OnControlLoad(object sender, EventArgs e)
+        public void Initialize()
         {
-            if (this.AccessLevel.Equals(AccessLevel.AdminOnly) && !CurrentSession.IsAdmin())
+            this.OnControlLoad(this, new EventArgs());
+            this.CheckAccessLevel();
+        }
+
+        private void CheckAccessLevel()
+        {
+            if ((this.AccessLevel.Equals(AccessLevel.AdminOnly) || this.AccessLevel.Equals(AccessLevel.LocalhostAdmin)) && !CurrentSession.IsAdmin())
             {
                 this.Page.Server.Transfer("~/Site/AccessIsDenied.aspx");
             }
@@ -52,18 +52,6 @@ namespace MixERP.Net.FrontEnd.Base
             {
                 this.Page.Server.Transfer("~/Site/AccessIsDenied.aspx");
             }
-
-
-            base.OnControlLoad(sender, e);
         }
-
-        
-
-        public override AccessLevel AccessLevel
-        {
-            get { return AccessLevel.PolicyBased; }
-        }
-
-
     }
 }

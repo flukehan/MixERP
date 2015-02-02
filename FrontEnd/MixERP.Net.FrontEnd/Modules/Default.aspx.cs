@@ -28,15 +28,15 @@ namespace MixERP.Net.FrontEnd.Modules
 {
     public partial class Default : MixERPWebpage
     {
-        private IControl plugin;
+        private MixERPUserControl plugin;
 
         protected void Page_Init(object sender, EventArgs e)
         {
             if (this.plugin != null)
             {
-                this.DefaultContentPlaceholder.Controls.Add((Control) this.plugin);
+                this.DefaultContentPlaceholder.Controls.Add(this.plugin);
 
-                this.plugin.OnControlLoad(sender, e);
+                this.plugin.Initialize();
 
                 if (!string.IsNullOrWhiteSpace(this.plugin.OverridePath))
                 {
@@ -73,7 +73,7 @@ namespace MixERP.Net.FrontEnd.Modules
 
                     if (File.Exists(this.Server.MapPath(path)))
                     {
-                        this.plugin = this.Page.LoadControl(path) as IControl;
+                        this.plugin = this.Page.LoadControl(path) as MixERPUserControl;
                     }
                 }
             }

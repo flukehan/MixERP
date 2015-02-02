@@ -43,7 +43,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
             this.CreateFormSegment(this.Placeholder1);
             this.CreateMessageLabel(this.Placeholder1);
 
-            base.OnControlLoad(sender, e);
+            
         }
 
         private void CreateHeader(Control container)

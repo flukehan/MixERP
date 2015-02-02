@@ -31,8 +31,6 @@ namespace MixERP.Net.Core.Modules.Sales.Widgets
             this.TopSellingProductsGridView.Attributes.Add("style", "display:none;");
             this.TopSellingProductsGridView.DataSource = Data.Reports.TopSellingProducts.GetTopSellingProductsOfAllTimeByOffice();
             this.TopSellingProductsGridView.DataBind();
-
-            base.OnControlLoad(sender, e);
         }
     }
 }

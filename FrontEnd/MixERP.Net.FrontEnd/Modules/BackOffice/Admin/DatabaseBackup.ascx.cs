@@ -47,9 +47,6 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
             this.CreateHeader(this.Placeholder1);
             this.CreateFormSegment(this.Placeholder1);
             this.CreateGridModal(this.Placeholder1);
-
-
-            base.OnControlLoad(sender, e);
         }
 
         private void CreateHeader(Control container)

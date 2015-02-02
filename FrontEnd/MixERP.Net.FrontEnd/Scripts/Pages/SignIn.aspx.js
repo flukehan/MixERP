@@ -5,7 +5,7 @@ var branchSelect = $("#BranchSelect");
 var languageSelect = $("#LanguageSelect");
 var signInButton = $("#SignInButton");
 
-$(document).ready(function() {
+$(document).ready(function () {
     usernameInputText.val('binod');
     passwordInputPassword.val('binod');
 
@@ -28,6 +28,8 @@ $(document).ready(function() {
 });
 
 signInButton.click(function() {
+    $(".dimmer").dimmer('show');
+
     var username = usernameInputText.val();
     var rememberMe = rememberInputCheckBox.is(":checked");
     var branchId = parseInt2(branchSelect.getSelectedValue());
@@ -50,6 +52,7 @@ signInButton.click(function() {
     ajaxAuthenticate.fail(function(xhr) {
         logAjaxErrorMessage(xhr);
         makeDirty();
+        $(".dimmer").dimmer('hide');
     });
 });
 
@@ -88,3 +91,12 @@ function getPassword(username, password, token) {
 
     return hex;
 };
+
+
+$(document).keyup(function (e) {
+    if (e.which === 13) {
+        if (!$(".form").hasClass("loading")) {
+            signInButton.trigger("click");
+        };
+    };
+});

@@ -51,7 +51,7 @@ namespace MixERP.Net.Core.Modules.Finance
                 this.Controls.Add(view);
             }
 
-            base.OnControlLoad(sender, e);
+            
         }
     }
 }

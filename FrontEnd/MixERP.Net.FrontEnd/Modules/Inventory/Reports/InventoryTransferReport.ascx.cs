@@ -43,7 +43,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Reports
                 this.Controls.Add(report);
             }
 
-            base.OnControlLoad(sender, e);
+            
         }
     }
 }

@@ -1680,6 +1680,7 @@ CREATE TABLE office.stores
                                             DEFAULT(NOW())
 );
 
+
 ALTER TABLE core.sales_tax_exempts
 ADD FOREIGN KEY(store_id) REFERENCES office.stores(store_id);
 

@@ -45,8 +45,6 @@ namespace MixERP.Net.Core.Modules.Sales
 
                 this.Placeholder1.Controls.Add(view);
             }
-
-            base.OnControlLoad(sender, e);
         }
     }
 }

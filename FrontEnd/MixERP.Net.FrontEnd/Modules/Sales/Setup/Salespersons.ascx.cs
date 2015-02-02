@@ -31,7 +31,6 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
         public override void OnControlLoad(object sender, EventArgs e)
         {
             this.LoadControl();
-            base.OnControlLoad(sender, e);
         }
 
         protected void LoadControl()

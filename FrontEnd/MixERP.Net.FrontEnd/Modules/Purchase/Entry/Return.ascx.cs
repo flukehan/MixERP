@@ -46,8 +46,6 @@ namespace MixERP.Net.Core.Modules.Purchase.Entry
 
                 this.Placeholder1.Controls.Add(product);
             }
-
-            base.OnControlLoad(sender, e);
         }
     }
 }

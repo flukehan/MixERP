@@ -298,3 +298,10 @@ $$
 LANGUAGE plpgsql;
 
 
+-- 
+-- SELECT * FROM transactions.post_purchase('Purchase.Direct', 2, 2, 56, '2/2/2015', 1, '', '', false, 'JASMI-0002', NULL, NULL, 1, ARRAY[]::bigint[], 
+--       ARRAY[
+--                  ROW(1, 'RMBP', 1, 'Piece',180000, 0, 200, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type,
+--                  ROW(1, '13MBA', 1, 'Dozen',130000, 300, 30, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type,
+--                  ROW(1, '11MBA', 1, 'Piece',110000, 5000, 50, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type], 
+--       ARRAY[NULL::core.attachment_type]);

@@ -20,7 +20,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Web.UI;
 using MixERP.Net.Common.Domains;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.FrontEnd.Base;
@@ -37,7 +36,6 @@ namespace MixERP.Net.Core.Modules.BackOffice
 
         public override void OnControlLoad(object sender, EventArgs e)
         {
-
             using (ScrudForm scrud = new ScrudForm())
             {
                 scrud.Text = "Users";
@@ -51,7 +49,7 @@ namespace MixERP.Net.Core.Modules.BackOffice
                 scrud.DisplayViews = GetDisplayViews();
                 scrud.ExcludeEdit = "password, user_name";
 
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(Users));
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (Users));
 
                 scrud.DenyAdd = !CurrentSession.IsAdmin();
                 scrud.DenyEdit = !CurrentSession.IsAdmin();
@@ -76,8 +74,5 @@ namespace MixERP.Net.Core.Modules.BackOffice
             ScrudHelper.AddDisplayView(displayViews, "office.roles.role_id", "office.roles");
             return string.Join(",", displayViews);
         }
-
-
-
     }
 }

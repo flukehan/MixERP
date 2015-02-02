@@ -47,6 +47,7 @@ namespace MixERP.Net.FrontEnd.Site
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
             string server = this.Request.ServerVariables["SERVER_SOFTWARE"];
 
             //This is visual studio.

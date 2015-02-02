@@ -43,7 +43,6 @@ namespace MixERP.Net.Core.Modules.Sales.Reports
 
                 this.Controls.Add(report);
             }
-            base.OnControlLoad(sender, e);
         }
     }
 }

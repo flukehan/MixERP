@@ -40,7 +40,7 @@ namespace MixERP.Net.Core.Modules.Inventory
             this.CreateGridView(this.Placeholder1);
             this.CreateBottomPanel(this.Placeholder1);
             this.RegisterJavascript();
-            base.OnControlLoad(sender, e);
+            
         }
 
         private void RegisterJavascript()

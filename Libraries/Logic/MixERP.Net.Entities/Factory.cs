@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Configuration;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
 using Npgsql;
 using PetaPoco;
 
@@ -35,15 +37,21 @@ namespace MixERP.Net.Entities
 
         private static string GetConnectionString()
         {
-            var connectionStringBuilder = new NpgsqlConnectionStringBuilder();
-            connectionStringBuilder.Host = ConfigurationManager.AppSettings["Server"];
-            connectionStringBuilder.Database = ConfigurationManager.AppSettings["Database"];
-            connectionStringBuilder.UserName = ConfigurationManager.AppSettings["UserId"];
-            connectionStringBuilder.Password = ConfigurationManager.AppSettings["Password"];
-            connectionStringBuilder.SyncNotification = true;
-            connectionStringBuilder.Pooling = true;
-            connectionStringBuilder.SSL = true;
-            connectionStringBuilder.SslMode = SslMode.Prefer;
+            var connectionStringBuilder = new NpgsqlConnectionStringBuilder
+            {
+                Host = ConfigurationHelper.GetDbServerParameter("Server"),
+                Database = ConfigurationHelper.GetDbServerParameter("Database"),
+                UserName = ConfigurationHelper.GetDbServerParameter("UserId"),
+                Password = ConfigurationHelper.GetDbServerParameter("Password"),
+                Port = Conversion.TryCastInteger(ConfigurationHelper.GetDbServerParameter("Port")),
+                SyncNotification = true,
+                Pooling = true,
+                SSL = true,
+                SslMode = SslMode.Prefer,
+                MinPoolSize = 10,
+                MaxPoolSize = 100,
+                ApplicationName = "MixERP"
+            };
 
             //connectionStringBuilder.ApplicationName = "MixERP";
             return connectionStringBuilder.ConnectionString;

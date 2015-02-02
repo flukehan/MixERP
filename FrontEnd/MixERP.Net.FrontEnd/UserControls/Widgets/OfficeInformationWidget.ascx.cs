@@ -43,13 +43,13 @@ namespace MixERP.Net.FrontEnd.UserControls.Widgets
 {
     public partial class OfficeInformationWidget : MixERPWidget
     {
+        public override void OnControlLoad(object sender, EventArgs e)
+        {
+        }
+
         public override AccessLevel AccessLevel
         {
             get { return AccessLevel.Everyone; }
-        }
-
-        protected void Page_Init(object sender, EventArgs e)
-        {
         }
     }
 }

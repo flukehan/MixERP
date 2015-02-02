@@ -44,8 +44,6 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof(BonusSlabAssignment));
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
-
-            base.OnControlLoad(sender, e);
         }
 
         private static string GetDisplayFields()

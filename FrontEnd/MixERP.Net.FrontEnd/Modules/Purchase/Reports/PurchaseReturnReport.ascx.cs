@@ -45,7 +45,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Reports
                 this.Controls.Add(report);
             }
 
-            base.OnControlLoad(sender, e);
+            
         }
     }
 }

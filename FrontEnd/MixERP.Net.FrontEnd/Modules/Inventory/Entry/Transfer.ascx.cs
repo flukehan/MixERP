@@ -40,7 +40,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Entry
                 this.Placeholder1.Controls.Add(form);
             }
 
-            base.OnControlLoad(sender, e);
+            
         }
     }
 }

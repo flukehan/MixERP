@@ -50,8 +50,6 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
                 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
-
-            base.OnControlLoad(sender, e);
         }
 
         private void AddScrudCustomValidatorErrorMessages()

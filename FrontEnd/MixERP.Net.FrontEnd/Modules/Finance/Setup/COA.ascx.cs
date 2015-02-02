@@ -49,7 +49,7 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
 
-            base.OnControlLoad(sender, e);
+            
         }
 
         private static string GetDisplayFields()

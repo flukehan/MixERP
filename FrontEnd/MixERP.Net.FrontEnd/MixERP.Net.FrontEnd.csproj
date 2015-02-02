@@ -41,7 +41,7 @@
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -269,13 +269,6 @@
     </Compile>
     <Compile Include="UserControls\Widgets\WorkflowWidget.ascx.designer.cs">
       <DependentUpon>WorkflowWidget.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="WebUserControl1.ascx.cs">
-      <DependentUpon>WebUserControl1.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="WebUserControl1.ascx.designer.cs">
-      <DependentUpon>WebUserControl1.ascx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -607,6 +600,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Resource\Configuration\MessagingParameters.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Resource\Configuration\DbServer.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Resource\Configuration\TransactionChecklistParameters.xml" />
@@ -1023,7 +1019,6 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-    <Content Include="WebUserControl1.ascx" />
     <Content Include="xsp4.bat" />
   </ItemGroup>
   <ItemGroup>

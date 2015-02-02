@@ -36,8 +36,6 @@ namespace MixERP.Net.Core.Modules.Sales.Reports
                 report.Path = "~/Modules/Sales/Reports/Source/TopSellingProductsOfAllTime.xml";
                 this.Controls.Add(report);
             }
-
-            base.OnControlLoad(sender, e);
         }
     }
 }

@@ -30,7 +30,7 @@ namespace MixERP.Net.Core.Modules.Finance
             this.OfficeInputText.Value = CurrentSession.GetOfficeName();
             this.CurrencyInputText.Value = "NPR";//Todo
 
-            base.OnControlLoad(sender, e);
+            
         }
     }
 }

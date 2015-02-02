@@ -54,8 +54,6 @@ namespace MixERP.Net.Core.Modules.Purchase.Confirmation
 
                 this.Placeholder1.Controls.Add(checklist);
             }
-
-            base.OnControlLoad(sender, e);
         }
     }
 }

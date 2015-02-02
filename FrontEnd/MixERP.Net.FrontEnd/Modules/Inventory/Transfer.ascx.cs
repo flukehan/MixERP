@@ -41,7 +41,7 @@ namespace MixERP.Net.Core.Modules.Inventory
                 this.Placeholder1.Controls.Add(productView);
             }
 
-            base.OnControlLoad(sender, e);
+            
         }
     }
 }

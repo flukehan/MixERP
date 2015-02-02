@@ -52,7 +52,7 @@ namespace MixERP.Net.Core.Modules.Finance
             }
 
             this.AddModal();
-            base.OnControlLoad(sender, e);
+            
         }
 
         #region Modal

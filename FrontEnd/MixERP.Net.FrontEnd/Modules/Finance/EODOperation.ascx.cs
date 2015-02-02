@@ -30,10 +30,10 @@ namespace MixERP.Net.Core.Modules.Finance
         public override void OnControlLoad(object sender, EventArgs e)
         {
             this.Initialize();
-            base.OnControlLoad(sender, e);
+            
         }
 
-        private void Initialize()
+        private new void Initialize()
         {
             int officeId = CurrentSession.GetOfficeId();
 

@@ -38,7 +38,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
 
         public static IEnumerable<CostCenter> GetCostCenters()
         {
-            return Factory.Get<CostCenter>("SELECT * FROM office.cost_center ORDER BY cost_center_id;");
+            return Factory.Get<CostCenter>("SELECT * FROM office.cost_centers ORDER BY cost_center_id;");
         }
 
         public static IEnumerable<FlagType> GetFlagTypes()

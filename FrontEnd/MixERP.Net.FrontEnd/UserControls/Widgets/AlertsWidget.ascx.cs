@@ -45,5 +45,9 @@ namespace MixERP.Net.FrontEnd.UserControls.Widgets
         protected void Page_Init(object sender, EventArgs e)
         {
         }
+
+        public override void OnControlLoad(object sender, EventArgs e)
+        {
+        }
     }
 }

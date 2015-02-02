@@ -25,6 +25,10 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
 {
     public partial class GLAccess : MixERPUserControl
     {
+        public override void OnControlLoad(object sender, EventArgs e)
+        {
+        }
+
         public override AccessLevel AccessLevel
         {
             get

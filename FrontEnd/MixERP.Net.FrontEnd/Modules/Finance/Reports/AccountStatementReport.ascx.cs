@@ -65,7 +65,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 this.Placeholder1.Controls.Add(report);
             }
 
-            base.OnControlLoad(sender, e);
+            
         }
     }
 }

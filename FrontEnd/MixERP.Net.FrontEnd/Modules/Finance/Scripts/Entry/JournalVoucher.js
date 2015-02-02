@@ -108,7 +108,7 @@ function loadCashRepositories() {
     var repoAjax = getAjax(url, data);
 
     repoAjax.success(function(msg) {
-        $.when(cashRepositorySelect.bindAjaxData(msg.d)).done(function() {
+        $.when(cashRepositorySelect.bindAjaxData(msg.d)).done(function () {
             if (cashRepositorySelect.children('option').length === 1) {
                 loadCurrenciesByAccountNumber(accountSelect.getSelectedValue());
                 return;

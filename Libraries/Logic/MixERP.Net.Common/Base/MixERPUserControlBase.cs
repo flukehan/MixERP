@@ -25,16 +25,12 @@ namespace MixERP.Net.Common.Base
 {
     public abstract class MixERPUserControlBase : UserControl, IControl
     {
-        public virtual string MasterPageId { get; set; }
-
-        public bool RemoveTheme { get; set; }
-
-        public virtual string OverridePath { get; set; }
-
-        public virtual string TargetContentPlaceHolder { get; set; }
-
-        public virtual void OnControlLoad(object sender, EventArgs e) { }
-
         public abstract AccessLevel AccessLevel { get; }
+        public abstract void OnControlLoad(object sender, EventArgs e);
+
+        public string MasterPageId { get; set; }
+        public bool RemoveTheme { get; set; }
+        public string OverridePath { get; set; }
+
     }
 }

@@ -70,6 +70,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Just a moment, please!.
+        /// </summary>
+        internal static string JustAMomentPlease {
+            get {
+                return ResourceManager.GetString("JustAMomentPlease", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Task completed successfully..
         /// </summary>
         internal static string TaskCompletedSuccessfully {

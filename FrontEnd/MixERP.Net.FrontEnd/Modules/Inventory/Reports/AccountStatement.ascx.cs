@@ -27,5 +27,9 @@ namespace MixERP.Net.Core.Modules.Inventory.Reports
         protected void Page_Load(object sender, EventArgs e)
         {
         }
+
+        public override void OnControlLoad(object sender, EventArgs e)
+        {
+        }
     }
 }

@@ -34,7 +34,7 @@ namespace MixERP.Net.Core.Modules.BackOffice
             }
 
             this.SetOverridePath();
-            base.OnControlLoad(sender, e);
+            
         }
 
         private void SetOverridePath()

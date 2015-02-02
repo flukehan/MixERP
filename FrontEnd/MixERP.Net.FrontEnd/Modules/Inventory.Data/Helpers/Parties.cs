@@ -53,7 +53,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
 
         public static PartyView GetPartyView(string partyCode)
         {
-            return Factory.Get<PartyView>("SELECT * FROM core.party_view WHERE party_code=@PartyCode ORDER BY party_id").FirstOrDefault();
+            return Factory.Get<PartyView>("SELECT * FROM core.party_view WHERE party_code=@0 ORDER BY party_id", partyCode).FirstOrDefault();
         }
 
         public static IEnumerable<ShippingAddress> GetShippingAddresses(string partyCode)

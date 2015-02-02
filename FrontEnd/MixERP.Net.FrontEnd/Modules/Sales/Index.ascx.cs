@@ -30,7 +30,6 @@ namespace MixERP.Net.Core.Modules.Sales
         public override void OnControlLoad(object sender, EventArgs e)
         {
             this.LoadWidget();
-            base.OnControlLoad(sender, e);
         }
 
         public void LoadWidget()

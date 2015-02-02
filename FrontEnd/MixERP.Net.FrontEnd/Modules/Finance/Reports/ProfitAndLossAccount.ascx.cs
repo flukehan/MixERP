@@ -40,7 +40,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             this.CreateGrid(this.Placeholder1);
             this.BindGrid();
 
-            base.OnControlLoad(sender, e);
+            
         }
 
         private void CreateHeader(Control container)

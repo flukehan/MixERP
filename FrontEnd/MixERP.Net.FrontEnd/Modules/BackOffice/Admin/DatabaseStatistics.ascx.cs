@@ -49,7 +49,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
             this.AddScrud();
             LocalizeButtons();
 
-            base.OnControlLoad(sender, e);
+            
         }
 
         protected void AnalyzeButton_Click(object sender, EventArgs e)
