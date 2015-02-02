@@ -636,4 +636,7 @@
   <data name="elevated" xml:space="preserve">
     <value>Elevated</value>
   </data>
+  <data name="flag_type_name" xml:space="preserve">
+    <value>Flag Type Name</value>
+  </data>
 </root>
