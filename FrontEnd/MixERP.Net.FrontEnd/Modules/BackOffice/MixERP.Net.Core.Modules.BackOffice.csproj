@@ -105,6 +105,7 @@
     <Content Include="Scripts\jquery-1.6.4.min.js" />
     <Content Include="Scripts\jquery.signalR-2.2.0.js" />
     <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
+    <Content Include="Scripts\Flags.ascx.js" />
     <Content Include="Scripts\OTS\OpeningInventory.ascx.js" />
     <Content Include="Services\web.config" />
     <None Include="Web.Debug.config">

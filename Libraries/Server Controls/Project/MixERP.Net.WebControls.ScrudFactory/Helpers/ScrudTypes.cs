@@ -35,7 +35,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
         public static readonly string[] Longs = {"bigint"};
         public static readonly string[] Shorts = {"smallint"};
         public static readonly string[] Singles = {"real"};
-        public static readonly string[] Strings = {"national character varying", "character varying", "national character", "character", "char", "varchar", "nvarchar", "text"};
+        public static readonly string[] Strings = {"national character varying", "character varying", "national character", "character", "char", "varchar", "nvarchar", "text", "color", "transaction_type"};
         public static readonly string[] Timestamps = {"timestamp with time zone", "timestamp without time zone"};
 
         [SuppressMessage("ReSharper", "FieldCanBeMadeReadOnly.Local")] //Resharper is wrong

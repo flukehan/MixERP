@@ -19,6 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.WebControls.Common;
 using MixERP.Net.WebControls.ScrudFactory.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Resources;
 
@@ -56,7 +57,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 gridPanel.Height = this.GridPanelWidth;
             }
 
-            this.searchGridView = new GridView();
+            this.searchGridView = new MixERPGridView();
             this.searchGridView.ID = "SearchGridView";
 
             this.searchGridView.Attributes.Add("style", "white-space: nowrap;");
@@ -67,7 +68,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
             this.searchGridView.AlternatingRowStyle.CssClass = this.GridViewAlternateRowCssClass;
             this.searchGridView.AutoGenerateColumns = true;
             this.searchGridView.RowDataBound += this.SearchGridView_RowDataBound;
-            this.searchGridView.DataBound += this.SearchGridView_DataBound;
             this.searchGridView.Columns.Add(GetSelectColumnTemplateField());
 
             gridPanel.Controls.Add(this.searchGridView);

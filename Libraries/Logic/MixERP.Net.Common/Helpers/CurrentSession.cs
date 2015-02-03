@@ -66,6 +66,11 @@ namespace MixERP.Net.Common.Helpers
             return Conversion.TryCastInteger(SessionHelper.GetSessionKey("OfficeId"));
         }
 
+        public static string GetBaseCurrency()
+        {
+            return Conversion.TryCastString(SessionHelper.GetSessionKey("CurrencyCode"));
+        }
+
         public static string GetOfficeName()
         {
             return Conversion.TryCastString(SessionHelper.GetSessionKey("OfficeName"));

@@ -189,6 +189,7 @@ namespace MixERP.Net.FrontEnd.Base
                     session["NickName"] = signInView.NickName;
                     session["OfficeName"] = signInView.OfficeName;
                     session["RegistrationDate"] = signInView.RegistrationDate;
+                    session["CurrencyCode"] = signInView.CurrencyCode;
                     session["RegistrationNumber"] = signInView.RegistrationNumber;
                     session["PanNumber"] = signInView.PanNumber;
                     session["AddressLine1"] = signInView.AddressLine1;

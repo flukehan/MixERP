@@ -21,8 +21,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
 <div class="four wide column widget">
     <div class="ui segment">
-        <h2>Alerts (5) (Todo)
+        <h2 class="ui purple header">Alerts (5) (Todo)
         </h2>
+        <div class="ui divider"></div>
         <ul>
             <li>
                 <a href="#">12 purchase orders not sent</a>

@@ -16,15 +16,16 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
-<%@ Control Language="C#" AutoEventWireup="true" 
-    CodeBehind="CurrentOfficeSalesByMonthWidget.ascx.cs" 
+<%@ Control Language="C#" AutoEventWireup="true"
+    CodeBehind="CurrentOfficeSalesByMonthWidget.ascx.cs"
     Inherits="MixERP.Net.Core.Modules.Sales.Widgets.CurrentOfficeSalesByMonthWidget" %>
 
 <div class="eight wide column widget">
     <div class="ui segment">
-        <h2>
+        <h2 class="ui purple header">
             <asp:Literal runat="server" ID="TitleLiteral" />
         </h2>
+        <div class="ui divider"></div>
         <asp:GridView runat="server" ID="SalesByMonthGridView" DataKeyNames="office" AutoGenerateColumns="False" CssClass="hidden">
             <Columns>
                 <asp:BoundField HeaderText="OfficeCode" DataField="office" />
@@ -43,7 +44,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
             </Columns>
         </asp:GridView>
 
-        <canvas id="curr-office-sales-by-month-canvas" width="500px" height="180px"></canvas>
+        <canvas id="curr-office-sales-by-month-canvas" width="500" height="180"></canvas>
         <div id="curr-office-sales-by-month-legend"></div>
     </div>
 </div>

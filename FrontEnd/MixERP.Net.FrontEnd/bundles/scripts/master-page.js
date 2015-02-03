@@ -205,27 +205,27 @@ var closeItemSelector = function () {
 };
 
 ///#source 1 1 /Scripts/mixerp/master-page/sortable.js
-//Widget Support
+////Widget Support
 $('#sortable-container').sortable({ placeholder: "ui-state-highlight", helper: 'clone', handle: 'h2' });
 
-$(document).ready(function () {
-    var height = 0;
-    $('#sortable-container').each(function () {
-        var items = $(this).find(".widget");
+//$(document).ready(function () {
+//    var height = 0;
+//    $('#sortable-container').each(function () {
+//        var items = $(this).find(".widget");
 
-        items.each(function () {
-            if ($(this).height() > height) {
-                height = $(this).height();
-            }
-        });
+//        items.each(function () {
+//            if ($(this).height() > height) {
+//                height = $(this).height();
+//            }
+//        });
 
-        var margin = 0;
+//        var margin = 0;
 
-        items.each(function () {
-            $(this).find(".segment").css("height", height - margin + "px");
-        });
-    });
-});
+//        items.each(function () {
+//            $(this).find(".segment").css("height", height - margin + "px");
+//        });
+//    });
+//});
 
 ///#source 1 1 /Scripts/mixerp/master-page/semantic.js
 $(document).ready(function () {

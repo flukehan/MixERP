@@ -20,16 +20,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 <%@ Page Title="" Language="C#" MasterPageFile="~/MixERPMaster.Master" AutoEventWireup="true" CodeBehind="Index.aspx.cs" Inherits="MixERP.Net.FrontEnd.Dashboard.Index" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceholder" runat="server">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
-    <script src="https://raw.githubusercontent.com/markmarkoh/datamaps/master/dist/datamaps.all.min.js"></script>
-    <script src="/Scripts/mixerp/utitlities/country-codes.js"></script>
-
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceholder" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceholder" runat="server">
-
     <div id="sortable-container" class="ui stackable grid">
         <asp:PlaceHolder ID="WidgetPlaceholder" runat="server" />
     </div>

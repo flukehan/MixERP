@@ -20,16 +20,17 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
 <div class="eight wide column widget">
     <div class="ui segment">
-        <h2>
-            <asp:Literal runat="server" ID="TopSellingProductsLiteral" />
+        <h2 class="ui purple header">
+            <asp:Literal runat="server" ID="TopSellingProductsLiteral"/>
         </h2>
+        <div class="ui divider"></div>
         <asp:GridView runat="server" ID="TopSellingProductsOfAllTimeGridView" DataKeyNames="id" AutoGenerateColumns="False" CssClass="hidden">
             <Columns>
                 <asp:BoundField HeaderText="ItemName" DataField="item_name" />
                 <asp:BoundField HeaderText="TotalSales" DataField="total_sales" />
             </Columns>
         </asp:GridView>
-        <canvas id="top-selling-products-canvas" width="500px" height="180px"></canvas>
+        <canvas id="top-selling-products-canvas" width="500" height="180"></canvas>
         <div id="top-selling-products-legend"></div>
     </div>
 </div>

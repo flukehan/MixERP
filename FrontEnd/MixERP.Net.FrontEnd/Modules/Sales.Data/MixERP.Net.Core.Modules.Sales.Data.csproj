@@ -61,6 +61,7 @@
     <Compile Include="Helpers\AttachmentHelper.cs" />
     <Compile Include="Helpers\Currencies.cs" />
     <Compile Include="Helpers\StockMasterDetailHelper.cs" />
+    <Compile Include="Reports\SalesByGeography.cs" />
     <Compile Include="Transactions\Delivery.cs" />
     <Compile Include="Transactions\DirectSales.cs" />
     <Compile Include="Helpers\Items.cs" />

@@ -639,4 +639,10 @@
   <data name="flag_type_name" xml:space="preserve">
     <value>Flag Type Name</value>
   </data>
+  <data name="background_color" xml:space="preserve">
+    <value>Background Color</value>
+  </data>
+  <data name="foreground_color" xml:space="preserve">
+    <value>Foreground Color</value>
+  </data>
 </root>

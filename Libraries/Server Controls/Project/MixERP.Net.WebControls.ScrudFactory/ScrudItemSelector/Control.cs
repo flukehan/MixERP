@@ -20,6 +20,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.WebControls.Common;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
@@ -30,7 +31,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
         public TextBox filterInputText;
         public DropDownList filterSelect;
         public Button goButton;
-        public GridView searchGridView;
+        public MixERPGridView searchGridView;
 
         protected override void CreateChildControls()
         {
@@ -49,11 +50,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
         protected override void Render(HtmlTextWriter w)
         {
             this.container.RenderControl(w);
-        }
-
-        private void SearchGridView_DataBound(object sender, EventArgs e)
-        {
-            this.searchGridView.HeaderRow.TableSection = TableRowSection.TableHeader;
         }
 
         #region IDisposable
@@ -98,7 +94,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
             if (this.searchGridView != null)
             {
                 this.searchGridView.RowDataBound -= this.SearchGridView_RowDataBound;
-                this.searchGridView.DataBound -= this.SearchGridView_DataBound;
                 this.searchGridView.Dispose();
                 this.searchGridView = null;
             }

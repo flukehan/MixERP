@@ -124,7 +124,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
             {
                 if (ScrudTypes.Strings.Contains(dataType))
                 {
-                    ScrudTextBox.AddTextBox(htmlTable, resourceClassName, columnName, defaultValue, isNullable, maxLength, errorCssClass, assembly, disabled);
+                    ScrudTextBox.AddTextBox(htmlTable, resourceClassName, columnName, dataType, defaultValue, isNullable, maxLength, errorCssClass, assembly, disabled);
                 }
 
                 if (ScrudTypes.Shorts.Contains(dataType) || ScrudTypes.Integers.Contains(dataType) || ScrudTypes.Longs.Contains(dataType))

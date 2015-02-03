@@ -227,6 +227,9 @@ var scrudAddNew = function () {
 
     scrudRepaint();
 
+    if (typeof scrudAddNewCallBack === "function") {
+        scrudAddNewCallBack();
+    };
     //Prevent postback
     return false;
 };
@@ -234,6 +237,10 @@ var scrudAddNew = function () {
 function displayForm() {
     $('#' + gridPanelId).hide(500);
     $('#' + formPanelId).show(500);
+
+    if (typeof scrudFormDisplayedCallBack === "function") {
+        scrudFormDisplayedCallBack();
+    };
 };
 
 var scrudRepaint = function () {

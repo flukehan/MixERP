@@ -387,4 +387,10 @@
   <data name="RecurringInvoiceSetup" xml:space="preserve">
     <value>Recurring Invoice Setup</value>
   </data>
+  <data name="TotalSales" xml:space="preserve">
+    <value>Total Sales :</value>
+  </data>
+  <data name="WorldSalesStatistics" xml:space="preserve">
+    <value>World Sales Statistics</value>
+  </data>
 </root>
