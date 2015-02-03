@@ -101,6 +101,7 @@
     <Content Include="Setup\RecurringInvoiceSetup.ascx" />
     <Content Include="Setup\Teams.ascx" />
     <Content Include="Widgets\CurrentOfficeSalesByMonthWidget.ascx" />
+    <Content Include="Widgets\SalesByGeographyWidget.ascx" />
     <Content Include="Widgets\SalesByOfficeWidget.ascx" />
     <Content Include="Widgets\TopSellingProductOfAllTimeCurrentWidget.ascx" />
     <Content Include="Widgets\TopSellingProductOfAllTimeWidget.ascx" />
@@ -526,6 +527,13 @@
     </Compile>
     <Compile Include="Widgets\CurrentOfficeSalesByMonthWidget.ascx.designer.cs">
       <DependentUpon>CurrentOfficeSalesByMonthWidget.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Widgets\SalesByGeographyWidget.ascx.cs">
+      <DependentUpon>SalesByGeographyWidget.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Widgets\SalesByGeographyWidget.ascx.designer.cs">
+      <DependentUpon>SalesByGeographyWidget.ascx</DependentUpon>
     </Compile>
     <Compile Include="Widgets\SalesByOfficeWidget.ascx.cs">
       <DependentUpon>SalesByOfficeWidget.ascx</DependentUpon>

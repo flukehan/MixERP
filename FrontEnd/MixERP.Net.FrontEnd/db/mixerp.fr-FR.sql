@@ -22350,7 +22350,7 @@ AS
 SELECT * FROM transactions.verified_transaction_view;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/transactions/4. transactions.stock_transaction_view.sql --<--<--
-DROP VIEW IF EXISTS transactions.stock_transaction_view;
+DROP VIEW IF EXISTS transactions.stock_transaction_view CASCADE;
 
 CREATE VIEW transactions.stock_transaction_view
 AS
@@ -22375,6 +22375,8 @@ SELECT
         transactions.transaction_master.verification_status_id,
         transactions.transaction_master.verification_reason,
         transactions.stock_master.party_id,
+        core.parties.country_id,
+        core.parties.state_id,
         transactions.stock_master.salesperson_id,
         transactions.stock_master.price_type_id,
         transactions.stock_master.is_credit,
@@ -22398,9 +22400,9 @@ FROM transactions.stock_details
 INNER JOIN transactions.stock_master
 ON transactions.stock_master.stock_master_id = transactions.stock_details.stock_master_id
 INNER JOIN transactions.transaction_master
-ON transactions.transaction_master.transaction_master_id = transactions.stock_master.transaction_master_id;
-
-
+ON transactions.transaction_master.transaction_master_id = transactions.stock_master.transaction_master_id
+INNER JOIN core.parties
+ON transactions.stock_master.party_id = core.parties.party_id;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/transactions/5. transactions.verified_stock_transaction_view.sql --<--<--
 DROP MATERIALIZED VIEW IF EXISTS transactions.verified_stock_transaction_view;
@@ -22424,6 +22426,23 @@ IN
 );
 
 
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/transactions/transactions.sales_by_country_view.sql --<--<--
+CREATE VIEW transactions.sales_by_country_view
+AS
+WITH country_data
+AS
+(
+SELECT country_id, SUM((price * quantity) - discount + tax + shipping_charge) AS sales
+FROM transactions.verified_stock_transaction_view
+WHERE book = ANY(ARRAY['Sales.Delivery', 'Sales.Direct'])
+GROUP BY country_id
+)
+
+SELECT country_code, sales 
+FROM country_data
+INNER JOIN core.countries
+ON country_data.country_id = core.countries.country_id;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/transactions/transactions.verified_stock_details_view.sql --<--<--
 DROP VIEW IF EXISTS transactions.verified_stock_details_view;
@@ -24241,6 +24260,30 @@ UPDATE core.parties
 SET 
     party_code=core.get_party_code(first_name, middle_name, last_name)
 WHERE core.parties.party_id=party_id;
+
+
+UPDATE core.parties
+SET country_id = core.get_country_id_by_country_code('GB')
+WHERE party_id IN(1, 3, 5);
+
+
+UPDATE core.parties
+SET country_id = core.get_country_id_by_country_code('DE')
+WHERE party_id IN(6, 8, 9);
+
+
+UPDATE core.parties
+SET country_id = core.get_country_id_by_country_code('FR')
+WHERE party_id IN(10, 11);
+
+
+UPDATE core.parties
+SET country_id = core.get_country_id_by_country_code('CN')
+WHERE party_id IN(13, 14);
+
+UPDATE core.parties
+SET country_id = core.get_country_id_by_country_code('CA')
+WHERE party_id IN(16, 19,22,23);
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/11. sample-data/sample-data.sql --<--<--

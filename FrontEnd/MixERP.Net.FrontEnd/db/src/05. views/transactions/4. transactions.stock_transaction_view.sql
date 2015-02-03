@@ -1,4 +1,4 @@
-DROP VIEW IF EXISTS transactions.stock_transaction_view;
+DROP VIEW IF EXISTS transactions.stock_transaction_view CASCADE;
 
 CREATE VIEW transactions.stock_transaction_view
 AS
@@ -23,6 +23,8 @@ SELECT
         transactions.transaction_master.verification_status_id,
         transactions.transaction_master.verification_reason,
         transactions.stock_master.party_id,
+        core.parties.country_id,
+        core.parties.state_id,
         transactions.stock_master.salesperson_id,
         transactions.stock_master.price_type_id,
         transactions.stock_master.is_credit,
@@ -46,5 +48,6 @@ FROM transactions.stock_details
 INNER JOIN transactions.stock_master
 ON transactions.stock_master.stock_master_id = transactions.stock_details.stock_master_id
 INNER JOIN transactions.transaction_master
-ON transactions.transaction_master.transaction_master_id = transactions.stock_master.transaction_master_id;
-
+ON transactions.transaction_master.transaction_master_id = transactions.stock_master.transaction_master_id
+INNER JOIN core.parties
+ON transactions.stock_master.party_id = core.parties.party_id;

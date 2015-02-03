@@ -676,6 +676,7 @@
     <Content Include="Scripts\jssha1.5\src\sha256.js" />
     <Content Include="Scripts\jssha1.5\src\sha512.js" />
     <Content Include="Scripts\jssha1.5\src\sha_dev.js" />
+    <Content Include="Scripts\mixerp\utitlities\country-codes.js" />
     <Content Include="Scripts\Pages\SignIn.aspx.js" />
     <Content Include="Scripts\mixerp.js" />
     <Content Include="bundles\scripts\parties-popup.js">

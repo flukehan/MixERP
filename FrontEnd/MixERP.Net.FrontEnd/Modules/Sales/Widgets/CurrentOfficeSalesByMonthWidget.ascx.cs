@@ -18,6 +18,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using MixERP.Net.Common.Base;
+using MixERP.Net.Common.Domains;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.FrontEnd.Base;
 
@@ -25,6 +27,11 @@ namespace MixERP.Net.Core.Modules.Sales.Widgets
 {
     public partial class CurrentOfficeSalesByMonthWidget : MixERPWidget
     {
+        public override AccessLevel AccessLevel
+        {
+            get { return AccessLevel.PolicyBased; }
+        }
+
         public override void OnControlLoad(object sender, EventArgs e)
         {
             int officeId = CurrentSession.GetOfficeId();

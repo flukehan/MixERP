@@ -17,19 +17,27 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Base;
+using System;
+using MixERP.Net.Entities;
+using MixERP.Net.Entities.Transactions;
+using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.WebControls.Common;
 
-namespace MixERP.Net.Common.Models
+namespace MixERP.Net.Core.Modules.Sales.Widgets
 {
-    public class WidgetModel
+    public partial class SalesByGeographyWidget : MixERPWidget
     {
+        public override void OnControlLoad(object sender, EventArgs e)
+        {
+            using (MixERPGridView grid = new MixERPGridView())
+            {
+                grid.ID = "SalesByGeographyGridView";
+                grid.CssClass = "initially hidden";
+                grid.DataSource = Factory.Get<SalesByCountryView>("SELECT * FROM transactions.sales_by_country_view");
+                grid.DataBind();
 
-        public int ColumnNumber { get; set; }
-
-        public int RowNumber { get; set; }
-
-        public MixERPWidgetBase Widget { get; set; }
-
-        public string WidgetSource { get; set; }
+                this.Placeholder1.Controls.Add(grid);
+            }
+        }
     }
 }

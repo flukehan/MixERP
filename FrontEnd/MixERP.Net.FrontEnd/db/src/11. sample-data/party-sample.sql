@@ -1110,3 +1110,27 @@ UPDATE core.parties
 SET 
     party_code=core.get_party_code(first_name, middle_name, last_name)
 WHERE core.parties.party_id=party_id;
+
+
+UPDATE core.parties
+SET country_id = core.get_country_id_by_country_code('GB')
+WHERE party_id IN(1, 3, 5);
+
+
+UPDATE core.parties
+SET country_id = core.get_country_id_by_country_code('DE')
+WHERE party_id IN(6, 8, 9);
+
+
+UPDATE core.parties
+SET country_id = core.get_country_id_by_country_code('FR')
+WHERE party_id IN(10, 11);
+
+
+UPDATE core.parties
+SET country_id = core.get_country_id_by_country_code('CN')
+WHERE party_id IN(13, 14);
+
+UPDATE core.parties
+SET country_id = core.get_country_id_by_country_code('CA')
+WHERE party_id IN(16, 19,22,23);

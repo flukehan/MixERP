@@ -22,5 +22,9 @@ namespace MixERP.Net.Common.Base
 {
     public abstract class MixERPWidgetBase : MixERPUserControlBase
     {
+        public override AccessLevel AccessLevel
+        {
+            get { return AccessLevel.PolicyBased; }
+        }
     }
 }

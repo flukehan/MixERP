@@ -16,7 +16,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
-<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CurrentOfficeSalesByMonthWidget.ascx.cs" Inherits="MixERP.Net.Core.Modules.Sales.Widgets.CurrentOfficeSalesByMonthWidget" %>
+<%@ Control Language="C#" AutoEventWireup="true" 
+    CodeBehind="CurrentOfficeSalesByMonthWidget.ascx.cs" 
+    Inherits="MixERP.Net.Core.Modules.Sales.Widgets.CurrentOfficeSalesByMonthWidget" %>
 
 <div class="eight wide column widget">
     <div class="ui segment">

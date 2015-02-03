@@ -41,28 +41,24 @@ namespace MixERP.Net.Core.Modules.Sales
                 {
                     RowNumber = 1,
                     ColumnNumber = 1,
-                    ColSpan = 2,
                     WidgetSource = "~/Modules/Sales/Widgets/SalesByOfficeWidget.ascx"
                 },
                 new WidgetModel
                 {
                     RowNumber = 1,
                     ColumnNumber = 2,
-                    ColSpan = 2,
                     WidgetSource = "~/Modules/Sales/Widgets/CurrentOfficeSalesByMonthWidget.ascx"
                 },
                 new WidgetModel
                 {
                     RowNumber = 3,
                     ColumnNumber = 1,
-                    ColSpan = 2,
                     WidgetSource = "~/Modules/Sales/Widgets/TopSellingProductOfAllTimeWidget.ascx"
                 },
                 new WidgetModel
                 {
                     RowNumber = 3,
                     ColumnNumber = 2,
-                    ColSpan = 2,
                     WidgetSource = "~/Modules/Sales/Widgets/TopSellingProductOfAllTimeCurrentWidget.ascx"
                 }
             };
