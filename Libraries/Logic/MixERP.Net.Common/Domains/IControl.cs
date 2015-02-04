@@ -25,9 +25,6 @@ using System.Threading.Tasks;
 
 namespace MixERP.Net.Common.Domains
 {
-    /// <summary>
-    /// MixERP User Control Interface
-    /// </summary>
     public interface IControl
     {
         string MasterPageId { get; set; }

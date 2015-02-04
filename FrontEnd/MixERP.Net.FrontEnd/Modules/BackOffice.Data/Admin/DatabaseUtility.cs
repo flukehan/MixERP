@@ -22,9 +22,16 @@ using Npgsql;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Data.Admin
 {
-    public static class DatabaseStatistics
+    /// <summary>
+    ///     This class provides utility functions to execute routine PostgreSQL server functions.
+    /// </summary>
+    public class DatabaseUtility
     {
-        public static void Analyze()
+        /// <summary>
+        ///     Asks the database server to analyze and collect statistics of the current database.
+        ///     For further information, http://www.postgresql.org/docs/9.4/static/sql-analyze.html
+        /// </summary>
+        public void Analyze()
         {
             const string sql = "ANALYZE;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
@@ -34,7 +41,12 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.Admin
             }
         }
 
-        public static void Vacuum()
+        /// <summary>
+        ///     The vacuum command reclaims the storage space of the database server
+        ///     against the dead/inactive database tuples.
+        ///     For further information, http://www.postgresql.org/docs/9.4/static/sql-vacuum.html
+        /// </summary>
+        public void Vacuum()
         {
             const string sql = "VACUUM;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
@@ -44,7 +56,12 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.Admin
             }
         }
 
-        public static void VacuumFull()
+        /// <summary>
+        ///     The vacuum full command frees the storage space of the database server against the
+        ///     dead/inactive database tuples. For further information,
+        ///     http://www.postgresql.org/docs/9.4/static/sql-vacuum.html.
+        /// </summary>
+        public void VacuumFull()
         {
             const string sql = "VACUUM FULL;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))

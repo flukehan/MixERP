@@ -81,12 +81,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 this.saveButton.Click -= this.SaveButton_Click;
             }
 
-            //Important: Don't sent this event to null.
-            //if (this.SaveButtonClick != null)
-            //{
-            //    this.SaveButtonClick = null;
-            //}
-
             if (this.saveButton != null)
             {
                 this.saveButton.Dispose();
@@ -151,12 +145,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
             {
                 this.formGridView.Dispose();
                 this.formGridView = null;
-            }
-
-            if (this.pager != null)
-            {
-                this.pager.Dispose();
-                this.pager = null;
             }
 
             if (this.topCommandPanel != null)

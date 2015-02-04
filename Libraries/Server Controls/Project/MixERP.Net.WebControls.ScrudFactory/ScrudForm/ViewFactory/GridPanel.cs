@@ -18,11 +18,11 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.Common;
-using Wuqi.Webdiyer;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
@@ -31,7 +31,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
         private MixERPGridView formGridView;
         private Panel gridPanel;
         private TextBox lastValueHiddenTextBox;
-        private AspNetPager pager;
 
         private void AddGridView(Panel p)
         {
@@ -60,35 +59,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
             p.Controls.Add(this.lastValueHiddenTextBox);
         }
 
-        private void AddPager(Panel p)
-        {
-            this.pager = new AspNetPager();
-            this.pager.ID = "Pager";
-            this.pager.CssClass = this.GetPagerCssClass();
-            this.pager.UrlPaging = true;
-
-            this.pager.CurrentPageButtonClass = this.GetPagerCurrentPageCssClass();
-
-            this.pager.PagingButtonsClass = this.GetPagerPageButtonCssClass();
-
-            //Avoiding conflict with Semantic UI Pagination Menu
-            //because pager control automatically generates an attribute "margin-right:5px";
-            this.pager.PagingButtonsStyle = "margin-right:0;";
-            this.pager.CurrentPageButtonStyle = "margin-right:0;";
-
-            this.pager.PagingButtonType = PagingButtonType.Text;
-            this.pager.NumericButtonType = PagingButtonType.Text;
-            this.pager.NavigationButtonType = PagingButtonType.Text;
-
-            this.pager.ShowNavigationToolTip = true;
-            this.pager.ShowPageIndexBox = ShowPageIndexBox.Never;
-            this.pager.ShowPageIndex = true;
-            this.pager.AlwaysShowFirstLastPageNumber = true;
-            this.pager.AlwaysShow = false;
-            this.pager.UrlPageIndexName = "page";
-
-            p.Controls.Add(this.pager);
-        }
 
         private void CreateGridPanel()
         {
@@ -103,7 +73,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
             }
 
             this.AddGridView(this.gridPanel);
-            this.AddPager(this.gridPanel);
             this.AddLastValueHiddenField(this.gridPanel);
         }
 

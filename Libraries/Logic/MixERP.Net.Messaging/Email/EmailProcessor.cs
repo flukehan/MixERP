@@ -29,6 +29,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web.Hosting;
+using Serilog;
 
 namespace MixERP.Net.Messaging.Email
 {
@@ -185,9 +186,9 @@ namespace MixERP.Net.Messaging.Email
                             mail.SubjectEncoding = Encoding.UTF8;
                             smtp.Send(mail);
                         }
-                        catch (SmtpException)
+                        catch (SmtpException ex)
                         {
-                            //Swallow
+                            Log.Warning(@"Could not send email to {To}. {Ex}. ", sendTo, ex);
                         }
                     }
                 }

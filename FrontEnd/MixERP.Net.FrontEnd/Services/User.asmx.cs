@@ -24,6 +24,7 @@ using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using MixERP.Net.FrontEnd.Base;
 using Resources;
+using Serilog;
 
 namespace MixERP.Net.FrontEnd.Services
 {
@@ -67,6 +68,8 @@ namespace MixERP.Net.FrontEnd.Services
             {
                 long signInId = Data.Office.User.SignIn(officeId, userName, password, culture, rememberMe, challenge, context);
 
+                Log.Information("{UserName} signed in to office : #{OfficeId}.", userName, officeId);
+
                 if (signInId > 0)
                 {
                     MixERPWebpage.SetSession(this.Context.Session, signInId);
@@ -76,10 +79,12 @@ namespace MixERP.Net.FrontEnd.Services
                 }
 
                 this.LogInvalidSignIn();
-                return Resources.Warnings.UserIdOrPasswordIncorrect;
+                return Warnings.UserIdOrPasswordIncorrect;
             }
             catch (MixERPException ex)
             {
+                Log.Warning("{UserName} could not sign in to office : #{OfficeId}.", userName, officeId);
+
                 this.LogInvalidSignIn();
                 return ex.Message;
             }

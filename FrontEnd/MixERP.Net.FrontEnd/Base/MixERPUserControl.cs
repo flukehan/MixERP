@@ -23,6 +23,7 @@ using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Domains;
 using MixERP.Net.Common.Helpers;
+using Serilog;
 
 namespace MixERP.Net.FrontEnd.Base
 {
@@ -35,7 +36,9 @@ namespace MixERP.Net.FrontEnd.Base
 
         public void Initialize()
         {
+            Log.Verbose("{Control} initialized.", this);
             this.OnControlLoad(this, new EventArgs());
+
             this.CheckAccessLevel();
         }
 
@@ -43,6 +46,8 @@ namespace MixERP.Net.FrontEnd.Base
         {
             if ((this.AccessLevel.Equals(AccessLevel.AdminOnly) || this.AccessLevel.Equals(AccessLevel.LocalhostAdmin)) && !CurrentSession.IsAdmin())
             {
+                Log.Information("Access to {Control} is denied to user.", this, CurrentSession.GetUserName());
+
                 this.Page.Server.Transfer("~/Site/AccessIsDenied.aspx");
             }
 
@@ -50,6 +55,8 @@ namespace MixERP.Net.FrontEnd.Base
 
             if (this.AccessLevel.Equals(AccessLevel.LocalhostAdmin) && !isLocalHost)
             {
+                Log.Information("Access to {Control} is denied to user.", this, CurrentSession.GetUserName());
+
                 this.Page.Server.Transfer("~/Site/AccessIsDenied.aspx");
             }
         }

@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 
 namespace MixERP.Net.WebControls.ScrudFactory
@@ -237,6 +238,51 @@ namespace MixERP.Net.WebControls.ScrudFactory
             }
 
             return cssClass;
+        }
+
+        private int GetRowLimit()
+        {
+            int maxRowLimit = this.MaxRowLimit;
+
+            if (maxRowLimit == 0)
+            {
+                maxRowLimit = Conversion.TryCastInteger(ConfigurationHelper.GetScrudParameter("MaxRowLimit"));
+            }
+
+            if (maxRowLimit == 0)
+            {
+                maxRowLimit = 1000;
+            }
+
+            return maxRowLimit;
+        }
+
+
+        private int GetPageSize()
+        {
+            int pageSize = this.PageSize;
+
+
+            if (pageSize == 0)
+            {
+                pageSize = Conversion.TryCastInteger(ConfigurationHelper.GetScrudParameter("PageSize"));
+            }
+
+            bool showAll = (Conversion.TryCastString(this.Page.Request.QueryString["show"]).Equals("all"));
+            
+            if (showAll)
+            {
+                pageSize = this.GetRowLimit();
+            }
+
+            if (pageSize == 0)
+            {
+                pageSize = 10;//Fallback
+            }
+
+
+
+            return pageSize;
         }
 
         private string GetPagerCurrentPageCssClass()

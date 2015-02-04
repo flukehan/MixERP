@@ -26,8 +26,18 @@ using MixERP.Net.Common.Helpers;
 
 namespace MixERP.Net.Common.jQueryHelper
 {
+
     public static class jQueryUI
     {
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>Add jQueryUI datepicker control.</summary>
+        ///
+        /// <param name="p">        The page instance.</param>
+        /// <param name="controlId">Target control id to bind jQuery UI datepicker to.</param>
+        /// <param name="minDate">  The minimum date.</param>
+        /// <param name="maxDate">  The maximum date.</param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public static void AddjQueryUIDatePicker(Page p, string controlId, DateTime? minDate, DateTime? maxDate)
         {
             if (string.IsNullOrWhiteSpace(controlId))
@@ -44,6 +54,16 @@ namespace MixERP.Net.Common.jQueryHelper
 
             PageUtility.RegisterJavascript("datePicker_" + controlId + RandomNumber().ToString(CultureInfo.InvariantCulture), script, p, true);
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>Gets datepicker script.</summary>
+        ///
+        /// <param name="controlId">Target control id to bind jQuery UI datepicker to.</param>
+        /// <param name="minDate">  The minimum date.</param>
+        /// <param name="maxDate">  The maximum date.</param>
+        ///
+        /// <returns>The date picker script.</returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         private static string GetDatePickerScript(string controlId, DateTime? minDate, DateTime? maxDate)
         {
@@ -67,6 +87,7 @@ namespace MixERP.Net.Common.jQueryHelper
             script += "});";
             return script;
         }
+
 
         private static string GetParameters(DateTime? minDate, DateTime? maxDate)
         {

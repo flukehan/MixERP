@@ -28,6 +28,7 @@ using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using MixERP.Net.DbFactory;
 using Npgsql;
+using Serilog;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Data
 {
@@ -52,6 +53,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
                 }
                 catch (NpgsqlException ex)
                 {
+                    Log.Warning("{Sql}/{Exception}.", sql, ex);
                     throw new MixERPException(ex.Message, ex);
                 }
             }
@@ -210,17 +212,27 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
 
         public static DataTable GetView(string tableSchema, string tableName, string orderBy, int limit, int offset)
         {
-            var sql = "SELECT * FROM @TableSchema.@TableName ORDER BY @OrderBy ASC LIMIT @Limit OFFSET @Offset;";
+            string sql = "SELECT * FROM @TableSchema.@TableName ORDER BY @OrderBy ASC LIMIT @Limit OFFSET @Offset;";
+
+            if (limit < 0)
+            {
+                sql = "SELECT * FROM @TableSchema.@TableName ORDER BY @OrderBy ASC;";
+            }
 
             using (var command = new NpgsqlCommand())
             {
                 //We are 100% sure that the following parameters do not come from user input.
-                //Having said that, it is nice to sanitize the objects before sending it to the database server.
+                //Having said that, it is still nice to sanitize the objects before sending it to the database server.
                 sql = sql.Replace("@TableSchema", DbFactory.Sanitizer.SanitizeIdentifierName(tableSchema));
                 sql = sql.Replace("@TableName", DbFactory.Sanitizer.SanitizeIdentifierName(tableName));
                 sql = sql.Replace("@OrderBy", DbFactory.Sanitizer.SanitizeIdentifierName(orderBy));
-                sql = sql.Replace("@Limit", Conversion.TryCastString(limit));
-                sql = sql.Replace("@Offset", Conversion.TryCastString(offset));
+
+                if (limit >= 0)
+                {
+                    sql = sql.Replace("@Limit", Conversion.TryCastString(limit));
+                    sql = sql.Replace("@Offset", Conversion.TryCastString(offset));
+                }
+
                 command.CommandText = sql;
 
                 return DbOperation.GetDataTable(command);
@@ -305,6 +317,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
                 }
                 catch (NpgsqlException ex)
                 {
+                    Log.Warning("{Sql}/{Data}/{Exception}.", sql, data, ex);
                     throw new MixERPException(ex.Message, ex, ex.ConstraintName);
                 }
             }
@@ -395,6 +408,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
                 }
                 catch (NpgsqlException ex)
                 {
+                    Log.Warning("{Sql}/{Data}/{Exception}.", sql, data, ex);
                     throw new MixERPException(ex.Message, ex, ex.ConstraintName);
                 }
             }

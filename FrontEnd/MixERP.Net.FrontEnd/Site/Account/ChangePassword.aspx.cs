@@ -25,6 +25,7 @@ using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.FrontEnd.Base;
+using Serilog;
 
 namespace MixERP.Net.FrontEnd.Site.Account
 {
@@ -106,13 +107,14 @@ namespace MixERP.Net.FrontEnd.Site.Account
 
             try
             {
-                if (MixERP.Net.FrontEnd.Data.Office.User.ChangePassword(userName, currentPassword, newPassword))
+                if (Data.Office.User.ChangePassword(userName, currentPassword, newPassword))
                 {
                     this.ShowMessage(Resources.Labels.YourPasswordWasChanged, "ui large green header");
                 }
             }
             catch (MixERPException ex)
             {
+                Log.Warning("Could not change password: {Message}.", ex.Message);
                 this.ShowMessage(ex.Message, "ui large red header");
             }
         }

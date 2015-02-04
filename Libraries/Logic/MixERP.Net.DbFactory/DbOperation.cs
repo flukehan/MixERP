@@ -26,6 +26,7 @@ using System.Threading;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.DbFactory.Resources;
 using Npgsql;
+using Serilog;
 
 namespace MixERP.Net.DbFactory
 {
@@ -186,16 +187,16 @@ namespace MixERP.Net.DbFactory
         {
             try
             {
-                using (var connection = new NpgsqlConnection(DbConnection.ConnectionString()))
+                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString()))
                 {
                     connection.Open();
                 }
 
                 return true;
             }
-            catch (NpgsqlException)
+            catch (NpgsqlException ex)
             {
-                //swallow exception
+                Log.Warning("Server is not available: {Exception}.", ex);
             }
 
             return false;

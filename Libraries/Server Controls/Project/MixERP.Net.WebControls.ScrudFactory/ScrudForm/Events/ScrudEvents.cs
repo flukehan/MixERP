@@ -80,7 +80,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
             catch (MixERPException ex)
             {
                 this.DisplayError(ex);
-                //Swallow
             }
         }
 
@@ -155,7 +154,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 catch (MixERPException ex)
                 {
                     this.DisplayError(ex);
-                    //Swallow
                 }
 
             }

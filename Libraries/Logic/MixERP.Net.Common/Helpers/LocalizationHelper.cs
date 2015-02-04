@@ -26,6 +26,7 @@ using System.Resources;
 using System.Threading;
 using System.Web;
 using System.Web.Compilation;
+using Serilog;
 
 namespace MixERP.Net.Common.Helpers
 {
@@ -116,11 +117,10 @@ namespace MixERP.Net.Common.Helpers
 
                 return string.Empty;
             }
-            catch
+            catch(MissingManifestResourceException)
             {
-                //Todo
+                Log.Error("Resource could not be found for the {Key} on {Class}", key, className);
                 return className + "." + key + "::NotFound";
-                //throw new InvalidOperationException("Resource could not be found for the key " + key + " on class " + className + " .");
             }
         }
 
@@ -153,15 +153,13 @@ namespace MixERP.Net.Common.Helpers
 
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    //Todo
                     return fullyQualifiedClassName + "." + key + "::NotFound";
-                    //throw new InvalidOperationException("Resource could not be found for the key " + key + " on Class " + fullyQualifiedClassName + " on Assembly " + assembly.GetName().Name);
                 }
             }
             catch (MissingManifestResourceException)
             {
+                Log.Error("Resource could not be found for the {Key} on {Class}", key, fullyQualifiedClassName);
                 return fullyQualifiedClassName + "." + key + "::NotFound";
-                //throw new InvalidOperationException("Resource could not be found for the key " + key + " on Class " + fullyQualifiedClassName + " on Assembly " + assembly.GetName().Name);
             }
 
             return value;

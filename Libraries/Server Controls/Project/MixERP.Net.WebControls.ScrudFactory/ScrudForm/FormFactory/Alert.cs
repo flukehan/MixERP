@@ -21,6 +21,7 @@ using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.ScrudFactory.Resources;
+using Serilog;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
@@ -46,6 +47,9 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             this.gridPanel.Attributes["style"] = "display:block;";
             this.formPanel.Attributes["style"] = "display:none;";
+
+            Log.Warning("ScrudFactory: {Message}/{Exception}.", message, ex);
+
             this.ResetForm();
         }
 
@@ -57,6 +61,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             this.gridPanel.Attributes["style"] = "display:block;";
             this.formPanel.Attributes["style"] = "display:none;";
+
             this.ResetForm();
         }
         private void ResetForm()

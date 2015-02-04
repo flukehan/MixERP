@@ -49,7 +49,7 @@ namespace MixERP.Net.Common.Helpers
 
             foreach (var group in groups)
             {
-                foreach (var item in group)
+                foreach (WidgetModel item in group)
                 {
                     using (MixERPWidgetBase widget = page.LoadControl(item.WidgetSource) as MixERPWidgetBase)
                     {

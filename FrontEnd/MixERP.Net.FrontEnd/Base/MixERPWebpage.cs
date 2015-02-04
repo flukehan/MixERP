@@ -16,14 +16,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
-
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Common;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Web;
 using System.Web.Security;
@@ -50,7 +49,7 @@ namespace MixERP.Net.FrontEnd.Base
         /// </summary>
         public bool SkipLoginCheck { get; set; }
 
-        public static string GetContentPageMenu(Control page, string path, string currentPage)
+        private static string GetContentPageMenu(Control page, string path, string currentPage)
         {
             if (page != null)
             {
@@ -76,6 +75,7 @@ namespace MixERP.Net.FrontEnd.Base
 
                             if (childMenu.Url.Replace("~", "").Equals(currentPage))
                             {
+
                                 menu += string.Format(Thread.CurrentThread.CurrentCulture,
                                     "<li id='node{0}' class='expanded' data-selected='true' data-menucode='{1}' data-jstree='{{\"type\":\"active\"}}'><a id='anchorNode{0}' href='{2}' title='{3}'>{3}</a></li>",
                                     id, childMenu.MenuCode, page.ResolveUrl(childMenu.Url), childMenu.MenuText);
@@ -98,7 +98,6 @@ namespace MixERP.Net.FrontEnd.Base
 
                 menu += "</li></ul>";
 
-
                 return menu;
             }
 
@@ -107,19 +106,25 @@ namespace MixERP.Net.FrontEnd.Base
 
         public static void RedirectToRootPage()
         {
+            Log.Debug("Redirecting to '/' root page.");
             HttpContext.Current.Response.Redirect("~/");
         }
 
         public static void RequestLogOnPage()
         {
             FormsAuthentication.SignOut();
+            Log.Information("User {UserName} was signed off.", CurrentSession.GetUserName());
 
+            Log.Debug("Clearing Http Cookies.");
             foreach (string cookie in HttpContext.Current.Request.Cookies.AllKeys)
             {
                 HttpContext.Current.Request.Cookies.Remove(cookie);
+                Log.Verbose("Cleared cookie: {Cookie}.", cookie);
             }
 
             string currentPage = HttpContext.Current.Request.Url.AbsolutePath;
+
+            Log.Verbose("Current page is {CurrentPage}.", currentPage);
 
             Page page = HttpContext.Current.Handler as Page;
 
@@ -133,6 +138,7 @@ namespace MixERP.Net.FrontEnd.Base
             if (currentPage != loginUrl)
             {
                 FormsAuthentication.RedirectToLoginPage(currentPage);
+                Log.Information("Redirected to login page.");
             }
         }
 
@@ -209,9 +215,9 @@ namespace MixERP.Net.FrontEnd.Base
 
                     return true;
                 }
-                catch (DbException)
+                catch (DbException ex)
                 {
-                    //Swallow the exception
+                    Log.Warning("Cannot set session for user with SingIn #{SigninId}. {Exception}.", signInId, ex);
                 }
             }
 
@@ -256,9 +262,11 @@ namespace MixERP.Net.FrontEnd.Base
             this.ForceLogOff();
             base.OnInit(e);
         }
-
+        
         protected override void OnLoad(EventArgs e)
         {
+            Log.Verbose("Page loaded {Page}.", this.Page);
+
             if (string.IsNullOrWhiteSpace(this.OverridePath))
             {
                 this.OverridePath = this.Page.Request.Url.AbsolutePath;

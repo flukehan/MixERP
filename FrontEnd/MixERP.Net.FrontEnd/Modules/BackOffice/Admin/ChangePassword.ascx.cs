@@ -24,8 +24,10 @@ using System.Web.UI.WebControls;
 using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Domains;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Core.Modules.BackOffice.Data.Admin;
 using MixERP.Net.Core.Modules.BackOffice.Resources;
 using MixERP.Net.FrontEnd.Base;
+using Serilog;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Admin
 {
@@ -42,8 +44,6 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
             this.CreateDivider(this.Placeholder1);
             this.CreateFormSegment(this.Placeholder1);
             this.CreateMessageLabel(this.Placeholder1);
-
-            
         }
 
         private void CreateHeader(Control container)
@@ -149,12 +149,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
 
             try
             {
-                Data.Admin.User.ChangePassword(username, password);
+                User user = new User();
+
+                user.SetNewPassword(username, password);
 
                 this.messageLabel.InnerText = Titles.PasswordUpdated;
             }
             catch (MixERPException ex)
             {
+                Log.Warning("Cannot change password. {Exception}.", ex);
                 this.ShowError(ex.Message);
             }
         }

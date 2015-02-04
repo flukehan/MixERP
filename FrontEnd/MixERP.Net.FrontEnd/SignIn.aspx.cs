@@ -30,6 +30,7 @@ using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Data.Helpers;
 using MixERP.Net.FrontEnd.Data.Office;
 using Resources;
+using Serilog;
 
 namespace MixERP.Net.FrontEnd
 {
@@ -154,8 +155,10 @@ namespace MixERP.Net.FrontEnd
 
         private void CheckDbConnectivity()
         {
+            Log.Verbose("Checking if database server is available.");
             if (!ServerConnectivity.IsDbServerAvailable())
             {
+                Log.Warning("Could not connect to database server.");
                 this.RedirectToOfflinePage();
             }
         }
@@ -167,6 +170,7 @@ namespace MixERP.Net.FrontEnd
 
         private void RedirectToOfflinePage()
         {
+            Log.Debug("Redirecting to offline page.");
             this.Response.Redirect("~/Site/offline.html");
         }
 

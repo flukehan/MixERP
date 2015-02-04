@@ -61,6 +61,9 @@
     <Compile Include="Helpers\TestHelper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\..\..\..\..\..\a\mixerp.dxp">
+      <Link>mixerp.dxp</Link>
+    </None>
     <None Include="..\..\..\mixerp.licenseheader">
       <Link>mixerp.licenseheader</Link>
     </None>

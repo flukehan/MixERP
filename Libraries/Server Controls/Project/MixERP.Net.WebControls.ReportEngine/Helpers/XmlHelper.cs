@@ -18,6 +18,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System.Xml;
+using Serilog;
 
 namespace MixERP.Net.WebControls.ReportEngine.Helpers
 {
@@ -51,9 +52,9 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
                 doc.LoadXml(xml);
                 return doc.SelectNodes(name);
             }
-            catch (XmlException)
+            catch (XmlException ex)
             {
-                //Swallow
+                Log.Debug("XML Exception occurred: {Exception}.", ex);
             }
 
             return null;

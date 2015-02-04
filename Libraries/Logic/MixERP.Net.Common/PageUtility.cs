@@ -21,10 +21,12 @@ using System;
 using System.Configuration;
 using System.Globalization;
 using System.Net;
+using System.Threading;
 using System.Web;
 using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
+using Serilog;
 
 namespace MixERP.Net.Common
 {
@@ -40,12 +42,49 @@ namespace MixERP.Net.Common
             }
         }
 
+        private static string GetUserHostAddress()
+        {
+            string host = string.Empty;
+
+            if (HttpContext.Current != null)
+            {
+                if (HttpContext.Current.Request.UserHostAddress != null)
+                {
+                    host = HttpContext.Current.Request.UserHostAddress;
+                }
+            }
+
+            return host;
+        }
+
+        private static HttpBrowserCapabilities GetBrowser()
+        {
+            if (HttpContext.Current != null)
+            {
+                if (HttpContext.Current.Request.UserHostAddress != null)
+                {
+                    return HttpContext.Current.Request.Browser;
+                }
+            }
+
+            return new HttpBrowserCapabilities();
+        }
+
         public static void CheckInvalidAttempts(Page page)
         {
             if (page != null)
             {
-                if (InvalidPasswordAttempts(page.Session, 0) >= Conversion.TryCastInteger(ConfigurationManager.AppSettings["MaxInvalidPasswordAttempts"]))
+                int triedAttempts = InvalidPasswordAttempts(page.Session);
+                int allowedAttemps = Conversion.TryCastInteger(ConfigurationManager.AppSettings["MaxInvalidPasswordAttempts"]);
+
+                if (triedAttempts > 0)
                 {
+                    Log.Warning("{Count} of {Allowed} allowed invalid sign-in attempts from {Host}/{IP} using {Browser}.", triedAttempts, allowedAttemps, GetUserHostAddress(), GetUserIpAddress(), GetBrowser().Browsers);
+                }
+
+                if (triedAttempts >= allowedAttemps)
+                {
+                    Log.Error("Disallowed access to {Host}/{IP} using {Browser}.", GetUserHostAddress(), GetUserIpAddress(), GetBrowser().Browsers);
                     page.Response.Redirect("~/Resource/Static/AccessIsDenied.html");
                 }
             }
@@ -54,7 +93,7 @@ namespace MixERP.Net.Common
         /// <summary>
         ///     Check if the input is a valid url.
         /// </summary>
-        /// <param name="url"></param>
+        /// <param name="url">Url to validate.</param>
         /// <returns>
         ///     Returns input if it's a valid url. If the input is not a valid url, returns empty string.
         /// </returns>
@@ -172,6 +211,12 @@ namespace MixERP.Net.Common
             {
                 retVal = Conversion.TryCastInteger(session["InvalidPasswordAttempts"]) + increment;
                 session["InvalidPasswordAttempts"] = retVal;
+            }
+
+
+            if (increment > 0)
+            {
+                Log.Warning("{Count} Invalid attempt to sign in from {Host}/{IP} using {Browser}.", retVal, GetUserHostAddress(), GetUserIpAddress(), GetBrowser().Browsers);
             }
 
             return retVal;

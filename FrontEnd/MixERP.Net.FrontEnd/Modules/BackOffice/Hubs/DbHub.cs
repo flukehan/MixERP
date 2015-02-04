@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
-
+using Serilog;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -160,7 +160,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Hubs
             }
             catch
             {
-                //Yeah! Ignore the exception.
+                Log.Warning("Could not delete file: {FileName}.", fileName);
             }
         }
     }
