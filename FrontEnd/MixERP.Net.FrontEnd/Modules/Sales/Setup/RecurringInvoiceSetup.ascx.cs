@@ -70,9 +70,9 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "core.recurring_invoices.recurring_invoice_id", "core.recurring_invoices");
-            ScrudHelper.AddDisplayView(displayViews, "core.parties.party_id", "core.parties");
-            ScrudHelper.AddDisplayView(displayViews, "core.payment_terms.payment_term_id", "core.payment_terms");
+            ScrudHelper.AddDisplayView(displayViews, "core.recurring_invoices.recurring_invoice_id", "core.recurring_invoice_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.parties.party_id", "core.party_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.payment_terms.payment_term_id", "core.payment_term_scrud_view");
             return string.Join(",", displayViews);
         }
     }
