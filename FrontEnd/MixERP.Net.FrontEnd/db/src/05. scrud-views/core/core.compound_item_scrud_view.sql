@@ -1,4 +1,4 @@
-CREATE VIEW core.compound_items_scrud_view
+CREATE VIEW core.compound_item_scrud_view
 AS
 SELECT 
         compound_item_id,

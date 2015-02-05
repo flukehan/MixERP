@@ -40,6 +40,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System.Configuration;
+using MixERP.Net.Common;
 
 namespace MixERP.Net.WebControls.ReportEngine.Data.Connection
 {
@@ -47,18 +48,19 @@ namespace MixERP.Net.WebControls.ReportEngine.Data.Connection
     {
         public static string ReportConnectionString()
         {
-            string host = ConfigurationManager.AppSettings["Server"];
-            string database = ConfigurationManager.AppSettings["Database"];
-            string userName = ConfigurationHelper.GetReportParameter("DbLoginName");
-            string password = ConfigurationHelper.GetReportParameter("DbPassword");
+            string host = ConfigurationHelper.GetReportParameter("DbServer");
+            int port = Conversion.TryCastInteger(ConfigurationHelper.GetReportParameter("DbServerPort"));
+            string database = ConfigurationHelper.GetReportParameter("DbServerDatabase");
+            string userName = ConfigurationHelper.GetReportParameter("DbServerUserId");
+            string password = ConfigurationHelper.GetReportParameter("DbServerPassword");
 
-            NpgsqlConnectionStringBuilder connectionStringBuilder = new NpgsqlConnectionStringBuilder();
-            connectionStringBuilder.Host = host;
-            connectionStringBuilder.Database = database;
-            connectionStringBuilder.UserName = userName;
-            connectionStringBuilder.Password = password;
 
-            return connectionStringBuilder.ConnectionString;
+            if (string.IsNullOrWhiteSpace(host))
+            {
+                return DbFactory.DbConnection.GetConnectionString();
+            }
+
+            return DbFactory.DbConnection.GetConnectionString(host, database, userName, password, port);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿<%--
+﻿<%-- 
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
 This file is part of MixERP.
@@ -14,17 +14,10 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with MixERP.  If not, see <http://www.gnu.org/licenses />.
+along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 --%>
-<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="AccountStatement.ascx.cs" Inherits="MixERP.Net.Core.Modules.Inventory.Reports.AccountStatement" %>
-<style type="text/css">
-    #AccountOverViewGrid td:nth-child(1),
-    #AccountOverViewGrid th:nth-child(1) {
-        width: 200px;
-    }
-</style>
-
-
-<asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
-
-<script src="/Modules/Inventory/Scripts/Reports/AccountStatement.js"></script>
+<%@ Control Language="C#" AutoEventWireup="true"
+    CodeBehind="AccountStatementReport.ascx.cs"
+    Inherits="MixERP.Net.Core.Modules.Inventory.Reports.AccountStatementReport"
+    RemoveTheme="true"
+    MasterPageId="MixERPReportMaster.Master" %>

@@ -30,7 +30,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Confirmation
         {
             using (TransactionChecklistForm checklist = new TransactionChecklistForm())
             {
-                checklist.ViewReportButtonText = Resources.Titles.ViewThisTransfer;
+                checklist.ViewReportButtonText = Resources.Titles.ViewThisAdjustment;
                 checklist.Text = Resources.Titles.StockAdjustment;
                 checklist.AttachmentBookName = "transaction";
                 checklist.OverridePath = "/Modules/Inventory/Adjustment.mix";

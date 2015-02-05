@@ -118,6 +118,8 @@ UNION ALL SELECT 'SQL Query Tool', '~/Modules/BackOffice/Admin/Query.mix', 'SQL'
 UNION ALL SELECT 'Database Statistics', '~/Modules/BackOffice/Admin/DatabaseStatistics.mix', 'DBSTAT', 2, core.get_menu_id('SAT')
 UNION ALL SELECT 'Backup Database', '~/Modules/BackOffice/Admin/DatabaseBackup.mix', 'BAK', 2, core.get_menu_id('SAT')
 UNION ALL SELECT 'Change User Password', '~/Modules/BackOffice/Admin/ChangePassword.mix', 'PWD', 2, core.get_menu_id('SAT')
+UNION ALL SELECT 'Check Updates', '~/Modules/BackOffice/Admin/CheckUpdates.mix', 'UPD', 2, core.get_menu_id('SAT')
+UNION ALL SELECT 'Translate MixERP', '~/Modules/BackOffice/Admin/LocalizeMixERP.mix', 'TRA', 2, core.get_menu_id('SAT')
 UNION ALL SELECT 'One Time Setup', NULL, 'OTS', 1, core.get_menu_id('BO')
 UNION ALL SELECT 'Opening Inventory', '~/Modules/BackOffice/OTS/OpeningInventory.mix', 'OTSI', 2, core.get_menu_id('OTS');
 
@@ -298,5 +300,7 @@ SELECT core.get_menu_id('SQL'), 'fr', 'Outils d''administration' UNION ALL
 SELECT core.get_menu_id('DBSTAT'), 'fr', 'Outil de requête SQL' UNION ALL
 SELECT core.get_menu_id('BAK'), 'fr', 'Sauvegarde base de données' UNION ALL
 SELECT core.get_menu_id('PWD'), 'fr', 'Changer mot de passe utilisateur' UNION ALL
+SELECT core.get_menu_id('UPD'), 'fr', 'Vérifiez Mise à jour' UNION ALL
+SELECT core.get_menu_id('TRA'), 'fr', 'Traduire MixERP' UNION ALL
 SELECT core.get_menu_id('OTS'), 'fr', 'Un réglage de l''heure' UNION ALL
 SELECT core.get_menu_id('OTSI'), 'fr', 'Stock d''ouverture';

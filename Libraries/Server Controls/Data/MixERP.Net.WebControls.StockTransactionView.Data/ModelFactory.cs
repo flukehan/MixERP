@@ -55,7 +55,7 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory.Data
             model.Book = tranBook;
             model.SubBook = subTranBook;
 
-            using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString()))
+            using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.GetConnectionString()))
             {
                 using (NpgsqlCommand command = GetViewCommand(tranBook, subTranBook, ids))
                 {

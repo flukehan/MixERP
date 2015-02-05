@@ -8067,7 +8067,7 @@ CREATE FUNCTION transactions.get_account_statement
 (
     _value_date_from        date,
     _value_date_to          date,
-    _user_id                integer, --RESERVED FOR FUTURE USE
+    _user_id                integer,
     _account_id             bigint,
     _office_id              integer
 )
@@ -11224,6 +11224,231 @@ LANGUAGE plpgsql;
 
 --SELECT * FROM transactions.get_sales_tax_id('Purchase', 1, 'JASMI-0002', '', 1, 'RMBP', 1, 30000);
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_stock_account_statement.sql --<--<--
+DROP FUNCTION IF EXISTS transactions.get_stock_account_statement
+(
+    _value_date_from        date,
+    _value_date_to          date,
+    _user_id                integer,
+    _item_id                integer,
+    _store_id               integer
+);
+
+CREATE FUNCTION transactions.get_stock_account_statement
+(
+    _value_date_from        date,
+    _value_date_to          date,
+    _user_id                integer,
+    _item_id                integer,
+    _store_id               integer
+)
+RETURNS TABLE
+(
+    id                      integer,
+    value_date              date,
+    tran_code               text,
+    statement_reference     text,
+    debit                   decimal(24, 4),
+    credit                  decimal(24, 4),
+    balance                 decimal(24, 4),
+    book                    text,
+    item_id                 integer,
+    item_code               text,
+    item_name               text,
+    posted_on               TIMESTAMP WITH TIME ZONE,
+    posted_by               text,
+    approved_by             text,
+    verification_status     integer,
+    flag_bg                 text,
+    flag_fg                 text
+)
+VOLATILE AS
+$$
+BEGIN
+
+    DROP TABLE IF EXISTS temp_account_statement;
+    CREATE TEMPORARY TABLE temp_account_statement
+    (
+        id                      SERIAL,
+        value_date              date,
+        tran_code               text,
+        statement_reference     text,
+        debit                   decimal(24, 4),
+        credit                  decimal(24, 4),
+        balance                 decimal(24, 4),
+        book                    text,
+        item_id                 integer,
+        item_code               text,
+        item_name               text,
+        posted_on               TIMESTAMP WITH TIME ZONE,
+        posted_by               text,
+        approved_by             text,
+        verification_status     integer,
+        flag_bg                 text,
+        flag_fg                 text
+    ) ON COMMIT DROP;
+
+    INSERT INTO temp_account_statement(value_date, statement_reference, debit, item_id)
+    SELECT 
+        _value_date_from, 
+        'Opening Balance', 
+        SUM
+        (
+            CASE transactions.stock_details.tran_type
+            WHEN 'Dr' THEN base_quantity
+            ELSE base_quantity * -1 
+            END            
+        ) as debit,
+        _item_id
+    FROM transactions.stock_details
+    INNER JOIN transactions.stock_master
+    ON transactions.stock_details.stock_master_id = transactions.stock_master.stock_master_id
+    INNER JOIN transactions.transaction_master
+    ON transactions.stock_master.transaction_master_id = transactions.transaction_master.transaction_master_id
+    WHERE
+        transactions.transaction_master.verification_status_id > 0
+    AND 
+        transactions.transaction_master.value_date < _value_date_from
+    AND 
+        transactions.stock_details.store_id = _store_id
+    AND
+        transactions.stock_details.item_id = _item_id;
+
+    DELETE FROM temp_account_statement
+    WHERE COALESCE(temp_account_statement.debit, 0) = 0
+    AND COALESCE(temp_account_statement.credit, 0) = 0;
+
+    UPDATE temp_account_statement SET 
+    debit = temp_account_statement.credit * -1,
+    credit = 0
+    WHERE temp_account_statement.credit < 0;
+
+    INSERT INTO temp_account_statement(value_date, tran_code, statement_reference, debit, credit, book, item_id, posted_on, posted_by, approved_by, verification_status)
+    SELECT
+        transactions.transaction_master.value_date,
+        transactions.transaction_master.transaction_code,
+        transactions.transaction_master.statement_reference,
+        CASE transactions.stock_details.tran_type
+        WHEN 'Dr' THEN base_quantity
+        ELSE 0 END AS debit,
+        CASE transactions.stock_details.tran_type
+        WHEN 'Cr' THEN base_quantity
+        ELSE 0 END AS credit,
+        transactions.transaction_master.book,
+        transactions.stock_details.item_id,
+        transactions.transaction_master.transaction_ts AS posted_on,
+        office.get_user_name_by_user_id(COALESCE(transactions.transaction_master.user_id, transactions.transaction_master.sys_user_id)),
+        office.get_user_name_by_user_id(transactions.transaction_master.verified_by_user_id),
+        transactions.transaction_master.verification_status_id
+    FROM transactions.transaction_master
+    INNER JOIN transactions.stock_master
+    ON transactions.transaction_master.transaction_master_id = transactions.stock_master.transaction_master_Id
+    INNER JOIN transactions.stock_details
+    ON transactions.stock_master.stock_master_id = transactions.stock_details.stock_master_id
+    WHERE
+        transactions.transaction_master.verification_status_id > 0
+    AND
+        transactions.transaction_master.value_date >= _value_date_from
+    AND
+        transactions.transaction_master.value_date <= _value_date_to
+    AND
+       transactions.stock_details.store_id = _store_id 
+    AND
+       transactions.stock_details.item_id = _item_id
+    ORDER BY 
+        transactions.transaction_master.value_date,
+        transactions.transaction_master.last_verified_on;
+    
+    UPDATE temp_account_statement
+    SET balance = c.balance
+    FROM
+    (
+        SELECT
+            temp_account_statement.id, 
+            SUM(COALESCE(c.debit, 0)) 
+            - 
+            SUM(COALESCE(c.credit,0)) As balance
+        FROM temp_account_statement
+        LEFT JOIN temp_account_statement AS c 
+            ON (c.id <= temp_account_statement.id)
+        GROUP BY temp_account_statement.id
+        ORDER BY temp_account_statement.id
+    ) AS c
+    WHERE temp_account_statement.id = c.id;
+
+    UPDATE temp_account_statement SET 
+        item_code = core.items.item_code,
+        item_name = core.items.item_name
+    FROM core.items
+    WHERE temp_account_statement.item_id = core.items.item_id;
+
+    UPDATE temp_account_statement SET
+        flag_bg = core.get_flag_background_color(core.get_flag_type_id(_user_id, 'account_statement', 'transaction_code', temp_account_statement.tran_code::text)),
+        flag_fg = core.get_flag_foreground_color(core.get_flag_type_id(_user_id, 'account_statement', 'transaction_code', temp_account_statement.tran_code::text));
+
+        
+    RETURN QUERY
+    SELECT * FROM temp_account_statement;
+END
+$$
+LANGUAGE plpgsql;
+
+DROP FUNCTION IF EXISTS transactions.get_stock_account_statement
+(
+    _value_date_from        date,
+    _value_date_to          date,
+    _user_id                integer,
+    _item_code              text,
+    _store_id               integer
+);
+
+CREATE FUNCTION transactions.get_stock_account_statement
+(
+    _value_date_from        date,
+    _value_date_to          date,
+    _user_id                integer,
+    _item_code              text,
+    _store_id               integer
+)
+RETURNS TABLE
+(
+    id                      integer,
+    value_date              date,
+    tran_code               text,
+    statement_reference     text,
+    debit                   decimal(24, 4),
+    credit                  decimal(24, 4),
+    balance                 decimal(24, 4),
+    book                    text,
+    item_id                 integer,
+    item_code               text,
+    item_name               text,
+    posted_on               TIMESTAMP WITH TIME ZONE,
+    posted_by               text,
+    approved_by             text,
+    verification_status     integer,
+    flag_bg                 text,
+    flag_fg                 text
+)
+VOLATILE AS
+$$
+    DECLARE _item_id        integer;
+BEGIN
+
+    SELECT core.items.item_id INTO _item_id
+    FROM core.items
+    WHERE core.items.item_code = _item_code;
+
+    RETURN QUERY
+    SELECT * FROM transactions.get_stock_account_statement(_value_date_from, _value_date_to, _user_id, _item_id, _store_id);
+END
+$$
+LANGUAGE plpgsql;
+
+--SELECT * FROM transactions.get_stock_account_statement('1-1-2010', '1-1-2020', 2, 'RMBP', 1);
+
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.get_top_selling_products_by_office.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_top_selling_products_by_office(_office_id integer, top integer);
 
@@ -14220,25 +14445,25 @@ LANGUAGE plpgsql;
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.post_stock_journal.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_stock_journal
 (
-        _office_id                              integer,
-        _user_id                                integer,
-        _login_id                               bigint,
-        _value_date                             date,
-        _reference_number                       national character varying(24),
-        _statement_reference                    text,
-        _details                                transactions.stock_adjustment_type[]
+    _office_id                              integer,
+    _user_id                                integer,
+    _login_id                               bigint,
+    _value_date                             date,
+    _reference_number                       national character varying(24),
+    _statement_reference                    text,
+    _details                                transactions.stock_adjustment_type[]
 );
 
 
 CREATE FUNCTION transactions.post_stock_journal
 (
-        _office_id                              integer,
-        _user_id                                integer,
-        _login_id                               bigint,
-        _value_date                             date,
-        _reference_number                       national character varying(24),
-        _statement_reference                    text,
-        _details                                transactions.stock_adjustment_type[]
+    _office_id                              integer,
+    _user_id                                integer,
+    _login_id                               bigint,
+    _value_date                             date,
+    _reference_number                       national character varying(24),
+    _statement_reference                    text,
+    _details                                transactions.stock_adjustment_type[]
 )
 RETURNS bigint
 AS
@@ -14376,6 +14601,7 @@ BEGIN
     FROM temp_stock_details;
     
     
+    PERFORM transactions.auto_verify(_transaction_master_id, _office_id);
     RETURN _transaction_master_id;
 END
 $$
@@ -20767,8 +20993,8 @@ WHERE
 core.bonus_slabs.checking_frequency_id = core.frequencies.frequency_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.brands_scrud_view.sql --<--<--
-CREATE VIEW core.brands_scrud_view
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.brand_scrud_view.sql --<--<--
+CREATE VIEW core.brand_scrud_view
 AS
 SELECT 
         brand_id,
@@ -20824,8 +21050,8 @@ INNER JOIN core.compound_items
 ON core.compound_item_details.compound_item_id = core.compound_items.compound_item_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.compound_items_scrud_view.sql --<--<--
-CREATE VIEW core.compound_items_scrud_view
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.compound_item_scrud_view.sql --<--<--
+CREATE VIEW core.compound_item_scrud_view
 AS
 SELECT 
         compound_item_id,
@@ -20965,48 +21191,10 @@ LEFT JOIN core.item_groups AS parent_item_group
 ON core.item_groups.parent_item_group_id = parent_item_group.item_group_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.item_selling_price_scrud_view.sql --<--<--
-DROP VIEW IF EXISTS core.item_selling_price_scrud_view;
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.item_scrud_view.sql --<--<--
+DROP VIEW IF EXISTS core.item_scrud_view;
 
-CREATE VIEW core.item_selling_price_scrud_view
-AS
-SELECT
-    core.item_selling_prices.item_selling_price_id,
-    core.items.item_code,
-    core.items.item_name,
-    core.party_types.party_type_code,
-    core.party_types.party_type_name,
-    unit_code || ' (' || unit_name || ')' AS unit,
-    price
-FROM
-    core.item_selling_prices
-INNER JOIN  core.items
-ON core.item_selling_prices.item_id = core.items.item_id
-INNER JOIN core.units
-ON core.item_selling_prices.unit_id = core.units.unit_id
-LEFT JOIN core.price_types
-ON core.item_selling_prices.price_type_id = core.price_types.price_type_id
-LEFT JOIN core.party_types
-ON  core.item_selling_prices.party_type_id = core.party_types.party_type_id;
-
-
-
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.item_type_scrud_view.sql --<--<--
-DROP VIEW IF EXISTS core.item_type_scrud_view;
-CREATE VIEW core.item_type_scrud_view
-AS
-SELECT 
-  core.item_types.item_type_id, 
-  core.item_types.item_type_code, 
-  core.item_types.item_type_name
-FROM 
-  core.item_types;
-
-
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.items_scrud_view.sql --<--<--
-DROP VIEW IF EXISTS core.items_scrud_view;
-
-CREATE VIEW core.items_scrud_view
+CREATE VIEW core.item_scrud_view
 AS
 SELECT 
         item_id,
@@ -21051,6 +21239,44 @@ LEFT JOIN core.shipping_mail_types
 ON core.items.preferred_shipping_mail_type_id = core.shipping_mail_types.shipping_mail_type_id
 LEFT JOIN core.shipping_package_shapes
 ON core.items.shipping_package_shape_id = core.shipping_package_shapes.shipping_package_shape_id;
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.item_selling_price_scrud_view.sql --<--<--
+DROP VIEW IF EXISTS core.item_selling_price_scrud_view;
+
+CREATE VIEW core.item_selling_price_scrud_view
+AS
+SELECT
+    core.item_selling_prices.item_selling_price_id,
+    core.items.item_code,
+    core.items.item_name,
+    core.party_types.party_type_code,
+    core.party_types.party_type_name,
+    unit_code || ' (' || unit_name || ')' AS unit,
+    price
+FROM
+    core.item_selling_prices
+INNER JOIN  core.items
+ON core.item_selling_prices.item_id = core.items.item_id
+INNER JOIN core.units
+ON core.item_selling_prices.unit_id = core.units.unit_id
+LEFT JOIN core.price_types
+ON core.item_selling_prices.price_type_id = core.price_types.price_type_id
+LEFT JOIN core.party_types
+ON  core.item_selling_prices.party_type_id = core.party_types.party_type_id;
+
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.item_type_scrud_view.sql --<--<--
+DROP VIEW IF EXISTS core.item_type_scrud_view;
+CREATE VIEW core.item_type_scrud_view
+AS
+SELECT 
+  core.item_types.item_type_id, 
+  core.item_types.item_type_code, 
+  core.item_types.item_type_name
+FROM 
+  core.item_types;
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.late_fee_scrud_view.sql --<--<--
@@ -21109,8 +21335,8 @@ INNER JOIN core.accounts
 ON core.parties.account_id=core.accounts.account_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.party_types_scrud_view.sql --<--<--
-CREATE VIEW core.party_types_scrud_view
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.party_type_scrud_view.sql --<--<--
+CREATE VIEW core.party_type_scrud_view
 AS
 SELECT 
         party_type_id,
@@ -21331,8 +21557,8 @@ FROM
   core.sales_tax_types;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.sales_teams_scrud_view.sql --<--<--
-CREATE VIEW core.sales_teams_scrud_view
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.sales_team_scrud_view.sql --<--<--
+CREATE VIEW core.sales_team_scrud_view
 AS
 SELECT 
         sales_team_id,
@@ -21375,8 +21601,8 @@ WHERE
     core.salespersons.account_id = core.accounts.account_id;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.shippers_scrud_view.sql --<--<--
-CREATE VIEW core.shippers_scrud_view
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.shipper_scrud_view.sql --<--<--
+CREATE VIEW core.shipper_scrud_view
 AS
 SELECT
         shipper_id,
@@ -21494,8 +21720,8 @@ FROM
   core.tax_master;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.units_scrud_view.sql --<--<--
-CREATE VIEW core.units_scrud_view
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. scrud-views/core/core.unit_scrud_view.sql --<--<--
+CREATE VIEW core.unit_scrud_view
 AS
 SELECT
         unit_id,
@@ -22028,11 +22254,59 @@ INNER JOIN office.users ON core.bank_accounts.maintained_by_user_id = office.use
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/core/core.item_view.sql --<--<--
---TODO
+DROP VIEW IF EXISTS core.item_view;
+
 CREATE VIEW core.item_view
 AS
-SELECT * FROM core.items;
-
+SELECT 
+        item_id,
+        item_code,
+        item_name,
+        item_group_code || ' (' || item_group_name || ')' AS item_group,
+        item_type_code || ' (' || item_type_name || ')' AS item_type,
+        maintain_stock,
+        brand_code || ' (' || brand_name || ')' AS brand,
+        party_code || ' (' || party_name || ')' AS preferred_supplier,
+        lead_time_in_days,
+        weight_in_grams,
+        width_in_centimeters,
+        height_in_centimeters,
+        length_in_centimeters,
+        machinable,
+        shipping_mail_type_code || ' (' || shipping_mail_type_name || ')' AS preferred_shipping_mail_type,
+        shipping_package_shape_code || ' (' || shipping_package_shape_name || ')' AS preferred_shipping_package_shape,
+        core.units.unit_code || ' (' || core.units.unit_name || ')' AS unit,
+        base_unit.unit_code || ' (' || base_unit.unit_name || ')' AS base_unit,
+        hot_item,
+        cost_price,
+        cost_price_includes_tax,
+        selling_price,
+        selling_price_includes_tax,
+        sales_tax_code || ' (' || sales_tax_name || ')' AS sales_tax,
+        reorder_unit.unit_code || ' (' || reorder_unit.unit_name || ')' AS reorder_unit,
+        reorder_level,
+        reorder_quantity
+FROM core.items
+INNER JOIN core.item_groups
+ON core.items.item_group_id = core.item_groups.item_group_id
+INNER JOIN core.item_types
+ON core.items.item_type_id = core.item_types.item_type_id
+INNER JOIN core.brands
+ON core.items.brand_id = core.brands.brand_id
+INNER JOIN core.parties
+ON core.items.preferred_supplier_id = core.parties.party_id
+INNER JOIN core.units
+ON core.items.unit_id = core.units.unit_id
+INNER JOIN core.units AS base_unit
+ON core.get_root_unit_id(core.items.unit_id) = core.units.unit_id
+INNER JOIN core.units AS reorder_unit
+ON core.items.reorder_unit_id = reorder_unit.unit_id
+INNER JOIN core.sales_taxes
+ON core.items.sales_tax_id = core.sales_taxes.sales_tax_id
+LEFT JOIN core.shipping_mail_types
+ON core.items.preferred_shipping_mail_type_id = core.shipping_mail_types.shipping_mail_type_id
+LEFT JOIN core.shipping_package_shapes
+ON core.items.shipping_package_shape_id = core.shipping_package_shapes.shipping_package_shape_id;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05. views/core/core.party_user_control_view.sql --<--<--
 CREATE VIEW core.party_user_control_view
@@ -22580,6 +22854,8 @@ UNION ALL SELECT 'SQL Query Tool', '~/Modules/BackOffice/Admin/Query.mix', 'SQL'
 UNION ALL SELECT 'Database Statistics', '~/Modules/BackOffice/Admin/DatabaseStatistics.mix', 'DBSTAT', 2, core.get_menu_id('SAT')
 UNION ALL SELECT 'Backup Database', '~/Modules/BackOffice/Admin/DatabaseBackup.mix', 'BAK', 2, core.get_menu_id('SAT')
 UNION ALL SELECT 'Change User Password', '~/Modules/BackOffice/Admin/ChangePassword.mix', 'PWD', 2, core.get_menu_id('SAT')
+UNION ALL SELECT 'Check Updates', '~/Modules/BackOffice/Admin/CheckUpdates.mix', 'UPD', 2, core.get_menu_id('SAT')
+UNION ALL SELECT 'Translate MixERP', '~/Modules/BackOffice/Admin/LocalizeMixERP.mix', 'TRA', 2, core.get_menu_id('SAT')
 UNION ALL SELECT 'One Time Setup', NULL, 'OTS', 1, core.get_menu_id('BO')
 UNION ALL SELECT 'Opening Inventory', '~/Modules/BackOffice/OTS/OpeningInventory.mix', 'OTSI', 2, core.get_menu_id('OTS');
 
@@ -22760,6 +23036,8 @@ SELECT core.get_menu_id('SQL'), 'fr', 'Outils d''administration' UNION ALL
 SELECT core.get_menu_id('DBSTAT'), 'fr', 'Outil de requête SQL' UNION ALL
 SELECT core.get_menu_id('BAK'), 'fr', 'Sauvegarde base de données' UNION ALL
 SELECT core.get_menu_id('PWD'), 'fr', 'Changer mot de passe utilisateur' UNION ALL
+SELECT core.get_menu_id('UPD'), 'fr', 'Vérifiez Mise à jour' UNION ALL
+SELECT core.get_menu_id('TRA'), 'fr', 'Traduire MixERP' UNION ALL
 SELECT core.get_menu_id('OTS'), 'fr', 'Un réglage de l''heure' UNION ALL
 SELECT core.get_menu_id('OTSI'), 'fr', 'Stock d''ouverture';
 
@@ -28253,6 +28531,149 @@ SELECT pg_catalog.setval('transaction_master_transaction_master_id_seq', 92, tru
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/enable-triggers.sql --<--<--
 ALTER TABLE transactions.transaction_details ENABLE TRIGGER check_cash_balance_trigger;
 
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/localization.sql --<--<--
+DROP SCHEMA IF EXISTS localization CASCADE;
+
+CREATE SCHEMA localization;
+
+CREATE TABLE localization.resources
+(
+    resource_id         SERIAL PRIMARY KEY,
+    path                text,
+    key                 text,
+    value               text
+);
+
+CREATE UNIQUE INDEX resources_path_key_uix
+ON localization.resources(UPPER(path), UPPER(key));
+
+CREATE INDEX resources_path_key_inx
+ON localization.resources(path, key);
+
+CREATE INDEX resources_path_inx
+ON localization.resources(path);
+
+CREATE INDEX resources_key_inx
+ON localization.resources(key);
+
+CREATE TABLE localization.cultures
+(
+    culture_code        text PRIMARY KEY,
+    culture_name        text
+);
+
+INSERT INTO localization.cultures
+SELECT 'de-DE',     'German (Germany)'          UNION ALL
+SELECT 'en-GB',     'English (United Kingdom)'  UNION ALL
+SELECT 'es-ES',     'Spanish (Spain)'           UNION ALL
+SELECT 'fil-PH',    'Filipino (Philippines)'    UNION ALL
+SELECT 'fr-FR',     'French (France)'           UNION ALL
+SELECT 'id-ID',     'Indonesian (Indonesia)'    UNION ALL
+SELECT 'ja-JP',     'Japanese (Japan)'          UNION ALL
+SELECT 'ms-MY',     'Malay (Malaysia)'          UNION ALL
+SELECT 'nl-NL',     'Dutch (Netherlands)'       UNION ALL
+SELECT 'pt-PT',     'Portuguese (Portugal)'     UNION ALL
+SELECT 'ru-RU',     'Russian (Russia)'          UNION ALL
+SELECT 'sv-SE',     'Swedish (Sweden)';
+
+
+CREATE TABLE localization.localized_resources
+(
+    id                  SERIAL PRIMARY KEY,
+    culture_code        text REFERENCES localization.cultures,
+    key                 text,
+    value               text
+);
+
+CREATE UNIQUE INDEX localized_resources_culture_key_uix
+ON localization.localized_resources(UPPER(culture_code), UPPER(key));
+
+CREATE FUNCTION localization.add_resource
+(
+    path                text,
+    key                 text,
+    value               text
+)
+RETURNS void
+AS
+$$
+BEGIN
+    IF NOT EXISTS(SELECT 1 FROM localization.resources WHERE localization.resources.path=$1 AND localization.resources.key=$2) THEN
+        INSERT INTO localization.resources(path, key, value)
+        SELECT $1, $2, $3;
+    END IF;
+END
+$$
+LANGUAGE plpgsql;
+
+CREATE FUNCTION localization.add_localized_resource
+(
+    culture_code        text,
+    key                 text,
+    value               text
+)
+RETURNS void
+AS
+$$
+BEGIN
+    IF EXISTS(SELECT 1 FROM localization.localized_resources WHERE culture_code=$1 AND key=$2) THEN
+        UPDATE localization.localized_resources
+        SET value=$2
+        WHERE culture_code=$1 AND key=$2;
+
+        RETURN;
+    END IF;
+
+    INSERT INTO localization.localized_resources(culture_code, key, value)
+    SELECT $1, $2, $3;
+END
+$$
+LANGUAGE plpgsql;
+
+--drop FUNCTION localization.get_localization_table(text)
+
+CREATE FUNCTION localization.get_localization_table
+(
+    culture_code        text
+)
+RETURNS TABLE
+(
+    row_number          bigint,
+    key                 text,
+    invariant_resource  text,
+    value               text
+)
+AS
+$$
+BEGIN   
+    CREATE TEMPORARY TABLE t
+    (
+        key                 text,
+        invariant_resource  text,
+        value               text
+    );
+    INSERT INTO t(key, invariant_resource, value)
+    SELECT
+        DISTINCT localization.resources.key,
+        localization.resources.value as invariant_resource,
+        localization.localized_resources.value
+    FROM localization.resources
+    LEFT JOIN localization.localized_resources
+    ON localization.resources.key = localization.localized_resources.key
+    AND localization.localized_resources.culture_code = $1;
+
+    RETURN QUERY 
+    SELECT 
+        row_number() OVER(ORDER BY t.key ~ '^[[:upper:]][^[:upper:]]' DESC, t.key),
+        t.key,
+        t.invariant_resource,
+        t.value
+    FROM t
+    ORDER BY t.key ~ '^[[:upper:]][^[:upper:]]' DESC, t.key;
+END
+$$
+LANGUAGE plpgsql;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/refresh-materialized-views.sql --<--<--
 SELECT * FROM transactions.refresh_materialized_views(1);

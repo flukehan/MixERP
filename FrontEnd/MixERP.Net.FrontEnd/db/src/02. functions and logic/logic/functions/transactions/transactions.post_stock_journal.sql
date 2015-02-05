@@ -1,24 +1,24 @@
 DROP FUNCTION IF EXISTS transactions.post_stock_journal
 (
-        _office_id                              integer,
-        _user_id                                integer,
-        _login_id                               bigint,
-        _value_date                             date,
-        _reference_number                       national character varying(24),
-        _statement_reference                    text,
-        _details                                transactions.stock_adjustment_type[]
+    _office_id                              integer,
+    _user_id                                integer,
+    _login_id                               bigint,
+    _value_date                             date,
+    _reference_number                       national character varying(24),
+    _statement_reference                    text,
+    _details                                transactions.stock_adjustment_type[]
 );
 
 
 CREATE FUNCTION transactions.post_stock_journal
 (
-        _office_id                              integer,
-        _user_id                                integer,
-        _login_id                               bigint,
-        _value_date                             date,
-        _reference_number                       national character varying(24),
-        _statement_reference                    text,
-        _details                                transactions.stock_adjustment_type[]
+    _office_id                              integer,
+    _user_id                                integer,
+    _login_id                               bigint,
+    _value_date                             date,
+    _reference_number                       national character varying(24),
+    _statement_reference                    text,
+    _details                                transactions.stock_adjustment_type[]
 )
 RETURNS bigint
 AS
@@ -156,6 +156,7 @@ BEGIN
     FROM temp_stock_details;
     
     
+    PERFORM transactions.auto_verify(_transaction_master_id, _office_id);
     RETURN _transaction_master_id;
 END
 $$

@@ -41,7 +41,7 @@ namespace MixERP.Net.DbFactory
             {
                 if (ValidateCommand(command))
                 {
-                    using (var connection = new NpgsqlConnection(DbConnection.ConnectionString()))
+                    using (var connection = new NpgsqlConnection(DbConnection.GetConnectionString()))
                     {
                         command.Connection = connection;
                         connection.Open();
@@ -64,7 +64,7 @@ namespace MixERP.Net.DbFactory
             {
                 if (ValidateCommand(command))
                 {
-                    using (var connection = new NpgsqlConnection(DbConnection.ConnectionString()))
+                    using (var connection = new NpgsqlConnection(DbConnection.GetConnectionString()))
                     {
                         command.Connection = connection;
 
@@ -86,7 +86,7 @@ namespace MixERP.Net.DbFactory
             {
                 if (ValidateCommand(command))
                 {
-                    using (var connection = new NpgsqlConnection(DbConnection.ConnectionString()))
+                    using (var connection = new NpgsqlConnection(DbConnection.GetConnectionString()))
                     {
                         command.Connection = connection;
                         command.Connection.Open();
@@ -147,7 +147,7 @@ namespace MixERP.Net.DbFactory
         [CLSCompliant(false)]
         public static DataTable GetDataTable(NpgsqlCommand command)
         {
-            return GetDataTable(command, DbConnection.ConnectionString());
+            return GetDataTable(command, DbConnection.GetConnectionString());
         }
 
         [CLSCompliant(false)]
@@ -171,7 +171,7 @@ namespace MixERP.Net.DbFactory
             {
                 if (ValidateCommand(command))
                 {
-                    using (var connection = new NpgsqlConnection(DbConnection.ConnectionString()))
+                    using (var connection = new NpgsqlConnection(DbConnection.GetConnectionString()))
                     {
                         command.Connection = connection;
                         connection.Open();
@@ -187,7 +187,7 @@ namespace MixERP.Net.DbFactory
         {
             try
             {
-                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString()))
+                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.GetConnectionString()))
                 {
                     connection.Open();
                 }
@@ -210,7 +210,7 @@ namespace MixERP.Net.DbFactory
                 {
                     ThreadStart queryStart = delegate
                     {
-                        using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString()))
+                        using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.GetConnectionString()))
                         {
                             command.Connection = connection;
                             connection.Notice += Connection_Notice;

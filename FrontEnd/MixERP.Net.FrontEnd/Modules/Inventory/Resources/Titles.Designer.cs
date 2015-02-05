@@ -61,11 +61,56 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account Statement.
+        /// </summary>
+        internal static string AccountStatement {
+            get {
+                return ResourceManager.GetString("AccountStatement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Actual.
         /// </summary>
         internal static string Actual {
             get {
                 return ResourceManager.GetString("Actual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Balance.
+        /// </summary>
+        internal static string Balance {
+            get {
+                return ResourceManager.GetString("Balance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Base Unit Name.
+        /// </summary>
+        internal static string BaseUnitName {
+            get {
+                return ResourceManager.GetString("BaseUnitName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Book.
+        /// </summary>
+        internal static string Book {
+            get {
+                return ResourceManager.GetString("Book", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Brand.
+        /// </summary>
+        internal static string Brand {
+            get {
+                return ResourceManager.GetString("Brand", resourceCulture);
             }
         }
         
@@ -106,6 +151,42 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Credit.
+        /// </summary>
+        internal static string Credit {
+            get {
+                return ResourceManager.GetString("Credit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Days.
+        /// </summary>
+        internal static string Days {
+            get {
+                return ResourceManager.GetString("Days", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Debit.
+        /// </summary>
+        internal static string Debit {
+            get {
+                return ResourceManager.GetString("Debit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Definition.
+        /// </summary>
+        internal static string Definition {
+            get {
+                return ResourceManager.GetString("Definition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Difference.
         /// </summary>
         internal static string Difference {
@@ -142,6 +223,33 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Flag.
+        /// </summary>
+        internal static string Flag {
+            get {
+                return ResourceManager.GetString("Flag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From.
+        /// </summary>
+        internal static string From {
+            get {
+                return ResourceManager.GetString("From", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inventory Advice.
+        /// </summary>
+        internal static string InventoryAdvice {
+            get {
+                return ResourceManager.GetString("InventoryAdvice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Item Code.
         /// </summary>
         internal static string ItemCode {
@@ -156,6 +264,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         internal static string ItemCostPrices {
             get {
                 return ResourceManager.GetString("ItemCostPrices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Group.
+        /// </summary>
+        internal static string ItemGroup {
+            get {
+                return ResourceManager.GetString("ItemGroup", resourceCulture);
             }
         }
         
@@ -187,6 +304,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Item Overview.
+        /// </summary>
+        internal static string ItemOverview {
+            get {
+                return ResourceManager.GetString("ItemOverview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Items.
         /// </summary>
         internal static string Items {
@@ -205,11 +331,29 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Item Type.
+        /// </summary>
+        internal static string ItemType {
+            get {
+                return ResourceManager.GetString("ItemType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Item Types.
         /// </summary>
         internal static string ItemTypes {
             get {
                 return ResourceManager.GetString("ItemTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lead Time.
+        /// </summary>
+        internal static string LeadTime {
+            get {
+                return ResourceManager.GetString("LeadTime", resourceCulture);
             }
         }
         
@@ -268,11 +412,38 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Preferred Supplier.
+        /// </summary>
+        internal static string PreferredSupplier {
+            get {
+                return ResourceManager.GetString("PreferredSupplier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prepare.
+        /// </summary>
+        internal static string Prepare {
+            get {
+                return ResourceManager.GetString("Prepare", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Prepared On.
         /// </summary>
         internal static string PreparedOn {
             get {
                 return ResourceManager.GetString("PreparedOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Print.
+        /// </summary>
+        internal static string Print {
+            get {
+                return ResourceManager.GetString("Print", resourceCulture);
             }
         }
         
@@ -286,11 +457,38 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reorder Unit Name.
+        /// </summary>
+        internal static string ReorderUnitName {
+            get {
+                return ResourceManager.GetString("ReorderUnitName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Running Total.
+        /// </summary>
+        internal static string RunningTotal {
+            get {
+                return ResourceManager.GetString("RunningTotal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         internal static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select.
+        /// </summary>
+        internal static string Select {
+            get {
+                return ResourceManager.GetString("Select", resourceCulture);
             }
         }
         
@@ -349,6 +547,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Store.
+        /// </summary>
+        internal static string Store {
+            get {
+                return ResourceManager.GetString("Store", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stores.
         /// </summary>
         internal static string Stores {
@@ -376,6 +583,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to To.
+        /// </summary>
+        internal static string To {
+            get {
+                return ResourceManager.GetString("To", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Transaction Code.
         /// </summary>
         internal static string TranCode {
@@ -390,6 +606,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         internal static string TransactionDate {
             get {
                 return ResourceManager.GetString("TransactionDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transaction Statement.
+        /// </summary>
+        internal static string TransactionStatement {
+            get {
+                return ResourceManager.GetString("TransactionStatement", resourceCulture);
             }
         }
         
@@ -426,6 +651,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         internal static string UnitId {
             get {
                 return ResourceManager.GetString("UnitId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unit Name.
+        /// </summary>
+        internal static string UnitName {
+            get {
+                return ResourceManager.GetString("UnitName", resourceCulture);
             }
         }
         
@@ -480,6 +714,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         internal static string VerifiedBy {
             get {
                 return ResourceManager.GetString("VerifiedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View This Adjustment.
+        /// </summary>
+        internal static string ViewThisAdjustment {
+            get {
+                return ResourceManager.GetString("ViewThisAdjustment", resourceCulture);
             }
         }
         

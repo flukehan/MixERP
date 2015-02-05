@@ -178,6 +178,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Balance.
+        /// </summary>
+        internal static string balance {
+            get {
+                return ResourceManager.GetString("balance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Base Unit Id.
         /// </summary>
         internal static string base_unit_id {
@@ -192,6 +201,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         internal static string base_unit_name {
             get {
                 return ResourceManager.GetString("base_unit_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Book.
+        /// </summary>
+        internal static string book {
+            get {
+                return ResourceManager.GetString("book", resourceCulture);
             }
         }
         
@@ -565,6 +583,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Credit.
+        /// </summary>
+        internal static string credit {
+            get {
+                return ResourceManager.GetString("credit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CST Number.
         /// </summary>
         internal static string cst_number {
@@ -606,6 +633,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         internal static string date_of_birth {
             get {
                 return ResourceManager.GetString("date_of_birth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Debit.
+        /// </summary>
+        internal static string debit {
+            get {
+                return ResourceManager.GetString("debit", resourceCulture);
             }
         }
         
@@ -1627,6 +1663,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Statement Reference.
+        /// </summary>
+        internal static string statement_reference {
+            get {
+                return ResourceManager.GetString("statement_reference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid unit provided..
         /// </summary>
         internal static string stock_details_unit_chk {
@@ -1771,6 +1816,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to TranCode.
+        /// </summary>
+        internal static string tran_code {
+            get {
+                return ResourceManager.GetString("tran_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tran Type.
         /// </summary>
         internal static string tran_type {
@@ -1830,6 +1884,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         internal static string value {
             get {
                 return ResourceManager.GetString("value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value_Date.
+        /// </summary>
+        internal static string value_date {
+            get {
+                return ResourceManager.GetString("value_date", resourceCulture);
             }
         }
         

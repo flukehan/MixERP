@@ -1,4 +1,4 @@
-CREATE VIEW core.party_types_scrud_view
+CREATE VIEW core.party_type_scrud_view
 AS
 SELECT 
         party_type_id,

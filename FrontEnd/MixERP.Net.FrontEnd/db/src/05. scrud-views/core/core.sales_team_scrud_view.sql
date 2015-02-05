@@ -1,4 +1,4 @@
-CREATE VIEW core.sales_teams_scrud_view
+CREATE VIEW core.sales_team_scrud_view
 AS
 SELECT 
         sales_team_id,

@@ -717,4 +717,25 @@
   <data name="store_type" xml:space="preserve">
     <value>Store Type</value>
   </data>
+  <data name="balance" xml:space="preserve">
+    <value>Balance</value>
+  </data>
+  <data name="book" xml:space="preserve">
+    <value>Book</value>
+  </data>
+  <data name="credit" xml:space="preserve">
+    <value>Credit</value>
+  </data>
+  <data name="debit" xml:space="preserve">
+    <value>Debit</value>
+  </data>
+  <data name="statement_reference" xml:space="preserve">
+    <value>Statement Reference</value>
+  </data>
+  <data name="tran_code" xml:space="preserve">
+    <value>TranCode</value>
+  </data>
+  <data name="value_date" xml:space="preserve">
+    <value>Value_Date</value>
+  </data>
 </root>

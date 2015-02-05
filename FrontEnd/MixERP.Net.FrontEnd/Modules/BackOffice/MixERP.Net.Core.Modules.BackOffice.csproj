@@ -91,6 +91,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Admin\LocalizeMixERP.ascx" />
     <Content Include="Counties.ascx" />
     <Content Include="Countries.ascx" />
     <Content Include="Entities.ascx" />
@@ -180,6 +181,13 @@
     </Compile>
     <Compile Include="Admin\DatabaseStatistics.ascx.designer.cs">
       <DependentUpon>DatabaseStatistics.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\LocalizeMixERP.ascx.cs">
+      <DependentUpon>LocalizeMixERP.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\LocalizeMixERP.ascx.designer.cs">
+      <DependentUpon>LocalizeMixERP.ascx</DependentUpon>
     </Compile>
     <Compile Include="Admin\NewCompany.ascx.cs">
       <DependentUpon>NewCompany.ascx</DependentUpon>

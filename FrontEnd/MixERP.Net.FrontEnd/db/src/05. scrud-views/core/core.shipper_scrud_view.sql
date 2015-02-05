@@ -1,4 +1,4 @@
-CREATE VIEW core.shippers_scrud_view
+CREATE VIEW core.shipper_scrud_view
 AS
 SELECT
         shipper_id,

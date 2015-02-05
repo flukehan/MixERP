@@ -92,155 +92,12 @@ namespace MixERP.Net.Entities.Core
     
 
 
-    [TableName("core.compound_item_details")]
-    [PrimaryKey("compound_item_detail_id")]
+    [TableName("core.item_view")]
     [ExplicitColumns]
-    public class CompoundItemDetail : PetaPocoDB.Record<CompoundItemDetail> 
-    {
-        [Column("compound_item_detail_id")] 
-        public int CompoundItemDetailId { get; set; }
-
-        [Column("compound_item_id")] 
-        public int CompoundItemId { get; set; }
-
-        [Column("item_id")] 
-        public int ItemId { get; set; }
-
-        [Column("unit_id")] 
-        public int UnitId { get; set; }
-
-        [Column("quantity")] 
-        public int Quantity { get; set; }
-
-        [Column("price")] 
-        public decimal Price { get; set; }
-
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
-
-    }
-
-    [TableName("core.item_cost_prices")]
-    [PrimaryKey("item_cost_price_id")]
-    [ExplicitColumns]
-    public class ItemCostPrice : PetaPocoDB.Record<ItemCostPrice> 
-    {
-        [Column("item_cost_price_id")] 
-        public long ItemCostPriceId { get; set; }
-
-        [Column("item_id")] 
-        public int ItemId { get; set; }
-
-        [Column("entry_ts")] 
-        public DateTime EntryTs { get; set; }
-
-        [Column("unit_id")] 
-        public int UnitId { get; set; }
-
-        [Column("party_id")] 
-        public long? PartyId { get; set; }
-
-        [Column("lead_time_in_days")] 
-        public int LeadTimeInDays { get; set; }
-
-        [Column("includes_tax")] 
-        public bool IncludesTax { get; set; }
-
-        [Column("price")] 
-        public decimal Price { get; set; }
-
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
-
-    }
-
-    [TableName("core.item_selling_prices")]
-    [PrimaryKey("item_selling_price_id")]
-    [ExplicitColumns]
-    public class ItemSellingPrice : PetaPocoDB.Record<ItemSellingPrice> 
-    {
-        [Column("item_selling_price_id")] 
-        public long ItemSellingPriceId { get; set; }
-
-        [Column("item_id")] 
-        public int ItemId { get; set; }
-
-        [Column("unit_id")] 
-        public int UnitId { get; set; }
-
-        [Column("party_type_id")] 
-        public int? PartyTypeId { get; set; }
-
-        [Column("price_type_id")] 
-        public int? PriceTypeId { get; set; }
-
-        [Column("includes_tax")] 
-        public bool IncludesTax { get; set; }
-
-        [Column("price")] 
-        public decimal Price { get; set; }
-
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
-
-    }
-
-    [TableName("core.item_opening_inventory")]
-    [PrimaryKey("item_opening_inventory_id")]
-    [ExplicitColumns]
-    public class ItemOpeningInventory : PetaPocoDB.Record<ItemOpeningInventory> 
-    {
-        [Column("item_opening_inventory_id")] 
-        public long ItemOpeningInventoryId { get; set; }
-
-        [Column("entry_ts")] 
-        public DateTime EntryTs { get; set; }
-
-        [Column("item_id")] 
-        public int ItemId { get; set; }
-
-        [Column("store_id")] 
-        public int StoreId { get; set; }
-
-        [Column("unit_id")] 
-        public int UnitId { get; set; }
-
-        [Column("quantity")] 
-        public int Quantity { get; set; }
-
-        [Column("amount")] 
-        public decimal Amount { get; set; }
-
-        [Column("base_unit_id")] 
-        public int BaseUnitId { get; set; }
-
-        [Column("base_quantity")] 
-        public decimal BaseQuantity { get; set; }
-
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
-
-    }
-
-    [TableName("core.items")]
-    [PrimaryKey("item_id")]
-    [ExplicitColumns]
-    public class Item : PetaPocoDB.Record<Item> 
+    public class ItemView : PetaPocoDB.Record<ItemView> 
     {
         [Column("item_id")] 
-        public int ItemId { get; set; }
+        public int? ItemId { get; set; }
 
         [Column("item_code")] 
         public string ItemCode { get; set; }
@@ -248,80 +105,77 @@ namespace MixERP.Net.Entities.Core
         [Column("item_name")] 
         public string ItemName { get; set; }
 
-        [Column("item_group_id")] 
-        public int ItemGroupId { get; set; }
+        [Column("item_group")] 
+        public string ItemGroup { get; set; }
 
-        [Column("item_type_id")] 
-        public int ItemTypeId { get; set; }
-
-        [Column("brand_id")] 
-        public int BrandId { get; set; }
-
-        [Column("preferred_supplier_id")] 
-        public long PreferredSupplierId { get; set; }
-
-        [Column("lead_time_in_days")] 
-        public int LeadTimeInDays { get; set; }
-
-        [Column("weight_in_grams")] 
-        public double WeightInGrams { get; set; }
-
-        [Column("width_in_centimeters")] 
-        public double WidthInCentimeters { get; set; }
-
-        [Column("height_in_centimeters")] 
-        public double HeightInCentimeters { get; set; }
-
-        [Column("length_in_centimeters")] 
-        public double LengthInCentimeters { get; set; }
-
-        [Column("machinable")] 
-        public bool Machinable { get; set; }
-
-        [Column("preferred_shipping_mail_type_id")] 
-        public int? PreferredShippingMailTypeId { get; set; }
-
-        [Column("shipping_package_shape_id")] 
-        public int? ShippingPackageShapeId { get; set; }
-
-        [Column("unit_id")] 
-        public int UnitId { get; set; }
-
-        [Column("hot_item")] 
-        public bool HotItem { get; set; }
-
-        [Column("cost_price")] 
-        public decimal CostPrice { get; set; }
-
-        [Column("cost_price_includes_tax")] 
-        public bool CostPriceIncludesTax { get; set; }
-
-        [Column("selling_price")] 
-        public decimal SellingPrice { get; set; }
-
-        [Column("selling_price_includes_tax")] 
-        public bool SellingPriceIncludesTax { get; set; }
-
-        [Column("sales_tax_id")] 
-        public int SalesTaxId { get; set; }
-
-        [Column("reorder_unit_id")] 
-        public int ReorderUnitId { get; set; }
-
-        [Column("reorder_level")] 
-        public int ReorderLevel { get; set; }
-
-        [Column("reorder_quantity")] 
-        public int ReorderQuantity { get; set; }
+        [Column("item_type")] 
+        public string ItemType { get; set; }
 
         [Column("maintain_stock")] 
-        public bool MaintainStock { get; set; }
+        public bool? MaintainStock { get; set; }
 
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
+        [Column("brand")] 
+        public string Brand { get; set; }
 
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
+        [Column("preferred_supplier")] 
+        public string PreferredSupplier { get; set; }
+
+        [Column("lead_time_in_days")] 
+        public int? LeadTimeInDays { get; set; }
+
+        [Column("weight_in_grams")] 
+        public double? WeightInGrams { get; set; }
+
+        [Column("width_in_centimeters")] 
+        public double? WidthInCentimeters { get; set; }
+
+        [Column("height_in_centimeters")] 
+        public double? HeightInCentimeters { get; set; }
+
+        [Column("length_in_centimeters")] 
+        public double? LengthInCentimeters { get; set; }
+
+        [Column("machinable")] 
+        public bool? Machinable { get; set; }
+
+        [Column("preferred_shipping_mail_type")] 
+        public string PreferredShippingMailType { get; set; }
+
+        [Column("preferred_shipping_package_shape")] 
+        public string PreferredShippingPackageShape { get; set; }
+
+        [Column("unit")] 
+        public string Unit { get; set; }
+
+        [Column("base_unit")] 
+        public string BaseUnit { get; set; }
+
+        [Column("hot_item")] 
+        public bool? HotItem { get; set; }
+
+        [Column("cost_price")] 
+        public decimal? CostPrice { get; set; }
+
+        [Column("cost_price_includes_tax")] 
+        public bool? CostPriceIncludesTax { get; set; }
+
+        [Column("selling_price")] 
+        public decimal? SellingPrice { get; set; }
+
+        [Column("selling_price_includes_tax")] 
+        public bool? SellingPriceIncludesTax { get; set; }
+
+        [Column("sales_tax")] 
+        public string SalesTax { get; set; }
+
+        [Column("reorder_unit")] 
+        public string ReorderUnit { get; set; }
+
+        [Column("reorder_level")] 
+        public int? ReorderLevel { get; set; }
+
+        [Column("reorder_quantity")] 
+        public int? ReorderQuantity { get; set; }
 
     }
 
@@ -406,9 +260,9 @@ namespace MixERP.Net.Entities.Core
 
     }
 
-    [TableName("core.brands_scrud_view")]
+    [TableName("core.brand_scrud_view")]
     [ExplicitColumns]
-    public class BrandsScrudView : PetaPocoDB.Record<BrandsScrudView> 
+    public class BrandScrudView : PetaPocoDB.Record<BrandScrudView> 
     {
         [Column("brand_id")] 
         public int? BrandId { get; set; }
@@ -493,9 +347,9 @@ namespace MixERP.Net.Entities.Core
 
     }
 
-    [TableName("core.compound_items_scrud_view")]
+    [TableName("core.compound_item_scrud_view")]
     [ExplicitColumns]
-    public class CompoundItemsScrudView : PetaPocoDB.Record<CompoundItemsScrudView> 
+    public class CompoundItemScrudView : PetaPocoDB.Record<CompoundItemScrudView> 
     {
         [Column("compound_item_id")] 
         public int? CompoundItemId { get; set; }
@@ -679,51 +533,9 @@ namespace MixERP.Net.Entities.Core
 
     }
 
-    [TableName("core.item_selling_price_scrud_view")]
+    [TableName("core.item_scrud_view")]
     [ExplicitColumns]
-    public class ItemSellingPriceScrudView : PetaPocoDB.Record<ItemSellingPriceScrudView> 
-    {
-        [Column("item_selling_price_id")] 
-        public long? ItemSellingPriceId { get; set; }
-
-        [Column("item_code")] 
-        public string ItemCode { get; set; }
-
-        [Column("item_name")] 
-        public string ItemName { get; set; }
-
-        [Column("party_type_code")] 
-        public string PartyTypeCode { get; set; }
-
-        [Column("party_type_name")] 
-        public string PartyTypeName { get; set; }
-
-        [Column("unit")] 
-        public string Unit { get; set; }
-
-        [Column("price")] 
-        public decimal? Price { get; set; }
-
-    }
-
-    [TableName("core.item_type_scrud_view")]
-    [ExplicitColumns]
-    public class ItemTypeScrudView : PetaPocoDB.Record<ItemTypeScrudView> 
-    {
-        [Column("item_type_id")] 
-        public int? ItemTypeId { get; set; }
-
-        [Column("item_type_code")] 
-        public string ItemTypeCode { get; set; }
-
-        [Column("item_type_name")] 
-        public string ItemTypeName { get; set; }
-
-    }
-
-    [TableName("core.items_scrud_view")]
-    [ExplicitColumns]
-    public class ItemsScrudView : PetaPocoDB.Record<ItemsScrudView> 
+    public class ItemScrudView : PetaPocoDB.Record<ItemScrudView> 
     {
         [Column("item_id")] 
         public int? ItemId { get; set; }
@@ -799,6 +611,48 @@ namespace MixERP.Net.Entities.Core
 
         [Column("reorder_quantity")] 
         public int? ReorderQuantity { get; set; }
+
+    }
+
+    [TableName("core.item_selling_price_scrud_view")]
+    [ExplicitColumns]
+    public class ItemSellingPriceScrudView : PetaPocoDB.Record<ItemSellingPriceScrudView> 
+    {
+        [Column("item_selling_price_id")] 
+        public long? ItemSellingPriceId { get; set; }
+
+        [Column("item_code")] 
+        public string ItemCode { get; set; }
+
+        [Column("item_name")] 
+        public string ItemName { get; set; }
+
+        [Column("party_type_code")] 
+        public string PartyTypeCode { get; set; }
+
+        [Column("party_type_name")] 
+        public string PartyTypeName { get; set; }
+
+        [Column("unit")] 
+        public string Unit { get; set; }
+
+        [Column("price")] 
+        public decimal? Price { get; set; }
+
+    }
+
+    [TableName("core.item_type_scrud_view")]
+    [ExplicitColumns]
+    public class ItemTypeScrudView : PetaPocoDB.Record<ItemTypeScrudView> 
+    {
+        [Column("item_type_id")] 
+        public int? ItemTypeId { get; set; }
+
+        [Column("item_type_code")] 
+        public string ItemTypeCode { get; set; }
+
+        [Column("item_type_name")] 
+        public string ItemTypeName { get; set; }
 
     }
 
@@ -919,9 +773,9 @@ namespace MixERP.Net.Entities.Core
 
     }
 
-    [TableName("core.party_types_scrud_view")]
+    [TableName("core.party_type_scrud_view")]
     [ExplicitColumns]
-    public class PartyTypesScrudView : PetaPocoDB.Record<PartyTypesScrudView> 
+    public class PartyTypeScrudView : PetaPocoDB.Record<PartyTypeScrudView> 
     {
         [Column("party_type_id")] 
         public int? PartyTypeId { get; set; }
@@ -1207,9 +1061,9 @@ namespace MixERP.Net.Entities.Core
 
     }
 
-    [TableName("core.sales_teams_scrud_view")]
+    [TableName("core.sales_team_scrud_view")]
     [ExplicitColumns]
-    public class SalesTeamsScrudView : PetaPocoDB.Record<SalesTeamsScrudView> 
+    public class SalesTeamScrudView : PetaPocoDB.Record<SalesTeamScrudView> 
     {
         [Column("sales_team_id")] 
         public int? SalesTeamId { get; set; }
@@ -1264,9 +1118,9 @@ namespace MixERP.Net.Entities.Core
 
     }
 
-    [TableName("core.shippers_scrud_view")]
+    [TableName("core.shipper_scrud_view")]
     [ExplicitColumns]
-    public class ShippersScrudView : PetaPocoDB.Record<ShippersScrudView> 
+    public class ShipperScrudView : PetaPocoDB.Record<ShipperScrudView> 
     {
         [Column("shipper_id")] 
         public int? ShipperId { get; set; }
@@ -1489,9 +1343,9 @@ namespace MixERP.Net.Entities.Core
 
     }
 
-    [TableName("core.units_scrud_view")]
+    [TableName("core.unit_scrud_view")]
     [ExplicitColumns]
-    public class UnitsScrudView : PetaPocoDB.Record<UnitsScrudView> 
+    public class UnitScrudView : PetaPocoDB.Record<UnitScrudView> 
     {
         [Column("unit_id")] 
         public int? UnitId { get; set; }
@@ -2338,96 +2192,6 @@ namespace MixERP.Net.Entities.Core
 
         [Column("relation_officer")] 
         public string RelationOfficer { get; set; }
-
-    }
-
-    [TableName("core.item_view")]
-    [ExplicitColumns]
-    public class ItemView : PetaPocoDB.Record<ItemView> 
-    {
-        [Column("item_id")] 
-        public int? ItemId { get; set; }
-
-        [Column("item_code")] 
-        public string ItemCode { get; set; }
-
-        [Column("item_name")] 
-        public string ItemName { get; set; }
-
-        [Column("item_group_id")] 
-        public int? ItemGroupId { get; set; }
-
-        [Column("item_type_id")] 
-        public int? ItemTypeId { get; set; }
-
-        [Column("brand_id")] 
-        public int? BrandId { get; set; }
-
-        [Column("preferred_supplier_id")] 
-        public long? PreferredSupplierId { get; set; }
-
-        [Column("lead_time_in_days")] 
-        public int? LeadTimeInDays { get; set; }
-
-        [Column("weight_in_grams")] 
-        public double? WeightInGrams { get; set; }
-
-        [Column("width_in_centimeters")] 
-        public double? WidthInCentimeters { get; set; }
-
-        [Column("height_in_centimeters")] 
-        public double? HeightInCentimeters { get; set; }
-
-        [Column("length_in_centimeters")] 
-        public double? LengthInCentimeters { get; set; }
-
-        [Column("machinable")] 
-        public bool? Machinable { get; set; }
-
-        [Column("preferred_shipping_mail_type_id")] 
-        public int? PreferredShippingMailTypeId { get; set; }
-
-        [Column("shipping_package_shape_id")] 
-        public int? ShippingPackageShapeId { get; set; }
-
-        [Column("unit_id")] 
-        public int? UnitId { get; set; }
-
-        [Column("hot_item")] 
-        public bool? HotItem { get; set; }
-
-        [Column("cost_price")] 
-        public decimal? CostPrice { get; set; }
-
-        [Column("cost_price_includes_tax")] 
-        public bool? CostPriceIncludesTax { get; set; }
-
-        [Column("selling_price")] 
-        public decimal? SellingPrice { get; set; }
-
-        [Column("selling_price_includes_tax")] 
-        public bool? SellingPriceIncludesTax { get; set; }
-
-        [Column("sales_tax_id")] 
-        public int? SalesTaxId { get; set; }
-
-        [Column("reorder_unit_id")] 
-        public int? ReorderUnitId { get; set; }
-
-        [Column("reorder_level")] 
-        public int? ReorderLevel { get; set; }
-
-        [Column("reorder_quantity")] 
-        public int? ReorderQuantity { get; set; }
-
-        [Column("maintain_stock")] 
-        public bool? MaintainStock { get; set; }
-
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
 
     }
 
@@ -4706,33 +4470,236 @@ namespace MixERP.Net.Entities.Core
 
     }
 
-    [FunctionName("get_associated_units_from_item_id")]
+    [TableName("core.compound_item_details")]
+    [PrimaryKey("compound_item_detail_id")]
     [ExplicitColumns]
-    public class DbGetAssociatedUnitsFromItemIdResult : PetaPocoDB.Record<DbGetAssociatedUnitsFromItemIdResult> 
+    public class CompoundItemDetail : PetaPocoDB.Record<CompoundItemDetail> 
     {
+        [Column("compound_item_detail_id")] 
+        public int CompoundItemDetailId { get; set; }
+
+        [Column("compound_item_id")] 
+        public int CompoundItemId { get; set; }
+
+        [Column("item_id")] 
+        public int ItemId { get; set; }
+
         [Column("unit_id")] 
-        public string UnitId { get; set; }
+        public int UnitId { get; set; }
 
-        [Column("unit_code")] 
-        public string UnitCode { get; set; }
+        [Column("quantity")] 
+        public int Quantity { get; set; }
 
-        [Column("unit_name")] 
-        public string UnitName { get; set; }
+        [Column("price")] 
+        public decimal Price { get; set; }
+
+        [Column("audit_user_id")] 
+        public int? AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime? AuditTs { get; set; }
 
     }
 
-    [FunctionName("get_associated_units_from_item_code")]
+    [TableName("core.item_cost_prices")]
+    [PrimaryKey("item_cost_price_id")]
     [ExplicitColumns]
-    public class DbGetAssociatedUnitsFromItemCodeResult : PetaPocoDB.Record<DbGetAssociatedUnitsFromItemCodeResult> 
+    public class ItemCostPrice : PetaPocoDB.Record<ItemCostPrice> 
     {
+        [Column("item_cost_price_id")] 
+        public long ItemCostPriceId { get; set; }
+
+        [Column("item_id")] 
+        public int ItemId { get; set; }
+
+        [Column("entry_ts")] 
+        public DateTime EntryTs { get; set; }
+
         [Column("unit_id")] 
-        public string UnitId { get; set; }
+        public int UnitId { get; set; }
 
-        [Column("unit_code")] 
-        public string UnitCode { get; set; }
+        [Column("party_id")] 
+        public long? PartyId { get; set; }
 
-        [Column("unit_name")] 
-        public string UnitName { get; set; }
+        [Column("lead_time_in_days")] 
+        public int LeadTimeInDays { get; set; }
+
+        [Column("includes_tax")] 
+        public bool IncludesTax { get; set; }
+
+        [Column("price")] 
+        public decimal Price { get; set; }
+
+        [Column("audit_user_id")] 
+        public int? AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime? AuditTs { get; set; }
+
+    }
+
+    [TableName("core.item_selling_prices")]
+    [PrimaryKey("item_selling_price_id")]
+    [ExplicitColumns]
+    public class ItemSellingPrice : PetaPocoDB.Record<ItemSellingPrice> 
+    {
+        [Column("item_selling_price_id")] 
+        public long ItemSellingPriceId { get; set; }
+
+        [Column("item_id")] 
+        public int ItemId { get; set; }
+
+        [Column("unit_id")] 
+        public int UnitId { get; set; }
+
+        [Column("party_type_id")] 
+        public int? PartyTypeId { get; set; }
+
+        [Column("price_type_id")] 
+        public int? PriceTypeId { get; set; }
+
+        [Column("includes_tax")] 
+        public bool IncludesTax { get; set; }
+
+        [Column("price")] 
+        public decimal Price { get; set; }
+
+        [Column("audit_user_id")] 
+        public int? AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime? AuditTs { get; set; }
+
+    }
+
+    [TableName("core.item_opening_inventory")]
+    [PrimaryKey("item_opening_inventory_id")]
+    [ExplicitColumns]
+    public class ItemOpeningInventory : PetaPocoDB.Record<ItemOpeningInventory> 
+    {
+        [Column("item_opening_inventory_id")] 
+        public long ItemOpeningInventoryId { get; set; }
+
+        [Column("entry_ts")] 
+        public DateTime EntryTs { get; set; }
+
+        [Column("item_id")] 
+        public int ItemId { get; set; }
+
+        [Column("store_id")] 
+        public int StoreId { get; set; }
+
+        [Column("unit_id")] 
+        public int UnitId { get; set; }
+
+        [Column("quantity")] 
+        public int Quantity { get; set; }
+
+        [Column("amount")] 
+        public decimal Amount { get; set; }
+
+        [Column("base_unit_id")] 
+        public int BaseUnitId { get; set; }
+
+        [Column("base_quantity")] 
+        public decimal BaseQuantity { get; set; }
+
+        [Column("audit_user_id")] 
+        public int? AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime? AuditTs { get; set; }
+
+    }
+
+    [TableName("core.items")]
+    [PrimaryKey("item_id")]
+    [ExplicitColumns]
+    public class Item : PetaPocoDB.Record<Item> 
+    {
+        [Column("item_id")] 
+        public int ItemId { get; set; }
+
+        [Column("item_code")] 
+        public string ItemCode { get; set; }
+
+        [Column("item_name")] 
+        public string ItemName { get; set; }
+
+        [Column("item_group_id")] 
+        public int ItemGroupId { get; set; }
+
+        [Column("item_type_id")] 
+        public int ItemTypeId { get; set; }
+
+        [Column("brand_id")] 
+        public int BrandId { get; set; }
+
+        [Column("preferred_supplier_id")] 
+        public long PreferredSupplierId { get; set; }
+
+        [Column("lead_time_in_days")] 
+        public int LeadTimeInDays { get; set; }
+
+        [Column("weight_in_grams")] 
+        public double WeightInGrams { get; set; }
+
+        [Column("width_in_centimeters")] 
+        public double WidthInCentimeters { get; set; }
+
+        [Column("height_in_centimeters")] 
+        public double HeightInCentimeters { get; set; }
+
+        [Column("length_in_centimeters")] 
+        public double LengthInCentimeters { get; set; }
+
+        [Column("machinable")] 
+        public bool Machinable { get; set; }
+
+        [Column("preferred_shipping_mail_type_id")] 
+        public int? PreferredShippingMailTypeId { get; set; }
+
+        [Column("shipping_package_shape_id")] 
+        public int? ShippingPackageShapeId { get; set; }
+
+        [Column("unit_id")] 
+        public int UnitId { get; set; }
+
+        [Column("hot_item")] 
+        public bool HotItem { get; set; }
+
+        [Column("cost_price")] 
+        public decimal CostPrice { get; set; }
+
+        [Column("cost_price_includes_tax")] 
+        public bool CostPriceIncludesTax { get; set; }
+
+        [Column("selling_price")] 
+        public decimal SellingPrice { get; set; }
+
+        [Column("selling_price_includes_tax")] 
+        public bool SellingPriceIncludesTax { get; set; }
+
+        [Column("sales_tax_id")] 
+        public int SalesTaxId { get; set; }
+
+        [Column("reorder_unit_id")] 
+        public int ReorderUnitId { get; set; }
+
+        [Column("reorder_level")] 
+        public int ReorderLevel { get; set; }
+
+        [Column("reorder_quantity")] 
+        public int ReorderQuantity { get; set; }
+
+        [Column("maintain_stock")] 
+        public bool MaintainStock { get; set; }
+
+        [Column("audit_user_id")] 
+        public int? AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime? AuditTs { get; set; }
 
     }
 
@@ -4751,9 +4718,39 @@ namespace MixERP.Net.Entities.Core
 
     }
 
+    [FunctionName("get_associated_units_from_item_id")]
+    [ExplicitColumns]
+    public class DbGetAssociatedUnitsFromItemIdResult : PetaPocoDB.Record<DbGetAssociatedUnitsFromItemIdResult> 
+    {
+        [Column("unit_id")] 
+        public string UnitId { get; set; }
+
+        [Column("unit_code")] 
+        public string UnitCode { get; set; }
+
+        [Column("unit_name")] 
+        public string UnitName { get; set; }
+
+    }
+
     [FunctionName("get_associated_units")]
     [ExplicitColumns]
     public class DbGetAssociatedUnitsResult : PetaPocoDB.Record<DbGetAssociatedUnitsResult> 
+    {
+        [Column("unit_id")] 
+        public string UnitId { get; set; }
+
+        [Column("unit_code")] 
+        public string UnitCode { get; set; }
+
+        [Column("unit_name")] 
+        public string UnitName { get; set; }
+
+    }
+
+    [FunctionName("get_associated_units_from_item_code")]
+    [ExplicitColumns]
+    public class DbGetAssociatedUnitsFromItemCodeResult : PetaPocoDB.Record<DbGetAssociatedUnitsFromItemCodeResult> 
     {
         [Column("unit_id")] 
         public string UnitId { get; set; }

@@ -11,7 +11,7 @@ CREATE FUNCTION transactions.get_account_statement
 (
     _value_date_from        date,
     _value_date_to          date,
-    _user_id                integer, --RESERVED FOR FUTURE USE
+    _user_id                integer,
     _account_id             bigint,
     _office_id              integer
 )

@@ -34,7 +34,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data
                                "SELECT @UserId, core.attachment_lookup.resource, core.attachment_lookup.resource_key, @ResourceId, @OriginalFileName, @FileExtension, @FilePath, @Comment" +
                                " FROM core.attachment_lookup WHERE book=@Book;";
 
-            using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString()))
+            using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.GetConnectionString()))
             {
                 connection.Open();
 

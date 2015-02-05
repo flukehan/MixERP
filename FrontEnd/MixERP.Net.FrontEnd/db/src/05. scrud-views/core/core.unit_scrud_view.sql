@@ -1,4 +1,4 @@
-CREATE VIEW core.units_scrud_view
+CREATE VIEW core.unit_scrud_view
 AS
 SELECT
         unit_id,

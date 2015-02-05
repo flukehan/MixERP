@@ -107,7 +107,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
                 throw new InvalidOperationException(Resources.Errors.ReferencingSidesNotEqual);
             }
 
-            using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString()))
+            using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.GetConnectionString()))
             {
                 connection.Open();
 

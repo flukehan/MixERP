@@ -261,4 +261,85 @@
   <data name="Difference" xml:space="preserve">
     <value>Difference</value>
   </data>
+  <data name="AccountStatement" xml:space="preserve">
+    <value>Account Statement</value>
+  </data>
+  <data name="Definition" xml:space="preserve">
+    <value>Definition</value>
+  </data>
+  <data name="ItemOverview" xml:space="preserve">
+    <value>Item Overview</value>
+  </data>
+  <data name="TransactionStatement" xml:space="preserve">
+    <value>Transaction Statement</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="Balance" xml:space="preserve">
+    <value>Balance</value>
+  </data>
+  <data name="Book" xml:space="preserve">
+    <value>Book</value>
+  </data>
+  <data name="Credit" xml:space="preserve">
+    <value>Credit</value>
+  </data>
+  <data name="Debit" xml:space="preserve">
+    <value>Debit</value>
+  </data>
+  <data name="Flag" xml:space="preserve">
+    <value>Flag</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="ItemGroup" xml:space="preserve">
+    <value>Item Group</value>
+  </data>
+  <data name="Prepare" xml:space="preserve">
+    <value>Prepare</value>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="BaseUnitName" xml:space="preserve">
+    <value>Base Unit Name</value>
+  </data>
+  <data name="Brand" xml:space="preserve">
+    <value>Brand</value>
+  </data>
+  <data name="ItemType" xml:space="preserve">
+    <value>Item Type</value>
+  </data>
+  <data name="LeadTime" xml:space="preserve">
+    <value>Lead Time</value>
+  </data>
+  <data name="PreferredSupplier" xml:space="preserve">
+    <value>Preferred Supplier</value>
+  </data>
+  <data name="ReorderUnitName" xml:space="preserve">
+    <value>Reorder Unit Name</value>
+  </data>
+  <data name="UnitName" xml:space="preserve">
+    <value>Unit Name</value>
+  </data>
+  <data name="Store" xml:space="preserve">
+    <value>Store</value>
+  </data>
+  <data name="RunningTotal" xml:space="preserve">
+    <value>Running Total</value>
+  </data>
+  <data name="Days" xml:space="preserve">
+    <value>Days</value>
+  </data>
+  <data name="ViewThisAdjustment" xml:space="preserve">
+    <value>View This Adjustment</value>
+  </data>
+  <data name="InventoryAdvice" xml:space="preserve">
+    <value>Inventory Advice</value>
+  </data>
 </root>

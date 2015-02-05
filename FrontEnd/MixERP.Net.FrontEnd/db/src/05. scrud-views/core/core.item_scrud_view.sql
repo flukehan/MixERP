@@ -1,6 +1,6 @@
-DROP VIEW IF EXISTS core.items_scrud_view;
+DROP VIEW IF EXISTS core.item_scrud_view;
 
-CREATE VIEW core.items_scrud_view
+CREATE VIEW core.item_scrud_view
 AS
 SELECT 
         item_id,

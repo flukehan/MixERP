@@ -36,26 +36,6 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 {
     public partial class AccountStatement : MixERPUserControl
     {
-        private Literal accountMasterLiteral;
-        private HtmlInputText accountNumberInputText;
-        private Literal accountNumberLiteral;
-        private HtmlSelect accountNumberSelect;
-        private Literal baseCurrencyLiteral;
-        private Literal confidentialLiteral;
-        private Literal descriptionLiteral;
-        private Literal externalCodeLiteral;
-        private DateTextBox fromDateTextBox;
-        private Literal headerLiteral;
-        private Literal isEmployeeLiteral;
-        private Literal isPartyLiteral;
-        private Literal isSystemAccountLiteral;
-        private Literal normallyDebitLiteral;
-        private Literal parentAccountLiteral;
-        private HiddenField selectedValuesHidden;
-        private Button showButton;
-        private GridView statementGridView;
-        private DateTextBox toDateTextBox;
-
         public override void OnControlLoad(object sender, EventArgs e)
         {
             this.CreateHeader(this.Placeholder1);
@@ -101,7 +81,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             }
 
             this.BindGridView();
-            this.BindOverview();
+            this.CreateAccountOverviewPanel(this.accountOverviewTab);
         }
 
         private void CreateFlagPanel(Control placeHolder)
@@ -139,7 +119,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             TransactionGovernor.Flags.CreateFlag(userId, flagTypeId, resource, resourceKey, this.GetSelectedValues());
 
             this.BindGridView();
-            this.BindOverview();
+            this.CreateAccountOverviewPanel(this.accountOverviewTab);
         }
 
         private Collection<string> GetSelectedValues()
@@ -198,19 +178,33 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 container.Controls.Add(transactionStatementTab);
             }
 
-            using (HtmlGenericControl accountOverviewTab = new HtmlGenericControl("div"))
-            {
-                accountOverviewTab.Attributes.Add("class", "ui bottom attached tab segment");
-                accountOverviewTab.Attributes.Add("data-tab", "second");
-                this.CreateAccountOverviewPanel(accountOverviewTab);
+            this.accountOverviewTab = new HtmlGenericControl("div");
+            this.accountOverviewTab.Attributes.Add("class", "ui bottom attached tab segment");
+            this.accountOverviewTab.Attributes.Add("data-tab", "second");
 
-                container.Controls.Add(accountOverviewTab);
-            }
+            container.Controls.Add(this.accountOverviewTab);
         }
 
         #endregion Tabs
 
         #region IDisposable
+        private HtmlInputText accountNumberInputText;
+
+        private HtmlSelect accountNumberSelect;
+
+
+        private Literal descriptionLiteral;
+
+        private DateTextBox fromDateTextBox;
+        private Literal headerLiteral;
+
+
+        private HtmlGenericControl accountOverviewTab;
+
+        private HiddenField selectedValuesHidden;
+        private Button showButton;
+        private GridView statementGridView;
+        private DateTextBox toDateTextBox;
 
         private bool disposed;
 
@@ -229,11 +223,6 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             {
                 return;
             }
-            if (this.accountMasterLiteral != null)
-            {
-                this.accountMasterLiteral.Dispose();
-                this.accountMasterLiteral = null;
-            }
 
             if (this.accountNumberInputText != null)
             {
@@ -241,11 +230,12 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 this.accountNumberInputText = null;
             }
 
-            if (this.accountNumberLiteral != null)
+            if (this.accountOverviewTab != null)
             {
-                this.accountNumberLiteral.Dispose();
-                this.accountNumberLiteral = null;
+                this.accountOverviewTab.Dispose();
+                this.accountOverviewTab = null;
             }
+
 
             if (this.accountNumberSelect != null)
             {
@@ -253,17 +243,6 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 this.accountNumberSelect = null;
             }
 
-            if (this.baseCurrencyLiteral != null)
-            {
-                this.baseCurrencyLiteral.Dispose();
-                this.baseCurrencyLiteral = null;
-            }
-
-            if (this.confidentialLiteral != null)
-            {
-                this.confidentialLiteral.Dispose();
-                this.confidentialLiteral = null;
-            }
 
             if (this.descriptionLiteral != null)
             {
@@ -271,11 +250,6 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 this.descriptionLiteral = null;
             }
 
-            if (this.externalCodeLiteral != null)
-            {
-                this.externalCodeLiteral.Dispose();
-                this.externalCodeLiteral = null;
-            }
 
             if (this.fromDateTextBox != null)
             {
@@ -287,36 +261,6 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             {
                 this.headerLiteral.Dispose();
                 this.headerLiteral = null;
-            }
-
-            if (this.isEmployeeLiteral != null)
-            {
-                this.isEmployeeLiteral.Dispose();
-                this.isEmployeeLiteral = null;
-            }
-
-            if (this.isPartyLiteral != null)
-            {
-                this.isPartyLiteral.Dispose();
-                this.isPartyLiteral = null;
-            }
-
-            if (this.isSystemAccountLiteral != null)
-            {
-                this.isSystemAccountLiteral.Dispose();
-                this.isSystemAccountLiteral = null;
-            }
-
-            if (this.normallyDebitLiteral != null)
-            {
-                this.normallyDebitLiteral.Dispose();
-                this.normallyDebitLiteral = null;
-            }
-
-            if (this.parentAccountLiteral != null)
-            {
-                this.parentAccountLiteral.Dispose();
-                this.parentAccountLiteral = null;
             }
 
             if (this.selectedValuesHidden != null)
@@ -351,7 +295,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
         #region Account Overview Panel
 
-        private void AddBodyRow(Table table, string text, ref Literal control)
+        private void AddBodyRow(Table table, string text, string definition)
         {
             using (TableRow row = new TableRow())
             {
@@ -365,13 +309,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
                 using (TableCell controlCell = new TableCell())
                 {
-                    if (control == null)
-                    {
-                        control = new Literal();
-                    }
-
-                    controlCell.Controls.Add(control);
-
+                    controlCell.Text = definition;
                     row.Cells.Add(controlCell);
                 }
 
@@ -402,6 +340,8 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
         private void CreateAccountOverviewPanel(HtmlGenericControl container)
         {
+            container.Controls.Clear();
+
             this.CreateAccountOverviewHeader(container);
             this.CreateAccountOverviewTable(container);
         }
@@ -420,16 +360,29 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
         private void CreateTableBody(Table table)
         {
-            this.AddBodyRow(table, Titles.AccountNumber, ref this.accountNumberLiteral);
-            this.AddBodyRow(table, Titles.ExternalCode, ref this.externalCodeLiteral);
-            this.AddBodyRow(table, Titles.BaseCurrency, ref this.baseCurrencyLiteral);
-            this.AddBodyRow(table, Titles.AccountMaster, ref this.accountMasterLiteral);
-            this.AddBodyRow(table, Titles.Confidential, ref this.confidentialLiteral);
-            this.AddBodyRow(table, Titles.IsSystemAccount, ref this.isSystemAccountLiteral);
-            this.AddBodyRow(table, Titles.IsEmployee, ref this.isEmployeeLiteral);
-            this.AddBodyRow(table, Titles.IsParty, ref this.isPartyLiteral);
-            this.AddBodyRow(table, Titles.NormallyDebit, ref this.normallyDebitLiteral);
-            this.AddBodyRow(table, Titles.ParentAccount, ref this.parentAccountLiteral);
+            if (this.accountNumberInputText == null)
+            {
+                return;
+            }
+
+            string accountNumber = this.accountNumberInputText.Value;
+            AccountView view = Data.Reports.AccountStatement.GetAccountOverview(accountNumber);
+
+            if (view == null)
+            {
+                return;
+            }
+
+            this.headerLiteral.Text = view.Account;
+
+            this.AddBodyRow(table, Titles.AccountNumber, view.AccountNumber);
+            this.AddBodyRow(table, Titles.ExternalCode, view.ExternalCode);
+            this.AddBodyRow(table, Titles.BaseCurrency, view.CurrencyCode);
+            this.AddBodyRow(table, Titles.AccountMaster, view.AccountMasterCode);
+            this.AddBodyRow(table, Titles.Confidential, Conversion.TryCastString(view.Confidential));
+            this.AddBodyRow(table, Titles.IsSystemAccount, Conversion.TryCastString(view.SysType));
+            this.AddBodyRow(table, Titles.NormallyDebit, Conversion.TryCastString(view.NormallyDebit));
+            this.AddBodyRow(table, Titles.ParentAccount, view.ParentAccountNumber);
         }
 
         private void CreateTableHeader(Table table)
@@ -547,27 +500,6 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             this.statementGridView.DataBind();
         }
 
-        private void BindOverview()
-        {
-            string accountNumber = this.accountNumberInputText.Value;
-            AccountView view = Data.Reports.AccountStatement.GetAccountOverview(accountNumber);
-
-            if (view != null)
-            {
-                this.headerLiteral.Text = view.Account;
-                this.descriptionLiteral.Text = view.Description;
-                this.accountNumberLiteral.Text = view.AccountNumber;
-                this.externalCodeLiteral.Text = view.ExternalCode;
-                this.baseCurrencyLiteral.Text = view.CurrencyCode;
-                this.accountMasterLiteral.Text = view.AccountMasterCode;
-
-                this.confidentialLiteral.Text = Conversion.TryCastString(view.Confidential);
-                this.isSystemAccountLiteral.Text = Conversion.TryCastString(view.SysType);
-                this.normallyDebitLiteral.Text = Conversion.TryCastString(view.NormallyDebit);
-
-                this.parentAccountLiteral.Text = view.ParentAccount;
-            }
-        }
 
         private void CreateFormPanel(HtmlGenericControl container)
         {
@@ -616,7 +548,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
         private void ShowButton_Click(object sender, EventArgs e)
         {
             this.BindGridView();
-            this.BindOverview();
+            this.CreateAccountOverviewPanel(this.accountOverviewTab);
         }
 
         private void StatementGridViewDataBound(object sender, EventArgs eventArgs)

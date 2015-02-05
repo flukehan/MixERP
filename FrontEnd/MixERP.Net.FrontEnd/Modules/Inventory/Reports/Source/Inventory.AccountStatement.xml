@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This file is part of MixERP.
+
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses />.
+-->
+
+<MixERPReport>
+  <Title>{Resources.Titles.AccountStatement}</Title>
+  <TopSection>
+    <table class="table horizontal">
+      <tr>
+        <td>{Resources.Titles.ItemId}</td>
+        <td>
+          {DataSource[0].item_id} <br />
+        </td>
+      </tr>
+      <tr>
+        <td>{Resources.Titles.ItemCode}</td>
+        <td>
+          {DataSource[0].item_code} <br />
+        </td>
+      </tr>
+      <tr>
+        <td>{Resources.Titles.ItemName}</td>
+        <td>
+          {DataSource[0].item_name} <br />
+        </td>
+      </tr>
+      <tr>
+        <td>{Resources.Titles.ItemGroup}</td>
+        <td>{DataSource[0].item_group}</td>
+      </tr>
+      <tr>
+        <td>{Resources.Titles.ItemType}</td>
+        <td>{DataSource[0].item_type}</td>
+      </tr>
+      <tr>
+        <td>{Resources.Titles.Brand}</td>
+        <td>{DataSource[0].brand}</td>
+      </tr>
+      <tr>
+        <td>{Resources.Titles.PreferredSupplier}</td>
+        <td>{DataSource[0].preferred_supplier}</td>
+      </tr>
+      <tr>
+        <td>{Resources.Titles.LeadTime}</td>
+        <td>{DataSource[0].lead_time_in_days} {Resources.Titles.Days}</td>
+      </tr>
+      <tr>
+        <td>{Resources.Titles.UnitName}</td>
+        <td>{DataSource[0].unit}</td>
+      </tr>
+    </table>
+    <br />
+  </TopSection>
+  <Body>
+    <Content>
+      <h2>{DataSource[0].item_code} ({DataSource[0].item_name})</h2>
+    </Content>
+    <GridViews>
+      <GridView>
+        <GridViewDataSource Index="1" Style="white-space:nowrap;">
+        </GridViewDataSource>
+      </GridView>
+    </GridViews>
+  </Body>
+  <BottomSection>
+  </BottomSection>
+  <DataSources>
+    <DataSource>
+      <Query>
+        SELECT * FROM core.item_view WHERE item_code=@ItemCode;
+      </Query>
+      <Parameters>
+        <Parameter Name="@ItemCode" Type="Text" />
+      </Parameters>
+    </DataSource>
+    <DataSource>
+      <Query>
+        SELECT
+        book,
+        tran_code,
+        value_date,
+        debit,
+        credit,
+        balance,
+        statement_reference
+        FROM transactions.get_stock_account_statement
+        (@From::date, @To::date, @UserId, @ItemCode, @StoreId)
+        ORDER BY id;
+      </Query>
+      <Parameters>
+        <Parameter Name="@From" Type="Date" />
+        <Parameter Name="@To" Type="Date" />
+        <Parameter Name="@UserId" Type="Number" />
+        <Parameter Name="@ItemCode" Type="Text" />
+        <Parameter Name="@StoreId" Type="Number" />
+      </Parameters>
+      <RunningTotalTextColumnIndex>2</RunningTotalTextColumnIndex>
+      <RunningTotalFieldIndices>3, 4</RunningTotalFieldIndices>
+    </DataSource>
+  </DataSources>
+</MixERPReport>

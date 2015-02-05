@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System.Configuration;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using Npgsql;
@@ -26,15 +25,26 @@ namespace MixERP.Net.DbFactory
 {
     public static class DbConnection
     {
-        public static string ConnectionString()
+        public static string GetConnectionString()
         {
-            var connectionStringBuilder = new NpgsqlConnectionStringBuilder
+            string host = ConfigurationHelper.GetDbServerParameter("Server");
+            string database = ConfigurationHelper.GetDbServerParameter("Database");
+            string userId = ConfigurationHelper.GetDbServerParameter("UserId");
+            string password = ConfigurationHelper.GetDbServerParameter("Password");
+            int port = Conversion.TryCastInteger(ConfigurationHelper.GetDbServerParameter("Port"));
+
+            return GetConnectionString(host, database, userId, password, port);
+        }
+
+        public static string GetConnectionString(string host, string database, string username, string password, int port)
+        {
+            NpgsqlConnectionStringBuilder connectionStringBuilder = new NpgsqlConnectionStringBuilder
             {
-                Host = ConfigurationHelper.GetDbServerParameter("Server"),
-                Database = ConfigurationHelper.GetDbServerParameter("Database"),
-                UserName = ConfigurationHelper.GetDbServerParameter("UserId"),
-                Password = ConfigurationHelper.GetDbServerParameter("Password"),
-                Port = Conversion.TryCastInteger(ConfigurationHelper.GetDbServerParameter("Port")),
+                Host = host,
+                Database = database,
+                UserName = username,
+                Password = password,
+                Port = port,
                 SyncNotification = true,
                 Pooling = true,
                 SSL = true,
@@ -43,7 +53,7 @@ namespace MixERP.Net.DbFactory
                 MaxPoolSize = 100,
                 ApplicationName = "MixERP"
             };
-  
+
             return connectionStringBuilder.ConnectionString;
         }
     }
