@@ -281,7 +281,11 @@ $(document).ready(function () {
 function Page_EndRequest() {
     setCurrencyFormat();
     setNumberFormat();
-}
+
+    if (typeof (AsyncListener) === "function") {
+        AsyncListener();
+    };
+};
 
 var setCurrencyFormat = function () {
     if (typeof currencyDecimalPlaces === "undefined" || typeof decimalSeparator === "undefined" || typeof thousandSeparator === "undefined") {

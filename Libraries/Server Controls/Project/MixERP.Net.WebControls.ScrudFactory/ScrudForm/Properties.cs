@@ -173,6 +173,13 @@ namespace MixERP.Net.WebControls.ScrudFactory
         /// </summary>
         public int PageSize { get; set; }
 
+        /// <summary>Gets or sets the maximum row limit.</summary>
+        ///Set this to -1 if you want to display all the rows of your database
+        /// table no matter how big it is. Default value is: 1000
+        /// <value>The maximum row limit.</value>
+
+        public int MaxRowLimit { get; set; }
+
         public string PrintButtonIconCssClass { get; set; }
 
         /// <summary>

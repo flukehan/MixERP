@@ -727,6 +727,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Total Sales :.
+        /// </summary>
+        internal static string TotalSales {
+            get {
+                return ResourceManager.GetString("TotalSales", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Transaction Code.
         /// </summary>
         internal static string TranCode {
@@ -867,6 +876,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         internal static string ViewThisReturn {
             get {
                 return ResourceManager.GetString("ViewThisReturn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to World Sales Statistics.
+        /// </summary>
+        internal static string WorldSalesStatistics {
+            get {
+                return ResourceManager.GetString("WorldSalesStatistics", resourceCulture);
             }
         }
     }

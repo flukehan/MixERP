@@ -31,6 +31,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Linq.Expressions;
 using Npgsql;
+using Serilog;
 
 
 namespace PetaPoco
@@ -448,6 +449,8 @@ namespace PetaPoco
         // Override this to log/capture exceptions
         public virtual void OnException(Exception x)
         {
+            Log.Warning(@"{Exception}.", x);
+
             System.Diagnostics.Debug.WriteLine(x.ToString());
             System.Diagnostics.Debug.WriteLine(LastCommand);
         }
@@ -480,6 +483,7 @@ namespace PetaPoco
             }
             catch (Exception x)
             {
+                Log.Warning(@"Could execute command {Sql}/{Args}. ", sql, args);
                 OnException(x);
                 throw;
             }
@@ -512,6 +516,7 @@ namespace PetaPoco
             }
             catch (Exception x)
             {
+                Log.Warning(@"Could execute command {Sql}/{Args}. ", sql, args);
                 OnException(x);
                 throw;
             }
@@ -688,6 +693,7 @@ namespace PetaPoco
                     }
                     catch (Exception x)
                     {
+                        Log.Warning(@"Could execute command {Sql}/{Args}. ", sql, args);
                         OnException(x);
                         throw;
                     }

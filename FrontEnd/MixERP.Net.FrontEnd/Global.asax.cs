@@ -16,13 +16,17 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
-
+using Serilog;
 using System;
+using System.Configuration;
 using System.Threading;
 using System.Web;
 using System.Web.Routing;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
+using Serilog.Configuration;
+using Serilog.Core;
+using Serilog.Events;
 
 namespace MixERP.Net.FrontEnd
 {
@@ -32,6 +36,8 @@ namespace MixERP.Net.FrontEnd
         {
             if (routes != null)
             {
+                Log.Information("Registering routes.");
+
                 routes.Ignore("{resource}.axd");
                 routes.MapPageRoute("DefaultRoute", "", "~/SignIn.aspx");
                 routes.MapPageRoute("Reporting", "Reports/{path}", "~/Reports/ReportMaster.aspx");
@@ -48,9 +54,9 @@ namespace MixERP.Net.FrontEnd
                 return;
             }
 
-
             if (ex is ThreadAbortException)
             {
+                Log.Verbose("The thread was being aborted. {Exception}.", ex);
                 return;
             }
 
@@ -59,8 +65,17 @@ namespace MixERP.Net.FrontEnd
 
             if (exception != null)
             {
+                Log.Verbose("Handling exception.");
+
                 MixERPExceptionManager.HandleException(exception);
                 return;
+            }
+
+            Log.Error("Exception occurred. {Exception}.", ex);
+
+            if (ex.InnerException != null)
+            {
+                Log.Error("Inner Exception. {InnerException}.", ex.InnerException);
             }
 
             throw ex;
@@ -68,7 +83,36 @@ namespace MixERP.Net.FrontEnd
 
         private void Application_Start(object sender, EventArgs e)
         {
+            this.IntializeLogger();
             RegisterRoutes(RouteTable.Routes);
+        }
+
+        private LoggerConfiguration GetConfiguration()
+        {
+
+            string applicationLogDirectory = Server.MapPath(ConfigurationManager.AppSettings["ApplicationLogDirectory"]);
+            string filePath = System.IO.Path.Combine(applicationLogDirectory, DateTime.Now.Date.ToShortDateString().Replace(@"/", "-"), "log.txt");
+
+            string minimumLogLevel = ConfigurationManager.AppSettings["MinimumLogLevel"];
+
+            LoggingLevelSwitch levelSwitch = new LoggingLevelSwitch();
+
+            LogEventLevel logLevel;
+            Enum.TryParse(minimumLogLevel, out logLevel);
+
+            levelSwitch.MinimumLevel = logLevel;
+
+            return new LoggerConfiguration().MinimumLevel.ControlledBy(levelSwitch).WriteTo.RollingFile(filePath);
+        }
+
+
+        private void IntializeLogger()
+        {
+
+            Log.Logger = this.GetConfiguration().CreateLogger();
+
+            Log.Information("Application started.");
+            //Log.Verbose("Appending to log directory: {Directory}.", applicationLogDirectory);
         }
     }
 }

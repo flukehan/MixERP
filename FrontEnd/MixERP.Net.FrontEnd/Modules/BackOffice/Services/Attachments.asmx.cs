@@ -26,6 +26,7 @@ using System.Web.Script.Services;
 using System.Web.Services;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Entities.Core;
+using Serilog;
 using CollectionHelper = MixERP.Net.WebControls.StockTransactionFactory.Helpers.CollectionHelper;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Services
@@ -98,10 +99,9 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
                     File.Delete(filePath);
                     return true;
                 }
-                    // ReSharper disable once EmptyGeneralCatchClause
                 catch (IOException)
                 {
-                    //Swallow
+                    Log.Warning("Could not delete file: {FilePath}.", filePath);
                 }
             }
 

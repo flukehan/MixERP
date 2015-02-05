@@ -22,78 +22,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 <asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
 
-<div class="sixteen wide column widget">
-    <div class="ui segment">
-        <h2 class="ui purple header">World Sales Statistics</h2>
 
-        <div class="" style="overflow: auto">
-            <div id="map-container" style="height: 700px;">
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<script>
-    var el = document.getElementById('map-container');
-    var colors = ['#A8F792', '#F2C3FA', '#E892F7', '#D4C3FA', '#C3C4FA', '#DB9E58', '#58DB91', '#F792B4', '#DBCC58', '#DB9E58', '#58DBDB', '#D558DB', '#D6313C', '#3134D6', '#A1CCA2'];
-    var table = $("#SalesByGeographyGridView");
-    var totalSalesLocalized = 'Total Sales: ';
-    var baseCurrencyCode = 'NPR';
-
-    function parseTable() {
-        var items = [];
-        var data = {};
-        var fills = {};
-
-        var counter = 0;
-        table.find("tbody tr").each(function () {
-            counter++;
-            var countryCode = $(this).find("td:first-child").html();
-            var sales = parseFloat2($(this).find("td:last-child").html());
-
-            var code = iso3Countries[countryCode];
-
-            data[code] = {
-                fillKey: code,
-                isoCode: countryCode,
-                sales: getFormattedNumber(sales)
-            };
-
-            fills[code] = colors[counter];
-        });
-
-        fills['defaultFill'] = '#DCE3E8';
-
-        items.push(data);
-        items.push(fills);
-
-        table.remove();
-
-        return items;
-    };
-
-    function createMap() {
-        var items = parseTable();
-
-        var map = new Datamap({
-            element: document.getElementById('map-container'),
-            fills: items[1],
-            dataType: 'json',
-            data: items[0],
-            geographyConfig: {
-                popupTemplate: function (geo, data) {
-                    return ['<div class="ui compact segment">' +
-                        '<div class="ui small header"><i class="' + data.isoCode.toLowerCase() + ' flag"></i><div class="content">'
-                        + geo.properties.name + '</div>',
-                        '<div class="sub header">' + totalSalesLocalized + baseCurrencyCode + data.sales,
-                        '</div></div>'].join('');
-                }
-            }
-        });
-    };
-
-    $(document).ready(function () {
-        createMap();
-    });
-</script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+<script src="/Scripts/Datamaps/datamaps.all.min.js"></script>
+<script src="/Scripts/mixerp/utitlities/country-codes.js"></script>
+<script src="/Modules/Sales/Scripts/Widgets/SalesByGeographyWidget.ascx.js"></script>

@@ -151,6 +151,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Background Color.
+        /// </summary>
+        internal static string background_color {
+            get {
+                return ResourceManager.GetString("background_color", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Based On Shipping Address.
         /// </summary>
         internal static string based_on_shipping_address {
@@ -583,11 +592,29 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Flag Type Name.
+        /// </summary>
+        internal static string flag_type_name {
+            get {
+                return ResourceManager.GetString("flag_type_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Flagged On.
         /// </summary>
         internal static string flagged_on {
             get {
                 return ResourceManager.GetString("flagged_on", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Foreground Color.
+        /// </summary>
+        internal static string foreground_color {
+            get {
+                return ResourceManager.GetString("foreground_color", resourceCulture);
             }
         }
         

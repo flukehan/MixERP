@@ -21,8 +21,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
 <div class="four wide column widget">
     <div class="ui segment">
-        <h2>Office Information (Todo)
+        <h2 class="ui purple header">Office Information (Todo)
         </h2>
+        <div class="ui divider"></div>
         <p>
             Your Office : MoF-NY-MEM (Memphis Branch)
                     <br />

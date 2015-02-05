@@ -102,9 +102,11 @@ namespace MixERP.Net.Common.Helpers
                 }
                 catch (NotImplementedException)
                 {
-                    return string.Empty;
+                    //Swallow
                 }
             }
+
+            return string.Empty;
         }
     }
 }

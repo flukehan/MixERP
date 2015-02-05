@@ -21,10 +21,7 @@ using System;
 using System.Collections.ObjectModel;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models;
-using MixERP.Net.Entities;
-using MixERP.Net.Entities.Transactions;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.Common;
 
 namespace MixERP.Net.FrontEnd.Dashboard
 {
@@ -92,7 +89,6 @@ namespace MixERP.Net.FrontEnd.Dashboard
             };
 
             WidgetHelper.LoadWidgets(models, this.WidgetPlaceholder, this.Page);
-
         }
     }
 }

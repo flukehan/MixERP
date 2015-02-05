@@ -23,9 +23,11 @@ using System.Linq;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.DbFactory;
+using MixERP.Net.Entities.Audit;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Models.Transactions;
 using Npgsql;
+using Serilog;
 
 namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 {
@@ -219,13 +221,15 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
                         transaction.Commit();
                         return transactionMasterId;
                     }
-                    catch (NpgsqlException)
+                    catch (NpgsqlException ex)
                     {
+                        Log.Warning(@"Could not post transaction. ValueDate: {ValueDate}, OfficeId: {OfficeId}, UserId: {UserId}, LoginId: {LoginId}, CostCenterId:{CostCenterId}, ReferenceNumber: {ReferenceNumber}, Details: {Details}, Attachments: {Attachments}. {Exception}.", valueDate, officeId, userId, logOnId, costCenterId, referenceNumber, details, attachments, ex);
                         transaction.Rollback();
                         throw;
                     }
-                    catch (InvalidOperationException)
+                    catch (InvalidOperationException ex)
                     {
+                        Log.Warning(@"Could not post transaction. ValueDate: {ValueDate}, OfficeId: {OfficeId}, UserId: {UserId}, LoginId: {LoginId}, CostCenterId:{CostCenterId}, ReferenceNumber: {ReferenceNumber}, Details: {Details}, Attachments: {Attachments}. {Exception}.", valueDate, officeId, userId, logOnId, costCenterId, referenceNumber, details, attachments, ex);
                         transaction.Rollback();
                         throw;
                     }

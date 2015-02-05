@@ -21,8 +21,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
 <div class="four wide column widget widget">
     <div class="ui segment">
-        <h2>MixERP Links
+        <h2 class="ui purple header">MixERP Links
         </h2>
+        <div class="ui divider"></div>
         <ul>
             <li>
                 <a href="http://docs.mixerp.org" target="_blank">Documentation</a>

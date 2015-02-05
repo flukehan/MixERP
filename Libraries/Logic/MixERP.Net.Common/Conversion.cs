@@ -29,6 +29,7 @@ using System.Web.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common.Helpers;
+using Serilog;
 using Image = System.Drawing.Image;
 
 namespace MixERP.Net.Common
@@ -236,11 +237,11 @@ namespace MixERP.Net.Common
             }
             catch (FormatException)
             {
-                //swallow the exception
+                Log.Debug("Invalid date format: {Value}.", value);
             }
             catch (InvalidCastException)
             {
-                //swallow the exception
+                Log.Debug("Could not cast {Value} to date.", value);
             }
 
             return DateTime.MinValue;

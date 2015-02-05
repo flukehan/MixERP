@@ -40,6 +40,7 @@ using System;
 using System.Configuration;
 using System.Text;
 using System.Threading;
+using Serilog;
 
 namespace MixERP.Net.FrontEnd.Site
 {
@@ -47,7 +48,6 @@ namespace MixERP.Net.FrontEnd.Site
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
             string server = this.Request.ServerVariables["SERVER_SOFTWARE"];
 
             //This is visual studio.
@@ -74,9 +74,15 @@ namespace MixERP.Net.FrontEnd.Site
 
             if (ex != null)
             {
+                Log.Verbose("Getting the innermost exception.");
                 ex = this.GetInnerMostException(ex);
+
+                Log.Verbose("Exception displayed to user.");
+
                 s.Append(string.Format(Thread.CurrentThread.CurrentCulture, "<hr class='hr' />"));
                 s.Append(string.Format(Thread.CurrentThread.CurrentCulture, "<h2>{0}</h2>", ex.Message));
+
+                Log.Warning("{Exception}.", ex);
 
                 this.ExceptionLiteral.Text = s.ToString();
             }

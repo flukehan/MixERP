@@ -17,20 +17,19 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.WebControls.ScrudFactory.Helpers;
-using MixERP.Net.WebControls.ScrudFactory.Resources;
 using System.Reflection;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.WebControls.ScrudFactory.Helpers;
+using MixERP.Net.WebControls.ScrudFactory.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 {
     internal static class ScrudTextBox
     {
-        internal static void AddTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isNullable, int maxLength, string errorCssClass, Assembly assembly, bool disabled)
+        internal static void AddTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string dataType, string defaultValue, bool isNullable, int maxLength, string errorCssClass, Assembly assembly, bool disabled)
         {
-
             if (htmlTable == null)
             {
                 return;
@@ -51,6 +50,12 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
             using (TextBox textBox = GetTextBox(columnName + "_textbox", maxLength))
             {
                 string label = ScrudLocalizationHelper.GetResourceString(assembly, resourceClassName, columnName);
+
+
+                if (dataType.ToUpperInvariant().Equals("COLOR"))
+                {
+                    textBox.CssClass = "color";
+                }
 
                 if (isPasswordField)
                 {

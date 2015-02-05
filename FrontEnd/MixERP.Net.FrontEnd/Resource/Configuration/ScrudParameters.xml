@@ -58,6 +58,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <add key="PagerCssClass" value="ui pagination menu vmargin8" />
     <add key="PagerCurrentPageCssClass" value="active item" />
     <add key="PagerPageButtonCssClass" value="item" />
+    <add key="PageSize" value="10" />
     <add key="ResourceClassName" value="ScrudResource" />
 
     <add key="ButtonCssClass" value="small ui button" />

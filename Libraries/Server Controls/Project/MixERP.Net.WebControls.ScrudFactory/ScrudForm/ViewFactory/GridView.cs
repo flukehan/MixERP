@@ -28,20 +28,15 @@ namespace MixERP.Net.WebControls.ScrudFactory
     {
         private void BindGridView()
         {
-            var showAll = (Conversion.TryCastString(this.Page.Request.QueryString["show"]).Equals("all"));
 
             var limit = 10;
             var offset = 0;
 
-            if (this.PageSize != 0)
+            if (this.GetPageSize() != 0)
             {
-                limit = this.PageSize;
+                limit = this.GetPageSize();
             }
 
-            if (showAll)
-            {
-                limit = 1000;
-            }
 
             if (this.Page.Request["page"] != null)
             {
@@ -53,6 +48,8 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 this.formGridView.DataSource = table;
                 this.formGridView.DataBind();
             }
+
+           this.CreatePager(this.gridPanel);
         }
 
         private Unit GetGridViewWidth()
@@ -75,19 +72,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             this.formGridView.Width = this.GetGridViewWidth();
             this.formGridView.Attributes.Add("style", "white-space: nowrap;");
-
-            this.pager.RecordCount = FormHelper.GetTotalRecords(this.ViewSchema, this.View);
-            this.pager.PageSize = 10;
-
-            if (this.PageSize != 0)
-            {
-                this.pager.PageSize = this.PageSize;
-            }
-
-            if (showAll)
-            {
-                this.pager.PageSize = 1000;
-            }
 
             var userNameSessionKey = ConfigurationHelper.GetScrudParameter("UserNameSessionKey");
             var officeCodeSessionKey = ConfigurationHelper.GetScrudParameter("OfficeCodeSessionKey");

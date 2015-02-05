@@ -23,6 +23,7 @@ using MixERP.Net.WebControls.ScrudFactory;
 using System;
 using System.Reflection;
 using MixERP.Net.Common.Domains;
+using MixERP.Net.Core.Modules.BackOffice.Data.Admin;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Admin
 {
@@ -54,19 +55,24 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
 
         protected void AnalyzeButton_Click(object sender, EventArgs e)
         {
-            Data.Admin.DatabaseStatistics.Analyze();
+            DatabaseUtility utility = new DatabaseUtility();
+            utility.Analyze();
+
             this.DisplaySuccess();
         }
 
         protected void FullVacuumButton_Click(object sender, EventArgs e)
         {
-            Data.Admin.DatabaseStatistics.VacuumFull();
+            DatabaseUtility utility = new DatabaseUtility();
+            utility.VacuumFull();
+
             this.DisplaySuccess();
         }
 
         protected void VacuumButton_Click(object sender, EventArgs e)
         {
-            Data.Admin.DatabaseStatistics.Vacuum();
+            DatabaseUtility utility = new DatabaseUtility();
+            utility.Vacuum();
             this.DisplaySuccess();
         }
 

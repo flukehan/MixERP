@@ -20,6 +20,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Web;
 using MixERP.Net.Common.Base;
+using Serilog;
 
 namespace MixERP.Net.Common
 {
@@ -35,6 +36,8 @@ namespace MixERP.Net.Common
             if (HttpContext.Current.Session != null)
             {
                 HttpContext.Current.Session["ex"] = ex;
+                Log.Information("Exception object was added to session.");
+
                 HttpContext.Current.Server.TransferRequest("~/Site/RuntimeError.aspx", true);
             }
         }

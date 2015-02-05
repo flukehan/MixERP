@@ -42,8 +42,9 @@
     <AssemblyOriginatorKeyFile>Mix Open Foundation.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AspNetPager">
-      <HintPath>..\..\..\..\packages\AspNetPager.7.4.4.1\lib\AspNetPager.dll</HintPath>
+    <Reference Include="Serilog, Version=1.4.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\packages\Serilog.1.4.155\lib\net45\Serilog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -76,6 +77,7 @@
       <DependentUpon>Titles.resx</DependentUpon>
     </Compile>
     <Compile Include="ScrudForm\FormFactory\Alert.cs" />
+    <Compile Include="ScrudForm\Pager.cs" />
     <Compile Include="ScrudForm\Validation.cs" />
     <Compile Include="ScrudForm\IDisposable.cs" />
     <Compile Include="ScrudForm\Styling.cs" />
@@ -113,7 +115,6 @@
     </None>
     <None Include="app.config" />
     <None Include="Mix Open Foundation.snk" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Errors.resx">
