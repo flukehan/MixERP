@@ -29,18 +29,19 @@ CREATE TABLE localization.cultures
 );
 
 INSERT INTO localization.cultures
-SELECT 'de-DE',     'German (Germany)'          UNION ALL
-SELECT 'en-GB',     'English (United Kingdom)'  UNION ALL
-SELECT 'es-ES',     'Spanish (Spain)'           UNION ALL
-SELECT 'fil-PH',    'Filipino (Philippines)'    UNION ALL
-SELECT 'fr-FR',     'French (France)'           UNION ALL
-SELECT 'id-ID',     'Indonesian (Indonesia)'    UNION ALL
-SELECT 'ja-JP',     'Japanese (Japan)'          UNION ALL
-SELECT 'ms-MY',     'Malay (Malaysia)'          UNION ALL
-SELECT 'nl-NL',     'Dutch (Netherlands)'       UNION ALL
-SELECT 'pt-PT',     'Portuguese (Portugal)'     UNION ALL
-SELECT 'ru-RU',     'Russian (Russia)'          UNION ALL
-SELECT 'sv-SE',     'Swedish (Sweden)';
+SELECT 'de-DE',     'German (Germany)'              UNION ALL
+SELECT 'en-GB',     'English (United Kingdom)'      UNION ALL
+SELECT 'es-ES',     'Spanish (Spain)'               UNION ALL
+SELECT 'fil-PH',    'Filipino (Philippines)'        UNION ALL
+SELECT 'fr-FR',     'French (France)'               UNION ALL
+SELECT 'id-ID',     'Indonesian (Indonesia)'        UNION ALL
+SELECT 'ja-JP',     'Japanese (Japan)'              UNION ALL
+SELECT 'ms-MY',     'Malay (Malaysia)'              UNION ALL
+SELECT 'nl-NL',     'Dutch (Netherlands)'           UNION ALL
+SELECT 'pt-PT',     'Portuguese (Portugal)'         UNION ALL
+SELECT 'ru-RU',     'Russian (Russia)'              UNION ALL
+SELECT 'sv-SE',     'Swedish (Sweden)'              UNION ALL
+SELECT 'zh-CN',     'Simplified Chinese (China)';
 
 
 CREATE TABLE localization.localized_resources
@@ -71,32 +72,6 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
-
-CREATE FUNCTION localization.add_localized_resource
-(
-    culture_code        text,
-    key                 text,
-    value               text
-)
-RETURNS void
-AS
-$$
-BEGIN
-    IF EXISTS(SELECT 1 FROM localization.localized_resources WHERE culture_code=$1 AND key=$2) THEN
-        UPDATE localization.localized_resources
-        SET value=$2
-        WHERE culture_code=$1 AND key=$2;
-
-        RETURN;
-    END IF;
-
-    INSERT INTO localization.localized_resources(culture_code, key, value)
-    SELECT $1, $2, $3;
-END
-$$
-LANGUAGE plpgsql;
-
---drop FUNCTION localization.get_localization_table(text)
 
 CREATE FUNCTION localization.get_localization_table
 (
@@ -139,3 +114,29 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+
+
+
+CREATE OR REPLACE FUNCTION localization.add_localized_resource(text, text, text)
+RETURNS void AS
+$$
+BEGIN
+    IF EXISTS
+    (
+        SELECT 1 FROM localization.localized_resources 
+        WHERE localization.localized_resources.culture_code=$1 
+        AND localization.localized_resources.key=$2
+    ) THEN
+        UPDATE localization.localized_resources
+        SET value=$3
+        WHERE localization.localized_resources.culture_code=$1 AND key=$2;
+
+        RETURN;
+    END IF;
+
+    INSERT INTO localization.localized_resources(culture_code, key, value)
+    SELECT $1, $2, $3;
+END
+$$
+LANGUAGE plpgsql VOLATILE
+COST 100;

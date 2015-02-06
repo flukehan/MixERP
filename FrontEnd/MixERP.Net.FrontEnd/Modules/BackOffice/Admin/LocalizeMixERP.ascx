@@ -72,6 +72,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 <div class="ui orange button">Save All</div>
 
+<asp:Literal runat="server" ID="CultureLiteral"></asp:Literal>
 <div class="vpad8">
     <asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
 </div>
@@ -110,5 +111,47 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
         grid.removeClass("initially hidden");
 
+
+        $(".action.input .button").click(function () {
+            var button = $(this);
+            button.addClass("loading");
+
+            var row = button.parent().parent().parent();
+
+            var key = row.find("td:nth-child(2)").html();
+            var value = button.parent().find("input").val().trim();
+
+            var ajaxSave = save(key, value);
+
+            ajaxSave.success(function() {
+                button.removeClass("loading");
+                displayMessage("Saved \"" + value + "\"", "success");
+            });
+
+            ajaxSave.fail(function(xhr) {
+                button.removeClass("loading");
+                logAjaxErrorMessage(xhr);
+            });
+        });
+
+        $(".action.input input").keyup(function(e) {
+            if (e.ctrlKey) {
+                if (e.keyCode === 13) {
+                    $(this).parent().find(".button").trigger("click");
+                };
+            };
+        });
     });
+
+    function save(key, value) {
+        var url = "/Modules/BackOffice/Services/Admin/LocalizeMixERP.asmx/Save";
+        var data = appendParameter("", "key", key);
+        data = appendParameter(data, "value", value);
+
+        data = getData(data);
+
+        return getAjax(url, data);
+    };
+
+
 </script>

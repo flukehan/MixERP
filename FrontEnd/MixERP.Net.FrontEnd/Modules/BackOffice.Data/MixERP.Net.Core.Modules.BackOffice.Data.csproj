@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Admin\DatabaseUtility.cs" />
+    <Compile Include="Admin\LocalizeMixERP.cs" />
     <Compile Include="Admin\QueryTool.cs" />
     <Compile Include="Admin\User.cs" />
     <Compile Include="Attachments.cs" />

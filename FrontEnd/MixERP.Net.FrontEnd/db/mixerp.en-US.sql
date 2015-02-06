@@ -1,4 +1,149 @@
-﻿-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/00. db core/0. verbosity.sql --<--<--
+﻿-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/0. localization.sql --<--<--
+DROP SCHEMA IF EXISTS localization CASCADE;
+
+CREATE SCHEMA localization;
+
+CREATE TABLE localization.resources
+(
+    resource_id         SERIAL PRIMARY KEY,
+    path                text,
+    key                 text,
+    value               text
+);
+
+CREATE UNIQUE INDEX resources_path_key_uix
+ON localization.resources(UPPER(path), UPPER(key));
+
+CREATE INDEX resources_path_key_inx
+ON localization.resources(path, key);
+
+CREATE INDEX resources_path_inx
+ON localization.resources(path);
+
+CREATE INDEX resources_key_inx
+ON localization.resources(key);
+
+CREATE TABLE localization.cultures
+(
+    culture_code        text PRIMARY KEY,
+    culture_name        text
+);
+
+INSERT INTO localization.cultures
+SELECT 'de-DE',     'German (Germany)'              UNION ALL
+SELECT 'en-GB',     'English (United Kingdom)'      UNION ALL
+SELECT 'es-ES',     'Spanish (Spain)'               UNION ALL
+SELECT 'fil-PH',    'Filipino (Philippines)'        UNION ALL
+SELECT 'fr-FR',     'French (France)'               UNION ALL
+SELECT 'id-ID',     'Indonesian (Indonesia)'        UNION ALL
+SELECT 'ja-JP',     'Japanese (Japan)'              UNION ALL
+SELECT 'ms-MY',     'Malay (Malaysia)'              UNION ALL
+SELECT 'nl-NL',     'Dutch (Netherlands)'           UNION ALL
+SELECT 'pt-PT',     'Portuguese (Portugal)'         UNION ALL
+SELECT 'ru-RU',     'Russian (Russia)'              UNION ALL
+SELECT 'sv-SE',     'Swedish (Sweden)'              UNION ALL
+SELECT 'zh-CN',     'Simplified Chinese (China)';
+
+
+CREATE TABLE localization.localized_resources
+(
+    id                  SERIAL PRIMARY KEY,
+    culture_code        text REFERENCES localization.cultures,
+    key                 text,
+    value               text
+);
+
+CREATE UNIQUE INDEX localized_resources_culture_key_uix
+ON localization.localized_resources(UPPER(culture_code), UPPER(key));
+
+CREATE FUNCTION localization.add_resource
+(
+    path                text,
+    key                 text,
+    value               text
+)
+RETURNS void
+AS
+$$
+BEGIN
+    IF NOT EXISTS(SELECT 1 FROM localization.resources WHERE localization.resources.path=$1 AND localization.resources.key=$2) THEN
+        INSERT INTO localization.resources(path, key, value)
+        SELECT $1, $2, $3;
+    END IF;
+END
+$$
+LANGUAGE plpgsql;
+
+CREATE FUNCTION localization.get_localization_table
+(
+    culture_code        text
+)
+RETURNS TABLE
+(
+    row_number          bigint,
+    key                 text,
+    invariant_resource  text,
+    value               text
+)
+AS
+$$
+BEGIN   
+    CREATE TEMPORARY TABLE t
+    (
+        key                 text,
+        invariant_resource  text,
+        value               text
+    );
+    INSERT INTO t(key, invariant_resource, value)
+    SELECT
+        DISTINCT localization.resources.key,
+        localization.resources.value as invariant_resource,
+        localization.localized_resources.value
+    FROM localization.resources
+    LEFT JOIN localization.localized_resources
+    ON localization.resources.key = localization.localized_resources.key
+    AND localization.localized_resources.culture_code = $1;
+
+    RETURN QUERY 
+    SELECT 
+        row_number() OVER(ORDER BY t.key ~ '^[[:upper:]][^[:upper:]]' DESC, t.key),
+        t.key,
+        t.invariant_resource,
+        t.value
+    FROM t
+    ORDER BY t.key ~ '^[[:upper:]][^[:upper:]]' DESC, t.key;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+CREATE OR REPLACE FUNCTION localization.add_localized_resource(text, text, text)
+RETURNS void AS
+$$
+BEGIN
+    IF EXISTS
+    (
+        SELECT 1 FROM localization.localized_resources 
+        WHERE localization.localized_resources.culture_code=$1 
+        AND localization.localized_resources.key=$2
+    ) THEN
+        UPDATE localization.localized_resources
+        SET value=$3
+        WHERE localization.localized_resources.culture_code=$1 AND key=$2;
+
+        RETURN;
+    END IF;
+
+    INSERT INTO localization.localized_resources(culture_code, key, value)
+    SELECT $1, $2, $3;
+END
+$$
+LANGUAGE plpgsql VOLATILE
+COST 100;
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/00. db core/0. verbosity.sql --<--<--
 SET CLIENT_MIN_MESSAGES TO WARNING;
 
 
@@ -26426,13 +26571,14 @@ INSERT INTO logins (login_id, user_id, office_id, browser, ip_address, login_dat
 INSERT INTO logins (login_id, user_id, office_id, browser, ip_address, login_date_time, remote_user, culture) VALUES (50, 2, 2, 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:35.0) Gecko/20100101 Firefox/35.0', '::1', '2015-02-03 10:19:31.372+00', '', 'en-US');
 INSERT INTO logins (login_id, user_id, office_id, browser, ip_address, login_date_time, remote_user, culture) VALUES (51, 2, 2, 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:35.0) Gecko/20100101 Firefox/35.0', '::1', '2015-02-03 10:23:11.829+00', '', 'en-US');
 INSERT INTO logins (login_id, user_id, office_id, browser, ip_address, login_date_time, remote_user, culture) VALUES (52, 2, 4, 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:35.0) Gecko/20100101 Firefox/35.0', '::1', '2015-02-03 10:26:13.616+00', '', 'en-US');
+INSERT INTO logins (login_id, user_id, office_id, browser, ip_address, login_date_time, remote_user, culture) VALUES (53, 2, 2, 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:35.0) Gecko/20100101 Firefox/35.0', '::1', '2015-02-06 11:12:40.533+00', '', 'en-GB');
 
 
 --
 -- Name: logins_login_id_seq; Type: SEQUENCE SET; Schema: audit; Owner: postgres
 --
 
-SELECT pg_catalog.setval('logins_login_id_seq', 52, true);
+SELECT pg_catalog.setval('logins_login_id_seq', 53, true);
 
 
 SET search_path = core, pg_catalog;
@@ -26450,6 +26596,1457 @@ INSERT INTO flags (flag_id, user_id, flag_type_id, resource, resource_key, resou
 --
 
 SELECT pg_catalog.setval('flags_flag_id_seq', 2, true);
+
+
+SET search_path = localization, pg_catalog;
+
+--
+-- Data for Name: localized_resources; Type: TABLE DATA; Schema: localization; Owner: postgres
+--
+
+
+
+--
+-- Name: localized_resources_id_seq; Type: SEQUENCE SET; Schema: localization; Owner: postgres
+--
+
+SELECT pg_catalog.setval('localized_resources_id_seq', 5, true);
+
+
+--
+-- Data for Name: resources; Type: TABLE DATA; Schema: localization; Owner: postgres
+--
+
+INSERT INTO resources (resource_id, path, key, value) VALUES (1, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Labels.resx', 'DaysLowerCase', 'days');
+INSERT INTO resources (resource_id, path, key, value) VALUES (2, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Labels.resx', 'JustAMomentPlease', 'Just a moment, please!');
+INSERT INTO resources (resource_id, path, key, value) VALUES (3, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Labels.resx', 'TaskCompletedSuccessfully', 'Task completed successfully.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (4, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Labels.resx', 'UserGreeting', 'Hi {0}!');
+INSERT INTO resources (resource_id, path, key, value) VALUES (5, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Labels.resx', 'YourPasswordWasChanged', 'Your password was changed.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (6, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Questions.resx', 'AreYouSure', 'Are you sure?');
+INSERT INTO resources (resource_id, path, key, value) VALUES (7, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Questions.resx', 'CannotAccessAccount', 'Cannot access your account?');
+INSERT INTO resources (resource_id, path, key, value) VALUES (8, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Titles.resx', 'AccessIsDenied', 'Access is denied.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (9, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Titles.resx', 'Cancel', 'Cancel');
+INSERT INTO resources (resource_id, path, key, value) VALUES (10, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Titles.resx', 'ChangePassword', 'Change Password');
+INSERT INTO resources (resource_id, path, key, value) VALUES (11, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Titles.resx', 'ConfirmPassword', 'Confirm Password');
+INSERT INTO resources (resource_id, path, key, value) VALUES (12, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Titles.resx', 'CurrentPassword', 'Current Password');
+INSERT INTO resources (resource_id, path, key, value) VALUES (13, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Titles.resx', 'Email', 'Email');
+INSERT INTO resources (resource_id, path, key, value) VALUES (14, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Titles.resx', 'Fax', 'Fax');
+INSERT INTO resources (resource_id, path, key, value) VALUES (15, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Titles.resx', 'ManageProfile', 'Manage Profile');
+INSERT INTO resources (resource_id, path, key, value) VALUES (16, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Titles.resx', 'MixERPDocumentation', 'MixERP Documentation');
+INSERT INTO resources (resource_id, path, key, value) VALUES (17, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Titles.resx', 'NewPassword', 'New Password');
+INSERT INTO resources (resource_id, path, key, value) VALUES (18, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Titles.resx', 'No', 'No');
+INSERT INTO resources (resource_id, path, key, value) VALUES (19, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Titles.resx', 'None', 'None');
+INSERT INTO resources (resource_id, path, key, value) VALUES (20, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Titles.resx', 'Notifications', 'Notifications');
+INSERT INTO resources (resource_id, path, key, value) VALUES (21, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Titles.resx', 'OfficeCode', 'Office Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (22, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Titles.resx', 'Password', 'Password');
+INSERT INTO resources (resource_id, path, key, value) VALUES (23, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Titles.resx', 'Phone', 'Phone');
+INSERT INTO resources (resource_id, path, key, value) VALUES (24, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Titles.resx', 'PreparedOn', 'Prepared On');
+INSERT INTO resources (resource_id, path, key, value) VALUES (25, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Titles.resx', 'RememberMe', 'Remember Me');
+INSERT INTO resources (resource_id, path, key, value) VALUES (26, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Titles.resx', 'Select', 'Select');
+INSERT INTO resources (resource_id, path, key, value) VALUES (27, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Titles.resx', 'SelectLanguage', 'Select Language');
+INSERT INTO resources (resource_id, path, key, value) VALUES (28, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Titles.resx', 'SelectYourBranch', 'Select Your Branch');
+INSERT INTO resources (resource_id, path, key, value) VALUES (29, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Titles.resx', 'SignIn', 'Sign In');
+INSERT INTO resources (resource_id, path, key, value) VALUES (30, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Titles.resx', 'SigningIn', 'Signing In');
+INSERT INTO resources (resource_id, path, key, value) VALUES (31, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Titles.resx', 'SignOut', 'Sign Out');
+INSERT INTO resources (resource_id, path, key, value) VALUES (32, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Titles.resx', 'Url', 'Url');
+INSERT INTO resources (resource_id, path, key, value) VALUES (33, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Titles.resx', 'User', 'User');
+INSERT INTO resources (resource_id, path, key, value) VALUES (34, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Titles.resx', 'UserId', 'User Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (35, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Titles.resx', 'Username', 'Username');
+INSERT INTO resources (resource_id, path, key, value) VALUES (36, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Titles.resx', 'Yes', 'Yes');
+INSERT INTO resources (resource_id, path, key, value) VALUES (37, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Warnings.resx', 'AccessIsDenied', 'Access is denied.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (38, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Warnings.resx', 'ConfirmationPasswordDoesNotMatch', 'The confirmation password does not match with the new password.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (39, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Warnings.resx', 'DuplicateEntry', 'Duplicate entry.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (40, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Warnings.resx', 'DuplicateFiles', 'Duplicate files.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (41, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Warnings.resx', 'GridViewEmpty', 'Gridview is empty.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (42, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Warnings.resx', 'InvalidDate', 'Invalid date.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (43, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Warnings.resx', 'NewPasswordCannotBeOldPassword', 'New password can not be old password.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (44, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Warnings.resx', 'NotAuthorized', 'You are not authorized to access this resources at this time.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (45, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Warnings.resx', 'NothingSelected', 'Nothing selected.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (46, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Warnings.resx', 'PleaseEnterCurrentPassword', 'Please enter your current password.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (47, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Warnings.resx', 'PleaseEnterNewPassword', 'Please enter a new password.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (48, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Warnings.resx', 'UserIdOrPasswordIncorrect', 'User id or password incorrect.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (49, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Labels.resx', 'ClickHereToDownload', 'Click here to download.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (50, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Labels.resx', 'DatabaseBackupSuccessful', 'The database backup was successful.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (51, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Labels.resx', 'NumRowsAffected', '{0} rows affected.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (52, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Labels.resx', 'TaskCompletedSuccessfully', 'Task completed successfully.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (53, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Questions.resx', 'ConfirmAnalyze', 'This will lock client database access during execution. Are you sure you want to execute this action right now?');
+INSERT INTO resources (resource_id, path, key, value) VALUES (54, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Questions.resx', 'ConfirmVacuum', 'This will lock client database access during execution. Are you sure you want to execute this action right now?');
+INSERT INTO resources (resource_id, path, key, value) VALUES (55, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Questions.resx', 'ConfirmVacuumFull', 'This will lock client database access during execution. Are you sure you want to execute this action right now?');
+INSERT INTO resources (resource_id, path, key, value) VALUES (56, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'address_line_1', 'Address Line 1');
+INSERT INTO resources (resource_id, path, key, value) VALUES (57, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'address_line_2', 'Address Line 2');
+INSERT INTO resources (resource_id, path, key, value) VALUES (58, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'analyze_count', 'Analyze Count');
+INSERT INTO resources (resource_id, path, key, value) VALUES (59, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'autoanalyze_count', 'Autoanalyze Count');
+INSERT INTO resources (resource_id, path, key, value) VALUES (60, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'autovacuum_count', 'Autovacuum Count');
+INSERT INTO resources (resource_id, path, key, value) VALUES (70, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'currency_code', 'Currency Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (80, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'fiscal_year_name', 'Fiscal Year Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (90, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'is_system', 'Is System');
+INSERT INTO resources (resource_id, path, key, value) VALUES (100, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'parent_cash_repository_id', 'Parent Cash Repository Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (110, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'resource_id', 'Resource Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (120, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'url', 'Url');
+INSERT INTO resources (resource_id, path, key, value) VALUES (130, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'store_id', 'Store Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (140, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'tax_master_id', 'Tax Master Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (150, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'item_group_id', 'Item Group Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (160, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'sales_tax_detail_code', 'Sales Tax Detail Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (170, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'sales_tax_type_name', 'Sales Tax Type Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (180, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'tax_exempt_type_id', 'Tax Exempt Type Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (190, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'rounding_decimal_places', 'Rounding Decimal Places');
+INSERT INTO resources (resource_id, path, key, value) VALUES (200, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'county_id', 'County Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (210, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'use_tax_collecting_account_id', 'Use Tax Collecting Account Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (220, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'sales_tax', 'Sales Tax');
+INSERT INTO resources (resource_id, path, key, value) VALUES (230, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'background_color', 'Background Color');
+INSERT INTO resources (resource_id, path, key, value) VALUES (240, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'Execute', 'Execute');
+INSERT INTO resources (resource_id, path, key, value) VALUES (250, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'SalesTaxDetails', 'Sales Tax Details');
+INSERT INTO resources (resource_id, path, key, value) VALUES (260, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'Tel', 'Tel');
+INSERT INTO resources (resource_id, path, key, value) VALUES (270, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'Industries', 'Industries');
+INSERT INTO resources (resource_id, path, key, value) VALUES (280, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'EnterNewPassword', 'Enter a New Password');
+INSERT INTO resources (resource_id, path, key, value) VALUES (290, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Warnings.resx', 'NoFileSpecified', 'No file specified.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (300, '\FrontEnd\MixERP.Net.FrontEnd\Modules\CRM\Resources\ScrudResource.resx', 'opportunity_stage_code', 'Opportunity Stage Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (310, '\FrontEnd\MixERP.Net.FrontEnd\Modules\CRM\Resources\Titles.resx', 'Tel', 'Tel');
+INSERT INTO resources (resource_id, path, key, value) VALUES (320, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'audit_ts', 'Audit Timestamp');
+INSERT INTO resources (resource_id, path, key, value) VALUES (330, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'cost_center_id', 'Cost Center Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (340, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'from_days', 'From Days');
+INSERT INTO resources (resource_id, path, key, value) VALUES (350, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'repository', 'Repository');
+INSERT INTO resources (resource_id, path, key, value) VALUES (360, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'to_days', 'To Days');
+INSERT INTO resources (resource_id, path, key, value) VALUES (370, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'discount', 'Discount');
+INSERT INTO resources (resource_id, path, key, value) VALUES (380, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'cash_flow_heading_code', 'Cash Flow Heading Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (390, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'balance', 'Balance');
+INSERT INTO resources (resource_id, path, key, value) VALUES (400, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'is_purchase', 'Is Purchase');
+INSERT INTO resources (resource_id, path, key, value) VALUES (410, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'BankAccounts', 'Bank Accounts');
+INSERT INTO resources (resource_id, path, key, value) VALUES (420, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'CtrlAltC1', 'Ctrl + Alt + C');
+INSERT INTO resources (resource_id, path, key, value) VALUES (430, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'EnteredBy', 'Entered By');
+INSERT INTO resources (resource_id, path, key, value) VALUES (440, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'RunningTotal', 'Running Total');
+INSERT INTO resources (resource_id, path, key, value) VALUES (450, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'VerifiedBy', 'Verified By');
+INSERT INTO resources (resource_id, path, key, value) VALUES (460, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'PostedBy', 'Posted By');
+INSERT INTO resources (resource_id, path, key, value) VALUES (470, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Shipper', 'Shipper');
+INSERT INTO resources (resource_id, path, key, value) VALUES (480, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Show', 'Show');
+INSERT INTO resources (resource_id, path, key, value) VALUES (490, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'AccountMaster', 'Account Master');
+INSERT INTO resources (resource_id, path, key, value) VALUES (500, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'ParentAccount', 'Parent Account');
+INSERT INTO resources (resource_id, path, key, value) VALUES (510, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'PreviousCredit', 'Previous Credit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (520, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'StatementOfCashFlows', 'Statement of Cash Flows');
+INSERT INTO resources (resource_id, path, key, value) VALUES (530, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Cancel', 'Cancel');
+INSERT INTO resources (resource_id, path, key, value) VALUES (540, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance.Data\Resources\Errors.resx', 'BothSidesCannotHaveValue', 'Both debit and credit cannot have values.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (550, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'address_line_2', 'Address Line 2');
+INSERT INTO resources (resource_id, path, key, value) VALUES (560, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'charge_interest', 'Charge Interest');
+INSERT INTO resources (resource_id, path, key, value) VALUES (570, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'compound_unit_id', 'Compound Unit Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (580, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'contact_state', 'Contact State');
+INSERT INTO resources (resource_id, path, key, value) VALUES (590, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'exclude_from_purchase', 'Exclude From Purchase');
+INSERT INTO resources (resource_id, path, key, value) VALUES (600, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'interest_rate', 'Interest Rate');
+INSERT INTO resources (resource_id, path, key, value) VALUES (610, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'item_selling_price_id', 'Item Selling Price Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (620, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'party', 'Party');
+INSERT INTO resources (resource_id, path, key, value) VALUES (630, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'po_box', 'Po Box');
+INSERT INTO resources (resource_id, path, key, value) VALUES (640, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'shipper_id', 'Shipper Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (61, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'can_self_verify', 'Can Self Verify');
+INSERT INTO resources (resource_id, path, key, value) VALUES (71, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'department_code', 'Department Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (81, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'flagged_on', 'Flagged On');
+INSERT INTO resources (resource_id, path, key, value) VALUES (91, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'last_analyze', 'Last Analyze On');
+INSERT INTO resources (resource_id, path, key, value) VALUES (101, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'parent_office_id', 'Parent Office Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (111, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'resource_key', 'Resource Key');
+INSERT INTO resources (resource_id, path, key, value) VALUES (121, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'user_id', 'User Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (131, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'counter_code', 'Counter Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (141, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'tax_master_name', 'Tax Master Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (151, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'item_id', 'Item Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (161, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'sales_tax_detail_id', 'Sales Tax Detail Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (171, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'state_id', 'State Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (181, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'tax_exempt_type_name', 'Tax Exempt Type Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (191, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'entity_name', 'Entity Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (201, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'county_name', 'County Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (211, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'party_type_id', 'Party Type Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (221, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'tax_exempt_type', 'Tax Exempt Type');
+INSERT INTO resources (resource_id, path, key, value) VALUES (231, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'foreground_color', 'Foreground Color');
+INSERT INTO resources (resource_id, path, key, value) VALUES (241, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'Fax', 'Fax');
+INSERT INTO resources (resource_id, path, key, value) VALUES (251, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'SalesTaxes', 'Sales Taxes');
+INSERT INTO resources (resource_id, path, key, value) VALUES (261, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'Url', 'Url');
+INSERT INTO resources (resource_id, path, key, value) VALUES (271, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'States', 'States');
+INSERT INTO resources (resource_id, path, key, value) VALUES (281, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'PasswordUpdated', 'Password was updated.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (291, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Warnings.resx', 'PasswordCannotBeEmpty', 'Password cannot be empty.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (301, '\FrontEnd\MixERP.Net.FrontEnd\Modules\CRM\Resources\ScrudResource.resx', 'opportunity_stage_id', 'Opportunity Stage Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (311, '\FrontEnd\MixERP.Net.FrontEnd\Modules\CRM\Resources\Titles.resx', 'Url', 'Url');
+INSERT INTO resources (resource_id, path, key, value) VALUES (321, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'audit_user_id', 'Audit User Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (331, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'cost_center_name', 'Cost Center Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (341, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'has_child', 'Has Child');
+INSERT INTO resources (resource_id, path, key, value) VALUES (351, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'Select', 'Select');
+INSERT INTO resources (resource_id, path, key, value) VALUES (361, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'account_master_name', 'Account Master Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (371, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'item_code', 'Item Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (381, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'cash_flow_heading_name', 'Cash Flow Heading Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (391, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'book', 'Book');
+INSERT INTO resources (resource_id, path, key, value) VALUES (401, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'is_transaction_node', 'Is Transaction Node');
+INSERT INTO resources (resource_id, path, key, value) VALUES (411, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Book', 'Book');
+INSERT INTO resources (resource_id, path, key, value) VALUES (421, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'CtrlAltD', 'Ctrl + Alt + D');
+INSERT INTO resources (resource_id, path, key, value) VALUES (431, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'ER', 'ER');
+INSERT INTO resources (resource_id, path, key, value) VALUES (441, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'StatementReference', 'Statement Reference');
+INSERT INTO resources (resource_id, path, key, value) VALUES (451, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Email', 'Email');
+INSERT INTO resources (resource_id, path, key, value) VALUES (461, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Reason', 'Reason');
+INSERT INTO resources (resource_id, path, key, value) VALUES (471, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'ShippingCharge', 'Shipping Charge');
+INSERT INTO resources (resource_id, path, key, value) VALUES (481, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Actions', 'Actions');
+INSERT INTO resources (resource_id, path, key, value) VALUES (491, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'BaseCurrency', 'Base Currency');
+INSERT INTO resources (resource_id, path, key, value) VALUES (501, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'AccountOverview', 'Account Overview');
+INSERT INTO resources (resource_id, path, key, value) VALUES (511, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'PreviousDebit', 'Previous Debit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (521, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'AccountId', 'Account Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (531, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Verify', 'Verify');
+INSERT INTO resources (resource_id, path, key, value) VALUES (541, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance.Data\Resources\Errors.resx', 'NoTransactionToPost', 'No transaction to post.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (551, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'allow_credit', 'Allow Credit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (561, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'city', 'City');
+INSERT INTO resources (resource_id, path, key, value) VALUES (571, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'contact_address_line_1', 'Contact Address Line 1');
+INSERT INTO resources (resource_id, path, key, value) VALUES (581, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'contact_street', 'Contact Street');
+INSERT INTO resources (resource_id, path, key, value) VALUES (591, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'exclude_from_sales', 'Exclude From Sales');
+INSERT INTO resources (resource_id, path, key, value) VALUES (601, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'is_supplier', 'Is Supplier');
+INSERT INTO resources (resource_id, path, key, value) VALUES (611, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'last_name', 'Last Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (621, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'party_code', 'Party Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (631, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'preferred_shipping_mail_type_id', 'Preferred Shipping Mail Type Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (641, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'shipper_name', 'Shipper Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (62, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'can_verify_gl_transactions', 'Can Verify Gl Transactions');
+INSERT INTO resources (resource_id, path, key, value) VALUES (72, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'department_id', 'Department Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (82, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'flag_id', 'Flag Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (92, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'last_autoanalyze', 'Last Autoanalyze On');
+INSERT INTO resources (resource_id, path, key, value) VALUES (102, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'password', 'Password');
+INSERT INTO resources (resource_id, path, key, value) VALUES (112, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'role_code', 'Role Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (122, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'user_name', 'User Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (132, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'counter_name', 'Counter Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (142, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'account_id', 'Account Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (152, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'party_id', 'Party Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (162, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'sales_tax_detail_name', 'Sales Tax Detail Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (172, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'state_sales_tax_code', 'State Sales Tax Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (182, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'tax_rate_type_code', 'Tax Rate Type Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (192, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'industry_name', 'Industry Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (202, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'county_sales_tax_code', 'County Sales Tax Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (212, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'cash_repositories_cash_repository_code_uix', 'Duplicate Cash Repository Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (222, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'item', 'Item');
+INSERT INTO resources (resource_id, path, key, value) VALUES (232, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'AnalyzeDatabse', 'Analyze Databse');
+INSERT INTO resources (resource_id, path, key, value) VALUES (242, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'FiscalYear', 'Fiscal Year');
+INSERT INTO resources (resource_id, path, key, value) VALUES (252, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'SalesTaxExemptDetails', 'Sales Tax Exempt Details');
+INSERT INTO resources (resource_id, path, key, value) VALUES (262, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'User', 'User');
+INSERT INTO resources (resource_id, path, key, value) VALUES (272, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'BackupDatabase', 'Backup Database');
+INSERT INTO resources (resource_id, path, key, value) VALUES (282, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'SelectUser', 'Select User');
+INSERT INTO resources (resource_id, path, key, value) VALUES (292, '\FrontEnd\MixERP.Net.FrontEnd\Modules\CRM\Resources\ScrudResource.resx', 'audit_ts', 'Audit Timestamp');
+INSERT INTO resources (resource_id, path, key, value) VALUES (302, '\FrontEnd\MixERP.Net.FrontEnd\Modules\CRM\Resources\ScrudResource.resx', 'opportunity_stage_name', 'Opportunity Stage Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (312, '\FrontEnd\MixERP.Net.FrontEnd\Modules\CRM\Resources\Titles.resx', 'User', 'User');
+INSERT INTO resources (resource_id, path, key, value) VALUES (322, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'bank_account_number', 'Bank Account Number');
+INSERT INTO resources (resource_id, path, key, value) VALUES (332, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'credit', 'Credit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (342, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'hundredth_name', 'Hundredth Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (352, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'statement_reference', 'Statement Reference');
+INSERT INTO resources (resource_id, path, key, value) VALUES (362, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'parent_account_number', 'Parent Account Number');
+INSERT INTO resources (resource_id, path, key, value) VALUES (372, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'item_name', 'Item Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (382, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'cash_flow_master_code', 'Cash Flow Master Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (392, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'office', 'Office');
+INSERT INTO resources (resource_id, path, key, value) VALUES (402, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'account_master', 'Account Master');
+INSERT INTO resources (resource_id, path, key, value) VALUES (412, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'CashRepository', 'Cash Repository');
+INSERT INTO resources (resource_id, path, key, value) VALUES (422, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'CtrlAltD1', 'Ctrl + Alt + D');
+INSERT INTO resources (resource_id, path, key, value) VALUES (432, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'GLAdvice', 'GL Advice');
+INSERT INTO resources (resource_id, path, key, value) VALUES (442, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'TaxSetup', 'Tax Setup');
+INSERT INTO resources (resource_id, path, key, value) VALUES (452, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Fax', 'Fax');
+INSERT INTO resources (resource_id, path, key, value) VALUES (462, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Status', 'Status');
+INSERT INTO resources (resource_id, path, key, value) VALUES (472, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'TransactionType', 'Transaction Type');
+INSERT INTO resources (resource_id, path, key, value) VALUES (482, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Select', 'Select');
+INSERT INTO resources (resource_id, path, key, value) VALUES (492, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'CashFlowHeading', 'CashFlow Heading');
+INSERT INTO resources (resource_id, path, key, value) VALUES (502, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'TransactionStatement', 'TransactionStatement');
+INSERT INTO resources (resource_id, path, key, value) VALUES (512, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'TrialBalance', 'Trial Balance');
+INSERT INTO resources (resource_id, path, key, value) VALUES (522, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'BalanceSheet', 'Balance Sheet');
+INSERT INTO resources (resource_id, path, key, value) VALUES (532, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Warnings.resx', 'AccessIsDenied', 'Access is denied.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (542, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance.Data\Resources\Errors.resx', 'ReferencingSidesNotEqual', 'The referencing sides are not equal.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (552, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'audit_ts', 'Audit Timestamp');
+INSERT INTO resources (resource_id, path, key, value) VALUES (562, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'company_name', 'Company Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (572, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'contact_address_line_2', 'Contact Address Line 2');
+INSERT INTO resources (resource_id, path, key, value) VALUES (582, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'cost_price', 'Cost Price');
+INSERT INTO resources (resource_id, path, key, value) VALUES (592, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'factory_address', 'Factory Address');
+INSERT INTO resources (resource_id, path, key, value) VALUES (602, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'item', 'Item');
+INSERT INTO resources (resource_id, path, key, value) VALUES (612, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'lead_time_in_days', 'Lead Time In Days');
+INSERT INTO resources (resource_id, path, key, value) VALUES (622, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'party_id', 'Party Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (632, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'preferred_supplier_id', 'Preferred Supplier Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (63, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'can_verify_purchase_transactions', 'Can Verify Purchase Transactions');
+INSERT INTO resources (resource_id, path, key, value) VALUES (73, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'department_name', 'Department Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (83, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'flag_type_id', 'Flag Type Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (93, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'last_autovacuum', 'Last Autovacuum On');
+INSERT INTO resources (resource_id, path, key, value) VALUES (103, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'phone', 'Phone');
+INSERT INTO resources (resource_id, path, key, value) VALUES (113, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'role_id', 'Role Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (123, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'vacuum_count', 'Vacuum Count');
+INSERT INTO resources (resource_id, path, key, value) VALUES (133, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'audit_ts', 'Audit Timestamp');
+INSERT INTO resources (resource_id, path, key, value) VALUES (143, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'based_on_shipping_address', 'Based On Shipping Address');
+INSERT INTO resources (resource_id, path, key, value) VALUES (153, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'price_from', 'Price From');
+INSERT INTO resources (resource_id, path, key, value) VALUES (163, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'sales_tax_exempt_code', 'Sales Tax Exempt Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (173, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'state_sales_tax_id', 'State Sales Tax Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (183, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'valid_from', 'Valid From');
+INSERT INTO resources (resource_id, path, key, value) VALUES (193, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'is_exempt', 'Is Exempt');
+INSERT INTO resources (resource_id, path, key, value) VALUES (203, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'county_sales_tax_id', 'County Sales Tax Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (213, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'cash_repositories_cash_repository_name_uix', 'Duplicate Cash Repository Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (223, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'item_group', 'Item Group');
+INSERT INTO resources (resource_id, path, key, value) VALUES (233, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'AutoVerificationPolicy', 'Autoverification Policy');
+INSERT INTO resources (resource_id, path, key, value) VALUES (243, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'Flags', 'Flags');
+INSERT INTO resources (resource_id, path, key, value) VALUES (253, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'SalesTaxExempts', 'Sales Tax Exempts');
+INSERT INTO resources (resource_id, path, key, value) VALUES (263, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'VacuumDatabase', 'Vacuum Database');
+INSERT INTO resources (resource_id, path, key, value) VALUES (273, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'BackupNow', 'Backup Now');
+INSERT INTO resources (resource_id, path, key, value) VALUES (283, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'Update', 'Update');
+INSERT INTO resources (resource_id, path, key, value) VALUES (293, '\FrontEnd\MixERP.Net.FrontEnd\Modules\CRM\Resources\ScrudResource.resx', 'audit_user_id', 'Audit User Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (303, '\FrontEnd\MixERP.Net.FrontEnd\Modules\CRM\Resources\ScrudResource.resx', 'Select', 'Select');
+INSERT INTO resources (resource_id, path, key, value) VALUES (313, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'account_number', 'Account Number');
+INSERT INTO resources (resource_id, path, key, value) VALUES (323, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'bank_account_type', 'Bank Account Type');
+INSERT INTO resources (resource_id, path, key, value) VALUES (333, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'currency_code', 'Currency Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (343, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'lc_credit', 'LC Credit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (353, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'sys_type', 'Sys Type');
+INSERT INTO resources (resource_id, path, key, value) VALUES (363, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'parent_account_name', 'Parent Account Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (373, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'price', 'Price');
+INSERT INTO resources (resource_id, path, key, value) VALUES (383, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'cash_flow_master_id', 'Cash Flow Master Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (393, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'tran_code', 'Tran Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (403, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'cash_flow_heading', 'Cash Flow Heading');
+INSERT INTO resources (resource_id, path, key, value) VALUES (413, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'ChartOfAccounts', 'Chart of Accounts');
+INSERT INTO resources (resource_id, path, key, value) VALUES (423, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'CtrlAltS', 'Ctrl + Alt + S');
+INSERT INTO resources (resource_id, path, key, value) VALUES (433, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'GLDetails', 'GL Details');
+INSERT INTO resources (resource_id, path, key, value) VALUES (443, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'TaxTypes', 'Tax Types');
+INSERT INTO resources (resource_id, path, key, value) VALUES (453, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'PreparedOn', 'Prepared On');
+INSERT INTO resources (resource_id, path, key, value) VALUES (463, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'TransactionTimestamp', 'Transaction Timestamp');
+INSERT INTO resources (resource_id, path, key, value) VALUES (473, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'AddNew', 'Add New');
+INSERT INTO resources (resource_id, path, key, value) VALUES (483, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'VoucherVerification', 'Voucher Verification');
+INSERT INTO resources (resource_id, path, key, value) VALUES (493, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Confidential', 'Confidential');
+INSERT INTO resources (resource_id, path, key, value) VALUES (503, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Balance', 'Balance');
+INSERT INTO resources (resource_id, path, key, value) VALUES (513, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Factor', 'Factor');
+INSERT INTO resources (resource_id, path, key, value) VALUES (523, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'CurrentPeriod', 'Current Period');
+INSERT INTO resources (resource_id, path, key, value) VALUES (533, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Warnings.resx', 'CompareDaysErrorMessage', 'From days should not be greater than the to days.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (543, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Errors.resx', 'CompoundUnitOfMeasureErrorMessage', 'The base unit and compare unit cannot be same.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (553, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'audit_user_id', 'Audit User Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (563, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'compare_unit_id', 'Compare Unit Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (573, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'contact_cell', 'Contact Cell');
+INSERT INTO resources (resource_id, path, key, value) VALUES (583, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'cost_price_includes_tax', 'Cost Price Includes Tax');
+INSERT INTO resources (resource_id, path, key, value) VALUES (593, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'fax', 'Fax');
+INSERT INTO resources (resource_id, path, key, value) VALUES (603, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'item_code', 'Item Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (613, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'length_in_centimeters', 'Length In Centimeters');
+INSERT INTO resources (resource_id, path, key, value) VALUES (623, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'party_name', 'Party Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (633, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'price', 'Price');
+INSERT INTO resources (resource_id, path, key, value) VALUES (64, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'can_verify_sales_transactions', 'Can Verify Sales Transactions');
+INSERT INTO resources (resource_id, path, key, value) VALUES (74, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'description', 'Description');
+INSERT INTO resources (resource_id, path, key, value) VALUES (84, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'frequency_id', 'Frequency Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (94, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'last_vacuum', 'Last Vacuum On');
+INSERT INTO resources (resource_id, path, key, value) VALUES (104, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'po_box', 'Po Box');
+INSERT INTO resources (resource_id, path, key, value) VALUES (114, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'role_name', 'Role Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (124, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'value_date', 'Value Date');
+INSERT INTO resources (resource_id, path, key, value) VALUES (134, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'audit_user_id', 'Audit User Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (144, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'collecting_account_id', 'Collecting Account Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (154, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'price_to', 'Price To');
+INSERT INTO resources (resource_id, path, key, value) VALUES (164, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'sales_tax_exempt_detail_id', 'Sales Tax Exempt Detail Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (174, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'state_sales_tax_name', 'State Sales Tax Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (184, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'valid_till', 'Valid Till');
+INSERT INTO resources (resource_id, path, key, value) VALUES (194, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'parent_industry_id', 'Parent Industry Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (204, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'county_sales_tax_name', 'County Sales Tax Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (214, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'county', 'County');
+INSERT INTO resources (resource_id, path, key, value) VALUES (224, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'party', 'Party');
+INSERT INTO resources (resource_id, path, key, value) VALUES (234, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'CashRepositories', 'Cash Repositories');
+INSERT INTO resources (resource_id, path, key, value) VALUES (244, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'Frequencies', 'Frequencies');
+INSERT INTO resources (resource_id, path, key, value) VALUES (254, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'SalesTaxTypes', 'Sales Tax Types');
+INSERT INTO resources (resource_id, path, key, value) VALUES (264, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'VacuumFullDatabase', 'Vacuum Database (Full)');
+INSERT INTO resources (resource_id, path, key, value) VALUES (274, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'Close', 'Close');
+INSERT INTO resources (resource_id, path, key, value) VALUES (284, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Warnings.resx', 'AccessIsDenied', 'Access is denied.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (294, '\FrontEnd\MixERP.Net.FrontEnd\Modules\CRM\Resources\ScrudResource.resx', 'lead_source_code', 'Lead Source Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (304, '\FrontEnd\MixERP.Net.FrontEnd\Modules\CRM\Resources\Titles.resx', 'Email', 'Email');
+INSERT INTO resources (resource_id, path, key, value) VALUES (314, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'account_id', 'Account Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (324, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'bank_address', 'Bank Address');
+INSERT INTO resources (resource_id, path, key, value) VALUES (334, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'currency_name', 'Currency Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (344, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'lc_debit', 'LC Debit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (354, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'tax_code', 'Tax Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (364, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'full_name', 'Full Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (374, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'quantity', 'Quantity');
+INSERT INTO resources (resource_id, path, key, value) VALUES (384, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'cash_flow_master_name', 'Cash Flow Master Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (394, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'value_date', 'Value Date');
+INSERT INTO resources (resource_id, path, key, value) VALUES (404, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Account', 'Account');
+INSERT INTO resources (resource_id, path, key, value) VALUES (414, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'CostCenter', 'Cost Center');
+INSERT INTO resources (resource_id, path, key, value) VALUES (424, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'CtrlAltT', 'Ctrl + Alt + T');
+INSERT INTO resources (resource_id, path, key, value) VALUES (434, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'JournalVoucherEntry', 'Journal Voucher Entry');
+INSERT INTO resources (resource_id, path, key, value) VALUES (444, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'TranCode', 'Tran Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (454, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Tel', 'Tel');
+INSERT INTO resources (resource_id, path, key, value) VALUES (464, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'VerifiedOn', 'VerifiedOn');
+INSERT INTO resources (resource_id, path, key, value) VALUES (474, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Approve', 'Approve');
+INSERT INTO resources (resource_id, path, key, value) VALUES (484, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'AccountStatement', 'Account Statement');
+INSERT INTO resources (resource_id, path, key, value) VALUES (494, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'ExternalCode', 'External Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (504, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'AccountName', 'Account Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (514, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'ChangeSideWhenNegative', 'Change Side When Negative');
+INSERT INTO resources (resource_id, path, key, value) VALUES (524, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'PreviousPeriod', 'Previous Period  ');
+INSERT INTO resources (resource_id, path, key, value) VALUES (534, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Warnings.resx', 'InsufficientBalanceInCashRepository', 'There is no sufficient balance in the cash repository to process this transaction.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (544, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Errors.resx', 'InsufficientStockWarning', 'Only {0} {1} of {2} left in stock.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (554, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'base_unit_id', 'Base Unit Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (564, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'compare_unit_name', 'Compare Unit Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (574, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'contact_city', 'Contact City');
+INSERT INTO resources (resource_id, path, key, value) VALUES (584, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'country', 'Country');
+INSERT INTO resources (resource_id, path, key, value) VALUES (594, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'first_name', 'First Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (604, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'item_cost_price_id', 'Item Cost Price Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (614, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'machinable', 'Machinable');
+INSERT INTO resources (resource_id, path, key, value) VALUES (624, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'party_type', 'Party Type');
+INSERT INTO resources (resource_id, path, key, value) VALUES (634, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'price_type_id', 'Price Type Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (646, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'state', 'State');
+INSERT INTO resources (resource_id, path, key, value) VALUES (65, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'cash_repository_code', 'Cash Repository Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (75, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'effective_from', 'Effective From');
+INSERT INTO resources (resource_id, path, key, value) VALUES (85, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'frequency_setup_id', 'Frequency Setup Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (95, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'nick_name', 'Nick Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (105, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'purchase_verification_limit', 'Purchase Verification Limit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (115, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'sales_verification_limit', 'Sales Verification Limit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (125, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'verify_gl_transactions', 'Verify Gl Transactions');
+INSERT INTO resources (resource_id, path, key, value) VALUES (135, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'frequency_code', 'Frequency Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (145, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'collecting_tax_authority_id', 'Collecting Tax Authority Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (155, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'priority', 'Priority');
+INSERT INTO resources (resource_id, path, key, value) VALUES (165, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'sales_tax_exempt_id', 'Sales Tax Exempt Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (175, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'tax_authority_code', 'Tax Authority Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (185, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'sales_tax_id', 'Sales Tax Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (195, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'country_id', 'Country Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (205, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'sales_tax_details_rate_chk', 'Rate should not be empty unless you have selected state or county tax. Similarly, you cannot provide both rate and choose to have state or county tax.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (215, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'tax_master', 'Tax Master');
+INSERT INTO resources (resource_id, path, key, value) VALUES (225, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'party_type', 'Party Type');
+INSERT INTO resources (resource_id, path, key, value) VALUES (235, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'Clear', 'Clear');
+INSERT INTO resources (resource_id, path, key, value) VALUES (245, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'GoToTop', 'GoToTop');
+INSERT INTO resources (resource_id, path, key, value) VALUES (255, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'Save', 'Save');
+INSERT INTO resources (resource_id, path, key, value) VALUES (265, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'VoucherVerificationPolicy', 'Voucher Verification Policy');
+INSERT INTO resources (resource_id, path, key, value) VALUES (275, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'DatabaseBackups', 'Database Backups');
+INSERT INTO resources (resource_id, path, key, value) VALUES (285, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Warnings.resx', 'CannotCreateABackup', 'Sorry, cannot create a database backup at this time.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (295, '\FrontEnd\MixERP.Net.FrontEnd\Modules\CRM\Resources\ScrudResource.resx', 'lead_source_id', 'Lead Source Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (305, '\FrontEnd\MixERP.Net.FrontEnd\Modules\CRM\Resources\Titles.resx', 'Fax', 'Fax');
+INSERT INTO resources (resource_id, path, key, value) VALUES (315, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'account_master_code', 'Account Master Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (325, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'bank_branch', 'Bank Branch');
+INSERT INTO resources (resource_id, path, key, value) VALUES (335, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'currency_symbol', 'Currency Symbol');
+INSERT INTO resources (resource_id, path, key, value) VALUES (345, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'maintained_by_user_id', 'Maintained By User Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (355, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'tax_id', 'Tax Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (365, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'office_name', 'Office Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (375, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'sub_total', 'Sub Total');
+INSERT INTO resources (resource_id, path, key, value) VALUES (385, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'is_added', 'Is Added');
+INSERT INTO resources (resource_id, path, key, value) VALUES (395, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'normally_debit', 'Normally Debit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (405, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'AccountNumber', 'Account Number');
+INSERT INTO resources (resource_id, path, key, value) VALUES (415, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'CostCenters', 'Cost Centers');
+INSERT INTO resources (resource_id, path, key, value) VALUES (425, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'CtrlReturn', 'Ctrl + Return');
+INSERT INTO resources (resource_id, path, key, value) VALUES (435, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'LCCredit', 'LC Credit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (445, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'TransactionDate', 'Transaction Date');
+INSERT INTO resources (resource_id, path, key, value) VALUES (455, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Url', 'Url');
+INSERT INTO resources (resource_id, path, key, value) VALUES (465, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'StockTransaction', 'Stock Transaction');
+INSERT INTO resources (resource_id, path, key, value) VALUES (475, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Flag', 'Flag');
+INSERT INTO resources (resource_id, path, key, value) VALUES (485, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'NewJournalEntry', 'New Journal Entry');
+INSERT INTO resources (resource_id, path, key, value) VALUES (495, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'IsCash', 'Is Cash');
+INSERT INTO resources (resource_id, path, key, value) VALUES (505, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'ShowCompact', 'Show Compact');
+INSERT INTO resources (resource_id, path, key, value) VALUES (515, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'IncludeZeroBalanceAccounts', 'Include Zero Balance Accounts');
+INSERT INTO resources (resource_id, path, key, value) VALUES (525, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Date', 'Date');
+INSERT INTO resources (resource_id, path, key, value) VALUES (535, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Warnings.resx', 'InvalidAccount', 'Invalid account.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (545, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Errors.resx', 'ReferencingSidesNotEqual', 'Referencing sides are not equal.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (555, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'base_unit_name', 'Base Unit Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (565, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'compounding_frequency', 'Compounding Frequency');
+INSERT INTO resources (resource_id, path, key, value) VALUES (575, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'contact_country', 'Contact Country');
+INSERT INTO resources (resource_id, path, key, value) VALUES (585, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'cst_number', 'CST Number');
+INSERT INTO resources (resource_id, path, key, value) VALUES (595, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'gl_head', 'GL Head');
+INSERT INTO resources (resource_id, path, key, value) VALUES (605, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'item_group_code', 'Item Group Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (615, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'maintain_stock', 'Maintain Stock');
+INSERT INTO resources (resource_id, path, key, value) VALUES (625, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'party_type_code', 'Party Type Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (66, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'cash_repository_id', 'Cash Repository Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (76, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'email', 'Email');
+INSERT INTO resources (resource_id, path, key, value) VALUES (86, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'full_name', 'Full Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (96, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'office_code', 'Office Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (106, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'registration_date', 'Registration Date');
+INSERT INTO resources (resource_id, path, key, value) VALUES (116, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'self_verification_limit', 'Self Verification Limit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (126, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'verify_purchase_transactions', 'Verify Purchase Transactions');
+INSERT INTO resources (resource_id, path, key, value) VALUES (136, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'parent_cr_code', 'Parent CR Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (146, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'entity_id', 'Entity Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (156, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'rate', 'Rate');
+INSERT INTO resources (resource_id, path, key, value) VALUES (166, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'sales_tax_exempt_name', 'Sales Tax Exempt Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (176, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'tax_authority_id', 'Tax Authority Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (186, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'rounding_method_name', 'Rounding Method Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (196, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'cell', 'Cell');
+INSERT INTO resources (resource_id, path, key, value) VALUES (206, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'country_code', 'Country Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (216, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'cash_repository', 'Cash Repository');
+INSERT INTO resources (resource_id, path, key, value) VALUES (226, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'sales_tax_exempt', 'Sales Tax Exempt');
+INSERT INTO resources (resource_id, path, key, value) VALUES (236, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'Counters', 'Counters');
+INSERT INTO resources (resource_id, path, key, value) VALUES (246, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'Load', 'Load');
+INSERT INTO resources (resource_id, path, key, value) VALUES (256, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'StateSalesTaxes', 'State Sales Taxes');
+INSERT INTO resources (resource_id, path, key, value) VALUES (266, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'CountySalesTaxes', 'County Sales Taxes');
+INSERT INTO resources (resource_id, path, key, value) VALUES (276, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'EnterBackupName', 'Enter Backup Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (286, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Warnings.resx', 'ComparePriceErrorMessage', 'Price from should be less than price to.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (296, '\FrontEnd\MixERP.Net.FrontEnd\Modules\CRM\Resources\ScrudResource.resx', 'lead_source_name', 'Lead Source Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (306, '\FrontEnd\MixERP.Net.FrontEnd\Modules\CRM\Resources\Titles.resx', 'LeadSources', 'Lead Sources');
+INSERT INTO resources (resource_id, path, key, value) VALUES (316, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'account_master_id', 'Account Master Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (326, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'bank_contact_number', 'Bank Contact Number');
+INSERT INTO resources (resource_id, path, key, value) VALUES (336, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'debit', 'Debit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (346, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'parent', 'Parent');
+INSERT INTO resources (resource_id, path, key, value) VALUES (356, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'tax_name', 'Tax Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (366, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'role_name', 'Role Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (376, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'tax', 'Tax');
+INSERT INTO resources (resource_id, path, key, value) VALUES (386, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'is_debit', 'Is Debit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (396, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'cash_flow_heading_type', 'Cashflow Heading Type');
+INSERT INTO resources (resource_id, path, key, value) VALUES (406, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Action', 'Action');
+INSERT INTO resources (resource_id, path, key, value) VALUES (416, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Credit', 'Credit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (426, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Currencies', 'Currencies');
+INSERT INTO resources (resource_id, path, key, value) VALUES (436, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'LCDebit', 'LC Debit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (446, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'TransactionDetails', 'Transaction Details');
+INSERT INTO resources (resource_id, path, key, value) VALUES (456, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'User', 'User');
+INSERT INTO resources (resource_id, path, key, value) VALUES (466, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'PartyName', 'Party Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (476, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'JournalVoucher', 'Journal Voucher');
+INSERT INTO resources (resource_id, path, key, value) VALUES (486, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'From', 'From');
+INSERT INTO resources (resource_id, path, key, value) VALUES (496, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'IsEmployee', 'Is Employee');
+INSERT INTO resources (resource_id, path, key, value) VALUES (506, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'ClosingBalance', 'Closing Balance');
+INSERT INTO resources (resource_id, path, key, value) VALUES (516, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'ProfitAndLossStatement', 'Profit & Loss Statement');
+INSERT INTO resources (resource_id, path, key, value) VALUES (526, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'RetainedEarnings', 'Retained Earnings');
+INSERT INTO resources (resource_id, path, key, value) VALUES (536, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Warnings.resx', 'InvalidCashRepository', 'Invalid cash repository.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (546, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Labels.resx', 'PartyDescription', 'Parties collectively refer to suppliers, customers, agents, and dealers.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (556, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'brand_code', 'Brand Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (566, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'compound_item_code', 'Compound Item Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (576, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'contact_email', 'Contact Email');
+INSERT INTO resources (resource_id, path, key, value) VALUES (586, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'currency_code', 'Currency Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (596, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'height_in_centimeters', 'Height In Centimeters');
+INSERT INTO resources (resource_id, path, key, value) VALUES (606, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'item_group_id', 'Item Group Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (616, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'maximum_credit_amount', 'Maximum Credit Amount');
+INSERT INTO resources (resource_id, path, key, value) VALUES (626, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'party_type_id', 'Party Type Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (636, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'reorder_level', 'Reorder Level');
+INSERT INTO resources (resource_id, path, key, value) VALUES (67, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'cash_repository_name', 'Cash Repository Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (77, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'ends_on', 'Ends On');
+INSERT INTO resources (resource_id, path, key, value) VALUES (87, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'gl_verification_limit', 'Gl Verification Limit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (97, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'office_id', 'Office Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (107, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'registration_number', 'Registration Number');
+INSERT INTO resources (resource_id, path, key, value) VALUES (117, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'starts_from', 'Starts From');
+INSERT INTO resources (resource_id, path, key, value) VALUES (127, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'verify_sales_transactions', 'Verify Sales Transactions');
+INSERT INTO resources (resource_id, path, key, value) VALUES (137, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'parent_cr_name', 'Parent CR Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (147, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'industry_id', 'Industry Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (157, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'reporting_tax_authority_id', 'Reporting Tax Authority Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (167, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'sales_tax_name', 'Sales Tax Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (177, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'tax_authority_name', 'Tax Authority Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (187, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'tax_base_amount_type_name', 'Tax Base Amount Type Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (197, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'state_code', 'State Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (207, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'country_name', 'Country Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (217, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'store', 'Store');
+INSERT INTO resources (resource_id, path, key, value) VALUES (227, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'can_change_password', 'Can Change Password');
+INSERT INTO resources (resource_id, path, key, value) VALUES (237, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'DatabaseStatistics', 'Database Statistics');
+INSERT INTO resources (resource_id, path, key, value) VALUES (247, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'OfficeSetup', 'Office Setup');
+INSERT INTO resources (resource_id, path, key, value) VALUES (257, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'TaxAuthorities', 'Tax Authorities');
+INSERT INTO resources (resource_id, path, key, value) VALUES (267, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'Counties', 'Counties');
+INSERT INTO resources (resource_id, path, key, value) VALUES (277, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'ViewBackups', 'View Backups');
+INSERT INTO resources (resource_id, path, key, value) VALUES (287, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Warnings.resx', 'ConfigurationError', 'Cannot continue the task. Please correct configuration issues.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (297, '\FrontEnd\MixERP.Net.FrontEnd\Modules\CRM\Resources\ScrudResource.resx', 'lead_status_code', 'Lead Status Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (307, '\FrontEnd\MixERP.Net.FrontEnd\Modules\CRM\Resources\Titles.resx', 'LeadStatuses', 'Lead Statuses');
+INSERT INTO resources (resource_id, path, key, value) VALUES (317, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'account_name', 'Account Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (327, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'bank_name', 'Bank Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (337, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'description', 'Description');
+INSERT INTO resources (resource_id, path, key, value) VALUES (347, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'parent_account_id', 'Parent Account Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (357, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'tax_type_code', 'Tax Type Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (367, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'user_id', 'User Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (377, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'total', 'Total');
+INSERT INTO resources (resource_id, path, key, value) VALUES (387, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'is_summary', 'Is Summary');
+INSERT INTO resources (resource_id, path, key, value) VALUES (397, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'cash_flow_heading_cash_flow_heading_type_chk', 'Invalid Cashflow Heading Type. Allowed values: O, I, F.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (407, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Add', 'Add');
+INSERT INTO resources (resource_id, path, key, value) VALUES (417, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'CreditTotal', 'Credit Total');
+INSERT INTO resources (resource_id, path, key, value) VALUES (427, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Currency', 'Currency');
+INSERT INTO resources (resource_id, path, key, value) VALUES (437, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'OfficeCode', 'Office Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (447, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'TransactionStatus', 'Transaction Status');
+INSERT INTO resources (resource_id, path, key, value) VALUES (457, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Phone', 'Phone');
+INSERT INTO resources (resource_id, path, key, value) VALUES (467, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'InvoiceDetails', 'Invoice Details');
+INSERT INTO resources (resource_id, path, key, value) VALUES (477, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Print', 'Print');
+INSERT INTO resources (resource_id, path, key, value) VALUES (487, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Prepare', 'Prepare');
+INSERT INTO resources (resource_id, path, key, value) VALUES (497, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'IsParty', 'Is Party');
+INSERT INTO resources (resource_id, path, key, value) VALUES (507, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'ClosingCredit', 'Closing Credit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (517, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Amount', 'Amount');
+INSERT INTO resources (resource_id, path, key, value) VALUES (527, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'ApproveThisTransaction', 'Approve This Transaction');
+INSERT INTO resources (resource_id, path, key, value) VALUES (537, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Warnings.resx', 'InvalidData', 'Invalid data.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (547, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'account_number', 'Account Number');
+INSERT INTO resources (resource_id, path, key, value) VALUES (557, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'brand_id', 'Brand Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (567, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'compound_item_detail_id', 'Compound Item Detail Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (577, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'contact_person', 'Contact Person');
+INSERT INTO resources (resource_id, path, key, value) VALUES (587, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'date_of_birth', 'Date Of Birth');
+INSERT INTO resources (resource_id, path, key, value) VALUES (597, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'hot_item', 'Hot Item');
+INSERT INTO resources (resource_id, path, key, value) VALUES (607, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'item_group_name', 'Item Group Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (617, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'maximum_credit_period', 'Maximum Credit Period');
+INSERT INTO resources (resource_id, path, key, value) VALUES (627, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'party_type_id1', 'Party Type Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (637, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'selling_price', 'Selling Price');
+INSERT INTO resources (resource_id, path, key, value) VALUES (68, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'city', 'City');
+INSERT INTO resources (resource_id, path, key, value) VALUES (78, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'fax', 'Fax');
+INSERT INTO resources (resource_id, path, key, value) VALUES (88, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'is_active', 'Is Active');
+INSERT INTO resources (resource_id, path, key, value) VALUES (98, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'office_name', 'Office Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (108, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'relname', 'Relation Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (118, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'state', 'State');
+INSERT INTO resources (resource_id, path, key, value) VALUES (128, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'zip_code', 'Zip Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (138, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'Select', 'Select');
+INSERT INTO resources (resource_id, path, key, value) VALUES (148, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'is_exemption', 'Is Exemption');
+INSERT INTO resources (resource_id, path, key, value) VALUES (158, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'rounding_method_code', 'Rounding Method Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (168, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'sales_tax_type_code', 'Sales Tax Type Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (178, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'tax_base_amount_type_code', 'Tax Base Amount Type Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (188, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'tax_rate_type_name', 'Tax Rate Type Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (198, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'state_name', 'State Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (208, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'applied_on_shipping_charge', 'Applied on Shipping Charge');
+INSERT INTO resources (resource_id, path, key, value) VALUES (218, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'currency', 'Currency');
+INSERT INTO resources (resource_id, path, key, value) VALUES (228, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'elevated', 'Elevated');
+INSERT INTO resources (resource_id, path, key, value) VALUES (238, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'Departments', 'Departments');
+INSERT INTO resources (resource_id, path, key, value) VALUES (248, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'PreparedOn', 'Prepared On');
+INSERT INTO resources (resource_id, path, key, value) VALUES (258, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'TaxExemptTypes', 'Tax Exempt Types');
+INSERT INTO resources (resource_id, path, key, value) VALUES (268, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'Countries', 'Countries');
+INSERT INTO resources (resource_id, path, key, value) VALUES (278, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'BackupConsole', 'Backup Console');
+INSERT INTO resources (resource_id, path, key, value) VALUES (288, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Warnings.resx', 'DateErrorMessage', 'Selected date is out of range.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (298, '\FrontEnd\MixERP.Net.FrontEnd\Modules\CRM\Resources\ScrudResource.resx', 'lead_status_id', 'Lead Status Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (308, '\FrontEnd\MixERP.Net.FrontEnd\Modules\CRM\Resources\Titles.resx', 'OpportunityStages', 'Opportunity Stages');
+INSERT INTO resources (resource_id, path, key, value) VALUES (318, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'ageing_slab_id', 'Ageing Slab Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (328, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'confidential', 'Confidential');
+INSERT INTO resources (resource_id, path, key, value) VALUES (338, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'er', 'ER');
+INSERT INTO resources (resource_id, path, key, value) VALUES (348, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'rate', 'Rate');
+INSERT INTO resources (resource_id, path, key, value) VALUES (358, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'tax_type_id', 'Tax Type Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (368, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'user_name', 'Username');
+INSERT INTO resources (resource_id, path, key, value) VALUES (378, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'unit_name', 'Unit Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (388, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'parent_cash_flow_heading_id', 'Parent Cash Flow Heading Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (398, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'cash_flow_setup_id', 'Cashflow Setup Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (408, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'AgeingSlabs', 'Ageing Slabs');
+INSERT INTO resources (resource_id, path, key, value) VALUES (418, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'CtrlAltA', 'Ctrl + Alt + A');
+INSERT INTO resources (resource_id, path, key, value) VALUES (428, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Debit', 'Debit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (438, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'PostTransaction', 'Post Transaction');
+INSERT INTO resources (resource_id, path, key, value) VALUES (448, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'ValueDate', 'Value Date');
+INSERT INTO resources (resource_id, path, key, value) VALUES (458, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Id', 'Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (468, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'OtherDetails', 'Other Details');
+INSERT INTO resources (resource_id, path, key, value) VALUES (478, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Reject', 'Reject');
+INSERT INTO resources (resource_id, path, key, value) VALUES (488, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'To', 'To');
+INSERT INTO resources (resource_id, path, key, value) VALUES (498, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'IsSystemAccount', 'Is System Account');
+INSERT INTO resources (resource_id, path, key, value) VALUES (508, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'ClosingDebit', 'Closing Debit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (518, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'CashFlowHeadings', 'Cashflow Headings');
+INSERT INTO resources (resource_id, path, key, value) VALUES (528, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'RejectThisTransaction', 'Reject This Transaction');
+INSERT INTO resources (resource_id, path, key, value) VALUES (538, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Warnings.resx', 'NegativeValueSupplied', 'Negative value supplied.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (548, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'account_id', 'Account Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (558, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'brand_name', 'Brand Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (568, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'compound_item_id', 'Compound Item Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (578, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'contact_phone', 'Contact Phone');
+INSERT INTO resources (resource_id, path, key, value) VALUES (588, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'email', 'Email');
+INSERT INTO resources (resource_id, path, key, value) VALUES (598, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'includes_tax', 'Includes Tax');
+INSERT INTO resources (resource_id, path, key, value) VALUES (608, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'item_id', 'Item Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (618, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'middle_name', 'Middle Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (628, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'party_type_name', 'Party Type Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (638, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'selling_price_includes_tax', 'Selling Price Includes Tax');
+INSERT INTO resources (resource_id, path, key, value) VALUES (648, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'tax_id', 'Tax Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (913, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'ViewThisOrder', 'View This Order');
+INSERT INTO resources (resource_id, path, key, value) VALUES (69, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'country', 'Country');
+INSERT INTO resources (resource_id, path, key, value) VALUES (79, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'fiscal_year_code', 'Fiscal Year Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (89, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'is_admin', 'Is Admin');
+INSERT INTO resources (resource_id, path, key, value) VALUES (99, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'pan_number', 'Pan Number');
+INSERT INTO resources (resource_id, path, key, value) VALUES (109, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'resource', 'Resource');
+INSERT INTO resources (resource_id, path, key, value) VALUES (119, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'street', 'Street');
+INSERT INTO resources (resource_id, path, key, value) VALUES (129, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'counter_id', 'Counter Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (139, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'tax_master_code', 'Tax Master Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (149, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'is_vat', 'Is Vat');
+INSERT INTO resources (resource_id, path, key, value) VALUES (159, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'sales_tax_code', 'Sales Tax Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (169, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'sales_tax_type_id', 'Sales Tax Type Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (179, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'tax_exempt_type_code', 'Tax Exempt Type Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (189, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'account_number', 'Account Number');
+INSERT INTO resources (resource_id, path, key, value) VALUES (199, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'county_code', 'County Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (209, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'check_nexus', 'Check Nexus');
+INSERT INTO resources (resource_id, path, key, value) VALUES (219, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'parent_office', 'Parent Office');
+INSERT INTO resources (resource_id, path, key, value) VALUES (229, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\ScrudResource.resx', 'flag_type_name', 'Flag Type Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (239, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'Email', 'Email');
+INSERT INTO resources (resource_id, path, key, value) VALUES (249, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'Roles', 'Roles');
+INSERT INTO resources (resource_id, path, key, value) VALUES (259, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'TaxMaster', 'Tax Master');
+INSERT INTO resources (resource_id, path, key, value) VALUES (269, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'Entities', 'Entities');
+INSERT INTO resources (resource_id, path, key, value) VALUES (279, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Titles.resx', 'ChangePassword', 'Change Password');
+INSERT INTO resources (resource_id, path, key, value) VALUES (289, '\FrontEnd\MixERP.Net.FrontEnd\Modules\BackOffice\Resources\Warnings.resx', 'InvalidUser', 'Invalid user.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (299, '\FrontEnd\MixERP.Net.FrontEnd\Modules\CRM\Resources\ScrudResource.resx', 'lead_status_name', 'Lead Status Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (309, '\FrontEnd\MixERP.Net.FrontEnd\Modules\CRM\Resources\Titles.resx', 'PreparedOn', 'Prepared On');
+INSERT INTO resources (resource_id, path, key, value) VALUES (319, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'ageing_slab_name', 'Ageing Slab Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (329, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'cost_center_code', 'Cost Center Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (339, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'external_code', 'External Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (349, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'relationship_officer_name', 'Relationship Officer Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (359, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'tax_type_name', 'Tax Type Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (369, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'amount', 'Amount');
+INSERT INTO resources (resource_id, path, key, value) VALUES (379, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'cash_flow_heading_id', 'Cash Flow Heading Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (389, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'account', 'Account');
+INSERT INTO resources (resource_id, path, key, value) VALUES (399, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\ScrudResource.resx', 'is_sales', 'Is Sales');
+INSERT INTO resources (resource_id, path, key, value) VALUES (409, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'AttachmentsPlus', 'Attachments (+)');
+INSERT INTO resources (resource_id, path, key, value) VALUES (419, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'CtrlAltC', 'Ctrl + Alt + C');
+INSERT INTO resources (resource_id, path, key, value) VALUES (429, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'DebitTotal', 'Debit Total');
+INSERT INTO resources (resource_id, path, key, value) VALUES (439, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'ReferenceNumber', 'Reference Number');
+INSERT INTO resources (resource_id, path, key, value) VALUES (449, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'VerificationReason', 'Verification Reason');
+INSERT INTO resources (resource_id, path, key, value) VALUES (459, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Office', 'Office');
+INSERT INTO resources (resource_id, path, key, value) VALUES (469, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'PriceType', 'Price Type');
+INSERT INTO resources (resource_id, path, key, value) VALUES (479, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'TranId', 'Tran Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (489, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'Definition', 'Definition');
+INSERT INTO resources (resource_id, path, key, value) VALUES (499, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'NormallyDebit', 'Normally Debit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (509, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'PreviousBalance', 'Previous Balance');
+INSERT INTO resources (resource_id, path, key, value) VALUES (519, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'CashFlowSetup', 'Cashflow Setup');
+INSERT INTO resources (resource_id, path, key, value) VALUES (529, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Titles.resx', 'TranIdParameter', 'TranId: #{0}');
+INSERT INTO resources (resource_id, path, key, value) VALUES (539, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Finance\Resources\Warnings.resx', 'ReferencingSidesNotEqual', 'The referencing sides are not equal.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (549, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'address_line_1', 'Address Line 1');
+INSERT INTO resources (resource_id, path, key, value) VALUES (559, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'cell', 'Cell');
+INSERT INTO resources (resource_id, path, key, value) VALUES (569, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'compound_item_name', 'Compound Item Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (579, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'contact_po_box', 'Contact Po Box');
+INSERT INTO resources (resource_id, path, key, value) VALUES (589, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'entry_ts', 'Entry Ts');
+INSERT INTO resources (resource_id, path, key, value) VALUES (599, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'interest_compounding_frequency_id', 'Interest Compounding Frequency Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (609, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'item_name', 'Item Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (619, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'pan_number', 'PAN Number');
+INSERT INTO resources (resource_id, path, key, value) VALUES (629, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'phone', 'Phone');
+INSERT INTO resources (resource_id, path, key, value) VALUES (639, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'shipper_code', 'Shipper Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (649, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'unit', 'Unit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (659, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'parent', 'Parent');
+INSERT INTO resources (resource_id, path, key, value) VALUES (635, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'quantity', 'Quantity');
+INSERT INTO resources (resource_id, path, key, value) VALUES (645, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'sst_number', 'SST Number');
+INSERT INTO resources (resource_id, path, key, value) VALUES (655, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'weight_in_grams', 'Weight In Grams');
+INSERT INTO resources (resource_id, path, key, value) VALUES (665, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'preferred_supplier', 'Preferred Supplier');
+INSERT INTO resources (resource_id, path, key, value) VALUES (675, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'non_gl_stock_details_unit_chk', 'Invalid unit provided.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (685, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'tran_type', 'Tran Type');
+INSERT INTO resources (resource_id, path, key, value) VALUES (695, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'sales_tax_id', 'Sales Tax Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (705, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'sales_discount_account_id', 'Sales Discount Account Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (715, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'is_party', 'Is Party');
+INSERT INTO resources (resource_id, path, key, value) VALUES (725, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'is_exemption', 'Is Exemption');
+INSERT INTO resources (resource_id, path, key, value) VALUES (735, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'store_type_code', 'Store Type Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (745, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'office', 'Office');
+INSERT INTO resources (resource_id, path, key, value) VALUES (755, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'CompoundUnitsOfMeasure', 'Compound Units of Measure');
+INSERT INTO resources (resource_id, path, key, value) VALUES (765, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'CompoundItemDetails', 'Compound Item Details');
+INSERT INTO resources (resource_id, path, key, value) VALUES (775, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'ValueDate', 'ValueDate');
+INSERT INTO resources (resource_id, path, key, value) VALUES (785, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'VerificationReason', 'Verification Reason');
+INSERT INTO resources (resource_id, path, key, value) VALUES (795, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'Show', 'Show');
+INSERT INTO resources (resource_id, path, key, value) VALUES (805, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'TransactionStatement', 'Transaction Statement');
+INSERT INTO resources (resource_id, path, key, value) VALUES (815, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'Print', 'Print');
+INSERT INTO resources (resource_id, path, key, value) VALUES (825, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'RunningTotal', 'Running Total');
+INSERT INTO resources (resource_id, path, key, value) VALUES (835, '\FrontEnd\MixERP.Net.FrontEnd\Modules\POS\Resources\Titles.resx', 'AssignCashier', 'Assign Cashier');
+INSERT INTO resources (resource_id, path, key, value) VALUES (845, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\ScrudResource.resx', 'discount', 'Discount');
+INSERT INTO resources (resource_id, path, key, value) VALUES (855, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\ScrudResource.resx', 'item_id', 'Item Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (865, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'EmailThisReturn', 'Email This Return');
+INSERT INTO resources (resource_id, path, key, value) VALUES (642, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'shipping_address_code', 'Shipping Address Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (652, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'unit_name', 'Unit Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (662, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'item_group', 'Item Group');
+INSERT INTO resources (resource_id, path, key, value) VALUES (672, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'item_cost_prices_unit_chk', 'Invalid unit provided.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (682, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'hundredth_name', 'Hundredth Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (692, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'industry_name', 'Industry Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (702, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'purchase_account_id', 'Purchase Account Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (712, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'external_code', 'External Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (722, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'counter_code', 'Counter Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (732, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'store_code', 'Store Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (742, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'items_item_code_uix', 'Duplicate item code.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (752, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'tran_code', 'TranCode');
+INSERT INTO resources (resource_id, path, key, value) VALUES (762, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'PartyTypes', 'Party Types');
+INSERT INTO resources (resource_id, path, key, value) VALUES (772, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'User', 'User');
+INSERT INTO resources (resource_id, path, key, value) VALUES (782, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'TransactionDate', 'Transaction Date');
+INSERT INTO resources (resource_id, path, key, value) VALUES (792, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'StoreTypes', 'Store Types');
+INSERT INTO resources (resource_id, path, key, value) VALUES (802, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'AccountStatement', 'Account Statement');
+INSERT INTO resources (resource_id, path, key, value) VALUES (812, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'From', 'From');
+INSERT INTO resources (resource_id, path, key, value) VALUES (822, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'ReorderUnitName', 'Reorder Unit Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (832, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Manufacturing\Resources\Titles.resx', 'Tel', 'Tel');
+INSERT INTO resources (resource_id, path, key, value) VALUES (842, '\FrontEnd\MixERP.Net.FrontEnd\Modules\POS\Resources\Titles.resx', 'Url', 'Url');
+INSERT INTO resources (resource_id, path, key, value) VALUES (852, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\ScrudResource.resx', 'tax', 'Tax');
+INSERT INTO resources (resource_id, path, key, value) VALUES (862, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'EmailThisInvoice', 'Email This Invoice');
+INSERT INTO resources (resource_id, path, key, value) VALUES (643, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'shipping_address_id', 'Shipping Address Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (653, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'url', 'Url');
+INSERT INTO resources (resource_id, path, key, value) VALUES (663, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'preferred_shipping_mail_type', 'Preferred Shipping Mail Type');
+INSERT INTO resources (resource_id, path, key, value) VALUES (673, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'item_opening_inventory_unit_chk', 'Invalid unit provided.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (683, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'amount', 'Amount');
+INSERT INTO resources (resource_id, path, key, value) VALUES (693, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'parent_industry_id', 'Parent Industry Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (703, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'purchase_discount_account_id', 'Purchase Discount Account Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (713, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'is_cash', 'Is Cash');
+INSERT INTO resources (resource_id, path, key, value) VALUES (723, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'counter_id', 'Counter Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (733, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'store_id', 'Store Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (743, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'items_item_name_uix', 'Duplicate item name.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (753, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'value_date', 'Value_Date');
+INSERT INTO resources (resource_id, path, key, value) VALUES (763, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'Shippers', 'Shippers');
+INSERT INTO resources (resource_id, path, key, value) VALUES (773, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'StockTransferJournal', 'Stock Transfer Journal');
+INSERT INTO resources (resource_id, path, key, value) VALUES (783, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'TransactionStatus', 'Transaction Status');
+INSERT INTO resources (resource_id, path, key, value) VALUES (793, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'Save', 'Save');
+INSERT INTO resources (resource_id, path, key, value) VALUES (803, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'Definition', 'Definition');
+INSERT INTO resources (resource_id, path, key, value) VALUES (813, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'ItemGroup', 'Item Group');
+INSERT INTO resources (resource_id, path, key, value) VALUES (823, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'UnitName', 'Unit Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (833, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Manufacturing\Resources\Titles.resx', 'Url', 'Url');
+INSERT INTO resources (resource_id, path, key, value) VALUES (843, '\FrontEnd\MixERP.Net.FrontEnd\Modules\POS\Resources\Titles.resx', 'User', 'User');
+INSERT INTO resources (resource_id, path, key, value) VALUES (853, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\ScrudResource.resx', 'total', 'Total');
+INSERT INTO resources (resource_id, path, key, value) VALUES (863, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'EmailThisNote', 'Email This Note');
+INSERT INTO resources (resource_id, path, key, value) VALUES (644, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'shipping_package_shape_id', 'Shipping Package Shape Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (654, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'value', 'Value');
+INSERT INTO resources (resource_id, path, key, value) VALUES (664, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'preferred_shipping_package_shape', 'Preferred Shipping Package Shape');
+INSERT INTO resources (resource_id, path, key, value) VALUES (674, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'item_selling_prices_unit_chk', 'Invalid unit provided.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (684, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'store', 'Store');
+INSERT INTO resources (resource_id, path, key, value) VALUES (694, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'sales_tax', 'Sales Tax');
+INSERT INTO resources (resource_id, path, key, value) VALUES (704, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'sales_account_id', 'Sales Account Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (714, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'is_employee', 'Is Employee');
+INSERT INTO resources (resource_id, path, key, value) VALUES (724, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'counter_name', 'Counter Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (734, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'store_name', 'Store Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (744, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'cash_repository', 'Cash Repository');
+INSERT INTO resources (resource_id, path, key, value) VALUES (754, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'Brands', 'Brands');
+INSERT INTO resources (resource_id, path, key, value) VALUES (764, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'ShippingAddressMaintenance', 'Shipping Address Maintenance');
+INSERT INTO resources (resource_id, path, key, value) VALUES (774, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'Type', 'Type');
+INSERT INTO resources (resource_id, path, key, value) VALUES (784, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'TransferDetails', 'Transfer Details');
+INSERT INTO resources (resource_id, path, key, value) VALUES (794, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'ListItems', 'List Items');
+INSERT INTO resources (resource_id, path, key, value) VALUES (804, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'ItemOverview', 'Item Overview');
+INSERT INTO resources (resource_id, path, key, value) VALUES (814, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'Prepare', 'Prepare');
+INSERT INTO resources (resource_id, path, key, value) VALUES (824, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'Store', 'Store');
+INSERT INTO resources (resource_id, path, key, value) VALUES (834, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Manufacturing\Resources\Titles.resx', 'User', 'User');
+INSERT INTO resources (resource_id, path, key, value) VALUES (844, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\ScrudResource.resx', 'amount', 'Amount');
+INSERT INTO resources (resource_id, path, key, value) VALUES (854, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\ScrudResource.resx', 'unit_name', 'Unit Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (864, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'EmailThisOrder', 'Email This Order');
+INSERT INTO resources (resource_id, path, key, value) VALUES (647, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'street', 'Street');
+INSERT INTO resources (resource_id, path, key, value) VALUES (657, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'Select', 'Select');
+INSERT INTO resources (resource_id, path, key, value) VALUES (667, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'reorder_quantity', 'Reorder Quantity');
+INSERT INTO resources (resource_id, path, key, value) VALUES (677, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'currency_name', 'Currency Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (687, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'state_id', 'State Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (697, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'item_type_code', 'Item Type Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (707, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'account_master_id', 'Account Master Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (717, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'parent_account_id', 'Parent Account Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (727, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'office_id', 'Office Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (737, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'store_type_name', 'Store Type Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (747, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'balance', 'Balance');
+INSERT INTO resources (resource_id, path, key, value) VALUES (757, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'ItemGroups', 'Item Groups');
+INSERT INTO resources (resource_id, path, key, value) VALUES (767, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'Email', 'Email');
+INSERT INTO resources (resource_id, path, key, value) VALUES (777, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'ViewThisTransfer', 'View This Transfer');
+INSERT INTO resources (resource_id, path, key, value) VALUES (787, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'OfficeCode', 'Office Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (797, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'ItemId', 'Item Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (807, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'Balance', 'Balance');
+INSERT INTO resources (resource_id, path, key, value) VALUES (817, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'BaseUnitName', 'Base Unit Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (827, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'ViewThisAdjustment', 'View This Adjustment');
+INSERT INTO resources (resource_id, path, key, value) VALUES (837, '\FrontEnd\MixERP.Net.FrontEnd\Modules\POS\Resources\Titles.resx', 'StoreTypes', 'Store Types');
+INSERT INTO resources (resource_id, path, key, value) VALUES (847, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\ScrudResource.resx', 'item_name', 'Item Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (857, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'Check', 'Check');
+INSERT INTO resources (resource_id, path, key, value) VALUES (867, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'ExchangeRate', 'Exchange Rate');
+INSERT INTO resources (resource_id, path, key, value) VALUES (650, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'unit_code', 'Unit Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (660, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'tax', 'Tax');
+INSERT INTO resources (resource_id, path, key, value) VALUES (806, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'Select', 'Select');
+INSERT INTO resources (resource_id, path, key, value) VALUES (670, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'items_reorder_quantity_chk', 'The reorder quantity must be great than or equal to the reorder level.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (680, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'frequency_id', 'Frequency Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (690, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'entity_name', 'Entity Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (700, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'cost_of_goods_sold_account_id', 'COGS Account Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (710, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'confidential', 'Confidential');
+INSERT INTO resources (resource_id, path, key, value) VALUES (720, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'allow_sales', 'Allow Sales');
+INSERT INTO resources (resource_id, path, key, value) VALUES (730, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'sales_tax_name', 'Sales Tax Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (740, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'default_cash_account_id', 'Default Cash Account Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (750, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'debit', 'Debit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (760, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'UnitsOfMeasure', 'Units of Measure');
+INSERT INTO resources (resource_id, path, key, value) VALUES (770, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'Tel', 'Tel');
+INSERT INTO resources (resource_id, path, key, value) VALUES (780, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'ReferenceNumber', 'Reference Number');
+INSERT INTO resources (resource_id, path, key, value) VALUES (790, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'ItemTypes', 'Item Types');
+INSERT INTO resources (resource_id, path, key, value) VALUES (800, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'Actual', 'Actual');
+INSERT INTO resources (resource_id, path, key, value) VALUES (810, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'Debit', 'Debit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (820, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'LeadTime', 'Lead Time');
+INSERT INTO resources (resource_id, path, key, value) VALUES (830, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Manufacturing\Resources\Titles.resx', 'Fax', 'Fax');
+INSERT INTO resources (resource_id, path, key, value) VALUES (840, '\FrontEnd\MixERP.Net.FrontEnd\Modules\POS\Resources\Titles.resx', 'PreparedOn', 'Prepared On');
+INSERT INTO resources (resource_id, path, key, value) VALUES (850, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\ScrudResource.resx', 'Select', 'Select');
+INSERT INTO resources (resource_id, path, key, value) VALUES (860, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'DirectPurchase', 'Direct Purchase');
+INSERT INTO resources (resource_id, path, key, value) VALUES (870, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'InvoiceDetails', 'Invoice Details');
+INSERT INTO resources (resource_id, path, key, value) VALUES (651, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'unit_id', 'Unit Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (661, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'brand', 'Brand');
+INSERT INTO resources (resource_id, path, key, value) VALUES (671, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'compound_item_details_unit_chk', 'Invalid unit provided.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (681, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'frequency_name', 'Frequency Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (691, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'industry_id', 'Industry Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (701, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'inventory_account_id', 'Inventory Account Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (711, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'description', 'Description');
+INSERT INTO resources (resource_id, path, key, value) VALUES (721, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'cash_repository_id', 'Cash Repository Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (731, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'stores_sales_tax_id_chk', 'The chosen SalesTaxId is invalid for this office.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (741, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'stores_default_cash_account_id_chk', 'Please select a valid Cash or Bank AccountId.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (751, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'statement_reference', 'Statement Reference');
+INSERT INTO resources (resource_id, path, key, value) VALUES (761, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'Parties', 'Parties');
+INSERT INTO resources (resource_id, path, key, value) VALUES (771, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'Url', 'Url');
+INSERT INTO resources (resource_id, path, key, value) VALUES (781, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'TranCode', 'Transaction Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (791, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'Stores', 'Stores');
+INSERT INTO resources (resource_id, path, key, value) VALUES (801, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'Difference', 'Difference');
+INSERT INTO resources (resource_id, path, key, value) VALUES (811, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'Flag', 'Flag');
+INSERT INTO resources (resource_id, path, key, value) VALUES (821, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'PreferredSupplier', 'Preferred Supplier');
+INSERT INTO resources (resource_id, path, key, value) VALUES (831, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Manufacturing\Resources\Titles.resx', 'PreparedOn', 'Prepared On');
+INSERT INTO resources (resource_id, path, key, value) VALUES (841, '\FrontEnd\MixERP.Net.FrontEnd\Modules\POS\Resources\Titles.resx', 'Tel', 'Tel');
+INSERT INTO resources (resource_id, path, key, value) VALUES (851, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\ScrudResource.resx', 'sub_total', 'Sub Total');
+INSERT INTO resources (resource_id, path, key, value) VALUES (861, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'Email', 'Email');
+INSERT INTO resources (resource_id, path, key, value) VALUES (871, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'ItemCode', 'Item Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (656, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'width_in_centimeters', 'Width In Centimeters');
+INSERT INTO resources (resource_id, path, key, value) VALUES (666, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'account', 'Account');
+INSERT INTO resources (resource_id, path, key, value) VALUES (676, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'stock_details_unit_chk', 'Invalid unit provided.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (686, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'country_id', 'Country Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (696, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'compound_units_chk', 'The base unit id cannot same as compare unit id.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (706, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'sales_return_account_id', 'Sales Return Account Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (716, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'normally_debit', 'Normally Debit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (726, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'office_code', 'Office Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (736, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'store_type_id', 'Store Type Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (746, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'store_type', 'Store Type');
+INSERT INTO resources (resource_id, path, key, value) VALUES (756, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'ItemCostPrices', 'Item Cost Prices');
+INSERT INTO resources (resource_id, path, key, value) VALUES (766, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'CompoundItems', 'Compound Items');
+INSERT INTO resources (resource_id, path, key, value) VALUES (776, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'StockAdjustment', 'Stock Adjustment');
+INSERT INTO resources (resource_id, path, key, value) VALUES (786, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'VerifiedBy', 'Verified By');
+INSERT INTO resources (resource_id, path, key, value) VALUES (796, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'ItemCode', 'Item Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (816, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'To', 'To');
+INSERT INTO resources (resource_id, path, key, value) VALUES (826, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'Days', 'Days');
+INSERT INTO resources (resource_id, path, key, value) VALUES (836, '\FrontEnd\MixERP.Net.FrontEnd\Modules\POS\Resources\Titles.resx', 'Stores', 'Stores');
+INSERT INTO resources (resource_id, path, key, value) VALUES (846, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\ScrudResource.resx', 'item_code', 'Item Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (856, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'CashRepository', 'Cash Repository');
+INSERT INTO resources (resource_id, path, key, value) VALUES (866, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'EnteredBy', 'Entered By');
+INSERT INTO resources (resource_id, path, key, value) VALUES (658, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'parent_item_group_id', 'Parent Item Group Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (668, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'reorder_unit_id', 'Reorder Unit Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (678, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'currency_symbol', 'Currency Symbol');
+INSERT INTO resources (resource_id, path, key, value) VALUES (688, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'zip_code', 'ZIP Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (698, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'item_type_id', 'Item Type Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (708, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'account_name', 'Account Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (718, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'sys_type', 'Sys Type');
+INSERT INTO resources (resource_id, path, key, value) VALUES (728, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'rate', 'Rate');
+INSERT INTO resources (resource_id, path, key, value) VALUES (738, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'tax_master_id', 'Tax Master Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (748, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'book', 'Book');
+INSERT INTO resources (resource_id, path, key, value) VALUES (758, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'Items', 'Items');
+INSERT INTO resources (resource_id, path, key, value) VALUES (768, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'Fax', 'Fax');
+INSERT INTO resources (resource_id, path, key, value) VALUES (778, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'EnteredBy', 'Entered By');
+INSERT INTO resources (resource_id, path, key, value) VALUES (788, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'Phone', 'Phone');
+INSERT INTO resources (resource_id, path, key, value) VALUES (798, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'ItemName', 'Item Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (808, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'Book', 'Book');
+INSERT INTO resources (resource_id, path, key, value) VALUES (818, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'Brand', 'Brand');
+INSERT INTO resources (resource_id, path, key, value) VALUES (828, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'InventoryAdvice', 'Inventory Advice');
+INSERT INTO resources (resource_id, path, key, value) VALUES (838, '\FrontEnd\MixERP.Net.FrontEnd\Modules\POS\Resources\Titles.resx', 'Email', 'Email');
+INSERT INTO resources (resource_id, path, key, value) VALUES (848, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\ScrudResource.resx', 'price', 'Price');
+INSERT INTO resources (resource_id, path, key, value) VALUES (858, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'CostCenter', 'Cost Center');
+INSERT INTO resources (resource_id, path, key, value) VALUES (868, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'Fax', 'Fax');
+INSERT INTO resources (resource_id, path, key, value) VALUES (669, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'reorder_unit', 'Reorder Unit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (679, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'frequency_code', 'Frequency Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (689, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'entity_id', 'Entity Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (699, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'item_type_name', 'Item Type Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (709, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'cash_flow_heading_id', 'Cashflow Heading Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (719, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'address', 'Address');
+INSERT INTO resources (resource_id, path, key, value) VALUES (729, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'sales_tax_code', 'Sales Tax Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (739, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'default_cash_repository_id', 'Default Cash Repository Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (749, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\ScrudResource.resx', 'credit', 'Credit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (759, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'ItemSellingPrices', 'Item Selling Prices');
+INSERT INTO resources (resource_id, path, key, value) VALUES (769, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'PreparedOn', 'Prepared On');
+INSERT INTO resources (resource_id, path, key, value) VALUES (779, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'Office', 'Office');
+INSERT INTO resources (resource_id, path, key, value) VALUES (789, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'StatementReference', 'Statement Reference');
+INSERT INTO resources (resource_id, path, key, value) VALUES (799, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'UnitId', 'Unit Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (809, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'Credit', 'Credit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (819, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Inventory\Resources\Titles.resx', 'ItemType', 'Item Type');
+INSERT INTO resources (resource_id, path, key, value) VALUES (829, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Manufacturing\Resources\Titles.resx', 'Email', 'Email');
+INSERT INTO resources (resource_id, path, key, value) VALUES (839, '\FrontEnd\MixERP.Net.FrontEnd\Modules\POS\Resources\Titles.resx', 'Fax', 'Fax');
+INSERT INTO resources (resource_id, path, key, value) VALUES (849, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\ScrudResource.resx', 'quantity', 'Quantity');
+INSERT INTO resources (resource_id, path, key, value) VALUES (859, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'DefaultReorderQuantityAbbreviated', 'Default Reorder Qty');
+INSERT INTO resources (resource_id, path, key, value) VALUES (869, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'GoodsReceiptNote', 'Goods Receipt Note');
+INSERT INTO resources (resource_id, path, key, value) VALUES (872, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'ItemId', 'Item Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (873, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'ItemName', 'Item Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (874, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'ItemsBelowReorderLevel', 'Items Below Reorder Level');
+INSERT INTO resources (resource_id, path, key, value) VALUES (875, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'Office', 'Office');
+INSERT INTO resources (resource_id, path, key, value) VALUES (876, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'OfficeCode', 'OfficeCode');
+INSERT INTO resources (resource_id, path, key, value) VALUES (877, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'OtherDetails', 'Other Details');
+INSERT INTO resources (resource_id, path, key, value) VALUES (878, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'Phone', 'Phone');
+INSERT INTO resources (resource_id, path, key, value) VALUES (879, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'PlaceReorderRequests', 'Place Reorder Request(s)');
+INSERT INTO resources (resource_id, path, key, value) VALUES (880, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'PreferredSupplier', 'Preferred Supplier');
+INSERT INTO resources (resource_id, path, key, value) VALUES (881, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'PreferredSupplierIdAbbreviated', 'Pref SupId');
+INSERT INTO resources (resource_id, path, key, value) VALUES (882, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'PreparedOn', 'Prepared On');
+INSERT INTO resources (resource_id, path, key, value) VALUES (883, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'Price', 'Price');
+INSERT INTO resources (resource_id, path, key, value) VALUES (884, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'PriceType', 'Price Type');
+INSERT INTO resources (resource_id, path, key, value) VALUES (885, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'PurchaseInvoice', 'Purchase Invoice');
+INSERT INTO resources (resource_id, path, key, value) VALUES (886, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'PurchaseOrder', 'Purchase Order');
+INSERT INTO resources (resource_id, path, key, value) VALUES (887, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'PurchaseReturn', 'Purchase Return');
+INSERT INTO resources (resource_id, path, key, value) VALUES (888, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'PurchaseType', 'Purchase Type');
+INSERT INTO resources (resource_id, path, key, value) VALUES (889, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'QuantityOnHandAbbreviated', 'Qty (On Hand)');
+INSERT INTO resources (resource_id, path, key, value) VALUES (890, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'ReferenceNumber', 'Reference Number');
+INSERT INTO resources (resource_id, path, key, value) VALUES (891, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'ReorderLevel', 'Reorder Level');
+INSERT INTO resources (resource_id, path, key, value) VALUES (892, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'ReorderQuantityAbbreviated', 'Reorder Qty');
+INSERT INTO resources (resource_id, path, key, value) VALUES (893, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'SelectSupplier', 'Select Supplier');
+INSERT INTO resources (resource_id, path, key, value) VALUES (894, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'SelectUnit', 'Select Unit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (895, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'StatementReference', 'Statement Reference');
+INSERT INTO resources (resource_id, path, key, value) VALUES (896, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'SupplierName', 'Supplier Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (897, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'Tax', 'Tax');
+INSERT INTO resources (resource_id, path, key, value) VALUES (898, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'TaxRate', 'Tax Rate');
+INSERT INTO resources (resource_id, path, key, value) VALUES (899, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'Tel', 'Tel');
+INSERT INTO resources (resource_id, path, key, value) VALUES (900, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'TranCode', 'Tran Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (901, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'TranId', 'Tran Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (902, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'TransactionDate', 'Transaction Date');
+INSERT INTO resources (resource_id, path, key, value) VALUES (903, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'TransactionStatus', 'Transaction Status');
+INSERT INTO resources (resource_id, path, key, value) VALUES (904, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'Unit', 'Unit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (905, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'UnitId', 'Unit Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (906, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'Url', 'Url');
+INSERT INTO resources (resource_id, path, key, value) VALUES (907, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'User', 'User');
+INSERT INTO resources (resource_id, path, key, value) VALUES (908, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'ValueDate', 'Value Date');
+INSERT INTO resources (resource_id, path, key, value) VALUES (909, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'VerificationReason', 'Verification Reason');
+INSERT INTO resources (resource_id, path, key, value) VALUES (910, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'VerifiedBy', 'Verified By');
+INSERT INTO resources (resource_id, path, key, value) VALUES (911, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'ViewThisInvoice', 'View This Invoice');
+INSERT INTO resources (resource_id, path, key, value) VALUES (912, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'ViewThisNote', 'View This Note');
+INSERT INTO resources (resource_id, path, key, value) VALUES (914, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Titles.resx', 'ViewThisReturn', 'View This Return');
+INSERT INTO resources (resource_id, path, key, value) VALUES (924, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\DbResource.resx', 'party', 'Party');
+INSERT INTO resources (resource_id, path, key, value) VALUES (934, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'amount_from', 'Amount From');
+INSERT INTO resources (resource_id, path, key, value) VALUES (944, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'discount', 'Discount');
+INSERT INTO resources (resource_id, path, key, value) VALUES (954, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'salesperson_id', 'Salesperson Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (964, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'account_name', 'Account Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (974, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'account_master_id', 'Account Master Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (984, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'due_days', 'Due Days');
+INSERT INTO resources (resource_id, path, key, value) VALUES (994, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'payment_term_id', 'Payment Term Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1004, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'recurring_frequency_id', 'Recurring Frequency Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1014, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'recurring_frequency', 'Recurring Frequency');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1024, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'cost_price', 'Cost Price');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1034, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'height_in_centimeters', 'Hight In Centimeters');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1044, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'maximum_credit_period', 'Maximum Credit Period');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1054, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'preferred_shipping_package_shape', 'Preferred Shipping Package Shape');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1064, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'street', 'Street');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1074, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'AmountInBaseCurrency', 'Amount (In Base Currency)');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1084, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'CustomerPanNumber', 'Customer PAN #');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1094, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'EnteredBy', 'Entered By');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1104, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'Office', 'Office');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1114, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'ReceiptCurrency', 'Receipt Currency');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1124, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'SalesReturn', 'Sales Return');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1134, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'TransactionDate', 'Transaction Date');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1144, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'ViewThisQuotation', 'View This Quotation');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1154, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'SalesByOfficeInThousands', 'Sales By Office (In Thousands)');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1164, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Warnings.resx', 'DateErrorMessage', 'Selected date is out of range.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1174, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Labels.resx', 'TaskCompletedSuccessfully', 'Task completed successfully.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1184, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'Email', 'Email');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1194, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'Phone', 'Phone');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1204, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'User', 'User');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1214, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Warnings.resx', 'NewPasswordCannotBeOldPassword', 'New password can not be old password.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1255, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.Flag\Resources\Titles.resx', 'Update', 'Update');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1224, '\Libraries\Logic\MixERP.Net.Entities\Resources\Warnings.resx', 'InvalidSubTranBookInventoryInvoice', 'Invalid SubTranBook "Inventory Invoice"');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1234, '\Libraries\Logic\MixERP.Net.Entities\Resources\Warnings.resx', 'InvalidSubTranBookSalesPayment', 'Invalid SubTranBook "Sales Payment"');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1244, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.AttachmentFactory\Resources\Messages.resx', 'DuplicateFile', 'Duplicate File!');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1254, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.Flag\Resources\Titles.resx', 'Close', 'Close');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1264, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\Resources\Titles.resx', 'AddNew', 'Add New');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1274, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\Resources\Titles.resx', 'OnlyNumbersAllowed', 'Please type a valid number.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1284, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\Resources\Titles.resx', 'TableEmptyExceptionMessage', 'The property ''Table'' cannot be left empty.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1294, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockAdjustmentFactory\Resources\Titles.resx', 'Add', 'Add');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1304, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockAdjustmentFactory\Resources\Titles.resx', 'ValueDate', 'Value Date');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1314, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'SelectStore', 'Select Store');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1324, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'Price', 'Price');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1334, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'SalesType', 'Sales Type');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1344, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Titles.resx', 'AddNew', 'Add New');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1354, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Titles.resx', 'Office', 'Office');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1364, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Titles.resx', 'TransactionTimestamp', 'Transaction Timestamp');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1374, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Warnings.resx', 'ReturnButtonUrlNull', 'Cannot return this entry. The return url was not provided.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1384, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\Resources\Labels.resx', 'TransactionPostedSuccessfully', 'The transaction was posted successfully.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1394, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\Resources\Titles.resx', 'Checklists', 'Checklists');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1404, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionViewFactory\Resources\Titles.resx', 'Approve', 'Approve');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1414, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionViewFactory\Resources\Titles.resx', 'Select', 'Select');
+INSERT INTO resources (resource_id, path, key, value) VALUES (915, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Warnings.resx', 'InvalidParty', 'Invalid party.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (925, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\DbResource.resx', 'reference_number', 'Reference Number');
+INSERT INTO resources (resource_id, path, key, value) VALUES (935, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'amount_to', 'Amount To');
+INSERT INTO resources (resource_id, path, key, value) VALUES (945, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'frequency_name', 'Frequency Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (955, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'salesperson_name', 'Salesperson Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (965, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'audit_ts', 'Audit Timestamp');
+INSERT INTO resources (resource_id, path, key, value) VALUES (975, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'account_master_name', 'Account Master Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (985, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'due_frequency_id', 'Due Frequency Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (995, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'payment_term_name', 'Payment Term Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1005, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'recurring_amount', 'Recurring Amount');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1015, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'recurring_invoice', 'Recurring Invoice');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1025, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'cost_price_includes_tax', 'Cost Price Includes Tax');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1035, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'hot_item', 'Hot Item');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1045, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'middle_name', 'Middle Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1055, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'preferred_supplier', 'Preferred Supplier');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1065, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'unit', 'Unit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1075, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'AmountInHomeCurrency', 'Amount (In Home Currency)');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1085, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'DeliverTo', 'Deliver To');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1095, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'ERToBaseCurrency', 'Exchange Rate (To Base Currency)');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1105, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'OfficeCode', 'Office Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1115, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'ReferenceNumber', 'Reference #');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1125, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'SalesTeams', 'Sales Teams');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1135, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'TransactionStatus', 'Transaction Status');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1145, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'ViewThisReturn', 'View This Return');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1155, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'Phone', 'Phone');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1165, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Warnings.resx', 'DueFrequencyErrorMessage', 'Due days can only be 0 if due frequency id is selected.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1175, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Labels.resx', 'UserGreeting', 'Hi {0}!');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1185, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'Fax', 'Fax');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1195, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'PreparedOn', 'Prepared On');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1205, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'UserId', 'User Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1215, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Warnings.resx', 'NotAuthorized', 'You are not authorized to access this resources at this time.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1225, '\Libraries\Logic\MixERP.Net.Entities\Resources\Warnings.resx', 'InvalidSubTranBookInventoryOrder', 'Invalid SubTranBook "Inventory Order"');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1235, '\Libraries\Logic\MixERP.Net.Entities\Resources\Warnings.resx', 'InvalidSubTranBookSalesSuspense', 'Invalid SubTranBook "Sales Suspense"');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1245, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.AttachmentFactory\Resources\Messages.resx', 'InvalidFile', 'Invalid file!');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1265, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\Resources\Titles.resx', 'AreYouSure', 'Are you sure?');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1275, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\Resources\Titles.resx', 'Print', 'Print');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1285, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\Resources\Titles.resx', 'TableSchemaEmptyExceptionMessage', 'The property ''TableSchema'' cannot be left empty.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1295, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockAdjustmentFactory\Resources\Titles.resx', 'ItemCode', 'Item Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1305, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'CashRepository', 'Cash Repository');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1315, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'ShippingAddress', 'Shipping Address');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1325, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'QuantityAbbreviated', 'Qty');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1335, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'NonTaxableSales', 'Nontaxable Sales');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1345, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Titles.resx', 'Amount', 'Amount');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1355, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Titles.resx', 'Party', 'Party');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1365, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Titles.resx', 'User', 'User');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1375, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\Resources\Labels.resx', 'CannotWithdrawNotValidGLTransaction', 'Cannot withdraw transaction. This is a not a valid GL transaction.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1385, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\Resources\Labels.resx', 'TransactionRejectedDetails', 'This transaction was rejected by {0} on {1}. Reason: "{2}".');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1395, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\Resources\Titles.resx', 'OK', 'OK');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1405, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionViewFactory\Resources\Titles.resx', 'Book', 'Book');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1415, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionViewFactory\Resources\Titles.resx', 'Show', 'Show');
+INSERT INTO resources (resource_id, path, key, value) VALUES (916, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Purchase\Resources\Warnings.resx', 'InvalidStockTransaction', 'Invalid stock transaction.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (926, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\DbResource.resx', 'statement_reference', 'Statement Reference');
+INSERT INTO resources (resource_id, path, key, value) VALUES (936, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'bonus_rate', 'Bonus Rate');
+INSERT INTO resources (resource_id, path, key, value) VALUES (946, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'id', 'Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (956, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'sales_team_code', 'Sales Team Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (966, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'audit_user_id', 'Audit User Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (976, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'bonus_slab_details_amounts_chk', 'The field "AmountTo" must be greater than "AmountFrom".');
+INSERT INTO resources (resource_id, path, key, value) VALUES (986, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'due_on_date', 'Due on Date');
+INSERT INTO resources (resource_id, path, key, value) VALUES (996, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'rate', 'Rate');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1006, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'auto_trigger_on_sales', 'Automatically Trigger on Sales');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1016, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'late_fee', 'Late Fee');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1026, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'country', 'Country');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1036, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'is_supplier', 'Is Supplier');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1046, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'pan_number', 'Pan Number');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1056, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'reorder_level', 'Reorder Level');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1066, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'url', 'URL');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1076, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'BaseCurrency', 'Base Currency');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1086, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'DirectSales', 'Direct Sales');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1096, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'ERToHomeCurrency', 'Exchange Rate (To Home Currency)');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1106, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'OtherDetails', 'Other Details');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1116, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'SalesByMonthInThousands', 'Sales By Month (In Thousands)');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1126, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'SalesType', 'Sales Type');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1136, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'Update', 'Update');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1146, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'PrintReceipt', 'Print Receipt');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1156, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'LateFees', 'Late Fees');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1166, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Warnings.resx', 'InsufficientStockWarning', 'Only {0} {1} of {2} left in stock.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1176, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Labels.resx', 'YourPasswordWasChanged', 'Your password was changed.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1186, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'ManageProfile', 'Manage Profile');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1196, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'RememberMe', 'Remember Me');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1206, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'Username', 'Username');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1216, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Warnings.resx', 'NothingSelected', 'Nothing selected.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1226, '\Libraries\Logic\MixERP.Net.Entities\Resources\Warnings.resx', 'InvalidSubTranBookInventoryPayment', 'Invalid SubTranBook "Inventory Payment"');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1236, '\Libraries\Logic\MixERP.Net.Entities\Resources\Warnings.resx', 'InvalidSubTranBookSalesTransfer', 'Invalid SubTranBook "Sales Transfer"');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1246, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.AttachmentFactory\Resources\Messages.resx', 'UploadFilesDeleted', 'The uploaded files were successfully deleted.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1256, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.PartyControl\Resources\Titles.resx', 'AddressAndContactInfo', 'Address & Contact Information');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1266, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\Resources\Titles.resx', 'Cancel', 'Cancel');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1276, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\Resources\Titles.resx', 'RequiredField', 'This is a required field.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1286, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\Resources\Titles.resx', 'TaskCompletedSuccessfully', 'The task was completed successfully.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1296, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockAdjustmentFactory\Resources\Titles.resx', 'ItemName', 'Item Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1306, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'CashRepositoryBalance', 'Cash Repository Balance');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1316, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'ShippingCharge', 'Shipping Charge');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1326, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'Rate', 'Rate');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1336, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'TaxableSales', 'Taxable Sales');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1346, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Titles.resx', 'Book', 'Book');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1356, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Titles.resx', 'Preview', 'Preview');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1366, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Titles.resx', 'ValueDate', 'Value Date');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1376, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\Resources\Labels.resx', 'CannotWithdrawTransaction', 'Cannot withdraw transaction.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1386, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\Resources\Labels.resx', 'TransactionWithdrawalInformation', 'When you withdraw a transaction, it won''t be forwarded to the workflow module. This means that your withdrawn transactions are rejected and require no further verification. However, you won''t be able to unwithdraw this transaction later.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1396, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\Resources\Titles.resx', 'PrintGlEntry', 'Print GL Entry');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1406, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionViewFactory\Resources\Titles.resx', 'Flag', 'Flag');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1416, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionViewFactory\Resources\Titles.resx', 'StatementReference', 'Statement Reference');
+INSERT INTO resources (resource_id, path, key, value) VALUES (917, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\DbResource.resx', 'actions', 'Actions');
+INSERT INTO resources (resource_id, path, key, value) VALUES (927, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\DbResource.resx', 'transaction_ts', 'Transaction Timestamp');
+INSERT INTO resources (resource_id, path, key, value) VALUES (937, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'bonus_slab_code', 'Bonus Slab Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (947, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'item_code', 'Item Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (957, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'sales_team_id', 'Sales Team Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (967, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'commission_rate', 'Commission Rate');
+INSERT INTO resources (resource_id, path, key, value) VALUES (977, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'description', 'Description');
+INSERT INTO resources (resource_id, path, key, value) VALUES (987, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'grace_peiod', 'Grace Period');
+INSERT INTO resources (resource_id, path, key, value) VALUES (997, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'recurring_invoice_code', 'Recurring Invoice Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1007, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'recurring_invoices_item_id_auto_trigger_on_sales_uix', 'You cannot have more than one auto trigger on sales for this item.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1017, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'address_line_1', 'Address Line 1');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1027, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'cst_number', 'CST Number');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1037, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'item_group', 'Item Group');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1047, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'parent', 'Parent');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1057, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'reorder_quantity', 'Reorder Quantity');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1067, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'weight_in_grams', 'Weight In Grams');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1077, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'BonusSlabDetails', 'Bonus Slab Details for Salespersons');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1087, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'DueDate', 'Due Date');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1097, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'ExchangeRate', 'Exchange Rate');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1107, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'PANNumber', 'PAN Number');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1117, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'SalesDelivery', 'Sales Delivery');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1127, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'SelectFlag', 'Select a Flag');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1137, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'ValueDate', 'Value Date');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1147, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'EmailThisReceipt', 'Email This Receipt');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1157, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'PaymentTerms', 'Payment Terms');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1167, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Warnings.resx', 'InvalidParty', 'Invalid party. This party is not associated with this transaction.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1177, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Questions.resx', 'AreYouSure', 'Are you sure?');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1187, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'MixERPDocumentation', 'MixERP Documentation');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1197, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'Select', 'Select');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1207, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'Yes', 'Yes');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1217, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Warnings.resx', 'PleaseEnterCurrentPassword', 'Please enter your current password.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1227, '\Libraries\Logic\MixERP.Net.Entities\Resources\Warnings.resx', 'InvalidSubTranBookInventoryQuotation', 'Invalid SubTranBook "Inventory Quotation"');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1237, '\Libraries\Logic\MixERP.Net.HtmlParser\Resources\Messages.resx', 'CouldNotDetermineVirtualPathError', 'Could not determine virtual path to create an image.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1247, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.Common\Resources\CommonResource.resx', 'DateMustBeGreaterThan', 'Invalid date. Must be greater than "{0}".');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1257, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.PartyControl\Resources\Titles.resx', 'Go', 'Go');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1267, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\Resources\Titles.resx', 'DeleteSelected', 'Delete Selected');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1277, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\Resources\Titles.resx', 'RequiredFieldDetails', 'The fields marked with asterisk (*) are required.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1287, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\Resources\Titles.resx', 'UnknownError', 'Operation failed due to an unknown error.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1297, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockAdjustmentFactory\Resources\Titles.resx', 'Quantity', 'Quantity');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1307, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'CostCenter', 'Cost Center');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1317, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'ShippingCompany', 'Shipping Company');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1327, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'SubTotal', 'Sub Total');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1337, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'Save', 'Save');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1347, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Titles.resx', 'Flag', 'Flag');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1357, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Titles.resx', 'PriceType', 'Price Type');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1367, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Warnings.resx', 'CannotCreateFlagTransactionTableNull', 'Cannot create or update flag. Transaction table was not provided.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1377, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\Resources\Labels.resx', 'EmailBody', '<h2>Hi,</h2><p>Please find the attached document.</p><p>Thank you.<br />MixERP</p>');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1387, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\Resources\Labels.resx', 'TransactionWithdrawnDetails', 'This transaction was withdrawn by {0} on {1}. Reason: "{2}".');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1397, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\Resources\Titles.resx', 'PrintReceipt', 'Print Receipt');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1407, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionViewFactory\Resources\Titles.resx', 'Id', 'Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1417, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionViewFactory\Resources\Titles.resx', 'Status', 'Status');
+INSERT INTO resources (resource_id, path, key, value) VALUES (918, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\DbResource.resx', 'amount', 'Amount');
+INSERT INTO resources (resource_id, path, key, value) VALUES (928, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\DbResource.resx', 'user', 'User');
+INSERT INTO resources (resource_id, path, key, value) VALUES (938, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'bonus_slab_detail_id', 'Bonus Slab Detail Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (948, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'item_id', 'Item Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (958, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'sales_team_name', 'Sales Team Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (968, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'slab_name', 'Slab Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (978, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'effective_from', 'Effective From');
+INSERT INTO resources (resource_id, path, key, value) VALUES (988, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'is_flat_amount', 'Is Flat Amount');
+INSERT INTO resources (resource_id, path, key, value) VALUES (998, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'recurring_invoice_id', 'Recurring Invoice Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1008, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'due_frequency', 'Due Frequency');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1018, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'address_line_2', 'Address Line 2');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1028, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'email', 'Email');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1038, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'last_name', 'Last Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1048, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'party_code', 'Party Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1058, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'reorder_unit', 'Reorder Unit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1068, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'width_in_centimeters', 'Width In Centimeters');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1078, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'CashRepository', 'Cash Repository');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1088, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'Email', 'Email');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1098, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'Flag', 'Flag');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1108, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'PartyCode', 'Party Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1118, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'SalesDeliveryNote', 'Delivery Note');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1128, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'Shipper', 'Shipper');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1138, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'VerificationReason', 'Verification Reason');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1148, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'ViewSalesInovice', 'View Sales Invoice');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1158, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'RecurringInvoices', 'Recurring Invoices');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1168, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Warnings.resx', 'InvalidStockTransaction', 'Invalid stock transaction Id.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1178, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Questions.resx', 'CannotAccessAccount', 'Cannot access your account?');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1188, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'NewPassword', 'New Password');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1198, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'SelectLanguage', 'Select Language');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1208, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Warnings.resx', 'AccessIsDenied', 'Access is denied.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1218, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Warnings.resx', 'PleaseEnterNewPassword', 'Please enter a new password.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1228, '\Libraries\Logic\MixERP.Net.Entities\Resources\Warnings.resx', 'InvalidSubTranBookInventoryReceipt', 'Invalid SubTranBook "Inventory Receipt"');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1238, '\Libraries\Logic\MixERP.Net.HtmlParser\Resources\Messages.resx', 'TempDirectoryNullError', 'Cannot create an image when the temp directory is null.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1248, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.Common\Resources\CommonResource.resx', 'DateMustBeLessThan', 'Invalid date. Must be less than "{0}".');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1258, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.PartyControl\Resources\Titles.resx', 'Home', 'Home');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1268, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\Resources\Titles.resx', 'EditSelected', 'Edit Selected');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1278, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\Resources\Titles.resx', 'RequiredFieldIndicator', ' *');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1288, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\Resources\Titles.resx', 'Use', 'Use');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1298, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockAdjustmentFactory\Resources\Titles.resx', 'RefererenceNumberAbbreviated', 'Ref #');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1308, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'GrandTotal', 'Grand Total');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1318, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'StatementReference', 'Statement Reference');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1328, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'Tax', 'Tax');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1338, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'Action', 'Action');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1348, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Titles.resx', 'FlagBackgroundColor', 'Flag Background Color');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1358, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Titles.resx', 'Print', 'Print');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1368, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Warnings.resx', 'CannotCreateFlagTransactionTablePrimaryKeyNull', 'Cannot create or update flag. Transaction table primary key was not provided.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1378, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\Resources\Labels.resx', 'EmailSentConfirmation', 'An email was sent to {0}.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1388, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\Resources\Labels.resx', 'TransactionWithdrawnMessage', 'The transaction was withdrawn successfully. Moreover, this action will affect the all the reports produced on and after "{0}".');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1398, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\Resources\Titles.resx', 'ReturnToView', 'Return to View');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1408, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionViewFactory\Resources\Titles.resx', 'Office', 'Office');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1418, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionViewFactory\Resources\Titles.resx', 'TranCode', 'Tran Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (919, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\DbResource.resx', 'currency', 'Currency');
+INSERT INTO resources (resource_id, path, key, value) VALUES (929, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\DbResource.resx', 'value_date', 'Value Date');
+INSERT INTO resources (resource_id, path, key, value) VALUES (939, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'bonus_slab_id', 'Bonus Slab Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (949, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'item_name', 'Item Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (959, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'sub_total', 'Sub Total');
+INSERT INTO resources (resource_id, path, key, value) VALUES (969, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'Select', 'Select');
+INSERT INTO resources (resource_id, path, key, value) VALUES (979, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'ends_on', 'Ends On');
+INSERT INTO resources (resource_id, path, key, value) VALUES (989, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'late_fee_code', 'Late Fee Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (999, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'recurring_invoice_name', 'Recurring Invoice Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1009, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'late_fee_posting_frequency', 'Late Fee Posting Frequency');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1019, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'allow_credit', 'Allow Credit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1029, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'external_code', 'External Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1039, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'lead_time_in_days', 'Lead Time In Days');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1049, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'party_name', 'Party Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1059, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'sales_tax', 'Sales Tax');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1069, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'zip_code', 'Zip Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1079, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'Close', 'Close');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1089, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'EmailThisDelivery', 'Email This Delivery');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1099, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'FlagDescription', 'You can mark this transaction with a flag, however you will not be able to see the flags created by other users.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1109, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'PartyName', 'Party Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1119, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'SalesInvoice', 'Sales Invoice');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1129, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'ShippingCharge', 'Shipping Charge');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1139, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'VerifiedBy', 'Verified By');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1149, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'Fax', 'Fax');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1159, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'RecurringInvoiceSetup', 'Recurring Invoice Setup');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1169, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Warnings.resx', 'ItemErrorMessage', 'You have to select either item id or  compound id.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1179, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'AccessIsDenied', 'Access is denied.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1189, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'No', 'No');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1199, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'SelectYourBranch', 'Select Your Branch');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1209, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Warnings.resx', 'ConfirmationPasswordDoesNotMatch', 'The confirmation password does not match with the new password.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1219, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Warnings.resx', 'UserIdOrPasswordIncorrect', 'User id or password incorrect.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1229, '\Libraries\Logic\MixERP.Net.Entities\Resources\Warnings.resx', 'InvalidSubTranBookInventoryReturn', 'Invalid SubTranBook "Inventory Return"');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1239, '\Libraries\Server Controls\Data\MixERP.Net.WebControls.StockTransactionView.Data\Resources\Errors.resx', 'InvalidSubTranBookPurchaseDelivery', 'Invalid SubTranBook ''Purchase Delivery''.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1249, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.Common\Resources\CommonResource.resx', 'InvalidDate', 'Invalid date.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1259, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.PartyControl\Resources\Titles.resx', 'PartySummary', 'Party Summary');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1269, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\Resources\Titles.resx', 'Go', 'Go');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1279, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\Resources\Titles.resx', 'Reset', 'Reset');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1289, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\Resources\Titles.resx', 'ViewEmptyExceptionMessage', 'The property ''View'' cannot be left empty.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1299, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockAdjustmentFactory\Resources\Titles.resx', 'Save', 'Save');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1309, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'PriceType', 'Price Type');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1319, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'TaxTotal', 'Tax Total');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1329, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'Total', 'Total');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1339, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'Add', 'Add');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1349, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Titles.resx', 'FlagForegroundColor', 'Flag Foreground Color');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1359, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Titles.resx', 'ReferenceNumber', 'Reference Number');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1369, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Warnings.resx', 'CannotMergeAlreadyMerged', 'The selected transaction(s) contains item(s) which have already been merged. Please try again.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1379, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\Resources\Labels.resx', 'ThisFieldIsRequired', 'This field is required.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1389, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\Resources\Questions.resx', 'AreYouSure', 'Are you sure you know what you''re doing?');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1399, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\Resources\Titles.resx', 'UploadAttachmentsForThisTransaction', 'Upload Attachments for This Transaction');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1409, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionViewFactory\Resources\Titles.resx', 'PostedBy', 'Posted By');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1419, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionViewFactory\Resources\Titles.resx', 'TranId', 'TranId');
+INSERT INTO resources (resource_id, path, key, value) VALUES (920, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\DbResource.resx', 'flag_background_color', 'Flag Background Color');
+INSERT INTO resources (resource_id, path, key, value) VALUES (930, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Labels.resx', 'ThankYouForYourBusiness', 'Thank you for your business.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (940, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'bonus_slab_name', 'Bonus Slab Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (950, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'price', 'Price');
+INSERT INTO resources (resource_id, path, key, value) VALUES (960, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'tax', 'Tax');
+INSERT INTO resources (resource_id, path, key, value) VALUES (970, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'frequency_code', 'Frequency Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (980, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'parent_account_number', 'Parent Account Number');
+INSERT INTO resources (resource_id, path, key, value) VALUES (990, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'late_fee_id', 'Late Fee Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1000, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'recurring_invoice_setup_id', 'Recurring Invoice Setup Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1010, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'compound_item', 'Compound Item');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1020, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'brand', 'Brand');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1030, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'fax', 'Fax');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1040, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'length_in_centimeters', 'Length In Centimeters');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1050, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'party_type', 'Party Type');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1060, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'selling_price', 'Selling Price');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1070, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'AddNew', 'Add New');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1080, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'CostCenter', 'Cost Center');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1090, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'EmailThisInvoice', 'Email This Invoice');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1100, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'FlagThisTransaction', 'Flag This Transaction');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1110, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'PriceType', 'Price Type');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1120, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'SalesOrder', 'Sales Order');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1130, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'SSTNumber', 'SST Number');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1140, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'ViewCustomerCopy', 'View Customer Copy');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1150, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'PreparedOn', 'Prepared On');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1160, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'TotalSales', 'Total Sales :');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1170, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Warnings.resx', 'LateFeeErrorMessage', 'Late fee id and late fee posting frequency id both should be either selected or not.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1180, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'Cancel', 'Cancel');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1190, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'None', 'None');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1200, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'SignIn', 'Sign In');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1210, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Warnings.resx', 'DuplicateEntry', 'Duplicate entry.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1220, '\Libraries\Logic\MixERP.Net.Common\Resources\Warnings.resx', 'CouldNotRegisterJavascript', 'Could not register JavaScript on this page because the page instance was invalid or empty.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1230, '\Libraries\Logic\MixERP.Net.Entities\Resources\Warnings.resx', 'InvalidSubTranBookPurchaseDelivery', 'Invalid SubTranBook "Purchase Delivery"');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1240, '\Libraries\Server Controls\Data\MixERP.Net.WebControls.StockTransactionView.Data\Resources\Errors.resx', 'InvalidSubTranBookPurchaseQuotation', 'Invalid SubTranBook ''Purchase Quotation''.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1250, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.Common\Resources\CommonResource.resx', 'NoRecordFound', 'Sorry, no record found.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1260, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.PartyControl\Resources\Titles.resx', 'SelectCustomer', 'Select Customer');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1270, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\Resources\Titles.resx', 'InvalidDate', 'This is not a valid date.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1280, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\Resources\Titles.resx', 'Save', 'Save');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1290, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\Resources\Titles.resx', 'ViewSchemaEmptyExceptionMessage', 'The property ''ViewSchema'' cannot be left empty.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1300, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockAdjustmentFactory\Resources\Titles.resx', 'StatementReference', 'Statement Reference');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1310, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'ReferenceNumberAbbreviated', 'Ref#');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1320, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'ValueDate', 'Value Date');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1330, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'Unit', 'Unit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1340, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'AttachmentsPlus', 'Attachments (+)');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1350, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Titles.resx', 'Id', 'Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1360, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Titles.resx', 'Return', 'Return');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1370, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Warnings.resx', 'CannotMergeDifferentPartyTransaction', 'Cannot merge transactions of different parties into a single batch. Please try again.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1380, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\Resources\Labels.resx', 'TransactionApprovedDetails', 'This transaction was approved by {0} on {1}.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1390, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\Resources\Questions.resx', 'WithdrawalReason', 'Why do you want to withdraw this transaction?');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1400, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\Resources\Titles.resx', 'WithdrawTransaction', 'Withdraw Transaction');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1410, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionViewFactory\Resources\Titles.resx', 'Print', 'Print');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1420, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionViewFactory\Resources\Titles.resx', 'TransactionTimestamp', 'Transaction Timestamp');
+INSERT INTO resources (resource_id, path, key, value) VALUES (921, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\DbResource.resx', 'flag_foreground_color', 'Flag Foreground Color');
+INSERT INTO resources (resource_id, path, key, value) VALUES (931, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'account_id', 'Account Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (941, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'checking_frequency_id', 'Checking Frequency Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (951, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'quantity', 'Quantity');
+INSERT INTO resources (resource_id, path, key, value) VALUES (961, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'total', 'Total');
+INSERT INTO resources (resource_id, path, key, value) VALUES (971, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'frequency_id', 'Frequency Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (981, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'parent_account_id', 'Parent Account Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (991, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'late_fee_name', 'Late Fee Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1001, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'starts_from', 'Starts From');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1011, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'item', 'Item');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1021, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'cell', 'Cell');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1031, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'first_name', 'First Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1041, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'machinable', 'Machinable');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1051, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'party_type_id', 'Party Type Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1061, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'selling_price_includes_tax', 'Selling Price Includes Tax');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1071, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'Address', 'Address');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1081, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'CSTNumber', 'CST Number');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1091, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'EmailThisOrder', 'Email This Order');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1101, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'HomeCurrency', 'Home Currency');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1111, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'Print', 'Print');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1121, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'SalesPersons', 'Salespersons');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1131, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'StatementReference', 'Statement Reference');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1141, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'ViewThisDelivery', 'View This Delivery');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1151, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'Tel', 'Tel');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1161, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'WorldSalesStatistics', 'World Sales Statistics');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1171, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Warnings.resx', 'RecurringAmountErrorMessage', 'Recurring amount should not be less than or equal to 0');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1181, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'ChangePassword', 'Change Password');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1191, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'Notifications', 'Notifications');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1201, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'SigningIn', 'Signing In');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1211, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Warnings.resx', 'DuplicateFiles', 'Duplicate files.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1221, '\Libraries\Logic\MixERP.Net.DbFactory\Resources\Warnings.resx', 'InvalidParameterName', 'Invalid Npgsql parameter name {0}. . Make sure that the parameter name matches with your command text.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1231, '\Libraries\Logic\MixERP.Net.Entities\Resources\Warnings.resx', 'InvalidSubTranBookPurchaseQuotation', 'Invalid SubTranBook "Purchase Quotation"');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1241, '\Libraries\Server Controls\Data\MixERP.Net.WebControls.StockTransactionView.Data\Resources\Errors.resx', 'InvalidSubTranBookPurchaseReceipt', 'Invalid SubTranBook ''Purchase Receipt''.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1251, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.Common\Resources\CommonResource.resx', 'RequiredField', 'This is a required field.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1261, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.PartyControl\Resources\Titles.resx', 'TransactionSummary', 'Transaction Summary');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1271, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\Resources\Titles.resx', 'InvalidImage', 'This is not a valid image.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1281, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\Resources\Titles.resx', 'Select', 'Select');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1291, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\Resources\Titles.resx', 'YesNo', 'Yes, No');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1301, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockAdjustmentFactory\Resources\Titles.resx', 'Store', 'Store');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1311, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'RunningTotal', 'Running Total');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1321, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'Amount', 'Amount');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1331, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'ItemCode', 'Item Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1341, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Labels.resx', 'GoToChecklistWindow', 'Go to checklist window.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1351, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Titles.resx', 'MergeBatchToGRN', 'Merge Batch to GRN');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1361, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Titles.resx', 'Select', 'Select');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1371, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Warnings.resx', 'CannotMergeIncompatibleTax', 'Cannot merge transactions having incompatible tax types. Please try again.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1381, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\Resources\Labels.resx', 'TransactionAutoApprovedDetails', 'This transaction was automatically approved by {0} on {1}.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1391, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\Resources\Titles.resx', 'AddNew', 'Add New');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1401, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\Resources\Warnings.resx', 'CouldNotDetermineEmailImageParserType', 'Could not determine image parser type for email.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1411, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionViewFactory\Resources\Titles.resx', 'Reason', 'Reason');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1421, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionViewFactory\Resources\Titles.resx', 'ValueDate', 'Value Date');
+INSERT INTO resources (resource_id, path, key, value) VALUES (922, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\DbResource.resx', 'id', 'ID');
+INSERT INTO resources (resource_id, path, key, value) VALUES (932, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'address', 'Address');
+INSERT INTO resources (resource_id, path, key, value) VALUES (942, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'commision_rate', 'Commission Rate');
+INSERT INTO resources (resource_id, path, key, value) VALUES (952, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'salesperson_bonus_setup_id', 'Salesperson Bonus Setup Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (962, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'total_sales', 'Total Sales');
+INSERT INTO resources (resource_id, path, key, value) VALUES (972, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'account_number', 'Account Number');
+INSERT INTO resources (resource_id, path, key, value) VALUES (982, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'parent_account_name', 'Parent Account Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (992, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'late_fee_posting_frequency_id', 'Late Fee Posting Frequency Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1002, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'compound_item_id', 'Compound Item Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1012, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'party', 'Party');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1022, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'city', 'City');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1032, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'gl_head', 'GL Head');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1042, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'maintain_stock', 'Maintain Stok');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1052, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'phone', 'Phone');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1062, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'sst_number', 'SST Number');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1072, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'AgentBonusSlabAssignment', 'Bonus Slab Assignment');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1082, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'CustomerCode', 'Customer Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1092, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'EmailThisQuotation', 'Email This Quotation');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1102, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'InvoiceAmount', 'Invoice Amount');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1112, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'Receipt', 'Receipt');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1122, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'SalesQuotation', 'Sales Quotation');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1132, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'TopSellingProductsOfAllTime', 'Top Selling Products of All Time');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1142, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'ViewThisInvoice', 'View This Invoice');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1152, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'Url', 'Url');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1162, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Warnings.resx', 'AccessIsDenied', 'Access is denied.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1172, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Labels.resx', 'DaysLowerCase', 'days');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1182, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'ConfirmPassword', 'Confirm Password');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1192, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'OfficeCode', 'Office Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1202, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'SignOut', 'Sign Out');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1212, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Warnings.resx', 'GridViewEmpty', 'Gridview is empty.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1222, '\Libraries\Logic\MixERP.Net.Entities\Resources\Warnings.resx', 'InvalidSubTranBookInventoryDelivery', 'Invalid SubTranBook "Inventory Delivery"');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1232, '\Libraries\Logic\MixERP.Net.Entities\Resources\Warnings.resx', 'InvalidSubTranBookPurchaseSuspense', 'Invalid SubTranBook "Purchase Suspense"');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1242, '\Libraries\Server Controls\Data\MixERP.Net.WebControls.StockTransactionView.Data\Resources\Errors.resx', 'InvalidSubTranBookSalesPayment', 'Invalid SubTranBook ''Sales Payment''.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1252, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.Flag\Resources\Labels.resx', 'FlagLabel', 'You can mark this transaction with a flag, however you will not be able to see the flags created by other users.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1262, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\Resources\Errors.resx', 'KeyValueMismatch', 'There is a mismatching count of key/value items in this ListControl.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1272, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\Resources\Titles.resx', 'KeyColumnEmptyExceptionMessage', 'The property ''KeyColumn'' cannot be left empty.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1282, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\Resources\Titles.resx', 'ShowAll', 'Show All');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1292, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockAdjustmentFactory\Resources\Errors.resx', 'ReferencingSidesNotEqual', 'Referencing sides are not equal.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1302, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockAdjustmentFactory\Resources\Titles.resx', 'Type', 'Type');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1312, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'Salesperson', 'Salesperson');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1322, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'Discount', 'Discount');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1332, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'CashTransaction', 'Cash Transaction');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1342, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Labels.resx', 'GoToTop', 'Go to top.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1352, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Titles.resx', 'MergeBatchToSalesDelivery', 'Merge Batch to Sales Delivery');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1362, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Titles.resx', 'Show', 'Show');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1372, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Warnings.resx', 'CannotMergeUrlNull', 'Cannot merge transaction(s). The merge url was not provided.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1382, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\Resources\Labels.resx', 'TransactionAwaitingVerification', 'This transaction is awaiting verification from an administrator.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1392, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\Resources\Titles.resx', 'Back', 'Back');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1402, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionViewFactory\Resources\Titles.resx', 'Actions', 'Actions');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1412, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionViewFactory\Resources\Titles.resx', 'ReferenceNumber', 'Reference Number');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1422, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionViewFactory\Resources\Titles.resx', 'VerifiedBy', 'Verified By');
+INSERT INTO resources (resource_id, path, key, value) VALUES (923, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\DbResource.resx', 'office', 'Office');
+INSERT INTO resources (resource_id, path, key, value) VALUES (933, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'amount', 'Amount');
+INSERT INTO resources (resource_id, path, key, value) VALUES (943, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'contact_number', 'Contact Number');
+INSERT INTO resources (resource_id, path, key, value) VALUES (953, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'salesperson_code', 'Salesperson Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (963, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'unit_name', 'Unit Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (973, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'account_master_code', 'Account Master Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (983, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'sys_type', 'Sys Type');
+INSERT INTO resources (resource_id, path, key, value) VALUES (993, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'payment_term_code', 'Payment Term Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1003, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'party_id', 'Party Id');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1013, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'payment_term', 'Payment Term');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1023, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'confidential', 'Confidential');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1033, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'has_child', 'Has Child');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1043, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'maximum_credit_amount', 'Maximum Credit Amount');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1053, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'preferred_shipping_mail_type', 'Preferred Shipping Mail Type');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1063, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\ScrudResource.resx', 'state', 'State');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1073, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'AgentBonusSlabs', 'Bonus Slab for Salespersons');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1083, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'CustomerName', 'Customer Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1093, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'EmailThisReturn', 'Email This Return');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1103, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'InvoiceDetails', 'Invoice Details');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1113, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'ReceiptAmount', 'Receipt Amount');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1123, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'SalesReceipt', 'Sales Receipt');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1133, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'TranCode', 'Transaction Code');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1143, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'ViewThisOrder', 'View This Order');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1153, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Titles.resx', 'User', 'User');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1163, '\FrontEnd\MixERP.Net.FrontEnd\Modules\Sales\Resources\Warnings.resx', 'CompareAmountErrorMessage', 'The amount to should be greater than the amount from.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1173, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Labels.resx', 'JustAMomentPlease', 'Just a moment, please!');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1183, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'CurrentPassword', 'Current Password');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1193, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'Password', 'Password');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1203, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'Url', 'Url');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1213, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Warnings.resx', 'InvalidDate', 'Invalid date.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1223, '\Libraries\Logic\MixERP.Net.Entities\Resources\Warnings.resx', 'InvalidSubTranBookInventoryDirect', 'Invalid SubTranBook "Inventory Direct"');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1233, '\Libraries\Logic\MixERP.Net.Entities\Resources\Warnings.resx', 'InvalidSubTranBookPurchaseTransfer', 'Invalid SubTranBook "Purchase Transfer"');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1243, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.AttachmentFactory\Resources\Messages.resx', 'AreYouSure', 'Are you sure?');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1253, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.Flag\Resources\Labels.resx', 'SelectAFlag', 'Select a flag.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1263, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\Resources\Titles.resx', 'AccessDenied', 'Access is denied.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1273, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\Resources\Titles.resx', 'NothingSelected', 'Nothing selected!');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1283, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\Resources\Titles.resx', 'ShowCompact', 'Show Compact');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1293, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockAdjustmentFactory\Resources\Titles.resx', 'Action', 'Action');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1303, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockAdjustmentFactory\Resources\Titles.resx', 'Unit', 'Unit');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1313, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'SelectParty', 'Select Party');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1323, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'ItemName', 'Item Name');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1333, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\Resources\Titles.resx', 'TaxForm', 'Tax Form');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1343, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Titles.resx', 'Actions', 'Actions');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1353, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Titles.resx', 'MergeBatchToSalesOrder', 'Merge Batch to Sales Order');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1363, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Titles.resx', 'StatementReference', 'Statement Reference');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1373, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\Resources\Warnings.resx', 'NothingSelected', 'Nothing selected.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1383, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\Resources\Labels.resx', 'TransactionClosedDetails', 'This transaction was closed by {0} on {1}. Reason: "{2}".');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1393, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\Resources\Titles.resx', 'Cancel', 'Cancel');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1403, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionViewFactory\Resources\Titles.resx', 'AddNew', 'Add New');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1413, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionViewFactory\Resources\Titles.resx', 'Reject', 'Reject');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1423, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionViewFactory\Resources\Titles.resx', 'VerifiedOn', 'Verified On');
+
+
+--
+-- Name: resources_resource_id_seq; Type: SEQUENCE SET; Schema: localization; Owner: postgres
+--
+
+SELECT pg_catalog.setval('resources_resource_id_seq', 1423, true);
 
 
 SET search_path = transactions, pg_catalog;
@@ -28531,149 +30128,6 @@ SELECT pg_catalog.setval('transaction_master_transaction_master_id_seq', 92, tru
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/enable-triggers.sql --<--<--
 ALTER TABLE transactions.transaction_details ENABLE TRIGGER check_cash_balance_trigger;
 
-
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/localization.sql --<--<--
-DROP SCHEMA IF EXISTS localization CASCADE;
-
-CREATE SCHEMA localization;
-
-CREATE TABLE localization.resources
-(
-    resource_id         SERIAL PRIMARY KEY,
-    path                text,
-    key                 text,
-    value               text
-);
-
-CREATE UNIQUE INDEX resources_path_key_uix
-ON localization.resources(UPPER(path), UPPER(key));
-
-CREATE INDEX resources_path_key_inx
-ON localization.resources(path, key);
-
-CREATE INDEX resources_path_inx
-ON localization.resources(path);
-
-CREATE INDEX resources_key_inx
-ON localization.resources(key);
-
-CREATE TABLE localization.cultures
-(
-    culture_code        text PRIMARY KEY,
-    culture_name        text
-);
-
-INSERT INTO localization.cultures
-SELECT 'de-DE',     'German (Germany)'          UNION ALL
-SELECT 'en-GB',     'English (United Kingdom)'  UNION ALL
-SELECT 'es-ES',     'Spanish (Spain)'           UNION ALL
-SELECT 'fil-PH',    'Filipino (Philippines)'    UNION ALL
-SELECT 'fr-FR',     'French (France)'           UNION ALL
-SELECT 'id-ID',     'Indonesian (Indonesia)'    UNION ALL
-SELECT 'ja-JP',     'Japanese (Japan)'          UNION ALL
-SELECT 'ms-MY',     'Malay (Malaysia)'          UNION ALL
-SELECT 'nl-NL',     'Dutch (Netherlands)'       UNION ALL
-SELECT 'pt-PT',     'Portuguese (Portugal)'     UNION ALL
-SELECT 'ru-RU',     'Russian (Russia)'          UNION ALL
-SELECT 'sv-SE',     'Swedish (Sweden)';
-
-
-CREATE TABLE localization.localized_resources
-(
-    id                  SERIAL PRIMARY KEY,
-    culture_code        text REFERENCES localization.cultures,
-    key                 text,
-    value               text
-);
-
-CREATE UNIQUE INDEX localized_resources_culture_key_uix
-ON localization.localized_resources(UPPER(culture_code), UPPER(key));
-
-CREATE FUNCTION localization.add_resource
-(
-    path                text,
-    key                 text,
-    value               text
-)
-RETURNS void
-AS
-$$
-BEGIN
-    IF NOT EXISTS(SELECT 1 FROM localization.resources WHERE localization.resources.path=$1 AND localization.resources.key=$2) THEN
-        INSERT INTO localization.resources(path, key, value)
-        SELECT $1, $2, $3;
-    END IF;
-END
-$$
-LANGUAGE plpgsql;
-
-CREATE FUNCTION localization.add_localized_resource
-(
-    culture_code        text,
-    key                 text,
-    value               text
-)
-RETURNS void
-AS
-$$
-BEGIN
-    IF EXISTS(SELECT 1 FROM localization.localized_resources WHERE culture_code=$1 AND key=$2) THEN
-        UPDATE localization.localized_resources
-        SET value=$2
-        WHERE culture_code=$1 AND key=$2;
-
-        RETURN;
-    END IF;
-
-    INSERT INTO localization.localized_resources(culture_code, key, value)
-    SELECT $1, $2, $3;
-END
-$$
-LANGUAGE plpgsql;
-
---drop FUNCTION localization.get_localization_table(text)
-
-CREATE FUNCTION localization.get_localization_table
-(
-    culture_code        text
-)
-RETURNS TABLE
-(
-    row_number          bigint,
-    key                 text,
-    invariant_resource  text,
-    value               text
-)
-AS
-$$
-BEGIN   
-    CREATE TEMPORARY TABLE t
-    (
-        key                 text,
-        invariant_resource  text,
-        value               text
-    );
-    INSERT INTO t(key, invariant_resource, value)
-    SELECT
-        DISTINCT localization.resources.key,
-        localization.resources.value as invariant_resource,
-        localization.localized_resources.value
-    FROM localization.resources
-    LEFT JOIN localization.localized_resources
-    ON localization.resources.key = localization.localized_resources.key
-    AND localization.localized_resources.culture_code = $1;
-
-    RETURN QUERY 
-    SELECT 
-        row_number() OVER(ORDER BY t.key ~ '^[[:upper:]][^[:upper:]]' DESC, t.key),
-        t.key,
-        t.invariant_resource,
-        t.value
-    FROM t
-    ORDER BY t.key ~ '^[[:upper:]][^[:upper:]]' DESC, t.key;
-END
-$$
-LANGUAGE plpgsql;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/refresh-materialized-views.sql --<--<--
 SELECT * FROM transactions.refresh_materialized_views(1);

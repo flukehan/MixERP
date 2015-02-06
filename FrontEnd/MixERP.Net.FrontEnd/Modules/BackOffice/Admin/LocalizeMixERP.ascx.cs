@@ -19,6 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
@@ -31,12 +32,12 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
 {
     public partial class LocalizeMixERP : MixERPUserControl
     {
-        private const string sessionKey = "LocalizationCulture";
+        public const string sessionKey = "LocalizationCulture";
         private string root;
 
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            this.CultureSelect.DataSource = Factory.Get<Culture>("SELECT * FROM localization.cultures;");
+            this.CultureSelect.DataSource = Data.Admin.LocalizeMixERP.GetCultures();
             this.CultureSelect.DataValueField = "CultureCode";
             this.CultureSelect.DataTextField = "CultureName";
             this.CultureSelect.DataBind();
@@ -59,6 +60,10 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
 
         private void AddGrid(string cultureCode)
         {
+            string cultureName = new CultureInfo(cultureCode).NativeName;
+
+            this.CultureLiteral.Text = string.Format("<h2 class='ui red header'>{0}</h2>", cultureName);
+
             using (MixERPGridView gridView = new MixERPGridView())
             {
                 gridView.ID = "LocalizationGridView";

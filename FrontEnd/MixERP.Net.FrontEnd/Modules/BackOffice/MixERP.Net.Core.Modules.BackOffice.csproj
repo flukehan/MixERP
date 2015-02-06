@@ -112,6 +112,7 @@
     <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
     <Content Include="Scripts\Flags.ascx.js" />
     <Content Include="Scripts\OTS\OpeningInventory.ascx.js" />
+    <Content Include="Services\Admin\LocalizeMixERP.asmx" />
     <Content Include="Services\web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -372,6 +373,10 @@
     </Compile>
     <Compile Include="Roles.ascx.designer.cs">
       <DependentUpon>Roles.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Admin\LocalizeMixERP.asmx.cs">
+      <DependentUpon>LocalizeMixERP.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Services\Attachments.asmx.cs">
       <DependentUpon>Attachments.asmx</DependentUpon>
