@@ -1,10 +1,8 @@
 DO
 $$
 BEGIN
-    IF NOT EXISTS (SELECT * FROM pg_catalog.pg_user WHERE  usename = 'mix_erp') THEN
+    IF NOT EXISTS (SELECT * FROM pg_catalog.pg_roles WHERE rolname = 'mix_erp') THEN
         CREATE ROLE mix_erp WITH LOGIN PASSWORD 'change-on-deployment';
-    ELSE
-        ALTER ROLE mix_erp WITH PASSWORD 'change-on-deployment';    
     END IF;
 
     COMMENT ON ROLE mix_erp IS 'The default user for MixERP databases.';
@@ -73,14 +71,12 @@ LANGUAGE plpgsql;
 DO
 $$
 BEGIN
-    IF NOT EXISTS (SELECT * FROM pg_catalog.pg_user WHERE  usename = 'report_user') THEN
+    IF NOT EXISTS (SELECT * FROM pg_catalog.pg_roles WHERE rolname= 'report_user') THEN
         CREATE ROLE report_user WITH LOGIN PASSWORD 'change-on-deployment';
-    ELSE
-        ALTER ROLE report_user WITH PASSWORD 'change-on-deployment';    
     END IF;
 
     COMMENT ON ROLE report_user IS 'This user account should be used by the Reporting Engine to run ad-hoc queries.
-    It is strictly advised for this user to have a read-only access to the database.';
+    It is strictly advised for this user to only have a read-only access to the database.';
 
     GRANT USAGE ON SCHEMA public TO report_user;
     GRANT USAGE ON SCHEMA information_schema TO report_user;

@@ -1309,10 +1309,8 @@ $body$;
 DO
 $$
 BEGIN
-    IF NOT EXISTS (SELECT * FROM pg_catalog.pg_user WHERE  usename = 'mix_erp') THEN
+    IF NOT EXISTS (SELECT * FROM pg_catalog.pg_roles WHERE rolname = 'mix_erp') THEN
         CREATE ROLE mix_erp WITH LOGIN PASSWORD 'change-on-deployment';
-    ELSE
-        ALTER ROLE mix_erp WITH PASSWORD 'change-on-deployment';    
     END IF;
 
     COMMENT ON ROLE mix_erp IS 'The default user for MixERP databases.';
@@ -1381,14 +1379,12 @@ LANGUAGE plpgsql;
 DO
 $$
 BEGIN
-    IF NOT EXISTS (SELECT * FROM pg_catalog.pg_user WHERE  usename = 'report_user') THEN
+    IF NOT EXISTS (SELECT * FROM pg_catalog.pg_roles WHERE rolname= 'report_user') THEN
         CREATE ROLE report_user WITH LOGIN PASSWORD 'change-on-deployment';
-    ELSE
-        ALTER ROLE report_user WITH PASSWORD 'change-on-deployment';    
     END IF;
 
     COMMENT ON ROLE report_user IS 'This user account should be used by the Reporting Engine to run ad-hoc queries.
-    It is strictly advised for this user to have a read-only access to the database.';
+    It is strictly advised for this user to only have a read-only access to the database.';
 
     GRANT USAGE ON SCHEMA public TO report_user;
     GRANT USAGE ON SCHEMA information_schema TO report_user;
@@ -15708,7 +15704,7 @@ LANGUAGE plpgsql;
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/office/office.get_offices.sql --<--<--
 CREATE TYPE office.office_type AS
 (
-    office_id               integer_strict,
+    office_id                   integer,
     office_code                 national character varying(12),
     office_name                 national character varying(150),
     address text
@@ -15718,21 +15714,9 @@ CREATE FUNCTION office.get_offices()
 RETURNS setof office.office_type
 AS
 $$
-DECLARE "@record" office.office_type%rowtype;
 BEGIN
-    FOR "@record" IN SELECT office_id, office_code,office_name,street || ' ' || city AS Address FROM office.offices WHERE parent_office_id IS NOT NULL
-    LOOP
-        RETURN NEXT "@record";
-    END LOOP;
-
-    IF NOT FOUND THEN
-        FOR "@record" IN SELECT office_id, office_code,office_name,street || ' ' || city AS Address FROM office.offices WHERE parent_office_id IS NULL
-        LOOP
-            RETURN NEXT "@record";
-        END LOOP;
-    END IF;
-
-    RETURN;
+    RETURN QUERY
+    SELECT office_id, office_code,office_name,street || ' ' || city AS Address FROM office.offices;
 END
 $$
 LANGUAGE plpgsql;
