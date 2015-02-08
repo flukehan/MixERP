@@ -3,7 +3,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Security.AccessControl;
-using System.Security.Principal;
 using Microsoft.Web.Administration;
 using MixERP.Net.Utility.Installer.Helpers;
 
@@ -53,6 +52,21 @@ namespace MixERP.Net.Utility.Installer.Installer
             this.CreateBinding();
             this.CreateApplication();
             this.WritePermission();
+            this.CreateLogDirectory();
+        }
+
+        private void CreateLogDirectory()
+        {
+            string path = ConfigurationHelper.GetConfigurationValues(this.InstallerManifest, "ApplicationLogDirectory");
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            string userId = "IIS AppPool\\" + this.AppPoolName;
+
+            FileHelper.SetPermission(path, FileSystemRights.Modify, userId);
         }
 
         private void CreateApplication()
@@ -89,7 +103,9 @@ namespace MixERP.Net.Utility.Installer.Installer
 
         private void WritePermission()
         {
-            this.SetPermission(this.InstallDirectory, FileSystemRights.ReadAndExecute);
+            string userId = "IIS AppPool\\" + this.AppPoolName;
+
+            FileHelper.SetPermission(this.InstallDirectory, FileSystemRights.ReadAndExecute, userId);
 
             string writableDirectories = ConfigurationHelper.GetConfigurationValues(this.InstallerManifest,
                 "WritableDirectories");
@@ -97,26 +113,8 @@ namespace MixERP.Net.Utility.Installer.Installer
             foreach (string path in writableDirectories.Split(','))
             {
                 string directory = Path.Combine(this.InstallDirectory, path.Trim());
-                this.SetPermission(directory, FileSystemRights.Modify);
+                FileHelper.SetPermission(directory, FileSystemRights.Modify, userId);
             }
-        }
-
-        private void SetPermission(string directory, FileSystemRights permission)
-        {
-            if (!Directory.Exists(directory))
-            {
-                return;
-            }
-
-            DirectoryInfo info = new DirectoryInfo(directory);
-            DirectorySecurity security = info.GetAccessControl();
-            string userId = "IIS AppPool\\" + this.AppPoolName;
-
-            FileSystemAccessRule rule = new FileSystemAccessRule(userId, permission, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit,
-                PropagationFlags.None, AccessControlType.Allow);
-
-            security.AddAccessRule(rule);
-            info.SetAccessControl(security);
         }
 
         private void CreateApplicationPool()
@@ -204,6 +202,15 @@ namespace MixERP.Net.Utility.Installer.Installer
                 "DbServerConfigFileLocation");
             string reportConfig = ConfigurationHelper.GetConfigurationValues(this.InstallerManifest,
                 "ReportConfigFileLocation");
+            string mixerpConfig = ConfigurationHelper.GetConfigurationValues(this.InstallerManifest,
+                "MixERPConfigFileLocation");
+
+            string logDirectory = ConfigurationHelper.GetConfigurationValues(this.InstallerManifest,
+                "ApplicationLogDirectory");
+
+            string minLogLevel = ConfigurationHelper.GetConfigurationValues(this.InstallerManifest,
+                "MinimumLogLevel");
+
 
             this.UpdateConfig(dbConfig, "Database", this.DatabaseName);
             this.UpdateConfig(dbConfig, "UserId", "mix_erp");
@@ -212,6 +219,9 @@ namespace MixERP.Net.Utility.Installer.Installer
 
             this.UpdateConfig(reportConfig, "DbLoginName", "report_user");
             this.UpdateConfig(reportConfig, "DbPassword", this.ReportUserPassword);
+
+            this.UpdateConfig(mixerpConfig, "ApplicationLogDirectory", logDirectory);
+            this.UpdateConfig(mixerpConfig, "MinimumLogLevel", minLogLevel);
         }
 
         private void UpdateConfig(string configFileRelativePath, string key, string value)

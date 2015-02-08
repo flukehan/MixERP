@@ -17,20 +17,19 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Finance.Data;
+using MixERP.Net.Entities.Contracts;
 using MixERP.Net.FrontEnd.Base;
-
-using System;
 
 namespace MixERP.Net.Core.Modules.Finance
 {
-    public partial class EODOperation : MixERPUserControl
+    public partial class EODOperation : MixERPUserControl, ITransaction
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
             this.Initialize();
-            
         }
 
         private new void Initialize()

@@ -92,67 +92,6 @@ namespace MixERP.Net.Entities.Audit
     
 
 
-    [TableName("audit.logged_actions")]
-    [PrimaryKey("event_id")]
-    [ExplicitColumns]
-    public class LoggedAction : PetaPocoDB.Record<LoggedAction> 
-    {
-        [Column("event_id")] 
-        public long EventId { get; set; }
-
-        [Column("schema_name")] 
-        public string SchemaName { get; set; }
-
-        [Column("table_name")] 
-        public string TableName { get; set; }
-
-        [Column("relid")] 
-        public string Relid { get; set; }
-
-        [Column("session_user_name")] 
-        public string SessionUserName { get; set; }
-
-        [Column("application_user_name")] 
-        public string ApplicationUserName { get; set; }
-
-        [Column("action_tstamp_tx")] 
-        public DateTime ActionTstampTx { get; set; }
-
-        [Column("action_tstamp_stm")] 
-        public DateTime ActionTstampStm { get; set; }
-
-        [Column("action_tstamp_clk")] 
-        public DateTime ActionTstampClk { get; set; }
-
-        [Column("transaction_id")] 
-        public long? TransactionId { get; set; }
-
-        [Column("application_name")] 
-        public string ApplicationName { get; set; }
-
-        [Column("client_addr")] 
-        public string ClientAddr { get; set; }
-
-        [Column("client_port")] 
-        public int? ClientPort { get; set; }
-
-        [Column("client_query")] 
-        public string ClientQuery { get; set; }
-
-        [Column("action")] 
-        public string Action { get; set; }
-
-        [Column("row_data")] 
-        public string RowData { get; set; }
-
-        [Column("changed_fields")] 
-        public string ChangedFields { get; set; }
-
-        [Column("statement_only")] 
-        public bool StatementOnly { get; set; }
-
-    }
-
     [TableName("audit.logins")]
     [PrimaryKey("login_id")]
     [ExplicitColumns]
@@ -215,6 +154,67 @@ namespace MixERP.Net.Entities.Audit
 
         [Column("details")] 
         public string Details { get; set; }
+
+    }
+
+    [TableName("audit.logged_actions")]
+    [PrimaryKey("event_id")]
+    [ExplicitColumns]
+    public class LoggedAction : PetaPocoDB.Record<LoggedAction> 
+    {
+        [Column("event_id")] 
+        public long EventId { get; set; }
+
+        [Column("schema_name")] 
+        public string SchemaName { get; set; }
+
+        [Column("table_name")] 
+        public string TableName { get; set; }
+
+        [Column("relid")] 
+        public string Relid { get; set; }
+
+        [Column("session_user_name")] 
+        public string SessionUserName { get; set; }
+
+        [Column("application_user_name")] 
+        public string ApplicationUserName { get; set; }
+
+        [Column("action_tstamp_tx")] 
+        public DateTime ActionTstampTx { get; set; }
+
+        [Column("action_tstamp_stm")] 
+        public DateTime ActionTstampStm { get; set; }
+
+        [Column("action_tstamp_clk")] 
+        public DateTime ActionTstampClk { get; set; }
+
+        [Column("transaction_id")] 
+        public long? TransactionId { get; set; }
+
+        [Column("application_name")] 
+        public string ApplicationName { get; set; }
+
+        [Column("client_addr")] 
+        public string ClientAddr { get; set; }
+
+        [Column("client_port")] 
+        public int? ClientPort { get; set; }
+
+        [Column("client_query")] 
+        public string ClientQuery { get; set; }
+
+        [Column("action")] 
+        public string Action { get; set; }
+
+        [Column("row_data")] 
+        public string RowData { get; set; }
+
+        [Column("changed_fields")] 
+        public string ChangedFields { get; set; }
+
+        [Column("statement_only")] 
+        public bool StatementOnly { get; set; }
 
     }
 }

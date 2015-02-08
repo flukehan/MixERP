@@ -90,6 +90,7 @@ namespace MixERP.Net.Utility.Installer.Installer
                 PostgreSQLBinDirectory = ConfigurationHelper.GetPostgreSQLBinDirectory()
             });
 
+
             installer.Add(new DbScript
             {
                 InstallerManifest = ConfigurationHelper.GetInstallerManifest(),

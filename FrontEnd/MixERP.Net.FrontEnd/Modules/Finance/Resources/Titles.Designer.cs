@@ -259,7 +259,7 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CashFlow Heading.
+        ///   Looks up a localized string similar to Cash Flow Heading.
         /// </summary>
         internal static string CashFlowHeading {
             get {
@@ -268,7 +268,7 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cashflow Headings.
+        ///   Looks up a localized string similar to Cash Flow Headings.
         /// </summary>
         internal static string CashFlowHeadings {
             get {
@@ -277,7 +277,7 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cashflow Setup.
+        ///   Looks up a localized string similar to Cash Flow Setup.
         /// </summary>
         internal static string CashFlowSetup {
             get {
@@ -403,29 +403,11 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ctrl + Alt + C.
-        /// </summary>
-        internal static string CtrlAltC1 {
-            get {
-                return ResourceManager.GetString("CtrlAltC1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Ctrl + Alt + D.
         /// </summary>
         internal static string CtrlAltD {
             get {
                 return ResourceManager.GetString("CtrlAltD", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ctrl + Alt + D.
-        /// </summary>
-        internal static string CtrlAltD1 {
-            get {
-                return ResourceManager.GetString("CtrlAltD1", resourceCulture);
             }
         }
         

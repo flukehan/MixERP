@@ -92,6 +92,47 @@ namespace MixERP.Net.Entities.Policy
     
 
 
+    [TableName("policy.menu_access")]
+    [PrimaryKey("access_id")]
+    [ExplicitColumns]
+    public class MenuAccess : PetaPocoDB.Record<MenuAccess> 
+    {
+        [Column("access_id")] 
+        public long AccessId { get; set; }
+
+        [Column("office_id")] 
+        public int OfficeId { get; set; }
+
+        [Column("menu_id")] 
+        public int MenuId { get; set; }
+
+        [Column("user_id")] 
+        public int? UserId { get; set; }
+
+    }
+
+    [TableName("policy.store_policies")]
+    [PrimaryKey("store_policy_id")]
+    [ExplicitColumns]
+    public class StorePolicy : PetaPocoDB.Record<StorePolicy> 
+    {
+        [Column("store_policy_id")] 
+        public long StorePolicyId { get; set; }
+
+        [Column("written_by_user_id")] 
+        public int WrittenByUserId { get; set; }
+
+        [Column("status")] 
+        public bool Status { get; set; }
+
+        [Column("audit_user_id")] 
+        public int? AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime? AuditTs { get; set; }
+
+    }
+
     [TableName("policy.store_policy_details")]
     [PrimaryKey("store_policy_detail_id")]
     [ExplicitColumns]
@@ -114,6 +155,83 @@ namespace MixERP.Net.Entities.Policy
 
         [Column("audit_ts")] 
         public DateTime? AuditTs { get; set; }
+
+    }
+
+    [TableName("policy.voucher_verification_policy")]
+    [PrimaryKey("user_id", autoIncrement=false)]
+    [ExplicitColumns]
+    public class VoucherVerificationPolicy : PetaPocoDB.Record<VoucherVerificationPolicy> 
+    {
+        [Column("user_id")] 
+        public int UserId { get; set; }
+
+        [Column("can_verify_sales_transactions")] 
+        public bool CanVerifySalesTransactions { get; set; }
+
+        [Column("sales_verification_limit")] 
+        public decimal SalesVerificationLimit { get; set; }
+
+        [Column("can_verify_purchase_transactions")] 
+        public bool CanVerifyPurchaseTransactions { get; set; }
+
+        [Column("purchase_verification_limit")] 
+        public decimal PurchaseVerificationLimit { get; set; }
+
+        [Column("can_verify_gl_transactions")] 
+        public bool CanVerifyGlTransactions { get; set; }
+
+        [Column("gl_verification_limit")] 
+        public decimal GlVerificationLimit { get; set; }
+
+        [Column("can_self_verify")] 
+        public bool CanSelfVerify { get; set; }
+
+        [Column("self_verification_limit")] 
+        public decimal SelfVerificationLimit { get; set; }
+
+        [Column("effective_from")] 
+        public DateTime EffectiveFrom { get; set; }
+
+        [Column("ends_on")] 
+        public DateTime EndsOn { get; set; }
+
+        [Column("is_active")] 
+        public bool IsActive { get; set; }
+
+        [Column("audit_user_id")] 
+        public int? AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime? AuditTs { get; set; }
+
+    }
+
+    [TableName("policy.menu_policy")]
+    [PrimaryKey("policy_id")]
+    [ExplicitColumns]
+    public class MenuPolicy : PetaPocoDB.Record<MenuPolicy> 
+    {
+        [Column("policy_id")] 
+        public int PolicyId { get; set; }
+
+        [Column("menu_id")] 
+        public int MenuId { get; set; }
+
+        [Column("office_id")] 
+        public int? OfficeId { get; set; }
+
+        [Column("inherit_in_child_offices")] 
+        public bool InheritInChildOffices { get; set; }
+
+        [Column("role_id")] 
+        public int? RoleId { get; set; }
+
+        [Column("user_id")] 
+        public int? UserId { get; set; }
+
+        [Column("scope")] 
+        public string Scope { get; set; }
 
     }
 
@@ -201,28 +319,6 @@ namespace MixERP.Net.Entities.Policy
 
     }
 
-    [TableName("policy.store_policies")]
-    [PrimaryKey("store_policy_id")]
-    [ExplicitColumns]
-    public class StorePolicy : PetaPocoDB.Record<StorePolicy> 
-    {
-        [Column("store_policy_id")] 
-        public long StorePolicyId { get; set; }
-
-        [Column("written_by_user_id")] 
-        public int WrittenByUserId { get; set; }
-
-        [Column("status")] 
-        public bool Status { get; set; }
-
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
-
-    }
-
     [TableName("policy.lock_outs")]
     [PrimaryKey("lock_out_id")]
     [ExplicitColumns]
@@ -239,102 +335,6 @@ namespace MixERP.Net.Entities.Policy
 
         [Column("lock_out_till")] 
         public DateTime LockOutTill { get; set; }
-
-    }
-
-    [TableName("policy.menu_policy")]
-    [PrimaryKey("policy_id")]
-    [ExplicitColumns]
-    public class MenuPolicy : PetaPocoDB.Record<MenuPolicy> 
-    {
-        [Column("policy_id")] 
-        public int PolicyId { get; set; }
-
-        [Column("menu_id")] 
-        public int MenuId { get; set; }
-
-        [Column("office_id")] 
-        public int? OfficeId { get; set; }
-
-        [Column("inherit_in_child_offices")] 
-        public bool InheritInChildOffices { get; set; }
-
-        [Column("role_id")] 
-        public int? RoleId { get; set; }
-
-        [Column("user_id")] 
-        public int? UserId { get; set; }
-
-        [Column("scope")] 
-        public string Scope { get; set; }
-
-    }
-
-    [TableName("policy.menu_access")]
-    [PrimaryKey("access_id")]
-    [ExplicitColumns]
-    public class MenuAccess : PetaPocoDB.Record<MenuAccess> 
-    {
-        [Column("access_id")] 
-        public long AccessId { get; set; }
-
-        [Column("office_id")] 
-        public int OfficeId { get; set; }
-
-        [Column("menu_id")] 
-        public int MenuId { get; set; }
-
-        [Column("user_id")] 
-        public int? UserId { get; set; }
-
-    }
-
-    [TableName("policy.voucher_verification_policy")]
-    [PrimaryKey("user_id", autoIncrement=false)]
-    [ExplicitColumns]
-    public class VoucherVerificationPolicy : PetaPocoDB.Record<VoucherVerificationPolicy> 
-    {
-        [Column("user_id")] 
-        public int UserId { get; set; }
-
-        [Column("can_verify_sales_transactions")] 
-        public bool CanVerifySalesTransactions { get; set; }
-
-        [Column("sales_verification_limit")] 
-        public decimal SalesVerificationLimit { get; set; }
-
-        [Column("can_verify_purchase_transactions")] 
-        public bool CanVerifyPurchaseTransactions { get; set; }
-
-        [Column("purchase_verification_limit")] 
-        public decimal PurchaseVerificationLimit { get; set; }
-
-        [Column("can_verify_gl_transactions")] 
-        public bool CanVerifyGlTransactions { get; set; }
-
-        [Column("gl_verification_limit")] 
-        public decimal GlVerificationLimit { get; set; }
-
-        [Column("can_self_verify")] 
-        public bool CanSelfVerify { get; set; }
-
-        [Column("self_verification_limit")] 
-        public decimal SelfVerificationLimit { get; set; }
-
-        [Column("effective_from")] 
-        public DateTime EffectiveFrom { get; set; }
-
-        [Column("ends_on")] 
-        public DateTime EndsOn { get; set; }
-
-        [Column("is_active")] 
-        public bool IsActive { get; set; }
-
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
 
     }
 

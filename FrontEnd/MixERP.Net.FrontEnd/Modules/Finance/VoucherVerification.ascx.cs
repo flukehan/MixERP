@@ -24,10 +24,11 @@ using MixERP.Net.WebControls.TransactionViewFactory;
 using System;
 using System.Web.UI.HtmlControls;
 using MixERP.Net.Entities;
+using MixERP.Net.Entities.Contracts;
 
 namespace MixERP.Net.Core.Modules.Finance
 {
-    public partial class VoucherVerification : MixERPUserControl
+    public partial class VoucherVerification : MixERPUserControl, ITransaction
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {

@@ -19,11 +19,13 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using Serilog;
 using System;
 using System.Configuration;
+using System.IO;
 using System.Threading;
 using System.Web;
 using System.Web.Routing;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
+using MixERP.Net.Common.Helpers;
 using Serilog.Configuration;
 using Serilog.Core;
 using Serilog.Events;
@@ -87,13 +89,35 @@ namespace MixERP.Net.FrontEnd
             RegisterRoutes(RouteTable.Routes);
         }
 
+        private string GetLogDirectory()
+        {
+            string path = ConfigurationHelper.GetMixERPParameter("ApplicationLogDirectory");
+
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                return Server.MapPath("~/Resource/Temp");
+            }
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            return path;
+        }
+
+        private string GetLogFileName()
+        {
+            string applicationLogDirectory = this.GetLogDirectory();
+            string filePath = Path.Combine(applicationLogDirectory, DateTime.Now.Date.ToShortDateString().Replace(@"/", "-"), "log.txt");
+            return filePath;
+        }
+
+
         private LoggerConfiguration GetConfiguration()
         {
 
-            string applicationLogDirectory = Server.MapPath(ConfigurationManager.AppSettings["ApplicationLogDirectory"]);
-            string filePath = System.IO.Path.Combine(applicationLogDirectory, DateTime.Now.Date.ToShortDateString().Replace(@"/", "-"), "log.txt");
-
-            string minimumLogLevel = ConfigurationManager.AppSettings["MinimumLogLevel"];
+            string minimumLogLevel = ConfigurationHelper.GetMixERPParameter("MinimumLogLevel");
 
             LoggingLevelSwitch levelSwitch = new LoggingLevelSwitch();
 
@@ -102,7 +126,7 @@ namespace MixERP.Net.FrontEnd
 
             levelSwitch.MinimumLevel = logLevel;
 
-            return new LoggerConfiguration().MinimumLevel.ControlledBy(levelSwitch).WriteTo.RollingFile(filePath);
+            return new LoggerConfiguration().MinimumLevel.ControlledBy(levelSwitch).WriteTo.RollingFile(this.GetLogFileName());
         }
 
 

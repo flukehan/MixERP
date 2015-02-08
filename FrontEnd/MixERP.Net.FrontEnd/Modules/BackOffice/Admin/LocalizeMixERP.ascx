@@ -34,7 +34,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
             Community Contribution
         </div>
         <p>
-            Please read the <a target="_blank" href="http://mixerp.org/cla.html">Contributor License Agreement</a> before proceeding.
+            Please read and sign the <a target="_blank" href="https://www.clahub.com/agreements/mixerp/mixerp">Contributor License Agreement</a> before proceeding.
         </p>
     </div>
     <i class="close icon"></i>

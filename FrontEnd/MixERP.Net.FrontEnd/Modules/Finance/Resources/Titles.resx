@@ -165,13 +165,7 @@
   <data name="CtrlAltC" xml:space="preserve">
     <value>Ctrl + Alt + C</value>
   </data>
-  <data name="CtrlAltC1" xml:space="preserve">
-    <value>Ctrl + Alt + C</value>
-  </data>
   <data name="CtrlAltD" xml:space="preserve">
-    <value>Ctrl + Alt + D</value>
-  </data>
-  <data name="CtrlAltD1" xml:space="preserve">
     <value>Ctrl + Alt + D</value>
   </data>
   <data name="CtrlAltS" xml:space="preserve">
@@ -382,7 +376,7 @@
     <value>Base Currency</value>
   </data>
   <data name="CashFlowHeading" xml:space="preserve">
-    <value>CashFlow Heading</value>
+    <value>Cash Flow Heading</value>
   </data>
   <data name="Confidential" xml:space="preserve">
     <value>Confidential</value>
@@ -460,10 +454,10 @@
     <value>Amount</value>
   </data>
   <data name="CashFlowHeadings" xml:space="preserve">
-    <value>Cashflow Headings</value>
+    <value>Cash Flow Headings</value>
   </data>
   <data name="CashFlowSetup" xml:space="preserve">
-    <value>Cashflow Setup</value>
+    <value>Cash Flow Setup</value>
   </data>
   <data name="StatementOfCashFlows" xml:space="preserve">
     <value>Statement of Cash Flows</value>

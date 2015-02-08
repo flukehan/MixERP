@@ -651,4 +651,7 @@
   <data name="parent_cash_repository" xml:space="preserve">
     <value>Parent Cash Repository</value>
   </data>
+  <data name="allow_transaction_posting" xml:space="preserve">
+    <value>Allow Transaction Posting</value>
+  </data>
 </root>

@@ -25,7 +25,6 @@ namespace MixERP.Net.Utility.Installer.Helpers
             return ReadConfiguration("PostgreSQLInstallationDirectory");
         }
 
-
         public static string GetPostgreSQLBinDirectory()
         {
             string path = GetPostgreSQLInstallationDirectory();
@@ -62,11 +61,11 @@ namespace MixERP.Net.Utility.Installer.Helpers
             return config;
         }
 
-
         public static string GetConfigurationValues(string configFileName, string sectionName)
         {
-            ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap { ExeConfigFilename = configFileName };
-            Configuration config = ConfigurationManager.OpenMappedExeConfiguration(configFileMap, ConfigurationUserLevel.None);
+            ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap {ExeConfigFilename = configFileName};
+            Configuration config = ConfigurationManager.OpenMappedExeConfiguration(configFileMap,
+                ConfigurationUserLevel.None);
             AppSettingsSection section = config.GetSection("appSettings") as AppSettingsSection;
 
             if (section != null)
@@ -82,7 +81,7 @@ namespace MixERP.Net.Utility.Installer.Helpers
 
         public static string SetConfigurationValues(string configFileName, string key, string value)
         {
-            ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap { ExeConfigFilename = configFileName };
+            ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap {ExeConfigFilename = configFileName};
             var config = ConfigurationManager.OpenMappedExeConfiguration(configFileMap, ConfigurationUserLevel.None);
             AppSettingsSection section = config.GetSection("appSettings") as AppSettingsSection;
 
@@ -97,7 +96,5 @@ namespace MixERP.Net.Utility.Installer.Helpers
 
             return string.Empty;
         }
-
-
     }
 }

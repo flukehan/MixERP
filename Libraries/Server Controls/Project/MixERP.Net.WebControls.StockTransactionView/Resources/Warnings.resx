@@ -124,7 +124,7 @@
     <value>Cannot create or update flag. Transaction table primary key was not provided.</value>
   </data>
   <data name="CannotMergeAlreadyMerged" xml:space="preserve">
-    <value>The selected transaction(s) contains item(s) which have already been merged. Please try again.</value>
+    <value>The selected transactions contain items which have already been merged. Please try again.</value>
   </data>
   <data name="CannotMergeDifferentPartyTransaction" xml:space="preserve">
     <value>Cannot merge transactions of different parties into a single batch. Please try again.</value>
@@ -133,7 +133,7 @@
     <value>Cannot merge transactions having incompatible tax types. Please try again.</value>
   </data>
   <data name="CannotMergeUrlNull" xml:space="preserve">
-    <value>Cannot merge transaction(s). The merge url was not provided.</value>
+    <value>Cannot merge transactions. The merge url was not provided.</value>
   </data>
   <data name="NothingSelected" xml:space="preserve">
     <value>Nothing selected.</value>

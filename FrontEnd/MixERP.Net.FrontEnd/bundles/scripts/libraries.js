@@ -46745,7 +46745,6 @@ function Page_EndRequest() {
     if (typeof (AsyncListener) === "function") {
         AsyncListener();
     };
-
 };
 
 var setCurrencyFormat = function () {

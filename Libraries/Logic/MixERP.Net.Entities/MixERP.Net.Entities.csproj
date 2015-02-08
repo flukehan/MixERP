@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\ITransaction.cs" />
     <Compile Include="Localization.cs">
       <DependentUpon>Localization.tt</DependentUpon>
       <AutoGen>True</AutoGen>

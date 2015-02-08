@@ -271,10 +271,11 @@ CREATE TABLE office.offices
     url                                     national character varying(50) NULL,
     registration_number                     national character varying(24) NULL,
     pan_number                              national character varying(24) NULL,
+    allow_transaction_posting               boolean not null DEFAULT(true),
+    parent_office_id                        integer NULL REFERENCES office.offices(office_id),
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL 
-                                            DEFAULT(NOW()),
-    parent_office_id                        integer NULL REFERENCES office.offices(office_id)
+                                            DEFAULT(NOW())
 );
 
 ALTER TABLE office.users

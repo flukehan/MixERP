@@ -160,6 +160,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This establishment does not allow transaction posting..
+        /// </summary>
+        internal static string RestrictedTransactionMode {
+            get {
+                return ResourceManager.GetString("RestrictedTransactionMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User id or password incorrect..
         /// </summary>
         internal static string UserIdOrPasswordIncorrect {

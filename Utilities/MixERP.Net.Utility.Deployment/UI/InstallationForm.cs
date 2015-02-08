@@ -239,7 +239,7 @@ namespace MixERP.Net.Utility.Installer.UI
 
             if (!this._office.IsValid)
             {
-                Program.warn("All the fields in office information form are required.");
+                Program.warn("Invalid office information form.");
                 return;
             }
 

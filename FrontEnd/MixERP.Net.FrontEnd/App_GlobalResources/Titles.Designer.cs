@@ -70,6 +70,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Back to Previous Page.
+        /// </summary>
+        internal static string BackToPreviousPage {
+            get {
+                return ResourceManager.GetString("BackToPreviousPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         internal static string Cancel {
@@ -219,6 +228,15 @@ namespace Resources {
         internal static string RememberMe {
             get {
                 return ResourceManager.GetString("RememberMe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restricted Transaction Mode.
+        /// </summary>
+        internal static string RestrictedTransactionMode {
+            get {
+                return ResourceManager.GetString("RestrictedTransactionMode", resourceCulture);
             }
         }
         

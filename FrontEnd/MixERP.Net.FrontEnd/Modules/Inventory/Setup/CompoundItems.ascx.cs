@@ -36,7 +36,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
                 scrud.TableSchema = "core";
                 scrud.Table = "compound_items";
                 scrud.ViewSchema = "core";
-                scrud.View = "compound_items_scrud_view";
+                scrud.View = "compound_item_scrud_view";
 
                 scrud.Text = Titles.CompoundItems;
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof(CompoundItems));

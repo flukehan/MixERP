@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -74,6 +75,24 @@ namespace MixERP.Net.Utility.Installer.Helpers
             foreach (FileInfo file in source.GetFiles())
                 file.CopyTo(Path.Combine(target.FullName, file.Name));
         }
+
+        public static void SetPermission(string directory, FileSystemRights permission, string userId)
+        {
+            if (!Directory.Exists(directory))
+            {
+                return;
+            }
+
+            DirectoryInfo info = new DirectoryInfo(directory);
+            DirectorySecurity security = info.GetAccessControl();
+
+            FileSystemAccessRule rule = new FileSystemAccessRule(userId, permission, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit,
+                PropagationFlags.None, AccessControlType.Allow);
+
+            security.AddAccessRule(rule);
+            info.SetAccessControl(security);
+        }
+
 
     }
 }

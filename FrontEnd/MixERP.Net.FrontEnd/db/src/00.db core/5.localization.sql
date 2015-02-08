@@ -1,7 +1,3 @@
-DROP SCHEMA IF EXISTS localization CASCADE;
-
-CREATE SCHEMA localization;
-
 CREATE TABLE localization.resources
 (
     resource_id         SERIAL PRIMARY KEY,

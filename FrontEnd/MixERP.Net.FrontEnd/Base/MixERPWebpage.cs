@@ -209,6 +209,7 @@ namespace MixERP.Net.FrontEnd.Base
                     session["Fax"] = signInView.Fax;
                     session["Email"] = signInView.Email;
                     session["Url"] = signInView.Url;
+                    session["AllowTransactionPosting"] = signInView.AllowTransactionPosting;
 
                     SetCulture();
 

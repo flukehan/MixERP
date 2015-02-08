@@ -79,7 +79,7 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The selected transaction(s) contains item(s) which have already been merged. Please try again..
+        ///   Looks up a localized string similar to The selected transactions contain items which have already been merged. Please try again..
         /// </summary>
         internal static string CannotMergeAlreadyMerged {
             get {
@@ -106,7 +106,7 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot merge transaction(s). The merge url was not provided..
+        ///   Looks up a localized string similar to Cannot merge transactions. The merge url was not provided..
         /// </summary>
         internal static string CannotMergeUrlNull {
             get {

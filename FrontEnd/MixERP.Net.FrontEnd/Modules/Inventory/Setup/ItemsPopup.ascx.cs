@@ -38,7 +38,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
                 scrud.TableSchema = "core";
                 scrud.Table = "items";
                 scrud.ViewSchema = "core";
-                scrud.View = "items_scrud_view";
+                scrud.View = "item_scrud_view";
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
                 scrud.UseDisplayViewsAsParents = true;

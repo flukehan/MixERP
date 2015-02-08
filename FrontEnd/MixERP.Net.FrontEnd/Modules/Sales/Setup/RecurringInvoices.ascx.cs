@@ -71,8 +71,8 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
         {
             List<string> displayViews = new List<string>();
             ScrudHelper.AddDisplayView(displayViews, "core.frequencies.frequency_id", "core.frequencies");
-            ScrudHelper.AddDisplayView(displayViews, "core.items.item_id", "core.items_scrud_view");
-            ScrudHelper.AddDisplayView(displayViews, "core.compound_items.compound_item_id", "core.compound_items_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.items.item_id", "core.item_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.compound_items.compound_item_id", "core.compound_item_scrud_view");
             return string.Join(",", displayViews);
         }
     }

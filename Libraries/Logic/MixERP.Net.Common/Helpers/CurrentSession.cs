@@ -156,6 +156,11 @@ namespace MixERP.Net.Common.Helpers
             return Conversion.TryCastString(SessionHelper.GetSessionKey("ZipCode"));
         }
 
+        public static bool AllowTransactionPosting()
+        {
+            return Conversion.TryCastBoolean(SessionHelper.GetSessionKey("AllowTransactionPosting"));
+        }
+
         public static bool IsAdmin()
         {
             return Conversion.TryCastBoolean(SessionHelper.GetSessionKey("IsAdmin"));

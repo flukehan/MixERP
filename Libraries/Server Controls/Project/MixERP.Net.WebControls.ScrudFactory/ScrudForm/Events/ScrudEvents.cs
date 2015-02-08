@@ -66,7 +66,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             {
                 if (this.DenyDelete)
                 {
-                    throw new MixERPException(Titles.AccessDenied);
+                    throw new MixERPException(Titles.AccessIsDenied);
                 }
 
                 if (FormHelper.DeleteRecord(this.TableSchema, this.Table, this.KeyColumn, id))
@@ -129,7 +129,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 {
                     if (this.DenyAdd)
                     {
-                        throw new MixERPException(Titles.AccessDenied);
+                        throw new MixERPException(Titles.AccessIsDenied);
                     }
 
                     long lastValue = FormHelper.InsertRecord(userId, this.TableSchema, this.Table, list, this.imageColumn);
@@ -163,7 +163,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 {
                     if (this.DenyEdit)
                     {
-                        throw new MixERPException(Titles.AccessDenied);
+                        throw new MixERPException(Titles.AccessIsDenied);
                     }
 
                     string[] exclusion = { "" };

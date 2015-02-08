@@ -150,6 +150,9 @@
   <data name="PleaseEnterNewPassword" xml:space="preserve">
     <value>Please enter a new password.</value>
   </data>
+  <data name="RestrictedTransactionMode" xml:space="preserve">
+    <value>This establishment does not allow transaction posting.</value>
+  </data>
   <data name="UserIdOrPasswordIncorrect" xml:space="preserve">
     <value>User id or password incorrect.</value>
   </data>

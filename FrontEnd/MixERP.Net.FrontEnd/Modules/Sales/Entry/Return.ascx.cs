@@ -21,12 +21,13 @@ using System;
 using MixERP.Net.Common;
 using MixERP.Net.Core.Modules.Sales.Resources;
 using MixERP.Net.Entities;
+using MixERP.Net.Entities.Contracts;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.StockTransactionFactory;
 
 namespace MixERP.Net.Core.Modules.Sales.Entry
 {
-    public partial class Return : MixERPUserControl
+    public partial class Return : MixERPUserControl, ITransaction
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {

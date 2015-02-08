@@ -204,4 +204,10 @@
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
   </data>
+  <data name="RestrictedTransactionMode" xml:space="preserve">
+    <value>Restricted Transaction Mode</value>
+  </data>
+  <data name="BackToPreviousPage" xml:space="preserve">
+    <value>Back to Previous Page</value>
+  </data>
 </root>

@@ -23,6 +23,7 @@ using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Domains;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Entities.Contracts;
 using Serilog;
 
 namespace MixERP.Net.FrontEnd.Base
@@ -40,6 +41,18 @@ namespace MixERP.Net.FrontEnd.Base
             this.OnControlLoad(this, new EventArgs());
 
             this.CheckAccessLevel();
+            this.CheckTransactionPostingStatus();
+        }
+
+        private void CheckTransactionPostingStatus()
+        {
+            if (this is ITransaction)
+            {
+                if (!CurrentSession.AllowTransactionPosting())
+                {
+                    this.Server.Transfer("~/Site/Exceptions/RestrictedTransactionMode.aspx");
+                }
+            }
         }
 
         private void CheckAccessLevel()

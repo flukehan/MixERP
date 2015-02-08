@@ -63,9 +63,9 @@ namespace MixERP.Net.WebControls.ScrudFactory.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Access is denied..
         /// </summary>
-        internal static string AccessDenied {
+        internal static string AccessIsDenied {
             get {
-                return ResourceManager.GetString("AccessDenied", resourceCulture);
+                return ResourceManager.GetString("AccessIsDenied", resourceCulture);
             }
         }
         
@@ -115,6 +115,15 @@ namespace MixERP.Net.WebControls.ScrudFactory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to First Page.
+        /// </summary>
+        internal static string FirstPage {
+            get {
+                return ResourceManager.GetString("FirstPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Go.
         /// </summary>
         internal static string Go {
@@ -151,6 +160,24 @@ namespace MixERP.Net.WebControls.ScrudFactory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Last Page.
+        /// </summary>
+        internal static string LastPage {
+            get {
+                return ResourceManager.GetString("LastPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next Page.
+        /// </summary>
+        internal static string NextPage {
+            get {
+                return ResourceManager.GetString("NextPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nothing selected!.
         /// </summary>
         internal static string NothingSelected {
@@ -165,6 +192,24 @@ namespace MixERP.Net.WebControls.ScrudFactory.Resources {
         internal static string OnlyNumbersAllowed {
             get {
                 return ResourceManager.GetString("OnlyNumbersAllowed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Page {0}.
+        /// </summary>
+        internal static string PageN {
+            get {
+                return ResourceManager.GetString("PageN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Previous Page.
+        /// </summary>
+        internal static string PreviousPage {
+            get {
+                return ResourceManager.GetString("PreviousPage", resourceCulture);
             }
         }
         

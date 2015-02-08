@@ -114,28 +114,6 @@ namespace MixERP.Net.Entities.CRM
 
     }
 
-    [TableName("crm.opportunity_stages")]
-    [PrimaryKey("opportunity_stage_id")]
-    [ExplicitColumns]
-    public class OpportunityStage : PetaPocoDB.Record<OpportunityStage> 
-    {
-        [Column("opportunity_stage_id")] 
-        public int OpportunityStageId { get; set; }
-
-        [Column("opportunity_stage_code")] 
-        public string OpportunityStageCode { get; set; }
-
-        [Column("opportunity_stage_name")] 
-        public string OpportunityStageName { get; set; }
-
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
-
-    }
-
     [TableName("crm.lead_statuses")]
     [PrimaryKey("lead_status_id")]
     [ExplicitColumns]
@@ -149,6 +127,28 @@ namespace MixERP.Net.Entities.CRM
 
         [Column("lead_status_name")] 
         public string LeadStatusName { get; set; }
+
+        [Column("audit_user_id")] 
+        public int? AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime? AuditTs { get; set; }
+
+    }
+
+    [TableName("crm.opportunity_stages")]
+    [PrimaryKey("opportunity_stage_id")]
+    [ExplicitColumns]
+    public class OpportunityStage : PetaPocoDB.Record<OpportunityStage> 
+    {
+        [Column("opportunity_stage_id")] 
+        public int OpportunityStageId { get; set; }
+
+        [Column("opportunity_stage_code")] 
+        public string OpportunityStageCode { get; set; }
+
+        [Column("opportunity_stage_name")] 
+        public string OpportunityStageName { get; set; }
 
         [Column("audit_user_id")] 
         public int? AuditUserId { get; set; }

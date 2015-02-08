@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AccessDenied" xml:space="preserve">
+  <data name="AccessIsDenied" xml:space="preserve">
     <value>Access is denied.</value>
   </data>
   <data name="AddNew" xml:space="preserve">
@@ -135,6 +135,9 @@
   <data name="EditSelected" xml:space="preserve">
     <value>Edit Selected</value>
   </data>
+  <data name="FirstPage" xml:space="preserve">
+    <value>First Page</value>
+  </data>
   <data name="Go" xml:space="preserve">
     <value>Go</value>
   </data>
@@ -147,11 +150,23 @@
   <data name="KeyColumnEmptyExceptionMessage" xml:space="preserve">
     <value>The property 'KeyColumn' cannot be left empty.</value>
   </data>
+  <data name="LastPage" xml:space="preserve">
+    <value>Last Page</value>
+  </data>
+  <data name="NextPage" xml:space="preserve">
+    <value>Next Page</value>
+  </data>
   <data name="NothingSelected" xml:space="preserve">
     <value>Nothing selected!</value>
   </data>
   <data name="OnlyNumbersAllowed" xml:space="preserve">
     <value>Please type a valid number.</value>
+  </data>
+  <data name="PageN" xml:space="preserve">
+    <value>Page {0}</value>
+  </data>
+  <data name="PreviousPage" xml:space="preserve">
+    <value>Previous Page</value>
   </data>
   <data name="Print" xml:space="preserve">
     <value>Print</value>

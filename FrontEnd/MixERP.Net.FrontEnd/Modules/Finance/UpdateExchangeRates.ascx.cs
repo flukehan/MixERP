@@ -17,20 +17,19 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.FrontEnd.Base;
 using System;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Entities.Contracts;
+using MixERP.Net.FrontEnd.Base;
 
 namespace MixERP.Net.Core.Modules.Finance
 {
-    public partial class UpdateExchangeRates : MixERPUserControl
+    public partial class UpdateExchangeRates : MixERPUserControl, ITransaction
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
             this.OfficeInputText.Value = CurrentSession.GetOfficeName();
-            this.CurrencyInputText.Value = "NPR";//Todo
-
-            
+            this.CurrencyInputText.Value = "NPR"; //Todo
         }
     }
 }

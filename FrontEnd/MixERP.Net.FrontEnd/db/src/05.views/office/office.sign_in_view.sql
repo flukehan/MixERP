@@ -37,7 +37,8 @@ SELECT
   offices.email, 
   offices.url, 
   offices.registration_number, 
-  offices.pan_number
+  offices.pan_number,
+  offices.allow_transaction_posting
 FROM 
   audit.logins, 
   office.users, 

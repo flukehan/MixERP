@@ -43,6 +43,12 @@ namespace MixERP.Net.Common.Helpers
             return string.Empty;
         }
 
+        public static string GetMixERPParameter(string keyName)
+        {
+            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["MixERPConfigFileLocation"]);
+            return GetConfigurationValues(path, keyName);
+        }
+
         public static string GetDbServerParameter(string keyName)
         {
             string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["DbServerConfigFileLocation"]);

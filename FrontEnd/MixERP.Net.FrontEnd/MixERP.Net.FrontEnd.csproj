@@ -222,6 +222,13 @@
     <Compile Include="Site\AccessIsDenied.aspx.designer.cs">
       <DependentUpon>AccessIsDenied.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Site\Exceptions\RestrictedTransactionMode.aspx.cs">
+      <DependentUpon>RestrictedTransactionMode.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Site\Exceptions\RestrictedTransactionMode.aspx.designer.cs">
+      <DependentUpon>RestrictedTransactionMode.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Site\RuntimeError.aspx.cs">
       <DependentUpon>RuntimeError.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -302,9 +309,13 @@
     <Content Include="db\mixerp.de-DE.sql" />
     <Content Include="db\mixerp.en-US.sql" />
     <Content Include="db\mixerp.fr-FR.sql" />
+    <Content Include="MixERP.Installation.xml" />
     <Content Include="Modules\Default.aspx" />
     <Content Include="Resource\Backups\index.html" />
     <Content Include="Resource\Configuration\AttachmentFactoryParameters.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Resource\Configuration\MixERP.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Resource\Configuration\MessagingParameters.xml">
@@ -323,9 +334,11 @@
     <Content Include="Resource\Temp\Images\index.html" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\ajax-file-upload.js" />
+    <Content Include="packages.config" />
     <Content Include="Scripts\colorbox\colorbox.css" />
     <Content Include="Scripts\colorbox\i18n\jquery.colorbox-ar.js" />
     <Content Include="Scripts\colorbox\i18n\jquery.colorbox-bg.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-bn.js" />
     <Content Include="Scripts\colorbox\i18n\jquery.colorbox-ca.js" />
     <Content Include="Scripts\colorbox\i18n\jquery.colorbox-cs.js" />
     <Content Include="Scripts\colorbox\i18n\jquery.colorbox-da.js" />
@@ -344,11 +357,13 @@
     <Content Include="Scripts\colorbox\i18n\jquery.colorbox-it.js" />
     <Content Include="Scripts\colorbox\i18n\jquery.colorbox-ja.js" />
     <Content Include="Scripts\colorbox\i18n\jquery.colorbox-kr.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-lt.js" />
     <Content Include="Scripts\colorbox\i18n\jquery.colorbox-lv.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-my.js" />
     <Content Include="Scripts\colorbox\i18n\jquery.colorbox-nl.js" />
     <Content Include="Scripts\colorbox\i18n\jquery.colorbox-no.js" />
     <Content Include="Scripts\colorbox\i18n\jquery.colorbox-pl.js" />
-    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-pt-br.js" />
+    <Content Include="Scripts\colorbox\i18n\jquery.colorbox-pt-BR.js" />
     <Content Include="Scripts\colorbox\i18n\jquery.colorbox-ro.js" />
     <Content Include="Scripts\colorbox\i18n\jquery.colorbox-ru.js" />
     <Content Include="Scripts\colorbox\i18n\jquery.colorbox-si.js" />
@@ -359,20 +374,20 @@
     <Content Include="Scripts\colorbox\i18n\jquery.colorbox-uk.js" />
     <Content Include="Scripts\colorbox\i18n\jquery.colorbox-zh-CN.js" />
     <Content Include="Scripts\colorbox\i18n\jquery.colorbox-zh-TW.js" />
-    <Content Include="Scripts\colorbox\images\border.png" />
-    <Content Include="Scripts\colorbox\images\border1.png" />
-    <Content Include="Scripts\colorbox\images\border2.png" />
     <Content Include="Scripts\colorbox\images\controls.png" />
     <Content Include="Scripts\colorbox\images\loading.gif" />
-    <Content Include="Scripts\colorbox\images\loading_background.png" />
-    <Content Include="Scripts\colorbox\images\overlay.png" />
     <Content Include="Scripts\colorbox\jquery.colorbox-min.js" />
     <Content Include="Scripts\colorbox\jquery.colorbox.js" />
-    <Content Include="packages.config" />
     <Content Include="Scripts\colorpicker\bower.json" />
     <Content Include="Scripts\colorpicker\jqcolorpicker.jquery.json" />
     <Content Include="Scripts\colorpicker\README.md" />
     <Content Include="Scripts\colorpicker\TODO" />
+    <Content Include="Scripts\colorbox\bower.json" />
+    <Content Include="Scripts\colorbox\colorbox.ai" />
+    <Content Include="Scripts\colorbox\README.md" />
+    <Content Include="bundles\scripts\parties-popup.min.js.gzip">
+      <DependentUpon>parties-popup.min.js</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\colorpicker\.gitignore" />
@@ -601,6 +616,7 @@
     <Content Include="Global.asax" />
     <Content Include="index.html" />
     <Content Include="Site\Account\UserProfile.aspx" />
+    <Content Include="Site\Exceptions\RestrictedTransactionMode.aspx" />
     <Content Include="Site\offline.html" />
     <Content Include="Reports\Assets\Header.aspx" />
     <Content Include="Reports\Assets\Header.html" />
@@ -709,9 +725,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Resource\Configuration\DbParameters.xml" />
-    <Content Include="Scripts\colorbox\bower.json" />
-    <Content Include="Scripts\colorbox\colorbox.ai" />
-    <Content Include="Scripts\colorbox\colorbox.jquery.json" />
     <Content Include="..\..\mixerp.licenseheader">
       <Link>mixerp.licenseheader</Link>
     </Content>
