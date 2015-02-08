@@ -1,12 +1,13 @@
 CREATE VIEW core.bonus_slab_scrud_view
 AS
 SELECT
-    bonus_slab_id,
-    bonus_slab_code,
-    bonus_slab_name,
-    checking_frequency_id,
-    frequency_name
+    core.bonus_slabs.bonus_slab_id,
+    core.bonus_slabs.bonus_slab_code,
+    core.bonus_slabs.bonus_slab_name,
+    core.bonus_slabs.effective_from,
+    core.bonus_slabs.ends_on,
+    core.frequencies.frequency_code || '('||core.frequencies.frequency_name||')' AS checking_frequency
 FROM
-core.bonus_slabs, core.frequencies
-WHERE
-core.bonus_slabs.checking_frequency_id = core.frequencies.frequency_id;
+core.bonus_slabs
+INNER JOIN core.frequencies
+ON core.bonus_slabs.checking_frequency_id = core.frequencies.frequency_id;
