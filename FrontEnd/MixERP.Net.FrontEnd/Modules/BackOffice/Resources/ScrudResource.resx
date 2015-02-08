@@ -645,4 +645,10 @@
   <data name="foreground_color" xml:space="preserve">
     <value>Foreground Color</value>
   </data>
+  <data name="office" xml:space="preserve">
+    <value>Office</value>
+  </data>
+  <data name="parent_cash_repository" xml:space="preserve">
+    <value>Parent Cash Repository</value>
+  </data>
 </root>
