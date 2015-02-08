@@ -39,7 +39,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
                 scrud.TableSchema = "core";
                 scrud.Table = "county_sales_taxes";
                 scrud.ViewSchema = "core";
-                scrud.View = "county_sales_taxes";
+                scrud.View = "county_sales_tax_scrud_view";
                 scrud.Text = Titles.CountySalesTaxes;
 
                 scrud.DisplayFields = GetDisplayFields();
@@ -63,10 +63,10 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "core.counties.county_id", "core.counties");
-            ScrudHelper.AddDisplayView(displayViews, "core.entities.entity_id", "core.entities");
-            ScrudHelper.AddDisplayView(displayViews, "core.industries.industry_id", "core.industries");
-            ScrudHelper.AddDisplayView(displayViews, "core.item_groups.item_group_id", "core.item_groups");
+            ScrudHelper.AddDisplayView(displayViews, "core.counties.county_id", "core.county_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.entities.entity_id", "core.entity_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.industries.industry_id", "core.industry_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.item_groups.item_group_id", "core.item_group_scrud_view");
             return string.Join(",", displayViews);
         }
     }

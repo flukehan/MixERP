@@ -60,8 +60,8 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "core.tax_master.tax_master_id", "core.tax_master");
-            ScrudHelper.AddDisplayView(displayViews, "office.offices.office_id", "office.office_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.tax_master.tax_master_id", "core.tax_master_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "office.offices.office_id", "office.office_scrud_view");
             ScrudHelper.AddDisplayView(displayViews, "core.tax_base_amount_types.tax_base_amount_type_code", "core.tax_base_amount_types");
             return string.Join(",", displayViews);
         }
