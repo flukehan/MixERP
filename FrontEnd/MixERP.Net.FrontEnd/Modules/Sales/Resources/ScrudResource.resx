@@ -534,4 +534,7 @@
   <data name="zip_code" xml:space="preserve">
     <value>Zip Code</value>
   </data>
+  <data name="checking_frequency" xml:space="preserve">
+    <value>Checking Frequency</value>
+  </data>
 </root>
