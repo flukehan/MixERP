@@ -651,6 +651,9 @@
   <data name="account_name" xml:space="preserve">
     <value>Account Name</value>
   </data>
+  <data name="brand" xml:space="preserve">
+    <value>Brand</value>
+  </data>
   <data name="collecting_account" xml:space="preserve">
     <value>Collecting Account</value>
   </data>
@@ -659,6 +662,12 @@
   </data>
   <data name="confidential" xml:space="preserve">
     <value>Confidential</value>
+  </data>
+  <data name="cost_price" xml:space="preserve">
+    <value>Cost Price</value>
+  </data>
+  <data name="cost_price_includes_tax" xml:space="preserve">
+    <value>Cost price Includes Tax</value>
   </data>
   <data name="county_sales_tax" xml:space="preserve">
     <value>County Sales Tax</value>
@@ -675,11 +684,38 @@
   <data name="has_child" xml:space="preserve">
     <value>Has Child</value>
   </data>
+  <data name="height_in_centimeters" xml:space="preserve">
+    <value>Height In Centimeters</value>
+  </data>
+  <data name="hot_item" xml:space="preserve">
+    <value>Hot Item</value>
+  </data>
+  <data name="is_supplier" xml:space="preserve">
+    <value>Is Supplier</value>
+  </data>
+  <data name="item_code" xml:space="preserve">
+    <value>Item Type</value>
+  </data>
   <data name="item_group_code" xml:space="preserve">
     <value>Item Group Code</value>
   </data>
   <data name="item_group_name" xml:space="preserve">
     <value>Item Group Name</value>
+  </data>
+  <data name="item_name" xml:space="preserve">
+    <value>Item Name</value>
+  </data>
+  <data name="lead_time_in_days" xml:space="preserve">
+    <value>Lead Time In days</value>
+  </data>
+  <data name="length_in_centimeters" xml:space="preserve">
+    <value>Length In Centimeters</value>
+  </data>
+  <data name="machinable" xml:space="preserve">
+    <value>Machinable</value>
+  </data>
+  <data name="maintain_stock" xml:space="preserve">
+    <value>Maintain Stock</value>
   </data>
   <data name="office" xml:space="preserve">
     <value>Office</value>
@@ -690,6 +726,30 @@
   <data name="parent_industry_name" xml:space="preserve">
     <value>Parent Industry Name</value>
   </data>
+  <data name="party_type_code" xml:space="preserve">
+    <value>Party Type Code</value>
+  </data>
+  <data name="party_type_name" xml:space="preserve">
+    <value>Party Type Name</value>
+  </data>
+  <data name="preferred_shipping_mail_type" xml:space="preserve">
+    <value>Preferred Shipping Mail Type</value>
+  </data>
+  <data name="preferred_shipping_package_shape" xml:space="preserve">
+    <value>Preferred Shipping Package Shape</value>
+  </data>
+  <data name="preferred_supplier" xml:space="preserve">
+    <value>Preferred Supplier</value>
+  </data>
+  <data name="reorder_level" xml:space="preserve">
+    <value>Reorder Level</value>
+  </data>
+  <data name="reorder_quantity" xml:space="preserve">
+    <value>Reorder Quantity</value>
+  </data>
+  <data name="reorder_unit" xml:space="preserve">
+    <value>Reorder Unit </value>
+  </data>
   <data name="reporting_tax_authority" xml:space="preserve">
     <value>Reporting Tax Authority</value>
   </data>
@@ -698,6 +758,12 @@
   </data>
   <data name="sales_tax_type" xml:space="preserve">
     <value>Sales Tax Type</value>
+  </data>
+  <data name="selling_price" xml:space="preserve">
+    <value>Selling Price</value>
+  </data>
+  <data name="selling_price_includes_tax" xml:space="preserve">
+    <value>Selling Price Includes Tax</value>
   </data>
   <data name="state_sales_tax" xml:space="preserve">
     <value>State Sales Tax</value>
@@ -711,7 +777,16 @@
   <data name="tax_rate_type" xml:space="preserve">
     <value>Tax Rate Type</value>
   </data>
+  <data name="unit" xml:space="preserve">
+    <value>Unit</value>
+  </data>
   <data name="use_tax_collecting_account" xml:space="preserve">
     <value>Use Tax Collecting Account</value>
+  </data>
+  <data name="weight_in_grams" xml:space="preserve">
+    <value>Weight In Grams</value>
+  </data>
+  <data name="width_in_centimeters" xml:space="preserve">
+    <value>Width In Centimeters</value>
   </data>
 </root>

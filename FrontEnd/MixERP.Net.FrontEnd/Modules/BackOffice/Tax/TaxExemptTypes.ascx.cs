@@ -35,7 +35,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
                 scrud.TableSchema = "core";
                 scrud.Table = "tax_exempt_types";
                 scrud.ViewSchema = "core";
-                scrud.View = "tax_exempt_types";
+                scrud.View = "tax_exempt_type_scrud_view";
                 scrud.Text = Titles.TaxExemptTypes;
 
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof(TaxExemptTypes));
