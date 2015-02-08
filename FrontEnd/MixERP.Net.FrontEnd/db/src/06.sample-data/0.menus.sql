@@ -124,46 +124,6 @@ UNION ALL SELECT 'One Time Setup', NULL, 'OTS', 1, core.get_menu_id('BO')
 UNION ALL SELECT 'Opening Inventory', '~/Modules/BackOffice/OTS/OpeningInventory.mix', 'OTSI', 2, core.get_menu_id('OTS');
 
 
-INSERT INTO policy.menu_access(office_id, menu_id, user_id)
-SELECT office.get_office_id_by_office_code('MoF-NY-BK'), core.menus.menu_id, office.get_user_id_by_user_name('binod')
-FROM core.menus
-
-UNION ALL
-SELECT office.get_office_id_by_office_code('MoF-NY-RV'), core.menus.menu_id, office.get_user_id_by_user_name('binod')
-FROM core.menus
-
-UNION ALL
-SELECT office.get_office_id_by_office_code('MoF-NP-KTM'), core.menus.menu_id, office.get_user_id_by_user_name('binod')
-FROM core.menus
-
-UNION ALL
-SELECT office.get_office_id_by_office_code('MoF-NY-BK'), core.menus.menu_id, office.get_user_id_by_user_name('nirvan')
-FROM core.menus
-
-UNION ALL
-SELECT office.get_office_id_by_office_code('MoF-NY-RV'), core.menus.menu_id, office.get_user_id_by_user_name('nirvan')
-FROM core.menus
-
-UNION ALL
-SELECT office.get_office_id_by_office_code('MoF-NP-KTM'), core.menus.menu_id, office.get_user_id_by_user_name('nirvan')
-FROM core.menus
-
-UNION ALL
-
-SELECT office.get_office_id_by_office_code('MoF-NY-BK'), core.menus.menu_id, office.get_user_id_by_user_name('demo')
-FROM core.menus
-
-UNION ALL
-SELECT office.get_office_id_by_office_code('MoF-NY-RV'), core.menus.menu_id, office.get_user_id_by_user_name('demo')
-FROM core.menus
-
-UNION ALL
-SELECT office.get_office_id_by_office_code('MoF-NP-KTM'), core.menus.menu_id, office.get_user_id_by_user_name('demo')
-FROM core.menus;
-
-
-
-
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 

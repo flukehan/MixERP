@@ -24,8 +24,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
     <add key="Server" value="localhost" />
     <add key="Port" value="5432" />
     <add key="Database" value="mixerp" />
-    <add key="UserId" value="postgres" />
-    <add key="Password" value="binod" />
+    <add key="UserId" value="mix_erp" />
+    <add key="Password" value="change-on-deployment" />
 
     <add key="PostgreSQLBinDirectory" value="C:\Program Files\PostgreSQL\9.3\bin\" />
     <add key="PostgreSQLBinDirectory" value="C:\Program Files\PostgreSQL\9.3\bin\" />

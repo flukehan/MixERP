@@ -353,6 +353,7 @@ namespace MixERP.Net.FrontEnd
                 {
                     signInButton.ID = "SignInButton";
                     signInButton.Value = Titles.SignIn;
+                    signInButton.Attributes.Add("title", "CRTL + RETURN");
                     signInButton.Attributes.Add("class", "ui teal button");
                     field.Controls.Add(signInButton);
                 }

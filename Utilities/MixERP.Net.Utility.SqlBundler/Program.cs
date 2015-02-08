@@ -26,7 +26,6 @@ namespace MixERP.Net.Utility.SqlBundler
     internal class Program
     {
         private static string bundlePath = string.Empty;
-        private static bool ignoreOptional;
         private static string root = string.Empty;
 
         public static void SetBundleDirectory(string path)
@@ -37,10 +36,7 @@ namespace MixERP.Net.Utility.SqlBundler
             }
         }
 
-        public static void SetIgnoreOptional(bool value)
-        {
-            ignoreOptional = value;
-        }
+
 
         public static void SetRootDirectory(string dir)
         {
@@ -53,6 +49,7 @@ namespace MixERP.Net.Utility.SqlBundler
         private static void Main(string[] args)
         {
             bool optional = false;
+            bool sample = false;
 
             if (args[0] == null)
             {
@@ -86,7 +83,15 @@ namespace MixERP.Net.Utility.SqlBundler
                 }
             }
 
-            SetIgnoreOptional(optional);
+            if (args.Length > 3)
+            {
+                if (args[3] != null)
+                {
+                    sample = args[3].ToUpperInvariant().Equals("TRUE");
+                }
+            }
+
+
 
             Console.WriteLine(@"---------MixERP.Net.Utility.SqlBundler---------");
 
@@ -105,7 +110,7 @@ namespace MixERP.Net.Utility.SqlBundler
 
             if (files.Count > 0)
             {
-                Bundler.Bundle(root, files, optional);
+                Bundler.Bundle(root, files, optional, sample);
             }
 
             Console.WriteLine(@"---------MixERP.Net.Utility.SqlBundler---------");

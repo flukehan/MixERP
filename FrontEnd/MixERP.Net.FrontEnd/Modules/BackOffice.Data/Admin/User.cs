@@ -40,13 +40,14 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.Admin
 
         /// <summary>Change password of the user to a new one.</summary>
         /// <exception cref="MixERPException">Thrown when a MixERPException occurs.</exception>
+        /// <param name="adminUserId">The UserId of the administration who is changing password for this user.</param>
         /// <param name="username">The username.</param>
         /// <param name="password">The new password.</param>
-        public void SetNewPassword(string username, string password)
+        public void SetNewPassword(int adminUserId, string username, string password)
         {
             try
             {
-                Factory.NonQuery("SELECT * FROM policy.change_password(@0, @1);", username, password);
+                Factory.NonQuery("SELECT * FROM policy.change_password(@0, @1, @2);", adminUserId, username, password);
             }
             catch (DbException ex)
             {

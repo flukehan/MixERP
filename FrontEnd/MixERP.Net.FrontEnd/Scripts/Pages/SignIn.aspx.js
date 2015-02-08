@@ -94,7 +94,7 @@ function getPassword(username, password, token) {
 
 
 $(document).keyup(function (e) {
-    if (e.which === 13) {
+    if (e.ctrlKey && e.which === 13) {
         if (!$(".form").hasClass("loading")) {
             signInButton.trigger("click");
         };

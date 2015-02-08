@@ -29,7 +29,7 @@ namespace MixERP.Net.Utility.SqlBundler.Helpers
 {
     public static class Parser
     {
-        public static BundlerModel Parse(string root, string path, bool includeOptionalFiles)
+        public static BundlerModel Parse(string root, string path, bool includeOptionalFiles, bool includeSample)
         {
             if (string.IsNullOrWhiteSpace(path))
             {
@@ -84,7 +84,7 @@ namespace MixERP.Net.Utility.SqlBundler.Helpers
             }
 
             model.OriginalFileName = Path.GetFileNameWithoutExtension(path).Replace(".sqlbundle", "");
-            model.Files = GetScripts(scriptDirectory, includeOptionalFiles);
+            model.Files = GetScripts(scriptDirectory, includeOptionalFiles, includeSample);
             model.Dictionaries = dictionaries;
 
             return model;
@@ -112,7 +112,7 @@ namespace MixERP.Net.Utility.SqlBundler.Helpers
             return new KeyValuePair<string, string>();
         }
 
-        private static IEnumerable<string> GetFiles(string path, bool includeOptionalFiles)
+        private static IEnumerable<string> GetFiles(string path, bool includeOptionalFiles, bool includeSample)
         {
             Queue<string> queue = new Queue<string>();
             queue.Enqueue(path);
@@ -136,14 +136,20 @@ namespace MixERP.Net.Utility.SqlBundler.Helpers
                 string[] files = null;
                 try
                 {
+                    string extension = "*.sql";
+
                     if (includeOptionalFiles)
                     {
-                        files = GetFiles(path, "*.sql|*.optional");
+                        extension += "|*.optional";
                     }
-                    else
+                    
+                    if(includeSample)
                     {
-                        files = GetFiles(path, "*.sql");
+                        extension += "|*.sample";
                     }
+
+                    files = GetFiles(path, extension);
+
                 }
                 catch (Exception ex)
                 {
@@ -184,9 +190,9 @@ namespace MixERP.Net.Utility.SqlBundler.Helpers
             return string.Empty;
         }
 
-        private static Collection<string> GetScripts(string directory, bool includeOptionalFiles)
+        private static Collection<string> GetScripts(string directory, bool includeOptionalFiles, bool includeSample)
         {
-            return new Collection<string>(GetFiles(directory, includeOptionalFiles).OrderBy(s => s).ToList());
+            return new Collection<string>(GetFiles(directory, includeOptionalFiles, includeSample).OrderBy(s => s).ToList());
         }
     }
 }

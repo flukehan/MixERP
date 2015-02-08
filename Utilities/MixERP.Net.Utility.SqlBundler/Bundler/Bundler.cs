@@ -25,11 +25,11 @@ namespace MixERP.Net.Utility.SqlBundler
 {
     public static class Bundler
     {
-        public static void Bundle(string root, Collection<string> files, bool includeOptionalFiles)
+        public static void Bundle(string root, Collection<string> files, bool includeOptionalFiles, bool includeSample)
         {
             foreach (string file in files)
             {
-                BundlerModel model = Parser.Parse(root, file, includeOptionalFiles);
+                BundlerModel model = Parser.Parse(root, file, includeOptionalFiles, includeSample);
                 if (model == null)
                 {
                     return;
