@@ -654,4 +654,88 @@
   <data name="allow_transaction_posting" xml:space="preserve">
     <value>Allow Transaction Posting</value>
   </data>
+  <data name="account" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="account_master_code" xml:space="preserve">
+    <value>Account Master Code</value>
+  </data>
+  <data name="account_name" xml:space="preserve">
+    <value>Account Name</value>
+  </data>
+  <data name="address" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="allow_sales" xml:space="preserve">
+    <value>Allow Sales</value>
+  </data>
+  <data name="collecting_account" xml:space="preserve">
+    <value>Collecting Account</value>
+  </data>
+  <data name="collecting_tax_authority" xml:space="preserve">
+    <value>Collecting Tax Authority</value>
+  </data>
+  <data name="confidential" xml:space="preserve">
+    <value>Confidential</value>
+  </data>
+  <data name="county_sales_tax" xml:space="preserve">
+    <value>County Sales Tax</value>
+  </data>
+  <data name="exclude_from_purchase" xml:space="preserve">
+    <value>Exclude From Purchase</value>
+  </data>
+  <data name="exclude_from_sales" xml:space="preserve">
+    <value>Exclude From Sales</value>
+  </data>
+  <data name="external_code" xml:space="preserve">
+    <value>External Code</value>
+  </data>
+  <data name="has_child" xml:space="preserve">
+    <value>Has Child</value>
+  </data>
+  <data name="item_group_code" xml:space="preserve">
+    <value>Item Group Code</value>
+  </data>
+  <data name="item_group_name" xml:space="preserve">
+    <value>Item Group Name</value>
+  </data>
+  <data name="parent" xml:space="preserve">
+    <value>Parent</value>
+  </data>
+  <data name="parent_industry_name" xml:space="preserve">
+    <value>Parent Industry Name</value>
+  </data>
+  <data name="reporting_tax_authority" xml:space="preserve">
+    <value>Reporting Tax Authority</value>
+  </data>
+  <data name="rounding_method" xml:space="preserve">
+    <value>Rounding Method</value>
+  </data>
+  <data name="sales_tax_type" xml:space="preserve">
+    <value>Sales Tax Type</value>
+  </data>
+  <data name="state_sales_tax" xml:space="preserve">
+    <value>State Sales Tax</value>
+  </data>
+  <data name="store_code" xml:space="preserve">
+    <value>Store Code</value>
+  </data>
+  <data name="store_name" xml:space="preserve">
+    <value>Store Name</value>
+  </data>
+  <data name="store_type" xml:space="preserve">
+    <value>Store Type</value>
+  </data>
+  <data name="sys_type" xml:space="preserve">
+    <value>Sys Type</value>
+  </data>
+  <data name="tax_base_amount" xml:space="preserve">
+    <value>Tax Base Amount</value>
+  </data>
+  <data name="tax_rate_type" xml:space="preserve">
+    <value>Tax Rate Type</value>
+  </data>
+  <data name="use_tax_collecting_account" xml:space="preserve">
+    <value>Use Tax Collecting Account</value>
+  </data>
 </root>

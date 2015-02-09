@@ -75,7 +75,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
             ScrudHelper.AddDisplayView(displayViews, "core.tax_master.tax_master_id", "core.tax_master_scrud_view");
             ScrudHelper.AddDisplayView(displayViews, "core.tax_exempt_types.tax_exempt_type_id", "core.tax_exempt_type_scrud_view");
             ScrudHelper.AddDisplayView(displayViews, "core.sales_taxes.sales_tax_id", "core.sales_tax_scrud_view");
-            ScrudHelper.AddDisplayView(displayViews, "office.stores.store_id", "office.stores");
+            ScrudHelper.AddDisplayView(displayViews, "office.stores.store_id", "office.store_scrud_view");
 
             return string.Join(",", displayViews);
         }
