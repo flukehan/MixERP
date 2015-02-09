@@ -57,25 +57,30 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
             this.referenceNumberInputText.Value = this.model.ReferenceNumber;
             this.statementReferenceTextArea.Value = this.model.StatementReference;
 
-            this.Page.Session[this.ID] = this.model.View;
+            this.Page.Session[sessionKey] = this.model.View;
             this.tranIdCollectionHidden.Value = string.Join(",", this.model.TransactionIdCollection);
+        }
+
+        private void ClearSession()
+        {
             SessionHelper.RemoveSessionKey(mergeModelSessionKey);
+            SessionHelper.RemoveSessionKey(sessionKey);
         }
 
         private Collection<ProductDetail> GetTable()
         {
             Collection<ProductDetail> productCollection = new Collection<ProductDetail>();
 
-            if (this.Page != null && this.Page.Session[this.ID] != null)
+            if (this.Page != null && this.Page.Session[sessionKey] != null)
             {
                 //Get an instance of the ProductDetailsModel collection stored in session.
-                productCollection = (Collection<ProductDetail>) this.Page.Session[this.ID];
+                productCollection = (Collection<ProductDetail>)this.Page.Session[sessionKey];
 
                 //Summate the collection.
                 productCollection = SummateProducts(productCollection);
 
-                //Store the summed table in session.
-                this.Page.Session[this.ID] = productCollection;
+                //Store the summated table in session.
+                this.Page.Session[sessionKey] = productCollection;
             }
 
             return productCollection;

@@ -11,7 +11,7 @@ RETURNS TABLE
 )
 AS
 $$
-DECLARE culture_exists boolean = false;
+    DECLARE culture_exists boolean = false;
 BEGIN
     IF EXISTS(SELECT * FROM core.menu_locale WHERE culture=$3) THEN
         culture_exists := true;

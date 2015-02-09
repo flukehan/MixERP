@@ -997,6 +997,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Policy Id.
+        /// </summary>
+        internal static string policy_id {
+            get {
+                return ResourceManager.GetString("policy_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Price From.
         /// </summary>
         internal static string price_from {

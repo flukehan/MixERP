@@ -654,4 +654,7 @@
   <data name="allow_transaction_posting" xml:space="preserve">
     <value>Allow Transaction Posting</value>
   </data>
+  <data name="policy_id" xml:space="preserve">
+    <value>Policy Id</value>
+  </data>
 </root>

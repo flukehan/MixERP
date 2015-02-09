@@ -70,6 +70,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A cash transaction cannot contain bank transaction details..
+        /// </summary>
+        internal static string CashTransactionCannotContainBankInfo {
+            get {
+                return ResourceManager.GetString("CashTransactionCannotContainBankInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The amount to should be greater than the amount from..
         /// </summary>
         internal static string CompareAmountErrorMessage {
@@ -111,6 +120,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         internal static string InvalidParty {
             get {
                 return ResourceManager.GetString("InvalidParty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid receipt mode..
+        /// </summary>
+        internal static string InvalidReceiptMode {
+            get {
+                return ResourceManager.GetString("InvalidReceiptMode", resourceCulture);
             }
         }
         

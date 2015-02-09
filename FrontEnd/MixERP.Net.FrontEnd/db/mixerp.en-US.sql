@@ -1978,13 +1978,14 @@ ON core.accounts(UPPER(account_name));
 
 CREATE TABLE core.bank_accounts
 (
-    account_id                              bigint PRIMARY KEY REFERENCES core.accounts(account_id),
+    account_id                              bigint PRIMARY KEY REFERENCES core.accounts(account_id),                                            
     maintained_by_user_id                   integer NOT NULL REFERENCES office.users(user_id),
+    office_id                               integer NOT NULL REFERENCES office.offices(office_id),
     bank_name                               national character varying(128) NOT NULL,
     bank_branch                             national character varying(128) NOT NULL,
     bank_contact_number                     national character varying(128) NULL,
     bank_address                            text NULL,
-    bank_account_number                       national character varying(128) NULL,
+    bank_account_number                     national character varying(128) NULL,
     bank_account_type                       national character varying(128) NULL,
     relationship_officer_name               national character varying(128) NULL,
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
@@ -2113,10 +2114,13 @@ ON core.salesperson_bonus_setups(salesperson_id, bonus_slab_id);
 
 CREATE TABLE core.ageing_slabs
 (
-    ageing_slab_id SERIAL PRIMARY KEY,
-    ageing_slab_name national character varying(24) NOT NULL,
-    from_days   integer NOT NULL,
-    to_days     integer NOT NULL CHECK(to_days > 0)
+    ageing_slab_id SERIAL                   PRIMARY KEY,
+    ageing_slab_name                        national character varying(24) NOT NULL,
+    from_days                               integer NOT NULL,
+    to_days                                 integer NOT NULL CHECK(to_days > 0),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 CREATE UNIQUE INDEX ageing_slabs_ageing_slab_name_uix
@@ -3536,7 +3540,8 @@ ON office.work_centers(UPPER(work_center_name));
 
 CREATE TABLE policy.voucher_verification_policy
 (
-    user_id                                 integer PRIMARY KEY REFERENCES office.users(user_id),
+    policy_id                               SERIAL NOT NULL PRIMARY KEY,
+    user_id                                 integer REFERENCES office.users(user_id),
     can_verify_sales_transactions           boolean NOT NULL   
                                             CONSTRAINT voucher_verification_policy_verify_sales_df 
                                             DEFAULT(false),
@@ -4031,6 +4036,8 @@ END
 $$LANGUAGE plpgsql;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02.functions-and-logic/core/core.get_account_master_id_by_account_id.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_account_master_id_by_account_id(bigint) CASCADE;
+
 CREATE FUNCTION core.get_account_master_id_by_account_id(bigint)
 RETURNS integer
 STABLE
@@ -4043,6 +4050,13 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+
+ALTER TABLE core.bank_accounts
+ADD CONSTRAINT bank_accounts_account_id_chk 
+CHECK
+(
+    core.get_account_master_id_by_account_id(account_id) = '10102'
+);
 
 
 
@@ -5028,6 +5042,24 @@ LANGUAGE plpgsql;
 
 --SELECT core.get_item_name_by_item_id(1);
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02.functions-and-logic/core/core.get_item_tax_rate.sql --<--<--
+CREATE FUNCTION core.get_item_tax_rate(_item_id integer)
+RETURNS decimal
+STABLE
+AS
+$$
+BEGIN
+    RETURN
+        core.sales_taxes.rate
+    FROM core.sales_taxes
+    INNER JOIN core.items
+    ON core.items.sales_tax_id = core.sales_taxes.sales_tax_id
+    AND core.items.item_id = $1;
+END
+$$
+LANGUAGE plpgsql;
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02.functions-and-logic/core/core.get_menu_id.sql --<--<--
 CREATE FUNCTION core.get_menu_id(menu_code text)
 RETURNS INTEGER
@@ -5538,9 +5570,9 @@ LANGUAGE plpgsql;
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02.functions-and-logic/core/core.get_shipping_address_by_shipping_address_id.sql --<--<--
-DROP FUNCTION IF EXISTS core.get_shipping_address_by_shipping_address_id(integer);
+DROP FUNCTION IF EXISTS core.get_shipping_address_by_shipping_address_id(bigint);
 
-CREATE FUNCTION core.get_shipping_address_by_shipping_address_id(integer)
+CREATE FUNCTION core.get_shipping_address_by_shipping_address_id(bigint)
 RETURNS text
 AS
 $$
@@ -7147,7 +7179,7 @@ RETURNS TABLE
 )
 AS
 $$
-DECLARE culture_exists boolean = false;
+    DECLARE culture_exists boolean = false;
 BEGIN
     IF EXISTS(SELECT * FROM core.menu_locale WHERE culture=$3) THEN
         culture_exists := true;
@@ -7186,6 +7218,76 @@ BEGIN
         AND policy.menu_access.office_id=$2;
     END IF;
 
+END
+$$
+LANGUAGE plpgsql;
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02.functions-and-logic/logic/functions/policy/policy.get_menu_policy.sql --<--<--
+DROP FUNCTION IF EXISTS policy.get_menu_policy
+(
+    _user_id        integer,
+    _office_id      integer,
+    _culture        text
+);
+
+CREATE FUNCTION policy.get_menu_policy
+(
+    _user_id        integer,
+    _office_id      integer,
+    _culture        text
+)
+RETURNS TABLE
+(
+    row_number      bigint,
+    access          boolean,
+    menu_id         integer,
+    menu_code       text,
+    menu_text       text,
+    url             text
+)
+STABLE AS
+$$
+    DECLARE culture_exists boolean = false;
+BEGIN
+    IF EXISTS(SELECT * FROM core.menu_locale WHERE culture=$3) THEN
+        culture_exists := true;
+    END IF;
+
+
+    IF culture_exists THEN
+        RETURN QUERY 
+        SELECT
+            row_number() OVER(ORDER BY core.menus.menu_id),
+            CASE WHEN policy.menu_access.access_id IS NOT NULL THEN true ELSE false END as access,
+            core.menus.menu_id,
+            core.menus.menu_code::text, 
+            core.menu_locale.menu_text::text, 
+            core.menus.url::text
+        FROM core.menus
+        INNER JOIN core.menu_locale
+        ON core.menus.menu_id = core.menu_locale.menu_id
+        LEFT JOIN policy.menu_access
+        ON core.menus.menu_id = policy.menu_access.menu_id
+        AND policy.menu_access.user_id = $1
+        AND policy.menu_access.office_id = $2
+        ORDER BY core.menus.menu_id;
+    END IF;
+    
+    RETURN QUERY
+    SELECT
+        row_number() OVER(ORDER BY core.menus.menu_id),
+        CASE WHEN policy.menu_access.access_id IS NOT NULL THEN true ELSE false END as access,
+        core.menus.menu_id,
+        core.menus.menu_code::text, 
+        core.menus.menu_text::text, 
+        core.menus.url::text
+    FROM core.menus
+    LEFT JOIN policy.menu_access
+    ON core.menus.menu_id = policy.menu_access.menu_id
+    AND policy.menu_access.user_id = $1
+    AND policy.menu_access.office_id = $2
+    ORDER BY core.menus.menu_id;
 END
 $$
 LANGUAGE plpgsql;
@@ -9732,8 +9834,8 @@ BEGIN
         core.get_shipper_name_by_shipper_id(transactions.stock_master.shipper_id),
         core.get_shipping_address_code_by_shipping_address_id(transactions.stock_master.shipping_address_id),
         office.get_store_name_by_store_id(transactions.stock_master.store_id),
-        core.get_flag_background_color(core.get_flag_type_id(user_id_, 'transactions.stock_master', 'stock_master_id', transactions.stock_master.transaction_master_id::text)) AS flag_bg,
-        core.get_flag_foreground_color(core.get_flag_type_id(user_id_, 'transactions.stock_master', 'stock_master_id', transactions.stock_master.transaction_master_id::text)) AS flag_fg
+        core.get_flag_background_color(core.get_flag_type_id(user_id_, 'transactions.transaction_master', 'transaction_master_id', transactions.stock_master.transaction_master_id::text)) AS flag_bg,
+        core.get_flag_foreground_color(core.get_flag_type_id(user_id_, 'transactions.transaction_master', 'transaction_master_id', transactions.stock_master.transaction_master_id::text)) AS flag_fg
     FROM transactions.stock_master
     INNER JOIN transactions.stock_details
     ON transactions.stock_master.stock_master_id = transactions.stock_details.stock_master_id
@@ -15773,18 +15875,19 @@ CREATE FUNCTION office.is_periodic_inventory(_office_id integer)
 RETURNS boolean
 AS
 $$
-        DECLARE config boolean;
+    DECLARE config boolean;
 BEGIN
-        SELECT value = 'Periodic' INTO config
-        FROM office.configuration
-        WHERE config_id=1
-        AND office_id=$1;
+    SELECT value = 'Periodic' INTO config
+    FROM office.configuration
+    WHERE config_id=1
+    AND office_id=$1;
 
-        IF(config IS NULL) THEN
-                RAISE EXCEPTION '%', 'ERROR M9001: Invalid MixERP database schema. Please consult with your administrator.';
-        END IF;
+    IF(config IS NULL) THEN
+        RETURN false;
+        --RAISE EXCEPTION '%', 'ERROR M9001: Invalid MixERP database schema. Please consult with your administrator.';
+    END IF;
 
-        RETURN config;
+    RETURN config;
 END
 $$
 LANGUAGE plpgsql;
@@ -22775,126 +22878,126 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 INSERT INTO core.menu_locale(menu_id, culture, menu_text)
-SELECT core.get_menu_id('SA'), 'fr', 'ventes' UNION ALL
-SELECT core.get_menu_id('PU'), 'fr', 'achat' UNION ALL
-SELECT core.get_menu_id('ITM'), 'fr', 'Produits et Articles' UNION ALL
-SELECT core.get_menu_id('FI'), 'fr', 'financement' UNION ALL
-SELECT core.get_menu_id('BO'), 'fr', 'Back-Office' UNION ALL
-SELECT core.get_menu_id('SAQ'), 'fr', 'Sales & Devis' UNION ALL
-SELECT core.get_menu_id('DRS'), 'fr', 'Ventes directes' UNION ALL
-SELECT core.get_menu_id('SQ'), 'fr', 'Devis de vente' UNION ALL
-SELECT core.get_menu_id('SO'), 'fr', 'Commande client' UNION ALL
-SELECT core.get_menu_id('SD'), 'fr', 'Vente livraison' UNION ALL
-SELECT core.get_menu_id('RFC'), 'fr', 'Réception du client' UNION ALL
-SELECT core.get_menu_id('SR'), 'fr', 'Retour sur les ventes' UNION ALL
-SELECT core.get_menu_id('SSM'), 'fr', 'Le programme d''installation & entretien' UNION ALL
-SELECT core.get_menu_id('ABS'), 'fr', 'Dalle de bonus pour les vendeurs' UNION ALL
-SELECT core.get_menu_id('BSD'), 'fr', 'Détails du bonus dalle' UNION ALL
-SELECT core.get_menu_id('SST'), 'fr', 'Équipes de vente' UNION ALL
-SELECT core.get_menu_id('SSA'), 'fr', 'Vendeurs/vendeuses' UNION ALL
-SELECT core.get_menu_id('BSA'), 'fr', 'Affectation de dalle de bonus' UNION ALL
-SELECT core.get_menu_id('LF'), 'fr', 'Frais de retard' UNION ALL
-SELECT core.get_menu_id('PAT'), 'fr', 'Conditions de paiement' UNION ALL
-SELECT core.get_menu_id('RI'), 'fr', 'Factures récurrentes' UNION ALL
-SELECT core.get_menu_id('RIS'), 'fr', 'Paramètres des factures récurrentes' UNION ALL
-SELECT core.get_menu_id('SAR'), 'fr', 'Rapports sur les ventes' UNION ALL
-SELECT core.get_menu_id('SAR-TSI'), 'fr', 'Haut de la page points de vente' UNION ALL
-SELECT core.get_menu_id('PUQ'), 'fr', 'Achat & citation' UNION ALL
-SELECT core.get_menu_id('DRP'), 'fr', 'Achat direct' UNION ALL
-SELECT core.get_menu_id('PO'), 'fr', 'Bon de commande' UNION ALL
-SELECT core.get_menu_id('PRO'), 'fr', 'Achat Reorder' UNION ALL
-SELECT core.get_menu_id('GRN'), 'fr', 'Entrée GRN' UNION ALL
-SELECT core.get_menu_id('PR'), 'fr', 'Achat de retour' UNION ALL
-SELECT core.get_menu_id('PUR'), 'fr', 'Rapports d''achat' UNION ALL
-SELECT core.get_menu_id('IIM'), 'fr', 'Mouvements de stock' UNION ALL
-SELECT core.get_menu_id('STJ'), 'fr', 'Feuille de transfert de stock' UNION ALL
-SELECT core.get_menu_id('STA'), 'fr', 'Ajustements de stocks' UNION ALL
-SELECT core.get_menu_id('ISM'), 'fr', 'Le programme d''installation & entretien' UNION ALL
-SELECT core.get_menu_id('STT'), 'fr', 'Types de magasins' UNION ALL
-SELECT core.get_menu_id('STO'), 'fr', 'Magasins' UNION ALL
-SELECT core.get_menu_id('SCS'), 'fr', 'Installation de compteur' UNION ALL
-SELECT core.get_menu_id('PT'), 'fr', 'Types de partie' UNION ALL
-SELECT core.get_menu_id('PA'), 'fr', 'Comptes de tiers' UNION ALL
-SELECT core.get_menu_id('PSA'), 'fr', 'Adresses d''expédition' UNION ALL
-SELECT core.get_menu_id('SSI'), 'fr', 'Gestion des Articles' UNION ALL
-SELECT core.get_menu_id('SSC'), 'fr', 'Composé d''éléments' UNION ALL
-SELECT core.get_menu_id('SSCD'), 'fr', 'Détails de l''élément composé' UNION ALL
-SELECT core.get_menu_id('ICP'), 'fr', 'Prix de revient' UNION ALL
-SELECT core.get_menu_id('ISP'), 'fr', 'Prix de vente' UNION ALL
-SELECT core.get_menu_id('SIG'), 'fr', 'Groupes d''articles' UNION ALL
-SELECT core.get_menu_id('SIT'), 'fr', 'Types d''éléments' UNION ALL
-SELECT core.get_menu_id('SSB'), 'fr', 'Marques' UNION ALL
-SELECT core.get_menu_id('UOM'), 'fr', 'Unités de mesure' UNION ALL
-SELECT core.get_menu_id('CUOM'), 'fr', 'Composé d''unités de mesure' UNION ALL
-SELECT core.get_menu_id('SHI'), 'fr', 'Informations de l''expéditeur' UNION ALL
-SELECT core.get_menu_id('IR'), 'fr', 'Rapports' UNION ALL
-SELECT core.get_menu_id('IAS'), 'fr', 'Relevé de compte de l''inventaire' UNION ALL
-SELECT core.get_menu_id('FTT'), 'fr', 'Modèles de & de transactions' UNION ALL
-SELECT core.get_menu_id('JVN'), 'fr', 'Bon écriture' UNION ALL
-SELECT core.get_menu_id('UER'), 'fr', 'Mise à jour des taux de change' UNION ALL
-SELECT core.get_menu_id('FVV'), 'fr', 'Vérification du bon' UNION ALL
-SELECT core.get_menu_id('EOD'), 'fr', 'Fin de l''opération de la journée' UNION ALL
-SELECT core.get_menu_id('FSM'), 'fr', 'Le programme d''installation & entretien' UNION ALL
-SELECT core.get_menu_id('COA'), 'fr', 'Plan comptable' UNION ALL
-SELECT core.get_menu_id('CUR'), 'fr', 'Gestion de la devise' UNION ALL
-SELECT core.get_menu_id('CBA'), 'fr', 'Comptes bancaires' UNION ALL
-SELECT core.get_menu_id('PGM'), 'fr', 'Produit GL cartographie' UNION ALL
-SELECT core.get_menu_id('BT'), 'fr', 'Les budgets des cibles &' UNION ALL
-SELECT core.get_menu_id('AGS'), 'fr', 'Vieillissement des dalles' UNION ALL
-SELECT core.get_menu_id('CFH'), 'fr', 'Positions de trésorerie' UNION ALL
-SELECT core.get_menu_id('CFS'), 'fr', 'Configuration des flux de trésorerie' UNION ALL
-SELECT core.get_menu_id('CC'), 'fr', 'Centres de coûts' UNION ALL
-SELECT core.get_menu_id('FIR'), 'fr', 'Rapports' UNION ALL
-SELECT core.get_menu_id('AS'), 'fr', 'Relevé de compte' UNION ALL
-SELECT core.get_menu_id('TB'), 'fr', 'Balance de vérification' UNION ALL
-SELECT core.get_menu_id('PLA'), 'fr', 'Profit & compte de la perte' UNION ALL
-SELECT core.get_menu_id('BS'), 'fr', 'Bilan' UNION ALL
-SELECT core.get_menu_id('RET'), 'fr', 'Des Bénéfices Non Répartis' UNION ALL
-SELECT core.get_menu_id('CF'), 'fr', 'Flux de trésorerie' UNION ALL
-SELECT core.get_menu_id('BOTC'), 'fr', 'Configuration de l''impôt' UNION ALL
-SELECT core.get_menu_id('TXM'), 'fr', 'Maître de l''impôt' UNION ALL
-SELECT core.get_menu_id('TXA'), 'fr', 'Administration fiscale' UNION ALL
-SELECT core.get_menu_id('STXT'), 'fr', 'Types de taxe de vente' UNION ALL
-SELECT core.get_menu_id('STST'), 'fr', 'État des Taxes de vente' UNION ALL
-SELECT core.get_menu_id('CTST'), 'fr', 'Taxes de vente de comtés' UNION ALL
-SELECT core.get_menu_id('STX'), 'fr', 'Taxes de vente' UNION ALL
-SELECT core.get_menu_id('STXD'), 'fr', 'Détails de la taxe de vente' UNION ALL
-SELECT core.get_menu_id('TXEXT'), 'fr', 'Types exonérés de taxe' UNION ALL
-SELECT core.get_menu_id('STXEX'), 'fr', 'Exempte de la taxe de vente' UNION ALL
-SELECT core.get_menu_id('STXEXD'), 'fr', 'Détails exonéré de taxe de vente' UNION ALL
-SELECT core.get_menu_id('SMP'), 'fr', 'Divers paramètres' UNION ALL
-SELECT core.get_menu_id('TRF'), 'fr', 'Drapeaux' UNION ALL
-SELECT core.get_menu_id('SEAR'), 'fr', 'Rapports d''audit' UNION ALL
-SELECT core.get_menu_id('SEAR-LV'), 'fr', 'Vue de l''ouverture de session' UNION ALL
-SELECT core.get_menu_id('SOS'), 'fr', 'Installation de Office' UNION ALL
-SELECT core.get_menu_id('SOB'), 'fr', 'Bureau & de la direction générale de la configuration' UNION ALL
-SELECT core.get_menu_id('SCR'), 'fr', 'Installation de dépôt comptant' UNION ALL
-SELECT core.get_menu_id('SDS'), 'fr', 'Département installation' UNION ALL
-SELECT core.get_menu_id('SRM'), 'fr', 'Gestion des rôles' UNION ALL
-SELECT core.get_menu_id('SUM'), 'fr', 'Gestion des utilisateurs' UNION ALL
-SELECT core.get_menu_id('SES'), 'fr', 'Configuration de l''entité' UNION ALL
-SELECT core.get_menu_id('SIS'), 'fr', 'Installation de l''industrie' UNION ALL
-SELECT core.get_menu_id('SCRS'), 'fr', 'Programme d''installation de pays' UNION ALL
-SELECT core.get_menu_id('SSS'), 'fr', 'Installation de l''État' UNION ALL
-SELECT core.get_menu_id('SCTS'), 'fr', 'Comté de Setup' UNION ALL
-SELECT core.get_menu_id('SFY'), 'fr', 'Informations de l''exercice' UNION ALL
-SELECT core.get_menu_id('SFR'), 'fr', 'Fréquence & la gestion de l''exercice' UNION ALL
-SELECT core.get_menu_id('SPM'), 'fr', 'Gestion des stratégies de' UNION ALL
-SELECT core.get_menu_id('SVV'), 'fr', 'Politique sur la vérification bon' UNION ALL
-SELECT core.get_menu_id('SAV'), 'fr', 'Politique sur la vérification automatique' UNION ALL
-SELECT core.get_menu_id('SMA'), 'fr', 'Stratégie d''accès menu' UNION ALL
-SELECT core.get_menu_id('SAP'), 'fr', 'Stratégie d''accès GL' UNION ALL
-SELECT core.get_menu_id('SSP'), 'fr', 'Politique de boutique' UNION ALL
-SELECT core.get_menu_id('SWI'), 'fr', 'Commutateurs' UNION ALL
-SELECT core.get_menu_id('SAT'), 'fr', 'Outils d''administration' UNION ALL
-SELECT core.get_menu_id('SQL'), 'fr', 'Outils d''administration' UNION ALL
-SELECT core.get_menu_id('DBSTAT'), 'fr', 'Outil de requête SQL' UNION ALL
-SELECT core.get_menu_id('BAK'), 'fr', 'Sauvegarde base de données' UNION ALL
-SELECT core.get_menu_id('PWD'), 'fr', 'Changer mot de passe utilisateur' UNION ALL
-SELECT core.get_menu_id('UPD'), 'fr', 'Vérifiez Mise à jour' UNION ALL
-SELECT core.get_menu_id('TRA'), 'fr', 'Traduire MixERP' UNION ALL
-SELECT core.get_menu_id('OTS'), 'fr', 'Un réglage de l''heure' UNION ALL
-SELECT core.get_menu_id('OTSI'), 'fr', 'Stock d''ouverture';
+SELECT core.get_menu_id('SA'), 'fr-FR', 'ventes' UNION ALL
+SELECT core.get_menu_id('PU'), 'fr-FR', 'achat' UNION ALL
+SELECT core.get_menu_id('ITM'), 'fr-FR', 'Produits et Articles' UNION ALL
+SELECT core.get_menu_id('FI'), 'fr-FR', 'financement' UNION ALL
+SELECT core.get_menu_id('BO'), 'fr-FR', 'Back-Office' UNION ALL
+SELECT core.get_menu_id('SAQ'), 'fr-FR', 'Sales & Devis' UNION ALL
+SELECT core.get_menu_id('DRS'), 'fr-FR', 'Ventes directes' UNION ALL
+SELECT core.get_menu_id('SQ'), 'fr-FR', 'Devis de vente' UNION ALL
+SELECT core.get_menu_id('SO'), 'fr-FR', 'Commande client' UNION ALL
+SELECT core.get_menu_id('SD'), 'fr-FR', 'Vente livraison' UNION ALL
+SELECT core.get_menu_id('RFC'), 'fr-FR', 'Réception du client' UNION ALL
+SELECT core.get_menu_id('SR'), 'fr-FR', 'Retour sur les ventes' UNION ALL
+SELECT core.get_menu_id('SSM'), 'fr-FR', 'Le programme d''installation & entretien' UNION ALL
+SELECT core.get_menu_id('ABS'), 'fr-FR', 'Dalle de bonus pour les vendeurs' UNION ALL
+SELECT core.get_menu_id('BSD'), 'fr-FR', 'Détails du bonus dalle' UNION ALL
+SELECT core.get_menu_id('SST'), 'fr-FR', 'Équipes de vente' UNION ALL
+SELECT core.get_menu_id('SSA'), 'fr-FR', 'Vendeurs/vendeuses' UNION ALL
+SELECT core.get_menu_id('BSA'), 'fr-FR', 'Affectation de dalle de bonus' UNION ALL
+SELECT core.get_menu_id('LF'), 'fr-FR', 'Frais de retard' UNION ALL
+SELECT core.get_menu_id('PAT'), 'fr-FR', 'Conditions de paiement' UNION ALL
+SELECT core.get_menu_id('RI'), 'fr-FR', 'Factures récurrentes' UNION ALL
+SELECT core.get_menu_id('RIS'), 'fr-FR', 'Paramètres des factures récurrentes' UNION ALL
+SELECT core.get_menu_id('SAR'), 'fr-FR', 'Rapports sur les ventes' UNION ALL
+SELECT core.get_menu_id('SAR-TSI'), 'fr-FR', 'Haut de la page points de vente' UNION ALL
+SELECT core.get_menu_id('PUQ'), 'fr-FR', 'Achat & citation' UNION ALL
+SELECT core.get_menu_id('DRP'), 'fr-FR', 'Achat direct' UNION ALL
+SELECT core.get_menu_id('PO'), 'fr-FR', 'Bon de commande' UNION ALL
+SELECT core.get_menu_id('PRO'), 'fr-FR', 'Achat Reorder' UNION ALL
+SELECT core.get_menu_id('GRN'), 'fr-FR', 'Entrée GRN' UNION ALL
+SELECT core.get_menu_id('PR'), 'fr-FR', 'Achat de retour' UNION ALL
+SELECT core.get_menu_id('PUR'), 'fr-FR', 'Rapports d''achat' UNION ALL
+SELECT core.get_menu_id('IIM'), 'fr-FR', 'Mouvements de stock' UNION ALL
+SELECT core.get_menu_id('STJ'), 'fr-FR', 'Feuille de transfert de stock' UNION ALL
+SELECT core.get_menu_id('STA'), 'fr-FR', 'Ajustements de stocks' UNION ALL
+SELECT core.get_menu_id('ISM'), 'fr-FR', 'Le programme d''installation & entretien' UNION ALL
+SELECT core.get_menu_id('STT'), 'fr-FR', 'Types de magasins' UNION ALL
+SELECT core.get_menu_id('STO'), 'fr-FR', 'Magasins' UNION ALL
+SELECT core.get_menu_id('SCS'), 'fr-FR', 'Installation de compteur' UNION ALL
+SELECT core.get_menu_id('PT'), 'fr-FR', 'Types de partie' UNION ALL
+SELECT core.get_menu_id('PA'), 'fr-FR', 'Comptes de tiers' UNION ALL
+SELECT core.get_menu_id('PSA'), 'fr-FR', 'Adresses d''expédition' UNION ALL
+SELECT core.get_menu_id('SSI'), 'fr-FR', 'Gestion des Articles' UNION ALL
+SELECT core.get_menu_id('SSC'), 'fr-FR', 'Composé d''éléments' UNION ALL
+SELECT core.get_menu_id('SSCD'), 'fr-FR', 'Détails de l''élément composé' UNION ALL
+SELECT core.get_menu_id('ICP'), 'fr-FR', 'Prix de revient' UNION ALL
+SELECT core.get_menu_id('ISP'), 'fr-FR', 'Prix de vente' UNION ALL
+SELECT core.get_menu_id('SIG'), 'fr-FR', 'Groupes d''articles' UNION ALL
+SELECT core.get_menu_id('SIT'), 'fr-FR', 'Types d''éléments' UNION ALL
+SELECT core.get_menu_id('SSB'), 'fr-FR', 'Marques' UNION ALL
+SELECT core.get_menu_id('UOM'), 'fr-FR', 'Unités de mesure' UNION ALL
+SELECT core.get_menu_id('CUOM'), 'fr-FR', 'Composé d''unités de mesure' UNION ALL
+SELECT core.get_menu_id('SHI'), 'fr-FR', 'Informations de l''expéditeur' UNION ALL
+SELECT core.get_menu_id('IR'), 'fr-FR', 'Rapports' UNION ALL
+SELECT core.get_menu_id('IAS'), 'fr-FR', 'Relevé de compte de l''inventaire' UNION ALL
+SELECT core.get_menu_id('FTT'), 'fr-FR', 'Modèles de & de transactions' UNION ALL
+SELECT core.get_menu_id('JVN'), 'fr-FR', 'Bon écriture' UNION ALL
+SELECT core.get_menu_id('UER'), 'fr-FR', 'Mise à jour des taux de change' UNION ALL
+SELECT core.get_menu_id('FVV'), 'fr-FR', 'Vérification du bon' UNION ALL
+SELECT core.get_menu_id('EOD'), 'fr-FR', 'Fin de l''opération de la journée' UNION ALL
+SELECT core.get_menu_id('FSM'), 'fr-FR', 'Le programme d''installation & entretien' UNION ALL
+SELECT core.get_menu_id('COA'), 'fr-FR', 'Plan comptable' UNION ALL
+SELECT core.get_menu_id('CUR'), 'fr-FR', 'Gestion de la devise' UNION ALL
+SELECT core.get_menu_id('CBA'), 'fr-FR', 'Comptes bancaires' UNION ALL
+SELECT core.get_menu_id('PGM'), 'fr-FR', 'Produit GL cartographie' UNION ALL
+SELECT core.get_menu_id('BT'), 'fr-FR', 'Les budgets des cibles &' UNION ALL
+SELECT core.get_menu_id('AGS'), 'fr-FR', 'Vieillissement des dalles' UNION ALL
+SELECT core.get_menu_id('CFH'), 'fr-FR', 'Positions de trésorerie' UNION ALL
+SELECT core.get_menu_id('CFS'), 'fr-FR', 'Configuration des flux de trésorerie' UNION ALL
+SELECT core.get_menu_id('CC'), 'fr-FR', 'Centres de coûts' UNION ALL
+SELECT core.get_menu_id('FIR'), 'fr-FR', 'Rapports' UNION ALL
+SELECT core.get_menu_id('AS'), 'fr-FR', 'Relevé de compte' UNION ALL
+SELECT core.get_menu_id('TB'), 'fr-FR', 'Balance de vérification' UNION ALL
+SELECT core.get_menu_id('PLA'), 'fr-FR', 'Profit & compte de la perte' UNION ALL
+SELECT core.get_menu_id('BS'), 'fr-FR', 'Bilan' UNION ALL
+SELECT core.get_menu_id('RET'), 'fr-FR', 'Des Bénéfices Non Répartis' UNION ALL
+SELECT core.get_menu_id('CF'), 'fr-FR', 'Flux de trésorerie' UNION ALL
+SELECT core.get_menu_id('BOTC'), 'fr-FR', 'Configuration de l''impôt' UNION ALL
+SELECT core.get_menu_id('TXM'), 'fr-FR', 'Maître de l''impôt' UNION ALL
+SELECT core.get_menu_id('TXA'), 'fr-FR', 'Administration fiscale' UNION ALL
+SELECT core.get_menu_id('STXT'), 'fr-FR', 'Types de taxe de vente' UNION ALL
+SELECT core.get_menu_id('STST'), 'fr-FR', 'État des Taxes de vente' UNION ALL
+SELECT core.get_menu_id('CTST'), 'fr-FR', 'Taxes de vente de comtés' UNION ALL
+SELECT core.get_menu_id('STX'), 'fr-FR', 'Taxes de vente' UNION ALL
+SELECT core.get_menu_id('STXD'), 'fr-FR', 'Détails de la taxe de vente' UNION ALL
+SELECT core.get_menu_id('TXEXT'), 'fr-FR', 'Types exonérés de taxe' UNION ALL
+SELECT core.get_menu_id('STXEX'), 'fr-FR', 'Exempte de la taxe de vente' UNION ALL
+SELECT core.get_menu_id('STXEXD'), 'fr-FR', 'Détails exonéré de taxe de vente' UNION ALL
+SELECT core.get_menu_id('SMP'), 'fr-FR', 'Divers paramètres' UNION ALL
+SELECT core.get_menu_id('TRF'), 'fr-FR', 'Drapeaux' UNION ALL
+SELECT core.get_menu_id('SEAR'), 'fr-FR', 'Rapports d''audit' UNION ALL
+SELECT core.get_menu_id('SEAR-LV'), 'fr-FR', 'Vue de l''ouverture de session' UNION ALL
+SELECT core.get_menu_id('SOS'), 'fr-FR', 'Installation de Office' UNION ALL
+SELECT core.get_menu_id('SOB'), 'fr-FR', 'Bureau & de la direction générale de la configuration' UNION ALL
+SELECT core.get_menu_id('SCR'), 'fr-FR', 'Installation de dépôt comptant' UNION ALL
+SELECT core.get_menu_id('SDS'), 'fr-FR', 'Département installation' UNION ALL
+SELECT core.get_menu_id('SRM'), 'fr-FR', 'Gestion des rôles' UNION ALL
+SELECT core.get_menu_id('SUM'), 'fr-FR', 'Gestion des utilisateurs' UNION ALL
+SELECT core.get_menu_id('SES'), 'fr-FR', 'Configuration de l''entité' UNION ALL
+SELECT core.get_menu_id('SIS'), 'fr-FR', 'Installation de l''industrie' UNION ALL
+SELECT core.get_menu_id('SCRS'), 'fr-FR', 'Programme d''installation de pays' UNION ALL
+SELECT core.get_menu_id('SSS'), 'fr-FR', 'Installation de l''État' UNION ALL
+SELECT core.get_menu_id('SCTS'), 'fr-FR', 'Comté de Setup' UNION ALL
+SELECT core.get_menu_id('SFY'), 'fr-FR', 'Informations de l''exercice' UNION ALL
+SELECT core.get_menu_id('SFR'), 'fr-FR', 'Fréquence & la gestion de l''exercice' UNION ALL
+SELECT core.get_menu_id('SPM'), 'fr-FR', 'Gestion des stratégies de' UNION ALL
+SELECT core.get_menu_id('SVV'), 'fr-FR', 'Politique sur la vérification bon' UNION ALL
+SELECT core.get_menu_id('SAV'), 'fr-FR', 'Politique sur la vérification automatique' UNION ALL
+SELECT core.get_menu_id('SMA'), 'fr-FR', 'Stratégie d''accès menu' UNION ALL
+SELECT core.get_menu_id('SAP'), 'fr-FR', 'Stratégie d''accès GL' UNION ALL
+SELECT core.get_menu_id('SSP'), 'fr-FR', 'Politique de boutique' UNION ALL
+SELECT core.get_menu_id('SWI'), 'fr-FR', 'Commutateurs' UNION ALL
+SELECT core.get_menu_id('SAT'), 'fr-FR', 'Outils d''administration' UNION ALL
+SELECT core.get_menu_id('SQL'), 'fr-FR', 'Outils d''administration' UNION ALL
+SELECT core.get_menu_id('DBSTAT'), 'fr-FR', 'Outil de requête SQL' UNION ALL
+SELECT core.get_menu_id('BAK'), 'fr-FR', 'Sauvegarde base de données' UNION ALL
+SELECT core.get_menu_id('PWD'), 'fr-FR', 'Changer mot de passe utilisateur' UNION ALL
+SELECT core.get_menu_id('UPD'), 'fr-FR', 'Vérifiez Mise à jour' UNION ALL
+SELECT core.get_menu_id('TRA'), 'fr-FR', 'Traduire MixERP' UNION ALL
+SELECT core.get_menu_id('OTS'), 'fr-FR', 'Un réglage de l''heure' UNION ALL
+SELECT core.get_menu_id('OTSI'), 'fr-FR', 'Stock d''ouverture';
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/06.sample-data/price-types.sql --<--<--
@@ -23999,6 +24102,22 @@ SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='USE
 UPDATE office.users SET can_change_password=false
 WHERE user_name='binod';
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/99.sample-data/05.config.sql --<--<--
+INSERT INTO office.configuration(config_id, office_id, value, configuration_details)
+SELECT 1, office_id, 'Perpetual', ''
+FROM office.offices
+WHERE parent_office_id IS NOT NULL;
+
+
+INSERT INTO office.configuration(config_id, office_id, value, configuration_details)
+SELECT 2, office_id, 'LIFO', ''
+FROM office.offices
+WHERE parent_office_id IS NOT NULL;
+
+
+
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/99.sample-data/06.policy-config.sql.sample --<--<--
 INSERT INTO policy.auto_verification_policy
 SELECT 2, true, 0, true, 0, true, 0, '1-1-2010', '1-1-2020', true;
@@ -24068,7 +24187,8 @@ SELECT 'DEF', 'Default', 1, core.get_account_id_by_account_number('30100'), core
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/99.sample-data/20.menus.sql.sample --<--<--
 INSERT INTO policy.menu_access(office_id, menu_id, user_id)
 SELECT office.offices.office_id, core.menus.menu_id, office.users.user_id
-FROM core.menus, office.offices, office.users;
+FROM core.menus, office.offices, office.users
+WHERE office.users.user_name <> 'sys';
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/99.sample-data/30.exchange-rates.sql.sample --<--<--
 INSERT INTO core.exchange_rates(office_id)

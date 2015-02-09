@@ -120,6 +120,9 @@
   <data name="AccessIsDenied" xml:space="preserve">
     <value>Access is denied.</value>
   </data>
+  <data name="CashTransactionCannotContainBankInfo" xml:space="preserve">
+    <value>A cash transaction cannot contain bank transaction details.</value>
+  </data>
   <data name="CompareAmountErrorMessage" xml:space="preserve">
     <value>The amount to should be greater than the amount from.</value>
   </data>
@@ -135,6 +138,9 @@
   </data>
   <data name="InvalidParty" xml:space="preserve">
     <value>Invalid party. This party is not associated with this transaction.</value>
+  </data>
+  <data name="InvalidReceiptMode" xml:space="preserve">
+    <value>Invalid receipt mode.</value>
   </data>
   <data name="InvalidStockTransaction" xml:space="preserve">
     <value>Invalid stock transaction Id.</value>

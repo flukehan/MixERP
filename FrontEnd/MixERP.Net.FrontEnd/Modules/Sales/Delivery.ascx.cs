@@ -40,8 +40,9 @@ namespace MixERP.Net.Core.Modules.Sales
                 view.ShowReturnButton = true;
 
                 view.ReturnButtonUrl = "~/Modules/Sales/Entry/Return.mix";
-                view.DbTableName = "transactions.stock_master";
-                view.PrimaryKey = "stock_master_id";
+
+                view.DbTableName = "transactions.transaction_master";
+                view.PrimaryKey = "transaction_master_id";
 
                 this.Placeholder1.Controls.Add(view);
             }

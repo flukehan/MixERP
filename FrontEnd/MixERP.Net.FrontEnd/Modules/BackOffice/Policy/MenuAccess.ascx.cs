@@ -33,7 +33,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
         {
             get
             {
-                return AccessLevel.AdminOnly;
+                return AccessLevel.LocalhostAdmin;
             }
         }
     }

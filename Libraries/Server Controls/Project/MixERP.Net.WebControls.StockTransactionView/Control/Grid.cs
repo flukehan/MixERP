@@ -121,7 +121,7 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory
                 return;
             }
 
-            if (this.SubBook == SubTranBook.Receipt)
+            if (this.Book == TranBook.Sales && this.SubBook == SubTranBook.Receipt)
             {
                 this.productViewGridView.DataSource = CustomerReceipts.GetView(userId, officeId, dateFrom, dateTo, office, party, user, referenceNumber, statementReference);
                 this.productViewGridView.DataBind();

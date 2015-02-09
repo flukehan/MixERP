@@ -40,7 +40,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.Tax
         /// <returns>The sales tax.</returns>
         public static decimal GetSalesTax(string tranBook, int storeId, string partyCode, string shippingAddressCode, int priceTypeId, string itemCode, decimal price, int quantity, decimal discount, decimal shippingCharge, int salesTaxId)
         {
-            const string sql = "SELECT SUM(tax) FROM transactions.get_sales_tax(@0,@1,@2,@3,@4,@5,@6,@7,@8,@9,@10);";
+            const string sql = "SELECT COALESCE(SUM(tax), 0) FROM transactions.get_sales_tax(@0,@1,@2,@3,@4,@5,@6,@7,@8,@9,@10);";
             return Factory.Scalar<decimal>(sql, tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode, price, quantity, discount, shippingCharge, salesTaxId);
         }
 

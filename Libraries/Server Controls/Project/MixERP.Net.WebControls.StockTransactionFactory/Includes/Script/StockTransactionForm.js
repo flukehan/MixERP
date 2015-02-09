@@ -322,6 +322,10 @@ discountInputText.blur(function () {
     getDefaultSalesTax();
 });
 
+shippingChargeInputText.blur(function () {
+    calculateAmount();
+});
+
 itemCodeInputText.blur(function () {
     selectDropDownListByValue(this.id, 'ItemSelect');
 });
@@ -718,9 +722,11 @@ var restoreData = function () {
 
 //New Row Helper Function
 var calculateAmount = function () {
-    amountInputText.val(parseFloat2(quantityInputText.val()) * parseFloat2(priceInputText.val()));
+    var amount = parseFloat2(quantityInputText.val()) * parseFloat2(priceInputText.val());
+    var subTotal = amount - parseFloat2(discountInputText.val()) + parseFloat2(shippingChargeInputText.val());
 
-    subTotalInputText.val(parseFloat2(amountInputText.val()) - parseFloat2(discountInputText.val()));
+    amountInputText.val(amount);
+    subTotalInputText.val(subTotal);
 };
 
 //GridView Manipulation

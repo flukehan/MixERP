@@ -67,6 +67,7 @@
     <Compile Include="Admin\User.cs" />
     <Compile Include="Attachments.cs" />
     <Compile Include="OpeningInventory.cs" />
+    <Compile Include="Policy\Menu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tax\SalesTax.cs" />
   </ItemGroup>

@@ -102,8 +102,8 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
                 validator.EnableClientScript = true;
                 validator.SetFocusOnError = true;
                 validator.Display = ValidatorDisplay.Dynamic;
-                validator.ValueToCompare = new DateTime(1900, 1, 1).ToShortDateString();
-                validator.Operator = ValidationCompareOperator.GreaterThan;
+                validator.Type = ValidationDataType.Date;
+                validator.Operator = ValidationCompareOperator.DataTypeCheck;
 
                 return validator;
             }

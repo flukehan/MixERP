@@ -85,8 +85,8 @@ BEGIN
         core.get_shipper_name_by_shipper_id(transactions.stock_master.shipper_id),
         core.get_shipping_address_code_by_shipping_address_id(transactions.stock_master.shipping_address_id),
         office.get_store_name_by_store_id(transactions.stock_master.store_id),
-        core.get_flag_background_color(core.get_flag_type_id(user_id_, 'transactions.stock_master', 'stock_master_id', transactions.stock_master.transaction_master_id::text)) AS flag_bg,
-        core.get_flag_foreground_color(core.get_flag_type_id(user_id_, 'transactions.stock_master', 'stock_master_id', transactions.stock_master.transaction_master_id::text)) AS flag_fg
+        core.get_flag_background_color(core.get_flag_type_id(user_id_, 'transactions.transaction_master', 'transaction_master_id', transactions.stock_master.transaction_master_id::text)) AS flag_bg,
+        core.get_flag_foreground_color(core.get_flag_type_id(user_id_, 'transactions.transaction_master', 'transaction_master_id', transactions.stock_master.transaction_master_id::text)) AS flag_fg
     FROM transactions.stock_master
     INNER JOIN transactions.stock_details
     ON transactions.stock_master.stock_master_id = transactions.stock_details.stock_master_id

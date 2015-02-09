@@ -23,6 +23,7 @@ using System.Globalization;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common.Helpers;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Office;
 
@@ -34,26 +35,27 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
     [ScriptService]
     public class Accounts : WebService
     {
-        [WebMethod]
+        [WebMethod(EnableSession = true)]
         public Collection<ListItem> GetBankAccounts()
         {
+            int officeId = CurrentSession.GetOfficeId();
             Collection<ListItem> values = new Collection<ListItem>();
 
-            foreach (BankAccount bankAccount in Data.Helpers.Accounts.GetBankAccounts())
+            foreach (BankAccount bankAccount in Data.Helpers.Accounts.GetBankAccounts(officeId))
             {
-                values.Add(new ListItem(bankAccount.BankAccountNumber + " (" + bankAccount.BankAccountNumber + ")", bankAccount.AccountId.ToString(CultureInfo.InvariantCulture)));
+                values.Add(new ListItem(bankAccount.BankName + " (" + bankAccount.BankAccountNumber + ")", bankAccount.AccountId.ToString(CultureInfo.InvariantCulture)));
             }
 
             return values;
         }
 
-        [WebMethod]
+        [WebMethod(EnableSession = true)]
         public Collection<ListItem> GetCashRepositories()
         {
+            int officeId = CurrentSession.GetOfficeId();
             Collection<ListItem> values = new Collection<ListItem>();
 
-
-            foreach (CashRepository cashRepository in Data.Helpers.Accounts.GetCashRepositories())
+            foreach (CashRepository cashRepository in Data.Helpers.Accounts.GetCashRepositories(officeId))
             {
                 values.Add(new ListItem(cashRepository.CashRepositoryName, cashRepository.CashRepositoryId.ToString(CultureInfo.InvariantCulture)));
             }

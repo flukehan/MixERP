@@ -636,13 +636,14 @@ ON core.accounts(UPPER(account_name));
 
 CREATE TABLE core.bank_accounts
 (
-    account_id                              bigint PRIMARY KEY REFERENCES core.accounts(account_id),
+    account_id                              bigint PRIMARY KEY REFERENCES core.accounts(account_id),                                            
     maintained_by_user_id                   integer NOT NULL REFERENCES office.users(user_id),
+    office_id                               integer NOT NULL REFERENCES office.offices(office_id),
     bank_name                               national character varying(128) NOT NULL,
     bank_branch                             national character varying(128) NOT NULL,
     bank_contact_number                     national character varying(128) NULL,
     bank_address                            text NULL,
-    bank_account_number                       national character varying(128) NULL,
+    bank_account_number                     national character varying(128) NULL,
     bank_account_type                       national character varying(128) NULL,
     relationship_officer_name               national character varying(128) NULL,
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
@@ -771,10 +772,13 @@ ON core.salesperson_bonus_setups(salesperson_id, bonus_slab_id);
 
 CREATE TABLE core.ageing_slabs
 (
-    ageing_slab_id SERIAL PRIMARY KEY,
-    ageing_slab_name national character varying(24) NOT NULL,
-    from_days   integer NOT NULL,
-    to_days     integer NOT NULL CHECK(to_days > 0)
+    ageing_slab_id SERIAL                   PRIMARY KEY,
+    ageing_slab_name                        national character varying(24) NOT NULL,
+    from_days                               integer NOT NULL,
+    to_days                                 integer NOT NULL CHECK(to_days > 0),
+    audit_user_id                           integer NULL REFERENCES office.users(user_id),
+    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
+                                            DEFAULT(NOW())
 );
 
 CREATE UNIQUE INDEX ageing_slabs_ageing_slab_name_uix
@@ -2194,7 +2198,8 @@ ON office.work_centers(UPPER(work_center_name));
 
 CREATE TABLE policy.voucher_verification_policy
 (
-    user_id                                 integer PRIMARY KEY REFERENCES office.users(user_id),
+    policy_id                               SERIAL NOT NULL PRIMARY KEY,
+    user_id                                 integer REFERENCES office.users(user_id),
     can_verify_sales_transactions           boolean NOT NULL   
                                             CONSTRAINT voucher_verification_policy_verify_sales_df 
                                             DEFAULT(false),

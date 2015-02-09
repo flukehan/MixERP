@@ -3,8 +3,11 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Security.AccessControl;
+using System.Windows.Forms;
 using Microsoft.Web.Administration;
 using MixERP.Net.Utility.Installer.Helpers;
+using Application = Microsoft.Web.Administration.Application;
+using Binding = Microsoft.Web.Administration.Binding;
 
 namespace MixERP.Net.Utility.Installer.Installer
 {

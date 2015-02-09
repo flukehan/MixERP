@@ -390,4 +390,10 @@
   <data name="cash_flow_heading" xml:space="preserve">
     <value>Cash Flow Heading</value>
   </data>
+  <data name="office_id" xml:space="preserve">
+    <value>Office Id</value>
+  </data>
+  <data name="bank_accounts_account_id_chk" xml:space="preserve">
+    <value>The selected item is not a valid bank account.</value>
+  </data>
 </root>

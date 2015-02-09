@@ -52,6 +52,7 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
             this.RegisterJavascriptVariables();
             this.LoadValuesFromSession();
             this.BindGridView();
+            this.ClearSession();
 
             this.Controls.Add(this.placeHolder);
         }

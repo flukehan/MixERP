@@ -134,6 +134,28 @@ namespace MixERP.Net.Utility.Installer.UI
                 return;
             }
 
+            string destination = this.InstallationDirectoryTextBox.Text;
+            bool isEmpty = !Directory.EnumerateFiles(destination).Any();
+
+            if (!isEmpty)
+            {
+                string message = string.Format(CultureInfo.InvariantCulture,
+                    "The destination directory {0} is not empty. Would you like to empty it now?", destination);
+                DialogResult result = MessageBox.Show(message, "", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+
+                    Directory.Delete(destination, true);
+                }
+                else
+                {
+                    Program.error("Cannot install MixERP.");
+                    return;
+                }
+            }
+
+
             this.InstallButton.Enabled = false;
             this.CloseButton.Enabled = false;
             this.GroupBox.Enabled = false;

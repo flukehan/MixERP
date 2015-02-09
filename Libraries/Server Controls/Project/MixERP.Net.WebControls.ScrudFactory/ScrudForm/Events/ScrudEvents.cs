@@ -132,7 +132,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         throw new MixERPException(Titles.AccessIsDenied);
                     }
 
-                    long lastValue = FormHelper.InsertRecord(userId, this.TableSchema, this.Table, list, this.imageColumn);
+                    long lastValue = FormHelper.InsertRecord(userId, this.TableSchema, this.Table, this.KeyColumn, list, this.imageColumn);
 
                     if (lastValue > 0)
                     {

@@ -20,6 +20,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using MixERP.Net.Common.Helpers;
 using System;
 using System.Web.Services;
+using MixERP.Net.Core.Modules.Sales.Resources;
 
 namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
 {
@@ -59,18 +60,18 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
 
             if (cashRepositoryId == 0 && bankAccountId == 0)
             {
-                throw new InvalidOperationException("Unknown mode of receipt.");
+                throw new InvalidOperationException(Warnings.InvalidReceiptMode);
             }
 
             if (cashRepositoryId > 0 && (bankAccountId > 0 || !string.IsNullOrWhiteSpace(bankInstrumentCode) || !string.IsNullOrWhiteSpace(bankInstrumentCode)))
             {
-                throw new InvalidOperationException("A cash transaction cannot contain bank detail information.");
+                throw new InvalidOperationException(Warnings.CashTransactionCannotContainBankInfo);
             }
 
-            return this.PostTransaction(partyCode, currencyCode, amount, debitExchangeRate, creditExchangeRate, referenceNumber, statementReference, costCenterId, cashRepositoryId, postedDate, bankAccountId, bankInstrumentCode, bankTransactionCode);
+            return PostTransaction(partyCode, currencyCode, amount, debitExchangeRate, creditExchangeRate, referenceNumber, statementReference, costCenterId, cashRepositoryId, postedDate, bankAccountId, bankInstrumentCode, bankTransactionCode);
         }
 
-        private long PostTransaction(string partyCode, string currencyCode, decimal amount, decimal debitExchangeRate, decimal creditExchangeRate, string referenceNumber, string statementReference, int costCenterId, int cashRepositoryId, DateTime? postedDate, int bankAccountId, string bankInstrumentCode, string bankTransactionCode)
+        private static long PostTransaction(string partyCode, string currencyCode, decimal amount, decimal debitExchangeRate, decimal creditExchangeRate, string referenceNumber, string statementReference, int costCenterId, int cashRepositoryId, DateTime? postedDate, int bankAccountId, string bankInstrumentCode, string bankTransactionCode)
         {
             int userId = CurrentSession.GetUserId();
             int officeId = CurrentSession.GetOfficeId();

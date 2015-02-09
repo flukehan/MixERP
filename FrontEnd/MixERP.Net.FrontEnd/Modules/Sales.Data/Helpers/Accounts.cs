@@ -31,9 +31,19 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
             return Factory.Get<BankAccount>("SELECT * FROM core.bank_accounts ORDER BY account_id;");
         }
 
+        public static IEnumerable<BankAccount> GetBankAccounts(int officeId)
+        {
+            return Factory.Get<BankAccount>("SELECT * FROM core.bank_accounts WHERE office_id=@0 ORDER BY account_id;", officeId);
+        }
+
         public static IEnumerable<CashRepository> GetCashRepositories()
         {
             return Factory.Get<CashRepository>("SELECT * FROM office.cash_repositories ORDER BY cash_repository_id;");
+        }
+
+        public static IEnumerable<CashRepository> GetCashRepositories(int officeId)
+        {
+            return Factory.Get<CashRepository>("SELECT * FROM office.cash_repositories WHERE office_id=@0 ORDER BY cash_repository_id;", officeId);
         }
 
         public static IEnumerable<CostCenter> GetCostCenters()

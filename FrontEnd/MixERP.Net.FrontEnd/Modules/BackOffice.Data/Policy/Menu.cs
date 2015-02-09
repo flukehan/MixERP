@@ -16,33 +16,28 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
-
 using System;
-using MixERP.Net.Core.Modules.Sales.Resources;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using MixERP.Net.Entities;
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.StockTransactionViewFactory;
+using MixERP.Net.Entities.Core;
+using MixERP.Net.Entities.Policy;
 
-namespace MixERP.Net.Core.Modules.Sales
+namespace MixERP.Net.Core.Modules.BackOffice.Data.Policy
 {
-    public partial class Return : MixERPUserControl
+   public static class Menu
     {
-        public override void OnControlLoad(object sender, EventArgs e)
-        {
+       public static IEnumerable<DbGetMenuPolicyResult> GetMenuPolicy(int userId, int officeId, string culture)
+       {
+           return Factory.Get<DbGetMenuPolicyResult>("SELECT * FROM policy.get_menu_policy(@0, @1, @2)", userId, officeId, culture);
+       }
 
-            using (StockTransactionView view = new StockTransactionView())
-            {
-                view.Text = Titles.SalesReturn;
-                view.Book = TranBook.Sales;
-                view.SubBook = SubTranBook.Return;
-                view.PreviewUrl = "~/Modules/Sales/Reports/SalesReturnReport.mix";
-                view.ChecklistUrl = "~/Modules/Sales/Confirmation/Return.mix";
-
-                view.DbTableName = "transactions.transaction_master";
-                view.PrimaryKey = "transaction_master_id";
-
-                this.Placeholder1.Controls.Add(view);
-            }
-        }
+       public static void SaveMenuPolicy(int userId, int officeId, string menus)
+       {
+           const string sql = "SELECT * FROM policy.save_menu_policy(@0, @1, string_to_array(@2, ',')::int[]);";
+           Factory.NonQuery(sql, userId, officeId, menus);
+       }
     }
 }

@@ -143,6 +143,27 @@ namespace MixERP.Net.Common.Helpers
             }
         }
 
+        public static HtmlGenericControl GetPageHeader(string text)
+        {
+            using (HtmlGenericControl header = new HtmlGenericControl("div"))
+            {
+                using (HtmlGenericControl h1 = new HtmlGenericControl("h1"))
+                {
+                    h1.Attributes.Add("class", "ui purple header");
+                    h1.InnerText = text;
+
+                    header.Controls.Add(h1);
+                }
+
+                using (HtmlGenericControl divider = GetDivider())
+                {
+                    header.Controls.Add(divider);
+                }
+
+                return header;
+            }
+        }
+
         public static string GetLabelHtml(string text)
         {
             return string.Format(CultureInfo.InvariantCulture, "<label>{0}</label>", text);
@@ -162,6 +183,7 @@ namespace MixERP.Net.Common.Helpers
                 return field;
             }
         }
+
         public static HtmlGenericControl GetModal()
         {
             using (HtmlGenericControl field = new HtmlGenericControl("div"))

@@ -57,6 +57,7 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
             List<string> displayFields = new List<string>();
             ScrudHelper.AddDisplayField(displayFields, "office.users.user_id", ConfigurationHelper.GetDbParameter("UserDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.accounts.account_id", ConfigurationHelper.GetDbParameter("AccountDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "office.offices.office_id", ConfigurationHelper.GetDbParameter("OfficeDisplayField"));
             return string.Join(",", displayFields);
         }
 
@@ -65,6 +66,7 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
             List<string> displayViews = new List<string>();
             ScrudHelper.AddDisplayView(displayViews, "office.users.user_id", "office.user_selector_view");
             ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.account_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "office.offices.office_id", "core.offices");
             return string.Join(",", displayViews);
         }
     }

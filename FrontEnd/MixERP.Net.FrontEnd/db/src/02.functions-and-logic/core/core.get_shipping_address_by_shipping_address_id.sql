@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS core.get_shipping_address_by_shipping_address_id(integer);
+DROP FUNCTION IF EXISTS core.get_shipping_address_by_shipping_address_id(bigint);
 
-CREATE FUNCTION core.get_shipping_address_by_shipping_address_id(integer)
+CREATE FUNCTION core.get_shipping_address_by_shipping_address_id(bigint)
 RETURNS text
 AS
 $$

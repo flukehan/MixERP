@@ -239,7 +239,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
             }
         }
 
-        public static long InsertRecord(int userId, string tableSchema, string tableName, Collection<KeyValuePair<string, object>> data, string imageColumn)
+        public static long InsertRecord(int userId, string tableSchema, string tableName, string keyColumnName, Collection<KeyValuePair<string, object>> data, string imageColumn)
         {
             if (data == null)
             {
@@ -268,11 +268,12 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
             }
 
             string sql = "INSERT INTO @TableSchema.@TableName(" + columns + ", audit_user_id) SELECT " + columnParameters +
-                         ", @AuditUserId;SELECT LASTVAL();";
+                         ", @AuditUserId RETURNING @PrimaryKey;";
             using (NpgsqlCommand command = new NpgsqlCommand())
             {
                 sql = sql.Replace("@TableSchema", DbFactory.Sanitizer.SanitizeIdentifierName(tableSchema));
                 sql = sql.Replace("@TableName", DbFactory.Sanitizer.SanitizeIdentifierName(tableName));
+                sql = sql.Replace("@PrimaryKey", DbFactory.Sanitizer.SanitizeIdentifierName(keyColumnName));
 
                 command.CommandText = sql;
 

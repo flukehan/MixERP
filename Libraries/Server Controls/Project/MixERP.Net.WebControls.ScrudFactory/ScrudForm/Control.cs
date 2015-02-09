@@ -42,6 +42,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             this.LoadDescription();
 
             this.LoadGrid();
+            this.CreatePager(this.gridPanel);
 
             this.InitializeScrudControl();
 

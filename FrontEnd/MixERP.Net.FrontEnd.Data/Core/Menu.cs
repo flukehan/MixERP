@@ -31,7 +31,7 @@ namespace MixERP.Net.FrontEnd.Data.Core
             string relativePath = path;
             int userId = CurrentSession.GetUserId();
             int officeId = CurrentSession.GetOfficeId();
-            string culture = CurrentSession.GetCulture().TwoLetterISOLanguageName;
+            string culture = CurrentSession.GetCulture().Name;
 
 
             return Factory.Get<Entities.Core.Menu>("SELECT * FROM policy.get_menu(@0, @1, @2) WHERE parent_menu_id=(SELECT menu_id FROM core.menus WHERE url=@3) AND level=@4 ORDER BY menu_id;", userId, officeId, culture, relativePath, level);
@@ -41,7 +41,7 @@ namespace MixERP.Net.FrontEnd.Data.Core
         {
             int userId = CurrentSession.GetUserId();
             int officeId = CurrentSession.GetOfficeId();
-            string culture = CurrentSession.GetCulture().TwoLetterISOLanguageName;
+            string culture = CurrentSession.GetCulture().Name;
 
             if (parentMenuId > 0)
             {
@@ -55,7 +55,7 @@ namespace MixERP.Net.FrontEnd.Data.Core
         {
             int userId = CurrentSession.GetUserId();
             int officeId = CurrentSession.GetOfficeId();
-            string culture = CurrentSession.GetCulture().TwoLetterISOLanguageName;
+            string culture = CurrentSession.GetCulture().Name;
 
             return Factory.Get<Entities.Core.Menu>("SELECT * FROM policy.get_menu(@0, @1, @2) WHERE parent_menu_id=core.get_root_parent_menu_id(@3) ORDER BY menu_id;", userId, officeId, culture, path);
         }

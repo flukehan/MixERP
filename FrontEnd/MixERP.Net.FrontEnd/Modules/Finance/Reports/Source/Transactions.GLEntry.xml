@@ -31,6 +31,12 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         </td>
       </tr>
       <tr>
+        <td>{Resources.Titles.TranId}</td>
+        <td>
+          {DataSource[0].transaction_master_id}
+        </td>
+      </tr>
+      <tr>
         <td>{Resources.Titles.OfficeCode}</td>
         <td>{DataSource[0].office_code}</td>
       </tr>
@@ -94,6 +100,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
       <Query>
         SELECT
         office.offices.office_code,
+        transactions.transaction_master.transaction_master_id,
         transactions.transaction_master.transaction_code,
         transactions.transaction_master.reference_number,
         transactions.transaction_master.book,

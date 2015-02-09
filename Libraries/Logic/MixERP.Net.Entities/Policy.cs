@@ -92,6 +92,25 @@ namespace MixERP.Net.Entities.Policy
     
 
 
+    [TableName("policy.lock_outs")]
+    [PrimaryKey("lock_out_id")]
+    [ExplicitColumns]
+    public class LockOut : PetaPocoDB.Record<LockOut> 
+    {
+        [Column("lock_out_id")] 
+        public long LockOutId { get; set; }
+
+        [Column("user_id")] 
+        public int UserId { get; set; }
+
+        [Column("lock_out_time")] 
+        public DateTime LockOutTime { get; set; }
+
+        [Column("lock_out_till")] 
+        public DateTime LockOutTill { get; set; }
+
+    }
+
     [TableName("policy.menu_access")]
     [PrimaryKey("access_id")]
     [ExplicitColumns]
@@ -159,12 +178,15 @@ namespace MixERP.Net.Entities.Policy
     }
 
     [TableName("policy.voucher_verification_policy")]
-    [PrimaryKey("user_id", autoIncrement=false)]
+    [PrimaryKey("policy_id")]
     [ExplicitColumns]
     public class VoucherVerificationPolicy : PetaPocoDB.Record<VoucherVerificationPolicy> 
     {
+        [Column("policy_id")] 
+        public int PolicyId { get; set; }
+
         [Column("user_id")] 
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
 
         [Column("can_verify_sales_transactions")] 
         public bool CanVerifySalesTransactions { get; set; }
@@ -189,6 +211,49 @@ namespace MixERP.Net.Entities.Policy
 
         [Column("self_verification_limit")] 
         public decimal SelfVerificationLimit { get; set; }
+
+        [Column("effective_from")] 
+        public DateTime EffectiveFrom { get; set; }
+
+        [Column("ends_on")] 
+        public DateTime EndsOn { get; set; }
+
+        [Column("is_active")] 
+        public bool IsActive { get; set; }
+
+        [Column("audit_user_id")] 
+        public int? AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime? AuditTs { get; set; }
+
+    }
+
+    [TableName("policy.auto_verification_policy")]
+    [PrimaryKey("user_id", autoIncrement=false)]
+    [ExplicitColumns]
+    public class AutoVerificationPolicy : PetaPocoDB.Record<AutoVerificationPolicy> 
+    {
+        [Column("user_id")] 
+        public int UserId { get; set; }
+
+        [Column("verify_sales_transactions")] 
+        public bool VerifySalesTransactions { get; set; }
+
+        [Column("sales_verification_limit")] 
+        public decimal SalesVerificationLimit { get; set; }
+
+        [Column("verify_purchase_transactions")] 
+        public bool VerifyPurchaseTransactions { get; set; }
+
+        [Column("purchase_verification_limit")] 
+        public decimal PurchaseVerificationLimit { get; set; }
+
+        [Column("verify_gl_transactions")] 
+        public bool VerifyGlTransactions { get; set; }
+
+        [Column("gl_verification_limit")] 
+        public decimal GlVerificationLimit { get; set; }
 
         [Column("effective_from")] 
         public DateTime EffectiveFrom { get; set; }
@@ -319,68 +384,6 @@ namespace MixERP.Net.Entities.Policy
 
     }
 
-    [TableName("policy.lock_outs")]
-    [PrimaryKey("lock_out_id")]
-    [ExplicitColumns]
-    public class LockOut : PetaPocoDB.Record<LockOut> 
-    {
-        [Column("lock_out_id")] 
-        public long LockOutId { get; set; }
-
-        [Column("user_id")] 
-        public int UserId { get; set; }
-
-        [Column("lock_out_time")] 
-        public DateTime LockOutTime { get; set; }
-
-        [Column("lock_out_till")] 
-        public DateTime LockOutTill { get; set; }
-
-    }
-
-    [TableName("policy.auto_verification_policy")]
-    [PrimaryKey("user_id", autoIncrement=false)]
-    [ExplicitColumns]
-    public class AutoVerificationPolicy : PetaPocoDB.Record<AutoVerificationPolicy> 
-    {
-        [Column("user_id")] 
-        public int UserId { get; set; }
-
-        [Column("verify_sales_transactions")] 
-        public bool VerifySalesTransactions { get; set; }
-
-        [Column("sales_verification_limit")] 
-        public decimal SalesVerificationLimit { get; set; }
-
-        [Column("verify_purchase_transactions")] 
-        public bool VerifyPurchaseTransactions { get; set; }
-
-        [Column("purchase_verification_limit")] 
-        public decimal PurchaseVerificationLimit { get; set; }
-
-        [Column("verify_gl_transactions")] 
-        public bool VerifyGlTransactions { get; set; }
-
-        [Column("gl_verification_limit")] 
-        public decimal GlVerificationLimit { get; set; }
-
-        [Column("effective_from")] 
-        public DateTime EffectiveFrom { get; set; }
-
-        [Column("ends_on")] 
-        public DateTime EndsOn { get; set; }
-
-        [Column("is_active")] 
-        public bool IsActive { get; set; }
-
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
-
-    }
-
     [FunctionName("get_menu")]
     [ExplicitColumns]
     public class DbGetMenuResult : PetaPocoDB.Record<DbGetMenuResult> 
@@ -402,6 +405,30 @@ namespace MixERP.Net.Entities.Policy
 
         [Column("parent_menu_id")] 
         public string ParentMenuId { get; set; }
+
+    }
+
+    [FunctionName("get_menu_policy")]
+    [ExplicitColumns]
+    public class DbGetMenuPolicyResult : PetaPocoDB.Record<DbGetMenuPolicyResult> 
+    {
+        [Column("row_number")] 
+        public string RowNumber { get; set; }
+
+        [Column("access")] 
+        public bool Access { get; set; }
+
+        [Column("menu_id")] 
+        public string MenuId { get; set; }
+
+        [Column("menu_code")] 
+        public string MenuCode { get; set; }
+
+        [Column("menu_text")] 
+        public string MenuText { get; set; }
+
+        [Column("url")] 
+        public string Url { get; set; }
 
     }
 }

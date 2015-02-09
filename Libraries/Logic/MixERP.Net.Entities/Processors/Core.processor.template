@@ -543,6 +543,9 @@ class PostGreSqlSchemaReader : SchemaReader
             case "bool":    
                 return "bool";
 
+            case "boolean":    
+                return "bool";
+
             case "bytea":    
                 return "byte[]";
 

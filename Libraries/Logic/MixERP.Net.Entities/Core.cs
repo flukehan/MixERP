@@ -551,6 +551,34 @@ namespace MixERP.Net.Entities.Core
 
     }
 
+    [TableName("core.bonus_slab_details")]
+    [PrimaryKey("bonus_slab_detail_id")]
+    [ExplicitColumns]
+    public class BonusSlabDetail : PetaPocoDB.Record<BonusSlabDetail> 
+    {
+        [Column("bonus_slab_detail_id")] 
+        public int BonusSlabDetailId { get; set; }
+
+        [Column("bonus_slab_id")] 
+        public int BonusSlabId { get; set; }
+
+        [Column("amount_from")] 
+        public decimal AmountFrom { get; set; }
+
+        [Column("amount_to")] 
+        public decimal AmountTo { get; set; }
+
+        [Column("bonus_rate")] 
+        public decimal BonusRate { get; set; }
+
+        [Column("audit_user_id")] 
+        public int? AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime? AuditTs { get; set; }
+
+    }
+
     [TableName("core.bonus_slabs")]
     [PrimaryKey("bonus_slab_id")]
     [ExplicitColumns]
@@ -621,6 +649,12 @@ namespace MixERP.Net.Entities.Core
         [Column("to_days")] 
         public int ToDays { get; set; }
 
+        [Column("audit_user_id")] 
+        public int? AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime? AuditTs { get; set; }
+
     }
 
     [TableName("core.countries")]
@@ -636,6 +670,34 @@ namespace MixERP.Net.Entities.Core
 
         [Column("country_name")] 
         public string CountryName { get; set; }
+
+        [Column("audit_user_id")] 
+        public int? AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime? AuditTs { get; set; }
+
+    }
+
+    [TableName("core.income_tax_setup")]
+    [PrimaryKey("income_tax_setup_id")]
+    [ExplicitColumns]
+    public class IncomeTaxSetup : PetaPocoDB.Record<IncomeTaxSetup> 
+    {
+        [Column("income_tax_setup_id")] 
+        public int IncomeTaxSetupId { get; set; }
+
+        [Column("office_id")] 
+        public int OfficeId { get; set; }
+
+        [Column("effective_from")] 
+        public DateTime EffectiveFrom { get; set; }
+
+        [Column("tax_rate")] 
+        public decimal TaxRate { get; set; }
+
+        [Column("tax_authority_id")] 
+        public int TaxAuthorityId { get; set; }
 
         [Column("audit_user_id")] 
         public int? AuditUserId { get; set; }
@@ -705,6 +767,31 @@ namespace MixERP.Net.Entities.Core
 
         [Column("tax_base_amount_type_name")] 
         public string TaxBaseAmountTypeName { get; set; }
+
+    }
+
+    [TableName("core.sales_tax_types")]
+    [PrimaryKey("sales_tax_type_id")]
+    [ExplicitColumns]
+    public class SalesTaxType : PetaPocoDB.Record<SalesTaxType> 
+    {
+        [Column("sales_tax_type_id")] 
+        public int SalesTaxTypeId { get; set; }
+
+        [Column("sales_tax_type_code")] 
+        public string SalesTaxTypeCode { get; set; }
+
+        [Column("sales_tax_type_name")] 
+        public string SalesTaxTypeName { get; set; }
+
+        [Column("is_vat")] 
+        public bool IsVat { get; set; }
+
+        [Column("audit_user_id")] 
+        public int? AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime? AuditTs { get; set; }
 
     }
 
@@ -880,6 +967,61 @@ namespace MixERP.Net.Entities.Core
 
     }
 
+    [TableName("core.item_groups")]
+    [PrimaryKey("item_group_id")]
+    [ExplicitColumns]
+    public class ItemGroup : PetaPocoDB.Record<ItemGroup> 
+    {
+        [Column("item_group_id")] 
+        public int ItemGroupId { get; set; }
+
+        [Column("item_group_code")] 
+        public string ItemGroupCode { get; set; }
+
+        [Column("item_group_name")] 
+        public string ItemGroupName { get; set; }
+
+        [Column("exclude_from_purchase")] 
+        public bool ExcludeFromPurchase { get; set; }
+
+        [Column("exclude_from_sales")] 
+        public bool ExcludeFromSales { get; set; }
+
+        [Column("sales_tax_id")] 
+        public int SalesTaxId { get; set; }
+
+        [Column("sales_account_id")] 
+        public long SalesAccountId { get; set; }
+
+        [Column("sales_discount_account_id")] 
+        public long SalesDiscountAccountId { get; set; }
+
+        [Column("sales_return_account_id")] 
+        public long SalesReturnAccountId { get; set; }
+
+        [Column("purchase_account_id")] 
+        public long PurchaseAccountId { get; set; }
+
+        [Column("purchase_discount_account_id")] 
+        public long PurchaseDiscountAccountId { get; set; }
+
+        [Column("inventory_account_id")] 
+        public long InventoryAccountId { get; set; }
+
+        [Column("cost_of_goods_sold_account_id")] 
+        public long CostOfGoodsSoldAccountId { get; set; }
+
+        [Column("parent_item_group_id")] 
+        public int? ParentItemGroupId { get; set; }
+
+        [Column("audit_user_id")] 
+        public int? AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime? AuditTs { get; set; }
+
+    }
+
     [TableName("core.item_types")]
     [PrimaryKey("item_type_id")]
     [ExplicitColumns]
@@ -1027,6 +1169,28 @@ namespace MixERP.Net.Entities.Core
 
         [Column("rate")] 
         public decimal Rate { get; set; }
+
+        [Column("audit_user_id")] 
+        public int? AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime? AuditTs { get; set; }
+
+    }
+
+    [TableName("core.compound_items")]
+    [PrimaryKey("compound_item_id")]
+    [ExplicitColumns]
+    public class CompoundItem : PetaPocoDB.Record<CompoundItem> 
+    {
+        [Column("compound_item_id")] 
+        public int CompoundItemId { get; set; }
+
+        [Column("compound_item_code")] 
+        public string CompoundItemCode { get; set; }
+
+        [Column("compound_item_name")] 
+        public string CompoundItemName { get; set; }
 
         [Column("audit_user_id")] 
         public int? AuditUserId { get; set; }
@@ -1281,37 +1445,37 @@ namespace MixERP.Net.Entities.Core
 
     }
 
-    [TableName("core.bank_accounts")]
-    [PrimaryKey("account_id", autoIncrement=false)]
+    [TableName("core.payment_terms")]
+    [PrimaryKey("payment_term_id")]
     [ExplicitColumns]
-    public class BankAccount : PetaPocoDB.Record<BankAccount> 
+    public class PaymentTerm : PetaPocoDB.Record<PaymentTerm> 
     {
-        [Column("account_id")] 
-        public long AccountId { get; set; }
+        [Column("payment_term_id")] 
+        public int PaymentTermId { get; set; }
 
-        [Column("maintained_by_user_id")] 
-        public int MaintainedByUserId { get; set; }
+        [Column("payment_term_code")] 
+        public string PaymentTermCode { get; set; }
 
-        [Column("bank_name")] 
-        public string BankName { get; set; }
+        [Column("payment_term_name")] 
+        public string PaymentTermName { get; set; }
 
-        [Column("bank_branch")] 
-        public string BankBranch { get; set; }
+        [Column("due_on_date")] 
+        public bool DueOnDate { get; set; }
 
-        [Column("bank_contact_number")] 
-        public string BankContactNumber { get; set; }
+        [Column("due_days")] 
+        public int DueDays { get; set; }
 
-        [Column("bank_address")] 
-        public string BankAddress { get; set; }
+        [Column("due_frequency_id")] 
+        public int? DueFrequencyId { get; set; }
 
-        [Column("bank_account_number")] 
-        public string BankAccountNumber { get; set; }
+        [Column("grace_peiod")] 
+        public int GracePeiod { get; set; }
 
-        [Column("bank_account_type")] 
-        public string BankAccountType { get; set; }
+        [Column("late_fee_id")] 
+        public int? LateFeeId { get; set; }
 
-        [Column("relationship_officer_name")] 
-        public string RelationshipOfficerName { get; set; }
+        [Column("late_fee_posting_frequency_id")] 
+        public int? LateFeePostingFrequencyId { get; set; }
 
         [Column("audit_user_id")] 
         public int? AuditUserId { get; set; }
@@ -1574,6 +1738,62 @@ namespace MixERP.Net.Entities.Core
 
         [Column("rate")] 
         public decimal Rate { get; set; }
+
+        [Column("audit_user_id")] 
+        public int? AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime? AuditTs { get; set; }
+
+    }
+
+    [TableName("core.config")]
+    [PrimaryKey("config_id", autoIncrement=false)]
+    [ExplicitColumns]
+    public class Config : PetaPocoDB.Record<Config> 
+    {
+        [Column("config_id")] 
+        public int ConfigId { get; set; }
+
+        [Column("config_name")] 
+        public string ConfigName { get; set; }
+
+    }
+
+    [TableName("core.bank_accounts")]
+    [PrimaryKey("account_id", autoIncrement=false)]
+    [ExplicitColumns]
+    public class BankAccount : PetaPocoDB.Record<BankAccount> 
+    {
+        [Column("account_id")] 
+        public long AccountId { get; set; }
+
+        [Column("maintained_by_user_id")] 
+        public int MaintainedByUserId { get; set; }
+
+        [Column("office_id")] 
+        public int OfficeId { get; set; }
+
+        [Column("bank_name")] 
+        public string BankName { get; set; }
+
+        [Column("bank_branch")] 
+        public string BankBranch { get; set; }
+
+        [Column("bank_contact_number")] 
+        public string BankContactNumber { get; set; }
+
+        [Column("bank_address")] 
+        public string BankAddress { get; set; }
+
+        [Column("bank_account_number")] 
+        public string BankAccountNumber { get; set; }
+
+        [Column("bank_account_type")] 
+        public string BankAccountType { get; set; }
+
+        [Column("relationship_officer_name")] 
+        public string RelationshipOfficerName { get; set; }
 
         [Column("audit_user_id")] 
         public int? AuditUserId { get; set; }
@@ -1928,19 +2148,6 @@ namespace MixERP.Net.Entities.Core
 
         [Column("parent_industry_name")] 
         public string ParentIndustryName { get; set; }
-
-    }
-
-    [TableName("core.config")]
-    [PrimaryKey("config_id", autoIncrement=false)]
-    [ExplicitColumns]
-    public class Config : PetaPocoDB.Record<Config> 
-    {
-        [Column("config_id")] 
-        public int ConfigId { get; set; }
-
-        [Column("config_name")] 
-        public string ConfigName { get; set; }
 
     }
 
@@ -4080,6 +4287,115 @@ namespace MixERP.Net.Entities.Core
 
     }
 
+    [TableName("core.shippers")]
+    [PrimaryKey("shipper_id")]
+    [ExplicitColumns]
+    public class Shipper : PetaPocoDB.Record<Shipper> 
+    {
+        [Column("shipper_id")] 
+        public int ShipperId { get; set; }
+
+        [Column("shipper_code")] 
+        public string ShipperCode { get; set; }
+
+        [Column("company_name")] 
+        public string CompanyName { get; set; }
+
+        [Column("shipper_name")] 
+        public string ShipperName { get; set; }
+
+        [Column("po_box")] 
+        public string PoBox { get; set; }
+
+        [Column("address_line_1")] 
+        public string AddressLine1 { get; set; }
+
+        [Column("address_line_2")] 
+        public string AddressLine2 { get; set; }
+
+        [Column("street")] 
+        public string Street { get; set; }
+
+        [Column("city")] 
+        public string City { get; set; }
+
+        [Column("state")] 
+        public string State { get; set; }
+
+        [Column("country")] 
+        public string Country { get; set; }
+
+        [Column("phone")] 
+        public string Phone { get; set; }
+
+        [Column("fax")] 
+        public string Fax { get; set; }
+
+        [Column("cell")] 
+        public string Cell { get; set; }
+
+        [Column("email")] 
+        public string Email { get; set; }
+
+        [Column("url")] 
+        public string Url { get; set; }
+
+        [Column("contact_person")] 
+        public string ContactPerson { get; set; }
+
+        [Column("contact_po_box")] 
+        public string ContactPoBox { get; set; }
+
+        [Column("contact_address_line_1")] 
+        public string ContactAddressLine1 { get; set; }
+
+        [Column("contact_address_line_2")] 
+        public string ContactAddressLine2 { get; set; }
+
+        [Column("contact_street")] 
+        public string ContactStreet { get; set; }
+
+        [Column("contact_city")] 
+        public string ContactCity { get; set; }
+
+        [Column("contact_state")] 
+        public string ContactState { get; set; }
+
+        [Column("contact_country")] 
+        public string ContactCountry { get; set; }
+
+        [Column("contact_email")] 
+        public string ContactEmail { get; set; }
+
+        [Column("contact_phone")] 
+        public string ContactPhone { get; set; }
+
+        [Column("contact_cell")] 
+        public string ContactCell { get; set; }
+
+        [Column("factory_address")] 
+        public string FactoryAddress { get; set; }
+
+        [Column("pan_number")] 
+        public string PanNumber { get; set; }
+
+        [Column("sst_number")] 
+        public string SstNumber { get; set; }
+
+        [Column("cst_number")] 
+        public string CstNumber { get; set; }
+
+        [Column("account_id")] 
+        public long AccountId { get; set; }
+
+        [Column("audit_user_id")] 
+        public int? AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime? AuditTs { get; set; }
+
+    }
+
     [TableName("core.shipping_addresses")]
     [PrimaryKey("shipping_address_id")]
     [ExplicitColumns]
@@ -4459,310 +4775,18 @@ namespace MixERP.Net.Entities.Core
 
     }
 
-    [TableName("core.bonus_slab_details")]
-    [PrimaryKey("bonus_slab_detail_id")]
+    [FunctionName("get_account_view_by_account_master_id")]
     [ExplicitColumns]
-    public class BonusSlabDetail : PetaPocoDB.Record<BonusSlabDetail> 
+    public class DbGetAccountViewByAccountMasterIdResult : PetaPocoDB.Record<DbGetAccountViewByAccountMasterIdResult> 
     {
-        [Column("bonus_slab_detail_id")] 
-        public int BonusSlabDetailId { get; set; }
-
-        [Column("bonus_slab_id")] 
-        public int BonusSlabId { get; set; }
-
-        [Column("amount_from")] 
-        public decimal AmountFrom { get; set; }
-
-        [Column("amount_to")] 
-        public decimal AmountTo { get; set; }
-
-        [Column("bonus_rate")] 
-        public decimal BonusRate { get; set; }
-
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
-
-    }
-
-    [TableName("core.income_tax_setup")]
-    [PrimaryKey("income_tax_setup_id")]
-    [ExplicitColumns]
-    public class IncomeTaxSetup : PetaPocoDB.Record<IncomeTaxSetup> 
-    {
-        [Column("income_tax_setup_id")] 
-        public int IncomeTaxSetupId { get; set; }
-
-        [Column("office_id")] 
-        public int OfficeId { get; set; }
-
-        [Column("effective_from")] 
-        public DateTime EffectiveFrom { get; set; }
-
-        [Column("tax_rate")] 
-        public decimal TaxRate { get; set; }
-
-        [Column("tax_authority_id")] 
-        public int TaxAuthorityId { get; set; }
-
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
-
-    }
-
-    [TableName("core.sales_tax_types")]
-    [PrimaryKey("sales_tax_type_id")]
-    [ExplicitColumns]
-    public class SalesTaxType : PetaPocoDB.Record<SalesTaxType> 
-    {
-        [Column("sales_tax_type_id")] 
-        public int SalesTaxTypeId { get; set; }
-
-        [Column("sales_tax_type_code")] 
-        public string SalesTaxTypeCode { get; set; }
-
-        [Column("sales_tax_type_name")] 
-        public string SalesTaxTypeName { get; set; }
-
-        [Column("is_vat")] 
-        public bool IsVat { get; set; }
-
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
-
-    }
-
-    [TableName("core.item_groups")]
-    [PrimaryKey("item_group_id")]
-    [ExplicitColumns]
-    public class ItemGroup : PetaPocoDB.Record<ItemGroup> 
-    {
-        [Column("item_group_id")] 
-        public int ItemGroupId { get; set; }
-
-        [Column("item_group_code")] 
-        public string ItemGroupCode { get; set; }
-
-        [Column("item_group_name")] 
-        public string ItemGroupName { get; set; }
-
-        [Column("exclude_from_purchase")] 
-        public bool ExcludeFromPurchase { get; set; }
-
-        [Column("exclude_from_sales")] 
-        public bool ExcludeFromSales { get; set; }
-
-        [Column("sales_tax_id")] 
-        public int SalesTaxId { get; set; }
-
-        [Column("sales_account_id")] 
-        public long SalesAccountId { get; set; }
-
-        [Column("sales_discount_account_id")] 
-        public long SalesDiscountAccountId { get; set; }
-
-        [Column("sales_return_account_id")] 
-        public long SalesReturnAccountId { get; set; }
-
-        [Column("purchase_account_id")] 
-        public long PurchaseAccountId { get; set; }
-
-        [Column("purchase_discount_account_id")] 
-        public long PurchaseDiscountAccountId { get; set; }
-
-        [Column("inventory_account_id")] 
-        public long InventoryAccountId { get; set; }
-
-        [Column("cost_of_goods_sold_account_id")] 
-        public long CostOfGoodsSoldAccountId { get; set; }
-
-        [Column("parent_item_group_id")] 
-        public int? ParentItemGroupId { get; set; }
-
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
-
-    }
-
-    [TableName("core.compound_items")]
-    [PrimaryKey("compound_item_id")]
-    [ExplicitColumns]
-    public class CompoundItem : PetaPocoDB.Record<CompoundItem> 
-    {
-        [Column("compound_item_id")] 
-        public int CompoundItemId { get; set; }
-
-        [Column("compound_item_code")] 
-        public string CompoundItemCode { get; set; }
-
-        [Column("compound_item_name")] 
-        public string CompoundItemName { get; set; }
-
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
-
-    }
-
-    [TableName("core.payment_terms")]
-    [PrimaryKey("payment_term_id")]
-    [ExplicitColumns]
-    public class PaymentTerm : PetaPocoDB.Record<PaymentTerm> 
-    {
-        [Column("payment_term_id")] 
-        public int PaymentTermId { get; set; }
-
-        [Column("payment_term_code")] 
-        public string PaymentTermCode { get; set; }
-
-        [Column("payment_term_name")] 
-        public string PaymentTermName { get; set; }
-
-        [Column("due_on_date")] 
-        public bool DueOnDate { get; set; }
-
-        [Column("due_days")] 
-        public int DueDays { get; set; }
-
-        [Column("due_frequency_id")] 
-        public int? DueFrequencyId { get; set; }
-
-        [Column("grace_peiod")] 
-        public int GracePeiod { get; set; }
-
-        [Column("late_fee_id")] 
-        public int? LateFeeId { get; set; }
-
-        [Column("late_fee_posting_frequency_id")] 
-        public int? LateFeePostingFrequencyId { get; set; }
-
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
-
-    }
-
-    [TableName("core.shippers")]
-    [PrimaryKey("shipper_id")]
-    [ExplicitColumns]
-    public class Shipper : PetaPocoDB.Record<Shipper> 
-    {
-        [Column("shipper_id")] 
-        public int ShipperId { get; set; }
-
-        [Column("shipper_code")] 
-        public string ShipperCode { get; set; }
-
-        [Column("company_name")] 
-        public string CompanyName { get; set; }
-
-        [Column("shipper_name")] 
-        public string ShipperName { get; set; }
-
-        [Column("po_box")] 
-        public string PoBox { get; set; }
-
-        [Column("address_line_1")] 
-        public string AddressLine1 { get; set; }
-
-        [Column("address_line_2")] 
-        public string AddressLine2 { get; set; }
-
-        [Column("street")] 
-        public string Street { get; set; }
-
-        [Column("city")] 
-        public string City { get; set; }
-
-        [Column("state")] 
-        public string State { get; set; }
-
-        [Column("country")] 
-        public string Country { get; set; }
-
-        [Column("phone")] 
-        public string Phone { get; set; }
-
-        [Column("fax")] 
-        public string Fax { get; set; }
-
-        [Column("cell")] 
-        public string Cell { get; set; }
-
-        [Column("email")] 
-        public string Email { get; set; }
-
-        [Column("url")] 
-        public string Url { get; set; }
-
-        [Column("contact_person")] 
-        public string ContactPerson { get; set; }
-
-        [Column("contact_po_box")] 
-        public string ContactPoBox { get; set; }
-
-        [Column("contact_address_line_1")] 
-        public string ContactAddressLine1 { get; set; }
-
-        [Column("contact_address_line_2")] 
-        public string ContactAddressLine2 { get; set; }
-
-        [Column("contact_street")] 
-        public string ContactStreet { get; set; }
-
-        [Column("contact_city")] 
-        public string ContactCity { get; set; }
-
-        [Column("contact_state")] 
-        public string ContactState { get; set; }
-
-        [Column("contact_country")] 
-        public string ContactCountry { get; set; }
-
-        [Column("contact_email")] 
-        public string ContactEmail { get; set; }
-
-        [Column("contact_phone")] 
-        public string ContactPhone { get; set; }
-
-        [Column("contact_cell")] 
-        public string ContactCell { get; set; }
-
-        [Column("factory_address")] 
-        public string FactoryAddress { get; set; }
-
-        [Column("pan_number")] 
-        public string PanNumber { get; set; }
-
-        [Column("sst_number")] 
-        public string SstNumber { get; set; }
-
-        [Column("cst_number")] 
-        public string CstNumber { get; set; }
+        [Column("id")] 
+        public string Id { get; set; }
 
         [Column("account_id")] 
-        public long AccountId { get; set; }
+        public string AccountId { get; set; }
 
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
+        [Column("account_name")] 
+        public string AccountName { get; set; }
 
     }
 
@@ -4781,9 +4805,9 @@ namespace MixERP.Net.Entities.Core
 
     }
 
-    [FunctionName("get_associated_units_from_item_code")]
+    [FunctionName("get_associated_units")]
     [ExplicitColumns]
-    public class DbGetAssociatedUnitsFromItemCodeResult : PetaPocoDB.Record<DbGetAssociatedUnitsFromItemCodeResult> 
+    public class DbGetAssociatedUnitsResult : PetaPocoDB.Record<DbGetAssociatedUnitsResult> 
     {
         [Column("unit_id")] 
         public string UnitId { get; set; }
@@ -4796,24 +4820,9 @@ namespace MixERP.Net.Entities.Core
 
     }
 
-    [FunctionName("get_account_view_by_account_master_id")]
+    [FunctionName("get_associated_units_from_item_code")]
     [ExplicitColumns]
-    public class DbGetAccountViewByAccountMasterIdResult : PetaPocoDB.Record<DbGetAccountViewByAccountMasterIdResult> 
-    {
-        [Column("id")] 
-        public string Id { get; set; }
-
-        [Column("account_id")] 
-        public string AccountId { get; set; }
-
-        [Column("account_name")] 
-        public string AccountName { get; set; }
-
-    }
-
-    [FunctionName("get_associated_units")]
-    [ExplicitColumns]
-    public class DbGetAssociatedUnitsResult : PetaPocoDB.Record<DbGetAssociatedUnitsResult> 
+    public class DbGetAssociatedUnitsFromItemCodeResult : PetaPocoDB.Record<DbGetAssociatedUnitsFromItemCodeResult> 
     {
         [Column("unit_id")] 
         public string UnitId { get; set; }

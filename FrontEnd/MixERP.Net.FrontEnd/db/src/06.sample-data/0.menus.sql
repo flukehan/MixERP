@@ -144,123 +144,123 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 INSERT INTO core.menu_locale(menu_id, culture, menu_text)
-SELECT core.get_menu_id('SA'), 'fr', 'ventes' UNION ALL
-SELECT core.get_menu_id('PU'), 'fr', 'achat' UNION ALL
-SELECT core.get_menu_id('ITM'), 'fr', 'Produits et Articles' UNION ALL
-SELECT core.get_menu_id('FI'), 'fr', 'financement' UNION ALL
-SELECT core.get_menu_id('BO'), 'fr', 'Back-Office' UNION ALL
-SELECT core.get_menu_id('SAQ'), 'fr', 'Sales & Devis' UNION ALL
-SELECT core.get_menu_id('DRS'), 'fr', 'Ventes directes' UNION ALL
-SELECT core.get_menu_id('SQ'), 'fr', 'Devis de vente' UNION ALL
-SELECT core.get_menu_id('SO'), 'fr', 'Commande client' UNION ALL
-SELECT core.get_menu_id('SD'), 'fr', 'Vente livraison' UNION ALL
-SELECT core.get_menu_id('RFC'), 'fr', 'Réception du client' UNION ALL
-SELECT core.get_menu_id('SR'), 'fr', 'Retour sur les ventes' UNION ALL
-SELECT core.get_menu_id('SSM'), 'fr', 'Le programme d''installation & entretien' UNION ALL
-SELECT core.get_menu_id('ABS'), 'fr', 'Dalle de bonus pour les vendeurs' UNION ALL
-SELECT core.get_menu_id('BSD'), 'fr', 'Détails du bonus dalle' UNION ALL
-SELECT core.get_menu_id('SST'), 'fr', 'Équipes de vente' UNION ALL
-SELECT core.get_menu_id('SSA'), 'fr', 'Vendeurs/vendeuses' UNION ALL
-SELECT core.get_menu_id('BSA'), 'fr', 'Affectation de dalle de bonus' UNION ALL
-SELECT core.get_menu_id('LF'), 'fr', 'Frais de retard' UNION ALL
-SELECT core.get_menu_id('PAT'), 'fr', 'Conditions de paiement' UNION ALL
-SELECT core.get_menu_id('RI'), 'fr', 'Factures récurrentes' UNION ALL
-SELECT core.get_menu_id('RIS'), 'fr', 'Paramètres des factures récurrentes' UNION ALL
-SELECT core.get_menu_id('SAR'), 'fr', 'Rapports sur les ventes' UNION ALL
-SELECT core.get_menu_id('SAR-TSI'), 'fr', 'Haut de la page points de vente' UNION ALL
-SELECT core.get_menu_id('PUQ'), 'fr', 'Achat & citation' UNION ALL
-SELECT core.get_menu_id('DRP'), 'fr', 'Achat direct' UNION ALL
-SELECT core.get_menu_id('PO'), 'fr', 'Bon de commande' UNION ALL
-SELECT core.get_menu_id('PRO'), 'fr', 'Achat Reorder' UNION ALL
-SELECT core.get_menu_id('GRN'), 'fr', 'Entrée GRN' UNION ALL
-SELECT core.get_menu_id('PR'), 'fr', 'Achat de retour' UNION ALL
-SELECT core.get_menu_id('PUR'), 'fr', 'Rapports d''achat' UNION ALL
-SELECT core.get_menu_id('IIM'), 'fr', 'Mouvements de stock' UNION ALL
-SELECT core.get_menu_id('STJ'), 'fr', 'Feuille de transfert de stock' UNION ALL
-SELECT core.get_menu_id('STA'), 'fr', 'Ajustements de stocks' UNION ALL
-SELECT core.get_menu_id('ISM'), 'fr', 'Le programme d''installation & entretien' UNION ALL
-SELECT core.get_menu_id('STT'), 'fr', 'Types de magasins' UNION ALL
-SELECT core.get_menu_id('STO'), 'fr', 'Magasins' UNION ALL
-SELECT core.get_menu_id('SCS'), 'fr', 'Installation de compteur' UNION ALL
-SELECT core.get_menu_id('PT'), 'fr', 'Types de partie' UNION ALL
-SELECT core.get_menu_id('PA'), 'fr', 'Comptes de tiers' UNION ALL
-SELECT core.get_menu_id('PSA'), 'fr', 'Adresses d''expédition' UNION ALL
-SELECT core.get_menu_id('SSI'), 'fr', 'Gestion des Articles' UNION ALL
-SELECT core.get_menu_id('SSC'), 'fr', 'Composé d''éléments' UNION ALL
-SELECT core.get_menu_id('SSCD'), 'fr', 'Détails de l''élément composé' UNION ALL
-SELECT core.get_menu_id('ICP'), 'fr', 'Prix de revient' UNION ALL
-SELECT core.get_menu_id('ISP'), 'fr', 'Prix de vente' UNION ALL
-SELECT core.get_menu_id('SIG'), 'fr', 'Groupes d''articles' UNION ALL
-SELECT core.get_menu_id('SIT'), 'fr', 'Types d''éléments' UNION ALL
-SELECT core.get_menu_id('SSB'), 'fr', 'Marques' UNION ALL
-SELECT core.get_menu_id('UOM'), 'fr', 'Unités de mesure' UNION ALL
-SELECT core.get_menu_id('CUOM'), 'fr', 'Composé d''unités de mesure' UNION ALL
-SELECT core.get_menu_id('SHI'), 'fr', 'Informations de l''expéditeur' UNION ALL
-SELECT core.get_menu_id('IR'), 'fr', 'Rapports' UNION ALL
-SELECT core.get_menu_id('IAS'), 'fr', 'Relevé de compte de l''inventaire' UNION ALL
-SELECT core.get_menu_id('FTT'), 'fr', 'Modèles de & de transactions' UNION ALL
-SELECT core.get_menu_id('JVN'), 'fr', 'Bon écriture' UNION ALL
-SELECT core.get_menu_id('UER'), 'fr', 'Mise à jour des taux de change' UNION ALL
-SELECT core.get_menu_id('FVV'), 'fr', 'Vérification du bon' UNION ALL
-SELECT core.get_menu_id('EOD'), 'fr', 'Fin de l''opération de la journée' UNION ALL
-SELECT core.get_menu_id('FSM'), 'fr', 'Le programme d''installation & entretien' UNION ALL
-SELECT core.get_menu_id('COA'), 'fr', 'Plan comptable' UNION ALL
-SELECT core.get_menu_id('CUR'), 'fr', 'Gestion de la devise' UNION ALL
-SELECT core.get_menu_id('CBA'), 'fr', 'Comptes bancaires' UNION ALL
-SELECT core.get_menu_id('PGM'), 'fr', 'Produit GL cartographie' UNION ALL
-SELECT core.get_menu_id('BT'), 'fr', 'Les budgets des cibles &' UNION ALL
-SELECT core.get_menu_id('AGS'), 'fr', 'Vieillissement des dalles' UNION ALL
-SELECT core.get_menu_id('CFH'), 'fr', 'Positions de trésorerie' UNION ALL
-SELECT core.get_menu_id('CFS'), 'fr', 'Configuration des flux de trésorerie' UNION ALL
-SELECT core.get_menu_id('CC'), 'fr', 'Centres de coûts' UNION ALL
-SELECT core.get_menu_id('FIR'), 'fr', 'Rapports' UNION ALL
-SELECT core.get_menu_id('AS'), 'fr', 'Relevé de compte' UNION ALL
-SELECT core.get_menu_id('TB'), 'fr', 'Balance de vérification' UNION ALL
-SELECT core.get_menu_id('PLA'), 'fr', 'Profit & compte de la perte' UNION ALL
-SELECT core.get_menu_id('BS'), 'fr', 'Bilan' UNION ALL
-SELECT core.get_menu_id('RET'), 'fr', 'Des Bénéfices Non Répartis' UNION ALL
-SELECT core.get_menu_id('CF'), 'fr', 'Flux de trésorerie' UNION ALL
-SELECT core.get_menu_id('BOTC'), 'fr', 'Configuration de l''impôt' UNION ALL
-SELECT core.get_menu_id('TXM'), 'fr', 'Maître de l''impôt' UNION ALL
-SELECT core.get_menu_id('TXA'), 'fr', 'Administration fiscale' UNION ALL
-SELECT core.get_menu_id('STXT'), 'fr', 'Types de taxe de vente' UNION ALL
-SELECT core.get_menu_id('STST'), 'fr', 'État des Taxes de vente' UNION ALL
-SELECT core.get_menu_id('CTST'), 'fr', 'Taxes de vente de comtés' UNION ALL
-SELECT core.get_menu_id('STX'), 'fr', 'Taxes de vente' UNION ALL
-SELECT core.get_menu_id('STXD'), 'fr', 'Détails de la taxe de vente' UNION ALL
-SELECT core.get_menu_id('TXEXT'), 'fr', 'Types exonérés de taxe' UNION ALL
-SELECT core.get_menu_id('STXEX'), 'fr', 'Exempte de la taxe de vente' UNION ALL
-SELECT core.get_menu_id('STXEXD'), 'fr', 'Détails exonéré de taxe de vente' UNION ALL
-SELECT core.get_menu_id('SMP'), 'fr', 'Divers paramètres' UNION ALL
-SELECT core.get_menu_id('TRF'), 'fr', 'Drapeaux' UNION ALL
-SELECT core.get_menu_id('SEAR'), 'fr', 'Rapports d''audit' UNION ALL
-SELECT core.get_menu_id('SEAR-LV'), 'fr', 'Vue de l''ouverture de session' UNION ALL
-SELECT core.get_menu_id('SOS'), 'fr', 'Installation de Office' UNION ALL
-SELECT core.get_menu_id('SOB'), 'fr', 'Bureau & de la direction générale de la configuration' UNION ALL
-SELECT core.get_menu_id('SCR'), 'fr', 'Installation de dépôt comptant' UNION ALL
-SELECT core.get_menu_id('SDS'), 'fr', 'Département installation' UNION ALL
-SELECT core.get_menu_id('SRM'), 'fr', 'Gestion des rôles' UNION ALL
-SELECT core.get_menu_id('SUM'), 'fr', 'Gestion des utilisateurs' UNION ALL
-SELECT core.get_menu_id('SES'), 'fr', 'Configuration de l''entité' UNION ALL
-SELECT core.get_menu_id('SIS'), 'fr', 'Installation de l''industrie' UNION ALL
-SELECT core.get_menu_id('SCRS'), 'fr', 'Programme d''installation de pays' UNION ALL
-SELECT core.get_menu_id('SSS'), 'fr', 'Installation de l''État' UNION ALL
-SELECT core.get_menu_id('SCTS'), 'fr', 'Comté de Setup' UNION ALL
-SELECT core.get_menu_id('SFY'), 'fr', 'Informations de l''exercice' UNION ALL
-SELECT core.get_menu_id('SFR'), 'fr', 'Fréquence & la gestion de l''exercice' UNION ALL
-SELECT core.get_menu_id('SPM'), 'fr', 'Gestion des stratégies de' UNION ALL
-SELECT core.get_menu_id('SVV'), 'fr', 'Politique sur la vérification bon' UNION ALL
-SELECT core.get_menu_id('SAV'), 'fr', 'Politique sur la vérification automatique' UNION ALL
-SELECT core.get_menu_id('SMA'), 'fr', 'Stratégie d''accès menu' UNION ALL
-SELECT core.get_menu_id('SAP'), 'fr', 'Stratégie d''accès GL' UNION ALL
-SELECT core.get_menu_id('SSP'), 'fr', 'Politique de boutique' UNION ALL
-SELECT core.get_menu_id('SWI'), 'fr', 'Commutateurs' UNION ALL
-SELECT core.get_menu_id('SAT'), 'fr', 'Outils d''administration' UNION ALL
-SELECT core.get_menu_id('SQL'), 'fr', 'Outils d''administration' UNION ALL
-SELECT core.get_menu_id('DBSTAT'), 'fr', 'Outil de requête SQL' UNION ALL
-SELECT core.get_menu_id('BAK'), 'fr', 'Sauvegarde base de données' UNION ALL
-SELECT core.get_menu_id('PWD'), 'fr', 'Changer mot de passe utilisateur' UNION ALL
-SELECT core.get_menu_id('UPD'), 'fr', 'Vérifiez Mise à jour' UNION ALL
-SELECT core.get_menu_id('TRA'), 'fr', 'Traduire MixERP' UNION ALL
-SELECT core.get_menu_id('OTS'), 'fr', 'Un réglage de l''heure' UNION ALL
-SELECT core.get_menu_id('OTSI'), 'fr', 'Stock d''ouverture';
+SELECT core.get_menu_id('SA'), 'fr-FR', 'ventes' UNION ALL
+SELECT core.get_menu_id('PU'), 'fr-FR', 'achat' UNION ALL
+SELECT core.get_menu_id('ITM'), 'fr-FR', 'Produits et Articles' UNION ALL
+SELECT core.get_menu_id('FI'), 'fr-FR', 'financement' UNION ALL
+SELECT core.get_menu_id('BO'), 'fr-FR', 'Back-Office' UNION ALL
+SELECT core.get_menu_id('SAQ'), 'fr-FR', 'Sales & Devis' UNION ALL
+SELECT core.get_menu_id('DRS'), 'fr-FR', 'Ventes directes' UNION ALL
+SELECT core.get_menu_id('SQ'), 'fr-FR', 'Devis de vente' UNION ALL
+SELECT core.get_menu_id('SO'), 'fr-FR', 'Commande client' UNION ALL
+SELECT core.get_menu_id('SD'), 'fr-FR', 'Vente livraison' UNION ALL
+SELECT core.get_menu_id('RFC'), 'fr-FR', 'Réception du client' UNION ALL
+SELECT core.get_menu_id('SR'), 'fr-FR', 'Retour sur les ventes' UNION ALL
+SELECT core.get_menu_id('SSM'), 'fr-FR', 'Le programme d''installation & entretien' UNION ALL
+SELECT core.get_menu_id('ABS'), 'fr-FR', 'Dalle de bonus pour les vendeurs' UNION ALL
+SELECT core.get_menu_id('BSD'), 'fr-FR', 'Détails du bonus dalle' UNION ALL
+SELECT core.get_menu_id('SST'), 'fr-FR', 'Équipes de vente' UNION ALL
+SELECT core.get_menu_id('SSA'), 'fr-FR', 'Vendeurs/vendeuses' UNION ALL
+SELECT core.get_menu_id('BSA'), 'fr-FR', 'Affectation de dalle de bonus' UNION ALL
+SELECT core.get_menu_id('LF'), 'fr-FR', 'Frais de retard' UNION ALL
+SELECT core.get_menu_id('PAT'), 'fr-FR', 'Conditions de paiement' UNION ALL
+SELECT core.get_menu_id('RI'), 'fr-FR', 'Factures récurrentes' UNION ALL
+SELECT core.get_menu_id('RIS'), 'fr-FR', 'Paramètres des factures récurrentes' UNION ALL
+SELECT core.get_menu_id('SAR'), 'fr-FR', 'Rapports sur les ventes' UNION ALL
+SELECT core.get_menu_id('SAR-TSI'), 'fr-FR', 'Haut de la page points de vente' UNION ALL
+SELECT core.get_menu_id('PUQ'), 'fr-FR', 'Achat & citation' UNION ALL
+SELECT core.get_menu_id('DRP'), 'fr-FR', 'Achat direct' UNION ALL
+SELECT core.get_menu_id('PO'), 'fr-FR', 'Bon de commande' UNION ALL
+SELECT core.get_menu_id('PRO'), 'fr-FR', 'Achat Reorder' UNION ALL
+SELECT core.get_menu_id('GRN'), 'fr-FR', 'Entrée GRN' UNION ALL
+SELECT core.get_menu_id('PR'), 'fr-FR', 'Achat de retour' UNION ALL
+SELECT core.get_menu_id('PUR'), 'fr-FR', 'Rapports d''achat' UNION ALL
+SELECT core.get_menu_id('IIM'), 'fr-FR', 'Mouvements de stock' UNION ALL
+SELECT core.get_menu_id('STJ'), 'fr-FR', 'Feuille de transfert de stock' UNION ALL
+SELECT core.get_menu_id('STA'), 'fr-FR', 'Ajustements de stocks' UNION ALL
+SELECT core.get_menu_id('ISM'), 'fr-FR', 'Le programme d''installation & entretien' UNION ALL
+SELECT core.get_menu_id('STT'), 'fr-FR', 'Types de magasins' UNION ALL
+SELECT core.get_menu_id('STO'), 'fr-FR', 'Magasins' UNION ALL
+SELECT core.get_menu_id('SCS'), 'fr-FR', 'Installation de compteur' UNION ALL
+SELECT core.get_menu_id('PT'), 'fr-FR', 'Types de partie' UNION ALL
+SELECT core.get_menu_id('PA'), 'fr-FR', 'Comptes de tiers' UNION ALL
+SELECT core.get_menu_id('PSA'), 'fr-FR', 'Adresses d''expédition' UNION ALL
+SELECT core.get_menu_id('SSI'), 'fr-FR', 'Gestion des Articles' UNION ALL
+SELECT core.get_menu_id('SSC'), 'fr-FR', 'Composé d''éléments' UNION ALL
+SELECT core.get_menu_id('SSCD'), 'fr-FR', 'Détails de l''élément composé' UNION ALL
+SELECT core.get_menu_id('ICP'), 'fr-FR', 'Prix de revient' UNION ALL
+SELECT core.get_menu_id('ISP'), 'fr-FR', 'Prix de vente' UNION ALL
+SELECT core.get_menu_id('SIG'), 'fr-FR', 'Groupes d''articles' UNION ALL
+SELECT core.get_menu_id('SIT'), 'fr-FR', 'Types d''éléments' UNION ALL
+SELECT core.get_menu_id('SSB'), 'fr-FR', 'Marques' UNION ALL
+SELECT core.get_menu_id('UOM'), 'fr-FR', 'Unités de mesure' UNION ALL
+SELECT core.get_menu_id('CUOM'), 'fr-FR', 'Composé d''unités de mesure' UNION ALL
+SELECT core.get_menu_id('SHI'), 'fr-FR', 'Informations de l''expéditeur' UNION ALL
+SELECT core.get_menu_id('IR'), 'fr-FR', 'Rapports' UNION ALL
+SELECT core.get_menu_id('IAS'), 'fr-FR', 'Relevé de compte de l''inventaire' UNION ALL
+SELECT core.get_menu_id('FTT'), 'fr-FR', 'Modèles de & de transactions' UNION ALL
+SELECT core.get_menu_id('JVN'), 'fr-FR', 'Bon écriture' UNION ALL
+SELECT core.get_menu_id('UER'), 'fr-FR', 'Mise à jour des taux de change' UNION ALL
+SELECT core.get_menu_id('FVV'), 'fr-FR', 'Vérification du bon' UNION ALL
+SELECT core.get_menu_id('EOD'), 'fr-FR', 'Fin de l''opération de la journée' UNION ALL
+SELECT core.get_menu_id('FSM'), 'fr-FR', 'Le programme d''installation & entretien' UNION ALL
+SELECT core.get_menu_id('COA'), 'fr-FR', 'Plan comptable' UNION ALL
+SELECT core.get_menu_id('CUR'), 'fr-FR', 'Gestion de la devise' UNION ALL
+SELECT core.get_menu_id('CBA'), 'fr-FR', 'Comptes bancaires' UNION ALL
+SELECT core.get_menu_id('PGM'), 'fr-FR', 'Produit GL cartographie' UNION ALL
+SELECT core.get_menu_id('BT'), 'fr-FR', 'Les budgets des cibles &' UNION ALL
+SELECT core.get_menu_id('AGS'), 'fr-FR', 'Vieillissement des dalles' UNION ALL
+SELECT core.get_menu_id('CFH'), 'fr-FR', 'Positions de trésorerie' UNION ALL
+SELECT core.get_menu_id('CFS'), 'fr-FR', 'Configuration des flux de trésorerie' UNION ALL
+SELECT core.get_menu_id('CC'), 'fr-FR', 'Centres de coûts' UNION ALL
+SELECT core.get_menu_id('FIR'), 'fr-FR', 'Rapports' UNION ALL
+SELECT core.get_menu_id('AS'), 'fr-FR', 'Relevé de compte' UNION ALL
+SELECT core.get_menu_id('TB'), 'fr-FR', 'Balance de vérification' UNION ALL
+SELECT core.get_menu_id('PLA'), 'fr-FR', 'Profit & compte de la perte' UNION ALL
+SELECT core.get_menu_id('BS'), 'fr-FR', 'Bilan' UNION ALL
+SELECT core.get_menu_id('RET'), 'fr-FR', 'Des Bénéfices Non Répartis' UNION ALL
+SELECT core.get_menu_id('CF'), 'fr-FR', 'Flux de trésorerie' UNION ALL
+SELECT core.get_menu_id('BOTC'), 'fr-FR', 'Configuration de l''impôt' UNION ALL
+SELECT core.get_menu_id('TXM'), 'fr-FR', 'Maître de l''impôt' UNION ALL
+SELECT core.get_menu_id('TXA'), 'fr-FR', 'Administration fiscale' UNION ALL
+SELECT core.get_menu_id('STXT'), 'fr-FR', 'Types de taxe de vente' UNION ALL
+SELECT core.get_menu_id('STST'), 'fr-FR', 'État des Taxes de vente' UNION ALL
+SELECT core.get_menu_id('CTST'), 'fr-FR', 'Taxes de vente de comtés' UNION ALL
+SELECT core.get_menu_id('STX'), 'fr-FR', 'Taxes de vente' UNION ALL
+SELECT core.get_menu_id('STXD'), 'fr-FR', 'Détails de la taxe de vente' UNION ALL
+SELECT core.get_menu_id('TXEXT'), 'fr-FR', 'Types exonérés de taxe' UNION ALL
+SELECT core.get_menu_id('STXEX'), 'fr-FR', 'Exempte de la taxe de vente' UNION ALL
+SELECT core.get_menu_id('STXEXD'), 'fr-FR', 'Détails exonéré de taxe de vente' UNION ALL
+SELECT core.get_menu_id('SMP'), 'fr-FR', 'Divers paramètres' UNION ALL
+SELECT core.get_menu_id('TRF'), 'fr-FR', 'Drapeaux' UNION ALL
+SELECT core.get_menu_id('SEAR'), 'fr-FR', 'Rapports d''audit' UNION ALL
+SELECT core.get_menu_id('SEAR-LV'), 'fr-FR', 'Vue de l''ouverture de session' UNION ALL
+SELECT core.get_menu_id('SOS'), 'fr-FR', 'Installation de Office' UNION ALL
+SELECT core.get_menu_id('SOB'), 'fr-FR', 'Bureau & de la direction générale de la configuration' UNION ALL
+SELECT core.get_menu_id('SCR'), 'fr-FR', 'Installation de dépôt comptant' UNION ALL
+SELECT core.get_menu_id('SDS'), 'fr-FR', 'Département installation' UNION ALL
+SELECT core.get_menu_id('SRM'), 'fr-FR', 'Gestion des rôles' UNION ALL
+SELECT core.get_menu_id('SUM'), 'fr-FR', 'Gestion des utilisateurs' UNION ALL
+SELECT core.get_menu_id('SES'), 'fr-FR', 'Configuration de l''entité' UNION ALL
+SELECT core.get_menu_id('SIS'), 'fr-FR', 'Installation de l''industrie' UNION ALL
+SELECT core.get_menu_id('SCRS'), 'fr-FR', 'Programme d''installation de pays' UNION ALL
+SELECT core.get_menu_id('SSS'), 'fr-FR', 'Installation de l''État' UNION ALL
+SELECT core.get_menu_id('SCTS'), 'fr-FR', 'Comté de Setup' UNION ALL
+SELECT core.get_menu_id('SFY'), 'fr-FR', 'Informations de l''exercice' UNION ALL
+SELECT core.get_menu_id('SFR'), 'fr-FR', 'Fréquence & la gestion de l''exercice' UNION ALL
+SELECT core.get_menu_id('SPM'), 'fr-FR', 'Gestion des stratégies de' UNION ALL
+SELECT core.get_menu_id('SVV'), 'fr-FR', 'Politique sur la vérification bon' UNION ALL
+SELECT core.get_menu_id('SAV'), 'fr-FR', 'Politique sur la vérification automatique' UNION ALL
+SELECT core.get_menu_id('SMA'), 'fr-FR', 'Stratégie d''accès menu' UNION ALL
+SELECT core.get_menu_id('SAP'), 'fr-FR', 'Stratégie d''accès GL' UNION ALL
+SELECT core.get_menu_id('SSP'), 'fr-FR', 'Politique de boutique' UNION ALL
+SELECT core.get_menu_id('SWI'), 'fr-FR', 'Commutateurs' UNION ALL
+SELECT core.get_menu_id('SAT'), 'fr-FR', 'Outils d''administration' UNION ALL
+SELECT core.get_menu_id('SQL'), 'fr-FR', 'Outils d''administration' UNION ALL
+SELECT core.get_menu_id('DBSTAT'), 'fr-FR', 'Outil de requête SQL' UNION ALL
+SELECT core.get_menu_id('BAK'), 'fr-FR', 'Sauvegarde base de données' UNION ALL
+SELECT core.get_menu_id('PWD'), 'fr-FR', 'Changer mot de passe utilisateur' UNION ALL
+SELECT core.get_menu_id('UPD'), 'fr-FR', 'Vérifiez Mise à jour' UNION ALL
+SELECT core.get_menu_id('TRA'), 'fr-FR', 'Traduire MixERP' UNION ALL
+SELECT core.get_menu_id('OTS'), 'fr-FR', 'Un réglage de l''heure' UNION ALL
+SELECT core.get_menu_id('OTSI'), 'fr-FR', 'Stock d''ouverture';

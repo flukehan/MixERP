@@ -66,7 +66,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 CurrentPageUrl = this.Page.Request.Url.AbsolutePath
             };
 
-
             container.Controls.Add(scrudPager.GetPager());
         }
     }
