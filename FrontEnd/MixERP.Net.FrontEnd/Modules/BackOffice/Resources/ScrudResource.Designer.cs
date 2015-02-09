@@ -61,6 +61,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account.
+        /// </summary>
+        internal static string account {
+            get {
+                return ResourceManager.GetString("account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Account Id.
         /// </summary>
         internal static string account_id {
@@ -70,11 +79,38 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account Master Code.
+        /// </summary>
+        internal static string account_master_code {
+            get {
+                return ResourceManager.GetString("account_master_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account Name.
+        /// </summary>
+        internal static string account_name {
+            get {
+                return ResourceManager.GetString("account_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Account Number.
         /// </summary>
         internal static string account_number {
             get {
                 return ResourceManager.GetString("account_number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Address.
+        /// </summary>
+        internal static string address {
+            get {
+                return ResourceManager.GetString("address", resourceCulture);
             }
         }
         
@@ -93,6 +129,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string address_line_2 {
             get {
                 return ResourceManager.GetString("address_line_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allow Sales.
+        /// </summary>
+        internal static string allow_sales {
+            get {
+                return ResourceManager.GetString("allow_sales", resourceCulture);
             }
         }
         
@@ -304,6 +349,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Collecting Account.
+        /// </summary>
+        internal static string collecting_account {
+            get {
+                return ResourceManager.GetString("collecting_account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Collecting Account Id.
         /// </summary>
         internal static string collecting_account_id {
@@ -313,11 +367,29 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Collecting Tax Authority.
+        /// </summary>
+        internal static string collecting_tax_authority {
+            get {
+                return ResourceManager.GetString("collecting_tax_authority", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Collecting Tax Authority Id.
         /// </summary>
         internal static string collecting_tax_authority_id {
             get {
                 return ResourceManager.GetString("collecting_tax_authority_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confidential.
+        /// </summary>
+        internal static string confidential {
+            get {
+                return ResourceManager.GetString("confidential", resourceCulture);
             }
         }
         
@@ -417,6 +489,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string county_name {
             get {
                 return ResourceManager.GetString("county_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to County Sales Tax.
+        /// </summary>
+        internal static string county_sales_tax {
+            get {
+                return ResourceManager.GetString("county_sales_tax", resourceCulture);
             }
         }
         
@@ -556,6 +637,33 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exclude From Purchase.
+        /// </summary>
+        internal static string exclude_from_purchase {
+            get {
+                return ResourceManager.GetString("exclude_from_purchase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exclude From Sales.
+        /// </summary>
+        internal static string exclude_from_sales {
+            get {
+                return ResourceManager.GetString("exclude_from_sales", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to External Code.
+        /// </summary>
+        internal static string external_code {
+            get {
+                return ResourceManager.GetString("external_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fax.
         /// </summary>
         internal static string fax {
@@ -673,6 +781,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Has Child.
+        /// </summary>
+        internal static string has_child {
+            get {
+                return ResourceManager.GetString("has_child", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Industry Id.
         /// </summary>
         internal static string industry_id {
@@ -763,11 +880,29 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Item Group Code.
+        /// </summary>
+        internal static string item_group_code {
+            get {
+                return ResourceManager.GetString("item_group_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Item Group Id.
         /// </summary>
         internal static string item_group_id {
             get {
                 return ResourceManager.GetString("item_group_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Group Name.
+        /// </summary>
+        internal static string item_group_name {
+            get {
+                return ResourceManager.GetString("item_group_name", resourceCulture);
             }
         }
         
@@ -871,6 +1006,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Parent.
+        /// </summary>
+        internal static string parent {
+            get {
+                return ResourceManager.GetString("parent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parent Cash Repository.
         /// </summary>
         internal static string parent_cash_repository {
@@ -912,6 +1056,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string parent_industry_id {
             get {
                 return ResourceManager.GetString("parent_industry_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parent Industry Name.
+        /// </summary>
+        internal static string parent_industry_name {
+            get {
+                return ResourceManager.GetString("parent_industry_name", resourceCulture);
             }
         }
         
@@ -1078,6 +1231,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reporting Tax Authority.
+        /// </summary>
+        internal static string reporting_tax_authority {
+            get {
+                return ResourceManager.GetString("reporting_tax_authority", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reporting Tax Authority Id.
         /// </summary>
         internal static string reporting_tax_authority_id {
@@ -1146,6 +1308,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string rounding_decimal_places {
             get {
                 return ResourceManager.GetString("rounding_decimal_places", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rounding Method.
+        /// </summary>
+        internal static string rounding_method {
+            get {
+                return ResourceManager.GetString("rounding_method", resourceCulture);
             }
         }
         
@@ -1285,6 +1456,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sales Tax Type.
+        /// </summary>
+        internal static string sales_tax_type {
+            get {
+                return ResourceManager.GetString("sales_tax_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sales Tax Type Code.
         /// </summary>
         internal static string sales_tax_type_code {
@@ -1384,6 +1564,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to State Sales Tax.
+        /// </summary>
+        internal static string state_sales_tax {
+            get {
+                return ResourceManager.GetString("state_sales_tax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to State Sales Tax Code.
         /// </summary>
         internal static string state_sales_tax_code {
@@ -1420,6 +1609,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Store Code.
+        /// </summary>
+        internal static string store_code {
+            get {
+                return ResourceManager.GetString("store_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Store Id.
         /// </summary>
         internal static string store_id {
@@ -1429,11 +1627,38 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Store Name.
+        /// </summary>
+        internal static string store_name {
+            get {
+                return ResourceManager.GetString("store_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Store Type.
+        /// </summary>
+        internal static string store_type {
+            get {
+                return ResourceManager.GetString("store_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Street.
         /// </summary>
         internal static string street {
             get {
                 return ResourceManager.GetString("street", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sys Type.
+        /// </summary>
+        internal static string sys_type {
+            get {
+                return ResourceManager.GetString("sys_type", resourceCulture);
             }
         }
         
@@ -1461,6 +1686,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string tax_authority_name {
             get {
                 return ResourceManager.GetString("tax_authority_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tax Base Amount.
+        /// </summary>
+        internal static string tax_base_amount {
+            get {
+                return ResourceManager.GetString("tax_base_amount", resourceCulture);
             }
         }
         
@@ -1555,6 +1789,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tax Rate Type.
+        /// </summary>
+        internal static string tax_rate_type {
+            get {
+                return ResourceManager.GetString("tax_rate_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tax Rate Type Code.
         /// </summary>
         internal static string tax_rate_type_code {
@@ -1578,6 +1821,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string url {
             get {
                 return ResourceManager.GetString("url", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Tax Collecting Account.
+        /// </summary>
+        internal static string use_tax_collecting_account {
+            get {
+                return ResourceManager.GetString("use_tax_collecting_account", resourceCulture);
             }
         }
         
