@@ -61,7 +61,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The base unit and compare unit cannot be same..
+        ///   Looks up a localized string similar to Base unit id and compare unit id cannot be same..
         /// </summary>
         internal static string CompoundUnitOfMeasureErrorMessage {
             get {

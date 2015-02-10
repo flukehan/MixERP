@@ -35,7 +35,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
             displayMessage(window.dateErrorMessageLocalized);
             return false;
         };
-        if (priceTo < priceFrom) {
+        if (priceTo <= priceFrom) {
             displayMessage(window.comparePriceErrorMessageLocalized);
             return false;
         };
