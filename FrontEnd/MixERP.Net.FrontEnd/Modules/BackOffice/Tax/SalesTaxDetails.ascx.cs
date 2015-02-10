@@ -70,10 +70,10 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
             ScrudHelper.AddDisplayView(displayViews, "core.sales_taxes.sales_tax_id", "core.sales_tax_scrud_view");
             ScrudHelper.AddDisplayView(displayViews, "core.state_sales_taxes.state_sales_tax_id", "core.state_sales_tax_scrud_view");
             ScrudHelper.AddDisplayView(displayViews, "core.county_sales_taxes.county_sales_tax_id", "core.county_sales_tax_scrud_view");
-            ScrudHelper.AddDisplayView(displayViews, "core.tax_rate_types.tax_rate_type_code", "core.tax_rate_types");
+            ScrudHelper.AddDisplayView(displayViews, "core.tax_rate_types.tax_rate_type_code", "core.tax_rate_type_selector_view");
             ScrudHelper.AddDisplayView(displayViews, "core.tax_authorities.tax_authority_id", "core.tax_authority_scrud_view");
             ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.account_scrud_view");
-            ScrudHelper.AddDisplayView(displayViews, "core.rounding_methods.rounding_method_code", "core.rounding_methods");
+            ScrudHelper.AddDisplayView(displayViews, "core.rounding_methods.rounding_method_code", "core.rounding_method_selector_view");
             return string.Join(",", displayViews);
         }
     }

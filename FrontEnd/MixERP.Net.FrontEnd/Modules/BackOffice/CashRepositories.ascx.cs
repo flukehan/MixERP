@@ -74,8 +74,8 @@ namespace MixERP.Net.Core.Modules.BackOffice
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "office.cash_repositories.cash_repository_id", "office.cash_repository_selector_view");
-            ScrudHelper.AddDisplayView(displayViews, "office.offices.office_id", "office.office_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "office.cash_repositories.cash_repository_id", "office.cash_repository_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "office.offices.office_id", "office.office_scrud_view");
             return string.Join(",", displayViews);
         }
     }

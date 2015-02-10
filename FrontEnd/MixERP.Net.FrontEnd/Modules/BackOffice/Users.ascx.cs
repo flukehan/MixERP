@@ -70,8 +70,8 @@ namespace MixERP.Net.Core.Modules.BackOffice
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "office.offices.office_id", "office.offices");
-            ScrudHelper.AddDisplayView(displayViews, "office.roles.role_id", "office.roles");
+            ScrudHelper.AddDisplayView(displayViews, "office.offices.office_id", "office.office_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "office.roles.role_id", "office.role_scrud_view");
             return string.Join(",", displayViews);
         }
     }
