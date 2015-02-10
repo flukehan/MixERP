@@ -1,4 +1,4 @@
-﻿DROP VIEW core.supplier_selector_view;
+﻿DROP VIEW IF EXISTS core.supplier_selector_view;
 CREATE VIEW core.supplier_selector_view
 AS
 SELECT

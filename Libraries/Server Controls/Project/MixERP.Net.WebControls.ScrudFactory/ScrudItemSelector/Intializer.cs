@@ -58,11 +58,8 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 return;
             }
 
-            using (var table = TableHelper.GetTable(this.GetSchema(), this.GetView(), ""))
-            {
-                this.filterSelect.DataSource = table;
-                this.filterSelect.DataBind();
-            }
+            this.filterSelect.DataSource = TableHelper.GetColumns(this.GetSchema(), this.GetView());
+            this.filterSelect.DataBind();
         }
     }
 }

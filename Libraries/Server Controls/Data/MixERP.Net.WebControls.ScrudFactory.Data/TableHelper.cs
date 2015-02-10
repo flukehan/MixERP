@@ -17,10 +17,13 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading;
 using MixERP.Net.DbFactory;
+using MixERP.Net.Entities;
+using MixERP.Net.Entities.Public;
 using Npgsql;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Data
@@ -62,6 +65,12 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
 
                 return DbOperation.GetDataTable(command);
             }
+        }
+
+        public static IEnumerable<DbPocoGetTableFunctionDefinitionResult> GetColumns(string schema, string table)
+        {
+            const string sql = "SELECT * FROM public.poco_get_table_function_definition(@0, @1)";
+            return Factory.Get<DbPocoGetTableFunctionDefinitionResult>(sql, schema, table);
         }
     }
 }

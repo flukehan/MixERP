@@ -17,11 +17,11 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 var scrudShowCompact = function () {
-    window.location = window.location.pathname + '?show=compact';
+    window.location = updateQueryString('show', 'compact');
 };
 
 var scrudShowAll = function () {
-    window.location = window.location.pathname + '?show=all';
+    window.location = updateQueryString('show', 'all');
 };
 
 var scrudConfirmAction = function () {

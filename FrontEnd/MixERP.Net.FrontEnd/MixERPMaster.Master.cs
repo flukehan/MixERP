@@ -21,10 +21,11 @@ using MixERP.Net.Common.Helpers;
 using System;
 using System.Globalization;
 using System.Web.UI;
+using MixERP.Net.FrontEnd.Base;
 
 namespace MixERP.Net.FrontEnd
 {
-    public partial class MixERPMaster : MasterPage
+    public partial class MixERPMaster : MixERPMasterPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

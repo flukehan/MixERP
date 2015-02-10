@@ -42,7 +42,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
                     collection.Add(new NpgsqlParameter("@SupplierCode" + i, details[i].SupplierCode));
                     collection.Add(new NpgsqlParameter("@UnitId" + i, details[i].UnitId));
                     collection.Add(new NpgsqlParameter("@Price" + i, details[i].Price));
-                    collection.Add(new NpgsqlParameter("@Tax" + i, details[i].Tax));
+                    collection.Add(new NpgsqlParameter("@Tax" + i, details[i].Tax ?? string.Empty));
                     collection.Add(new NpgsqlParameter("@OrderQuantity" + i, details[i].OrderQuantity));
                 }
             }
@@ -60,7 +60,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
             Collection<string> detailCollection = new Collection<string>();
             for (int i = 0; i < details.Count; i++)
             {
-                detailCollection.Add(string.Format(CultureInfo.InvariantCulture, "ROW(@ItemId{0}, @SupplierCode{0}, @UnitId{0}, @Price{0},@TaxRate{0}, @OrderQuantity{0})::transactions.purchase_reorder_type", i.ToString(CultureInfo.InvariantCulture)));
+                detailCollection.Add(string.Format(CultureInfo.InvariantCulture, "ROW(@ItemId{0}, @SupplierCode{0}, @UnitId{0}, @Price{0},@Tax{0}, @OrderQuantity{0})::transactions.purchase_reorder_type", i.ToString(CultureInfo.InvariantCulture)));
             }
 
             return string.Join(",", detailCollection);
@@ -73,7 +73,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
 
         public static bool Save(long loginId, int userId, int officeId, Collection<Models.Reorder> details)
         {
-            string sql = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM transactions.post_purhcase_reorder(transactions.get_value_date(), @LoginId, @UserId, @OfficeId, ARRAY[{0}]);", CreatePurchaseReorderTypeParameter(details));
+            string sql = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM transactions.post_purhcase_reorder(transactions.get_value_date(@OfficeId), @LoginId, @UserId, @OfficeId, ARRAY[{0}]);", CreatePurchaseReorderTypeParameter(details));
 
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {

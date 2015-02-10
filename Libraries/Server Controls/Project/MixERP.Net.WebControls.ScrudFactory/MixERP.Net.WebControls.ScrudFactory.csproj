@@ -135,6 +135,10 @@
       <Project>{d5a09c22-8f48-4fb2-a14d-c62c8c8fcec0}</Project>
       <Name>MixERP.Net.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Logic\MixERP.Net.Entities\MixERP.Net.Entities.csproj">
+      <Project>{BDE918B1-DD9B-41C9-A41F-F3DDEC18B6D8}</Project>
+      <Name>MixERP.Net.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MixERP.Net.WebControls.Common\MixERP.Net.WebControls.Common.csproj">
       <Project>{2d961540-6597-4e7b-969c-974d71d820dd}</Project>
       <Name>MixERP.Net.WebControls.Common</Name>

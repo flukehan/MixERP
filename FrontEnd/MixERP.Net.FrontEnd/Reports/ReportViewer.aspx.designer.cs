@@ -31,12 +31,12 @@ namespace MixERP.Net.FrontEnd.Reports {
         protected global::System.Web.UI.WebControls.Table ReportParameterTable;
         
         /// <summary>
-        /// ReportViewer11 control.
+        /// Placeholder1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::MixERP.Net.WebControls.ReportEngine.Report ReportViewer11;
+        protected global::System.Web.UI.WebControls.PlaceHolder Placeholder1;
     }
 }

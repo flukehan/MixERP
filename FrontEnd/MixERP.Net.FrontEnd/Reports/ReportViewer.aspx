@@ -19,12 +19,19 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
 <%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/MixERPReportMaster.Master" CodeBehind="ReportViewer.aspx.cs" Inherits="MixERP.Net.FrontEnd.Reports.ReportViewer" ValidateRequest="false" %>
 
+<%@ Register TagPrefix="mixerp" Namespace="MixERP.Net.WebControls.ReportEngine" Assembly="MixERP.Net.WebControls.ReportEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a724a47a0879d02f" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="BodyContentPlaceholder" runat="server">
+
     <asp:Panel runat="server" ID="ReportParameterPanel" class="report-parameter hide">
-        <asp:Table ID="ReportParameterTable" runat="server" />
-        <a href="#" onclick="$('.report-parameter').toggle(500);" class="btn btn-danger btn-sm" style="float: right; padding: 4px;">Close This Form</a>
+        <asp:Table ID="ReportParameterTable" runat="server"/>
+        <a href="#" onclick=" $('.report-parameter').toggle(500); " class="ui red button" style="float: right; padding: 4px;">Close This Form</a>
     </asp:Panel>
-    <mixerp:Report ID="ReportViewer11" runat="server" />
+
+    <div style="padding:12px">
+        <asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
+    </div>
+
 </asp:Content>

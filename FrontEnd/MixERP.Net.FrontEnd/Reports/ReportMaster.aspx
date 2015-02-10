@@ -26,10 +26,14 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         #IFramePlaceholder {
             width: 800px;
         }
+
+        html, body, .thirteen.wide.column, #MainContent {
+            height: 100%;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceholder" runat="server">
-    <asp:PlaceHolder ID="IFramePlaceholder" runat="server" />
+    <asp:PlaceHolder ID="IFramePlaceholder" runat="server"/>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceholder" runat="server">
 </asp:Content>

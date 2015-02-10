@@ -20,10 +20,12 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Reflection;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.WebControls.ReportEngine;
 using MixERP.Net.WebControls.ReportEngine.Helpers;
 
 namespace MixERP.Net.FrontEnd.Reports
@@ -32,8 +34,16 @@ namespace MixERP.Net.FrontEnd.Reports
     {
         private Button updateButton = new Button();
 
+        #region IDisposable
+        private Report report;
+        #endregion
+
         protected void Page_Init(object sender, EventArgs e)
         {
+            this.report = new Report();
+            this.report.ResourceAssembly = Assembly.GetAssembly(typeof(ReportViewer));
+            this.report.AutoInitialize = false;
+            this.Placeholder1.Controls.Add(this.report);
             this.AddParameters();
         }
 
@@ -58,14 +68,14 @@ namespace MixERP.Net.FrontEnd.Reports
                     list.Add(new KeyValuePair<string, object>("@" + textBox.ID.Replace("_text_box", ""), textBox.Text));
                 }
             }
-            this.ReportViewer11.Path = this.ReportPath();
+            this.report.Path = this.ReportPath();
 
             foreach (var parameter in ParameterHelper.BindParameters(this.Server.MapPath(this.ReportPath()), list))
             {
-                this.ReportViewer11.AddParameterToCollection(parameter);
+                this.report.AddParameterToCollection(parameter);
             }
 
-            this.ReportViewer11.InitializeReport();
+            this.report.InitializeReport();
         }
 
         private void AddParameters()
@@ -75,8 +85,8 @@ namespace MixERP.Net.FrontEnd.Reports
             if (collection == null || collection.Count.Equals(0))
             {
                 this.ReportParameterPanel.Style.Add("display", "none");
-                this.ReportViewer11.Path = this.ReportPath();
-                this.ReportViewer11.InitializeReport();
+                this.report.Path = this.ReportPath();
+                this.report.InitializeReport();
                 return;
             }
 

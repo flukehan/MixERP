@@ -1,19 +1,19 @@
 DROP FUNCTION IF EXISTS transactions.post_purhcase_reorder
 (
-        _value_date                             date,
-        _login_id                               bigint,
-        _user_id                                integer,
-        _office_id                              integer,
-        _details                                transactions.purchase_reorder_type[]
+    _value_date                             date,
+    _login_id                               bigint,
+    _user_id                                integer,
+    _office_id                              integer,
+    _details                                transactions.purchase_reorder_type[]
 );
 
 CREATE FUNCTION transactions.post_purhcase_reorder
 (
-        _value_date                             date,
-        _login_id                               bigint,
-        _user_id                                integer,
-        _office_id                              integer,
-        _details                                transactions.purchase_reorder_type[]
+    _value_date                             date,
+    _login_id                               bigint,
+    _user_id                                integer,
+    _office_id                              integer,
+    _details                                transactions.purchase_reorder_type[]
 )
 RETURNS bool
 AS
@@ -80,12 +80,12 @@ $$
 LANGUAGE plpgsql;
 
 
---   SELECT * FROM transactions.post_purhcase_reorder('1-1-2000', 1, 2, 2,
---   ARRAY[
---   ROW(1, 'ETBRO-0002', 1, 40000, 'MoF-NP-KTM-VAT', 10)::transactions.purchase_reorder_type,
---   ROW(1, 'ETBRO-0002', 1, 40000, '', 10)::transactions.purchase_reorder_type
---   ]);
---  
+-- SELECT * FROM transactions.post_purhcase_reorder('1-1-2000', 1, 2, 2,
+-- ARRAY[
+-- ROW(1, 'ETBRO-0002', 1, 40000, 'MoF-NP-KTM-VAT', 10)::transactions.purchase_reorder_type,
+-- ROW(1, 'ETBRO-0002', 1, 40000, '', 10)::transactions.purchase_reorder_type
+-- ]);
+-- 
 
 
 

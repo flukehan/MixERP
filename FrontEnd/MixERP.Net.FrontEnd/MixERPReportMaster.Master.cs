@@ -19,10 +19,11 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Web.UI;
+using MixERP.Net.FrontEnd.Base;
 
 namespace MixERP.Net.FrontEnd
 {
-    public partial class MixERPReportMaster : MasterPage
+    public partial class MixERPReportMaster : MixERPMasterPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

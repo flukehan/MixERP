@@ -60,6 +60,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\ITransaction.cs" />
+    <Compile Include="Public.cs">
+      <DependentUpon>Public.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Localization.cs">
       <DependentUpon>Localization.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -125,11 +130,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Public.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Public.cs</LastGenOutput>
+    </None>
     <None Include="Localization.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Localization.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
+    <None Include="Processors\Public.processor.template" />
     <None Include="Processors\Localization.processor.template" />
     <None Include="Processors\Transactions.processor.template" />
     <None Include="Transactions.tt">

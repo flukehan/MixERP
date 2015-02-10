@@ -7269,9 +7269,12 @@ BEGIN
         ON core.menus.menu_id = core.menu_locale.menu_id
         LEFT JOIN policy.menu_access
         ON core.menus.menu_id = policy.menu_access.menu_id
-        AND policy.menu_access.user_id = $1
+        WHERE policy.menu_access.user_id = $1
         AND policy.menu_access.office_id = $2
+        AND core.menu_locale.culture = $3
         ORDER BY core.menus.menu_id;
+
+        RETURN;
     END IF;
     
     RETURN QUERY
@@ -7288,6 +7291,8 @@ BEGIN
     AND policy.menu_access.user_id = $1
     AND policy.menu_access.office_id = $2
     ORDER BY core.menus.menu_id;
+
+    RETURN;
 END
 $$
 LANGUAGE plpgsql;
@@ -13380,20 +13385,20 @@ LANGUAGE plpgsql;
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02.functions-and-logic/logic/functions/transactions/transactions.post_purhcase_reorder.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_purhcase_reorder
 (
-        _value_date                             date,
-        _login_id                               bigint,
-        _user_id                                integer,
-        _office_id                              integer,
-        _details                                transactions.purchase_reorder_type[]
+    _value_date                             date,
+    _login_id                               bigint,
+    _user_id                                integer,
+    _office_id                              integer,
+    _details                                transactions.purchase_reorder_type[]
 );
 
 CREATE FUNCTION transactions.post_purhcase_reorder
 (
-        _value_date                             date,
-        _login_id                               bigint,
-        _user_id                                integer,
-        _office_id                              integer,
-        _details                                transactions.purchase_reorder_type[]
+    _value_date                             date,
+    _login_id                               bigint,
+    _user_id                                integer,
+    _office_id                              integer,
+    _details                                transactions.purchase_reorder_type[]
 )
 RETURNS bool
 AS
@@ -13460,12 +13465,12 @@ $$
 LANGUAGE plpgsql;
 
 
---   SELECT * FROM transactions.post_purhcase_reorder('1-1-2000', 1, 2, 2,
---   ARRAY[
---   ROW(1, 'ETBRO-0002', 1, 40000, 'MoF-NP-KTM-VAT', 10)::transactions.purchase_reorder_type,
---   ROW(1, 'ETBRO-0002', 1, 40000, '', 10)::transactions.purchase_reorder_type
---   ]);
---  
+-- SELECT * FROM transactions.post_purhcase_reorder('1-1-2000', 1, 2, 2,
+-- ARRAY[
+-- ROW(1, 'ETBRO-0002', 1, 40000, 'MoF-NP-KTM-VAT', 10)::transactions.purchase_reorder_type,
+-- ROW(1, 'ETBRO-0002', 1, 40000, '', 10)::transactions.purchase_reorder_type
+-- ]);
+-- 
 
 
 
@@ -20937,21 +20942,37 @@ CREATE VIEW core.account_scrud_view
 AS
 SELECT
     core.accounts.account_id,
-    core.account_masters.account_master_code,
+    core.account_masters.account_master_code || ' (' || core.account_masters.account_master_name || ')' AS account_master,
     core.accounts.account_number,
     core.accounts.external_code,
+	core.currencies.currency_code || ' ('|| core.currencies.currency_name|| ')' currency,
     core.accounts.account_name,
-    core.accounts.confidential,
     core.accounts.description,
+	core.accounts.confidential,
+	core.accounts.is_transaction_node,
     core.accounts.sys_type,
-    parent_account.account_number || ' (' || parent_account.account_name || ')' AS parent,
-    core.has_child_accounts(core.accounts.account_id) AS has_child
+    parent_account.account_number || ' (' || parent_account.account_name || ')' AS parent
+    
 FROM core.accounts
 INNER JOIN core.account_masters
 ON core.account_masters.account_master_id=core.accounts.account_master_id
+INNER JOIN core.currencies
+ON core.accounts.currency_code = core.currencies.currency_code
 LEFT JOIN core.accounts parent_account
 ON parent_account.account_id=core.accounts.parent_account_id
 WHERE NOT core.accounts.sys_type;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05.scrud-views/core/core.ageing_slab_scrud_view.sql --<--<--
+CREATE VIEW core.ageing_slab_scrud_view
+AS
+SELECT 
+  ageing_slabs.ageing_slab_id, 
+  ageing_slabs.ageing_slab_name, 
+  ageing_slabs.from_days, 
+  ageing_slabs.to_days
+FROM 
+  core.ageing_slabs;
+
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05.scrud-views/core/core.bonus_slab_detail_scrud_view.sql --<--<--
 CREATE VIEW core.bonus_slab_detail_scrud_view
@@ -21811,10 +21832,10 @@ CREATE VIEW office.cash_repository_scrud_view
 AS
 SELECT
 office.cash_repositories.cash_repository_id,
-office.offices.office_code || '('|| office.offices.office_name||')' AS office,
+office.offices.office_code || ' (' || office.offices.office_name || ') ' AS office,
 office.cash_repositories.cash_repository_code,
 office.cash_repositories.cash_repository_name,
-parent_cash_repository.cash_repository_code || '('|| parent_cash_repository.cash_repository_name||')' AS parent_cash_repository,
+parent_cash_repository.cash_repository_code || ' (' || parent_cash_repository.cash_repository_name || ') ' AS parent_cash_repository,
 office.cash_repositories.description
 
 FROM office.cash_repositories
@@ -22143,10 +22164,15 @@ SELECT * FROM core.party_types;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05.selector-views/core/core.price_type_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.price_type_selector_view;
-
 CREATE VIEW core.price_type_selector_view
 AS
-SELECT * FROM core.price_types;
+SELECT 
+  price_types.price_type_id, 
+  price_types.price_type_code, 
+  price_types.price_type_name
+FROM 
+  core.price_types;
+
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05.selector-views/core/core.rounding_method_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.rounding_method_selector_view;
@@ -22198,25 +22224,71 @@ DROP VIEW IF EXISTS core.shipping_mail_type_selector_view;
 
 CREATE VIEW core.shipping_mail_type_selector_view
 AS
-SELECT * FROM core.shipping_mail_types;
+SELECT 
+  shipping_mail_types.shipping_mail_type_id, 
+  shipping_mail_types.shipping_mail_type_code, 
+  shipping_mail_types.shipping_mail_type_name
+FROM 
+  core.shipping_mail_types;
+
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05.selector-views/core/core.shipping_package_shape_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.shipping_package_shape_selector_view;
 
 CREATE VIEW core.shipping_package_shape_selector_view
 AS
-SELECT * FROM core.shipping_package_shapes;
+SELECT 
+  shipping_package_shapes.shipping_package_shape_id, 
+  shipping_package_shapes.shipping_package_shape_code, 
+  shipping_package_shapes.shipping_package_shape_name, 
+  shipping_package_shapes.is_rectangular
+FROM 
+  core.shipping_package_shapes;
+
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05.selector-views/core/core.supplier_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.supplier_selector_view;
 CREATE VIEW core.supplier_selector_view
 AS
-SELECT * FROM core.parties
-WHERE party_type_id IN
-(
-        SELECT party_type_id FROM core.party_types
-        WHERE is_supplier=true
-);
-
+SELECT
+    core.parties.party_id,
+    core.party_types.party_type_id,
+    core.party_types.is_supplier,
+    core.party_types.party_type_code || ' (' || core.party_types.party_type_name || ')' AS party_type,
+    core.parties.party_code,
+    core.parties.first_name,
+    core.parties.middle_name,
+    core.parties.last_name,
+    core.parties.party_name,
+    core.parties.zip_code,
+    core.parties.address_line_1,
+    core.parties.address_line_2,
+    core.parties.street,
+    core.parties.city,
+    core.get_state_name_by_state_id(core.parties.state_id) AS state,
+    core.get_country_name_by_country_id(core.parties.country_id) AS country,
+    core.parties.allow_credit,
+    core.parties.maximum_credit_period,
+    core.parties.maximum_credit_amount,
+    core.parties.pan_number,
+    core.parties.sst_number,
+    core.parties.cst_number,
+    core.parties.phone,
+    core.parties.fax,
+    core.parties.cell,
+    core.parties.email,
+    core.parties.url,
+    core.accounts.account_id,
+    core.accounts.account_number,
+    core.accounts.account_number || ' (' || core.accounts.account_name || ')' AS gl_head
+FROM
+core.parties
+INNER JOIN
+core.party_types
+ON core.parties.party_type_id = core.party_types.party_type_id
+INNER JOIN core.accounts
+ON core.parties.account_id=core.accounts.account_id
+WHERE is_supplier=true;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05.selector-views/core/core.tax_base_amount_type_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.tax_base_amount_type_selector_view;

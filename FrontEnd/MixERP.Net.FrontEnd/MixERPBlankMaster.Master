@@ -23,42 +23,19 @@
 <body>
     <form id="form1" runat="server">
         <script type="text/javascript">
-            function pageLoad() {
-                $(".item-selector").colorbox({ iframe: true, innerWidth: 1024, innerHeight: 450, overlayClose: false });
-                $(".preview").colorbox({ iframe: true, innerWidth: 1024, innerHeight: 450, overlayClose: false });
-            };
+            //function pageLoad() {
+            //    $(".item-selector").colorbox({ iframe: true, innerWidth: 1024, innerHeight: 450, overlayClose: false });
+            //    $(".preview").colorbox({ iframe: true, innerWidth: 1024, innerHeight: 450, overlayClose: false });
+            //};
 
-            var today = "<%= DateTime.Now.ToShortDateString() %>";
-            var shortDateFormat = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetShortDateFormat() %>";
-            var thousandSeparator = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetThousandSeparator() %>";
-            var decimalSeparator = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetDecimalSeparator() %>";
-            var currencyDecimalPlaces = "<%= MixERP.Net.Common.Helpers.LocalizationHelper.GetCurrencyDecimalPlaces() %>";
+            //Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
+            //    //Fired on each ASP.net AJAX request.
+            //    initializeItemSelector();
+            //});
 
-            var duplicateEntryLocalized = "<%= Resources.Warnings.DuplicateEntry %>";
-
-            var selectLocalized = "<%=Resources.Titles.Select %>";
-            var noneLocalized = "<%=Resources.Titles.None %>";
-            var invalidDateWarningLocalized = "<%= Resources.Warnings.InvalidDate %>";
-            var areYouSureLocalized = "<%=Resources.Questions.AreYouSure %>";
-            var nothingSelectedLocalized = "<%= Resources.Warnings.NothingSelected %>";
-            var yesLocalized = "<%=Resources.Titles.Yes %>";
-            var noLocalized = "<%=Resources.Titles.No %>";
-
-            var daysLowerCaseLocalized = "<%=Resources.Labels.DaysLowerCase %>";
-            var gridViewEmptyWarningLocalized = "<%=Resources.Warnings.GridViewEmpty%>";
-
-            var duplicateFileLocalized = "<% = Resources.Warnings.DuplicateFiles %>";
-
-            var taskCompletedSuccessfullyLocalized = "<%= Resources.Labels.TaskCompletedSuccessfully %>";
-
-            Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
-                //Fired on each ASP.net AJAX request.
-                initializeItemSelector();
-            });
-
-            $(document).on('ready', function () {
-                initializeItemSelector();
-            });
+            //$(document).on('ready', function () {
+            //    initializeItemSelector();
+            //});
         </script>
 
         <asp:ScriptManager runat="server" ID="ScriptManager1" />

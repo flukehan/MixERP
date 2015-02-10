@@ -106,8 +106,8 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
                         this.filterSelect.ID = "FilterDropDownList";
                         this.filterSelect.CssClass = this.FilterDropDownListCssClass;
-                        this.filterSelect.DataTextField = "column_name";
-                        this.filterSelect.DataValueField = "column_name";
+                        this.filterSelect.DataTextField = "ColumnName";
+                        this.filterSelect.DataValueField = "ColumnName";
                         this.filterSelect.DataBound += this.FilterSelectDataBound;
 
                         filterSelectField.Controls.Add(this.filterSelect);

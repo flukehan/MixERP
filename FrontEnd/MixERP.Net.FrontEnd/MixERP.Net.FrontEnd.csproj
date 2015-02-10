@@ -123,6 +123,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Warnings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Base\MixERPMasterPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Base\MixERPUserControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
