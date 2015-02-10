@@ -47,11 +47,11 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "office.store_types.store_type_id", "office.store_type_selector_view");
-            ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.accounts");
-            ScrudHelper.AddDisplayView(displayViews, "office.offices.office_id", "office.office_selector_view");
-            ScrudHelper.AddDisplayView(displayViews, "office.cash_repositories.cash_repository_id", "office.cash_repositories");
-            ScrudHelper.AddDisplayView(displayViews, "core.sales_taxes.sales_tax_id", "core.sales_taxes");
+            ScrudHelper.AddDisplayView(displayViews, "office.store_types.store_type_id", "office.store_type_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.account_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "office.offices.office_id", "office.office_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "office.cash_repositories.cash_repository_id", "office.cash_repository_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.sales_taxes.sales_tax_id", "core.sales_tax_scrud_view");
 
             return string.Join(",", displayViews);
         }

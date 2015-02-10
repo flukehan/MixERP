@@ -36,7 +36,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
                 scrud.TableSchema = "core";
                 scrud.Table = "units";
                 scrud.ViewSchema = "core";
-                scrud.View = "units_scrud_view";
+                scrud.View = "unit_scrud_view";
 
                 scrud.Text = Titles.UnitsOfMeasure;
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof (UOM));

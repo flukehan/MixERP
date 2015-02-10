@@ -71,7 +71,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "core.units.unit_id", "core.unit_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.units.unit_id", "core.unit_scrud_view");
             return string.Join(",", displayViews);
         }
     }

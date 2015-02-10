@@ -37,7 +37,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
                 scrud.TableSchema = "core";
                 scrud.Table = "shippers";
                 scrud.ViewSchema = "core";
-                scrud.View = "shippers_scrud_view";
+                scrud.View = "shipper_scrud_view";
 
                 //The following fields will be automatically generated on the database server.
                 scrud.Exclude = "shipper_code, shipper_name";
