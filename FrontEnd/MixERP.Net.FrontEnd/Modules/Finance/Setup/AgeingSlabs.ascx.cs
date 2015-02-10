@@ -36,7 +36,7 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
                 scrud.TableSchema = "core";
                 scrud.Table = "ageing_slabs";
                 scrud.ViewSchema = "core";
-                scrud.View = "ageing_slabs";
+                scrud.View = "ageing_slab_scrud_view";
 
                 scrud.Text = Titles.AgeingSlabs;
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof(AgeingSlabs));

@@ -59,8 +59,8 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "core.cash_flow_headings.cash_flow_heading_id", "core.cash_flow_headings");
-            ScrudHelper.AddDisplayView(displayViews, "core.account_masters.account_master_id", "core.account_masters");
+            ScrudHelper.AddDisplayView(displayViews, "core.cash_flow_headings.cash_flow_heading_id", "core.cash_flow_heading_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.account_masters.account_master_id", "core.account_master_selector_view");
             return string.Join(",", displayViews);
         }
     }
