@@ -34,10 +34,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         <asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
 
         <script type="text/javascript">
-            var shortDateFormat = "<%= LocalizationHelper.GetShortDateFormat()%>";
-            var thousandSeparator = "<%= LocalizationHelper.GetThousandSeparator()%>";
-            var decimalSeparator = "<%= LocalizationHelper.GetDecimalSeparator()%>";
-            var currencyDecimalPlaces = "<%= LocalizationHelper.GetCurrencyDecimalPlaces()%>";
+            var shortDateFormat = "<%= LocalizationHelper.GetShortDateFormat() %>";
+            var thousandSeparator = "<%= LocalizationHelper.GetThousandSeparator() %>";
+            var decimalSeparator = "<%= LocalizationHelper.GetDecimalSeparator() %>";
+            var currencyDecimalPlaces = "<%= LocalizationHelper.GetCurrencyDecimalPlaces() %>";
         </script>
         <script type="text/javascript" src="/bundles/scripts/libraries.min.js"></script>
         <script type="text/javascript" src="/Scripts/jssha1.5/src/sha.js"></script>
