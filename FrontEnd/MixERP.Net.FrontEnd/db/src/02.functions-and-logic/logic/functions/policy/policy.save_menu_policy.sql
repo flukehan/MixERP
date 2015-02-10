@@ -16,7 +16,7 @@ VOLATILE AS
 $$
 BEGIN
     DELETE FROM policy.menu_access
-    WHERE NOT menu_id = ANY(_menu_ids)
+    WHERE NOT policy.menu_access.menu_id = ANY(_menu_ids)
     AND user_id = _user_id
     AND office_id = _office_id;
 
@@ -29,15 +29,17 @@ BEGIN
     INSERT INTO policy.menu_access(user_id, office_id, menu_id)
     SELECT _user_id, _office_id, _menu_id
     FROM menus
-    WHERE menu_id NOT IN
+    WHERE _menu_id NOT IN
     (
-        SELECT _menu_id
-        FROM menus
-    )
-    AND user_id = _user_id
-    AND office_id = _office_id;
+        SELECT menu_id
+        FROM policy.menu_access
+        WHERE policy.menu_access.user_id = _user_id
+        AND policy.menu_access.office_id = _office_id
+    );
 
     RETURN;
 END
 $$
 LANGUAGE plpgsql;
+
+--SELECT * FROM policy.save_menu_policy(2, 2, string_to_array('1,2,3, 4', ',')::int[])

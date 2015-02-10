@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using MixERP.Net.Common.Domains;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Core.Modules.BackOffice.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.ScrudFactory;
 
@@ -38,7 +39,7 @@ namespace MixERP.Net.Core.Modules.BackOffice
         {
             using (ScrudForm scrud = new ScrudForm())
             {
-                scrud.Text = "Users";
+                scrud.Text = Titles.Users;
                 scrud.TableSchema = "office";
                 scrud.Table = "users";
                 scrud.ViewSchema = "office";

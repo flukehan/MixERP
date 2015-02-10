@@ -144,11 +144,9 @@
     <Content Include="Services\JournalVoucher.asmx" />
     <Content Include="Setup\AgeingSlabs.ascx" />
     <Content Include="Setup\BankAccounts.ascx" />
-    <Content Include="Setup\BudgetAndTarget.ascx" />
     <Content Include="Setup\COA.ascx" />
     <Content Include="Setup\CostCenters.ascx" />
     <Content Include="Setup\Currencies.ascx" />
-    <Content Include="Setup\ProductGLMapping.ascx" />
     <Content Include="StandingInstructions.ascx" />
     <Content Include="UpdateExchangeRates.ascx" />
     <Content Include="VoucherVerification.ascx" />
@@ -300,13 +298,6 @@
     <Compile Include="Setup\BankAccounts.ascx.designer.cs">
       <DependentUpon>BankAccounts.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Setup\BudgetAndTarget.ascx.cs">
-      <DependentUpon>BudgetAndTarget.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Setup\BudgetAndTarget.ascx.designer.cs">
-      <DependentUpon>BudgetAndTarget.ascx</DependentUpon>
-    </Compile>
     <Compile Include="Setup\CashFlowHeadings.ascx.cs">
       <DependentUpon>CashFlowHeadings.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -341,13 +332,6 @@
     </Compile>
     <Compile Include="Setup\Currencies.ascx.designer.cs">
       <DependentUpon>Currencies.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Setup\ProductGLMapping.ascx.cs">
-      <DependentUpon>ProductGLMapping.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Setup\ProductGLMapping.ascx.designer.cs">
-      <DependentUpon>ProductGLMapping.ascx</DependentUpon>
     </Compile>
     <Compile Include="StandingInstructions.ascx.cs">
       <DependentUpon>StandingInstructions.ascx</DependentUpon>

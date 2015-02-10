@@ -295,6 +295,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        internal static string Update {
+            get {
+                return ResourceManager.GetString("Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Url.
         /// </summary>
         internal static string Url {

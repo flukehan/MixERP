@@ -88,6 +88,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Opening inventory has already been entered for this office..
+        /// </summary>
+        internal static string OpeningInventoryAlreadyEntered {
+            get {
+                return ResourceManager.GetString("OpeningInventoryAlreadyEntered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Task completed successfully..
         /// </summary>
         internal static string TaskCompletedSuccessfully {

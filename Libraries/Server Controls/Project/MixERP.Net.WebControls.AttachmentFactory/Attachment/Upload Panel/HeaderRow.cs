@@ -1,5 +1,6 @@
 ﻿using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.WebControls.AttachmentFactory.Resources;
 
 namespace MixERP.Net.WebControls.AttachmentFactory
 {
@@ -35,10 +36,10 @@ namespace MixERP.Net.WebControls.AttachmentFactory
             {
                 header.TableSection = TableRowSection.TableHeader;
 
-                this.AddHeaderCell(header, "340px", "Comment");
-                this.AddHeaderCell(header, "50px", "Upload", "nopadding");
-                this.AddHeaderCell(header, "240px", "Progress");
-                this.AddHeaderCell(header, "", "File Path");
+                this.AddHeaderCell(header, "340px", Titles.Comment);
+                this.AddHeaderCell(header, "50px", Titles.Upload, "nopadding");
+                this.AddHeaderCell(header, "240px", Titles.Progress);
+                this.AddHeaderCell(header, "", Titles.FilePath);
 
                 table.Rows.Add(header);
             }

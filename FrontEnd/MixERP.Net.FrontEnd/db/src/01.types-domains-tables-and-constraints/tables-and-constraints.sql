@@ -67,7 +67,7 @@ ON core.entities(UPPER(entity_name));
 CREATE TABLE core.industries
 (
     industry_id                             SERIAL PRIMARY KEY,
-    industry_name                           national character varying(100),
+    industry_name                           national character varying(100) NOT NULL,
     parent_industry_id                      integer REFERENCES core.industries(industry_id),
     audit_user_id                           integer NULL REFERENCES office.users(user_id),
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
@@ -1182,7 +1182,7 @@ ON core.sales_tax_exempts(UPPER(sales_tax_exempt_name));
 CREATE TABLE core.sales_tax_exempt_details
 (
     sales_tax_exempt_detail_id              SERIAL PRIMARY KEY,
-    sales_tax_exempt_id                     integer REFERENCES core.sales_tax_exempts(sales_tax_exempt_id),
+    sales_tax_exempt_id                     integer NOT NULL REFERENCES core.sales_tax_exempts(sales_tax_exempt_id),
     entity_id                               integer NULL REFERENCES core.entities(entity_id),
     industry_id                             integer NULL REFERENCES core.industries(industry_id),    
     party_id                                bigint NULL REFERENCES core.parties(party_id),

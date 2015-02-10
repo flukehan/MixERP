@@ -50,7 +50,7 @@ namespace MixERP.Net.WebControls.Flag
                 using (HtmlGenericControl h3 = new HtmlGenericControl("h3"))
                 {
                     h3.Attributes.Add("class", "panel-title");
-                    h3.InnerText = "Flag This Transaction";
+                    h3.InnerText = Titles.FlagThisTransaction;
                     div.Controls.Add(h3);
                 }
 

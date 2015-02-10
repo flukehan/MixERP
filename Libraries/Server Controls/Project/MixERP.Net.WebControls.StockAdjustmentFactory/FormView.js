@@ -79,7 +79,7 @@ var addRow = function () {
 };
 
 function appendToTable(tranType, storeName, itemCode, itemName, unitName, quantity) {
-    var rows = transferGridView.find("tr:not(:first-child):not(:last-child)");
+    var rows = transferGridView.find("tbody tr:not(:last-child)");
     var match = false;
 
     rows.each(function () {
@@ -97,7 +97,7 @@ function appendToTable(tranType, storeName, itemCode, itemName, unitName, quanti
             getColumnText(row, 1) === storeName &&
             getColumnText(row, 2) === itemCode &&
             getColumnText(row, 4) === unitName) {
-            setColumnText(row, 5, parseFloat2(getColumnText(row, 5)) + quantity);
+            setColumnText(row, 5, getFormattedNumber(parseFloat2(getColumnText(row, 5)) + quantity));
 
             addDanger(row);
             match = true;
@@ -106,7 +106,7 @@ function appendToTable(tranType, storeName, itemCode, itemName, unitName, quanti
     });
 
     if (!match) {
-        var html = "<tr class='grid2-row'><td>" + tranType + "</td><td>" + storeName + "</td><td>" + itemCode + "</td><td>" + itemName + "</td><td>" + unitName + "</td><td class='text-right'>" + quantity + "</td>"
+        var html = "<tr class='grid2-row'><td>" + tranType + "</td><td>" + storeName + "</td><td>" + itemCode + "</td><td>" + itemName + "</td><td>" + unitName + "</td><td class='text-right'>" + getFormattedNumber(quantity) + "</td>"
             + "</td><td><a class='pointer' onclick='removeRow($(this));'><i class='ui delete icon'></i></a><a class='pointer' onclick='toggleDanger($(this));'><i class='ui pointer check mark icon'></a></i><a class='pointer' onclick='toggleSuccess($(this));'><i class='ui pointer thumbs up icon'></i></a></td></tr>";
         transferGridView.find("tr:last").before(html);
     }

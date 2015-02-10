@@ -273,4 +273,61 @@
   <data name="Update" xml:space="preserve">
     <value>Update</value>
   </data>
+  <data name="Access" xml:space="preserve">
+    <value>Access</value>
+  </data>
+  <data name="MenuCode" xml:space="preserve">
+    <value>Menu Code</value>
+  </data>
+  <data name="MenuId" xml:space="preserve">
+    <value>Menu Id</value>
+  </data>
+  <data name="MenuText" xml:space="preserve">
+    <value>Menu Text</value>
+  </data>
+  <data name="RowNumber" xml:space="preserve">
+    <value>Row Number</value>
+  </data>
+  <data name="CheckAll" xml:space="preserve">
+    <value>Check All</value>
+  </data>
+  <data name="MenuAccessPolicy" xml:space="preserve">
+    <value>Menu Access Policy</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>Show</value>
+  </data>
+  <data name="UncheckAll" xml:space="preserve">
+    <value>Uncheck All</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="ItemCode" xml:space="preserve">
+    <value>Item Code</value>
+  </data>
+  <data name="ItemName" xml:space="preserve">
+    <value>Item Name</value>
+  </data>
+  <data name="OpeningInventory" xml:space="preserve">
+    <value>Opening Inventory</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>Quantity</value>
+  </data>
+  <data name="StoreName" xml:space="preserve">
+    <value>Store Name</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="Unit" xml:space="preserve">
+    <value>Unit</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Users</value>
+  </data>
 </root>

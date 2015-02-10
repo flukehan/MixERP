@@ -71,6 +71,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Messages.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Titles.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Titles.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Logic\MixERP.net.Common\MixERP.Net.Common.csproj">
@@ -87,6 +92,10 @@
     <EmbeddedResource Include="Resources\Messages.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Titles.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

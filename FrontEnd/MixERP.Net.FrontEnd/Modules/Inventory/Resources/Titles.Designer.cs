@@ -493,6 +493,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select Store.
+        /// </summary>
+        internal static string SelectStore {
+            get {
+                return ResourceManager.GetString("SelectStore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Shippers.
         /// </summary>
         internal static string Shippers {

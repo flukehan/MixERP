@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MixERP.Net.WebControls.Flag.Resources {
+namespace MixERP.Net.WebControls.AttachmentFactory.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace MixERP.Net.WebControls.Flag.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MixERP.Net.WebControls.Flag.Resources.Titles", typeof(Titles).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MixERP.Net.WebControls.AttachmentFactory.Resources.Titles", typeof(Titles).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,29 +61,65 @@ namespace MixERP.Net.WebControls.Flag.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Close.
+        ///   Looks up a localized string similar to Browse.
         /// </summary>
-        internal static string Close {
+        internal static string Browse {
             get {
-                return ResourceManager.GetString("Close", resourceCulture);
+                return ResourceManager.GetString("Browse", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Flag This Transaction.
+        ///   Looks up a localized string similar to Comment.
         /// </summary>
-        internal static string FlagThisTransaction {
+        internal static string Comment {
             get {
-                return ResourceManager.GetString("FlagThisTransaction", resourceCulture);
+                return ResourceManager.GetString("Comment", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update.
+        ///   Looks up a localized string similar to File Path.
         /// </summary>
-        internal static string Update {
+        internal static string FilePath {
             get {
-                return ResourceManager.GetString("Update", resourceCulture);
+                return ResourceManager.GetString("FilePath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Progress.
+        /// </summary>
+        internal static string Progress {
+            get {
+                return ResourceManager.GetString("Progress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        internal static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Undo.
+        /// </summary>
+        internal static string Undo {
+            get {
+                return ResourceManager.GetString("Undo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload.
+        /// </summary>
+        internal static string Upload {
+            get {
+                return ResourceManager.GetString("Upload", resourceCulture);
             }
         }
     }

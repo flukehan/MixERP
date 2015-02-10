@@ -1,5 +1,6 @@
 ﻿using System.Web.UI;
 using System.Web.UI.HtmlControls;
+using MixERP.Net.WebControls.AttachmentFactory.Resources;
 
 namespace MixERP.Net.WebControls.AttachmentFactory
 {
@@ -23,7 +24,7 @@ namespace MixERP.Net.WebControls.AttachmentFactory
             using (HtmlInputButton undoButton = new HtmlInputButton())
             {
                 undoButton.ID = "UndoButton";
-                undoButton.Value = "Undo";
+                undoButton.Value = Titles.Undo;
                 undoButton.Attributes.Add("class", "ui small red button");
 
                 container.Controls.Add(undoButton);
@@ -35,7 +36,7 @@ namespace MixERP.Net.WebControls.AttachmentFactory
             using (HtmlInputButton uploadButton = new HtmlInputButton())
             {
                 uploadButton.ID = "UploadButton";
-                uploadButton.Value = "Upload";
+                uploadButton.Value = Titles.Upload;
                 uploadButton.Attributes.Add("class", "ui small blue button");
 
                 container.Controls.Add(uploadButton);
@@ -48,7 +49,7 @@ namespace MixERP.Net.WebControls.AttachmentFactory
             {
                 saveButton.ID = "SaveButton";
                 saveButton.Attributes.Add("class", "ui small green button");
-                saveButton.Value = "Save";
+                saveButton.Value = Titles.Save;
                 saveButton.Visible = this.ShowSaveButton;
 
                 container.Controls.Add(saveButton);

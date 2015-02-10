@@ -126,6 +126,9 @@
   <data name="NumRowsAffected" xml:space="preserve">
     <value>{0} rows affected.</value>
   </data>
+  <data name="OpeningInventoryAlreadyEntered" xml:space="preserve">
+    <value>Opening inventory has already been entered for this office.</value>
+  </data>
   <data name="TaskCompletedSuccessfully" xml:space="preserve">
     <value>Task completed successfully.</value>
   </data>

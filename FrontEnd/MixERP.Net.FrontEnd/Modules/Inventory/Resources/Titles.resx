@@ -342,4 +342,7 @@
   <data name="InventoryAdvice" xml:space="preserve">
     <value>Inventory Advice</value>
   </data>
+  <data name="SelectStore" xml:space="preserve">
+    <value>Select Store</value>
+  </data>
 </root>

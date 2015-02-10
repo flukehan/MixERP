@@ -4,6 +4,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using MixERP.Net.Common.Domains;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Core.Modules.BackOffice.Resources;
 using MixERP.Net.FrontEnd.Base;
 
 namespace MixERP.Net.Core.Modules.BackOffice.OTS
@@ -39,7 +40,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.OTS
             using (HtmlGenericControl message = new HtmlGenericControl("div"))
             {
                 message.Attributes.Add("class", "ui positive message");
-                message.InnerText = "Opening inventory has already been entered for this office.";
+                message.InnerText = Labels.OpeningInventoryAlreadyEntered;
 
                 container.Controls.Add(message);
             }
@@ -49,7 +50,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.OTS
         {
             using (HtmlGenericControl header = new HtmlGenericControl("h2"))
             {
-                header.InnerText = "Opening Inventory";
+                header.InnerText = Titles.OpeningInventory;
                 container.Controls.Add(header);
             }
         }
@@ -72,14 +73,14 @@ namespace MixERP.Net.Core.Modules.BackOffice.OTS
         {
             using (TableRow headerRow = new TableRow())
             {
-                this.AddHeaderCell(headerRow, "ItemCodeInputText", "Item Code", "");
-                this.AddHeaderCell(headerRow, "ItemSelect", "Item Name","");
-                this.AddHeaderCell(headerRow, "StoreSelect", "Store Name", "");
-                this.AddHeaderCell(headerRow, "QuantityInputText", "Quantity", "integer text-right");
-                this.AddHeaderCell(headerRow, "UnitSelect", "Unit", "");
-                this.AddHeaderCell(headerRow, "AmountInputText", "Amount", "currency text-right");
-                this.AddHeaderCell(headerRow, "TotalInputText", "Total", "currency text-right");
-                this.AddHeaderCell(headerRow, "AddRowButton", "Action", "");
+                this.AddHeaderCell(headerRow, "ItemCodeInputText", Titles.ItemCode, "");
+                this.AddHeaderCell(headerRow, "ItemSelect", Titles.ItemName,"");
+                this.AddHeaderCell(headerRow, "StoreSelect", Titles.StoreName, "");
+                this.AddHeaderCell(headerRow, "QuantityInputText", Titles.Quantity, "integer text-right");
+                this.AddHeaderCell(headerRow, "UnitSelect", Titles.Unit, "");
+                this.AddHeaderCell(headerRow, "AmountInputText", Titles.Amount, "currency text-right");
+                this.AddHeaderCell(headerRow, "TotalInputText", Titles.Total, "currency text-right");
+                this.AddHeaderCell(headerRow, "AddRowButton", Titles.Action, "");
                
 
                 table.Controls.Add(headerRow);
@@ -187,7 +188,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.OTS
             {
                 saveButton.ID = "SaveButton";
                 saveButton.Attributes.Add("class", "small ui button red");
-                saveButton.Value = "Save";
+                saveButton.Value = Titles.Save;
 
                 container.Controls.Add(saveButton);
             }

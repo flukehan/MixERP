@@ -117,100 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AccessIsDenied" xml:space="preserve">
-    <value>Access is denied.</value>
+  <data name="Browse" xml:space="preserve">
+    <value>Browse</value>
   </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+  <data name="Comment" xml:space="preserve">
+    <value>Comment</value>
   </data>
-  <data name="ChangePassword" xml:space="preserve">
-    <value>Change Password</value>
+  <data name="FilePath" xml:space="preserve">
+    <value>File Path</value>
   </data>
-  <data name="ConfirmPassword" xml:space="preserve">
-    <value>Confirm Password</value>
+  <data name="Progress" xml:space="preserve">
+    <value>Progress</value>
   </data>
-  <data name="CurrentPassword" xml:space="preserve">
-    <value>Current Password</value>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
   </data>
-  <data name="Email" xml:space="preserve">
-    <value>Email</value>
+  <data name="Undo" xml:space="preserve">
+    <value>Undo</value>
   </data>
-  <data name="Fax" xml:space="preserve">
-    <value>Fax</value>
-  </data>
-  <data name="ManageProfile" xml:space="preserve">
-    <value>Manage Profile</value>
-  </data>
-  <data name="MixERPDocumentation" xml:space="preserve">
-    <value>MixERP Documentation</value>
-  </data>
-  <data name="NewPassword" xml:space="preserve">
-    <value>New Password</value>
-  </data>
-  <data name="No" xml:space="preserve">
-    <value>No</value>
-  </data>
-  <data name="None" xml:space="preserve">
-    <value>None</value>
-  </data>
-  <data name="Notifications" xml:space="preserve">
-    <value>Notifications</value>
-  </data>
-  <data name="OfficeCode" xml:space="preserve">
-    <value>Office Code</value>
-  </data>
-  <data name="Password" xml:space="preserve">
-    <value>Password</value>
-  </data>
-  <data name="Phone" xml:space="preserve">
-    <value>Phone</value>
-  </data>
-  <data name="PreparedOn" xml:space="preserve">
-    <value>Prepared On</value>
-  </data>
-  <data name="RememberMe" xml:space="preserve">
-    <value>Remember Me</value>
-  </data>
-  <data name="Select" xml:space="preserve">
-    <value>Select</value>
-  </data>
-  <data name="SelectLanguage" xml:space="preserve">
-    <value>Select Language</value>
-  </data>
-  <data name="SelectYourBranch" xml:space="preserve">
-    <value>Select Your Branch</value>
-  </data>
-  <data name="SignIn" xml:space="preserve">
-    <value>Sign In</value>
-  </data>
-  <data name="SigningIn" xml:space="preserve">
-    <value>Signing In</value>
-  </data>
-  <data name="SignOut" xml:space="preserve">
-    <value>Sign Out</value>
-  </data>
-  <data name="Url" xml:space="preserve">
-    <value>Url</value>
-  </data>
-  <data name="User" xml:space="preserve">
-    <value>User</value>
-  </data>
-  <data name="UserId" xml:space="preserve">
-    <value>User Id</value>
-  </data>
-  <data name="Username" xml:space="preserve">
-    <value>Username</value>
-  </data>
-  <data name="Yes" xml:space="preserve">
-    <value>Yes</value>
-  </data>
-  <data name="RestrictedTransactionMode" xml:space="preserve">
-    <value>Restricted Transaction Mode</value>
-  </data>
-  <data name="BackToPreviousPage" xml:space="preserve">
-    <value>Back to Previous Page</value>
-  </data>
-  <data name="Update" xml:space="preserve">
-    <value>Update</value>
+  <data name="Upload" xml:space="preserve">
+    <value>Upload</value>
   </data>
 </root>

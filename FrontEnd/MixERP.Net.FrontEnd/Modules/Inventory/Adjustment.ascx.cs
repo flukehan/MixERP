@@ -236,7 +236,7 @@ namespace MixERP.Net.Core.Modules.Inventory
         {
             using (HtmlGenericControl field = HtmlControlHelper.GetField("four wide column field"))
             {
-                using (HtmlGenericControl label = HtmlControlHelper.GetLabel("Select Store", "StoreSelect"))
+                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Titles.SelectStore, "StoreSelect"))
                 {
                     field.Controls.Add(label);
                 }

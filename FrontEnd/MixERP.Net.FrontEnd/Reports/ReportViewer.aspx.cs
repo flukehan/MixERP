@@ -100,7 +100,7 @@ namespace MixERP.Net.FrontEnd.Reports
             }
 
             this.updateButton.ID = "UpdateButton";
-            this.updateButton.Text = "Update";
+            this.updateButton.Text = Resources.Titles.Update;
             this.updateButton.CssClass = "myButton report-button";
             this.updateButton.Click += this.UpdateButton_Click;
 

@@ -18,8 +18,16 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using System.Reflection;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using MixERP.Net.Common;
 using MixERP.Net.Common.Domains;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Core.Modules.BackOffice.Resources;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.WebControls.Common;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Policy
 {
@@ -27,7 +35,241 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
+            this.CreateFormPanel(this.Placeholder1);
+            this.CreateGridPanel(this.Placeholder1);
+            this.CreateHiddenField(this.Placeholder1);
+            this.BindGrid();
         }
+
+        private void CreateHiddenField(Control container)
+        {
+            this.selectedMenusHidden = new HiddenField();
+            this.selectedMenusHidden.ID = "SelectedMenusHidden";
+            container.Controls.Add(this.selectedMenusHidden);
+        }
+
+        private void CreateHeader(Control container)
+        {
+            using (HtmlGenericControl header = HtmlControlHelper.GetPageHeader(Titles.MenuAccessPolicy))
+            {
+                container.Controls.Add(header);
+            }
+        }
+
+        private void CreateFormPanel(Control container)
+        {
+            using (HtmlGenericControl formSegment = HtmlControlHelper.GetFormSegment("ui tiny pink form segment"))
+            {
+                formSegment.Attributes.Add("style", "position:fixed;right:4px;top:40px;");
+                this.CreateHeader(formSegment);
+
+                using (HtmlGenericControl field = HtmlControlHelper.GetField())
+                {
+                    using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Titles.SelectUser, "UserSelect"))
+                    {
+                        field.Controls.Add(label);
+                    }
+
+                    this.userSelect = new DropDownList();
+                    userSelect.ID = "UserSelect";
+                    field.Controls.Add(userSelect);
+                    this.userSelect.DataSource = Data.Admin.User.GetUsers();
+                    this.userSelect.DataTextField = "UserName";
+                    this.userSelect.DataValueField = "UserId";
+                    this.userSelect.DataBind();
+
+                    formSegment.Controls.Add(field);
+                }
+
+                this.CreateButtons(formSegment);
+
+                container.Controls.Add(formSegment);
+            }
+        }
+
+        private void CreateButtons(Control container)
+        {
+            using (HtmlGenericControl buttons = new HtmlGenericControl("div"))
+            {
+                buttons.Attributes.Add("class", "ui buttons vpad8");
+
+                this.showButton = new Button();
+                this.showButton.CssClass = "ui red button";
+                this.showButton.Text = Titles.Show;
+                this.showButton.Click += this.ShowButton_Click;
+                buttons.Controls.Add(this.showButton);
+
+                using (HtmlInputButton checkAllButton = new HtmlInputButton())
+                {
+                    checkAllButton.ID = "CheckAllButton";
+                    checkAllButton.Attributes.Add("class", "ui blue button");
+                    checkAllButton.Value = Titles.CheckAll;
+
+                    buttons.Controls.Add(checkAllButton);
+                }
+
+                using (HtmlInputButton uncheckAllButton = new HtmlInputButton())
+                {
+                    uncheckAllButton.ID = "UncheckAllButton";
+                    uncheckAllButton.Attributes.Add("class", "ui pink button");
+                    uncheckAllButton.Value = Titles.UncheckAll;
+
+                    buttons.Controls.Add(uncheckAllButton);
+                }
+
+                this.saveButton = new Button();
+                this.saveButton.CssClass = "ui green button";
+                this.saveButton.Text = Titles.Save;
+                this.saveButton.Click += this.SaveButton_Click;
+                this.saveButton.OnClientClick = "return updateSelection();";
+                buttons.Controls.Add(this.saveButton);
+
+                container.Controls.Add(buttons);
+            }
+        }
+
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            int userId = Conversion.TryCastInteger(this.userSelect.SelectedValue);
+            int officeId = CurrentSession.GetOfficeId();
+            string menus = this.selectedMenusHidden.Value;
+
+            if (userId.Equals(0) || officeId.Equals(0))
+            {
+                return;
+            }
+
+            Data.Policy.Menu.SaveMenuPolicy(userId, officeId, menus);
+            this.BindGrid();
+        }
+
+        private void ShowButton_Click(object sender, EventArgs e)
+        {
+            this.BindGrid();
+        }
+
+        private void CreateGridPanel(Control container)
+        {
+            this.grid = new MixERPGridView();
+            grid.ID = "MenuAccessGridView";
+            grid.RowDataBound += this.Grid_RowDataBound;
+
+            container.Controls.Add(grid);
+        }
+
+        private void BindGrid()
+        {
+            int userId = Conversion.TryCastInteger(this.userSelect.SelectedValue);
+            int officeId = CurrentSession.GetOfficeId();
+            string culture = CurrentSession.GetCulture().Name;
+
+            if (userId.Equals(0) || officeId.Equals(0))
+            {
+                return;
+            }
+
+            grid.DataSource = Data.Policy.Menu.GetMenuPolicy(userId, officeId, culture);
+            grid.DataBind();
+        }
+
+        private void Grid_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.Header)
+            {
+                for (int i = 0; i < e.Row.Cells.Count -1; i++)
+                {
+                    e.Row.Cells[i].Text = this.GetLocalizedResource(e.Row.Cells[i].Text);                    
+                }
+            }
+
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                string url = e.Row.Cells[5].Text;
+
+                url = Server.HtmlDecode(url).Trim();
+
+                using (HtmlAnchor anchor = new HtmlAnchor())
+                {
+                    anchor.InnerText = url;
+                    anchor.Target = "_blank";
+                    anchor.HRef = this.Page.ResolveUrl(url); ;
+                    e.Row.Cells[5].Text = string.Empty;
+                    e.Row.Cells[5].Controls.Add(anchor);
+                }
+            }
+        }
+
+        private string GetLocalizedResource(string key)
+        {
+            Assembly ass = Assembly.GetAssembly(typeof(MenuAccess));
+            string fqName = ass.GetName().Name + ".Resources.Titles";
+            return LocalizationHelper.GetResourceString(ass, fqName, key);
+        }
+
+
+        #region IDisposable
+
+        private DropDownList userSelect;
+        private MixERPGridView grid;
+        private Button showButton;
+        private Button saveButton;
+        private HiddenField selectedMenusHidden;
+        private bool disposed;
+
+        public sealed override void Dispose()
+        {
+            if (!this.disposed)
+            {
+                this.Dispose(true);
+                base.Dispose();
+            }
+        }
+
+
+        private void Dispose(bool disposing)
+        {
+            if (!disposing)
+            {
+                return;
+            }
+
+            if (this.userSelect != null)
+            {
+                this.userSelect.Dispose();
+                this.userSelect = null;
+            }
+
+            if (this.grid != null)
+            {
+                this.grid.RowDataBound -= Grid_RowDataBound;
+                this.grid.Dispose();
+                this.grid = null;
+            }
+
+            if (this.showButton != null)
+            {
+                this.showButton.Click -= this.ShowButton_Click;
+                this.showButton.Dispose();
+                this.showButton = null;
+            }
+
+            if (this.saveButton != null)
+            {
+                this.saveButton.Click -= this.SaveButton_Click;
+                this.saveButton.Dispose();
+                this.saveButton = null;
+            }
+
+            if (this.selectedMenusHidden != null)
+            {
+                this.selectedMenusHidden.Dispose();
+                this.selectedMenusHidden = null;
+            }
+
+            this.disposed = true;
+        }
+
+        #endregion
 
         public override AccessLevel AccessLevel
         {

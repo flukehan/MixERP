@@ -37,7 +37,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
     [ScriptService]
     public class Attachments : WebService
     {
-        [WebMethod]
+        [WebMethod(EnableSession = true)]
         public bool DeleteAttachment(long id)
         {
             if (id <= 0)
@@ -45,7 +45,12 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
                 throw new ArgumentNullException("id");
             }
 
-            return this.DeleteImage(Data.Attachments.DeleteReturningPath(id));
+            if (CurrentSession.GetUserId() > 0)
+            {
+                return this.DeleteImage(Data.Attachments.DeleteReturningPath(id));
+            }
+
+            return false;
         }
 
         [WebMethod]

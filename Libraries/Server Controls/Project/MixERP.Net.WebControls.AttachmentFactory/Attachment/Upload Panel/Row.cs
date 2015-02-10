@@ -1,5 +1,6 @@
 ﻿using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.WebControls.AttachmentFactory.Resources;
 
 namespace MixERP.Net.WebControls.AttachmentFactory
 {
@@ -90,7 +91,7 @@ namespace MixERP.Net.WebControls.AttachmentFactory
                 {
                     browseButton.ID = "BrowseButton" + index;
                     browseButton.Attributes.Add("class", "browse ui small blue button");
-                    browseButton.Value = "Browse";
+                    browseButton.Value = Titles.Browse;
 
                     cell.Controls.Add(browseButton);
                 }

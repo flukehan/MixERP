@@ -7319,6 +7319,53 @@ ALTER TABLE transactions.transaction_master
 ADD CONSTRAINT transaction_master_office_id_chk
 CHECK(NOT policy.is_transaction_restricted(office_id));
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02.functions-and-logic/logic/functions/policy/policy.save_menu_policy.sql --<--<--
+DROP FUNCTION IF EXISTS policy.save_menu_policy
+(
+    _user_id        integer,
+    _office_id      integer,
+    _menu_ids       int[]
+);
+
+CREATE FUNCTION policy.save_menu_policy
+(
+    _user_id        integer,
+    _office_id      integer,
+    _menu_ids       int[]
+)
+RETURNS void
+VOLATILE AS
+$$
+BEGIN
+    DELETE FROM policy.menu_access
+    WHERE NOT policy.menu_access.menu_id = ANY(_menu_ids)
+    AND user_id = _user_id
+    AND office_id = _office_id;
+
+    WITH menus
+    AS
+    (
+        SELECT explode_array(_menu_ids) AS _menu_id
+    )
+    
+    INSERT INTO policy.menu_access(user_id, office_id, menu_id)
+    SELECT _user_id, _office_id, _menu_id
+    FROM menus
+    WHERE _menu_id NOT IN
+    (
+        SELECT menu_id
+        FROM policy.menu_access
+        WHERE policy.menu_access.user_id = _user_id
+        AND policy.menu_access.office_id = _office_id
+    );
+
+    RETURN;
+END
+$$
+LANGUAGE plpgsql;
+
+--SELECT * FROM policy.save_menu_policy(2, 2, string_to_array('1,2,3, 4', ',')::int[])
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02.functions-and-logic/logic/functions/public/poco_get_table_definition.sql --<--<--
 
 
@@ -21643,6 +21690,31 @@ INNER JOIN core.parties
 ON core.shipping_addresses.party_id=core.parties.party_id;
 
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05.scrud-views/core/core.state_sales_tax_scrud_view.sql --<--<--
+CREATE VIEW core.state_sales_tax_scrud_view
+AS
+SELECT 
+    core.state_sales_taxes.state_sales_tax_id,   
+    core.state_sales_taxes.state_sales_tax_code,
+    core.state_sales_taxes.state_sales_tax_name,
+    core.states.state_code || ' (' ||  core.states.state_name || ')' AS state,
+    core.entities.entity_name,
+    core.industries.industry_name,
+    core.item_groups.item_group_code || ' (' ||  core.item_groups.item_group_name || ')' AS item_group,
+    core.state_sales_taxes.rate
+FROM
+    core.state_sales_taxes
+INNER JOIN core.states
+ON core.state_sales_taxes.state_id=core.states.state_id
+LEFT JOIN core.entities
+ON core.state_sales_taxes.entity_id=core.entities.entity_id
+LEFT JOIN core.industries
+ON core.state_sales_taxes.industry_id=core.industries.industry_id
+LEFT JOIN core.item_groups
+ON core.state_sales_taxes.item_group_id=core.item_groups.item_group_id;
+
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/05.scrud-views/core/core.state_scrud_view.sql --<--<--
 CREATE VIEW core.state_scrud_view
 AS
@@ -22799,8 +22871,6 @@ UNION ALL SELECT 'Setup & Maintenance', NULL, 'FSM', 1, core.get_menu_id('FI')
 UNION ALL SELECT 'Chart of Accounts', '~/Modules/Finance/Setup/COA.mix', 'COA', 2, core.get_menu_id('FSM')
 UNION ALL SELECT 'Currency Management', '~/Modules/Finance/Setup/Currencies.mix', 'CUR', 2, core.get_menu_id('FSM')
 UNION ALL SELECT 'Bank Accounts', '~/Modules/Finance/Setup/BankAccounts.mix', 'CBA', 2, core.get_menu_id('FSM')
-UNION ALL SELECT 'Product GL Mapping', '~/Modules/Finance/Setup/ProductGLMapping.mix', 'PGM', 2, core.get_menu_id('FSM')
-UNION ALL SELECT 'Budgets & Targets', '~/Modules/Finance/Setup/BudgetAndTarget.mix', 'BT', 2, core.get_menu_id('FSM')
 UNION ALL SELECT 'Ageing Slabs', '~/Modules/Finance/Setup/AgeingSlabs.mix', 'AGS', 2, core.get_menu_id('FSM')
 UNION ALL SELECT 'Cash Flow Headings', '~/Modules/Finance/Setup/CashFlowHeadings.mix', 'CFH', 2, core.get_menu_id('FSM')
 UNION ALL SELECT 'Cash Flow Setup', '~/Modules/Finance/Setup/CashFlowSetup.mix', 'CFS', 2, core.get_menu_id('FSM')
@@ -22941,8 +23011,6 @@ SELECT core.get_menu_id('FSM'), 'fr-FR', 'Le programme d''installation & entreti
 SELECT core.get_menu_id('COA'), 'fr-FR', 'Plan comptable' UNION ALL
 SELECT core.get_menu_id('CUR'), 'fr-FR', 'Gestion de la devise' UNION ALL
 SELECT core.get_menu_id('CBA'), 'fr-FR', 'Comptes bancaires' UNION ALL
-SELECT core.get_menu_id('PGM'), 'fr-FR', 'Produit GL cartographie' UNION ALL
-SELECT core.get_menu_id('BT'), 'fr-FR', 'Les budgets des cibles &' UNION ALL
 SELECT core.get_menu_id('AGS'), 'fr-FR', 'Vieillissement des dalles' UNION ALL
 SELECT core.get_menu_id('CFH'), 'fr-FR', 'Positions de trésorerie' UNION ALL
 SELECT core.get_menu_id('CFS'), 'fr-FR', 'Configuration des flux de trésorerie' UNION ALL

@@ -65,8 +65,6 @@ UNION ALL SELECT 'Setup & Maintenance', NULL, 'FSM', 1, core.get_menu_id('FI')
 UNION ALL SELECT 'Chart of Accounts', '~/Modules/Finance/Setup/COA.mix', 'COA', 2, core.get_menu_id('FSM')
 UNION ALL SELECT 'Currency Management', '~/Modules/Finance/Setup/Currencies.mix', 'CUR', 2, core.get_menu_id('FSM')
 UNION ALL SELECT 'Bank Accounts', '~/Modules/Finance/Setup/BankAccounts.mix', 'CBA', 2, core.get_menu_id('FSM')
-UNION ALL SELECT 'Product GL Mapping', '~/Modules/Finance/Setup/ProductGLMapping.mix', 'PGM', 2, core.get_menu_id('FSM')
-UNION ALL SELECT 'Budgets & Targets', '~/Modules/Finance/Setup/BudgetAndTarget.mix', 'BT', 2, core.get_menu_id('FSM')
 UNION ALL SELECT 'Ageing Slabs', '~/Modules/Finance/Setup/AgeingSlabs.mix', 'AGS', 2, core.get_menu_id('FSM')
 UNION ALL SELECT 'Cash Flow Headings', '~/Modules/Finance/Setup/CashFlowHeadings.mix', 'CFH', 2, core.get_menu_id('FSM')
 UNION ALL SELECT 'Cash Flow Setup', '~/Modules/Finance/Setup/CashFlowSetup.mix', 'CFS', 2, core.get_menu_id('FSM')
@@ -112,9 +110,7 @@ UNION ALL SELECT 'Automatic Verification Policy', '~/Modules/BackOffice/Policy/A
 UNION ALL SELECT 'Menu Access Policy', '~/Modules/BackOffice/Policy/MenuAccess.mix', 'SMA', 2, core.get_menu_id('SPM')
 UNION ALL SELECT 'GL Access Policy', '~/Modules/BackOffice/Policy/GLAccess.mix', 'SAP', 2, core.get_menu_id('SPM')
 UNION ALL SELECT 'Store Policy', '~/Modules/BackOffice/Policy/Store.mix', 'SSP', 2, core.get_menu_id('SPM')
-UNION ALL SELECT 'Switches', '~/Modules/BackOffice/Policy/Switches.mix', 'SWI', 2, core.get_menu_id('SPM')
 UNION ALL SELECT 'Admin Tools', NULL, 'SAT', 1, core.get_menu_id('BO')
-UNION ALL SELECT 'SQL Query Tool', '~/Modules/BackOffice/Admin/Query.mix', 'SQL', 2, core.get_menu_id('SAT')
 UNION ALL SELECT 'Database Statistics', '~/Modules/BackOffice/Admin/DatabaseStatistics.mix', 'DBSTAT', 2, core.get_menu_id('SAT')
 UNION ALL SELECT 'Backup Database', '~/Modules/BackOffice/Admin/DatabaseBackup.mix', 'BAK', 2, core.get_menu_id('SAT')
 UNION ALL SELECT 'Change User Password', '~/Modules/BackOffice/Admin/ChangePassword.mix', 'PWD', 2, core.get_menu_id('SAT')
@@ -207,8 +203,6 @@ SELECT core.get_menu_id('FSM'), 'fr-FR', 'Le programme d''installation & entreti
 SELECT core.get_menu_id('COA'), 'fr-FR', 'Plan comptable' UNION ALL
 SELECT core.get_menu_id('CUR'), 'fr-FR', 'Gestion de la devise' UNION ALL
 SELECT core.get_menu_id('CBA'), 'fr-FR', 'Comptes bancaires' UNION ALL
-SELECT core.get_menu_id('PGM'), 'fr-FR', 'Produit GL cartographie' UNION ALL
-SELECT core.get_menu_id('BT'), 'fr-FR', 'Les budgets des cibles &' UNION ALL
 SELECT core.get_menu_id('AGS'), 'fr-FR', 'Vieillissement des dalles' UNION ALL
 SELECT core.get_menu_id('CFH'), 'fr-FR', 'Positions de trésorerie' UNION ALL
 SELECT core.get_menu_id('CFS'), 'fr-FR', 'Configuration des flux de trésorerie' UNION ALL
@@ -254,9 +248,7 @@ SELECT core.get_menu_id('SAV'), 'fr-FR', 'Politique sur la vérification automat
 SELECT core.get_menu_id('SMA'), 'fr-FR', 'Stratégie d''accès menu' UNION ALL
 SELECT core.get_menu_id('SAP'), 'fr-FR', 'Stratégie d''accès GL' UNION ALL
 SELECT core.get_menu_id('SSP'), 'fr-FR', 'Politique de boutique' UNION ALL
-SELECT core.get_menu_id('SWI'), 'fr-FR', 'Commutateurs' UNION ALL
 SELECT core.get_menu_id('SAT'), 'fr-FR', 'Outils d''administration' UNION ALL
-SELECT core.get_menu_id('SQL'), 'fr-FR', 'Outils d''administration' UNION ALL
 SELECT core.get_menu_id('DBSTAT'), 'fr-FR', 'Outil de requête SQL' UNION ALL
 SELECT core.get_menu_id('BAK'), 'fr-FR', 'Sauvegarde base de données' UNION ALL
 SELECT core.get_menu_id('PWD'), 'fr-FR', 'Changer mot de passe utilisateur' UNION ALL
