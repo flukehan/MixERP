@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CompoundUnitOfMeasureErrorMessage" xml:space="preserve">
-    <value>The base unit and compare unit cannot be same.</value>
+    <value>Base unit id and compare unit id cannot be same.</value>
   </data>
   <data name="InsufficientStockWarning" xml:space="preserve">
     <value>Only {0} {1} of {2} left in stock.</value>

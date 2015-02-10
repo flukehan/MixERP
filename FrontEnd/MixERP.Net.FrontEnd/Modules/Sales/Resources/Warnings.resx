@@ -127,10 +127,10 @@
     <value>The amount to should be greater than the amount from.</value>
   </data>
   <data name="DateErrorMessage" xml:space="preserve">
-    <value>Selected date is out of range.</value>
+    <value>Selected date is invalid. </value>
   </data>
   <data name="DueFrequencyErrorMessage" xml:space="preserve">
-    <value>Due days can only be 0 if due frequency id is selected.</value>
+    <value>Due days should be 0 if due frequency id is selected.</value>
   </data>
   <data name="InsufficientStockWarning" xml:space="preserve">
     <value>Only {0} {1} of {2} left in stock.</value>

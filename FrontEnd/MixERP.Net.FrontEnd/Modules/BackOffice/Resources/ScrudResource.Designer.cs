@@ -133,6 +133,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Allow Credit.
+        /// </summary>
+        internal static string allow_credit {
+            get {
+                return ResourceManager.GetString("allow_credit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Allow Sales.
         /// </summary>
         internal static string allow_sales {
@@ -219,6 +228,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string based_on_shipping_address {
             get {
                 return ResourceManager.GetString("based_on_shipping_address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Brand.
+        /// </summary>
+        internal static string brand {
+            get {
+                return ResourceManager.GetString("brand", resourceCulture);
             }
         }
         
@@ -394,6 +412,24 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cost Price.
+        /// </summary>
+        internal static string cost_price {
+            get {
+                return ResourceManager.GetString("cost_price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cost Price Includes Tax.
+        /// </summary>
+        internal static string cost_price_includes_tax {
+            get {
+                return ResourceManager.GetString("cost_price_includes_tax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Counter Code.
         /// </summary>
         internal static string counter_code {
@@ -529,6 +565,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CST Number.
+        /// </summary>
+        internal static string cst_number {
+            get {
+                return ResourceManager.GetString("cst_number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Currency.
         /// </summary>
         internal static string currency {
@@ -543,6 +588,24 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string currency_code {
             get {
                 return ResourceManager.GetString("currency_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Currency Name.
+        /// </summary>
+        internal static string currency_name {
+            get {
+                return ResourceManager.GetString("currency_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Currency Symbol.
+        /// </summary>
+        internal static string currency_symbol {
+            get {
+                return ResourceManager.GetString("currency_symbol", resourceCulture);
             }
         }
         
@@ -673,6 +736,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to First Name.
+        /// </summary>
+        internal static string first_name {
+            get {
+                return ResourceManager.GetString("first_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fiscal Year Code.
         /// </summary>
         internal static string fiscal_year_code {
@@ -754,6 +826,24 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Frequency Name.
+        /// </summary>
+        internal static string frequency_name {
+            get {
+                return ResourceManager.GetString("frequency_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Frequency Setup Code.
+        /// </summary>
+        internal static string frequency_setup_code {
+            get {
+                return ResourceManager.GetString("frequency_setup_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Frequency Setup Id.
         /// </summary>
         internal static string frequency_setup_id {
@@ -772,6 +862,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to GL Head.
+        /// </summary>
+        internal static string gl_head {
+            get {
+                return ResourceManager.GetString("gl_head", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gl Verification Limit.
         /// </summary>
         internal static string gl_verification_limit {
@@ -786,6 +885,33 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string has_child {
             get {
                 return ResourceManager.GetString("has_child", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Height In Centimeters.
+        /// </summary>
+        internal static string height_in_centimeters {
+            get {
+                return ResourceManager.GetString("height_in_centimeters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hot item.
+        /// </summary>
+        internal static string hot_item {
+            get {
+                return ResourceManager.GetString("hot_item", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hundredth Name.
+        /// </summary>
+        internal static string hundredth_name {
+            get {
+                return ResourceManager.GetString("hundredth_name", resourceCulture);
             }
         }
         
@@ -844,6 +970,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Is Supplier.
+        /// </summary>
+        internal static string is_supplier {
+            get {
+                return ResourceManager.GetString("is_supplier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Is System.
         /// </summary>
         internal static string is_system {
@@ -867,6 +1002,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string item {
             get {
                 return ResourceManager.GetString("item", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Code.
+        /// </summary>
+        internal static string item_code {
+            get {
+                return ResourceManager.GetString("item_code", resourceCulture);
             }
         }
         
@@ -916,6 +1060,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Item Name.
+        /// </summary>
+        internal static string item_name {
+            get {
+                return ResourceManager.GetString("item_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Last Analyze On.
         /// </summary>
         internal static string last_analyze {
@@ -943,11 +1096,83 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Last Name.
+        /// </summary>
+        internal static string last_name {
+            get {
+                return ResourceManager.GetString("last_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Last Vacuum On.
         /// </summary>
         internal static string last_vacuum {
             get {
                 return ResourceManager.GetString("last_vacuum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lead Time In Days.
+        /// </summary>
+        internal static string lead_time_in_days {
+            get {
+                return ResourceManager.GetString("lead_time_in_days", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Length In Centimeters.
+        /// </summary>
+        internal static string length_in_centimeters {
+            get {
+                return ResourceManager.GetString("length_in_centimeters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Machinable.
+        /// </summary>
+        internal static string machinable {
+            get {
+                return ResourceManager.GetString("machinable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maintain Stock.
+        /// </summary>
+        internal static string maintain_stock {
+            get {
+                return ResourceManager.GetString("maintain_stock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maximum Credit Amount.
+        /// </summary>
+        internal static string maximum_credit_amount {
+            get {
+                return ResourceManager.GetString("maximum_credit_amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maximum Credit Period.
+        /// </summary>
+        internal static string maximum_credit_period {
+            get {
+                return ResourceManager.GetString("maximum_credit_period", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Middle Name.
+        /// </summary>
+        internal static string middle_name {
+            get {
+                return ResourceManager.GetString("middle_name", resourceCulture);
             }
         }
         
@@ -1096,11 +1321,29 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Party Code.
+        /// </summary>
+        internal static string party_code {
+            get {
+                return ResourceManager.GetString("party_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Party Id.
         /// </summary>
         internal static string party_id {
             get {
                 return ResourceManager.GetString("party_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Party Name.
+        /// </summary>
+        internal static string party_name {
+            get {
+                return ResourceManager.GetString("party_name", resourceCulture);
             }
         }
         
@@ -1114,11 +1357,29 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Party Tpye Code.
+        /// </summary>
+        internal static string party_type_code {
+            get {
+                return ResourceManager.GetString("party_type_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Party Type Id.
         /// </summary>
         internal static string party_type_id {
             get {
                 return ResourceManager.GetString("party_type_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Party Type Name.
+        /// </summary>
+        internal static string party_type_name {
+            get {
+                return ResourceManager.GetString("party_type_name", resourceCulture);
             }
         }
         
@@ -1150,11 +1411,38 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Policy Id.
+        ///   Looks up a localized string similar to Policy id.
         /// </summary>
         internal static string policy_id {
             get {
                 return ResourceManager.GetString("policy_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preferred Shipping Mail Type.
+        /// </summary>
+        internal static string preferred_shipping_mail_type {
+            get {
+                return ResourceManager.GetString("preferred_shipping_mail_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preferred Shipping Package Shape.
+        /// </summary>
+        internal static string preferred_shipping_package_shape {
+            get {
+                return ResourceManager.GetString("preferred_shipping_package_shape", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preferred Supplier.
+        /// </summary>
+        internal static string preferred_supplier {
+            get {
+                return ResourceManager.GetString("preferred_supplier", resourceCulture);
             }
         }
         
@@ -1227,6 +1515,33 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string relname {
             get {
                 return ResourceManager.GetString("relname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reorder Level.
+        /// </summary>
+        internal static string reorder_level {
+            get {
+                return ResourceManager.GetString("reorder_level", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reorder Quantity.
+        /// </summary>
+        internal static string reorder_quantity {
+            get {
+                return ResourceManager.GetString("reorder_quantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reorder Unit.
+        /// </summary>
+        internal static string reorder_unit {
+            get {
+                return ResourceManager.GetString("reorder_unit", resourceCulture);
             }
         }
         
@@ -1515,6 +1830,33 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string self_verification_limit {
             get {
                 return ResourceManager.GetString("self_verification_limit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selling Price.
+        /// </summary>
+        internal static string selling_price {
+            get {
+                return ResourceManager.GetString("selling_price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selling Price Includes Tax.
+        /// </summary>
+        internal static string selling_price_includes_tax {
+            get {
+                return ResourceManager.GetString("selling_price_includes_tax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SST Number.
+        /// </summary>
+        internal static string sst_number {
+            get {
+                return ResourceManager.GetString("sst_number", resourceCulture);
             }
         }
         
@@ -1816,6 +2158,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unit.
+        /// </summary>
+        internal static string unit {
+            get {
+                return ResourceManager.GetString("unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Url.
         /// </summary>
         internal static string url {
@@ -1920,6 +2271,24 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string verify_sales_transactions {
             get {
                 return ResourceManager.GetString("verify_sales_transactions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weight In Grams.
+        /// </summary>
+        internal static string weight_in_grams {
+            get {
+                return ResourceManager.GetString("weight_in_grams", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Width In Centimeters.
+        /// </summary>
+        internal static string width_in_centimeters {
+            get {
+                return ResourceManager.GetString("width_in_centimeters", resourceCulture);
             }
         }
         

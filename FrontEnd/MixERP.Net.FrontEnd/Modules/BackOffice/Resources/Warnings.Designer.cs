@@ -97,7 +97,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Selected date is out of range..
+        ///   Looks up a localized string similar to Selected date is invalid..
         /// </summary>
         internal static string DateErrorMessage {
             get {

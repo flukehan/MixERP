@@ -58,7 +58,7 @@ namespace MixERP.Net.Core.Modules.BackOffice
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "core.countries.country_id", "core.countries");
+            ScrudHelper.AddDisplayView(displayViews, "core.countries.country_id", "core.country_scrud_view");
             return string.Join(",", displayViews);
         }
     }

@@ -121,7 +121,7 @@
     <value>Access is denied.</value>
   </data>
   <data name="CompareDaysErrorMessage" xml:space="preserve">
-    <value>From days should not be greater than the to days.</value>
+    <value>From days should be less than to days.</value>
   </data>
   <data name="InsufficientBalanceInCashRepository" xml:space="preserve">
     <value>There is no sufficient balance in the cash repository to process this transaction.</value>

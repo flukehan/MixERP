@@ -88,7 +88,7 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Selected date is out of range..
+        ///   Looks up a localized string similar to Selected date is invalid. .
         /// </summary>
         internal static string DateErrorMessage {
             get {
@@ -97,7 +97,7 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Due days can only be 0 if due frequency id is selected..
+        ///   Looks up a localized string similar to Due days should be 0 if due frequency id is selected..
         /// </summary>
         internal static string DueFrequencyErrorMessage {
             get {

@@ -37,7 +37,7 @@ namespace MixERP.Net.Core.Modules.BackOffice
                 scrud.TableSchema = "core";
                 scrud.Table = "flag_types";
                 scrud.ViewSchema = "core";
-                scrud.View = "flag_types";
+                scrud.View = "flag_type_scrud_view";
 
                 scrud.Text = Titles.Flags;
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof(Flags));
