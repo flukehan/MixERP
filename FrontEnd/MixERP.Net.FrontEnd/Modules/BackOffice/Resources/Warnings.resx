@@ -130,7 +130,7 @@
     <value>Cannot continue the task. Please correct configuration issues.</value>
   </data>
   <data name="DateErrorMessage" xml:space="preserve">
-    <value>Selected date is out of range.</value>
+    <value>Selected date is invalid.</value>
   </data>
   <data name="InvalidUser" xml:space="preserve">
     <value>Invalid user.</value>

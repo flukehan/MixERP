@@ -70,7 +70,7 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to From days should not be greater than the to days..
+        ///   Looks up a localized string similar to From days should be less than to days..
         /// </summary>
         internal static string CompareDaysErrorMessage {
             get {

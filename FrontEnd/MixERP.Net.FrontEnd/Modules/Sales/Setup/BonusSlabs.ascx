@@ -22,10 +22,14 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
 <script type="text/javascript">
 
-    function scrudCustomValidator() {
-        var effectiveFromTextbox = $("#effective_from_textbox");
-        var endsOnTextbox = $("$ends_on_textbox");
+    var effectiveFromTextbox = $("#effective_from_textbox");
+    var endsOnTextbox = $("#ends_on_textbox");
 
+    $(document).ready(function () {
+        scrudCustomValidator();
+    });
+
+    function scrudCustomValidator() {
         var effectiveFrom = parseDate(effectiveFromTextbox.val());
         var endsOn = parseDate(endsOnTextbox.val());
 
@@ -35,4 +39,5 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         };
         return true;
     };
+
 </script>

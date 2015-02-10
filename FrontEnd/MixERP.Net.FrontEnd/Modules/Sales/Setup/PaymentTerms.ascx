@@ -25,12 +25,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         var lateFeeIdDropdownlist = $("#late_fee_id_dropdownlist");
         var lateFeePostingFrequencyIdDropdownlist = $("#late_fee_posting_frequency_id_dropdownlist");
 
-
         var dueDays = parseInt2(dueDaysTextbox.val());
         var dueFrequency = parseInt2(dueFrequencyIdDropdownlist.getSelectedValue());
         var lateFee = parseInt2(lateFeeIdDropdownlist.getSelectedValue());
         var lateFeePostingFrequency = parseInt2(lateFeePostingFrequencyIdDropdownlist.getSelectedValue());
-
 
         if (!dueFrequency && dueDays === 0 || dueFrequency && dueDays > 0) {
             displayMessage(window.dueFrequencyErrorMessageLocalized);
