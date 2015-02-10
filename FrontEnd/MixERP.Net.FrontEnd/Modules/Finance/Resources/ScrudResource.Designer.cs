@@ -133,6 +133,24 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Address Line 1.
+        /// </summary>
+        internal static string address_line_1 {
+            get {
+                return ResourceManager.GetString("address_line_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Address Line 2.
+        /// </summary>
+        internal static string address_line_2 {
+            get {
+                return ResourceManager.GetString("address_line_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ageing Slab Id.
         /// </summary>
         internal static string ageing_slab_id {
@@ -349,6 +367,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to City.
+        /// </summary>
+        internal static string city {
+            get {
+                return ResourceManager.GetString("city", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confidential.
         /// </summary>
         internal static string confidential {
@@ -385,11 +412,29 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Country.
+        /// </summary>
+        internal static string country {
+            get {
+                return ResourceManager.GetString("country", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Credit.
         /// </summary>
         internal static string credit {
             get {
                 return ResourceManager.GetString("credit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Currency .
+        /// </summary>
+        internal static string currency {
+            get {
+                return ResourceManager.GetString("currency", resourceCulture);
             }
         }
         
@@ -448,6 +493,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        internal static string email {
+            get {
+                return ResourceManager.GetString("email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ER.
         /// </summary>
         internal static string er {
@@ -462,6 +516,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string external_code {
             get {
                 return ResourceManager.GetString("external_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fax.
+        /// </summary>
+        internal static string fax {
+            get {
+                return ResourceManager.GetString("fax", resourceCulture);
             }
         }
         
@@ -601,6 +664,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nick Name.
+        /// </summary>
+        internal static string nick_name {
+            get {
+                return ResourceManager.GetString("nick_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Normally Debit.
         /// </summary>
         internal static string normally_debit {
@@ -615,6 +687,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string office {
             get {
                 return ResourceManager.GetString("office", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Office Code.
+        /// </summary>
+        internal static string office_code {
+            get {
+                return ResourceManager.GetString("office_code", resourceCulture);
             }
         }
         
@@ -655,6 +736,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Parent Account Master Id.
+        /// </summary>
+        internal static string parent_account_master_id {
+            get {
+                return ResourceManager.GetString("parent_account_master_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parent Account Name.
         /// </summary>
         internal static string parent_account_name {
@@ -682,6 +772,33 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Parent Office .
+        /// </summary>
+        internal static string parent_office {
+            get {
+                return ResourceManager.GetString("parent_office", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phone.
+        /// </summary>
+        internal static string phone {
+            get {
+                return ResourceManager.GetString("phone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PO Box.
+        /// </summary>
+        internal static string po_box {
+            get {
+                return ResourceManager.GetString("po_box", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Price.
         /// </summary>
         internal static string price {
@@ -705,6 +822,24 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string rate {
             get {
                 return ResourceManager.GetString("rate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registration Date.
+        /// </summary>
+        internal static string registration_date {
+            get {
+                return ResourceManager.GetString("registration_date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registration Number.
+        /// </summary>
+        internal static string registration_number {
+            get {
+                return ResourceManager.GetString("registration_number", resourceCulture);
             }
         }
         
@@ -745,11 +880,29 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to State.
+        /// </summary>
+        internal static string state {
+            get {
+                return ResourceManager.GetString("state", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Statement Reference.
         /// </summary>
         internal static string statement_reference {
             get {
                 return ResourceManager.GetString("statement_reference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Street.
+        /// </summary>
+        internal static string street {
+            get {
+                return ResourceManager.GetString("street", resourceCulture);
             }
         }
         
@@ -871,6 +1024,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to URL.
+        /// </summary>
+        internal static string url {
+            get {
+                return ResourceManager.GetString("url", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User Id.
         /// </summary>
         internal static string user_id {
@@ -894,6 +1056,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string value_date {
             get {
                 return ResourceManager.GetString("value_date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ZIP Code.
+        /// </summary>
+        internal static string zip_code {
+            get {
+                return ResourceManager.GetString("zip_code", resourceCulture);
             }
         }
     }
