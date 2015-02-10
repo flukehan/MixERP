@@ -75,7 +75,7 @@ namespace MixERP.Net.Core.Modules.BackOffice
         {
             List<string> displayViews = new List<string>();
             ScrudHelper.AddDisplayView(displayViews, "core.frequencies.frequency_id", "core.frequency_selector_view");
-            ScrudHelper.AddDisplayView(displayViews, "core.fiscal_year.fiscal_year_code", "core.fiscal_year_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.fiscal_year.fiscal_year_code", "core.fiscal_year_scrud_view");
             return string.Join(",", displayViews);
         }
     }
