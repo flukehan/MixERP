@@ -424,10 +424,18 @@ namespace MixERP.Net.FrontEnd
             Collection<ListItem> items = new Collection<ListItem>();
             items.Add(new ListItem("English (United States)", "en-US"));
             items.Add(new ListItem("English (Great Britain)", "en-GB"));
-            items.Add(new ListItem("Français (France)", "fr-FR"));
             items.Add(new ListItem("Deutsch (Deutschland)", "de-DE"));
-            items.Add(new ListItem("नेपाली (नेपाल)", "ne-NP"));
-            items.Add(new ListItem("हिन्दी (India)", "hi-IN"));
+            items.Add(new ListItem("español (España, alfabetización internacional)", "es-ES"));
+            items.Add(new ListItem("Filipino (Pilipinas)", "fil-PH"));
+            items.Add(new ListItem("français (France)", "fr-FR"));
+            items.Add(new ListItem("Bahasa Indonesia (Indonesia)", "id-ID"));
+            items.Add(new ListItem("日本語 (日本)", "ja-JP"));
+            items.Add(new ListItem("Bahasa Melayu (Malaysia)", "ms-MY"));
+            items.Add(new ListItem("Nederlands (Nederland)", "nl-NL"));
+            items.Add(new ListItem("português (Portugal)", "pt-PT"));
+            items.Add(new ListItem("русский (Россия)", "ru-RU"));
+            items.Add(new ListItem("svenska (Sverige)", "sv-SE"));
+            items.Add(new ListItem("中文(中华人民共和国)", "zh-CN"));
 
             return items;
         }

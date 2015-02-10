@@ -43,9 +43,12 @@ BEGIN
         ON core.menus.menu_id = core.menu_locale.menu_id
         LEFT JOIN policy.menu_access
         ON core.menus.menu_id = policy.menu_access.menu_id
-        AND policy.menu_access.user_id = $1
+        WHERE policy.menu_access.user_id = $1
         AND policy.menu_access.office_id = $2
+        AND core.menu_locale.culture = $3
         ORDER BY core.menus.menu_id;
+
+        RETURN;
     END IF;
     
     RETURN QUERY
@@ -62,6 +65,8 @@ BEGIN
     AND policy.menu_access.user_id = $1
     AND policy.menu_access.office_id = $2
     ORDER BY core.menus.menu_id;
+
+    RETURN;
 END
 $$
 LANGUAGE plpgsql;
