@@ -79,6 +79,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account Master.
+        /// </summary>
+        internal static string account_master {
+            get {
+                return ResourceManager.GetString("account_master", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Account Master Code.
         /// </summary>
         internal static string account_master_code {
@@ -984,6 +993,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string is_system {
             get {
                 return ResourceManager.GetString("is_system", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Transaction Node.
+        /// </summary>
+        internal static string is_transaction_node {
+            get {
+                return ResourceManager.GetString("is_transaction_node", resourceCulture);
             }
         }
         

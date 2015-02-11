@@ -864,4 +864,10 @@
   <data name="width_in_centimeters" xml:space="preserve">
     <value>Width In Centimeters</value>
   </data>
+  <data name="account_master" xml:space="preserve">
+    <value>Account Master</value>
+  </data>
+  <data name="is_transaction_node" xml:space="preserve">
+    <value>Is Transaction Node</value>
+  </data>
 </root>
