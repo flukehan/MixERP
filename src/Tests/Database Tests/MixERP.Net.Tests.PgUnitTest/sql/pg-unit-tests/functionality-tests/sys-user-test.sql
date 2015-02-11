@@ -68,31 +68,3 @@ END
 $$
 LANGUAGE plpgsql;
 
-DROP FUNCTION IF EXISTS unit_tests.check_sys_user_password();
-
-CREATE FUNCTION unit_tests.check_sys_user_password()
-RETURNS test_result
-AS
-$$
-DECLARE message test_result = '';
-DECLARE sys_user_name text;
-BEGIN
-	SELECT user_name INTO sys_user_name
-	FROM office.users
-	INNER JOIN office.roles
-	ON office.users.role_id = office.roles.role_id
-	WHERE office.roles.is_system = true
-	LIMIT 1;
-
-	IF office.validate_login(sys_user_name, '') THEN
-		SELECT assert.fail('Blank password was accepted for sys_user and was allowed to login.') INTO message;	
-		RETURN message;		
-	END IF;
-
-	SELECT assert.ok('End of test.') INTO message;
-	RETURN message;
-END
-$$
-LANGUAGE plpgsql;
-
-

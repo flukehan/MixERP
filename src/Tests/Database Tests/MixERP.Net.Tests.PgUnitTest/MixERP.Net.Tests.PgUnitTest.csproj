@@ -61,9 +61,6 @@
     <Compile Include="Helpers\TestHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\..\..\..\..\a\mixerp.dxp">
-      <Link>mixerp.dxp</Link>
-    </None>
     <None Include="..\..\..\mixerp.licenseheader">
       <Link>mixerp.licenseheader</Link>
     </None>
@@ -81,7 +78,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="sql\install-unit-test.sql" />
     <Content Include="sql\pg-unit-tests\functionality-tests\gl-mapping.test.sql" />
     <Content Include="sql\pg-unit-tests\functionality-tests\index.html" />
     <Content Include="sql\pg-unit-tests\functionality-tests\interest-calculation-test.sql" />

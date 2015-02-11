@@ -461,8 +461,6 @@
     <Content Include="Scripts\colorpicker\swatches\jquery.ui.colorpicker-crayola.js" />
     <Content Include="Scripts\colorpicker\swatches\jquery.ui.colorpicker-pantone.js" />
     <Content Include="Scripts\colorpicker\swatches\jquery.ui.colorpicker-ral-classic.js" />
-    <Content Include="Scripts\colorpicker\test\events.js" />
-    <Content Include="Scripts\colorpicker\test\index.html" />
     <Content Include="Scripts\Datamaps\datamaps.all.min.js" />
     <Content Include="Scripts\jquery-1.6.4.js" />
     <Content Include="Scripts\jquery-1.6.4.min.js" />

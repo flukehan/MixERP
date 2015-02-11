@@ -74,6 +74,7 @@ BEGIN
         _cash_repository_id                 := NULL;
     END IF;
 
+    DROP TABLE IF EXISTS temp_stock_details CASCADE;
     CREATE TEMPORARY TABLE temp_stock_details
     (
         id                              SERIAL PRIMARY KEY,
@@ -100,6 +101,7 @@ BEGIN
     ) ON COMMIT DROP;
 
 
+    DROP TABLE IF EXISTS temp_stock_tax_details;
     CREATE TEMPORARY TABLE temp_stock_tax_details
     (
         id                                      SERIAL,
@@ -183,6 +185,7 @@ BEGIN
 
     _payable                                := _grand_total - COALESCE(_discount_total, 0) + COALESCE(_tax_total, 0) + COALESCE(_shipping_charge, 0);
 
+    DROP TABLE IF EXISTS temp_transaction_details;
     CREATE TEMPORARY TABLE temp_transaction_details
     (
         transaction_master_id       BIGINT, 

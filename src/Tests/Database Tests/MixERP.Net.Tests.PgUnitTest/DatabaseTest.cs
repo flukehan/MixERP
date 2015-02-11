@@ -38,6 +38,8 @@ namespace MixERP.Net.Tests.PgUnitTest
             {
                 Assert.Fail(message);
             }
+
+            Assert.Pass(message);
         }
     }
 }

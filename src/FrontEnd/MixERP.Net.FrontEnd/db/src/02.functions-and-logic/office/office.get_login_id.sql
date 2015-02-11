@@ -1,3 +1,5 @@
+DROP FUNCTION IF EXISTS office.get_login_id(_user_id integer);
+
 CREATE FUNCTION office.get_login_id(_user_id integer)
 RETURNS bigint
 AS
@@ -14,6 +16,7 @@ BEGIN
             FROM audit.logins
             WHERE user_id=$1
         )
+        LIMIT 1
     );
 END
 $$

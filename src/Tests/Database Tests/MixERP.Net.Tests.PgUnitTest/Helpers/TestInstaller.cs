@@ -33,7 +33,6 @@ namespace MixERP.Net.Tests.PgUnitTest.Helpers
 
         public static bool InstallTests()
         {
-            RunInstallScript();
             InstallUnitTests();
             return true;
         }
@@ -99,21 +98,5 @@ namespace MixERP.Net.Tests.PgUnitTest.Helpers
             }
         }
 
-        private static void RunInstallScript()
-        {
-            bool run = Conversion.TryCastBoolean(ConfigurationManager.AppSettings["RunInstallScript"]);
-
-            if (!run)
-            {
-                return;
-            }
-
-            string script = ConfigurationManager.AppSettings["InstallScriptPath"];
-
-            using (NpgsqlCommand command = new NpgsqlCommand(script))
-            {
-                DbOperation.ExecuteNonQuery(command);
-            }
-        }
     }
 }

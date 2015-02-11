@@ -48,6 +48,9 @@ BEGIN
     SELECT _office_code, _office_name, _nick_name, _registration_date, _currency_code
     RETURNING office_id INTO _office_id;
 
+    INSERT INTO office.users(role_id, office_id, user_name, password, full_name)
+    SELECT office.get_role_id_by_role_code('SYST'), _office_id, 'sys', '', 'System';
+    
     INSERT INTO office.users(role_id,office_id,user_name,password, full_name, elevated)
     SELECT office.get_role_id_by_role_code('ADMN'), _office_id, _user_name, _password, _admin_name, true
     RETURNING user_id INTO _user_id;

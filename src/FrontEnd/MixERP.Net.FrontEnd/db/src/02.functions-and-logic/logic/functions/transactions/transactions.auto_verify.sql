@@ -50,7 +50,7 @@ BEGIN
     FROM
     transactions.transaction_master
     WHERE transactions.transaction_master.transaction_master_id=_transaction_master_id;
-    
+
     IF(_voucher_date <> _value_date) THEN
         RAISE EXCEPTION 'Access is denied. You cannot verify past or futuer dated transaction.';
     END IF;
@@ -172,76 +172,73 @@ CREATE FUNCTION unit_tests.auto_verify_sales_test1()
 RETURNS public.test_result
 AS
 $$
-        DECLARE _value_date date;
-        DECLARE _tran_id bigint;
-        DECLARE _verification_status_id smallint;
-        DECLARE message test_result;
+    DECLARE _value_date                             date;
+    DECLARE _tran_id                                bigint;
+    DECLARE _verification_status_id                 smallint;
+    DECLARE _book_name                              national character varying(12)='Sales.Direct';
+    DECLARE _office_id                              integer;
+    DECLARE _user_id                                integer;
+    DECLARE _login_id                               bigint;
+    DECLARE _cost_center_id                         integer;
+    DECLARE _reference_number                       national character varying(24)='Plpgunit.fixture';
+    DECLARE _statement_reference                    text='Plpgunit test was here.';
+    DECLARE _is_credit                              boolean=false;
+    DECLARE _payment_term_id                        integer;
+    DECLARE _party_code                             national character varying(12);
+    DECLARE _price_type_id                          integer;
+    DECLARE _salesperson_id                         integer;
+    DECLARE _shipper_id                             integer;
+    DECLARE _shipping_address_code                  national character varying(12)='';
+    DECLARE _store_id                               integer;
+    DECLARE _is_non_taxable_sales                   boolean=true;
+    DECLARE _details                                transactions.stock_detail_type[];
+    DECLARE _attachments                            core.attachment_type[];
+    DECLARE message                                 test_result;
 BEGIN
-        _value_date := NOW()::date;
+    PERFORM unit_tests.create_mock();
+    PERFORM unit_tests.sign_in_test();
 
-        PERFORM unit_tests.create_dummy_office();
-        PERFORM unit_tests.create_dummy_users();
-        PERFORM unit_tests.create_dummy_accounts();
-        PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), true, 0, true, 0, true, 0, '1-1-2000', '1-1-2020', true);
+    _office_id          := office.get_office_id_by_office_code('dummy-off01');
+    _user_id            := office.get_user_id_by_user_name('plpgunit-test-user-000001');
+    _login_id           := office.get_login_id(_user_id);
+    _value_date         := transactions.get_value_date(_office_id);
+    _cost_center_id     := office.get_cost_center_id_by_cost_center_code('dummy-cs01');
+    _payment_term_id    := core.get_payment_term_id_by_payment_term_code('dummy-pt01');
+    _party_code         := 'dummy-pr01';
+    _price_type_id      := core.get_price_type_id_by_price_type_code('dummy-pt01');
+    _salesperson_id     := core.get_salesperson_id_by_salesperson_code('dummy-sp01');
+    _shipper_id         := core.get_shipper_id_by_shipper_code('dummy-sh01');
+    _store_id           := office.get_store_id_by_store_code('dummy-st01');
 
-        _tran_id := nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
-
-        INSERT INTO transactions.transaction_master
-        (
-                transaction_master_id, 
-                transaction_counter, 
-                transaction_code, 
-                book, 
-                value_date, 
-                user_id, 
-                login_id, 
-                office_id, 
-                reference_number, 
-                statement_reference
-        )
-        SELECT 
-        _tran_id, 
-        transactions.get_new_transaction_counter(_value_date), 
-        transactions.get_transaction_code(_value_date, office.get_office_id_by_office_code('dummy-off01'), office.get_user_id_by_user_name('plpgunit-test-user-000001'), 1),
-        'Sales.Direct',
-        _value_date,
-        office.get_user_id_by_user_name('plpgunit-test-user-000001'),
-        1,
-        office.get_office_id_by_office_code('dummy-off01'),
-        'REF# TEST',
-        'Thou art not able to see this.';
+    
+    _details            := ARRAY[
+                             ROW(_store_id, 'dummy-it01', 1, 'Test Mock Unit',1800000, 0, 0, '', 0)::transactions.stock_detail_type,
+                             ROW(_store_id, 'dummy-it02', 2, 'Test Mock Unit',1300000, 300, 0, '', 0)::transactions.stock_detail_type];
+             
+    
+    PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), true, 0, true, 0, true, 0, '1-1-2000', '1-1-2020', true);
 
 
+    SELECT * FROM transactions.post_sales
+    (
+        _book_name,_office_id, _user_id, _login_id, _value_date, _cost_center_id, _reference_number, _statement_reference,
+        _is_credit, _payment_term_id, _party_code, _price_type_id, _salesperson_id, _shipper_id,
+        _shipping_address_code,
+        _store_id,
+        _is_non_taxable_sales,
+        _details,
+        _attachments
+    ) INTO _tran_id;
 
-        INSERT INTO transactions.transaction_details
-        (
-                transaction_master_id, 
-                tran_type, 
-                account_id, 
-                statement_reference, 
-                currency_code, 
-                amount_in_currency, 
-                local_currency_code,    
-                er, 
-                amount_in_local_currency
-        )
+    SELECT verification_status_id
+    INTO _verification_status_id
+    FROM transactions.transaction_master
+    WHERE transaction_master_id = _tran_id;
 
-        SELECT _tran_id, 'Cr', core.get_account_id_by_account_number('TEST-ACC-001'), '', 'NPR', 12000, 'NPR', 1, 12000 UNION ALL
-        SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-002'), '', 'NPR', 3000, 'NPR', 1, 3000 UNION ALL
-        SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
-
-
-        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), office.get_office_id_by_office_code('dummy-off01'));
-
-        SELECT verification_status_id
-        INTO _verification_status_id
-        FROM transactions.transaction_master
-        WHERE transaction_master_id = _tran_id;
-
-        IF(_verification_status_id < 1) THEN
-                SELECT assert.fail('This transaction should have been verified.') INTO message;
-                RETURN message;
-        END IF;
+    IF(_verification_status_id < 1) THEN
+        SELECT assert.fail('This transaction should have been verified.') INTO message;
+        RETURN message;
+    END IF;
 
     SELECT assert.ok('End of test.') INTO message;  
     RETURN message;
@@ -256,76 +253,72 @@ CREATE FUNCTION unit_tests.auto_verify_sales_test2()
 RETURNS public.test_result
 AS
 $$
-        DECLARE _value_date date;
-        DECLARE _tran_id bigint;
-        DECLARE _verification_status_id smallint;
-        DECLARE message test_result;
+    DECLARE _value_date                             date;
+    DECLARE _tran_id                                bigint;
+    DECLARE _verification_status_id                 smallint;
+    DECLARE _book_name                              national character varying(12)='Sales.Direct';
+    DECLARE _office_id                              integer;
+    DECLARE _user_id                                integer;
+    DECLARE _login_id                               bigint;
+    DECLARE _cost_center_id                         integer;
+    DECLARE _reference_number                       national character varying(24)='Plpgunit.fixture';
+    DECLARE _statement_reference                    text='Plpgunit test was here.';
+    DECLARE _is_credit                              boolean=false;
+    DECLARE _payment_term_id                        integer;
+    DECLARE _party_code                             national character varying(12);
+    DECLARE _price_type_id                          integer;
+    DECLARE _salesperson_id                         integer;
+    DECLARE _shipper_id                             integer;
+    DECLARE _shipping_address_code                  national character varying(12)='';
+    DECLARE _store_id                               integer;
+    DECLARE _is_non_taxable_sales                   boolean=true;
+    DECLARE _details                                transactions.stock_detail_type[];
+    DECLARE _attachments                            core.attachment_type[];
+    DECLARE message                                 test_result;
 BEGIN
-        _value_date := NOW()::date;
-        
-        PERFORM unit_tests.create_dummy_office();
-        PERFORM unit_tests.create_dummy_users();
-        PERFORM unit_tests.create_dummy_accounts();
-        PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), true, 100, true, 0, true, 0, '1-1-2000', '1-1-2020', true);
+    PERFORM unit_tests.create_mock();
+    PERFORM unit_tests.sign_in_test();
 
-        _tran_id := nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
+    _office_id          := office.get_office_id_by_office_code('dummy-off01');
+    _user_id            := office.get_user_id_by_user_name('plpgunit-test-user-000001');
+    _login_id           := office.get_login_id(_user_id);
+    _value_date         := transactions.get_value_date(_office_id);
+    _cost_center_id     := office.get_cost_center_id_by_cost_center_code('dummy-cs01');
+    _payment_term_id    := core.get_payment_term_id_by_payment_term_code('dummy-pt01');
+    _party_code         := 'dummy-pr01';
+    _price_type_id      := core.get_price_type_id_by_price_type_code('dummy-pt01');
+    _salesperson_id     := core.get_salesperson_id_by_salesperson_code('dummy-sp01');
+    _shipper_id         := core.get_shipper_id_by_shipper_code('dummy-sh01');
+    _store_id           := office.get_store_id_by_store_code('dummy-st01');
 
-        INSERT INTO transactions.transaction_master
-        (
-                transaction_master_id, 
-                transaction_counter, 
-                transaction_code, 
-                book, 
-                value_date, 
-                user_id, 
-                login_id, 
-                office_id, 
-                reference_number, 
-                statement_reference
-        )
-        SELECT 
-        _tran_id, 
-        transactions.get_new_transaction_counter(_value_date), 
-        transactions.get_transaction_code(_value_date, office.get_office_id_by_office_code('dummy-off01'), office.get_user_id_by_user_name('plpgunit-test-user-000001'), 1),
-        'Sales.Direct',
-        _value_date,
-        office.get_user_id_by_user_name('plpgunit-test-user-000001'),
-        1,
-        office.get_office_id_by_office_code('dummy-off01'),
-        'REF# TEST',
-        'Thou art not able to see this.';
+    
+    _details            := ARRAY[
+                             ROW(_store_id, 'dummy-it01', 1, 'Test Mock Unit',180000, 0, 0, '', 0)::transactions.stock_detail_type,
+                             ROW(_store_id, 'dummy-it02', 2, 'Test Mock Unit',130000, 300, 0, '', 0)::transactions.stock_detail_type];
 
+    PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), true, 100, true, 0, true, 0, '1-1-2000', '1-1-2020', true);
+
+    SELECT * FROM transactions.post_sales
+    (
+        _book_name,_office_id, _user_id, _login_id, _value_date, _cost_center_id, _reference_number, _statement_reference,
+        _is_credit, _payment_term_id, _party_code, _price_type_id, _salesperson_id, _shipper_id,
+        _shipping_address_code,
+        _store_id,
+        _is_non_taxable_sales,
+        _details,
+        _attachments
+    ) INTO _tran_id;
 
 
-        INSERT INTO transactions.transaction_details
-        (
-                transaction_master_id, 
-                tran_type, 
-                account_id, 
-                statement_reference, 
-                currency_code, 
-                amount_in_currency, 
-                local_currency_code,    
-                er, 
-                amount_in_local_currency
-        )
+    SELECT verification_status_id
+    INTO _verification_status_id
+    FROM transactions.transaction_master
+    WHERE transaction_master_id = _tran_id;
 
-        SELECT _tran_id, 'Cr', core.get_account_id_by_account_number('TEST-ACC-001'), '', 'NPR', 12000, 'NPR', 1, 12000 UNION ALL
-        SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-002'), '', 'NPR', 3000, 'NPR', 1, 3000 UNION ALL
-        SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
-
-
-        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), office.get_office_id_by_office_code('dummy-off01'));
-
-        SELECT verification_status_id
-        INTO _verification_status_id
-        FROM transactions.transaction_master
-        WHERE transaction_master_id = _tran_id;
-
-        IF(_verification_status_id > 0) THEN
-                SELECT assert.fail('This transaction should not have been verified.') INTO message;
-                RETURN message;
-        END IF;
+    IF(_verification_status_id > 0) THEN
+            SELECT assert.fail('This transaction should not have been verified.') INTO message;
+            RETURN message;
+    END IF;
 
     SELECT assert.ok('End of test.') INTO message;  
     RETURN message;
@@ -344,76 +337,65 @@ CREATE FUNCTION unit_tests.auto_verify_purchase_test1()
 RETURNS public.test_result
 AS
 $$
-        DECLARE _value_date date;
-        DECLARE _tran_id bigint;
-        DECLARE _verification_status_id smallint;
-        DECLARE message test_result;
+    DECLARE _value_date                             date;
+    DECLARE _tran_id                                bigint;
+    DECLARE _verification_status_id                 smallint;
+    DECLARE _book_name                              national character varying(12)='Sales.Direct';
+    DECLARE _office_id                              integer;
+    DECLARE _user_id                                integer;
+    DECLARE _login_id                               bigint;
+    DECLARE _cost_center_id                         integer;
+    DECLARE _reference_number                       national character varying(24)='Plpgunit.fixture';
+    DECLARE _statement_reference                    text='Plpgunit test was here.';
+    DECLARE _is_credit                              boolean=false;
+    DECLARE _payment_term_id                        integer;
+    DECLARE _party_code                             national character varying(12);
+    DECLARE _price_type_id                          integer;
+    DECLARE _shipper_id                             integer;
+    DECLARE _store_id                               integer;
+    DECLARE _is_non_taxable_sales                   boolean=true;
+    DECLARE _tran_ids                               bigint[];
+    DECLARE _details                                transactions.stock_detail_type[];
+    DECLARE _attachments                            core.attachment_type[];
+    DECLARE message                                 test_result;
 BEGIN
-        _value_date := NOW()::date;
+    PERFORM unit_tests.create_mock();
+    PERFORM unit_tests.sign_in_test();
 
-        PERFORM unit_tests.create_dummy_office();
-        PERFORM unit_tests.create_dummy_users();
-        PERFORM unit_tests.create_dummy_accounts();
-        PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), true, 0, true, 0, true, 0, '1-1-2000', '1-1-2020', true);
+    _office_id          := office.get_office_id_by_office_code('dummy-off01');
+    _user_id            := office.get_user_id_by_user_name('plpgunit-test-user-000001');
+    _login_id           := office.get_login_id(_user_id);
+    _value_date         := transactions.get_value_date(_office_id);
+    _cost_center_id     := office.get_cost_center_id_by_cost_center_code('dummy-cs01');
+    _party_code         := 'dummy-pr01';
+    _price_type_id      := core.get_price_type_id_by_price_type_code('dummy-pt01');
+    _shipper_id         := core.get_shipper_id_by_shipper_code('dummy-sh01');
+    _store_id           := office.get_store_id_by_store_code('dummy-st01');
 
-        _tran_id := nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
+    
+    _details            := ARRAY[
+                             ROW(_store_id, 'dummy-it01', 1, 'Test Mock Unit',180000, 0, 0, '', 0)::transactions.stock_detail_type,
+                             ROW(_store_id, 'dummy-it02', 2, 'Test Mock Unit',130000, 300, 0, '', 0)::transactions.stock_detail_type];
 
-        INSERT INTO transactions.transaction_master
-        (
-                transaction_master_id, 
-                transaction_counter, 
-                transaction_code, 
-                book, 
-                value_date, 
-                user_id, 
-                login_id, 
-                office_id, 
-                reference_number, 
-                statement_reference
-        )
-        SELECT 
-        _tran_id, 
-        transactions.get_new_transaction_counter(_value_date), 
-        transactions.get_transaction_code(_value_date, office.get_office_id_by_office_code('dummy-off01'), office.get_user_id_by_user_name('plpgunit-test-user-000001'), 1),
-        'Purchase.Direct',
-        _value_date,
-        office.get_user_id_by_user_name('plpgunit-test-user-000001'),
-        1,
-        office.get_office_id_by_office_code('dummy-off01'),
-        'REF# TEST',
-        'Thou art not able to see this.';
+    PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), true, 0, true, 0, true, 0, '1-1-2000', '1-1-2020', true);
+
+    SELECT * FROM transactions.post_purchase
+    (
+        _book_name,_office_id, _user_id, _login_id, _value_date, _cost_center_id, _reference_number, _statement_reference,
+        _is_credit, _party_code, _price_type_id, _shipper_id,
+        _store_id, _tran_ids, _details, _attachments
+    ) INTO _tran_id;
 
 
+    SELECT verification_status_id
+    INTO _verification_status_id
+    FROM transactions.transaction_master
+    WHERE transaction_master_id = _tran_id;
 
-        INSERT INTO transactions.transaction_details
-        (
-                transaction_master_id, 
-                tran_type, 
-                account_id, 
-                statement_reference, 
-                currency_code, 
-                amount_in_currency, 
-                local_currency_code,    
-                er, 
-                amount_in_local_currency
-        )
-
-        SELECT _tran_id, 'Cr', core.get_account_id_by_account_number('TEST-ACC-001'), '', 'NPR', 12000, 'NPR', 1, 12000 UNION ALL
-        SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-002'), '', 'NPR', 3000, 'NPR', 1, 3000 UNION ALL
-        SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
-
-
-        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), office.get_office_id_by_office_code('dummy-off01'));
-
-        SELECT verification_status_id
-        INTO _verification_status_id
-        FROM transactions.transaction_master
-        WHERE transaction_master_id = _tran_id;
-
-        IF(_verification_status_id < 1) THEN
-                SELECT assert.fail('This transaction should have been verified.') INTO message;
-                RETURN message;
-        END IF;
+    IF(_verification_status_id < 1) THEN
+            SELECT assert.fail('This transaction should have been verified.') INTO message;
+            RETURN message;
+    END IF;
 
     SELECT assert.ok('End of test.') INTO message;  
     RETURN message;
@@ -428,87 +410,72 @@ CREATE FUNCTION unit_tests.auto_verify_purchase_test2()
 RETURNS public.test_result
 AS
 $$
-        DECLARE _value_date date;
-        DECLARE _tran_id bigint;
-        DECLARE _verification_status_id smallint;
-        DECLARE message test_result;
+    DECLARE _value_date                             date;
+    DECLARE _tran_id                                bigint;
+    DECLARE _verification_status_id                 smallint;
+    DECLARE _book_name                              national character varying(12)='Sales.Direct';
+    DECLARE _office_id                              integer;
+    DECLARE _user_id                                integer;
+    DECLARE _login_id                               bigint;
+    DECLARE _cost_center_id                         integer;
+    DECLARE _reference_number                       national character varying(24)='Plpgunit.fixture';
+    DECLARE _statement_reference                    text='Plpgunit test was here.';
+    DECLARE _is_credit                              boolean=false;
+    DECLARE _payment_term_id                        integer;
+    DECLARE _party_code                             national character varying(12);
+    DECLARE _price_type_id                          integer;
+    DECLARE _shipper_id                             integer;
+    DECLARE _store_id                               integer;
+    DECLARE _is_non_taxable_sales                   boolean=true;
+    DECLARE _tran_ids                               bigint[];
+    DECLARE _details                                transactions.stock_detail_type[];
+    DECLARE _attachments                            core.attachment_type[];
+    DECLARE message                                 test_result;
 BEGIN
-        _value_date := NOW()::date;
-        
-        PERFORM unit_tests.create_dummy_office();
-        PERFORM unit_tests.create_dummy_users();
-        PERFORM unit_tests.create_dummy_accounts();
-        PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), true, 0, true, 100, true, 0, '1-1-2000', '1-1-2020', true);
+    PERFORM unit_tests.create_mock();
+    PERFORM unit_tests.sign_in_test();
 
-        _tran_id := nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
+    _office_id          := office.get_office_id_by_office_code('dummy-off01');
+    _user_id            := office.get_user_id_by_user_name('plpgunit-test-user-000001');
+    _login_id           := office.get_login_id(_user_id);
+    _value_date         := transactions.get_value_date(_office_id);
+    _cost_center_id     := office.get_cost_center_id_by_cost_center_code('dummy-cs01');
+    _party_code         := 'dummy-pr01';
+    _price_type_id      := core.get_price_type_id_by_price_type_code('dummy-pt01');
+    _shipper_id         := core.get_shipper_id_by_shipper_code('dummy-sh01');
+    _store_id           := office.get_store_id_by_store_code('dummy-st01');
 
-        INSERT INTO transactions.transaction_master
-        (
-                transaction_master_id, 
-                transaction_counter, 
-                transaction_code, 
-                book, 
-                value_date, 
-                user_id, 
-                login_id, 
-                office_id, 
-                reference_number, 
-                statement_reference
-        )
-        SELECT 
-        _tran_id, 
-        transactions.get_new_transaction_counter(_value_date), 
-        transactions.get_transaction_code(_value_date, office.get_office_id_by_office_code('dummy-off01'), office.get_user_id_by_user_name('plpgunit-test-user-000001'), 1),
-        'Purchase.Direct',
-        _value_date,
-        office.get_user_id_by_user_name('plpgunit-test-user-000001'),
-        1,
-        office.get_office_id_by_office_code('dummy-off01'),
-        'REF# TEST',
-        'Thou art not able to see this.';
+    
+    _details            := ARRAY[
+                             ROW(_store_id, 'dummy-it01', 1, 'Test Mock Unit',180000, 0, 0, '', 0)::transactions.stock_detail_type,
+                             ROW(_store_id, 'dummy-it02', 2, 'Test Mock Unit',130000, 300, 0, '', 0)::transactions.stock_detail_type];
+
+    PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), true, 0, true, 100, true, 0, '1-1-2000', '1-1-2000', true);
 
 
-
-        INSERT INTO transactions.transaction_details
-        (
-                transaction_master_id, 
-                tran_type, 
-                account_id, 
-                statement_reference, 
-                currency_code, 
-                amount_in_currency, 
-                local_currency_code,    
-                er, 
-                amount_in_local_currency
-        )
-
-        SELECT _tran_id, 'Cr', core.get_account_id_by_account_number('TEST-ACC-001'), '', 'NPR', 12000, 'NPR', 1, 12000 UNION ALL
-        SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-002'), '', 'NPR', 3000, 'NPR', 1, 3000 UNION ALL
-        SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
+    SELECT * FROM transactions.post_purchase
+    (
+        _book_name,_office_id, _user_id, _login_id, _value_date, _cost_center_id, _reference_number, _statement_reference,
+        _is_credit, _party_code, _price_type_id, _shipper_id,
+        _store_id, _tran_ids, _details, _attachments
+    ) INTO _tran_id;
 
 
-        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), office.get_office_id_by_office_code('dummy-off01'));
+    SELECT verification_status_id
+    INTO _verification_status_id
+    FROM transactions.transaction_master
+    WHERE transaction_master_id = _tran_id;
 
-        SELECT verification_status_id
-        INTO _verification_status_id
-        FROM transactions.transaction_master
-        WHERE transaction_master_id = _tran_id;
-
-        IF(_verification_status_id > 0) THEN
-                SELECT assert.fail('This transaction should not have been verified.') INTO message;
-                RETURN message;
-        END IF;
+    IF(_verification_status_id > 0) THEN
+        SELECT assert.fail('This transaction should not have been verified.') INTO message;
+        RETURN message;
+    END IF;
 
     SELECT assert.ok('End of test.') INTO message;  
     RETURN message;
 END
 $$
 LANGUAGE plpgsql;
-
-
-
-
-
 
 DROP FUNCTION IF EXISTS unit_tests.auto_verify_journal_test1();
 
@@ -516,82 +483,90 @@ CREATE FUNCTION unit_tests.auto_verify_journal_test1()
 RETURNS public.test_result
 AS
 $$
-        DECLARE _value_date date;
-        DECLARE _tran_id bigint;
-        DECLARE _verification_status_id smallint;
-        DECLARE message test_result;
+    DECLARE _value_date                             date;
+    DECLARE _office_id                              integer;
+    DECLARE _user_id                                integer;
+    DECLARE _login_id                               bigint;
+    DECLARE _tran_id                                bigint;
+    DECLARE _verification_status_id                 smallint;
+    DECLARE message                                 test_result;
 BEGIN
-        _value_date := NOW()::date;
+    PERFORM unit_tests.create_mock();
+    PERFORM unit_tests.sign_in_test();
 
-        PERFORM unit_tests.create_dummy_office();
-        PERFORM unit_tests.create_dummy_users();
-        PERFORM unit_tests.create_dummy_accounts();
-        PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), true, 0, true, 0, true, 0, '1-1-2000', '1-1-2020', true);
+    _office_id          := office.get_office_id_by_office_code('dummy-off01');
+    _value_date         := transactions.get_value_date(_office_id);
+    _user_id            := office.get_user_id_by_user_name('plpgunit-test-user-000001');
+    _login_id           := office.get_login_id(_user_id);
 
-        _tran_id := nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
+    PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), true, 0, true, 0, true, 0, '1-1-2000', '1-1-2020', true);
 
-        INSERT INTO transactions.transaction_master
-        (
-                transaction_master_id, 
-                transaction_counter, 
-                transaction_code, 
-                book, 
-                value_date, 
-                user_id, 
-                login_id, 
-                office_id, 
-                reference_number, 
-                statement_reference
-        )
-        SELECT 
+    _tran_id := nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
+
+    INSERT INTO transactions.transaction_master
+    (
+        transaction_master_id, 
+        transaction_counter, 
+        transaction_code, 
+        book, 
+        value_date, 
+        user_id, 
+        login_id, 
+        office_id, 
+        reference_number, 
+        statement_reference
+    )
+    SELECT 
         _tran_id, 
         transactions.get_new_transaction_counter(_value_date), 
-        transactions.get_transaction_code(_value_date, office.get_office_id_by_office_code('dummy-off01'), office.get_user_id_by_user_name('plpgunit-test-user-000001'), 1),
+        transactions.get_transaction_code(_value_date, _office_id, _user_id, 1),
         'Journal',
         _value_date,
-        office.get_user_id_by_user_name('plpgunit-test-user-000001'),
-        1,
-        office.get_office_id_by_office_code('dummy-off01'),
+        _user_id,
+        _login_id,
+        _office_id,
         'REF# TEST',
         'Thou art not able to see this.';
 
 
 
-        INSERT INTO transactions.transaction_details
-        (
-                transaction_master_id, 
-                tran_type, 
-                account_id, 
-                statement_reference, 
-                currency_code, 
-                amount_in_currency, 
-                local_currency_code,    
-                er, 
-                amount_in_local_currency
-        )
+    INSERT INTO transactions.transaction_details
+    (
+        transaction_master_id, 
+        value_date,
+        tran_type, 
+        account_id, 
+        statement_reference, 
+        currency_code, 
+        amount_in_currency, 
+        local_currency_code,    
+        er, 
+        amount_in_local_currency
+    )
 
-        SELECT _tran_id, 'Cr', core.get_account_id_by_account_number('TEST-ACC-001'), '', 'NPR', 12000, 'NPR', 1, 12000 UNION ALL
-        SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-002'), '', 'NPR', 3000, 'NPR', 1, 3000 UNION ALL
-        SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
+    SELECT _tran_id, _value_date, 'Cr', core.get_account_id_by_account_number('dummy-acc01'), '', 'NPR', 12000, 'NPR', 1, 12000 UNION ALL
+    SELECT _tran_id, _value_date, 'Dr', core.get_account_id_by_account_number('dummy-acc02'), '', 'NPR', 3000, 'NPR', 1, 3000 UNION ALL
+    SELECT _tran_id, _value_date, 'Dr', core.get_account_id_by_account_number('dummy-acc03'), '', 'NPR', 9000, 'NPR', 1, 9000;
 
 
-        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), office.get_office_id_by_office_code('dummy-off01'));
+    PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), office.get_office_id_by_office_code('dummy-off01'));
 
-        SELECT verification_status_id
-        INTO _verification_status_id
-        FROM transactions.transaction_master
-        WHERE transaction_master_id = _tran_id;
+    SELECT verification_status_id
+    INTO _verification_status_id
+    FROM transactions.transaction_master
+    WHERE transaction_master_id = _tran_id;
 
-        IF(_verification_status_id < 1) THEN
-                SELECT assert.fail('This transaction should have been verified.') INTO message;
-                RETURN message;
-        END IF;
+    IF(_verification_status_id < 1) THEN
+            SELECT assert.fail('This transaction should have been verified.') INTO message;
+            RETURN message;
+    END IF;
 
     SELECT assert.ok('End of test.') INTO message;  
     RETURN message;
 END
 $$
 LANGUAGE plpgsql;
+
 
 
 DROP FUNCTION IF EXISTS unit_tests.auto_verify_journal_test2();
@@ -600,80 +575,84 @@ CREATE FUNCTION unit_tests.auto_verify_journal_test2()
 RETURNS public.test_result
 AS
 $$
-        DECLARE _value_date date;
-        DECLARE _tran_id bigint;
-        DECLARE _verification_status_id smallint;
-        DECLARE message test_result;
+    DECLARE _value_date                             date;
+    DECLARE _office_id                              integer;
+    DECLARE _user_id                                integer;
+    DECLARE _login_id                               bigint;
+    DECLARE _tran_id                                bigint;
+    DECLARE _verification_status_id                 smallint;
+    DECLARE message                                 test_result;
 BEGIN
-        _value_date := NOW()::date;
-        
-        PERFORM unit_tests.create_dummy_office();
-        PERFORM unit_tests.create_dummy_users();
-        PERFORM unit_tests.create_dummy_accounts();
-        PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), true, 0, true, 0, true, 100, '1-1-2000', '1-1-2020', true);
+    PERFORM unit_tests.create_mock();
+    PERFORM unit_tests.sign_in_test();
 
-        _tran_id := nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
+    _office_id          := office.get_office_id_by_office_code('dummy-off01');
+    _value_date         := transactions.get_value_date(_office_id);
+    _user_id            := office.get_user_id_by_user_name('plpgunit-test-user-000001');
+    _login_id           := office.get_login_id(_user_id);
 
-        INSERT INTO transactions.transaction_master
-        (
-                transaction_master_id, 
-                transaction_counter, 
-                transaction_code, 
-                book, 
-                value_date, 
-                user_id, 
-                login_id, 
-                office_id, 
-                reference_number, 
-                statement_reference
-        )
-        SELECT 
+     PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), true, 0, true, 0, true, 100, '1-1-2000', '1-1-2020', true);
+    _tran_id := nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
+
+    INSERT INTO transactions.transaction_master
+    (
+        transaction_master_id, 
+        transaction_counter, 
+        transaction_code, 
+        book, 
+        value_date, 
+        user_id, 
+        login_id, 
+        office_id, 
+        reference_number, 
+        statement_reference
+    )
+    SELECT 
         _tran_id, 
         transactions.get_new_transaction_counter(_value_date), 
-        transactions.get_transaction_code(_value_date, office.get_office_id_by_office_code('dummy-off01'), office.get_user_id_by_user_name('plpgunit-test-user-000001'), 1),
+        transactions.get_transaction_code(_value_date, _office_id, _user_id, 1),
         'Journal',
         _value_date,
-        office.get_user_id_by_user_name('plpgunit-test-user-000001'),
-        1,
-        office.get_office_id_by_office_code('dummy-off01'),
+        _user_id,
+        _login_id,
+        _office_id,
         'REF# TEST',
         'Thou art not able to see this.';
 
 
 
-        INSERT INTO transactions.transaction_details
-        (
-                transaction_master_id, 
-                tran_type, 
-                account_id, 
-                statement_reference, 
-                currency_code, 
-                amount_in_currency, 
-                local_currency_code,    
-                er, 
-                amount_in_local_currency
-        )
+    INSERT INTO transactions.transaction_details
+    (
+        transaction_master_id,
+        value_date,
+        tran_type, 
+        account_id, 
+        statement_reference, 
+        currency_code, 
+        amount_in_currency, 
+        local_currency_code,    
+        er, 
+        amount_in_local_currency
+    )
+    SELECT _tran_id, _value_date, 'Cr', core.get_account_id_by_account_number('dummy-acc01'), '', 'NPR', 12000, 'NPR', 1, 12000 UNION ALL
+    SELECT _tran_id, _value_date, 'Dr', core.get_account_id_by_account_number('dummy-acc02'), '', 'NPR', 3000, 'NPR', 1, 3000 UNION ALL
+    SELECT _tran_id, _value_date, 'Dr', core.get_account_id_by_account_number('dummy-acc03'), '', 'NPR', 9000, 'NPR', 1, 9000;
 
-        SELECT _tran_id, 'Cr', core.get_account_id_by_account_number('TEST-ACC-001'), '', 'NPR', 12000, 'NPR', 1, 12000 UNION ALL
-        SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-002'), '', 'NPR', 3000, 'NPR', 1, 3000 UNION ALL
-        SELECT _tran_id, 'Dr', core.get_account_id_by_account_number('TEST-ACC-003'), '', 'NPR', 9000, 'NPR', 1, 9000;
 
+    PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), office.get_office_id_by_office_code('dummy-off01'));
 
-        PERFORM transactions.auto_verify(currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), office.get_office_id_by_office_code('dummy-off01'));
+    SELECT verification_status_id
+    INTO _verification_status_id
+    FROM transactions.transaction_master
+    WHERE transaction_master_id = _tran_id;
 
-        SELECT verification_status_id
-        INTO _verification_status_id
-        FROM transactions.transaction_master
-        WHERE transaction_master_id = _tran_id;
-
-        IF(_verification_status_id > 0) THEN
-                SELECT assert.fail('This transaction should not have been verified.') INTO message;
-                RETURN message;
-        END IF;
+    IF(_verification_status_id > 0) THEN
+            SELECT assert.fail('This transaction should not have been verified.') INTO message;
+            RETURN message;
+    END IF;
 
     SELECT assert.ok('End of test.') INTO message;  
     RETURN message;
 END
 $$
 LANGUAGE plpgsql;
-

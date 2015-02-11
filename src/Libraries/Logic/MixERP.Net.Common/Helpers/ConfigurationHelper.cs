@@ -20,6 +20,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
+using System.Web;
 using System.Web.Hosting;
 
 namespace MixERP.Net.Common.Helpers
@@ -28,6 +29,12 @@ namespace MixERP.Net.Common.Helpers
     {
         public static string GetConfigurationValues(string configFileName, string sectionName)
         {
+            if (configFileName == null)
+            {
+                return string.Empty;
+            }
+
+
             ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap { ExeConfigFilename = configFileName };
             Configuration config = ConfigurationManager.OpenMappedExeConfiguration(configFileMap, ConfigurationUserLevel.None);
             AppSettingsSection section = config.GetSection("appSettings") as AppSettingsSection;
@@ -43,57 +50,79 @@ namespace MixERP.Net.Common.Helpers
             return string.Empty;
         }
 
+        private static string MapPath(string virtualPath)
+        {
+            if (string.IsNullOrWhiteSpace(virtualPath))
+            {
+                return string.Empty;
+            }
+
+            string path = HostingEnvironment.MapPath(virtualPath);
+
+            if (string.IsNullOrWhiteSpace(path) && HttpContext.Current != null)
+            {
+                path = HttpContext.Current.Server.MapPath(virtualPath);
+            }
+
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                return virtualPath;
+            }
+
+            return path;
+        }
+
         public static string GetMixERPParameter(string keyName)
         {
-            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["MixERPConfigFileLocation"]);
+            string path = MapPath(ConfigurationManager.AppSettings["MixERPConfigFileLocation"]);
             return GetConfigurationValues(path, keyName);
         }
 
         public static string GetDbServerParameter(string keyName)
         {
-            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["DbServerConfigFileLocation"]);
+            string path = MapPath(ConfigurationManager.AppSettings["DbServerConfigFileLocation"]);
             return GetConfigurationValues(path, keyName);
         }
 
         public static string GetDbParameter(string keyName)
         {
-            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["DBParameterConfigFileLocation"]);
+            string path = MapPath(ConfigurationManager.AppSettings["DBParameterConfigFileLocation"]);
             return GetConfigurationValues(path, keyName);
         }
 
         public static string GetMessagingParameter(string keyName)
         {
-            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["MessagingParameterConfigFileLocation"]);
+            string path = MapPath(ConfigurationManager.AppSettings["MessagingParameterConfigFileLocation"]);
             return GetConfigurationValues(path, keyName);
         }
 
         public static string GetParameter(string keyName)
         {
-            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["ParameterConfigFileLocation"]);
+            string path = MapPath(ConfigurationManager.AppSettings["ParameterConfigFileLocation"]);
             return GetConfigurationValues(path, keyName);
         }
 
         public static string GetReportParameter(string keyName)
         {
-            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["ReportConfigFileLocation"]);
+            string path = MapPath(ConfigurationManager.AppSettings["ReportConfigFileLocation"]);
             return GetConfigurationValues(path, keyName);
         }
 
         public static string GetScrudParameter(string keyName)
         {
-            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["ScrudConfigFileLocation"]);
+            string path = MapPath(ConfigurationManager.AppSettings["ScrudConfigFileLocation"]);
             return GetConfigurationValues(path, keyName);
         }
 
         public static string GetSwitch(string keyName)
         {
-            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["SwitchConfigFileLocation"]);
+            string path = MapPath(ConfigurationManager.AppSettings["SwitchConfigFileLocation"]);
             return GetConfigurationValues(path, keyName);
         }
 
         public static string GetTransactionChecklistParameter(string keyName)
         {
-            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["TransactionChecklistConfigFileLocation"]);
+            string path = MapPath(ConfigurationManager.AppSettings["TransactionChecklistConfigFileLocation"]);
             return GetConfigurationValues(path, keyName);
         }
 
