@@ -1,8 +1,8 @@
 bin
 obj
 *.pdb
-FrontEnd/MixERP.Net.FrontEnd/Resource/Static/Attachments
-FrontEnd/MixERP.Net.FrontEnd/Resource/Static/Emails
-FrontEnd/MixERP.Net.FrontEnd/Resource/Backups
-FrontEnd/MixERP.Net.FrontEnd/Resource/Temp
+src/FrontEnd/MixERP.Net.FrontEnd/Resource/Static/Attachments
+src/FrontEnd/MixERP.Net.FrontEnd/Resource/Static/Emails
+src/FrontEnd/MixERP.Net.FrontEnd/Resource/Backups
+src/FrontEnd/MixERP.Net.FrontEnd/Resource/Temp
 
