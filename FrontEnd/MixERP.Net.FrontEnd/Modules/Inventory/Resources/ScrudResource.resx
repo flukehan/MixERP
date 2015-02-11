@@ -738,4 +738,97 @@
   <data name="value_date" xml:space="preserve">
     <value>Value_Date</value>
   </data>
+  <data name="account_master" xml:space="preserve">
+    <value>Account Master</value>
+  </data>
+  <data name="cash_repository_code" xml:space="preserve">
+    <value>Cash Repository Code</value>
+  </data>
+  <data name="cash_repository_name" xml:space="preserve">
+    <value>Cash Repository Name</value>
+  </data>
+  <data name="currency" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="has_child" xml:space="preserve">
+    <value>Has Child</value>
+  </data>
+  <data name="is_transaction_node" xml:space="preserve">
+    <value>Is Transaction Node</value>
+  </data>
+  <data name="nick_name" xml:space="preserve">
+    <value>Nick Name</value>
+  </data>
+  <data name="office_name" xml:space="preserve">
+    <value>Office Name</value>
+  </data>
+  <data name="parent_cash_repository" xml:space="preserve">
+    <value>Parent Cash Repository</value>
+  </data>
+  <data name="parent_office" xml:space="preserve">
+    <value>Parent Office</value>
+  </data>
+  <data name="registration_date" xml:space="preserve">
+    <value>Registration Date</value>
+  </data>
+  <data name="registration_number" xml:space="preserve">
+    <value>Registration Number</value>
+  </data>
+  <data name="tax_base_amount" xml:space="preserve">
+    <value>Tax Base Amount</value>
+  </data>
+  <data name="tax_master" xml:space="preserve">
+    <value>Tax Master</value>
+  </data>
+  <data name="parent_industry_name" xml:space="preserve">
+    <value>Parent Industry Name</value>
+  </data>
+  <data name="country_code" xml:space="preserve">
+    <value>Country Code</value>
+  </data>
+  <data name="country_name" xml:space="preserve">
+    <value>Country Name</value>
+  </data>
+  <data name="state_code" xml:space="preserve">
+    <value>State Code</value>
+  </data>
+  <data name="state_name" xml:space="preserve">
+    <value>State Name</value>
+  </data>
+  <data name="account_master_code" xml:space="preserve">
+    <value>Account Master Code</value>
+  </data>
+  <data name="account_master_name" xml:space="preserve">
+    <value>Account Master Name</value>
+  </data>
+  <data name="is_rectangular" xml:space="preserve">
+    <value>Is Rectangular</value>
+  </data>
+  <data name="parent_account_name" xml:space="preserve">
+    <value>Parent Account Name</value>
+  </data>
+  <data name="parent_account_number" xml:space="preserve">
+    <value>Parent Account Number</value>
+  </data>
+  <data name="price_type_code" xml:space="preserve">
+    <value>Price Type Code</value>
+  </data>
+  <data name="price_type_name" xml:space="preserve">
+    <value>Price Type Name</value>
+  </data>
+  <data name="shipping_mail_type_code" xml:space="preserve">
+    <value>Shipping Mail Type Code</value>
+  </data>
+  <data name="shipping_mail_type_id" xml:space="preserve">
+    <value>Shipping Mail Type Id</value>
+  </data>
+  <data name="shipping_mail_type_name" xml:space="preserve">
+    <value>Shipping Mail Type Name</value>
+  </data>
+  <data name="shipping_package_shape_code" xml:space="preserve">
+    <value>Shipping Package Shape Code</value>
+  </data>
+  <data name="shipping_package_shape_name" xml:space="preserve">
+    <value>Shipping Package Shape Name</value>
+  </data>
 </root>

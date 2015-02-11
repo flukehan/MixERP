@@ -75,13 +75,13 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "core.party_types.party_type_id", "core.party_type_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.party_types.party_type_id", "core.party_type_scrud_view");
             ScrudHelper.AddDisplayView(displayViews, "core.frequencies.frequency_id", "core.frequency_selector_view");
-            ScrudHelper.AddDisplayView(displayViews, "core.currencies.currency_code", "core.currency_selector_view");
-            ScrudHelper.AddDisplayView(displayViews, "core.countries.country_id", "core.countries");
-            ScrudHelper.AddDisplayView(displayViews, "core.states.state_id", "core.states");
-            ScrudHelper.AddDisplayView(displayViews, "core.entities.entity_id", "core.entities");
-            ScrudHelper.AddDisplayView(displayViews, "core.industries.industry_id", "core.industries");
+            ScrudHelper.AddDisplayView(displayViews, "core.currencies.currency_code", "core.currency_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.countries.country_id", "core.country_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.states.state_id", "core.state_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.entities.entity_id", "core.entity_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.industries.industry_id", "core.industry_scrud_view");
 
             return string.Join(",", displayViews);
         }

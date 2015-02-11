@@ -69,7 +69,7 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
         {
             List<string> displayViews = new List<string>();
             ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.account_scrud_view");
-            ScrudHelper.AddDisplayView(displayViews, "core.sales_teams.sales_team_id", "core.sales_teams_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.sales_teams.sales_team_id", "core.sales_team_scrud_view");
             return string.Join(",", displayViews);
         }
 

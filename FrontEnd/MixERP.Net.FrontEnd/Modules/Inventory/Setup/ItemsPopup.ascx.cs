@@ -72,12 +72,12 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
         {
             List<string> displayViews = new List<string>();
 
-            ScrudHelper.AddDisplayView(displayViews, "core.item_types.item_type_id", "core.item_types");
-            ScrudHelper.AddDisplayView(displayViews, "core.item_groups.item_group_id", "core.item_group_selector_view");
-            ScrudHelper.AddDisplayView(displayViews, "core.brands.brand_id", "core.brand_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.item_types.item_type_id", "core.item_type_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.item_groups.item_group_id", "core.item_group_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.brands.brand_id", "core.brand_scrud_view");
             ScrudHelper.AddDisplayView(displayViews, "core.parties.party_id", "core.supplier_selector_view");
-            ScrudHelper.AddDisplayView(displayViews, "core.units.unit_id", "core.unit_selector_view");
-            ScrudHelper.AddDisplayView(displayViews, "core.sales_taxes.sales_tax_id", "core.sales_tax_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.units.unit_id", "core.unit_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.sales_taxes.sales_tax_id", "core.sales_tax_scrud_view");
             ScrudHelper.AddDisplayView(displayViews, "core.shipping_mail_types.shipping_mail_type_id", "core.shipping_mail_type_selector_view");
             ScrudHelper.AddDisplayView(displayViews, "core.shipping_package_shapes.shipping_package_shape_id", "core.shipping_package_shape_selector_view");
 
