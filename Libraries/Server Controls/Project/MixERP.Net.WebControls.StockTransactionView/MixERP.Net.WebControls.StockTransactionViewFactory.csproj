@@ -133,20 +133,26 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Labels.es-ES.resx" />
     <EmbeddedResource Include="Resources\Labels.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Labels.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Labels.zh-CN.resx" />
+    <EmbeddedResource Include="Resources\Titles.es-ES.resx" />
     <EmbeddedResource Include="Resources\Titles.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Titles.zh-CN.resx" />
+    <EmbeddedResource Include="Resources\Warnings.es-ES.resx" />
     <EmbeddedResource Include="Resources\Warnings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Warnings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Warnings.zh-CN.resx" />
     <EmbeddedResource Include="StockTransactionView.js" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

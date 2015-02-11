@@ -78,11 +78,13 @@
     <None Include="Mix Open Foundation.snk" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\CommonResource.es-ES.resx" />
     <EmbeddedResource Include="Resources\CommonResource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>CommonResource.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CommonResource.zh-CN.resx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Logic\MixERP.net.Common\MixERP.Net.Common.csproj">

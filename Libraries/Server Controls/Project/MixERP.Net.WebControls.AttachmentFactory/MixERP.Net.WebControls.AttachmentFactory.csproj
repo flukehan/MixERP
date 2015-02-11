@@ -89,10 +89,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AttachmentFactory.js" />
+    <EmbeddedResource Include="Resources\Messages.es-ES.resx" />
     <EmbeddedResource Include="Resources\Messages.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Messages.zh-CN.resx" />
     <EmbeddedResource Include="Resources\Titles.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>

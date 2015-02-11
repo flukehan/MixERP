@@ -63,10 +63,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="PartyControl.js" />
+    <EmbeddedResource Include="Resources\Titles.es-ES.resx" />
     <EmbeddedResource Include="Resources\Titles.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Titles.zh-CN.resx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Logic\MixERP.net.Common\MixERP.Net.Common.csproj">

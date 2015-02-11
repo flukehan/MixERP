@@ -180,10 +180,12 @@
     <None Include="Templates\Generator.template" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Warnings.es-ES.resx" />
     <EmbeddedResource Include="Resources\Warnings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Warnings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Warnings.zh-CN.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

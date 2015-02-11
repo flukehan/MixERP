@@ -95,6 +95,16 @@
     </Content>
     <Content Include="Reports\TopSellingItems.ascx" />
     <Content Include="Reports\TopSellingItemsFrame.ascx" />
+    <EmbeddedResource Include="Resources\DbResource.es-ES.resx" />
+    <EmbeddedResource Include="Resources\DbResource.zh-CN.resx" />
+    <EmbeddedResource Include="Resources\Labels.es-ES.resx" />
+    <EmbeddedResource Include="Resources\Labels.zh-CN.resx" />
+    <EmbeddedResource Include="Resources\ScrudResource.es-ES.resx" />
+    <EmbeddedResource Include="Resources\ScrudResource.zh-CN.resx" />
+    <EmbeddedResource Include="Resources\Titles.es-ES.resx" />
+    <EmbeddedResource Include="Resources\Titles.zh-CN.resx" />
+    <EmbeddedResource Include="Resources\Warnings.es-ES.resx" />
+    <EmbeddedResource Include="Resources\Warnings.zh-CN.resx" />
     <EmbeddedResource Include="Scripts\Widgets\SalesByGeographyWidget.ascx.js" />
     <Content Include="Setup\LateFees.ascx" />
     <Content Include="Setup\PaymentTerms.ascx" />

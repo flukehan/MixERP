@@ -136,3 +136,15 @@ END
 $$
 LANGUAGE plpgsql VOLATILE
 COST 100;
+
+CREATE VIEW localization.localized_resources_view
+AS
+SELECT
+    REPLACE(localization.resources.path, '.resx', '') || '.' || localization.localized_resources.culture_code || '.resx' AS resource,
+    localization.resources.key,
+    localization.localized_resources.culture_code,
+    localization.localized_resources.value
+FROM localization.resources
+INNER JOIN localization.localized_resources
+ON localization.localized_resources.key = localization.resources.key
+ORDER BY PATH;

@@ -178,6 +178,15 @@ namespace MixERP.Net.WebControls.ScrudFactory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        internal static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nothing selected!.
         /// </summary>
         internal static string NothingSelected {
@@ -358,11 +367,11 @@ namespace MixERP.Net.WebControls.ScrudFactory.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yes, No.
+        ///   Looks up a localized string similar to Yes.
         /// </summary>
-        internal static string YesNo {
+        internal static string Yes {
             get {
-                return ResourceManager.GetString("YesNo", resourceCulture);
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

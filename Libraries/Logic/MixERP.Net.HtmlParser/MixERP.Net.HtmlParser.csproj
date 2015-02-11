@@ -77,10 +77,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Messages.es-ES.resx" />
     <EmbeddedResource Include="Resources\Messages.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Messages.zh-CN.resx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Mix Open Foundation.snk" />

@@ -19,6 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Linq;
+using System.Threading;
 using System.Web.UI.WebControls;
 using MixERP.Net.WebControls.ScrudFactory.Resources;
 
@@ -43,7 +44,9 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
                 return;
             }
 
-            string[] key = keys.Split(',');
+            char separator = ",".ToString(Thread.CurrentThread.CurrentCulture).ToCharArray()[0];
+
+            string[] key = keys.Split(separator);
             string[] value = values.Split(',');
 
             if (key.Count() != value.Count())

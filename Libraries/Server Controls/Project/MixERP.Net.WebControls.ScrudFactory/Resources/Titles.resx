@@ -156,6 +156,9 @@
   <data name="NextPage" xml:space="preserve">
     <value>Next Page</value>
   </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
   <data name="NothingSelected" xml:space="preserve">
     <value>Nothing selected!</value>
   </data>
@@ -216,7 +219,7 @@
   <data name="ViewSchemaEmptyExceptionMessage" xml:space="preserve">
     <value>The property 'ViewSchema' cannot be left empty.</value>
   </data>
-  <data name="YesNo" xml:space="preserve">
-    <value>Yes, No</value>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
   </data>
 </root>

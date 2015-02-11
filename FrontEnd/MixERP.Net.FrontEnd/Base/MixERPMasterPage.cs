@@ -99,7 +99,7 @@ namespace MixERP.Net.FrontEnd.Base
         private string GetVariable(string name, object value)
         {
             string script = "var {0}='{1}';";
-            script = string.Format(CultureInfo.InvariantCulture, script, name, value);
+            script = string.Format(CultureInfo.InvariantCulture, script, name, value.ToString().Replace("'", @"\'"));
             return script;
         }
     }

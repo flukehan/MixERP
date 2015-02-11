@@ -334,18 +334,24 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\ScrudResource.es-ES.resx" />
     <EmbeddedResource Include="Resources\ScrudResource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ScrudResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ScrudResource.zh-CN.resx" />
+    <EmbeddedResource Include="Resources\Titles.es-ES.resx" />
     <EmbeddedResource Include="Resources\Titles.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Titles.zh-CN.resx" />
+    <EmbeddedResource Include="Resources\Warnings.es-ES.resx" />
     <EmbeddedResource Include="Resources\Warnings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Warnings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Warnings.zh-CN.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

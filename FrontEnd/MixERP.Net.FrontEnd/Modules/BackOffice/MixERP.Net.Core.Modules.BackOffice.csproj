@@ -502,28 +502,38 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Labels.es-ES.resx" />
     <EmbeddedResource Include="Resources\Labels.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Labels.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Labels.zh-CN.resx" />
+    <EmbeddedResource Include="Resources\Questions.es-ES.resx" />
     <EmbeddedResource Include="Resources\Questions.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Questions.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Questions.zh-CN.resx" />
+    <EmbeddedResource Include="Resources\ScrudResource.es-ES.resx" />
     <EmbeddedResource Include="Resources\ScrudResource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ScrudResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ScrudResource.zh-CN.resx" />
+    <EmbeddedResource Include="Resources\Titles.es-ES.resx" />
     <EmbeddedResource Include="Resources\Titles.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Titles.zh-CN.resx" />
+    <EmbeddedResource Include="Resources\Warnings.es-ES.resx" />
     <EmbeddedResource Include="Resources\Warnings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Warnings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Warnings.zh-CN.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

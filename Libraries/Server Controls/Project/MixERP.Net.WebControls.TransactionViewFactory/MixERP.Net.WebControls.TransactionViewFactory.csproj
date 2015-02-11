@@ -97,6 +97,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Titles.es-ES.resx" />
     <EmbeddedResource Include="Resources\Titles.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
@@ -107,6 +108,7 @@
     <None Include="Mix Open Foundation.snk" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Titles.zh-CN.resx" />
     <EmbeddedResource Include="TransactionViewFactory.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

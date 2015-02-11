@@ -139,7 +139,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 
                 if (ScrudTypes.Bools.Contains(dataType))
                 {
-                    ScrudRadioButtonList.AddRadioButtonList(htmlTable, resourceClassName, columnName, isNullable, Titles.YesNo, "true,false", defaultValue, errorCssClass, assembly, disabled);
+                    ScrudRadioButtonList.AddRadioButtonList(htmlTable, resourceClassName, columnName, isNullable, Titles.Yes + "," + Titles.No, "true,false", defaultValue, errorCssClass, assembly, disabled);
                 }
 
                 if (ScrudTypes.Dates.Contains(dataType))
