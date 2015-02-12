@@ -9,3 +9,5 @@ IN
     WHERE account_master_id IN(10101, 10102) --Cash and Bank A/C
 );
 
+ALTER MATERIALIZED VIEW transactions.verified_cash_transaction_mat_view
+OWNER TO mix_erp;

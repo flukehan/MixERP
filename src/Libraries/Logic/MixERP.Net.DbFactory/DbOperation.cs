@@ -30,9 +30,17 @@ using Serilog;
 
 namespace MixERP.Net.DbFactory
 {
+    public class DbNotificationArgs : EventArgs
+    {
+        public NpgsqlError Notice { get; set; }
+        public string Message { get; set; }
+    }
+
     public class DbOperation
     {
-        public EventHandler<NpgsqlNoticeEventArgs> Listen;
+
+
+        public EventHandler<DbNotificationArgs> Listen;
 
         [CLSCompliant(false)]
         public static bool ExecuteNonQuery(NpgsqlCommand command)
@@ -210,12 +218,31 @@ namespace MixERP.Net.DbFactory
                 {
                     ThreadStart queryStart = delegate
                     {
-                        using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.GetConnectionString()))
+                        try
                         {
-                            command.Connection = connection;
-                            connection.Notice += Connection_Notice;
-                            connection.Open();
-                            command.ExecuteNonQueryAsync();
+                            using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.GetConnectionString()))
+                            {
+                                command.Connection = connection;
+                                connection.Notice += Connection_Notice;
+                                connection.Open();
+                                command.ExecuteNonQuery();
+                            }
+
+                        }
+                        catch (NpgsqlException ex)
+                        {
+                            var listen = this.Listen;
+
+                            if (listen != null)
+                            {
+                                DbNotificationArgs args = new DbNotificationArgs
+                                {
+                                    Message = ex.Message
+                                };
+
+                                listen(this, args);
+                            }
+
                         }
                     };
 
@@ -275,7 +302,13 @@ namespace MixERP.Net.DbFactory
 
             if (listen != null)
             {
-                listen(this, e);
+                DbNotificationArgs args = new DbNotificationArgs
+                {
+                    Notice = e.Notice,
+                    Message = e.Notice.Message
+                };
+
+                listen(this, args);
             }
         }
     }

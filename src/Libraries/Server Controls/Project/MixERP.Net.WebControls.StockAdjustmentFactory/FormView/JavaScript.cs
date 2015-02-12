@@ -9,21 +9,22 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
     {
         private void AddInlineScript()
         {
-            StringBuilder inline = new StringBuilder();
-            inline.Append("var referencingSidesNotEqualErrorLocalized = '" + Errors.ReferencingSidesNotEqual + "';");
-            inline.Append("var storeServiceUrl = '" + this.StoreServiceUrl + "';");
-            inline.Append("var itemServiceUrl = '" + this.ItemServiceUrl + "';");
-            inline.Append("var unitServiceUrl ='" + this.UnitServiceUrl + "';");
-            inline.Append("var itemPopupUrl ='" + this.ItemPopupUrl + "';");
-            inline.Append("var itemIdQuerySericeUrl ='" + this.ItemIdQuerySericeUrl + "';");
-            inline.Append("var validateSides= " + this.ValidateSides.ToString().ToLower(CultureInfo.InvariantCulture) + ";");
+            string script = string.Empty;
 
-            Net.Common.PageUtility.RegisterJavascript("StockAdjustmentFormViewInlineScript", inline.ToString(), this.Page, true);
+            script += JSUtility.GetVar("referencingSidesNotEqualErrorLocalized", Errors.ReferencingSidesNotEqual);
+            script += JSUtility.GetVar("storeServiceUrl", this.StoreServiceUrl);
+            script += JSUtility.GetVar("itemServiceUrl", this.ItemServiceUrl);
+            script += JSUtility.GetVar("unitServiceUrl", this.UnitServiceUrl);
+            script += JSUtility.GetVar("itemPopupUrl", this.ItemPopupUrl);
+            script += JSUtility.GetVar("itemIdQuerySericeUrl", this.ItemIdQuerySericeUrl);
+            script += JSUtility.GetVar("validateSides", this.ValidateSides.ToString().ToLower(CultureInfo.InvariantCulture));
+
+            Net.Common.PageUtility.RegisterJavascript("StockAdjustmentFormViewInlineScript", script, this.Page, true);
         }
 
         private void AddJavascript()
         {
-            JavascriptHelper.AddJSReference(this.Page, "MixERP.Net.WebControls.StockAdjustmentFactory.FormView.js", "party_control", typeof(FormView));
+            JSUtility.AddJSReference(this.Page, "MixERP.Net.WebControls.StockAdjustmentFactory.FormView.js", "party_control", typeof(FormView));
         }
     }
 }

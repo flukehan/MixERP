@@ -126,6 +126,9 @@
   <data name="NumRowsAffected" xml:space="preserve">
     <value>{0} строк, затронутых.</value>
   </data>
+  <data name="OpeningInventoryAlreadyEntered" xml:space="preserve">
+    <value>Открытие запасов уже были введены на эту должность.</value>
+  </data>
   <data name="TaskCompletedSuccessfully" xml:space="preserve">
     <value>Задача была успешно завершена.</value>
   </data>

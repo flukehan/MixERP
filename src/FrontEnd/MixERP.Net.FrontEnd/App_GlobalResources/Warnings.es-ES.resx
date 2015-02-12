@@ -117,14 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="GridViewEmpty" xml:space="preserve">
-    <value>Vista de cuadrícula está vacía.</value>
+  <data name="AccessIsDenied" xml:space="preserve">
+    <value>Acceso denegado.</value>
+  </data>
+  <data name="ConfirmationPasswordDoesNotMatch" xml:space="preserve">
+    <value>La confirmación de contraseña no coincide con la nueva contraseña.</value>
+  </data>
+  <data name="DuplicateEntry" xml:space="preserve">
+    <value>Duplicar entrada.</value>
   </data>
   <data name="DuplicateFiles" xml:space="preserve">
     <value>Los archivos duplicados.</value>
   </data>
-  <data name="DuplicateEntry" xml:space="preserve">
-    <value>Duplicar entrada.</value>
+  <data name="GridViewEmpty" xml:space="preserve">
+    <value>Vista de cuadrícula está vacía.</value>
   </data>
   <data name="InvalidDate" xml:space="preserve">
     <value>Fecha no válida.</value>
@@ -144,13 +150,10 @@
   <data name="PleaseEnterNewPassword" xml:space="preserve">
     <value>Por favor, introduzca una nueva contraseña.</value>
   </data>
+  <data name="RestrictedTransactionMode" xml:space="preserve">
+    <value>Este establecimiento no permite la publicación de transacciones.</value>
+  </data>
   <data name="UserIdOrPasswordIncorrect" xml:space="preserve">
     <value>Identificador de usuario o contraseña incorrecta.</value>
-  </data>
-  <data name="ConfirmationPasswordDoesNotMatch" xml:space="preserve">
-    <value>La confirmación de contraseña no coincide con la nueva contraseña.</value>
-  </data>
-  <data name="AccessIsDenied" xml:space="preserve">
-    <value>Acceso denegado.</value>
   </data>
 </root>

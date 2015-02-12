@@ -66,7 +66,8 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
 
         private void AddScrudCustomValidatorMessages()
         {
-            string javascript = "var compareAmountErrorMessageLocalized='" + Warnings.CompareAmountErrorMessage + "';";
+            string javascript = JSUtility.GetVar("compareAmountErrorMessageLocalized", Warnings.CompareAmountErrorMessage);
+
             Common.PageUtility.RegisterJavascript("BonusSlabDetails_CustomValidatorMessages", javascript, this.Page, true);
         }
     }

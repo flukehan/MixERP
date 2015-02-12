@@ -117,91 +117,100 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="SelectLanguage" xml:space="preserve">
-    <value>Selecciona Idioma de la</value>
-  </data>
-  <data name="Select" xml:space="preserve">
-    <value>seleccionar</value>
-  </data>
-  <data name="RememberMe" xml:space="preserve">
-    <value>Acuérdate De Mí</value>
-  </data>
-  <data name="PreparedOn" xml:space="preserve">
-    <value>Elaborado sobre</value>
-  </data>
-  <data name="Phone" xml:space="preserve">
-    <value>teléfono</value>
-  </data>
-  <data name="Password" xml:space="preserve">
-    <value>contraseña</value>
+  <data name="RestrictedTransactionMode" xml:space="preserve">
+    <value>Este establecimiento no permite la publicación de transacciones.</value>
   </data>
   <data name="None" xml:space="preserve">
     <value>ninguno</value>
   </data>
-  <data name="No" xml:space="preserve">
-    <value>no</value>
+  <data name="BackToPreviousPage" xml:space="preserve">
+    <value>Volver a la página anterior</value>
   </data>
-  <data name="NewPassword" xml:space="preserve">
-    <value>nueva Contraseña</value>
-  </data>
-  <data name="MixERPDocumentation" xml:space="preserve">
-    <value>MixERP Documentación</value>
-  </data>
-  <data name="ManageProfile" xml:space="preserve">
-    <value>administrar perfil</value>
-  </data>
-  <data name="Fax" xml:space="preserve">
-    <value>fax</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>Correo electrónico</value>
-  </data>
-  <data name="CurrentPassword" xml:space="preserve">
-    <value>Contraseña Actual</value>
-  </data>
-  <data name="ConfirmPassword" xml:space="preserve">
-    <value>confirmar Contraseña</value>
+  <data name="Update" xml:space="preserve">
+    <value>actualización</value>
   </data>
   <data name="ChangePassword" xml:space="preserve">
     <value>Cambiar La Contraseña</value>
   </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>cancelar</value>
-  </data>
-  <data name="AccessIsDenied" xml:space="preserve">
-    <value>Acceso denegado.</value>
-  </data>
-  <data name="User" xml:space="preserve">
-    <value>usuario</value>
-  </data>
-  <data name="Url" xml:space="preserve">
-    <value>Localizador de recursos uniforme</value>
-  </data>
-  <data name="SignOut" xml:space="preserve">
-    <value>Desconectar</value>
-  </data>
-  <data name="SigningIn" xml:space="preserve">
-    <value>Inicio de sesión en</value>
-  </data>
-  <data name="SignIn" xml:space="preserve">
-    <value>Registrarse</value>
-  </data>
-  <data name="SelectYourBranch" xml:space="preserve">
-    <value>Seleccione su sucursal</value>
-  </data>
-  <data name="Yes" xml:space="preserve">
-    <value>sí</value>
-  </data>
-  <data name="Username" xml:space="preserve">
-    <value>Nombre de usuario</value>
-  </data>
-  <data name="UserId" xml:space="preserve">
-    <value>Identificador de Usuario</value>
+  <data name="Notifications" xml:space="preserve">
+    <value>Notificaciones</value>
   </data>
   <data name="OfficeCode" xml:space="preserve">
     <value>Código de oficina</value>
   </data>
-  <data name="Notifications" xml:space="preserve">
-    <value>Notificaciones</value>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>confirmar Contraseña</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>contraseña</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>teléfono</value>
+  </data>
+  <data name="CurrentPassword" xml:space="preserve">
+    <value>Contraseña Actual</value>
+  </data>
+  <data name="PreparedOn" xml:space="preserve">
+    <value>Elaborado sobre</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Acuérdate De Mí</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Correo electrónico</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>seleccionar</value>
+  </data>
+  <data name="SelectLanguage" xml:space="preserve">
+    <value>Selecciona Idioma de la</value>
+  </data>
+  <data name="Fax" xml:space="preserve">
+    <value>fax</value>
+  </data>
+  <data name="SelectYourBranch" xml:space="preserve">
+    <value>Seleccione su sucursal</value>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>Registrarse</value>
+  </data>
+  <data name="ManageProfile" xml:space="preserve">
+    <value>administrar perfil</value>
+  </data>
+  <data name="SigningIn" xml:space="preserve">
+    <value>Inicio de sesión en</value>
+  </data>
+  <data name="SignOut" xml:space="preserve">
+    <value>Desconectar</value>
+  </data>
+  <data name="AccessIsDenied" xml:space="preserve">
+    <value>Acceso denegado.</value>
+  </data>
+  <data name="MixERPDocumentation" xml:space="preserve">
+    <value>MixERP Documentación</value>
+  </data>
+  <data name="Url" xml:space="preserve">
+    <value>Localizador de recursos uniforme</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>usuario</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>nueva Contraseña</value>
+  </data>
+  <data name="UserId" xml:space="preserve">
+    <value>Identificador de Usuario</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>cancelar</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Nombre de usuario</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>no</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>sí</value>
   </data>
 </root>

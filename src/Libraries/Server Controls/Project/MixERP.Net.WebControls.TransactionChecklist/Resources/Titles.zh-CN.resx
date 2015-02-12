@@ -117,17 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="PrintReceipt" xml:space="preserve">
+    <value>打印收据</value>
+  </data>
   <data name="PrintGlEntry" xml:space="preserve">
     <value>打印总帐进入</value>
-  </data>
-  <data name="AddNew" xml:space="preserve">
-    <value>添加新</value>
-  </data>
-  <data name="Back" xml:space="preserve">
-    <value>背部</value>
-  </data>
-  <data name="UploadAttachmentsForThisTransaction" xml:space="preserve">
-    <value>上传附件为此次交易</value>
   </data>
   <data name="ReturnToView" xml:space="preserve">
     <value>返回查看</value>
@@ -135,16 +129,22 @@
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
-  <data name="PrintReceipt" xml:space="preserve">
-    <value>打印收据</value>
+  <data name="OK" xml:space="preserve">
+    <value>行</value>
+  </data>
+  <data name="AddNew" xml:space="preserve">
+    <value>添加新</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>背部</value>
   </data>
   <data name="WithdrawTransaction" xml:space="preserve">
     <value>撤销交易</value>
   </data>
+  <data name="UploadAttachmentsForThisTransaction" xml:space="preserve">
+    <value>上传附件为此次交易</value>
+  </data>
   <data name="Checklists" xml:space="preserve">
     <value>清单</value>
-  </data>
-  <data name="OK" xml:space="preserve">
-    <value>行</value>
   </data>
 </root>

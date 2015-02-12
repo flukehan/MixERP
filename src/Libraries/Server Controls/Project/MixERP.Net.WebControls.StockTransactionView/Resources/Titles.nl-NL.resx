@@ -117,76 +117,76 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="FlagForegroundColor" xml:space="preserve">
-    <value>Vlag Voorgrondkleur</value>
-  </data>
-  <data name="TransactionTimestamp" xml:space="preserve">
-    <value>transactie Tijdstempel</value>
-  </data>
-  <data name="Flag" xml:space="preserve">
-    <value>vlag</value>
-  </data>
-  <data name="Return" xml:space="preserve">
-    <value>terugkeer</value>
-  </data>
-  <data name="StatementReference" xml:space="preserve">
-    <value>verklaring verwijzing</value>
-  </data>
-  <data name="Show" xml:space="preserve">
-    <value>tonen</value>
+  <data name="PriceType" xml:space="preserve">
+    <value>Prijs Type</value>
   </data>
   <data name="Preview" xml:space="preserve">
     <value>Voorbeeld</value>
   </data>
-  <data name="ValueDate" xml:space="preserve">
-    <value>valutadatum</value>
+  <data name="Show" xml:space="preserve">
+    <value>tonen</value>
   </data>
   <data name="MergeBatchToSalesDelivery" xml:space="preserve">
     <value>Batch fuseren om de verkoop levering</value>
   </data>
+  <data name="FlagForegroundColor" xml:space="preserve">
+    <value>Vlag Voorgrondkleur</value>
+  </data>
   <data name="Amount" xml:space="preserve">
     <value>bedrag</value>
-  </data>
-  <data name="FlagBackgroundColor" xml:space="preserve">
-    <value>Vlag Achtergrond Kleur</value>
-  </data>
-  <data name="PriceType" xml:space="preserve">
-    <value>Prijs Type</value>
-  </data>
-  <data name="Office" xml:space="preserve">
-    <value>kantoor</value>
   </data>
   <data name="User" xml:space="preserve">
     <value>gebruiker</value>
   </data>
-  <data name="MergeBatchToGRN" xml:space="preserve">
-    <value>Batch fuseren om goederen mee ontvangst</value>
-  </data>
-  <data name="Select" xml:space="preserve">
-    <value>kiezen</value>
-  </data>
-  <data name="AddNew" xml:space="preserve">
-    <value>Nieuwe toevoegen</value>
-  </data>
-  <data name="ReferenceNumber" xml:space="preserve">
-    <value>verwijzing #</value>
-  </data>
-  <data name="Print" xml:space="preserve">
-    <value>afdruk</value>
-  </data>
-  <data name="Id" xml:space="preserve">
-    <value>Id</value>
+  <data name="Party" xml:space="preserve">
+    <value>partij</value>
   </data>
   <data name="Actions" xml:space="preserve">
     <value>acties</value>
   </data>
-  <data name="Book" xml:space="preserve">
-    <value>boek</value>
-  </data>
   <data name="MergeBatchToSalesOrder" xml:space="preserve">
     <value>Batch fuseren tot verkooporder</value>
   </data>
-  <data name="Party" xml:space="preserve">
-    <value>partij</value>
+  <data name="Office" xml:space="preserve">
+    <value>kantoor</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>kiezen</value>
+  </data>
+  <data name="StatementReference" xml:space="preserve">
+    <value>verklaring verwijzing</value>
+  </data>
+  <data name="TransactionTimestamp" xml:space="preserve">
+    <value>transactie Tijdstempel</value>
+  </data>
+  <data name="FlagBackgroundColor" xml:space="preserve">
+    <value>Vlag Achtergrond Kleur</value>
+  </data>
+  <data name="MergeBatchToGRN" xml:space="preserve">
+    <value>Batch fuseren om goederen mee ontvangst</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="Return" xml:space="preserve">
+    <value>terugkeer</value>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>afdruk</value>
+  </data>
+  <data name="Flag" xml:space="preserve">
+    <value>vlag</value>
+  </data>
+  <data name="ReferenceNumber" xml:space="preserve">
+    <value>verwijzing #</value>
+  </data>
+  <data name="Book" xml:space="preserve">
+    <value>boek</value>
+  </data>
+  <data name="ValueDate" xml:space="preserve">
+    <value>valutadatum</value>
+  </data>
+  <data name="AddNew" xml:space="preserve">
+    <value>Nieuwe toevoegen</value>
   </data>
 </root>

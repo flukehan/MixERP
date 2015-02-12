@@ -117,62 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="StatementReference" xml:space="preserve">
-    <value>О себе Ссылка</value>
-  </data>
   <data name="PriceType" xml:space="preserve">
     <value>Цена Тип</value>
   </data>
   <data name="Preview" xml:space="preserve">
     <value>предварительный просмотр</value>
   </data>
-  <data name="Return" xml:space="preserve">
-    <value>возвращение</value>
-  </data>
-  <data name="Amount" xml:space="preserve">
-    <value>количество</value>
-  </data>
-  <data name="MergeBatchToGRN" xml:space="preserve">
-    <value>Слияние партии к поступления материала ноте</value>
-  </data>
-  <data name="Print" xml:space="preserve">
-    <value>печать</value>
-  </data>
-  <data name="FlagBackgroundColor" xml:space="preserve">
-    <value>Цвет флаг фон</value>
-  </data>
-  <data name="User" xml:space="preserve">
-    <value>пользователь</value>
-  </data>
-  <data name="Actions" xml:space="preserve">
-    <value>действия</value>
-  </data>
-  <data name="ReferenceNumber" xml:space="preserve">
-    <value>Ссылка #</value>
-  </data>
-  <data name="TransactionTimestamp" xml:space="preserve">
-    <value>сделка Отметка времени</value>
-  </data>
-  <data name="MergeBatchToSalesDelivery" xml:space="preserve">
-    <value>Слияние партии к продажам Доставка</value>
-  </data>
   <data name="Show" xml:space="preserve">
     <value>шоу</value>
-  </data>
-  <data name="Flag" xml:space="preserve">
-    <value>флаг</value>
-  </data>
-  <data name="Office" xml:space="preserve">
-    <value>офис</value>
   </data>
   <data name="Book" xml:space="preserve">
     <value>книга</value>
   </data>
-  <data name="AddNew" xml:space="preserve">
-    <value>Добавить новый</value>
-  </data>
-  <data name="FlagForegroundColor" xml:space="preserve">
-    <value>Флаг цвет переднего плана</value>
+  <data name="FlagBackgroundColor" xml:space="preserve">
+    <value>Цвет флаг фон</value>
   </data>
   <data name="Party" xml:space="preserve">
     <value>партия</value>
@@ -180,13 +138,55 @@
   <data name="MergeBatchToSalesOrder" xml:space="preserve">
     <value>Слияние пакетного на заказ клиента</value>
   </data>
-  <data name="Id" xml:space="preserve">
-    <value>идентификатор</value>
-  </data>
   <data name="ValueDate" xml:space="preserve">
     <value>Дата валютирования</value>
   </data>
+  <data name="Id" xml:space="preserve">
+    <value>идентификатор</value>
+  </data>
+  <data name="StatementReference" xml:space="preserve">
+    <value>О себе Ссылка</value>
+  </data>
+  <data name="TransactionTimestamp" xml:space="preserve">
+    <value>сделка Отметка времени</value>
+  </data>
+  <data name="MergeBatchToSalesDelivery" xml:space="preserve">
+    <value>Слияние партии к продажам Доставка</value>
+  </data>
+  <data name="Return" xml:space="preserve">
+    <value>возвращение</value>
+  </data>
+  <data name="MergeBatchToGRN" xml:space="preserve">
+    <value>Слияние партии к поступления материала ноте</value>
+  </data>
   <data name="Select" xml:space="preserve">
     <value>выбрать</value>
+  </data>
+  <data name="ReferenceNumber" xml:space="preserve">
+    <value>Ссылка #</value>
+  </data>
+  <data name="AddNew" xml:space="preserve">
+    <value>Добавить новый</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>количество</value>
+  </data>
+  <data name="FlagForegroundColor" xml:space="preserve">
+    <value>Флаг цвет переднего плана</value>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>печать</value>
+  </data>
+  <data name="Flag" xml:space="preserve">
+    <value>флаг</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>действия</value>
+  </data>
+  <data name="Office" xml:space="preserve">
+    <value>офис</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>пользователь</value>
   </data>
 </root>

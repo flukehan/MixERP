@@ -117,40 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="lead_source_name" xml:space="preserve">
-    <value>Plomb Identificateur Source</value>
-  </data>
-  <data name="lead_status_name" xml:space="preserve">
-    <value>Statut plomb Nom</value>
-  </data>
-  <data name="lead_status_code" xml:space="preserve">
-    <value>Lead Status Code</value>
-  </data>
-  <data name="audit_user_id" xml:space="preserve">
-    <value>Audit identifiant utilisateur</value>
-  </data>
-  <data name="Select" xml:space="preserve">
-    <value>sélectionner</value>
-  </data>
-  <data name="lead_status_id" xml:space="preserve">
-    <value>Lead Identificateur du statut</value>
-  </data>
-  <data name="opportunity_stage_id" xml:space="preserve">
-    <value>Opportunité Identifier étape</value>
-  </data>
-  <data name="lead_source_code" xml:space="preserve">
-    <value>Plomb Source Code</value>
-  </data>
-  <data name="opportunity_stage_code" xml:space="preserve">
-    <value>Opportunité des codes d'étape</value>
-  </data>
-  <data name="lead_source_id" xml:space="preserve">
-    <value>Plomb Source Identifier</value>
-  </data>
   <data name="audit_ts" xml:space="preserve">
     <value>Timestamp de vérification</value>
   </data>
   <data name="opportunity_stage_name" xml:space="preserve">
     <value>Opportunity Stage Name</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>sélectionner</value>
+  </data>
+  <data name="audit_user_id" xml:space="preserve">
+    <value>Audit identifiant utilisateur</value>
+  </data>
+  <data name="lead_status_id" xml:space="preserve">
+    <value>Lead Identificateur du statut</value>
+  </data>
+  <data name="lead_source_id" xml:space="preserve">
+    <value>Plomb Source Identifier</value>
+  </data>
+  <data name="lead_status_name" xml:space="preserve">
+    <value>Statut plomb Nom</value>
+  </data>
+  <data name="opportunity_stage_id" xml:space="preserve">
+    <value>Opportunité Identifier étape</value>
+  </data>
+  <data name="lead_source_name" xml:space="preserve">
+    <value>Plomb Identificateur Source</value>
+  </data>
+  <data name="opportunity_stage_code" xml:space="preserve">
+    <value>Opportunité des codes d'étape</value>
+  </data>
+  <data name="lead_status_code" xml:space="preserve">
+    <value>Lead Status Code</value>
+  </data>
+  <data name="lead_source_code" xml:space="preserve">
+    <value>Plomb Source Code</value>
   </data>
 </root>

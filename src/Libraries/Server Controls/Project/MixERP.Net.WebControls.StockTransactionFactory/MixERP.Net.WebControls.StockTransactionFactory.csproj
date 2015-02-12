@@ -130,6 +130,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Include="Resources\Warnings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Warnings.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\mixerp.licenseheader">
@@ -191,6 +196,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Titles.ru-RU.resx" />
     <EmbeddedResource Include="Resources\Titles.zh-CN.resx" />
+    <EmbeddedResource Include="Resources\Warnings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Warnings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

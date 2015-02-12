@@ -61,9 +61,7 @@ namespace MixERP.Net.WebControls.PartyControl
 
         private void AddScript()
         {
-            JavascriptHelper.AddJSReference(this.Page, "MixERP.Net.WebControls.PartyControl.PartyControl.js", "party_control", typeof(PartyControl));
-            //string script = JavascriptHelper.GetEmbeddedScript("MixERP.Net.WebControls.PartyControl.PartyControl.js", Assembly.GetExecutingAssembly());
-            //PageUtility.RegisterJavascript("partyControl", script, this.Page);
+            JSUtility.AddJSReference(this.Page, "MixERP.Net.WebControls.PartyControl.PartyControl.js", "party_control", typeof(PartyControl));
         }
 
         #region IDisposable

@@ -117,14 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="NumRowsAffected" xml:space="preserve">
-    <value>{0} filas afectadas.</value>
-  </data>
   <data name="ClickHereToDownload" xml:space="preserve">
     <value>Haga clic aquí para descargar.</value>
   </data>
   <data name="DatabaseBackupSuccessful" xml:space="preserve">
     <value>La copia de Seguridad de Base de Datos se ha Realizado correctamente.</value>
+  </data>
+  <data name="NumRowsAffected" xml:space="preserve">
+    <value>{0} filas afectadas.</value>
+  </data>
+  <data name="OpeningInventoryAlreadyEntered" xml:space="preserve">
+    <value>Inventario de apertura ya se ha introducido para esta función.</value>
   </data>
   <data name="TaskCompletedSuccessfully" xml:space="preserve">
     <value>Tarea completada con éxito.</value>

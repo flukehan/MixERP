@@ -117,46 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="TransactionWithdrawnDetails" xml:space="preserve">
-    <value>Cette transaction a été retirée par {0} sur {1}. Motif: "{2}".</value>
-  </data>
-  <data name="TransactionApprovedDetails" xml:space="preserve">
-    <value>Cette transaction a été approuvée par {0} sur {1}.</value>
-  </data>
-  <data name="TransactionWithdrawalInformation" xml:space="preserve">
-    <value>Lorsque vous retirez une transaction, il ne sera pas transmise au module de workflow. Cela signifie que vos transactions retirés sont rejetées et ne nécessitent pas de vérification supplémentaire. Toutefois, vous ne serez pas en mesure de unwithdraw cette opération plus tard.</value>
-  </data>
-  <data name="CannotWithdrawNotValidGLTransaction" xml:space="preserve">
-    <value>Vous ne pouvez pas retirer transaction. Ce est un pas une transaction General Ledger valide.</value>
-  </data>
-  <data name="TransactionAwaitingVerification" xml:space="preserve">
-    <value>Cette transaction est en attente de la vérification d'un administrateur.</value>
+  <data name="TransactionClosedDetails" xml:space="preserve">
+    <value>Cette transaction a été finalisée par {0} sur {1}. Motif: "{2}".</value>
   </data>
   <data name="EmailSentConfirmation" xml:space="preserve">
     <value>Un e-mail a été envoyé à {0}.</value>
   </data>
-  <data name="EmailBody" xml:space="preserve">
-    <value>&lt;h2&gt; Salut, &lt;/ h2&gt; &lt;p&gt; Se il vous plaît trouver le document ci-joint. &lt;/ p&gt; &lt;p&gt; Merci. &lt;br /&gt; MixERP &lt;/ p&gt;</value>
+  <data name="TransactionPostedSuccessfully" xml:space="preserve">
+    <value>La transaction a été publié avec succès.</value>
   </data>
   <data name="TransactionWithdrawnMessage" xml:space="preserve">
     <value>La transaction a été retirée avec succès. En outre, cette action aura une incidence sur les tous les rapports produits sur et après "{0}".</value>
   </data>
-  <data name="TransactionPostedSuccessfully" xml:space="preserve">
-    <value>La transaction a été publié avec succès.</value>
+  <data name="EmailBody" xml:space="preserve">
+    <value>&lt;h2&gt; Salut, &lt;/ h2&gt; &lt;p&gt; Se il vous plaît trouver le document ci-joint. &lt;/ p&gt; &lt;p&gt; Merci. &lt;br /&gt; MixERP &lt;/ p&gt;</value>
+  </data>
+  <data name="TransactionApprovedDetails" xml:space="preserve">
+    <value>Cette transaction a été approuvée par {0} sur {1}.</value>
+  </data>
+  <data name="TransactionAwaitingVerification" xml:space="preserve">
+    <value>Cette transaction est en attente de la vérification d'un administrateur.</value>
   </data>
   <data name="CannotWithdrawTransaction" xml:space="preserve">
     <value>Vous ne pouvez pas retirer transaction.</value>
   </data>
-  <data name="TransactionRejectedDetails" xml:space="preserve">
-    <value>Cette transaction a été rejetée par {0} sur {1}. Motif: "{2}".</value>
+  <data name="TransactionWithdrawnDetails" xml:space="preserve">
+    <value>Cette transaction a été retirée par {0} sur {1}. Motif: "{2}".</value>
   </data>
-  <data name="TransactionClosedDetails" xml:space="preserve">
-    <value>Cette transaction a été finalisée par {0} sur {1}. Motif: "{2}".</value>
+  <data name="CannotWithdrawNotValidGLTransaction" xml:space="preserve">
+    <value>Vous ne pouvez pas retirer transaction. Ce est un pas une transaction General Ledger valide.</value>
+  </data>
+  <data name="TransactionWithdrawalInformation" xml:space="preserve">
+    <value>Lorsque vous retirez une transaction, il ne sera pas transmise au module de workflow. Cela signifie que vos transactions retirés sont rejetées et ne nécessitent pas de vérification supplémentaire. Toutefois, vous ne serez pas en mesure de unwithdraw cette opération plus tard.</value>
+  </data>
+  <data name="ThisFieldIsRequired" xml:space="preserve">
+    <value>Ce champ est obligatoire.</value>
   </data>
   <data name="TransactionAutoApprovedDetails" xml:space="preserve">
     <value>Cette transaction a été automatiquement approuvé par {0} sur {1}.</value>
   </data>
-  <data name="ThisFieldIsRequired" xml:space="preserve">
-    <value>Ce champ est obligatoire.</value>
+  <data name="TransactionRejectedDetails" xml:space="preserve">
+    <value>Cette transaction a été rejetée par {0} sur {1}. Motif: "{2}".</value>
   </data>
 </root>

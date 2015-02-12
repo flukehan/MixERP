@@ -117,28 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CompareDaysErrorMessage" xml:space="preserve">
-    <value>Von Tag sollte nicht größer als das zu Tage.</value>
-  </data>
-  <data name="AccessIsDenied" xml:space="preserve">
-    <value>Zugriff wird verweigert.</value>
+  <data name="InvalidData" xml:space="preserve">
+    <value>Ungültige Daten.</value>
   </data>
   <data name="InvalidCashRepository" xml:space="preserve">
     <value>Ungültige Cash-Repository.</value>
   </data>
-  <data name="InvalidData" xml:space="preserve">
-    <value>Ungültige Daten.</value>
+  <data name="CompareDaysErrorMessage" xml:space="preserve">
+    <value>Von Tag sollte nicht größer als das zu Tage.</value>
   </data>
   <data name="NegativeValueSupplied" xml:space="preserve">
     <value>Negativer Wert geliefert.</value>
   </data>
+  <data name="AccessIsDenied" xml:space="preserve">
+    <value>Zugriff wird verweigert.</value>
+  </data>
   <data name="InsufficientBalanceInCashRepository" xml:space="preserve">
     <value>Es gibt keine ausreichenden Gleichgewicht in der Kapital Repository, diese Transaktion zu verarbeiten.</value>
   </data>
-  <data name="InvalidAccount" xml:space="preserve">
-    <value>Ungültige Konto.</value>
-  </data>
   <data name="ReferencingSidesNotEqual" xml:space="preserve">
     <value>Die referenzierenden Seiten sind nicht gleich.</value>
+  </data>
+  <data name="InvalidAccount" xml:space="preserve">
+    <value>Ungültige Konto.</value>
   </data>
 </root>

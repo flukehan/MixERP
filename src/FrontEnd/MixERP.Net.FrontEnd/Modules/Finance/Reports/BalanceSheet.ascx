@@ -78,10 +78,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                 currentBalance = (currentBalance === 0) ? "" : currentBalance;
 
                 if (accountId) {
-                    html = "<a class='dotted underline' href='javascript:void(0);' onclick=showWindow('" + String.format(url, accountId, previousPeriod) + "')>" + previousBalanceCell.html() + "</a>";
+                    html = "<a class='dotted underline' href='javascript:void(0);' onclick=\"showWindow('" + String.format(url, accountId, previousPeriod) + "');\">" + previousBalanceCell.html() + "</a>";
                     previousBalanceCell.html(html);
 
-                    html = "<a class='dotted underline' href='javascript:void(0);' onclick=showWindow('" + String.format(url, accountId, currentPeriod) + "')>" + currentBalanceCell.html() + "</a>";
+                    html = "<a class='dotted underline' href='javascript:void(0);' onclick=\"showWindow('" + String.format(url, accountId, currentPeriod) + "');\">" + currentBalanceCell.html() + "</a>";
                     currentBalanceCell.html(html);
                 };
 

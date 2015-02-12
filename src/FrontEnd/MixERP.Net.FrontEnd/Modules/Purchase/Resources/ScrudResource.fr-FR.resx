@@ -117,17 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="item_id" xml:space="preserve">
-    <value>Item Id</value>
+  <data name="item_name" xml:space="preserve">
+    <value>Item nom</value>
   </data>
-  <data name="sub_total" xml:space="preserve">
-    <value>sous-total</value>
-  </data>
-  <data name="discount" xml:space="preserve">
-    <value>rabais</value>
-  </data>
-  <data name="quantity" xml:space="preserve">
-    <value>quantité</value>
+  <data name="price" xml:space="preserve">
+    <value>prix</value>
   </data>
   <data name="tax" xml:space="preserve">
     <value>impôt</value>
@@ -135,8 +129,17 @@
   <data name="total" xml:space="preserve">
     <value>total</value>
   </data>
-  <data name="item_code" xml:space="preserve">
-    <value>Code de l'article</value>
+  <data name="item_id" xml:space="preserve">
+    <value>Item Id</value>
+  </data>
+  <data name="discount" xml:space="preserve">
+    <value>rabais</value>
+  </data>
+  <data name="sub_total" xml:space="preserve">
+    <value>sous-total</value>
+  </data>
+  <data name="quantity" xml:space="preserve">
+    <value>quantité</value>
   </data>
   <data name="amount" xml:space="preserve">
     <value>montant</value>
@@ -144,13 +147,10 @@
   <data name="unit_name" xml:space="preserve">
     <value>Nom de l'unité</value>
   </data>
-  <data name="item_name" xml:space="preserve">
-    <value>Item nom</value>
+  <data name="item_code" xml:space="preserve">
+    <value>Code de l'article</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>sélectionner</value>
-  </data>
-  <data name="price" xml:space="preserve">
-    <value>prix</value>
   </data>
 </root>

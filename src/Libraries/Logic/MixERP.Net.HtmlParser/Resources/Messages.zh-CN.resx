@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="TempDirectoryNullError" xml:space="preserve">
-    <value>无法创建图像时的临时目录为空。</value>
-  </data>
   <data name="CouldNotDetermineVirtualPathError" xml:space="preserve">
     <value>无法确定的虚拟路径来创建图像。</value>
+  </data>
+  <data name="TempDirectoryNullError" xml:space="preserve">
+    <value>无法创建图像时的临时目录为空。</value>
   </data>
 </root>

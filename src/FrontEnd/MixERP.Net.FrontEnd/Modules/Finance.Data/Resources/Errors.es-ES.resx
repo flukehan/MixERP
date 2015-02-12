@@ -117,13 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ReferencingSidesNotEqual" xml:space="preserve">
-    <value>Los lados que hacen referencia no son iguales.</value>
+  <data name="BothSidesCannotHaveValue" xml:space="preserve">
+    <value>Tanto débito y crédito no pueden tener valores.</value>
   </data>
   <data name="NoTransactionToPost" xml:space="preserve">
     <value>Ninguna transacción para enviar.</value>
   </data>
-  <data name="BothSidesCannotHaveValue" xml:space="preserve">
-    <value>Tanto débito y crédito no pueden tener valores.</value>
+  <data name="ReferencingSidesNotEqual" xml:space="preserve">
+    <value>Los lados que hacen referencia no son iguales.</value>
   </data>
 </root>

@@ -7,6 +7,8 @@ BEGIN
 
     COMMENT ON ROLE mix_erp IS 'The default user for MixERP databases.';
 
+    EXECUTE 'ALTER DATABASE ' || current_database() || ' OWNER TO mix_erp;';
+
     REVOKE ALL ON SCHEMA assert FROM public;
     REVOKE ALL ON SCHEMA audit FROM public;
     REVOKE ALL ON SCHEMA core FROM public;
@@ -18,7 +20,8 @@ BEGIN
     REVOKE ALL ON SCHEMA scrud FROM public;
     REVOKE ALL ON SCHEMA transactions FROM public;
     REVOKE ALL ON SCHEMA unit_tests FROM public;
-    
+
+        
     GRANT USAGE ON SCHEMA assert TO mix_erp;
     GRANT USAGE ON SCHEMA audit TO mix_erp;
     GRANT USAGE ON SCHEMA core TO mix_erp;
@@ -45,6 +48,7 @@ BEGIN
     ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
     ALTER DEFAULT PRIVILEGES IN SCHEMA transactions GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
     ALTER DEFAULT PRIVILEGES IN SCHEMA unit_tests GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
+
 
     GRANT SELECT ON ALL TABLES IN SCHEMA scrud TO mix_erp;
     GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA scrud TO mix_erp;

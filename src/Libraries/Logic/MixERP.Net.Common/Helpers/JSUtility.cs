@@ -18,13 +18,14 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Web.UI;
 
 namespace MixERP.Net.Common.Helpers
 {
-    public static class JavascriptHelper
+    public static class JSUtility
     {
         public static void AddJSReference(Page page, string resourceName, string key, Type type)
         {
@@ -32,8 +33,6 @@ namespace MixERP.Net.Common.Helpers
             {
                 string script = "<script type='text/javascript' src='" + page.Request.Url.GetLeftPart(UriPartial.Authority) + page.ClientScript.GetWebResourceUrl(type, resourceName) + "'></script>";
                 PageUtility.RegisterJavascript(key, script, page, false);
-
-                //page.ClientScript.RegisterClientScriptInclude(type, key, page.ClientScript.GetWebResourceUrl(type, resourceName));
             }
         }
 
@@ -60,6 +59,27 @@ namespace MixERP.Net.Common.Helpers
             {
                 return reader.ReadToEnd();
             }
+        }
+
+        public static string GetVar(string name, object value, bool isString = true)
+        {
+            string script = "var {0}={1};";
+
+            if (isString)
+            {
+                script = "var {0}='{1}';";
+            }
+
+            if (value == null)
+            {
+                script = string.Format(CultureInfo.InvariantCulture, script, name, string.Empty);
+            }
+            else
+            {
+                script = string.Format(CultureInfo.InvariantCulture, script, name, value.ToString().Replace("'", @"\'"));
+            }
+
+            return script;
         }
     }
 }

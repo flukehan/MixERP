@@ -117,13 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="NoTransactionToPost" xml:space="preserve">
+    <value>トランザクションは投稿しないように。</value>
+  </data>
   <data name="BothSidesCannotHaveValue" xml:space="preserve">
     <value>どちらの借方と貸方値を持つことができません。</value>
   </data>
   <data name="ReferencingSidesNotEqual" xml:space="preserve">
     <value>参照辺が等しくない。</value>
-  </data>
-  <data name="NoTransactionToPost" xml:space="preserve">
-    <value>トランザクションは投稿しないように。</value>
   </data>
 </root>

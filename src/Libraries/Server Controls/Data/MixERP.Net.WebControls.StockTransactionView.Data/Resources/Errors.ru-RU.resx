@@ -117,14 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="InvalidSubTranBookPurchaseDelivery" xml:space="preserve">
+    <value>Неверный Вспомогательные Сделки Книга "Покупка Доставка"</value>
+  </data>
   <data name="InvalidSubTranBookSalesPayment" xml:space="preserve">
     <value>Неверный Вспомогательные Сделки Книга "Оплата по продажам"</value>
   </data>
   <data name="InvalidSubTranBookPurchaseQuotation" xml:space="preserve">
     <value>Недействительные сделки Вспомогательные Книга "Покупка цитаты"</value>
-  </data>
-  <data name="InvalidSubTranBookPurchaseDelivery" xml:space="preserve">
-    <value>Неверный Вспомогательные Сделки Книга "Покупка Доставка"</value>
   </data>
   <data name="InvalidSubTranBookPurchaseReceipt" xml:space="preserve">
     <value>Неверный Вспомогательные Сделки Книга "Покупка Получение"</value>

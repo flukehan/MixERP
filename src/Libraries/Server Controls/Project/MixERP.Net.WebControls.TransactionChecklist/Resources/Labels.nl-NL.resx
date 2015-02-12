@@ -117,46 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="TransactionWithdrawnDetails" xml:space="preserve">
-    <value>Deze transactie werd ingetrokken door {0} op {1}. Reden: "{2}".</value>
+  <data name="EmailBody" xml:space="preserve">
+    <value>&lt;h2&gt; Hallo, &lt;/ h2&gt; &lt;p&gt; Hieronder vindt u het bijgevoegde document. &lt;/ p&gt; &lt;p&gt; Bedankt. &lt;br /&gt; MixERP &lt;/ p&gt;</value>
   </data>
   <data name="TransactionApprovedDetails" xml:space="preserve">
     <value>Deze transactie werd goedgekeurd door {0} op {1}.</value>
   </data>
-  <data name="CannotWithdrawNotValidGLTransaction" xml:space="preserve">
-    <value>Kan niet terug te trekken transactie. Dit is een niet geldige grootboek transactie.</value>
-  </data>
-  <data name="CannotWithdrawTransaction" xml:space="preserve">
-    <value>Kan niet terug te trekken transactie.</value>
-  </data>
   <data name="TransactionClosedDetails" xml:space="preserve">
     <value>Deze transactie werd gesloten door {0} op {1}. Reden: "{2}".</value>
   </data>
-  <data name="TransactionAutoApprovedDetails" xml:space="preserve">
-    <value>Deze transactie werd automatisch goedgekeurd door {0} op {1}.</value>
-  </data>
-  <data name="TransactionWithdrawalInformation" xml:space="preserve">
-    <value>Wanneer u een transactie in te trekken, zal het niet worden doorgestuurd naar de workflow module. Dit betekent dat uw ingetrokken transacties worden afgewezen en vereisen geen verdere controle. Maar, zult u niet in staat zijn om deze transactie later unwithdraw.</value>
-  </data>
-  <data name="TransactionRejectedDetails" xml:space="preserve">
-    <value>Deze transactie werd verworpen door {0} op {1}. Reden: "{2}".</value>
-  </data>
-  <data name="EmailSentConfirmation" xml:space="preserve">
-    <value>Een e-mail is verzonden naar {0}.</value>
+  <data name="TransactionWithdrawnMessage" xml:space="preserve">
+    <value>De transactie werd succesvol ingetrokken. Bovendien zal deze actie invloed op de productie van en na "{0}" alle rapporten.</value>
   </data>
   <data name="TransactionAwaitingVerification" xml:space="preserve">
     <value>Deze transactie is in afwachting van de verificatie van een beheerder.</value>
   </data>
-  <data name="ThisFieldIsRequired" xml:space="preserve">
-    <value>Dit veld is verplicht.</value>
+  <data name="CannotWithdrawNotValidGLTransaction" xml:space="preserve">
+    <value>Kan niet terug te trekken transactie. Dit is een niet geldige grootboek transactie.</value>
+  </data>
+  <data name="TransactionRejectedDetails" xml:space="preserve">
+    <value>Deze transactie werd verworpen door {0} op {1}. Reden: "{2}".</value>
+  </data>
+  <data name="TransactionWithdrawnDetails" xml:space="preserve">
+    <value>Deze transactie werd ingetrokken door {0} op {1}. Reden: "{2}".</value>
   </data>
   <data name="TransactionPostedSuccessfully" xml:space="preserve">
     <value>De transactie werd met succes geplaatst.</value>
   </data>
-  <data name="EmailBody" xml:space="preserve">
-    <value>&lt;h2&gt; Hallo, &lt;/ h2&gt; &lt;p&gt; Hieronder vindt u het bijgevoegde document. &lt;/ p&gt; &lt;p&gt; Bedankt. &lt;br /&gt; MixERP &lt;/ p&gt;</value>
+  <data name="ThisFieldIsRequired" xml:space="preserve">
+    <value>Dit veld is verplicht.</value>
   </data>
-  <data name="TransactionWithdrawnMessage" xml:space="preserve">
-    <value>De transactie werd succesvol ingetrokken. Bovendien zal deze actie invloed op de productie van en na "{0}" alle rapporten.</value>
+  <data name="EmailSentConfirmation" xml:space="preserve">
+    <value>Een e-mail is verzonden naar {0}.</value>
+  </data>
+  <data name="TransactionWithdrawalInformation" xml:space="preserve">
+    <value>Wanneer u een transactie in te trekken, zal het niet worden doorgestuurd naar de workflow module. Dit betekent dat uw ingetrokken transacties worden afgewezen en vereisen geen verdere controle. Maar, zult u niet in staat zijn om deze transactie later unwithdraw.</value>
+  </data>
+  <data name="TransactionAutoApprovedDetails" xml:space="preserve">
+    <value>Deze transactie werd automatisch goedgekeurd door {0} op {1}.</value>
+  </data>
+  <data name="CannotWithdrawTransaction" xml:space="preserve">
+    <value>Kan niet terug te trekken transactie.</value>
   </data>
 </root>

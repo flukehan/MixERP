@@ -117,16 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="TaskCompletedSuccessfully" xml:space="preserve">
-    <value>任务成功完成。</value>
-  </data>
-  <data name="NumRowsAffected" xml:space="preserve">
-    <value>{0}行受到影响。</value>
+  <data name="ClickHereToDownload" xml:space="preserve">
+    <value>点击这里下载。</value>
   </data>
   <data name="DatabaseBackupSuccessful" xml:space="preserve">
     <value>数据库备份是成功的。</value>
   </data>
-  <data name="ClickHereToDownload" xml:space="preserve">
-    <value>点击这里下载。</value>
+  <data name="NumRowsAffected" xml:space="preserve">
+    <value>{0}行受到影响。</value>
+  </data>
+  <data name="OpeningInventoryAlreadyEntered" xml:space="preserve">
+    <value>期初库存已经为这个办公室输入。</value>
+  </data>
+  <data name="TaskCompletedSuccessfully" xml:space="preserve">
+    <value>任务成功完成。</value>
   </data>
 </root>

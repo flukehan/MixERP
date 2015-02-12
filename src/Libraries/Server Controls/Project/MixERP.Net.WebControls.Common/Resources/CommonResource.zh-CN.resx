@@ -120,14 +120,14 @@
   <data name="RequiredField" xml:space="preserve">
     <value>这是一个必填字段。</value>
   </data>
-  <data name="InvalidDate" xml:space="preserve">
-    <value>无效的日期。</value>
+  <data name="NoRecordFound" xml:space="preserve">
+    <value>对不起，没有找到记录。</value>
   </data>
   <data name="DateMustBeGreaterThan" xml:space="preserve">
     <value>无效的日期。必须大于“{0}”。</value>
   </data>
-  <data name="NoRecordFound" xml:space="preserve">
-    <value>对不起，没有找到记录。</value>
+  <data name="InvalidDate" xml:space="preserve">
+    <value>无效的日期。</value>
   </data>
   <data name="DateMustBeLessThan" xml:space="preserve">
     <value>无效的日期。必须小于“{0}”。</value>

@@ -117,34 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddNew" xml:space="preserve">
+    <value>新しい追加</value>
+  </data>
+  <data name="WithdrawTransaction" xml:space="preserve">
+    <value>トランザクションを撤回</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>よし</value>
+  </data>
+  <data name="UploadAttachmentsForThisTransaction" xml:space="preserve">
+    <value>このトランザクションの添付ファイルをアップロードする</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="Checklists" xml:space="preserve">
+    <value>チェックリスト</value>
+  </data>
   <data name="ReturnToView" xml:space="preserve">
     <value>ビューに戻る</value>
   </data>
   <data name="PrintReceipt" xml:space="preserve">
     <value>印刷領収書</value>
   </data>
-  <data name="AddNew" xml:space="preserve">
-    <value>新しい追加</value>
-  </data>
-  <data name="UploadAttachmentsForThisTransaction" xml:space="preserve">
-    <value>このトランザクションの添付ファイルをアップロードする</value>
-  </data>
-  <data name="WithdrawTransaction" xml:space="preserve">
-    <value>トランザクションを撤回</value>
-  </data>
   <data name="PrintGlEntry" xml:space="preserve">
     <value>総勘定元帳のエントリを印刷</value>
   </data>
-  <data name="Checklists" xml:space="preserve">
-    <value>チェックリスト</value>
-  </data>
   <data name="Back" xml:space="preserve">
     <value>バック</value>
-  </data>
-  <data name="OK" xml:space="preserve">
-    <value>よし</value>
-  </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>キャンセル</value>
   </data>
 </root>

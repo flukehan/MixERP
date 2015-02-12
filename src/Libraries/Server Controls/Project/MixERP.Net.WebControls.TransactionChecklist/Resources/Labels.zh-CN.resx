@@ -117,46 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="TransactionAwaitingVerification" xml:space="preserve">
-    <value>这宗交易是由管理员等待验证。</value>
-  </data>
-  <data name="TransactionWithdrawnMessage" xml:space="preserve">
-    <value>本次交易已成功撤出。此外，这个动作会影响到所有的生产上，并在“{0}”的报告。</value>
-  </data>
-  <data name="CannotWithdrawTransaction" xml:space="preserve">
-    <value>不能撤回交易。</value>
+  <data name="EmailSentConfirmation" xml:space="preserve">
+    <value>一封电子邮件被发送到{0}。</value>
   </data>
   <data name="TransactionClosedDetails" xml:space="preserve">
     <value>此项交易已于{1}关闭了{0}。原因：“{2}”。</value>
   </data>
-  <data name="TransactionWithdrawalInformation" xml:space="preserve">
-    <value>当撤回事务时，将不被转发到工作流模块。这意味着，你撤回交易被拒绝，不需要进一步验证。但是，您将无法取消后撤销该交易。</value>
-  </data>
-  <data name="CannotWithdrawNotValidGLTransaction" xml:space="preserve">
-    <value>不能撤回交易。这是不是一个有效的总帐交易。</value>
-  </data>
-  <data name="EmailSentConfirmation" xml:space="preserve">
-    <value>一封电子邮件被发送到{0}。</value>
-  </data>
-  <data name="EmailBody" xml:space="preserve">
-    <value>&lt;h2&gt;嗨，&lt;/ h2&gt;&lt;p&gt;请参考附件文件。&lt;/ p&gt; &lt;p&gt;谢谢。&lt;br/&gt; MixERP&lt;/ P&gt;</value>
+  <data name="TransactionRejectedDetails" xml:space="preserve">
+    <value>本次交易由{0}在{1}拒绝。原因：“{2}”。</value>
   </data>
   <data name="TransactionWithdrawnDetails" xml:space="preserve">
     <value>此项交易已于{1}撤回{0}。原因：“{2}”。</value>
   </data>
+  <data name="TransactionAwaitingVerification" xml:space="preserve">
+    <value>这宗交易是由管理员等待验证。</value>
+  </data>
   <data name="TransactionAutoApprovedDetails" xml:space="preserve">
     <value>此项交易已于{1}自动批准{0}。</value>
   </data>
-  <data name="TransactionPostedSuccessfully" xml:space="preserve">
-    <value>本次交易已成功发布。</value>
+  <data name="EmailBody" xml:space="preserve">
+    <value>&lt;h2&gt;嗨，&lt;/ h2&gt;&lt;p&gt;请参考附件文件。&lt;/ p&gt; &lt;p&gt;谢谢。&lt;br/&gt; MixERP&lt;/ P&gt;</value>
   </data>
   <data name="TransactionApprovedDetails" xml:space="preserve">
     <value>此项交易已于{1}批准{0}。</value>
   </data>
-  <data name="TransactionRejectedDetails" xml:space="preserve">
-    <value>本次交易由{0}在{1}拒绝。原因：“{2}”。</value>
+  <data name="TransactionPostedSuccessfully" xml:space="preserve">
+    <value>本次交易已成功发布。</value>
+  </data>
+  <data name="CannotWithdrawTransaction" xml:space="preserve">
+    <value>不能撤回交易。</value>
   </data>
   <data name="ThisFieldIsRequired" xml:space="preserve">
     <value>这是必填栏。</value>
+  </data>
+  <data name="TransactionWithdrawalInformation" xml:space="preserve">
+    <value>当撤回事务时，将不被转发到工作流模块。这意味着，你撤回交易被拒绝，不需要进一步验证。但是，您将无法取消后撤销该交易。</value>
+  </data>
+  <data name="TransactionWithdrawnMessage" xml:space="preserve">
+    <value>本次交易已成功撤出。此外，这个动作会影响到所有的生产上，并在“{0}”的报告。</value>
+  </data>
+  <data name="CannotWithdrawNotValidGLTransaction" xml:space="preserve">
+    <value>不能撤回交易。这是不是一个有效的总帐交易。</value>
   </data>
 </root>

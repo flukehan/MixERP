@@ -24,31 +24,24 @@ namespace MixERP.Net.WebControls.AttachmentFactory
         [AspNetHostingPermission(SecurityAction.Demand, Level = AspNetHostingPermissionLevel.Minimal)]
         private void AddJavascript()
         {
-            JavascriptHelper.AddJSReference(this.Page, "MixERP.Net.WebControls.AttachmentFactory.ajax-file-upload.js", "attachment_factory_ajax_file_upload", this.GetType());
-            JavascriptHelper.AddJSReference(this.Page, "MixERP.Net.WebControls.AttachmentFactory.AttachmentFactory.js", "attachment_factory", this.GetType());
+            JSUtility.AddJSReference(this.Page, "MixERP.Net.WebControls.AttachmentFactory.ajax-file-upload.js", "attachment_factory_ajax_file_upload", this.GetType());
+            JSUtility.AddJSReference(this.Page, "MixERP.Net.WebControls.AttachmentFactory.AttachmentFactory.js", "attachment_factory", this.GetType());
         }
 
 
         private void RegisterJavascript()
         {
-            string javascript = "var allowedExtensions='{0}'.split(',');" +
-                                "var areYouSureLocalized='{1}';" +
-                                "var duplicateFileLocalized='{2}';" +
-                                "var invalidFileLocalized='{3}';" +
-                                "var uploadedFilesDeletedLocalized='{4}';" +
-                                "var undoUploadServiceUrl='{5}';" +
-                                "var uploadHandlerUrl='{6}';";
+            string script = JSUtility.GetVar("allowedExtensions", Helpers.ConfigurationHelper.GetAllowedExtensions());
 
-            string allowedExtensions = Helpers.ConfigurationHelper.GetAllowedExtensions();
-            string areYouSure = Messages.AreYouSure;
-            string duplicateFile = Messages.DuplicateFile;
-            string invalidFile = Messages.InvalidFile;
-            string uploadedFilesDeleted = Messages.UploadFilesDeleted;
-            string undoUploadUrl = Helpers.ConfigurationHelper.GetUndoUploadServiceUrl();
-            string uploadUrl = Helpers.ConfigurationHelper.GetUploadHandlerUrl();
+            script += "allowedExtensions = allowedExtensions.split(',');";
+            script += JSUtility.GetVar("areYouSureLocalized", Messages.AreYouSure);
+            script += JSUtility.GetVar("duplicateFileLocalized", Messages.DuplicateFile);
+            script += JSUtility.GetVar("invalidFileLocalized", Messages.InvalidFile);
+            script += JSUtility.GetVar("uploadedFilesDeletedLocalized", Messages.UploadFilesDeleted);
+            script += JSUtility.GetVar("undoUploadServiceUrl", Helpers.ConfigurationHelper.GetUndoUploadServiceUrl());
+            script += JSUtility.GetVar("uploadHandlerUrl", Helpers.ConfigurationHelper.GetUploadHandlerUrl());
 
-            javascript = string.Format(CultureInfo.InvariantCulture, javascript, allowedExtensions, areYouSure, duplicateFile, invalidFile, uploadedFilesDeleted, undoUploadUrl, uploadUrl);
-            PageUtility.RegisterJavascript("AttachmentUserControl_Resources", javascript, this.Page, true);
+            PageUtility.RegisterJavascript("AttachmentUserControl_Resources", script, this.Page, true);
         }
     }
 }

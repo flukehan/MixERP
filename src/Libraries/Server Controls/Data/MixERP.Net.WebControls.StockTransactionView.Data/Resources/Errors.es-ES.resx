@@ -117,16 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="InvalidSubTranBookSalesPayment" xml:space="preserve">
-    <value>Transacciones Subsidiarios válida libro "de venta"</value>
-  </data>
-  <data name="InvalidSubTranBookPurchaseReceipt" xml:space="preserve">
-    <value>Inválido Transacciones Subsidiarios libro "recibo de compra"</value>
-  </data>
   <data name="InvalidSubTranBookPurchaseDelivery" xml:space="preserve">
     <value>Inválido Transacciones Subsidiarios libro "Compra de Entrega"</value>
   </data>
+  <data name="InvalidSubTranBookSalesPayment" xml:space="preserve">
+    <value>Transacciones Subsidiarios válida libro "de venta"</value>
+  </data>
   <data name="InvalidSubTranBookPurchaseQuotation" xml:space="preserve">
     <value>Transacciones Subsidiarios no válidos libro "Cita de Compra"</value>
+  </data>
+  <data name="InvalidSubTranBookPurchaseReceipt" xml:space="preserve">
+    <value>Inválido Transacciones Subsidiarios libro "recibo de compra"</value>
   </data>
 </root>

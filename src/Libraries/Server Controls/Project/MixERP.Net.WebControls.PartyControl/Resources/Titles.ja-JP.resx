@@ -117,22 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddressAndContactInfo" xml:space="preserve">
+    <value>住所＆連絡先</value>
+  </data>
   <data name="PartySummary" xml:space="preserve">
     <value>パーティーの概要</value>
   </data>
-  <data name="SelectCustomer" xml:space="preserve">
-    <value>セレクトカスタマー</value>
-  </data>
-  <data name="AddressAndContactInfo" xml:space="preserve">
-    <value>住所＆連絡先</value>
+  <data name="TransactionSummary" xml:space="preserve">
+    <value>取引概要</value>
   </data>
   <data name="Home" xml:space="preserve">
     <value>ホーム</value>
   </data>
+  <data name="SelectCustomer" xml:space="preserve">
+    <value>セレクトカスタマー</value>
+  </data>
   <data name="Go" xml:space="preserve">
     <value>行く</value>
-  </data>
-  <data name="TransactionSummary" xml:space="preserve">
-    <value>取引概要</value>
   </data>
 </root>

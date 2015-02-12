@@ -120,20 +120,14 @@
   <data name="item_name" xml:space="preserve">
     <value>Item Name</value>
   </data>
-  <data name="Select" xml:space="preserve">
-    <value>seleccionar</value>
+  <data name="tax" xml:space="preserve">
+    <value>impuesto</value>
   </data>
   <data name="price" xml:space="preserve">
     <value>precio</value>
   </data>
-  <data name="sub_total" xml:space="preserve">
-    <value>total parcial</value>
-  </data>
-  <data name="item_code" xml:space="preserve">
-    <value>Código tem</value>
-  </data>
-  <data name="quantity" xml:space="preserve">
-    <value>cantidad</value>
+  <data name="total" xml:space="preserve">
+    <value>entero</value>
   </data>
   <data name="discount" xml:space="preserve">
     <value>descuento</value>
@@ -141,16 +135,22 @@
   <data name="item_id" xml:space="preserve">
     <value>Identificador de artículo</value>
   </data>
-  <data name="tax" xml:space="preserve">
-    <value>impuesto</value>
+  <data name="sub_total" xml:space="preserve">
+    <value>total parcial</value>
   </data>
-  <data name="total" xml:space="preserve">
-    <value>entero</value>
+  <data name="quantity" xml:space="preserve">
+    <value>cantidad</value>
   </data>
   <data name="amount" xml:space="preserve">
     <value>cantidad</value>
   </data>
   <data name="unit_name" xml:space="preserve">
     <value>Nombre de la unidad</value>
+  </data>
+  <data name="item_code" xml:space="preserve">
+    <value>Código tem</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>seleccionar</value>
   </data>
 </root>

@@ -117,11 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="sub_total" xml:space="preserve">
-    <value>Zwischensumme</value>
+  <data name="item_name" xml:space="preserve">
+    <value>Artikelname</value>
   </data>
-  <data name="quantity" xml:space="preserve">
-    <value>Menge</value>
+  <data name="price" xml:space="preserve">
+    <value>Preis</value>
+  </data>
+  <data name="tax" xml:space="preserve">
+    <value>Steuer</value>
   </data>
   <data name="total" xml:space="preserve">
     <value>gesamt</value>
@@ -132,22 +135,19 @@
   <data name="discount" xml:space="preserve">
     <value>Rabatt</value>
   </data>
-  <data name="item_code" xml:space="preserve">
-    <value>Item Code</value>
+  <data name="sub_total" xml:space="preserve">
+    <value>Zwischensumme</value>
+  </data>
+  <data name="quantity" xml:space="preserve">
+    <value>Menge</value>
   </data>
   <data name="unit_name" xml:space="preserve">
     <value>Einheit Name</value>
   </data>
-  <data name="item_name" xml:space="preserve">
-    <value>Artikelname</value>
+  <data name="item_code" xml:space="preserve">
+    <value>Item Code</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>wählen</value>
-  </data>
-  <data name="price" xml:space="preserve">
-    <value>Preis</value>
-  </data>
-  <data name="tax" xml:space="preserve">
-    <value>Steuer</value>
   </data>
 </root>

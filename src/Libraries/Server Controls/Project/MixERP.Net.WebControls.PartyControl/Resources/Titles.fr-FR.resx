@@ -117,22 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Go" xml:space="preserve">
-    <value>aller</value>
-  </data>
   <data name="AddressAndContactInfo" xml:space="preserve">
     <value>Adresse et coordonnées</value>
-  </data>
-  <data name="SelectCustomer" xml:space="preserve">
-    <value>Sélectionnez client</value>
-  </data>
-  <data name="Home" xml:space="preserve">
-    <value>maison</value>
   </data>
   <data name="PartySummary" xml:space="preserve">
     <value>Résumé Parti</value>
   </data>
   <data name="TransactionSummary" xml:space="preserve">
     <value>Sommaire des transactions</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>maison</value>
+  </data>
+  <data name="SelectCustomer" xml:space="preserve">
+    <value>Sélectionnez client</value>
+  </data>
+  <data name="Go" xml:space="preserve">
+    <value>aller</value>
   </data>
 </root>

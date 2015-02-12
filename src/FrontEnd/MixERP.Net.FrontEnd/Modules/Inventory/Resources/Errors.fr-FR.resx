@@ -117,13 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CompoundUnitOfMeasureErrorMessage" xml:space="preserve">
-    <value>L'unité de base et comparez appareil ne peut pas être la même.</value>
-  </data>
   <data name="InsufficientStockWarning" xml:space="preserve">
     <value>Seulement {0} {1} {2} gauche en stock.</value>
   </data>
   <data name="ReferencingSidesNotEqual" xml:space="preserve">
     <value>Les côtés de référencement sont pas égaux.</value>
+  </data>
+  <data name="CompoundUnitOfMeasureErrorMessage" xml:space="preserve">
+    <value>L'unité de base et comparez appareil ne peut pas être la même.</value>
   </data>
 </root>

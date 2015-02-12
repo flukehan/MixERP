@@ -117,62 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Select" xml:space="preserve">
-    <value>wählen</value>
-  </data>
-  <data name="SelectLanguage" xml:space="preserve">
-    <value>Sprache wählen</value>
-  </data>
-  <data name="Fax" xml:space="preserve">
-    <value>Fax</value>
-  </data>
-  <data name="SelectYourBranch" xml:space="preserve">
-    <value>Wählen Sie Ihre Branche</value>
-  </data>
-  <data name="SignIn" xml:space="preserve">
-    <value>Anmelden</value>
-  </data>
-  <data name="ManageProfile" xml:space="preserve">
-    <value>Profil verwalten</value>
-  </data>
-  <data name="SigningIn" xml:space="preserve">
-    <value>Anmeldung</value>
-  </data>
-  <data name="SignOut" xml:space="preserve">
-    <value>Austragen</value>
-  </data>
-  <data name="AccessIsDenied" xml:space="preserve">
-    <value>Zugriff wird verweigert.</value>
-  </data>
-  <data name="MixERPDocumentation" xml:space="preserve">
-    <value>MixERP Dokumentation</value>
-  </data>
-  <data name="Url" xml:space="preserve">
-    <value>Uniform Resource Locator</value>
-  </data>
-  <data name="User" xml:space="preserve">
-    <value>Benutzer</value>
-  </data>
-  <data name="NewPassword" xml:space="preserve">
-    <value>neues Passwort</value>
-  </data>
-  <data name="UserId" xml:space="preserve">
-    <value>Benutzerkennung</value>
-  </data>
-  <data name="Username" xml:space="preserve">
-    <value>Benutzername</value>
-  </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>Rückgängig Machen</value>
-  </data>
-  <data name="No" xml:space="preserve">
-    <value>keine</value>
-  </data>
   <data name="None" xml:space="preserve">
     <value>Die Sonne Geht Auf</value>
   </data>
+  <data name="BackToPreviousPage" xml:space="preserve">
+    <value>Zurück zur Ausgangsseite</value>
+  </data>
   <data name="ChangePassword" xml:space="preserve">
     <value>Passwort Ändern</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Aktualisierung</value>
   </data>
   <data name="Notifications" xml:space="preserve">
     <value>Benachrichtigungen</value>
@@ -200,5 +155,59 @@
   </data>
   <data name="Email" xml:space="preserve">
     <value>E-Mail</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>wählen</value>
+  </data>
+  <data name="Fax" xml:space="preserve">
+    <value>Fax</value>
+  </data>
+  <data name="SelectLanguage" xml:space="preserve">
+    <value>Sprache wählen</value>
+  </data>
+  <data name="SelectYourBranch" xml:space="preserve">
+    <value>Wählen Sie Ihre Branche</value>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>Anmelden</value>
+  </data>
+  <data name="ManageProfile" xml:space="preserve">
+    <value>Profil verwalten</value>
+  </data>
+  <data name="SigningIn" xml:space="preserve">
+    <value>Anmeldung</value>
+  </data>
+  <data name="AccessIsDenied" xml:space="preserve">
+    <value>Zugriff wird verweigert.</value>
+  </data>
+  <data name="SignOut" xml:space="preserve">
+    <value>Austragen</value>
+  </data>
+  <data name="MixERPDocumentation" xml:space="preserve">
+    <value>MixERP Dokumentation</value>
+  </data>
+  <data name="Url" xml:space="preserve">
+    <value>Uniform Resource Locator</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>Benutzer</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>neues Passwort</value>
+  </data>
+  <data name="UserId" xml:space="preserve">
+    <value>Benutzerkennung</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Rückgängig Machen</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Benutzername</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>keine</value>
+  </data>
+  <data name="RestrictedTransactionMode" xml:space="preserve">
+    <value>Diese Einrichtung erlaubt keine Transaktions Beitrag.</value>
   </data>
 </root>

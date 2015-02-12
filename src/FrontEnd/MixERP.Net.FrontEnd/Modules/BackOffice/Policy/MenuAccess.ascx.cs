@@ -192,7 +192,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
                 {
                     anchor.InnerText = url;
                     anchor.Target = "_blank";
-                    anchor.HRef = this.Page.ResolveUrl(url); ;
+                    anchor.HRef = this.Page.ResolveUrl(url);
                     e.Row.Cells[5].Text = string.Empty;
                     e.Row.Cells[5].Controls.Add(anchor);
                 }

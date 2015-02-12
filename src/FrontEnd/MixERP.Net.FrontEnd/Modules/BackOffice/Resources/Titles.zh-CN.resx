@@ -117,32 +117,107 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ChangePassword" xml:space="preserve">
-    <value>更改密码</value>
+  <data name="Users" xml:space="preserve">
+    <value>用户</value>
   </data>
-  <data name="Load" xml:space="preserve">
-    <value>负载</value>
+  <data name="Show" xml:space="preserve">
+    <value>演出</value>
   </data>
-  <data name="Counters" xml:space="preserve">
-    <value>计数器</value>
+  <data name="Unit" xml:space="preserve">
+    <value>单元</value>
   </data>
-  <data name="AutoVerificationPolicy" xml:space="preserve">
-    <value>自动验证策略</value>
+  <data name="UncheckAll" xml:space="preserve">
+    <value>全部取消</value>
   </data>
-  <data name="Flags" xml:space="preserve">
-    <value>旗</value>
+  <data name="SelectUser" xml:space="preserve">
+    <value>选择用户</value>
   </data>
-  <data name="PreparedOn" xml:space="preserve">
-    <value>编制</value>
+  <data name="DatabaseStatistics" xml:space="preserve">
+    <value>数据库统计</value>
   </data>
-  <data name="Departments" xml:space="preserve">
-    <value>部门</value>
+  <data name="OfficeSetup" xml:space="preserve">
+    <value>办公室设定</value>
+  </data>
+  <data name="TaxAuthorities" xml:space="preserve">
+    <value>税务机关</value>
+  </data>
+  <data name="Counties" xml:space="preserve">
+    <value>区县</value>
+  </data>
+  <data name="ViewBackups" xml:space="preserve">
+    <value>查看备份</value>
+  </data>
+  <data name="MenuText" xml:space="preserve">
+    <value>菜单文本</value>
+  </data>
+  <data name="OpeningInventory" xml:space="preserve">
+    <value>期初库存</value>
+  </data>
+  <data name="CashRepositories" xml:space="preserve">
+    <value>现金库</value>
+  </data>
+  <data name="Frequencies" xml:space="preserve">
+    <value>频率</value>
+  </data>
+  <data name="SalesTaxTypes" xml:space="preserve">
+    <value>销售税类型</value>
+  </data>
+  <data name="VacuumFullDatabase" xml:space="preserve">
+    <value>真空数据库（完整）</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>近</value>
+  </data>
+  <data name="Access" xml:space="preserve">
+    <value>访问</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>量</value>
   </data>
   <data name="Execute" xml:space="preserve">
     <value>执行</value>
   </data>
-  <data name="BackupNow" xml:space="preserve">
-    <value>立即备份</value>
+  <data name="SalesTaxDetails" xml:space="preserve">
+    <value>销售税细节</value>
+  </data>
+  <data name="Tel" xml:space="preserve">
+    <value>电话</value>
+  </data>
+  <data name="Industries" xml:space="preserve">
+    <value>行业</value>
+  </data>
+  <data name="BackupDatabase" xml:space="preserve">
+    <value>备份数据库</value>
+  </data>
+  <data name="Countries" xml:space="preserve">
+    <value>国家</value>
+  </data>
+  <data name="Departments" xml:space="preserve">
+    <value>部门</value>
+  </data>
+  <data name="PreparedOn" xml:space="preserve">
+    <value>编制</value>
+  </data>
+  <data name="TaxExemptTypes" xml:space="preserve">
+    <value>免税类型</value>
+  </data>
+  <data name="EnterNewPassword" xml:space="preserve">
+    <value>输入新密码</value>
+  </data>
+  <data name="BackupConsole" xml:space="preserve">
+    <value>备份控制台</value>
+  </data>
+  <data name="RowNumber" xml:space="preserve">
+    <value>行号</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>数量</value>
+  </data>
+  <data name="MenuAccessPolicy" xml:space="preserve">
+    <value>菜单访问策略</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>总</value>
   </data>
   <data name="Clear" xml:space="preserve">
     <value>明确</value>
@@ -150,20 +225,41 @@
   <data name="GoToTop" xml:space="preserve">
     <value>返回首页</value>
   </data>
+  <data name="CheckAll" xml:space="preserve">
+    <value>检查所有</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>保存</value>
   </data>
   <data name="VoucherVerificationPolicy" xml:space="preserve">
     <value>券验证策略</value>
   </data>
+  <data name="Email" xml:space="preserve">
+    <value>电子邮件</value>
+  </data>
+  <data name="TaxMaster" xml:space="preserve">
+    <value>税务硕士</value>
+  </data>
   <data name="DatabaseBackups" xml:space="preserve">
     <value>数据库备份</value>
   </data>
-  <data name="CashRepositories" xml:space="preserve">
-    <value>现金库</value>
+  <data name="Roles" xml:space="preserve">
+    <value>角色</value>
   </data>
-  <data name="Frequencies" xml:space="preserve">
-    <value>频率</value>
+  <data name="MenuCode" xml:space="preserve">
+    <value>菜单代码</value>
+  </data>
+  <data name="ItemCode" xml:space="preserve">
+    <value>产品编号</value>
+  </data>
+  <data name="Entities" xml:space="preserve">
+    <value>实体</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>更改密码</value>
+  </data>
+  <data name="StoreName" xml:space="preserve">
+    <value>店铺名称</value>
   </data>
   <data name="AnalyzeDatabse" xml:space="preserve">
     <value>分析数据库</value>
@@ -177,14 +273,47 @@
   <data name="User" xml:space="preserve">
     <value>用户</value>
   </data>
-  <data name="BackupDatabase" xml:space="preserve">
-    <value>备份数据库</value>
+  <data name="EnterBackupName" xml:space="preserve">
+    <value>输入备份名称</value>
   </data>
-  <data name="SelectUser" xml:space="preserve">
-    <value>选择用户</value>
+  <data name="Load" xml:space="preserve">
+    <value>负载</value>
+  </data>
+  <data name="StateSalesTaxes" xml:space="preserve">
+    <value>州销售税</value>
+  </data>
+  <data name="CountySalesTaxes" xml:space="preserve">
+    <value>县销售税</value>
+  </data>
+  <data name="MenuId" xml:space="preserve">
+    <value>菜单标识</value>
+  </data>
+  <data name="ItemName" xml:space="preserve">
+    <value>项目名称</value>
+  </data>
+  <data name="Counters" xml:space="preserve">
+    <value>计数器</value>
+  </data>
+  <data name="AutoVerificationPolicy" xml:space="preserve">
+    <value>自动验证策略</value>
+  </data>
+  <data name="Flags" xml:space="preserve">
+    <value>旗</value>
+  </data>
+  <data name="SalesTaxExempts" xml:space="preserve">
+    <value>销售税豁免</value>
+  </data>
+  <data name="VacuumDatabase" xml:space="preserve">
+    <value>真空数据库</value>
+  </data>
+  <data name="BackupNow" xml:space="preserve">
+    <value>立即备份</value>
   </data>
   <data name="Update" xml:space="preserve">
     <value>更新</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>行动</value>
   </data>
   <data name="Fax" xml:space="preserve">
     <value>Fax</value>
@@ -200,77 +329,5 @@
   </data>
   <data name="PasswordUpdated" xml:space="preserve">
     <value>密码已更新。</value>
-  </data>
-  <data name="EnterBackupName" xml:space="preserve">
-    <value>输入备份名称</value>
-  </data>
-  <data name="EnterNewPassword" xml:space="preserve">
-    <value>输入新密码</value>
-  </data>
-  <data name="Industries" xml:space="preserve">
-    <value>行业</value>
-  </data>
-  <data name="Tel" xml:space="preserve">
-    <value>电话</value>
-  </data>
-  <data name="SalesTaxDetails" xml:space="preserve">
-    <value>销售税细节</value>
-  </data>
-  <data name="SalesTaxTypes" xml:space="preserve">
-    <value>销售税类型</value>
-  </data>
-  <data name="VacuumFullDatabase" xml:space="preserve">
-    <value>真空数据库（完整）</value>
-  </data>
-  <data name="Close" xml:space="preserve">
-    <value>近</value>
-  </data>
-  <data name="CountySalesTaxes" xml:space="preserve">
-    <value>县销售税</value>
-  </data>
-  <data name="ViewBackups" xml:space="preserve">
-    <value>查看备份</value>
-  </data>
-  <data name="Counties" xml:space="preserve">
-    <value>区县</value>
-  </data>
-  <data name="TaxAuthorities" xml:space="preserve">
-    <value>税务机关</value>
-  </data>
-  <data name="OfficeSetup" xml:space="preserve">
-    <value>办公室设定</value>
-  </data>
-  <data name="DatabaseStatistics" xml:space="preserve">
-    <value>数据库统计</value>
-  </data>
-  <data name="SalesTaxExempts" xml:space="preserve">
-    <value>销售税豁免</value>
-  </data>
-  <data name="VacuumDatabase" xml:space="preserve">
-    <value>真空数据库</value>
-  </data>
-  <data name="StateSalesTaxes" xml:space="preserve">
-    <value>州销售税</value>
-  </data>
-  <data name="Entities" xml:space="preserve">
-    <value>实体</value>
-  </data>
-  <data name="TaxMaster" xml:space="preserve">
-    <value>税务硕士</value>
-  </data>
-  <data name="Roles" xml:space="preserve">
-    <value>角色</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>电子邮件</value>
-  </data>
-  <data name="BackupConsole" xml:space="preserve">
-    <value>备份控制台</value>
-  </data>
-  <data name="Countries" xml:space="preserve">
-    <value>国家</value>
-  </data>
-  <data name="TaxExemptTypes" xml:space="preserve">
-    <value>免税类型</value>
   </data>
 </root>

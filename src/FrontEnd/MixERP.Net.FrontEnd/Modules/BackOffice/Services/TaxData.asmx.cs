@@ -93,7 +93,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
         [WebMethod]
         public int GetSalesTaxId(string tranBook, int storeId, string partyCode, string shippingAddressCode, int priceTypeId, string itemCode, int unitId, decimal price)
         {
-            return Data.Tax.SalesTax.GetSalesTaxId(tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode, unitId, price);
+            return SalesTax.GetSalesTaxId(tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode, unitId, price);
         }
     }
 }

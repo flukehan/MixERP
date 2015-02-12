@@ -117,38 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Counters" xml:space="preserve">
-    <value>Счетчики</value>
-  </data>
-  <data name="Load" xml:space="preserve">
-    <value>нагрузка</value>
-  </data>
-  <data name="StateSalesTaxes" xml:space="preserve">
-    <value>Государственные налогов с продаж</value>
-  </data>
-  <data name="CountySalesTaxes" xml:space="preserve">
-    <value>Налоги графства продаж</value>
-  </data>
-  <data name="EnterBackupName" xml:space="preserve">
-    <value>Электронная почта Этот возврат...</value>
-  </data>
-  <data name="ChangePassword" xml:space="preserve">
-    <value>Изменить Пароль</value>
-  </data>
-  <data name="Entities" xml:space="preserve">
-    <value>юридические лица</value>
-  </data>
-  <data name="Roles" xml:space="preserve">
-    <value>Роли</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>Email</value>
-  </data>
-  <data name="DatabaseStatistics" xml:space="preserve">
-    <value>Статистика базы данных</value>
+  <data name="Unit" xml:space="preserve">
+    <value>блок</value>
   </data>
   <data name="OfficeSetup" xml:space="preserve">
     <value>Программа установки офис</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>пользователи</value>
+  </data>
+  <data name="UncheckAll" xml:space="preserve">
+    <value>Снять отметку со всех</value>
+  </data>
+  <data name="DatabaseStatistics" xml:space="preserve">
+    <value>Статистика базы данных</value>
   </data>
   <data name="TaxAuthorities" xml:space="preserve">
     <value>Налоговые органы</value>
@@ -158,6 +140,156 @@
   </data>
   <data name="ViewBackups" xml:space="preserve">
     <value>Посмотреть Резервные копии</value>
+  </data>
+  <data name="MenuText" xml:space="preserve">
+    <value>Текст меню</value>
+  </data>
+  <data name="OpeningInventory" xml:space="preserve">
+    <value>Открытие Инвентарь</value>
+  </data>
+  <data name="CashRepositories" xml:space="preserve">
+    <value>Денежные Хранилища</value>
+  </data>
+  <data name="Frequencies" xml:space="preserve">
+    <value>частоты</value>
+  </data>
+  <data name="SalesTaxTypes" xml:space="preserve">
+    <value>Типы Налог на продажу</value>
+  </data>
+  <data name="VacuumFullDatabase" xml:space="preserve">
+    <value>Вакуумный базы данных (полное)</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>близко</value>
+  </data>
+  <data name="Access" xml:space="preserve">
+    <value>доступ</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>количество</value>
+  </data>
+  <data name="Execute" xml:space="preserve">
+    <value>выполнять</value>
+  </data>
+  <data name="SalesTaxDetails" xml:space="preserve">
+    <value>Налог на продажу Подробнее</value>
+  </data>
+  <data name="Tel" xml:space="preserve">
+    <value>телефон</value>
+  </data>
+  <data name="Industries" xml:space="preserve">
+    <value>промышленности</value>
+  </data>
+  <data name="BackupConsole" xml:space="preserve">
+    <value>Резервное копирование консоли</value>
+  </data>
+  <data name="TaxExemptTypes" xml:space="preserve">
+    <value>Освобождаются от налогообложения Типы</value>
+  </data>
+  <data name="PreparedOn" xml:space="preserve">
+    <value>Подготовлено на</value>
+  </data>
+  <data name="Departments" xml:space="preserve">
+    <value>ведомства</value>
+  </data>
+  <data name="EnterNewPassword" xml:space="preserve">
+    <value>Введите новый пароль</value>
+  </data>
+  <data name="Countries" xml:space="preserve">
+    <value>Страны</value>
+  </data>
+  <data name="RowNumber" xml:space="preserve">
+    <value>Рядное Количество</value>
+  </data>
+  <data name="MenuAccessPolicy" xml:space="preserve">
+    <value>Меню политика доступа</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>количество</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>общий</value>
+  </data>
+  <data name="StoreName" xml:space="preserve">
+    <value>Сохранение имени</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>ясно</value>
+  </data>
+  <data name="GoToTop" xml:space="preserve">
+    <value>Перейти к началу</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="VoucherVerificationPolicy" xml:space="preserve">
+    <value>Политика Ваучер Проверка</value>
+  </data>
+  <data name="Roles" xml:space="preserve">
+    <value>Роли</value>
+  </data>
+  <data name="DatabaseBackups" xml:space="preserve">
+    <value>Резервное копирование баз данных</value>
+  </data>
+  <data name="MenuCode" xml:space="preserve">
+    <value>Меню Код</value>
+  </data>
+  <data name="TaxMaster" xml:space="preserve">
+    <value>Налоговый Мастер</value>
+  </data>
+  <data name="ItemCode" xml:space="preserve">
+    <value>Код товара</value>
+  </data>
+  <data name="Entities" xml:space="preserve">
+    <value>юридические лица</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Изменить Пароль</value>
+  </data>
+  <data name="CheckAll" xml:space="preserve">
+    <value>Проверьте все</value>
+  </data>
+  <data name="AnalyzeDatabse" xml:space="preserve">
+    <value>Анализ базы данных</value>
+  </data>
+  <data name="FiscalYear" xml:space="preserve">
+    <value>Финансовый Год</value>
+  </data>
+  <data name="SalesTaxExemptDetails" xml:space="preserve">
+    <value>Налог на продажу Освобожденные Подробнее</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>пользователь</value>
+  </data>
+  <data name="BackupDatabase" xml:space="preserve">
+    <value>Резервное копирование базы данных</value>
+  </data>
+  <data name="SelectUser" xml:space="preserve">
+    <value>Выберите пользователя</value>
+  </data>
+  <data name="ItemName" xml:space="preserve">
+    <value>Название товара</value>
+  </data>
+  <data name="Counters" xml:space="preserve">
+    <value>Счетчики</value>
+  </data>
+  <data name="Load" xml:space="preserve">
+    <value>нагрузка</value>
+  </data>
+  <data name="CountySalesTaxes" xml:space="preserve">
+    <value>Налоги графства продаж</value>
+  </data>
+  <data name="EnterBackupName" xml:space="preserve">
+    <value>Электронная почта Этот возврат...</value>
+  </data>
+  <data name="MenuId" xml:space="preserve">
+    <value>Меню Идентификатор</value>
+  </data>
+  <data name="StateSalesTaxes" xml:space="preserve">
+    <value>Государственные налогов с продаж</value>
   </data>
   <data name="AutoVerificationPolicy" xml:space="preserve">
     <value>Авто проверка Политика</value>
@@ -177,26 +309,14 @@
   <data name="Update" xml:space="preserve">
     <value>обновление</value>
   </data>
-  <data name="Departments" xml:space="preserve">
-    <value>ведомства</value>
-  </data>
-  <data name="PreparedOn" xml:space="preserve">
-    <value>Подготовлено на</value>
-  </data>
-  <data name="TaxExemptTypes" xml:space="preserve">
-    <value>Освобождаются от налогообложения Типы</value>
+  <data name="Action" xml:space="preserve">
+    <value>действие</value>
   </data>
   <data name="Fax" xml:space="preserve">
     <value>факс</value>
   </data>
-  <data name="Countries" xml:space="preserve">
-    <value>Страны</value>
-  </data>
   <data name="SalesTaxes" xml:space="preserve">
     <value>налогов с продаж</value>
-  </data>
-  <data name="BackupConsole" xml:space="preserve">
-    <value>Резервное копирование консоли</value>
   </data>
   <data name="Url" xml:space="preserve">
     <value>Унифицированный указатель информационного ресурса</value>
@@ -207,70 +327,7 @@
   <data name="PasswordUpdated" xml:space="preserve">
     <value>Пароль был обновлен.</value>
   </data>
-  <data name="TaxMaster" xml:space="preserve">
-    <value>Налоговый Мастер</value>
-  </data>
-  <data name="Execute" xml:space="preserve">
-    <value>выполнять</value>
-  </data>
-  <data name="CashRepositories" xml:space="preserve">
-    <value>Денежные Хранилища</value>
-  </data>
-  <data name="SalesTaxDetails" xml:space="preserve">
-    <value>Налог на продажу Подробнее</value>
-  </data>
-  <data name="Frequencies" xml:space="preserve">
-    <value>частоты</value>
-  </data>
-  <data name="SalesTaxTypes" xml:space="preserve">
-    <value>Типы Налог на продажу</value>
-  </data>
-  <data name="VacuumFullDatabase" xml:space="preserve">
-    <value>Вакуумный базы данных (полное)</value>
-  </data>
-  <data name="Close" xml:space="preserve">
-    <value>близко</value>
-  </data>
-  <data name="Tel" xml:space="preserve">
-    <value>телефон</value>
-  </data>
-  <data name="Industries" xml:space="preserve">
-    <value>промышленности</value>
-  </data>
-  <data name="EnterNewPassword" xml:space="preserve">
-    <value>Введите новый пароль</value>
-  </data>
-  <data name="Clear" xml:space="preserve">
-    <value>ясно</value>
-  </data>
-  <data name="GoToTop" xml:space="preserve">
-    <value>Перейти к началу</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Сохранить</value>
-  </data>
-  <data name="VoucherVerificationPolicy" xml:space="preserve">
-    <value>Политика Ваучер Проверка</value>
-  </data>
-  <data name="DatabaseBackups" xml:space="preserve">
-    <value>Резервное копирование баз данных</value>
-  </data>
-  <data name="AnalyzeDatabse" xml:space="preserve">
-    <value>Анализ базы данных</value>
-  </data>
-  <data name="FiscalYear" xml:space="preserve">
-    <value>Финансовый Год</value>
-  </data>
-  <data name="SalesTaxExemptDetails" xml:space="preserve">
-    <value>Налог на продажу Освобожденные Подробнее</value>
-  </data>
-  <data name="User" xml:space="preserve">
-    <value>пользователь</value>
-  </data>
-  <data name="BackupDatabase" xml:space="preserve">
-    <value>Резервное копирование базы данных</value>
-  </data>
-  <data name="SelectUser" xml:space="preserve">
-    <value>Выберите пользователя</value>
+  <data name="Show" xml:space="preserve">
+    <value>шоу</value>
   </data>
 </root>

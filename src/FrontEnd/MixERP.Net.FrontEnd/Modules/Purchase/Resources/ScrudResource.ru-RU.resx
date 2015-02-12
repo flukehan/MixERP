@@ -117,23 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="sub_total" xml:space="preserve">
-    <value>Промежуточный итог</value>
+  <data name="item_name" xml:space="preserve">
+    <value>Название товара</value>
   </data>
-  <data name="tax" xml:space="preserve">
-    <value>налог</value>
-  </data>
-  <data name="item_id" xml:space="preserve">
-    <value>Пункт Идентификатор</value>
-  </data>
-  <data name="discount" xml:space="preserve">
-    <value>скидка</value>
+  <data name="price" xml:space="preserve">
+    <value>цена</value>
   </data>
   <data name="total" xml:space="preserve">
     <value>общий</value>
   </data>
-  <data name="quantity" xml:space="preserve">
-    <value>количество</value>
+  <data name="discount" xml:space="preserve">
+    <value>скидка</value>
+  </data>
+  <data name="item_id" xml:space="preserve">
+    <value>Пункт Идентификатор</value>
+  </data>
+  <data name="sub_total" xml:space="preserve">
+    <value>Промежуточный итог</value>
   </data>
   <data name="amount" xml:space="preserve">
     <value>количество</value>
@@ -141,16 +141,16 @@
   <data name="unit_name" xml:space="preserve">
     <value>Имя единицы</value>
   </data>
-  <data name="item_name" xml:space="preserve">
-    <value>Название товара</value>
-  </data>
   <data name="item_code" xml:space="preserve">
     <value>Код товара</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>выбрать</value>
   </data>
-  <data name="price" xml:space="preserve">
-    <value>цена</value>
+  <data name="quantity" xml:space="preserve">
+    <value>количество</value>
+  </data>
+  <data name="tax" xml:space="preserve">
+    <value>налог</value>
   </data>
 </root>

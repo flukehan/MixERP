@@ -101,7 +101,7 @@
     <Compile Include="Helpers\GridViewHelper.cs" />
     <Compile Include="Helpers\HtmlControlHelper.cs" />
     <Compile Include="Helpers\ImageHelper.cs" />
-    <Compile Include="Helpers\JavaScriptHelper.cs" />
+    <Compile Include="Helpers\JSUtility.cs" />
     <Compile Include="Helpers\JSONHelper.cs" />
     <Compile Include="Helpers\LocalizationHelper.cs" />
     <Compile Include="Helpers\Parameters.cs" />

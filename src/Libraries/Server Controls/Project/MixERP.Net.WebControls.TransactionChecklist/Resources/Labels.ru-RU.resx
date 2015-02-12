@@ -117,46 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="EmailSentConfirmation" xml:space="preserve">
-    <value>Письмо было отправлено на адрес {0}.</value>
+  <data name="EmailBody" xml:space="preserve">
+    <value>&lt;h2&gt; Привет, &lt;/ h2&gt; &lt;p&gt; Вы можете найти в прикрепленном документе. &lt;/ p&gt; &lt;p&gt; Спасибо. &lt;br /&gt; MixERP &lt;/ p&gt;</value>
   </data>
   <data name="TransactionApprovedDetails" xml:space="preserve">
     <value>Эта сделка была одобрена {0} на {1}.</value>
   </data>
-  <data name="TransactionAwaitingVerification" xml:space="preserve">
-    <value>Эта сделка ожидает проверки от имени администратора.</value>
-  </data>
-  <data name="TransactionWithdrawalInformation" xml:space="preserve">
-    <value>Когда вы снимаете транзакции, он не будет направлен к модулю рабочего процесса. Это означает, что ваши изъятые сделки, отклоняются и не требуют дополнительной проверки. Тем не менее, вы не сможете unwithdraw эту сделку позже.</value>
-  </data>
-  <data name="TransactionAutoApprovedDetails" xml:space="preserve">
-    <value>Данная сделка была автоматически одобрена {0} на {1}.</value>
-  </data>
-  <data name="CannotWithdrawTransaction" xml:space="preserve">
-    <value>Не можете отозвать сделку.</value>
+  <data name="EmailSentConfirmation" xml:space="preserve">
+    <value>Письмо было отправлено на адрес {0}.</value>
   </data>
   <data name="TransactionClosedDetails" xml:space="preserve">
     <value>Эта сделка была закрыта через {0} на {1}. Причина: "{2}".</value>
   </data>
-  <data name="EmailBody" xml:space="preserve">
-    <value>&lt;h2&gt; Привет, &lt;/ h2&gt; &lt;p&gt; Вы можете найти в прикрепленном документе. &lt;/ p&gt; &lt;p&gt; Спасибо. &lt;br /&gt; MixERP &lt;/ p&gt;</value>
-  </data>
-  <data name="TransactionWithdrawnDetails" xml:space="preserve">
-    <value>Данная сделка была отозвана {0} на {1}. Причина: "{2}".</value>
+  <data name="TransactionWithdrawnMessage" xml:space="preserve">
+    <value>Сделка была успешно снята. Кроме того, это действие будет влиять на все отчеты, полученные после "{0}".</value>
   </data>
   <data name="TransactionRejectedDetails" xml:space="preserve">
     <value>Эта сделка была отклонена {0} {1}. Причина: "{2}".</value>
   </data>
+  <data name="TransactionAwaitingVerification" xml:space="preserve">
+    <value>Эта сделка ожидает проверки от имени администратора.</value>
+  </data>
   <data name="ThisFieldIsRequired" xml:space="preserve">
     <value>Это поле обязательно к заполнению.</value>
   </data>
-  <data name="CannotWithdrawNotValidGLTransaction" xml:space="preserve">
-    <value>Не можете отозвать сделку. Это не действует общее сделки Леджер.</value>
+  <data name="CannotWithdrawTransaction" xml:space="preserve">
+    <value>Не можете отозвать сделку.</value>
+  </data>
+  <data name="TransactionWithdrawalInformation" xml:space="preserve">
+    <value>Когда вы снимаете транзакции, он не будет направлен к модулю рабочего процесса. Это означает, что ваши изъятые сделки, отклоняются и не требуют дополнительной проверки. Тем не менее, вы не сможете unwithdraw эту сделку позже.</value>
   </data>
   <data name="TransactionPostedSuccessfully" xml:space="preserve">
     <value>Сделка была успешно размещена.</value>
   </data>
-  <data name="TransactionWithdrawnMessage" xml:space="preserve">
-    <value>Сделка была успешно снята. Кроме того, это действие будет влиять на все отчеты, полученные после "{0}".</value>
+  <data name="TransactionWithdrawnDetails" xml:space="preserve">
+    <value>Данная сделка была отозвана {0} на {1}. Причина: "{2}".</value>
+  </data>
+  <data name="TransactionAutoApprovedDetails" xml:space="preserve">
+    <value>Данная сделка была автоматически одобрена {0} на {1}.</value>
+  </data>
+  <data name="CannotWithdrawNotValidGLTransaction" xml:space="preserve">
+    <value>Не можете отозвать сделку. Это не действует общее сделки Леджер.</value>
   </data>
 </root>

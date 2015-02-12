@@ -117,11 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="PostedBy" xml:space="preserve">
-    <value>publicado Por</value>
-  </data>
-  <data name="TranId" xml:space="preserve">
-    <value>identificador de transacción</value>
+  <data name="Reject" xml:space="preserve">
+    <value>rechazar</value>
   </data>
   <data name="Status" xml:space="preserve">
     <value>estado</value>
@@ -129,58 +126,61 @@
   <data name="Id" xml:space="preserve">
     <value>identificación</value>
   </data>
-  <data name="ReferenceNumber" xml:space="preserve">
-    <value>Número de referencia</value>
-  </data>
-  <data name="Actions" xml:space="preserve">
-    <value>acciones</value>
-  </data>
-  <data name="ValueDate" xml:space="preserve">
-    <value>Fecha Valor</value>
-  </data>
-  <data name="StatementReference" xml:space="preserve">
-    <value>Declaración de Referencia</value>
-  </data>
-  <data name="Show" xml:space="preserve">
-    <value>Mostrar</value>
-  </data>
-  <data name="Print" xml:space="preserve">
-    <value>impresión</value>
-  </data>
-  <data name="Select" xml:space="preserve">
-    <value>seleccionar</value>
-  </data>
-  <data name="Approve" xml:space="preserve">
-    <value>aprobar</value>
-  </data>
-  <data name="Book" xml:space="preserve">
-    <value>libro</value>
-  </data>
-  <data name="TransactionTimestamp" xml:space="preserve">
-    <value>Marca de tiempo de transacción</value>
-  </data>
-  <data name="Reason" xml:space="preserve">
-    <value>razón</value>
-  </data>
-  <data name="Flag" xml:space="preserve">
-    <value>bandera</value>
-  </data>
-  <data name="TranCode" xml:space="preserve">
-    <value>Código de transacción</value>
+  <data name="PostedBy" xml:space="preserve">
+    <value>publicado Por</value>
   </data>
   <data name="Office" xml:space="preserve">
     <value>oficina</value>
   </data>
-  <data name="Reject" xml:space="preserve">
-    <value>rechazar</value>
+  <data name="Actions" xml:space="preserve">
+    <value>acciones</value>
   </data>
-  <data name="VerifiedBy" xml:space="preserve">
-    <value>Por  verificado</value>
+  <data name="Approve" xml:space="preserve">
+    <value>aprobar</value>
   </data>
   <data name="VerifiedOn" xml:space="preserve">
     <value>verificado en</value>
   </data>
+  <data name="ReferenceNumber" xml:space="preserve">
+    <value>Número de referencia</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>seleccionar</value>
+  </data>
+  <data name="Book" xml:space="preserve">
+    <value>libro</value>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>impresión</value>
+  </data>
+  <data name="TransactionTimestamp" xml:space="preserve">
+    <value>Marca de tiempo de transacción</value>
+  </data>
   <data name="AddNew" xml:space="preserve">
     <value>Agregar nuevo</value>
+  </data>
+  <data name="TranId" xml:space="preserve">
+    <value>identificador de transacción</value>
+  </data>
+  <data name="TranCode" xml:space="preserve">
+    <value>Código de transacción</value>
+  </data>
+  <data name="StatementReference" xml:space="preserve">
+    <value>Declaración de Referencia</value>
+  </data>
+  <data name="ValueDate" xml:space="preserve">
+    <value>Fecha Valor</value>
+  </data>
+  <data name="Flag" xml:space="preserve">
+    <value>bandera</value>
+  </data>
+  <data name="Reason" xml:space="preserve">
+    <value>razón</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>Mostrar</value>
+  </data>
+  <data name="VerifiedBy" xml:space="preserve">
+    <value>Por  verificado</value>
   </data>
 </root>

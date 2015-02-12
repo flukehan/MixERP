@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="SelectAFlag" xml:space="preserve">
-    <value>Выберите флаг.</value>
-  </data>
   <data name="FlagLabel" xml:space="preserve">
     <value>Вы можете отметить эту сделку с флагом, однако вы не сможете увидеть флажки созданные другими пользователями.</value>
+  </data>
+  <data name="SelectAFlag" xml:space="preserve">
+    <value>Выберите флаг.</value>
   </data>
 </root>

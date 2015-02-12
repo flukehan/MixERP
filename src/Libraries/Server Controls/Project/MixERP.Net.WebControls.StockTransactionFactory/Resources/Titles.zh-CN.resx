@@ -117,56 +117,35 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ItemCode" xml:space="preserve">
-    <value>产品编号</value>
-  </data>
-  <data name="CostCenter" xml:space="preserve">
-    <value>成本中心</value>
-  </data>
   <data name="ShippingCompany" xml:space="preserve">
     <value>航运公司</value>
-  </data>
-  <data name="SubTotal" xml:space="preserve">
-    <value>小计</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>保存</value>
-  </data>
-  <data name="GrandTotal" xml:space="preserve">
-    <value>累计</value>
-  </data>
-  <data name="StatementReference" xml:space="preserve">
-    <value>声明参考</value>
-  </data>
-  <data name="Tax" xml:space="preserve">
-    <value>税</value>
-  </data>
-  <data name="Action" xml:space="preserve">
-    <value>行动</value>
-  </data>
-  <data name="Salesperson" xml:space="preserve">
-    <value>售货员</value>
   </data>
   <data name="Discount" xml:space="preserve">
     <value>折扣</value>
   </data>
+  <data name="Salesperson" xml:space="preserve">
+    <value>售货员</value>
+  </data>
   <data name="CashTransaction" xml:space="preserve">
     <value>现金交易</value>
   </data>
-  <data name="PriceType" xml:space="preserve">
-    <value>价格类型</value>
-  </data>
-  <data name="TaxTotal" xml:space="preserve">
-    <value>税务总</value>
-  </data>
-  <data name="Total" xml:space="preserve">
-    <value>总</value>
-  </data>
-  <data name="Add" xml:space="preserve">
-    <value>添加</value>
-  </data>
   <data name="SelectParty" xml:space="preserve">
     <value>选择党</value>
+  </data>
+  <data name="ShippingAddress" xml:space="preserve">
+    <value>收件地址</value>
+  </data>
+  <data name="CashRepository" xml:space="preserve">
+    <value>现金库</value>
+  </data>
+  <data name="GrandTotal" xml:space="preserve">
+    <value>累计</value>
+  </data>
+  <data name="QuantityAbbreviated" xml:space="preserve">
+    <value>数量</value>
+  </data>
+  <data name="NonTaxableSales" xml:space="preserve">
+    <value>免税的销售</value>
   </data>
   <data name="ItemName" xml:space="preserve">
     <value>项目名称</value>
@@ -180,49 +159,70 @@
   <data name="ValueDate" xml:space="preserve">
     <value>起息日</value>
   </data>
+  <data name="Tax" xml:space="preserve">
+    <value>税</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>行动</value>
+  </data>
+  <data name="SalesType" xml:space="preserve">
+    <value>销售类型</value>
+  </data>
   <data name="Unit" xml:space="preserve">
     <value>单元</value>
   </data>
   <data name="AttachmentsPlus" xml:space="preserve">
     <value>附件（+）</value>
   </data>
-  <data name="SelectStore" xml:space="preserve">
-    <value>选择店铺</value>
+  <data name="StatementReference" xml:space="preserve">
+    <value>声明参考</value>
   </data>
-  <data name="Price" xml:space="preserve">
-    <value>价格</value>
+  <data name="PriceType" xml:space="preserve">
+    <value>价格类型</value>
   </data>
-  <data name="SalesType" xml:space="preserve">
-    <value>销售类型</value>
+  <data name="TaxTotal" xml:space="preserve">
+    <value>税务总</value>
   </data>
-  <data name="RunningTotal" xml:space="preserve">
-    <value>运行总计</value>
+  <data name="Total" xml:space="preserve">
+    <value>总</value>
   </data>
-  <data name="Amount" xml:space="preserve">
-    <value>量</value>
+  <data name="Save" xml:space="preserve">
+    <value>保存</value>
   </data>
-  <data name="CashRepository" xml:space="preserve">
-    <value>现金库</value>
-  </data>
-  <data name="ShippingAddress" xml:space="preserve">
-    <value>收件地址</value>
-  </data>
-  <data name="QuantityAbbreviated" xml:space="preserve">
-    <value>数量</value>
-  </data>
-  <data name="NonTaxableSales" xml:space="preserve">
-    <value>免税的销售</value>
-  </data>
-  <data name="CashRepositoryBalance" xml:space="preserve">
-    <value>现金库平衡</value>
+  <data name="Add" xml:space="preserve">
+    <value>添加</value>
   </data>
   <data name="ShippingCharge" xml:space="preserve">
     <value>运费</value>
+  </data>
+  <data name="SubTotal" xml:space="preserve">
+    <value>小计</value>
+  </data>
+  <data name="CashRepositoryBalance" xml:space="preserve">
+    <value>现金库平衡</value>
   </data>
   <data name="Rate" xml:space="preserve">
     <value>率</value>
   </data>
   <data name="TaxableSales" xml:space="preserve">
     <value>应税销售</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>价格</value>
+  </data>
+  <data name="CostCenter" xml:space="preserve">
+    <value>成本中心</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>量</value>
+  </data>
+  <data name="RunningTotal" xml:space="preserve">
+    <value>运行总计</value>
+  </data>
+  <data name="ItemCode" xml:space="preserve">
+    <value>产品编号</value>
+  </data>
+  <data name="SelectStore" xml:space="preserve">
+    <value>选择店铺</value>
   </data>
 </root>

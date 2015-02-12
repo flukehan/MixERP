@@ -117,47 +117,47 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="InvalidSubTranBookInventoryReturn" xml:space="preserve">
-    <value>Transactions non valide subsidiaires livre "Inventaire retour"</value>
+  <data name="InvalidSubTranBookInventoryPayment" xml:space="preserve">
+    <value>Transactions non valide subsidiaires livre "Inventaire paiement»</value>
   </data>
   <data name="InvalidSubTranBookInventoryQuotation" xml:space="preserve">
     <value>Transactions non valide subsidiaires livre "offre d'inventaire"</value>
   </data>
+  <data name="InvalidSubTranBookInventoryReturn" xml:space="preserve">
+    <value>Transactions non valide subsidiaires livre "Inventaire retour"</value>
+  </data>
+  <data name="InvalidSubTranBookSalesPayment" xml:space="preserve">
+    <value>Transactions non valide subsidiaires livre «Paiement des ventes"</value>
+  </data>
+  <data name="InvalidSubTranBookInventoryDelivery" xml:space="preserve">
+    <value>Transactions non valide subsidiaires livre "Inventaire Livraison"</value>
+  </data>
+  <data name="InvalidSubTranBookInventoryInvoice" xml:space="preserve">
+    <value>Transactions non valide subsidiaires livre "Facture d'inventaire"</value>
+  </data>
   <data name="InvalidSubTranBookPurchaseSuspense" xml:space="preserve">
     <value>Transactions subsidiaires invalides livre "Achat Suspense"</value>
-  </data>
-  <data name="InvalidSubTranBookPurchaseTransfer" xml:space="preserve">
-    <value>Transactions non valide subsidiaires livre «Transfert d'achat"</value>
-  </data>
-  <data name="InvalidSubTranBookInventoryDirect" xml:space="preserve">
-    <value>Transactions subsidiaires invalides livre "Inventaire Direct"</value>
-  </data>
-  <data name="InvalidSubTranBookSalesTransfer" xml:space="preserve">
-    <value>Transactions subsidiaires livre invalide "Transfert de vente"</value>
   </data>
   <data name="InvalidSubTranBookInventoryReceipt" xml:space="preserve">
     <value>Transactions non valide subsidiaires livre "Réception d'inventaire"</value>
   </data>
-  <data name="InvalidSubTranBookInventoryPayment" xml:space="preserve">
-    <value>Transactions non valide subsidiaires livre "Inventaire paiement»</value>
+  <data name="InvalidSubTranBookInventoryDirect" xml:space="preserve">
+    <value>Transactions subsidiaires invalides livre "Inventaire Direct"</value>
   </data>
-  <data name="InvalidSubTranBookInventoryDelivery" xml:space="preserve">
-    <value>Transactions non valide subsidiaires livre "Inventaire Livraison"</value>
+  <data name="InvalidSubTranBookPurchaseTransfer" xml:space="preserve">
+    <value>Transactions non valide subsidiaires livre «Transfert d'achat"</value>
+  </data>
+  <data name="InvalidSubTranBookSalesTransfer" xml:space="preserve">
+    <value>Transactions subsidiaires livre invalide "Transfert de vente"</value>
+  </data>
+  <data name="InvalidSubTranBookPurchaseDelivery" xml:space="preserve">
+    <value>Transactions non valide subsidiaires livre "Achat Livraison"</value>
   </data>
   <data name="InvalidSubTranBookInventoryOrder" xml:space="preserve">
     <value>Transactions non valide subsidiaires livre "afin d'inventaire"</value>
   </data>
   <data name="InvalidSubTranBookSalesSuspense" xml:space="preserve">
     <value>Transactions subsidiaires livre non valide "Suspense de vente"</value>
-  </data>
-  <data name="InvalidSubTranBookSalesPayment" xml:space="preserve">
-    <value>Transactions non valide subsidiaires livre «Paiement des ventes"</value>
-  </data>
-  <data name="InvalidSubTranBookInventoryInvoice" xml:space="preserve">
-    <value>Transactions non valide subsidiaires livre "Facture d'inventaire"</value>
-  </data>
-  <data name="InvalidSubTranBookPurchaseDelivery" xml:space="preserve">
-    <value>Transactions non valide subsidiaires livre "Achat Livraison"</value>
   </data>
   <data name="InvalidSubTranBookPurchaseQuotation" xml:space="preserve">
     <value>Transactions subsidiaires invalides livre "Achat Citation"</value>

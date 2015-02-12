@@ -117,14 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="lead_source_name" xml:space="preserve">
-    <value>Blei Source Name</value>
-  </data>
-  <data name="lead_status_name" xml:space="preserve">
-    <value>Lead-Status Name</value>
-  </data>
-  <data name="lead_status_code" xml:space="preserve">
-    <value>Lead-Status-Code</value>
+  <data name="opportunity_stage_name" xml:space="preserve">
+    <value>Gelegenheit Bühnennamen</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>wählen</value>
@@ -132,19 +126,25 @@
   <data name="lead_status_id" xml:space="preserve">
     <value>Lead-Status Identifier</value>
   </data>
+  <data name="lead_source_id" xml:space="preserve">
+    <value>Führen Quelle Identifier</value>
+  </data>
+  <data name="lead_status_name" xml:space="preserve">
+    <value>Lead-Status Name</value>
+  </data>
   <data name="opportunity_stage_id" xml:space="preserve">
     <value>Gelegenheit Bühnen Identifier</value>
   </data>
-  <data name="lead_source_code" xml:space="preserve">
-    <value>Führen Source Code</value>
+  <data name="lead_source_name" xml:space="preserve">
+    <value>Blei Source Name</value>
   </data>
   <data name="opportunity_stage_code" xml:space="preserve">
     <value>Gelegenheit Bühnen-Code</value>
   </data>
-  <data name="lead_source_id" xml:space="preserve">
-    <value>Führen Quelle Identifier</value>
+  <data name="lead_status_code" xml:space="preserve">
+    <value>Lead-Status-Code</value>
   </data>
-  <data name="opportunity_stage_name" xml:space="preserve">
-    <value>Gelegenheit Bühnennamen</value>
+  <data name="lead_source_code" xml:space="preserve">
+    <value>Führen Source Code</value>
   </data>
 </root>

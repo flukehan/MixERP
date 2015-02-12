@@ -152,8 +152,10 @@ namespace MixERP.Net.Core.Modules.Finance
 
         private void AddLocalizedVariables()
         {
-            string javascript = "var approvedLocalized='{0}';var rejectLocalized='{1}';var tranIdLocalized = '{2}';";
-            javascript = string.Format(javascript, Titles.ApproveThisTransaction, Titles.RejectThisTransaction, Titles.TranIdParameter);
+
+            string javascript = JSUtility.GetVar("approvedLocalized", Titles.ApproveThisTransaction);
+            javascript += JSUtility.GetVar("rejectLocalized", Titles.RejectThisTransaction);
+            javascript += JSUtility.GetVar("tranIdLocalized", Titles.TranIdParameter);
 
             Common.PageUtility.RegisterJavascript("VoucherVerification_LocalizedVariables", javascript, this.Page, true);
         }

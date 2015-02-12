@@ -120,6 +120,9 @@
   <data name="DaysLowerCase" xml:space="preserve">
     <value>日数</value>
   </data>
+  <data name="TaskCompletedSuccessfully" xml:space="preserve">
+    <value>タスクが正常に完了した。</value>
+  </data>
   <data name="JustAMomentPlease" xml:space="preserve">
     <value>ちょっと待って、してください！</value>
   </data>
@@ -128,8 +131,5 @@
   </data>
   <data name="YourPasswordWasChanged" xml:space="preserve">
     <value>あなたのパスワードが変更されました。</value>
-  </data>
-  <data name="TaskCompletedSuccessfully" xml:space="preserve">
-    <value>タスクが正常に完了した。</value>
   </data>
 </root>

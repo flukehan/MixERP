@@ -117,23 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ReferencingSidesNotEqual" xml:space="preserve">
-    <value>Ссылающейся стороны не равны.</value>
-  </data>
-  <data name="AccessIsDenied" xml:space="preserve">
-    <value>Отказано в доступе.</value>
-  </data>
-  <data name="CompareDaysErrorMessage" xml:space="preserve">
-    <value>Из дней не должно быть больше, чем до нескольких дней.</value>
-  </data>
   <data name="InvalidCashRepository" xml:space="preserve">
     <value>Неверный хранилище наличными.</value>
   </data>
   <data name="InvalidData" xml:space="preserve">
     <value>Неверные данные.</value>
   </data>
+  <data name="CompareDaysErrorMessage" xml:space="preserve">
+    <value>Из дней не должно быть больше, чем до нескольких дней.</value>
+  </data>
   <data name="NegativeValueSupplied" xml:space="preserve">
     <value>Отрицательное значение в комплект поставки.</value>
+  </data>
+  <data name="ReferencingSidesNotEqual" xml:space="preserve">
+    <value>Ссылающейся стороны не равны.</value>
+  </data>
+  <data name="AccessIsDenied" xml:space="preserve">
+    <value>Отказано в доступе.</value>
   </data>
   <data name="InsufficientBalanceInCashRepository" xml:space="preserve">
     <value>Там нет достаточного остатка в кассовой хранилища для обработки транзакции.</value>

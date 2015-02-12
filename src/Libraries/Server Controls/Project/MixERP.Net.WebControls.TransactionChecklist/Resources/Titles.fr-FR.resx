@@ -117,34 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="PrintGlEntry" xml:space="preserve">
-    <value>Imprimer entrée du grand livre général</value>
-  </data>
-  <data name="ReturnToView" xml:space="preserve">
-    <value>Retour à Voir</value>
-  </data>
   <data name="UploadAttachmentsForThisTransaction" xml:space="preserve">
     <value>Télécharger des pièces jointes pour cette transaction</value>
   </data>
   <data name="OK" xml:space="preserve">
     <value>D'ACCORD</value>
   </data>
-  <data name="AddNew" xml:space="preserve">
-    <value>Ajouter un nouveau</value>
-  </data>
-  <data name="WithdrawTransaction" xml:space="preserve">
-    <value>retirer Transaction</value>
-  </data>
-  <data name="Back" xml:space="preserve">
-    <value>arrière</value>
+  <data name="PrintReceipt" xml:space="preserve">
+    <value>Imprimer réception</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>annuler</value>
   </data>
-  <data name="PrintReceipt" xml:space="preserve">
-    <value>Imprimer réception</value>
+  <data name="PrintGlEntry" xml:space="preserve">
+    <value>Imprimer entrée du grand livre général</value>
+  </data>
+  <data name="AddNew" xml:space="preserve">
+    <value>Ajouter un nouveau</value>
   </data>
   <data name="Checklists" xml:space="preserve">
     <value>Listes de contrôle</value>
+  </data>
+  <data name="ReturnToView" xml:space="preserve">
+    <value>Retour à Voir</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>arrière</value>
+  </data>
+  <data name="WithdrawTransaction" xml:space="preserve">
+    <value>retirer Transaction</value>
   </data>
 </root>

@@ -117,47 +117,47 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="InvalidSubTranBookInventoryReturn" xml:space="preserve">
-    <value>無効な子会社との取引帳「インベントリ戻る」</value>
-  </data>
-  <data name="InvalidSubTranBookSalesSuspense" xml:space="preserve">
-    <value>無効な子会社との取引帳」販売サスペンス」</value>
-  </data>
-  <data name="InvalidSubTranBookInventoryOrder" xml:space="preserve">
-    <value>無効な子会社との取引帳「インベントリ順序」</value>
-  </data>
-  <data name="InvalidSubTranBookSalesPayment" xml:space="preserve">
-    <value>無効な子会社との取引帳「販売支払い」</value>
-  </data>
-  <data name="InvalidSubTranBookInventoryReceipt" xml:space="preserve">
-    <value>無効な子会社との取引帳「インベントリ領収書」</value>
-  </data>
-  <data name="InvalidSubTranBookInventoryInvoice" xml:space="preserve">
-    <value>無効な子会社との取引帳「インベントリ請求書」</value>
-  </data>
-  <data name="InvalidSubTranBookPurchaseTransfer" xml:space="preserve">
-    <value>無効な子会社との取引帳「購入転送」」</value>
-  </data>
-  <data name="InvalidSubTranBookPurchaseSuspense" xml:space="preserve">
-    <value>無効な子会社との取引帳」購入時の領収書」」</value>
-  </data>
-  <data name="InvalidSubTranBookInventoryDirect" xml:space="preserve">
-    <value>無効な子会社との取引ブック「インベントリダイレクト」</value>
-  </data>
-  <data name="InvalidSubTranBookPurchaseDelivery" xml:space="preserve">
-    <value>無効な子会社との取引ブック」」...</value>
-  </data>
-  <data name="InvalidSubTranBookInventoryPayment" xml:space="preserve">
-    <value>無効な子会社との取引帳「インベントリ支払い」</value>
+  <data name="InvalidSubTranBookSalesTransfer" xml:space="preserve">
+    <value>無効な子会社との取引帳「販売転送」</value>
   </data>
   <data name="InvalidSubTranBookInventoryQuotation" xml:space="preserve">
     <value>無効な子会社との取引帳「インベントリ引用」</value>
   </data>
-  <data name="InvalidSubTranBookSalesTransfer" xml:space="preserve">
-    <value>無効な子会社との取引帳「販売転送」</value>
+  <data name="InvalidSubTranBookPurchaseSuspense" xml:space="preserve">
+    <value>無効な子会社との取引帳」購入時の領収書」」</value>
+  </data>
+  <data name="InvalidSubTranBookInventoryInvoice" xml:space="preserve">
+    <value>無効な子会社との取引帳「インベントリ請求書」</value>
+  </data>
+  <data name="InvalidSubTranBookSalesPayment" xml:space="preserve">
+    <value>無効な子会社との取引帳「販売支払い」</value>
   </data>
   <data name="InvalidSubTranBookInventoryDelivery" xml:space="preserve">
     <value>無効な子会社との取引帳「インベントリ配信」</value>
+  </data>
+  <data name="InvalidSubTranBookInventoryPayment" xml:space="preserve">
+    <value>無効な子会社との取引帳「インベントリ支払い」</value>
+  </data>
+  <data name="InvalidSubTranBookInventoryReceipt" xml:space="preserve">
+    <value>無効な子会社との取引帳「インベントリ領収書」</value>
+  </data>
+  <data name="InvalidSubTranBookInventoryReturn" xml:space="preserve">
+    <value>無効な子会社との取引帳「インベントリ戻る」</value>
+  </data>
+  <data name="InvalidSubTranBookInventoryDirect" xml:space="preserve">
+    <value>無効な子会社との取引ブック「インベントリダイレクト」</value>
+  </data>
+  <data name="InvalidSubTranBookPurchaseTransfer" xml:space="preserve">
+    <value>無効な子会社との取引帳「購入転送」」</value>
+  </data>
+  <data name="InvalidSubTranBookPurchaseDelivery" xml:space="preserve">
+    <value>無効な子会社との取引ブック」」...</value>
+  </data>
+  <data name="InvalidSubTranBookInventoryOrder" xml:space="preserve">
+    <value>無効な子会社との取引帳「インベントリ順序」</value>
+  </data>
+  <data name="InvalidSubTranBookSalesSuspense" xml:space="preserve">
+    <value>無効な子会社との取引帳」販売サスペンス」</value>
   </data>
   <data name="InvalidSubTranBookPurchaseQuotation" xml:space="preserve">
     <value>無効な子会社との取引帳「購入配信」」</value>

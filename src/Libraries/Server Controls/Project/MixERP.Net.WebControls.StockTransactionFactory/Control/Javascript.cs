@@ -17,31 +17,42 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System.Globalization;
 using System.Security.Permissions;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Entities;
+using MixERP.Net.WebControls.StockTransactionFactory.Resources;
 
 [assembly: WebResource("MixERP.Net.WebControls.StockTransactionFactory.Includes.Script.StockTransactionForm.js", "application/x-javascript", PerformSubstitution = true)]
+
 namespace MixERP.Net.WebControls.StockTransactionFactory
 {
     public partial class StockTransactionForm
     {
-        private void RegisterJavascriptVariables()
+        private void RegisterJavascript()
         {
-            string javascript = "var isSales={0};var tranBook='{1}';var taxAfterDiscount={2};var verifyStock={3};";
             string isSales = (this.Book.Equals(TranBook.Sales)) ? "true" : "false";
             string tranBook = this.GetTranBook();
             string taxAfterDiscount = Switches.TaxAfterDiscount().ToString().ToUpperInvariant().Equals("TRUE") ? "true" : "false";
             string verifyStock = (this.VerifyStock) ? "true" : "false";
 
-            javascript = string.Format(CultureInfo.InvariantCulture, javascript, isSales, tranBook, taxAfterDiscount, verifyStock);
+            string js = string.Empty;
+            js += JSUtility.GetVar("isSales", isSales, false);
+            js += JSUtility.GetVar("tranBook", tranBook);
+            js += JSUtility.GetVar("taxAfterDiscount", taxAfterDiscount, false);
+            js += JSUtility.GetVar("verifyStock", verifyStock, false);
+            js += JSUtility.GetVar("insufficientStockWarningLocalized", Warnings.InsufficientStockWarning);
+            js += JSUtility.GetVar("invalidPartyWarningLocalized", Warnings.InvalidParty);
+            js += JSUtility.GetVar("invalidPriceTypeWarningLocalized", Warnings.InvalidPriceType);
+            js += JSUtility.GetVar("invalidStoreWarningLocalized", Warnings.InvalidStore);
+            js += JSUtility.GetVar("invalidShippingCompanyWarningLocalized", Warnings.InvalidShippingCompany);
+            js += JSUtility.GetVar("invalidCostCenterWarningLocalized", Warnings.InvalidCostCenter);
+            js += JSUtility.GetVar("invalidSalesPersonWarningLocalized", Warnings.InvalidSalesPerson);
+            js += JSUtility.GetVar("invalidPaymentTermLocalized", Warnings.InvalidPaymentTerm);
 
-            PageUtility.RegisterJavascript("StockTransactionFactory_Vars", javascript, this.Page, true);
+            PageUtility.RegisterJavascript("StockTransactionFactory_Vars", js, this.Page, true);
         }
 
         public string GetTranBook()
@@ -57,8 +68,7 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
         [AspNetHostingPermission(SecurityAction.Demand, Level = AspNetHostingPermissionLevel.Minimal)]
         private void AddJavascript()
         {
-            JavascriptHelper.AddJSReference(this.Page, "MixERP.Net.WebControls.StockTransactionFactory.Includes.Script.StockTransactionForm.js", "stock_transaction_form", this.GetType());
+            JSUtility.AddJSReference(this.Page, "MixERP.Net.WebControls.StockTransactionFactory.Includes.Script.StockTransactionForm.js", "stock_transaction_form", this.GetType());
         }
-
     }
 }

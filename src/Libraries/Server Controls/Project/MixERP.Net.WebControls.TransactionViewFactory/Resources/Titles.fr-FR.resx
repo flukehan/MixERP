@@ -117,70 +117,70 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Actions" xml:space="preserve">
+    <value>actes</value>
+  </data>
   <data name="Reason" xml:space="preserve">
     <value>raison</value>
-  </data>
-  <data name="Print" xml:space="preserve">
-    <value>imprimer</value>
-  </data>
-  <data name="Id" xml:space="preserve">
-    <value>ça</value>
-  </data>
-  <data name="Show" xml:space="preserve">
-    <value>spectacle</value>
-  </data>
-  <data name="TransactionTimestamp" xml:space="preserve">
-    <value>Transaction horodatage</value>
-  </data>
-  <data name="Office" xml:space="preserve">
-    <value>bureau</value>
-  </data>
-  <data name="TranId" xml:space="preserve">
-    <value>Identificateur de transaction</value>
-  </data>
-  <data name="Flag" xml:space="preserve">
-    <value>drapeau</value>
-  </data>
-  <data name="ReferenceNumber" xml:space="preserve">
-    <value>Référence #</value>
-  </data>
-  <data name="VerifiedOn" xml:space="preserve">
-    <value>Sur Vérifié</value>
-  </data>
-  <data name="TranCode" xml:space="preserve">
-    <value>Code de transaction</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>sélectionner</value>
   </data>
-  <data name="PostedBy" xml:space="preserve">
-    <value>Publié par</value>
+  <data name="StatementReference" xml:space="preserve">
+    <value>déclaration de référence</value>
   </data>
-  <data name="Status" xml:space="preserve">
-    <value>statut</value>
+  <data name="Id" xml:space="preserve">
+    <value>ça</value>
   </data>
-  <data name="ValueDate" xml:space="preserve">
-    <value>date de valeur</value>
+  <data name="TranId" xml:space="preserve">
+    <value>Identificateur de transaction</value>
+  </data>
+  <data name="AddNew" xml:space="preserve">
+    <value>Ajouter un nouveau</value>
   </data>
   <data name="Reject" xml:space="preserve">
     <value>rejeter</value>
   </data>
-  <data name="Book" xml:space="preserve">
-    <value>livre</value>
+  <data name="TransactionTimestamp" xml:space="preserve">
+    <value>Transaction horodatage</value>
   </data>
   <data name="Approve" xml:space="preserve">
     <value>approuver</value>
   </data>
-  <data name="Actions" xml:space="preserve">
-    <value>actes</value>
+  <data name="Flag" xml:space="preserve">
+    <value>drapeau</value>
+  </data>
+  <data name="ValueDate" xml:space="preserve">
+    <value>date de valeur</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>spectacle</value>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>imprimer</value>
+  </data>
+  <data name="PostedBy" xml:space="preserve">
+    <value>Publié par</value>
+  </data>
+  <data name="Office" xml:space="preserve">
+    <value>bureau</value>
   </data>
   <data name="VerifiedBy" xml:space="preserve">
     <value>vérifié par</value>
   </data>
-  <data name="StatementReference" xml:space="preserve">
-    <value>déclaration de référence</value>
+  <data name="Book" xml:space="preserve">
+    <value>livre</value>
   </data>
-  <data name="AddNew" xml:space="preserve">
-    <value>Ajouter un nouveau</value>
+  <data name="TranCode" xml:space="preserve">
+    <value>Code de transaction</value>
+  </data>
+  <data name="ReferenceNumber" xml:space="preserve">
+    <value>Référence #</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>statut</value>
+  </data>
+  <data name="VerifiedOn" xml:space="preserve">
+    <value>Sur Vérifié</value>
   </data>
 </root>

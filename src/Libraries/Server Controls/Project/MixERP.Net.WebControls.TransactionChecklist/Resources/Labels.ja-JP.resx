@@ -117,46 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="TransactionClosedDetails" xml:space="preserve">
-    <value>この取引は、{1}に{0}によって閉鎖された。理由："{2}"。</value>
-  </data>
-  <data name="TransactionWithdrawnDetails" xml:space="preserve">
-    <value>この取引は、{1}に{0}によって撤回された。理由："{2}"。</value>
-  </data>
-  <data name="CannotWithdrawTransaction" xml:space="preserve">
-    <value>トランザクションを撤回することはできません。</value>
+  <data name="EmailBody" xml:space="preserve">
+    <value>&lt;h2&gt;こんにちは、&lt;/ h2&gt;&lt;p&gt;添付文書を見つけてくださいます。&lt;/ p&gt; &lt;p&gt;/&gt; MixERPます。&lt;/ p&gt;&lt;br。ありがとうございます</value>
   </data>
   <data name="TransactionAwaitingVerification" xml:space="preserve">
     <value>このトランザクションは、管理者からの確認を待っている。</value>
   </data>
-  <data name="TransactionWithdrawalInformation" xml:space="preserve">
-    <value>あなたが取引を撤回した場合、それは、ワークフローモジュールに転送されません。これはあなたの撤退取引が拒否され、それ以上の検証を必要としないことを意味します。ただし、国連に後でこのトランザクションを撤回することはできません。</value>
-  </data>
-  <data name="EmailBody" xml:space="preserve">
-    <value>&lt;h2&gt;こんにちは、&lt;/ h2&gt;&lt;p&gt;添付文書を見つけてくださいます。&lt;/ p&gt; &lt;p&gt;/&gt; MixERPます。&lt;/ p&gt;&lt;br。ありがとうございます</value>
-  </data>
-  <data name="TransactionRejectedDetails" xml:space="preserve">
-    <value>このトランザクションは、{0}{1}上によって拒否されました。理由："{2}"。</value>
-  </data>
-  <data name="ThisFieldIsRequired" xml:space="preserve">
-    <value>この項目は必須です。</value>
-  </data>
-  <data name="TransactionWithdrawnMessage" xml:space="preserve">
-    <value>トランザクションは正常に撤回された。また、このアクションは、上と"{0}"の後に生成されたすべてのレポートに影響します。</value>
-  </data>
-  <data name="TransactionApprovedDetails" xml:space="preserve">
-    <value>この取引は、{1}に{0}によって承認された。</value>
-  </data>
-  <data name="TransactionPostedSuccessfully" xml:space="preserve">
-    <value>トランザクションは正常に投稿されました。</value>
-  </data>
-  <data name="TransactionAutoApprovedDetails" xml:space="preserve">
-    <value>このトランザクションは自動的に{1}に{0}によって承認された。</value>
+  <data name="TransactionClosedDetails" xml:space="preserve">
+    <value>この取引は、{1}に{0}によって閉鎖された。理由："{2}"。</value>
   </data>
   <data name="CannotWithdrawNotValidGLTransaction" xml:space="preserve">
     <value>トランザクションを撤回することはできません。これはいない有効なGLトランザクションである。</value>
   </data>
+  <data name="TransactionRejectedDetails" xml:space="preserve">
+    <value>このトランザクションは、{0}{1}上によって拒否されました。理由："{2}"。</value>
+  </data>
+  <data name="TransactionWithdrawalInformation" xml:space="preserve">
+    <value>あなたが取引を撤回した場合、それは、ワークフローモジュールに転送されません。これはあなたの撤退取引が拒否され、それ以上の検証を必要としないことを意味します。ただし、国連に後でこのトランザクションを撤回することはできません。</value>
+  </data>
+  <data name="TransactionApprovedDetails" xml:space="preserve">
+    <value>この取引は、{1}に{0}によって承認された。</value>
+  </data>
+  <data name="TransactionWithdrawnDetails" xml:space="preserve">
+    <value>この取引は、{1}に{0}によって撤回された。理由："{2}"。</value>
+  </data>
+  <data name="TransactionAutoApprovedDetails" xml:space="preserve">
+    <value>このトランザクションは自動的に{1}に{0}によって承認された。</value>
+  </data>
+  <data name="TransactionWithdrawnMessage" xml:space="preserve">
+    <value>トランザクションは正常に撤回された。また、このアクションは、上と"{0}"の後に生成されたすべてのレポートに影響します。</value>
+  </data>
   <data name="EmailSentConfirmation" xml:space="preserve">
     <value>電子メールは{0}に送られました。</value>
+  </data>
+  <data name="TransactionPostedSuccessfully" xml:space="preserve">
+    <value>トランザクションは正常に投稿されました。</value>
+  </data>
+  <data name="ThisFieldIsRequired" xml:space="preserve">
+    <value>この項目は必須です。</value>
+  </data>
+  <data name="CannotWithdrawTransaction" xml:space="preserve">
+    <value>トランザクションを撤回することはできません。</value>
   </data>
 </root>

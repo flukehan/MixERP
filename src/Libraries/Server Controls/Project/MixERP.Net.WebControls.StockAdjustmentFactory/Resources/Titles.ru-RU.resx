@@ -117,32 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ItemCode" xml:space="preserve">
-    <value>Код товара</value>
-  </data>
-  <data name="Type" xml:space="preserve">
-    <value>тип</value>
-  </data>
-  <data name="Add" xml:space="preserve">
-    <value>добавлять</value>
-  </data>
-  <data name="StatementReference" xml:space="preserve">
-    <value>О себе Ссылка</value>
-  </data>
-  <data name="RefererenceNumberAbbreviated" xml:space="preserve">
-    <value>Ссылка #</value>
+  <data name="Action" xml:space="preserve">
+    <value>действие</value>
   </data>
   <data name="Unit" xml:space="preserve">
     <value>блок</value>
   </data>
-  <data name="Quantity" xml:space="preserve">
-    <value>количество</value>
+  <data name="StatementReference" xml:space="preserve">
+    <value>О себе Ссылка</value>
   </data>
-  <data name="Action" xml:space="preserve">
-    <value>действие</value>
+  <data name="ItemCode" xml:space="preserve">
+    <value>Код товара</value>
   </data>
-  <data name="ItemName" xml:space="preserve">
-    <value>Название товара</value>
+  <data name="RefererenceNumberAbbreviated" xml:space="preserve">
+    <value>Ссылка #</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>добавлять</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Сохранить</value>
@@ -150,7 +141,16 @@
   <data name="ValueDate" xml:space="preserve">
     <value>Дата валютирования</value>
   </data>
+  <data name="Type" xml:space="preserve">
+    <value>тип</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>количество</value>
+  </data>
   <data name="Store" xml:space="preserve">
     <value>магазин</value>
+  </data>
+  <data name="ItemName" xml:space="preserve">
+    <value>Название товара</value>
   </data>
 </root>

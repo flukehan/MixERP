@@ -117,26 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CannotCreateFlagTransactionTableNull" xml:space="preserve">
-    <value>Kan niet maken of bijwerken vlag. Transactietabel werd niet verstrekt.</value>
+  <data name="CannotMergeUrlNull" xml:space="preserve">
+    <value>Kunnen transacties niet fuseren. Het samenvoegen url werd niet verstrekt.</value>
   </data>
   <data name="CannotMergeAlreadyMerged" xml:space="preserve">
     <value>De geselecteerde transacties bevatten items die al zijn samengevoegd. Gelieve opnieuw te proberen.</value>
   </data>
-  <data name="CannotMergeUrlNull" xml:space="preserve">
-    <value>Kunnen transacties niet fuseren. Het samenvoegen url werd niet verstrekt.</value>
+  <data name="CannotCreateFlagTransactionTableNull" xml:space="preserve">
+    <value>Kan niet maken of bijwerken vlag. Transactietabel werd niet verstrekt.</value>
   </data>
   <data name="NothingSelected" xml:space="preserve">
     <value>Niets geselecteerd.</value>
   </data>
-  <data name="CannotMergeIncompatibleTax" xml:space="preserve">
-    <value>Kunnen transacties tussen onverenigbare fiscale types niet fuseren. Gelieve opnieuw te proberen.</value>
+  <data name="CannotMergeDifferentPartyTransaction" xml:space="preserve">
+    <value>Kan transacties van verschillende partijen niet samen te voegen tot één partij. Gelieve opnieuw te proberen.</value>
   </data>
   <data name="ReturnButtonUrlNull" xml:space="preserve">
     <value>Kan dit item niet meer terug. De return url werd niet verstrekt.</value>
   </data>
-  <data name="CannotMergeDifferentPartyTransaction" xml:space="preserve">
-    <value>Kan transacties van verschillende partijen niet samen te voegen tot één partij. Gelieve opnieuw te proberen.</value>
+  <data name="CannotMergeIncompatibleTax" xml:space="preserve">
+    <value>Kunnen transacties tussen onverenigbare fiscale types niet fuseren. Gelieve opnieuw te proberen.</value>
   </data>
   <data name="CannotCreateFlagTransactionTablePrimaryKeyNull" xml:space="preserve">
     <value>Cannot create or update flag. Transaction table primary key was not provided.</value>

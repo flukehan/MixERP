@@ -25,6 +25,7 @@ using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.FrontEnd.Base;
+using Resources;
 using Serilog;
 
 namespace MixERP.Net.FrontEnd.Site.Account
@@ -52,7 +53,7 @@ namespace MixERP.Net.FrontEnd.Site.Account
         {
             using (HtmlGenericControl header = new HtmlGenericControl("h1"))
             {
-                header.InnerText = Resources.Titles.ChangePassword;
+                header.InnerText = Titles.ChangePassword;
 
                 container.Controls.Add(header);
             }
@@ -60,8 +61,13 @@ namespace MixERP.Net.FrontEnd.Site.Account
 
         private void CreateJavasriptLocalizedMessages()
         {
-            string javascript = "var enterCurrentPasswordLocalized = '{0}';var newPasswordCannotBeOldPasswordLocalized = '{1}';var enterNewPasswordLocalized = '{2}';var confirmationPasswordDoesNotMatchLocalized = '{3}';";
-            javascript = string.Format(javascript, Resources.Warnings.PleaseEnterCurrentPassword, Resources.Warnings.NewPasswordCannotBeOldPassword, Resources.Warnings.PleaseEnterNewPassword, Resources.Warnings.ConfirmationPasswordDoesNotMatch);
+            string javascript = string.Empty;
+
+            javascript += JSUtility.GetVar("enterCurrentPasswordLocalized", Warnings.PleaseEnterCurrentPassword);
+            javascript += JSUtility.GetVar("newPasswordCannotBeOldPasswordLocalized", Warnings.NewPasswordCannotBeOldPassword);
+            javascript += JSUtility.GetVar("enterNewPasswordLocalized", Warnings.PleaseEnterNewPassword);
+            javascript += JSUtility.GetVar("confirmationPasswordDoesNotMatchLocalized", Warnings.ConfirmationPasswordDoesNotMatch);
+
 
             PageUtility.RegisterJavascript("ChangePassowrd_Localized", javascript, this.Page, true);
         }

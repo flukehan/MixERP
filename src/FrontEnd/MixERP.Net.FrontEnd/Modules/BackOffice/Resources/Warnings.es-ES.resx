@@ -117,28 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CannotCreateABackup" xml:space="preserve">
-    <value>Lo sentimos, no se puede crear una copia de seguridad de base de datos en este momento.</value>
-  </data>
-  <data name="ConfigurationError" xml:space="preserve">
-    <value>No se puede continuar la tarea. Por favor, corrija los problemas de configuración.</value>
-  </data>
-  <data name="PasswordCannotBeEmpty" xml:space="preserve">
-    <value>La contraseña no puede estar vacío.</value>
-  </data>
   <data name="DateErrorMessage" xml:space="preserve">
     <value>Fecha seleccionada está fuera de rango.</value>
   </data>
-  <data name="AccessIsDenied" xml:space="preserve">
-    <value>Acceso denegado.</value>
+  <data name="CannotCreateABackup" xml:space="preserve">
+    <value>Lo sentimos, no se puede crear una copia de seguridad de base de datos en este momento.</value>
   </data>
   <data name="InvalidUser" xml:space="preserve">
     <value>Usuario no válido.</value>
+  </data>
+  <data name="PasswordCannotBeEmpty" xml:space="preserve">
+    <value>La contraseña no puede estar vacío.</value>
   </data>
   <data name="ComparePriceErrorMessage" xml:space="preserve">
     <value>Precio de debe ser menor que el precio a.</value>
   </data>
   <data name="NoFileSpecified" xml:space="preserve">
     <value>No hay archivo especificado.</value>
+  </data>
+  <data name="ConfigurationError" xml:space="preserve">
+    <value>No se puede continuar la tarea. Por favor, corrija los problemas de configuración.</value>
+  </data>
+  <data name="AccessIsDenied" xml:space="preserve">
+    <value>Acceso denegado.</value>
   </data>
 </root>

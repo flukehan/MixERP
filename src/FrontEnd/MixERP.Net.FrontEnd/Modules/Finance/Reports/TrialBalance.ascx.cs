@@ -38,9 +38,17 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             this.CreateHeader(this.Placeholder1);
             this.CreateForm(this.Placeholder1);
             this.CreateGrid(this.Placeholder1);
+            this.RegisterJavascript();
             this.BindGrid();
+        }
 
-            
+        private void RegisterJavascript()
+        {
+            string script = JSUtility.GetVar("perviousPeriodLocalized", Titles.PreviousPeriod);
+            script += JSUtility.GetVar("currentPeriodLocalized", Titles.CurrentPeriod);
+            script += JSUtility.GetVar("closingLocalized", Titles.ClosingBalance);
+
+            PageUtility.RegisterJavascript("TrialBalance_Vars", script, this.Page, true);
         }
 
         private void CreateHeader(Control container)

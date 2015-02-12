@@ -117,23 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="VerifiedBy" xml:space="preserve">
-    <value>验证通过</value>
+  <data name="Items" xml:space="preserve">
+    <value>项目</value>
   </data>
-  <data name="ItemCode" xml:space="preserve">
-    <value>产品编号</value>
+  <data name="ReferenceNumber" xml:space="preserve">
+    <value>参考号码</value>
   </data>
-  <data name="To" xml:space="preserve">
-    <value>到</value>
+  <data name="Tel" xml:space="preserve">
+    <value>电话</value>
   </data>
-  <data name="Days" xml:space="preserve">
-    <value>天</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>电子邮件</value>
-  </data>
-  <data name="ItemName" xml:space="preserve">
-    <value>项目名称</value>
+  <data name="Fax" xml:space="preserve">
+    <value>Fax</value>
   </data>
   <data name="Phone" xml:space="preserve">
     <value>电话</value>
@@ -141,41 +135,50 @@
   <data name="EnteredBy" xml:space="preserve">
     <value>输入者</value>
   </data>
-  <data name="ViewThisTransfer" xml:space="preserve">
-    <value>查看该转让</value>
+  <data name="ItemName" xml:space="preserve">
+    <value>项目名称</value>
   </data>
-  <data name="OfficeCode" xml:space="preserve">
-    <value>办公代码</value>
+  <data name="Brand" xml:space="preserve">
+    <value>牌</value>
   </data>
-  <data name="ItemId" xml:space="preserve">
-    <value>项目编号</value>
+  <data name="Book" xml:space="preserve">
+    <value>书</value>
+  </data>
+  <data name="InventoryAdvice" xml:space="preserve">
+    <value>库存忠告</value>
+  </data>
+  <data name="ItemSellingPrices" xml:space="preserve">
+    <value>产品销售价格</value>
+  </data>
+  <data name="PreparedOn" xml:space="preserve">
+    <value>编制</value>
+  </data>
+  <data name="SelectStore" xml:space="preserve">
+    <value>选择店铺</value>
+  </data>
+  <data name="Office" xml:space="preserve">
+    <value>办公室</value>
   </data>
   <data name="Shippers" xml:space="preserve">
     <value>托运人</value>
   </data>
+  <data name="StatementReference" xml:space="preserve">
+    <value>声明参考</value>
+  </data>
   <data name="StockTransferJournal" xml:space="preserve">
     <value>股权转让杂志</value>
   </data>
-  <data name="ReferenceNumber" xml:space="preserve">
-    <value>参考号码</value>
-  </data>
-  <data name="ItemTypes" xml:space="preserve">
-    <value>项目类型</value>
-  </data>
-  <data name="Actual" xml:space="preserve">
-    <value>实际</value>
-  </data>
-  <data name="Debit" xml:space="preserve">
-    <value>借方</value>
-  </data>
-  <data name="LeadTime" xml:space="preserve">
-    <value>交货时间</value>
-  </data>
-  <data name="ItemGroups" xml:space="preserve">
-    <value>项目组</value>
+  <data name="UnitId" xml:space="preserve">
+    <value>单位标识符</value>
   </data>
   <data name="TransactionStatus" xml:space="preserve">
     <value>交易状态</value>
+  </data>
+  <data name="Credit" xml:space="preserve">
+    <value>信贷</value>
+  </data>
+  <data name="ItemType" xml:space="preserve">
+    <value>项目类型</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>保存</value>
@@ -189,44 +192,11 @@
   <data name="UnitName" xml:space="preserve">
     <value>单位名称</value>
   </data>
-  <data name="Balance" xml:space="preserve">
-    <value>平衡</value>
-  </data>
-  <data name="PreparedOn" xml:space="preserve">
-    <value>编制</value>
-  </data>
-  <data name="ItemSellingPrices" xml:space="preserve">
-    <value>产品销售价格</value>
-  </data>
-  <data name="BaseUnitName" xml:space="preserve">
-    <value>基本单位名称</value>
-  </data>
-  <data name="ViewThisAdjustment" xml:space="preserve">
-    <value>查看该调整</value>
-  </data>
-  <data name="CompoundItems" xml:space="preserve">
-    <value>复合项目</value>
-  </data>
-  <data name="InventoryAdvice" xml:space="preserve">
-    <value>库存忠告</value>
-  </data>
-  <data name="Brand" xml:space="preserve">
-    <value>牌</value>
-  </data>
-  <data name="Book" xml:space="preserve">
-    <value>书</value>
-  </data>
-  <data name="Select" xml:space="preserve">
-    <value>选择</value>
-  </data>
-  <data name="StockAdjustment" xml:space="preserve">
-    <value>库存调整</value>
-  </data>
-  <data name="ItemCostPrices" xml:space="preserve">
-    <value>项目成本价格</value>
-  </data>
   <data name="Brands" xml:space="preserve">
     <value>品牌</value>
+  </data>
+  <data name="ListItems" xml:space="preserve">
+    <value>列表项</value>
   </data>
   <data name="ShippingAddressMaintenance" xml:space="preserve">
     <value>送货地址保养</value>
@@ -237,20 +207,83 @@
   <data name="TransferDetails" xml:space="preserve">
     <value>汇款细节</value>
   </data>
+  <data name="Prepare" xml:space="preserve">
+    <value>准备</value>
+  </data>
+  <data name="ItemOverview" xml:space="preserve">
+    <value>项目简介</value>
+  </data>
+  <data name="Store" xml:space="preserve">
+    <value>店</value>
+  </data>
+  <data name="ItemCostPrices" xml:space="preserve">
+    <value>项目成本价格</value>
+  </data>
+  <data name="CompoundItems" xml:space="preserve">
+    <value>复合项目</value>
+  </data>
+  <data name="StockAdjustment" xml:space="preserve">
+    <value>库存调整</value>
+  </data>
+  <data name="VerifiedBy" xml:space="preserve">
+    <value>验证通过</value>
+  </data>
+  <data name="ItemCode" xml:space="preserve">
+    <value>产品编号</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>选择</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>到</value>
+  </data>
+  <data name="Days" xml:space="preserve">
+    <value>天</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>从</value>
+  </data>
+  <data name="ReorderUnitName" xml:space="preserve">
+    <value>重新排序单位名称</value>
+  </data>
+  <data name="AccountStatement" xml:space="preserve">
+    <value>帐户对帐单</value>
+  </data>
+  <data name="UnitsOfMeasure" xml:space="preserve">
+    <value>计量单位</value>
+  </data>
+  <data name="StoreTypes" xml:space="preserve">
+    <value>存储类型</value>
+  </data>
+  <data name="ValueDate" xml:space="preserve">
+    <value>起息日</value>
+  </data>
+  <data name="ItemTypes" xml:space="preserve">
+    <value>项目类型</value>
+  </data>
+  <data name="Debit" xml:space="preserve">
+    <value>借方</value>
+  </data>
   <data name="CompoundUnitsOfMeasure" xml:space="preserve">
     <value>计量单位复合</value>
   </data>
   <data name="CompoundItemDetails" xml:space="preserve">
     <value>复合项目详情</value>
   </data>
-  <data name="ValueDate" xml:space="preserve">
-    <value>起息日</value>
+  <data name="LeadTime" xml:space="preserve">
+    <value>交货时间</value>
   </data>
   <data name="VerificationReason" xml:space="preserve">
     <value>验证原因</value>
   </data>
   <data name="Show" xml:space="preserve">
     <value>演出</value>
+  </data>
+  <data name="BaseUnitName" xml:space="preserve">
+    <value>基本单位名称</value>
+  </data>
+  <data name="ItemGroups" xml:space="preserve">
+    <value>项目组</value>
   </data>
   <data name="TransactionStatement" xml:space="preserve">
     <value>交易声明</value>
@@ -261,29 +294,26 @@
   <data name="RunningTotal" xml:space="preserve">
     <value>运行总计</value>
   </data>
-  <data name="Fax" xml:space="preserve">
-    <value>Fax</value>
+  <data name="Email" xml:space="preserve">
+    <value>电子邮件</value>
   </data>
-  <data name="ItemType" xml:space="preserve">
-    <value>项目类型</value>
+  <data name="ViewThisTransfer" xml:space="preserve">
+    <value>查看该转让</value>
   </data>
-  <data name="Credit" xml:space="preserve">
-    <value>信贷</value>
+  <data name="OfficeCode" xml:space="preserve">
+    <value>办公代码</value>
   </data>
-  <data name="UnitId" xml:space="preserve">
-    <value>单位标识符</value>
+  <data name="ItemId" xml:space="preserve">
+    <value>项目编号</value>
   </data>
-  <data name="ListItems" xml:space="preserve">
-    <value>列表项</value>
+  <data name="Balance" xml:space="preserve">
+    <value>平衡</value>
   </data>
-  <data name="ItemOverview" xml:space="preserve">
-    <value>项目简介</value>
+  <data name="ViewThisAdjustment" xml:space="preserve">
+    <value>查看该调整</value>
   </data>
-  <data name="Prepare" xml:space="preserve">
-    <value>准备</value>
-  </data>
-  <data name="Store" xml:space="preserve">
-    <value>店</value>
+  <data name="PreferredSupplier" xml:space="preserve">
+    <value>首选供应商</value>
   </data>
   <data name="Parties" xml:space="preserve">
     <value>缔约方</value>
@@ -303,43 +333,16 @@
   <data name="Flag" xml:space="preserve">
     <value>旗</value>
   </data>
-  <data name="PreferredSupplier" xml:space="preserve">
-    <value>首选供应商</value>
+  <data name="TransactionDate" xml:space="preserve">
+    <value>交易日期</value>
   </data>
   <data name="PartyTypes" xml:space="preserve">
     <value>党的类型</value>
   </data>
+  <data name="Actual" xml:space="preserve">
+    <value>实际</value>
+  </data>
   <data name="User" xml:space="preserve">
     <value>用户</value>
-  </data>
-  <data name="TransactionDate" xml:space="preserve">
-    <value>交易日期</value>
-  </data>
-  <data name="StoreTypes" xml:space="preserve">
-    <value>存储类型</value>
-  </data>
-  <data name="AccountStatement" xml:space="preserve">
-    <value>帐户对帐单</value>
-  </data>
-  <data name="From" xml:space="preserve">
-    <value>从</value>
-  </data>
-  <data name="ReorderUnitName" xml:space="preserve">
-    <value>重新排序单位名称</value>
-  </data>
-  <data name="Items" xml:space="preserve">
-    <value>项目</value>
-  </data>
-  <data name="StatementReference" xml:space="preserve">
-    <value>声明参考</value>
-  </data>
-  <data name="Office" xml:space="preserve">
-    <value>办公室</value>
-  </data>
-  <data name="UnitsOfMeasure" xml:space="preserve">
-    <value>计量单位</value>
-  </data>
-  <data name="Tel" xml:space="preserve">
-    <value>电话</value>
   </data>
 </root>

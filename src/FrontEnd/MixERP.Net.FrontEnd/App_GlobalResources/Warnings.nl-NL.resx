@@ -150,6 +150,9 @@
   <data name="PleaseEnterNewPassword" xml:space="preserve">
     <value>Vul een nieuw wachtwoord.</value>
   </data>
+  <data name="RestrictedTransactionMode" xml:space="preserve">
+    <value>Dit etablissement staat niet toe dat de transactie posting.</value>
+  </data>
   <data name="UserIdOrPasswordIncorrect" xml:space="preserve">
     <value>Gebruiker Identifier of wachtwoord onjuist.</value>
   </data>

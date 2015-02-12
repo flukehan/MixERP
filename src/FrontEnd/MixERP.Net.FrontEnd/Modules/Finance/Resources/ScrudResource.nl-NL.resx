@@ -117,23 +117,185 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="sys_type" xml:space="preserve">
+    <value>Systeemtype</value>
+  </data>
+  <data name="registration_date" xml:space="preserve">
+    <value>Registratiedatum</value>
+  </data>
+  <data name="parent_account_name" xml:space="preserve">
+    <value>Ouderaccount Naam</value>
+  </data>
+  <data name="lc_credit" xml:space="preserve">
+    <value>Letter of Credit Credit</value>
+  </data>
+  <data name="currency_code" xml:space="preserve">
+    <value>valuta Code</value>
+  </data>
+  <data name="state" xml:space="preserve">
+    <value>staat</value>
+  </data>
+  <data name="account_number" xml:space="preserve">
+    <value>Kontonummer</value>
+  </data>
+  <data name="bank_account_type" xml:space="preserve">
+    <value>Bankrekening Type</value>
+  </data>
+  <data name="email" xml:space="preserve">
+    <value>e-mail</value>
+  </data>
+  <data name="bank_account_number" xml:space="preserve">
+    <value>Bank Account Number</value>
+  </data>
+  <data name="is_transaction_node" xml:space="preserve">
+    <value>Is Transaction Node</value>
+  </data>
+  <data name="credit" xml:space="preserve">
+    <value>krediet</value>
+  </data>
+  <data name="hundredth_name" xml:space="preserve">
+    <value>honderdste Naam</value>
+  </data>
+  <data name="book" xml:space="preserve">
+    <value>boek</value>
+  </data>
+  <data name="statement_reference" xml:space="preserve">
+    <value>verklaring Reference</value>
+  </data>
+  <data name="parent_account_number" xml:space="preserve">
+    <value>Parent Account Number</value>
+  </data>
+  <data name="item_name" xml:space="preserve">
+    <value>Naam van het punt</value>
+  </data>
+  <data name="confidential" xml:space="preserve">
+    <value>vertrouwelijk</value>
+  </data>
+  <data name="ageing_slab_id" xml:space="preserve">
+    <value>Ageing Slab Id</value>
+  </data>
+  <data name="er" xml:space="preserve">
+    <value>effectief tarief</value>
+  </data>
   <data name="cash_flow_master_code" xml:space="preserve">
     <value>Cash Flow Master Code</value>
+  </data>
+  <data name="rate" xml:space="preserve">
+    <value>tarief</value>
+  </data>
+  <data name="city" xml:space="preserve">
+    <value>City</value>
   </data>
   <data name="office" xml:space="preserve">
     <value>kantoor</value>
   </data>
+  <data name="tax_type_id" xml:space="preserve">
+    <value>Belasting Type kenmerk</value>
+  </data>
   <data name="account_master" xml:space="preserve">
-    <value>account Master</value>
+    <value>Konto Meister</value>
+  </data>
+  <data name="cash_flow_heading_cash_flow_heading_type_chk" xml:space="preserve">
+    <value>Ongeldige Kasstroom Heading Type. Toegestane waarden: O, I, F.</value>
+  </data>
+  <data name="user_name" xml:space="preserve">
+    <value>Gebruikersnaam</value>
+  </data>
+  <data name="fax" xml:space="preserve">
+    <value>fax</value>
+  </data>
+  <data name="unit_name" xml:space="preserve">
+    <value>unit Naam</value>
+  </data>
+  <data name="street" xml:space="preserve">
+    <value>straat</value>
+  </data>
+  <data name="parent_cash_flow_heading_id" xml:space="preserve">
+    <value>Ouder Cash Flow rubriek Identifier</value>
+  </data>
+  <data name="account_master_code" xml:space="preserve">
+    <value>Konto Mastercode</value>
+  </data>
+  <data name="bank_branch" xml:space="preserve">
+    <value>Bank Branch</value>
+  </data>
+  <data name="currency_symbol" xml:space="preserve">
+    <value>valutasymbool</value>
+  </data>
+  <data name="cash_flow_setup_id" xml:space="preserve">
+    <value>Cashflow Setup Identifier</value>
+  </data>
+  <data name="maintained_by_user_id" xml:space="preserve">
+    <value>Onderhouden door Gebruiker Identifier</value>
+  </data>
+  <data name="tax_id" xml:space="preserve">
+    <value>belasting Identifier</value>
+  </data>
+  <data name="office_name" xml:space="preserve">
+    <value>Vestiging Naam</value>
+  </data>
+  <data name="sub_total" xml:space="preserve">
+    <value>Subtotaal</value>
+  </data>
+  <data name="is_added" xml:space="preserve">
+    <value>wordt toegevoegd</value>
+  </data>
+  <data name="normally_debit" xml:space="preserve">
+    <value>normaal Debit</value>
+  </data>
+  <data name="po_box" xml:space="preserve">
+    <value>Postbus</value>
+  </data>
+  <data name="bank_accounts_account_id_chk" xml:space="preserve">
+    <value>Het geselecteerde item is geen geldige bankrekening.</value>
+  </data>
+  <data name="parent_account_master_id" xml:space="preserve">
+    <value>Ouderaccount Master Identifier</value>
+  </data>
+  <data name="parent_account_id" xml:space="preserve">
+    <value>Ouderaccount Identifier</value>
+  </data>
+  <data name="relationship_officer_name" xml:space="preserve">
+    <value>Relatie Officer Naam</value>
+  </data>
+  <data name="external_code" xml:space="preserve">
+    <value>externe code</value>
+  </data>
+  <data name="amount" xml:space="preserve">
+    <value>Höhe</value>
+  </data>
+  <data name="tax_type_name" xml:space="preserve">
+    <value>Belasting Type Naam</value>
+  </data>
+  <data name="cash_flow_heading_id" xml:space="preserve">
+    <value>Kasstroom Heading Identifier</value>
+  </data>
+  <data name="account" xml:space="preserve">
+    <value>Konto</value>
+  </data>
+  <data name="is_sales" xml:space="preserve">
+    <value>is Sales</value>
+  </data>
+  <data name="country" xml:space="preserve">
+    <value>land</value>
+  </data>
+  <data name="audit_user_id" xml:space="preserve">
+    <value>Audit User Identifier</value>
+  </data>
+  <data name="cost_center_name" xml:space="preserve">
+    <value>Kostenplaats Naam</value>
   </data>
   <data name="account_master_id" xml:space="preserve">
-    <value>Account Master Identifier</value>
+    <value>Kontenstamm Identifier</value>
   </data>
   <data name="bank_contact_number" xml:space="preserve">
     <value>Bank Contact nummer</value>
   </data>
   <data name="debit" xml:space="preserve">
     <value>debet</value>
+  </data>
+  <data name="has_child" xml:space="preserve">
+    <value>heeft Child</value>
   </data>
   <data name="parent" xml:space="preserve">
     <value>ouder</value>
@@ -153,47 +315,80 @@
   <data name="cash_flow_heading_type" xml:space="preserve">
     <value>Kasstroom  Rubriek Type</value>
   </data>
-  <data name="is_sales" xml:space="preserve">
-    <value>is Sales</value>
+  <data name="Select" xml:space="preserve">
+    <value>kiezen</value>
   </data>
-  <data name="amount" xml:space="preserve">
-    <value>bedrag</value>
+  <data name="audit_ts" xml:space="preserve">
+    <value>Prüfungszeitstempel</value>
   </data>
-  <data name="external_code" xml:space="preserve">
-    <value>externe code</value>
+  <data name="address_line_1" xml:space="preserve">
+    <value>Adresszeile 1</value>
   </data>
-  <data name="ageing_slab_name" xml:space="preserve">
-    <value>Vergrijzing Slab Naam</value>
+  <data name="parent_office" xml:space="preserve">
+    <value>ouder Office</value>
   </data>
-  <data name="is_transaction_node" xml:space="preserve">
-    <value>Is Transaction Node</value>
+  <data name="cost_center_id" xml:space="preserve">
+    <value>Kostenplaats Identifier</value>
   </data>
-  <data name="book" xml:space="preserve">
-    <value>boek</value>
+  <data name="account_master_name" xml:space="preserve">
+    <value>Konto Master Name</value>
   </data>
-  <data name="cash_flow_heading_name" xml:space="preserve">
-    <value>Cash Flow Rubriek Naam</value>
+  <data name="from_days" xml:space="preserve">
+    <value>van dagen</value>
+  </data>
+  <data name="repository" xml:space="preserve">
+    <value>opslagplaats</value>
   </data>
   <data name="item_code" xml:space="preserve">
     <value>Item Code</value>
   </data>
-  <data name="account_master_name" xml:space="preserve">
-    <value>Account Master Naam</value>
+  <data name="url" xml:space="preserve">
+    <value>Universal Resource Locator</value>
   </data>
-  <data name="Select" xml:space="preserve">
-    <value>kiezen</value>
+  <data name="cash_flow_heading_name" xml:space="preserve">
+    <value>Cash Flow Rubriek Naam</value>
+  </data>
+  <data name="to_days" xml:space="preserve">
+    <value>tot dagen</value>
+  </data>
+  <data name="discount" xml:space="preserve">
+    <value>korting</value>
+  </data>
+  <data name="ageing_slab_name" xml:space="preserve">
+    <value>Ageing Slab Name</value>
+  </data>
+  <data name="cost_center_code" xml:space="preserve">
+    <value>Kostenplaats</value>
+  </data>
+  <data name="balance" xml:space="preserve">
+    <value>Balance</value>
+  </data>
+  <data name="is_purchase" xml:space="preserve">
+    <value>is Aankoop</value>
+  </data>
+  <data name="registration_number" xml:space="preserve">
+    <value>registratie Nummer</value>
+  </data>
+  <data name="nick_name" xml:space="preserve">
+    <value>Nick Name</value>
+  </data>
+  <data name="cash_flow_heading" xml:space="preserve">
+    <value>Cash Flow rubriek</value>
+  </data>
+  <data name="cash_flow_heading_code" xml:space="preserve">
+    <value>Cash Flow rubriek Code</value>
+  </data>
+  <data name="tran_code" xml:space="preserve">
+    <value>transactie Code</value>
   </data>
   <data name="account_name" xml:space="preserve">
-    <value>Accountnaam</value>
+    <value>Kontobezeichnung</value>
   </data>
   <data name="bank_name" xml:space="preserve">
     <value>Naam van de bank</value>
   </data>
   <data name="description" xml:space="preserve">
     <value>beschrijving</value>
-  </data>
-  <data name="parent_account_id" xml:space="preserve">
-    <value>Ouderaccount Identifier</value>
   </data>
   <data name="tax_type_code" xml:space="preserve">
     <value>Belasting Type Code</value>
@@ -207,92 +402,17 @@
   <data name="is_summary" xml:space="preserve">
     <value>is Samenvatting</value>
   </data>
-  <data name="cash_flow_heading_cash_flow_heading_type_chk" xml:space="preserve">
-    <value>Ongeldige Kasstroom Heading Type. Toegestane waarden: O, I, F.</value>
-  </data>
-  <data name="account_number" xml:space="preserve">
-    <value>rekening Nummer</value>
-  </data>
-  <data name="bank_account_type" xml:space="preserve">
-    <value>Bankrekening Type</value>
-  </data>
-  <data name="currency_code" xml:space="preserve">
-    <value>valuta Code</value>
-  </data>
-  <data name="lc_credit" xml:space="preserve">
-    <value>Letter of Credit Credit</value>
-  </data>
-  <data name="sys_type" xml:space="preserve">
-    <value>Systeemtype</value>
-  </data>
-  <data name="parent_account_name" xml:space="preserve">
-    <value>Ouderaccount Naam</value>
+  <data name="cash_flow_master_id" xml:space="preserve">
+    <value>Cash Flow Master Identifier</value>
   </data>
   <data name="price" xml:space="preserve">
     <value>prijs</value>
   </data>
-  <data name="cash_flow_master_id" xml:space="preserve">
-    <value>Cash Flow Master Identifier</value>
-  </data>
-  <data name="tran_code" xml:space="preserve">
-    <value>transactie Code</value>
-  </data>
-  <data name="cash_flow_heading" xml:space="preserve">
-    <value>Cash Flow rubriek</value>
-  </data>
-  <data name="ageing_slab_id" xml:space="preserve">
-    <value>Vergrijzing Slab Identifier</value>
-  </data>
-  <data name="confidential" xml:space="preserve">
-    <value>vertrouwelijk</value>
-  </data>
-  <data name="er" xml:space="preserve">
-    <value>effectief tarief</value>
-  </data>
-  <data name="rate" xml:space="preserve">
-    <value>tarief</value>
-  </data>
-  <data name="tax_type_id" xml:space="preserve">
-    <value>Belasting Type kenmerk</value>
-  </data>
-  <data name="user_name" xml:space="preserve">
-    <value>Gebruikersnaam</value>
-  </data>
-  <data name="unit_name" xml:space="preserve">
-    <value>unit Naam</value>
-  </data>
-  <data name="parent_cash_flow_heading_id" xml:space="preserve">
-    <value>Ouder Cash Flow rubriek Identifier</value>
-  </data>
-  <data name="cash_flow_setup_id" xml:space="preserve">
-    <value>Cashflow Setup Identifier</value>
-  </data>
-  <data name="audit_user_id" xml:space="preserve">
-    <value>Audit Gebruiker Identifier</value>
-  </data>
-  <data name="cost_center_name" xml:space="preserve">
-    <value>Kostenplaats Naam</value>
-  </data>
-  <data name="has_child" xml:space="preserve">
-    <value>heeft Child</value>
-  </data>
-  <data name="cost_center_code" xml:space="preserve">
-    <value>Kostenplaats</value>
-  </data>
-  <data name="relationship_officer_name" xml:space="preserve">
-    <value>Relatie Officer Naam</value>
-  </data>
-  <data name="tax_type_name" xml:space="preserve">
-    <value>Belasting Type Naam</value>
-  </data>
-  <data name="cash_flow_heading_id" xml:space="preserve">
-    <value>Kasstroom Heading Identifier</value>
-  </data>
-  <data name="account" xml:space="preserve">
-    <value>rekening</value>
-  </data>
   <data name="account_id" xml:space="preserve">
-    <value>account Identifier</value>
+    <value>Konto Identifier</value>
+  </data>
+  <data name="currency" xml:space="preserve">
+    <value>valuta</value>
   </data>
   <data name="bank_address" xml:space="preserve">
     <value>Bank Adres</value>
@@ -318,76 +438,19 @@
   <data name="value_date" xml:space="preserve">
     <value>Value Date</value>
   </data>
-  <data name="audit_ts" xml:space="preserve">
-    <value>audit Tijdstempel</value>
+  <data name="office_id" xml:space="preserve">
+    <value>Office Identifier</value>
   </data>
-  <data name="cost_center_id" xml:space="preserve">
-    <value>Kostenplaats Identifier</value>
+  <data name="office_code" xml:space="preserve">
+    <value>Office Code</value>
   </data>
-  <data name="from_days" xml:space="preserve">
-    <value>van dagen</value>
+  <data name="zip_code" xml:space="preserve">
+    <value>postcode</value>
   </data>
-  <data name="repository" xml:space="preserve">
-    <value>opslagplaats</value>
+  <data name="phone" xml:space="preserve">
+    <value>telefoon</value>
   </data>
-  <data name="to_days" xml:space="preserve">
-    <value>tot dagen</value>
-  </data>
-  <data name="discount" xml:space="preserve">
-    <value>korting</value>
-  </data>
-  <data name="cash_flow_heading_code" xml:space="preserve">
-    <value>Cash Flow rubriek Code</value>
-  </data>
-  <data name="balance" xml:space="preserve">
-    <value>balans</value>
-  </data>
-  <data name="is_purchase" xml:space="preserve">
-    <value>is Aankoop</value>
-  </data>
-  <data name="account_master_code" xml:space="preserve">
-    <value>Account Master Code</value>
-  </data>
-  <data name="bank_branch" xml:space="preserve">
-    <value>Bank Branch</value>
-  </data>
-  <data name="currency_symbol" xml:space="preserve">
-    <value>valutasymbool</value>
-  </data>
-  <data name="maintained_by_user_id" xml:space="preserve">
-    <value>Onderhouden door Gebruiker Identifier</value>
-  </data>
-  <data name="tax_id" xml:space="preserve">
-    <value>belasting Identifier</value>
-  </data>
-  <data name="office_name" xml:space="preserve">
-    <value>Vestiging Naam</value>
-  </data>
-  <data name="sub_total" xml:space="preserve">
-    <value>Subtotaal</value>
-  </data>
-  <data name="is_added" xml:space="preserve">
-    <value>wordt toegevoegd</value>
-  </data>
-  <data name="normally_debit" xml:space="preserve">
-    <value>normaal Debit</value>
-  </data>
-  <data name="bank_account_number" xml:space="preserve">
-    <value>Bank Account Number</value>
-  </data>
-  <data name="credit" xml:space="preserve">
-    <value>krediet</value>
-  </data>
-  <data name="hundredth_name" xml:space="preserve">
-    <value>honderdste Naam</value>
-  </data>
-  <data name="statement_reference" xml:space="preserve">
-    <value>verklaring Reference</value>
-  </data>
-  <data name="parent_account_number" xml:space="preserve">
-    <value>Parent Account Number</value>
-  </data>
-  <data name="item_name" xml:space="preserve">
-    <value>Naam van het punt</value>
+  <data name="address_line_2" xml:space="preserve">
+    <value>Adresszeile 2</value>
   </data>
 </root>

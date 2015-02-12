@@ -117,17 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AccessIsDenied" xml:space="preserve">
-    <value>Toegang is geweigerd.</value>
-  </data>
   <data name="CompareDaysErrorMessage" xml:space="preserve">
     <value>Vanaf dagen mag niet groter zijn dan de te dagen.</value>
   </data>
-  <data name="InvalidCashRepository" xml:space="preserve">
-    <value>Ongeldige contant repository.</value>
-  </data>
   <data name="NegativeValueSupplied" xml:space="preserve">
     <value>Negatieve waarde geleverd.</value>
+  </data>
+  <data name="ReferencingSidesNotEqual" xml:space="preserve">
+    <value>De verwijzingen zijkanten zijn niet gelijk.</value>
   </data>
   <data name="InvalidData" xml:space="preserve">
     <value>Ongeldige gegevens.</value>
@@ -135,8 +132,11 @@
   <data name="InsufficientBalanceInCashRepository" xml:space="preserve">
     <value>Er is geen voldoende saldo in de cash repository om deze transactie te verwerken.</value>
   </data>
-  <data name="ReferencingSidesNotEqual" xml:space="preserve">
-    <value>De verwijzingen zijkanten zijn niet gelijk.</value>
+  <data name="InvalidCashRepository" xml:space="preserve">
+    <value>Ongeldige contant repository.</value>
+  </data>
+  <data name="AccessIsDenied" xml:space="preserve">
+    <value>Toegang is geweigerd.</value>
   </data>
   <data name="InvalidAccount" xml:space="preserve">
     <value>Ongeldige rekening.</value>

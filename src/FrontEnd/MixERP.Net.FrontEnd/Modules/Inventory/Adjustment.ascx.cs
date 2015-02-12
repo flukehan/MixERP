@@ -45,7 +45,9 @@ namespace MixERP.Net.Core.Modules.Inventory
 
         private void RegisterJavascript()
         {
-            string javascript = string.Format("var actualLocalized='{0}';var differenceLocalized='{1}';", Titles.Actual, Titles.Difference);
+            string javascript = JSUtility.GetVar("actualLocalized", Titles.Actual);
+            javascript += JSUtility.GetVar("differenceLocalized", Titles.Difference);
+
             PageUtility.RegisterJavascript("Adjustment_Localized", javascript, this.Page, true);
         }
 

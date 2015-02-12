@@ -117,49 +117,49 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="InvalidSubTranBookSalesTransfer" xml:space="preserve">
-    <value>Inválido Transacciones Subsidiarios libro "Transferencia de Ventas"</value>
-  </data>
-  <data name="InvalidSubTranBookSalesSuspense" xml:space="preserve">
-    <value>Inválido Transacciones Subsidiarios libro "Suspense Ventas"</value>
-  </data>
-  <data name="InvalidSubTranBookInventoryOrder" xml:space="preserve">
-    <value>Inválido Transacciones Subsidiarios libro "Inventario Orden"</value>
-  </data>
-  <data name="InvalidSubTranBookInventoryInvoice" xml:space="preserve">
-    <value>nválido Transacciones Subsidiarios libro "Factura de inventario"</value>
-  </data>
-  <data name="InvalidSubTranBookSalesPayment" xml:space="preserve">
-    <value>Transacciones Subsidiarios válida libro "de venta"</value>
-  </data>
-  <data name="InvalidSubTranBookPurchaseTransfer" xml:space="preserve">
-    <value>Inválido Transacciones Subsidiarios libro "Compra de Transferencia"</value>
-  </data>
-  <data name="InvalidSubTranBookInventoryDirect" xml:space="preserve">
-    <value>Transacciones Subsidiarios no válidos libro "Inventario Directo"</value>
-  </data>
-  <data name="InvalidSubTranBookPurchaseQuotation" xml:space="preserve">
-    <value>Transacciones Subsidiarios no válidos libro "Cita de Compra"</value>
-  </data>
-  <data name="InvalidSubTranBookInventoryReturn" xml:space="preserve">
-    <value>Inválido Transacciones Subsidiarios libro "El regreso de inventario"</value>
+  <data name="InvalidSubTranBookInventoryPayment" xml:space="preserve">
+    <value>Transacciones Subsidiarios válida libro "Inventario de Pago"</value>
   </data>
   <data name="InvalidSubTranBookInventoryQuotation" xml:space="preserve">
     <value>Inválido Transacciones Subsidiarios libro "Cita de inventario"</value>
   </data>
-  <data name="InvalidSubTranBookInventoryReceipt" xml:space="preserve">
-    <value>Inválido Transacciones Subsidiarios libro "Recibo de inventario"</value>
+  <data name="InvalidSubTranBookSalesPayment" xml:space="preserve">
+    <value>Transacciones Subsidiarios válida libro "de venta"</value>
   </data>
   <data name="InvalidSubTranBookPurchaseSuspense" xml:space="preserve">
     <value>Transacciones Subsidiarios no válidos libro "Suspense Compra"</value>
   </data>
+  <data name="InvalidSubTranBookSalesTransfer" xml:space="preserve">
+    <value>Inválido Transacciones Subsidiarios libro "Transferencia de Ventas"</value>
+  </data>
+  <data name="InvalidSubTranBookInventoryInvoice" xml:space="preserve">
+    <value>nválido Transacciones Subsidiarios libro "Factura de inventario"</value>
+  </data>
   <data name="InvalidSubTranBookInventoryDelivery" xml:space="preserve">
     <value>Inválido Transacciones Subsidiarios libro "Inventario Entrega"</value>
+  </data>
+  <data name="InvalidSubTranBookInventoryReceipt" xml:space="preserve">
+    <value>Inválido Transacciones Subsidiarios libro "Recibo de inventario"</value>
+  </data>
+  <data name="InvalidSubTranBookInventoryReturn" xml:space="preserve">
+    <value>Inválido Transacciones Subsidiarios libro "El regreso de inventario"</value>
+  </data>
+  <data name="InvalidSubTranBookInventoryDirect" xml:space="preserve">
+    <value>Transacciones Subsidiarios no válidos libro "Inventario Directo"</value>
+  </data>
+  <data name="InvalidSubTranBookPurchaseTransfer" xml:space="preserve">
+    <value>Inválido Transacciones Subsidiarios libro "Compra de Transferencia"</value>
   </data>
   <data name="InvalidSubTranBookPurchaseDelivery" xml:space="preserve">
     <value>Inválido Transacciones Subsidiarios libro "Compra de Entrega"</value>
   </data>
-  <data name="InvalidSubTranBookInventoryPayment" xml:space="preserve">
-    <value>Transacciones Subsidiarios válida libro "Inventario de Pago"</value>
+  <data name="InvalidSubTranBookInventoryOrder" xml:space="preserve">
+    <value>Inválido Transacciones Subsidiarios libro "Inventario Orden"</value>
+  </data>
+  <data name="InvalidSubTranBookSalesSuspense" xml:space="preserve">
+    <value>Inválido Transacciones Subsidiarios libro "Suspense Ventas"</value>
+  </data>
+  <data name="InvalidSubTranBookPurchaseQuotation" xml:space="preserve">
+    <value>Transacciones Subsidiarios no válidos libro "Cita de Compra"</value>
   </data>
 </root>

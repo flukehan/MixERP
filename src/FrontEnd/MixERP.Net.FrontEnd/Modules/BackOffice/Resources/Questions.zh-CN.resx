@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ConfirmVacuum" xml:space="preserve">
+  <data name="ConfirmAnalyze" xml:space="preserve">
     <value>这将锁定在执行过程中的客户端的数据库访问。你确定你想立即执行此操作？</value>
   </data>
-  <data name="ConfirmAnalyze" xml:space="preserve">
+  <data name="ConfirmVacuum" xml:space="preserve">
     <value>这将锁定在执行过程中的客户端的数据库访问。你确定你想立即执行此操作？</value>
   </data>
   <data name="ConfirmVacuumFull" xml:space="preserve">

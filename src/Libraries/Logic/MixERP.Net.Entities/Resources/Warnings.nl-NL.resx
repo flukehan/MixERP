@@ -117,29 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="InvalidSubTranBookPurchaseTransfer" xml:space="preserve">
-    <value>ongeldige Dochteronderneming Transacties Boek "Aankoop Transfer"</value>
-  </data>
-  <data name="InvalidSubTranBookInventoryPayment" xml:space="preserve">
-    <value>ongeldige Dochteronderneming Transacties Book "Inventaris Betaling"</value>
-  </data>
-  <data name="InvalidSubTranBookSalesSuspense" xml:space="preserve">
-    <value>ongeldige Dochteronderneming Transacties Book "Sales Suspense"</value>
+  <data name="InvalidSubTranBookSalesTransfer" xml:space="preserve">
+    <value>ongeldige Dochteronderneming Transacties Book "Sales Transfer"</value>
   </data>
   <data name="InvalidSubTranBookInventoryQuotation" xml:space="preserve">
     <value>ongeldige Dochteronderneming Transacties Book "Inventarisatie Offerte"</value>
   </data>
-  <data name="InvalidSubTranBookPurchaseSuspense" xml:space="preserve">
-    <value>ongeldige Dochteronderneming Transacties Boek "Aankoop Suspense"</value>
+  <data name="InvalidSubTranBookInventoryReturn" xml:space="preserve">
+    <value>ongeldige Dochteronderneming Transacties Book "Inventaris Return"</value>
   </data>
   <data name="InvalidSubTranBookInventoryDelivery" xml:space="preserve">
     <value>ongeldige Dochteronderneming Transacties Book "Inventaris Delivery"</value>
   </data>
-  <data name="InvalidSubTranBookSalesTransfer" xml:space="preserve">
-    <value>ongeldige Dochteronderneming Transacties Book "Sales Transfer"</value>
+  <data name="InvalidSubTranBookPurchaseSuspense" xml:space="preserve">
+    <value>ongeldige Dochteronderneming Transacties Boek "Aankoop Suspense"</value>
   </data>
-  <data name="InvalidSubTranBookInventoryOrder" xml:space="preserve">
-    <value>ongeldige Dochteronderneming Transacties Book "Inventaris Order"</value>
+  <data name="InvalidSubTranBookInventoryPayment" xml:space="preserve">
+    <value>ongeldige Dochteronderneming Transacties Book "Inventaris Betaling"</value>
   </data>
   <data name="InvalidSubTranBookSalesPayment" xml:space="preserve">
     <value>ongeldige Dochteronderneming Transacties Book "Sales Betaling"</value>
@@ -147,17 +141,23 @@
   <data name="InvalidSubTranBookInventoryInvoice" xml:space="preserve">
     <value>ongeldige Dochteronderneming Transacties Book "Inventaris Factuur"</value>
   </data>
+  <data name="InvalidSubTranBookInventoryReceipt" xml:space="preserve">
+    <value>ongeldige Dochteronderneming Transacties Book "Inventaris Receipt"</value>
+  </data>
   <data name="InvalidSubTranBookInventoryDirect" xml:space="preserve">
     <value>ongeldige Dochteronderneming Transacties Book "Inventaris Direct"</value>
+  </data>
+  <data name="InvalidSubTranBookPurchaseTransfer" xml:space="preserve">
+    <value>ongeldige Dochteronderneming Transacties Boek "Aankoop Transfer"</value>
   </data>
   <data name="InvalidSubTranBookPurchaseDelivery" xml:space="preserve">
     <value>ongeldige Dochteronderneming Transacties Boek "Aankoop Delivery"</value>
   </data>
-  <data name="InvalidSubTranBookInventoryReceipt" xml:space="preserve">
-    <value>ongeldige Dochteronderneming Transacties Book "Inventaris Receipt"</value>
+  <data name="InvalidSubTranBookInventoryOrder" xml:space="preserve">
+    <value>ongeldige Dochteronderneming Transacties Book "Inventaris Order"</value>
   </data>
-  <data name="InvalidSubTranBookInventoryReturn" xml:space="preserve">
-    <value>ongeldige Dochteronderneming Transacties Book "Inventaris Return"</value>
+  <data name="InvalidSubTranBookSalesSuspense" xml:space="preserve">
+    <value>ongeldige Dochteronderneming Transacties Book "Sales Suspense"</value>
   </data>
   <data name="InvalidSubTranBookPurchaseQuotation" xml:space="preserve">
     <value>ongeldige Dochteronderneming Transacties Boek "Aankoop Offerte"</value>

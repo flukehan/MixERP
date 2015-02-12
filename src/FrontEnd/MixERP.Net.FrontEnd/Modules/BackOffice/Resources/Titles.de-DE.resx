@@ -117,26 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Counters" xml:space="preserve">
-    <value>Zähler</value>
+  <data name="Unit" xml:space="preserve">
+    <value>Einheit</value>
   </data>
-  <data name="Load" xml:space="preserve">
-    <value>Last</value>
+  <data name="Users" xml:space="preserve">
+    <value>Benutzer</value>
+  </data>
+  <data name="UncheckAll" xml:space="preserve">
+    <value>Alle deaktivieren</value>
+  </data>
+  <data name="SelectUser" xml:space="preserve">
+    <value>Wählen Sie Benutzer</value>
   </data>
   <data name="StateSalesTaxes" xml:space="preserve">
     <value>Bundesstaatlicher Verkaufssteuer</value>
   </data>
-  <data name="CountySalesTaxes" xml:space="preserve">
-    <value>Grafschaft Verkaufssteuern</value>
-  </data>
-  <data name="EnterBackupName" xml:space="preserve">
-    <value>Geben Sie Sicherungsname</value>
-  </data>
-  <data name="Roles" xml:space="preserve">
-    <value>Rollen</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>E-Mail</value>
+  <data name="BackupDatabase" xml:space="preserve">
+    <value>Datenbank sichern</value>
   </data>
   <data name="DatabaseStatistics" xml:space="preserve">
     <value>Datenbankstatistik</value>
@@ -149,6 +146,144 @@
   </data>
   <data name="Counties" xml:space="preserve">
     <value>Grafschaften</value>
+  </data>
+  <data name="MenuText" xml:space="preserve">
+    <value>Menütext</value>
+  </data>
+  <data name="OpeningInventory" xml:space="preserve">
+    <value>Öffnungs Inventar</value>
+  </data>
+  <data name="CashRepositories" xml:space="preserve">
+    <value>Barzahlung Repositories</value>
+  </data>
+  <data name="Frequencies" xml:space="preserve">
+    <value>Frequenzen</value>
+  </data>
+  <data name="SalesTaxTypes" xml:space="preserve">
+    <value>Umsatzsteuerarten</value>
+  </data>
+  <data name="VacuumFullDatabase" xml:space="preserve">
+    <value>Vakuum-Datenbank (voll)</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Zu Schließen</value>
+  </data>
+  <data name="Access" xml:space="preserve">
+    <value>Zugriff</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>Höhe</value>
+  </data>
+  <data name="Execute" xml:space="preserve">
+    <value>ausführen</value>
+  </data>
+  <data name="SalesTaxDetails" xml:space="preserve">
+    <value>Umsatzsteuer-Details</value>
+  </data>
+  <data name="Tel" xml:space="preserve">
+    <value>Telefon</value>
+  </data>
+  <data name="Industries" xml:space="preserve">
+    <value>Branchen</value>
+  </data>
+  <data name="EnterNewPassword" xml:space="preserve">
+    <value>Neues Passwort eingeben</value>
+  </data>
+  <data name="PreparedOn" xml:space="preserve">
+    <value>vorbereitet auf</value>
+  </data>
+  <data name="TaxExemptTypes" xml:space="preserve">
+    <value>Steuerbefreiung Typen</value>
+  </data>
+  <data name="Departments" xml:space="preserve">
+    <value>Abteilungen</value>
+  </data>
+  <data name="BackupConsole" xml:space="preserve">
+    <value>Backup-Konsole</value>
+  </data>
+  <data name="RowNumber" xml:space="preserve">
+    <value>Zeilennummer</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>Menge</value>
+  </data>
+  <data name="MenuAccessPolicy" xml:space="preserve">
+    <value>Menü-Richtlinien</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>gesamt</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>klar</value>
+  </data>
+  <data name="GoToTop" xml:space="preserve">
+    <value>zurück nach oben</value>
+  </data>
+  <data name="Roles" xml:space="preserve">
+    <value>Rollen</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Speichern</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-Mail</value>
+  </data>
+  <data name="DatabaseBackups" xml:space="preserve">
+    <value>Datenbanksicherungen</value>
+  </data>
+  <data name="MenuCode" xml:space="preserve">
+    <value>Menü-Code</value>
+  </data>
+  <data name="ItemCode" xml:space="preserve">
+    <value>Item Code</value>
+  </data>
+  <data name="TaxMaster" xml:space="preserve">
+    <value>Steuern Meister</value>
+  </data>
+  <data name="Entities" xml:space="preserve">
+    <value>Entities</value>
+  </data>
+  <data name="CheckAll" xml:space="preserve">
+    <value>alle auswählen</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Passwort Ändern</value>
+  </data>
+  <data name="StoreName" xml:space="preserve">
+    <value>Shop-Name</value>
+  </data>
+  <data name="AnalyzeDatabse" xml:space="preserve">
+    <value>analysieren Datenbank</value>
+  </data>
+  <data name="FiscalYear" xml:space="preserve">
+    <value>Geschäftsjahr</value>
+  </data>
+  <data name="SalesTaxExemptDetails" xml:space="preserve">
+    <value>Umsatzsteuer befreit Einzelheiten</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>Benutzer</value>
+  </data>
+  <data name="Countries" xml:space="preserve">
+    <value>Die Länder</value>
+  </data>
+  <data name="Counters" xml:space="preserve">
+    <value>Zähler</value>
+  </data>
+  <data name="Load" xml:space="preserve">
+    <value>Last</value>
+  </data>
+  <data name="CountySalesTaxes" xml:space="preserve">
+    <value>Grafschaft Verkaufssteuern</value>
+  </data>
+  <data name="EnterBackupName" xml:space="preserve">
+    <value>Geben Sie Sicherungsname</value>
+  </data>
+  <data name="MenuId" xml:space="preserve">
+    <value>MenüIdentifier</value>
+  </data>
+  <data name="ItemName" xml:space="preserve">
+    <value>Artikelname</value>
   </data>
   <data name="AutoVerificationPolicy" xml:space="preserve">
     <value>Automatische Überprüfung Politik</value>
@@ -168,23 +303,11 @@
   <data name="Update" xml:space="preserve">
     <value>Aktualisierung</value>
   </data>
-  <data name="Departments" xml:space="preserve">
-    <value>Abteilungen</value>
-  </data>
-  <data name="PreparedOn" xml:space="preserve">
-    <value>vorbereitet auf</value>
+  <data name="Action" xml:space="preserve">
+    <value>Aktion</value>
   </data>
   <data name="Fax" xml:space="preserve">
     <value>Fax</value>
-  </data>
-  <data name="TaxExemptTypes" xml:space="preserve">
-    <value>Steuerbefreiung Typen</value>
-  </data>
-  <data name="Countries" xml:space="preserve">
-    <value>Die Länder</value>
-  </data>
-  <data name="BackupConsole" xml:space="preserve">
-    <value>Backup-Konsole</value>
   </data>
   <data name="SalesTaxes" xml:space="preserve">
     <value>Verkäufe Steuern</value>
@@ -198,73 +321,7 @@
   <data name="PasswordUpdated" xml:space="preserve">
     <value>Kennwort wurde aktualisiert.</value>
   </data>
-  <data name="TaxMaster" xml:space="preserve">
-    <value>Steuern Meister</value>
-  </data>
-  <data name="Entities" xml:space="preserve">
-    <value>Entities</value>
-  </data>
-  <data name="ChangePassword" xml:space="preserve">
-    <value>Passwort Ändern</value>
-  </data>
-  <data name="Execute" xml:space="preserve">
-    <value>ausführen</value>
-  </data>
-  <data name="CashRepositories" xml:space="preserve">
-    <value>Barzahlung Repositories</value>
-  </data>
-  <data name="Frequencies" xml:space="preserve">
-    <value>Frequenzen</value>
-  </data>
-  <data name="SalesTaxTypes" xml:space="preserve">
-    <value>Umsatzsteuerarten</value>
-  </data>
-  <data name="VacuumFullDatabase" xml:space="preserve">
-    <value>Vakuum-Datenbank (voll)</value>
-  </data>
-  <data name="SalesTaxDetails" xml:space="preserve">
-    <value>Umsatzsteuer-Details</value>
-  </data>
-  <data name="Close" xml:space="preserve">
-    <value>Zu Schließen</value>
-  </data>
-  <data name="Tel" xml:space="preserve">
-    <value>Telefon</value>
-  </data>
-  <data name="Industries" xml:space="preserve">
-    <value>Branchen</value>
-  </data>
-  <data name="EnterNewPassword" xml:space="preserve">
-    <value>Neues Passwort eingeben</value>
-  </data>
-  <data name="Clear" xml:space="preserve">
-    <value>klar</value>
-  </data>
-  <data name="GoToTop" xml:space="preserve">
-    <value>zurück nach oben</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Speichern</value>
-  </data>
-  <data name="DatabaseBackups" xml:space="preserve">
-    <value>Datenbanksicherungen</value>
-  </data>
-  <data name="AnalyzeDatabse" xml:space="preserve">
-    <value>analysieren Datenbank</value>
-  </data>
-  <data name="FiscalYear" xml:space="preserve">
-    <value>Geschäftsjahr</value>
-  </data>
-  <data name="SalesTaxExemptDetails" xml:space="preserve">
-    <value>Umsatzsteuer befreit Einzelheiten</value>
-  </data>
-  <data name="User" xml:space="preserve">
-    <value>Benutzer</value>
-  </data>
-  <data name="BackupDatabase" xml:space="preserve">
-    <value>Datenbank sichern</value>
-  </data>
-  <data name="SelectUser" xml:space="preserve">
-    <value>Wählen Sie Benutzer</value>
+  <data name="Show" xml:space="preserve">
+    <value>anzeigen</value>
   </data>
 </root>

@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="SelectAFlag" xml:space="preserve">
-    <value>Choisissez un drapeau.</value>
-  </data>
   <data name="FlagLabel" xml:space="preserve">
     <value>Vous pouvez marquer cette transaction avec un drapeau, mais vous ne serez pas en mesure de voir les drapeaux créés par d'autres utilisateurs.</value>
+  </data>
+  <data name="SelectAFlag" xml:space="preserve">
+    <value>Choisissez un drapeau.</value>
   </data>
 </root>

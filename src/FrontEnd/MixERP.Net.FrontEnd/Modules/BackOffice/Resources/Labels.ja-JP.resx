@@ -126,6 +126,9 @@
   <data name="NumRowsAffected" xml:space="preserve">
     <value>{0}の行が影響を受けた。</value>
   </data>
+  <data name="OpeningInventoryAlreadyEntered" xml:space="preserve">
+    <value>在庫を開くがすでにこのオフィスのために入力されています。</value>
+  </data>
   <data name="TaskCompletedSuccessfully" xml:space="preserve">
     <value>タスクが正常に完了した。</value>
   </data>

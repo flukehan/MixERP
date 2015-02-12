@@ -117,14 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="GridViewEmpty" xml:space="preserve">
-    <value>网格视图是空的。</value>
+  <data name="AccessIsDenied" xml:space="preserve">
+    <value>访问被拒绝。</value>
+  </data>
+  <data name="ConfirmationPasswordDoesNotMatch" xml:space="preserve">
+    <value>在确认密码不使用新的密码匹配。</value>
+  </data>
+  <data name="DuplicateEntry" xml:space="preserve">
+    <value>重复的条目。</value>
   </data>
   <data name="DuplicateFiles" xml:space="preserve">
     <value>重复文件。</value>
   </data>
-  <data name="DuplicateEntry" xml:space="preserve">
-    <value>重复的条目。</value>
+  <data name="GridViewEmpty" xml:space="preserve">
+    <value>网格视图是空的。</value>
   </data>
   <data name="InvalidDate" xml:space="preserve">
     <value>无效的日期。</value>
@@ -144,13 +150,10 @@
   <data name="PleaseEnterNewPassword" xml:space="preserve">
     <value>请输入新密码。</value>
   </data>
+  <data name="RestrictedTransactionMode" xml:space="preserve">
+    <value>这个成立不允许交易张贴。</value>
+  </data>
   <data name="UserIdOrPasswordIncorrect" xml:space="preserve">
     <value>用户标识符或密码不正确。</value>
-  </data>
-  <data name="ConfirmationPasswordDoesNotMatch" xml:space="preserve">
-    <value>在确认密码不使用新的密码匹配。</value>
-  </data>
-  <data name="AccessIsDenied" xml:space="preserve">
-    <value>访问被拒绝。</value>
   </data>
 </root>

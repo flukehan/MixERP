@@ -89,11 +89,9 @@ namespace MixERP.Net.Core.Modules.Sales.Widgets
 
         private void RegisterJavascriptVariables()
         {
-            string javascript = "var totalSalesLocalized = '{0}';var baseCurrencyCode = '{1}';";
-            string totalSalesLocalized = Titles.TotalSales;
-            string baseCurrencyCode = CurrentSession.GetBaseCurrency();
+            string javascript = JSUtility.GetVar("totalSalesLocalized", Titles.TotalSales);
+            javascript += JSUtility.GetVar("baseCurrencyCode", CurrentSession.GetBaseCurrency());
 
-            javascript = string.Format(CultureInfo.InvariantCulture, javascript, totalSalesLocalized, baseCurrencyCode);
             PageUtility.RegisterJavascript("SalesByGeographyWidget_Localized", javascript, this.Page, true);
         }
     }

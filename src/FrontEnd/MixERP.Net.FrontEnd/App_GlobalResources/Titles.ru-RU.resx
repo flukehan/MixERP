@@ -117,17 +117,50 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BackToPreviousPage" xml:space="preserve">
+    <value>Вернуться на предыдущую страницу</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>обновление</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>Уведомления</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Подтвердите Пароль</value>
+  </data>
+  <data name="OfficeCode" xml:space="preserve">
+    <value>код бюро</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>пароль</value>
+  </data>
+  <data name="CurrentPassword" xml:space="preserve">
+    <value>Текущий Пароль</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>телефон</value>
+  </data>
+  <data name="PreparedOn" xml:space="preserve">
+    <value>Подготовлено на</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Запомнить Меня</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>выбрать</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
   <data name="SelectLanguage" xml:space="preserve">
     <value>Выберите язык</value>
   </data>
-  <data name="SelectYourBranch" xml:space="preserve">
-    <value>Выберите вашу ветку</value>
-  </data>
   <data name="Fax" xml:space="preserve">
     <value>факс</value>
+  </data>
+  <data name="SelectYourBranch" xml:space="preserve">
+    <value>Выберите вашу ветку</value>
   </data>
   <data name="AccessIsDenied" xml:space="preserve">
     <value>Отказано в доступе.</value>
@@ -171,37 +204,13 @@
   <data name="Yes" xml:space="preserve">
     <value>Да</value>
   </data>
+  <data name="RestrictedTransactionMode" xml:space="preserve">
+    <value>Это учреждение не позволяет объявление транзакций.</value>
+  </data>
   <data name="ChangePassword" xml:space="preserve">
     <value>Изменить Пароль</value>
   </data>
   <data name="None" xml:space="preserve">
     <value>Ни один</value>
-  </data>
-  <data name="Notifications" xml:space="preserve">
-    <value>Уведомления</value>
-  </data>
-  <data name="ConfirmPassword" xml:space="preserve">
-    <value>Подтвердите Пароль</value>
-  </data>
-  <data name="OfficeCode" xml:space="preserve">
-    <value>код бюро</value>
-  </data>
-  <data name="Password" xml:space="preserve">
-    <value>пароль</value>
-  </data>
-  <data name="CurrentPassword" xml:space="preserve">
-    <value>Текущий Пароль</value>
-  </data>
-  <data name="Phone" xml:space="preserve">
-    <value>телефон</value>
-  </data>
-  <data name="PreparedOn" xml:space="preserve">
-    <value>Подготовлено на</value>
-  </data>
-  <data name="RememberMe" xml:space="preserve">
-    <value>Запомнить Меня</value>
-  </data>
-  <data name="Select" xml:space="preserve">
-    <value>выбрать</value>
   </data>
 </root>

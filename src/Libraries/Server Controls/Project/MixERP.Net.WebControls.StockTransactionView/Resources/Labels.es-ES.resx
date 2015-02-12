@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="GoToChecklistWindow" xml:space="preserve">
-    <value>Ir a la ventana Lista de comprobación.</value>
-  </data>
   <data name="GoToTop" xml:space="preserve">
     <value>Ir a la parte superior.</value>
+  </data>
+  <data name="GoToChecklistWindow" xml:space="preserve">
+    <value>Ir a la ventana Lista de comprobación.</value>
   </data>
 </root>

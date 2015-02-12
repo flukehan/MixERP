@@ -915,6 +915,8 @@ BEGIN
 
     COMMENT ON ROLE mix_erp IS 'The default user for MixERP databases.';
 
+    EXECUTE 'ALTER DATABASE ' || current_database() || ' OWNER TO mix_erp;';
+
     REVOKE ALL ON SCHEMA assert FROM public;
     REVOKE ALL ON SCHEMA audit FROM public;
     REVOKE ALL ON SCHEMA core FROM public;
@@ -926,7 +928,8 @@ BEGIN
     REVOKE ALL ON SCHEMA scrud FROM public;
     REVOKE ALL ON SCHEMA transactions FROM public;
     REVOKE ALL ON SCHEMA unit_tests FROM public;
-    
+
+        
     GRANT USAGE ON SCHEMA assert TO mix_erp;
     GRANT USAGE ON SCHEMA audit TO mix_erp;
     GRANT USAGE ON SCHEMA core TO mix_erp;
@@ -953,6 +956,7 @@ BEGIN
     ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
     ALTER DEFAULT PRIVILEGES IN SCHEMA transactions GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
     ALTER DEFAULT PRIVILEGES IN SCHEMA unit_tests GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO mix_erp;
+
 
     GRANT SELECT ON ALL TABLES IN SCHEMA scrud TO mix_erp;
     GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA scrud TO mix_erp;
@@ -15825,13 +15829,17 @@ CREATE TYPE office.office_type AS
     address text
 );
 
+DROP FUNCTION IF EXISTS office.get_offices();
+
 CREATE FUNCTION office.get_offices()
 RETURNS setof office.office_type
+STABLE
 AS
 $$
 BEGIN
     RETURN QUERY
-    SELECT office_id, office_code,office_name,street || ' ' || city AS Address FROM office.offices;
+    SELECT office_id, office_code,office_name,street || ' ' || city AS Address FROM office.offices
+    ORDER BY parent_office_id NULLS LAST;
 END
 $$
 LANGUAGE plpgsql;
@@ -22948,9 +22956,6 @@ ON transactions.transaction_details.account_id = core.accounts.account_id
 INNER JOIN core.account_masters
 ON core.accounts.account_master_id = core.account_masters.account_master_id;
 
-
-
-
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/src/05.views/transactions/2. transactions.verified_transaction_view.sql --<--<--
 DROP VIEW IF EXISTS transactions.verified_transaction_view CASCADE;
 
@@ -22970,6 +22975,8 @@ SELECT core.get_account_name(account_id),
 FROM transactions.verified_transaction_view
 GROUP BY account_id;
 
+ALTER MATERIALIZED VIEW transactions.trial_balance_view
+OWNER TO mix_erp;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/src/05.views/transactions/3. transactions.verified_transaction_mat_view.sql --<--<--
 DROP MATERIALIZED VIEW IF EXISTS transactions.verified_transaction_mat_view CASCADE;
@@ -22977,6 +22984,9 @@ DROP MATERIALIZED VIEW IF EXISTS transactions.verified_transaction_mat_view CASC
 CREATE MATERIALIZED VIEW transactions.verified_transaction_mat_view
 AS
 SELECT * FROM transactions.verified_transaction_view;
+
+ALTER MATERIALIZED VIEW transactions.verified_transaction_mat_view
+OWNER TO mix_erp;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/src/05.views/transactions/4. transactions.stock_transaction_view.sql --<--<--
 DROP VIEW IF EXISTS transactions.stock_transaction_view CASCADE;
@@ -23041,6 +23051,8 @@ AS
 SELECT * FROM transactions.stock_transaction_view
 WHERE verification_status_id > 0;
 
+ALTER MATERIALIZED VIEW transactions.verified_stock_transaction_view
+OWNER TO mix_erp;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/src/05.views/transactions/6. transactions.verified_cash_transaction_mat_view.sql --<--<--
 CREATE MATERIALIZED VIEW transactions.verified_cash_transaction_mat_view
@@ -23054,7 +23066,8 @@ IN
     WHERE account_master_id IN(10101, 10102) --Cash and Bank A/C
 );
 
-
+ALTER MATERIALIZED VIEW transactions.verified_cash_transaction_mat_view
+OWNER TO mix_erp;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/src/05.views/transactions/transactions.sales_by_country_view.sql --<--<--
 CREATE VIEW transactions.sales_by_country_view

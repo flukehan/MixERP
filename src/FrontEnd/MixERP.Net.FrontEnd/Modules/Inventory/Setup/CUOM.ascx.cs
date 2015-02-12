@@ -56,9 +56,9 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
 
         private void AddScrudCustomValidatorErrorMessages()
         {
-            string javascript = "var compareCompoundUnitOfMeasureErrorMessageLocalized= '" + Errors.CompoundUnitOfMeasureErrorMessage + "';";
-            Common.PageUtility.RegisterJavascript("CompoundUnit_ScrudCustomValidatorErrorMessages", javascript, this.Page, true);
+            string javascript = JSUtility.GetVar("compareCompoundUnitOfMeasureErrorMessageLocalized", Errors.CompoundUnitOfMeasureErrorMessage);
 
+            Common.PageUtility.RegisterJavascript("CompoundUnit_ScrudCustomValidatorErrorMessages", javascript, this.Page, true);
         }
 
         private static string GetDisplayFields()

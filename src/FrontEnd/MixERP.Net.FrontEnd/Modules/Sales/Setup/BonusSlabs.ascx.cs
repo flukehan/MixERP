@@ -54,9 +54,9 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
 
         private void AddScrudCustomValidatorErrorMessages()
         {
-            string javascript = "var dateErrorMessageLocalized= '" + Warnings.DateErrorMessage + "';";
-            Common.PageUtility.RegisterJavascript("SalesPerson_ScrudCustomValidatorMessages", javascript, this.Page, true);
+            string javascript = JSUtility.GetVar("dateErrorMessageLocalized", Warnings.DateErrorMessage);
 
+            Common.PageUtility.RegisterJavascript("SalesPerson_ScrudCustomValidatorMessages", javascript, this.Page, true);
         }
 
         private static string GetDisplayFields()

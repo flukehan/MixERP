@@ -117,62 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="SelectLanguage" xml:space="preserve">
-    <value>言語を選択</value>
-  </data>
-  <data name="Fax" xml:space="preserve">
-    <value>ファックス</value>
-  </data>
-  <data name="SelectYourBranch" xml:space="preserve">
-    <value>あなたのブランチを選択します</value>
-  </data>
-  <data name="SignIn" xml:space="preserve">
-    <value>ログイン</value>
-  </data>
-  <data name="ManageProfile" xml:space="preserve">
-    <value>プロファイルの管理</value>
-  </data>
-  <data name="SigningIn" xml:space="preserve">
-    <value>サインイン</value>
-  </data>
-  <data name="AccessIsDenied" xml:space="preserve">
-    <value>アクセスが拒否されました。</value>
-  </data>
-  <data name="SignOut" xml:space="preserve">
-    <value>サインアウト</value>
-  </data>
-  <data name="MixERPDocumentation" xml:space="preserve">
-    <value>MixERPドキュメント</value>
-  </data>
-  <data name="Url" xml:space="preserve">
-    <value>ユニフォームリソースロケータ</value>
-  </data>
-  <data name="User" xml:space="preserve">
-    <value>ユーザー</value>
-  </data>
-  <data name="NewPassword" xml:space="preserve">
-    <value>新しいパスワード</value>
-  </data>
-  <data name="UserId" xml:space="preserve">
-    <value>ユーザ識別子</value>
-  </data>
-  <data name="Username" xml:space="preserve">
-    <value>ユーザー名</value>
-  </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>キャンセル</value>
-  </data>
-  <data name="No" xml:space="preserve">
-    <value>ノー</value>
-  </data>
-  <data name="Yes" xml:space="preserve">
-    <value>はい</value>
-  </data>
-  <data name="None" xml:space="preserve">
-    <value>なし</value>
+  <data name="BackToPreviousPage" xml:space="preserve">
+    <value>前のページに戻る</value>
   </data>
   <data name="ChangePassword" xml:space="preserve">
     <value>パスワードを変更する</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>アップデート</value>
   </data>
   <data name="Notifications" xml:space="preserve">
     <value>通知</value>
@@ -203,5 +155,62 @@
   </data>
   <data name="Select" xml:space="preserve">
     <value>選択する</value>
+  </data>
+  <data name="SelectLanguage" xml:space="preserve">
+    <value>言語を選択</value>
+  </data>
+  <data name="Fax" xml:space="preserve">
+    <value>ファックス</value>
+  </data>
+  <data name="SelectYourBranch" xml:space="preserve">
+    <value>あなたのブランチを選択します</value>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>ログイン</value>
+  </data>
+  <data name="ManageProfile" xml:space="preserve">
+    <value>プロファイルの管理</value>
+  </data>
+  <data name="AccessIsDenied" xml:space="preserve">
+    <value>アクセスが拒否されました。</value>
+  </data>
+  <data name="SigningIn" xml:space="preserve">
+    <value>サインイン</value>
+  </data>
+  <data name="SignOut" xml:space="preserve">
+    <value>サインアウト</value>
+  </data>
+  <data name="MixERPDocumentation" xml:space="preserve">
+    <value>MixERPドキュメント</value>
+  </data>
+  <data name="Url" xml:space="preserve">
+    <value>ユニフォームリソースロケータ</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>ユーザー</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>新しいパスワード</value>
+  </data>
+  <data name="UserId" xml:space="preserve">
+    <value>ユーザ識別子</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>ユーザー名</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>ノー</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>はい</value>
+  </data>
+  <data name="RestrictedTransactionMode" xml:space="preserve">
+    <value>彼の設立は、取引の投稿を許可していません。</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>なし</value>
   </data>
 </root>

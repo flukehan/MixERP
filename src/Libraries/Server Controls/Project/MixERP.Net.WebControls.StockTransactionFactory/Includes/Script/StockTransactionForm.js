@@ -863,6 +863,7 @@ var addRowToTable = function (itemCode, itemName, quantity, unitName, price, dis
     rows.each(function () {
         var row = $(this);
 
+
         if (getColumnText(row, 0) === itemCode &&
             getColumnText(row, 1) === itemName && //Same Item
             getColumnText(row, 3) === unitName && //Same Unit

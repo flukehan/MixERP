@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="SelectAFlag" xml:space="preserve">
-    <value>选择的标记。</value>
-  </data>
   <data name="FlagLabel" xml:space="preserve">
     <value>你可以用一个标志纪念这个交易，但是你将无法看到其他用户创建的标志。</value>
+  </data>
+  <data name="SelectAFlag" xml:space="preserve">
+    <value>选择的标记。</value>
   </data>
 </root>

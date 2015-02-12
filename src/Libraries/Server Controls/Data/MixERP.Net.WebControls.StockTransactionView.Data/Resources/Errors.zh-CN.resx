@@ -117,14 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="InvalidSubTranBookPurchaseQuotation" xml:space="preserve">
-    <value>无效的子公司交易书“购买报价”</value>
+  <data name="InvalidSubTranBookPurchaseDelivery" xml:space="preserve">
+    <value>无效的子公司交易书“购机送”</value>
   </data>
   <data name="InvalidSubTranBookSalesPayment" xml:space="preserve">
     <value>无效的子公司交易书“销售支付”</value>
   </data>
-  <data name="InvalidSubTranBookPurchaseDelivery" xml:space="preserve">
-    <value>无效的子公司交易书“购机送”</value>
+  <data name="InvalidSubTranBookPurchaseQuotation" xml:space="preserve">
+    <value>无效的子公司交易书“购买报价”</value>
   </data>
   <data name="InvalidSubTranBookPurchaseReceipt" xml:space="preserve">
     <value>无效的子公司交易书“外购入库单”</value>

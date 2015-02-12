@@ -39,16 +39,16 @@ namespace MixERP.Net.WebControls.ReportEngine
         [AspNetHostingPermission(SecurityAction.Demand, Level = AspNetHostingPermissionLevel.Minimal)]
         private void AddJavascript()
         {
-            JavascriptHelper.AddJSReference(this.Page, "MixERP.Net.WebControls.ReportEngine.Scripts.JsBarcode.CODE128.js", "code128", this.GetType());
-            JavascriptHelper.AddJSReference(this.Page, "MixERP.Net.WebControls.ReportEngine.Scripts.JsBarcode.CODE39.js", "code39", this.GetType()); //404 error
-            JavascriptHelper.AddJSReference(this.Page, "MixERP.Net.WebControls.ReportEngine.Scripts.JsBarcode.EAN_UPC.js", "ean_upc", this.GetType());
-            JavascriptHelper.AddJSReference(this.Page, "MixERP.Net.WebControls.ReportEngine.Scripts.JsBarcode.ITF.js", "itf", this.GetType());
-            JavascriptHelper.AddJSReference(this.Page, "MixERP.Net.WebControls.ReportEngine.Scripts.JsBarcode.ITF14.js", "itf14", this.GetType());
-            JavascriptHelper.AddJSReference(this.Page, "MixERP.Net.WebControls.ReportEngine.Scripts.JsBarcode.JsBarcode.js", "jsbarcode", this.GetType());
-            JavascriptHelper.AddJSReference(this.Page, "MixERP.Net.WebControls.ReportEngine.Scripts.ReportEngine.Barcode.js", "reportengine_barcode", this.GetType());
-            JavascriptHelper.AddJSReference(this.Page, "MixERP.Net.WebControls.ReportEngine.Scripts.JQueryQRcode.jquery.qrcode.js", "reportengine_jquery_qrcode", this.GetType());
-            JavascriptHelper.AddJSReference(this.Page, "MixERP.Net.WebControls.ReportEngine.Scripts.JQueryQRcode.qrcode.js", "reportengine_qrcode1", this.GetType());
-            JavascriptHelper.AddJSReference(this.Page, "MixERP.Net.WebControls.ReportEngine.Scripts.ReportEngine.QRCode.js", "reportengine_qrcode2", this.GetType());
+            JSUtility.AddJSReference(this.Page, "MixERP.Net.WebControls.ReportEngine.Scripts.JsBarcode.CODE128.js", "code128", this.GetType());
+            JSUtility.AddJSReference(this.Page, "MixERP.Net.WebControls.ReportEngine.Scripts.JsBarcode.CODE39.js", "code39", this.GetType()); //404 error
+            JSUtility.AddJSReference(this.Page, "MixERP.Net.WebControls.ReportEngine.Scripts.JsBarcode.EAN_UPC.js", "ean_upc", this.GetType());
+            JSUtility.AddJSReference(this.Page, "MixERP.Net.WebControls.ReportEngine.Scripts.JsBarcode.ITF.js", "itf", this.GetType());
+            JSUtility.AddJSReference(this.Page, "MixERP.Net.WebControls.ReportEngine.Scripts.JsBarcode.ITF14.js", "itf14", this.GetType());
+            JSUtility.AddJSReference(this.Page, "MixERP.Net.WebControls.ReportEngine.Scripts.JsBarcode.JsBarcode.js", "jsbarcode", this.GetType());
+            JSUtility.AddJSReference(this.Page, "MixERP.Net.WebControls.ReportEngine.Scripts.ReportEngine.Barcode.js", "reportengine_barcode", this.GetType());
+            JSUtility.AddJSReference(this.Page, "MixERP.Net.WebControls.ReportEngine.Scripts.JQueryQRcode.jquery.qrcode.js", "reportengine_jquery_qrcode", this.GetType());
+            JSUtility.AddJSReference(this.Page, "MixERP.Net.WebControls.ReportEngine.Scripts.JQueryQRcode.qrcode.js", "reportengine_qrcode1", this.GetType());
+            JSUtility.AddJSReference(this.Page, "MixERP.Net.WebControls.ReportEngine.Scripts.ReportEngine.QRCode.js", "reportengine_qrcode2", this.GetType());
         }
     }
 }

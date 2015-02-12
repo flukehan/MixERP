@@ -47022,7 +47022,7 @@ var sumOfColumn = function (tableSelector, columnIndex) {
 };
 
 var getColumnText = function (row, columnIndex) {
-    return row.find("td:eq(" + columnIndex + ")").html();
+    return row.find("td:eq(" + columnIndex + ")").text();
 };
 
 var setColumnText = function (row, columnIndex, value) {
@@ -47298,7 +47298,7 @@ var tableToJSON = function (grid) {
         colData = [];
 
         row.find("td:not(:last-child)").each(function () {
-            colData.push($(this).html());
+            colData.push($(this).text());
         });
 
         rowData.push(colData);
@@ -47569,3 +47569,4 @@ function updateQueryString(key, value, url) {
             return url;
     };
 };
+

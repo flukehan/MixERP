@@ -117,40 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Store" xml:space="preserve">
-    <value>Tienda</value>
-  </data>
-  <data name="ValueDate" xml:space="preserve">
-    <value>Fecha Valor</value>
-  </data>
-  <data name="Unit" xml:space="preserve">
-    <value>unidad</value>
+  <data name="Add" xml:space="preserve">
+    <value>añadir</value>
   </data>
   <data name="Action" xml:space="preserve">
     <value>acción</value>
   </data>
-  <data name="RefererenceNumberAbbreviated" xml:space="preserve">
-    <value>Referencia #</value>
-  </data>
-  <data name="Add" xml:space="preserve">
-    <value>añadir</value>
-  </data>
-  <data name="Quantity" xml:space="preserve">
-    <value>cantidad</value>
-  </data>
-  <data name="ItemName" xml:space="preserve">
-    <value>Nombre del artículo</value>
-  </data>
-  <data name="StatementReference" xml:space="preserve">
-    <value>Declaración de Referencia</value>
+  <data name="Unit" xml:space="preserve">
+    <value>unidad</value>
   </data>
   <data name="ItemCode" xml:space="preserve">
     <value>Código del artículo</value>
   </data>
-  <data name="Type" xml:space="preserve">
-    <value>tipo</value>
+  <data name="Store" xml:space="preserve">
+    <value>Tienda</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Guardar</value>
+  </data>
+  <data name="StatementReference" xml:space="preserve">
+    <value>Declaración de Referencia</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>tipo</value>
+  </data>
+  <data name="ItemName" xml:space="preserve">
+    <value>Nombre del artículo</value>
+  </data>
+  <data name="RefererenceNumberAbbreviated" xml:space="preserve">
+    <value>Referencia #</value>
+  </data>
+  <data name="ValueDate" xml:space="preserve">
+    <value>Fecha Valor</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>cantidad</value>
   </data>
 </root>

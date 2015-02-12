@@ -120,10 +120,10 @@
   <data name="InsufficientStockWarning" xml:space="preserve">
     <value>Alleen {0} {1} van {2} op voorraad.</value>
   </data>
-  <data name="ReferencingSidesNotEqual" xml:space="preserve">
-    <value>De verwijzingen zijkanten zijn niet gelijk.</value>
-  </data>
   <data name="CompoundUnitOfMeasureErrorMessage" xml:space="preserve">
     <value>De basiseenheid en vergelijk toestel kan niet hetzelfde zijn.</value>
+  </data>
+  <data name="ReferencingSidesNotEqual" xml:space="preserve">
+    <value>De verwijzingen zijkanten zijn niet gelijk.</value>
   </data>
 </root>

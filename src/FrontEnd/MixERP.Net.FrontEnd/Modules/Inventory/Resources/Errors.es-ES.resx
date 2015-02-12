@@ -120,10 +120,10 @@
   <data name="ReferencingSidesNotEqual" xml:space="preserve">
     <value>Los lados que hacen referencia no son iguales.</value>
   </data>
-  <data name="InsufficientStockWarning" xml:space="preserve">
-    <value>Sólo {0} {1} de {2} dejados en la acción.</value>
-  </data>
   <data name="CompoundUnitOfMeasureErrorMessage" xml:space="preserve">
     <value>La unidad base y la unidad de comparación no pueden ser iguales.</value>
+  </data>
+  <data name="InsufficientStockWarning" xml:space="preserve">
+    <value>Sólo {0} {1} de {2} dejados en la acción.</value>
   </data>
 </root>

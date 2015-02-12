@@ -232,11 +232,29 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        internal static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Departments.
         /// </summary>
         internal static string Departments {
             get {
                 return ResourceManager.GetString("Departments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download.
+        /// </summary>
+        internal static string Download {
+            get {
+                return ResourceManager.GetString("Download", resourceCulture);
             }
         }
         
@@ -678,6 +696,24 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string VacuumFullDatabase {
             get {
                 return ResourceManager.GetString("VacuumFullDatabase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View.
+        /// </summary>
+        internal static string View {
+            get {
+                return ResourceManager.GetString("View", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View Attachments.
+        /// </summary>
+        internal static string ViewAttachments {
+            get {
+                return ResourceManager.GetString("ViewAttachments", resourceCulture);
             }
         }
         

@@ -117,70 +117,70 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Actions" xml:space="preserve">
-    <value>действия</value>
-  </data>
-  <data name="Status" xml:space="preserve">
-    <value>статус</value>
-  </data>
-  <data name="AddNew" xml:space="preserve">
-    <value>Добавить новый</value>
-  </data>
-  <data name="PostedBy" xml:space="preserve">
-    <value>Автор</value>
+  <data name="TransactionTimestamp" xml:space="preserve">
+    <value>сделка Отметка времени</value>
   </data>
   <data name="TranId" xml:space="preserve">
     <value>идентификатор транзакции</value>
   </data>
-  <data name="Flag" xml:space="preserve">
-    <value>флаг</value>
-  </data>
-  <data name="Id" xml:space="preserve">
-    <value>идентификатор</value>
-  </data>
-  <data name="Book" xml:space="preserve">
-    <value>книга</value>
-  </data>
-  <data name="VerifiedOn" xml:space="preserve">
-    <value>проверен на</value>
-  </data>
-  <data name="ReferenceNumber" xml:space="preserve">
-    <value>Ссылка #</value>
-  </data>
-  <data name="VerifiedBy" xml:space="preserve">
-    <value>Проверено</value>
-  </data>
-  <data name="Reason" xml:space="preserve">
-    <value>причина</value>
-  </data>
-  <data name="StatementReference" xml:space="preserve">
-    <value>О себе Ссылка</value>
-  </data>
-  <data name="Select" xml:space="preserve">
-    <value>выбрать</value>
+  <data name="Approve" xml:space="preserve">
+    <value>утвердить</value>
   </data>
   <data name="Print" xml:space="preserve">
     <value>печать</value>
   </data>
-  <data name="Reject" xml:space="preserve">
-    <value>отклонить</value>
+  <data name="StatementReference" xml:space="preserve">
+    <value>О себе Ссылка</value>
+  </data>
+  <data name="Flag" xml:space="preserve">
+    <value>флаг</value>
+  </data>
+  <data name="Office" xml:space="preserve">
+    <value>офис</value>
+  </data>
+  <data name="PostedBy" xml:space="preserve">
+    <value>Автор</value>
   </data>
   <data name="TranCode" xml:space="preserve">
     <value>код транзакции</value>
   </data>
+  <data name="Id" xml:space="preserve">
+    <value>идентификатор</value>
+  </data>
+  <data name="Reject" xml:space="preserve">
+    <value>отклонить</value>
+  </data>
+  <data name="Book" xml:space="preserve">
+    <value>книга</value>
+  </data>
   <data name="Show" xml:space="preserve">
     <value>шоу</value>
   </data>
-  <data name="Approve" xml:space="preserve">
-    <value>утвердить</value>
+  <data name="ReferenceNumber" xml:space="preserve">
+    <value>Ссылка #</value>
   </data>
-  <data name="TransactionTimestamp" xml:space="preserve">
-    <value>сделка Отметка времени</value>
+  <data name="Reason" xml:space="preserve">
+    <value>причина</value>
   </data>
   <data name="ValueDate" xml:space="preserve">
     <value>Дата валютирования</value>
   </data>
-  <data name="Office" xml:space="preserve">
-    <value>офис</value>
+  <data name="Actions" xml:space="preserve">
+    <value>действия</value>
+  </data>
+  <data name="VerifiedBy" xml:space="preserve">
+    <value>Проверено</value>
+  </data>
+  <data name="VerifiedOn" xml:space="preserve">
+    <value>проверен на</value>
+  </data>
+  <data name="AddNew" xml:space="preserve">
+    <value>Добавить новый</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>статус</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>выбрать</value>
   </data>
 </root>

@@ -233,6 +233,12 @@ namespace MixERP.Net.Common
                     return DateTime.MinValue;
                 }
 
+                if (value is DateTime)
+                {
+                    return (DateTime)value;
+                }
+
+
                 return Convert.ToDateTime(value, CurrentSession.GetCulture());
             }
             catch (FormatException)
@@ -253,12 +259,15 @@ namespace MixERP.Net.Common
 
             if (value != null)
             {
-                //string numberToParse = RemoveGroupping(value.ToString());
+                if (value is decimal)
+                {
+                    return (decimal)value;
+                }
+
                 string numberToParse = value.ToString();
 
-                CultureInfo culture = CurrentSession.GetCulture();
 
-                if (decimal.TryParse(numberToParse, NumberStyles.Any, culture, out retVal))
+                if (decimal.TryParse(numberToParse, NumberStyles.Any, CurrentSession.GetCulture(), out retVal))
                 {
                     return retVal;
                 }
@@ -273,7 +282,11 @@ namespace MixERP.Net.Common
 
             if (value != null)
             {
-                //string numberToParse = RemoveGroupping(value.ToString());
+                if (value is double)
+                {
+                    return (double)value;
+                }
+
                 string numberToParse = value.ToString();
 
                 if (double.TryParse(numberToParse, NumberStyles.Any, CurrentSession.GetCulture(), out retVal))
@@ -299,6 +312,12 @@ namespace MixERP.Net.Common
                     }
                 }
 
+                if (value is int)
+                {
+                    return (int)value;
+                }
+
+
                 string numberToParse = value.ToString();
 
                 if (int.TryParse(numberToParse, NumberStyles.Any, CurrentSession.GetCulture(), out retVal))
@@ -316,6 +335,11 @@ namespace MixERP.Net.Common
 
             if (value != null)
             {
+                if (value is long)
+                {
+                    return (long)value;
+                }
+
                 string numberToParse = value.ToString();
 
                 if (long.TryParse(numberToParse, NumberStyles.Any, CurrentSession.GetCulture(), out retVal))
@@ -348,7 +372,12 @@ namespace MixERP.Net.Common
 
             if (value != null)
             {
-                //string numberToParse = RemoveGroupping(value.ToString());
+
+                if (value is short)
+                {
+                    return (short)value;
+                }
+
                 string numberToParse = value.ToString();
 
                 if (short.TryParse(numberToParse, NumberStyles.Any, CurrentSession.GetCulture(), out retVal))
@@ -366,7 +395,12 @@ namespace MixERP.Net.Common
 
             if (value != null)
             {
-                //string numberToParse = RemoveGroupping(value.ToString());
+
+                if (value is float)
+                {
+                    return (float)value;
+                }
+
                 string numberToParse = value.ToString();
 
                 if (float.TryParse(numberToParse, NumberStyles.Any, CurrentSession.GetCulture(), out retVal))
@@ -412,6 +446,12 @@ namespace MixERP.Net.Common
             {
                 return new Unit();
             }
+
+            if (value is Unit)
+            {
+                return (Unit)value;
+            }
+
 
             return Unit.Parse(value.ToString(), CurrentSession.GetCulture());
         }

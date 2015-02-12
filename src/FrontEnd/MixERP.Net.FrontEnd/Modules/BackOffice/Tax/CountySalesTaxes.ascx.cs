@@ -1,9 +1,4 @@
-﻿using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.BackOffice.Resources;
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.ScrudFactory;
-
-/********************************************************************************
+﻿/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
 This file is part of MixERP.
@@ -21,11 +16,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
-
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using MixERP.Net.Common.Domains;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Core.Modules.BackOffice.Resources;
+using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.WebControls.ScrudFactory;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Tax
 {
@@ -45,7 +42,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
 
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(StateSalesTaxes));
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (StateSalesTaxes));
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
         }

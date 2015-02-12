@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CannotAccessAccount" xml:space="preserve">
-    <value>Vous ne pouvez pas accéder à votre compte?</value>
-  </data>
   <data name="AreYouSure" xml:space="preserve">
     <value>Êtes-vous sûr que vous savez ce que vous faites?</value>
+  </data>
+  <data name="CannotAccessAccount" xml:space="preserve">
+    <value>Vous ne pouvez pas accéder à votre compte?</value>
   </data>
 </root>

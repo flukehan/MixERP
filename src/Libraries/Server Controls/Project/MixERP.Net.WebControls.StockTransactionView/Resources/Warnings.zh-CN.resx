@@ -117,26 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CannotMergeUrlNull" xml:space="preserve">
+    <value>不能合并交易。未提供合并网址。</value>
+  </data>
+  <data name="CannotMergeIncompatibleTax" xml:space="preserve">
+    <value>不能合并有不兼容的税种交易。请重试。</value>
+  </data>
+  <data name="CannotCreateFlagTransactionTableNull" xml:space="preserve">
+    <value>无法创建或更新标志。未提供事务表。</value>
+  </data>
   <data name="NothingSelected" xml:space="preserve">
     <value>没有什么选择。</value>
   </data>
   <data name="CannotMergeDifferentPartyTransaction" xml:space="preserve">
     <value>不能合并各方的交易成一个批次。请重试。</value>
   </data>
-  <data name="CannotMergeIncompatibleTax" xml:space="preserve">
-    <value>不能合并有不兼容的税种交易。请重试。</value>
-  </data>
-  <data name="CannotMergeAlreadyMerged" xml:space="preserve">
-    <value>所选择的交易包括那些已经被合并的项目。请重试。</value>
-  </data>
-  <data name="CannotMergeUrlNull" xml:space="preserve">
-    <value>不能合并交易。未提供合并网址。</value>
-  </data>
   <data name="CannotCreateFlagTransactionTablePrimaryKeyNull" xml:space="preserve">
     <value>无法创建或更新标志。未提供交易表的主键。</value>
   </data>
-  <data name="CannotCreateFlagTransactionTableNull" xml:space="preserve">
-    <value>无法创建或更新标志。未提供事务表。</value>
+  <data name="CannotMergeAlreadyMerged" xml:space="preserve">
+    <value>所选择的交易包括那些已经被合并的项目。请重试。</value>
   </data>
   <data name="ReturnButtonUrlNull" xml:space="preserve">
     <value>不能返回该条目。未提供的返回统一资源定位符。</value>

@@ -120,17 +120,14 @@
   <data name="CannotMergeUrlNull" xml:space="preserve">
     <value>トランザクションをマージすることはできません。マージURLが提供されなかった。</value>
   </data>
-  <data name="CannotMergeIncompatibleTax" xml:space="preserve">
-    <value>互換性のない税タイプを持つトランザクションをマージすることはできません。もう一度やり直してください。</value>
-  </data>
   <data name="CannotMergeDifferentPartyTransaction" xml:space="preserve">
     <value>単一のバッチに異なる当事者の取引をマージすることはできません。もう一度やり直してください。</value>
   </data>
-  <data name="NothingSelected" xml:space="preserve">
-    <value>何も選択されていません。</value>
-  </data>
   <data name="CannotCreateFlagTransactionTablePrimaryKeyNull" xml:space="preserve">
     <value>作成または更新フラグはできません。トランザクションテーブルの主キーが提供されていませんでした。</value>
+  </data>
+  <data name="NothingSelected" xml:space="preserve">
+    <value>何も選択されていません。</value>
   </data>
   <data name="ReturnButtonUrlNull" xml:space="preserve">
     <value>このエントリを返すことができません。リターンURLが提供されなかった。</value>
@@ -140,5 +137,8 @@
   </data>
   <data name="CannotMergeAlreadyMerged" xml:space="preserve">
     <value>選択したトランザクションは既にマージされた項目が含まれています。もう一度やり直してください。</value>
+  </data>
+  <data name="CannotMergeIncompatibleTax" xml:space="preserve">
+    <value>互換性のない税タイプを持つトランザクションをマージすることはできません。もう一度やり直してください。</value>
   </data>
 </root>

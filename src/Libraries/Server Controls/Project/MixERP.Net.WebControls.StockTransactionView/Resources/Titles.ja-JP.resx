@@ -117,76 +117,76 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="User" xml:space="preserve">
-    <value>ユーザー</value>
-  </data>
-  <data name="Return" xml:space="preserve">
-    <value>リターン</value>
-  </data>
-  <data name="FlagForegroundColor" xml:space="preserve">
-    <value>旗前景色</value>
-  </data>
-  <data name="Amount" xml:space="preserve">
-    <value>額</value>
-  </data>
-  <data name="Id" xml:space="preserve">
-    <value>イド</value>
-  </data>
-  <data name="StatementReference" xml:space="preserve">
-    <value>ステートメントリファレンス</value>
-  </data>
-  <data name="Flag" xml:space="preserve">
-    <value>フラグ</value>
-  </data>
-  <data name="FlagBackgroundColor" xml:space="preserve">
-    <value>旗の背景色</value>
+  <data name="Preview" xml:space="preserve">
+    <value>プレビュー</value>
   </data>
   <data name="Show" xml:space="preserve">
     <value>ショー</value>
   </data>
-  <data name="MergeBatchToGRN" xml:space="preserve">
-    <value>入庫ノートにバッチをマージ</value>
-  </data>
-  <data name="MergeBatchToSalesOrder" xml:space="preserve">
-    <value>受注するバッチをマージ</value>
-  </data>
-  <data name="ValueDate" xml:space="preserve">
-    <value>実行日</value>
-  </data>
-  <data name="PriceType" xml:space="preserve">
-    <value>価格タイプ</value>
-  </data>
-  <data name="Party" xml:space="preserve">
-    <value>パーティー</value>
+  <data name="Book" xml:space="preserve">
+    <value>ブック</value>
   </data>
   <data name="MergeBatchToSalesDelivery" xml:space="preserve">
     <value>セールス配信にバッチをマージ</value>
   </data>
-  <data name="Select" xml:space="preserve">
-    <value>選択する</value>
+  <data name="AddNew" xml:space="preserve">
+    <value>新しい追加</value>
   </data>
-  <data name="Book" xml:space="preserve">
-    <value>ブック</value>
-  </data>
-  <data name="TransactionTimestamp" xml:space="preserve">
-    <value>トランザクションタイムスタンプ</value>
-  </data>
-  <data name="Preview" xml:space="preserve">
-    <value>プレビュー</value>
-  </data>
-  <data name="Office" xml:space="preserve">
-    <value>オフィス</value>
-  </data>
-  <data name="ReferenceNumber" xml:space="preserve">
-    <value>リファレンス＃</value>
+  <data name="Amount" xml:space="preserve">
+    <value>額</value>
   </data>
   <data name="Actions" xml:space="preserve">
     <value>アクション</value>
   </data>
-  <data name="AddNew" xml:space="preserve">
-    <value>新しい追加</value>
+  <data name="Office" xml:space="preserve">
+    <value>オフィス</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>イド</value>
+  </data>
+  <data name="Return" xml:space="preserve">
+    <value>リターン</value>
+  </data>
+  <data name="MergeBatchToGRN" xml:space="preserve">
+    <value>入庫ノートにバッチをマージ</value>
+  </data>
+  <data name="FlagBackgroundColor" xml:space="preserve">
+    <value>旗の背景色</value>
+  </data>
+  <data name="TransactionTimestamp" xml:space="preserve">
+    <value>トランザクションタイムスタンプ</value>
+  </data>
+  <data name="ReferenceNumber" xml:space="preserve">
+    <value>リファレンス＃</value>
+  </data>
+  <data name="StatementReference" xml:space="preserve">
+    <value>ステートメントリファレンス</value>
+  </data>
+  <data name="PriceType" xml:space="preserve">
+    <value>価格タイプ</value>
+  </data>
+  <data name="FlagForegroundColor" xml:space="preserve">
+    <value>旗前景色</value>
+  </data>
+  <data name="ValueDate" xml:space="preserve">
+    <value>実行日</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>選択する</value>
+  </data>
+  <data name="MergeBatchToSalesOrder" xml:space="preserve">
+    <value>受注するバッチをマージ</value>
   </data>
   <data name="Print" xml:space="preserve">
     <value>印刷</value>
+  </data>
+  <data name="Flag" xml:space="preserve">
+    <value>フラグ</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>ユーザー</value>
+  </data>
+  <data name="Party" xml:space="preserve">
+    <value>パーティー</value>
   </data>
 </root>

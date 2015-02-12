@@ -117,140 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="amount_from" xml:space="preserve">
-    <value>从量</value>
-  </data>
-  <data name="discount" xml:space="preserve">
-    <value>折扣</value>
-  </data>
-  <data name="salesperson_id" xml:space="preserve">
-    <value>销售人员标识符</value>
-  </data>
-  <data name="account_name" xml:space="preserve">
-    <value>帐户名称</value>
-  </data>
-  <data name="account_master_id" xml:space="preserve">
-    <value>科目主标识</value>
-  </data>
-  <data name="due_days" xml:space="preserve">
-    <value>由于天</value>
-  </data>
-  <data name="payment_term_id" xml:space="preserve">
-    <value>付款期限标识符</value>
-  </data>
-  <data name="recurring_frequency_id" xml:space="preserve">
-    <value>反复出现的频率标识</value>
-  </data>
-  <data name="recurring_frequency" xml:space="preserve">
-    <value>反复出现的频率</value>
-  </data>
-  <data name="cost_price" xml:space="preserve">
-    <value>成本价</value>
-  </data>
-  <data name="height_in_centimeters" xml:space="preserve">
-    <value>身高以厘米为单位</value>
-  </data>
-  <data name="maximum_credit_period" xml:space="preserve">
-    <value>最高优惠期</value>
-  </data>
   <data name="preferred_shipping_package_shape" xml:space="preserve">
     <value>首选的运输包装形状</value>
   </data>
   <data name="street" xml:space="preserve">
     <value>街头</value>
   </data>
-  <data name="amount_to" xml:space="preserve">
-    <value>量</value>
-  </data>
-  <data name="frequency_name" xml:space="preserve">
-    <value>频率名称</value>
-  </data>
-  <data name="salesperson_name" xml:space="preserve">
-    <value>营业员姓名</value>
-  </data>
-  <data name="audit_ts" xml:space="preserve">
-    <value>审计时间戳</value>
-  </data>
-  <data name="account_master_name" xml:space="preserve">
-    <value>账户名硕士</value>
-  </data>
-  <data name="due_frequency_id" xml:space="preserve">
-    <value>由于频率标识</value>
-  </data>
-  <data name="payment_term_name" xml:space="preserve">
-    <value>付款方式名称</value>
-  </data>
-  <data name="recurring_amount" xml:space="preserve">
-    <value>经常性金额</value>
-  </data>
-  <data name="recurring_invoice" xml:space="preserve">
-    <value>经常性发票</value>
-  </data>
-  <data name="cost_price_includes_tax" xml:space="preserve">
-    <value>成本价格含税</value>
-  </data>
-  <data name="hot_item" xml:space="preserve">
-    <value>热门货</value>
-  </data>
-  <data name="middle_name" xml:space="preserve">
-    <value>中间名字</value>
-  </data>
-  <data name="preferred_supplier" xml:space="preserve">
-    <value>首选供应商</value>
-  </data>
-  <data name="unit" xml:space="preserve">
-    <value>单元</value>
-  </data>
-  <data name="bonus_rate" xml:space="preserve">
-    <value>红利</value>
-  </data>
-  <data name="id" xml:space="preserve">
-    <value>登录</value>
-  </data>
-  <data name="sales_team_code" xml:space="preserve">
-    <value>销售团队代码</value>
-  </data>
-  <data name="audit_user_id" xml:space="preserve">
-    <value>审计用户标识符</value>
-  </data>
-  <data name="bonus_slab_details_amounts_chk" xml:space="preserve">
-    <value>现场“数要”必须大于“从量”。</value>
-  </data>
-  <data name="due_on_date" xml:space="preserve">
-    <value>到期日</value>
-  </data>
-  <data name="rate" xml:space="preserve">
-    <value>率</value>
-  </data>
-  <data name="auto_trigger_on_sales" xml:space="preserve">
-    <value>自动触发销售</value>
-  </data>
-  <data name="late_fee" xml:space="preserve">
-    <value>滞纳金</value>
-  </data>
-  <data name="country" xml:space="preserve">
-    <value>国家</value>
-  </data>
-  <data name="is_supplier" xml:space="preserve">
-    <value>是供应商</value>
-  </data>
-  <data name="pan_number" xml:space="preserve">
-    <value>潘号码</value>
-  </data>
-  <data name="reorder_level" xml:space="preserve">
-    <value>重新排序级别</value>
-  </data>
-  <data name="url" xml:space="preserve">
-    <value>统一资源定位符</value>
+  <data name="starts_from" xml:space="preserve">
+    <value>从开始</value>
   </data>
   <data name="bonus_slab_code" xml:space="preserve">
     <value>奖励板代码</value>
+  </data>
+  <data name="amount_to" xml:space="preserve">
+    <value>量</value>
   </data>
   <data name="item_code" xml:space="preserve">
     <value>产品编号</value>
   </data>
   <data name="sales_team_id" xml:space="preserve">
     <value>销售团队标识</value>
+  </data>
+  <data name="account_number" xml:space="preserve">
+    <value>帐号</value>
   </data>
   <data name="commission_rate" xml:space="preserve">
     <value>佣金率</value>
@@ -263,6 +152,15 @@
   </data>
   <data name="recurring_invoice_code" xml:space="preserve">
     <value>经常性发票代码</value>
+  </data>
+  <data name="item" xml:space="preserve">
+    <value>项目</value>
+  </data>
+  <data name="account_id" xml:space="preserve">
+    <value>帐户标识</value>
+  </data>
+  <data name="reorder_quantity" xml:space="preserve">
+    <value>再订购数量</value>
   </data>
   <data name="recurring_invoices_item_id_auto_trigger_on_sales_uix" xml:space="preserve">
     <value>你不能对销售这个项目不止一个自动触发。</value>
@@ -279,41 +177,194 @@
   <data name="parent" xml:space="preserve">
     <value>亲</value>
   </data>
-  <data name="reorder_quantity" xml:space="preserve">
-    <value>再订购数量</value>
+  <data name="cell" xml:space="preserve">
+    <value>细胞</value>
+  </data>
+  <data name="hot_item" xml:space="preserve">
+    <value>热门货</value>
+  </data>
+  <data name="preferred_shipping_mail_type" xml:space="preserve">
+    <value>优先运送邮件类型</value>
   </data>
   <data name="weight_in_grams" xml:space="preserve">
     <value>重量以克</value>
   </data>
-  <data name="bonus_slab_detail_id" xml:space="preserve">
-    <value>奖励板详细标识</value>
+  <data name="gl_head" xml:space="preserve">
+    <value>总帐头</value>
   </data>
-  <data name="item_id" xml:space="preserve">
-    <value>项目标识符</value>
+  <data name="commision_rate" xml:space="preserve">
+    <value>佣金率</value>
   </data>
-  <data name="sales_team_name" xml:space="preserve">
-    <value>销售团队名称</value>
+  <data name="address" xml:space="preserve">
+    <value>地址</value>
   </data>
-  <data name="slab_name" xml:space="preserve">
-    <value>平板名称</value>
+  <data name="salesperson_bonus_setup_id" xml:space="preserve">
+    <value>销售人员奖金设置标识符</value>
+  </data>
+  <data name="maximum_credit_amount" xml:space="preserve">
+    <value>最高信用额</value>
+  </data>
+  <data name="parent_account_name" xml:space="preserve">
+    <value>父帐户名称</value>
+  </data>
+  <data name="total_sales" xml:space="preserve">
+    <value>销售总额</value>
+  </data>
+  <data name="has_child" xml:space="preserve">
+    <value>有子</value>
+  </data>
+  <data name="payment_term" xml:space="preserve">
+    <value>付款期限</value>
+  </data>
+  <data name="party_id" xml:space="preserve">
+    <value>党的标识符</value>
+  </data>
+  <data name="salesperson_name" xml:space="preserve">
+    <value>营业员姓名</value>
+  </data>
+  <data name="payment_term_name" xml:space="preserve">
+    <value>付款方式名称</value>
+  </data>
+  <data name="city" xml:space="preserve">
+    <value>城市</value>
+  </data>
+  <data name="party" xml:space="preserve">
+    <value>党</value>
+  </data>
+  <data name="compound_item_id" xml:space="preserve">
+    <value>复合项目标识符</value>
+  </data>
+  <data name="unit" xml:space="preserve">
+    <value>单元</value>
+  </data>
+  <data name="frequency_name" xml:space="preserve">
+    <value>频率名称</value>
+  </data>
+  <data name="late_fee_posting_frequency_id" xml:space="preserve">
+    <value>滞纳金发帖频率标识</value>
   </data>
   <data name="effective_from" xml:space="preserve">
     <value>从有效</value>
   </data>
+  <data name="first_name" xml:space="preserve">
+    <value>名字</value>
+  </data>
+  <data name="item_id" xml:space="preserve">
+    <value>项目标识符</value>
+  </data>
+  <data name="amount" xml:space="preserve">
+    <value>量</value>
+  </data>
+  <data name="slab_name" xml:space="preserve">
+    <value>平板名称</value>
+  </data>
+  <data name="checking_frequency_id" xml:space="preserve">
+    <value>检查频率标识</value>
+  </data>
+  <data name="quantity" xml:space="preserve">
+    <value>数量</value>
+  </data>
+  <data name="maintain_stock" xml:space="preserve">
+    <value>维持股票</value>
+  </data>
+  <data name="phone" xml:space="preserve">
+    <value>电话</value>
+  </data>
+  <data name="sst_number" xml:space="preserve">
+    <value>精干的销售税号</value>
+  </data>
+  <data name="currency" xml:space="preserve">
+    <value>货币</value>
+  </data>
   <data name="is_flat_amount" xml:space="preserve">
     <value>是平量</value>
   </data>
-  <data name="recurring_invoice_id" xml:space="preserve">
-    <value>经常性发票标识</value>
+  <data name="contact_number" xml:space="preserve">
+    <value>联系电话</value>
   </data>
-  <data name="due_frequency" xml:space="preserve">
-    <value>由于频率</value>
+  <data name="audit_ts" xml:space="preserve">
+    <value>审计时间戳</value>
+  </data>
+  <data name="recurring_amount" xml:space="preserve">
+    <value>经常性金额</value>
+  </data>
+  <data name="due_frequency_id" xml:space="preserve">
+    <value>由于频率标识</value>
+  </data>
+  <data name="recurring_invoice" xml:space="preserve">
+    <value>经常性发票</value>
+  </data>
+  <data name="preferred_supplier" xml:space="preserve">
+    <value>首选供应商</value>
+  </data>
+  <data name="total" xml:space="preserve">
+    <value>总</value>
+  </data>
+  <data name="middle_name" xml:space="preserve">
+    <value>中间名字</value>
   </data>
   <data name="address_line_2" xml:space="preserve">
     <value>地址线 2</value>
   </data>
-  <data name="email" xml:space="preserve">
-    <value>电子邮件</value>
+  <data name="salesperson_code" xml:space="preserve">
+    <value>营业员守则</value>
+  </data>
+  <data name="machinable" xml:space="preserve">
+    <value>可加工</value>
+  </data>
+  <data name="width_in_centimeters" xml:space="preserve">
+    <value>宽以厘米为单位</value>
+  </data>
+  <data name="account_master_code" xml:space="preserve">
+    <value>帐户主码</value>
+  </data>
+  <data name="confidential" xml:space="preserve">
+    <value>机密</value>
+  </data>
+  <data name="sys_type" xml:space="preserve">
+    <value>系统类型</value>
+  </data>
+  <data name="payment_term_code" xml:space="preserve">
+    <value>付款条款代码</value>
+  </data>
+  <data name="is_transaction_node" xml:space="preserve">
+    <value>是交易节点</value>
+  </data>
+  <data name="state" xml:space="preserve">
+    <value>状态</value>
+  </data>
+  <data name="frequency_id" xml:space="preserve">
+    <value>频率标识</value>
+  </data>
+  <data name="selling_price_includes_tax" xml:space="preserve">
+    <value>售价含税</value>
+  </data>
+  <data name="party_type_id" xml:space="preserve">
+    <value>党的类型标识符</value>
+  </data>
+  <data name="sales_team_name" xml:space="preserve">
+    <value>销售团队名称</value>
+  </data>
+  <data name="item_name" xml:space="preserve">
+    <value>项目名称</value>
+  </data>
+  <data name="external_code" xml:space="preserve">
+    <value>外部代码</value>
+  </data>
+  <data name="zip_code" xml:space="preserve">
+    <value>邮政编码</value>
+  </data>
+  <data name="unit_name" xml:space="preserve">
+    <value>单位名称</value>
+  </data>
+  <data name="reorder_unit" xml:space="preserve">
+    <value>重排部</value>
+  </data>
+  <data name="checking_frequency" xml:space="preserve">
+    <value>检查频率</value>
+  </data>
+  <data name="lead_time_in_days" xml:space="preserve">
+    <value>交货时间在天</value>
   </data>
   <data name="last_name" xml:space="preserve">
     <value>姓</value>
@@ -321,53 +372,47 @@
   <data name="party_code" xml:space="preserve">
     <value>党码</value>
   </data>
-  <data name="reorder_unit" xml:space="preserve">
-    <value>重排部</value>
-  </data>
-  <data name="width_in_centimeters" xml:space="preserve">
-    <value>宽以厘米为单位</value>
-  </data>
-  <data name="bonus_slab_id" xml:space="preserve">
-    <value>责任板坯标识符</value>
-  </data>
-  <data name="item_name" xml:space="preserve">
-    <value>项目名称</value>
-  </data>
-  <data name="sub_total" xml:space="preserve">
-    <value>小计</value>
-  </data>
-  <data name="Select" xml:space="preserve">
-    <value>选择</value>
-  </data>
-  <data name="ends_on" xml:space="preserve">
-    <value>结束在</value>
-  </data>
-  <data name="late_fee_code" xml:space="preserve">
-    <value>滞纳金代码</value>
-  </data>
-  <data name="recurring_invoice_name" xml:space="preserve">
-    <value>经常性发票名称</value>
-  </data>
-  <data name="late_fee_posting_frequency" xml:space="preserve">
-    <value>滞纳金发布频率</value>
-  </data>
-  <data name="allow_credit" xml:space="preserve">
-    <value>允许信用</value>
-  </data>
-  <data name="external_code" xml:space="preserve">
-    <value>外部代码</value>
-  </data>
-  <data name="lead_time_in_days" xml:space="preserve">
-    <value>交货时间在天</value>
+  <data name="sales_tax" xml:space="preserve">
+    <value>营业税</value>
   </data>
   <data name="party_name" xml:space="preserve">
     <value>党的名称</value>
   </data>
-  <data name="sales_tax" xml:space="preserve">
-    <value>营业税</value>
+  <data name="email" xml:space="preserve">
+    <value>电子邮件</value>
   </data>
-  <data name="zip_code" xml:space="preserve">
-    <value>邮政编码</value>
+  <data name="bonus_slab_detail_id" xml:space="preserve">
+    <value>奖励板详细标识</value>
+  </data>
+  <data name="allow_credit" xml:space="preserve">
+    <value>允许信用</value>
+  </data>
+  <data name="late_fee_posting_frequency" xml:space="preserve">
+    <value>滞纳金发布频率</value>
+  </data>
+  <data name="recurring_invoice_name" xml:space="preserve">
+    <value>经常性发票名称</value>
+  </data>
+  <data name="ends_on" xml:space="preserve">
+    <value>结束在</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>选择</value>
+  </data>
+  <data name="sub_total" xml:space="preserve">
+    <value>小计</value>
+  </data>
+  <data name="bonus_slab_id" xml:space="preserve">
+    <value>责任板坯标识符</value>
+  </data>
+  <data name="due_frequency" xml:space="preserve">
+    <value>由于频率</value>
+  </data>
+  <data name="cost_price_includes_tax" xml:space="preserve">
+    <value>成本价格含税</value>
+  </data>
+  <data name="late_fee_id" xml:space="preserve">
+    <value>滞纳金标识</value>
   </data>
   <data name="bonus_slab_name" xml:space="preserve">
     <value>奖励板名称</value>
@@ -384,11 +429,11 @@
   <data name="parent_account_number" xml:space="preserve">
     <value>家长帐号</value>
   </data>
-  <data name="late_fee_id" xml:space="preserve">
-    <value>滞纳金标识</value>
-  </data>
   <data name="recurring_invoice_setup_id" xml:space="preserve">
     <value>经常性发票设置标识符</value>
+  </data>
+  <data name="bonus_rate" xml:space="preserve">
+    <value>红利</value>
   </data>
   <data name="compound_item" xml:space="preserve">
     <value>复合项目</value>
@@ -402,136 +447,103 @@
   <data name="length_in_centimeters" xml:space="preserve">
     <value>长度以厘米为单位</value>
   </data>
-  <data name="party_type" xml:space="preserve">
-    <value>党的类型</value>
+  <data name="id" xml:space="preserve">
+    <value>登录</value>
   </data>
   <data name="selling_price" xml:space="preserve">
     <value>售价</value>
   </data>
-  <data name="account_id" xml:space="preserve">
-    <value>帐户标识</value>
-  </data>
-  <data name="checking_frequency_id" xml:space="preserve">
-    <value>检查频率标识</value>
-  </data>
-  <data name="quantity" xml:space="preserve">
-    <value>数量</value>
-  </data>
-  <data name="total" xml:space="preserve">
-    <value>总</value>
-  </data>
-  <data name="frequency_id" xml:space="preserve">
-    <value>频率标识</value>
-  </data>
-  <data name="parent_account_id" xml:space="preserve">
-    <value>父帐户标识</value>
+  <data name="party_type" xml:space="preserve">
+    <value>党的类型</value>
   </data>
   <data name="late_fee_name" xml:space="preserve">
     <value>滞纳金名称</value>
   </data>
-  <data name="starts_from" xml:space="preserve">
-    <value>从开始</value>
+  <data name="amount_from" xml:space="preserve">
+    <value>从量</value>
   </data>
-  <data name="item" xml:space="preserve">
-    <value>项目</value>
+  <data name="sales_team_code" xml:space="preserve">
+    <value>销售团队代码</value>
   </data>
-  <data name="cell" xml:space="preserve">
-    <value>细胞</value>
+  <data name="audit_user_id" xml:space="preserve">
+    <value>审计用户标识符</value>
   </data>
-  <data name="first_name" xml:space="preserve">
-    <value>名字</value>
+  <data name="discount" xml:space="preserve">
+    <value>折扣</value>
   </data>
-  <data name="machinable" xml:space="preserve">
-    <value>可加工</value>
+  <data name="salesperson_id" xml:space="preserve">
+    <value>销售人员标识符</value>
   </data>
-  <data name="party_type_id" xml:space="preserve">
-    <value>党的类型标识符</value>
+  <data name="account_name" xml:space="preserve">
+    <value>帐户名称</value>
   </data>
-  <data name="selling_price_includes_tax" xml:space="preserve">
-    <value>售价含税</value>
+  <data name="due_days" xml:space="preserve">
+    <value>由于天</value>
   </data>
-  <data name="address" xml:space="preserve">
-    <value>地址</value>
+  <data name="account_master_id" xml:space="preserve">
+    <value>科目主标识</value>
   </data>
-  <data name="commision_rate" xml:space="preserve">
-    <value>佣金率</value>
+  <data name="payment_term_id" xml:space="preserve">
+    <value>付款期限标识符</value>
   </data>
-  <data name="salesperson_bonus_setup_id" xml:space="preserve">
-    <value>销售人员奖金设置标识符</value>
+  <data name="recurring_frequency_id" xml:space="preserve">
+    <value>反复出现的频率标识</value>
   </data>
-  <data name="total_sales" xml:space="preserve">
-    <value>销售总额</value>
+  <data name="maximum_credit_period" xml:space="preserve">
+    <value>最高优惠期</value>
   </data>
-  <data name="account_number" xml:space="preserve">
-    <value>帐号</value>
+  <data name="recurring_frequency" xml:space="preserve">
+    <value>反复出现的频率</value>
   </data>
-  <data name="parent_account_name" xml:space="preserve">
-    <value>父帐户名称</value>
+  <data name="cost_price" xml:space="preserve">
+    <value>成本价</value>
   </data>
-  <data name="late_fee_posting_frequency_id" xml:space="preserve">
-    <value>滞纳金发帖频率标识</value>
+  <data name="height_in_centimeters" xml:space="preserve">
+    <value>身高以厘米为单位</value>
   </data>
-  <data name="compound_item_id" xml:space="preserve">
-    <value>复合项目标识符</value>
+  <data name="bonus_slab_details_amounts_chk" xml:space="preserve">
+    <value>现场“数要”必须大于“从量”。</value>
   </data>
-  <data name="party" xml:space="preserve">
-    <value>党</value>
+  <data name="due_on_date" xml:space="preserve">
+    <value>到期日</value>
   </data>
-  <data name="city" xml:space="preserve">
-    <value>城市</value>
+  <data name="auto_trigger_on_sales" xml:space="preserve">
+    <value>自动触发销售</value>
   </data>
-  <data name="gl_head" xml:space="preserve">
-    <value>总帐头</value>
+  <data name="rate" xml:space="preserve">
+    <value>率</value>
   </data>
-  <data name="maintain_stock" xml:space="preserve">
-    <value>维持股票</value>
+  <data name="late_fee" xml:space="preserve">
+    <value>滞纳金</value>
   </data>
-  <data name="phone" xml:space="preserve">
-    <value>电话</value>
+  <data name="country" xml:space="preserve">
+    <value>国家</value>
   </data>
-  <data name="sst_number" xml:space="preserve">
-    <value>精干的销售税号</value>
+  <data name="is_supplier" xml:space="preserve">
+    <value>是供应商</value>
   </data>
-  <data name="amount" xml:space="preserve">
-    <value>量</value>
+  <data name="account_master" xml:space="preserve">
+    <value>科目主</value>
   </data>
-  <data name="contact_number" xml:space="preserve">
-    <value>联系电话</value>
+  <data name="pan_number" xml:space="preserve">
+    <value>潘号码</value>
   </data>
-  <data name="salesperson_code" xml:space="preserve">
-    <value>营业员守则</value>
+  <data name="reorder_level" xml:space="preserve">
+    <value>重新排序级别</value>
   </data>
-  <data name="unit_name" xml:space="preserve">
-    <value>单位名称</value>
+  <data name="url" xml:space="preserve">
+    <value>统一资源定位符</value>
   </data>
-  <data name="account_master_code" xml:space="preserve">
-    <value>帐户主码</value>
+  <data name="late_fee_code" xml:space="preserve">
+    <value>滞纳金代码</value>
   </data>
-  <data name="sys_type" xml:space="preserve">
-    <value>系统类型</value>
+  <data name="account_master_name" xml:space="preserve">
+    <value>账户名硕士</value>
   </data>
-  <data name="payment_term_code" xml:space="preserve">
-    <value>付款条款代码</value>
+  <data name="recurring_invoice_id" xml:space="preserve">
+    <value>经常性发票标识</value>
   </data>
-  <data name="party_id" xml:space="preserve">
-    <value>党的标识符</value>
-  </data>
-  <data name="payment_term" xml:space="preserve">
-    <value>付款期限</value>
-  </data>
-  <data name="confidential" xml:space="preserve">
-    <value>机密</value>
-  </data>
-  <data name="has_child" xml:space="preserve">
-    <value>有子</value>
-  </data>
-  <data name="maximum_credit_amount" xml:space="preserve">
-    <value>最高信用额</value>
-  </data>
-  <data name="preferred_shipping_mail_type" xml:space="preserve">
-    <value>优先运送邮件类型</value>
-  </data>
-  <data name="state" xml:space="preserve">
-    <value>状态</value>
+  <data name="parent_account_id" xml:space="preserve">
+    <value>父帐户标识</value>
   </data>
 </root>

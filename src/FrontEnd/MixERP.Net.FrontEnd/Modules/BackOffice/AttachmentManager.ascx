@@ -30,7 +30,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
 <asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
 
-<div class="ui massive teal header">View Attachments</div>
+<div class="ui massive teal header">
+    <asp:Literal ID="TitleLiteral" runat="server"/>
+</div>
 
 <div id="images">
 </div>

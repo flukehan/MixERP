@@ -117,28 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ComparePriceErrorMessage" xml:space="preserve">
-    <value>Preis ab sollte weniger als der Preis.</value>
+  <data name="DateErrorMessage" xml:space="preserve">
+    <value>Ausgewähltes Datum liegt außerhalb des Bereichs.</value>
+  </data>
+  <data name="CannotCreateABackup" xml:space="preserve">
+    <value>Sorry, kann nicht erstellen Sie eine Datenbanksicherung zu diesem Zeitpunkt.</value>
   </data>
   <data name="InvalidUser" xml:space="preserve">
     <value>Ungültige Benutzer.</value>
   </data>
-  <data name="ConfigurationError" xml:space="preserve">
-    <value>Können die Aufgabe nicht fortgesetzt werden. Bitte korrigieren Sie Konfigurationsprobleme.</value>
-  </data>
-  <data name="DateErrorMessage" xml:space="preserve">
-    <value>Ausgewähltes Datum liegt außerhalb des Bereichs.</value>
-  </data>
   <data name="PasswordCannotBeEmpty" xml:space="preserve">
     <value>Das Passwort darf nicht leer sein.</value>
   </data>
-  <data name="AccessIsDenied" xml:space="preserve">
-    <value>Zugriff wird verweigert.</value>
+  <data name="ComparePriceErrorMessage" xml:space="preserve">
+    <value>Preis ab sollte weniger als der Preis.</value>
   </data>
   <data name="NoFileSpecified" xml:space="preserve">
     <value>Keine Datei angegeben.</value>
   </data>
-  <data name="CannotCreateABackup" xml:space="preserve">
-    <value>Sorry, kann nicht erstellen Sie eine Datenbanksicherung zu diesem Zeitpunkt.</value>
+  <data name="ConfigurationError" xml:space="preserve">
+    <value>Können die Aufgabe nicht fortgesetzt werden. Bitte korrigieren Sie Konfigurationsprobleme.</value>
+  </data>
+  <data name="AccessIsDenied" xml:space="preserve">
+    <value>Zugriff wird verweigert.</value>
   </data>
 </root>

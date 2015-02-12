@@ -32,40 +32,27 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
     {
         internal static string GetScript(string keyColumn, string customFormUrl, string formGridViewId, string gridPanelId, string userIdHiddenId, string officeCodeHiddenId, string titleLabelId, string formPanelId, string cancelButtonId)
         {
-            string resource = JavascriptHelper.GetEmbeddedScript("MixERP.Net.WebControls.ScrudFactory.Scrud.js", Assembly.GetExecutingAssembly());
-            StringBuilder script = new StringBuilder();
+            string resource = JSUtility.GetEmbeddedScript("MixERP.Net.WebControls.ScrudFactory.Scrud.js", Assembly.GetExecutingAssembly());
+            string script = string.Empty;
 
-            script.Append(CreateVariable("formGridViewId", formGridViewId));
-            script.Append(CreateVariable("gridPanelId", gridPanelId));
-            script.Append(CreateVariable("userIdHiddenId", userIdHiddenId));
-            script.Append(CreateVariable("officeCodeHiddenId", officeCodeHiddenId));
-            script.Append(CreateVariable("titleLabelId", titleLabelId));
-            script.Append(CreateVariable("formPanelId", formPanelId));
-            script.Append(CreateVariable("cancelButtonId ", cancelButtonId));
+            script += JSUtility.GetVar("gridPanelId", gridPanelId);
+            script += JSUtility.GetVar("userIdHiddenId", userIdHiddenId);
+            script += JSUtility.GetVar("formGridViewId", formGridViewId);
+            script += JSUtility.GetVar("officeCodeHiddenId", officeCodeHiddenId);
+            script += JSUtility.GetVar("titleLabelId", titleLabelId);
+            script += JSUtility.GetVar("formPanelId", formPanelId);
+            script += JSUtility.GetVar("cancelButtonId ", cancelButtonId);
 
-            script.Append(CreateVariable("scrudAreYouSureLocalized", Titles.AreYouSure));
-            script.Append(CreateVariable("scrudNothingSelectedLocalized", Titles.NothingSelected));
-            script.Append(CreateVariable("reportTemplatePath", PageUtility.ResolveUrl(ConfigurationHelper.GetScrudParameter("TemplatePath"))));
-            script.Append(CreateVariable("reportHeaderPath", PageUtility.ResolveUrl(ConfigurationHelper.GetScrudParameter("HeaderPath"))));
-            script.Append(CreateVariable("date", DateTime.Now.ToString(CultureInfo.InvariantCulture)));
-            script.Append(CreateVariable("keyColumn", keyColumn));
-            script.Append(CreateVariable("customFormUrl", customFormUrl));
+            script += JSUtility.GetVar("scrudAreYouSureLocalized", Titles.AreYouSure);
+            script += JSUtility.GetVar("scrudNothingSelectedLocalized", Titles.NothingSelected);
+            script += JSUtility.GetVar("reportTemplatePath", PageUtility.ResolveUrl(ConfigurationHelper.GetScrudParameter("TemplatePath")));
+            script += JSUtility.GetVar("reportHeaderPath", PageUtility.ResolveUrl(ConfigurationHelper.GetScrudParameter("HeaderPath")));
+            script += JSUtility.GetVar("date", DateTime.Now.ToString(CultureInfo.InvariantCulture));
+            script += JSUtility.GetVar("keyColumn", keyColumn);
+            script += JSUtility.GetVar("customFormUrl", customFormUrl);
 
-            script.Append(resource);
-            return script.ToString();
-        }
-
-        private static string CreateVariable(string variableName, string initialValue)
-        {
-            StringBuilder variable = new StringBuilder();
-            variable.Append("var ");
-            variable.Append(variableName);
-            variable.Append("='");
-            variable.Append(HttpUtility.JavaScriptStringEncode(initialValue));
-            variable.Append("';");
-            variable.Append(Environment.NewLine);
-
-            return variable.ToString();
+            script += resource;
+            return script;
         }
     }
 }

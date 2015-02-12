@@ -330,4 +330,16 @@
   <data name="Users" xml:space="preserve">
     <value>Users</value>
   </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="ViewAttachments" xml:space="preserve">
+    <value>View Attachments</value>
+  </data>
 </root>

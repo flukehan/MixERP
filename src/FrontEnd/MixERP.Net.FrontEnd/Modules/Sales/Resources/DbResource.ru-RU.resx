@@ -117,26 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="actions" xml:space="preserve">
+    <value>акции</value>
+  </data>
+  <data name="transaction_ts" xml:space="preserve">
+    <value>сделка Отметка времени</value>
+  </data>
+  <data name="flag_foreground_color" xml:space="preserve">
+    <value>Флаг цвет переднего плана</value>
+  </data>
+  <data name="id" xml:space="preserve">
+    <value>идентифицировать</value>
+  </data>
   <data name="office" xml:space="preserve">
     <value>офис</value>
+  </data>
+  <data name="reference_number" xml:space="preserve">
+    <value>номер для ссылок</value>
   </data>
   <data name="amount" xml:space="preserve">
     <value>количество</value>
   </data>
   <data name="user" xml:space="preserve">
     <value>пользователь</value>
-  </data>
-  <data name="id" xml:space="preserve">
-    <value>идентифицировать</value>
-  </data>
-  <data name="party" xml:space="preserve">
-    <value>партия</value>
-  </data>
-  <data name="flag_background_color" xml:space="preserve">
-    <value>Цвет флаг фон</value>
-  </data>
-  <data name="flag_foreground_color" xml:space="preserve">
-    <value>Флаг цвет переднего плана</value>
   </data>
   <data name="currency" xml:space="preserve">
     <value>валюта</value>
@@ -147,13 +150,10 @@
   <data name="statement_reference" xml:space="preserve">
     <value>О себе Ссылка</value>
   </data>
-  <data name="actions" xml:space="preserve">
-    <value>акции</value>
+  <data name="flag_background_color" xml:space="preserve">
+    <value>Цвет флаг фон</value>
   </data>
-  <data name="transaction_ts" xml:space="preserve">
-    <value>сделка Отметка времени</value>
-  </data>
-  <data name="reference_number" xml:space="preserve">
-    <value>номер для ссылок</value>
+  <data name="party" xml:space="preserve">
+    <value>партия</value>
   </data>
 </root>

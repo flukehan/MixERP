@@ -120,13 +120,13 @@
   <data name="AreYouSure" xml:space="preserve">
     <value>你确定你知道你在做什么？</value>
   </data>
-  <data name="UploadFilesDeleted" xml:space="preserve">
-    <value>上传的文件被成功删除。</value>
+  <data name="InvalidFile" xml:space="preserve">
+    <value>无效的文件！</value>
   </data>
   <data name="DuplicateFile" xml:space="preserve">
     <value>重复的文件！</value>
   </data>
-  <data name="InvalidFile" xml:space="preserve">
-    <value>无效的文件！</value>
+  <data name="UploadFilesDeleted" xml:space="preserve">
+    <value>上传的文件被成功删除。</value>
   </data>
 </root>

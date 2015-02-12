@@ -117,6 +117,159 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Unit" xml:space="preserve">
+    <value>unité</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>utilisateurs</value>
+  </data>
+  <data name="UncheckAll" xml:space="preserve">
+    <value>Décocher tout</value>
+  </data>
+  <data name="SelectUser" xml:space="preserve">
+    <value>Sélectionnez Utilisateur</value>
+  </data>
+  <data name="DatabaseStatistics" xml:space="preserve">
+    <value>Statistiques de base de données</value>
+  </data>
+  <data name="ViewBackups" xml:space="preserve">
+    <value>Voir sauvegardes</value>
+  </data>
+  <data name="OfficeSetup" xml:space="preserve">
+    <value>configuration de bureau</value>
+  </data>
+  <data name="Counties" xml:space="preserve">
+    <value>Comtés</value>
+  </data>
+  <data name="MenuText" xml:space="preserve">
+    <value>Texte Menu</value>
+  </data>
+  <data name="OpeningInventory" xml:space="preserve">
+    <value>Inventaire d'ouverture</value>
+  </data>
+  <data name="TaxAuthorities" xml:space="preserve">
+    <value>Les autorités fiscales</value>
+  </data>
+  <data name="CashRepositories" xml:space="preserve">
+    <value>Dépôts de trésorerie</value>
+  </data>
+  <data name="Frequencies" xml:space="preserve">
+    <value>fréquences</value>
+  </data>
+  <data name="SalesTaxTypes" xml:space="preserve">
+    <value>Types de la taxe de vente</value>
+  </data>
+  <data name="VacuumFullDatabase" xml:space="preserve">
+    <value>Base de données de vide (complet)</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>près</value>
+  </data>
+  <data name="Access" xml:space="preserve">
+    <value>accès</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>montant</value>
+  </data>
+  <data name="Execute" xml:space="preserve">
+    <value>exécuter</value>
+  </data>
+  <data name="SalesTaxDetails" xml:space="preserve">
+    <value>Détails de la taxe de vente</value>
+  </data>
+  <data name="Tel" xml:space="preserve">
+    <value>téléphone</value>
+  </data>
+  <data name="Industries" xml:space="preserve">
+    <value>industries</value>
+  </data>
+  <data name="Departments" xml:space="preserve">
+    <value>départements</value>
+  </data>
+  <data name="EnterNewPassword" xml:space="preserve">
+    <value>Entrez un nouveau mot de passe</value>
+  </data>
+  <data name="PreparedOn" xml:space="preserve">
+    <value>préparé Sur</value>
+  </data>
+  <data name="TaxExemptTypes" xml:space="preserve">
+    <value>Fiscales types exonérés</value>
+  </data>
+  <data name="Countries" xml:space="preserve">
+    <value>pays</value>
+  </data>
+  <data name="BackupConsole" xml:space="preserve">
+    <value>Console de sauvegarde</value>
+  </data>
+  <data name="RowNumber" xml:space="preserve">
+    <value>Nombre de lignes</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>quantité</value>
+  </data>
+  <data name="MenuAccessPolicy" xml:space="preserve">
+    <value>Menu Stratégie d'accès</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>total</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>email</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>clair</value>
+  </data>
+  <data name="GoToTop" xml:space="preserve">
+    <value>Aller en haut de page.</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Enregistrer</value>
+  </data>
+  <data name="VoucherVerificationPolicy" xml:space="preserve">
+    <value>Politique sur la vérification Voucher</value>
+  </data>
+  <data name="DatabaseBackups" xml:space="preserve">
+    <value>Les sauvegardes de bases de données</value>
+  </data>
+  <data name="Roles" xml:space="preserve">
+    <value>rôles</value>
+  </data>
+  <data name="MenuCode" xml:space="preserve">
+    <value>Code Menu</value>
+  </data>
+  <data name="TaxMaster" xml:space="preserve">
+    <value>Maître impôt</value>
+  </data>
+  <data name="ItemCode" xml:space="preserve">
+    <value>Code de l'article</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Changer Le Mot De Passe</value>
+  </data>
+  <data name="Entities" xml:space="preserve">
+    <value>entités</value>
+  </data>
+  <data name="CheckAll" xml:space="preserve">
+    <value>Cocher tout</value>
+  </data>
+  <data name="StoreName" xml:space="preserve">
+    <value>Nom de magasin</value>
+  </data>
+  <data name="AnalyzeDatabse" xml:space="preserve">
+    <value>analyser la base de données</value>
+  </data>
+  <data name="FiscalYear" xml:space="preserve">
+    <value>exercice Fiscal</value>
+  </data>
+  <data name="SalesTaxExemptDetails" xml:space="preserve">
+    <value>Taxe de vente Détails exonérés</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>utilisateur</value>
+  </data>
+  <data name="BackupDatabase" xml:space="preserve">
+    <value>Base de données de sauvegarde</value>
+  </data>
   <data name="Counters" xml:space="preserve">
     <value>compteurs</value>
   </data>
@@ -132,32 +285,11 @@
   <data name="EnterBackupName" xml:space="preserve">
     <value>Entrez Nom de la sauvegarde</value>
   </data>
-  <data name="TaxMaster" xml:space="preserve">
-    <value>Maître impôt</value>
+  <data name="MenuId" xml:space="preserve">
+    <value>Menu Identifiant</value>
   </data>
-  <data name="Entities" xml:space="preserve">
-    <value>entités</value>
-  </data>
-  <data name="Roles" xml:space="preserve">
-    <value>rôles</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>email</value>
-  </data>
-  <data name="DatabaseStatistics" xml:space="preserve">
-    <value>Statistiques de base de données</value>
-  </data>
-  <data name="OfficeSetup" xml:space="preserve">
-    <value>configuration de bureau</value>
-  </data>
-  <data name="TaxAuthorities" xml:space="preserve">
-    <value>Les autorités fiscales</value>
-  </data>
-  <data name="Counties" xml:space="preserve">
-    <value>Comtés</value>
-  </data>
-  <data name="ViewBackups" xml:space="preserve">
-    <value>Voir sauvegardes</value>
+  <data name="ItemName" xml:space="preserve">
+    <value>Nom de l'article</value>
   </data>
   <data name="AutoVerificationPolicy" xml:space="preserve">
     <value>Politique autovérification</value>
@@ -177,23 +309,11 @@
   <data name="Update" xml:space="preserve">
     <value>mettre à jour</value>
   </data>
-  <data name="Departments" xml:space="preserve">
-    <value>départements</value>
+  <data name="Action" xml:space="preserve">
+    <value>action</value>
   </data>
   <data name="Fax" xml:space="preserve">
     <value>fax</value>
-  </data>
-  <data name="PreparedOn" xml:space="preserve">
-    <value>préparé Sur</value>
-  </data>
-  <data name="TaxExemptTypes" xml:space="preserve">
-    <value>Fiscales types exonérés</value>
-  </data>
-  <data name="Countries" xml:space="preserve">
-    <value>pays</value>
-  </data>
-  <data name="BackupConsole" xml:space="preserve">
-    <value>Console de sauvegarde</value>
   </data>
   <data name="SalesTaxes" xml:space="preserve">
     <value>taxes de vente</value>
@@ -207,70 +327,7 @@
   <data name="PasswordUpdated" xml:space="preserve">
     <value>Mot de passe a été mis à jour.</value>
   </data>
-  <data name="ChangePassword" xml:space="preserve">
-    <value>Changer Le Mot De Passe</value>
-  </data>
-  <data name="Execute" xml:space="preserve">
-    <value>exécuter</value>
-  </data>
-  <data name="CashRepositories" xml:space="preserve">
-    <value>Dépôts de trésorerie</value>
-  </data>
-  <data name="Frequencies" xml:space="preserve">
-    <value>fréquences</value>
-  </data>
-  <data name="SalesTaxTypes" xml:space="preserve">
-    <value>Types de la taxe de vente</value>
-  </data>
-  <data name="SalesTaxDetails" xml:space="preserve">
-    <value>Détails de la taxe de vente</value>
-  </data>
-  <data name="VacuumFullDatabase" xml:space="preserve">
-    <value>Base de données de vide (complet)</value>
-  </data>
-  <data name="Close" xml:space="preserve">
-    <value>près</value>
-  </data>
-  <data name="Tel" xml:space="preserve">
-    <value>téléphone</value>
-  </data>
-  <data name="Industries" xml:space="preserve">
-    <value>industries</value>
-  </data>
-  <data name="EnterNewPassword" xml:space="preserve">
-    <value>Entrez un nouveau mot de passe</value>
-  </data>
-  <data name="Clear" xml:space="preserve">
-    <value>clair</value>
-  </data>
-  <data name="GoToTop" xml:space="preserve">
-    <value>Aller en haut de page.</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Enregistrer</value>
-  </data>
-  <data name="VoucherVerificationPolicy" xml:space="preserve">
-    <value>Politique sur la vérification Voucher</value>
-  </data>
-  <data name="DatabaseBackups" xml:space="preserve">
-    <value>Les sauvegardes de bases de données</value>
-  </data>
-  <data name="AnalyzeDatabse" xml:space="preserve">
-    <value>analyser la base de données</value>
-  </data>
-  <data name="FiscalYear" xml:space="preserve">
-    <value>exercice Fiscal</value>
-  </data>
-  <data name="SalesTaxExemptDetails" xml:space="preserve">
-    <value>Taxe de vente Détails exonérés</value>
-  </data>
-  <data name="User" xml:space="preserve">
-    <value>utilisateur</value>
-  </data>
-  <data name="BackupDatabase" xml:space="preserve">
-    <value>Base de données de sauvegarde</value>
-  </data>
-  <data name="SelectUser" xml:space="preserve">
-    <value>Sélectionnez Utilisateur</value>
+  <data name="Show" xml:space="preserve">
+    <value>spectacle</value>
   </data>
 </root>

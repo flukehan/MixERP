@@ -49,7 +49,7 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
             this.CreateHiddenFields(this.placeHolder);
             CreateErrorLabelBottom(this.placeHolder);
             this.AddJavascript();
-            this.RegisterJavascriptVariables();
+            this.RegisterJavascript();
             this.LoadValuesFromSession();
             this.BindGridView();
             this.ClearSession();

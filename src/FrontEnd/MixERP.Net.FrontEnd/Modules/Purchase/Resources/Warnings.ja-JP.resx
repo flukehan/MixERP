@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="InvalidStockTransaction" xml:space="preserve">
-    <value>無効な株式取引。</value>
-  </data>
   <data name="InvalidParty" xml:space="preserve">
     <value>無効なパーティー。このパーティーは、このトランザクションに関連付けられていない。</value>
+  </data>
+  <data name="InvalidStockTransaction" xml:space="preserve">
+    <value>無効な株式取引。</value>
   </data>
 </root>

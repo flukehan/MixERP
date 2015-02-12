@@ -100,10 +100,17 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Messages.ru-RU.resx" />
     <EmbeddedResource Include="Resources\Messages.zh-CN.resx" />
+    <EmbeddedResource Include="Resources\Titles.de-DE.resx" />
+    <EmbeddedResource Include="Resources\Titles.es-ES.resx" />
+    <EmbeddedResource Include="Resources\Titles.fr-FR.resx" />
+    <EmbeddedResource Include="Resources\Titles.ja-JP.resx" />
+    <EmbeddedResource Include="Resources\Titles.nl-NL.resx" />
     <EmbeddedResource Include="Resources\Titles.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Titles.ru-RU.resx" />
+    <EmbeddedResource Include="Resources\Titles.zh-CN.resx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Mix Open Foundation.snk" />

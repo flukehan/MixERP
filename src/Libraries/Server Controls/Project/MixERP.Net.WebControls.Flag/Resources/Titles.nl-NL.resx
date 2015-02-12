@@ -120,6 +120,9 @@
   <data name="Close" xml:space="preserve">
     <value>dicht</value>
   </data>
+  <data name="FlagThisTransaction" xml:space="preserve">
+    <value>Vlag Deze transactie</value>
+  </data>
   <data name="Update" xml:space="preserve">
     <value>-update</value>
   </data>

@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="TempDirectoryNullError" xml:space="preserve">
-    <value>tempディレクトリがnullの場合の画像を作成できません。</value>
-  </data>
   <data name="CouldNotDetermineVirtualPathError" xml:space="preserve">
     <value>イメージを作成するための仮想パスを決定することができませんでした。</value>
+  </data>
+  <data name="TempDirectoryNullError" xml:space="preserve">
+    <value>tempディレクトリがnullの場合の画像を作成できません。</value>
   </data>
 </root>

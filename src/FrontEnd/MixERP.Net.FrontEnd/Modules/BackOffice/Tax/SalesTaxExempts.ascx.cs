@@ -53,8 +53,9 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
 
         private void AddScrudCustomValidatorErrorMessages()
         {
-            string javascript = "var dateErrorMessageLocalized= '" + Warnings.DateErrorMessage + "';" +
-                    "var comparePriceErrorMessageLocalized= '" + Warnings.ComparePriceErrorMessage + "';";
+            string javascript = JSUtility.GetVar("dateErrorMessageLocalized", Warnings.DateErrorMessage);
+            javascript += JSUtility.GetVar("comparePriceErrorMessageLocalized", Warnings.ComparePriceErrorMessage);
+
             Common.PageUtility.RegisterJavascript("SalesTaxExempts_ScrudCustomValidatorErrorMessages", javascript, this.Page, true);
 
         }

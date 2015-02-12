@@ -53,10 +53,10 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
 
         private void AddScrudCustomValidatorErrorMessages()
         {
-            string javascript = "var dueFrequencyErrorMessageLocalized= '" + Warnings.DueFrequencyErrorMessage + "';" +
-                    "var lateFeeErrorMessageLocalized= '" + Warnings.LateFeeErrorMessage + "';";
-            Common.PageUtility.RegisterJavascript("PaymentTerm_ScrudCustomValidatorErrorMessages", javascript, this.Page, true);
+            string javascript = JSUtility.GetVar("dueFrequencyErrorMessageLocalized", Warnings.DueFrequencyErrorMessage);
+            javascript += JSUtility.GetVar("lateFeeErrorMessageLocalized", Warnings.LateFeeErrorMessage);
 
+            Common.PageUtility.RegisterJavascript("PaymentTerm_ScrudCustomValidatorErrorMessages", javascript, this.Page, true);
         }
 
         private static string GetDisplayFields()

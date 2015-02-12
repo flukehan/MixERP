@@ -150,6 +150,9 @@
   <data name="PleaseEnterNewPassword" xml:space="preserve">
     <value>Пожалуйста, введите новый пароль.</value>
   </data>
+  <data name="RestrictedTransactionMode" xml:space="preserve">
+    <value>Это учреждение не позволяет объявление транзакций.</value>
+  </data>
   <data name="UserIdOrPasswordIncorrect" xml:space="preserve">
     <value>Идентификатор пользователя или пароль неверен.</value>
   </data>

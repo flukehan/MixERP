@@ -37,18 +37,10 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
         public long Save(DateTime valueDate, int storeId, string partyCode, int priceTypeId, string referenceNumber, string data, string statementReference, string transactionType, int paymentTermId, int salespersonId, int shipperId, string shippingAddressCode, decimal shippingCharge, int costCenterId, string transactionIds, string attachmentsJSON, bool nonTaxable)
         {
             Collection<StockDetail> details = CollectionHelper.GetStockMasterDetailCollection(data, storeId);
-            Collection<int> tranIds = new Collection<int>();
+
 
             System.Web.Script.Serialization.JavaScriptSerializer js = new System.Web.Script.Serialization.JavaScriptSerializer();
             Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
-
-            if (!string.IsNullOrWhiteSpace(transactionIds))
-            {
-                foreach (string transactionId in transactionIds.Split(','))
-                {
-                    tranIds.Add(Common.Conversion.TryCastInteger(transactionId));
-                }
-            }
 
             bool isCredit = transactionType != null && !transactionType.ToUpperInvariant().Equals("CASH");
 

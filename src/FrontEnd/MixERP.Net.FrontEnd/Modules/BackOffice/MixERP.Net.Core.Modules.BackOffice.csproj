@@ -112,6 +112,7 @@
     <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
     <Content Include="Scripts\Flags.ascx.js" />
     <Content Include="Scripts\OTS\OpeningInventory.ascx.js" />
+    <Content Include="Scripts\Policy\MenuAccess.ascx.js" />
     <Content Include="Services\Admin\LocalizeMixERP.asmx" />
     <Content Include="Services\web.config" />
     <None Include="Web.Debug.config">

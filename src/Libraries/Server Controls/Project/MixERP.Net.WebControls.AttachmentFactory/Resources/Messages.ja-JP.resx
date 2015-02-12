@@ -117,16 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AreYouSure" xml:space="preserve">
-    <value>あなたは何をやっている知っているあなたはよろしいですか？</value>
-  </data>
   <data name="UploadFilesDeleted" xml:space="preserve">
     <value>アップロードされたファイルが正常に削除されました。</value>
   </data>
-  <data name="InvalidFile" xml:space="preserve">
-    <value>無効なファイル！</value>
-  </data>
   <data name="DuplicateFile" xml:space="preserve">
     <value>重複ファイル！</value>
+  </data>
+  <data name="AreYouSure" xml:space="preserve">
+    <value>あなたは何をやっている知っているあなたはよろしいですか？</value>
+  </data>
+  <data name="InvalidFile" xml:space="preserve">
+    <value>無効なファイル！</value>
   </data>
 </root>

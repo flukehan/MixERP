@@ -101,16 +101,23 @@ namespace MixERP.Net.Core.Modules.Finance.Data
             }
         }
 
-        private void Listen(object sender, NpgsqlNoticeEventArgs e)
+        private void Listen(object sender, DbNotificationArgs e)
         {
-            if (e.Notice.Severity.ToUpperInvariant().Equals("INFO"))
+            var notificationReceived = this.NotificationReceived;
+
+            if (notificationReceived != null)
             {
-                MixERPPGEventArgs args = new MixERPPGEventArgs(e.Notice.Message, e.Notice.Detail, 0);
-
-                var notificationReceived = this.NotificationReceived;
-
-                if (notificationReceived != null)
+                if (e.Notice == null && !string.IsNullOrWhiteSpace(e.Message))
                 {
+                    MixERPPGEventArgs args = new MixERPPGEventArgs(e.Message, "error", 0);
+                    notificationReceived(this, args);
+                    return;
+                }
+
+                if (e.Notice != null && e.Notice.Severity.ToUpperInvariant().Equals("INFO"))
+                {
+                    MixERPPGEventArgs args = new MixERPPGEventArgs(e.Notice.Message, e.Notice.Detail, 0);
+
                     notificationReceived(this, args);
                 }
             }

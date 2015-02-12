@@ -19,7 +19,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -34,8 +33,8 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
     public partial class LocalizeMixERP : MixERPUserControl
     {
         public const string sessionKey = "LocalizationCulture";
-        private string root;
         private readonly IEnumerable<string> cultures = Data.Admin.LocalizeMixERP.GetCultures().Select(x => x.CultureCode).ToArray();
+        private string root;
 
         public override void OnControlLoad(object sender, EventArgs e)
         {
@@ -99,7 +98,6 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
 
         private IEnumerable<string> GetFiles()
         {
-
             DirectoryInfo directoryInfo = new DirectoryInfo(this.Page.Server.MapPath("~/")).Parent;
 
             if (directoryInfo != null && directoryInfo.Parent != null)
@@ -121,20 +119,16 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
                             files.RemoveAt(i);
                         }
                     }
-
                 }
 
                 return files;
-
             }
 
             return null;
         }
 
-
         private IEnumerable<KeyValuePair<string, string>> GetResources(string file)
         {
-
             XDocument xDoc = XDocument.Load(this.root + file);
 
             IEnumerable<KeyValuePair<string, string>> result =

@@ -117,68 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="QuantityAbbreviated" xml:space="preserve">
-    <value>Menge</value>
-  </data>
-  <data name="TaxTotal" xml:space="preserve">
-    <value>MwSt</value>
-  </data>
-  <data name="GrandTotal" xml:space="preserve">
-    <value>Gesamtsumme</value>
-  </data>
-  <data name="NonTaxableSales" xml:space="preserve">
-    <value>Nontaxable Vertrieb</value>
-  </data>
-  <data name="ValueDate" xml:space="preserve">
-    <value>Wert Datum</value>
-  </data>
-  <data name="ReferenceNumberAbbreviated" xml:space="preserve">
-    <value>Referenz-Nr #</value>
-  </data>
-  <data name="Discount" xml:space="preserve">
-    <value>Rabatt</value>
-  </data>
-  <data name="PriceType" xml:space="preserve">
-    <value>Preis Art</value>
-  </data>
-  <data name="CashTransaction" xml:space="preserve">
-    <value>Geldtransaktions</value>
-  </data>
-  <data name="Action" xml:space="preserve">
-    <value>Aktion</value>
-  </data>
-  <data name="SelectParty" xml:space="preserve">
-    <value>Wählen Partei</value>
-  </data>
-  <data name="Unit" xml:space="preserve">
-    <value>Einheit</value>
-  </data>
-  <data name="Amount" xml:space="preserve">
-    <value>Höhe</value>
-  </data>
-  <data name="Add" xml:space="preserve">
-    <value>hinzufügen</value>
-  </data>
-  <data name="TaxForm" xml:space="preserve">
-    <value>Steuererklärung</value>
-  </data>
-  <data name="ItemName" xml:space="preserve">
-    <value>Artikelname</value>
-  </data>
-  <data name="Tax" xml:space="preserve">
-    <value>Steuer</value>
-  </data>
-  <data name="RunningTotal" xml:space="preserve">
-    <value>Laufende Summe</value>
-  </data>
-  <data name="CostCenter" xml:space="preserve">
-    <value>Kostenstelle</value>
-  </data>
-  <data name="CashRepositoryBalance" xml:space="preserve">
-    <value>Barzahlung Repository Abgleich</value>
-  </data>
-  <data name="ItemCode" xml:space="preserve">
-    <value>Item Code</value>
+  <data name="Salesperson" xml:space="preserve">
+    <value>Verkäufer</value>
   </data>
   <data name="SubTotal" xml:space="preserve">
     <value>Zwischensumme</value>
@@ -186,43 +126,103 @@
   <data name="Save" xml:space="preserve">
     <value>Speichern</value>
   </data>
-  <data name="CashRepository" xml:space="preserve">
-    <value>Barzahlung Repository</value>
+  <data name="Discount" xml:space="preserve">
+    <value>Rabatt</value>
   </data>
-  <data name="Salesperson" xml:space="preserve">
-    <value>Verkäufer</value>
-  </data>
-  <data name="Price" xml:space="preserve">
-    <value>Preis</value>
-  </data>
-  <data name="Total" xml:space="preserve">
-    <value>gesamt</value>
+  <data name="CashTransaction" xml:space="preserve">
+    <value>Geldtransaktions</value>
   </data>
   <data name="SelectStore" xml:space="preserve">
     <value>Wählen Sie Speicher</value>
   </data>
-  <data name="AttachmentsPlus" xml:space="preserve">
-    <value>Anhänge (+)</value>
+  <data name="Rate" xml:space="preserve">
+    <value>Preis</value>
   </data>
-  <data name="ShippingCompany" xml:space="preserve">
-    <value>Versandunternehmen</value>
+  <data name="Amount" xml:space="preserve">
+    <value>Höhe</value>
+  </data>
+  <data name="SelectParty" xml:space="preserve">
+    <value>Wählen Partei</value>
+  </data>
+  <data name="CashRepository" xml:space="preserve">
+    <value>Barzahlung Repository</value>
+  </data>
+  <data name="ShippingAddress" xml:space="preserve">
+    <value>Versandadresse</value>
+  </data>
+  <data name="QuantityAbbreviated" xml:space="preserve">
+    <value>Menge</value>
+  </data>
+  <data name="NonTaxableSales" xml:space="preserve">
+    <value>Nontaxable Vertrieb</value>
   </data>
   <data name="SalesType" xml:space="preserve">
     <value>Verkaufs-Art</value>
   </data>
-  <data name="ShippingCharge" xml:space="preserve">
-    <value>Verschiffen-Gebühr</value>
+  <data name="Unit" xml:space="preserve">
+    <value>Einheit</value>
   </data>
-  <data name="Rate" xml:space="preserve">
-    <value>Preis</value>
+  <data name="ItemName" xml:space="preserve">
+    <value>Artikelname</value>
   </data>
-  <data name="TaxableSales" xml:space="preserve">
-    <value>steuerpflichtigen Umsatz</value>
+  <data name="TaxForm" xml:space="preserve">
+    <value>Steuererklärung</value>
+  </data>
+  <data name="Tax" xml:space="preserve">
+    <value>Steuer</value>
+  </data>
+  <data name="ValueDate" xml:space="preserve">
+    <value>Wert Datum</value>
   </data>
   <data name="StatementReference" xml:space="preserve">
     <value>Anweisungsreferenz</value>
   </data>
-  <data name="ShippingAddress" xml:space="preserve">
-    <value>Versandadresse</value>
+  <data name="Action" xml:space="preserve">
+    <value>Aktion</value>
+  </data>
+  <data name="ShippingCharge" xml:space="preserve">
+    <value>Verschiffen-Gebühr</value>
+  </data>
+  <data name="AttachmentsPlus" xml:space="preserve">
+    <value>Anhänge (+)</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Preis</value>
+  </data>
+  <data name="PriceType" xml:space="preserve">
+    <value>Preis Art</value>
+  </data>
+  <data name="TaxTotal" xml:space="preserve">
+    <value>MwSt</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>gesamt</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>hinzufügen</value>
+  </data>
+  <data name="ReferenceNumberAbbreviated" xml:space="preserve">
+    <value>Referenz-Nr #</value>
+  </data>
+  <data name="GrandTotal" xml:space="preserve">
+    <value>Gesamtsumme</value>
+  </data>
+  <data name="CashRepositoryBalance" xml:space="preserve">
+    <value>Barzahlung Repository Abgleich</value>
+  </data>
+  <data name="TaxableSales" xml:space="preserve">
+    <value>steuerpflichtigen Umsatz</value>
+  </data>
+  <data name="ShippingCompany" xml:space="preserve">
+    <value>Versandunternehmen</value>
+  </data>
+  <data name="CostCenter" xml:space="preserve">
+    <value>Kostenstelle</value>
+  </data>
+  <data name="RunningTotal" xml:space="preserve">
+    <value>Laufende Summe</value>
+  </data>
+  <data name="ItemCode" xml:space="preserve">
+    <value>Item Code</value>
   </data>
 </root>

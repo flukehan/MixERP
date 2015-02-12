@@ -43,5 +43,3 @@ INNER JOIN core.accounts
 ON transactions.transaction_details.account_id = core.accounts.account_id
 INNER JOIN core.account_masters
 ON core.accounts.account_master_id = core.account_masters.account_master_id;
-
-

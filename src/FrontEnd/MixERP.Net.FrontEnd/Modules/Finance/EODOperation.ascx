@@ -133,8 +133,18 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         $.connection.dayOperationHub.client.getNotification = function (msg) {
             AddItem(msg);
 
+            if (msg.substr(0, 5).toLowerCase() === "error") {
+                receivingData = false;
+
+                $(".blue").removeClass("blue").addClass("red");
+                $("h2").removeClass("blue").addClass("red");
+                $(".loading").removeClass("loading");
+                $(".progress").removeClass("success").addClass("error");
+            };
+
             if (msg === "OK") {
                 receivingData = false;
+                $(".loading").removeClass("loading");
                 notifyServer();
             };
         };

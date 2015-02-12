@@ -38,69 +38,63 @@ namespace MixERP.Net.FrontEnd.Base
         {
             string script = "var searchInput = $('#SearchInput');";
 
-            script += this.GetVariable("today", DateTime.Now.ToShortDateString());
-            script += this.GetVariable("now", DateTime.Now.ToString(CultureInfo.InvariantCulture));
+            script += JSUtility.GetVar("today", DateTime.Now.ToShortDateString());
+            script += JSUtility.GetVar("now", DateTime.Now.ToString(CultureInfo.InvariantCulture));
 
-            script += this.GetVariable("user", CurrentSession.GetUserName());
-            script += this.GetVariable("office", CurrentSession.GetOfficeName());
+            script += JSUtility.GetVar("user", CurrentSession.GetUserName());
+            script += JSUtility.GetVar("office", CurrentSession.GetOfficeName());
 
-            script += this.GetVariable("shortDateFormat", LocalizationHelper.GetShortDateFormat());
-            script += this.GetVariable("longDateFormat", LocalizationHelper.GetLongDateFormat());
+            script += JSUtility.GetVar("shortDateFormat", LocalizationHelper.GetShortDateFormat());
+            script += JSUtility.GetVar("longDateFormat", LocalizationHelper.GetLongDateFormat());
 
-            script += this.GetVariable("thousandSeparator", LocalizationHelper.GetThousandSeparator());
-            script += this.GetVariable("decimalSeparator", LocalizationHelper.GetDecimalSeparator());
-            script += this.GetVariable("currencyDecimalPlaces", LocalizationHelper.GetCurrencyDecimalPlaces());
-            script += this.GetVariable("currencySymbol", LocalizationHelper.GetCurrencySymbol());
+            script += JSUtility.GetVar("thousandSeparator", LocalizationHelper.GetThousandSeparator());
+            script += JSUtility.GetVar("decimalSeparator", LocalizationHelper.GetDecimalSeparator());
+            script += JSUtility.GetVar("currencyDecimalPlaces", LocalizationHelper.GetCurrencyDecimalPlaces());
+            script += JSUtility.GetVar("currencySymbol", LocalizationHelper.GetCurrencySymbol());
 
-            script += this.GetVariable("duplicateEntryLocalized", Resources.Warnings.DuplicateEntry);
-            script += this.GetVariable("selectLocalized", Resources.Titles.Select);
-            script += this.GetVariable("noneLocalized", Resources.Titles.None);
-            script += this.GetVariable("invalidDateWarningLocalized", Resources.Warnings.InvalidDate);
-            script += this.GetVariable("areYouSureLocalized", Resources.Questions.AreYouSure);
-            script += this.GetVariable("nothingSelectedLocalized", Resources.Warnings.NothingSelected);
-            script += this.GetVariable("yesLocalized", Resources.Titles.Yes);
-            script += this.GetVariable("noLocalized", Resources.Titles.No);
+            script += JSUtility.GetVar("duplicateEntryLocalized", Resources.Warnings.DuplicateEntry);
+            script += JSUtility.GetVar("selectLocalized", Resources.Titles.Select);
+            script += JSUtility.GetVar("noneLocalized", Resources.Titles.None);
+            script += JSUtility.GetVar("invalidDateWarningLocalized", Resources.Warnings.InvalidDate);
+            script += JSUtility.GetVar("areYouSureLocalized", Resources.Questions.AreYouSure);
+            script += JSUtility.GetVar("nothingSelectedLocalized", Resources.Warnings.NothingSelected);
+            script += JSUtility.GetVar("yesLocalized", Resources.Titles.Yes);
+            script += JSUtility.GetVar("noLocalized", Resources.Titles.No);
 
-            script += this.GetVariable("daysLowerCaseLocalized", Resources.Labels.DaysLowerCase);
-            script += this.GetVariable("gridViewEmptyWarningLocalized", Resources.Warnings.GridViewEmpty);
+            script += JSUtility.GetVar("daysLowerCaseLocalized", Resources.Labels.DaysLowerCase);
+            script += JSUtility.GetVar("gridViewEmptyWarningLocalized", Resources.Warnings.GridViewEmpty);
 
-            script += this.GetVariable("duplicateFileLocalized", Resources.Warnings.DuplicateFiles);
+            script += JSUtility.GetVar("duplicateFileLocalized", Resources.Warnings.DuplicateFiles);
 
-            script += this.GetVariable("taskCompletedSuccessfullyLocalized", Resources.Labels.TaskCompletedSuccessfully);
+            script += JSUtility.GetVar("taskCompletedSuccessfullyLocalized", Resources.Labels.TaskCompletedSuccessfully);
 
 
-            script += this.GetVariable("today", DateTime.Now.ToShortDateString());
-            script += this.GetVariable("shortDateFormat", LocalizationHelper.GetShortDateFormat());
-            script += this.GetVariable("thousandSeparator", LocalizationHelper.GetThousandSeparator());
-            script += this.GetVariable("decimalSeparator", LocalizationHelper.GetDecimalSeparator());
-            script += this.GetVariable("currencyDecimalPlaces", LocalizationHelper.GetCurrencyDecimalPlaces());
+            script += JSUtility.GetVar("today", DateTime.Now.ToShortDateString());
+            script += JSUtility.GetVar("shortDateFormat", LocalizationHelper.GetShortDateFormat());
+            script += JSUtility.GetVar("thousandSeparator", LocalizationHelper.GetThousandSeparator());
+            script += JSUtility.GetVar("decimalSeparator", LocalizationHelper.GetDecimalSeparator());
+            script += JSUtility.GetVar("currencyDecimalPlaces", LocalizationHelper.GetCurrencyDecimalPlaces());
 
-            script += this.GetVariable("duplicateEntryLocalized", Resources.Warnings.DuplicateEntry);
+            script += JSUtility.GetVar("duplicateEntryLocalized", Resources.Warnings.DuplicateEntry);
 
-            script += this.GetVariable("selectLocalized", Resources.Titles.Select);
-            script += this.GetVariable("noneLocalized", Resources.Titles.None);
-            script += this.GetVariable("invalidDateWarningLocalized", Resources.Warnings.InvalidDate);
-            script += this.GetVariable("areYouSureLocalized", Resources.Questions.AreYouSure);
-            script += this.GetVariable("nothingSelectedLocalized", Resources.Warnings.NothingSelected);
-            script += this.GetVariable("yesLocalized", Resources.Titles.Yes);
-            script += this.GetVariable("noLocalized", Resources.Titles.No);
+            script += JSUtility.GetVar("selectLocalized", Resources.Titles.Select);
+            script += JSUtility.GetVar("noneLocalized", Resources.Titles.None);
+            script += JSUtility.GetVar("invalidDateWarningLocalized", Resources.Warnings.InvalidDate);
+            script += JSUtility.GetVar("areYouSureLocalized", Resources.Questions.AreYouSure);
+            script += JSUtility.GetVar("nothingSelectedLocalized", Resources.Warnings.NothingSelected);
+            script += JSUtility.GetVar("yesLocalized", Resources.Titles.Yes);
+            script += JSUtility.GetVar("noLocalized", Resources.Titles.No);
 
-            script += this.GetVariable("daysLowerCaseLocalized", Resources.Labels.DaysLowerCase);
-            script += this.GetVariable("gridViewEmptyWarningLocalized", Resources.Warnings.GridViewEmpty);
+            script += JSUtility.GetVar("daysLowerCaseLocalized", Resources.Labels.DaysLowerCase);
+            script += JSUtility.GetVar("gridViewEmptyWarningLocalized", Resources.Warnings.GridViewEmpty);
 
-            script += this.GetVariable("duplicateFileLocalized", Resources.Warnings.DuplicateFiles);
+            script += JSUtility.GetVar("duplicateFileLocalized", Resources.Warnings.DuplicateFiles);
 
-            script += this.GetVariable("taskCompletedSuccessfullyLocalized", Resources.Labels.TaskCompletedSuccessfully);
+            script += JSUtility.GetVar("taskCompletedSuccessfullyLocalized", Resources.Labels.TaskCompletedSuccessfully);
 
             PageUtility.RegisterJavascript("MixERP_MasterBase", script, this.Page, true);
 
         }
 
-        private string GetVariable(string name, object value)
-        {
-            string script = "var {0}='{1}';";
-            script = string.Format(CultureInfo.InvariantCulture, script, name, value.ToString().Replace("'", @"\'"));
-            return script;
-        }
     }
 }

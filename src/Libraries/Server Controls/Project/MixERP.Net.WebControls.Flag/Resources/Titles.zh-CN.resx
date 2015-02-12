@@ -117,10 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Close" xml:space="preserve">
-    <value>近</value>
+  <data name="FlagThisTransaction" xml:space="preserve">
+    <value>将此交易</value>
   </data>
   <data name="Update" xml:space="preserve">
     <value>更新</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>近</value>
   </data>
 </root>
