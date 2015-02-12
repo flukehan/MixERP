@@ -130,14 +130,14 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\ScrudResource.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>ScrudResource.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Resources\Titles.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Titles.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Setup\LeadSources.ascx.cs">
       <DependentUpon>LeadSources.ascx</DependentUpon>
@@ -186,17 +186,27 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\ScrudResource.de-DE.resx" />
     <EmbeddedResource Include="Resources\ScrudResource.es-ES.resx" />
+    <EmbeddedResource Include="Resources\ScrudResource.fr-FR.resx" />
+    <EmbeddedResource Include="Resources\ScrudResource.ja-JP.resx" />
+    <EmbeddedResource Include="Resources\ScrudResource.nl-NL.resx" />
     <EmbeddedResource Include="Resources\ScrudResource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ScrudResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ScrudResource.ru-RU.resx" />
     <EmbeddedResource Include="Resources\ScrudResource.zh-CN.resx" />
+    <EmbeddedResource Include="Resources\Titles.de-DE.resx" />
     <EmbeddedResource Include="Resources\Titles.es-ES.resx" />
+    <EmbeddedResource Include="Resources\Titles.fr-FR.resx" />
+    <EmbeddedResource Include="Resources\Titles.ja-JP.resx" />
+    <EmbeddedResource Include="Resources\Titles.nl-NL.resx" />
     <EmbeddedResource Include="Resources\Titles.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Titles.ru-RU.resx" />
     <EmbeddedResource Include="Resources\Titles.zh-CN.resx" />
   </ItemGroup>
   <PropertyGroup>

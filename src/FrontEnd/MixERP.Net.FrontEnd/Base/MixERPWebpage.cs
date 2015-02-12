@@ -325,6 +325,8 @@ namespace MixERP.Net.FrontEnd.Base
             CultureInfo culture = new CultureInfo(cultureName);
             Thread.CurrentThread.CurrentCulture = culture;
             Thread.CurrentThread.CurrentUICulture = culture;
+            CultureInfo.DefaultThreadCurrentCulture = culture;
+            CultureInfo.DefaultThreadCurrentUICulture = culture;
         }
 
         private void ForceLogOff()

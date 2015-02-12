@@ -31,11 +31,11 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                     <br />
             Last Login IP : 192.168.0.200
                 <br />
-            Last Login On : <%=DateTime.Now.ToString(MixERP.Net.Common.Helpers.LocalizationHelper.GetCurrentCulture()) %>
+            Last Login On : <%=DateTime.Now.ToString(MixERP.Net.Common.Helpers.LocalizationHelper.GetCurrentUICulture()) %>
             <br />
             Current Login IP : 192.168.0.200
                 <br />
-            Current Login On: <%=DateTime.Now.ToString(MixERP.Net.Common.Helpers.LocalizationHelper.GetCurrentCulture()) %>
+            Current Login On: <%=DateTime.Now.ToString(MixERP.Net.Common.Helpers.LocalizationHelper.GetCurrentUICulture()) %>
             <br />
             Role : ADM (Administrators)
                     <br />

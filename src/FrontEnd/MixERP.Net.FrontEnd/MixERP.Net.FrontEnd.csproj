@@ -103,65 +103,165 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_GlobalResources\Labels.Designer.cs">
+    <Compile Include="App_GlobalResources\Labels.de-DE.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>Labels.de-DE.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Labels.Designer.cs">
       <DependentUpon>Labels.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="App_GlobalResources\Labels.es-ES.designer.cs">
+      <DependentUpon>Labels.es-ES.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="App_GlobalResources\Labels.fr-FR.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Labels.es-ES.resx</DependentUpon>
+      <DependentUpon>Labels.fr-FR.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Labels.ja-JP.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Labels.ja-JP.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Labels.nl-NL.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Labels.nl-NL.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Labels.ru-RU.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Labels.ru-RU.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\Labels.zh-CN.designer.cs">
+      <DependentUpon>Labels.zh-CN.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="App_GlobalResources\Questions.de-DE.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Labels.zh-CN.resx</DependentUpon>
+      <DependentUpon>Questions.de-DE.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\Questions.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Questions.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="App_GlobalResources\Questions.es-ES.designer.cs">
+      <DependentUpon>Questions.es-ES.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="App_GlobalResources\Questions.fr-FR.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Questions.es-ES.resx</DependentUpon>
+      <DependentUpon>Questions.fr-FR.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Questions.ja-JP.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Questions.ja-JP.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Questions.nl-NL.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Questions.nl-NL.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Questions.ru-RU.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Questions.ru-RU.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\Questions.zh-CN.designer.cs">
+      <DependentUpon>Questions.zh-CN.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="App_GlobalResources\Titles.de-DE.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Questions.zh-CN.resx</DependentUpon>
+      <DependentUpon>Titles.de-DE.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\Titles.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Titles.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="App_GlobalResources\Titles.es-ES.designer.cs">
+      <DependentUpon>Titles.es-ES.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="App_GlobalResources\Titles.fr-FR.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Titles.es-ES.resx</DependentUpon>
+      <DependentUpon>Titles.fr-FR.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Titles.ja-JP.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Titles.ja-JP.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Titles.nl-NL.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Titles.nl-NL.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Titles.ru-RU.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Titles.ru-RU.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\Titles.zh-CN.designer.cs">
+      <DependentUpon>Titles.zh-CN.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="App_GlobalResources\Warnings.de-DE.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Titles.zh-CN.resx</DependentUpon>
+      <DependentUpon>Warnings.de-DE.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\Warnings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Warnings.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="App_GlobalResources\Warnings.es-ES.designer.cs">
+      <DependentUpon>Warnings.es-ES.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="App_GlobalResources\Warnings.fr-FR.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Warnings.es-ES.resx</DependentUpon>
+      <DependentUpon>Warnings.fr-FR.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Warnings.ja-JP.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Warnings.ja-JP.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Warnings.nl-NL.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Warnings.nl-NL.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Warnings.ru-RU.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Warnings.ru-RU.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\Warnings.zh-CN.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Warnings.zh-CN.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Base\MixERPMasterPage.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -330,6 +430,54 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_GlobalResources\Labels.es-ES.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Labels.es-ES.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Labels.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Labels.Designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Labels.zh-CN.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Labels.zh-CN.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Questions.es-ES.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Questions.es-ES.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Questions.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Questions.Designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Questions.zh-CN.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Questions.zh-CN.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Titles.es-ES.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Titles.es-ES.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Titles.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Titles.Designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Titles.zh-CN.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Titles.zh-CN.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Warnings.es-ES.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Warnings.es-ES.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Warnings.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Warnings.Designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Warnings.zh-CN.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Warnings.zh-CN.designer.cs</LastGenOutput>
+    </Content>
     <Content Include="App_Themes\MixERP\mixerp.css">
       <DependentUpon>mixerp.less</DependentUpon>
     </Content>
@@ -813,7 +961,6 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-    <Content Include="xsp4.bat" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Handlers\" />
@@ -879,69 +1026,85 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_GlobalResources\Titles.resx">
+    <Content Include="App_GlobalResources\Labels.de-DE.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Titles.Designer.cs</LastGenOutput>
+      <LastGenOutput>Labels.de-DE.designer.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_GlobalResources\Warnings.resx">
+    <Content Include="App_GlobalResources\Labels.fr-FR.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Warnings.Designer.cs</LastGenOutput>
+      <LastGenOutput>Labels.fr-FR.designer.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_GlobalResources\Labels.resx">
+    <Content Include="App_GlobalResources\Labels.ja-JP.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Labels.Designer.cs</LastGenOutput>
+      <LastGenOutput>Labels.ja-JP.designer.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_GlobalResources\Questions.resx">
+    <Content Include="App_GlobalResources\Labels.nl-NL.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Questions.Designer.cs</LastGenOutput>
+      <LastGenOutput>Labels.nl-NL.designer.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_GlobalResources\Labels.zh-CN.resx">
+    <Content Include="App_GlobalResources\Labels.ru-RU.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Labels.zh-CN.designer.cs</LastGenOutput>
+      <LastGenOutput>Labels.ru-RU.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Questions.es-ES.resx">
+    <Content Include="App_GlobalResources\Questions.de-DE.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Questions.es-ES.designer.cs</LastGenOutput>
+      <LastGenOutput>Questions.de-DE.designer.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_GlobalResources\Labels.es-ES.resx">
+    <Content Include="App_GlobalResources\Questions.fr-FR.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Labels.es-ES.designer.cs</LastGenOutput>
+      <LastGenOutput>Questions.fr-FR.designer.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_GlobalResources\Questions.zh-CN.resx">
+    <Content Include="App_GlobalResources\Questions.ja-JP.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Questions.zh-CN.designer.cs</LastGenOutput>
+      <LastGenOutput>Questions.ja-JP.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Titles.es-ES.resx">
+    <Content Include="App_GlobalResources\Questions.nl-NL.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Titles.es-ES.designer.cs</LastGenOutput>
+      <LastGenOutput>Questions.nl-NL.designer.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_GlobalResources\Titles.zh-CN.resx">
+    <Content Include="App_GlobalResources\Questions.ru-RU.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Titles.zh-CN.designer.cs</LastGenOutput>
+      <LastGenOutput>Questions.ru-RU.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Warnings.es-ES.resx">
+    <Content Include="App_GlobalResources\Titles.de-DE.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Warnings.es-ES.designer.cs</LastGenOutput>
+      <LastGenOutput>Titles.de-DE.designer.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_GlobalResources\Warnings.zh-CN.resx">
+    <Content Include="App_GlobalResources\Titles.fr-FR.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Warnings.zh-CN.designer.cs</LastGenOutput>
+      <LastGenOutput>Titles.fr-FR.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Titles.ja-JP.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Titles.ja-JP.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Titles.nl-NL.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Titles.nl-NL.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Titles.ru-RU.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Titles.ru-RU.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Warnings.de-DE.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Warnings.de-DE.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Warnings.fr-FR.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Warnings.fr-FR.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Warnings.ja-JP.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Warnings.ja-JP.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Warnings.nl-NL.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Warnings.nl-NL.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Warnings.ru-RU.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Warnings.ru-RU.designer.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <PropertyGroup>

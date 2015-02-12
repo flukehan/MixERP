@@ -59,14 +59,14 @@
     <Compile Include="FlagUpdatedEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Labels.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Labels.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Resources\Titles.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Titles.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -88,17 +88,27 @@
     <None Include="Mix Open Foundation.snk" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Labels.de-DE.resx" />
     <EmbeddedResource Include="Resources\Labels.es-ES.resx" />
+    <EmbeddedResource Include="Resources\Labels.fr-FR.resx" />
+    <EmbeddedResource Include="Resources\Labels.ja-JP.resx" />
+    <EmbeddedResource Include="Resources\Labels.nl-NL.resx" />
     <EmbeddedResource Include="Resources\Labels.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Labels.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Labels.ru-RU.resx" />
     <EmbeddedResource Include="Resources\Labels.zh-CN.resx" />
+    <EmbeddedResource Include="Resources\Titles.de-DE.resx" />
     <EmbeddedResource Include="Resources\Titles.es-ES.resx" />
+    <EmbeddedResource Include="Resources\Titles.fr-FR.resx" />
+    <EmbeddedResource Include="Resources\Titles.ja-JP.resx" />
+    <EmbeddedResource Include="Resources\Titles.nl-NL.resx" />
     <EmbeddedResource Include="Resources\Titles.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Titles.ru-RU.resx" />
     <EmbeddedResource Include="Resources\Titles.zh-CN.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

@@ -67,14 +67,14 @@
     <Compile Include="Helpers\ConfigurationHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Messages.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Messages.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Resources\Titles.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Titles.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -89,11 +89,16 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AttachmentFactory.js" />
+    <EmbeddedResource Include="Resources\Messages.de-DE.resx" />
     <EmbeddedResource Include="Resources\Messages.es-ES.resx" />
+    <EmbeddedResource Include="Resources\Messages.fr-FR.resx" />
+    <EmbeddedResource Include="Resources\Messages.ja-JP.resx" />
+    <EmbeddedResource Include="Resources\Messages.nl-NL.resx" />
     <EmbeddedResource Include="Resources\Messages.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Messages.ru-RU.resx" />
     <EmbeddedResource Include="Resources\Messages.zh-CN.resx" />
     <EmbeddedResource Include="Resources\Titles.resx">
       <Generator>ResXFileCodeGenerator</Generator>

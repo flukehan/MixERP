@@ -77,25 +77,25 @@ namespace MixERP.Net.Common.Helpers
 
         public static int GetCurrencyDecimalPlaces()
         {
-            CultureInfo culture = GetCurrentCulture();
+            CultureInfo culture = GetCurrentUICulture();
             return culture.NumberFormat.CurrencyDecimalDigits;
         }
 
         public static string GetCurrencySymbol()
         {
-            CultureInfo culture = GetCurrentCulture();
+            CultureInfo culture = GetCurrentUICulture();
             return culture.NumberFormat.CurrencySymbol;
         }
 
-        public static CultureInfo GetCurrentCulture()
+        public static CultureInfo GetCurrentUICulture()
         {
-            CultureInfo culture = Thread.CurrentThread.CurrentUICulture;
+            CultureInfo culture = CultureInfo.DefaultThreadCurrentUICulture ?? CultureInfo.CurrentUICulture;
             return culture;
         }
 
         public static string GetDecimalSeparator()
         {
-            CultureInfo culture = GetCurrentCulture();
+            CultureInfo culture = GetCurrentUICulture();
             return culture.NumberFormat.CurrencyDecimalSeparator;
         }
 
@@ -108,7 +108,7 @@ namespace MixERP.Net.Common.Helpers
 
             try
             {
-                var globalResourceObject = HttpContext.GetGlobalResourceObject(className, key, GetCurrentCulture());
+                var globalResourceObject = HttpContext.GetGlobalResourceObject(className, key, GetCurrentUICulture());
 
                 if (globalResourceObject != null)
                 {
@@ -126,7 +126,7 @@ namespace MixERP.Net.Common.Helpers
 
         public static int GetNumberDecimalPlaces()
         {
-            CultureInfo culture = GetCurrentCulture();
+            CultureInfo culture = GetCurrentUICulture();
             return culture.NumberFormat.NumberDecimalDigits;
         }
 
@@ -149,7 +149,7 @@ namespace MixERP.Net.Common.Helpers
 
             try
             {
-                value = r.GetString(key, GetCurrentCulture());
+                value = r.GetString(key, GetCurrentUICulture());
 
                 if (string.IsNullOrWhiteSpace(value))
                 {
@@ -167,19 +167,19 @@ namespace MixERP.Net.Common.Helpers
 
         public static string GetShortDateFormat()
         {
-            CultureInfo culture = GetCurrentCulture();
+            CultureInfo culture = GetCurrentUICulture();
             return culture.DateTimeFormat.ShortDatePattern;
         }
 
         public static string GetLongDateFormat()
         {
-            CultureInfo culture = GetCurrentCulture();
+            CultureInfo culture = GetCurrentUICulture();
             return culture.DateTimeFormat.LongDatePattern;
         }
 
         public static string GetThousandSeparator()
         {
-            CultureInfo culture = GetCurrentCulture();
+            CultureInfo culture = GetCurrentUICulture();
             return culture.NumberFormat.CurrencyGroupSeparator;
         }
 

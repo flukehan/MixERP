@@ -150,13 +150,13 @@ namespace MixERP.Net.Common.jQueryHelper
 
         public static string GetDatePickerFormat()
         {
-            string datePattern = LocalizationHelper.GetCurrentCulture().DateTimeFormat.ShortDatePattern;
+            string datePattern = LocalizationHelper.GetCurrentUICulture().DateTimeFormat.ShortDatePattern;
             return ConvertDateFormat(datePattern);
         }
 
         public static string GetDatePickerLocale()
         {
-            return LocalizationHelper.GetCurrentCulture().TwoLetterISOLanguageName;
+            return LocalizationHelper.GetCurrentUICulture().TwoLetterISOLanguageName;
         }
 
         public static string GetNumberOfMonths()
@@ -166,7 +166,7 @@ namespace MixERP.Net.Common.jQueryHelper
 
         public static int GetWeekStartDay()
         {
-            return (int) LocalizationHelper.GetCurrentCulture().DateTimeFormat.FirstDayOfWeek;
+            return (int) LocalizationHelper.GetCurrentUICulture().DateTimeFormat.FirstDayOfWeek;
         }
 
         public static bool ShowWeekNumber()

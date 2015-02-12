@@ -262,7 +262,7 @@ namespace MixERP.Net.DbFactory
 
                 if (!match)
                 {
-                    throw new InvalidOperationException(string.Format(LocalizationHelper.GetCurrentCulture(), Warnings.InvalidParameterName, npgsqlParameter.ParameterName));
+                    throw new InvalidOperationException(string.Format(LocalizationHelper.GetCurrentUICulture(), Warnings.InvalidParameterName, npgsqlParameter.ParameterName));
                 }
             }
 

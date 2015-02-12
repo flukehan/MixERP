@@ -38,7 +38,7 @@ namespace MixERP.Net.Common.Helpers
 
         public static CultureInfo GetCulture()
         {
-            return LocalizationHelper.GetCurrentCulture();
+            return LocalizationHelper.GetCurrentUICulture();
         }
 
         public static string GetEmail()

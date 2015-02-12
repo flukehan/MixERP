@@ -107,11 +107,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Errors.de-DE.resx" />
     <EmbeddedResource Include="Resources\Errors.es-ES.resx" />
+    <EmbeddedResource Include="Resources\Errors.fr-FR.resx" />
+    <EmbeddedResource Include="Resources\Errors.ja-JP.resx" />
+    <EmbeddedResource Include="Resources\Errors.nl-NL.resx" />
     <EmbeddedResource Include="Resources\Errors.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Errors.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Errors.ru-RU.resx" />
     <EmbeddedResource Include="Resources\Errors.zh-CN.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

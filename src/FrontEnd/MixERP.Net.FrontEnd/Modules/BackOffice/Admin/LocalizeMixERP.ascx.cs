@@ -19,6 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -34,6 +35,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
     {
         public const string sessionKey = "LocalizationCulture";
         private string root;
+        private readonly IEnumerable<string> cultures = Data.Admin.LocalizeMixERP.GetCultures().Select(x => x.CultureCode).ToArray();
 
         public override void OnControlLoad(object sender, EventArgs e)
         {
@@ -68,7 +70,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
             {
                 gridView.ID = "LocalizationGridView";
                 gridView.CssClass = "ui table initially hidden";
-                gridView.DataSource = Factory.Get<DbGetLocalizationTableResult>("SELECT * FROM localization.get_localization_table(@0::text)", cultureCode);
+                gridView.DataSource = Factory.Get<DbGetLocalizationTableResult>("SELECT * FROM localization.get_localization_table(@0::text) ORDER BY row_number;", cultureCode);
                 gridView.DataBind();
 
                 this.Placeholder1.Controls.Add(gridView);
@@ -84,7 +86,9 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
         {
             const string sql = "SELECT * FROM localization.add_resource(@0, @1, @2);";
 
-            foreach (string file in this.GetFiles())
+            IEnumerable<string> files = this.GetFiles();
+
+            foreach (string file in files)
             {
                 foreach (KeyValuePair<string, string> item in this.GetResources(file))
                 {
@@ -95,21 +99,42 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
 
         private IEnumerable<string> GetFiles()
         {
+
             DirectoryInfo directoryInfo = new DirectoryInfo(this.Page.Server.MapPath("~/")).Parent;
 
             if (directoryInfo != null && directoryInfo.Parent != null)
             {
                 this.root = directoryInfo.Parent.FullName;
 
-                string[] files = Directory.GetFiles(root, "*.resx", SearchOption.AllDirectories);
-                return files.Select(s => s.Replace(root, "")).ToArray();
+                List<string> files = Directory.GetFiles(root, "*.resx", SearchOption.AllDirectories).ToList();
+                files = files.Select(s => s.Replace(root, "")).ToList();
+
+
+                foreach (string culture in cultures)
+                {
+                    for (int i = 0; i < files.Count; i++)
+                    {
+                        string file = files[i];
+
+                        if (file.Contains(culture))
+                        {
+                            files.RemoveAt(i);
+                        }
+                    }
+
+                }
+
+                return files;
+
             }
 
             return null;
         }
 
+
         private IEnumerable<KeyValuePair<string, string>> GetResources(string file)
         {
+
             XDocument xDoc = XDocument.Load(this.root + file);
 
             IEnumerable<KeyValuePair<string, string>> result =

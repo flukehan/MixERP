@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DirectSales.ascx.cs" Inherits="MixERP.Net.Core.Modules.Sales.Entry.DirectSales"
-    OverridePath="/Modules/Sales/DirectSales.mix" %>
+OverridePath="/Modules/Sales/DirectSales.mix" %>
 <asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
-
 <script src="../Scripts/Entry/DirectSales.js"></script>

@@ -70,6 +70,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Resources\Warnings.Designer.cs">
+      <DependentUpon>Warnings.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Include="Transactions.cs">
       <DependentUpon>Transactions.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -106,11 +111,6 @@
     </Compile>
     <Compile Include="Models\Policy\SignInResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\Warnings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Warnings.resx</DependentUpon>
-    </Compile>
     <Compile Include="Models\Transactions\JournalDetail.cs" />
     <Compile Include="Models\Transactions\ProductDetail.cs" />
     <Compile Include="Models\Transactions\StockAdjustmentDetail.cs" />
@@ -180,11 +180,16 @@
     <None Include="Templates\Generator.template" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Warnings.de-DE.resx" />
     <EmbeddedResource Include="Resources\Warnings.es-ES.resx" />
+    <EmbeddedResource Include="Resources\Warnings.fr-FR.resx" />
+    <EmbeddedResource Include="Resources\Warnings.ja-JP.resx" />
+    <EmbeddedResource Include="Resources\Warnings.nl-NL.resx" />
     <EmbeddedResource Include="Resources\Warnings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Warnings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Warnings.ru-RU.resx" />
     <EmbeddedResource Include="Resources\Warnings.zh-CN.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
