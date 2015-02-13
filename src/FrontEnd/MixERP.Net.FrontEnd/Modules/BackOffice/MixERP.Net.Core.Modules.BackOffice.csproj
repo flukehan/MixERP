@@ -92,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Admin\LocalizeMixERP.ascx" />
+    <Content Include="Counters.ascx" />
     <Content Include="Counties.ascx" />
     <Content Include="Countries.ascx" />
     <Content Include="Entities.ascx" />
@@ -219,6 +220,13 @@
     </Compile>
     <Compile Include="CashRepositories.ascx.designer.cs">
       <DependentUpon>CashRepositories.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Counters.ascx.cs">
+      <DependentUpon>Counters.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Counters.ascx.designer.cs">
+      <DependentUpon>Counters.ascx</DependentUpon>
     </Compile>
     <Compile Include="Counties.ascx.cs">
       <DependentUpon>Counties.ascx</DependentUpon>
