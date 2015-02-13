@@ -1,18 +1,19 @@
 CREATE FUNCTION office.create_user
 (
-    role_id integer_strict,
-    office_id integer_strict,
-    user_name text,
-    password text,
-    full_name text,
-    elevated boolean = false
+    _role_id		integer,
+    _department_id	integer,
+    _office_id		integer,
+    _user_name 		text,
+    _password 		text,
+    _full_name 		text,
+    _elevated 		boolean = false
 )
 RETURNS VOID
 AS
 $$
 BEGIN
-    INSERT INTO office.users(role_id,office_id,user_name,password, full_name, elevated)
-    SELECT $1, $2, $3, $4,$5, $6;
+    INSERT INTO office.users(role_id, department_id, office_id, user_name, password, full_name, elevated)
+    SELECT _role_id, _department_id, _office_id, _user_name, _password, _full_name, _elevated;
     RETURN;
 END
 $$

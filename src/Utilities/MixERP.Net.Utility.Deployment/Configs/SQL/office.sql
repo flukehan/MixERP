@@ -51,8 +51,8 @@ BEGIN
     INSERT INTO office.users(role_id, office_id, user_name, password, full_name)
     SELECT office.get_role_id_by_role_code('SYST'), _office_id, 'sys', '', 'System';
     
-    INSERT INTO office.users(role_id,office_id,user_name,password, full_name, elevated)
-    SELECT office.get_role_id_by_role_code('ADMN'), _office_id, _user_name, _password, _admin_name, true
+    INSERT INTO office.users(role_id,department_id, office_id,user_name,password, full_name, elevated)
+    SELECT office.get_role_id_by_role_code('ADMN'), office.get_department_id_by_code('SUP'), _office_id, _user_name, _password, _admin_name, true
     RETURNING user_id INTO _user_id;
 
     INSERT INTO policy.menu_access(office_id, menu_id, user_id)

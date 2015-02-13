@@ -1386,6 +1386,7 @@ CREATE TABLE office.users
 (
     user_id                                 SERIAL PRIMARY KEY,
     role_id                                 integer NOT NULL,
+    department_id                           integer NOT NULL,
     office_id                               integer NOT NULL,
     user_name                               national character varying(50) NOT NULL,
     full_name                               national character varying(100) NOT NULL,
@@ -1446,6 +1447,10 @@ CREATE TABLE office.departments
                                             DEFAULT(NOW())
 );
 
+ALTER TABLE office.users
+ADD CONSTRAINT users_departments_fk 
+FOREIGN KEY(department_id)
+REFERENCES office.departments(department_id);
 
 CREATE TABLE core.flag_types
 (
@@ -3637,6 +3642,22 @@ CREATE TABLE office.configuration
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
                                             DEFAULT(NOW())    
 );
+
+CREATE TABLE core.widgets
+(
+    widget_id           SERIAL NOT NULL PRIMARY KEY,
+    widget_name         text,
+    widget_source       text NOT NULL,
+    row_number          integer NOT NULL,
+    column_number       integer NOT NULL
+);
+
+CREATE UNIQUE INDEX widgets_widget_name_uix
+ON core.widgets(UPPER(widget_name));
+
+CREATE UNIQUE INDEX widgets_widget_source_uix
+ON core.widgets(UPPER(widget_source));
+
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/src/01.types-domains-tables-and-constraints/types.sql --<--<--
@@ -6192,6 +6213,112 @@ END
 $$
 LANGUAGE plpgsql;
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/src/02.functions-and-logic/logic/functions/audit/audit.get_office_information_model.sql --<--<--
+DROP FUNCTION IF EXISTS audit.get_office_information_model(integer);
+
+CREATE FUNCTION audit.get_office_information_model(integer)
+RETURNS TABLE
+(
+    office              text,
+    logged_in_to        text,
+    last_login_ip       text,
+    last_login_on       TIMESTAMP WITH TIME ZONE,
+    current_ip          text,
+    current_login_on    TIMESTAMP WITH TIME ZONE,
+    role                text,
+    department          text
+)
+VOLATILE
+AS
+$$
+BEGIN
+    CREATE TEMPORARY TABLE temp_model
+    (
+        office              text,
+        logged_in_to        text,
+        last_login_ip       text,
+        last_login_on       TIMESTAMP WITH TIME ZONE,
+        current_ip          text,
+        current_login_on    TIMESTAMP WITH TIME ZONE,
+        role                text,
+        department          text
+    ) ON COMMIT DROP;
+
+
+    INSERT INTO temp_model(office, role, department)
+    SELECT 
+        office.offices.office_code || ' (' || office.offices.office_name || ')',
+        office.roles.role_code || ' (' || office.roles.role_name || ')',
+        office.departments.department_code || ' (' || office.departments.department_name
+    FROM office.users
+    INNER JOIN office.offices
+    ON office.users.office_id = office.users.office_id
+    INNER JOIN office.roles
+    ON office.users.role_id = office.roles.role_id
+    INNER JOIN office.departments
+    ON office.users.department_id = office.departments.department_id
+    WHERE office.users.user_id = $1;
+
+    WITH login_info
+    AS
+    (
+        SELECT 
+            office.offices.office_code || ' (' || office.offices.office_name || ')' AS logged_in_to,
+            ip_address AS current_ip,
+            login_date_time AS current_login_on
+        FROM audit.logins
+        INNER JOIN office.offices
+        ON audit.logins.office_id = office.offices.office_id
+        WHERE user_id = $1
+        AND login_date_time = 
+        (
+            SELECT max(login_date_time)
+            FROM audit.logins
+            WHERE user_id = $1
+        )
+    )
+
+    UPDATE temp_model
+    SET 
+        logged_in_to        = login_info.logged_in_to,
+        current_ip          = login_info.current_ip,
+        current_login_on    = login_info.current_login_on
+    FROM login_info;
+
+
+    WITH last_login_info
+    AS
+    (
+        SELECT 
+            ip_address          AS last_login_ip,
+            login_date_time     AS last_login_on
+        FROM audit.logins
+        WHERE user_id = $1
+        AND login_date_time < 
+        (
+            SELECT max(login_date_time)
+            FROM audit.logins
+            WHERE user_id = $1
+        )
+        ORDER BY login_date_time DESC
+        LIMIT 1
+    )
+    UPDATE temp_model
+    SET 
+        last_login_ip       = last_login_info.last_login_ip,
+        last_login_on       = last_login_info.last_login_on
+    FROM last_login_info;
+    
+    
+    RETURN QUERY
+    SELECT * FROM temp_model;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/src/02.functions-and-logic/logic/functions/core/core.calculate_interest.sql --<--<--
 DROP FUNCTION IF EXISTS core.calculate_interest(principal numeric, rate numeric, days integer, num_of_days_in_year integer, round_up integer);
 CREATE FUNCTION core.calculate_interest(principal numeric, rate numeric, days integer, round_up integer, num_of_days_in_year integer)
@@ -6889,6 +7016,71 @@ $$
 LANGUAGE plpgsql;
 
 
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/src/02.functions-and-logic/logic/functions/core/core.get_workflow_model.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_workflow_model();
+
+CREATE FUNCTION core.get_workflow_model()
+RETURNS TABLE
+(
+    flagged_transactions        integer,
+    in_verification_stack       integer,
+    auto_approved               integer,
+    approved                    integer,
+    rejected                    integer,
+    closed                      integer,
+    withdrawn                   integer
+)
+VOLATILE
+AS
+$$
+    DECLARE _flagged            integer;
+    DECLARE _in_verification    integer;
+    DECLARE _auto_approved      integer;
+    DECLARE _approved           integer;
+    DECLARE _rejected           integer;
+    DECLARE _closed             integer;
+    DECLARE _withdrawn          integer;
+BEGIN
+    SELECT COUNT(*) INTO _flagged 
+    FROM core.flags;
+
+    SELECT COUNT(*) INTO _in_verification
+    FROM transactions.transaction_master
+    WHERE verification_status_id = 0;
+
+    SELECT COUNT(*) INTO _auto_approved
+    FROM transactions.transaction_master
+    WHERE verification_status_id = 1;
+
+    SELECT COUNT(*) INTO _approved
+    FROM transactions.transaction_master
+    WHERE verification_status_id = 2;
+
+    SELECT COUNT(*) INTO _rejected
+    FROM transactions.transaction_master
+    WHERE verification_status_id = -3;
+
+    SELECT COUNT(*) INTO _closed
+    FROM transactions.transaction_master
+    WHERE verification_status_id = -2;
+
+    SELECT COUNT(*) INTO _withdrawn
+    FROM transactions.transaction_master
+    WHERE verification_status_id = -1;
+
+    RETURN QUERY
+    SELECT
+        _flagged, 
+        _in_verification, 
+        _auto_approved,
+        _approved,
+        _rejected,
+        _closed,
+        _withdrawn;
+END
+$$
+LANGUAGE plpgsql;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/src/02.functions-and-logic/logic/functions/core/core.is_cash_account_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.is_cash_account_id(_account_id bigint);
@@ -15532,19 +15724,20 @@ LANGUAGE plpgsql;
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/src/02.functions-and-logic/office/office.create_user.sql --<--<--
 CREATE FUNCTION office.create_user
 (
-    role_id integer_strict,
-    office_id integer_strict,
-    user_name text,
-    password text,
-    full_name text,
-    elevated boolean = false
+    _role_id		integer,
+    _department_id	integer,
+    _office_id		integer,
+    _user_name 		text,
+    _password 		text,
+    _full_name 		text,
+    _elevated 		boolean = false
 )
 RETURNS VOID
 AS
 $$
 BEGIN
-    INSERT INTO office.users(role_id,office_id,user_name,password, full_name, elevated)
-    SELECT $1, $2, $3, $4,$5, $6;
+    INSERT INTO office.users(role_id, department_id, office_id, user_name, password, full_name, elevated)
+    SELECT _role_id, _department_id, _office_id, _user_name, _password, _full_name, _elevated;
     RETURN;
 END
 $$
@@ -21122,6 +21315,17 @@ SELECT 'Bien',            '#D0F5A9', '#000000';
 
 
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/src/04.default-values/widgets.sql --<--<--
+INSERT INTO core.widgets(widget_name, widget_source, row_number, column_number)
+SELECT 'SalesByGeographyWidget',                    '/Modules/Sales/Widgets/SalesByGeographyWidget.ascx',                   1, 1 UNION ALL
+SELECT 'SalesByOfficeWidget',                       '/Modules/Sales/Widgets/SalesByOfficeWidget.ascx',                      2, 1 UNION ALL
+SELECT 'CurrentOfficeSalesByMonthWidget',           '/Modules/Sales/Widgets/CurrentOfficeSalesByMonthWidget.ascx',          2, 2 UNION ALL
+SELECT 'OfficeInformationWidget',                   '/Modules/BackOffice/Widgets/OfficeInformationWidget.ascx',             3, 1 UNION ALL
+SELECT 'LinksWidget',                               '/Modules/BackOffice/Widgets/LinksWidget.ascx',                         3, 2 UNION ALL
+SELECT 'WorkflowWidget',                            '/Modules/Finance/Widgets/WorkflowWidget.ascx',                         3, 4 UNION ALL
+SELECT 'TopSellingProductOfAllTimeWidget',          '/Modules/Sales/Widgets/TopSellingProductOfAllTimeWidget.ascx',         4, 1 UNION ALL
+SELECT 'TopSellingProductOfAllTimeCurrentWidget',   '/Modules/Sales/Widgets/TopSellingProductOfAllTimeCurrentWidget.ascx',  4, 2;
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/src/05.scrud-views/core/core.account_scrud_view.sql --<--<--
 CREATE VIEW core.account_scrud_view
 AS
@@ -26264,9 +26468,9 @@ SELECT 'MoF-NY-RV','Rio Vista Branch', 'MoF Rio Vista', '06/06/1989', 'Rio Vista
 INSERT INTO office.offices(office_code,office_name,nick_name, registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number,currency_code,parent_office_id)
 SELECT 'MoF-NP-KTM','Kathmandu Branch', 'MoF Kathmandu', '06/06/1989', 'Baneshwor', 'Kathmandu','Bagmati','NP','','64464554','','info@mixof.org','http://mixof.org','0','0','NPR',(SELECT office_id FROM office.offices WHERE office_code='MoF');
 
-SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='SYST'),(SELECT office_id FROM office.offices WHERE office_code='MoF'),'sys','','Système');
-SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='ADMN'),(SELECT office_id FROM office.offices WHERE office_code='MoF'),'binod','binod','Binod', false);
-SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='USER'),(SELECT office_id FROM office.offices WHERE office_code='MoF'),'demo','demo','Demo User', false);
+SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='SYST'),1,(SELECT office_id FROM office.offices WHERE office_code='MoF'),'sys','','Système');
+SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='ADMN'),1,(SELECT office_id FROM office.offices WHERE office_code='MoF'),'binod','binod','Binod', false);
+SELECT office.create_user((SELECT role_id FROM office.roles WHERE role_code='USER'),1,(SELECT office_id FROM office.offices WHERE office_code='MoF'),'demo','demo','Demo User', false);
 
 
 UPDATE office.users SET can_change_password=false
