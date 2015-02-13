@@ -307,28 +307,6 @@ namespace MixERP.Net.Entities.Core
 
     }
 
-    [TableName("core.widgets")]
-    [PrimaryKey("widget_id")]
-    [ExplicitColumns]
-    public class Widget : PetaPocoDB.Record<Widget> 
-    {
-        [Column("widget_id")] 
-        public int WidgetId { get; set; }
-
-        [Column("widget_name")] 
-        public string WidgetName { get; set; }
-
-        [Column("widget_source")] 
-        public string WidgetSource { get; set; }
-
-        [Column("row_number")] 
-        public int RowNumber { get; set; }
-
-        [Column("column_number")] 
-        public int ColumnNumber { get; set; }
-
-    }
-
     [TableName("core.menu_locale")]
     [PrimaryKey("menu_locale_id")]
     [ExplicitColumns]
@@ -1779,6 +1757,28 @@ namespace MixERP.Net.Entities.Core
 
         [Column("config_name")] 
         public string ConfigName { get; set; }
+
+    }
+
+    [TableName("core.widgets")]
+    [PrimaryKey("widget_id")]
+    [ExplicitColumns]
+    public class Widget : PetaPocoDB.Record<Widget> 
+    {
+        [Column("widget_id")] 
+        public int WidgetId { get; set; }
+
+        [Column("widget_name")] 
+        public string WidgetName { get; set; }
+
+        [Column("widget_source")] 
+        public string WidgetSource { get; set; }
+
+        [Column("row_number")] 
+        public int RowNumber { get; set; }
+
+        [Column("column_number")] 
+        public int ColumnNumber { get; set; }
 
     }
 
@@ -4644,46 +4644,6 @@ namespace MixERP.Net.Entities.Core
 
     }
 
-    [TableName("core.item_opening_inventory")]
-    [PrimaryKey("item_opening_inventory_id")]
-    [ExplicitColumns]
-    public class ItemOpeningInventory : PetaPocoDB.Record<ItemOpeningInventory> 
-    {
-        [Column("item_opening_inventory_id")] 
-        public long ItemOpeningInventoryId { get; set; }
-
-        [Column("entry_ts")] 
-        public DateTime EntryTs { get; set; }
-
-        [Column("item_id")] 
-        public int ItemId { get; set; }
-
-        [Column("store_id")] 
-        public int StoreId { get; set; }
-
-        [Column("unit_id")] 
-        public int UnitId { get; set; }
-
-        [Column("quantity")] 
-        public int Quantity { get; set; }
-
-        [Column("amount")] 
-        public decimal Amount { get; set; }
-
-        [Column("base_unit_id")] 
-        public int BaseUnitId { get; set; }
-
-        [Column("base_quantity")] 
-        public decimal BaseQuantity { get; set; }
-
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
-
-    }
-
     [TableName("core.items")]
     [PrimaryKey("item_id")]
     [ExplicitColumns]
@@ -4962,6 +4922,39 @@ namespace MixERP.Net.Entities.Core
 
         [Column("unit_name")] 
         public string UnitName { get; set; }
+
+    }
+
+    [TableName("core.attachment_type")]
+    [ExplicitColumns]
+    public class AttachmentType : PetaPocoDB.Record<AttachmentType> 
+    {
+        [Column("comment")] 
+        public string Comment { get; set; }
+
+        [Column("file_path")] 
+        public string FilePath { get; set; }
+
+        [Column("original_file_name")] 
+        public string OriginalFileName { get; set; }
+
+        [Column("file_extension")] 
+        public string FileExtension { get; set; }
+
+    }
+
+    [TableName("core.period")]
+    [ExplicitColumns]
+    public class Period : PetaPocoDB.Record<Period> 
+    {
+        [Column("period_name")] 
+        public string PeriodName { get; set; }
+
+        [Column("date_from")] 
+        public DateTime DateFrom { get; set; }
+
+        [Column("date_to")] 
+        public DateTime DateTo { get; set; }
 
     }
 }

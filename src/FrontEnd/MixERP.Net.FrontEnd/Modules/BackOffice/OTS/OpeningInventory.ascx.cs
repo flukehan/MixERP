@@ -1,29 +1,28 @@
 ﻿using System;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using MixERP.Net.Common;
 using MixERP.Net.Common.Domains;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.BackOffice.Resources;
+using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.WebControls.Common;
 
 namespace MixERP.Net.Core.Modules.BackOffice.OTS
 {
     public partial class OpeningInventory : MixERPUserControl
     {
-
         public override AccessLevel AccessLevel
         {
-            get
-            {
-                return AccessLevel.AdminOnly;
-            }
+            get { return AccessLevel.AdminOnly; }
         }
 
-
         public override void OnControlLoad(object sender, EventArgs e)
-        {            
+        {
             this.CreateHeader(this.Placeholder1);
+            this.CreateTopPanel(this.Placeholder1);
 
             if (Data.OpeningInventory.Exists(CurrentSession.GetOfficeId()))
             {
@@ -32,7 +31,14 @@ namespace MixERP.Net.Core.Modules.BackOffice.OTS
             }
 
             this.CreateGridView(this.Placeholder1);
-            this.CreateSaveButton(this.Placeholder1);
+            this.CreateBottomPanel(this.Placeholder1);
+            this.RegisterJavascript();
+        }
+
+        private void RegisterJavascript()
+        {
+            string script = JSUtility.GetVar("accessIsDeniedLocalized", Warnings.AccessIsDenied);
+            PageUtility.RegisterJavascript("OpeningInventory_Vars", script, this.Page, true);
         }
 
         private void CreateMessage(Control container)
@@ -55,7 +61,162 @@ namespace MixERP.Net.Core.Modules.BackOffice.OTS
             }
         }
 
+        private void CreateSaveButton(Control container)
+        {
+            using (HtmlInputButton saveButton = new HtmlInputButton())
+            {
+                saveButton.ID = "SaveButton";
+                saveButton.Attributes.Add("class", "small ui button red");
+                saveButton.Value = Titles.Save;
+
+                container.Controls.Add(saveButton);
+            }
+        }
+
+        #region IDisposable
+
+        private bool disposed;
+        private DateTextBox dateTextBox;
+
+        public override sealed void Dispose()
+        {
+            if (!this.disposed)
+            {
+                this.Dispose(true);
+                base.Dispose();
+            }
+        }
+
+
+        private void Dispose(bool disposing)
+        {
+            if (!disposing)
+            {
+                return;
+            }
+
+            if (this.dateTextBox != null)
+            {
+                this.dateTextBox.Dispose();
+                this.dateTextBox = null;
+            }
+
+            this.disposed = true;
+        }
+
+        #endregion
+
+        #region Top Panel
+
+        private void AddDateTextBox(HtmlGenericControl fields)
+        {
+            using (HtmlGenericControl field = HtmlControlHelper.GetField())
+            {
+                using (HtmlGenericControl label = new HtmlGenericControl())
+                {
+                    label.TagName = "label";
+                    label.Attributes.Add("for", "ValueDateTextBox");
+                    label.InnerText = Titles.ValueDate;
+                    field.Controls.Add(label);
+                }
+
+                this.dateTextBox = new DateTextBox();
+                this.dateTextBox.ID = "ValueDateTextBox";
+                this.dateTextBox.Mode = FrequencyType.Today;
+                field.Controls.Add(this.dateTextBox);
+
+                fields.Controls.Add(field);
+            }
+        }
+
+        private void AddReferenceNumberTextBox(HtmlGenericControl fields)
+        {
+            using (HtmlGenericControl field = HtmlControlHelper.GetField())
+            {
+                using (HtmlGenericControl label = new HtmlGenericControl())
+                {
+                    label.TagName = "label";
+                    label.Attributes.Add("for", "ReferenceNumberInputText");
+                    label.InnerText = Titles.ReferenceNumber;
+                    field.Controls.Add(label);
+                }
+
+                using (HtmlInputText referenceNumberInputText = new HtmlInputText())
+                {
+                    referenceNumberInputText.ID = "ReferenceNumberInputText";
+                    referenceNumberInputText.MaxLength = 24;
+
+                    field.Controls.Add(referenceNumberInputText);
+                }
+                fields.Controls.Add(field);
+            }
+        }
+
+        private void CreateTopPanel(Control container)
+        {
+            using (HtmlGenericControl form = new HtmlGenericControl())
+            {
+                form.TagName = "div";
+                form.Attributes.Add("class", "ui form");
+
+                using (HtmlGenericControl fields = HtmlControlHelper.GetInlineFields())
+                {
+                    this.AddDateTextBox(fields);
+                    this.AddReferenceNumberTextBox(fields);
+
+                    form.Controls.Add(fields);
+                }
+                container.Controls.Add(form);
+            }
+        }
+
+        #endregion
+
+        #region Bottom Panel
+
+        private void AddStatementReferenceTextArea(HtmlGenericControl fields)
+        {
+            using (HtmlGenericControl field = HtmlControlHelper.GetField())
+            {
+                using (HtmlGenericControl label = new HtmlGenericControl())
+                {
+                    label.TagName = "label";
+                    label.Attributes.Add("for", "StatementReferenceTextArea");
+                    label.InnerText = Titles.StatementReference;
+                    field.Controls.Add(label);
+                }
+
+                using (HtmlTextArea statementReferenceTextArea = new HtmlTextArea())
+                {
+                    statementReferenceTextArea.ID = "StatementReferenceTextArea";
+                    statementReferenceTextArea.Rows = 4;
+
+                    field.Controls.Add(statementReferenceTextArea);
+                }
+
+                fields.Controls.Add(field);
+            }
+        }
+
+        private void CreateBottomPanel(Control container)
+        {
+            using (HtmlGenericControl fields = HtmlControlHelper.GetInlineFields())
+            {
+                fields.TagName = "div";
+                fields.Attributes.Add("class", "ui form");
+                fields.Attributes.Add("style", "width:290px;");
+
+                this.AddStatementReferenceTextArea(fields);
+                this.CreateSaveButton(fields);
+
+                container.Controls.Add(fields);
+            }
+        }
+
+        #endregion
+
         #region GridView
+
         private void CreateGridView(Control container)
         {
             using (Table openingInventoryGridView = new Table())
@@ -69,19 +230,20 @@ namespace MixERP.Net.Core.Modules.BackOffice.OTS
         }
 
         #region Header Row
+
         private void CreateHeaderRow(Table table)
         {
             using (TableRow headerRow = new TableRow())
             {
                 this.AddHeaderCell(headerRow, "ItemCodeInputText", Titles.ItemCode, "");
-                this.AddHeaderCell(headerRow, "ItemSelect", Titles.ItemName,"");
+                this.AddHeaderCell(headerRow, "ItemSelect", Titles.ItemName, "");
                 this.AddHeaderCell(headerRow, "StoreSelect", Titles.StoreName, "");
                 this.AddHeaderCell(headerRow, "QuantityInputText", Titles.Quantity, "integer text-right");
                 this.AddHeaderCell(headerRow, "UnitSelect", Titles.Unit, "");
                 this.AddHeaderCell(headerRow, "AmountInputText", Titles.Amount, "currency text-right");
                 this.AddHeaderCell(headerRow, "TotalInputText", Titles.Total, "currency text-right");
                 this.AddHeaderCell(headerRow, "AddRowButton", Titles.Action, "");
-               
+
 
                 table.Controls.Add(headerRow);
                 headerRow.TableSection = TableRowSection.TableHeader;
@@ -101,12 +263,13 @@ namespace MixERP.Net.Core.Modules.BackOffice.OTS
                 }
 
                 row.Controls.Add(cell);
-
             }
         }
+
         #endregion
 
         #region Control Row
+
         private void CreateControlRow(Table table)
         {
             using (TableRow controlRow = new TableRow())
@@ -159,7 +322,6 @@ namespace MixERP.Net.Core.Modules.BackOffice.OTS
 
                 row.Controls.Add(cell);
             }
-
         }
 
 
@@ -178,21 +340,10 @@ namespace MixERP.Net.Core.Modules.BackOffice.OTS
 
                 row.Controls.Add(cell);
             }
-        #endregion
-        }
-        #endregion
 
-        private void CreateSaveButton(Control container)
-        {
-            using (HtmlInputButton saveButton = new HtmlInputButton())
-            {
-                saveButton.ID = "SaveButton";
-                saveButton.Attributes.Add("class", "small ui button red");
-                saveButton.Value = Titles.Save;
-
-                container.Controls.Add(saveButton);
-            }
+            #endregion
         }
 
+        #endregion
     }
 }

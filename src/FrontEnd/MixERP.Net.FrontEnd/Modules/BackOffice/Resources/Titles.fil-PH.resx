@@ -396,4 +396,13 @@
   <data name="OK" xml:space="preserve">
     <value>OK</value>
   </data>
+  <data name="ReferenceNumber" xml:space="preserve">
+    <value>Sanggunian sa Numero</value>
+  </data>
+  <data name="StatementReference" xml:space="preserve">
+    <value>Sanggunian ng statement</value>
+  </data>
+  <data name="ValueDate" xml:space="preserve">
+    <value>Petsa halaga</value>
+  </data>
 </root>

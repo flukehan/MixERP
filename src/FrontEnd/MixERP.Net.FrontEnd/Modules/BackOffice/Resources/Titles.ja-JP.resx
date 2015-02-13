@@ -396,4 +396,13 @@
   <data name="OK" xml:space="preserve">
     <value>よし</value>
   </data>
+  <data name="ReferenceNumber" xml:space="preserve">
+    <value>参照番号</value>
+  </data>
+  <data name="StatementReference" xml:space="preserve">
+    <value>ステートメントリファレンス</value>
+  </data>
+  <data name="ValueDate" xml:space="preserve">
+    <value>実行日</value>
+  </data>
 </root>

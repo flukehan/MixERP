@@ -396,4 +396,13 @@
   <data name="OK" xml:space="preserve">
     <value>OKE</value>
   </data>
+  <data name="ReferenceNumber" xml:space="preserve">
+    <value>Nomor Surat</value>
+  </data>
+  <data name="StatementReference" xml:space="preserve">
+    <value>pernyataan Referensi</value>
+  </data>
+  <data name="ValueDate" xml:space="preserve">
+    <value>nilai Tanggal</value>
+  </data>
 </root>

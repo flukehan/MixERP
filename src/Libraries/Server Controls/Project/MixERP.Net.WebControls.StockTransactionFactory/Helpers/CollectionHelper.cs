@@ -59,7 +59,7 @@ namespace MixERP.Net.WebControls.StockTransactionFactory.Helpers
 
             dynamic result = jss.Deserialize<dynamic>(json);
 
-            foreach (var item in result)
+            foreach (dynamic item in result)
             {
                 StockDetail detail = new StockDetail();
                 detail.ItemCode = item[0];

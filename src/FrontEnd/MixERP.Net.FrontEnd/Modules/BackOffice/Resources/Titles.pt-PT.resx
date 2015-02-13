@@ -396,4 +396,13 @@
   <data name="OK" xml:space="preserve">
     <value>ESTÁ BEM</value>
   </data>
+  <data name="ReferenceNumber" xml:space="preserve">
+    <value>Número de Referência</value>
+  </data>
+  <data name="StatementReference" xml:space="preserve">
+    <value>declaração de Referência</value>
+  </data>
+  <data name="ValueDate" xml:space="preserve">
+    <value>valor Data</value>
+  </data>
 </root>

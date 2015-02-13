@@ -20,14 +20,6 @@ ALTER TABLE core.item_selling_prices
 ADD CONSTRAINT item_selling_prices_unit_chk
 CHECK(core.is_valid_unit(item_id, unit_id));
 
-
-ALTER TABLE core.item_opening_inventory
-DROP CONSTRAINT IF EXISTS item_opening_inventory_unit_chk;
-
-ALTER TABLE core.item_opening_inventory
-ADD CONSTRAINT item_opening_inventory_unit_chk
-CHECK(core.is_valid_unit(item_id, unit_id));
-
 ALTER TABLE core.items
 DROP CONSTRAINT IF EXISTS items_reorder_quantity_chk;
 

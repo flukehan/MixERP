@@ -106,6 +106,7 @@
     <Content Include="Scripts\Admin\DatabaseBackup.ascx.js" />
     <Content Include="Scripts\AttachmentManager.ascx.js" />
     <Content Include="packages.config" />
+    <Content Include="Services\OTS\OpeningInventory.asmx" />
     <Content Include="Widgets\LinksWidget.ascx" />
     <Content Include="Widgets\OfficeInformationWidget.ascx" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
@@ -383,6 +384,10 @@
     </Compile>
     <Compile Include="Services\Attachments.asmx.cs">
       <DependentUpon>Attachments.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\OTS\OpeningInventory.asmx.cs">
+      <DependentUpon>OpeningInventory.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Services\TaxData.asmx.cs">

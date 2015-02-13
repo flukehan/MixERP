@@ -3137,26 +3137,6 @@ CREATE TABLE policy.store_policy_details
 );
 
 
-CREATE TABLE core.item_opening_inventory
-(
-    item_opening_inventory_id               BIGSERIAL PRIMARY KEY,
-    entry_ts                                TIMESTAMP WITH TIME ZONE NOT NULL,
-    item_id                                 integer NOT NULL REFERENCES core.items(item_id),
-    store_id                                integer NOT NULL REFERENCES office.stores(store_id),
-    unit_id                                 integer NOT NULL REFERENCES core.units(unit_id),
-    quantity                                integer NOT NULL,
-    amount                                  money_strict NOT NULL,
-    base_unit_id                            integer NOT NULL REFERENCES core.units(unit_id),
-    base_quantity                           decimal NOT NULL,
-    audit_user_id                           integer NULL REFERENCES office.users(user_id),
-    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
-                                            DEFAULT(NOW())
-);
-
-
-
-
-
 CREATE TABLE transactions.transaction_master
 (
     transaction_master_id                   BIGSERIAL PRIMARY KEY,
@@ -15813,6 +15793,22 @@ LANGUAGE plpgsql;
 
 
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/src/02.functions-and-logic/office/office.get_department_id_by_code.sql --<--<--
+DROP FUNCTION IF EXISTS office.get_department_id_by_code(text);
+
+CREATE FUNCTION office.get_department_id_by_code(text)
+RETURNS integer
+STABLE
+AS
+$$
+BEGIN
+    RETURN department_id
+    FROM office.departments
+    WHERE department_code=$1;
+END
+$$
+LANGUAGE plpgsql;
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/src/02.functions-and-logic/office/office.get_logged_in_culture.sql --<--<--
 CREATE FUNCTION office.get_logged_in_culture(_user_id integer)
 RETURNS text
@@ -26131,14 +26127,6 @@ ALTER TABLE core.item_selling_prices
 ADD CONSTRAINT item_selling_prices_unit_chk
 CHECK(core.is_valid_unit(item_id, unit_id));
 
-
-ALTER TABLE core.item_opening_inventory
-DROP CONSTRAINT IF EXISTS item_opening_inventory_unit_chk;
-
-ALTER TABLE core.item_opening_inventory
-ADD CONSTRAINT item_opening_inventory_unit_chk
-CHECK(core.is_valid_unit(item_id, unit_id));
-
 ALTER TABLE core.items
 DROP CONSTRAINT IF EXISTS items_reorder_quantity_chk;
 
@@ -31830,20 +31818,6 @@ COMMENT ON COLUMN core.item_groups.cost_of_goods_sold_account_id IS '';
 COMMENT ON COLUMN core.item_groups.parent_item_group_id IS '';
 COMMENT ON COLUMN core.item_groups.audit_user_id IS 'Contains the id of the user who last inserted or updated the corresponding row.';
 COMMENT ON COLUMN core.item_groups.audit_ts IS 'Contains the date and timestamp of the last insert or update action.';
-
-
-COMMENT ON TABLE core.item_opening_inventory IS 'This table stores information on opening inventory and other associated information.';
-COMMENT ON COLUMN core.item_opening_inventory.item_opening_inventory_id IS 'The primary key of this table, which is also a serial field.';
-COMMENT ON COLUMN core.item_opening_inventory.entry_ts IS '';
-COMMENT ON COLUMN core.item_opening_inventory.item_id IS 'Foreign key to the table core.items.';
-COMMENT ON COLUMN core.item_opening_inventory.store_id IS '';
-COMMENT ON COLUMN core.item_opening_inventory.unit_id IS 'Foreign key to the table core.items.';
-COMMENT ON COLUMN core.item_opening_inventory.quantity IS '';
-COMMENT ON COLUMN core.item_opening_inventory.amount IS '';
-COMMENT ON COLUMN core.item_opening_inventory.base_unit_id IS '';
-COMMENT ON COLUMN core.item_opening_inventory.base_quantity IS '';
-COMMENT ON COLUMN core.item_opening_inventory.audit_user_id IS 'Contains the id of the user who last inserted or updated the corresponding row.';
-COMMENT ON COLUMN core.item_opening_inventory.audit_ts IS 'Contains the date and timestamp of the last insert or update action.';
 
 
 COMMENT ON TABLE core.item_selling_prices IS 'This table stores information on selling price of an item and other information.

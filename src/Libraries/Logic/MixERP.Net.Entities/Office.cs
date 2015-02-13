@@ -1149,6 +1149,9 @@ namespace MixERP.Net.Entities.Office
         [Column("role_id")] 
         public int RoleId { get; set; }
 
+        [Column("department_id")] 
+        public int DepartmentId { get; set; }
+
         [Column("office_id")] 
         public int OfficeId { get; set; }
 
@@ -1172,9 +1175,6 @@ namespace MixERP.Net.Entities.Office
 
         [Column("audit_ts")] 
         public DateTime? AuditTs { get; set; }
-
-        [Column("department_id")] 
-        public int? DepartmentId { get; set; }
 
     }
 
@@ -1217,6 +1217,24 @@ namespace MixERP.Net.Entities.Office
 
         [Column("message")] 
         public string Message { get; set; }
+
+    }
+
+    [TableName("office.office_type")]
+    [ExplicitColumns]
+    public class OfficeType : PetaPocoDB.Record<OfficeType> 
+    {
+        [Column("office_id")] 
+        public string OfficeId { get; set; }
+
+        [Column("office_code")] 
+        public string OfficeCode { get; set; }
+
+        [Column("office_name")] 
+        public string OfficeName { get; set; }
+
+        [Column("address")] 
+        public string Address { get; set; }
 
     }
 }

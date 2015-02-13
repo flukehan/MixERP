@@ -408,20 +408,6 @@ COMMENT ON COLUMN core.item_groups.audit_user_id IS 'Contains the id of the user
 COMMENT ON COLUMN core.item_groups.audit_ts IS 'Contains the date and timestamp of the last insert or update action.';
 
 
-COMMENT ON TABLE core.item_opening_inventory IS 'This table stores information on opening inventory and other associated information.';
-COMMENT ON COLUMN core.item_opening_inventory.item_opening_inventory_id IS 'The primary key of this table, which is also a serial field.';
-COMMENT ON COLUMN core.item_opening_inventory.entry_ts IS '';
-COMMENT ON COLUMN core.item_opening_inventory.item_id IS 'Foreign key to the table core.items.';
-COMMENT ON COLUMN core.item_opening_inventory.store_id IS '';
-COMMENT ON COLUMN core.item_opening_inventory.unit_id IS 'Foreign key to the table core.items.';
-COMMENT ON COLUMN core.item_opening_inventory.quantity IS '';
-COMMENT ON COLUMN core.item_opening_inventory.amount IS '';
-COMMENT ON COLUMN core.item_opening_inventory.base_unit_id IS '';
-COMMENT ON COLUMN core.item_opening_inventory.base_quantity IS '';
-COMMENT ON COLUMN core.item_opening_inventory.audit_user_id IS 'Contains the id of the user who last inserted or updated the corresponding row.';
-COMMENT ON COLUMN core.item_opening_inventory.audit_ts IS 'Contains the date and timestamp of the last insert or update action.';
-
-
 COMMENT ON TABLE core.item_selling_prices IS 'This table stores information on selling price of an item and other information.
  PLEASE NOTE :
 

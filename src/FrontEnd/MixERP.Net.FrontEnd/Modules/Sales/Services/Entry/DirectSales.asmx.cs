@@ -38,8 +38,6 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
         {
             Collection<StockDetail> details = CollectionHelper.GetStockMasterDetailCollection(data, storeId);
 
-
-            System.Web.Script.Serialization.JavaScriptSerializer js = new System.Web.Script.Serialization.JavaScriptSerializer();
             Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
 
             bool isCredit = transactionType != null && !transactionType.ToUpperInvariant().Equals("CASH");

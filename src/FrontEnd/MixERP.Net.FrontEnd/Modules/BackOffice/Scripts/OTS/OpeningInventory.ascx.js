@@ -1,4 +1,8 @@
-﻿var addRowButton = $("#AddRowButton");
+﻿if (typeof accessIsDeniedLocalized === "undefined") {
+    accessIsDeniedLocalized = "Access is denied";
+};
+
+var addRowButton = $("#AddRowButton");
 var amountInputText = $("#AmountInputText");
 
 var buttons = $("#Buttons");
@@ -12,6 +16,9 @@ var openingInventoryGridView = $("#OpeningInventoryGridView");
 
 var quantityInputText = $("#QuantityInputText");
 
+var referenceNumberInputText = $("#ReferenceNumberInputText");
+
+var statementReferenceTextArea = $("#StatementReferenceTextArea");
 var storeSelect = $("#StoreSelect");
 var storeIdHidden = $("#StoreIdHidden");
 
@@ -21,6 +28,9 @@ var tranBook = "OpeningInventory";
 var unitSelect = $("#UnitSelect");
 var unitIdHidden = $("#UnitIdHidden");
 var unitNameHidden = $("#UnitNameHidden");
+var saveButton = $("#SaveButton");
+
+var valueDateTextBox = $("#ValueDateTextBox");
 
 var amount;
 var data;
@@ -230,4 +240,45 @@ var calculateTotal = function () {
     var total = quatity * amount;
 
     totalInputText.val(total);
+};
+
+saveButton.click(function() {
+    var valueDate = parseDate(valueDateTextBox.val());
+    var referenceNumber = referenceNumberInputText.val();
+    var statementReference = statementReferenceTextArea.val();
+
+    if (openingInventoryGridView.find("tbody tr").length < 2) {
+
+        openingInventoryGridView.addClass("inverted red").delay(1000).queue(function () {
+            $(this).removeClass("inverted red");
+            $(this).dequeue();
+        });
+
+        displayMessage(accessIsDeniedLocalized);
+        return;
+    };
+
+    var json = tableToJSON(openingInventoryGridView);
+
+    var ajaxSave = save(valueDate, referenceNumber, statementReference, json);
+
+    ajaxSave.success(function() {
+        window.location = "/";
+    });
+
+    ajaxSave.fail(function(xhr) {
+        logAjaxErrorMessage(xhr);
+    });
+});
+
+function save(valueDate, referenceNumber, statementReference, details) {
+    url = "/Modules/BackOffice/Services/OTS/OpeningInventory.asmx/Save";
+    data = appendParameter("", "valueDate", valueDate);
+    data = appendParameter(data, "referenceNumber", referenceNumber);
+    data = appendParameter(data, "statementReference", statementReference);
+    data = appendParameter(data, "jsonDetails", details);
+
+    data = getData(data);
+
+    return getAjax(url, data);
 };

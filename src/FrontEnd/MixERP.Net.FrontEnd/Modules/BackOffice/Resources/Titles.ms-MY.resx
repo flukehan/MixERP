@@ -396,4 +396,13 @@
   <data name="OK" xml:space="preserve">
     <value>OK</value>
   </data>
+  <data name="ReferenceNumber" xml:space="preserve">
+    <value>Nombor Rujukan</value>
+  </data>
+  <data name="StatementReference" xml:space="preserve">
+    <value>penyata Rujukan</value>
+  </data>
+  <data name="ValueDate" xml:space="preserve">
+    <value>nilai Tarikh</value>
+  </data>
 </root>

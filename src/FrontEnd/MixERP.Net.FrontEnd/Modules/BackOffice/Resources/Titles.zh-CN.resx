@@ -396,4 +396,13 @@
   <data name="OK" xml:space="preserve">
     <value>行</value>
   </data>
+  <data name="ReferenceNumber" xml:space="preserve">
+    <value>参考号码</value>
+  </data>
+  <data name="StatementReference" xml:space="preserve">
+    <value>声明参考</value>
+  </data>
+  <data name="ValueDate" xml:space="preserve">
+    <value>起息日</value>
+  </data>
 </root>

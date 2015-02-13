@@ -396,4 +396,13 @@
   <data name="OK" xml:space="preserve">
     <value>Okay</value>
   </data>
+  <data name="String" xml:space="preserve">
+    <value>Fecha Valor</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value>Número de referencia</value>
+  </data>
+  <data name="String2" xml:space="preserve">
+    <value>Declaración de Referencia</value>
+  </data>
 </root>

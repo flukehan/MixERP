@@ -1379,7 +1379,7 @@ namespace MixERP.Net.Entities.Transactions
         public string PreferredSupplier { get; set; }
 
         [Column("price")] 
-        public string Price { get; set; }
+        public decimal Price { get; set; }
 
         [Column("tax")] 
         public string Tax { get; set; }
@@ -1646,19 +1646,19 @@ namespace MixERP.Net.Entities.Transactions
         public string AccountId { get; set; }
 
         [Column("price")] 
-        public string Price { get; set; }
+        public decimal Price { get; set; }
 
         [Column("quantity")] 
-        public string Quantity { get; set; }
+        public int Quantity { get; set; }
 
         [Column("discount")] 
-        public string Discount { get; set; }
+        public decimal Discount { get; set; }
 
         [Column("shipping_charge")] 
-        public string ShippingCharge { get; set; }
+        public decimal ShippingCharge { get; set; }
 
         [Column("taxable_amount")] 
-        public string TaxableAmount { get; set; }
+        public decimal TaxableAmount { get; set; }
 
         [Column("state_sales_tax_id")] 
         public string StateSalesTaxId { get; set; }
@@ -1667,7 +1667,7 @@ namespace MixERP.Net.Entities.Transactions
         public string CountySalesTaxId { get; set; }
 
         [Column("rate")] 
-        public string Rate { get; set; }
+        public decimal Rate { get; set; }
 
         [Column("base_amount_type")] 
         public string BaseAmountType { get; set; }
@@ -1682,7 +1682,7 @@ namespace MixERP.Net.Entities.Transactions
         public string RoundingPlaces { get; set; }
 
         [Column("tax")] 
-        public string Tax { get; set; }
+        public decimal Tax { get; set; }
 
     }
 
@@ -1715,7 +1715,7 @@ namespace MixERP.Net.Entities.Transactions
         public string CurrencyCode { get; set; }
 
         [Column("amount")] 
-        public string Amount { get; set; }
+        public decimal Amount { get; set; }
 
         [Column("transaction_ts")] 
         public DateTime TransactionTs { get; set; }
@@ -1797,6 +1797,171 @@ namespace MixERP.Net.Entities.Transactions
 
         [Column("flag_foreground_color")] 
         public string FlagForegroundColor { get; set; }
+
+    }
+
+    [TableName("transactions.stock_detail_type")]
+    [ExplicitColumns]
+    public class StockDetailType : PetaPocoDB.Record<StockDetailType> 
+    {
+        [Column("store_id")] 
+        public string StoreId { get; set; }
+
+        [Column("item_code")] 
+        public string ItemCode { get; set; }
+
+        [Column("quantity")] 
+        public int Quantity { get; set; }
+
+        [Column("unit_name")] 
+        public string UnitName { get; set; }
+
+        [Column("price")] 
+        public decimal Price { get; set; }
+
+        [Column("discount")] 
+        public decimal Discount { get; set; }
+
+        [Column("shipping_charge")] 
+        public decimal ShippingCharge { get; set; }
+
+        [Column("tax_form")] 
+        public string TaxForm { get; set; }
+
+        [Column("tax")] 
+        public decimal Tax { get; set; }
+
+    }
+
+    [TableName("transactions.purchase_reorder_type")]
+    [ExplicitColumns]
+    public class PurchaseReorderType : PetaPocoDB.Record<PurchaseReorderType> 
+    {
+        [Column("item_id")] 
+        public string ItemId { get; set; }
+
+        [Column("supplier_code")] 
+        public string SupplierCode { get; set; }
+
+        [Column("unit_id")] 
+        public string UnitId { get; set; }
+
+        [Column("price")] 
+        public decimal Price { get; set; }
+
+        [Column("tax_code")] 
+        public string TaxCode { get; set; }
+
+        [Column("order_quantity")] 
+        public int OrderQuantity { get; set; }
+
+    }
+
+    [TableName("transactions.stock_adjustment_type")]
+    [ExplicitColumns]
+    public class StockAdjustmentType : PetaPocoDB.Record<StockAdjustmentType> 
+    {
+        [Column("tran_type")] 
+        public string TranType { get; set; }
+
+        [Column("store_name")] 
+        public string StoreName { get; set; }
+
+        [Column("item_code")] 
+        public string ItemCode { get; set; }
+
+        [Column("unit_name")] 
+        public string UnitName { get; set; }
+
+        [Column("quantity")] 
+        public int Quantity { get; set; }
+
+    }
+
+    [TableName("transactions.opening_stock_type")]
+    [ExplicitColumns]
+    public class OpeningStockType : PetaPocoDB.Record<OpeningStockType> 
+    {
+        [Column("store_name")] 
+        public string StoreName { get; set; }
+
+        [Column("item_code")] 
+        public string ItemCode { get; set; }
+
+        [Column("quantity")] 
+        public int Quantity { get; set; }
+
+        [Column("unit_name")] 
+        public string UnitName { get; set; }
+
+        [Column("amount")] 
+        public decimal Amount { get; set; }
+
+    }
+
+    [TableName("transactions.sales_tax_type")]
+    [ExplicitColumns]
+    public class SalesTaxType : PetaPocoDB.Record<SalesTaxType> 
+    {
+        [Column("id")] 
+        public string Id { get; set; }
+
+        [Column("sales_tax_detail_id")] 
+        public string SalesTaxDetailId { get; set; }
+
+        [Column("sales_tax_id")] 
+        public string SalesTaxId { get; set; }
+
+        [Column("sales_tax_detail_code")] 
+        public string SalesTaxDetailCode { get; set; }
+
+        [Column("sales_tax_detail_name")] 
+        public string SalesTaxDetailName { get; set; }
+
+        [Column("is_use_tax")] 
+        public bool IsUseTax { get; set; }
+
+        [Column("account_id")] 
+        public string AccountId { get; set; }
+
+        [Column("price")] 
+        public decimal Price { get; set; }
+
+        [Column("quantity")] 
+        public int Quantity { get; set; }
+
+        [Column("discount")] 
+        public decimal Discount { get; set; }
+
+        [Column("shipping_charge")] 
+        public decimal ShippingCharge { get; set; }
+
+        [Column("taxable_amount")] 
+        public decimal TaxableAmount { get; set; }
+
+        [Column("state_sales_tax_id")] 
+        public string StateSalesTaxId { get; set; }
+
+        [Column("county_sales_tax_id")] 
+        public string CountySalesTaxId { get; set; }
+
+        [Column("rate")] 
+        public decimal Rate { get; set; }
+
+        [Column("base_amount_type")] 
+        public string BaseAmountType { get; set; }
+
+        [Column("rate_type")] 
+        public string RateType { get; set; }
+
+        [Column("rounding_type")] 
+        public string RoundingType { get; set; }
+
+        [Column("rounding_places")] 
+        public string RoundingPlaces { get; set; }
+
+        [Column("tax")] 
+        public decimal Tax { get; set; }
 
     }
 }

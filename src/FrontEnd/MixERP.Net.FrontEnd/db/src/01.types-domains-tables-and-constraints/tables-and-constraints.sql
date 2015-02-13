@@ -1780,26 +1780,6 @@ CREATE TABLE policy.store_policy_details
 );
 
 
-CREATE TABLE core.item_opening_inventory
-(
-    item_opening_inventory_id               BIGSERIAL PRIMARY KEY,
-    entry_ts                                TIMESTAMP WITH TIME ZONE NOT NULL,
-    item_id                                 integer NOT NULL REFERENCES core.items(item_id),
-    store_id                                integer NOT NULL REFERENCES office.stores(store_id),
-    unit_id                                 integer NOT NULL REFERENCES core.units(unit_id),
-    quantity                                integer NOT NULL,
-    amount                                  money_strict NOT NULL,
-    base_unit_id                            integer NOT NULL REFERENCES core.units(unit_id),
-    base_quantity                           decimal NOT NULL,
-    audit_user_id                           integer NULL REFERENCES office.users(user_id),
-    audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
-                                            DEFAULT(NOW())
-);
-
-
-
-
-
 CREATE TABLE transactions.transaction_master
 (
     transaction_master_id                   BIGSERIAL PRIMARY KEY,

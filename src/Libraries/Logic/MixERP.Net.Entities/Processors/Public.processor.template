@@ -554,12 +554,16 @@ class PostGreSqlSchemaReader : SchemaReader
 
             case "int4":    
             case "serial4":    
+            case "integer_strict":    
+            case "integer_strict2":    
                 return "int";
 
             case "money":    
-                return "decimal";
-
             case "numeric":    
+            case "money_strict":    
+            case "money_strict2":    
+            case "decimal_strict":    
+            case "decimal_strict2":    
                 return "decimal";
 
             case "float4":    
@@ -582,7 +586,6 @@ class PostGreSqlSchemaReader : SchemaReader
     }
 
 
-
     const string TABLE_SQL=@"
             SELECT table_schema, table_name, table_type
             FROM information_schema.tables 
@@ -596,7 +599,14 @@ class PostGreSqlSchemaReader : SchemaReader
             INNER JOIN pg_type
             ON pg_proc.prorettype=pg_type.oid
             WHERE ('t' = ANY(pg_proc.proargmodes) OR 'o' = ANY(pg_proc.proargmodes) OR pg_type.typtype = 'c')
-            AND nspname = @schemaname;";
+            AND nspname = @schemaname
+            UNION ALL
+            SELECT nspname, relname, 'BASE TABLE'
+            FROM pg_class
+            INNER JOIN pg_namespace
+            ON pg_class.relnamespace=pg_namespace.oid
+            WHERE relkind='c'
+            AND nspname=@schemaname;";
 
     const string COLUMN_SQL=@"SELECT * FROM public.poco_get_table_function_definition(@schemaname, @tableName);";
     

@@ -208,6 +208,60 @@ namespace MixERP.Net.Entities.Public
         public string ColumnDefault { get; set; }
 
     }
+
+    [TableName("public.tablefunc_crosstab_2")]
+    [ExplicitColumns]
+    public class TablefuncCrosstab2 : PetaPocoDB.Record<TablefuncCrosstab2> 
+    {
+        [Column("row_name")] 
+        public string RowName { get; set; }
+
+        [Column("category_1")] 
+        public string Category1 { get; set; }
+
+        [Column("category_2")] 
+        public string Category2 { get; set; }
+
+    }
+
+    [TableName("public.tablefunc_crosstab_3")]
+    [ExplicitColumns]
+    public class TablefuncCrosstab3 : PetaPocoDB.Record<TablefuncCrosstab3> 
+    {
+        [Column("row_name")] 
+        public string RowName { get; set; }
+
+        [Column("category_1")] 
+        public string Category1 { get; set; }
+
+        [Column("category_2")] 
+        public string Category2 { get; set; }
+
+        [Column("category_3")] 
+        public string Category3 { get; set; }
+
+    }
+
+    [TableName("public.tablefunc_crosstab_4")]
+    [ExplicitColumns]
+    public class TablefuncCrosstab4 : PetaPocoDB.Record<TablefuncCrosstab4> 
+    {
+        [Column("row_name")] 
+        public string RowName { get; set; }
+
+        [Column("category_1")] 
+        public string Category1 { get; set; }
+
+        [Column("category_2")] 
+        public string Category2 { get; set; }
+
+        [Column("category_3")] 
+        public string Category3 { get; set; }
+
+        [Column("category_4")] 
+        public string Category4 { get; set; }
+
+    }
 }
 
 

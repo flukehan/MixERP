@@ -396,4 +396,13 @@
   <data name="OK" xml:space="preserve">
     <value>хОРОШО</value>
   </data>
+  <data name="ReferenceNumber" xml:space="preserve">
+    <value>номер для ссылок</value>
+  </data>
+  <data name="StatementReference" xml:space="preserve">
+    <value>О себе Ссылка</value>
+  </data>
+  <data name="ValueDate" xml:space="preserve">
+    <value>Дата валютирования</value>
+  </data>
 </root>
