@@ -42,7 +42,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         {
             int officeId = CurrentSession.GetOfficeId();
             int userId = CurrentSession.GetUserId();
-            long loginId = CurrentSession.GetLogOnId();
+            long loginId = CurrentSession.GetLoginId();
             const int verificationStatusId = 2;
 
             Transaction.Verify(tranId, officeId, userId, loginId, verificationStatusId, reason);
@@ -62,7 +62,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         {
             int officeId = CurrentSession.GetOfficeId();
             int userId = CurrentSession.GetUserId();
-            long loginId = CurrentSession.GetLogOnId();
+            long loginId = CurrentSession.GetLoginId();
             const int verificationStatusId = -3;
 
             Transaction.Verify(tranId, officeId, userId, loginId, verificationStatusId, reason);

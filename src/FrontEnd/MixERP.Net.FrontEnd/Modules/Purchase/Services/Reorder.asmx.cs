@@ -40,7 +40,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Services
                 throw new ArgumentNullException("details");
             }
 
-            long loginId = CurrentSession.GetLogOnId();
+            long loginId = CurrentSession.GetLoginId();
             int userId = CurrentSession.GetUserId();
             int officeId = CurrentSession.GetOfficeId();
 

@@ -45,7 +45,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services.OTS
 
             int userId = CurrentSession.GetUserId();
             int officeId = CurrentSession.GetOfficeId();
-            long loginId = CurrentSession.GetLogOnId();
+            long loginId = CurrentSession.GetLoginId();
 
             Collection<OpeningStockType> details = this.GetStockDetails(jsonDetails);
 

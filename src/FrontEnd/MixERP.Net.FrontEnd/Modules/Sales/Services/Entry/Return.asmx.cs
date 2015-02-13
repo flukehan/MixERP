@@ -61,7 +61,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
 
             int officeId = CurrentSession.GetOfficeId();
             int userId = CurrentSession.GetUserId();
-            long loginId = CurrentSession.GetLogOnId();
+            long loginId = CurrentSession.GetLoginId();
 
             return Data.Transactions.Return.PostTransaction(tranId, valueDate, officeId, userId, loginId, storeId, partyCode, priceTypeId, referenceNumber, statementReference, details, attachments);
         }

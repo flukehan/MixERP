@@ -51,9 +51,9 @@ namespace MixERP.Net.Common.Helpers
             return Conversion.TryCastString(SessionHelper.GetSessionKey("Fax"));
         }
 
-        public static long GetLogOnId()
+        public static long GetLoginId()
         {
-            return Conversion.TryCastLong(SessionHelper.GetSessionKey("LogOnId"));
+            return Conversion.TryCastLong(SessionHelper.GetSessionKey("LoginId"));
         }
 
         public static string GetNickname()

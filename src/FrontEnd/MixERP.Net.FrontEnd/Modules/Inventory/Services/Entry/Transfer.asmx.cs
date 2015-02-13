@@ -60,7 +60,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
 
             int officeId = CurrentSession.GetOfficeId();
             int userId = CurrentSession.GetUserId();
-            long loginId = CurrentSession.GetLogOnId();
+            long loginId = CurrentSession.GetLoginId();
 
             return Data.Transactions.StockTransfer.Add(officeId, userId, loginId, valueDate, referenceNumber, statementReference, stockTransferModels);
         }

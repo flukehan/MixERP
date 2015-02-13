@@ -182,7 +182,7 @@ namespace MixERP.Net.FrontEnd.Base
                     }
 
                     session["SignInTimestamp"] = DateTime.Now;
-                    session["LogOnId"] = signInView.LoginId;
+                    session["LoginId"] = signInView.LoginId;
                     session["UserId"] = signInView.UserId;
                     session["Culture"] = signInView.Culture;
                     session["UserName"] = signInView.UserName;

@@ -38,7 +38,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
             stockMaster.ShippingAddressCode = shippingAddressCode;
             stockMaster.StoreId = storeId;
 
-            long nonGlStockMasterId = NonGlStockTransaction.Add("Sales.Quotation", valueDate, CurrentSession.GetOfficeId(), CurrentSession.GetUserId(), CurrentSession.GetLogOnId(), referenceNumber, statementReference, stockMaster, details, transactionIdCollection, attachments, nonTaxable);
+            long nonGlStockMasterId = NonGlStockTransaction.Add("Sales.Quotation", valueDate, CurrentSession.GetOfficeId(), CurrentSession.GetUserId(), CurrentSession.GetLoginId(), referenceNumber, statementReference, stockMaster, details, transactionIdCollection, attachments, nonTaxable);
             return nonGlStockMasterId;
         }
     }

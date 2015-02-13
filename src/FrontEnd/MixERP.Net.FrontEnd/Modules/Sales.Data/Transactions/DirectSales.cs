@@ -41,7 +41,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
             stockMaster.SalespersonId = agentId;
             stockMaster.StoreId = storeId;
 
-            long transactionMasterId = GlTransaction.Add("Sales.Direct", valueDate, CurrentSession.GetOfficeId(), CurrentSession.GetUserId(), CurrentSession.GetLogOnId(), costCenterId, referenceNumber, statementReference, stockMaster, details, attachments, nonTaxable);
+            long transactionMasterId = GlTransaction.Add("Sales.Direct", valueDate, CurrentSession.GetOfficeId(), CurrentSession.GetUserId(), CurrentSession.GetLoginId(), costCenterId, referenceNumber, statementReference, stockMaster, details, attachments, nonTaxable);
 
             return transactionMasterId;
         }

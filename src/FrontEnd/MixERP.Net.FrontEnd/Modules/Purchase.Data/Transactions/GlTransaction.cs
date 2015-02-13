@@ -33,7 +33,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
 {
     internal static class GlTransaction
     {
-        internal static long Add(DateTime valueDate, string book, int officeId, int userId, long logOnId, int costCenterId, string referenceNumber, string statementReference, StockMaster stockMaster, Collection<StockDetail> details, Collection<long> transactionIdCollection, Collection<Attachment> attachments)
+        internal static long Add(DateTime valueDate, string book, int officeId, int userId, long loginId, int costCenterId, string referenceNumber, string statementReference, StockMaster stockMaster, Collection<StockDetail> details, Collection<long> transactionIdCollection, Collection<Attachment> attachments)
         {
             if (stockMaster == null)
             {
@@ -60,7 +60,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
                 command.Parameters.AddWithValue("@BookName", book);
                 command.Parameters.AddWithValue("@OfficeId", officeId);
                 command.Parameters.AddWithValue("@UserId", userId);
-                command.Parameters.AddWithValue("@LoginId", logOnId);
+                command.Parameters.AddWithValue("@LoginId", loginId);
                 command.Parameters.AddWithValue("@ValueDate", valueDate);
                 command.Parameters.AddWithValue("@CostCenterId", costCenterId);
                 command.Parameters.AddWithValue("@ReferenceNumber", referenceNumber);

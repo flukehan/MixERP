@@ -33,7 +33,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
 {
     internal static class NonGlStockTransaction
     {
-        internal static long Add(string book, DateTime valueDate, int officeId, int userId, long logOnId, string referenceNumber, string statementReference, StockMaster stockMaster, Collection<StockDetail> details, Collection<long> transactionIdCollection, Collection<Attachment> attachments, bool nonTaxable)
+        internal static long Add(string book, DateTime valueDate, int officeId, int userId, long loginId, string referenceNumber, string statementReference, StockMaster stockMaster, Collection<StockDetail> details, Collection<long> transactionIdCollection, Collection<Attachment> attachments, bool nonTaxable)
         {
             if (stockMaster == null)
             {
@@ -61,7 +61,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
                 command.Parameters.AddWithValue("@Book", book);
                 command.Parameters.AddWithValue("@OfficeId", officeId);
                 command.Parameters.AddWithValue("@UserId", userId);
-                command.Parameters.AddWithValue("@LoginId", logOnId);
+                command.Parameters.AddWithValue("@LoginId", loginId);
                 command.Parameters.AddWithValue("@ValueDate", valueDate);
                 command.Parameters.AddWithValue("@ReferenceNumber", referenceNumber);
                 command.Parameters.AddWithValue("@StatementReference", statementReference);

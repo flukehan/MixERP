@@ -35,7 +35,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
     {
         public static long Add(DateTime valueDate, string referenceNumber, int costCenterId, Collection<JournalDetail> details, Collection<Attachment> attachments)
         {
-            long transactionMasterId = Add(valueDate, CurrentSession.GetOfficeId(), CurrentSession.GetUserId(), CurrentSession.GetLogOnId(), costCenterId, referenceNumber, details, attachments);
+            long transactionMasterId = Add(valueDate, CurrentSession.GetOfficeId(), CurrentSession.GetUserId(), CurrentSession.GetLoginId(), costCenterId, referenceNumber, details, attachments);
             return transactionMasterId;
         }
 
@@ -78,7 +78,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
             }
         }
 
-        private static long Add(DateTime valueDate, int officeId, int userId, long logOnId, int costCenterId, string referenceNumber, Collection<JournalDetail> details, Collection<Attachment> attachments)
+        private static long Add(DateTime valueDate, int officeId, int userId, long loginId, int costCenterId, string referenceNumber, Collection<JournalDetail> details, Collection<Attachment> attachments)
         {
             if (details == null)
             {
@@ -115,14 +115,14 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
                 {
                     try
                     {
-                        string sql = "INSERT INTO transactions.transaction_master(transaction_master_id, transaction_counter, transaction_code, book, value_date, user_id, login_id, office_id, cost_center_id, reference_number) SELECT nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), transactions.get_new_transaction_counter(@ValueDate), transactions.get_transaction_code(@ValueDate, @OfficeId, @UserId, @LogOnId), @Book, @ValueDate, @UserId, @LogOnId, @OfficeId, @CostCenterId, @ReferenceNumber;SELECT currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));";
+                        string sql = "INSERT INTO transactions.transaction_master(transaction_master_id, transaction_counter, transaction_code, book, value_date, user_id, login_id, office_id, cost_center_id, reference_number) SELECT nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), transactions.get_new_transaction_counter(@ValueDate), transactions.get_transaction_code(@ValueDate, @OfficeId, @UserId, @LoginId), @Book, @ValueDate, @UserId, @LoginId, @OfficeId, @CostCenterId, @ReferenceNumber;SELECT currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));";
                         long transactionMasterId;
                         using (NpgsqlCommand master = new NpgsqlCommand(sql, connection))
                         {
                             master.Parameters.AddWithValue("@ValueDate", valueDate);
                             master.Parameters.AddWithValue("@OfficeId", officeId);
                             master.Parameters.AddWithValue("@UserId", userId);
-                            master.Parameters.AddWithValue("@LogOnId", logOnId);
+                            master.Parameters.AddWithValue("@LoginId", loginId);
                             master.Parameters.AddWithValue("@Book", "Journal");
                             master.Parameters.AddWithValue("@CostCenterId", costCenterId);
                             master.Parameters.AddWithValue("@ReferenceNumber", referenceNumber);
@@ -223,13 +223,13 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
                     }
                     catch (NpgsqlException ex)
                     {
-                        Log.Warning(@"Could not post transaction. ValueDate: {ValueDate}, OfficeId: {OfficeId}, UserId: {UserId}, LoginId: {LoginId}, CostCenterId:{CostCenterId}, ReferenceNumber: {ReferenceNumber}, Details: {Details}, Attachments: {Attachments}. {Exception}.", valueDate, officeId, userId, logOnId, costCenterId, referenceNumber, details, attachments, ex);
+                        Log.Warning(@"Could not post transaction. ValueDate: {ValueDate}, OfficeId: {OfficeId}, UserId: {UserId}, LoginId: {LoginId}, CostCenterId:{CostCenterId}, ReferenceNumber: {ReferenceNumber}, Details: {Details}, Attachments: {Attachments}. {Exception}.", valueDate, officeId, userId, loginId, costCenterId, referenceNumber, details, attachments, ex);
                         transaction.Rollback();
                         throw;
                     }
                     catch (InvalidOperationException ex)
                     {
-                        Log.Warning(@"Could not post transaction. ValueDate: {ValueDate}, OfficeId: {OfficeId}, UserId: {UserId}, LoginId: {LoginId}, CostCenterId:{CostCenterId}, ReferenceNumber: {ReferenceNumber}, Details: {Details}, Attachments: {Attachments}. {Exception}.", valueDate, officeId, userId, logOnId, costCenterId, referenceNumber, details, attachments, ex);
+                        Log.Warning(@"Could not post transaction. ValueDate: {ValueDate}, OfficeId: {OfficeId}, UserId: {UserId}, LoginId: {LoginId}, CostCenterId:{CostCenterId}, ReferenceNumber: {ReferenceNumber}, Details: {Details}, Attachments: {Attachments}. {Exception}.", valueDate, officeId, userId, loginId, costCenterId, referenceNumber, details, attachments, ex);
                         transaction.Rollback();
                         throw;
                     }
